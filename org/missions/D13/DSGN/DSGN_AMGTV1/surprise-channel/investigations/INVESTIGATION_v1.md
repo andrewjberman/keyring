@@ -1367,6 +1367,27 @@
  "spec_asserts": "TO-AV-zp-1 contract C-PRESENTATION-ONLY: a time is printed only when served; the footer time is one of the card's served values printed in words.",
  "world_is": "Where a card serves only a day, the shared footer (the estate's own format on /market and /philosophy) appends 5:00p ET. The card hands over the served day unchanged and the check grades it as served (same day); the added clock is the shared formatter's house convention, not a served value. dateWords.longDate prints the same day with no clock, but PanelFooter does not call it.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W100-S3",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~100",
+ "surfaced_at": "2026-10-05T08:39Z",
+ "one_line": "AV-zp-1 amendment 1: the shared PageEnd prints a clock the payload did not serve on a bare served day ('Data as of October 2nd, 2026, 5:00p ET.' for a served price.as_of_date day); PageEnd.tsx is outside <paths>, so the card footers are fixed and the end line is not.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal/src/ui/components/PageEnd.tsx @75f9f477: asOf = formatPanelTimestamp(null, dataAsOf), the same formatter row Z-W100-S2 names; a bare day prints '5:00p ET'.",
+   "repairs38.cjs ARM 3 on this tree: 'MSFT thesis: \"End of Security Analysis. Data as of October 2nd, 2026, 5:00p ET.\"' -- graded PASS (it grades the served day)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zp-1 AMENDMENT 1 section 2 (and C-PRESENTATION-ONLY): a bare served day prints as a day, never a time of day; the amendment scopes this to a card's footer (CardFooter.tsx, PanelFooter.tsx).",
+ "world_is": "The card footers print a bare day as a day (CardFooter passes the pre-formatted day through the new PanelFooter timeText prop). The page's end line is the shared PageEnd, which this order cannot edit; it still appends 5:00p ET to the served day.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```

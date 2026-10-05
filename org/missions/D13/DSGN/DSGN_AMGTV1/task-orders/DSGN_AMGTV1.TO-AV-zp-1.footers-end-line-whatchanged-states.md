@@ -145,7 +145,7 @@ Report once: what changed and where, the output line of every criterion, the por
 - **Producer gap:** the timeline serves no source, so it gets no footer. Route to RESAPP with the close.
 - **Item 3 of the list** (the FWD-11 re-read) is the issuer's real run at the close.
 
-<status>pending</status>
+<status>complete</status>
 <round>38</round>
 <slot>~100</slot>
 <fabric>site-z</fabric>
