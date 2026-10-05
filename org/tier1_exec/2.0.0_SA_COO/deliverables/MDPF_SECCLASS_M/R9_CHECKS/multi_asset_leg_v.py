@@ -37,6 +37,7 @@ sys.path.insert(0, str(HERE))
 import remint_served_effect as base  # noqa: E402
 
 PIN_T = "RmruvCeo"
+SHARDS = HERE.parents[5] / ".scratch" / "legv_shards"  # repo root .scratch, uncommitted
 FWD9_SET = HERE.parent / "R7_CHECKS" / "FWD9_ROW_SET_20261005.tsv"
 s3 = boto3.client("s3", region_name="us-east-1")
 
@@ -55,8 +56,9 @@ def get_json(bucket, key, ver=None):
     return json.loads(base.get(bucket, key, ver))
 
 
-def packet_nodes(rev_manifest, keys, us_keys=frozenset()):
-    """Stream every platinum part of one revision; the packet's SECURITY nodes by key and class."""
+def packet_nodes(rev_manifest, keys, us_keys=frozenset(), shard=None):
+    """Stream every platinum part of one revision (or, with shard=(k, n), the parts k, k+n, k+2n, ...); the packet's
+    SECURITY nodes by key and class."""
     by_key = collections.defaultdict(collections.Counter)
     amount = collections.defaultdict(float)
     accounts = set()
@@ -64,6 +66,8 @@ def packet_nodes(rev_manifest, keys, us_keys=frozenset()):
     us_accounts = collections.defaultdict(set)
     parts = 0
     objs = [p["object"] for p in rev_manifest["partitions"]]
+    if shard:
+        objs = objs[shard[0]::shard[1]]
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
         futures = [pool.submit(get_json, o["bucket"], o["key"], o.get("version_id")) for o in objs]
         for fut in concurrent.futures.as_completed(futures):
@@ -79,8 +83,33 @@ def packet_nodes(rev_manifest, keys, us_keys=frozenset()):
             "keys_held": len(by_key), "nodes_by_class": dict(classes),
             "amount_by_class": {k: round(v, 2) for k, v in amount.items()},
             "by_key": {k: dict(v) for k, v in sorted(by_key.items())}, "accounts": sorted(accounts),
-            "fwd9_us_held": {k: {"accounts": len(us_accounts[k]), "class_sub_basis": dict(v)}
-                             for k, v in sorted(us_held.items())}}
+            "fwd9_us_held": {k: {"accounts": len(us_accounts[k]), "account_ids": sorted(us_accounts[k]),
+                                 "class_sub_basis": dict(v)} for k, v in sorted(us_held.items())}}
+
+
+def merge_shards(shards):
+    """One revision's packet_nodes() result from its shard results (each covering parts k::n)."""
+    by_key = collections.defaultdict(collections.Counter)
+    amount = collections.defaultdict(float)
+    accounts, us_cls, us_acc = set(), collections.defaultdict(collections.Counter), collections.defaultdict(set)
+    for sh in shards:
+        for k, v in sh["by_key"].items():
+            by_key[k].update(v)
+        for c, v in sh["amount_by_class"].items():
+            amount[c] += v
+        accounts.update(sh["accounts"])
+        for k, v in sh["fwd9_us_held"].items():
+            us_cls[k].update(v["class_sub_basis"])
+            us_acc[k].update(v["account_ids"])
+    classes = collections.Counter()
+    for c in by_key.values():
+        classes.update(c)
+    return {"parts_read": sum(sh["parts_read"] for sh in shards), "partitions_declared": shards[0]["partitions_declared"],
+            "keys_held": len(by_key), "nodes_by_class": dict(classes),
+            "amount_by_class": {k: round(v, 2) for k, v in amount.items()},
+            "by_key": {k: dict(v) for k, v in sorted(by_key.items())}, "accounts": sorted(accounts),
+            "fwd9_us_held": {k: {"accounts": len(us_acc[k]), "account_ids": sorted(us_acc[k]),
+                                 "class_sub_basis": dict(v)} for k, v in sorted(us_cls.items())}}
 
 
 def scan_us(doc, us_keys, us_held, us_accounts):
@@ -152,7 +181,14 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("firm", choices=sorted(base.FIRMS))
     ap.add_argument("--max-accounts", type=int, default=25)
+    ap.add_argument("--no-pre", action="store_true",
+                    help="skip the PRE revision (already read by the pre-fire control); halves the read")
+    ap.add_argument("--shard", default=None, help="K/N: read only POST parts K, K+N, ... and save them to .scratch; "
+                    "each shard fits one foreground call (implies --no-pre)")
+    ap.add_argument("--merge", type=int, default=None, help="N: merge the N saved POST shards, then header and reader")
     a = ap.parse_args()
+    if a.shard or a.merge:
+        a.no_pre = True
     bucket = base.FIRMS[a.firm]
     keys = set(base.row_keys())
     us_keys = fwd9_us_keys()
@@ -166,13 +202,32 @@ def main():
            "packet_keys": len(keys)}
     revs = {}
     for label, d in (("post", post), ("pre", pre)):
-        if d is None:
+        if d is None or (label == "pre" and a.no_pre):
             continue
         ref = cur["dates"][d]["manifest"]
         rm = get_json(ref["bucket"], ref["key"], ref.get("version_id"))
         revs[label] = rm
+        if a.shard:
+            k, n = (int(x) for x in a.shard.split("/"))
+            res = packet_nodes(rm, keys, us_keys, shard=(k, n))
+            SHARDS.mkdir(parents=True, exist_ok=True)
+            f = SHARDS / f"{a.firm}_{rm['revision']}_{k}of{n}.json"
+            f.write_text(json.dumps(res), encoding="utf-8")
+            print(f"LEG-V-SHARD firm={a.firm} post={post} shard={k}/{n} parts_read={res['parts_read']} "
+                  f"nodes_by_class={res['nodes_by_class']} saved={f.name}")
+            return
+        if a.merge:
+            files = [SHARDS / f"{a.firm}_{rm['revision']}_{k}of{a.merge}.json" for k in range(a.merge)]
+            missing = [f.name for f in files if not f.exists()]
+            if missing:
+                raise SystemExit(f"REFUSED: shards missing for revision {rm['revision']}: {missing}")
+            res = merge_shards([json.loads(f.read_text(encoding="utf-8")) for f in files])
+            if res["parts_read"] != res["partitions_declared"]:
+                raise SystemExit(f"REFUSED: shards read {res['parts_read']} of {res['partitions_declared']} parts")
+        else:
+            res = packet_nodes(rm, keys, us_keys if label == "post" else frozenset())
         out[label] = {"revision": rm["revision"], "as_of_timestamp": (rm.get("clocks") or {}).get("as_of_timestamp"),
-                      **packet_nodes(rm, keys, us_keys if label == "post" else frozenset())}
+                      **res}
         print(label, d, {k: out[label][k] for k in ("parts_read", "keys_held", "nodes_by_class")}, flush=True)
     hdr_ref = revs["post"]["platinum_header"]
     hdr = get_json(hdr_ref["bucket"], hdr_ref["key"], hdr_ref.get("version_id"))

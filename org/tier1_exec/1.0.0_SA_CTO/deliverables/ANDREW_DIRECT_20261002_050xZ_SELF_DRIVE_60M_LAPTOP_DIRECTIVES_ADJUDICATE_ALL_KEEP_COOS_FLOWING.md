@@ -47,3 +47,14 @@ one another. Once that is complete, we may resume the drive across the fabric."
 Verbatim: "We may resume now" and "all seats back". This follows `0.0.0_AB_MSTR` msg 104913: the six seats (COO~P, ~D, ~Y, ~M, CVO and
 CRO) sat on the account's monthly spend-limit panel from about 03:20Z, which is his act alone. The drive runs on every lane from
 here, and this seat sends each lane the one item it owes.
+
+
+### STOPPED-BY-OPERATOR 2026-10-05 ~15:5xZ -- Andrew-direct at the 1.0.0_SA_CTO terminal
+
+Verbatim: "I think we need to wind down this device, please /log where you're at and wind down. no need to broadcast."
+
+- **Done:** cron `57facd67` deleted (CronList showed it as the only job before the delete). The final self-drive log is tick 70,
+  `state: STOPPED-BY-OPERATOR`. The session-close log carries the handoff.
+- **Not read into the word:** no broadcast, per his words. No other seat is stood down by this seat; the device's wind-down is his,
+  and this record states only this loop's stop.
+- **A successor does not re-arm from this record.** A new arming word from Andrew is a new record.
