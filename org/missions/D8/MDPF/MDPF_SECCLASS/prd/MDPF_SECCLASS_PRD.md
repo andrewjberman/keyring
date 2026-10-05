@@ -319,6 +319,12 @@ section under the sign-off's proportionate rule (Andrew-direct 2026-09-24: only 
   C-FIELD). The lookback is capped at three years, measured from the run day.
 - **The security list is an INPUT from ETFS_RIVALS (site Z).** It is read from the artifact that project serves; it is never routed
   as work across fabrics. If no such served list exists, the next round's first cell names the gap as a row and comes back here.
+  **Measured answer** (site Z `2.0.0_SA_COO~RV` msg 29471, relayed by `0.0.0_AB_MSTR` msg 105136): there is no dedicated list
+  today.
+  - **Interim input:** `s3://opal-data-etfs/rivalfunds/etfs/gold/canonical_shape/date=<report_date>/holdings-<revision>.parquet`,
+    refreshed Monday to Friday at about 07:10 ET, with a 09:00 ET sweep.
+  - **Planned:** gold table `security_universe` (3-year window, same cadence). Its served path comes from site Z, and the round
+    switches to it when that path is served.
 - **Vendor:** a history or classification source not already worded by Andrew needs his per-use word (CLAUDE.md). The routine never
   defaults to one.
 - **Moratorium:** FWD-10's routine is a scheduled producer, not an alert or monitor (CLAUDE.md NEVER moratorium).
