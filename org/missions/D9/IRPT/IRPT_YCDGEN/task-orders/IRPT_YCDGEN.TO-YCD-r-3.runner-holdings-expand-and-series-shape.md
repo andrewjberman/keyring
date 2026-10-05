@@ -154,9 +154,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 3 cut from the CTO's round-2 analysis section 2 (E1-E6); decomposition round 3 v1.0 (`IRPT_YCDGEN_DECOMP_R3.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~1`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: r-3.AC1 FAIL as expected; r-3.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~01:1xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @5a982069a6, merged dd418f6555; r-3.AC1 PASS (8), r-3.AC2 PASS (2) on the merged tree. **Issuer ruling on row W1-S1:** run.json is v2 with `holdings` only when the run is given holdings, v1 unchanged otherwise -- accepted as built (v1's exact key pin stays valid; the layout reads v1 as no holdings).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>3</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>
