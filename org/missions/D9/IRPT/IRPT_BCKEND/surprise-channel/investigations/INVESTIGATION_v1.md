@@ -18190,3 +18190,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the gate's account-wide IAM read does not return in 180 s and made no progress in 30 min, so every default_tags-tree apply on this laptop needs an override or waits indefinitely."
 }
 ```
+
+## IRPT_BCKEND-S335 -- the directory refresh still fails after the runner restart: its own start races the SSM hand-over (S323)
+
+```json
+{
+  "id": "IRPT_BCKEND-S335",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T13:42:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S323's remedy was not the restart: the 2026-10-05 13:30Z directory refresh again FAILED at 49F, INF and COT with build_dispatch_failure HAND_OVER_RUNNER_OFFLINE, 'start issued, no build sent'. The runner EC2 i-02448edb624a7a7cf was STARTED at 13:30:36Z (its LaunchTime), so something stopped it after the 03:49Z one-time start, and the refresh dispatcher itself issues the start, then hands the build over before the instance's SSM agent is Online. The hand-over races the boot: a start-then-immediate-dispatch fails by construction.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P (the directory refresh is this workstream's: S126, S323). Disarms when a refresh after the fix lands READY at all three firms: either the dispatcher waits, bounded, for SSM PingStatus Online after its start before the hand-over, or the runner's stop schedule is aligned to leave it up across the refresh",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 investor-reporting/directory/_refresh/2026-10-05/manifest.json at opal-data-bd, opal-data-inf and opal-data-cot (LastModified 13:30Z): delta {build_command_status 'start issued, no build sent', build_dispatch_failure HAND_OVER_RUNNER_OFFLINE, build_dispatch_half HAND_OVER, build_error DispatchError}",
+      "ec2 describe-instances i-02448edb624a7a7cf at ~13:4xZ: running, LaunchTime 2026-10-05T13:30:36Z (the 03:49:32Z start from ledger mdpf-daily-runner-restart-s323-20261005 S1 was followed by a stop before 13:30Z)",
+      "ssm describe-instance-information at ~13:4xZ: PingStatus Online, LastPing 13:42Z (Online only after the boot, too late for the 13:30Z hand-over)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S323 (via Andrew card 2): restarting the mdpf-daily-runner instance lets the directory refresh build again.",
+  "world_is": "MEASURED: with the instance restarted and then stopped again before the refresh, the refresh's own start-then-hand-over fails at all three firms; the directory is still served from the 2026-09-25 build."
+}
+```
