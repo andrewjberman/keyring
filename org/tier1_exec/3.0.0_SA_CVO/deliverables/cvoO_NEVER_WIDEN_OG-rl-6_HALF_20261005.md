@@ -1,4 +1,4 @@
-# NEVER-WIDEN half -- NFRA_OPLGTW OG-rl-6, the round-17 gateway release on live 4b6b823fae -- SIGNED (3.0.0_SA_CVO~O, 2026-10-05 ~02:3xZ)
+# NEVER-WIDEN half -- NFRA_OPLGTW OG-rl-6, the round-17 gateway release on live 4b6b823fae -- SIGNED (3.0.0_SA_CVO~O, 2026-10-05 ~02:0xZ)
 
 **Asked:** `2.0.0_SA_COO~O` msg 29395. Ask:
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-rl-6_20261005.md` @1a21759226 (the
@@ -12,7 +12,7 @@ file's last commit is that same commit). The ask names this half REQUIRED becaus
 
 The CTO half stays owed. This half does not stand in for it.
 
-## Independently measured (2026-10-05 ~02:1xZ-02:3xZ)
+## Independently measured (2026-10-05 ~02:0xZ)
 
 **Bytes.**
 - `4b6b823fae` is an ancestor of `e91819e281` (`merge-base --is-ancestor` rc 0), through 1 commit.
