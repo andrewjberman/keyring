@@ -8124,3 +8124,78 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The wall is the same at the guard (ALB-OIDC identity, blocklist, email deny list) and different at the page: /sprint also filters by roster, /yearinreview does not. The ANNOUNCE states it for the three halves in those terms. Whether the Year One page should be roster-limited is a call for the halves, not a worker act; a roster check would be a code change to the kit's view file."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S47",
+  "one_line": "OG-rl-6 C-A2 step 16b: 'the server.py, config.py and deploy-to-ec2.sh diffs each equal the CLOUD-source diffs' holds for config.py in full and for server.py in body lines, but for deploy-to-ec2.sh only on the CHANGE: CLOUD's template is OLDER than live's, so the one .env printf line differs between the two trees for reasons outside this order.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_diff_equality.py (run on rel-nfra-oplgtw-r17c 37be3485db against the CLOUD commits 52ef7bef94 and 17d151f6cc): app/config.py release and CLOUD diff text equal INCLUDING the hunk header @@ -116,6 +116,14 @@; app/server.py body lines equal (33 lines each), hunk header 3 differs (-994 release, -1008 CLOUD) as in row Z-W15-S44; deploy-to-ec2.sh: added comment line byte-equal in both, the .env printf line delta is exactly one inserted token in both, 0 other added lines, 1 removed line in each.",
+      "GIT: git diff e91819e281 52ef7bef94~1 -- infra/aws/ec2/opal-gateway/deploy-to-ec2.sh is 126 lines (5 hunks, e.g. @@ -165,16 +165,6 @@ and @@ -235,58 +225,10 @@): the live release template carries OG-rl-1..4 / OG-tr-1 host-side roster and bearer reads that CLOUD's template lacks, so the CLOUD patch cannot git-apply to the release tree.",
+      "METHOD: the release tree's deploy-to-ec2.sh was produced by inserting the same comment line and the same one printf token into the LIVE e91819e281 file (string substitution, anchors asserted unique), not by git apply."
+    ]
+  },
+  "spec_asserts": "TO step 16b: 'Prove the server.py, config.py and deploy-to-ec2.sh diffs each equal the CLOUD-source diffs.'",
+  "world_is": "Equal in the sense the order needs (the same change on a different base) for all three; literally equal diff text only for config.py. The CLOUD-source deploy template lagging live's is a standing divergence of the release-branch lineage (releases carry template lines CLOUD does not), not something this release created."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S48",
+  "one_line": "OG-rl-6 C-A2 step 16b: the kit's index.html is CRLF ON DISK in the CLOUD-source worktree (344 CR) though the committed blob is LF, so a release tree seeded by copying from that worktree carries disk bytes (md5 306f6238) that differ from the committed blob (1869ef21) and from the shipped-md5 list; corrected in the r17c tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: .scratch/chk_eol.py output (worktree-local): wk-oplgtw-15-r17 disk md5 306f6238 CR 344 vs blob md5 1869ef21 CR 0; og-rel13 (as first copied) the same; og-rel12 (the superseded r17b tree) disk 1869ef21 CR 0. git check-attr: text set, eol lf for app/static/yearinreview/index.html.",
+      "ACT: og-rel13's disk copy was rewritten from `git show HEAD:<path>` bytes (disk == blob, CR 0) and, because git kept reporting `needs update` for the stat-dirty entry, `git add` of the byte-identical blob refreshed the index entry in the release worktree only (no staged difference, no commit). rl7_release_md5.txt lists the LF bytes (1869ef21), as in r17b.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl7_release_md5.txt: 96 files, only app/config.py (0d486a1f) and app/yearinreview_view.py (0d26f064) differ from the r17b list; app/static/yearinreview/index.html stays 1869ef21."
+    ]
+  },
+  "spec_asserts": "TO step 16b: 'Re-cut ... with the 6 files at their new bytes'; row Z-W15-S43 (the page committed as LF).",
+  "world_is": "The page bytes the host must read are the LF form. A re-cut that copies from the CLOUD-source worktree's disk file instead of the blob reads index.html as 1 of 96 files wrong at the verify script's md5 compare. Inert now; the CLOUD-source worktree's disk copy remains CRLF (blob LF), so the same trap stands for any later re-cut that copies from it."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T13:50Z",
+  "id": "NFRA_OPLGTW-Z-W15-S49",
+  "one_line": "OG-rl-6 C-A2 step 16c: the verify script's host-local PLANTED-identity check (a well-formed ES256-shaped JWT with an unknown kid) makes the gateway fetch https://public-keys.auth.elb.us-east-1.amazonaws.com/<kid> from the host, an egress the order's declared class does not name; it first occurs at the deploy-time `after` run, not before.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: infra/aws/ec2/opal-gateway/app/identity.py:_alb_oidc_identity and _fetch_elb_public_key (release tree 37be3485db): kid read from the unverified header, public key fetched by httpx GET from public-keys.auth.elb.<region>.amazonaws.com, then jwt.decode with ES256; any exception becomes IdentityError -> 401. This is the gateway's own per-request path, unchanged by the release.",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_guard_arms.py (local, no network: identity._fetch_elb_public_key pointed at a locally generated ES256 public key): owner signed 200, non-owner signed 403 + audit DENIED/roster, planted 401, no identity 401; roster empty and roster missing: owner 403, non-owner 403, no identity 401 (11 of 11 across the 3 modes).",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/rl8_negative_control.out: against the undeployed host the planted request got 404 (the route did not exist, so no JWT was processed and no fetch occurred); the check FAILED there as designed (host-local 404, want 401)."
+    ]
+  },
+  "spec_asserts": "TO preflight: 'EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM, Secrets Manager reads) and the public gateway URL.' TO step 16c: 'a request carrying a planted, NON-ALB-signed identity header gets 401 (identity is verified by signature)'.",
+  "world_is": "The planted check can only be exercised after the route exists, and exercising it makes the host call the AWS-owned regional ELB key endpoint once (a 4xx/network error also yields 401). It is the gateway's standard identity path, not a vendor call; named here so the issuer can strike the planted check from the verify script instead if AWS-owned public endpoints are outside the declared class."
+}
+```
