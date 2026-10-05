@@ -17788,5 +17788,84 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "The deployed on-demand print (default format=pdf) for BA, AMD and ASML_NA is a 21-24 page mnemonic dump, not a branded document.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 / PRD FWD-5 (v0.38): 'a seat prints the pack on demand for three covered names, and each reads as a document: Opal Brand form, every figure traceable to its page field, no raw code, no dashboard chrome (a JUDGMENT read at L9)'.",
+ "world_is": "GET /api/scoped/amgt/security/<key>/print on GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE= returned %PDF files of 21 (BA), 23 (AMD) and 24 (ASML_NA) pages. Page 1 begins 'BOEING CO/THE [BA US Equity] Research Note / MODEL BLOCK (from the landed record, provenance per the figure rule)' and prints monospace lines such as 'USD TEXT (string field) - CRNCY (ISO currency code ...)', clipped at the right page edge, plus a Python list repr; 109 (BA), 108 (AMD), 107 (ASML) distinct UPPER_CASE_WITH_UNDERSCORE field-code tokens across the pages. The page's own Print button obtained byte-identical files (sha256 equal). Recorded for the L9 judgment; no verdict here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "print/{BA_US_Equity,AMD_US_Equity,ASML_NA_Equity}.pdf in org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~235/ (PyMuPDF text read: raw-code token counts per file).",
+   "tmp/ui-walk/20261005T163146Z/shots/au5-BA-US-print-modal-viewport.png shows page 1 of 21 in the page's own Print preview."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "Every Thesis driver-chart point link on BA and ASML_NA answers 'The filing passage for this point is not shown on this page.'",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 / PRD FWD-18: 'an analyst has clicked a filing-derived figure through to the passage it came from'.",
+ "world_is": "The three '<year>: <value> -- SHOW THE FILING PASSAGE' links under the driver chart (BA 2023/2024/2025 values 528/348/600; ASML 393421721/393283720/385417665) each opened to the single sentence 'The filing passage for this point is not shown on this page.' (0 of 6 showed a passage). The claim-level click-through worked on BA: 'Read more' on RISKS opens a dialog with each sentence's filing text and its cite 'BA US'S 10-K, FILED JANUARY 30TH, 2026 -- ITEM 1A. RISK FACTORS > PARAGRAPH 8'.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261005T161750Z/shots/008-BA-US-Thesis-open-2023-528-SHOW-THE-FI.png and 068-ASML-NA-Thesis-open-2023-393421721-SHOW-.png (the sentence); 011-BA-US-Thesis-open-RISKS-Delays-on-the-737-.png (the passage dialog)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S4",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "The stock ui-walk engine has no step for Print, header hovers or a ranked-list row click, and FWD-31's byte-unchanged arm cannot be captured from the UI.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 section 1: run `node .claude/skills/ui-walk/walk.mjs --route /security-analysis --security \"<name>\"` and record, per act, a capture and a positive control; FWD-31: 'the roster's own rows are BYTE-UNCHANGED against the same tab captured without the passage'.",
+ "world_is": "walk.mjs selected each name by typing its ticker, never pressed Print and never hovered the header cards, so I ran walk_au5.mjs, a copy of it in the deliverables folder (flags --au5, --pick-bar, a PICK log line; the original is untouched, same guard, same disarm). 'Export as a document' names a DO_NOT_CLICK word and was not pressed. A name's Exec Management tab cannot be captured with and without its team passage from the UI (the passage is a served key, dossier_fields.management); substitute read: page roster rows equal the deployed served management.officers (BA 12 of 12, ASML_NA 7 of 7, AMD 0 of 0).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~235/walk_au5.mjs (diff against .claude/skills/ui-walk/walk.mjs is the additions only).",
+   "tmp/ui-walk/20261005T163146Z/au5-reads.json (per-tab data-attribute reads) and 20261005T165304Z/shots/004-ranked-list-before-click-AMD-US.png, 005-AMD-US-overlay.png."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S5",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "No segment breakdown is on the BA page or in its deployed rich export.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "PRD FWD-1 ACCEPT: 'the model numbers, the business description and the segment breakdown are already on screen'.",
+ "world_is": "BA's overlay and five tabs show header figures, a company description, news, a timeline, a financial summary and a version comparison; I found no segment breakdown on any tab. The deployed print?format=rich export for BA_US_Equity (198,974 bytes) contains the word 'segment' once and no breakdown, and the thesis route carries one unrelated sentence containing 'segments'.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Python read of .scratch/cap_BA/served/BA_US_Equity.rich.md (re.findall 'segment' -> 1, no hit with context) and of served_fixture thesis (1 hit: 'Backlog across all segments expanded materially').",
+   "tmp/ui-walk/20261005T161750Z/shots/017-BA-US-Model.png (Model tab; no segment table)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
