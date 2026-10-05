@@ -100,9 +100,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 4 cut from the CTO's round-3 analysis @033795b666 sections 2-3 (E1-E6); decomposition round 4 v1.0 (`IRPT_YCDGEN_DECOMP_R4.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~4`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: m-4.AC1 FAIL as expected; m-4.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~06:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~4 @c73a8fae30, merged c3b266a60a (channel conflict resolved as base plus both appendices); m-4.AC1 PASS (4), m-4.AC2 PASS (comparison 574, multi 423) on the merged tree. Rows W4-S5 and W4-S6 ACCEPTED (the seven Multi third-security stat names and Comparison p8.e33 remain map-side, named; 129 ordinal labels renumbered with ids and sources kept). AC3 is the CVO's judgment at L9.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>4</round>
 <slot>~4</slot>
 <fabric>laptop</fabric>

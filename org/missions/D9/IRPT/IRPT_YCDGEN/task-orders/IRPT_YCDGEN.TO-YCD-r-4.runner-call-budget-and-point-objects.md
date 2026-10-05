@@ -100,9 +100,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 4 cut from the CTO's round-3 analysis @033795b666 sections 2-3 (E1-E6); decomposition round 4 v1.0 (`IRPT_YCDGEN_DECOMP_R4.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~1`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: r-4.AC1 FAIL as expected; r-4.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~05:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @7f0d395090, merged 0a439396d1; r-4.AC1 PASS (16), r-4.AC2 PASS (2) on the merged tree; research suite 104 passed after all four merges. Issuer ruling on the two choices the worker named: `record["lease"]` holds the first window's fence, and the window wait is counted in the next window's first call's `waited_ms` -- both ACCEPTED (the record schema and the clock sum hold). Live: the merged runner ran windows 1-2 of the round-4 close (no budget path; 6, 6, 6, 1 and 1 requests a run, no challenge).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>4</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>

@@ -117,9 +117,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 4 cut from the CTO's round-3 analysis @033795b666 sections 2-3 (E1-E6); decomposition round 4 v1.0 (`IRPT_YCDGEN_DECOMP_R4.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~3`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: l-4.AC1 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~05:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @869f31f05c, merged 57b511a031; l-4.AC1 PASS (7) on the merged tree. Issuer rulings: W3-S5 ACCEPTED (the base test contradicted contract 4.3; kurtosis_1y now carries the unknown-statistic case); W3-S6 conventions CONFIRMED (sample n-1 moments; Jensen alpha monthly x 12 in percent; Sortino downside about 0 over all months; VaR the 5th percentile by linear interpolation; benchmark and risk-free as optional level series -- a held yield is converted by the wiring cell).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>4</round>
 <slot>~3</slot>
 <fabric>laptop</fabric>
