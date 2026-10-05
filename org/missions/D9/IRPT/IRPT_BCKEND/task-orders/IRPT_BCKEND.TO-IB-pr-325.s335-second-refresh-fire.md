@@ -88,6 +88,15 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> IB57-1-AC1,IB5
 **REPORT:** your final message gives the commit hashes, each criterion's last line, the per-firm version ids and counts, the writer,
 and any row ids.
 
+## AMENDMENT 1 (2026-10-05 ~16:0xZ, issuer 2.0.0_SA_COO~P, on row W128-S1)
+
+The naming gate (ENFORCE) refuses `irpt-directory-refresh-retry` as a SCHEDULE name: the grammar ends in a cadence token, and the schema's
+cadence values are daily, weekly, monthly, hourly, 5min and 1min. Ruled: the schedule is named `irpt-directory-refresh-retry-daily`. `daily`
+is a registered cadence value, so this is a registry-conformant name, not a workaround. The schedule fires every trading weekday, the same
+as its sibling's MON-FRI cadence. The resource label stays `irpt_directory_refresh_retry`. If the gate still refuses, file the row and stop.
+Criteria are unchanged. No gate limb graded this modification: LIMB 6 does not fire on a modification, and GATE (viii) grades the
+unchanged `<placeholders>NONE</placeholders>`.
+
 ---
 
 ## RECORD FACE
