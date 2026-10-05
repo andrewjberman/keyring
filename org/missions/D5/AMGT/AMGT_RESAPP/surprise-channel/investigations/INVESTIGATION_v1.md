@@ -18014,5 +18014,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "deployed runs this session: R64 C14 SERVED: YES, R68 C27 SERVED: YES, R68 C28 SERVED: YES, each exit=0"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W241-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~241",
+ "surfaced_at": "2026-10-05T21:55:02Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The task order says a four-digit Japanese code maps to '<code> JT'; the held list is written '<code> JP', so the JT form matches 0 of 9.",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-5 section 1 item 1: the 9 four-digit Japanese codes map to `<code> JT`, then resolve through the identity list.",
+ "world_is": "crosswalk.resolve('8306 JT') and ('9433 JT') return security_key None; resolve('8306 JP') returns 8306_JP_Equity and ('9433 JP') returns 9433_JP_Equity (crosswalk/v1 as_of 2026-09-29, 237 records, Japanese records held as bloomberg '<code> JP'). The code now tries both forms, JT first, JP second; of the 9 four-digit members 2 resolve by code (8306, 9433), and the rest have no held company by that code.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/identity/crosswalk.py resolve() run live at worktree HEAD",
+   "lib/research/peers/numeric_tickers.py japan_forms()",
+   "lib/research/peers/tests/test_numeric_tickers.py test_japan_code_resolves_by_either_form"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W241-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~241",
+ "surfaced_at": "2026-10-05T21:55:02Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "4 covered names list themselves among their own peer members under a numeric scanner id; the name match now serves their own key on that member.",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-5 bounds item 2: add identity or the reason only, no member is removed; FWD-8 wants the comparison block's subject identity to equal the page's.",
+ "world_is": "Over the 95 covered names' served /peers members (local handler), numeric-ticker members that now serve a key equal to the page's own key: ROG_SW_Equity (710891), NOVN_SW_Equity (710306), PBR_US_Equity (268236), ZURN_SW_Equity (598381). The producer put the subject into its own peer set under its scanner id. Left in place per the bound; removing a self-member is the producer's or the issuer's to decide.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "read_peer_set over covered_security_keys() at worktree HEAD: 21 of 94 numeric members resolved, 4 of them equal to the subject key",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~241/f6_served.json names covered counts"
+  ]
+ }
 }]
 ```
