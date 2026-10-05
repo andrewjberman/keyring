@@ -135,3 +135,14 @@ Stamp any row's `surfaced_at` with `date -u`.
 - Base: `OcKZF34X...`, VersionId `WlTp7CvQs4zkxFnYmwhDPB8cITLFF.Ve`.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~09:0xZ):** CLOSED, both legs.
+- AE~A instance @0a26380fe7 is VALID (rc=0), genre DEPLOY.
+- Grant: +2 policy strings exactly. AC4 NO -> YES; issuer-site bronze still implicitDeny.
+- Code: `OcKZF34X` -> `GS//XHnV`; VersionId `WlTp7CvQ` -> `.Sj7rblal1sHPyETvJW_ZKXvOzeGVds3`; 1769. CONTENT-DIFF exactly the AMENDMENT 1
+  list.
+- AC1-AC3 PASS: c30-c33 NO -> YES; 11 of 11 reported reads YES; c15 cold 3 of 3 at 1.9-2.0 s; /peers worst 136.83 ms.
+- Rows: Z-S353 (the per-segment /peers timing is unmeetable, since no AMGT_SEGMENT lines are emitted) and Z-S352 (two unlisted store
+  literals, both unreachable) go to the CTO's analysis. The entry is CLOSED.
+
+<status>complete</status>

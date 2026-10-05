@@ -82,3 +82,8 @@ state.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~09:0xZ):** at-6 landed, so the deployed function is `GS//XHnV` (the round-70 state). The
+worker is spawned with this order's face, in worktree `C:/tmp/r70-230`.
+
+<status>pending</status>
