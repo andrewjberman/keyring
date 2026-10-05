@@ -390,3 +390,17 @@ The enrichment list is E1-E4:
 | (E2) | the 0.35 pp tie-out grade per account and segment | LOCAL | E1 | cut after E1 |
 
 fanout: 2 of 2 chains, cap 8, reason: E3 and E4 are independent; E2 waits on E1. Workers 0.9.0_WK_IRPT_DASHBD~9 and ~10, each in its own worktree.
+
+## 16. ROUND 16, WORKSTREAM B (2026-10-05 ~10:5xZ, issuer 2.0.0_SA_COO~P, on relaunch 2's silent stop)
+
+Relaunch 2 (detached, 07:14Z) landed 848 accounts (S3 2,860 of 5,252). About 10:27Z its workers died on an uncaught
+http.client.RemoteDisconnected on the bearer-mint path, and the record read complete with aborted null while 2,384 were never
+requested. Relaunch 3 started 10:44:00Z (pid 43456) over the re-derived complement of 2,392, under the same rules. The runner is fixed
+in one cell. Round 15 is complete: DB-b-23 @487429cb60, DB-b-24 @28efce5b4d.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-25` | P-5: the runner never stops silently (mint retry once, abort on a worker crash, complete only when the queue is empty) | LOCAL (no vendor call) | DB-b-22 (merged) | B16 |
+| (E2) | the 0.35 pp tie-out grade | LOCAL | E1 (the pull) | cut after E1 |
+
+fanout: 1 of 1 chains, cap 8, reason: one runner fix; the pull itself is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~11 in its own worktree.
