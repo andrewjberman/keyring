@@ -127,3 +127,17 @@ Stamp any row's `surfaced_at` with `date -u`.
 
 <status>go</status>
 
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~20:0xZ):** CLOSED. LANDED and VERIFIED @ba5f7871ed. GS//XHnV -> `wbIT0PHvxKIgJvgVy+u0XhLuSXFK5dUE/wypJPDcf8o=`
+(VersionId WG8u2w_ngxnIWFRsCrae3S4nSD2Og8ux; rollback `.Sj7rblal1sHPyETvJW_ZKXvOzeGVds3`). NEVER-2 closed 4/4. proof VALID.
+- **AE~A report:** AC1 c34/c36 YES; AC3 and the CTO's 13 regression cells YES; c38 YES (worst 801 ms).
+- **Issuer re-read, 19:57Z on wbIT0PHv** (`round71/REAL_RUN_r71_deployed_20261005.txt`):
+  - c38 YES (9 of 9 under 2,000 ms);
+  - c34 YES (572 objects, 0 failing);
+  - c36 YES (95 of 95);
+  - cold chatter 5.3-10.0 s.
+  - c35 NO as expected: 48 ft/wsj items serve `url_reason`; 552 bbg/barrons/sa items wait for HARVST's next gold build (AMENDMENT 1).
+- **Andrew's speed note** sent via MSTR~Z (CTO condition 3).
+- **The CORPUS entry** that the wait clause found was already closed on CLOUD @e2790c8b2b (COO~X msg 29758).
+
+<status>complete</status>
+
