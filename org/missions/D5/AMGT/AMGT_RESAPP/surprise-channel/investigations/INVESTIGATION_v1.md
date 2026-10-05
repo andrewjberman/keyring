@@ -17767,5 +17767,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "git ls-files over deliverables/0.9.0_WK_AMGT_RESAPP~6 lists price_axis_rows_2026-09-10.json only; the 2026-10-01 and 2026-10-02 copies are untracked."
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T15:56:02Z",
+ "class": "BLOCKING",
+ "one_line": "The UI walker account was already armed by another holder when AMGT-au-5 started, so the signed-in walk was not run (the order says file BLOCKING and stop).",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-au-5 section 1: 'If python .claude/skills/ui-walk/ui_walker_account.py status reads armed by anyone else when you start, file a BLOCKING row and stop.' The issuer's brief said it holds the walker slot for this run.",
+ "world_is": "At 2026-10-05T15:56:02Z status read: 'row PRESENT opal-ui-walker@opal.test status=active role=admin userType=Dev armed=yes (9.7 min ago) armedBy=Opal_Bloomberg:19292:75661450; SSM PRESENT'; a second read ~1.5 min later read the same armedBy (12.3 min ago). A Win32_Process query found no process with PID 19292 (the only matches were this worker's own shell), so the holder may be a dead walk, but this worker did not disarm a lease it did not take. The armed account stays armed until its holder or the issuer disarms it (hazard: a live admin login with a minted SSM password).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ui_walker_account.py status x2 at 2026-10-05T15:54Z and 15:55Z, both armedBy=Opal_Bloomberg:19292:75661450, status=active, SSM PRESENT.",
+   "Get-CimInstance Win32_Process filtered on ProcessId 19292 or CommandLine walk.mjs returned only this worker's own bash/powershell processes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
