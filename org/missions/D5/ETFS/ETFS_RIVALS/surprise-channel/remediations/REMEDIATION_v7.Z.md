@@ -29,11 +29,11 @@ its organic proof on 2026-10-05.
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
