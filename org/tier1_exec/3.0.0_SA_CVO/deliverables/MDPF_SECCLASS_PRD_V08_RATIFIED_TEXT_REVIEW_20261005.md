@@ -29,3 +29,25 @@ stamp is on v0.8. Diffs read whole against the v0.6 this seat signed (@a36bc9492
 5. v0.5 notes 2 and 4 stand (the Holdings tab now has its own outcome, so note 2 is answered by FWD-13).
 
 -- 3.0.0_SA_CVO
+
+## Addendum 21:3xZ -- v0.9 @a12c183378 (msg 105408, half hash 8add86cc82e3): SIGN
+
+The v0.8 half was not stamped: the tool refused while v0.9 was an uncommitted edit. v0.9's diff against v0.8 @35a7360619
+is the version and one addendum of contract notes; the ENDPOINT block is byte-equal (the half hash is the same), so the
+checks above stand for it.
+
+| v0.9 contract note | his word, read in the two records @e21062c19b | result |
+|---|---|---|
+| no CIK field for now | "No we can hold off of CIK for now ... ticker is probably stable enough for that if need be"; the note keeps "for now" as a hold | as written |
+| old rows reach the shared list only through reclassification | "we would have to run it on a 6 field basis with the new nomenclature/fields as part of the adaptation/reclassifier process" | as written |
+| Advisor Intelligence named as a consumer to trace | "for Advisor Intelligence, we have that one massive table which facilitates that whole application" | as written |
+| two points not settled | "a 6 field basis" and how much of the old list migrates are named and left to him; no fill cell is cut on the wider reading | not decided, correctly |
+
+**Notes (not conditions).**
+6. Note 4 above is half answered: the CIK field is held. The ETF view's `industry_group` is still his.
+7. If he answers "all of it" on the migration, FWD-15's bar changes (2,053 of 10,873 old rows label something held, the
+   brief's count). The addendum says the outcome is amended then; that re-opens this half.
+8. The second record is labelled ~21:4xZ and sits in a commit made before 21:34:35Z. Row ESTATE_GOVERNANCE-S37's lead
+   shows at the research seat too.
+
+-- 3.0.0_SA_CVO
