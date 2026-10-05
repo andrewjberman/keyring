@@ -17975,3 +17975,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: Y-2's request is first on the served route and on the page."
 }
 ```
+
+## IRPT_BCKEND-S330 -- W100-S2 after-read 2 answered 403/403/200 under an Opal principal; INERT, re-pointed to ADVI_PERFRP (CTO batch 256 'S329')
+
+```json
+{
+  "id": "IRPT_BCKEND-S330",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "W100-S2 after-read 2 answered 403 / 403 / 200, not 404 / 404 / 200. Under a signed-in Opal principal (?firm=bd), shared-advisor-router refuses the withdrawn account leaf AND the never-served relationship leaf by name (artifact_forbidden, firmId opal-capital), while perfrp_gainloss_account.json answers 200. CTO batch 256 calls this row 'S329' (the id was renumbered: 2.0.0_SA_COO~Y's S329 landed first at 02641aacbd). Not user-visible: re-pointed to ADVI_PERFRP's owner, INERT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO (ADVI_PERFRP owner; CTO batch 256 @cbb9281add). REC for when ADVI_PERFRP un-parks: the perfrp fetcher (advisor-intelligence.ts:1673) reads a 403 artifact_forbidden as absent, the same as a 404",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2.0.0_SA_COO~D msg 105155, walker probe 04:37Z (tmp/ui-walk/20261005T043558Z/probe-get.json, local): account 403 artifact_forbidden; relationship 403 artifact_forbidden; gainloss_account 200 (11,896,644 bytes, body not kept); each without headers 401",
+      "1.0.0_SA_CTO batch 256 @cbb9281add: the withdrawn leaf reads identical to the never-served control and the object is gone at S3; the page destructures only data (AdvisorBookView.tsx:469, 477) and perfrpPerformancePayload returns undefined on !leaf (:203-207), so a 403 renders the same shell"
+    ]
+  },
+  "dismissal_reason": "CTO batch 256: not user-visible; the 403 renders the designed shell. The fetcher's 403 handling is a recommendation for ADVI_PERFRP when it un-parks, not a hazard on this project.",
+  "spec_asserts": "CTO batch 254: under a 49F-scoped session the withdrawn leaf answers 404, the same as the never-served leaf, and gainloss_account answers 200; a 403 is a new row.",
+  "world_is": "MEASURED under an Opal principal: 403 / 403 / 200. The router name-refuses both perfrp_performance leaves for opal-capital. No 49F principal was read; batch 256 rules none is needed."
+}
+```
+
+## IRPT_BCKEND-S331 -- DISARM of W121-S1: the 49F perfrp account leaf is withdrawn and reads as never-served (CTO batch 256)
+
+```json
+{
+  "id": "IRPT_BCKEND-S331",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T04:58:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W121-S1 (and W100-S2) on CTO batch 256: the 49F perfrp account leaf is withdrawn (Andrew card 1 @c9c8e0c191; delete marker vQdm_KxXCknlz3LooZIS.ViTHQiTiZVn current, head 404, version E78kI4KB... kept for rollback), and after-read 2 read the withdrawn leaf identical to the never-served control. Ledger irpt-w100s2-perfrp-leaf-withdrawal-20261005 closes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ledger irpt-w100s2-perfrp-leaf-withdrawal-20261005 D1 and V1 @92c527758b: pre-head ETag and version matched; delete marker IsLatest; head-object 404",
+      "after-read 2: row IRPT_BCKEND-S330 (403/403/200); CTO batch 256 @cbb9281add closes V2 on it",
+      "CTO half @4a63c9b600, COO half @48fa2860ab, Andrew card 1 @c9c8e0c191"
+    ]
+  },
+  "dismissal_reason": "The live reader W121-S1 named (AdvisorBookView -> shared-advisor-router -> the leaf) can no longer load the inflated leaf: the object is withdrawn and the route answers the same as for a never-served key.",
+  "spec_asserts": "IRPT_BCKEND-W121-S1 (BLOCKING, ARMED): a served page can still load the 49F perfrp leaf carrying the inflated 2025-01-10 day.",
+  "world_is": "MEASURED: head-object 404 with the delete marker current; the route answers 403 artifact_forbidden for it, the same as for the never-served relationship leaf."
+}
+```
