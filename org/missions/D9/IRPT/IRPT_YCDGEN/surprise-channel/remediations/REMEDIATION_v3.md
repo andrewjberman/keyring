@@ -32,11 +32,11 @@ latest surfaced_at compiled (S6), behind the wall clock at this compile's read (
     "owner": "2.0.0_SA_COO~Y",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_YCDGEN-W2-S4",
