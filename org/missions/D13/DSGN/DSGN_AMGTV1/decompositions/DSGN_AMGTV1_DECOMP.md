@@ -1918,3 +1918,20 @@ firmId === 'opal-capital'; no partner allowlist names the path) and PLANTED pass
 **Backend, measured:** the scoped AMGT API admits on the edge-injected firm identity only (scoped_amgt.py `_firm_id`); no Dev/admin role
 check, so no backend change. **Not cut:** the Lead Panel's slow load (Andrew: to COO~Z; message sent 15:03Z).
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Direct act.**
+
+## v41 -- ROUND 41 (issuer, 2026-10-05 ~15:4xZ) -- ONE ISSUER ACT: THE COMPLETION GRADING WALK ON DEV e6ab82ad
+
+**Rectangle:** `ledger/CTO_LIST_ROUND41.md` @9a476b6ee0 (msg 29654): (1) grade FWD-1..27 on DEV e6ab82ad against RESAPP GS//XHnV, each on
+its DONE WHEN, into `COMPLETION_GRADES.round41.json` for the CTO's countersign; (2) re-read FWD-4 (ROG SW + a US name), FWD-7 (AMD, ASML),
+FWD-8 (a mixed-currency name) where the producer moved. **Base:** portal DEV e6ab82ad (CI 37332239294 success).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zs-G` GRADING (issuer act, no product file) | FWD-1..27 | `deliverables/2.0.0_SA_COO~D/round41/` | 2.0.0_SA_COO~D (as round 36, per CTO ruling msg 29406) |
+
+**Instruments, unchanged and already proven able to fail:** `round35/walk/closewalk35.mjs --no-officer "ASML NA" --names "BA US,VLO US,AMD
+US,MSFT US"` (FWD-2/4/5/6-11/21/24/27, ROG SW non-USD header, ASML no-filing roster, AMD and MSFT tabs); `round37/walk/reads37.mjs
+--names "BA US,AMD US"` (FWD-5 markers + own-first, FWD-11 side-by-side, FWD-19 panels; its no-permission arm RETIRED in round 40);
+`round35/checks/instrument/instrument35.cjs` (FWD-12..20 states sweep). Live: localhost:5174 = C:/tmp/wk-dsgn-amgtv1-92/portal at e6ab82ad
+(dev:live, live API). Walker ARM/DISARMED through MSTR~Z.
+**Fan-out:** 0 worker chains (no product change). **Risk:** SERVED read (no write). **Not cut:** the Lead Panel load (COO~Z).
