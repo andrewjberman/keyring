@@ -86,3 +86,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @3e32ecca8f. On the shared tree, c39 local reads 138 of 138 (YES). The census reads covered 612 values / 53 reasoned / 0 unexplained and uncovered 7 / 959 / 0. proof VALID. No rows. Served by av-8.
+
+<status>complete</status>

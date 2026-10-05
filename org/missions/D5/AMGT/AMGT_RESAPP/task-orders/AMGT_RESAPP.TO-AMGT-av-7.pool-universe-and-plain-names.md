@@ -81,3 +81,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @ff5e740156, with a code conflict against av-5 resolved by composing both peer transforms (66 passed). On the shared tree, c47 local reads dry-run rc 0, 95 of 95, YES; c45 local reads 735 objects, 0 failing, YES. Identity suite 213 passed. proof VALID. Row Z-W243-S1 (ARMED) disarmed by av-8 AMENDMENT 1: no pool write this round. S2 INERT.
+
+<status>complete</status>

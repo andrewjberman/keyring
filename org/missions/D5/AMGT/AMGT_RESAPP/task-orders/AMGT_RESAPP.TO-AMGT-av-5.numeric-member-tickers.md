@@ -86,3 +86,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @33d9077d5f. On the shared tree, c44 local reads 94 numeric members (21 resolved, 73 reasoned), YES. F6 WRONG 0 of 57. Peers suite 62 passed. proof VALID. Rows Z-W241-S1/S2 INERT.
+
+<status>complete</status>

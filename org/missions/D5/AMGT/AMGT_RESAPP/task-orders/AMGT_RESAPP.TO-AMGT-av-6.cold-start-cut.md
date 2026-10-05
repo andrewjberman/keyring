@@ -101,3 +101,6 @@ The worker measured that the three named cuts reach 60 / 72 first-request calls 
 
 Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
 
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @e4023b44fe. AMENDMENT 1 (bar 75) @b50a1e7aa8. On the shared tree, c46 local reads rankings 60 / chatter 72, YES (from 153 / 167). AC2: EQUAL 15 of 15. proof VALID. Row Z-W242-S1 is the producer remainder (23 names held only in model blocks), carried to round 73 with Z-W236-S1. The new action dynamodb:BatchGetItem goes to av-8's grant check.
+
+<status>complete</status>

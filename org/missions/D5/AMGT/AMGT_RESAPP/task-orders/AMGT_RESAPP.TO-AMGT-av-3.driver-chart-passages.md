@@ -85,3 +85,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @9520208af5. AC1: 9 passed. AC2 dry build: BA 3/3 and ASML_NA 3/3. Filings suite 150 passed. proof VALID. No rows. c42 grades on deployed after av-8's drafting rebuild of drafting/v1/BA_US_Equity.json and ASML_NA_Equity.json.
+
+<status>complete</status>

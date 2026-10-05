@@ -82,3 +82,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @395963e729, with a code conflict against av-3 resolved by keeping both blocks and av-3's three-argument signature (16 passed). On the shared tree, c43 local reads 12 names with rows and 83 with a reason, YES. proof VALID. Row Z-W240-S1 INERT: 83 names for Andrew's segment pull. New read path filings/v1/ goes to av-8's grant leg.
+
+<status>complete</status>

@@ -84,3 +84,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~22:4xZ):** CLOSED -- drained @39e8abe250. On the shared tree, c41 local reads 0 field-code tokens over 3 prints (from 2,389), YES. Worker AC2: FWD-30 grader equal 3 of 3, 1736 compared, 0 differ. Print suite 53 passed. proof VALID. Row Z-W238-S1 INERT. Served by av-8.
+
+<status>complete</status>
