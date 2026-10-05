@@ -95,3 +95,12 @@ Stamp any row's `surfaced_at` with `date -u`.
 - Base: `6wwEU3Sw...`, VersionId `3eIFUS9kZLTBHPeHXkhsf_4OF8rE41Fc`. New S3 read paths: none.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~05:4xZ):** CLOSED.
+- AE~A instance @493cea8a00 is VALID (rc=0), genre DEPLOY.
+- `6wwEU3Sw` -> `OcKZF34X`; VersionId `3eIFUS9k` -> `WlTp7CvQ`; 1769. CONTENT-DIFF exactly `scoped_amgt.py`.
+- AC1 c29 YES (95 names, 0 offenders). AC2 c27 and c28 YES. AC3 c23-c26 YES. The NEVER-2 entry is closed @40d1e5add3.
+- Row Z-S349 (the c15 cold conjunct) was ruled by the CTO (msg 29487). c15 was amended and Z-S351 disarms it @7a8a75d216.
+- Issuer real run @ `round69/REAL_RUN_r69_deployed_20261005.txt`: c29, r68 c27/c28 and r67 c23-c26 all YES on `OcKZF34X`.
+
+<status>complete</status>
