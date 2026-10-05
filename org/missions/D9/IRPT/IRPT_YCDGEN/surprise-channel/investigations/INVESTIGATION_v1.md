@@ -1041,3 +1041,136 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a checker that runs the invocation with FORCE_COLOR unset, or strips ANSI, reads the same pass."
 }
 ```
+
+## IRPT_YCDGEN-W1-S6 -- the retained-report validator and the publication path are bound to the v1 AnalysisReport; an OPAL_ENGINE document is refused there
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "reports/resident_installed.py binds ANALYSIS to AnalysisReport.schema.json (v1) and publisher.py / publication_worker.py accept only a vendor metadata key set, so an OPAL_ENGINE document cannot be persisted or published on the existing path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Order a-6 section 3: if publisher.py or publication_worker.py would reject an OPAL_ENGINE document, file a row naming the line; the document is written where OwnedAnalysisReader reads a report.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/resident_installed.py:47 REPORT_SCHEMAS = {ANALYSIS: AnalysisReport.schema.json} and :121 (the validator the ReportRepository is built with, so persist and get both validate against v1: an OPAL_ENGINE document carries opal_artifact and computation_validation, which the v1 schema's additionalProperties false refuses). ycharts/generate/publisher.py:107 and ycharts/generate/publication_worker.py:47 require set(metadata) == {request_ref, vendor_artifact, effective_inputs, release}. opal_producer.produce calls reports.persist directly on the injected repository, so it does not pass through the publisher, but the repository's validate callable is the issuer's to build against the v2 schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/resident_installed.py:47,121@wk-IRPT_YCDGEN-63",
+      "ycharts/generate/publisher.py:107@wk-IRPT_YCDGEN-63",
+      "ycharts/generate/publication_worker.py:47@wk-IRPT_YCDGEN-63",
+      "opal_producer tests persist through a recording fake; no test builds the real ReportRepository"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the first Opal request persisted through a repository validating v1 is refused at persist ('report schema validation failed'), loudly. Another lane's files; the owner cuts the change (a v2-aware validate callable keyed by provider)."
+}
+```
+
+## IRPT_YCDGEN-W1-S7 -- OwnedAnalysisReader reads vendor members an OPAL_ENGINE report does not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "ops/owned_report.py reads report['extraction_validation'] in sections() and report['vendor_artifact'] / release.protected_pdf_ref in pdf(); an OPAL_ENGINE document has computation_validation and opal_artifact instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Order a-6 section 1 and PRD item 29: a consumer that needs a vendor member rejects the document; the v2 document is written where OwnedAnalysisReader reads a report.",
+  "world_is": "infra/aws/lambda/investor-reporting/ops/owned_report.py:49 builds the public projection with report[key] for request_ref, sections and extraction_validation (KeyError on an OPAL_ENGINE document, which has no extraction_validation); :126-133 pdf() needs release.protected_pdf_ref with server_only true and vendor_artifact.sha256/byte_length, and the OPAL_ENGINE release carries released_revision only (the artifact is opal_artifact). The class is not edited by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ops/owned_report.py:49,125-133@wk-IRPT_YCDGEN-63"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: reading or downloading an Opal report through the existing reader fails (KeyError / ANALYSIS_PDF_NOT_RETAINED) until the reader's owner reads provider and opal_artifact. Whether the PDF is reached through release.protected_pdf_ref (the producer does not write one) or opal_artifact is that owner's decision."
+}
+```
+
+## IRPT_YCDGEN-W1-S8 -- under pricing=False the layout still prints YCharts wording on a report with no YCharts data
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "layout_overview.py prints 'Not available from YCharts' data endpoints.' for builder-only elements, 'YCharts gave no answer' / 'outside the run's time budget' for vendor-call elements, and a 'Data: YCharts' footer on every page of the Opal report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order a-6 R2: every price-based element prints NOT_AVAILABLE with NOT_IN_THIS_VERSION; the producer calls build with pricing=False.",
+  "world_is": "layout_overview.py:56-59,67,943 and the footer in build (:1088): only elements the layout classes as price-based (_price_based) print the NOT_IN_THIS_VERSION line. In the real Overview map the 65 BUILDER_ONLY and 22 call-sourced elements are not price-based by that test, so the page prints the YCharts / time-budget lines while run.json and the AnalysisReport section carry reason NOT_IN_THIS_VERSION (the producer's closed-set mapping). The footer credit 'Data: YCharts' prints on pages that hold no YCharts figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py:56,57,59,67,943,1088@wk-IRPT_YCDGEN-63",
+      "opal_producer on the real overview_map.json (scratch run): 65 BUILDER_ONLY, 22 VENDOR_SOURCED, 9 OWN_SERIES are NOT_AVAILABLE / NOT_IN_THIS_VERSION in run.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for the record (the document and run.json are consistent); the printed page is not. layout_overview.py is YCD-b-6's merged file, outside this cell's paths."
+}
+```
+
+## IRPT_YCDGEN-W1-S9 -- three choices the order left to the producer: the classified element list, the reason mapping and a table value inside a scalar section
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "The layout has no element list of its own for the three classified methods, the closed reason set excludes NOT_HELD:<r>, OUTSIDE_TIME_BUDGET and METHOD_UNKNOWN, and the v2 section value is number|string|null while the layout's table values are lists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order a-6 section 3: the producer reads the layout's own element list for the classified methods, never the map; R2 two states with a closed reason set; R4 section value.",
+  "world_is": "layout_overview.py defines the method names (HOLDINGS_CLASSIFIED, ALLOCATION_ASSET_CLASS, ALLOCATION_SUB_ASSET_CLASS) and consumes elements from the map, but holds no element list. opal_producer builds three elements (ids opal.classified.holdings, .asset_class, .sub_asset_class, on a page after the map's last) from those constants and adds them to a copy of the map when the map has none. Reasons: NOT_HELD:<r> -> INPUT_MISSING:held_<group>; OUTSIDE_TIME_BUDGET -> NOT_IN_THIS_VERSION; any other layout word -> INPUT_MISSING:<word>; the layout's own word is kept as layout_reason in the run.json entry. A table or chart value is written as canonical JSON in the string value with units 'json'. The map copy the producer passes has calls = [] because the run makes no vendor call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal_producer.py _classified_elements, _opal_map, closed_reason, _section",
+      "test_opal_producer.py test_closed_reason_maps_every_layout_word_into_the_closed_set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: each choice is stated in the code and covered by a test. YCD-s-6 (schema) or the CTO may rule a different mapping; closed_reason is the one place to change."
+}
+```
+
+## IRPT_YCDGEN-W1-S10 -- the held tables carry no as-of date the producer can read, so every input's as-of is its read date
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "run.json inputs and the document's inputs_as_of carry the date the run read each input (as_of_basis READ_DATE), because the layout's held-row loaders return rows without the dated folder or the table's own date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R3: run.json holds each input read with its as-of date; R4: inputs_as_of is an object of input name to date.",
+  "world_is": "layout_overview._read_characteristics picks the latest dated bbg/<YYYY-MM-DD>/characteristics.parquet folder and returns rows only, so the folder date is not exposed; read_classifications returns classifier rows with no table date; read_holdings returns no acceptance date. The producer therefore records the UTC date of the run for every input and marks it READ_DATE in run.json (not in the schema-bound document, whose inputs_as_of has no basis member). A stale held table would not read STALE_INPUT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py _read_characteristics, read_classifications@wk-IRPT_YCDGEN-63",
+      "runner.py read_holdings@wk-IRPT_YCDGEN-63"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the STALE_INPUT reason cannot fire from this producer until a loader returns the table's own date; exposing the dated folder is a small change in the layout's loader (another cell's file)."
+}
+```
