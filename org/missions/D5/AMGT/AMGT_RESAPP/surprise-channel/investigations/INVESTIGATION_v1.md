@@ -17469,5 +17469,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S348",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-05T00:52:22Z",
+ "one_line": "to-decomp-ref-lint's seating limb (gate2, ANNOUNCE) refused round 68's ar-3 and ar-4 because 0.7.0_AE_CloudOps~A 'already holds open TOs' on AMGT_HARVST (n-4, q-7), but both orders read <status>withdrawn</status>, a terminal state. The lint counts withdrawn as open, so the seat is legal and the refusal is false. Under ENFORCE it would block a legal seating.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "1.0.0_SA_CTO~Z",
+ "spec_asserts": "CLAUDE.md rule 27: ONE PROJECT PER TIER-2 SEAT INSTANCE, enforced by .tools/to-decomp-ref-lint.py's seating check. The check is meant to count OPEN task orders a seat holds on another project.",
+ "world_is": "Issuance commit 8ba8bf3ab0: '[gate2] REFUSED ... ar-3 / ar-4 ... 0.7.0_AE_CloudOps~A, which already holds open TOs on 1 OTHER pipeline project(s): AMGT_HARVST (2 open: AMGT_HARVST.TO-HVST-n-4.chatter-axis-source-gold-flip.md, AMGT_HARVST.TO-HVST-q-7.chatter-axis-gold-flip.md)'. Both files carry exactly one status tag, <status>withdrawn</status> (last touched 78425f62a7 2026-09-29 and 3a735f88e6 2026-09-30 by 2.0.0_SA_COO~H). Mode is ANNOUNCE ('NOT blocking this commit'), so nothing was refused in fact.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "grep of both HARVST order files: one <status>withdrawn</status> each; <issued_to>0.7.0_AE_CloudOps~A</issued_to>.",
+   "the gate2 output in the 8ba8bf3ab0 commit run, quoted above."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
