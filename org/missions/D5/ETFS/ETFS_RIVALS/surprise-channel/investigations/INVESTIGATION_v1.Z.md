@@ -3276,6 +3276,28 @@
     "spec_asserts": "RIV-lg-1 (decomposition round 8 A): an index_control fund is queried on its own under a cap >= 2,500 and < 50,000; the range read never truncates silently; an overflow is a per-name partial, never a leg crash.",
     "world_is": "Against real Excel the control read fails and crashes the backfill run. Daily runs are not exposed while D13 is off (rivals still read A1:Z2000 as at the deployed pin). Remedy: read only the used rows and turn a COM error on one unit into that unit's `unfetched` partial; add both to lg-1.AC1's fake (a read past UsedRange raises; a planted COM error is a partial).",
     "notes": "Found by the issuer's D13 Step A (local-only pull, CTO~Z budget ruling msg 29445). The interim fix runs from a scratch copy for the local pull only; the repo change goes through an lg-1 amendment before the merge. Shared append-only file: committed on the shared index."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T06:55Z",
+    "one_line": "Refines ETFS_RIVALS-Z-S21: the cause is NOT the oversized range -- a bounded read of IWM 2026-01-16 (1,958 used rows) raises the same com_error -2147352566 through Range.Value, while Range.Value2 reads all 1,953+2,280 rows; Value2 returns dates as Excel serial numbers, so the capture then fails analyze() as DATE-MISMATCH.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (06:40Z, scratch copy with a used-rows read + a per-unit catch): chunk 2026-01-02..01-30 PARTIAL, 20 of 20 dates OK except IWM 2026-01-16: \"range read failed on 2026-01-16 (1958 rows): (-2147352567, 'Exception occurred.', (0, None, None, None, 0, -2147352566), None)\"; the per-unit catch turned it into a named partial and the run stopped by its budget rule",
+        "probe 2026-01-16 with Range(...).Value2: ACWI 2,280 + IWM 1,953 rows read, sidecar status DATE-MISMATCH, claimed_report_date None (date cells arrive as serial numbers)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-lg-1: the range read never truncates silently; an overflow or a read failure is a per-name partial, never a leg crash.",
+    "world_is": "Range.Value converts some cell of the IWM 2026-01-16 holdings and overflows (DISP_E_OVERFLOW-shaped); Value2 does not convert, so it reads, but the date columns need converting from Excel serials. Remedy for lg-1: read Value2; convert the header's date columns (DATES, REPORT_DATE, and id().DATE as canon_header maps it) from Excel serial (1899-12-30 epoch) to ISO; keep the per-unit com_error -> unfetched partial. Supersedes Z-S21's cause line; Z-S21's hazard and remedy owner stand.",
+    "notes": "Daily rival reads at the deployed pin use Range.Value too; a similar cell could reach them, so the Value2 read applies to every unit, not only controls. disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
