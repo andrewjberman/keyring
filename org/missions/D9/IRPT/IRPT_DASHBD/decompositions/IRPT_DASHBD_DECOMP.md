@@ -357,3 +357,18 @@ That is class (a), a bearer expiry after about 18 calls. The completion mode re-
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; the completion run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~7 in its
 own worktree.
+
+## 14. ROUND 14, WORKSTREAM B (2026-10-05 ~01:5xZ, issuer 2.0.0_SA_COO~P, on 1.0.0_SA_CTO RULINGS batches 249 and 250, msgs 105079 and 105082)
+
+The sequential completion (DB-b-21) is vendor-latency bound, at about 12 s per call. It made 127 calls and landed 125, then aborted
+on a second transport error (URLError): its retry budget was one per run. 144 of 5,252 have landed. Batch 249 rules a concurrent
+shape: one coordinator and ONE shared bearer at the proven sign-in rate, 2 workers ramping to 6, 2 req/s aggregate. Batch 250 rules
+one retry per call, a twice-failed account recorded FAILED and not fatal, the abort set, and one sweep over the FAILED set. The
+ledger window was extended to 9 h before the relaunch (@df045ab288).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-22` | P-5: the concurrent completion (coordinator-owned shared bearer, ramp, rate cap, per-call retry, FAILED record, abort set, sweep) and its offline plan carrying the ruling values | LOCAL (no vendor call) | DB-b-21 (merged) | B14 |
+| (the run) | the concurrent completion over the complement (~5,108), the one sweep, then the 0.35 pp tie-out grade from the landed responses | WORLD | DB-b-22 | the issuer's act |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; the run is the issuer's act. Worker 0.9.0_WK_IRPT_DASHBD~8 in its own worktree.
