@@ -907,3 +907,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: no served report reads this object today (layout_overview.py takes it as a CLI file). Owner of the ingestion Lambda is outside this project; placed here because the in-house build would make the object load-bearing. Feasibility analysis: docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md."
 }
 ```
+
+## IRPT_YCDGEN-W2-S11 -- AC5 pin @62301f71e0 predates the v1 schema file; v1_untouched pins by content hash and published copy
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T21:21:00Z",
+  "one_line": "AC5 asks the v1 schema file be byte-identical to its pin @62301f71e0, but that pin is the PRD pin and the file did not exist at it; v1_untouched pins the file by content hash and by its byte-equal published copy instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AC5 / PRD v0.28 item 29: the generated v1 schema _contracts/AnalysisReport.schema.json (pinned @62301f71e0) is untouched; test -k v1_untouched compares the file to its pin.",
+  "world_is": "git cat-file at 62301f71e0 holds no infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json (git show: path exists on disk, but not in 62301f71e0); the file was added later (c4214773c9) and edited since (98d579cd1b date_claim, 1dae563e21), 366 lines at the cut base b091a522e9. 62301f71e0 is the PRD pin the schema is generated from. The test therefore asserts sha256 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f (measured at b091a522e9) and byte-equality with docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, the published copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 62301f71e0:infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json -> fatal: exists on disk, but not in 62301f71e0",
+      "git log --oneline on the file: 1dae563e21, 98d579cd1b, c4214773c9",
+      "sha256sum of the _contracts file and the docs/contracts copy are equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the criterion passes on the stated substitute; a later legitimate v1 edit would need the hash constant in test_analysisreport_v2.py updated."
+}
+```
+
+## IRPT_YCDGEN-W2-S12 -- R4 leaves v2 section typing open; the schema fixes nullability, inputs_as_of and coverage one way
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T21:21:00Z",
+  "one_line": "Contract R4 leaves the OPAL_ENGINE section's nullability, the inputs_as_of shape, the coverage type and the VALUE-branch reason open; the v2 schema fixes them one way that a consumer may need to confirm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R4 names the section members section_id, section_type, units, as_of_date, status, reason, method, coverage (page optional) and effective_inputs.inputs_as_of 'the as-of date of each input', without types or nullability.",
+  "world_is": "AnalysisReport.v2.schema.json chooses: inputs_as_of is an object of input name to YYYY-MM-DD, at least one; section coverage is a number 0..1 or null; as_of_date is a date string, or null only when status is NOT_AVAILABLE (a NOT_IN_THIS_VERSION section has no date of its own); value and method and coverage are required on every section; reason is required, a string from the closed set (INPUT_MISSING:<name> with a non-empty name), and value null when NOT_AVAILABLE; under VALUE reason is absent or null and value is a number or string. computation_validation.status reuses v1's CERTIFIED/UNCERTIFIED/FAILED. Any of these is one line in the schema to change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json $defs.opal_engine",
+      "IRPT_BCKEND PRD v0.28 item 29 read at HEAD: no types given for these members",
+      "tests test_analysisreport_v2.py: 5 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no producer or consumer reads the v2 schema yet."
+}
+```
