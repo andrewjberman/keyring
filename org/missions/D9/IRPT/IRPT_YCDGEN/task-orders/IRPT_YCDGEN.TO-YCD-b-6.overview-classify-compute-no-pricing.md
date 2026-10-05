@@ -74,9 +74,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, first order; no dependency. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~21:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @ef6c379f52, merged 9cbfbf2215 (the append-only investigations file conflicted with the s-6 drain and was resolved as a union, one shared closing fence restored); b-6.AC1-AC6 PASS on the merged tree (AC6: 38 passed, the 32 existing plus 6 new). Rows: W1-S3 ARMED and DISARMED by the a-6 amendment (the producer builds with pricing=False; criterion AC7); W1-S4 and W1-S5 INERT, accepted (`_scan_classifications` stays as a retired function an existing test calls; a plain YCharts-call element is not price-marked, and the Opal producer reads no YCharts call).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>

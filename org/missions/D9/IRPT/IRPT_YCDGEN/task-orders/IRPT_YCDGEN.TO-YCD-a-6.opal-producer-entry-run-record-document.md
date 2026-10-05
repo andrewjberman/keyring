@@ -20,7 +20,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE thread round; the lens runs on the enric
 ## 1. YOUR CELL (inlined verbatim from the round-6 decomposition)
 
 ### `YCD-a-6` -- the opal producer: read, render, and record one overview (hops 3 Read, 7 Render and record; FWD-1, FWD-6 (three clocks), FWD-9)
-- `ycharts/research/opal_producer.py` (new): R3, using b-6's merged `layout_overview` and s-6's merged v2 schema.
+- `ycharts/research/opal_producer.py` (new): R3, using b-6's merged `layout_overview` and s-6's merged v2 schema. The producer calls the layout's `build` with `pricing=False` (b-6 added the parameter; its default stays True) so every price-based element prints NOT_AVAILABLE with `NOT_IN_THIS_VERSION`, and it passes the classifier it is given (b-6's `read_classifications` takes one).
 - `ycharts/research/tests/test_opal_producer.py` (new) with fixtures under `ycharts/research/tests/fixtures/opal_producer/` (structure only, invented values).
 - The AnalysisReport v2 document is written where `ops/owned_report.py` `OwnedAnalysisReader` reads a report (read that class to find the store and key; do not edit it).
 
@@ -35,6 +35,8 @@ comp-adversary: DECLARED-NOT-APPLICABLE thread round; the lens runs on the enric
 ## 3. WHAT YOU NEED TO KNOW (measured at the cut, base CLOUD at the issuance commit)
 
 - Read first: `runner.py` `read_holdings` (443) and `research_s3` (479) for the reader and the store shapes; `ycharts/generate/frozen_worker.py` `FrozenCompositionWorker.prepare` (32); `lib/opal_naming.py` `address()`; `_contracts/AnalysisReport.v2.schema.json` (merged from s-6); `ops/owned_report.py` for where a report is read.
+- b-6 (merged) added to `layout_overview.py`: `read_classifications` (one `ETFClassifier.get_classification` per ticker), computed methods `HOLDINGS_CLASSIFIED`, `ALLOCATION_ASSET_CLASS`, `ALLOCATION_SUB_ASSET_CLASS`, and `pricing=False` / `--no-pricing`. Those three methods are not in `deliverables/maps/overview_map.json`: the producer reads the layout's own element list for them, never the map.
+- s-6 (merged) fixed `AnalysisReport.v2.schema.json` readings the contract left open: `inputs_as_of` is an object of input name to date; `coverage` a number 0 to 1 or null; `as_of_date` null only under NOT_AVAILABLE; `reason` absent or null under VALUE.
 - Clocks are wall seconds measured around the three stages; no time target is typed.
 - If `ycharts/generate/publisher.py` or `publication_worker.py` would reject an OPAL_ENGINE document, that is another lane's file: file a surprise row naming the line; do not edit it.
 - Module home and test layout: tests sit beside the code, no `conftest.py`, paths inserted at the top of each test file (as `ycharts/session/tests/test_resident_session.py:9`). Python tests run with `python -m pytest <file> -q -p no:cacheprovider` from your worktree root. Encoding: ASCII only in code and logs; no client figure and no secret in any committed file (C-FIRM, C-SECRET).
@@ -58,6 +60,7 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
 - **AC4** -- the written AnalysisReport document validates against the v2 schema (tests -k document_validates_v2, >= 1 passed)
 - **AC5** -- a run opens no connection and builds no client of its own (tests -k no_outside_call, >= 1 passed)
 - **AC6** -- the whole test file passes (tests, all, no failure)
+- **AC7** -- the producer builds with pricing off, so every price-based element reads NOT_IN_THIS_VERSION (tests -k builds_with_pricing_off, >= 1 passed)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider -k reads_accepted_holdings</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
@@ -65,6 +68,7 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC3" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider -k run_json_element_trace</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC4" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider -k document_validates_v2</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC5" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider -k no_outside_call</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
+  <criterion id="AC7" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider -k builds_with_pricing_off</invocation><expect>^[1-9][0-9]* passed</expect></criterion>
   <criterion id="AC6" cell_refs="YCD-a-6"><invocation>python -m pytest infra/aws/lambda/investor-reporting/ycharts/research/tests/test_opal_producer.py -q -p no:cacheprovider</invocation><expect>^[0-9]+ passed</expect></criterion>
 </proof_of_spec>
 
