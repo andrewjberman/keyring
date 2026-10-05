@@ -82,6 +82,17 @@ portal/src/pages/SecurityAnalysis/tabs/PeersTab.tsx
 portal/src/pages/SecurityAnalysis/tabs/PostureTab.tsx
 portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx
 portal/src/ui/components/panels/PanelFooter.tsx
+portal/src/pages/SecurityAnalysis/__harness__/errorEmpty.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/execFallback.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/execText.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/shell.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/execPattern.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/modelPattern.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/posturePattern.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/thesisLadder.harness.cjs
+portal/src/pages/SecurityAnalysis/__harness__/leadPanelPattern.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~100/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -98,6 +109,23 @@ Read-only: the whole repository; in particular the issuer's checks and fixtures 
 
 The KEEP arm inside repairs38.cjs runs nine earlier checks, and each must exit 0. battery29 includes the CI's ESLint step. AC1 takes
 several minutes.
+
+## 4a. AMENDMENT 1 (issuer, 2026-10-05 ~08:2xZ, on row DSGN_AMGTV1-Z-W100-S1 and S2)
+
+1. **The page's own harnesses are granted.** battery29 reads 3 of 14 harnesses green because the harness loaders under
+   `portal/src/pages/SecurityAnalysis/__harness__/` carry fixed import lists. They lack `CardFooter`, `@/ui/components/PageEnd`,
+   `@/ui/components/panels` and `@/ui/components/states`, and the Panel stub lacks PanelFooter. Also, `leadPanelPattern.harness.cjs`
+   asserts the retired hand-rolled "date | Source" caption (`source_footer`, `caption_facts_unchanged`).
+   - Update the 11 harnesses listed below so they load the new imports (a stub, as each loader already does for shared chrome).
+   - Re-point the Lead Panel's caption assertions to the shared footer: its served time and served source, in words.
+   - Weaken no other assertion. A harness that asserted something still true keeps asserting it.
+2. **No invented clock (row S2).** A card whose served time is a bare day (e.g. `2026-09-15`) must not print a time of day.
+   - Format the time in `CardFooter.tsx` from what is served: a day prints as a day, a stamp prints with its time.
+   - If PanelFooter only accepts a raw timestamp, it may take ONE more optional prop for a pre-formatted time string, default unchanged.
+3. AC2 stays as written: battery29 ALL PASS (0 skipped).
+
+Added to `<paths>` by this amendment:
+- `portal/src/pages/SecurityAnalysis/__harness__/{errorEmpty,drafting,execFallback,execText,tabs,shell,execPattern,modelPattern,posturePattern,thesisLadder,leadPanelPattern}.harness.cjs`
 
 ## 5. WHEN YOU ARE DONE
 
