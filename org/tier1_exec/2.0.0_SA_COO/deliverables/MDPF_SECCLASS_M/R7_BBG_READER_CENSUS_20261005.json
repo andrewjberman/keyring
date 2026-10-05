@@ -1,0 +1,394 @@
+{
+  "what": "SC-e-16 BLOOMBERG-namespace reader census: every reader of etf-classifications exercised on a BBG:<ticker>:<exch> row",
+  "bbg_rows": {
+    "rows": [
+      {
+        "ticker": "BBG:REL:LN",
+        "identifier_namespace": "BLOOMBERG",
+        "security_bloomberg": "REL LN Equity",
+        "asset_class": "equity",
+        "sub_asset_class": "Developed",
+        "instrument_kind": "single_security",
+        "classified_by": "scheduled",
+        "listing_country": "GB",
+        "low_confidence": false
+      },
+      {
+        "ticker": "BBG:REL:LN",
+        "identifier_namespace": "BLOOMBERG",
+        "security_bloomberg": "REL LN Equity",
+        "asset_class": "equity",
+        "instrument_kind": "single_security",
+        "classified_by": "scheduled",
+        "listing_country": "GB",
+        "low_confidence": true
+      }
+    ],
+    "key": "BBG:REL:LN",
+    "second_shape": "sub_asset_class absent, low_confidence true",
+    "controls": [
+      "SPY",
+      "REL",
+      "CUSIP:037833100",
+      "LEGACYX"
+    ],
+    "ruling": "1.0.0_SA_CTO RULINGS batch 257 Q1 (org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md)"
+  },
+  "readers": [
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (the one client)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only) || [B] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only)"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (Lambda copy, yang-generate-positioning)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only) || [B] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only)"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.get_*/find_by_* (Lambda copy, yang-generate-holdings-attribution)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only) || [B] get_classification/get_asset_class/get_sub_asset_class/get_management_style/get_sector read the row verbatim (bool low_confidence intact), the bare REL lookup still answers the US control, a verbatim `REL LN Equity` matches nothing; find_by_asset_class lists the row (only CUSIP rows are dropped by _drop_cusip_rows, a BLOOMBERG row is listed) and find_by_sub_asset_class lists it only when sub_asset_class is present. find_by_* has ZERO functional call sites in the repo (tests only)"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0 || [B] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site; Lambda copy)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0 || [B] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+      "function": "ETFClassifier.classify_holdings (static, no call site; Lambda copy)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0 || [B] classify_holdings over [BBG key 0.4, SPY 0.6, bare REL 0.1] -> equity 1.0, fixed_income 0.1, unknown 0"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py",
+      "function": "resolve_display_name/classify_etf/calculate_allocations/calculate_segment_breakdown",
+      "verdict": "TOLERATES",
+      "evidence": "[A] resolve_display_name falls to the fallback (no name on the row), classify_etf equity, management style defaults passive, calculate_allocations puts the row's weight in equity (the bare REL control stays fixed_income), calculate_segment_breakdown sector ['Other'] geography ['Other']; served dicts json.dumps strictly || [B] resolve_display_name falls to the fallback (no name on the row), classify_etf equity, management style defaults passive, calculate_allocations puts the row's weight in equity (the bare REL control stays fixed_income), calculate_segment_breakdown sector ['Other'] geography ['Other']; served dicts json.dumps strictly"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/lambda_function.py",
+      "function": "resolve_display_name/extract_holdings_for_portfolio",
+      "verdict": "TOLERATES",
+      "evidence": "[A] resolve_display_name answers the ticker verbatim (the row has no name); extract_holdings_for_portfolio over a 3-holding attribution sheet kept all 3, the BBG holding 'Equity', the bare REL control 'Fixed Income'; result json.dumps strictly || [B] resolve_display_name answers the ticker verbatim (the row has no name); extract_holdings_for_portfolio over a 3-holding attribution sheet kept all 3, the BBG holding 'Equity', the bare REL control 'Fixed Income'; result json.dumps strictly"
+    },
+    {
+      "path": "data/etfs/scripts/gold/etf_positioning_publisher.py",
+      "function": "_display_name",
+      "verdict": "TOLERATES",
+      "evidence": "[A] _display_name(BBG key, raw) -> 'RAW ISSUER STRING' (no registry name: the un-shouted raw string); bare REL still answers its own registry name || [B] _display_name(BBG key, raw) -> 'RAW ISSUER STRING' (no registry name: the un-shouted raw string); bare REL still answers its own registry name"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_satellites_registry.py",
+      "function": "load_classifier/classify",
+      "verdict": "TOLERATES",
+      "evidence": "[A] load_classifier()+classify() -> ('equity', 'Developed') strings, json-safe (absent sub_asset_class -> None) || [B] load_classifier()+classify() -> ('equity', None) strings, json-safe (absent sub_asset_class -> None)"
+    },
+    {
+      "path": "data/assets/scripts/gold/build_satellites_characteristics.py",
+      "function": "load_identity",
+      "verdict": "TOLERATES",
+      "evidence": "[A] load_identity([BBG key, REL]) -> BBG identity {'name': None, 'management_style': None} (no name, no style: absent not guessed), bare REL keeps its own name, json-safe, missing=0 || [B] load_identity([BBG key, REL]) -> BBG identity {'name': None, 'management_style': None} (no name, no style: absent not guessed), bare REL keeps its own name, json-safe, missing=0"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/lib/etf_classifier.py",
+      "function": "ETFClassifier.classify/get_sub_asset_class/classify_with_identity (BD library)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify/get_sub_asset_class/classify_with_identity read the BBG key verbatim -> ('equity', 'Developed', 'etf-classifications', 'ticker'); bare REL and a miss unchanged || [B] classify/get_sub_asset_class/classify_with_identity read the BBG key verbatim -> ('equity', '', 'etf-classifications', 'ticker'); bare REL and a miss unchanged"
+    },
+    {
+      "path": "data/cot/scripts/gold/lib/etf_classifier.py",
+      "function": "ETFClassifier.classify/get_sub_asset_class/classify_position (Cottonwood library)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify/get_sub_asset_class/classify_position read the BBG key by ticker -> ('equity', 'table ticker'); the CUSIP rung and bare REL unchanged || [B] classify/get_sub_asset_class/classify_position read the BBG key by ticker -> ('equity', 'table ticker'); the CUSIP rung and bare REL unchanged"
+    },
+    {
+      "path": "data/black_diamond/scripts/silver/build_bd_assets_dim.py",
+      "function": "apply_blend (BD assets dim)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] apply_blend over [BBG key, REL] kept both rows; asset_class_canonical: BBG equity, REL fixed_income (columns ['asset_class_canonical', 'sub_asset_class_canonical']) || [B] apply_blend over [BBG key, REL] kept both rows; asset_class_canonical: BBG equity, REL fixed_income (columns ['asset_class_canonical', 'sub_asset_class_canonical'])"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/D_04.client_portal_summary.py",
+      "function": "_classify_with_canonical",
+      "verdict": "TOLERATES",
+      "evidence": "[A] _classify_with_canonical(BBG key) -> ('equity', 'equity', 'Developed', 'etf-classifications'), json-safe; bare REL -> ('fixed_income', 'fixed_income') || [B] _classify_with_canonical(BBG key) -> ('equity', 'equity', '', 'etf-classifications'), json-safe; bare REL -> ('fixed_income', 'fixed_income')"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py",
+      "function": "classify_series (BD mix timeseries)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_series over [BBG key, REL] -> BBG equity / 'Developed' from 'etf-classifications', REL fixed_income; json-safe || [B] classify_series over [BBG key, REL] -> BBG equity / '' from 'etf-classifications', REL fixed_income; json-safe"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/D_03.composition_artifacts.py",
+      "function": "classify_series (BD composition artifacts)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_series over [BBG key, REL] -> BBG equity / 'Developed' from 'etf-classifications', REL fixed_income; json-safe || [B] classify_series over [BBG key, REL] -> BBG equity / '' from 'etf-classifications', REL fixed_income; json-safe"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/E_25.aua_decomposition_audit.py",
+      "function": "classification_drift_audit (BD)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classification_drift_audit over [BBG key, REL] ran; keys ['note', 'top_20_unknown_by_mv', 'total_unique_pairs', 'unknown_mv', 'unknown_pairs', 'unknown_pct_of_total']; the BBG row is not counted unknown || [B] classification_drift_audit over [BBG key, REL] ran; keys ['note', 'top_20_unknown_by_mv', 'total_unique_pairs', 'unknown_mv', 'unknown_pairs', 'unknown_pct_of_total']; the BBG row is not counted unknown"
+    },
+    {
+      "path": "data/cot/scripts/gold/C_06.client_mix_timeseries.py",
+      "function": "classify_series/classify_holding (Cottonwood mix timeseries)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_series over [BBG key, REL, blank] -> ['equity', 'fixed_income', 'unclassified'] (classify_position, the ruled rule); json-safe || [B] classify_series over [BBG key, REL, blank] -> ['equity', 'fixed_income', 'unclassified'] (classify_position, the ruled rule); json-safe"
+    },
+    {
+      "path": "data/cot/scripts/gold/D_03.composition_artifacts.py",
+      "function": "classify_series (Cottonwood composition artifacts)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classify_series over [BBG key, REL, blank] -> ['equity', 'fixed_income', 'unclassified'] (classify_position, the ruled rule); json-safe || [B] classify_series over [BBG key, REL, blank] -> ['equity', 'fixed_income', 'unclassified'] (classify_position, the ruled rule); json-safe"
+    },
+    {
+      "path": "data/cot/scripts/gold/D_04.client_portal_summary.py",
+      "function": "classify sites (Cottonwood client portal summary)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Calls only ETFClassifier.instance().classify(ticker, name), exercised in lib/etf_classifier.py above; a miss reads unknown, a hit is the row's asset_class verbatim. Deciding line(s): `classifier = ETFClassifier.instance()` | `result = classifier.classify(`"
+    },
+    {
+      "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+      "function": "annotate_classification/classify_security -> HoldingsSnapshot contract",
+      "verdict": "TOLERATES",
+      "evidence": "[A] annotate_classification over a BBG SECURITY node + a REL control: both validate against docs\\contracts\\investor-reporting\\v1\\HoldingsSnapshot.schema.json (additionalProperties false); BBG node asset_class equity basis TABLE sub 'Developed'; none of ['identifier_namespace', 'security_bloomberg', 'listing_country', 'instrument_kind', 'classified_by', 'low_confidence'] reaches a node; negative control (a leaked security_bloomberg) IS refused by the same validator; by_class_source {'etf-classifications': 2} || [B] annotate_classification over a BBG SECURITY node + a REL control: both validate against docs\\contracts\\investor-reporting\\v1\\HoldingsSnapshot.schema.json (additionalProperties false); BBG node asset_class equity basis TABLE sub None; none of ['identifier_namespace', 'security_bloomberg', 'listing_country', 'instrument_kind', 'classified_by', 'low_confidence'] reaches a node; negative control (a leaked security_bloomberg) IS refused by the same validator; by_class_source {'etf-classifications': 2}"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py",
+      "function": "TableVocabulary.from_live_table/existing_tickers/plan_rows",
+      "verdict": "TOLERATES",
+      "evidence": "[A] TableVocabulary.from_live_table and existing_tickers read the table with the BLOOMBERG row in it (row held in existing_tickers, sub_asset_class joins the vocabulary only when present); plan_rows over [BBG key, REL, ZZNEWX] planned only ['ZZNEWX'] (never the BBG key, never the bare REL). E_18 bd/cot call exactly this sequence || [B] TableVocabulary.from_live_table and existing_tickers read the table with the BLOOMBERG row in it (row held in existing_tickers, sub_asset_class joins the vocabulary only when present); plan_rows over [BBG key, REL, ZZNEWX] planned only ['ZZNEWX'] (never the BBG key, never the bare REL). E_18 bd/cot call exactly this sequence"
+    },
+    {
+      "path": "data/black_diamond/scripts/gold/E_18.detect_new_securities.py",
+      "function": "E_18 scheduled caller (BD)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Calls only TableVocabulary.from_live_table, existing_tickers and plan_rows, exercised in etf_classification_scheduled.py in this order. Deciding line(s): `vocab = TableVocabulary.from_live_table(classifier)` | `existing = existing_tickers(classifier)`"
+    },
+    {
+      "path": "data/cot/scripts/gold/E_18.detect_new_securities.py",
+      "function": "E_18 scheduled caller (COT)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Calls only TableVocabulary.from_live_table, existing_tickers and plan_rows, exercised in etf_classification_scheduled.py in this order. Deciding line(s): `vocab = TableVocabulary.from_live_table(classifier)` | `existing = existing_tickers(classifier)`"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/label-legacy-classified-by.py",
+      "function": "scan_all/plan_unlabelled/label_row_if_unlabelled",
+      "verdict": "TOLERATES",
+      "evidence": "[A] scan_all paginated 5 rows; plan_unlabelled excluded the BBG row (classified_by present); label_row_if_unlabelled raises RowAlreadyLabelled (designed, additive-only) and leaves it || [B] scan_all paginated 5 rows; plan_unlabelled excluded the BBG row (classified_by present); label_row_if_unlabelled raises RowAlreadyLabelled (designed, additive-only) and leaves it"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/set-instrument-kind.py",
+      "function": "scan_all/plan_absent_kind/set_kind_if_absent",
+      "verdict": "TOLERATES",
+      "evidence": "[A] scan_all+plan_absent_kind did not offer the BBG row (instrument_kind present); set_kind_if_absent raises KindAlreadySet (designed) and leaves it || [B] scan_all+plan_absent_kind did not offer the BBG row (instrument_kind present); set_kind_if_absent raises KindAlreadySet (designed) and leaves it"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py",
+      "function": "read_existing/merge_item (seed source does not carry the BBG key)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] read_existing paged 5 rows incl. the BBG row; the seed source (ETF_CLASSIFICATIONS, 197 keys) does not carry the BBG key, so no seed merge_item ever runs on it || [B] read_existing paged 5 rows incl. the BBG row; the seed source (ETF_CLASSIFICATIONS, 197 keys) does not carry the BBG key, so no seed merge_item ever runs on it"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-constituents.py",
+      "function": "main (--dry-run, --kind-only)/put_row_if_unclassified",
+      "verdict": "TOLERATES",
+      "evidence": "[A] paginated scan of 5 rows; --dry-run plan KEEPs the BBG key, --kind-only dry-run ok; put_row_if_unclassified on it raises RowProtected (designed) and leaves the row || [B] paginated scan of 5 rows; --dry-run plan KEEPs the BBG key, --kind-only dry-run ok; put_row_if_unclassified on it raises RowProtected (designed) and leaves the row"
+    },
+    {
+      "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py",
+      "function": "_yang_conflicts",
+      "verdict": "TOLERATES",
+      "evidence": "[A] _yang_conflicts read the BBG row via get_item by its full key -> [('sub_asset_class', 'Developed', 'US Large Cap')] (the table's own values, which win: designed guard); an absent BBG key is a clean first mint; the bare REL control identical to its row reports none || [B] _yang_conflicts read the BBG row via get_item by its full key -> [] (the table's own values, which win: designed guard); an absent BBG key is a clean first mint; the bare REL control identical to its row reports none"
+    },
+    {
+      "path": "data/black_diamond/scripts/classification/seed_bd_securities.py",
+      "function": "seed (one-time copy into bd-securities)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] one-time seed scanned 5 rows and copied the BBG row into bd-securities without error. NOTE (recorded, not graded): the copy overwrites classified_by ('scheduled' -> 'seed_from_yang') and carries identifier_namespace='BLOOMBERG' and security_bloomberg onto the retiring per-firm table; a documented one-time seed, not scheduled; CUSIP: rows are skipped by prefix, a BBG: row is not || [B] one-time seed scanned 5 rows and copied the BBG row into bd-securities without error. NOTE (recorded, not graded): the copy overwrites classified_by ('scheduled' -> 'seed_from_yang') and carries identifier_namespace='BLOOMBERG' and security_bloomberg onto the retiring per-firm table; a documented one-time seed, not scheduled; CUSIP: rows are skipped by prefix, a BBG: row is not"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py",
+      "function": "table_rows_at_build/existing_tickers",
+      "verdict": "TOLERATES",
+      "evidence": "[A] table_rows_at_build counted 5 (Select=COUNT, paginated) and existing_tickers returned the BBG key: the runner's own census sees it as a live row || [B] table_rows_at_build counted 5 (Select=COUNT, paginated) and existing_tickers returned the BBG key: the runner's own census sees it as a live row"
+    },
+    {
+      "path": "infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py",
+      "function": "TableVocabulary.from_live_table/existing_tickers/plan_rows (the model path's writer)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] from_live_table and existing_tickers read the table with the BBG row in it; plan_rows over the BBG key planned 0, refused 0, reported it PRESENT (left as it is) || [B] from_live_table and existing_tickers read the table with the BBG row in it; plan_rows over the BBG key planned 0, refused 0, reported it PRESENT (left as it is)"
+    },
+    {
+      "path": "lib/research/api/scoped_amgt.py",
+      "function": "_join_classification/_classification_for_ticker",
+      "verdict": "TOLERATES",
+      "evidence": "[A] _join_classification GetItem by the first token: the BBG key as a ticker joins the BBG row (equity), 'REL US' joins the US control; json.dumps strictly. NOTE (pre-existing, recorded not graded): a Bloomberg ticker 'REL LN' is read by its first space-separated token 'REL' (bare-ticker rule, AMGT-ww-2), so a London ranking row joins the US `REL` row, never the BBG row; the BBG row neither causes nor cures that || [B] _join_classification GetItem by the first token: the BBG key as a ticker joins the BBG row (equity), 'REL US' joins the US control; json.dumps strictly. NOTE (pre-existing, recorded not graded): a Bloomberg ticker 'REL LN' is read by its first space-separated token 'REL' (bare-ticker rule, AMGT-ww-2), so a London ranking row joins the US `REL` row, never the BBG row; the BBG row neither causes nor cures that"
+    },
+    {
+      "path": "lib/research/identity/positioning_chain.py",
+      "function": "read_etf_classifications/resolve_one",
+      "verdict": "TOLERATES",
+      "evidence": "[A] read_etf_classifications (client scan + TypeDeserializer, paginated) returned 5 rows incl. the BBG key (projected to asset_class/sub_asset_class/name); resolve_one carried classifier_asset_class equity; json.dumps strictly || [B] read_etf_classifications (client scan + TypeDeserializer, paginated) returned 5 rows incl. the BBG key (projected to asset_class/sub_asset_class/name); resolve_one carried classifier_asset_class equity; json.dumps strictly"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/comparison_catalogue.py",
+      "function": "classifications_reader (the real paginated Scan) + build_catalogue + entry_for_ticker",
+      "verdict": "TOLERATES",
+      "evidence": "[A] classifications_reader (real paginated Scan over the double) read the BBG row; build_catalogue lists it NOT (an unnamed row is never listed, CTO batch 61) and validates against ComparisonCatalogue.schema.json (closed); entry_for_ticker answers the BBG key verbatim (name_source ticker_verbatim), schema-valid. NAMED PROBE (not graded; the order's row carries no name): a BBG row WITH a name IS offered in the picker list (1 entry for BBG:REL:LN) and the list passes its closed schema || [B] classifications_reader (real paginated Scan over the double) read the BBG row; build_catalogue lists it NOT (an unnamed row is never listed, CTO batch 61) and validates against ComparisonCatalogue.schema.json (closed); entry_for_ticker answers the BBG key verbatim (name_source ticker_verbatim), schema-valid. NAMED PROBE (not graded; the order's row carries no name): a BBG row WITH a name IS offered in the picker list (1 entry for BBG:REL:LN) and the list passes its closed schema"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+      "function": "_classified_etf (a named classified ETF as a comparison key)",
+      "verdict": "TOLERATES",
+      "evidence": "[A] _classified_etf(BBG key): None (not admitted) (CLASSIFIED_ETF_TICKER '[A-Z][A-Z0-9.]{0,9}\\\\Z' does not match the key; the YCharts comparison grammar is a bare ticker). The BBG key is never admitted as a comparison key and never reduced to the bare vendor id REL; bare REL, named, is still admitted. This is a designed non-admission of a key outside the grammar (the row has no name either), not a read failure. NAMED PROBE (not graded): with a name on the row _classified_etf still returns None, while comparison_catalogue.build_catalogue WOULD list that named row (see its entry): the list could offer a key the resolver refuses || [B] _classified_etf(BBG key): None (not admitted) (CLASSIFIED_ETF_TICKER '[A-Z][A-Z0-9.]{0,9}\\\\Z' does not match the key; the YCharts comparison grammar is a bare ticker). The BBG key is never admitted as a comparison key and never reduced to the bare vendor id REL; bare REL, named, is still admitted. This is a designed non-admission of a key outside the grammar (the row has no name either), not a read failure. NAMED PROBE (not graded): with a name on the row _classified_etf still returns None, while comparison_catalogue.build_catalogue WOULD list that named row (see its entry): the list could offer a key the resolver refuses"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py",
+      "function": "read_comparison_catalogue (delegates to build_catalogue)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Delegates to comparison_catalogue.build_catalogue (exercised above). Deciding line(s): `return _catalogue.build_catalogue(tenant=ctx.tenant, read_classifications=read_classifications)`"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+      "function": "compose_ports: wires read_classifications to the real reader",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Composition only: installs comparison_catalogue.classifications_reader (exercised above); it reads no row itself. Deciding line(s): `\"read_classifications\": comparison_catalogue.classifications_reader(clients[\"dynamodb\"]),`"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+      "function": "comparison source authority (a MAINTAINED_RECORD at dynamodb:etf-classifications)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Reads no table row: it checks a comparison item's source descriptor, which maintained_sources._classified_etf builds (exercised above); a BBG key never reaches it as a comparison. Deciding line(s): `source.get(\"canonical_location\") == \"dynamodb:etf-classifications\"`"
+    },
+    {
+      "path": "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py",
+      "function": "read_classifications port pass-through",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (runs only inside a live pipeline run). Holds the injected read_classifications port and hands it to resolve_comparison_fields; reads no row itself. Deciding line(s): `self.read_classifications = read_classifications`"
+    },
+    {
+      "path": "portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts",
+      "function": "CANONICAL_CLASSES / normalizeMixTo4Class (portal asset-class mapping)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (TypeScript). Deciding line `export const CANONICAL_CLASSES = ['equity', 'fixed_income', 'alternatives', 'structured', 'commodities', 'multi_asset', 'unclassified'] as const`. normalizeMixTo4Class keeps an item only when `classes.includes(item.asset_class)` (composition.ts:126); the BBG row's asset_class 'equity' is a member. The portal reads served artifacts, never a table row, so identifier_namespace / security_bloomberg / listing_country never reach it portal submodule not checked out in this worktree; deciding line read from the portal working copy on 2026-10-05 (gitlink pin ec65c5d63769c5e215bc779e23a3082c09c52b3f), a build-time read not re-run here."
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts",
+      "function": "asset_class wire type",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (TypeScript). Deciding line `readonly asset_class?: 'equity' | 'fixed_income' | 'alternatives' | 'structured' | 'commodities' | 'multi_asset' | 'cash' | 'other' | 'unclassified'`. The wire type carries asset_class and sub_asset_class only (matching the Python contract, exercised in holdings_snapshot.py above); no BLOOMBERG attribute is a member portal submodule not checked out in this worktree; deciding line read from the portal working copy on 2026-10-05 (gitlink pin ec65c5d63769c5e215bc779e23a3082c09c52b3f), a build-time read not re-run here."
+    },
+    {
+      "path": "portal/src/pages/InvestorReporting/contracts/wire/ComparisonCatalogue.ts",
+      "function": "comparison catalogue wire type + readCatalogue",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (TypeScript). Deciding line `readonly name_source: 'model_catalogue' | 'etf_classifications' | 'ticker_verbatim'`. readCatalogue (contracts/comparison-catalogue.ts) accepts any non-empty string `key` and `ticker`, so a served verbatim 'BBG:REL:LN' entry is read; the Python producer is exercised above (comparison_catalogue.py) portal submodule not checked out in this worktree; deciding line read from the portal working copy on 2026-10-05 (gitlink pin ec65c5d63769c5e215bc779e23a3082c09c52b3f), a build-time read not re-run here."
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+      "function": "IRPT_DASHBD C-CLASSES consumer (PRD only, no code yet)",
+      "verdict": "READ-ONLY",
+      "evidence": "READ-ONLY (no consumer code exists in the tree). Deciding line IRPT_DASHBD_PRD.md C-CLASSES row: 'Each holding maps through `etf-classifications` (DynamoDB, key `ticker`) ... No row means UNCLASSIFIED' -- the BBG row's class 'equity' is inside the vocabulary; the row maps by key, names no identifier_namespace member"
+    }
+  ],
+  "denominator": {
+    "readers_exercised_or_read": 45,
+    "round6_model_reader_census_entries": 34,
+    "added_since_round6": [
+      "data/black_diamond/scripts/gold/E_25.aua_decomposition_audit.py",
+      "data/cot/scripts/gold/C_06.client_mix_timeseries.py",
+      "data/cot/scripts/gold/D_03.composition_artifacts.py",
+      "data/cot/scripts/gold/D_04.client_portal_summary.py",
+      "data/cot/scripts/gold/lib/etf_classifier.py",
+      "infra/aws/lambda/investor-reporting/_scope/maintained_sources.py",
+      "infra/aws/lambda/investor-reporting/reports/generate_installed.py",
+      "infra/aws/lambda/investor-reporting/reports/request_composition.py",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/prospect_submission.py",
+      "infra/aws/lambda/v2_portal/yang_pipeline/write-model-rows.py",
+      "portal/src/pages/InvestorReporting/contracts/wire/ComparisonCatalogue.ts"
+    ],
+    "dropped_since_round6": [],
+    "code_files_naming_the_table_outside_org_docs_archive": 92,
+    "of_which_tests": 37,
+    "of_which_declared_not_readers": 18,
+    "uncensused": []
+  },
+  "search": [
+    {
+      "pattern": "etf-classifications",
+      "hits": 254,
+      "files": 83
+    },
+    {
+      "pattern": "etf_classifications_dynamodb",
+      "hits": 83,
+      "files": 39
+    },
+    {
+      "pattern": "identifier_namespace",
+      "hits": 67,
+      "files": 25
+    },
+    {
+      "pattern": "classified_by",
+      "hits": 127,
+      "files": 28
+    },
+    {
+      "pattern": "lib.etf_classifier",
+      "hits": 28,
+      "files": 16
+    }
+  ],
+  "search_scope": "tracked files outside org/, docs/, archive/ with a code, config or shell extension (py ts tsx js mjs cjs tf sh json yaml yml); the portal submodule is not in git ls-files, its readers are listed by hand",
+  "comp_find_at_build": {
+    "measured_by": "comp-find <pattern> --files --all, corpus=all, worktree root wk-secclass-r7-13, 2026-10-05 (a one-time record, not re-run by this check)",
+    "etf-classifications": {
+      "hits": 6849,
+      "files_scanned": 53766
+    },
+    "etf_classifications_dynamodb": {
+      "hits": 612,
+      "files_scanned": 53767
+    },
+    "identifier_namespace": {
+      "hits": 926,
+      "files_scanned": 53768
+    }
+  },
+  "not_readers": {
+    "infra/aws/lambda/v2_portal/_shared/etf_classification.py": "the static seed SOURCE module (dicts), not a table reader; the seeders above read it",
+    "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py": "reads the LEGACY per-firm table (LEGACY_TABLE = _legacy_table_name()), not etf-classifications",
+    "data/black_diamond/scripts/classification/classify_bd_securities.py": "WRITES classified_by to bd-securities (gpt-4o-mini); not a reader of the table",
+    "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py": "WRITES classified_by to bd-securities; not a reader of the table",
+    "data/cot/scripts/gold/B_01b.classify_new_securities.py": "WRITES classified_by to the cot securities table; not a reader of the table",
+    "data/inf/scripts/classification/classify_assets.py": "reads/writes the INF assets table (BD_SECURITIES_TABLE = 'bd-securities'), not etf-classifications",
+    "data/black_diamond/scripts/gold/tests/thread_trace.py": "a LOCAL trace harness that drives apply_blend/BD library (both exercised above), not itself a reader",
+    ".tools/safe_deploy_core.py": "deploy tool: names the client file in a package member list",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/lambda_function.py": "docstring mention only; its derivation is build_satellites_registry (exercised above)",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-registry-producer/build_package.py": "packaging member list",
+    "infra/aws/lambda/cot-pipeline/cot-satellites-characteristics-producer/build_package.py": "packaging member list",
+    "infra/aws/lambda/etfs-pipeline/etf-positioning-producer/build_package.py": "packaging member list",
+    "infra/aws/lambda/investor-reporting/intake/corrections.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row",
+    "infra/aws/lambda/investor-reporting/intake/custody_portfolio.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row",
+    "infra/aws/lambda/investor-reporting/intake/parse.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row",
+    "infra/aws/lambda/investor-reporting/intake/portfolio.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/normalized_input.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/recipe.py": "IRPT intake / analysis path: `identifier_namespace` here is the namespace of a SUBMITTED PORTFOLIO holding (AnalysisRequest enum TICKER/CUSIP/ISIN/CASH/MODEL/UNMATCHED), not an etf-classifications row; the file reads no table row"
+  }
+}
