@@ -1600,3 +1600,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The R6 record file is a dated record and stays; this census supersedes its reader set for the BLOOMBERG question (it imports the R6 table double, not its verdicts). The R6 check is outside this order's grant and is not edited."
 }
 ```
+
+
+## MDPF_SECCLASS-S25 -- W13-S1 / W13-S2 disarmed by holding the FWD-9 rows act until the writer carries the BLOOMBERG fields
+
+```json
+{
+  "id": "MDPF_SECCLASS-S25",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T08:24Z",
+  "one_line": "W13-S1 and W13-S2 (ARMED, disarm owner 2.0.0_SA_COO~M) disarmed by HOLD: the FWD-9 rows act is the issuer's own act and does not run until etf_classification_scheduled.write() carries security_bloomberg and listing_country (W13-S2) and no BLOOMBERG row reaches the comparison picker under a key its resolver refuses (W13-S1).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SC-e-16 drained @c051a128d9; the issuer re-ran its check on CLOUD 2026-10-05 08:2xZ: BBG-READER-CENSUS readers=45 tolerates=34 read_only=11 crashes=0 refuses=0 miskeys=0 fails_contract=0, BBG-READER-TOLERATED; proof VALID",
+      "W13-S2: _WRITE_FIELDS in infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py omits security_bloomberg and listing_country (worker write against the table double); contract 0.4.0 @a8bca9d398 REQUIRES security_bloomberg on BLOOMBERG rows",
+      "W13-S1: a BBG row carrying name is listed by the comparison catalogue while maintained_sources._classified_etf refuses its key"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "No write path is open: the rows act is held by its own issuer, and SC-e-17's writer refuses --write without a signed half. The two fixes ride an amendment to TO-SC-e17 when its worker reports, before the half is signed.",
+  "spec_asserts": "Contract 0.4.0: security_bloomberg is required on BLOOMBERG rows; every reader tolerates a BLOOMBERG row.",
+  "world_is": "The census tolerates the row, but the one writer path drops two contract fields and one picker would list a key it cannot resolve.",
+  "notes": "Resolves the armed standing of MDPF_SECCLASS-W13-S1 and MDPF_SECCLASS-W13-S2."
+}
+```
