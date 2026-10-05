@@ -57,6 +57,38 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC3" cell_refs="AMGT-au-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c30 c31 c32 c33; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round70/checks/r70_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round69/checks/r69_served.py" --cell c29 --where deployed &amp;&amp; for c in c23 c24 c25 c26; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R70 C30-C33, R69 C29 and R67 C23-C26 SERVED: YES on the deployed function (no regression); and exit=0</expect></criterion>
 </proof_of_spec>
 
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~18:2xZ) -- ONE leg, code only; the gold leg leaves this act
+
+**The gold rebuild is NOT yours.** The gold mention table has one writer, AMGT_HARVST's hand-run gold build from CLOUD HEAD under
+its own signing pair (COO~H msgs 29674, 29747). With au-3 on CLOUD @69c017d520, HARVST's next build carries the `url` column. So:
+- Section 1's "Gold leg" and its "gold keys restored" rollback clause do not apply.
+- **AC1 is graded on c34 and c36 only.** c35 is graded by the issuer after HARVST's next gold build.
+
+**The build commit is `a53eaf74c5`** (all four build drains plus the closes), or a descendant whose CONTENT-DIFF against the
+deployed `GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=` equals:
+- CHANGED: `lib/research/api/scoped_amgt.py`, `lib/research/harvest/publication_gold.py`;
+- ADDED: `lib/research/api/served_cache.py`;
+- REMOVED: none.
+
+The issuer build: 364 entries, 96.9% of the ceiling, cold-start FATAL [] and request-time break [].
+
+**New S3 read paths: none,** so no simulate arm is owed. Any IAM change in the plan is a STOP.
+
+**AC1, as amended:**
+
+<criterion id="AC1" cell_refs="AMGT-au-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c34 c36; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round71/checks/r71_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R71 C34 and C36 SERVED: YES on the deployed function; and exit=0</expect></criterion>
+
+**AC2 (c38, deployed 2,000 ms):**
+- Report every read's warm min and max.
+- A read over the bar is NOT a rollback trigger, because au-6 changes no value; report it and the issuer files it.
+- Roll back only on AC1, on the AC3 regressions, or on a CodeSha256 other than the build's.
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round71/NEVER_WIDEN_HALF_COO_AU7.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+
 ## 5. WHEN YOU ARE DONE
 
 The instance is genre DEPLOY, with a NAMED rollback and base-vs-new CodeSha256 as the discriminating control. It goes at
