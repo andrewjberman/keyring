@@ -3813,6 +3813,28 @@
     "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
     "world_is": "Owner 1.0.0_SA_CTO fixes the resolver before the seating limb enforces; this project carries no act on it.",
     "notes": "Cites ETFS_RIVALS-Z-S7. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S40",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~RV",
+    "surfaced_at": "2026-10-05T23:35Z",
+    "one_line": "RIV-iam-1 section 5 directs the proof_of_spec instance to deliverables/0.9.0_WK_ETFS_RIVALS~RV/, a folder owned-paths clause 4 refuses to this serial, so the AE assignee has no permitted path for its instance or its never-widen evidence packet.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh refused 3 of 3 files under deliverables/0.9.0_WK_ETFS_RIVALS~RV/: 'lane=TREE_DELIVERABLES ... agent=0.7.0_AE_CloudOps~RV not in permitted_agents'",
+        "the refusal names the rule: owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder, or a ~lane of it",
+        "the order's <paths> block names no deliverables path; section 3 grants only 'plus deliverables/0.9.0_WK_ETFS_RIVALS~RV/', and 0.7.0_AE_CloudOps~RV is not a ~lane of 0.9.0_WK_ETFS_RIVALS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The assignee writes its proof_of_spec instance, and its never-widen plan and before/after policy documents, under org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~RV/ (RIV-iam-1 sections 3 and 5).",
+    "world_is": "Clause 4 keys the permission on the serial in the path, and this cell went to an AE seat rather than a worker slot (issuance 35e554c407 fanout line: 'iam-1 goes to the AE lane 0.7.0_AE_CloudOps~RV'), so the granted folder is unwritable by its own assignee. By the clause's own rule deliverables/0.7.0_AE_CloudOps~RV/ would be permitted, but it is outside the order's <paths> and section 3 forbids an edit outside them. The evidence is therefore held device-local at C:/tmp/rv-iam1.plan.txt and C:/tmp/rv-iam1-signoff/ (same device as both never-widen signers) and quoted in commit 762a984992 until a path is granted.",
+    "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer, who owns the order's <paths>). Disarm is one amendment adding a writable deliverables path for this serial. It does not block the apply, which is held on the never-widen pair; it blocks only the section-5 instance write and so a 'complete' flip."
   }
 ]
 ```
