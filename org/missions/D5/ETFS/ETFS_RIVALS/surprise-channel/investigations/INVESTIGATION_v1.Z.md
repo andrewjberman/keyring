@@ -3320,6 +3320,29 @@
     "spec_asserts": "RIV-lg-1: an index_control is queried on its own per date and its rows merge into the date's one capture.",
     "world_is": "Each part carries its own header; the merge must map every part's rows onto the first header by column NAME (a column absent from a part reads None; one absent from the first header is appended), never by position. Daily runs are not exposed while D13 is off (one rival query, one header). Remedy: lg-1 amendment 3; AC1 arm (f) pins it.",
     "notes": "Found by the issuer's D13 Step A re-run (local only, nothing on S3: 0 backfill-d13 markers listed). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S24",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T07:10Z",
+    "one_line": "The issuer's overnight Bloomberg backfill pulls exhausted the Terminal's BQL DAILY CAPACITY: at 07:06Z every query returned '#N/A Review: Error: #N/A Daily Capacity, request is blocked.' -- the 07:00 ET vehicle's rivalfunds Bloomberg leg (BQL holdings) may be blocked today, and any other BQL consumer on this Terminal with it.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/tmp/bbg_backfill_d13_stepA.log (07:06:37-07:06:50Z): 20 of 20 dates BAD-ANCHOR, anchor '#N/A Review: Error: #N/A Daily Capacity, request is blocked.', 0 rows; local sink, nothing on S3 (0 backfill-d13 markers listed)",
+        "the pulls before it (all local sinks, Andrew-direct @a36e70f335 / CTO~Z budget msg 29445): D12 IDVZ+PFOE 189 dates (12,820 rows, 05:3x-05:44Z); D13 ACWI+IWM first chunks 06:37Z (crash), 06:40Z (76,859 rows), 06:55Z (84,655 rows) plus single-date probes",
+        "bloomberg_health at 07:1xZ: ok (the DAPI/refdata session is up; the block is the BQL capacity, not the sign-in)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO~Z ruling msg 29445: the D13 backfill runs inside the PRD's Bloomberg-budget clause, its cost measured before the first fire. Andrew-direct: the daily jobs pull only the new day.",
+    "world_is": "A row budget (1M) was ruled, but the Terminal's own BQL daily capacity -- not documented in integrations/bloomberg/READ_HERE.md -- is lower: about 170k rows (plus probes) exhausted it. Not measured: when the capacity resets, and whether the 07:00 ET OPAL_BBGTML notebooks use BQL (they may use refdata, unaffected). Holds: no further Bloomberg request from this seat until the capacity reset is measured; the D13 Step A resumes only then, in smaller daily slices.",
+    "notes": "Escalated same turn to 1.0.0_SA_CTO~Z (overnight adjudicator) and 0.0.0_AB_MSTR~Z. The 07:00 ET vehicle log (%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261005_*.log) is the first read at 07:12 ET (the cron). disarm_owner 2.0.0_SA_COO~RV."
   }
 ]
 ```
