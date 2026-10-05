@@ -7828,3 +7828,31 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The served gateway serves the Schwab snapshots and the held-only dim_asset page, the download control holds, and AC1 matches after A6."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S53",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T01:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The disarm owner's recorded word for remediation row NFRA_OPLGTW-W6-S2. Decision: REMEDIATED; the CVO writes the clock (ruling @cc05804f8f). W6-S2 asserted that no carrier declares the three datasets' unique grain. (1) dim_position and dim_asset: R9's grains on CLOUD via OG-gr-3 (repair drain ef092da049) and live in r16 4b6b823fae (OG-rl-5). The served census found 56 of 56 snapshots carrying the grain columns, 0 blank, and dim_position pages OK. (2) dim_balance: OG-gr-4 (drain 06e6db2995) measured grain (account_id,) unique on 28 of 28 served snapshots, with 0 duplicate keys and 0 null grain cells, and served a rows page OK with a synthetic principal and 0 grants. OG-ar-2's moves_when for W6-S2 named exactly this condition (ISSUER_ROWS_R17.json).",
+  "adjudicates": [
+    "NFRA_OPLGTW-W6-S2"
+  ],
+  "one_line": "W6-S2 (no declared unique grain) is REMEDIATED on the owner's word: R9 grains live in r16 for dim_position and dim_asset, and OG-gr-4 measured dim_balance's (account_id,) unique on 28 of 28 served snapshots; the CVO writes the clock.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/gr4.AC1.sh at CLOUD 06e6db2995: served census 28; measured 28; duplicates 0; page OK; branch UNIQUE+SERVED; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/RL5_PAGING.json census_after (56 snapshots, lacking_or_blank 0)",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~21/ISSUER_ROWS_R17.json (W6-S2 moves_when = gr-4 zero duplicates)"
+    ]
+  },
+  "spec_asserts": "W6-S2: a carrier declares each dataset's unique grain, and served snapshots honor it.",
+  "world_is": "All three datasets carry declared grains on the served gateway, and each is measured unique on every served snapshot."
+}
+```
