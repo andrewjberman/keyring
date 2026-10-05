@@ -74,9 +74,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~2`, first order; no dependency. Fixtures and schema only: nothing served moves. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~21:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 @a9bb757ee3, merged 24bbe559eb; s-6.AC1-AC5 PASS (5 of 5) on the merged tree, instance VALID. Rows W2-S11 (the v1 pin is a PRD pin; the check uses the file's sha256 and the published copy) and W2-S12 (R4 left member types open: inputs_as_of an object of input name to date; coverage a number 0-1 or null; as_of_date null only under NOT_AVAILABLE; reason absent or null under VALUE) are ACCEPTED as issuer readings for a-6, c-6 and e-6.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <slot>~2</slot>
 <fabric>laptop</fabric>
