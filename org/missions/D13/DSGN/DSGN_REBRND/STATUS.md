@@ -49,7 +49,13 @@ R4-2. **FWD-10.** The page-end marker onto the remaining 24 routes; density meas
      - fixed in this part: /positioning's pt-6 panel top and /portfolio-management's header mb-6;
      - pin density-part2 (DEV fails).
    - R4-2 remaining: /portfolios and /security-analysis page ends (parked with their holders); the CVO's FWD-10 grade.
-   - Next: R4-3 (FWD-13). The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
+   - Next: R4-3 (FWD-13).
+R4-3 part 1 LANDED 2026-10-05 06:0xZ, portal DEV `99c6ae08`.
+   - Instrument `ui-smoke.mjs --state-table`. As-is: 63 declared pairs, 13 below the bar: every disabled state, and the dark hover/selected rung under navy on light. The white-overlay hover is invisible on light.
+   - To-be `src/ui/tokens/state-table.json`: 54 declared, 0 below the bar.
+   - Eight opaque `--state-*` rungs in index.css. Controls' disabled state is off opacity, and `rowStateClass(world)` (rowState.ts) serves rows.
+   - Census instrument `scripts/state-census.mjs` (590 files; state tokens 0). Pin state-table.test.ts.
+   - Next, R4-3 part 2+: move pages onto the rungs, worst first. That starts with the 17 `semantic-background-hover` sites on light grounds and the white-overlay hovers that land on light panels, each page re-censused, with a highlighted element walked on the band and on a light panel. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
 R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
 R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
 R4-5. **FWD-6.** The contract gains value labels, the layer table (R4-4) and the state clause; then one page rejected by clause, its author agreeing.
