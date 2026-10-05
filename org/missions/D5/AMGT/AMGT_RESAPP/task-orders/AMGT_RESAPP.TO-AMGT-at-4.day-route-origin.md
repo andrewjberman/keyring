@@ -87,3 +87,11 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~07:1xZ):** CLOSED.
+- Worker ~229: code `507af39d49`, instance at `2b8f4c3557`, proof-of-spec-check VALID (rc=0) on the committed bytes.
+- AC1 PASS 3 of 3; the mutant fails 2 of 3. AC2 PASS c33 local: 8 rows over 5 probes, 0 failing, 0 out of order.
+- `DAY_OWN_PUBLISHERS` is empty, and its source string says the estate holds no own publisher today, so every row is external.
+  0 new S3 read paths. Served by at-6.
+
+<status>complete</status>
