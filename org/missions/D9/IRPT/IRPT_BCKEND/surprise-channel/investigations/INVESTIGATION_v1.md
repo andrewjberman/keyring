@@ -18294,3 +18294,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: for a non-pinned member there is no old pin, so the live-matching commit stands in as the old pin; bundle.py is attributed to IB-pr-317 (0 riders). The same method applied to every non-pinned changed member in the 7 functions: bundle.py is the only one."
 }
 ```
+
+## IRPT_BCKEND-S336 -- DISARM of W80-S1: the first INF fire served T-1 (2026-10-02), named in its key (batch 252)
+
+```json
+{
+  "id": "IRPT_BCKEND-S336",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T14:25:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W80-S1 on CTO batch 252 (INF keeps T-1): the first scheduled INF holdings-performance fire (Mon 2026-10-05 14:00Z) computed and landed business date 2026-10-02, the T-1 day (974 rows, 798 computable, 176 NON-POSITIVE-BASE), and the served artifact names it: s3://opal-data-inflection/irpt/inflection/gold/holdings_performance_daily/date=2026-10-02/data.parquet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-inf-holdings-performance-lambda 14:00:27Z: computing date=2026-10-02 upload=True source=orion firm=inflection; 2026-10-02 rows=974 LANDED complete=True",
+      "s3 list of the producer's own gold address: date=2026-10-02/data.parquet LastModified 14:00Z, 36,472 bytes"
+    ]
+  },
+  "dismissal_reason": "Batch 252 accepted T-1 for INF; the first fire read shows the artifact named by its business date. A source-aware target stays a later enrichment, not a hold.",
+  "spec_asserts": "IRPT_BCKEND-W80-S1: the INF target day is not source-aware.",
+  "world_is": "MEASURED: the 14:00Z INF fire served T-1 (2026-10-02), named in its partition key."
+}
+```
+
+## IRPT_BCKEND-S337 -- IB-pr-324's census under-reported irpt-ycharts-generate (15 unattributed fixture/template members); held out
+
+```json
+{
+  "id": "IRPT_BCKEND-S337",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-05T14:26:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-324's census (R56_REPIN_CENSUS.json, worker ~127) reports irpt-ycharts-generate with 4 changed members and 0 riders, and IB56-1-AC2 PASSED on it. The issuer's own re-census at merged HEAD f36a8cdefd (BUILD_ONLY vs live get_function) reads 19 changed: the 4 re-pinned members plus 15 under fixtures/har/* and templates.json, which no order of this round produced. The worker's census under-reported, and the checker trusted the census file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P (this issuer: irpt-ycharts-generate is held out of the re-pin release; the checker pattern is noted for the next census criterion: re-derive, never trust a worker-written census)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P/r57_census/census-irpt-ycharts-generate.json: counts changed 19, members fixtures/har/{FIXTURE_MANIFEST,collection,create_201,create_422_fee,dashboard,decision_branches,generate_201,generate_404_minimal,status_drifted,status_ok,templates,upload_ok,validate_200}.json, report.pdf, templates.json",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~127/R56_REPIN_CENSUS.json: irpt-ycharts-generate 4 changed, 0 riders"
+    ]
+  },
+  "spec_asserts": "IB56-1-AC2: the census attributes every changed member, with no riders.",
+  "world_is": "MEASURED: irpt-ycharts-generate carries 15 unattributed members; it is held out of the release. The other 6 functions' issuer re-census matches the re-pinned members only."
+}
+```
