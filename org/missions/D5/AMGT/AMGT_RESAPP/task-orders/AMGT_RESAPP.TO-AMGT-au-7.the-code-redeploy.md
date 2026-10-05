@@ -113,3 +113,17 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~18:3xZ):** both halves are committed. ONE code-only leg at build commit `a53eaf74c5`.
+- COO: `round71/NEVER_WIDEN_HALF_COO_AU7.md` @f850d9d1e6.
+- CTO: `ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md` @a9c145359a. Its conditions:
+  1. at build time, the CONTENT-DIFF is exactly CHANGED `scoped_amgt.py` + `publication_gold.py`, ADDED `served_cache.py`;
+  2. AC1 (c34/c36) and the AC3 regressions grade on deployed; c38 is reported only;
+  3. the issuer measures the Lead Panel BEFORE (taken: `round71/LEADPANEL_BEFORE_au7.txt`, 18:25Z on GS//XHnV) and AFTER,
+     cold and warm. **Run `round71/checks/leadpanel_cold_warm.py --label after` right after the code leg, and put its output in
+     your report;** the issuer re-reads it;
+  4. one NEVER-2 entry, DEPLOY genre.
+- The base: CodeSha256 `GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=`, re-read live before the upload. Any other value is a STOP.
+
+<status>go</status>
+
