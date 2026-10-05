@@ -1200,3 +1200,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT until an OPAL_ENGINE report is READY on a served route: the response contract needs a v2 data branch (provider discriminator) and the frontend consumer a matching parse before the first Opal report is opened."
 }
 ```
+
+
+## IRPT_YCDGEN-W2-S14 -- the Analysis tab renderer and typed contracts are outside the e-6 paths and still v1-shaped
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T23:02:10Z",
+  "one_line": "The Opal sections reach the Analysis tab only through the adapter's carried members; NativeSections and the typed contracts are outside the e-6 paths and still speak the v1 vendor wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-e-6: sections render from status, method and coverage; a NOT_AVAILABLE section shows its reason; no visual change beyond the sections the form adds.",
+  "world_is": "adapt.ts now returns OpalReportSection (a ReportSection plus status, reason, method, coverage) and names the reason in the NOT_AVAILABLE value label, which the existing Label column prints. tabs/analysis/NativeSections.tsx (outside the order's paths) still prints the heading 'Certified sections', 'Extraction validation:' and 'Vendor attribution:' (null source coordinate prints 'no source coordinate stated for this section'), and reads only the base ReportSection members, so method and coverage are not printed. contracts/index.ts (ReportSection), contracts/wire/index.ts (no AnalysisReportOpalWire export), wire/consumed.ts 64-65 (AnalysisReport reads list names vendor_artifact), wire/responses.ts 162-166 (slice wire typed on the v1 members) and api/endpoints/investor-reporting.ts 1093 and 1188 (send<AnalysisReportWire,...>) are outside the paths and unchanged; the adapter's parameter types are the wider unions so those call sites still typecheck (tsc -b --noEmit rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx lines 106-176 @wk-IRPT_YCDGEN-67-portal",
+      "portal/src/pages/InvestorReporting/contracts/wire/consumed.ts lines 64-65 @wk-IRPT_YCDGEN-67-portal",
+      "portal/scripts/adapt-analysis-report-opal-exercise.mjs opal: RESULT: opal PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT until an OPAL_ENGINE report is served to the tab (also IRPT_YCDGEN-W2-S13). A later cell owning NativeSections.tsx would print method and coverage with isOpalReportSection(section) and drop the vendor wording for the Opal form."
+}
+```
+
+## IRPT_YCDGEN-W2-S15 -- eleven fe-s-13 tests are red in this worktree on route, envelope and pin checks unrelated to the adapter
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T23:02:40Z",
+  "one_line": "Eleven tests in portal src/pages/InvestorReporting/__tests__/fe-s-13 are red in this worktree on route-table, response-envelope and content-pin checks, none of them on the AnalysisReport adapter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-e-6 AC3 names tsc -b --noEmit only; no test run was required of this cell.",
+  "world_is": "bun test src/pages/InvestorReporting/__tests__/fe-s-13 src/pages/InvestorReporting/tabs/analysis on the worktree after the e-6 edits: 40 pass, 11 fail (51 tests, 9 files). The failures name the routes table (expected 19 DECLARED routes, received 18), the response envelope ('unprojected_grant' no longer declared on comparison-catalogue and analysis-request-pdf) and the content pins; field-map.test.ts, which adapts the v1 AnalysisReport fixture, is not among them. The run on the unedited tree was not made (git stash is refused in this tree), so the reds are not shown to pre-date the edit; their messages do not touch AnalysisReport.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test output, run 2026-10-05T23:00Z in C:/tmp/wk-ycdgen-6-67/portal",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts line 239 @wk-IRPT_YCDGEN-67-portal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this order (AC3 is the typecheck). Left for the issuer to compare against portal DEV @481b3bcc5f."
+}
+```
