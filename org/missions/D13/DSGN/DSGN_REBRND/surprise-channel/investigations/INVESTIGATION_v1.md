@@ -1938,3 +1938,30 @@
   "notes": "ARMED: DEV only (not on PROD c69b4747); a PROD promote of DEV would ship hover states worse than PROD's. Owner 2.0.0_SA_COO~D: pair each moved hover ground with the ink of that state (or keep a light hover rung for dark-ink elements), and walk every pointer element with modals opened before the next batch. Also: 4 of the 72 moved grounds (Attribution tab buttons) never paint (an inline transparent background wins); 6 files were rewritten CRLF to LF."
 }
 ```
+
+```json
+{
+  "id": "DSGN_REBRND-S23",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-05T14:50:00Z",
+  "one_line": "Row S22 DISARMED. FWD-13 part 3 batch 2 (31510397) is reverted by portal DEV f1cdccd7: the 38 batch-2 paths equal d1c7485b byte for byte, the 6 CRLF files committed with autocrlf off. The BUY/SELL chips, below the bar at d1c7485b as well, take the lighter semantic ink on no tint (cab2b039). 3.0.0_SA_CVO's re-walk at DEV cab2b039 reads every S22 element at or above its bar on hover (msg 105296, grades @6401060252); the PROD hold on S22 lifts.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal diff d1c7485b f1cdccd7 -- <the 38 paths of 31510397>: empty (repo level); state-part3b.test.ts removed",
+      "portal cab2b039 TradeDetailsModal.tsx: BUY 'border border-[hsl(var(--success))] text-[hsl(var(--delta-positive-hover))]', SELL the same on --danger / --delta-negative-hover; pin state-s22.test.ts OK, DEV's modal fails it",
+      "3.0.0_SA_CVO re-walk at DEV cab2b039 (105296 relayed by 1.0.0_SA_CTO 105300): the revert byte-exact; BUY/SELL text 9.42:1 or more, borders 2.70-3.54"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "spec_asserts": "Row S22's disarm: a re-walk of 31510397's successor on DEV reads every element S22 names at or above its bar on hover (4.5 text, 3.0 icon), before any PROD promote of DEV carries it.",
+  "world_is": "Met at DEV cab2b039: the regressing batch is out and BUY/SELL clear the bar. The translucent white hover overlays batch 2 targeted remain translucent (as at d1c7485b) until a redo pairs each ground with its state's ink.",
+  "notes": "Correction carried from the CVO's re-walk: this seat's claim that the lighter SELL ink reads 5.25:1 or more 'on every band ground' is false for --layer-selected (4.48:1), a ground the details modal never uses. Batch 2's redo waits on an instrument that hovers every hover-styled element (rows included), grades every text descendant and opens the modals.",
+  "dismissal_reason": "Disarmed by its owner's act and confirmed by the grader: the regressing batch is reverted byte-exact (f1cdccd7) and the one element below the bar before the batch (BUY/SELL) is fixed (cab2b039); 3.0.0_SA_CVO's re-walk at cab2b039 reads every S22 element at or above its bar (105296)."
+}
+```
