@@ -68,7 +68,17 @@ R4-3 part 3 batch 1 LANDED 2026-10-05 09:1xZ, portal DEV `d1c7485b` (ls-remote).
    - Census row `hover:bg-translucent`: 271 on DEV -> 248. Pin state-part3.
    - Walks: /data-refresh and /macro 0 below; the two modals are graded by the pin only.
    - Next batches: the rest of the 248, page by page on this seat's surfaces. AdvisorIntelligence (DistributionTab 14 ...), ClientsTab (~M) and ModelPortfolios (CRO lease) need their holders' grant first.
-   - NO builds or test suites while a Y-6 run polls (the run-3/4 lesson). That starts with the 17 `semantic-background-hover` sites on light grounds and the white-overlay hovers that land on light panels, each page re-censused, with a highlighted element walked on the band and on a light panel. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
+   - NO builds or test suites while a Y-6 run polls (the run-3/4 lesson).
+R4-3 part 3 batch 2 (DEV 31510397) FAILED the CVO's grade and was REVERTED.
+   - Row DSGN_REBRND-S22 (ARMED, PROD held): 72 hover grounds moved onto the dark band rung without their inks. Navy Excel button 9.13 -> 1.64; BUY/SELL 2.9 -> 1.7; /attribution negatives 4.7 -> 3.3 in 44 rows.
+   - Why this seat's walk missed it: one element per class, cursor:pointer only (rows invisible), no modal opened.
+   - f1cdccd7: revert; the 38 paths equal d1c7485b; 6 CRLF files restored with autocrlf off.
+   - cab2b039: BUY/SELL chips (2.9 already at d1c7485b) take the lighter semantic ink on no tint. Pin state-s22.
+   - The CVO's re-walk of cab2b039 is asked (105278), to disarm.
+   - Redo of batch 2 only after the instrument hovers EVERY hover-styled element (rows included), grades every text descendant, and opens the modals. Pair each ground with its state's ink:
+     - a light hover rung for navy-ink elements;
+     - hover delta inks for semantic text;
+     - an opaque hover ink wherever the resting ink is translucent. That starts with the 17 `semantic-background-hover` sites on light grounds and the white-overlay hovers that land on light panels, each page re-censused, with a highlighted element walked on the band and on a light panel. The three IV.9 routes (/market, /positioning, /portfolio-management) are rendered at 1440x900 with the named populated fixtures: `.frontend-dev/testing/rb-s-9-market.json`, `rb-s-9-attribution.json` (it carries positioning data), and a new /portfolio-management fixture. For each, print the viewport share below the last content before and after, plus C10's 30px inside / 20px between measured on the render. `rb-s-9-sparse.json` is the negative control.
 R4-3. **FWD-13.** One per-role state table (rest, hover, selected, focused, disabled); walk light panels, not dark only; close row S9 (the OS dark-mode setting) on PROD.
 R4-4. **FWD-12.** A layer table covering light and dark; the layer values into the one token file and the contract.
 R4-5. **FWD-6.** The contract gains value labels, the layer table (R4-4) and the state clause; then one page rejected by clause, its author agreeing.
