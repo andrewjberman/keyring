@@ -17652,5 +17652,55 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S352",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T08:32:00Z",
+ "one_line": "at-6's packaged diff carries TWO store-shaped path literals that are neither on the halves' new-read-path list nor granted to this role: amgt/harvest/state/pull_log/ in the ADDED lib/research/harvest/bloomberg.py and filings/v1/ in the ADDED lib/research/management/roster.py -- a prefix this role's grant DELIBERATELY REMOVED at AMGT-rk-91 M2. Measured: neither is reachable from the request path (pull_log is a put_object reached only from the one-shot --move-m1 CLI; filings/v1/ is a module-level constant defined and never referenced), so neither is a STOP and no grant is owed. Found by SUBTRACTION from the code's own literals, not by reading the halves' list.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The order s.1 says 'For every new S3 read path the halves list, a simulate-principal-policy on the function's role must read allowed. If one does not, it is a STOP.' AMENDMENT 1 then LISTS five: sec/harvest/silver/filing_source/, amgt/harvest/state/filing_attempt/, bloomberg/harvest/bronze/exec_officers/, derived/model_block/ (allowed) and issuer-site/harvest/silver/filing_source/ (the grant leg). Both halves present that enumeration as the complete set. A FORWARD LIST has no denominator, and CLAUDE.md rule 24(i) says to hunt the uncovered member BY SUBTRACTION from a printed one rather than by reading the list back.",
+ "world_is": "I took the subtraction instead of accepting the list. Denominator printed on both sides: 32 granted prefixes parsed out of local.scoped_amgt_pool_prefixes in infra/aws/terraform/harvest/scoped-amgt-api.tf at HEAD (post-grant), against 24 distinct slash-bearing string literals extracted from the 9 CHANGED/ADDED files at the pin e041c86791. 11 of 24 literals matched no granted prefix. Nine of those eleven are not S3 at all (application/json, application/octet-stream, application/pdf, application/zip, text/html, n/a, role/name/..., opal-management-roster/1.0.0, timeline/day/{date}). The remaining TWO are store-shaped and are the finding: (1) amgt/harvest/state/pull_log/ in the ADDED lib/research/harvest/bloomberg.py -- the granted sibling is amgt/harvest/state/filing_attempt/, so pull_log/ is NOT covered. It is a WRITE (state_put_pull_log -> client.put_object with a never-overwrite precondition), reachable only from move_m1(), the one-shot AMGT-rk-90 M1 CLI mover invoked by --move-m1. The adapter never calls it at request time. Same class as store.py's silver_append, which the CTO already ruled rides harmlessly (msg 29511). (2) filings/v1/ in the ADDED lib/research/management/roster.py as FILINGS_PREFIX, beside POOL_BUCKET = 'opal-data-harvest'. This prefix's grant was DELIBERATELY REMOVED from this role at AMGT-rk-91 M2 (the .tf comment says 'No production reader of this adapter still reads filings/v1/ after this cell'), so a live read would answer AccessDenied -- the exact shape of row Z-S346. MEASURED: both FILINGS_PREFIX and POOL_BUCKET have occurrence count 1 in the 1321-line file, i.e. the definition and nothing else -- DEAD CONSTANTS. roster.py's ONE real get_object reads amgt/harvest/state/filing_attempt/<partition>/UNRESOLVED-SOURCE.json via store.address_of (builder output, confirmed by running it), which IS granted and simulated allowed. The only other filings/v1/ mention in the seven added modules is a DOCSTRING in lib/research/management/__init__.py describing rj-6's old interface. So the halves' list is COMPLETE for request-time reads and ruling 4 is discharged -- but it is complete by accident of reachability, not because the enumeration was checked. Not fixed: both literals are in the issuer's and HARVST's source, outside this order's <paths>, and removing a dead constant is not a redeploy this act is signed for.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Subtraction output: 'GRANTED PREFIXES (from the .tf at HEAD): 32' / 'SLASH-BEARING STRING LITERALS across the 9 files: 24 distinct' / 'SUBTRACTION -- literals NOT covered by any granted prefix: 11 of 24'.",
+   "bloomberg.py at the pin: 'def state_put_pull_log(security_key, stamp, body, client=None)' calling client.put_object, with _NEW_STATE_PREFIX = 'amgt/harvest/state/pull_log/' used only inside move_m1()'s assertion; bronze_write REFUSES request 'pull_log' outright ('pull_log is STATE, model_block_fye is RETIRED').",
+   "roster.py at the pin: line 98 POOL_BUCKET = \"opal-data-harvest\", line 99 FILINGS_PREFIX = \"filings/v1/\"; grep occurrence counts over the whole 1321-line file are 1 and 1, so neither is read anywhere. Its one get_object is at line 1159 against store.address_of('amgt','state','filing_attempt',...).",
+   "Builder confirmation, run live: store.address_of('amgt','state','filing_attempt', 'security_key=BA_US_Equity', object_name='UNRESOLVED-SOURCE.json') -> s3://opal-data-harvest/amgt/harvest/state/filing_attempt/security_key=BA_US_Equity/UNRESOLVED-SOURCE.json.",
+   "All five halves-listed paths simulated allowed on both limbs before the code leg landed, each call one --resource-arns, beside an isolated ungranted control (identity/) that read implicitDeny on both limbs -- so the allowed verdicts are not a saturated instrument.",
+   "A METHOD NOTE AGAINST MYSELF: my first read of roster.py used a filtered grep piped to head -40 and showed no S3 call, from which I nearly concluded the file makes none. The truncation hid boto3 x2, get_object x1 and Bucket= x1. The occurrence-count census with a positive control on scoped_amgt.py (boto3 6, get_object 10, list_objects 6, Bucket= 11) is what corrected it."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+,
+{
+ "id": "AMGT_RESAPP-Z-S353",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T08:32:00Z",
+ "one_line": "CTO condition 3 and AMENDMENT 1 require /peers to be 'timed PER SEGMENT', but the /security/<key>/peers route emits NO AMGT_SEGMENT line, so a per-segment breakdown cannot be read off the function's own logs: 0 of 6 invokes carried one. The total latency IS measurable and answers the STOP bar with room to spare (worst 136.83 ms against 5,000 ms, 0 non-200 over 6 invokes on 3 names, 12 members each), so nothing is blocked -- but the per-segment half of the condition is UNMEETABLE as written and is reported as such rather than satisfied by presenting the total as a breakdown.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "The CTO half's condition 3 reads '/peers timed per segment' and AMENDMENT 1 reads 'Time /peers per segment' and 'Also report: the /security/<key>/peers latency on 3 names. at-3 adds one stored read per member, in parallel.' The COO half makes a /peers over 5 s a STOP (not a rollback). The per-segment phrasing presupposes the route emits AMGT_SEGMENT timings the way the day route does -- which is where r64 c15's C2 clause gets 'every run's log carries AMGT_SEGMENT timings'.",
+ "world_is": "Measured on deployed GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE= with deliverables/0.7.0_AE_CloudOps~A/at6_peers_latency.py, one Lambda invoke per read with LogType='Tail' so Duration and any AMGT_SEGMENT line come from the function's OWN REPORT line rather than a client-side stopwatch that would also time the network. Six invokes, two per name on BA/AMD/VLO: 112.22, 111.65, 110.60, 112.81, 104.82, 136.83 ms, all status 200, 12 members each, and AMGT_SEGMENT lines on 0 of 6. The zero is NOT 'no time was spent' and it is not a dead parser: the same regex over the day route's logs returns six segment lines per invoke in r64 c15 minutes earlier, and scoped_amgt.py at the pin carries 5 AMGT_SEGMENT emit sites -- so the mechanism exists and simply is not wired into the /peers handler. The absence is ROUTE-SPECIFIC. Consequence for the grading: the STOP question ('/peers over 5 s') is fully answered at 136.83 ms, 2.7 percent of the bar, and at-3's one-stored-read-per-member did not make the route expensive. The diagnostic question the per-segment phrasing was reaching for -- WHERE the time goes now that there are 12 parallel member reads -- cannot be answered with the current instrumentation. Not fixed: adding emit sites to the /peers handler is a served-code change in lib/research/api/scoped_amgt.py, which this order's bounds forbid (the act and nothing else) and which would invalidate the signed CONTENT-DIFF.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Probe output: 'DENOMINATOR: 6 invokes over 3 names; non-200 0' / 'WORST duration: 136.83 ms against the 5000 ms STOP bar' / 'PER-SEGMENT COVERAGE: 0 of 6 invokes emitted any AMGT_SEGMENT line' / 'R70 AT6 PEERS LATENCY: YES'.",
+   "Per-invoke rows, all cold=False (warm, measured after the apply and after c15): BA 112.22 / 111.65, AMD 110.60 / 112.81, VLO 104.82 / 136.83 ms; members 12 on each.",
+   "POSITIVE CONTROL that the parser and the mechanism both work: r64 c15 on the same deployed bytes minutes earlier printed six AMGT_SEGMENT pairs per invoke (identity=525, import=776, gold_chatter_daily=365, _list=74, _get=37, _decode=182 on run 1), read by the same regex shape. And scoped_amgt.py at pin e041c86791 contains 5 AMGT_SEGMENT emit sites.",
+   "The probe is committed at org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/at6_peers_latency.py and passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39), so the measurement is reproducible rather than a one-off transcript."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }]
 ```
