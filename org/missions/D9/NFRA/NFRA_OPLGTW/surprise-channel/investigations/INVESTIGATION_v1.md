@@ -8279,3 +8279,28 @@ name the one known failure instead of silently inheriting it.
   "world_is": "r17c serves /yearinreview owner-only; AC3 and AC4 PASS on the served host; the check defects are fixed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S55",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-10-05T21:52Z",
+  "one_line": "The in-repo colleague onboarding kit .tools/m365-mcp-kit/ (last touched 2026-06-12, @8b0e7d2412) still sets up a LOCAL Lokka server ('Lokka-Microsoft', npx @merill/lokka) under the old 'm365' name, not the hosted gateway; a colleague following it to reconnect (asked for Alyssa, 2026-10-05) would not get the opalgateway connection.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: .tools/m365-mcp-kit/BOOTSTRAP.md:43 registers `claude mcp add-json Lokka-Microsoft -s user` with command npx @merill/lokka; README.md:1 '# M365 MCP Kit'; no mention of mcp.opalinvest.dev or opalgateway in either file.",
+      "READ: this device's working client entry is opalgateway -> {type: http, url: https://mcp.opalinvest.dev/mcp} (~/.claude.json user scope).",
+      "READ: PRD C1 (NFRA_OPLGTW_PRD.md:131-140): at cutover legacy refresh/access tokens are refused and existing users reconnect once; an idle client registration expires after 30 days (invalid_client)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-1 / FWD-7 and C1: an existing Gateway user reconnects once to the hosted gateway (https://mcp.opalinvest.dev/mcp) with a fresh registered client.",
+  "world_is": "The only in-repo onboarding instructions describe the June local Lokka setup under the old name; the correct reconnect (remove the old entry, add opalgateway over HTTP at https://mcp.opalinvest.dev/mcp, authenticate with the work account) is written nowhere a colleague would find it.",
+  "notes": "INERT: nothing breaks on its own; it misdirects whoever follows it. The remedy is a doc cell for the issuer (retire or rewrite the kit to the hosted-gateway reconnect), cut when convenient. Answer given to Andrew in-session on 2026-10-05."
+}
+```
