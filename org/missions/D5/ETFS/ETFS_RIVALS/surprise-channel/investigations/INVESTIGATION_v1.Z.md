@@ -3541,6 +3541,50 @@
     "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
     "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
     "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-05T19:34:06Z",
+    "one_line": "RIV-gd-1: the G5 drift is not all code -- 9,467 of 9,477 compared rows differ in their G3 revision labels, 6 income_funded labels flip under the UNCHANGED parent code, and 3 corporate_action_refs change, because three G3 pulls landed after the live G5 was built; the tool pins G3 per live object to separate code from data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tools/g5_drift.py (worker ~6 branch wk-ETFS_RIVALS-6) run over live S3 (read-only): 189 dates, 9,477 rows compared, 0 unclassified; live G5 recorded G3 label 20260930-95af6e3d1a1c (9,366 rows) or +20261001-bb49468667d5+20261002-f94cbd79e15c (111 rows); live G3 now holds 4 objects",
+        "income_funded: of 27 flipping rows, 7 move at 2a655a0180 (DVD_CRNCY currency preferred), 13 at 0b2981d770 (minor-unit currencies), and 7 already at the parent code 2a655a0180^ once the 10-02 pull is read, while the parent code over the pinned G3 reproduces the live value",
+        "the 10-02 pull actions-20261002-f94cbd79e15c carries `currency` on its events (the 09-30 import pull actions-20260930-95af6e3d1a1c has it null) and DGCXX_US money-market accrual events"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gd-1: a class is ONE cause found with git log -S on gold_trade_schedule.py, named by commit and cell; the live newest G5 is compared with a G5 built by current code from the live newest G1 (no word on G3).",
+    "world_is": "The G5 a replay builds is a function of the G3 read at replay time as well as of the code: a G3 pull landed after the live build changes every row's corporate_actions_revision/applied labels and some income_funded and corporate_action_ref values with no code change. The tool therefore builds twice (G3 pinned to the live object's recorded revisions; G3 as now) so a code class is not confounded by data, and names the data class 4fa3e25f5e RIV-g-4 (latest pull per security, labels joined). Any later replay of rows already served moves these labels again.",
+    "notes": "INERT: nothing served moved, every build wrote to a local sink. The brief's 'est_price_source and key_resolution new on 183' reads 186 here (a date counts when any compared row lacks the column; the six newest live objects carry both). Raised for the CTO's ruling on the history, not a remedy request."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-05T19:34:07Z",
+    "one_line": "gold_trade_schedule replay mode loads only the GLOBAL previous report date of a scoped start, so a fund absent that date loses its first in-scope window (CGIC 2026-01-02: live window 2025-12-30 to 2026-01-02, a replay started at 2026-01-02 builds none); the drift tool replays from 2025-12-01 and compares from 2026-01-02.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py:910-917@7ed4580858: replay `need` adds only ordered[i - 1], the global previous date, for each scoped date",
+        "first measurement (replay start 2026-01-02 over G1 staged from 2025-12-01): 13 live_only rows, of which CGIC 2026-01-02 x3 = no local window ending 2026-01-02; live G6 has CGIC 2025-12-30 -> 2026-01-02 because CGIC has no G1 on 2025-12-31",
+        "the same drift run with replay start 2025-12-01: those 3 rows read equal (0 live_only rows outside the 10 REFUSED-window rows)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gd-1 interface: G5 rebuilt into a LOCAL sink with gold_trade_schedule.handler_entry (mode replay or daily per date), per report date 2026-01-02..2026-10-02.",
+    "world_is": "A replay scoped to a start date silently drops the first window of a fund that did not report the global previous date; a named-fund rebuild (RIV-nf-1) or any scoped replay that starts at the first date it serves has the same blind edge. No error, the rows are simply absent.",
+    "notes": "INERT for round 9 (the tool avoids it by starting the replay 31 days before the first compared date). Latent for any scoped replay; the issuer decides whether the nf-1 cell's named-fund rebuild needs the same guard."
   }
 ]
 ```
