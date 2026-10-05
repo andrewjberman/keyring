@@ -1,0 +1,94 @@
+{
+ "claim": "measured (served platinum, streamed; deployed reader bytes)",
+ "current_manifest_last_modified": "2026-10-05T14:18:08+00:00",
+ "firm": "cottonwood",
+ "packet_keys": 32,
+ "post": {
+  "accounts": 5,
+  "amount_by_class": {
+   "multi_asset": 159905.56
+  },
+  "as_of_timestamp": "2026-10-05T14:17:11Z",
+  "by_key": {
+   "32008F606": {
+    "multi_asset": 4
+   },
+   "SGIIX": {
+    "multi_asset": 1
+   }
+  },
+  "fwd9_us_held": {
+   "ATI": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | US Small Cap | NAME_ALIAS": 2
+    }
+   },
+   "BG": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | Developed | TABLE": 2
+    }
+   },
+   "JAN": {
+    "accounts": 2,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 2
+    }
+   },
+   "VG": {
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | US Large Cap | TABLE": 1
+    }
+   }
+  },
+  "keys_held": 2,
+  "nodes_by_class": {
+   "multi_asset": 5
+  },
+  "partitions_declared": 27,
+  "parts_read": 27,
+  "revision": "de91a5bcec4668bb7f3a41c79135063aac261f57fe53079d749eb2bb50a57bb8"
+ },
+ "post_custody_total": 541920714.07,
+ "post_date": "2026-10-02",
+ "post_reconcile": {
+  "difference": 0.0,
+  "reconciled": true,
+  "tolerance": 0.01,
+  "total_after": 541920714.07,
+  "total_before": 541920714.07
+ },
+ "pre_date": "2026-10-01",
+ "reader": {
+  "accounts": 5,
+  "business_date": "2026-10-02",
+  "class_totals_classes": [
+   "alternatives",
+   "cash",
+   "commodities",
+   "equity",
+   "fixed_income",
+   "multi_asset",
+   "structured"
+  ],
+  "code_sha256": "RmruvCeoZtaxgSSFgmeFCL7ioOJTJrGv7MCsUJi8jxU=",
+  "last_modified": "2026-10-05T00:12:28.000+0000",
+  "multi_asset_row": {
+   "amount": {
+    "units": "USD",
+    "value": 159905.559475
+   },
+   "asset_class": "multi_asset"
+  },
+  "pin_t_match": true,
+  "reconciled": true,
+  "validate": {
+   "available": true,
+   "errors": [],
+   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_98i8q2t0\\contracts\\HoldingsSnapshot.schema.json",
+   "valid": true
+  }
+ }
+}

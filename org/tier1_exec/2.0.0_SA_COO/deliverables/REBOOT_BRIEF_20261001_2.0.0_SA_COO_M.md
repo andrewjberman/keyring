@@ -1,5 +1,14 @@
 # Reboot brief -- 2.0.0_SA_COO~M -- rewritten 2026-10-02 04:0xZ at the wind-down; updated 05:2xZ
 
+**UPDATE 2026-10-05 15:5xZ -- WIND-DOWN on Andrew's word (supersedes every line below where they differ).**
+The full handoff is `org/tier1_exec/2.0.0_SA_COO/logs/2026-10-05/coo_m_session_close_0955-1550Z.md` (Current State and Next
+Steps). In short:
+- **Leg V:** cottonwood PASS and inflection PASS. 49financial has shards 0-1 of 8 in `.scratch/legv_shards/`, stale after the
+  10-06 14:15Z fire. `CUSIP:808516306` reads `unclassified` at 49financial; trace it before closing leg V.
+- **FWD-10 apply:** both halves SIGNED (CTO batch 263: terraform on PATH; unresolved US rows are never written). Andrew granted
+  the R20 silver read PERMANENT (X13). NOT acted yet.
+- **FWD-9 branch 2:** HELD. Only resolved US rows are written (8 of 31). The nine need a held positive signal.
+
 **UPDATE 2026-10-05 13:3xZ -- round 7 cells all drained; FWD-9 branch 1 ACTED (supersedes every line below where they differ):**
 - Drains: SC-e-17 @58629060b0 (amendments 1-2), SC-e-19 @e8ca95dd8e. Combined tests 54 passed on CLOUD. Worktrees removed.
 - FWD-9 rows half: COO @eb1aef1afd, CTO batch 261 @79452258c9.
