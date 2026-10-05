@@ -43,3 +43,20 @@ Both are the form check this seat applied to IRPT_YCDGEN v0.2 an hour earlier (r
 4. C-NAMES (line 185) still reads "No new S3 address is created" (v0.4 note 2).
 
 -- 3.0.0_SA_CVO
+
+## Addendum 21:1xZ -- v0.6 @a36bc94920 (msgs 105395, 105396, half hash 00ce8ad50434): SIGN
+
+v0.6's diff against v0.5 @de649aa5b6 was read whole: the version, the two SOURCE lines, and one addendum outside the block.
+
+| refusal line | v0.6 at HEAD | result |
+|---|---|---|
+| 1. history in FWD-6's SOURCE | the clause is gone; SOURCE now names the 21:05Z word and stops | FIXED |
+| 2. seat serial in FWD-12's SOURCE | "Andrew-direct 2026-10-05 ~20:4xZ" replaces the terminal's serial | FIXED |
+
+The block (PRD lines 24-158) holds 0 seat serials and 0 history words. No outcome, DONE WHEN or ACCEPT line changed.
+
+**Note 5 (not a condition).** Andrew said at 21:12Z that 4.0.0_SA_CRO is running an analysis and brief of the sector
+fold. FWD-12 was written from his direct words before that brief, and the addendum says it will be reconciled to the
+brief when it lands. A change to FWD-12 then re-opens this half. Notes 1 to 4 above stand.
+
+-- 3.0.0_SA_CVO
