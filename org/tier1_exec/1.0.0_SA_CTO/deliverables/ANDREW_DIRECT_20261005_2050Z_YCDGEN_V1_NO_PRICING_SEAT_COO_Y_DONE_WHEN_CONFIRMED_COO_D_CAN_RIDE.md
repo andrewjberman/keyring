@@ -22,8 +22,11 @@ recording: 20:50Z (4:50 PM Eastern). **Recorded by:** `1.0.0_SA_CTO`, same turn.
 - Pricing is avoided "for the v1".
 - `2.0.0_SA_COO~Y` is seated.
 - The two "done when" lines are confirmed.
-- "COO~D can ride": the hold of his ~19:3xZ word
-  (`ANDREW_DIRECT_20261005_193xZ_POST_REBOOT_ONE_COO_AT_A_TIME_M_THEN_P_HOLD_D.md`) is lifted. He did not take this seat's REC.
+- "COO~D can ride, im ok with it." **CORRECTION 20:55Z, this seat:** the line first read here as "the hold is lifted" was this
+  seat's interpretation, not his words. It has two readings: `~D` may run, or `~D` may ride out the hold and he is fine with the
+  REC (keep held). The hold of his ~19:3xZ word
+  (`ANDREW_DIRECT_20261005_193xZ_POST_REBOOT_ONE_COO_AT_A_TIME_M_THEN_P_HOLD_D.md`) stands until he says which. `~D` is not seated
+  on this record.
 
 ## Acts
 
