@@ -101,3 +101,37 @@ holds as 10-K (7) or 20-F (6), a served-data regression.
 
 Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
 
+## 4b. AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~23:0xZ) -- the drafting leg is a NARROW SPLICE, not a rebuild; the legs are fixed
+
+**Measured:** a full `drafting_build --rebuild-pool` re-applies the whole gate. On BA it also adds `anchored` / `text_original` to every
+drafted sentence; on ASML it DELETES `thesis_driver_provenance`. That is wider than this act.
+- **The drafting leg is therefore** `python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/checks/drafting_evidence_splice.py
+  --keys BA_US_Equity,ASML_NA_Equity --write --pre-act-dir <your deliverables>/av8-pre-act/`.
+- It changes only `.evidence_records` and `.denominators.evidence_records`, round-trips the stored bytes, and refuses otherwise.
+- **Run its `--dry-run` first;** it must print `SPLICE: YES`.
+
+**THE LEGS, in order:**
+1. **Grant.** In `infra/aws/terraform/harvest/scoped-amgt-api.tf`:
+   - add `"filings/v1/",` back to `local.scoped_amgt_pool_prefixes`, updating the AMGT-rk-91 removal comment: av-4's
+     `read_segment_breakdown` reads it now;
+   - add `"dynamodb:BatchGetItem"` to the etf-classifications GetItem statement (~`:354`).
+   Then ONE `safe-apply` targeted at `aws_iam_role_policy.scoped_amgt_api_grants`; the plan is one in-place update, or a STOP.
+   `round72/checks/r72_grant_av8.sh` must read `R72 AV8 GRANT: YES` (C1, C2, C3 allowed beside the controls) before the code leg.
+2. **Code.** Build commit `7889ef1ae4`. The CONTENT-DIFF against deployed `wbIT0PHv` is exactly:
+   - CHANGED `lib/research/api/scoped_amgt.py`, `lib/research/api/monthly_chatter.py`, `lib/research/print/render_pack.py`;
+   - ADDED `lib/research/peers/numeric_tickers.py`.
+   Then ONE code-only `safe-apply`, then `round71/checks/leadpanel_cold_warm.py --label after` at once.
+3. **Drafting splice,** as above. The BEFORE VersionIds: BA `.zSrn_broPgdErEesbpfY8lJH5RMBCSb`, ASML `kQZePsmgbJlF1Tnvf3t2ljwqNnW9wrYX`.
+
+The surfaces gain `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/` (already listed) for the pre-act bytes.
+
+**AC4 (added): the grant.**
+
+<criterion id="AC4" cell_refs="AMGT-av-8"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/checks/r72_grant_av8.sh"; echo "exit=$?"</invocation><expect>the three controls and C1, C2, C3 all PASS allowed; R72 AV8 GRANT: YES; and exit=0</expect></criterion>
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round72/NEVER_WIDEN_HALF_COO_AV8.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND72_AV8_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+
