@@ -243,3 +243,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   }
 ]
 ```
+
+## IRPT_YCDGEN-S4 -- the keeper classes a data.series answer as IDENTIFIERS (C-KEEP)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T00:31:00Z",
+  "one_line": "The keeper labels the scatter_plot_data answer IDENTIFIERS although it carries a data series (data.series): in round 2's close runs YCD-R2-20261004T2315Z-A/B the POST with the documented metric ids answered 200 with data.series, and C-KEEP's shape rule has no member for that key, so a DATA answer is filed as identifiers and an element sourced from it would read as not available.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round2/DRAIN_END_PACKET.md section 3 ('One defect found') and section 5 item 3",
+      "this seat's round-2 L9 read (delegate): both close runs' run.json, scatter call status 200 with data.series"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-KEEP: each kept answer is classed by its shape, and an answer carrying data is DATA.",
+  "world_is": "An answer with data.series is classed IDENTIFIERS; no element reads it yet, so nothing printed is wrong today.",
+  "notes": "INERT (no element sourced from the scatter yet). Owner 2.0.0_SA_COO~Y: teach the shape rule the series key and pin it with the round-2 scatter answer's shape, before the OTHER_ENDPOINT re-pointing (packet section 5 item 2) reads it."
+}
+```
