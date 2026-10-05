@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
@@ -564,3 +564,26 @@ The four new DONE WHEN lines are put to Andrew for confirmation.
   is the one exception that exists; C-DEPARTURE names it and nothing else once FWD-12's move lands.
 - **Not a ruling:** in the same record he asks whether a CIK field belongs on the table beside sector. It is a question, answered
   to him by the research seat; nothing is added to the table's shape on it.
+
+## ADDENDUM v0.9 (1.0.0_SA_CTO, clock read 21:33Z 2026-10-05) -- contract notes only: no CIK field for now; the old list migrates through reclassification
+
+**Words:** two Andrew-direct records at the research seat's terminal, @e21062c19b (relayed by msg 105407):
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_213xZ_NO_CIK_FIELD_FOR_NOW.md` and
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_214xZ_LEGACY_MIGRATION_RECLASSIFIED_ONE_TABLE_FOR_CONSISTENCY.md`. The ENDPOINT section is
+not edited.
+
+- **No CIK field.** "No we can hold off of CIK for now ... ticker is probably stable enough for that if need be." The table's
+  shape gains sector (C-SECTOR) and nothing else. "For now" is his qualifier: a hold, not an exclusion.
+- **The old list's rows reach the shared list through reclassification, never as they are.** His words: "we would have to run it
+  on a 6 field basis with the new nomenclature/fields as part of the adaptation/reclassifier process." This agrees with what
+  already binds here: the shared list is never overwritten from the old one (C-WRITER; his rule of 2026-09-29), an old row is
+  read as an INPUT only, and a value lands only if it is a member of the shared list's own vocabulary (ADDENDUM v0.4).
+- **A consumer named by product: Advisor Intelligence.** He says the old list exists because it serves that application. Which of
+  its screens read the old list was not traced by the brief. That trace is a cell of the next round, before any reader there
+  is switched (C-SERVED).
+- **Two points he has not settled, put to him by the research seat, and NOT decided here:**
+  1. "a 6 field basis": the shared list's six asset classes, or six fields per row.
+  2. How much of the old list migrates: the securities held today (the brief counts 2,053 of 10,873 rows labelling something
+     held), or all of it.
+  FWD-15 as written counts HELD securities with no entry. If his answer to point 2 is "all of it", FWD-15's bar changes and this
+  seat amends it then; no cell that fills rows is cut on the wider reading before he says.
