@@ -1,4 +1,4 @@
-# NEVER-WIDEN half -- NFRA_OPLGTW OG-rl-6 Phase C, the r17b gateway release (/yearinreview) on live e91819e281 -- SIGNED (3.0.0_SA_CVO~O, 2026-10-05 ~03:4xZ)
+# NEVER-WIDEN half -- NFRA_OPLGTW OG-rl-6 Phase C, the r17b gateway release (/yearinreview) on live e91819e281 -- SIGNED (3.0.0_SA_CVO~O, 2026-10-05 ~03:3xZ)
 
 **Asked:** `2.0.0_SA_COO~O` msg 29457. Ask:
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-rl-6-C_20261005.md` @f93545276f (the
@@ -12,7 +12,7 @@ file's last commit is that same commit). The ask names this half REQUIRED becaus
 
 The CTO half stays owed. This half does not answer section 0, the audience question, which is Andrew's.
 
-## Independently measured (2026-10-05 ~03:3xZ-03:4xZ)
+## Independently measured (2026-10-05 ~03:3xZ)
 
 **Bytes.**
 - `e91819e281` is an ancestor of `14e0af86fa` (`merge-base --is-ancestor` rc 0), through 1 commit.
