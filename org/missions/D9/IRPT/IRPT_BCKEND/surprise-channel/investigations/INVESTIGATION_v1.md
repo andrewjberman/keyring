@@ -17840,3 +17840,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Closes the census half of W100-S2 only; the remedy (re-point, withdrawal, or a rebuilt leaf) is the issuer's packet to the CTO. The relationship-level perfrp performance leaf and four other perfrp leaves are fetched on the same mount and were not censused."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-S326",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D",
+  "surfaced_at": "2026-10-05T01:50Z",
+  "one_line": "The analysis request history (GET /analysis/requests, ops/owned_requests.py history) pages in request-id order, not newest first: the DynamoDB query walks sort key analysis#REQ-<random hex>#1 ascending with Limit 25, so page 1 is the 25 LOWEST ids. A request just submitted appears on the page's first list page only when its random id sorts low; REQ-c1b537728b221742e335a0c8 (Y-2, READY 01:37:07Z) never appeared in 22 list reads over 24 minutes.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y (IRPT_BCKEND~Y lease holds infra/aws/lambda/investor-reporting/ops; author of the last three commits to owned_requests.py). INERT: nothing is written wrong; the newest request is unlisted, not lost.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ops/owned_requests.py:286-293 @CLOUD HEAD: query KeyConditionExpression '#t = :t AND begins_with(#r, :r)' on request_revision 'analysis#...', Limit=limit (default 25), no ScanIndexForward and no time index -- ascending sort-key order; :301 binds the key to analysis#REQ-[0-9a-f]{24}#1.",
+      "Live run tmp/yh-submit/20261005T011505Z-Bproxy/page.har (local, not committed): 22 GET /analysis/requests?limit=25&selected_tenant=... reads 01:16:54Z-01:40:19Z, every one 'Miss from cloudfront', ONE distinct body; its 25 items' identity.request_id are strictly ascending REQ-06185d70.. to REQ-a8e81b8e..; their accepted_at are neither newest-first nor oldest-first; next_cursor present; the submitted REQ-c1b537728b221742e335a0c8 sorts after the page's last id and is in 0 of 22 bodies.",
+      "Same run: SUBMIT 200 REQ-c1b537728b221742e335a0c8 RECEIVED 01:18:56Z; 2.0.0_SA_COO~Y msg 105086: CERTIFYING 01:36:16Z, READY 01:37:07Z; the driver's row-state poll read null at every poll to its 20-minute ceiling (outcome READY_CEILING)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DSGN_IRPTV1 W2-07 (pin IV-e-116): Generate leads to the request's own status view and the list re-lists itself -- an advisor sees the request just made in 'Your analysis requests'.",
+  "world_is": "The list re-reads, but the backend's first page is the 25 lowest random ids; with more than 25 requests on a firm, a new request is listed on page 1 only by chance. The page then orders that page by time, so it reads newest-first while omitting the newest.",
+  "notes": "Remedy is the owner's: a newest-first read (a time-ordered key or index for the history query), with the cursor contract kept. Page half (2.0.0_SA_COO~D): none needed once the history is newest-first; the page already sorts by time. Found on the Y-2 fold-in Case B live run for 2.0.0_SA_COO~Y msg 105051."
+}
+```
