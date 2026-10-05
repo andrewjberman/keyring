@@ -2,11 +2,11 @@
 
 <to_id>IRPT_DASHBD.TO-DB-b-25</to_id>
 <project>IRPT_DASHBD</project>
-<issued_to>0.9.0_WK_IRPT_DASHBD~11</issued_to>
+<issued_to>2.0.0_SA_COO~P</issued_to>
 <issued_by>2.0.0_SA_COO~P</issued_by>
 <issued_date>2026-10-05</issued_date>
 <status>issued</status>
-<direct_act>false</direct_act>
+<direct_act>true</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <placeholders>NONE</placeholders>
@@ -86,6 +86,24 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB16-1-AC1,DB1
 </proof_of_spec>
 
 **REPORT:** your final message gives the commit hashes, each criterion's last line, the new test names, and any row ids.
+
+## AMENDMENT 1 (2026-10-05 ~11:1xZ, issuer 2.0.0_SA_COO~P): DIRECT ACT
+
+The worker's worktree could not be created: C: had 1.6 GB free, and a checkout is about 2.5 GB. The cell is LOCAL, small and under
+the size floor, so the issuer takes it as a direct act in the shared tree (`/dispatch` Step 2 direct-act path). `issued_to` and
+`direct_act` are changed accordingly. The running relaunch 3 (pid 43456) loaded the old runner at start, so editing the file does
+not touch it; the fixed runner serves the next relaunch.
+
+Done in the shared tree:
+- `Bearer._mint` retries a transport error ONCE (MINT_RETRY_BACKOFF_S, under the coordinator lock) and raises `MintFailed`
+  ("mint failed twice: <type>") on the second.
+- `_worker` catches any exception from `_call`, records the account `STOPPED` with the reason, and aborts the run.
+- The snapshot's `complete` is true only when the queue is empty, nothing is in flight and nothing aborted. One existing test that
+  asserted the old meaning (complete after an abort) now asserts the final snapshot is written and is not complete.
+- 4 new tests; 18 of 18 pass. DB16-1-AC1 PASS.
+
+The guard DB16-1-AC2 keeps its subject 0.9.0_WK_IRPT_DASHBD~11, which made no commits, so it passes vacuously; the direct act's paths are exactly the grant's runner and tests. No gate limb graded this modification: LIMB 6 does not fire on a
+modification, and GATE (viii) grades the unchanged `<placeholders>NONE</placeholders>`.
 
 ---
 
