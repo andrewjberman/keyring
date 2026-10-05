@@ -6957,6 +6957,50 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "No act mid-round: the spec is frozen, and the CTO half's condition 2 holds pacing, caps and the floor unchanged. For the round-46 analysis: whether to accept a multi-day sa leg, give barrons its own driver root, or batch the listing uploads (one append per source per pass) as a cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W95-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~95",
+      "surfaced_at": "2026-10-05T06:25:32Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "One batched listing append silently drops columns: pa.Table.from_pylist takes a table's columns from its FIRST row only, so pages whose first hit carries different optional columns lose them when batched.",
+      "spec_asserts": "Order build item 2: for the same pending pages the silver rows written (every column) are identical to the old path's; only the number and names of parquet objects differ.",
+      "world_is": "store.silver_append builds each fetch-date table with pa.Table.from_pylist(date_rows); measured: from_pylist([{'a':1},{'a':2,'b':3}]) has columns ['a'] and the 'b' value is gone, no error. Per page the old path used that page's first hit as the lead; one batch per source uses one row per date, so a later page's optional column (an SA hit attribute only some pages carry) would vanish, with record_hash unchanged (silver_append hashes the full row before the write). Added uploads._listing_key_rounds: pages ordered widest first row first; a page whose first-row keys are not inside its date's lead keys waits for a second round (a second append, never per page). Uniform pages (the 100-page control) are one round, 1 prefix read. An incomparable pair costs 2 rounds, plus one extra read when round 2 shares the batch object name and takes the wrapper's -r1 retry (test_no_column_the_per_page_path_kept_is_lost_across_pages: 2 to 3 reads against 4 per page). New rows carry every old column with equal values and equal record_hash; a late-round column absent on other rows reads null on them instead of an absent column.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/uploads.py _listing_key_rounds and HarvestUploader._run_listings (branch wk-AMGT_HARVST-95-r47a)",
+          "lib/research/harvest/store.py silver_append (pa.Table.from_pylist(date_rows))",
+          "lib/opal_data_harvest/test_at1_batched_listing_upload.py test_no_column_the_per_page_path_kept_is_lost_across_pages"
+        ]
+      },
+      "notes": "Not measured: how often live sa/bbg/ft/wsj/barrons listing pages differ in first-hit columns. The rounds guard makes the occurrence cost only an extra append."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W95-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~95",
+      "surfaced_at": "2026-10-05T06:25:32Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "disposition": "UNDER_INVESTIGATION",
+      "one_line": "The article path batched by HVST-ai-5 (HarvestUploader._run_articles, one append per source per pass) has the same first-row-columns exposure as Z-W95-S1 and carries no guard.",
+      "spec_asserts": "HVST-ai-5 / row Z-S58: only the object-name stamp is shared; every silver row is otherwise as the per-row path wrote it (test_ai5_batched_silver_append compares 6 uniform rows).",
+      "world_is": "_run_articles passes every article row of a source in one silver_append call; pa.Table.from_pylist takes a date table's columns from the first row only (see Z-W95-S1, measured). If article rows of one source and date carry different optional columns, those later columns are dropped without error. Not measured on live article rows: test_ai5 plants uniform rows. This order's paths exclude _run_articles, so it is untouched.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/uploads.py _run_articles lines about 310-360 (by_source, _land)",
+          "lib/research/harvest/store.py silver_append"
+        ]
+      },
+      "notes": "Disarm is the issuer's: a measurement of article-row column variance per source per date on already-written silver, or applying _listing_key_rounds-style ordering to articles in a later cell."
     }
   ]
 ```
