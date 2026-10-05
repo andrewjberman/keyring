@@ -7001,6 +7001,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "notes": "Disarm is the issuer's: a measurement of article-row column variance per source per date on already-written silver, or applying _listing_key_rounds-style ordering to articles in a later cell."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S87",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T07:58Z",
+      "one_line": "The backfill driver does not catch an upload timeout: sa's old-path upload-harvest (237 objects, started 03:55Z) hit the driver's 14,400 s job timeout, subprocess.TimeoutExpired escaped drive(), and the driver exited at 07:55:49Z with a traceback, no SUMMARY and no checkpoint status for the stop. 55 listing pages and 37 article objects were left pending in the outbox.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "backfill_driver: every job ends with a recorded status and a checkpoint write; an upload after every job that left something pending.",
+      "world_is": "r46_sa_barrons_run.err ends in TimeoutExpired raised from Collector.upload -> _spawn -> subprocess.run(timeout=JOB_TIMEOUT_SECONDS) at backfill_driver.py:204 and :312. The checkpoint holds 4 done pairs (the AAPL job is recorded as new_articles, stored 37). The pending outbox objects are intact and upload on the next job's upload, now on the batched path @23baacf0e1. Resumed 07:57:37Z from its own checkpoint (pid 37112; 187 sa pairs + 191 barrons planned), as the same run (CTO ruling 2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/harvest-backfill/r46_sa_barrons_run.err (TimeoutExpired, 14400 s) and r46_sa_barrons_run.out (no SUMMARY line)",
+          "progress.sqlite3 read-only: harvest_listing_outbox pending 55, harvest_raw_outbox pending 37 at 07:56Z"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "No data lost: bronze and the outbox hold everything. The upload slowness that drove the timeout is cured by at-1 (Z-S86). For a later analysis: catch TimeoutExpired in Collector.upload and record it as a transport-class stop, so the driver checkpoints and resumes rather than exiting."
     }
   ]
 ```
