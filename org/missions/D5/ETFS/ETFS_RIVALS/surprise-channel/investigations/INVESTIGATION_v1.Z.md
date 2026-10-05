@@ -3901,6 +3901,28 @@
     "world_is": "At a date whose live G5 is at the newest G1 revision the rebuild returns the existing object and writes nothing, so a served replay of the 182 planned dates would report OK and move none of them. The dry tool avoids it by seeding the live object under a name the stage does not read as that revision.",
     "disarm_owner": "2.0.0_SA_COO~RV",
     "notes": "ARMED for the issuer's served replay act, which this tool exists to precede: a fix is in gold_trade_schedule.py (not this cell's paths) or the replay names a new revision. Not a worker act."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S42",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T23:58Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S23: DISARMED by issuer hold -- the served rp-2 replay does not run until the trade schedule writes a new revision on a same-input rebuild_funds pass; the fix goes to the round-10 L10 slug.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the only writer that can fire the hazard is the served replay, an issuer act under its own never-widen pair, which this row holds",
+        "worker ~3 probe: written_new 0, object count unchanged, at 2026-01-02 where the live G5 and G1 are both at 20261005T054335Z-8b69497a75c4",
+        "the organic daily and batch passes run rebuild_funds only on a fresh G1 revision, which never meets the same-revision branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A rebuild_funds replay at current code writes a new G5 revision for the planned funds (RIV-nf-1, RIV-rp-2 served act).",
+    "world_is": "gold_trade_schedule._g5_target returns the existing object when the live G5 is already at the newest G1 revision with the same held funds, so the replay would read OK and write nothing.",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S23. The fix (gold_trade_schedule.py) is outside round 10's frozen decomposition; it rides the round-10 slug to 1.0.0_SA_CTO~Z. The row's disposition stays the CVO's."
   }
 ]
 ```
