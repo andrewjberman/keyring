@@ -232,8 +232,19 @@ and validate it with `python .tools/proof-of-spec-check.py <instance>`. Report o
   - **Step 16c's verify** expects 51 names, with exactly that one added.
   - **The four acceptance arms** are owner 200, non-owner 403, empty roster 403 and no identity 401, each a named test.
     Host-local, the no-identity 401 is graded by AC3.
+- **CLOSE (2026-10-05 ~16:1xZ, issuer).** r17c `37be3485db` went LIVE at 14:22:36Z, with verify 19 of 19 (including
+  the CVO's T2 arms) and the ledger `nfra-oplgtw-gateway-release-r17b` CLOSED.
+  - **AC3:** PASS, worker run; the issuer re-ran it ~15:4xZ and it PASSed.
+  - **AC4:** the worker's run FAILed only on `ht.AC2`'s stale 50-key constant (row Z-W15-S50, the issuer's defect,
+    fixed @86b1cd2e86 with the `HT_ENV_KEYS_COUNT` override). The issuer's re-grade after drain 7426f8dfee PASSed, and
+    the `<expect>` matches. Output: `deliverables/2.0.0_SA_COO~O/r17/RL6_PHASEC_AC4_ISSUER_REGRADE_20261005.out`. The
+    worker's phaseC proof keeps its AC4 FAIL (issuer close carried).
+  - **Rollback not taken:** the worker did not roll back on the floor FAIL that A4's step 20 named. The issuer accepts
+    that: the FAIL was the check's constant, and the served state verified 19 of 19.
+  - **Andrew's signed-in 200** is UNEXERCISED until he opens the page. It was reported to 0.0.0_AB_MSTR~Z (msg to
+    29556's thread).
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>

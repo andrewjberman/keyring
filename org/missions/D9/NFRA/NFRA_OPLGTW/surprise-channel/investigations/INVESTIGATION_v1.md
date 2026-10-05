@@ -8249,3 +8249,33 @@ name the one known failure instead of silently inheriting it.
   "world_is": "The two orderings contradict for rl6.AC1: its anchor (manifest at HEAD) does not exist until step 21. Reading it before the manifest commit is guaranteed to read served_release False on a correct deploy. Re-running it after the manifest commit is the meaningful read."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S54",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-05T16:15Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "OG-rl-6 Phase C closed: r17c 37be3485db LIVE at 14:22:36Z; ledger nfra-oplgtw-gateway-release-r17b CLOSED; drain 7426f8dfee. (1) Z-W15-S42 (BLOCKING: yr.AC3 could not read 4 of 4 because tests/ never ships): resolved by amendment A2, which grades the shipped app files; AC3 PASSed on the served host. (2) Z-W15-S46 (no roster check, tenant-wide): ruled by Andrew-direct 'Visible to me only' (record @121b7b016e) and CTO R15 @16f729348e. Shipped owner-only with its own fail-closed key; the deployed-bytes arms read 403 for a non-owner and 403 for an empty roster. (3) Z-W15-S50 (BLOCKING: ht.AC2 hard-coded 50 .env keys): the issuer's stale constant, fixed @86b1cd2e86 with the HT_ENV_KEYS_COUNT override (default unchanged); the issuer's yr.AC4 re-grade at CLOUD 7426f8dfee PASSed.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S42",
+    "NFRA_OPLGTW-Z-W15-S46",
+    "NFRA_OPLGTW-Z-W15-S50"
+  ],
+  "one_line": "OG-rl-6 Phase C closed with r17c live owner-only: S42 resolved by A2, S46 ruled by Andrew (owner-only) and shipped, S50 fixed (ht.AC2 count override); issuer AC4 re-grade PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/yr.AC4.sh at CLOUD 7426f8dfee: shipped 6, outside the kit set 0; floor rl4.AC1 yes, ht.AC2 yes; RESULT: PASS; exit=0",
+      "RUN: yr.AC3.sh from the worker worktree at fb2c79369a: host kit files 4 of 4; public 302 to login.microsoftonline.com; host-local no-identity 401; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/ (rl7 verify after: 19/19, T2 arms 11/11, .env 51 names, 50 hashes equal)"
+    ]
+  },
+  "spec_asserts": "S42/S46/S50: AC3 and AC4 as cut, and the audience question, gated Phase C.",
+  "world_is": "r17c serves /yearinreview owner-only; AC3 and AC4 PASS on the served host; the check defects are fixed."
+}
+```
