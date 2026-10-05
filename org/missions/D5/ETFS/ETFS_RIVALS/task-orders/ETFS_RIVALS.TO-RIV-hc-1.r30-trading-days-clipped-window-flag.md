@@ -35,6 +35,16 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   name pick (nt-1). Write the two new columns on every row shape the module writes, including refused rows.
 - Workstream B's interfaces are fixed by the checks so the four cells build in parallel: hc-1 adds `period_nominal_start` and `period_clipped` to holding_contribution rows; bt-1 adds a `period` column (R30, MTD, QTD, YTD) to buying_trend rows; rn-1 renders both; gc-1 reads buying_trend with `period == "YTD"` when the column exists. `R30` keeps its id and now means the last 30 NYSE trading days (`lib/trading_calendar.py`).
 
+- AMENDMENT 1 (2026-10-05 ~13:3xZ, issuer; row ETFS_RIVALS-Z-S26): your AC1 build is merged to CLOUD (b930e18d40) and
+  is your base. Measured on the served 10-05 page: G4 `total_return_index` is filled from Bloomberg
+  DAY_TO_DAY_TOT_RETURN_GROSS_DVDS (`enrichment_bloomberg.py:115`), the day's total return IN PERCENT (MSFT 10-02: 0.9223869
+  against px_close 512.80 -> 517.53), but `_daily` divides two days of it as an index (`r = b[1] / a[1] - 1.0`, source
+  `g4_tri`), so MSFT read about -4,830% on 10-02 and 7 of 13 funds were refused in every window. AC2 prescribes: the
+  `g4_tri` return of s on d is `total_return_index(s, d) / 100` from day d's G4 row alone (it already measures d-1 -> d);
+  `g4_close` and `holding_implied` keep their rules and order. State the column's meaning (a day's percent total return,
+  not an index level) in the module docstring where `g4_tri` is defined. Read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/hc-1.AC2.py` before you build;
+  an existing test asserting the old ratio is changed to the new rule, and your report names it.
+
 ## 3. SURFACES AND BOUNDS
 
 You READ (never edit): `lib/`, `integrations/bloomberg/` (the Positioning pull is under an Andrew-direct no-modify order), the package's other modules and tests, `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/` and the earlier rounds' `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round{5,6,7}/checks/`, the PRD `org/missions/D5/ETFS/ETFS_RIVALS/prd/ETFS_RIVALS_PRD.md` (v0.14 @4cc8e40575), the decomposition `org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.md` (round 8, its WORKSTREAM B section), and live S3 READ-ONLY where a check reads it.
@@ -53,10 +63,12 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 ## 4. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
+- **AC2** -- a G4 total-return day is the day's own percent return / 100, never a ratio of two days; a security with no total return keeps its px_close ratio (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/hc-1.AC2.py`)
 - **AC1** -- R30 starts on the 30th trading day ending on the as-of date; a fund clipped to its first report reads period_nominal_start 2026-01-01, period_start 2026-09-30, period_clipped True for YTD; its MTD is not clipped (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/hc-1.AC1.py`)
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-hc-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/hc-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC2" cell_refs="RIV-hc-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round8/checks/hc-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -67,6 +79,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** Andrew-direct smoke @1c31a5f6ce (S2, S3, S7, S8) under "yes, build round 8 tonight" @0a4321b843, PRD v0.14 @4cc8e40575; decomposition round 8 WORKSTREAM B section; measured inputs WORKSTREAM_B_INPUTS.md @7cc969288b. Chain `~6`, slot `~6`, position 1 of 1. Checks dry-run at base base CLOUD 7cc969288b (the package equals the deployed pin 75ad1e4d2e): hc-1.AC1 FAIL (2; control OK) as expected. Bounds: no merge before the 2026-10-05 07:00 ET vehicle pull; no deploy before the 13:30Z grades.
 
+**AMENDMENT 1 (2026-10-05 ~13:3xZ, issuer):** AC2 added from row ETFS_RIVALS-Z-S26 (a served defect inside this cell's module, found at the 09:21 ET read). Dry-run at CLOUD df768d5f46: AC2 FAIL 1 ((a) FAIL, (b) control OK); AC1 PASS. Slot ~6 re-seated fresh on a new worktree from CLOUD; the AC1 build is merged and inherited. Graded by: to-pipeline-gate on a modified order reads only GATE (viii) <placeholders> (NONE).
+
 <risk>SERVED</risk>
 <worker_class>worker-light</worker_class>
 <status>complete</status>
@@ -74,3 +88,4 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <workstream>B</workstream>
 <slot>~6</slot>
 <fabric>site-z</fabric>
+<status>executing</status>
