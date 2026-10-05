@@ -55,6 +55,13 @@ Context: 1.0.0_SA_CTO msg 105093 had routed the /yearinreview release to 1.0.0_S
 CTO works with 0.0.0_AB_MSTR, who works with 0.0.0_AB_MSTR~Z to position the release from the site Z box; MSTR~Z is in
 control of deploys there. This seat does not decide how that route and the OG-rl-5 placement combine.
 
+Correction, same channel, minutes later, verbatim:
+
+> *sitez is in control of opalgateway deploys, to be specific
+
+Read as written: the control named above is of opal-gateway deploys specifically, held by site Z. Relayed to
+1.0.0_SA_CTO.
+
 ## Addendum ~20:0xZ -- email recon, same channel, verbatim
 
 > I also want you to go through my email for additional context, anyone emailing about dashboards partcularly, that
