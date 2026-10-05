@@ -78,7 +78,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Sequencing:** MSTR~Z msg 29616 answered (a). r39 71097b53 pushed first; this edit stacks on it.
 - **Not this cell:** the Lead Panel's slow load (Andrew: to COO~Z, msg sent 15:03Z).
 
-<status>pending</status>
+<status>complete</status>
 <round>40</round>
 <slot>~102</slot>
 <fabric>site-z</fabric>
