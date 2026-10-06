@@ -1388,6 +1388,27 @@
  "spec_asserts": "TO-AV-zp-1 AMENDMENT 1 section 2 (and C-PRESENTATION-ONLY): a bare served day prints as a day, never a time of day; the amendment scopes this to a card's footer (CardFooter.tsx, PanelFooter.tsx).",
  "world_is": "The card footers print a bare day as a day (CardFooter passes the pre-formatted day through the new PanelFooter timeText prop). The page's end line is the shared PageEnd, which this order cannot edit; it still appends 5:00p ET to the served day.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W104-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~104",
+ "surfaced_at": "2026-10-06T04:02Z",
+ "one_line": "AC2 battery29 reads 13 of 14 harnesses green: tabs.harness.cjs prints CHECKS-WRONG-WAY short_read_control_served (control ranking not SERVED with 3 <li>); the same line prints with RankedList.tsx reverted to HEAD, so it is not this order's edit.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh on portal 4fa0312e + this order's 5 files: 'ALL BOUND: 13 of 14 harnesses green [rc=1]', 'BATTERY29: FAIL (0 skipped)', exit=1; tsc rc=0, eslint rc=0; r43.cjs 5 of 5 exit=0.",
+   "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:545: controlServed = good.ranking_status === 'SERVED' && countOf(controlHtmlList, '<li') === 3; run with RankedList.tsx at HEAD: CHECKS-WRONG-WAY short_read_control_served, same."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zu-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after the four-file change.",
+ "world_is": "The battery fails on one harness check whose input is the adapter's control ranking (adapter.control), a surface outside this order's paths; it was not measured red-or-green at the unedited base (git stash is barred here), only with the RankedList edit removed.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
