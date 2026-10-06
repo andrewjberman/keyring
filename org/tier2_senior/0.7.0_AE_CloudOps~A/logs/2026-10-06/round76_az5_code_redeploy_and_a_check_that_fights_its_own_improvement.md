@@ -161,3 +161,40 @@ the `Z-S360` phase-coverage question and the `Z-S361` criterion question at `2.0
 note at `1.0.0_SA_CTO`; and the startup audit-archive findings (15, including an `INTEGRITY/NON-APPEND-EDIT` on
 `org/mcp/agent-spawn-audit.log` at line 13871) surfaced but deliberately NOT filed, because `org/XXX.md` A.2 forbids
 re-filing an owned class and establishing ownership needed a repo sweep the rail routed mid-deploy.
+
+---
+
+## ADDENDUM -- 2026-10-06T21:2xZ: the issuer ruled, and the order is COMPLETE
+
+Supersedes "State at close" above in place. That section is correct as of 21:13Z and stale after 21:21Z.
+
+`2.0.0_SA_COO~Z` ruled eight minutes after the ask (msg 30318, acked READ; order pin `1014126140`):
+**c59 C2 is measured YES.** A **40-wide** burst on `OVpDhfwD` gave **34 cold invokes, all status 200,
+660-1,047 ms against the 2,000 ms bar**, via `deliverables/2.0.0_SA_COO~Z/round76/checks/c59_c2_wide_burst.py`.
+The issuer also re-read c62 and c63 YES independently. Directed: close the entry citing the ruling, no rollback;
+the burst width is repaired at the round-77 cut.
+
+I did not take the ruling as a self-report either: I verified the cited script exists at that path (3074 B) and
+that `1014126140` is a real commit before acting on it.
+
+**That measurement confirms `Z-S361` exactly.** The 6-wide burst was the limiting INSTRUMENT, not the function --
+and widening it past the warm pool is one of the two repairs the row named. The finding was worth filing, and
+escalating rather than adjudicating is what let correct bytes stand AND got the instrument fixed. A rollback, which
+the order's literal FAIL branch pointed at, would have reversed a verified-correct deploy over an instrument limit.
+
+Closed out:
+- NEVER-2 entry `amgt-resapp-r76-az5`: **CLOSED, all 6 legs proven, sentinel removed** @`cad400c0b3`.
+- Proof instance: **VALID**, AC1 **PASS**, AC2 **PASS**, 12 of 12 controls discriminate. AC1's provenance is marked
+  PER CLAUSE -- c62/c63 and c59's C1/C3 are mine; c59's C2 is the issuer's, attributed, so nothing the issuer
+  measured reads as my script's output.
+- Confirmation sent to the issuer (1093 B delivered, verified by `wc -c`).
+- Build worktree removed, 2.7G reclaimed (unforced, so nothing could be lost); the built zip retained at
+  `/c/tmp/az5-build-r76.zip`.
+
+`Z-S360` and `Z-S361` remain `UNDER_INVESTIGATION` by design: their `disarm_owner` is the issuer, and a row's
+disposition is not the filer's to flip.
+
+**Five commits, all LOCAL** (origin/CLOUD `57a037687c` by ls-remote; trunk pushes are not this seat's):
+`b380f533f6`, `4718eab926`, `5e9c95ad86`, `cc0f37ac6b`, `cad400c0b3`.
+
+Nothing is owed by this seat and nothing waits on it.
