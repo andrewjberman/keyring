@@ -21223,6 +21223,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/critical_paths/change_management/20261006T1946Z_amgt-resapp-r76-az5_deploy_completion.md leg L3"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-S361",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-06T20:49:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "r75 c59 C2's cold clause is ANTI-CORRELATED with the latency work it guards: its fixed burst of 6 cannot force a cold container once the function answers fast enough for a surviving warm pool to absorb 6 concurrent requests, so the faster the route gets, the less measurable C2 becomes.",
+  "spec_asserts": "r75_served.py --cell c59 C2: 'every cold invoke answers within the bar' (bar 2000 ms), measured by firing a burst of 6 invokes at once so the function must start new containers. CTO half @9c5a2a4b61 condition 4 reads 'c59 reads YES with rows EQUAL'. The standing ay-5 forward note already records that a battery which has warmed the function yields an EMPTY cold list, and that an empty list FAILS -- so 'slow' and 'unmeasured' are the same verdict.",
+  "world_is": "On the az-5 artifact OVpDhfwDG3BzKE++wDxMlFA6JrwpTnH3FiHC+NrzsrE= c59 was run TWICE. (1) In AC1's own chain at about 20:25Z: 'burst of 6: cold invokes 0 []' -> C2 FAIL. AC1's chain is structurally self-defeating here, because it runs c62 then c63 BEFORE c59 and those two read all 95 covered names on the deployed function, warming the exact pool C2 needs cold. (2) After a DELIBERATE 12-minute quiet period with no invokes (20:32:37Z-20:44:38Z), run alone: 'burst of 6: cold invokes 0 []' again. THE CAUSE IS MEASURED, not guessed: over the second run's window CloudWatch shows 9 invokes with a REPORT line served by only 4 DISTINCT log streams (containers), 0 carrying Init Duration. So (a) 12 minutes of idle did not reap the containers, and (b) a 6-wide burst against >=4 surviving warm containers forces no new container, because post-az-4 the route answers in about 200-800 ms and the pool absorbs 6 concurrent arrivals before the scheduler needs to scale out. C1 and C3 both PASS on both runs (C1: serves the snapshot, generated_at 2026-10-06T20:18Z, age 0.44 h, rows EQUAL 302 of 302, rot equal to the deployed register; C3: 828 ms after the 65 s hold). The ONLY failing clause is the cold-latency bar, and nothing about the snapshot or the rows -- which is the substance condition 4 names -- is in doubt. CONSEQUENCE: C2 is not a latency guard at this vintage, it is a cold-start-availability guard, and it will read FAIL more often precisely as the route gets faster. Two repairs exist and BOTH change the criterion, so neither is this executor's to take: widen the burst past the warm pool (concurrency becomes the parameter, not 6), or require a measured EMPTY pool as C2's precondition and report UNMEASURED rather than FAIL when it is not met. Disposition left to the issuer; the executor neither reversed correct work nor declared the clause satisfied.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r75_served.py --cell c59 --where deployed, two runs 2026-10-06 (in AC1's chain, and alone after the named quiet period); C:/tmp output captured in the az-5 proof instance",
+      "CloudWatch Logs /aws/lambda/opal-amgt-scoped-api from 2026-10-06T20:44:38Z: 28 events, 9 REPORT lines, 4 distinct log streams, 0 Init Duration",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-ay-5.the-code-redeploy-and-snapshot-write.proof_of_spec.json control 'c2s_second_failure_was_read_as_vacuous_rather_than_as_a_regression'"
+    ]
+  }
 }
 ]
 ```
