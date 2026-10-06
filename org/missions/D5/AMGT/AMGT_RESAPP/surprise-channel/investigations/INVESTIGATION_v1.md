@@ -18404,6 +18404,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "lib/research/print/tests/test_ax4_brand_form.py test_the_text_layer_is_clean_without_a_false_space"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W253-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~253",
+ "surfaced_at": "2026-10-06T06:35:09Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "Ruling 3b premise did not reproduce: at fb939c4a the page already read the route's top-level `pack` field and showed a date for 95 of 95; no field mismatch was found.",
+ "spec_asserts": "TO-AMGT-ax-2 (b): the route serves a date for 95 of 95 but the page shows NEVER; find the field mismatch in freshnessRows.ts and fix it.",
+ "world_is": "Deployed /freshness captured today: 95 covered rows, pack is a compact stamp on 95 of 95 (0 NEVER, 0 null), under the top-level key `pack`, not per_input. freshnessRows.ts at fb939c4a read `row.pack` for the pack input, so the Research pack column rendered the date (aw-8's own WALK_ROUND73 also records the column reading a date). Nothing was mapped wrong; I made the read tolerant of a pack served under per_input as well and added a test that a dated pack is not flagged. If the issuer saw NEVER somewhere, it was not in the pack column of this build.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~253/freshness_body.json (deployed /freshness, captured 2026-10-06T06:35:09Z, 2850172 bytes); portal 6de76f0509 on wk-AMGT_RESAPP-253-portal",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~251/WALK_ROUND73.md FWD-7 section: Research pack column reads a date"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W253-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~253",
+ "surfaced_at": "2026-10-06T06:35:09Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "After ruling 3c the page still flags 95 of 95 names stale: Seeking Alpha has never been read for 92 of 95, and that input is collected for 3 names, so by the order's rule it stays flagged per row.",
+ "spec_asserts": "TO-AMGT-ax-2 (c): an input collected for NO covered name is stated once; the stale rule applies only to the inputs the pipeline collects for that name.",
+ "world_is": "On the deployed body: web search (serp) NEVER on 95 of 95 -> stated once ('Web search is not collected yet.'), no longer flagged. Seeking Alpha: 92 NEVER, 3 dated (2026-09-11) -> collected for some names, so a NEVER on the other 92 still reads stale. Rendered result: 'rows flagged stale 95 of 95' on all three sorts. The flag is therefore still not a discriminator on today's data; whether a name with no Seeking Alpha read should be flagged is the issuer's/CTO's call and is one line in freshnessRows.ts. Sorts now reorder on this data (first row Stalest AIA Group, Freshest Costco COST, Company name Adobe ADBE US).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~253/freshness_body.json (deployed /freshness, captured 2026-10-06T06:35:09Z, 2850172 bytes); portal 6de76f0509 on wk-AMGT_RESAPP-253-portal",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~253/render_freshness.txt: 'rows flagged stale 95' under each sort"
+  ]
+ }
 }
 ]
 ```
