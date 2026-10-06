@@ -82,7 +82,7 @@ open), **AT L2/L3** (endpoint or registration), **QUIET** (no commits in 7 days,
 | NFRA_CTLPLN | the four-device control plane | **round 1 COMPLETE** (4 of 13 outcomes PASS); round 2 waits on dell1 standing | COO~C (round 1 done) | 11 commits today |
 | ADVI_COTBKF | Cottonwood 10-year backfill from Commonwealth | **EXECUTING** round 1 (3 task orders pending) | COO~C | registered and issued today |
 | MDPF_SECCLASS | one classification table (bd-securities consolidation, sector, AI classifier) | **EXECUTING** round 7; PRD v0.12 | COO~M | 166 commits |
-| MDPF_SECHIST | the securities database: ingestion and history for every security (Andrew's "pipeline aggregation" inflow work) | **PRD READY** v0.1 signed, no round yet | none | 2 commits (new today) |
+| MDPF_SECHIST | the securities database: ingestion and history for every security (Andrew's "pipeline aggregation" inflow work) | **PRD READY** v0.1 co-signed; distribution HELD by Andrew (~18:1xZ) | none | 2 commits (new today) |
 | IRPT_YCDGEN | the in-house YCharts report (the ticketing system's first workflow) | **EXECUTING** round 6; PRD v0.8 | COO~Y | 152 commits |
 | IRPT_BCKEND | Investor Reporting back end: ingestion, scoping, execution | **EXECUTING**; PRD v0.28, 173 orders complete | COO~P | 1,122 commits |
 | IRPT_DASHBD | client reporting dashboard (total-return reporting gold) | **EXECUTING** round 26, 1 order issued | COO~P (workstreams ~P, ~D) | 179 commits |
@@ -158,7 +158,9 @@ canon projects (laptop, quiet); NFRA_SPRINTWIN (site Z).
   still bids CPU and memory only and its awards still run through LDO-001.
 - **Not built:** the publish-and-integrate queue (FWD-4), the standing push rule (FWD-6; text approved, lands with the
   queue), leases (FWD-9), per-box identities (FWD-10), restart safety (FWD-11), the one decision list (FWD-12).
-- **The CTLPLN seat (`2.0.0_SA_COO~C`) has moved on** to ADVI_COTBKF; its FAST lease for CTLPLN ran to 18:43Z.
+- **The CTLPLN seat (`2.0.0_SA_COO~C`) fronts both NFRA_CTLPLN and ADVI_COTBKF** on Andrew's word at ~18:1xZ (CTO record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md`); it is running the backfill now and holds CTLPLN round 2, which waits on dell1.
+  (CORRECTED ~19:1xZ: this line first said the seat had moved on.)
 
 ---
 

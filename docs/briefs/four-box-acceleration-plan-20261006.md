@@ -21,7 +21,7 @@
    (section 3). The bidding operation is NOT on that path: first placements are the CTO's call, which you approved.
 3. **Start new work on the Dells; move in-flight work only at round ends.** New projects carry no state to migrate.
    MDPF_SECHIST (the securities database, your "pipeline aggregation") has a signed PRD and no round yet: it is the
-   ideal first real round on dell1 (section 4).
+   ideal first real round on dell1 (section 4), but you HELD its distribution at ~18:1xZ, so that is yours to lift.
 4. **Target layout:** laptop = planning seats + the control-plane lane only; site Z = its in-flight research and
    gateway work + integration, deploys and Bloomberg; dell1 = Investor Reporting and the ticketing workflow; dell2 =
    the securities and Cottonwood data spine (section 5).
@@ -55,8 +55,10 @@
 | FWD-13 | moving work between boxes by bid | **not built**: `remote-job.py` reads the register now, but bids CPU and memory only and its awards still go through LDO-001 |
 | FWD-9, 11, 12 | leases, restart safety, one decision list | **not built** |
 
-The seat that built round 1 (`2.0.0_SA_COO~C`) is now running the Cottonwood backfill (ADVI_COTBKF). Nobody is assigned to
-the control plane's round 2.
+**CORRECTED ~19:1xZ (`1.0.0_SA_CTO` msg 105698):** round 2 IS assigned. Andrew at ~18:1xZ: "Yeah we can have ~C front both
+CTLPLAN and COTBKF" (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md`). `2.0.0_SA_COO~C` holds NFRA_CTLPLN round 2 and the Cottonwood backfill;
+round 2 waits on dell1. This brief first said nobody held it; that was wrong. The same CTO change added your RDP outcome as
+FWD-14 (PRD v0.4).
 
 ---
 
@@ -122,7 +124,8 @@ network; whether the MacBook has a Remote Desktop client installed; who `muse` i
 
 ## 4. The first real round on a Dell (PROPOSED)
 
-**MDPF_SECHIST round 1 on dell1.** It is the securities database you described in the transcript ("our securities
+**MDPF_SECHIST round 1 on dell1 -- if you lift its hold.** You ruled at ~18:1xZ that it is registered and its PRD
+co-signed but NOT distributed: no lane seated, no task order cut, until your word (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md`). It is the securities database you described in the transcript ("our securities
 database ... the inflowing securities through the positioning ETF channel, through models, through investor reporting,
 through Advisor Intelligence"). Its PRD v0.1 is signed and no round has started (census 3.1), so nothing migrates. It
 feeds Q-1 directly (every performance report needs every security's history). Its overlaps with MDPF_SECCLASS (laptop,
@@ -143,7 +146,7 @@ between rounds; new work starts where it will live.
 |---|---|---|---|
 | **laptop** (control plane) | CTO, CRO and CVO seats and their research lanes; the control-plane lane (NFRA_CTLPLN) | -- | every other execution lane, each at its next round end |
 | **site Z** (integrator, deploys, Bloomberg) | its in-flight work until each closes: AMGT_RESAPP, AMGT_CORPUS, AMGT_HARVST, DSGN_AMGTV1, ETFS_RIVALS, NFRA_OPLGTW and the opal_ai family, NFRA_SPRINTWIN, ADVI_49F; plus every Dell's deploy step and the integration | -- | nothing mid-project; quiet rows (NFRA_REPORT, NFRA_IAMROLES202609, NFRA_OPSEC202609, NFRA_MCPORTAL) closed or parked by the CTO |
-| **dell1** (Q-1 reporting and the ticketing workflow) | MDPF_SECHIST round 1 (the thread); then IRPT_YCDGEN (the YCharts in-house report, the first ticketing workflow) and NFRA_TRNSPT (investor commentary); then IRPT_DASHBD and DSGN_IRPTV1 when you lift the hold | MDPF_SECHIST now; IRPT_YCDGEN at its round-6 end; NFRA_TRNSPT revived | -- |
+| **dell1** (Q-1 reporting and the ticketing workflow) | MDPF_SECHIST round 1 (the thread); then IRPT_YCDGEN (the YCharts in-house report, the first ticketing workflow) and NFRA_TRNSPT (investor commentary); then IRPT_DASHBD and DSGN_IRPTV1 when you lift the hold | MDPF_SECHIST once you lift its hold; IRPT_YCDGEN at its round-6 end; NFRA_TRNSPT revived | -- |
 | **dell2** (Q-1 data spine) | MDPF_SECCLASS, ADVI_COTBKF, and the new Cottonwood consolidation adapter (Commonwealth history joined to daily Black Diamond data) | ADVI_COTBKF at its round-1 end; MDPF_SECCLASS at its round-7 end; the adapter as a new project | -- |
 | **laptop, staying for now** | IRPT_BCKEND and ADVI_PERFRP (COO~P) | move to dell1 after the thread passes and the queue runs under load | -- |
 
@@ -218,7 +221,8 @@ Your words are in the record named at the top. The deadline is yours: "it has to
 1. **Are dell1 and dell2 set up** (kit installed, signed in)? If yes, the control plane's round 2 is cut today; if not,
    setting them up is the first act and only you can do it.
 2. **Round 2 as section 3**, with the bid, leases and the decision list as round 3 in parallel. REC: yes.
-3. **The first real Dell round: MDPF_SECHIST round 1 on dell1.** REC: yes; ADVI_COTBKF round 2 as the fallback.
+3. **The first real Dell round: lift MDPF_SECHIST's distribution hold and run its round 1 on dell1.** REC: yes; if you
+   keep the hold, ADVI_COTBKF round 2 is the first Dell round instead.
 4. **Interim integration:** site Z's fabric manager merges Dell rounds and pushes on your word, one word per morning and
    evening window, until the standing push rule lands. REC: yes.
 5. **The layout of section 5**, each move made by the CTO at a round end. REC: yes.
