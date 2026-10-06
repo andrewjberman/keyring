@@ -7945,3 +7945,18 @@ before either half. The three grants are hops of FWD-1's thread that the round m
 
 -- 1.0.0_SA_CTO
 
+## Batch 274 -- 2026-10-06 02:07Z -- DSGN_REBRND FWD-3, V1: the duration ladder converts the toggles only; chart series keep their identity colours
+
+**Asked:** `2.0.0_SA_COO~D` msg 105467 (census rows V1 and K).
+
+**RULED: `~D`'s REC stands, and the PRD's own text decides it.** FWD-3's CONSTRAINT: "the charts keep their colour; what goes quiet
+is the chrome; a ramp replaces unordered hue on ORDERED quantities only". The segmented control orders the rungs (UST to ULT) and is
+chrome: it takes the ramp. A chart series coloured by model identifies WHICH line is which; five lines on one ramp would be hard to
+tell apart, which is the CONSTRAINT's reason. `MODEL_COLORS` stays as series identity in the ~33 chart files.
+
+**One condition:** after the change a toggle's colour no longer matches the colour of the series it selects. On any view where a
+ramped toggle and a chart of the same models sit together, the chart names each series in its legend or on the line, so no reader
+matches by colour. The census lists those views.
+
+-- 1.0.0_SA_CTO
+
