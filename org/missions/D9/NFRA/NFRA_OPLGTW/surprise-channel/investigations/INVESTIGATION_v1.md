@@ -8668,3 +8668,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S60",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T05:39Z",
+  "one_line": "OG-rl-7 A1 PHASE B: CVO guard V2 (record host-local /login BEFORE and AFTER, require equality) has no arm in r19b_verify.sh or the order; a separate recorder (r19b_login_record_host.py.txt) was written and run, and the 12 recorded arms are equal before and after the deploy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: r19b_login_record_host.py.txt (derived from r19_login_arms_host.py.txt: same INSTALLED-code TestClient with a test ES256 key, stubbed consent, env -i, never /opt/opal-gateway/.env; adds the running service's host-local GET /login with no identity and with a planted header); run through r19_ssm_prog.py in modes 'configured record' and 'empty record'",
+      "RUN: r19b_phaseB_login_before.out (ssm ae30d826, before the deploy) vs r19b_phaseB_login_after.out (after): 18 comparable lines (MODE, INSTALLED_FILE md5, LOGIN_REC) equal, 12 LOGIN_REC arms: no identity 401; synthetic verified identity 307 to the stub consent URL (consent reached); planted unsigned identity 401; running service host-local no identity 401 and planted header 401; installed server.py md5 b13b1e54bf22c5955f425177c799cd7c both times (= live's)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The task order's AC1b and r19b_verify.sh grade md5, tools, .env and the sender arm; the CVO half V2 (@e79b976d9b) adds '/login behaving exactly as live', and the issuer's go message names it as a record BEFORE and AFTER with equality required.",
+  "world_is": "No criterion script carries a /login record, so V2's arm lives only in the deliverables folder as a recorder plus two output files; the equality is a comparison of normalised lines done by the worker, not a check the order's AC1b runs.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
