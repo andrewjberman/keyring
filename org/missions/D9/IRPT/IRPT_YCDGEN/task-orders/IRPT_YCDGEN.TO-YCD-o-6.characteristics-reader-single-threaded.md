@@ -65,9 +65,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, first order of addendum H (decomposition IRPT_YCDGEN_DECOMP_R6H.md), the one-argument fix for the host abort found while proving the pinned pyarrow for branch B2 (CTO ruling msg 105485 point 3). Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~03:2xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @98f0a7bfb2, merged dfce2635d7; o-6.AC1-AC3 PASS on the merged tree (AC3: 43 passed), instance VALID. The diff of layout_overview.py is exactly the one call: `use_threads=False` added to `pq.read_table(io.BytesIO(body), ...)`; two tests added (one records the keyword arguments, one compares rows for a small real parquet). The abort at exit is host-specific, so the host re-run of the pinned pyarrow with this code is B2's real-stack proof; no row filed.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6H_PYARROW_THREADS</workstream>
 <slot>~1</slot>
