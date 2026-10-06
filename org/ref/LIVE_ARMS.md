@@ -9,7 +9,9 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
-- DSGN_REBRND (`2.0.0_SA_COO~D`): STOPPED and HELD by Andrew-direct ~14:35Z 2026-10-06 at the `2.0.0_SA_COO~D` terminal, VERBATIM:
+- DSGN_REBRND: **CLOSED** by Andrew-direct ~20:1xZ 2026-10-06 at the `1.0.0_SA_CTO` terminal ("Yeah REBRND should be closed definitively."; record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_DSGN_REBRND_CLOSED_AND_RDP_DIRECTIONS.md`); no seat works it. Before that,
+  `2.0.0_SA_COO~D`: STOPPED and HELD by Andrew-direct ~14:35Z 2026-10-06 at the `2.0.0_SA_COO~D` terminal, VERBATIM:
   "Stop work on REBRND", then "Any work on DSGN_REBRND from this point forward is on hold and not to be merged to the main branch
   unless I explicitly ask for it." Record: `org/missions/D13/DSGN/DSGN_REBRND/STATUS.md` "Open at Andrew" (@2ddf3afa91). Its light
   /market page is "kept off the main branch without explicit approval" (`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261006_1414Z_LIGHT_MARKET_EXPERIMENT_OFF_MAIN_BRANCH.md`).

@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.4",
+ "prd_version": "v0.5",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -127,15 +127,18 @@
          SOURCE     Andrew-direct 2026-10-06 ~14:0xZ (the CTO elects, the box's MSTR runs the bid) and
                     "agreed on all points go ahead"
 
-  FWD-14 From his MacBook, or any device on Opal's private network, Andrew opens a remote desktop on
-         any of the four boxes
-         DONE WHEN  EXERCISED -- one remote-desktop session opened from the MacBook to each of the four
-                    boxes over the private network
+  FWD-14 From his MacBook Andrew opens a remote desktop on all four boxes, and from the Windows laptop
+         on the other three, over Opal's private network
+         DONE WHEN  EXERCISED -- one session from the MacBook to each of laptop, site Z, dell1 and dell2, and
+                    one from the Windows laptop to each of site Z, dell1 and dell2, all over the private
+                    network
          ACCEPT     Andrew sits at his MacBook and opens a remote desktop to the laptop, site Z, dell1 and
-                    dell2 in turn, each over Opal's private network; a box added later is reachable the same
-                    way as part of being set up
+                    dell2 in turn; at the Windows laptop he opens one to site Z, dell1 and dell2; each goes
+                    over Opal's private network; a box added later is reachable the same way as part of
+                    being set up
          SOURCE     Andrew-direct 2026-10-06 ~18:5xZ, "we need RDP on all devices accessible
-                    via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook"
+                    via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook";
+                    the directions, Andrew-direct ~20:1xZ
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -299,3 +302,11 @@ the laptop and site Z halves need no Dell. The ratified-text half re-opens for `
 ## v0.4 wording (1.0.0_SA_CTO, 2026-10-06) -- on `3.0.0_SA_CVO`'s review @817586a898
 
 FWD-14 SOURCE names no seat. S14's bound gains its negative arm per box. C-RDP cites row S1. Re-opens nothing (proportionate sign-off).
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO, 2026-10-06) -- FWD-14's directions on Andrew's word
+
+Andrew-direct ~20:1xZ (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_DSGN_REBRND_CLOSED_AND_RDP_DIRECTIONS.md`):
+the MacBook reaches laptop, site Z, dell1, dell2; the Windows laptop reaches site Z, dell1, dell2; the laptop need not reach the
+MacBook. FWD-14 amended in place. His Dell setup steps are on his Desktop
+(`DELL1_DELL2_TAILNET_AND_REMOTE_DESKTOP_SETUP.txt`): edition check, tailnet join with key expiry off, Remote Desktop on, the firewall
+lock to 100.64.0.0/10, no sleep on AC, the connect and refusal tests. The ENDPOINT changed: the ratified-text half re-opens.
