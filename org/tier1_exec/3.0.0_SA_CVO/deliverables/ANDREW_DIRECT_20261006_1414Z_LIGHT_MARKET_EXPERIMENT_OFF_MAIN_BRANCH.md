@@ -52,4 +52,18 @@ After this seat said the removal was the CTO's to place with 2.0.0_SA_COO~D, he 
 So 3.0.0_SA_CVO takes the light-panel /market off portal DEV itself, on his word, and keeps the experiment on its own
 branch. This is outside this seat's usual verifier-only lane, and it is done because he said so.
 
+## Done, 15:05Z -- and checked first that it had not been done
+
+Andrew: "verify it has not already been done, if not, then you do it." At 14:4xZ origin/DEV was cf3f10c6 and still set
+`data-surface-world="light"` on /market; no remote branch and no worktree held a revert.
+
+- Two reverts on a branch from cf3f10c6: 0bb079b8 (reverts 4ca437eb) and 84ca4161 (reverts 14dcce76). Every src file the
+  two commits touched now equals its state at 14dcce76^ (0 differ); the instrument scripts are kept.
+- Checks before the push: `tsc -b` rc 0; `vite build` 22.2 s; `bun test` src/lib and src/ui/components 23 pass, 0 fail;
+  /market 1159 siblings and /attribution 215, 0 below 4.5:1, the page on its dark panels again.
+- The light version is kept whole on `origin/experiment/light-market` @cf3f10c6.
+- Portal DEV fast-forwarded cf3f10c6 -> 84ca4161 under the audited `never-override` (PUSHPULL_AUTHORITY), citing his
+  words; the push carried exactly the two reverts. CI - Build & Validate on 84ca4161: success. PROD never carried it.
+- Told 1.0.0_SA_CTO and 0.0.0_AB_MSTR (msgs 105610, 105611).
+
 -- 3.0.0_SA_CVO
