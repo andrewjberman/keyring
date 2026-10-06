@@ -2135,3 +2135,58 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The criteria were met as written; only the names differed."
 }
 ```
+
+
+## MDPF_SECCLASS-S30 -- Inflection's served firm_concentrations.json reports total_firm_aua $389,707,543.56, 1.873 times the same-day 
+
+```json
+{
+  "id": "MDPF_SECCLASS-S30",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T17:03Z",
+  "one_line": "Inflection's served firm_concentrations.json reports total_firm_aua $389,707,543.56, 1.873 times the same-day firm_composition.json total $208,044,040.13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-inf/platinum/firm/firm_concentrations.json (LastModified 2026-10-06 12:52:58Z, data_as_of 2026-10-05): total_firm_aua 389707543.56; IEFA total_position_value 40941476.76",
+      "s3://opal-data-inf/platinum/firm/firm_composition.json (LastModified 2026-10-06 12:51:23Z, data_as_of 2026-10-05): total_market_value 208044040.13; IEFA 21495407.99; leg V custody total 206,764,647.31 at 2026-10-02 (MULTI_ASSET_LEG_V_inflection_20261005.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "INF_D_07a docstring: pct_of_firm_aua is each security's share of firm AUA, on the same holdings as the firm composition.",
+  "world_is": "The two served Inflection firm artifacts of the same date disagree by $181,663,503.43 on the firm total and by 1.90x on the largest position. The gap is not the held multi_asset ($40,560.31). CAUSE NOT READ: a join that repeats position rows is a candidate, not shown.",
+  "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in its SC-e-20 amendment 1 triage (COT_FIRM_CLASS_LIST_TRIAGE_20261006.md); adopted as a seat row by 2.0.0_SA_COO~M at the drain. Found while reading INF_D_07a's served artifact for the SC-e-20 triage (T11). Off-task; not edited; the T11 verdict does not depend on it."
+}
+```
+
+
+## MDPF_SECCLASS-S31 -- 49 Financial's served mix artifacts (C_06 entity files, mix_daily_summary) were last written 2026-10-04 05:27Z
+
+```json
+{
+  "id": "MDPF_SECCLASS-S31",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T17:03Z",
+  "one_line": "49 Financial's served mix artifacts (C_06 entity files, mix_daily_summary) were last written 2026-10-04 05:27Z, while its composition artifacts were written 2026-10-06 05:25Z, so the two read different classification states and the mix has not yet met multi_asset.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M (decides whether the BD C_06 and lib/mix_views lists join the pair before the next BD C_06 run)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-bd/gold/views/mix_daily_summary.json LastModified 2026-10-04 05:27:06Z, 10-02 firm classes sum 1,994,163,061.52 with no multi_asset key; 77 of 77 client mix files for relationships holding a multi_asset key sum to 0.999999 at 2026-10-02",
+      "s3://opal-data-bd/gold/views/firm_composition.json LastModified 2026-10-06 05:25:50Z: total 1,994,163,246.13 vs class sum 1,988,724,709.05, gap 5,438,537.08 = BD D_03 re-run multi_asset 5,438,537.07 (triage T03)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-20 amendment 1 triage: a verdict states whether the served artifact loses a held multi_asset value today.",
+  "world_is": "The BD mix lists (C_06:182, lib/mix_views:25) lose none today only because the served run predates the table's multi_asset rows (INFERRED from timing; the run's classifier state was not read). The first C_06 run against the current table publishes 77 client mixes that omit multi_asset, and C_06's aggregate sum guard passes. BD C_06 and mix_views are outside the granted paths and were not edited.",
+  "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in its SC-e-20 amendment 1 triage (COT_FIRM_CLASS_LIST_TRIAGE_20261006.md); adopted as a seat row by 2.0.0_SA_COO~M at the drain. Disarm owner: 2.0.0_SA_COO~M (decides what joins the pair; the BD lists carry the same defect SC-e-20 fixed for Cottonwood). Triage T01, T02."
+}
+```
