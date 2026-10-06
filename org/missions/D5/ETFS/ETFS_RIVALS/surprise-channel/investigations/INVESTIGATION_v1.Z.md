@@ -4162,6 +4162,28 @@
     "spec_asserts": "RIV-pk-1 interface: security_parsekey is null when not asked or not answered.",
     "world_is": "The build stores a true null; the check's truthiness test was the wrong instrument for a null on this toolchain.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Resolves the S14 entry in the pk-1 instance's surprises list; the row's final disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S52",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T19:41:25Z",
+    "one_line": "The L8 slug gate read round 11 as non-terminal: it takes the FIRST <status> tag of an order (orders append their flips, so the first is 'pending'), then falls back to the proof instance, whose cell_ref check reads the decomposition at HEAD -- and DECOMP v1.1 (ce6c8e89ee, this seat) had replaced round 11's cells in place, so 'RIV-gt-1' / 'RIV-dr-1' were not found. Two complete orders read INVALID; the CVO's slug needed an audited override.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO~RV slug commit 69de0f08e0: '# surprise-row-override: round 11's orders gt-1 and dr-1 ARE complete (last <status> tag complete ...). The gate reads the FIRST <status> tag (pending) ... cell_ref RIV-gt-1 / RIV-dr-1 not found'",
+        "ROUND_ANALYSIS.round11.md @3ae96d6bc7 ruling 4: the gate reads the LAST <status> tag; the cell_ref check reads the decomposition at the order's issuance commit",
+        "decomposition v1.3 (37849d84e8): this seat now APPENDS round-13 cells instead of replacing earlier ones, so issued orders' cells stay readable at HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A slug gate grades an order's TERMINAL state: its last <status> tag, and its cells as issued.",
+    "world_is": "It grades the first tag and the decomposition at HEAD, so a true terminal state reads INVALID and invites routine overrides.",
+    "notes": "disarm_owner (n/a, INERT): the gate's lane owner (the L8 slug gate / proof-of-spec checker), not this project's cells (round-11 analysis item 4). Filed by 2.0.0_SA_COO~RV as the analysis directs; the in-place replacement that triggered the cell_ref half was this seat's, now avoided by appending."
   }
 ]
 ```
