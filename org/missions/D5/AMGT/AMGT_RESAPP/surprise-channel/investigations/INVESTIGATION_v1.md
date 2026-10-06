@@ -21245,6 +21245,77 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/AMGT_RESAPP.TO-AMGT-ay-5.the-code-redeploy-and-snapshot-write.proof_of_spec.json control 'c2s_second_failure_was_read_as_vacuous_rather_than_as_a_regression'"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W266-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~266",
+  "surfaced_at": "2026-10-06T21:36:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "On the deployed DEV page /freshness lists 95 of 95 covered companies as stale with one shared Last refreshed date, so a stale name cannot be singled out by flag or date; cold first paint was 4,116 ms.",
+  "spec_asserts": "PRD v0.40 FWD-7 DONE WHEN: 'a seat opens the one place on demand, sees every covered company with its last-refreshed date, and finds a stale one without opening any folders'.",
+  "world_is": "Walked 2026-10-06 ~21:31Z on DEV portal ref 6b4e89a8 against function CodeSha256 OVpDhfwD, role admin. First page after sign-in: first table row at 4,116 ms from navigation (DOMContentLoaded 223 ms; /api/scoped/amgt/freshness read started 954 ms, took 2,665 ms, 1,073,156 bytes encoded); second visit 1,591 ms. 95 rows; 95 of 95 data-stale=true; Last refreshed has ONE distinct value (2026-10-06) across 95 rows; Seeking Alpha reads Never on 92 and 2026-09-11 on 3 (Alibaba BABA, Boeing BA, Costco COST); Web search Not collected on 95. Summary: '95 of 95 covered companies have an input that is stale (older than 7 trading days, or never read).' Three sort buttons. The three names with a different Seeking Alpha date are distinguishable only by that column. Seen, no verdict (judgment read at L9).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/WALK_ROUND76.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/001-fwd7-freshness-first.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd7/fwd7-first.json"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W266-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~266",
+  "surfaced_at": "2026-10-06T21:36:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The FWD-1 segment breakdown prints the segment label on every row rather than one heading per segment (BA 11 rows under 3 labels); AMD serves no segments; ASML's 'segments' are share-capital items.",
+  "spec_asserts": "PRD v0.40 FWD-1 DONE WHEN: 'the model numbers, the business description and the segment breakdown are on screen'. The order's walk line reads 'the segment breakdown, one heading per segment'.",
+  "world_is": "Walked on DEV ref 6b4e89a8. BA: [data-segment-breakdown]=SERVED, one h4 'Business segments -- from the filing', 11 rows, label repeated on each row (Commercial Airplanes 4 rows, Defense, Space & Security 3 rows, Global Services 4 rows; rows interleave, e.g. row 8 Commercial Airplanes after row 7 Global Services), source line 'From the 10-K filed January 30th, 2026.' AMD: state REASON, 0 rows, the panel reads 'No filing analysis is stored for this name yet, so no segment breakdown is shown. A segment table with figures needs a separate segment data pull.' ASML_NA: SERVED, 5 rows labelled Authorized share capital, Other, Treasury shares, Major holders, Board holdings (capital structure, not business lines), source '20-F filed February 25th, 2026.' About the company opened on 3 of 3 with text (BA 247, AMD 401, ASML_NA 253 chars); Model tab opened on 3 of 3 with 'Reported figures and Bloomberg consensus estimates, from the model block'. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/WALK_ROUND76.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/008-fwd1-BA-segments.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/013-fwd1-AMD-segments.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/018-fwd1-ASML-segments.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd18/BA_dom.json"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W266-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~266",
+  "surfaced_at": "2026-10-06T21:36:08Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "FWD-18 passage text is flat table-extraction text: BA's carries no column labels, ASML's shows year columns and the row label as separate lines; AMD has no driver chart; ASML's chart y-axis labels read clipped.",
+  "spec_asserts": "PRD v0.40 FWD-18 DONE WHEN: 'a seat clicks, on demand, a filing-derived figure ... through to the passage it came from'. The order asks for 'the filing passage with the cite and, for a table passage, the row and column labels'.",
+  "world_is": "Walked on DEV ref 6b4e89a8. BA driver chart SERVED, caption 'Commercial Airplanes (BCA) aircraft deliveries -- from the filing, not the model', 3 links (2023: 528, 2024: 348, 2025: 600). Clicked the first: passage 'Cumulative deliveries 8,528 1,573 1,303 1,727 1,110 / Deliveries 396 (9) 1 / 32 (14) 26 / 73 528 / * Intercompany deliveries identified by parentheses / Loss From Operations', cite 'From the filing: ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS / TABLE 2023'; 0 table elements; only '2023' above the rows, no column labels for the five numbers. ASML_NA driver chart SERVED (issued ordinary shares), first link clicked: lines '2023','2024','2025','Issued ordinary shares with nominal value of EUR0.09','393,421,721','393,283,720','385,417,665', cite 'From the filing: TABLE / period 2023'; 0 table elements; the passage block rendered three times (once under each link) after one click, each cite 'period 2023'; the chart's y-axis tick labels read '000000000' (clipped) on the capture. AMD: no [data-driver-chart] on the page (driver state null), so no point to click. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/WALK_ROUND76.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/007-fwd18-BA-passage-open.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/017-fwd18-ASML-passage-open.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/captures/012-fwd18-AMD-driver-chart.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd18/BA_click.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd18/ASML_click.json"
+    ]
+  }
 }
 ]
 ```
