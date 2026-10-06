@@ -14,6 +14,10 @@ Round 10 is drained: 4 of 4 terminal (eg-1, ok-1, rp-2, iam-1).
 **Judgment:** ok-1 J1 has no served artifact this round (deploy sequenced after round-11 cell 1). It moves to round 11. No other
 round-10 order carries a J1.
 
+**Part B (2026-10-06 ~14:00Z), the 10-06 reads:** C-S44 -- D12 leg, iam-1 data and sweep PASS; nm-3 NOT MET (2 holdings);
+eg-1 live refusal and S24 backfill proof NOT EXERCISED; new rows S47 (dialogs OFF on the page) and S48 (enrichment hangs on an
+unreachable DAPI).
+
 **Dispositions:**
 - C-S42 confirms W3-S22's reading, on one condition.
 - C-S43 dismisses 13 items.
@@ -86,6 +90,33 @@ round-10 order carries a J1.
     },
     "disposition": "DISMISSED_WITH_REASON",
     "dismissal_reason": "Applied, cited, or sequenced by ruling. S31's disarm (2.0.0_SA_COO~RV) is owed at the first data run: the 07:00 ET marker publish reads stored names, and the 09:00 ET sweep writes the universe."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-C-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-06T14:00:00Z",
+    "one_line": "The 2026-10-06 reads (ROUND_ANALYSIS.round9.md ruling 6; CTO~Z msg 30024: graded from the post-sign-in re-run, with the 11:00Z fire as one cause, the Terminal down). PASS: the D12 daily leg, iam-1's data run (S31 disarm verified) and the organic sweep. NOT MET: nm-3 (2 holdings still ticker-form with no reason). NOT EXERCISED: eg-1's live refusal arm (S48) and S24's backfill-night proof. New: the page's dialogs are OFF (S47).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "adjudicates": [
+      "ETFS_RIVALS-Z-S44",
+      "ETFS_RIVALS-Z-S45",
+      "ETFS_RIVALS-Z-S46"
+    ],
+    "spec_asserts": "The first-act block of logs/2026-10-05/session_cvoRV_20261005T1320Z-2020Z.md (commits 6b5941834e, 2b31efc634): nm-3 J1, S24, eg-1 live, the D12 daily leg, iam-1's first data run, S31.",
+    "world_is": "Cause: the Terminal was down 03:09Z-12:22Z (S44/S45: a sign-in script clicking at stale screen coordinates, per 0.0.3_BG_BBGTerminal msg 30019). Re-run bbg_tplus1_20261006_082454.log, rc 0.\n- **eg-1:** G4 date=2026-10-05 market-20261006T123301Z-b6602b19fad6 (12:33:51Z): status OK, 582 securities, 0 errors, px_close 578 / gics 575 of 582. The refusal arm was not exercised live (S48); it stays proven offline (C-S43 / S25).\n- **S24:** ledger bbg_budget_2026-10-06.jsonl, 17 entries, 935 of 150,000 rows (daily 751, names 134, probe 50); 0 'Daily Capacity' in 751 capture rows. No backfill night ran, so the remedy's own proof (a backfill night, then a clean 07:00 ET pull) is unexercised and S24 stays OPEN.\n- **D12:** IDVZ 44 and PFOE 24 rows, of 751 in the capture and of 403 in G1 holdings-20261006T123244Z.\n- **nm-3:** the names stage ran (PARTIAL: 134 asked, 128 named; gold/security_names date=2026-10-06 12:33:59Z). On the served 10-06 page (ai-2026-10-06-517fd371, 13 of 13, 13:07:38Z), visible holding ticker forms read 3 occurrences of 2 holdings, against 28 of 22 on 10-05: 8053 JP Equity x2 and 9433 JP Equity in INEQ, with no reason shown. Of the 22 control keys, ATD_CN, MSCI_US, BABA_US, NOVN_SW and TCEHY_US now read company names; 'GQG US Equity' is the fund label, not a holding.\n- **iam-1:** 0 AccessDenied on etfs-rivalfunds-daily-lambda and rivalfunds-publish-page-lambda since 10:00Z. gold/security_universe date=2026-10-05 universe-20261006T130739Z written 13:07:40Z. S46's disarm of S31 is consistent.\n- **Sweep:** REPORT de6ac4f0 447.3 s, 0 timeouts; AI attempt OK, scheduled, 20261006T130020Z-ai.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "this seat's playwright read of platinum/page/date=2026-10-06/index.html and its manifest",
+        "this seat's fork reads: the two vehicle logs, the budget ledger, G1/G4/security_names/security_universe objects, CloudWatch for both Lambdas",
+        "investigation rows ETFS_RIVALS-Z-S44, S45, S46, S47, S48"
+      ]
+    },
+    "disposition": "DISMISSED_WITH_REASON",
+    "dismissal_reason": "A grade record. S44/S45 are the environment cause (Terminal down; the sign-in script belongs to 0.0.3_BG_BBGTerminal). S46's disarm of S31 is verified. C-S36 (nm-3) and S24 stay OPEN. S47 and S48 go to round 11's compile."
   }
 ]
 ```

@@ -4033,6 +4033,49 @@
     "spec_asserts": "RIV-fc-1 J1 and RIV-ln-1 J1 (both graded PASS-in-part on 10-05 pages): every security mention opens its one modal, under the gateway cap; ROUND_ANALYSIS.round8.md ruling 3: if linking everything would cross the cap, the cell links a name once per face and states that rule.",
     "world_is": "The fallback is binary: past the soft cap every dialog goes, not just enough of them to fit. 10-05's pages fit (r9 at 1.87 MB with dialogs) because that day carried less A1 content. A normal full day with D12's IDVZ/PFOE rows crosses the cap, so production will serve plain names on most days. The page itself publishes correctly (1.81 MB), and nothing tells anyone that the dialogs are off: the attribute is in the HTML only.",
     "notes": "For the round-11 issuer and CTO~Z: a size budget for dialogs (lighter dialog content, one shared dialog per security already in place; a partial fallback that keeps the dialogs that fit; or a lazy-load route under the gateway) is a ruling. INERT: no wrong value is served, but a FWD outcome is absent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S48",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-06T13:55Z",
+    "one_line": "With the Terminal down, the vehicle's ENRICHMENT step (python -m rivalfunds.enrichment_bloomberg --mode daily) never returned: it looped on blpapi reconnects to 8194 from 11:0xZ until it was interrupted (^C) about 29 minutes later. It wrote no exit code, no result JSON and no state record, so eg-1's guard (an error or empty RESPONSE) was never reached and nothing recorded that the step failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261006_070001.log :80-81 PRECONDITION FAILED (DAPI DOWN), :87-88 rivalfunds leg SKIPPED BAD-ANCHOR exit 93, :89 ENRICHMENT started, reconnect loop to 07:29 local, ^C (this seat's fork read)",
+        "no state/pull_enrichment record and no gold/security_market object written 11:00Z-12:30Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-eg-1: on a no-data Terminal the enrichment reads REFUSED, nothing is written and the prior revision stays newest (DRAIN_END_READ_ROUND10.md); a producer's failure must be distinguishable from a genuine negative (CLAUDE.md rule 28 q7).",
+    "world_is": "An unreachable DAPI is a third case beside an error response and an empty response: the session never opens, so the step hangs instead of refusing. The outcome was safe (no empty G4 landed) only because the process was killed. The vehicle's own precondition read DAPI DOWN at :80 but still started the step.",
+    "notes": "For the round-11 issuer: a session-open timeout that exits with a recorded REFUSED (DAPI unreachable), or the vehicle skips enrichment when its own precondition fails. INERT: nothing wrong was written."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S49",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~RV",
+    "surfaced_at": "2026-10-06T13:19Z",
+    "one_line": "The five rivalfunds stage Lambdas emit ZERO application log lines -- only the runtime's INIT_START/START/END/REPORT -- so a CloudWatch 'no AccessDenied' or 'logs are clean' read of this pipeline is vacuous, and a REPORT-line positive control does not detect that.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "filter-log-events over /aws/lambda/etfs-rivalfunds-daily-lambda since 12:00Z returned 4 events, read WHOLE: INIT_START, START, END, REPORT (Duration 447265.56 ms) and nothing else",
+        "the same read on /aws/lambda/rivalfunds-publish-page-lambda since 10:00Z returned 4 events across two invocations, again runtime lines only",
+        "filter patterns 'security_names', 'security_universe' and '?AccessDenied ?\"not authorized\"' each returned 0 on both groups, in windows where the REPORT control returned 1 -- the control came from the RUNTIME population, the hunted string from the APPLICATION population, whose denominator is 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deployed stage Lambda's CloudWatch log group can witness whether its S3 calls were authorized, so an absence of AccessDenied there is evidence the grant served.",
+    "world_is": "It cannot. The application emits nothing, so an AccessDenied the code catches and fail-softs leaves no trace, and an unhandled one would only ever appear as a traceback. The COO half for RIV-iam-1 notes a fail-soft repair already serves holding_contribution, so swallowing is live behaviour in this codebase. The sound oracle is the S3 ARTIFACT: gold/security_universe/date=2026-10-05/universe-20261006T130739Z-b845e2cc9c8c.parquet, 58411 B, LastModified 2026-10-06T13:07:40Z (s3api UTC; aws s3 ls renders LOCAL and read 09:07:40), written inside the 13:00Z sweep's own 447 s invocation -- a write that was implicitDeny on both roles before the RIV-iam-1 apply.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Filed off-task while closing RIV-iam-1; it does not affect that cell, whose AC1 oracle is simulate-principal-policy and whose condition-6 evidence is the artifact above. It DOES bound any future claim of the form 'the logs are clean' about these five functions, including one this seat nearly made: I reported '0 AccessDenied with positive controls firing' one tick before reading the 4 events whole."
   }
 ]
 ```
