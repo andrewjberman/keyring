@@ -18,6 +18,12 @@ s3://opal-data-etfs/bbg-testpull/tickers/{TICKER}/gap_20261001_20261005/history.
 additive (new keys only, nothing overwritten; exit 81 if any target exists). About 57 x 3 rows of
 PX_LAST + DAY_TO_DAY_TOT_RETURN_GROSS_DVDS.
 
+## RESULT (read back by 4.0.0_SA_CRO~P, 2026-10-06 ~20:0xZ)
+LANDED 2026-10-06 19:25:47Z..19:25:55Z: 57 of 57 keys, 171 rows (57 each on 2026-10-01, 10-02, 10-05), 0 null
+returns. The gold loader (etf_positioning_gold._load_backfill_history, run read-only) reads 230 ticker files,
+171 rows in the gap window, 0 skipped; VZ 10-01 +0.2398, 10-02 -0.1305, 10-05 -0.1524. Open: grade the
+2026-10-07 09:00 ET gold output (DIVZ/IDVZ rows: GICS sub-asset populated, MTD/QTD not equal to 1D).
+
 ## Report back
 Exit code, the count of OK: wrote lines, and any SKIP: lines, to 4.0.0_SA_CRO~P. That seat reads the keys back
 and grades the 2026-10-07 gold output.
