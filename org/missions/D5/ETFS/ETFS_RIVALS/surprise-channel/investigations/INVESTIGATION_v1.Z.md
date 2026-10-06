@@ -3946,6 +3946,28 @@
     "spec_asserts": "RIV-ok-1 cell: 'WCMG reports the Bloomberg id, the same CUSIP on the row'; a CUSIP-only row takes the Bloomberg key another row carries for that CUSIP, so Nebius renders once.",
     "world_is": "WCMG's row has no CUSIP or ISIN; the only shared identifier is the bare ticker NBIS. ok-1 is a no-op for Nebius on real data and J1 cannot pass. The cut's premise was written from the page's name map, not measured on G1.",
     "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer; the cut's defect). The ok-1 deploy (round-11 item 3) is HELD: it would ship a no-op for J1. Remedy options go to 1.0.0_SA_CTO~Z (a Bloomberg-key lookup per CUSIP in the G4 reference request, joined by ok-1)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T06:59Z",
+    "one_line": "The Z-S24 capacity probe's anchor moved from '#N/A Daily Capacity, request is blocked.' (14:33Z 10-05 .. 02:57Z 10-06) to '#N/A Requesting Data...' on 4 consecutive hourly probes (03:57, 04:57, 05:57, 06:57Z): the Terminal no longer refuses on capacity but the sheet does not resolve within the collector's wait -- neither branch of the probe ruling.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sidecars C:/bbg_backfill/probe_0357, probe_0457, probe_0557, probe_0657: anchor '#N/A Requesting Data...', status SKIPPED, captures {2026-10-01: BAD-ANCHOR}",
+        "sidecars probe_2311, probe_2359, probe_0105, probe_0157, probe_0257: anchor '#N/A Review: Error: #N/A Daily Capacity, request is blocked.'",
+        "the change falls at ~04:00Z = midnight ET, where a daily allowance would reset"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The probe ruling (CTO~Z @b5167de528) has two outcomes: 'ID' (capacity back) or 'Daily Capacity' (still capped).",
+    "world_is": "A third state: the request is accepted but unresolved at read time. It may be a slow first answer after the allowance reset, or a Terminal session that is not serving data; one probe per hour cannot tell which. The 07:00 ET vehicle (11:00Z) depends on it.",
+    "notes": "No act taken under the ruling (no line to MSTR~Z, no leg re-run, no backfill). MSTR~Z's 10:45Z P0 probe owns the Terminal read before the vehicle; this row is the record it can read."
   }
 ]
 ```
