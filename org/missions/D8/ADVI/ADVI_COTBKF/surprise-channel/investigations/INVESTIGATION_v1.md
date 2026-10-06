@@ -145,3 +145,136 @@ round.** Never edit an existing row.
   "notes": "Confirms v0.4's ruling (keep every row); corrects only its count. Owner of the PRD text: 1.0.0_SA_CTO, before 3.0.0_SA_CVO re-signs the ratified-text half."
 }
 ```
+
+## ADVI_COTBKF-W6-S1 -- the G4 security_market series holds 4 date partitions (2026-09-29 to 2026-10-05), not about 730 days, and none falls inside the needed window
+
+```json
+{
+  "id": "ADVI_COTBKF-W6-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~6",
+  "surfaced_at": "2026-10-06T22:20Z",
+  "one_line": "The order names security_market as a Bloomberg-derived series of about 730 days; the prefix holds 4 date partitions, all after 2026-06-23, so it prices 56 universe CUSIPs on 0 needed days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python boto3 list_objects_v2(Bucket=opal-data-etfs, Prefix=rivalfunds/etfs/gold/security_market/, Delimiter=/) -> 4 CommonPrefixes",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~6/PRICE_COVERAGE_20261006.json: store etfs.rivalfunds.gold.security_market priced_any=56 security_days_covered=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3: 'the G4 security_market series at s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/ (Bloomberg-derived, about 730 days)'.",
+  "world_is": "list_objects_v2 over the prefix returns 4 date partitions (date=2026-09-29, 2026-10-01, 2026-10-02, 2026-10-05; 3,023 rows read, 76 rows on 56 universe CUSIPs). The ~730-day depth sits in sibling G4 prefixes (canonical_shape 505 and flow_reconciliation 504 partitions), which are not price series. Covered security-days inside the needed window: 0.",
+  "notes": "Read as a CUSIP-keyed store (security_id); the 56 matches are CUSIP matches, the only CUSIP-keyed store found."
+}
+```
+
+## ADVI_COTBKF-W6-S2 -- the daily price series the order's starting points did not name live in the bd, inf and cot firm buckets
+
+```json
+{
+  "id": "ADVI_COTBKF-W6-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~6",
+  "surfaced_at": "2026-10-06T22:20Z",
+  "one_line": "The stored daily price series that cover the Commonwealth securities are canonical_prices.parquet and historical_prices.parquet in opal-data-bd, opal-data-inf and opal-data-cot, none of them among the order's named starting points; this cell reads only their date, ticker, price and source columns.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 head/read of schema: silver/prices/canonical_prices.parquet in opal-data-bd, opal-data-inf, opal-data-cot; silver/historical_prices.parquet in opal-data-bd, opal-data-inf",
+      ".tools/ds-precommit-check.py lines 69-72: _CROSS_FIRM_FOREIGN_BUCKETS covers data/black_diamond/ and data/cot/ only",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~6/PRICE_COVERAGE_20261006.json: by_source split per store (yahoo_finance, linear_interpolation, transaction_observed)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3: known starting points are security_market, the Bloomberg derived layer and the Yang pickles; the stores are to be found by census. The estate rule keeps bd and cot separate firms and forbids a pipeline tree referencing another firm's bucket (gate .tools/ds-precommit-check.py _CROSS_FIRM_FOREIGN_BUCKETS, homes data/cot/ and data/black_diamond/ only).",
+  "world_is": "Census found 3 canonical_prices files (bd 12,570,765 rows, inf 1,455,147, cot 11,291,021) and 2 historical_prices files (bd 5,868,653, inf 4,927,223); with sources yahoo_finance, linear_interpolation, transaction_observed. The script sits under data/assets/scripts/analysis/, outside both gated homes, and reads three columns of each. Whether opal-data-cot is the same firm as the commonwealth/cottonwood tenant was not resolved by this cell. The transaction_observed rows are prices taken from a firm's own transactions.",
+  "notes": "Nothing was written to any bucket. Whether a Commonwealth price read from another firm's bucket is acceptable for the daily-return build is for the CTO and CVO; the result file carries per-store numbers so the choice can be applied after the fact."
+}
+```
+
+## ADVI_COTBKF-W6-S3 -- 103 universe symbols are claimed by more than one CUSIP; a ticker match on them is reported and not credited
+
+```json
+{
+  "id": "ADVI_COTBKF-W6-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~6",
+  "surfaced_at": "2026-10-06T22:20Z",
+  "one_line": "The order asks that a ticker match on a reused symbol be reported as such; this cell does not credit it as priced, so coverage is a floor on those securities and the credit left out is printed beside each store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~6/PRICE_COVERAGE_20261006.json: universe.symbols_claimed_by_more_than_one_cusip=103; per store total.ticker_reused_not_credited and ticker_reused_days_not_credited",
+      "data/assets/scripts/analysis/tests/test_commonwealth_price_coverage.py::test_reused_symbol_is_reported_not_credited"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3: 'matches a security to a store by CUSIP, else by ticker (Symbol)' and a test that 'a ticker match on a reused symbol is reported as such' (the order does not say whether such a match counts as priced).",
+  "world_is": "103 Symbols are listed by more than one of the 4,634 CUSIPs. In bd canonical_prices 126 securities match a store ticker only through such a symbol (121,421 security-days not credited); inf 61 (25,741); cot 126 (120,287); bd historical 120 (158,988); inf historical 114 (151,979); bbg-testpull 18 (10,602). Crediting them would raise union coverage; the amount is the sum of those columns per store, with overlap.",
+  "notes": "The choice (not credited) is the cautious one for an UNPRICED claim; flipping it is one branch in match_security()."
+}
+```
+
+## ADVI_COTBKF-W6-S4 -- the first read of the nine stores takes 5 to 19 minutes; criterion CB2b3-AC2 meets its 120-second bound only against a primed cache under .scratch/
+
+```json
+{
+  "id": "ADVI_COTBKF-W6-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~6",
+  "surfaced_at": "2026-10-06T22:20Z",
+  "one_line": "Reading the three 100 MB-class price files from S3 took 5m24s (parallel) and 18m43s (first serial run); CB2b3-AC2 ran in 8s only because the filtered per-store cache sits at .scratch/price_cache/ in worker ~6's worktree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "time of the cold parallel run: real 5m23.7s (.scratch/run1.time); first serial cold run: real 18m43.4s",
+      "time timeout 120 python data/assets/scripts/analysis/commonwealth_price_coverage.py: real 0m8.1s, rc 0, last line PRICE-COVERAGE universe=4634 stores_checked=22 stores_with_prices=7 ..."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3 BOUNDS: 'Within 120 seconds for CB2b3-AC2: cache what you read under .scratch/ and let the script read the cache when present.'",
+  "world_is": "Uncached the script reads about 36 million rows over S3 (bd canonical 12.6M, cot canonical 11.3M, bd historical 5.9M, inf historical 4.9M, inf canonical 1.5M). The cache (.scratch/ is uncommitted) is not in the commit, so AC2 re-run in any other tree, or after this worktree is removed, ends at rc 124 on a cold run. Cached run: 7.8s real, rc 0.",
+  "notes": "A grader or the COO re-running AC2 in a clean tree should run the script once without the timeout (about 5.5 minutes) and then under it, or pass --cache-dir to a copy of C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-6/.scratch/price_cache. The criterion's output is also recorded in the proof instance."
+}
+```
+
+## ADVI_COTBKF-W6-S5 -- the naming gate refuses the legacy store addresses the cell reads; the census is a record file the script loads
+
+```json
+{
+  "id": "ADVI_COTBKF-W6-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~6",
+  "surfaced_at": "2026-10-06T22:40Z",
+  "one_line": "The commit naming gate refused 41 literals when the script typed the legacy bucket and key addresses of the stores it reads, so the store census is kept as a record file the script reads, and the universe address comes from address().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit naming limb (ENFORCE) on the first commit: NAMING-GATE: REFUSE 41 graded, e.g. commonwealth_price_coverage.py:52 opal-data-bd -> opal-data-49financial (hand-kept carrier), :53 silver/prices/canonical_prices.parquet -> {source}/{scope}/silver/prices/canonical_prices.parquet (OUT-OF-PATTERN)",
+      ".tools/naming-gate.py docstring lines 21-29: a firm token is graded unless inside key()/address()/name()/lookup() arguments; files graded are .py .js .mjs .ts .tf .json .yaml .yml outside org/ and docs/; prose strings and */tests/* are not graded",
+      "lookup('49financial')['bucket'] is opal-data-49financial, a different bucket from the opal-data-bd that holds silver/prices/canonical_prices.parquet today (the legacy buckets stay active until the D14 full-name migration)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3 reads stored price series at their existing locations; CLAUDE.md rule 30 says every address and name comes from the builders, and a builder refusal is a missing registry row.",
+  "world_is": "The existing stores sit at pre-LGIC bucket and key layouts the builders do not produce, and the registry lookup returns a different bucket than the one holding the data. The script therefore reads the census (location, reader spec, verdict for 22 stores) from org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~6/PRICE_COVERAGE_STORES_20261006.json, a record under org/ that the gate does not grade; only the universe address comes from address(). No registry row was added and no override was used.",
+  "notes": "Whether the census record or a registry row per legacy store is the right carrier is for the CTO; the migration project (rule 30, R19) removes the legacy locations. A later round that writes to any of these stores must use the builders."
+}
+```
