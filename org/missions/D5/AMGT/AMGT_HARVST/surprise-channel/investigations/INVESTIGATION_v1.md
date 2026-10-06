@@ -7150,6 +7150,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Not measured: which matcher admits the candidates (sitemap title match on the ticker token or the company name), and the rejection reasons of the T job, which is still running. The job is left to finish so its run record carries them. Carried to the round-50 analysis."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S91",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-06T23:54:28Z",
+      "one_line": "The wsj leg STOPPED at 23:22:27Z on sign_in_refused: its T US Equity job ran 3 h 03 min, fetched 502 articles, accepted 0 (431 company_not_mentioned), met 46 locked bodies and then a 401 under --no-sign-in. Completes row AMGT_HARVST-Z-S90 with the finished job's record.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Row AMGT_HARVST-Z-S90 left unmeasured the rejection reasons of the T job. Collection-run condition 1: a leg that meets a sign-in refusal stops and resumes from its own checkpoint after Andrew's sign-in.",
+      "world_is": "Run 20261006T201945Z-wsj-5eb7443985 (T US Equity, 20:19:45Z to 23:22:27Z): request_attempts 545, fetched_keys 502, skipped 14, accepted 0, rejected 515. fetch_outcomes by first issue: company_not_mentioned 431; publisher_did_not_unlock_body 39; short_or_partial_body 30 (7 of them with a locked body); publisher_word_count_mismatch 1; no outcome 1. Status sign_in_refused, detail '401 under --no-sign-in: no refresh'. The driver then printed STOP wsj: sign_in_refused. So two things are true of one job: the candidate set for a one-letter ticker is 86% articles that never mention the company (431 of 502), and the wsj profile's session ended during the run.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-wsj/runs/20261006T201945Z-wsj-5eb7443985.json (status, counts, fetch_outcomes)",
+          ".runtime/harvest-backfill/r50_wsj_run1.out: JOB wsj security-f0731ffb117030c8 status=sign_in_refused; STOP wsj: sign_in_refused"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not measured: which matcher admitted the 431 (the candidate rule for wsj), and how many of the remaining wsj names are short tickers. Issuer act: wsj is not resumed until Andrew signs in inside the wsj profile; the resume is from r46_wsj_checkpoint.json with --clear-stop wsj. Carried to the round-50 analysis: a cell that bounds or tightens the wsj candidate set before the leg reaches the next short ticker."
     }
   ]
 ```
