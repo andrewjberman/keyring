@@ -18424,3 +18424,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the first half holds (the scheduled fire landed 2026-10-02, census complete). The second half does NOT: 3 of 189 trading days have no partition. NOT MEASURED: whether Inflection had positions on those three days (a no-data day would be a legitimate gap the calendar cannot see), and whether the adapter's missing-trading-day disclosure (round 36 D1) names them. The leg stays OPEN; this seat did not backfill (a landing is a write and the producer's dry-run census is the CTO's condition)."
 }
 ```
+
+## IRPT_BCKEND-S339 -- the resident package builder ships the whole tree at its pin: other seats' unreleased merges ride every resident build
+
+```json
+{
+  "id": "IRPT_BCKEND-S339",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T01:17:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "build_resident_package.py packages the WHOLE tree at its --pin (no member override by default), so any resident build ships every merged-but-unreleased change of every seat under the package directories; the resident build of IRPT_YCDGEN round 6 at d2b625e697 would have carried 13 members of other seats' unreleased work, including the IRPT_BCKEND reason-code merges whose release is blocked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py main(): members = every tracked .py/.json/.sh/.md under PACKAGE_DIRS at --pin; the only per-member lever is --override REPO_PATH=PIN",
+      "gate census, 2026-10-06 ~00:50Z: build at d2b625e697 against the running st21 (3f29017cfc) read G5 added 5, changed 23; 10 of the 23 are IRPT_YCDGEN round-6 members and 13 are not: _authz/loaders.py (IB-pr-321, IB-pr-322 @8e6011bda1, @8540c9dd8f), _authz/served.py (IB-pr-320 @cd41c4e24f), _scope/canonical_profile_reads.py, _scope/maintained_sources.py, _scope/retained_input_authorizer.py (IB-pr-321/322), _contracts/ExportBundle.schema.json and docs/contracts/investor-reporting/v1/ExportBundle.schema.json (IB-pr-317 @73d0bbc37b, @239b895bc7), docs/contracts/investor-reporting/v1/routes.json (IRPT_DASHBD DB-b-23 @a414382a19), infra/logic/registry/systems.json (NFRA_SPRINTWIN @4201d79857), ops/owned_requests.py (@44cc631396) and ops/prospect_dates.py (@780c86d763) (the last two are earlier 2.0.0_SA_COO~Y fixes)",
+      "the IRPT_YCDGEN release was instead built from an ephemeral pin of st21 plus the 14 named round-6 files (commit 3d705e700f on scratch branch rel-ycdgen-r6-a): census added 5, removed 0, changed 10, identical 241; ledger irpt-ycdgen-r6-branch-a-20261006 CLOSED"
+    ]
+  },
+  "spec_asserts": "A resident release ships what its never-widen halves sign. The CTO half of IRPT_YCDGEN round 6 signs 'one resident package of the round-6 files'; the whole-tree rule (resident_package_gate.py G2: every member equal to git show <pin>:<path>) contradicts a named scope whenever other seats' merges sit under the package directories.",
+  "world_is": "MEASURED: at d2b625e697 the tree under the package directories differs from the running st21 package by 13 members that no half of this release names, and 2.0.0_SA_COO~P's r57 release (which holds the IB-pr-320..322 reason-code work) is blocked on a CTO ruling, so a whole-tree build would have released it to the resident unsigned. NOT MEASURED: whether P's own earlier resident builds carried the same extras (st21 3f29017cfc was built at a quiet tree). Consequence: every resident build needs a named file list or a base pin plus an overlay list; cell YCD-m-6 (IRPT_YCDGEN round 6 addendum E, CTO ruling 105454) adds that mode to the builder and the gate, and the disarm is that cell merged and used. Until then a builder user must read G5 and refuse any changed member that no signed half names."
+}
+```
