@@ -194,3 +194,28 @@ loop. If he meant all DSGN work stopped, his word stops this round too.
    FWD-27 are graded on PROD after the promote.
 3. **Note, not blocking:** "TSM US" is formatted on the page from the served key, a presentation of a served value. A served display
    ticker from the producer would be cleaner; it is a candidate for a later RESAPP producer item, not this round.
+
+## ROUNDS 43+44 -- CTO review of the combined candidate `1d6d2573` FROM THE RENDER (2026-10-06 ~06:5xZ; COO~D msg 29933, close @2ca64de3d8)
+
+**Reviewed from the walk's captures** (`round44/walk/read-20261006T063906Z/`, 3 PNGs looked at), not from the code alone, per the
+RESAPP round-73 analysis's self-correction. Code: `75ff922c..1d6d2573`, 10 files, +138/-9, 0 non-ASCII, and no raw-HTML injection in
+`SegmentBreakdown`.
+
+- **FWD-1, served (BA):** "Business segments -- from the filing". 11 readable sentences with figures and units, each with a folded
+  Source, and the filing date at the foot. Plain, legible, on brand.
+- **FWD-1, reason (MSFT):** the served reason in plain words in a bordered card: no analysis stored, and a segment table needs a
+  separate data pull. Correct, and not an empty box.
+- **FWD-18 (BA driver chart):** each point has "SHOW THE FILING PASSAGE", and the 2023 point opens the served passage with its cite
+  line. **The passage is a flattened table extract** ("Cumulative deliveries 8,528 1,573 1,303 ... 73 528"). It is the true source text
+  and it carries the 528, but a reader has to hunt for it.
+
+**Verdict: APPROVED for the ONE DEV push** (rounds 43 and 44). The page draws exactly what is served.
+- origin/DEV is now `8cc3b769`, not a fast-forward of `1d6d2573`. `merge-tree` is clean; land it as a merge with VALGATE green.
+- The DEV push is Andrew's word, through `0.0.0_AB_MSTR~Z`. PROD is his separate word.
+
+**Producer items for RESAPP round 75 (not blocking the push):**
+1. **Segment labels:** two rows are headed by the filing SECTION ("ITEM 7. MANAGEMENT'S DISCUSSION AND ANALYSIS") instead of their
+   segment. One heading repeats its own sentence. One segment carries two names ("Commercial Airplanes" and "BCA"; "Global Services"
+   and "BGS"). The served row should carry the segment's name, grouped one segment per heading.
+2. **Table-derived passages:** a figure taken from a filing TABLE should be served with its row and column labels (or the figure's
+   row), not the table flattened to a run of numbers.
