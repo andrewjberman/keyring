@@ -83,3 +83,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @40dcc8b342. On the shared tree, test_score_unit 5 passed. Worker AC2: c34 local 572 objects carry score, 0 failing. proof VALID. No rows. Served by au-7.
+
+<status>complete</status>

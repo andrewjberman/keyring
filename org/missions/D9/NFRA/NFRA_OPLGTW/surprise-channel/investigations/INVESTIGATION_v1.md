@@ -8279,3 +8279,198 @@ name the one known failure instead of silently inheriting it.
   "world_is": "r17c serves /yearinreview owner-only; AC3 and AC4 PASS on the served host; the check defects are fixed."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S55",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "1.0.0_SA_CTO~O",
+  "surfaced_at": "2026-10-05T21:52Z",
+  "one_line": "The in-repo colleague onboarding kit .tools/m365-mcp-kit/ (last touched 2026-06-12, @8b0e7d2412) still sets up a LOCAL Lokka server ('Lokka-Microsoft', npx @merill/lokka) under the old 'm365' name, not the hosted gateway; a colleague following it to reconnect (asked for Alyssa, 2026-10-05) would not get the opalgateway connection.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: .tools/m365-mcp-kit/BOOTSTRAP.md:43 registers `claude mcp add-json Lokka-Microsoft -s user` with command npx @merill/lokka; README.md:1 '# M365 MCP Kit'; no mention of mcp.opalinvest.dev or opalgateway in either file.",
+      "READ: this device's working client entry is opalgateway -> {type: http, url: https://mcp.opalinvest.dev/mcp} (~/.claude.json user scope).",
+      "READ: PRD C1 (NFRA_OPLGTW_PRD.md:131-140): at cutover legacy refresh/access tokens are refused and existing users reconnect once; an idle client registration expires after 30 days (invalid_client)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-1 / FWD-7 and C1: an existing Gateway user reconnects once to the hosted gateway (https://mcp.opalinvest.dev/mcp) with a fresh registered client.",
+  "world_is": "The only in-repo onboarding instructions describe the June local Lokka setup under the old name; the correct reconnect (remove the old entry, add opalgateway over HTTP at https://mcp.opalinvest.dev/mcp, authenticate with the work account) is written nowhere a colleague would find it.",
+  "notes": "INERT: nothing breaks on its own; it misdirects whoever follows it. The remedy is a doc cell for the issuer (retire or rewrite the kit to the hosted-gateway reconnect), cut when convenient. Answer given to Andrew in-session on 2026-10-05."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T00:45Z",
+  "one_line": "OG-pm-1 REGRESSION for the CTO: the full-day 2026-10-05 ALB TargetResponseTime p95 of the opal-gateway target is 0.9473 s over 3,328 requests, +71.1 % against OG-p-1's 0.5535 s, above the 20 % cap (0.6642 s).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: deliverables/0.9.0_WK_NFRA_OPLGTW~27/P95_R17.json: one 86400 s period 2026-10-05T00:00Z..2026-10-06T00:00Z, p95 0.9473 s, SampleCount 3326, RequestCount 3328, 5xx no datapoint (null, not filled); segments 4b6b823fae 0.7313 s (1451 req), e91819e281 1.0154 s (930 req), 37be3485db 0.9683 s (992 req); segments widened outward to whole minutes (CloudWatch period multiple of 60).",
+      "READ: EC2_MANIFEST.json git history matches A1's table (e0664cc9d5 4b6b823fae 2026-10-04T23:12:32Z; 37bd6ea0ad e91819e281 02:17:58Z; ab3d9965f2 37be3485db 14:22:36Z); SSM 0832efca-9969-48d0-a58e-233626be877a md5 of yearinreview_view.py, server.py, config.py equal 37be3485db blobs, 3 of 3.",
+      "READ: hourly p95 (24 periods): 23 of 24 hours exceed 0.6642 s; the only hour under is 02:00Z (1356 requests, 0.656 s); the other 23 hours carry 60-151 requests each at 0.89-1.07 s."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W16-S5 / OG-pm-1: the gateway's p95 over the first full trading day stays within 20 % of OG-p-1's 0.5535 s, i.e. <= 0.6642 s.",
+  "world_is": "Full-day p95 0.9473 s (3,328 requests, 3,326 samples, no 5xx datapoint) exceeds the cap on every served release (segment p95s 0.73 / 1.02 / 0.97 s). The hourly profile is flat near 1 s in the low-volume hours; only the 1,356-request deploy hour 02Z reads under the cap. Cause not investigated beyond this profile.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T01:20Z",
+  "one_line": "OG-pm-2: the OG-p-1 order and record name ALB rules and a latency window but no route list, so the at_ogp1 set was derived from the Gateway source at the commit OG-p-1 digest-compared (7bd89b5d71).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: task-orders/NFRA_OPLGTW.TO-OG-p-1.baseline.md and deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json: OGP1-AC3 lists ALB rule priorities 10, 20, 30-33 and the default OIDC rule; OGP1-AC11 gives the latency window; neither lists the application's own routes.",
+      "READ: BASELINE.json OGP1-AC1: host sha256 equal to the tree at 7bd89b5d71, 50 of 50 files; git show 7bd89b5d71:infra/aws/ec2/opal-gateway/app/server.py gives 26 Route paths plus the /mcp Mount; PM2_CAUSE.json route_set_at_ogp1 carries the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-pm-2 item 2: mark each route at_ogp1 by using the OG-p-1 order and record under this project's task-orders/ and deliverables/ to establish that set.",
+  "world_is": "The OG-p-1 record establishes the ALB rule set and the deployed commit, not the route set. The set was taken from the application source at the AC1-verified commit, with ALB rules from AC3 as a cross-check. Paths that are 404 probes (/favicon.ico, /hx/teams/x) are at_ogp1 false and exist at no release.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T01:20Z",
+  "one_line": "OG-pm-2 side read: 2026-10-03 was a worse day than 10-05 (CloudWatch p95 1.6547 s over 3,003 requests; GET /hx/teams/chats p95 1.85 s); its cause was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: CloudWatch AWS/ApplicationELB 2026-10-03 (one 86400 s period): RequestCount 3003, TargetResponseTime SampleCount 2996, p95 1.6547 s; ALB access logs forwarded rows 3003 of 3003.",
+      "READ: PM2_CAUSE.json context_days 2026-10-03: GET /hx/teams/chats 1440 requests at p95 1.8525 s against 1.0227 / 1.0062 / 1.018 s on 10-02 / 10-04 / 10-05; routes at OG-p-1 p95 0.6171 s that day."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-pm-2 reads 2026-10-05 and 2026-09-30 only; the cap in force is 0.6642 s.",
+  "world_is": "Beyond the two ruled days, the same poller route read 1.85 s on 10-03, so its latency is not constant at about 1.0 s. The extra days (09-30..10-05) were read from the same two read-only instruments; nothing was investigated further.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T23:55Z",
+  "one_line": "OG-ln-1: live's tests/test_schwab_host_inputs.py, ported byte-for-byte onto CLOUD, fails 2 of 9 on CLOUD: the key-count assertion (51 keys vs 50) fails on live's own tree too, and the build_package test calls a helper CLOUD's lambda build_package.py has re-signed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN: infra/aws/ec2/opal-gateway/tests/test_schwab_host_inputs.py at ebf5fca97d, own process, rc=1, '2 failed, 7 passed': test_values_that_can_hold_whitespace_are_rendered_quoted -> 'assert 51 == 50' (line 137); test_grant_writer_stages_the_contract_only_from_the_standard -> TypeError '_derive_import_closure() missing 1 required positional argument: src' (line 157).",
+      "RAN: git archive 37be3485db of the gateway dir, the same test file in its own process: the 51 == 50 assertion fails identically on live's own tree (the file and deploy-to-ec2.sh are byte-equal to live's); the other two live-tree failures there are the sparse archive lacking org/standards and build_package.py.",
+      "GIT: the '== 50' was set at af2d762970 (OG-rl-4); 37be3485db (r17c release) added the 51st key YEARINREVIEW_VIEW_ALLOWED_EMAILS to the printf without updating the count. The build_package.py is outside this order's <paths> (infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-ln-1 step 2: run the gateway's schwab and login test files, each in its own process; no new failure beyond the per-file baseline r17/Q7_SUITE_BASELINE.txt (which names only test_schwab_export_stream.py).",
+  "world_is": "The ported live-only file adds two red tests the baseline did not list; neither was introduced by this port's content (the first is live's own stale count; the second is a live test against CLOUD's newer lambda builder). Left red and unedited, so the file stays equal to live and no CLOUD_ONLY item is minted for it. A fix is a count bump 50 -> 51 in the test and a call-shape fix against build_package.py, issuer's choice of cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T23:56Z",
+  "one_line": "tests/test_principal_cutover.py::test_oga2_ac04 fails on CLOUD: ROUTE_CLASS does not classify /yearinreview and /yearinreview/, which 52ef7bef94 added to the route table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN: test_principal_cutover.py at ebf5fca97d, own process: '1 failed, 10 passed'; 'AssertionError: [/yearinreview, /yearinreview/]' at tests/test_principal_cutover.py:564 (declared routes minus ROUTE_CLASS).",
+      "READ: the file is CLOUD-only content (items in LINEAGE_R18.json, owners 2f00004b25 and 6abf60e5d5); this order's port touched neither it nor app/server.py, so the failure predates the port. It is outside the schwab and login files the order names; run as a neighbour of the /login narrowing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-ln-1: the schwab and login test files show no new failure beyond baseline (this file is not one of them).",
+  "world_is": "A CLOUD test stale against CLOUD's own route table since the /yearinreview owner-only release; not touched here (out of the order's cell)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T01:30Z",
+  "one_line": "Two schwab test processes run at the same time on one box collide on the shared export directory %TEMP%/opal-gateway-schwab-export and fail test_ogx1_ac27 with FileNotFoundError; the same run alone passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: three whole-set pytest processes started together in one worktree: run 2 ('-p no:randomly') ended '2 failed, 136 passed' with FAILED tests/test_schwab_export.py::test_ogx1_ac27 - FileNotFoundError ... 'opal-gateway-schwab-export/rows-1.arrow'; the identical command alone ended '1 failed, 137 passed' (only the baseline test_ogx4_ac03)",
+      "INFERRED (not read in code): the failing path is one fixed directory under the temp dir, not a per-process one, so a second process's cleanup would remove the first's rows-<n>.arrow"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1: the whole set passes in one process in any order; the proof runs it three ways.",
+  "world_is": "Order independence holds within one process. Concurrent processes are not isolated from each other: they share one export directory under the temp dir. The issuer's AC1 script runs its two pytest invocations sequentially, so it is not exposed; any seat that runs two suites at once on this device is. The directory path appears in the failure text; no test-side fix was made.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T02:10Z",
+  "one_line": "The re-hand of OG-ts-2 (status complete) cannot be committed: the lane gate admits a worker only to the <paths> of a NON-TERMINAL order, and the order reads complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash .tools/safe-commit.sh ... -- tests/proc_tmp_root.py tests/conftest.py tests/test_schwab_export.py ended 'ERROR: owned-paths lane violation(s)' on all 3 paths: 'no NON-TERMINAL task order at HEAD issued_to this serial names this path' (rc=1, nothing committed)",
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r18/checks/ti2.AC1.sh on the uncommitted fix ended 'collected 148, errors 0, failures beyond baseline 0 []; S40 subset: passed 48, failed 0, errors 0 / RESULT: PASS'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Issuer re-hand: fix tests/ and commit with safe-commit; the order's status stays complete.",
+  "world_is": "The fix sits uncommitted in worktree C:/tmp/wk-oplgtw-25-r19 (3 files under infra/aws/ec2/opal-gateway/tests/, proc_tmp_root.py new). The gate needs the order reopened (status non-terminal) for the grant to exist; I did not edit the status as told.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```

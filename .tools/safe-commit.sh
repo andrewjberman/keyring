@@ -1074,7 +1074,8 @@ if [ -f "$SCRIPT_DIR/to-decomp-ref-lint.py" ]; then
   else
     _g2_out="$(python "$SCRIPT_DIR/to-decomp-ref-lint.py" 2>&1)" && _g2_rc=0 || _g2_rc=$?
   fi
-  if [ "$_g2_rc" -ne 0 ] || printf '%s' "$_g2_out" | grep -q 'REFUSED'; then
+  # WARN: carries the deliverables-grant mismatch (CVO~Z msg 29834); it never blocks, but it must be seen at the cut.
+  if [ "$_g2_rc" -ne 0 ] || printf '%s' "$_g2_out" | grep -q -E 'REFUSED|WARN:'; then
     printf '%s\n' "$_g2_out" | sed 's/^/  [gate2] /' >&2
   fi
   if [ "$_g2_rc" -eq 1 ]; then

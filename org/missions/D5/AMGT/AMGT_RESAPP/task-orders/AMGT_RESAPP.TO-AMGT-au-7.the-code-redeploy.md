@@ -57,6 +57,38 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC3" cell_refs="AMGT-au-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c30 c31 c32 c33; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round70/checks/r70_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round69/checks/r69_served.py" --cell c29 --where deployed &amp;&amp; for c in c23 c24 c25 c26; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round67/checks/r67_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R70 C30-C33, R69 C29 and R67 C23-C26 SERVED: YES on the deployed function (no regression); and exit=0</expect></criterion>
 </proof_of_spec>
 
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-05 ~18:2xZ) -- ONE leg, code only; the gold leg leaves this act
+
+**The gold rebuild is NOT yours.** The gold mention table has one writer, AMGT_HARVST's hand-run gold build from CLOUD HEAD under
+its own signing pair (COO~H msgs 29674, 29747). With au-3 on CLOUD @69c017d520, HARVST's next build carries the `url` column. So:
+- Section 1's "Gold leg" and its "gold keys restored" rollback clause do not apply.
+- **AC1 is graded on c34 and c36 only.** c35 is graded by the issuer after HARVST's next gold build.
+
+**The build commit is `a53eaf74c5`** (all four build drains plus the closes), or a descendant whose CONTENT-DIFF against the
+deployed `GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=` equals:
+- CHANGED: `lib/research/api/scoped_amgt.py`, `lib/research/harvest/publication_gold.py`;
+- ADDED: `lib/research/api/served_cache.py`;
+- REMOVED: none.
+
+The issuer build: 364 entries, 96.9% of the ceiling, cold-start FATAL [] and request-time break [].
+
+**New S3 read paths: none,** so no simulate arm is owed. Any IAM change in the plan is a STOP.
+
+**AC1, as amended:**
+
+<criterion id="AC1" cell_refs="AMGT-au-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c34 c36; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round71/checks/r71_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R71 C34 and C36 SERVED: YES on the deployed function; and exit=0</expect></criterion>
+
+**AC2 (c38, deployed 2,000 ms):**
+- Report every read's warm min and max.
+- A read over the bar is NOT a rollback trigger, because au-6 changes no value; report it and the issuer files it.
+- Roll back only on AC1, on the AC3 regressions, or on a CodeSha256 other than the build's.
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round71/NEVER_WIDEN_HALF_COO_AU7.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+
 ## 5. WHEN YOU ARE DONE
 
 The instance is genre DEPLOY, with a NAMED rollback and base-vs-new CodeSha256 as the discriminating control. It goes at
@@ -81,3 +113,31 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-05 ~18:3xZ):** both halves are committed. ONE code-only leg at build commit `a53eaf74c5`.
+- COO: `round71/NEVER_WIDEN_HALF_COO_AU7.md` @f850d9d1e6.
+- CTO: `ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md` @a9c145359a. Its conditions:
+  1. at build time, the CONTENT-DIFF is exactly CHANGED `scoped_amgt.py` + `publication_gold.py`, ADDED `served_cache.py`;
+  2. AC1 (c34/c36) and the AC3 regressions grade on deployed; c38 is reported only;
+  3. the issuer measures the Lead Panel BEFORE (taken: `round71/LEADPANEL_BEFORE_au7.txt`, 18:25Z on GS//XHnV) and AFTER,
+     cold and warm. **Run `round71/checks/leadpanel_cold_warm.py --label after` right after the code leg, and put its output in
+     your report;** the issuer re-reads it;
+  4. one NEVER-2 entry, DEPLOY genre.
+- The base: CodeSha256 `GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE=`, re-read live before the upload. Any other value is a STOP.
+
+<status>go</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~20:0xZ):** CLOSED. LANDED and VERIFIED @ba5f7871ed. GS//XHnV -> `wbIT0PHvxKIgJvgVy+u0XhLuSXFK5dUE/wypJPDcf8o=`
+(VersionId WG8u2w_ngxnIWFRsCrae3S4nSD2Og8ux; rollback `.Sj7rblal1sHPyETvJW_ZKXvOzeGVds3`). NEVER-2 closed 4/4. proof VALID.
+- **AE~A report:** AC1 c34/c36 YES; AC3 and the CTO's 13 regression cells YES; c38 YES (worst 801 ms).
+- **Issuer re-read, 19:57Z on wbIT0PHv** (`round71/REAL_RUN_r71_deployed_20261005.txt`):
+  - c38 YES (9 of 9 under 2,000 ms);
+  - c34 YES (572 objects, 0 failing);
+  - c36 YES (95 of 95);
+  - cold chatter 5.3-10.0 s.
+  - c35 NO as expected: 48 ft/wsj items serve `url_reason`; 552 bbg/barrons/sa items wait for HARVST's next gold build (AMENDMENT 1).
+- **Andrew's speed note** sent via MSTR~Z (CTO condition 3).
+- **The CORPUS entry** that the wait clause found was already closed on CLOUD @e2790c8b2b (COO~X msg 29758).
+
+<status>complete</status>
+

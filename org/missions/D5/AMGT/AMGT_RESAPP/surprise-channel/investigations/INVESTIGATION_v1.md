@@ -17811,5 +17811,467 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "FWD30_READ_ROUND71.md in the same folder carries the per-name table."
   ]
  }
-}]
+},
+{
+ "id": "AMGT_RESAPP-Z-W236-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~236",
+ "surfaced_at": "2026-10-05T16:39:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AMGT-au-6 serves the Lead Panel warm from per-container memos, but the FIRST read of a cold container still makes about 100 classification GetItems and 23-57 model-block reads; removing that needs a NEW producer (a stored per-name roster of display name + classification), which this cell does not build.",
+ "spec_asserts": "AMGT-au-6 item 2: serve stored results; 'if the only real fix is a NEW producer or served file, do not build it: file ONE row naming the producer, the file and the measured gain, and do what is possible inside the route.'",
+ "world_is": "Inside the route the nine reads now hold the generation rows (keyed on generation_id + row_count), pointers (60 s), classification rows (300 s) and model-block names (300 s) per container: warm 0.15-0.97 s against 17-64 s before, calls per warm request GetItem 0 (was 99-289), S3 lists 1-8 (was 24-57). A cold container (first Lead Panel read after a deploy or idle recycle) still pays GetItem 99-110 (8 in parallel) and List 26-34 + GetObject 25-29, measured 5.1-29 s from this device against 18-62 s before. PRODUCER that would remove it: a scheduled harvest-gold writer of ONE served file per covered name set (security_key, ticker, display_name, name_source, classification) read as a single GET; measured gain on a cold container: about 100 GetItems and about 50 S3 calls become 1 GET (estimated 4-5 s to under 1 s locally; not built, so not measured). The memos also bound freshness: a new generation shows within 60 s, a classification or model-block name edit within 300 s (SLOW_TTL/POINTER_TTL in lib/research/api/served_cache.py); the 60 s and 300 s are this worker's choice, not a ratified figure. One api test, test_model_words.py::test_formula_words_equals_the_pages_own_function_run_in_node, fails at the issuance commit and after (it reads a portal function absent at this worktree's portal ref); no row beyond this mention.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~236/PROFILE.md section 3: per-route BEFORE/AFTER table, cold and warm, with boto call counts by operation, fresh process per route (9 of 9 routes, status 200).",
+   "lib/research/api/served_cache.py POINTER_TTL=60.0, SLOW_TTL=300.0; consumers: read_generation_pointer, read_generation_rows, _classification_for_ticker, _model_block_name in lib/research/api/scoped_amgt.py."
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T15:56:02Z",
+ "class": "BLOCKING",
+ "one_line": "The UI walker account was already armed by another holder when AMGT-au-5 started, so the signed-in walk was not run (the order says file BLOCKING and stop).",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-au-5 section 1: 'If python .claude/skills/ui-walk/ui_walker_account.py status reads armed by anyone else when you start, file a BLOCKING row and stop.' The issuer's brief said it holds the walker slot for this run.",
+ "world_is": "At 2026-10-05T15:56:02Z status read: 'row PRESENT opal-ui-walker@opal.test status=active role=admin userType=Dev armed=yes (9.7 min ago) armedBy=Opal_Bloomberg:19292:75661450; SSM PRESENT'; a second read ~1.5 min later read the same armedBy (12.3 min ago). A Win32_Process query found no process with PID 19292 (the only matches were this worker's own shell), so the holder may be a dead walk, but this worker did not disarm a lease it did not take. The armed account stays armed until its holder or the issuer disarms it (hazard: a live admin login with a minted SSM password).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "ui_walker_account.py status x2 at 2026-10-05T15:54Z and 15:55Z, both armedBy=Opal_Bloomberg:19292:75661450, status=active, SSM PRESENT.",
+   "Get-CimInstance Win32_Process filtered on ProcessId 19292 or CommandLine walk.mjs returned only this worker's own bash/powershell processes."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "The deployed on-demand print (default format=pdf) for BA, AMD and ASML_NA is a 21-24 page mnemonic dump, not a branded document.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 / PRD FWD-5 (v0.38): 'a seat prints the pack on demand for three covered names, and each reads as a document: Opal Brand form, every figure traceable to its page field, no raw code, no dashboard chrome (a JUDGMENT read at L9)'.",
+ "world_is": "GET /api/scoped/amgt/security/<key>/print on GS//XHnVd4+bBIg1VU++r1fp9v495pi6jKFat9KbEYE= returned %PDF files of 21 (BA), 23 (AMD) and 24 (ASML_NA) pages. Page 1 begins 'BOEING CO/THE [BA US Equity] Research Note / MODEL BLOCK (from the landed record, provenance per the figure rule)' and prints monospace lines such as 'USD TEXT (string field) - CRNCY (ISO currency code ...)', clipped at the right page edge, plus a Python list repr; 109 (BA), 108 (AMD), 107 (ASML) distinct UPPER_CASE_WITH_UNDERSCORE field-code tokens across the pages. The page's own Print button obtained byte-identical files (sha256 equal). Recorded for the L9 judgment; no verdict here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "print/{BA_US_Equity,AMD_US_Equity,ASML_NA_Equity}.pdf in org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~235/ (PyMuPDF text read: raw-code token counts per file).",
+   "tmp/ui-walk/20261005T163146Z/shots/au5-BA-US-print-modal-viewport.png shows page 1 of 21 in the page's own Print preview."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "Every Thesis driver-chart point link on BA and ASML_NA answers 'The filing passage for this point is not shown on this page.'",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 / PRD FWD-18: 'an analyst has clicked a filing-derived figure through to the passage it came from'.",
+ "world_is": "The three '<year>: <value> -- SHOW THE FILING PASSAGE' links under the driver chart (BA 2023/2024/2025 values 528/348/600; ASML 393421721/393283720/385417665) each opened to the single sentence 'The filing passage for this point is not shown on this page.' (0 of 6 showed a passage). The claim-level click-through worked on BA: 'Read more' on RISKS opens a dialog with each sentence's filing text and its cite 'BA US'S 10-K, FILED JANUARY 30TH, 2026 -- ITEM 1A. RISK FACTORS > PARAGRAPH 8'.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261005T161750Z/shots/008-BA-US-Thesis-open-2023-528-SHOW-THE-FI.png and 068-ASML-NA-Thesis-open-2023-393421721-SHOW-.png (the sentence); 011-BA-US-Thesis-open-RISKS-Delays-on-the-737-.png (the passage dialog)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S4",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "The stock ui-walk engine has no step for Print, header hovers or a ranked-list row click, and FWD-31's byte-unchanged arm cannot be captured from the UI.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-5 section 1: run `node .claude/skills/ui-walk/walk.mjs --route /security-analysis --security \"<name>\"` and record, per act, a capture and a positive control; FWD-31: 'the roster's own rows are BYTE-UNCHANGED against the same tab captured without the passage'.",
+ "world_is": "walk.mjs selected each name by typing its ticker, never pressed Print and never hovered the header cards, so I ran walk_au5.mjs, a copy of it in the deliverables folder (flags --au5, --pick-bar, a PICK log line; the original is untouched, same guard, same disarm). 'Export as a document' names a DO_NOT_CLICK word and was not pressed. A name's Exec Management tab cannot be captured with and without its team passage from the UI (the passage is a served key, dossier_fields.management); substitute read: page roster rows equal the deployed served management.officers (BA 12 of 12, ASML_NA 7 of 7, AMD 0 of 0).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~235/walk_au5.mjs (diff against .claude/skills/ui-walk/walk.mjs is the additions only).",
+   "tmp/ui-walk/20261005T163146Z/au5-reads.json (per-tab data-attribute reads) and 20261005T165304Z/shots/004-ranked-list-before-click-AMD-US.png, 005-AMD-US-overlay.png."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W235-S5",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~235",
+ "surfaced_at": "2026-10-05T16:56:20Z",
+ "class": "OBSERVATION",
+ "one_line": "No segment breakdown is on the BA page or in its deployed rich export.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "PRD FWD-1 ACCEPT: 'the model numbers, the business description and the segment breakdown are already on screen'.",
+ "world_is": "BA's overlay and five tabs show header figures, a company description, news, a timeline, a financial summary and a version comparison; I found no segment breakdown on any tab. The deployed print?format=rich export for BA_US_Equity (198,974 bytes) contains the word 'segment' once and no breakdown, and the thesis route carries one unrelated sentence containing 'segments'.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Python read of .scratch/cap_BA/served/BA_US_Equity.rich.md (re.findall 'segment' -> 1, no hit with context) and of served_fixture thesis (1 hit: 'Backlog across all segments expanded materially').",
+   "tmp/ui-walk/20261005T161750Z/shots/017-BA-US-Model.png (Model tab; no segment table)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:40:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "Silver stores the original link in more fields than the task order names: barrons 70 of 170 and sa 41 of 11429 articles lack the named field; 29 ft/wsj articles carry a url.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 items: bbg url, barrons canonicalUrl and sa links.self carry the link; ft and wsj store no link (so url null with a reason).",
+ "world_is": "Newest silver per article, read through publication_gold._iter_latest_articles at 2026-10-05: barrons 170 articles, 55 have canonicalUrl null with sourceUrl set (backfill form) and 15 are normalised records with top-level url; sa 11429 articles, 41 have links null but a top-level url (normalised record); bbg 1733 articles, 11 carry no link in any field; ft 14 and wsj 15 articles (of 185 and 454) carry a top-level url. article_url therefore reads barrons canonicalUrl then sourceUrl then url, and sa links.self then url, so the dry build reads barrons 162 of 162 and sa 10220 of 10220 mention rows with a url. ft and wsj are left null as ordered, so 29 stored ft/wsj links are not served and those items say the copy carries no link. Not changed: whether ft/wsj should read url is the issuer's call.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~233/dry_build_urls.txt",
+   "probe over _iter_latest_articles, counts above, run in worktree C:/tmp/r71-233 on the branch from the issuance commit"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:40:30Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The producer's own securities reader holds 53 of the 95 covered names, so the dry build covers 53 names, not 95.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 item 4: build the mention rows for the covered names (covered_security_keys, 95) with the producer's own readers.",
+ "world_is": "universe_securities.build() reads the newest pool universe object (pool:universe/v1/2026-09-16.json, 191 keyed names, as_of 2026-09-16); 42 of the 95 covered keys (e.g. 1299_HK_Equity, ADBE_US_Equity, AZN_LN_Equity) are not in its names list, so no alias set exists for them and the dry build skips them. Per-source rows are therefore over 53 names. The next gold rebuild reads the same securities and has the same 53-name reach unless the universe object is refreshed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "covered_security_keys() 95; universe_securities.build() securities 191, intersect 53; 42 covered keys absent from the universe document's 250 names",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~233/dry_build_urls.txt first line"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W233-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~233",
+ "surfaced_at": "2026-10-05T16:43:43Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The new url key on mention_rows fails lib/research/harvest/test_aj7_gold_title_precision.py::test_iv_pre_existing_fields_byte_identical, a file outside this order's paths.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT-au-3 item 1: mention_rows copies the link into a new url key; paths list publication_gold.py and test_mention_url.py in harvest, not test_aj7.",
+ "world_is": "test_aj7 strips only NEW=('title','published_precision') from the rows before comparing to its byte pin, so every new mention_rows key fails it. Result in worktree C:/tmp/r71-233: lib/research/harvest 1 failed, 352 passed; the one failure is that test. The fix is one word, adding 'url' to NEW at test_aj7_gold_title_precision.py line 36, which this order may not write. Left unedited. Without it the drain's harvest suite is red on this commit.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest -q lib/research/harvest at the worktree HEAD: 1 failed, 352 passed",
+   "test_aj7_gold_title_precision.py:36 NEW and :78-80 the pin comparison"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-S354",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T19:36:21Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "au-7's AC3 grades 9 regression cells; the CTO half it was signed under names 13 (c14, c15, c23-c33), so 4 cells sat outside the graded criterion.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-au-7 AC3 invocation grades exactly r70 c30-c33, r69 c29 and r67 c23-c26 -- 9 cells -- and AMENDMENT 1 makes 'the AC3 regressions' one of the three rollback triggers.",
+ "world_is": "NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md condition 2 requires 'au-1..au-5's checks, and the full regression set (c14, c15 as amended, c23-c33)'. c23-c33 is 11 cells, plus c14 and c15 = 13. AC3's 9 omit c14, c15, c27 and c28. The gap is in the CUT, not in the product: this seat ran the four anyway on the deployed build wbIT0PHvxKIgJvgVy+u0XhLuSXFK5dUE/wypJPDcf8o= and c14 (r64), c27 and c28 (r68) all read SERVED: YES, so condition 2 reads 12 of 13 YES. The 13th, c15, is the r64 cold-read cell: its only sound oracle is a COLD invoke proven by Init Duration, and by the time the scope gap was found the function had been warmed by AC1, AC2, AC3 and the leadpanel after-measurement, so c15 is taken last, after a measured idle, and reported separately. Nothing here is a rollback trigger under AMENDMENT 1's three named ones. Not adjudicated by this seat: whether AC3 should be re-cut to match the half, which is the issuer's.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/ledger/NEVER_WIDEN_ROUND71_AU7_CTO_HALF.md condition 2, read at the bytes (2656 B, present at its cited pin a9c145359a)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-au-7.the-code-redeploy.md section 4 AC3 invocation",
+   "r64_served.py:56 --cell choices include c14 and c15; r68_served.py:65 --cell choices are c27 and c28",
+   "deployed runs this session: R64 C14 SERVED: YES, R68 C27 SERVED: YES, R68 C28 SERVED: YES, each exit=0"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W241-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~241",
+ "surfaced_at": "2026-10-05T21:55:02Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The task order says a four-digit Japanese code maps to '<code> JT'; the held list is written '<code> JP', so the JT form matches 0 of 9.",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-5 section 1 item 1: the 9 four-digit Japanese codes map to `<code> JT`, then resolve through the identity list.",
+ "world_is": "crosswalk.resolve('8306 JT') and ('9433 JT') return security_key None; resolve('8306 JP') returns 8306_JP_Equity and ('9433 JP') returns 9433_JP_Equity (crosswalk/v1 as_of 2026-09-29, 237 records, Japanese records held as bloomberg '<code> JP'). The code now tries both forms, JT first, JP second; of the 9 four-digit members 2 resolve by code (8306, 9433), and the rest have no held company by that code.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/identity/crosswalk.py resolve() run live at worktree HEAD",
+   "lib/research/peers/numeric_tickers.py japan_forms()",
+   "lib/research/peers/tests/test_numeric_tickers.py test_japan_code_resolves_by_either_form"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W241-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~241",
+ "surfaced_at": "2026-10-05T21:55:02Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "4 covered names list themselves among their own peer members under a numeric scanner id; the name match now serves their own key on that member.",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-5 bounds item 2: add identity or the reason only, no member is removed; FWD-8 wants the comparison block's subject identity to equal the page's.",
+ "world_is": "Over the 95 covered names' served /peers members (local handler), numeric-ticker members that now serve a key equal to the page's own key: ROG_SW_Equity (710891), NOVN_SW_Equity (710306), PBR_US_Equity (268236), ZURN_SW_Equity (598381). The producer put the subject into its own peer set under its scanner id. Left in place per the bound; removing a self-member is the producer's or the issuer's to decide.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "read_peer_set over covered_security_keys() at worktree HEAD: 21 of 94 numeric members resolved, 4 of them equal to the subject key",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~241/f6_served.json names covered counts"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W242-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~242",
+ "surfaced_at": "2026-10-05T21:59:57Z",
+ "class": "BLOCKING",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AC1 cannot be met by the three named cuts: 23 of 94 ranked names are held ONLY in their model blocks, the crosswalk holds no name for them, and each name costs a listing and a GET -- first read is 60 calls (rankings) and 72 (chatter) after the cuts, from 153 and 167.",
+ "spec_asserts": "TO-AMGT-av-6 section 1: `_model_block_name` reads a whole model block per unnamed name just for NAME -- 'use the crosswalk name it already holds'; with that, the first rankings and chatter reads make 15 AWS calls or fewer.",
+ "world_is": "Measured locally, one fresh process per route, botocore _make_api_call counted by operation. BEFORE: rankings 153 (GetItem 99, Query 2, ListObjectsV2 27, GetObject 25), chatter 167. AFTER the cuts (one BatchGetItem for classifications, module-init resource, crosswalk name asked before the block in _slash_row_unconfirmed): rankings 60 (BatchGetItem 1, GetItem 5, Query 2, ListObjectsV2 27, GetObject 25), chatter 72 (BatchGetItem 2, GetItem 5, Query 2, ListObjectsV2 34, GetObject 29). The 24 and 25 _model_block_name reads are 23 distinct names that no earlier source in the chain supplies: over the served TRENDING/PRICE default body 23 rows carry name_source model_block_header, 36 etf-classifications, 35 crosswalk; for the 23 the crosswalk (237 records, 67 holding identity.name) holds no name. Other stored sources checked for those names and not usable without changing a served value: universe/v1/2026-09-16.json names are folder labels ('Costco COST'), repo registrations.json holds none, derived/model_block, derived/model_block_fye, peers, scores and bloomberg identity are all one object per key. Excluding the 23 name reads (about 48 calls) the rankings read is 12 calls, so the cut is cuttable only if those 23 names reach the crosswalk (a registration write and a Bloomberg identity pull, not this order's) or the cold read is accepted above 15; the provisioned-concurrency fallback in ruling 2 applies. AC2 holds: EQUAL 15 of 15. Not adjudicated by this seat.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python r72_served.py --cell c46 --where local after the cuts: {'rankings': 60, 'chatter': 72}; R72 C46 SERVED: NO; exit=1",
+   "same check before any edit at this worktree: {'rankings': 153, 'chatter': 167}",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~242/before/lead-panel_rankings_trending_price_default.json: 23 rows name_source model_block_header",
+   "lib.research.identity.crosswalk.load_crosswalk() on the served crosswalk/v1/2026-09-29.json: 237 records, 67 with identity.name, none of the 23 keys among them"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W243-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~243",
+ "surfaced_at": "2026-10-05T22:03:31Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The only stored SEC object is the raw ticker list (no EDGAR filing history), so a --write-pool run now would write form_expected 'none' over 13 names the 2026-09-16 pool object holds as 10-K or 20-F.",
+ "spec_asserts": "TO-AMGT-av-7 item 1: load_sec_cache reads the NEWEST stored object under sec/harvest/bronze/company_tickers/ and --dry-run names 95 of 95; preflight: never fetch from the SEC, 'if none is stored, file a row and stop'.",
+ "world_is": "The prefix holds ONE object: date=2026-09-22/company_tickers.json (800703 B, the SEC's raw list: cik_str/ticker/title). The pinned sec_ticker_cik_cache.json projection (rows + submissions.by_cik from EDGAR) was never stored. load_sec_cache now projects the raw list in memory over every ticker, prints 'SEC CACHE: partition date=2026-09-22 ...' to stderr, and marks submissions.unmeasured; each filing note says form_expected is NOT measured. The dry-run names 95 of 95. MEASURED on the stored universe/v1/2026-09-16.json: form_expected 10-K 7, 20-F 6, none 237 of 250 names. A --write-pool built from the raw list yields 'none' for those 13, a served regression av-8 must not land. Disarm: av-8 either stores the EDGAR-history projection first (an egress act the order forbids this cell) or carries the 13 forward before any write. No store write was made here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "boto3 paginated list of s3://opal-data-harvest/sec/harvest/bronze/company_tickers/ at 2026-10-05: 1 object, date=2026-09-22/company_tickers.json 800703 B",
+   "universe/v1/2026-09-16.json read: Counter(form_expected) = {'none': 237, '10-K': 7, '20-F': 6} over 250 names",
+   "lib/research/identity/build_universe.py _project_raw_sec_list and the filing_identity_for 'NOT measured' branch; test_union_universe.py LoadSecCache"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W243-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~243",
+ "surfaced_at": "2026-10-05T22:03:31Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "one_line": "c45 (no name of 5+ capital letters) cannot pass with the shared rule's 'BP PLC', 'RWE AG', 'SAP SE', 'SSE PLC', so /peers alone serves them without the legal form.",
+ "spec_asserts": "TO-AMGT-av-7 item 2: /peers serves display_name through _clean_display_name; AC2 grades 0 names with 5+ letters all upper case.",
+ "world_is": "_clean_display_name keeps declared initialisms and legal forms upper (DISPLAY_NAME_ACRONYMS, CTO round 65), so those four names are still all capitals: 8 of 735 objects failed c45 after the shared rule. _peer_plain_name drops a trailing legal form only when what is left is wholly capitals, giving 'BP', 'RWE', 'SAP', 'SSE'. Every other route still serves 'BP PLC'; the issuer decides whether the shared rule should follow. Names with a lower-case letter are untouched.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "c45 local run after the shared rule: failing 8 of 735, all four names above",
+   "scoped_amgt.py _peer_plain_name and test_peers_plain_names_av7.py::test_an_initialism_with_its_legal_form_is_served_as_the_initialism"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W238-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~238",
+ "surfaced_at": "2026-10-05T22:05:12Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "The served thesis bundle carries forecast_figures at thesis_bundle.model.forecast_figures, not at thesis_bundle.forecast_figures as av-2 item 1 class 2 names.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-2 section 1 class 2: add the 2026E-2028E forecast rows the page shows, from thesis_bundle.forecast_figures.",
+ "world_is": "read_thesis_bundle nests read_model()'s whole return under the key model (scoped_amgt.py bundle dict, the comment at AMGT-rk-36 item 6), and ModelTab.tsx reads data.model.forecast_figures; the captured BA served fixture has thesis.model.forecast_figures (35 figures, 2026-2028) and no top-level forecast_figures key. build_rich_text now reads the top-level key when a payload carries it, else thesis_bundle.model.forecast_figures, so both shapes serve. No edit outside the order's paths.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py bundle dict: the key model holds read_model()'s return, forecast_figures included",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~238/cache/BA_US_Equity/served/served_fixture.BA_US_Equity.json: thesis.model.forecast_figures length 35, thesis keys carry no forecast_figures",
+   "portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx ModelBody: data.model?.forecast_figures"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W240-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~240",
+ "surfaced_at": "2026-10-05T21:55:39Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "83 of 95 covered names have no segment prose or numeric segment data; a numeric segment table for them needs a Bloomberg segment pull, a vendor use for Andrew's word.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-av-4 item 2: file ONE row listing the names without segments, for Andrew's Bloomberg segment pull (a vendor use).",
+ "world_is": "Measured by read_segment_breakdown over covered_security_keys() (95): 12 names serve rows from stored filing analyses (filings/v1, 12 analysis objects in 12 folders), 83 serve rows [] with a plain reason. No pull was made. Census: org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~240/SEGMENT_CENSUS.md. The 83 names: 1299_HK_Equity, 2317_TT_Equity, 8035_JP_Equity, 8306_JP_Equity, 8316_JP_Equity, 8766_JP_Equity, 939_HK_Equity, 9433_JP_Equity, 992_HK_Equity, ADBE_US_Equity, AI_FP_Equity, AMD_US_Equity, AMXB_MM_Equity, AZN_LN_Equity, BATS_LN_Equity, BBSE3_BZ_Equity, BNP_FP_Equity, BP/_LN_Equity, BZLFY_US_Equity, CDNS_US_Equity, CELH_US_Equity, CLX_US_Equity, CNR_CN_Equity, CPA_US_Equity, ENEL_IM_Equity, GOOGL_US_Equity, GPN_US_Equity, GSK_LN_Equity, HEI_US_Equity, HSBA_LN_Equity, IBE_SM_Equity, ICICIBC_IN_Equity, ICT_PM_Equity, IDXX_US_Equity, IMB_LN_Equity, ISP_IM_Equity, ISRG_US_Equity, JD_US_Equity, KOFUBL_MM_Equity, KPN_NA_Equity, LLY_US_Equity, MA_US_Equity, MELI_US_Equity, MER_PM_Equity, ML_FP_Equity, MNST_US_Equity, MSCI_US_Equity, NESN_SW_Equity, NFLX_US_Equity, NG/_LN_Equity, NKE_US_Equity, NOKIA_FH_Equity, NOVN_SW_Equity, NOW_US_Equity, OMAB_MM_Equity, ORA_FP_Equity, PWR_US_Equity, QXO_US_Equity, RIO_LN_Equity, RKT_LN_Equity, RMS_FP_Equity, ROG_SW_Equity, RWE_GR_Equity, SAN_FP_Equity, SHOP_CN_Equity, SLB_US_Equity, SNPS_US_Equity, SPOT_US_Equity, SSE_LN_Equity, ST_SP_Equity, TSM_US_Equity, TTE_FP_Equity, UBER_US_Equity, UBSG_SW_Equity, ULVR_LN_Equity, UNH_US_Equity, UNVGY_US_Equity, VIVT3_BZ_Equity, V_US_Equity, WALMEX*_MM_Equity, WDAY_US_Equity, ZTS_US_Equity, ZURN_SW_Equity.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "SEGMENT_CENSUS.md totals line: covered names 95; names serving segment rows 12; names serving a plain reason 83",
+   "python r72_served.py --cell c43 --where local: names 95 with segment rows 12 non-200 0"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-S355",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T23:59:54Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "av-8's cold Lead Panel read did not come down as the COO half expected: 6998-8638 ms against round 71's 7306-7777, a band that widened rather than moved.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "NEVER_WIDEN_HALF_COO_AV8.md EXPECTED OUTCOMES: 'cold first read (leadpanel after) | before chatter 5.3-10.0 s | reported only: lower expected (60/72 calls from 153/167)'.",
+ "world_is": "Measured on the deployed round-72 build 2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ= at 2026-10-05T23:41:18Z, 10 s after the apply and before any other check touched the function: cold chatter n 6, min 6998 ms, max 8638 ms. Round 71's au-7 measurement on wbIT0PHv was min 7306, max 7777. The round-72 min is LOWER and the max is HIGHER, so the band widened rather than moved down, and it sits inside the half's stated 5.3-10.0 s before-band rather than below it. On two runs of n 6 that is not a distinguishable change in either direction, and none is claimed. THE LIKELY REASON THE EXPECTATION AND THE MEASUREMENT DO NOT MEET: the half's expectation is stated in CALL COUNTS (60/72 calls from 153/167), and leadpanel_cold_warm.py measures WALL TIME. A call-count reduction can be real and still not show in wall time if the removed calls were not the critical path, so the two are not the same quantity and this row is NOT evidence the call reduction failed -- it is evidence the instrument in hand cannot see it. Nothing was rolled back: the half marks the cold read report-only and expressly not a rollback trigger, since av-6 changes no value, and the warm column is unambiguous (warm chatter 532-682 ms, warm price 61-297 ms, all 9 routes 200). Not adjudicated by this seat: whether to re-measure the cold leg on the call-count plane the expectation was written on, which would need an instrument that counts S3 calls per cold invoke rather than timing the route.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/LEADPANEL_AFTER_av8.txt -- the raw output with its provenance and this comparison written out",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/NEVER_WIDEN_HALF_COO_AV8.md EXPECTED OUTCOMES table, read at the bytes (5282 B, present at its cited pin 30b3ff704d)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/LEADPANEL_AFTER_au7.txt -- round 71's cold figures for the comparison",
+   "the measuring script self-reports the CodeSha256 it measured, so the figures are pinned to the round-72 build"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W244-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~244",
+ "surfaced_at": "2026-10-06T00:41:06Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "FWD-7's served /freshness view reads the pack clock as NEVER for 95 of 95 covered names, though the pool's packs/ prefix holds 105 objects and ASML's team pack is cited on its page.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP PRD FWD-7 (:539-542): the one place shows every covered company with the date its research was last refreshed. read_coverage_freshness (lib/research/api/scoped_amgt.py) carries a per-row `pack` clock built by _child_stamps(pack_keys, 'packs/'), whose docstring says a stamp is the grandchild segment of <prefix><child>/<stamp>/...",
+ "world_is": "Measured at 2026-10-06T00:41:06Z on the deployed build via the walker's own signed-in GET /api/scoped/amgt/freshness (200, 131,628 bytes): 292 rows, 95 covered, covered rows' `pack` = NEVER 95 of 95 (ASML_NA and BA_US included), while reads.packs reports SERVED with 105 objects listed. The pool holds s3://opal-data-harvest/packs/ASML_NA_Equity/input_ledger.json (one file directly under the child, no <stamp>/ segment); _child_stamps sets stamp = '' when a key has two segments, and the row then reads `pack_stamp or NEVER` = NEVER. The 'last_refreshed' column is unaffected (it is the greatest of the Bloomberg/SA/SERP clocks; all 95 read 2026-10-04T13:00-13:11Z). Not adjudicated here: whether the pack clock should read input_ledger.json's own date or the research-report object date; only that the column cannot show a stale pack today.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261006T002600Z/probe-body-1.json (gitignored, on the worker device) -- the served body, rows[].pack",
+   "aws s3 ls s3://opal-data-harvest/packs/ASML_NA_Equity/ read 2026-10-06 ~00:3xZ: input_ledger.json 2456 bytes, 2026-10-04 09:02:13",
+   "lib/research/api/scoped_amgt.py :5292 _child_stamps and :5461 read_coverage_freshness (worktree C:/tmp/r72-244, branch wk-AMGT_RESAPP-244)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W246-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~246",
+ "surfaced_at": "2026-10-06T02:46:48Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The order named render_print.py under checkface, but the pack's figure lines come from lib/research/provenance/render_print.py; and four existing assertions in lib/research/print/tests/test_av2_export_equals_page.py pinned the old unit-code wording.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Task order AMGT-aw-2 section 1: each figure line prints its unit code from lib/research/checkface/render_print.py (~:212, :244) called via render_pack.py ~:319; fix it in render_pack.py, render_print read only; plant tests in lib/research/print/.",
+ "world_is": "render_pack.py imports render_figure_line from lib/research/provenance/render_print.py (lines :209-244 there), not from checkface/render_print.py (98 lines; no :212 or :244). The fix is still in render_pack.py alone: _plain_figure_line re-words the value segment of that function's output, and neither render_print file was edited. Four existing assertions in lib/research/print/tests/test_av2_export_equals_page.py (test_pdf_text_carries_no_field_code_and_names_every_line_in_words) read the old wording ('100.0 PRICE (local)', '1.5 PER SHARE (local)', '8.0 PERCENT', '2.0 PER SHARE (local)'); they are inside the order's lib/research/print/ write grant and were updated to the new wording, plus two assertions on 1.0 -> '1 [unit not stated]' and 'local currency 1.00 per share', and one prefix shortened because the line now wraps. Also observed once: lib/research/api/tests/test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself failed one run (a SHA256 of empty bytes e3b0c44298fc... on one side) and passed on the next two runs with no change in between; not in this order's paths and not investigated.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/print/render_pack.py import block and _plain_figure_line, worktree C:/tmp/r73-246 branch wk-AMGT_RESAPP-246",
+   "lib/research/provenance/render_print.py :209-244 render_figure_line",
+   "pytest lib/research/print lib/research/api/tests/test_print_fiscal_year_sort.py lib/research/api/tests/test_print_format_rich.py: 86 passed on two consecutive runs after the edits"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W245-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~245",
+ "surfaced_at": "2026-10-06T02:44:40Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The order names raw/bloomberg/<KEY>/<stamp>/refdata.json for the name read, but the scoped API role holds no grant on raw/; the cut reads bloomberg/harvest/bronze/refdata/ instead, which the role holds.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-aw-1 section 1 item 2 and preflight comp-iam: name the 23 from the stored Bloomberg refdata object `raw/bloomberg/<KEY>/.../refdata.json`, field NAME, newest; aw-7's never-widen pair simulates the read.",
+ "world_is": "infra/aws/terraform/harvest/scoped-amgt-api.tf (scoped_amgt_pool_prefixes, comment at the packs/ entry) records that 'raw/' was REMOVED by AMGT-rk-92 (M3) and no reader lists raw/. The same list grants bloomberg/harvest/bronze/ (AMGT-rk-82 H0-iam). The same NAME is stored at bloomberg/harvest/bronze/refdata/security_key=<slash-safe key>/<stamp>.json (the stamp is the file name; the newest object can be a vendor error row, so the read walks to the next older object, at most 3). Measured read-only at the cut: for the 25 keys the first request names through the model block (24 on the rankings route, 25 on the chatter route), the newest bronze refdata NAME equals the model-block header NAME 25 of 25; the raw refdata NAME equals it 25 of 25 too. The cut therefore reads the bronze prefix: a deployed read of raw/ would be refused and every row would fall back to the model block, leaving the cold path unchanged. New read prefix: bloomberg/harvest/bronze/refdata/ (inside the granted bloomberg/harvest/bronze/); no grant change is needed on this reading. Not adjudicated here: whether aw-7's simulation should name this prefix rather than raw/bloomberg/.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/harvest/scoped-amgt-api.tf scoped_amgt_pool_prefixes (worktree C:/tmp/r73-245, read at the cut)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~245/PHASES.md -- model-block GetObjects 24/25 before, 0 after, refdata GetObjects 24/25 after",
+   "lib/research/api/scoped_amgt.py _refdata_name (this branch)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W249-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~249",
+ "surfaced_at": "2026-10-06T02:51:50Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The round-73 c50 check reads the ranked row's and the freshness row's `name` field, so serving plain names required re-casing `name` itself, which two existing api tests pinned to the vendor capitals.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-aw-5 worker face item 1 names the ranked row via _with_display_name, which at the base kept `name` as stored ('the stored name keeps its value; only display_name changes', lib/research/api/tests/test_display_name_case.py test_every_route_chain_ends_in_the_seam); the c50 check (r73_served.py) fails a ranked row or a freshness row whose `name` is all capitals.",
+ "world_is": "At the base, c50 --where local read 383 names with 131 all-capital failing, every failure on `name` (ranked rows carry the stored vendor name; freshness rows have no display_name). To pass AC1 the worker set the ranked row's `name` to its plain form in _with_display_name and cleaned the freshness row `name`; casing is the only served change, plus the 'CO/THE' and bare legal-form tail the order's own examples name (BOEING CO/THE -> Boeing, BP PLC -> BP). Three existing tests that pinned the old capitals were updated: test_display_name_case.py (ranking name; BP PLC case) and test_lead_list_names_and_places_moved.py (ADOBE INC served as Adobe Inc). Not adjudicated: whether the portal reads `name` on a ranked row for anything other than display. After the change the api suite reads 650 passed and the harvest suite 355 passed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py _clean_display_name and _with_display_name on branch wk-AMGT_RESAPP-249 (C:/tmp/r73-249)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round73/checks/r73_served.py c50 branch reads r.get('name') for rankings and freshness"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+]
 ```

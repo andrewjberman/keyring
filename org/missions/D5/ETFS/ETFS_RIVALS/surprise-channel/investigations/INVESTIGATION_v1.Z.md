@@ -3541,6 +3541,411 @@
     "spec_asserts": "Andrew-direct @33ff3bdac0/@4bd948e824: one purely additive IDVZ/PFOE backfill; CTO~Z msg 29594: any non-IDVZ/PFOE fund delta is a STOP.",
     "world_is": "G1 is purely additive (189/189 dates) but the chain's G5 rebuild is not: it re-derives every fund's trades on 189 dates with current code. The served Jan-Sep G5 of the other funds was built with older code, so it would change. Options for the CTO: (A) accept a G5 replay of all funds as part of Step B (wider than the word); (B) a round-9 cell: the trade schedule rebuilds only named funds and carries every other fund's rows from the prior object unchanged, then Step B runs; (C) defer Step B.",
     "notes": "Nothing served moved: every write was to the local mirror. Step B is held. disarm_owner not needed (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S30",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-05T17:35Z",
+    "one_line": "S25's graduated remedy (enrichment refuses to land an all-error or all-empty G4 revision) has no placement in ROUND_ANALYSIS.round8.md: no ruling, and not one of the 8 round-9 enrichment items. Its remediation row in REMEDIATION_v8.Z.md is OPEN and owned by 1.0.0_SA_CTO~Z.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "remediations/REMEDIATION_v8.Z.md row ETFS_RIVALS-Z-S25 (state OPEN, owner 1.0.0_SA_CTO~Z) @5867175a58",
+        "ledger/ROUND_ANALYSIS.round8.md @2097b5212b: section 3 rulings 1-7 and section 4 items 1-8 name S24, S29, C-S35, C-S36, the G5 drift and the 8 stale rows; none names S25, G4 or the all-error guard",
+        "investigation row ETFS_RIVALS-Z-S25 (remedy 3 not cut in round 8)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md rule 27 L10: the CTO answers the slug with the ROUND-N ANALYSIS that the COO recuts in ONE issuance. ROUND_ANALYSIS.round8.md section 3 ruling 6: 'None is carried silently into round 10'.",
+    "world_is": "Of the 5 rows the round-8 slug graduated, 4 are placed in the analysis (S24 ruling 1 and item 6; S29 ruling 2 and item 1; C-S35 ruling 3 and item 4; C-S36 ruling 4 and item 5). S25 is placed nowhere. The G4 10-02 restore (remedy 2) is done, but the guard (remedy 3) is unbuilt. While S24's capacity block can recur, a blocked enrichment can land another empty G4 as the newest revision, and every reader would take it as current.",
+    "notes": "For the round-9 issuer (2.0.0_SA_COO~RV): cut S25 remedy 3 as a cell, or carry it under item 6 (the capacity budget) with the reason stated. INERT, so no disarm_owner. Filed as a row because the CVO's one send of the round (the slug) is spent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W5-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~5",
+    "surfaced_at": "2026-10-05T18:26Z",
+    "one_line": "nm-3's 'page day's newest holding_contribution' may not exist when the 07:00 ET enrichment step runs; the names stage reads the newest within 10 days before the page day, and its production fetch is refused at the daily ceiling, not ceiling minus reserve.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO RIV-nm-3 section 1: 'reads the page day's newest holding_contribution' and 'enrichment_bloomberg --mode daily runs it for the page day after its G4 lands'; INFERRED, not measured: the worker did not trace when the page day's holding_contribution is built relative to the 07:00 ET step; if it is built after, a strict page-day read finds none and the stage reads SKIPPED every morning",
+        "data/etfs/scripts/rivalfunds/security_names.py _page_contribution: newest object of the page day, else the newest dated within LOOKBACK_DAYS=10 before it (names belong to the security, not the day); nm-3.AC1 reads the page day exactly and passes either way",
+        "data/etfs/scripts/rivalfunds/security_names.py _budget_refusal: 1 row per key refused when spent(today) + keys > daily_ceiling_rows; bbg_budget.check_backfill's limit (ceiling - reserve) is for backfills and the names request is production (the reserve is what production spends); the order did not name which limit",
+        "page day defaults to today ET (event `page_day` overrides) in enrichment_bloomberg daily; the daily result gains `names` and the daily's own status and exit code are untouched"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-nm-3 cell: the stage reads the page day's newest holding_contribution; production fetch asked through bbg_budget first, refused -> SKIPPED with the reason.",
+    "world_is": "The stage reads the page day's object when present and otherwise the newest of the prior 10 days; the refusal limit is the daily ceiling. Both are one-line changes in security_names.py if the issuer wants the strict read or the backfill limit.",
+    "notes": "Nothing deployed or called; every test stubs the vendor hook. disarm_owner not needed (INERT)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-05T19:34:06Z",
+    "one_line": "RIV-gd-1: the G5 drift is not all code -- 9,467 of 9,477 compared rows differ in their G3 revision labels, 6 income_funded labels flip under the UNCHANGED parent code, and 3 corporate_action_refs change, because three G3 pulls landed after the live G5 was built; the tool pins G3 per live object to separate code from data.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/tools/g5_drift.py (worker ~6 branch wk-ETFS_RIVALS-6) run over live S3 (read-only): 189 dates, 9,477 rows compared, 0 unclassified; live G5 recorded G3 label 20260930-95af6e3d1a1c (9,366 rows) or +20261001-bb49468667d5+20261002-f94cbd79e15c (111 rows); live G3 now holds 4 objects",
+        "income_funded: of 27 flipping rows, 7 move at 2a655a0180 (DVD_CRNCY currency preferred), 13 at 0b2981d770 (minor-unit currencies), and 7 already at the parent code 2a655a0180^ once the 10-02 pull is read, while the parent code over the pinned G3 reproduces the live value",
+        "the 10-02 pull actions-20261002-f94cbd79e15c carries `currency` on its events (the 09-30 import pull actions-20260930-95af6e3d1a1c has it null) and DGCXX_US money-market accrual events"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gd-1: a class is ONE cause found with git log -S on gold_trade_schedule.py, named by commit and cell; the live newest G5 is compared with a G5 built by current code from the live newest G1 (no word on G3).",
+    "world_is": "The G5 a replay builds is a function of the G3 read at replay time as well as of the code: a G3 pull landed after the live build changes every row's corporate_actions_revision/applied labels and some income_funded and corporate_action_ref values with no code change. The tool therefore builds twice (G3 pinned to the live object's recorded revisions; G3 as now) so a code class is not confounded by data, and names the data class 4fa3e25f5e RIV-g-4 (latest pull per security, labels joined). Any later replay of rows already served moves these labels again.",
+    "notes": "INERT: nothing served moved, every build wrote to a local sink. The brief's 'est_price_source and key_resolution new on 183' reads 186 here (a date counts when any compared row lacks the column; the six newest live objects carry both). Raised for the CTO's ruling on the history, not a remedy request."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-05T19:34:07Z",
+    "one_line": "gold_trade_schedule replay mode loads only the GLOBAL previous report date of a scoped start, so a fund absent that date loses its first in-scope window (CGIC 2026-01-02: live window 2025-12-30 to 2026-01-02, a replay started at 2026-01-02 builds none); the drift tool replays from 2025-12-01 and compares from 2026-01-02.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py:910-917@7ed4580858: replay `need` adds only ordered[i - 1], the global previous date, for each scoped date",
+        "first measurement (replay start 2026-01-02 over G1 staged from 2025-12-01): 13 live_only rows, of which CGIC 2026-01-02 x3 = no local window ending 2026-01-02; live G6 has CGIC 2025-12-30 -> 2026-01-02 because CGIC has no G1 on 2025-12-31",
+        "the same drift run with replay start 2025-12-01: those 3 rows read equal (0 live_only rows outside the 10 REFUSED-window rows)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-gd-1 interface: G5 rebuilt into a LOCAL sink with gold_trade_schedule.handler_entry (mode replay or daily per date), per report date 2026-01-02..2026-10-02.",
+    "world_is": "A replay scoped to a start date silently drops the first window of a fund that did not report the global previous date; a named-fund rebuild (RIV-nf-1) or any scoped replay that starts at the first date it serves has the same blind edge. No error, the rows are simply absent.",
+    "notes": "INERT for round 9 (the tool avoids it by starting the replay 31 days before the first compared date). Latent for any scoped replay; the issuer decides whether the nf-1 cell's named-fund rebuild needs the same guard."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S31",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:25Z",
+    "one_line": "Round 9 shipped two reads/writes with no IAM grant -- holding_contribution now lists gold/security_names (RIV-nm-3) and the sweep writes gold/security_universe (RIV-su-2) -- so the D12 Step B refresh republish failed holding_contribution with AccessDenied; and the package tests read the committed leg_gates.json, so the D12 flip broke 25 of them.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served platinum/page/date=2026-10-05 batch rv-publish-1005d12 (21:17:54Z, refresh_a1): a1_produced.holding_contribution FAILED 'AccessDenied ... etfs-rivalfunds-daily-role ... not authorized to perform: s3:ListBucket on opal-data-etfs' (the security_names read); buying_trend and input_census OK; IDVZ no longer not-updated (latest report 2 Oct, BBG)",
+        "infra/aws/terraform/etfs-rivalfunds/gen_policies.py at CLOUD 35c6b3a923: no prefix for gold/security_names or gold/security_universe in any stage grant; the daily Lambda's role is the union of the stage grants",
+        "package suite at 35c6b3a923: 25 failed (test_hp1, test_g12, test_g21, test_g01, test_r5l1, test_p2, test_r8lg1, test_r9gf1, test_b1) -- every one reads the committed gate file as its default map"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every new read or write ships with its grant (rule 30: the stack's grants come from gen_policies); the package tests are independent of an operational switch.",
+    "world_is": "The served page is intact (it reads the prior holding_contribution object), but every holding_contribution build fails until the grant lands, and tomorrow's page day has no prior object to fall back on; the sweep's security_universe step would fail the same way. Remedy (issuer drain repair): gen_policies grants Get+List on gold/security_names and Put+Get+List on gold/security_universe to the publish-page stage (so the daily union), regenerated policies; holding_contribution treats an unreadable names table as no stored names; a test conftest pins every test to an all-off gate file. Deploy under a pair before the 2026-10-06 publish, then one refresh republish.",
+    "notes": "The issuer's own miss at the round-9 cut (nm-3 and su-2 orders named no IAM path) and at the D12 flip (the suite was not re-run after it). disarm_owner 2.0.0_SA_COO~RV."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S32",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S11: CLOSED -- remediated in code (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "enrichment_bloomberg.py:80 requests DVD_CRNCY beside DVD_HIST_ALL (plan fields :11); gold_trade_schedule.py:170 takes the G3 `currency` first, labelled g3"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Close the remediation row: the remedy is live in the deployed code (round 9 pin 8ba7b13b90 and later).",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S11. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S33",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S14: CUT -- the history depth rides the capacity budget (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "served 10-05 holding_contribution: g4_tri 897-973 security rows priced from G4 (was 0 at 10-01); G4 holds 3 dates; RIV-cb-1's budget is live (8ba7b13b90)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "The rankings price from G4 where it exists; the G4 history pull is blocked until the Terminal's capacity returns and then runs inside the cb-1 budget in daily slices (Z-S24).",
+    "notes": "Cites ETFS_RIVALS-Z-S14. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S34",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S13: BLOCKED -- a never-widen config change not yet cut (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "guardrails_config.json thresholds.min_resolved_fraction.value.issuer = 0.23, a scalar (last change 3c7177004e, round 6)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Per-fund issuer floors {BASG, GQGU} = round_down_2dp(resolved fraction - 2/n) need a served config change under a pair; blocker: not on the round-10 list; owner 2.0.0_SA_COO~RV proposes it for the next round's repair cell.",
+    "notes": "Cites ETFS_RIVALS-Z-S13. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S35",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S12: PARKED -- no failing case (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "no spinoff, rights or warrant action on a universe security inside a page window since the row; G3 carries DVD_HIST_ALL types only"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Un-park condition: such an action appears in G3 for a held security; owner 1.0.0_SA_CTO~Z.",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S12. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S36",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S3: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the gateway stack's fresh-tree plan is not a file any ETFS_RIVALS order may write"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner: the gateway stack's owning lane; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S3. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S37",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S7: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the commit-time naming gate is a .tools file (owner 1.0.0_SA_CTO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner 1.0.0_SA_CTO decides carve-out vs refusal; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S7. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S38",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W5-S14: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the wrapper's manifest writer is not an ETFS_RIVALS path"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner: the wrapper tool's lane; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-W5-S14. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S39",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T21:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S7: RE-HOMED -- outside the ETFS_RIVALS write surface (round-9 analysis ruling 5, C-S41; triage deliverables/2.0.0_SA_COO~RV/round9/STALE_ROWS_TRIAGE.md @f70677780a).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "to-decomp-ref-lint.py and to-check.py are .tools files (owner 1.0.0_SA_CTO)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Every open remediation row of the project is cut, closed or names its blocker (C-S41).",
+    "world_is": "Owner 1.0.0_SA_CTO fixes the resolver before the seating limb enforces; this project carries no act on it.",
+    "notes": "Cites ETFS_RIVALS-Z-S7. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S40",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~RV",
+    "surfaced_at": "2026-10-05T23:35Z",
+    "one_line": "RIV-iam-1 section 5 directs the proof_of_spec instance to deliverables/0.9.0_WK_ETFS_RIVALS~RV/, a folder owned-paths clause 4 refuses to this serial, so the AE assignee has no permitted path for its instance or its never-widen evidence packet.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit.sh refused 3 of 3 files under deliverables/0.9.0_WK_ETFS_RIVALS~RV/: 'lane=TREE_DELIVERABLES ... agent=0.7.0_AE_CloudOps~RV not in permitted_agents'",
+        "the refusal names the rule: owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder, or a ~lane of it",
+        "the order's <paths> block names no deliverables path; section 3 grants only 'plus deliverables/0.9.0_WK_ETFS_RIVALS~RV/', and 0.7.0_AE_CloudOps~RV is not a ~lane of 0.9.0_WK_ETFS_RIVALS"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The assignee writes its proof_of_spec instance, and its never-widen plan and before/after policy documents, under org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~RV/ (RIV-iam-1 sections 3 and 5).",
+    "world_is": "Clause 4 keys the permission on the serial in the path, and this cell went to an AE seat rather than a worker slot (issuance 35e554c407 fanout line: 'iam-1 goes to the AE lane 0.7.0_AE_CloudOps~RV'), so the granted folder is unwritable by its own assignee. By the clause's own rule deliverables/0.7.0_AE_CloudOps~RV/ would be permitted, but it is outside the order's <paths> and section 3 forbids an edit outside them. The evidence is therefore held device-local at C:/tmp/rv-iam1.plan.txt and C:/tmp/rv-iam1-signoff/ (same device as both never-widen signers) and quoted in commit 762a984992 until a path is granted.",
+    "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer, who owns the order's <paths>). Disarm is one amendment adding a writable deliverables path for this serial. It does not block the apply, which is held on the never-widen pair; it blocks only the section-5 instance write and so a 'complete' flip."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S41",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T23:52Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S40: DISARMED by issuer amendment -- RIV-iam-1 now grants and names deliverables/0.7.0_AE_CloudOps~RV/ for its instance and never-widen packet.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "RIV-iam-1 <paths> gains org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_CloudOps~RV/; sections 3 and 5 name that folder (0 references to deliverables/0.9.0_WK_ETFS_RIVALS~RV/ remain)",
+        "owned-paths clause 4 permits the serial named by the sub-folder, which is the assignee 0.7.0_AE_CloudOps~RV"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The assignee writes its proof_of_spec instance and never-widen evidence under a deliverables folder it may write.",
+    "world_is": "The cut copied the worker-slot deliverables convention onto an AE assignee; the amendment re-points it to the assignee's own folder.",
+    "notes": "Cites ETFS_RIVALS-Z-S40. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S22",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-05T23:44:40Z",
+    "one_line": "The live newest G5 now carries rows an nf-1 run carried forward under an older G1 revision label and with the additive columns (est_price_source, key_resolution) null, so a G3-pinned code replay of the 4 classes also changes provenance labels on 4,950 rows (9,892 label cells) and fills 5,287 additive cells; no trade-fact column outside the 4 classes moves.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~3/g5_replay_dry.json: rows_moved 1316 (1040/266/7/10 by class), rows_moved_outside_classes 0, rows_with_g1_label_moves 4950, g1_label_columns_moved 9892, additive_columns_filled 5287, rows_differing_in_labels_or_additive_columns_only 3651",
+        "live G5 date=2026-01-02: newest trades-20261005T054335Z-8b69497a75c4 holds ETFT IJGXX with dataset_revision 20260930T151241Z-b02-a94587f78df0 and key_resolution null, while the newest G1 is holdings-20261005T054335Z-8b69497a75c4 (read at 2026-10-05 ~23:00Z)",
+        "RIV-gd-1 (g5_drift.json) read the older live objects as lacking the two columns; the tool counts dataset_revision/prior_dataset_revision (G1 revision labels) and null->value in the two ADDED_COLS apart from moves (g5_code_replay.py _moves)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rp-2 AC1: nothing outside the 4 classes moves in the dry run and no G3 label column moves (check docstring (b)).",
+    "world_is": "Read literally, rows differing at all are 4,950 + the class rows: the G1 revision label and the null additive columns differ on rows outside the classes. The tool reports them under their own keys and does not count them as moves (gd-1's additive rule; a G1 revision label is provenance, not a trade fact); whether AC1 (b) means that is the issuer's and CVO's reading, not the worker's.",
+    "notes": "INERT: nothing is served. The served replay will move these labels for every row of a rebuilt fund."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W3-S23",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~3",
+    "surfaced_at": "2026-10-05T23:44:40Z",
+    "one_line": "A rebuild_funds replay (RIV-nf-1) over a date whose live G5 already has the newest G1 revision and the same held funds writes NOTHING and returns OK: _g5_target returns the existing object as 'already have it' (probe: written_new 0, object count 2 before and after).",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_trade_schedule.py:783-794@33d9077d5f: _g5_target returns (newest, True, name) when _held_of(newest) == held, with no regard to rebuild_funds; the write is skipped at lines 1011-1019",
+        "probe on a local sink (live G5 built at the newest G1 revision, then handler_entry replay rebuild_funds=['TXUE']): status OK, detail written_new 0, trade_schedule objects 2 before and 2 after",
+        "the live newest G5 of 2026-01-02 is trades-20261005T054335Z-8b69497a75c4 and the newest G1 is holdings-20261005T054335Z-8b69497a75c4: the same revision, so a served replay at that date hits this branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-rp-2 / round-9 ruling 4: the served replay writes new G5 revisions for the planned (date, fund) set with rebuild_funds carrying every other fund unchanged (RIV-nf-1: 'the new G5 object is the newest prior G5 object's rows for every fund NOT named plus the freshly inferred rows of the named funds').",
+    "world_is": "At a date whose live G5 is at the newest G1 revision the rebuild returns the existing object and writes nothing, so a served replay of the 182 planned dates would report OK and move none of them. The dry tool avoids it by seeding the live object under a name the stage does not read as that revision.",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "notes": "ARMED for the issuer's served replay act, which this tool exists to precede: a fix is in gold_trade_schedule.py (not this cell's paths) or the replay names a new revision. Not a worker act."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S42",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-05T23:58Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W3-S23: DISARMED by issuer hold -- the served rp-2 replay does not run until the trade schedule writes a new revision on a same-input rebuild_funds pass; the fix goes to the round-10 L10 slug.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "the only writer that can fire the hazard is the served replay, an issuer act under its own never-widen pair, which this row holds",
+        "worker ~3 probe: written_new 0, object count unchanged, at 2026-01-02 where the live G5 and G1 are both at 20261005T054335Z-8b69497a75c4",
+        "the organic daily and batch passes run rebuild_funds only on a fresh G1 revision, which never meets the same-revision branch"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A rebuild_funds replay at current code writes a new G5 revision for the planned funds (RIV-nf-1, RIV-rp-2 served act).",
+    "world_is": "gold_trade_schedule._g5_target returns the existing object when the live G5 is already at the newest G1 revision with the same held funds, so the replay would read OK and write nothing.",
+    "notes": "Cites ETFS_RIVALS-Z-W3-S23. The fix (gold_trade_schedule.py) is outside round 10's frozen decomposition; it rides the round-10 slug to 1.0.0_SA_CTO~Z. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S43",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T02:44Z",
+    "one_line": "RIV-ok-1's measured premise is false on the live data: the WCMG Nebius row carries no CUSIP/ISIN, so the CUSIP/ISIN join cannot merge it with GQGU's CUSIP-only row; a 10-05 refresh publish at the ok-1 code is byte-identical to the control (A1 content sha unchanged).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G1 2026-10-01 holdings-20261005T054409Z-9357ccb096f1: GQGU row security_id null, raw N97284108, cusip N97284108, isin NL0009805522, ticker NBIS; WCMG row security_id NBIS_US_Equity, raw 'NBIS US Equity', cusip null, isin null, ticker NBIS",
+        "publish_page.handler_entry 2026-10-05 refresh_a1 on a post-replay mirror (C:/tmp/r8measure/ov_ok1): control @59805c595c and ok-1 @6d83ff68bb both 1,875,806 B, no new holding_contribution object (content-sha reuse), Nebius keys N97284108 + NBIS_US_Equity, 2 dialogs, in both",
+        "G4 security_market 2026-10-02 holds N97284108 (/cusip/N97284108) and NBIS_US_Equity with equal px_close 242.81 and total_return_index, but no field that maps one to the other; security_universe carries the two as separate keys",
+        "Broadcom (AVGO_US_Equity) shows one key; 'Intuit' matched INTU and ISRG (Intuitive Surgical), different securities; the only within-table two-key name is Samsung 005930/005935 (common vs preferred, correct)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ok-1 cell: 'WCMG reports the Bloomberg id, the same CUSIP on the row'; a CUSIP-only row takes the Bloomberg key another row carries for that CUSIP, so Nebius renders once.",
+    "world_is": "WCMG's row has no CUSIP or ISIN; the only shared identifier is the bare ticker NBIS. ok-1 is a no-op for Nebius on real data and J1 cannot pass. The cut's premise was written from the page's name map, not measured on G1.",
+    "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer; the cut's defect). The ok-1 deploy (round-11 item 3) is HELD: it would ship a no-op for J1. Remedy options go to 1.0.0_SA_CTO~Z (a Bloomberg-key lookup per CUSIP in the G4 reference request, joined by ok-1)."
   }
 ]
 ```

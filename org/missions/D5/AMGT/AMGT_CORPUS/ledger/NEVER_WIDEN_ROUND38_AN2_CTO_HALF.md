@@ -35,3 +35,24 @@
    runs after Z-S24's recovery, in the production order, with MSTR~Z's vehicle first.
 
 **CTO HALF: SIGNED** for CRPS-an-2 under conditions 1-4.
+
+## AMENDMENT 1 (2026-10-06 ~03:1xZ, `1.0.0_SA_CTO~Z`, after Andrew asked why COO~X sat idle): condition 1's wait is removed
+
+**What I measured.** COO~X (LIVE) reads "WAITING: an-5 on MSTR~Z's line, an-3 on the 10-06 13:00Z fire". Its last commit was
+2026-10-05 ~21:00Z. That wait is **this seat's condition 1**, which held an-2 until the 10-06 13:00Z fire had been read on the OLD
+pin. So an-2, an-6 and an-7's page half all parked for about 16 hours behind one scheduled fire. The issuer kept a gate I wrote.
+
+**Why the wait buys nothing.**
+- an-2 makes no Bloomberg call: it re-derives from raw already pulled (condition 4).
+- A FWD-22 regression read on `3ffe37a57a`, a pin this act replaces the same day, only proves code that is about to stop running.
+- The 13:00Z fire on the NEW pin `6f6e472641` gives both reads in one: FWD-22's regression (96 pulled, rc 0, 0 pointer units) AND
+  condition 3's first-fire served census.
+
+**Amended condition 1:**
+- an-2 may run **now**. The dry run is re-run on the newest raw and reads `crc derive build 1/1 control 2/2`, and the plan names
+  Python311 (unchanged).
+- **an-5 is STRUCK:** its window was 2026-10-05, and the 10-06 13:00Z fire supersedes it.
+- **an-3 reads the 13:00Z fire on `<p>`,** and that same read discharges condition 3.
+
+Conditions 2-4 are unchanged. Branch C restores `3ffe37a57a` if the 13:00Z fire on `<p>` fails on code, with rc != 0 for a reason other
+than a capacity refusal. a -4001 refusal is Bloomberg's, not the pin's.

@@ -7023,6 +7023,111 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "No data lost: bronze and the outbox hold everything. The upload slowness that drove the timeout is cured by at-1 (Z-S86). For a later analysis: catch TimeoutExpired in Collector.upload and record it as a transport-class stop, so the driver checkpoints and resumes rather than exiting."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S88",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-05T18:48Z",
+      "one_line": "barrons listing_empty_200 rose from about 26% of jobs (through 17:16Z) to 12 of the last 25 jobs (17:53-18:46Z), and the empties fall on large US names Barron's covers (ISRG, FIX, EXPD, INCY, HSBC ADR), so they read as soft blocks, not genuine absences; they are interleaved with concluded jobs a minute apart.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-al-1: a page-1 HTTP 200 with 0 parseable hits is its own status (a probable soft block), not 'no articles', and not a backfill_driver STOP status; the pair is left unconcluded.",
+      "world_is": "barrons job_finished events today: 30 listing_empty_200 against 64 concluded; 12 of the last 25 (17:53-18:46Z) are empty_200. The driver keeps its normal pacing (no stop, no retry storm). wsj (also Dow Jones, own runtime root) shows 0 listing_empty_200. Every empty_200 pair stays unconcluded, so it is retried, not lost.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest/events.jsonl barrons job_finished statuses (read-only, 18:47Z)",
+          "as-1b.report.py 18:46Z: barrons 64 of 191 concluded, listing_empty_200 30"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Issuer ruling (inside the round-47 decomposition): keep the leg running at its configured pacing; at leg end, re-run every barrons pair whose last status is listing_empty_200 in ONE --names pass with the errored pairs (CTO ruling 2's leg-end pass). If the empty rate reaches every job (a hard block), stop the barrons leg by its stop file and carry it to Andrew. For a later analysis: back off pacing on consecutive empty_200s."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S89",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-06T01:48Z",
+      "one_line": "Every live collection leg was challenged or refused inside 30 minutes on 2026-10-06: sa account check HTTP 402 at 01:12:40Z (new parallel root), barrons 401 + challenge failed 01:30:37Z, wsj 401 + slider challenge failed 01:30:52Z, bbg 403 + press-and-hold failed 01:37:50Z; all four drivers have exited (sa account_or_harvester_unavailable; barrons, wsj, bbg bot_check).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Collection-run CTO half condition 1 and ruling 29759: a hard block means stop, and Andrew decides; bbg takes no second bot-check clear.",
+      "world_is": "Three hosts on two vendors (Dow Jones, Bloomberg) plus Seeking Alpha refused within 01:12-01:41Z, after a day of mostly clean jobs: one machine-wide signal, not four separate faults. Nothing is running now. Checkpoints: r46_sa_barrons stopped {sa: upstream_unavailable, barrons: bot_check}; r46_bbg {bbg: bot_check}; r46_wsj {wsj: bot_check}; r47_sa {sa: account_or_harvester_unavailable}. Concluded of 191 pool keys: sa 9, barrons 130, bbg 104, wsj 154, ft 0.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest*/events.jsonl http + challenge_presented/challenge_failed + job_finished, 01:12-01:41Z",
+          "r47_*_run*.out STOP lines; the four checkpoint files' stopped maps"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Issuer act: no leg is resumed and the planned single sa retry is cancelled; more traffic from a flagged machine risks a longer block. Carried to Andrew: whether and when to resume, and the sa account (402 = payment required on the account info endpoint)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W96-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~96",
+      "surfaced_at": "2026-10-06T03:02:07Z",
+      "one_line": "AC2 suite cannot be fully green: test_ae4 stop-set plant pins the old STOP_STATUSES",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-au-1 3.2 adds upload_timeout to STOP_STATUSES and 4 says the collector suite stays green (AC2 expects passed).",
+      "world_is": "lib/opal_data_harvest/test_ae4_backfill_driver.py::test_stop_set_is_exactly_the_ruled_set asserts sorted(STOP_STATUSES)==RULED_STOP_SET (the eight round-31 members) and now FAILS; the file is outside the order's <paths>, so the worker cannot update RULED_STOP_SET.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_ae4_backfill_driver.py:88-89",
+          "pytest lib/opal_data_harvest: 3 failed, 656 passed, 3 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer act: add upload_timeout to RULED_STOP_SET in test_ae4_backfill_driver.py (one line) in a follow-on order. The parametrized test over RULED_STOP_SET would then also exercise it."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W96-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~96",
+      "surfaced_at": "2026-10-06T03:02:07Z",
+      "one_line": "test_as1_rank_universe 191-key plants fail at HEAD: shipped universe is 234",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The as1 plants assert the shipped universe is 191 distinct keys.",
+      "world_is": "Two as1 tests fail with 234 == 191; the failure is in the universe config, not in backfill_driver.py, and is untouched by this order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "pytest lib/opal_data_harvest/test_as1_rank_universe.py: 2 failed (assert 234 == 191)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not fixed (outside paths and order)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W97-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "one_line": "Two tests in test_as1_rank_universe.py fail at HEAD 829ba218dd with and without the au-2 change (universe holds 234 keys, test expects 191).",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~97",
+      "surfaced_at": "2026-10-06T02:58:51Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-au-2 AC2: the collector suite python -m pytest lib/opal_data_harvest -q passes (r47 at-1 reported 655 passed, 3 skipped).",
+      "world_is": "At HEAD 829ba218dd two tests in lib/opal_data_harvest/test_as1_rank_universe.py fail with and without the au-2 change (re-run with worker.py read back from HEAD: 2 failed, 4 passed): test_the_shipped_universe_is_the_rank_universe_191_distinct_keys (234 == 191) and test_concluded_jobs_over_the_universe_read_universe_scope_191_of_191. The shipped universe now holds 234 keys. Full suite with au-2: 2 failed, 658 passed, 3 skipped.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_as1_rank_universe.py run on HEAD worker.py: 2 failed 4 passed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Outside the au-2 write set; not touched."
     }
   ]
 ```

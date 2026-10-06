@@ -8482,3 +8482,151 @@ fanout:
   egress: none
   portal_ref: e6ab82ad   # portal origin/DEV at the cut (DSGN AV-zr-1)
 ```
+
+## 80. ROUND 72 -- BLOCKLESS HEADER, EXPORT = PAGE + PLAIN PRINT, DRIVER-CHART PASSAGES, SEGMENTS, NUMERIC TICKERS, COLD START, POOL UNIVERSE + PLAIN NAMES, REDEPLOY, WALK. Nine orders
+
+**Input:** the CTO's round-71 analysis `ledger/ROUND_ANALYSIS.round71.md` @be50c0d724 (msg 29780), section 4 items 1-8 and rulings
+1-4. PRD v0.39 is ADMITTED (the CVO re-signed). Research read on deployed `wbIT0PHv`, 2026-10-05 ~20:3xZ-21:2xZ.
+
+### 80a. PREMISE CORRECTIONS (measured; they change the cut, not the list)
+
+- **Item 1:** ROG_SW_Equity HAS 14 stored model blocks and serves 22 header figures (4 reasoned nulls) on deployed.
+  - All 95 covered names serve a full header: 612 values + 53 reasoned nulls, 0 unexplained.
+  - The blockless gap is OUTSIDE the covered set. Of the 138 uncovered names with a key on /freshness, 137 serve no header
+    figures (`/overlay` 404 for most; 95 return `header_figures: []`).
+  - DSGN's 16:58Z "ROG 3 tiles, 0 reasons" read is page-side or a fixture; DSGN re-reads.
+- **Item 7:** the pool universe rebuild is BLOCKED. `build_universe --dry-run` fails on the missing
+  `sec/harvest/bronze/company_tickers/date=2026-09-22/sec_ticker_cik_cache.json`. The rebuild (`--write-pool`) is a served-data
+  move.
+- **Item 4:** NO stored numeric segment data exists (0 of 95 model blocks; 0 of 117 Bloomberg bronze fields). Segment PROSE
+  exists only in `filings/v1/<key>/*.analysis.json` for 12 of 95 names, and `filings/v1/` was removed from the Lambda grant
+  (`scoped-amgt-api.tf:123`). The other 83 need a Bloomberg segment pull, a vendor use for Andrew's list.
+- **Item 6:** init and imports are not the cost (Init Duration median 214 ms over 182 cold REPORTs). The first request's own
+  reads are: c46 counts 153 AWS calls on the first rankings read and 167 on the first chatter read.
+
+### 80b. BASE READS (deployed `wbIT0PHv` unless named; every build check FAILS)
+
+- c39: 137 of 138 uncovered names lack 7 explained header figures.
+- c41: the 3 prints carry 2,389 raw field-code tokens (BA 733, AMD 810, ASML 846).
+- c42: 0 of 6 driver-chart points serve passage text.
+- c43: 0 of 95 names serve `segment_breakdown`.
+- c44: 94 numeric-ticker members over 24 names, all unresolved and unexplained.
+- c45: 680 of 735 peers subjects and members lack a non-capitals `display_name`.
+- c46 (local, a fresh process per route): 153 and 167 calls; the bar is 15.
+- c47 (local): the dry-run fails, covering 0 of 95.
+- FWD-30, with the repaired au-2 grader: equal 0 of 3.
+
+### 80c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-av-1` | DSGN FWD-4: every uncovered name's overlay serves the 7 header figures with reasoned nulls (`_header_figures` no-block branch; `overlay` in `_COVERED_NO_BLOCK_LEAVES`), plus the census of missing figures and causes | `~237` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-2` | FWD-30 export = page (4 classes) + FWD-5 print in plain words (0 field codes) | `~238` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-av-3` | FWD-18: drafting evidence carries the driver-chart point passages; the route serves `passage_text`. Code + dry build; the drafting rebuild is av-8's leg | `~239` | worker | LOCAL | `lib/research/filings/drafting_build.py` + its test, `lib/research/api/` |
+| `AMGT-av-4` | FWD-1: `segment_breakdown` on /thesis from the stored filing analyses (12 names), a plain reason elsewhere; census; the 83 listed for Andrew | `~240` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-5` | DSGN FWD-8: numeric member tickers resolve or carry a plain reason; F6's measure re-run on served peers | `~241` | worker | LOCAL | `lib/research/peers/`, `lib/research/api/` |
+| `AMGT-av-6` | cold start (ruling 2, no spend): BatchGetItem classification, crosswalk names, init-time resource; the first request <= 15 calls; values unchanged | `~242` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-av-7` | the pool universe dry-run unblocked (the newest stored SEC cache, no egress), covering 95 of 95, + DSGN FWD-27 plain `display_name` on peers. The `--write-pool` is av-8's leg | `~243` | worker | LOCAL | `lib/research/identity/build_universe.py` + its test, `lib/research/api/` |
+| `AMGT-av-8` | the redeploy carrying av-1..av-7, plus the legs: the `filings/v1` read grant (av-4), the drafting rebuild (av-3), the pool universe write (av-7). One pair; simulate arms | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, IAM grants, named store keys, ledger |
+| `AMGT-av-9` | the walk after av-8: FWD-7 and FWD-19 (v0.39 on-demand), FWD-31's byte arm (a harness render without `management`) | `~244` | worker | LOCAL (a read) | own deliverables |
+
+### 80d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-8 of the list.
+  - Item 3 is split by write surface: the print goes to av-2 (`render_pack.py`, shared with FWD-30), the passages to av-3.
+  - Item 8 is split into the act (av-8) and the read (av-9).
+- **(ii) Same grain.** One served field family or one producer per build cell; one deploy; one walk.
+- **(iii) Intent.** One axis per cell. av-7 carries two bundled by the CTO, on disjoint files.
+- **(iv) What a cell does NOT move:**
+  - av-1 leaves the 95 covered headers unchanged.
+  - av-2 leaves the page (DSGN) unchanged.
+  - av-6 changes no value (bodies equal).
+  - The store writes are av-8's legs alone, each under the pair.
+
+### 80e. EDGES AND FAN-OUT
+```
+av-1..av-7 (7 independent chains) --> av-8 (one redeploy + three legs, one pair) --> av-9 (the walk)
+fanout:
+  cap: 8
+  orders_total: 9
+  chains_total: 7
+  wave_0: [av-1 ~237, av-2 ~238, av-3 ~239, av-4 ~240, av-5 ~241, av-6 ~242, av-7 ~243]
+  wave_1: [av-8 0.7.0_AE_CloudOps~A]   # after the seven drains and its pair
+  wave_2: [av-9 ~244]                  # after av-8; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none   # the SEC cache is read from the newest STORED object; a fresh SEC pull is egress and is not cut
+  portal_ref: a3ab197f   # portal origin/DEV at the cut
+```
+
+## 81. ROUND 73 -- COLD-PATH CUT, PRINT AS A DOCUMENT, PACK CLOCK + FRESHNESS PAGE, PLAIN NAMES + STORED LINKS, KEEP-PRIOR POOL, REDEPLOY, WALK. Eight orders
+
+**Input:** the CTO's round-72 analysis `ledger/ROUND_ANALYSIS.round72.md` @bb75b180ab (msg 29846), section 4 items 1-8 and rulings
+1-7. PRD v0.40 @d7b07c5a85 restates FWD-1 and FWD-18 as on-demand seat acts (the CVO re-sign is owed before the issuance). Research
+read on deployed `2lUlZomo`, 2026-10-06 ~01:3xZ-02:1xZ.
+
+### 81a. PREMISE CORRECTIONS (measured)
+
+- **Cold start (ruling 1):** init is a median 215 ms over 216 cold starts. The DOMINANT phase is naming 23 ranked names by reading whole
+  model blocks: about 50 calls and 11.85 MB, 2.5-3.0 s per cold read (`scoped_amgt.py:1213-1245`). The next is the mention parquet
+  decode, 1.2-1.6 s (`monthly_chatter.py:287-297`). Even with both cut, chatter likely stays near 3.5-4 s (inferred), so provisioned
+  concurrency likely stays on Andrew's list.
+- **Z-W242-S1 (register the 23 names):** the only registration tool (`add_security.py:524`) makes a LIVE Bloomberg call, which is
+  vendor egress. The cut is therefore the ROUTE's name source: the 23 names' stored `raw/bloomberg/<KEY>/.../refdata.json` carries
+  `NAME`. This supersedes a crosswalk registration for the latency purpose; a crosswalk write is not cut.
+- **Z-W233-S1 (stored links):** serving needs a gold rebuild of `article_security_mention`, which is AMGT_HARVST's write
+  (`2.0.0_SA_COO~H`). This round changes the producer code; the rebuild is HARVST's act, asked at the drain.
+- **Z-W243-S1:** the plain dry-run regresses all 13 prior decided forms (7 10-K, 6 20-F) to "none". Keep-prior is required.
+- **FWD-31 (44 names):** 43 of the 47 names serving a passage have no officers at all. Rosters are not reachable without new pulls,
+  so the census-with-reason branch is the reachable one.
+
+### 81b. BASE READS (deployed `2lUlZomo` unless named; every build check FAILS)
+
+- c48: the 3 prints carry 2,719 unit-code tokens, 86 figures past 4 decimals, 3 Python reprs and 742 spans past the page edge.
+- c49: 95 of 95 covered /freshness rows read pack NEVER.
+- c50: 131 of 383 served names are all capitals.
+- c51 (local, a fresh process per route): 24 and 25 model-block GetObjects on the first request.
+- c52 (local): the dry-run names 95 of 95; 13 of 13 prior decided forms regress to "none".
+
+### 81c. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-aw-1` | cold path: phase lines (`AMGT_PHASE`) on the request path; the 23 names from stored refdata, not model blocks; bodies unchanged | `~245` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-aw-2` | FWD-5: the print as a document (unit words, rounding, no reprs, no clipped lines) | `~246` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-aw-3` | FWD-7: the pack clock read from the stored packs (slash-safe decoded; ledger date) | `~247` | worker-light | LOCAL | `lib/research/api/` |
+| `AMGT-aw-4` | FWD-7: a `/freshness` portal page flagging a stale input per name (a PRODUCT file; DEV push on Andrew's word) | `~248` | worker | LOCAL (portal) | `portal/src/pages/Freshness/`, the endpoint module; the `App.tsx` hookup at the merge |
+| `AMGT-aw-5` | Z-W243-S2 plain names on every route + Z-W233-S1 stored ft/wsj/barrons/sa urls in the gold producer (code; the gold rebuild is HARVST's) | `~249` | worker | LOCAL | `lib/research/api/`, `lib/research/harvest/publication_gold.py` + its test |
+| `AMGT-aw-6` | Z-W243-S1: keep-prior `form_expected` in the pool universe build (dry-run proves 0 regressions) | `~250` | worker-light | LOCAL | `lib/research/identity/` |
+| `AMGT-aw-7` | the redeploy carrying aw-1/2/3/5, with its legs (any grant aw-1 needs, then code, then the keep-prior pool write), under one pair | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, grants, `universe/v1/<date>.json`, ledger |
+| `AMGT-aw-8` | the walk after aw-7 (v0.40): FWD-18 click, FWD-31 BABA/SAP browser capture + the 44-name census with reasons, FWD-1 on the 12 segment names, FWD-5 rendered pages, FWD-7 page | `~251` | worker | LOCAL (a read) | own deliverables |
+
+### 81d. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-8.
+  - Item 3 splits by write surface: aw-3 serves the clock, aw-4 is the page.
+  - Item 4 bundles two producer rows on disjoint files (aw-5).
+  - Item 6, the census, rides the walk (aw-8): it is a read.
+- **(ii) Same grain.** One route family or one producer per build cell, one deploy, one walk.
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - aw-1 changes no value (bodies equal).
+  - aw-2 changes no figure, only its form.
+  - aw-4 moves no served data.
+  - aw-5's gold change is served only after HARVST rebuilds.
+  - aw-7 writes only the GO's keys.
+
+### 81e. EDGES AND FAN-OUT
+```
+aw-1, aw-2, aw-3, aw-5, aw-6 --> aw-7 (one redeploy + legs, one pair) --> aw-8 (the walk)
+aw-4 (portal; independent; the DEV push is Andrew's word; aw-8 walks it once pushed, else reads it on the dev build)
+fanout:
+  cap: 8
+  orders_total: 8
+  chains_total: 6
+  wave_0: [aw-1 ~245, aw-2 ~246, aw-3 ~247, aw-4 ~248, aw-5 ~249, aw-6 ~250]
+  wave_1: [aw-7 0.7.0_AE_CloudOps~A]   # after the five Lambda/producer drains and its pair
+  wave_2: [aw-8 ~251]                  # after aw-7; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none   # no vendor, no SEC, no ft.com/wsj.com fetch (Andrew's FT hold)
+  portal_ref: 2146031c   # portal origin/DEV at the cut
+```

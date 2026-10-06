@@ -89,6 +89,20 @@ SERIAL_RE = re.compile(r"\b\d+\.\d+\.\d+_[A-Z]{2}_[A-Za-z][A-Za-z0-9_]*(?:~[A-Za
 # both `<status>withdrawn</status>`.
 TERMINAL_STATUS = {"COMPLETE", "CLOSED", "SUPERSEDED", "CANCELLED", "DONE",
                    "CLOSED-SUPERSEDED", "WITHDRAWN"}
+# DELIVERABLES-GRANT WARN (row ETFS_RIVALS-Z-S40; 3.0.0_SA_CVO~Z verdict msg 29834, 2026-10-06: "a WARN line ... at the cut.
+# No refusing limb anywhere"). owned-paths-validate.py clause 4 admits a seat to deliverables/<SERIAL>/ only when <SERIAL> is
+# that seat (or its tilde-stripped base). An order seated on one serial that grants another serial's folder is unwritable by
+# its own executor, and nothing said so until the cell's FINAL commit, after the act. A worker (0.9.0_WK_) is admitted by
+# clause 5 (its order's <paths>), not clause 4, so it is out of this check's scope.
+# Three write-grant carriers, each a template phrase measured over 1,987 tracked tree orders (2026-10-06): the <paths>
+# block; the WRITE line's "(plus [your own] `deliverables/<SERIAL>/`)" clause (89 orders); and the proof instance's
+# "Write the instance at `.../deliverables/<SERIAL>/...`" (188). Z-S40's own order carried its grant in the last two
+# and nothing in <paths>, so a <paths>-only read returns 0 on the case that motivated it.
+PATHS_RE = re.compile(r"<paths>(.*?)</paths>", re.S)
+TREE_DELIV_RE = re.compile(r"org/missions/[^/\s`]+/[^/\s`]+/[^/\s`]+/deliverables/([^/\s`]+)/")
+WRITE_LINE_DELIV_RE = re.compile(r"You WRITE only[^\n]*?\(plus (?:your own )?`deliverables/([^/\s`]+)/")
+INSTANCE_DELIV_RE = re.compile(r"Write the instance at `[^`\n]*?/deliverables/([^/\s`]+)/")
+WORKER_PREFIX = "0.9.0_WK_"
 
 
 def staged_added() -> list[str]:
@@ -348,6 +362,41 @@ def seating_check(new_tos: list) -> tuple[list, list]:
     return v, frames
 
 
+def _norm_serial(serial: str) -> str:
+    # The same bridge as owned-paths-validate.py _normalize_serial: tilde lane form == underscore lane form.
+    return re.sub(r"~([A-Za-z0-9]+)$", r"_\1", serial)
+
+
+def deliverables_grant_check(subjects: list) -> list:
+    """WARN lines, never findings: each deliverables/<SERIAL>/ folder a NEW order grants for WRITING (its <paths>,
+    its WRITE line's "plus" clause, its proof instance path) that its seated <issued_to> cannot write under
+    owned-paths clause 4. Prints both strings and the one-line fix (CVO~Z condition 1). A worker order, or an
+    order with no serial in <issued_to>, is skipped. A deliverables path mentioned only as a READ is not a grant."""
+    warns: list = []
+    for rel, _code, text in subjects:
+        m = ISSUED_TO_RE.search(text)
+        sm = SERIAL_RE.search(m.group(1)) if m else None
+        if not sm or sm.group(0).startswith(WORKER_PREFIX):
+            continue
+        seat = sm.group(0)
+        seat_norm, seat_base = _norm_serial(seat), seat.split("~", 1)[0]
+        pm = PATHS_RE.search(text)
+        grants: dict = {}
+        for owner in TREE_DELIV_RE.findall(pm.group(1)) if pm else []:
+            grants.setdefault(owner, "<paths>")
+        for owner in WRITE_LINE_DELIV_RE.findall(text):
+            grants.setdefault(owner, "the WRITE line")
+        for owner in INSTANCE_DELIV_RE.findall(text):
+            grants.setdefault(owner, "the proof instance path")
+        for owner in sorted(grants):
+            if _norm_serial(owner) in (seat_norm, seat_base):
+                continue
+            warns.append(f"{rel}: <issued_to> is {seat} but {grants[owner]} grants deliverables/{owner}/, which "
+                         f"{seat} cannot write (owned-paths clause 4 keys on the folder's serial). FIX: re-grant "
+                         f"the path as deliverables/{seat}/, or re-seat the order to {owner}.")
+    return warns
+
+
 def audit_override(reason: str, files: list[str]) -> None:
     try:
         OVERRIDE_LOG.parent.mkdir(parents=True, exist_ok=True)
@@ -361,7 +410,36 @@ def audit_override(reason: str, files: list[str]) -> None:
               f"is UNAUDITED", file=sys.stderr)
 
 
+def grant_self_test() -> int:
+    """`--self-test-grant`: CVO~Z condition 2 (msg 29834) -- "a WARN never tested reads clean when broken". The battery
+    under .tools/tests/ is lane TOOL_BATTERIES (author != gate), so the planted cases live here, in the lint's own lane."""
+    d = "org/missions/D5/FIX/FIXPIPE/deliverables/%s/out.json"
+    head = "<task_order id=\"FIXPIPE.TO-1\" project=\"FIXPIPE\">\n<issued_to>%s</issued_to>\n<status>ACTIVE</status>\n"
+    cases = [
+        ("planted mismatch in <paths> warns", 1, head % "0.7.0_AE_CloudOps~RV" +
+         "<paths>\n" + d % "0.7.0_AE_CloudOps~A" + "\n</paths>\n"),
+        ("matched pair is silent", 0, head % "0.7.0_AE_CloudOps~RV" + "<paths>\n" + d % "0.7.0_AE_CloudOps~RV" + "\n</paths>\n"),
+        ("worker order is silent (clause 5)", 0, head % "0.9.0_WK_FIXPIPE~3" +
+         "<paths>\n" + d % "2.0.0_SA_COO~Z" + "\n</paths>\n"),
+        ("Z-S40 shape (WRITE line + instance path) warns once", 1, head % "0.7.0_AE_CloudOps~RV" +
+         "The patch is ready: `" + d % "2.0.0_SA_COO~RV" + "`\n"
+         "You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_FIXPIPE~RV/`). NEVER: any deploy.\n"
+         "<paths>\ninfra/aws/terraform/fix/gen.py\n</paths>\n"
+         "Write the instance at `" + d % "0.9.0_WK_FIXPIPE~RV" + "`\n"),
+    ]
+    failed = 0
+    for name, want, text in cases:
+        got = deliverables_grant_check([("fixture.md", "FIXPIPE", text)])
+        ok = len(got) == want and all("FIX:" in w and "<issued_to> is" in w for w in got)
+        failed += 0 if ok else 1
+        print(f"  {'PASS' if ok else 'FAIL'} {name} (warns={len(got)}, expected {want})")
+    print(f"grant self-test: {len(cases) - failed}/{len(cases)}")
+    return 1 if failed else 0
+
+
 def main(argv: list[str]) -> int:
+    if "--self-test-grant" in argv:
+        return grant_self_test()
     enforce = "--enforce" in argv or ENFORCE_MARKER.is_file()
     reason = ""
     args = []
@@ -416,14 +494,17 @@ def main(argv: list[str]) -> int:
 
     seat_v, seat_frames = seating_check(seating_subjects)
     findings.extend(seat_v)
+    grant_warns = deliverables_grant_check(seating_subjects)
 
     mode = "ENFORCE" if enforce else "ANNOUNCE"
     print(f"to-decomp-ref-lint | mode={mode} | considered={considered} file(s), "
           f"{len(in_scope)} under task_orders/, {checked} on pipeline-registered projects, "
           f"{out_of_scope_unregistered} skipped (project not pipeline-registered) | "
-          f"findings={len(findings)}")
+          f"findings={len(findings)} | warns={len(grant_warns)}")
     for line in seat_frames:
         print(f"  {line}")
+    for w in grant_warns:
+        print(f"  WARN: {w}")
     for fnd in findings:
         print(f"  REFUSED: {fnd}")
 

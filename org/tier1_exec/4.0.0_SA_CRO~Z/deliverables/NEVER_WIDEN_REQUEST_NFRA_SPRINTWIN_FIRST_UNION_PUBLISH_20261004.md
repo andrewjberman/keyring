@@ -69,3 +69,14 @@ the missing device is named on the page; its pushed work counts. The window is ~
 
 **Rollback, per key:** pages -- re-point to 446603c3 and invoke `{"date": "2026-10-04"}` (the old rule re-publishes its own
 population). Both watermarks are inert to the old image. Writer 2 stays under condition 1(b) (no local publish of a watermarked day).
+
+## EXECUTION (2026-10-05, the first scheduled publish under the union)
+
+- **CTO condition 2, read LATE:** the re-read of `describe-images` was due before 19:30Z and was taken at 20:04:05Z. It found
+  `446603c3` held (5 images; newest `4e5987ce`, the running digest). No image was pushed between the two reads.
+- **CTO condition 1:** met by 1(a); the local half (`.tools/daily-sprint.py --census-args`, @be11470de0) is on origin.
+- **The fire:** 20:10:11Z, branch A (site Z's census at 20:05:02Z, run by hand from the origin/CLOUD copy; the laptop filed none).
+  Window 2026-10-04T21:34:58Z to 2026-10-05T20:05:02Z, contiguous with the 10-04 re-run's window_end. 862 commits, 80 not yet
+  pushed (sitez 80). Source line names site Z (4:05 PM) and "laptop did not report; its pushed work is counted".
+- **Keys touched:** the two 2026-10-05 pages (20:13:38Z) and the new `daily-reports/2026-10-05/watermark.json`; served objects
+  71 -> 74. Nothing else.
