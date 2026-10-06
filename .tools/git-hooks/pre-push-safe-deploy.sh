@@ -5,8 +5,9 @@
 # Reads the push refspec from stdin (git pre-push protocol):
 #   <local-ref> <local-sha1> <remote-ref> <remote-sha1>
 #
-# For each push line, if data/*/scripts/*.py files are in the diff,
-# delegates to safe-deploy.sh. Passes if no script files are in scope.
+# For each push line whose REMOTE ref is refs/heads/CLOUD, delegates the
+# range to safe-deploy.sh (which passes if no data/*/scripts/*.py is in it).
+# Any other remote ref prints one SKIP line and deploys nothing.
 #
 # To bypass (emergency only):
 #   git push --no-verify
@@ -46,6 +47,14 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
 
     # Skip tag pushes — tags are immutable refs, not code changes; no deploy needed
     if [[ "$LOCAL_REF" == refs/tags/* ]]; then
+        continue
+    fi
+
+    # Deploy only on the trunk (NFRA_CTLPLN FWD-5, contract C-TRUNK-DEPLOY): publishing any
+    # other branch never puts a pipeline script into production. Keyed on the REMOTE ref,
+    # so `git push origin work:CLOUD` still deploys and `git push origin CLOUD:work` does not.
+    if [[ "$REMOTE_REF" != "refs/heads/CLOUD" ]]; then
+        echo "SKIP: no deploy ran for $REMOTE_REF -- the deploy gate runs only on a push to refs/heads/CLOUD" >&2
         continue
     fi
 
