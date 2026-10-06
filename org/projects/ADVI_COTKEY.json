@@ -36,7 +36,9 @@
     "COT_SUPERVISED",
     "DATA_BDINSURANCE"
   ],
-  "status": "active",
+  "status": "merged",
+  "merged_into": "IRPT_CUSTDY",
+  "closed": "CLOSED MERGED 2026-10-06 by 1.0.0_SA_CTO at L3: folded into IRPT_CUSTDY FWD-4 (Cottonwood consolidation), per IRPT_CUSTDY PRD v0.1 C-PROGRAMME (Andrew confirmed Q-1 ~21:0xZ, record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_210xZ_SEVEN_CALLS_RDP_LOCK_Q1_Q2_Q3_CONFIRMED_NO_BD_SHAPE.md). Its prior work and rulings stay readable here; new work happens only in IRPT_CUSTDY.",
   "dep_stage": "DECOMP",
   "phase": "IN THE DIRECTIVE EXECUTION PIPELINE (CLAUDE.md Rule 27). STAGE 1 REGISTERED 2026-08-24 ~19:2xZ (1.0.0_SA_CTO, on Andrew's explicit 'will need to be investigated'). STAGE 2 = a purpose-level PRD for the INVESTIGATION (declare the cot identity surfaces: the cot runner chain's advisor/relationship/account dims, Cottonwood's BD tree blackdiamond/cottonwood/**, the served cot ADVI keys, and Cottonwood's own BD portfolio-group structure) with a GROUND TRUTH run; STAGE 3 = COO decomp of the measurement cells; the REMEDY is a second stage-2 act once the map exists. Certifier CVO. Placement LAPTOP. Sequencing consequence, his: Cottonwood's Tier-B PERFRP / D3 bindings and the INSURE port wait on this map.",
   "blocking": "None on any agent. PRD s.3 key-of-record RULED by Andrew 2026-08-26 ~20:39Z (CALL 3 APPROVED: key of record = Portfolio Group, BD template 270648, value = advisor, No Advisor = explicit unassigned book; record deliverables/ANDREW_DIRECT_20260826_2039Z_FOUR_RECS_APPROVED_CATVIEWS_TODAY_WEALTHSCAPE_HAR.md) -- no ruling open at Andrew (stale line corrected 2026-08-28 by 1.0.0_SA_CTO at /open-calls). Decomp seat: COO in its DISPATCH_ORDER_20260824 slot (wave 3; PRD ready earlier). The remedy needs a DS-class measuring/building lane on spawn (one project); the cot BD session bundle is the existing read vehicle.",
