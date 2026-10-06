@@ -18513,6 +18513,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "shots 005-009 in that stamp"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W257-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~257",
+ "surfaced_at": "2026-10-06T10:09:17Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The stored model block carries no quote date: every figure's only date is `vintage`, the day the block was landed (2026-10-06 on 745 of 745 BA, 822 of 822 AMD, 858 of 858 ASML_NA figures), so a market figure's quote date cannot be read from it.",
+ "spec_asserts": "TO AMGT-ay-1 / PRD v0.40 FWD-5 ruling 1: 'A market figure (share price, market cap) reads its quote date from the stored figure.'",
+ "world_is": "lib.research.api.scoped_amgt.read_model_block for BA_US_Equity, AMD_US_Equity, ASML_NA_Equity: figure keys are scope, fiscal_year, mnemonic, value, unit, sign, basis, vintage, source, currency* and (forecast only) fiscal_period, override, period_end_date, estimate_basis. No quote_date, price_date or as_of field. PX_LAST and CUR_MKT_CAP header figures carry vintage 2026-10-06T03:2xZ, the landing stamp. The print therefore never prints vintage as an as-of; a numeric header figure with no date of its own reads 'date not stored with this figure'; a figure that carries quote_date, price_date, as_of_date or as_of prints it. Forecast figures print 'period ending <period_end_date>'. Whether the producer should land the quote date is not decided here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/print/render_pack.py _figure_date_text on branch wk-AMGT_RESAPP-257",
+   "key census over read_model_block figures for the three prints, run in the worker worktree 2026-10-06"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W257-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~257",
+ "surfaced_at": "2026-10-06T10:09:17Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "build_pack now reads the store when given no bundle, so tests outside lib/research/print that call build_pack or _print_pack reach the real drafted-document read; test_print_format_rich byte-identity failed once in 3 runs of a combined api-test run and passed on 5 reruns.",
+ "spec_asserts": "TO AMGT-ay-1 bound 2: lib/research/api/ is read only; the print reads the drafted sections from scoped_amgt.read_drafted_sections.",
+ "world_is": "scoped_amgt._print_pack calls build_pack(display_form, block) with no thesis_bundle, so the print reads read_drafted_sections itself. lib/research/api/tests/test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself and test_print_fiscal_year_sort.py call these without planting a reader and so read the store. One combined run of the two files failed the sha equality (b9ae9b09... vs 3379480a...); the same files then passed alone twice and combined twice. The print suite under lib/research/print has an autouse offline reader (tests/conftest.py). Cause of the single failure not isolated here.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "pytest runs of lib/research/api/tests/test_print_format_rich.py and test_print_fiscal_year_sort.py in worktree C:/tmp/r75-257, 2026-10-06",
+   "lib/research/print/tests/conftest.py"
+  ]
+ }
 }
 ]
 ```
