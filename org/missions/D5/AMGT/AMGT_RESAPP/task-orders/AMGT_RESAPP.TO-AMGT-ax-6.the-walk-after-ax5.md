@@ -81,3 +81,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~08:3xZ):** ax-5 is live. The function is `0MZWPl7nGZzFI53w+vsKdS7hQpcxu4Mrd5wEMWWZQpA=` (08:00:43Z), and the gateway has 11 security routes including the greedy one. The issuer's r74 c53, c55 and c56 deployed checks read YES. The portal ref is ax-2's candidate `6de76f0509`. The walker slot was granted by `0.0.0_AB_MSTR~Z` (msg 29971, status disabled/armed=no at 08:28Z). The issuer relays ARM and DISARMED to MSTR~Z; the worker sends no message. HARVST gold #6 has landed (r71 c35 deployed YES: 602 of 657 feed items carry a url).
+
+<status>pending</status>
