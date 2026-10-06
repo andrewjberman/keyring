@@ -77,9 +77,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, first order of addendum E (decomposition IRPT_YCDGEN_DECOMP_R6E.md), cut on the CTO's ruling msg 105454 (a round-6 addendum cell like g-6; named file list; the packet prints the list and count) to disarm worker row W1-S13 and the builder half of IRPT_BCKEND-S339. Writer read recorded in the decomposition: 0 non-terminal orders name either tool file. The renderer's availability on the host is NOT proved here; it is branch B's first real exercise. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~01:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @2b5f4f00e1, merged 3ef2d8c8f8; m-6.AC1-AC7 PASS on the merged tree (AC7: 7 passed in 113 s), instance VALID. The reference case (base 3f29017cfc plus the 14-file list from d2b625e697) gives added 5, removed 0, changed 10, and the pinned-member digests equal PACKAGE_CENSUS_3d705e700f-st22.json. Builder: --research, --opal-map, --base-pin with --files-from, --state-json; gate: --base-pin with --files-from; a build with none of the new flags is unchanged (AC6). Row W1-S13 DISARMED (the opal_map binding has an installed home); IRPT_BCKEND-S339 builder half DISARMED (a named list builds exactly the named change set; a build that omits --base-pin still ships the whole tree, so the disarm holds only for a builder who uses the list: carried in the branch B packet). Row W1-S15 INERT, accepted (the builder records provenance.opal_map_source and the gate reads it from the package's own bindings; under --base-pin the research files come from P's tree like every member, so a research file P lacks must be in LIST). NOT PROVED by this cell: the renderer on the host (render_pdf.cjs and a headless browser); that is branch B's first real exercise.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6E_PACKAGING</workstream>
 <slot>~1</slot>
