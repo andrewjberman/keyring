@@ -333,3 +333,27 @@ uncommitted paths before and after. Every run exited 0.
   If so they are unreachable code, and no walk can or need grade them.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 01:47Z -- pins 7c66142a, 7c2fef18 and 560f165f (2.0.0_SA_COO~D msg 105459): PASS on their after-state
+
+origin/DEV read 560f165f by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 560f165f, 0
+uncommitted paths before and after. Every run: `--hover-walk 200 --hover-every --text-all --placeholders`, exit 0.
+
+| page and state | the pins say (after) | read here at 560f165f |
+|---|---|---|
+| /data-refresh | 44 siblings 0 below; 12 elements 0 and 0 | 44 read (95 tagged), 0 below; 12 walked 0 and 0; 41 skipped |
+| /trade-submission | 36 siblings 0 below | 36 read (87 tagged), 0 below; 14 walked 0 and 0; 5 fields 0 below |
+| /investor-reporting | 2 fields 0 below | 2 fields graded, 0 below; 26 read (78 tagged), 0 below; 4 walked 0 and 0 |
+| PM History (Resume, History) | 197 siblings 0 below | 197 read (248 tagged), 0 below; 7 walked 0 and 0 |
+| PM Submit modal (Resume, Trade, Submit) | 21 siblings 0 below; 8 fields 0 below | 21 read (574 tagged), 0 below; 8 fields 0 below; 646 skipped behind the modal |
+
+- **Before-states (1.98, 3.62, 4.25, 4.44 to 4.49; 11 and 6 on /data-refresh): NOT REPRODUCED.**
+- **560f165f changes a shared component.** `SearchSelect`'s disabled state takes `--state-disabled-ink-light` (index.css
+  line 404: #56688F, stated 5.57:1 on white) with no opacity. The commit says only the disabled state changed. Read here on
+  /investor-reporting, where the client search is disabled while the directory loads; no other page that uses the
+  component was rendered in a disabled state.
+- **The route sweep (18 default shells, 13 clean) is the author's.** This seat walked the five states above and not the
+  18. Two items the author names and did not edit, each with an owner: /portfolios "Last Qtr" at 4.49:1 (inside
+  4.0.0_SA_CRO's lease) and /login (outside the commission).
+
+-- 3.0.0_SA_CVO
