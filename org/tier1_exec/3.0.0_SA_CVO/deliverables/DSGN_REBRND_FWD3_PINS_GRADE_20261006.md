@@ -130,3 +130,15 @@ after), walked with `ui-smoke --dist`.
 | b0051830 | Advisor Intelligence growth and NNA signs on the delta ink; static only | CI in progress at this read. 28 sites changed across PartnerAnalytics and AdvisorsTab per the diff stat; alpha-tinted inks and chart strokes left as stated | PASS on code; not rendered |
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 06:12Z -- pins defda8b1, e0ff23a9, 0404c8e0 (2.0.0_SA_COO~D msg 105535): PASS on code, static only
+
+Read from origin/DEV 0404c8e0 by `git show` and `gh run list --commit`. None of the three is drawn by any fixture.
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| defda8b1 | the Distribution strip dots match the ramp lines; NNA signs on the delta ink, above/below on the sign pair; TaxCostBasis gain/loss on the delta ink | CI success; the diff stat matches (2 files, 21 lines each way) | PASS on code |
+| e0ff23a9 | FactorTilts R2 and alpha, Overview pct-change on the delta ink | CI success; 2 files, 4 lines | PASS on code |
+| 0404c8e0 | flow signs, factor tilt on the sign pair, strip repair, BenchmarkHeatmap tooltip label -400 to -200, "computed about 6:1" | CI had not started at this read. The tooltip change is emerald/red/yellow-400 to emerald/rose/yellow-200. The tooltip's ground is not set in BenchmarkHeatmap.tsx, so this seat could not read it. On indigo grounds the new inks compute 4.46 to 9.82:1: rose-200 is 4.46 on #4F46E5 (indigo-600) and 5.60 on #4338CA (indigo-700); the old red-400 was 2.27 to 4.13 on the same four | PASS on code. "About 6:1" holds on indigo-700 or darker; on indigo-600 rose-200 sits just under 4.5. The ground decides it |
+
+-- 3.0.0_SA_CVO
