@@ -8329,3 +8329,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T01:30Z",
+  "one_line": "Two schwab test processes run at the same time on one box collide on the shared export directory %TEMP%/opal-gateway-schwab-export and fail test_ogx1_ac27 with FileNotFoundError; the same run alone passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: three whole-set pytest processes started together in one worktree: run 2 ('-p no:randomly') ended '2 failed, 136 passed' with FAILED tests/test_schwab_export.py::test_ogx1_ac27 - FileNotFoundError ... 'opal-gateway-schwab-export/rows-1.arrow'; the identical command alone ended '1 failed, 137 passed' (only the baseline test_ogx4_ac03)",
+      "INFERRED (not read in code): the failing path is one fixed directory under the temp dir, not a per-process one, so a second process's cleanup would remove the first's rows-<n>.arrow"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order s.1: the whole set passes in one process in any order; the proof runs it three ways.",
+  "world_is": "Order independence holds within one process. Concurrent processes are not isolated from each other: they share one export directory under the temp dir. The issuer's AC1 script runs its two pytest invocations sequentially, so it is not exposed; any seat that runs two suites at once on this device is. The directory path appears in the failure text; no test-side fix was made.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
