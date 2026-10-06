@@ -1,0 +1,30 @@
+{
+  "project_code": "NFRA_CTLPLN",
+  "macro_code": "NFRA",
+  "directive": "D0",
+  "fabric": "laptop",
+  "pipeline": "four-device-control-plane",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-06",
+  "registered_under_tree": "2026-10-06",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "NFRA_SPRINTWIN",
+    "NFRA_DEPLOYLEDGER",
+    "LGIC_NAMING"
+  ],
+  "name": "The four-device control plane: laptop plans, site Z integrates and deploys, dell1 and dell2 execute -- one round at a time, one writer per file, no deploy from a publish",
+  "description": "Approved by Andrew-direct 2026-10-06 at the 4.0.0_SA_CRO terminal, VERBATIM: 'all recs approved' (the six-card proposal, record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_011xZ_FOUR_DEVICE_SIX_RECS_APPROVED.md) and 'im good with all of this' (the endpoint, record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_13xxZ_FOUR_DEVICE_ENDPOINT_CONFIRMED_FWD4_FIX_FWD12_ADD.md), which also asked to register under D0 now and start FWD-5 first. Home D0: agent infrastructure. Placed on the laptop, the control plane.",
+  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_FOUR_DEVICE_CONTROL_PLANE_20261006.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED at registration; seating a COO lane is 0.0.0_AB_MSTR's on Andrew's word"
+  }
+}

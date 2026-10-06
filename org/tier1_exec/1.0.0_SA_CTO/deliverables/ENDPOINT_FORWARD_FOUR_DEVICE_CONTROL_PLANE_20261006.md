@@ -1,7 +1,8 @@
 # ENDPOINT (step 2, /endpoint --forward) -- the four-device control plane (laptop, sitez, dell1, dell2)
 
-Author `1.0.0_SA_CTO`, 2026-10-06 ~03:1xZ (11:1x PM Eastern, 2026-10-05). **STATUS: PROPOSED, for Andrew to confirm. NOT LANDED:**
-no project is registered and no PRD exists; registration under D0 follows his confirmation.
+Author `1.0.0_SA_CTO`, 2026-10-06 ~03:1xZ (11:1x PM Eastern, 2026-10-05). **STATUS: CONFIRMED by Andrew** ("im good with all of this", record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_13xxZ_FOUR_DEVICE_ENDPOINT_CONFIRMED_FWD4_FIX_FWD12_ADD.md`), with
+the two changes below. Registered as NFRA_CTLPLN under D0; the PRD carries this section.
 
 **Brief read:** `docs/briefs/four-device-control-plane-brief-20261006.md` @a77b65337e (`4.0.0_SA_CRO`, 175 lines, read in full).
 Design behind it: `docs/briefs/four-device-control-plane-proposal-20261006.md` @86bdc8c3cb (not re-read here). Andrew's words: the
@@ -33,7 +34,7 @@ three records the brief names, in `org/tier1_exec/4.0.0_SA_CRO/deliverables/` (t
          SOURCE     brief O2
 
   FWD-4  A finished round from any working box reaches the shared trunk without that box pushing
-         it, and no box falls more than one round behind
+         it, and no lane falls more than one round behind
          DONE WHEN  EXERCISED -- two boxes' rounds published and merged in the order the laptop set
          ACCEPT     each working box publishes its finished round; site Z merges published rounds in
                     the order the laptop set and pushes. No box holds more than one unpublished round
@@ -86,6 +87,14 @@ three records the brief names, in `org/tier1_exec/4.0.0_SA_CRO/deliverables/` (t
          ACCEPT     after any one box restarts, the next person to look can say which round was where,
                     and the round finishes without work being redone or lost
          SOURCE     brief O10; PART III item 4
+
+  FWD-12 Andrew sees every box's open decisions in one place on the laptop, and a lane on a box
+         he is not at never stops waiting for him at that box's terminal
+         DONE WHEN  EXERCISED -- a decision raised on another box answered by Andrew from the laptop
+         ACCEPT     a decision any box needs from Andrew appears in one list on the laptop, and his
+                    answer there reaches the box that asked; no lane sits waiting on a terminal he is
+                    not at
+         SOURCE     proposal section 5.8; Andrew's confirmation (added at his word)
 ```
 
 ## Reachability
