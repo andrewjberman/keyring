@@ -18832,6 +18832,26 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~262/RENDER_FRESHNESS.md; captures/ and contrast-readings.json beside it; portal 6de76f0509 served from C:/tmp/r76-262/portal"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W263-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~263",
+  "surfaced_at": "2026-10-06T18:12:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Read as the last settled trading day, the top band serves 3 news items across the 95 covered names on 2026-10-06, because the gold mention rows for that day are nearly empty.",
+  "spec_asserts": "TO-AMGT-az-2 s.1: 'items: the latest trading day's news items for the name ... If there are none that day, serve items: [] and a plain items_reason.' The order does not say whether 'latest trading day' is the last settled trading day (T-1) or the newest day the name has news on.",
+  "world_is": "Built on the first reading: day = lib.trading_calendar.prev_trading_day(as_of or today UTC) = 2026-10-05 on 2026-10-06. Measured on the newest gold article_security_mention snapshot (33,665 rows, 15,702 on covered names, every covered-name row carries a url): rows per UTC day for covered names 09-28 39, 09-29 36, 09-30 34, 10-01 31, 10-02 20, 10-03 1, 10-04 1, 10-05 3. Local run of r76_served.py c62: names 95, items 3, C1-C3 PASS, so the order's criterion passes while 92 of 95 bands read items [] with a plain items_reason naming the newest day held. A day-of-news reading (newest trading day on which the name has news) would fill the list; this is the issuer's choice at the next cut, not changed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/top_band.py news_items and lib/research/api/scoped_amgt.py _overlay_top_band on branch wk-AMGT_RESAPP-263; r76_served.py --cell c62 --where local output (items 3); gold snapshot day counts printed by the worker 2026-10-06"
+    ]
+  }
 }
 ]
 ```
