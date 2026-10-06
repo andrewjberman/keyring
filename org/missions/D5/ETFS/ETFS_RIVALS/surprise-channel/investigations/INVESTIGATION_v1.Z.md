@@ -3988,6 +3988,28 @@
     "spec_asserts": "The Z-S24 probe reads the Terminal's capacity state ('ID' or 'Daily Capacity').",
     "world_is": "'#N/A Requesting Data...' was a Terminal that was not running, not a capacity state; the hourly probe keeps running and its first 'ID' read after the sign-in is MSTR~Z's trigger to re-run OPAL_BBGTML.",
     "notes": "Cites ETFS_RIVALS-Z-S44. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S46",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T13:11Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S31: DISARMED on the organic run -- the deployed Lambdas read gold/security_names and write gold/security_universe under RIV-iam-1's grant (applied 2026-10-06 00:0xZ, drain 5d75016e03).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "holding_contribution date=2026-10-06 holding_contribution-20261006T130556Z-bd0200b20c0a (13:05:58Z, the sweep's A1 refresh): input_manifest security_names = .../security_names/date=2026-10-06/security_names-20261006T123354Z-2b58c8c5a8e8.parquet, no security_names_note (read OK); 3,851 rows",
+        "gold/security_universe/date=2026-10-05/universe-20261006T130739Z-b845e2cc9c8c.parquet written 13:07:40Z by the 13:00Z sweep (etfs-rivalfunds-daily-lambda REPORT de6ac4f0, 447 s, no AccessDenied in the log)",
+        "the names object itself was written 12:33:59Z by the terminal-side enrichment in OPAL_BBGTML's re-run (RC_RIVENR 94)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 9's two tables are readable and writable by the stages that use them (RIV-nm-3, RIV-su-2).",
+    "world_is": "Both exercised on the organic 2026-10-06 runs with no AccessDenied: the read at 13:05Z and the write at 13:07Z.",
+    "notes": "Cites ETFS_RIVALS-Z-S31 (round-10 analysis item 5: S31's disarm is 2.0.0_SA_COO~RV's at the 10-06 run). The row's disposition stays the CVO's."
   }
 ]
 ```
