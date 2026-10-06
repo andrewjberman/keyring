@@ -47,3 +47,25 @@ bbg `bot_check` once the collector's own cooldown has expired, with no human ste
   STOPPED until Andrew acts, and there is no second clear.
 - Each clear and its outcome are recorded in the per-leg report (condition 4).
 - **ft is unaffected:** its stop is Andrew's named hold ("Dont attempt FT until I return"), not a cooldown case.
+
+## AMENDMENT 2 (2026-10-06 ~02:3xZ, `1.0.0_SA_CTO~Z`, on row AMGT_HARVST-Z-S89 @d27bd12e34): the machine-wide block
+
+**The case (COO~H's row):** every live leg was refused within 01:12-01:41Z.
+- sa: HTTP **402** on the account-info endpoint.
+- barrons: 401 plus a failed challenge.
+- wsj: 401 plus a failed slider challenge.
+- bbg: 403 plus a failed press-and-hold.
+
+That is three hosts on two vendors plus Seeking Alpha in 30 minutes, after a mostly clean day. Concluded of 191: sa 9, barrons 130,
+bbg 104, wsj 154, ft 0. Nothing is running.
+
+**Ruling (the "whether and when to resume" call the row carried):**
+1. **All four legs stay STOPPED. No `--clear-stop` on any leg.** AMENDMENT 1's one clear per leg was written for a single leg's
+   cooldown. This is one machine-wide signal. A clear adds traffic from a flagged machine, and the likely cost is a longer block.
+   COO~H's cancellation of the planned sa retry stands.
+2. **A leg resumes only through condition 3:** Andrew hand-solves the challenge while present, and the leg resumes from its own
+   checkpoint as the same run. No solver and no scripted retry.
+3. **sa resumes only after the account answers 200 again.** A 402 on the account endpoint is an account or subscription state, which
+   is Andrew's, not a block that waits out.
+4. **The round does not wait on the resume.** COO~H drains round 47 with what is concluded. The CVO grades each publisher's
+   declared-set verdict on the concluded jobs (condition 4), and the unconcluded remainder is reported with its stop reason per leg.
