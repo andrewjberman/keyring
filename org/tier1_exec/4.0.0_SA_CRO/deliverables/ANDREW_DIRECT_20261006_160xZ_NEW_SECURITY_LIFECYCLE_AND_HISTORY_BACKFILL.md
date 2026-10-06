@@ -32,5 +32,14 @@ Analysis: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_SECURITY_LIFECYCLE_ANAL
 > larger project than simply the Positioning page, this is really how Opal builds its internal securities database and
 > the associated ingestion and maintenance logic.
 
-Open from the analysis, not answered by this ruling: the 2026-10-01..05 DIVZ/IDVZ gap pull, and the money-market
-(SALXX) return rule.
+## /open-calls at this seat, answered (Andrew-direct, same session, ~18:1xZ), verbatim
+
+> both recs approved
+
+- CALL 1 -> YES: one-off site-Z Bloomberg pull of 2026-10-01..05 history for the DIVZ/IDVZ-only constituents
+  (57 securities; QXO B excluded, no series), landed additively at
+  `s3://opal-data-etfs/bbg-testpull/tickers/{T}/gap_20261001_20261005/history.csv`, before the 09:00 ET gold run
+  of 2026-10-07.
+- CALL 2 -> (c), showing (d) until it lands: money-market returns on a Bloomberg-null day come from the
+  total-return index level; until that is built the window shows blank. Carried into the securities-database brief
+  (O9).

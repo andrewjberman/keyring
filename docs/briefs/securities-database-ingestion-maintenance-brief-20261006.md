@@ -120,7 +120,9 @@ coverage record; the daily pull plan that asks each security only for what is mi
 - A per-security first-appearance date from each firm's holdings (cot depends on ADVI_COTBKF).
 - The ETF pull (or a sibling leg) able to request per-security windows; site Z vehicle changes are deploys.
 - The budget ledger extended to the ETF and history legs.
-- A ruling on money-market vendor nulls (SALXX).
+- Money-market vendor nulls (SALXX): RULED by Andrew 2026-10-06 ~18:1xZ ("both recs approved") -- derive the
+  day's return from Bloomberg's total-return index level; show the window blank until that exists. Unverified:
+  whether Bloomberg fills the index level on the days the daily return is null.
 - Retirement path for `bd-securities` as a second answer (MDPF_SECCLASS FWD-5).
 
 ## PART VI -- STATUS (NOT OUTCOME-BEARING; measured 2026-10-06 ~15:00-17:00Z)
