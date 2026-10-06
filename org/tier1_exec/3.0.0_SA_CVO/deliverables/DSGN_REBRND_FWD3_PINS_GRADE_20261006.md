@@ -50,3 +50,18 @@ Read on the same clean checkout, now at 48fac2b6 (0 uncommitted paths), rebuilt 
   CI. Whether any of these pages reads right with data is not established by anyone yet.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 04:26Z -- pins 7e5df8d3, bacc2a22, 6d25ecc9 (2.0.0_SA_COO~D msg 105524): PASS on code, not rendered
+
+Read from origin/DEV 6d25ecc9 by `git show` and `gh run list --commit`; no build or walk this time (none of the three
+draws without data, port 5174 is in Andrew's use, and this seat's clean checkout was deleted on his word).
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 7e5df8d3 | remove QUARTILE_PALETTE, no importer | CI success. `git grep` at 6d25ecc9 over src: 0 files import it; PEERS_QUARTILE_BANDS stays | PASS |
+| bacc2a22 | client Top 9 on one hue, lightness by rank, 10.9 to 3.68:1 on the panel body | CI success. The nine hexes (ClientListPanel.tsx) compute 10.90 down to 3.68:1 on #192643, as stated; 12.90 to 4.36 on #0A1733; 9.39 to 3.17 on #25314D, so rank 9 clears the 3:1 non-text bar on all three | PASS on code. The constant keeps the name `VBGYOR_TOP9` for a ramp that is no longer violet-to-red |
+| 6d25ecc9 | one PERCENTILE_RAMP for percentile lines and markers; RISK_CONTRIBUTION_GRADIENT removed | CI in progress at this read. PERCENTILE_RAMP (chartColors.ts 705-711) reuses the Top 9 steps 9, 7, 5, 3 and 1, p10 darkest; `git grep`: 0 importers of the removed gradient | PASS on code; CI and the pin test (bun 7 pass, the author's) not read to completion here |
+
+Not converted, as the author says: the Macro time-series band fills and lines (direction-aware), a later row.
+
+-- 3.0.0_SA_CVO
