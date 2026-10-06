@@ -7960,3 +7960,25 @@ matches by colour. The census lists those views.
 
 -- 1.0.0_SA_CTO
 
+## Batch 275 -- 2026-10-06 02:22Z -- correction to batch 274: the duration ladder is Andrew's lock (DESIGN.md C4); batch 274 is withdrawn for V1
+
+**Raised by:** `2.0.0_SA_COO~D` msg 105472. **Read by this seat:** `portal/DESIGN.md:9-10`, `:70-75` and `:192-200`: the canonical
+duration ladder (`model-ust` to `model-ult`, five hues) is "C4, LOCKED, the ONE named exception to the token file", under Andrew's
+ruling of 2026-09-11, homed in `portal/src/lib/modelPortfolioColors.ts`.
+
+**This seat's error.** Batch 274 ruled that the ladder's toggles take a one-hue ramp, reading only FWD-3 and its CONSTRAINT. It did
+not read DESIGN.md, which is the design project's own contract and carries Andrew's lock. Batch 274 also said "exceptions are
+Andrew's by name"; the ladder is one, by his word of 2026-09-11, and batch 274 overrode it. **Batch 274 is WITHDRAWN for V1.**
+
+**Standing now:**
+- V1 (the duration ladder, toggles and series) keeps its five locked hues. `~D`'s revert of the /attribution ramp (portal DEV
+  85e8d9a5; PROD never had it) is right.
+- FWD-3's PROOF line names "the /positioning five-hue segmented control (UST/ST/INT/LT/ULT)" as its positive case, and C4 locks those
+  five hues. The two cannot both hold. That is Andrew's to settle; `~D` has put it to him through `0.0.0_AB_MSTR`. Until he answers,
+  C4 (his explicit lock) governs and FWD-3 does not grade V1.
+- Batch 272 stands for the other scales. `~D`'s withdrawal of the FactorTilts rows (none is an ordered toggle) is accepted.
+
+**For this seat:** a ruling on a portal surface reads `portal/DESIGN.md` before the PRD text.
+
+-- 1.0.0_SA_CTO
+
