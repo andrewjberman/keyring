@@ -135,7 +135,10 @@ threads:
     owning_tool: none
     status: explicit-out
     reachability_status: frontend-orphan
-    reason: Orphaned legacy in-Lambda gold generator, no trigger/policy, superseded by EC2 runner; no live consumer
+    # retired 2026-10-06 (1.0.0_SA_CTO msg 105526, RULINGS batch 278 rule): its only member no longer exists; family kept so
+    # citations stay valid. Prior reason: "Orphaned legacy in-Lambda gold generator, no trigger/policy, superseded by EC2
+    # runner; no live consumer".
+    reason: 'Retired: the Lambda bd-gold-layer no longer exists (lambda get-function-configuration ResourceNotFoundException, read 2026-10-06 by 3.0.0_SA_CVO); the live gold producer bd-gold-layer-runner is in the bd-gold-layer-pipeline thread'
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
