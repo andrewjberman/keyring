@@ -84,3 +84,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** CLOSED -- drained @f5639411fb. On the shared tree, r75 c57 local YES (0 fiscal-year lines with the run date; run date once, page 1, on 3 of 3) and c58 local YES (BA 17 of 17); print 105 passed. Rows Z-W257-S1 (no stored quote date: market lines say so in words) and S2 INERT.
+
+<status>complete</status>

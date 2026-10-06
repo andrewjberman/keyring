@@ -90,3 +90,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** CLOSED -- drained @5c9d2edd3c. r75 c61 local: bad segment headings 36 -> 0 over 95 names; BA 10 -> 3; 3 of 3 table passages labelled. Rows Z-W260-S1/S2/S3 INERT; S2 (uneven table rows) is for the walk.
+
+<status>complete</status>

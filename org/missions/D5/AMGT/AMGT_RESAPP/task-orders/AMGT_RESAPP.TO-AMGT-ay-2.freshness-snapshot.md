@@ -128,3 +128,6 @@ with a refresh event once per trading day at about 12:30Z. This cell builds the 
 
 Gate limb: GATE (viii) on a modify.
 
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** CLOSED -- drained @ab28d0ba01, three seats (the original, AMENDMENT 1, AMENDMENT 2). r75 c59 local YES (EQUAL 302 of 302); api 703 passed on the shared tree. Row Z-W258-S1 (ARMED) disarmed by AMENDMENT 1 and the CTO's scheduled-writer ruling, recorded as row Z-S358; S2 fixed by AMENDMENT 1. The first write, the grant and the schedule are ay-5's.
+
+<status>complete</status>

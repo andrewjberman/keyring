@@ -18705,6 +18705,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "lib/research/api/tests/test_scoped_amgt_mount.py:105 and :129"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-S358",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~Z",
+ "surfaced_at": "2026-10-06T10:43:17Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "Disarms AMGT_RESAPP-Z-W258-S1: the /freshness snapshot is served only within 24 h of its generated_at (ay-2 AMENDMENT 1 @5861f53f1a, built @b45344d6c0) and is refreshed by a scheduled writer the CTO ruled (ROUND_ANALYSIS.round74.md ADDENDUM 1 @82afef1fd8, option b), built by ay-2 AMENDMENT 2 (@810df9297f) and ay-5 AMENDMENT 1.",
+ "spec_asserts": "Z-W258-S1: no step writes the pack ledgers, so a snapshot written once would be served as current with no age check.",
+ "world_is": "At CLOUD @ab28d0ba01 the route treats a snapshot older than 24 h, or one with an unreadable generated_at, as absent and computes the view with a plain snapshot_fallback; every served body carries snapshot.age_hours. The handler accepts the schedule's direct-invoke event {\"amgt_scheduled_action\": \"refresh_freshness_snapshot\"}. The schedule itself and the PutObject grant on the one snapshot key are ay-5's WORLD legs under a pair. Until they land no snapshot exists, so the route computes (the pre-round behaviour).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_freshness_snapshot.py@ab28d0ba01: an aged (30 h) snapshot falls back; a 23 h one is served with its age; the scheduled event writes once; an HTTP GET never writes (18 passed)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round74.md@82afef1fd8 ADDENDUM 1: option (b), a scheduled writer"
+  ]
+ }
 }
 ]
 ```

@@ -80,3 +80,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** CLOSED -- drained @42fd324fb3. r75 c60 local YES (the names phase logs 0 by overlap, row Z-W259-S1); the first chatter request locally 4.2-4.5 -> 3.5-4.0 s; bodies EQUAL 3 of 3.
+
+<status>complete</status>
