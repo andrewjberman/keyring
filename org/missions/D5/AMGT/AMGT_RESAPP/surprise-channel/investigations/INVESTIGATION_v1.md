@@ -18598,6 +18598,71 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "commit 723b8cefd6 message"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W260-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~260",
+ "surfaced_at": "2026-10-06T10:22:44Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "A driver-chart point's passage map does not carry the pool key of the filing text, so ay-4's table labels find it by listing the filings prefix once per 300 s.",
+ "spec_asserts": "TO ay-4 s.1 item 2: serve passage_table 'recovered from the stored drafting or filing records'; bound 3: write only _segment_rows, _point_passage and new helper modules.",
+ "world_is": "The column header of a table passage (BA: '737 * 747 767 * 777 787 Total') is NOT in the passage text; it is in the stored filing text (filings/v1/<key>/<accession>.source.json, excerpt.text, line above the first table row). The drafting document names that object in source.pool_key, but _driver_point_passages (not in the grant) copies only passage_text and passage_cite {accession, location} into the map _point_passage receives, and _point_passage is not given the security key. So lib/research/api/segment_labels.py lists filings/v1/ once (held 300 s in process), maps accession to its .source.json key, and reads the excerpt only when a passage is a table run (BA: 3 of 3 points; other covered names: 0). A one-line change in _driver_point_passages (carry source.pool_key) would replace the listing; not made, bound 3.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/segment_labels.py@wk-AMGT_RESAPP-260 (_source_map, filing_text_for)",
+   "lib/research/api/scoped_amgt.py _driver_point_passages (~:2844) and _point_passage (~:3743) on wk-AMGT_RESAPP-260",
+   "drafting/v1/BA_US_Equity.json source.pool_key = filings/v1/BA_US_Equity/000162828026004357.source.json (read through scoped_amgt._read_drafting_document)"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W260-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~260",
+ "surfaced_at": "2026-10-06T10:22:44Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The BA delivery tables are served with their column labels, but the Deliveries rows hold 5 to 8 figures against 6 columns because the filing's blank cells and footnote marks are not in the stored text.",
+ "spec_asserts": "TO ay-4 s.1 item 2: passage_table {columns, rows:[{label, values}]} recovered from stored bytes; criterion C2 needs non-empty columns and a non-empty label per row.",
+ "world_is": "BA P0276/P0277/P0278: columns 737, 747, 767, 777, 787, Total (read from the stored filing text above the table). Rows 'Cumulative deliveries' carry 5 figures; 'Deliveries' carries 7 (2025, 2024: '447 (7) 30 (15) 35 88 600') and 8 (2023, wrapped over 3 lines). The 747 cell is blank in the filing and '(7)'-style intercompany counts sit beside figures, and neither survives in the stored text, so figures cannot be placed under columns without a guess. The route serves the figures in printed order and a plain table-level note says they may not line up with the columns; label and column recovery is 3 of 3, column alignment is 0 of 3 for the Deliveries row. Whether that is acceptable for the reader is a judgment for the walk.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/segment_labels.py@wk-AMGT_RESAPP-260 (recover_table, TABLE_ALIGN_NOTE)",
+   "filings/v1/BA_US_Equity/000162828026004357.source.json excerpt.text, header line above 'Cumulative deliveries' (read with segment_labels.filing_text_for)",
+   "python .scratch run: GET /api/scoped/amgt/security/BA_US_Equity/thesis local handler, thesis_driver_chart.points[].passage_table"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W260-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~260",
+ "surfaced_at": "2026-10-06T10:22:44Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "Two api tests fail on this worktree independent of ay-4: the terraform route mount count is 19 and the handler serves 18.",
+ "spec_asserts": "TO ay-4 s.1: 'If one api test fails only because it reads a portal function absent at this worktree's portal ref, name it and file no row'; any other failure is a surprise.",
+ "world_is": "lib/research/api/tests/ at HEAD of wk-AMGT_RESAPP-260: 679 passed, 2 failed: test_scoped_amgt_mount.py::test_mounted_routes_and_handled_routes_are_the_same_set ('MOUNTED BUT NOT HANDLED: GET /api/scoped/amgt/security/{proxy+}', handled=18 mounted=19) and ::test_the_route_set_is_not_vacuously_empty ('terraform mounts 19 routes, expected 18'). Neither reads a portal function; both compare the terraform route list with the handler's routes, neither of which ay-4 edits. This matches the round-74 compile's 'one greedy route' on deployed 0MZWPl7n.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/tests/test_scoped_amgt_mount.py lines ~105 and ~129 on wk-AMGT_RESAPP-260",
+   "git diff --stat on the worktree: scoped_amgt.py (import line, _segment_rows, _point_passage), segment_labels.py, tests/test_segment_labels.py only"
+  ]
+ }
 }
 ]
 ```
