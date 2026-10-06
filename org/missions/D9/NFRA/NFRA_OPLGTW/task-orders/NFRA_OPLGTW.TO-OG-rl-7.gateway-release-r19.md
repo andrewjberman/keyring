@@ -47,6 +47,49 @@ Write `RL7_LOGIN.json` (AFTER keys filled in Phase B):
 
 The runbook, walkthrough protocol and tests ride along. They are not service behaviour.
 
+### AMENDMENT A1 -- R22 (CTO, `ledger/ROUND_ANALYSIS.round18.md` s.6; CTO half REFUSED @29ce3edce6, msg 29902)
+
+OA-e-10 does NOT ship as built. `/login` is the only path that grants a person delegated Graph scopes, and narrowing it
+dead-ends the non-restricted principals (alyssa@, opalbloomberg@) whose caches lapse. The release `619e8ddfd6` is
+SUPERSEDED. The CVO's half on it (@8ed7d1987b) binds those bytes only.
+
+**PHASE A2 (pre-GO, in YOUR worktree, then the release tree):**
+
+A2-1. **Revert OA-e-10 on CLOUD source.**
+- `app/server.py`: revert ONLY the `/login` hunk of `8ed37b3266`, so that `server.py` equals live `37be3485db`'s
+  `server.py`. Prove it with `git diff 37be3485db -- app/server.py`, which must be empty.
+- Delete `tests/test_login_retire.py` (OA-e-10's own test).
+- Commit with a message citing R22.
+
+A2-2. **Update `deliverables/0.9.0_WK_NFRA_OPLGTW~22/LINEAGE_R18.json`.** The two OA-e-10 items become
+`disposition: "REVERTED_PENDING_RECUT"` with a note citing R22. This file is in your paths.
+
+A2-3. **Re-cut r19.**
+- Use a NEW branch, `rel-nfra-oplgtw-r19b`, at `37be3485db`. The release tree's gateway subtree must EQUAL CLOUD after
+  A2-1: `git diff --stat <release head> CLOUD -- infra/aws/ec2/opal-gateway` is empty.
+- R13 (a) applies.
+- The behaviour files are now TWO:
+  - `app/admin_refusals.py` (MS-sg-1);
+  - `app/integrations/schwab/envelope.py` (docstring-only, row S54).
+
+A2-4. **Re-run on the re-cut release:**
+- form steps 3 (tests), 5 (BEFORE, now with no `/login` arm), 6 (verify script: drop the `/login` arms, keep the
+  sender-field arm), 7 (pre-GO exercise), 7a (R21 inventory) and 8 (`ANNOUNCE_OG-rl-7-B.md`, for three FRESH halves);
+- rollback `og-rb14` stands.
+
+The `/login` admit-list precondition no longer applies, because `/login` is unchanged: record that in
+`RL7_LOGIN.json` as `{"login_changed": false, "reason": "R22"}`.
+
+**Criteria under A1:**
+- AC1's arms for `/login` no longer apply, so AC1 is replaced by `rl7.AC1b.sh`. It checks the host's shipped app files
+  (`admin_refusals.py`, `envelope.py` and the UNCHANGED `server.py`) equal to the release, and the sender-field arm
+  from `RL7_SENDER.json`.
+- AC2 stands as written: the ledger, descent from `37be3485db`, CLOUD equal to live after the drain-back, and the
+  floor.
+- `RL7_SENDER.json` keys:
+  - `{served_release, after: {with_sender_args: "AS_GIVEN", without_sender_args: "NULL"}, grants_written: 0}`;
+  - produced by a synthetic, host-local exercise of the deployed listing.
+
 ## 2. BOUNDS
 
 - No grant is created or changed. Never source `/opt/opal-gateway/.env`.
@@ -73,7 +116,7 @@ Rows: id `NFRA_OPLGTW-Z-W15-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the drain-back and ledger close are committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rl-7"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r19/checks/rl7.AC1.sh; echo "exit=$?"</invocation><expect>(?s)host shipped app files equal the release bytes: 3 of 3.*audit window days >= 30: True.*outsiders in window 0: True.*configured identity admitted after: True.*unconfigured identity refused after: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rl-7"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r19/checks/rl7.AC1b.sh; echo "exit=$?"</invocation><expect>(?s)host shipped app files equal the release bytes: 3 of 3.*server.py equals live 37be3485db: yes.*sender from entry args: True.*sender null when absent: True.*grants_written 0: True.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-7"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r19/checks/rl7.AC2.sh; echo "exit=$?"</invocation><expect>(?s)sentinel at HEAD=no; deployed=\w+ descends from 37be3485db=yes; gateway files differing live\.\.CLOUD after drain-back 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
