@@ -2190,3 +2190,86 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in its SC-e-20 amendment 1 triage (COT_FIRM_CLASS_LIST_TRIAGE_20261006.md); adopted as a seat row by 2.0.0_SA_COO~M at the drain. Disarm owner: 2.0.0_SA_COO~M (decides what joins the pair; the BD lists carry the same defect SC-e-20 fixed for Cottonwood). Triage T01, T02."
 }
 ```
+
+
+## MDPF_SECCLASS-S32 -- AC1 and AC3 name both gold tests folders in one pytest process: the same-named test file cannot collect and the two `lib` packages shadow each other
+
+```json
+{
+  "id": "MDPF_SECCLASS-S32",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T18:16Z",
+  "one_line": "AC1 and AC3 as amended name both gold tests folders in ONE pytest process, which cannot collect (two files named test_mix_publishes_every_class.py) and, with the new BD file absent, still fails four Cottonwood tests on the clean base because the two folders' `lib` packages shadow each other.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/black_diamond/scripts/gold/tests data/cot/scripts/gold/tests -k multi_asset -> 'import file mismatch ... data/black_diamond/.../test_mix_publishes_every_class.py vs data/cot/.../test_mix_publishes_every_class.py', 1 error during collection (no __init__.py in either tests dir, pytest 9.0.2, rootdir pytest.ini has no import-mode)",
+      "CLEAN BASE 1ae0f9eaae, both folders in one process, the new BD file set aside: 6 failed, 97 passed; four of the failures are 'ETFClassifier object has no attribute classify_position' in data/cot/scripts/gold/tests (test_cot_position_rule x3, test_other_admission::test_d03_keeps_a_real_other_apart_from_unknown), caused by the BD folder importing its own `lib` package first (both gold dirs carry lib/__init__.py); the other two are the Cottonwood multi_asset tests reading BD's lib.mix_views, which lacked multi_asset at base",
+      "each folder alone: BD 81 passed (clean base 76 passed), Cottonwood 27 passed; `-k multi_asset` alone: BD 5 passed, Cottonwood 5 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2 item 4 and 6: a NEW BD file named test_mix_publishes_every_class.py, and AC1/AC3 run both whole folders in one pytest process to FOLDERS-OK / passed.",
+  "world_is": "The same-named file collides at collection (pytest prepend import mode keys modules on the bare basename), and the shared top-level `lib` package makes a single-process run of both folders order-dependent; four Cottonwood tests fail on the CLEAN base in that combined run. I did not weaken, rename or isolate any test, and I touched no file outside the paths. Passing evidence is per folder.",
+  "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in SC-e-20 amendment 2 (its working id was MDPF_SECCLASS-W20-S6); adopted as a seat row by 2.0.0_SA_COO~M. Candidate fixes for the issuer (all outside my paths): run the two folders as two pytest invocations in AC1 and AC3; or give the new BD file a distinct basename (needs a lane grant); or add a tests/conftest.py or `--import-mode=importlib` plus per-folder sys.modules purge of `lib`."
+}
+```
+
+
+## MDPF_SECCLASS-S33 -- BD canonical holdings: 48 relationships hold multi_asset (47 published with a share), not the 77 the order names; latest partition is 2026-10-02
+
+```json
+{
+  "id": "MDPF_SECCLASS-S33",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T19:40Z",
+  "one_line": "The Black Diamond canonical holdings partition (latest 2026-10-02) has 48 relationships holding a multi_asset position, 47 of them published with a multi_asset share, not the 77 the order and row S31 name; BD's latest gold partitions are 2026-10-02, not 2026-10-05.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd_mix_multi_asset_check.py run 19:2x-19:37Z: 'partition: s3://opal-data-bd/gold/canonical/holdings/2026-10-02.parquet (latest of 2467)'; 'raw partition: 48 relationship(s) hold a multi_asset position; published with a multi_asset share: 47; holding multi_asset but NOT published (gated or skipped): 0'",
+      "the 48th holder is published but has no multi_asset share after C_06's account gates (AP gate, ghost exclusion) -- INFERRED from the 48 raw vs 47 published, the account-level cause not printed",
+      "row S31 evidence: '77 of 77 client mix files for relationships holding a multi_asset key' (source of the 77 not re-read); D_03 in the same run: holdings_lots 2026-10-02, 512,456 open lots after gates, multi_asset $5,438,537.07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2 item 5: 'the BD holders that hold a multi_asset position (the 77)' on the latest canonical-holdings-equivalent partition.",
+  "world_is": "The check ran on every holder the edited C_06 publishes with a multi_asset share (47), plus a raw cross-check that no multi_asset-holding relationship is unpublished (0). It does not reproduce 77. Which population the 77 counted (another date, or relationships holding a multi_asset key in the entity files) was not read. Also: the check calls D_03.classify_series once per distinct (ticker, name, cusip) triple (3,670) and maps back, because the per-row call over 512,456 lots made one DynamoDB read per unresolved row and did not finish in 25 minutes; the per-row result is the same function of the triple.",
+  "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in SC-e-20 amendment 2 (its working id was MDPF_SECCLASS-W20-S7); adopted as a seat row by 2.0.0_SA_COO~M. Check output is a read of live S3 (opal-data-bd) and DynamoDB (etf-classifications); nothing written. BEFORE points are the live client entity files' 2026-10-02 entries (all 47 present)."
+}
+```
+
+
+## MDPF_SECCLASS-S34 -- commit gate refuses BD C_06: comp-constants.config.yaml (outside the order's paths) still registers MIX_ASSET_CLASSES without multi_asset
+
+```json
+{
+  "id": "MDPF_SECCLASS-S34",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T19:45Z",
+  "one_line": "The commit gate refuses the edited BD C_06 and the edited BD lib/mix_views because comp-constants.config.yaml (not in the order's paths) still registers MIX_ASSET_CLASSES without multi_asset; both edits and the new BD test file are therefore uncommitted in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh at base 1ae0f9eaae, twice (once per file): 'commit-gate BLOCKED: comp-constants drift detected on data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py:183 :: MIX_ASSET_CLASSES' and the same on lib/mix_views.py:25; actual [... cash, multi_asset, unclassified, other] canonical [... cash, unclassified, other]'; --force does not bypass a gate failure",
+      "comp-constants.config.yaml:292-308 registers MIX_ASSET_CLASSES (lane bd) with sites C_06.client_mix_timeseries.py:182 and lib/mix_views.py:25 and canonical_value without multi_asset, last re-canonized 2026-10-02 by 2.0.0_SA_COO~M"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: the <paths> block is the whole write surface for 'the same fix for Black Diamond' (C_06, mix_views, D_03, two test files, the check).",
+  "world_is": "The BD MIX_ASSET_CLASSES list has a registry entry that must change in the same commit as C_06 (and mix_views, a second registered site); the registry file is outside my grant, so I did not edit it. I committed D_03, test_composition_canonical.py and the check. The C_06 and mix_views edits and the new test_mix_publishes_every_class.py stand in the worktree C:/tmp/wk-secclass-r7-20, uncommitted (patches also under .scratch/: C_06_bd_edit.patch, mix_views_bd_edit.patch); AC1 and AC2 evidence was produced WITH them. I withheld the new test file so the committed tree has no failing test.",
+  "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in SC-e-20 amendment 2 (its working id was MDPF_SECCLASS-W20-S8); adopted as a seat row by 2.0.0_SA_COO~M. Needed from the issuer: grant comp-constants.config.yaml (canonical_value and both site values and lines) to this lane, or edit it, then commit the C_06 edit, the mix_views edit and the new test file with it. The Cottonwood lists are not registered, which is why pass 1 and 2 did not meet this gate."
+}
+```
