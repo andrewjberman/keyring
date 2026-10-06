@@ -72,9 +72,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, first order of addendum F (decomposition IRPT_YCDGEN_DECOMP_R6F.md), the implementation of the CTO's ruling batch 273 (msg 105464) on the branch B blockers. Item 5 settled before the cut: 81 of 153 held groups read opal-data-etfs/bbg/, so that read joins. The plan, the two halves, the apply (safe-apply), the 0-diff plan and the three simulate calls with the 49financial negative control are the issuer's acts after this cell merges. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~02:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @461e1eeac3, merged 64611cd24b. The issuer read the whole diff of resident.tf (+44 -1): the local ycdgen_opal_report_prefixes (derived from resident_bucket, the research policy's source and families and resident_scopes, nothing typed), the statements RetainTheOpalReportPdf (PutObject, GetObject, GetObjectVersion), ReadTheCanonicalClassificationTable (dynamodb:GetItem on the etf-classifications ARN only), ReadTheHeldFundCharacteristics (s3:GetObject on opal-data-etfs/bbg/*) and ListTheHeldFundCharacteristicsFolder (s3:ListBucket on opal-data-etfs with s3:prefix bbg/ and bbg/*), and the one KMS StringLike list gaining local.ycdgen_opal_report_prefixes; no other line changed. **AC5 was recorded FAIL by the worker and is the ISSUER'S defect, not the cell's:** the check's findall for s3 actions also matched the required Condition key s3:prefix (row W1-S16). The check was fixed at 50ba89d585 (actions are read from the Action list only) and AC1-AC5 PASS on the merged tree; AC6 PASSES at the worker (against the branch point) and the file's diff since the branch point is byte-identical to the worker's (shown by hash); the worker's instance keeps its honest AC5 FAIL row, VALID by the checker, and this note is its disposition for the CVO's L9. NOTHING IS APPLIED: the plan, both halves, the apply, the 0-diff plan and the simulate controls are the issuer's next acts.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6F_ROLE_GRANTS</workstream>
 <slot>~1</slot>
