@@ -175,3 +175,22 @@ promote are each Andrew's word.
 **Andrew's 2026-10-05 ~21:4xZ "Yes stop the loop"** (record `ANDREW_DIRECT_20261005_21xxZ_DELETE_DSGN_WORKTREES_STOP_DRIVE_LOOP.md`)
 stopped the `/canonical-drive DSGN_AMGTV1` cron. Read verbatim, it does not end DSGN work. This round is issued by hand and re-arms no
 loop. If he meant all DSGN work stopped, his word stops this round too.
+
+## ROUND 43 -- CTO review of portal candidate `c123c5a0` (2026-10-06 ~04:4xZ; COO~D msg 29899, close @5fedfdb9bd)
+
+**Read:** `bacc2a22..c123c5a0`, 2 commits, 6 files, +22/-5, 0 non-ASCII. The product diff was read in full.
+- **FWD-8:** `cscTable.memberTicker`.
+  - A numeric ticker shows its resolved key in house form (`TSM_US_Equity` -> "TSM US").
+  - Otherwise it shows the served `ticker_reason`, so never a bare number.
+  - A real numeric code with its exchange (`6861_JP_Equity` -> "6861 JP") is a ticker, not a bare number.
+- **FWD-27:** `display_name` is read first at the four served-name sites: PriceBars, RankedList, the peer label and the posture cite.
+- **The harness:** the tabs adapter clears `served_cache` between scenarios (AMENDMENT 1). Test-only.
+
+**Verdict: APPROVED.**
+1. **origin/DEV has moved** to `ac3b018e` (3 DSGN_REBRND FAST commits), so the candidate is no longer a fast-forward.
+   `git merge-tree origin/DEV c123c5a0` is clean, and those commits do not touch `SecurityAnalysis/`. Land it as a merge onto the
+   then-current DEV, with VALGATE green.
+2. **The DEV push is Andrew's word** (a product file), through `0.0.0_AB_MSTR~Z`. The PROD promote is his word as well. FWD-8 and
+   FWD-27 are graded on PROD after the promote.
+3. **Note, not blocking:** "TSM US" is formatted on the page from the served key, a presentation of a served value. A served display
+   ticker from the producer would be cleaner; it is a candidate for a later RESAPP producer item, not this round.
