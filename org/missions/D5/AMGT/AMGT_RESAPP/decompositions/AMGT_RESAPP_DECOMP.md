@@ -8689,3 +8689,64 @@ fanout:
   egress: none
   portal_ref: fb939c4a   # aw-4's /freshness candidate (on DEV 2146031c); DEV head at the cut e0ff23a9
 ```
+
+## 83. ROUND 75 -- PRINT DATED + SERVED THESIS, /freshness SNAPSHOT, NAMES-PHASE CUT, SEGMENT HEADINGS + TABLE LABELS, REDEPLOY, WALK. Six orders
+
+**Input:** the CTO's round-74 analysis `ledger/ROUND_ANALYSIS.round74.md` @0967e3d9c5 (msg 29990), section 4 items 1-7 and rulings
+1-6. PRD v0.40, ADMITTED. Ruling 4 (95 of 95 stale is correct) is not a cell.
+
+### 83a. MEASURED AT THE CUT (deployed `0MZWPl7n` unless named)
+
+- c57, per print (BA, AMD, ASML_NA): fiscal-year lines stamped with the run date 368 / 491 / 396; the run date appears 743 / 820 / 856
+  times. Every line reads "Label: value - as of <run date> - Bloomberg".
+- c58: BA's /thesis serves 17 drafted sentences (company_description 3, investment_thesis 2, risks 3, recommendation 9). The BA print
+  carries 0 of them and prints "No investment thesis / risks / recommendation has been written" (row Z-W256-S1).
+- c59 (local): no snapshot builder; 0 of 302 rows. A /freshness cache miss is 7,488 ms in the handler (Init 653 ms), 2,850,172 B; warm
+  68 ms (the issuer's probe after the walk).
+- c60 (local, fresh process): the chatter `names` phase (`monthly_chatter._display_names`) takes 1,560 ms (deployed cold 1,220 ms, the
+  largest cold phase now). The cold chatter read is 3.7-4.7 s.
+- c61: 36 segment headings across the 95 covered names are filing sections, figures or sentences. BA serves 10 distinct headings for 3
+  segments: "ITEM 7..." x2; BCA/BDS/BGS beside the full names; "BGS total backlog of $29,720 million at December 31, 2025". BA's 3
+  driver-chart passages are table runs (54-81% numeric tokens) with no labels.
+
+### 83b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ay-1` | FWD-5: each figure carries its own period or quote date, the run date once in the header; the print reads the drafted sections from the /thesis reader (rulings 1-2) | `~257` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-ay-2` | FWD-7: /freshness as ONE precomputed snapshot at an `address()` key, written by the refresh step, read by the route; falls back when absent (ruling 3) | `~258` | worker | LOCAL | `lib/research/freshness/`, `scoped_amgt.py` (freshness + refresh functions); a missing registry row moves to ay-5's pair |
+| `AMGT-ay-3` | the names-phase cut, bodies equal (ruling 5) | `~259` | worker | LOCAL | `lib/research/api/monthly_chatter.py` (+ new module) |
+| `AMGT-ay-4` | segment rows headed by one segment name; table passages with row and column labels (ruling 6) | `~260` | worker | LOCAL | `scoped_amgt.py` (`_segment_rows`, `_point_passage`), new helper module |
+| `AMGT-ay-5` | the redeploy carrying ay-1..ay-4, any snapshot grant, and the FIRST snapshot write; r74 c55 pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, IAM if named, the snapshot key, ledger |
+| `AMGT-ay-6` | the walk: FWD-5 (3 prints), FWD-7 (a first visit), FWD-18 and FWD-1 if DSGN 43+44 is on the portal ref | `~261` | worker | LOCAL (a read) | own deliverables |
+
+**Issuer ruling at the cut (write-set overlap):** ay-2 and ay-4 both write `lib/research/api/scoped_amgt.py`, in disjoint functions.
+ay-2 takes `read_coverage_freshness`, the /freshness route and the refresh path; ay-4 takes `_segment_rows` and `_point_passage`. Each
+order names the other's functions as not its own. The drains merge by hunk; a conflict is resolved by the issuer at the drain.
+
+### 83c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-7. Items 1 and 2 share one file (`render_pack.py`), so they are ONE cell (ay-1). Item 4 (95 of 95
+  stale) is ruled correct and is not a cell.
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ay-1 changes no figure value; ay-3 changes no served body;
+  - ay-2 changes no row value (EQUAL on every row);
+  - ay-4 changes no figure or sentence, only headings and the added labels;
+  - only ay-5 writes a store object.
+
+### 83d. EDGES AND FAN-OUT
+```
+ay-1, ay-2, ay-3, ay-4 --> ay-5 (redeploy + snapshot write, one pair) --> ay-6 (the walk)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [ay-1 ~257, ay-2 ~258, ay-3 ~259, ay-4 ~260]
+  wave_1: [ay-5 0.7.0_AE_CloudOps~A]   # after ay-1..ay-4 drain and its pair
+  wave_2: [ay-6 ~261]                  # after ay-5; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 4ca437eb   # the portal DEV head at the cut (origin/DEV); the api suite reads a portal fixture
+```
