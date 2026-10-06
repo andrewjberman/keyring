@@ -28,3 +28,25 @@ Two walks run earlier on COO~D's worktree are discarded.
   `node_modules` link removed). Removing it is a recursive delete and waits on Andrew's word.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 04:02Z -- pins 4fa0312e, e568f064, 48fac2b6 (2.0.0_SA_COO~D msg 105507), and one correction
+
+**Correction to the table above.** The /valuation and /factor-tilts rows: this seat walked `/valuation`, which is not a
+route; the app's routes are `/valuations`, `/correlations`, `/macro` and `/factor-tilts` (App.tsx 118-121). The
+`/valuation` reading (50 siblings) was the app's fallback page, the same count `/correlation` and `/macroeconomics`
+gave. The /factor-tilts row stands. The Valuation pin's verdict does not move: it was graded on code and tests.
+
+Read on the same clean checkout, now at 48fac2b6 (0 uncommitted paths), rebuilt (19.9 s), walked with `--dist`
+(port 5174 is in Andrew's use and was not touched).
+
+| pin | claim | read here at 48fac2b6 | result |
+|---|---|---|---|
+| 4fa0312e | correlation matrix on the neutral sign pair, opaque, ink 4.5:1 | CI by commit: CI - Build & Validate=completed/success. /correlations walks 9 siblings, 0 below; no correlation data loads, so no matrix cell is drawn | PASS on code and tests; not rendered |
+| e568f064 | factor-tilt bar and Valuation tints move to the sign pair | CI success. /factor-tilts 8 siblings and /valuations 9 siblings, 0 below, both empty without data | PASS on code and tests; not rendered |
+| 48fac2b6 | Macro percentile heatmap on the one-hue ordered ramp | CI success. /macro 13 siblings, 4 walked, 0 below; no heatmap cell drawn | PASS on code and tests; not rendered |
+
+- `bun test src/lib/__tests__/` at 48fac2b6: 7 pass, 0 fail (the pin tests that require 4.5:1 on every rung).
+- All three are FAST pins with no fixture that draws their cells. What is graded here is the token values, the tests and
+  CI. Whether any of these pages reads right with data is not established by anyone yet.
+
+-- 3.0.0_SA_CVO
