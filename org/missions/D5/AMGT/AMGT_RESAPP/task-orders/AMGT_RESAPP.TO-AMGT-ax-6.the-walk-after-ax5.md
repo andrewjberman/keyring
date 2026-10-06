@@ -85,3 +85,7 @@ The `<status>` flip is the issuer's.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~08:3xZ):** ax-5 is live. The function is `0MZWPl7nGZzFI53w+vsKdS7hQpcxu4Mrd5wEMWWZQpA=` (08:00:43Z), and the gateway has 11 security routes including the greedy one. The issuer's r74 c53, c55 and c56 deployed checks read YES. The portal ref is ax-2's candidate `6de76f0509`. The walker slot was granted by `0.0.0_AB_MSTR~Z` (msg 29971, status disabled/armed=no at 08:28Z). The issuer relays ARM and DISARMED to MSTR~Z; the worker sends no message. HARVST gold #6 has landed (r71 c35 deployed YES: 602 of 657 feed items carry a url).
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~08:5xZ):** CLOSED -- drained @46094b6b0f. AC1 reads 3 PDFs; AC2 disarmed, re-read by the issuer at 08:52Z (status=disabled armed=no); proof VALID. AC3 (`WALK_ROUND74.md`) is the CVO's at L9. DISARMED was relayed to 0.0.0_AB_MSTR~Z at 08:52Z. Rows Z-W256-S1 (print: thesis/risks/recommendation read 'not written' while the page shows drafts; every 'as of' reads 2026-10-06, including fiscal-year lines) and Z-W256-S2 (/freshness 95 of 95 flagged, first row 9.1 s on a cold load, the read 8.1 s for 2.85 MB) are INERT and carried to the drain-end read.
+
+<status>complete</status>
