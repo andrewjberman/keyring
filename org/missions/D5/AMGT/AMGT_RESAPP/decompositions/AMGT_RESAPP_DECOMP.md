@@ -8630,3 +8630,62 @@ fanout:
   egress: none   # no vendor, no SEC, no ft.com/wsj.com fetch (Andrew's FT hold)
   portal_ref: 2146031c   # portal origin/DEV at the cut
 ```
+
+## 82. ROUND 74 -- /freshness FAST + PAGE FIXED, MENTIONS-DECODE CUT, SLASH-KEY ROUTES, THE PRINT IN OPAL BRAND FORM, REDEPLOY, WALK. Six orders
+
+**Input:** the CTO's round-73 analysis `ledger/ROUND_ANALYSIS.round73.md` @cf0d03deb2 (msg 29920), section 4 RESAPP items 1-7 and
+rulings 2-5. PRD v0.40, ADMITTED. FWD-18 and FWD-1 page work goes to DSGN round 44 (ruling 1); not cut here.
+
+### 82a. MEASURED AT THE CUT (deployed `satkY3HX` unless named)
+
+- c53: /freshness warm 10.7-11.3 s deployed, 20.6-23.6 s local; 95 covered rows.
+- c54 (local, fresh process): the first chatter request decodes mentions in 1,290 ms (deployed up to 3,720 ms).
+- c55: the APPLIED gateway `opal-portal-data-proxy-api` (7k3ed8px20) has 10 security GET routes, all single-segment
+  `{security_key}`, so 0 match a key containing '/'. The FUNCTION answers 200 for BP/_LN and NG/_LN (raw and %2F) on overlay,
+  thesis, peers and print, so the 404 is the GATEWAY's. The routes live in `infra/aws/terraform/harvest/scoped-amgt-api.tf` (~`:500`).
+- c56, per print (BA, AMD, ASML_NA):
+  - 0% Lato;
+  - 3 company-description headings, 2 current market-cap lines ("Market cap" and "Market capitalisation", the same value), 5 raw
+    `[MACHINE-...` markers;
+  - the c48 floor holds (0/0/0/0).
+  - The brand font is Lato: `portal/src/index.css`; the TTFs are at `portal/src/pages/InvestorReporting/render/assets/fonts/`
+    (Regular + Bold ~1.3 MB, inside the package's 8.2 MB spare).
+
+### 82b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ax-1` | /freshness warm under 2 s (served_cache or a precomputed view), values EQUAL on all rows | `~252` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ax-2` | the /freshness PAGE: the current pack field, a never-collected input stated once, brand contrast, sorts that reorder; proven on a render (on aw-4's portal candidate) | `~253` | worker | LOCAL (portal) | `portal/src/pages/Freshness/` |
+| `AMGT-ax-3` | the cold cut: mentions decode within 500 ms local, bodies equal | `~254` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-ax-4` | FWD-5 in Opal Brand form (Lato, the brand heading styles and colour tokens), duplicates and raw markers removed | `~255` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-ax-5` | the redeploy carrying ax-1/3/4, plus the ROUTE leg: slash-capable gateway routes for the security endpoints (list item 4); c55 joins every later redeploy's regression set | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, gateway routes tf, ledger |
+| `AMGT-ax-6` | the walk after ax-5: FWD-5 (3 rendered prints), FWD-7 (open the page, find a stale name), FWD-4 (links, after HARVST gold #6) | `~256` | worker | LOCAL (a read) | own deliverables |
+
+### 82c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is RESAPP items 1-7. Item 4, the slash-key fix, is an infrastructure route change, so it rides ax-5's pair as
+  a leg. Its pin (c55) is a check file every later redeploy runs.
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ax-1 and ax-3 change no value (bodies equal);
+  - ax-4 changes no figure;
+  - ax-2 moves no served data;
+  - the route leg adds routes and removes none.
+
+### 82d. EDGES AND FAN-OUT
+```
+ax-1, ax-3, ax-4 --> ax-5 (redeploy + route leg, one pair) --> ax-6 (the walk)
+ax-2 (portal; independent; its DEV push is Andrew's word after a CTO review FROM A RENDER on the deployed route)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [ax-1 ~252, ax-2 ~253, ax-3 ~254, ax-4 ~255]
+  wave_1: [ax-5 0.7.0_AE_CloudOps~A]   # after ax-1/3/4 drain and its pair
+  wave_2: [ax-6 ~256]                  # after ax-5; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none
+  portal_ref: fb939c4a   # aw-4's /freshness candidate (on DEV 2146031c); DEV head at the cut e0ff23a9
+```
