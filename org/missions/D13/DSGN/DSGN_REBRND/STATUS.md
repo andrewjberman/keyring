@@ -269,6 +269,7 @@ Each of E1-E3, E5 and E6 needs its own surface in the lease (a re-arm), outside 
 
 ## Open at Andrew
 
+- HOLD (Andrew-direct 2026-10-06 14:14Z via CTO msg 105590, record `org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261006_1414Z_LIGHT_MARKET_EXPERIMENT_OFF_MAIN_BRANCH.md`): the light `/market` is an experiment kept off the main branch without his explicit approval. This seat lands NO further light-panel page and NOTHING new of the light scope on DEV until the CVO's which-branch question is answered. PRD R17 page 2 is parked on that answer; `4ca437eb` (in `cf3f10c6`) stays on DEV only, and a DEV-to-PROD promote carrying it needs his word (MSTR's act). Un-park: Andrew's answer recorded.
 - FWD-9 (Andrew's own side-by-side) and FWD-1 (a walk by a person new to the portal) are person acts, unchanged.
 - PRD v0.11 (batch 80 item 11: FWD-3's PROOF sentence against Andrew's 09-11 word that the ladder's five hues are canon) is an
   ENDPOINT change, both halves re-signed; it rides the round's FULL cut, not this FAST lease.
