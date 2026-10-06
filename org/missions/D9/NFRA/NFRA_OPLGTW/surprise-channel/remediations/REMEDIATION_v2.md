@@ -66,15 +66,15 @@ Author: 3.0.0_SA_CVO~O. Round: v2. Fabric: site-z. Recorded: 2026-10-02T00:44:59
     "owner": "2.0.0_SA_COO~O",
     "round": "v2",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v2"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~O",
-      "at": null
+      "at": "2026-10-06T09:12:00Z"
     }
   },
   {
