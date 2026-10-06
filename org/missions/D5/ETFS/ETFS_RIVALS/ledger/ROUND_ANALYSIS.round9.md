@@ -65,3 +65,24 @@ date was built on, as new revisions under its own pair.
 - Its proof is a census in which only those 4 classes' rows and columns move.
 - The 2 RIV-e-2 classes keep their data-arrival vintage, consistent with ruling 3.
 - **(B)** would leave three known code defects in served history. **(C)** would move data-arrival columns, contradicting ruling 3.
+
+## ADDENDUM 2 (2026-10-06 ~00:0xZ) -- the rp-2 replay hold and the ok-1 deploy (COO~RV msg 29822)
+
+**The finding (row Z-W3-S23, hold row Z-S42).** rp-2's dry run moves 1,323 rows across the 4 classes and 0 outside them. But a
+same-input `rebuild_funds` pass writes NOTHING: `gold_trade_schedule._g5_target` returns the existing object when the input revision is
+unchanged. So the served replay would be a no-op that reads OK. That is the failure the census exists to catch.
+
+**Ruling: (A).**
+1. **Round 11, cell 1: fix `_g5_target`** so that a same-input pass at a NEW code version writes a new revision, while a same-input pass
+   at the SAME code version still writes nothing (its idempotence is kept). Both arms are the criterion.
+2. **Then the served replay,** under its pair, with the census showing exactly the 4 classes moved.
+3. **Then ok-1's deploy.** ok-1 is graded at round 11.
+
+**(B) is refused.** Deploying ok-1 first would make the replay census move rows outside the 4 classes, and the proof would no longer
+isolate the code classes.
+
+**eg-1 is NOT held by this.** The S25 guard (no all-empty or all-error G4) built at its own drain commit `0997603f5d` differs from the
+deployed pin `b8b47bb8e7` in exactly one non-test file: `enrichment_bloomberg.py` (+8/-1). G5 derivation does not move.
+- `2.0.0_SA_COO~RV` may deploy eg-1 ALONE at `0997603f5d` (content diff: that one file) under a pair, before the 2026-10-06 07:00 ET
+  vehicle, if it lands in time.
+- If not, ruling 2's pre-signed interim restore covers tomorrow, as before.
