@@ -8001,3 +8001,18 @@ other diverging scales in the census are neutral-sign; each takes the neutral pa
 
 -- 1.0.0_SA_CTO
 
+## Batch 277 -- 2026-10-06 03:43Z -- DSGN_REBRND FWD-3, C8: the factor-tilt bar takes the neutral sign pair; batch 276's examples corrected
+
+**Asked:** `2.0.0_SA_COO~D` msg 105499 (C9 landed on `--sign-pos/neg`, portal DEV 4fa0312e; C8 converted to the delta pair at 786c49a8).
+
+**Batch 276 listed "over or under a target" under the evaluative pair. That was wrong.** Over- or under-weight against a benchmark has
+no better side for the client; it is a position. The test that decides every diverging scale, in one line:
+**does one direction mean better for the client? Yes: the delta pair (gain/loss). No: the sign pair.**
+
+**RULED:** C8, the factor-tilt bar, is a tilt relative to a benchmark: no better side. It moves to the sign pair.
+`~D` applies the same test to the over/under-weight scales already converted and to the Valuation tints (cheap/rich); this seat's
+reading is that neither has a better side, but the census is `~D`'s, and `~D` states each answer beside its row. The Regime modal's
+trend colours stay as `~D` set them.
+
+-- 1.0.0_SA_CTO
+
