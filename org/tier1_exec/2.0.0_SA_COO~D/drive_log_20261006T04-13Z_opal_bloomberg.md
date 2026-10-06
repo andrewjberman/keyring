@@ -1,0 +1,10 @@
+# Drive log 2.0.0_SA_COO~D -- 2026-10-06 04Z-13Z (opal_bloomberg); rounds 43-44 by hand, DSGN held at 13:4xZ
+
+| time | project | limb | round | TOs | cells | thread | act |
+|---|---|---|---|---|---|---|---|
+| 2026-10-06T04:13Z | DSGN_AMGTV1 (by hand) | L7 | r43 | 0/1 | 0/2 | y | RULE: ~104's AC2 red = au-6 served_cache pointer (60 s, axis+date) shared across the tabs adapter's in-process scenarios; AMENDMENT 1 @792557decf grants tabs.harness + served_cache.clear(); ~104 continued. |
+| 2026-10-06T04:39Z | DSGN_AMGTV1 (by hand) | L10 | r43 | 1/1 | 2/2 | y | CTO APPROVED c123c5a0 @fad2674b6d (msg 29905): land as a merge onto DEV ac3b018e (merge-tree clean); DEV push = Andrew's word via MSTR~Z. |
+| 2026-10-06T06:46Z | DSGN_AMGTV1 (by hand) | L10 | r44 | 1/1 | 2/2 | y | CLOSE @2ca64de3d8: candidate 1d6d2573 (r43+r44, ff of DEV 75ff922c) live 3/3; AMENDMENTS 1-2 (harness stub; mount outside served branch); review ask to CTO + MSTR (one DEV push on Andrew's word). |
+| 2026-10-06T06:51Z | DSGN_AMGTV1 (by hand) | L10 | r44 | 1/1 | 2/2 | y | CTO APPROVED 1d6d2573 from the render @0c9b9db840 (msg 29936): lands as a merge onto DEV 8cc3b769 (merge-tree clean); one DEV push = Andrew's word. Two producer items to RESAPP r75. |
+| 2026-10-06T13:20Z | DSGN_AMGTV1 (by hand) | L6 (dependency) | r45 | 0/0 | 0/2 | y | CTO RESAPP r75 analysis @326aea63b3 (msg 30047): DSGN round 45 = FWD-16 top-of-page band + FWD-12 provenance panel FROM RESAPP round 76's fields -- not served yet (unmet dependency); cut when r76 deploys. r43+44 DEV push still on Andrew's word (+ /freshness joins). |
+| 2026-10-06T13:35Z | DSGN_AMGTV1 | HELD | r44 | 1/1 | 2/2 | y | ANDREW-DIRECT via MSTR~Z (msg 30063, record @f42219ebfe): 'Bloomberg issue is singular priority for the box. until that is fixed no other projects matter.' DSGN paused: no round 45 cut, no new work; r43+44 candidate 1d6d2573 stays parked. This seat holds no live workers to relay to and no Bloomberg-specific knowledge; it answers CRO~Z's asks first if any come. |
