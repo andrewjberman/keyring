@@ -4010,6 +4010,29 @@
     "spec_asserts": "Round 9's two tables are readable and writable by the stages that use them (RIV-nm-3, RIV-su-2).",
     "world_is": "Both exercised on the organic 2026-10-06 runs with no AccessDenied: the read at 13:05Z and the write at 13:07Z.",
     "notes": "Cites ETFS_RIVALS-Z-S31 (round-10 analysis item 5: S31's disarm is 2.0.0_SA_COO~RV's at the 10-06 run). The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S47",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-06T13:35Z",
+    "one_line": "The first organic full-day page (2026-10-06, batch ai-2026-10-06-517fd371, 13 of 13 funds updated) renders with holding dialogs OFF: 0 clickable security names and 0 security dialogs, against 1,948 buttons and 441 dialogs on the 10-05 r9 page. The with-dialogs render crossed render.DIALOG_SOFT_CAP (1,950,000 B), so fc-1's and ln-1's outcome (Andrew: 'anytime a stock/ticker is mentioned, it should be clickable to the modal') is absent on the served page.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-06/index.html (1,813,001 B, 13:07:38Z): data-holding-dialogs=\"off\" on rf-panels; counts data-sec-dialog 0, data-sec= 0, class=rf-h 0 (this seat's read)",
+        "platinum/page/date=2026-10-05/index.html batch rv-publish-1005r9 (1,870,715 B): data-sec-dialog 441, data-sec= 1,948",
+        "data/etfs/scripts/rivalfunds/render.py:1793-1802 at the live pin ca39e20a20: DIALOG_SOFT_CAP = 1_950_000; above it the page is re-rendered without holding dialogs",
+        "manifest date=2026-10-06: a1_produced buying_trend/holding_contribution/input_census OK (a full A1 day), funds 13 of 13 updated"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-fc-1 J1 and RIV-ln-1 J1 (both graded PASS-in-part on 10-05 pages): every security mention opens its one modal, under the gateway cap; ROUND_ANALYSIS.round8.md ruling 3: if linking everything would cross the cap, the cell links a name once per face and states that rule.",
+    "world_is": "The fallback is binary: past the soft cap every dialog goes, not just enough of them to fit. 10-05's pages fit (r9 at 1.87 MB with dialogs) because that day carried less A1 content. A normal full day with D12's IDVZ/PFOE rows crosses the cap, so production will serve plain names on most days. The page itself publishes correctly (1.81 MB), and nothing tells anyone that the dialogs are off: the attribute is in the HTML only.",
+    "notes": "For the round-11 issuer and CTO~Z: a size budget for dialogs (lighter dialog content, one shared dialog per security already in place; a partial fallback that keeps the dialogs that fit; or a lazy-load route under the gateway) is a ruling. INERT: no wrong value is served, but a FWD outcome is absent."
   }
 ]
 ```
