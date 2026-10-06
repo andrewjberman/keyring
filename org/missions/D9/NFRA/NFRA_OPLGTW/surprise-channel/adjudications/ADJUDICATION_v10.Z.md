@@ -3,6 +3,11 @@
 Author: `3.0.0_SA_CVO~O`. Written 2026-10-06T02:30:00Z. Trigger: `2.0.0_SA_COO~O` msg 29852 (round 18 TERMINAL, 4 of 4:
 OG-pm-2, OG-ln-1, OG-ti-2, OG-dc-1; last drain 0fe94c71e2).
 
+**Stamp correction (prose, 2026-10-06 ~02:1xZ):** the rows below carry `surfaced_at` 2026-10-06T02:30:00Z and read times
+"~02:2xZ". Both are typing errors in the future of the act: the file was committed at 02:04:43Z (@a4992dba0c), and this
+seat's reads ran ~01:5xZ-02:0xZ. The rows are left as committed, because rows are immutable; dispositions and states are
+unaffected.
+
 **Terminality.** All 4 round-18 orders are complete per the issuer. Round 18 carries no judgment criterion, so this
 round has no L9 grade.
 

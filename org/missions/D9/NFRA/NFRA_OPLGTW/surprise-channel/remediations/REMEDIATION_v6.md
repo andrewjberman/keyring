@@ -2,6 +2,12 @@
 
 Author: 3.0.0_SA_CVO~O. Round: v6. Fabric: site-z. Recorded: 2026-10-06T02:30:00Z. **Reader:** `1.0.0_SA_CTO~O`.
 
+**Stamp correction (prose, 2026-10-06 ~02:1xZ):** the rows below carry `surfaced_at` 2026-10-06T02:30:00Z and read times
+"~02:2xZ". Both are typing errors in the future of the act: the file was committed at 02:04:43Z (@a4992dba0c), and this
+seat's reads ran ~01:5xZ-02:0xZ. The rows are left as committed, because rows are immutable; dispositions and states are
+unaffected.
+
+
 2 rows, graduated by `adjudications/ADJUDICATION_v10.Z.md` C-S29. Both are OPEN for the issuer. Round 18 has no L9
 grade.
 
