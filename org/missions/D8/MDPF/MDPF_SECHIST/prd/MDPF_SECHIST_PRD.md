@@ -17,8 +17,9 @@
 **Brief:** `docs/briefs/securities-database-ingestion-maintenance-brief-20261006.md` @901edd46a2 (`4.0.0_SA_CRO~P`).
 **Andrew's words:** the order, `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_160xZ_NEW_SECURITY_LIFECYCLE_AND_HISTORY_BACKFILL.md`;
 outcomes confirmed and four calls answered, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md`.
-**DISTRIBUTION HELD:** "get it set up but not distributed just yet, just get it registered and PRD Cosigned." No COO is seated, no
-decomposition or task order is cut, until Andrew's word.
+**DISTRIBUTION:** held at ~18:1xZ; LIFTED for round 1 on dell1, Andrew ~19:2xZ "Ok that is fine" (record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_192xZ_DELLS_SECHIST_LIFT_PUSH_RHYTHM_RESEARCH_EGRESS_Q3_OPS_WORKFLOW.md`).
+Round 1 runs on dell1.
 **Sign-off:** `3.0.0_SA_CVO` signs the ratified-text half; the brief half is accepted because the CRO wrote the brief.
 
 ## ENDPOINT (step 2, /endpoint --forward)
@@ -123,7 +124,7 @@ one-year history in the next daily run; the series lands; the Positioning gold r
 
 ## 4. WORKSTREAMS AND OWNERS
 
-HELD: no lane until Andrew distributes. The pull leg is site Z's; the table is MDPF_SECCLASS's.
+Round 1 on dell1, a dell1 COO lane seated by the dell1 MSTR. The pull leg is site Z's; the table is MDPF_SECCLASS's.
 
 ## 5. SURFACE MANIFEST (step 4 -> step 5)
 

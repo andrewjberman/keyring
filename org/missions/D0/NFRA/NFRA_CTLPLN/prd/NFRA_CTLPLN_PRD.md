@@ -134,7 +134,7 @@
          ACCEPT     Andrew sits at his MacBook and opens a remote desktop to the laptop, site Z, dell1 and
                     dell2 in turn, each over Opal's private network; a box added later is reachable the same
                     way as part of being set up
-         SOURCE     Andrew-direct 2026-10-06 ~18:5xZ at 4.0.0_SA_CRO, "we need RDP on all devices accessible
+         SOURCE     Andrew-direct 2026-10-06 ~18:5xZ, "we need RDP on all devices accessible
                     via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook"
 ```
 
@@ -165,7 +165,7 @@
 | C-BID: placement of a move (FWD-13) | Andrew; `.tools/remote-job.py` | One CTO, on the laptop, elects a move and tells the laptop's fabric manager. That fabric manager offers it to the boxes' fabric managers, which bid with measured load; it awards the move. MEASURED at L4 by the CRO (record @ab368f2e7c): `remote-job.py` bids CPU and memory via `psutil`, knows two devices (`DEVICES = ("laptop", "sitez")`), and its awards run through LDO-001; disk and storage are not measured. The bid adds disk and storage and reads devices from the register (C-REGISTRY). LDO-001 keeps awarding Teams remote jobs; the laptop's fabric manager awards moves. A move happens only between rounds: the old box publishes its last round (C-QUEUE), the new box pulls the trunk and seats the lane. |
 | C-NAMES | CLAUDE.md rule 30 | Every new queue, identity, register home and branch prefix is builder output, printed in the order that creates it. A builder refusal is a missing registry row to add. |
 | C-MORATORIUM | law | No alert, alarm, SNS, SES send, freshness checker or monitor. A box that has not acknowledged is visible on the control plane as a state, not a notification. |
-| C-RDP: remote desktop over the tailnet (FWD-14) | this project; each box's bring-up | Remote Desktop (port 3389) is enabled on every box in the device register and is reachable over the tailnet (the Tailscale private network); the register records each box's tailnet name and address. CTO ruling, the narrower default: the Windows firewall scopes 3389 to the tailnet's address range only, never the public internet or the local network; the sign-in is Andrew's own Windows account on each box, no shared or agent account. Measured by `4.0.0_SA_CRO` (~19:0xZ, `docs/briefs/four-box-acceleration-plan-20261006.md` section 3a): 3389 answers over the tailnet on the laptop and site Z; dell1 and dell2 are not on the tailnet; firewall scope unmeasured. Joining the tailnet and enabling Remote Desktop are steps of the new-device kit's bring-up, so a new box is reachable the day it joins. |
+| C-RDP: remote desktop over the tailnet (FWD-14) | this project; each box's bring-up | Remote Desktop (port 3389) is enabled on every box in the device register and is reachable over the tailnet (the Tailscale private network); the register records each box's tailnet name and address. CTO ruling, the narrower default: the Windows firewall scopes 3389 to the tailnet's address range only, never the public internet or the local network; the sign-in is Andrew's own Windows account on each box, no shared or agent account. Measured by `4.0.0_SA_CRO` (~19:0xZ, `docs/briefs/four-box-acceleration-plan-20261006.md` section 3a): 3389 answers over the tailnet on the laptop and site Z; dell1 and dell2 are not on the tailnet; firewall scope MEASURED by `3.0.0_SA_CVO` (row NFRA_CTLPLN-S1, ARMED): the laptop admits 3389 from any address on every profile today. Joining the tailnet and enabling Remote Desktop are steps of the new-device kit's bring-up, so a new box is reachable the day it joins. |
 | C-NO-SHADOW | law | No standing comparator between boxes and no second bus or trunk run beside the first; each change replaces the old path in the same window. |
 
 ## 1. The arc
@@ -250,7 +250,7 @@ start the work that needs no Dell, FWD-5 first"). So:
 | S10 | FWD-9 | the lease register | unmeasured | C-LEASE | wire | S05 | expiry, not release by hand |
 | S11 | FWD-11 | work-in-progress publication at cell close | unmeasured | C-RESTART | wire | S07 | at most one cell lost |
 | S13 | FWD-13 | the bid for a move: four devices, disk and storage measured, the laptop's fabric manager awards | measured (the CRO's read of `remote-job.py`) | C-BID | wire | S02, S05 | between rounds only |
-| S14 | FWD-14 | Remote Desktop on each box, firewall scoped to the tailnet; tailnet name and address in `org/devices/DEVICES.json`; the bring-up step in the new-device kit | held (CRO section 3a) | C-RDP | wire | S02 | tailnet only |
+| S14 | FWD-14 | Remote Desktop on each box, firewall scoped to the tailnet; tailnet name and address in `org/devices/DEVICES.json`; the bring-up step in the new-device kit | held (CRO section 3a) | C-RDP | wire | S02 | tailnet only; proof on each box = one session from the MacBook over the tailnet ACCEPTED and one connection from a non-tailnet address REFUSED |
 | S12 | FWD-12 | one decision list on the laptop | unmeasured | C-ATTENTION | wire | S05 | no blocking prompt on an unattended box |
 
 MECE check: every one of the 13 outcomes has at least one row.
@@ -295,3 +295,7 @@ namely the macbook". Not covered before (the CRO's check). FWD-14 added at the n
 points he did not state are ruled here to the narrower side: tailnet-only (never the public internet), Andrew's own account only.
 Lane: `2.0.0_SA_COO~C` fronts this project with ADVI_COTBKF (Andrew ~18:1xZ); FWD-14 rides round 2 with each Dell's bring-up, and
 the laptop and site Z halves need no Dell. The ratified-text half re-opens for `3.0.0_SA_CVO`.
+
+## v0.4 wording (1.0.0_SA_CTO, 2026-10-06) -- on `3.0.0_SA_CVO`'s review @817586a898
+
+FWD-14 SOURCE names no seat. S14's bound gains its negative arm per box. C-RDP cites row S1. Re-opens nothing (proportionate sign-off).
