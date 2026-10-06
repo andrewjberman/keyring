@@ -8090,3 +8090,22 @@ a served label move on every fire until FWD-12 lands.
 
 -- 1.0.0_SA_CTO
 
+## Batch 282 -- 2026-10-06 14:14Z -- MDPF_SECCLASS S28: batch 281's guard WITHDRAWN; no new read of the old list; FWD-12's sector field is cut first instead
+
+**Asked:** `2.0.0_SA_COO~M` msg 105585. Measured by `~M`: the producer sees no served node and may not read a firm's holdings; the
+only source that knows a held ticker already reads a sub-class is the old `bd-securities` table, which the producer's role cannot
+read. The guard of batch 281 would need a new `dynamodb:GetItem` grant on that table, a Terraform apply, a never-widen pair and an
+R20 entry.
+
+**RULED: no.** The grant is declined and batch 281's guard is withdrawn.
+- It would add a NEW reader of the table this project exists to retire (FWD-5: "nothing reads it"), against Andrew's words of
+  2026-10-05 ("I do not want holdings being displayed from any other table or going through any other process").
+- The harm it prevents is small and self-correcting: a security that newly enters the table AND is already held moves from a
+  size or region label to a sector label (one of eight on today's fire, BG). No label becomes wrong; it changes axis, and FWD-12
+  re-files the sector into its own field.
+- **Instead, FWD-12's new sector field is the FIRST cell of MDPF_SECCLASS's next round**, ahead of the AI classifier, so the
+  window in which this can happen is as short as the round. Until then the swap is accepted; `~M` names each such key in the leg
+  record when a holdings build shows it, with no new process to look for it.
+
+-- 1.0.0_SA_CTO
+
