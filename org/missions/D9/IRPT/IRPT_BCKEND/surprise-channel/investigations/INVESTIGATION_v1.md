@@ -18451,3 +18451,84 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: at d2b625e697 the tree under the package directories differs from the running st21 package by 13 members that no half of this release names, and 2.0.0_SA_COO~P's r57 release (which holds the IB-pr-320..322 reason-code work) is blocked on a CTO ruling, so a whole-tree build would have released it to the resident unsigned. NOT MEASURED: whether P's own earlier resident builds carried the same extras (st21 3f29017cfc was built at a quiet tree). Consequence: every resident build needs a named file list or a base pin plus an overlay list; cell YCD-m-6 (IRPT_YCDGEN round 6 addendum E, CTO ruling 105454) adds that mode to the builder and the gate, and the disarm is that cell merged and used. Until then a builder user must read G5 and refuse any changed member that no signed half names."
 }
 ```
+
+## IRPT_BCKEND-S340 -- irpt-export-async-submit-20260927: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S340",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-async-submit-20260927 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change f3995c0d31 (async submit): entry.py: 65 added lines, 59 present live and the other 6 absent from HEAD source too (later-edited); submit_async.py: 134 added, 128 present and 6 later-edited; submit_service.py and submit_async.py are in the live zip",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-async-submit-20260927 leg A1 (next K8 window): ONE POST answers QUEUED with an exr_ revision in under 29 s; the pointer goes BUILDING -> SUBMITTED; the receipt goes NOT_READY -> READY %PDF (or a named FAILED); the grant and receipt name the caller; nothing outside the export's write set.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```
+
+## IRPT_BCKEND-S341 -- irpt-export-receipt-running-20260928: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S341",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-receipt-running-20260928 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change 5c0185fee2 (pending receipt answers RUNNING): entry.py: 19 added lines, 19 present live, 0 absent; 7 removed lines gone from HEAD and absent live",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-receipt-running-20260928 leg A1 (next K8 window): a pending receipt reads RUNNING and the page keeps polling to READY.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```
+
+## IRPT_BCKEND-S342 -- irpt-export-reopen-rule-20260927: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S342",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-reopen-rule-20260927 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change f92445392d (reopen rule): retained_export.py: 6 added lines, 5 present live and 1 later-edited; 4 removed lines gone at HEAD and absent live",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-reopen-rule-20260927 leg A1 (next K8 window): a second in-scope principal exports READY; a principal missing one account refused; owner unchanged; grant/receipt name the caller.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```
