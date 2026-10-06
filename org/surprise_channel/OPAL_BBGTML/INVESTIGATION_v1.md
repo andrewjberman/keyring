@@ -177,3 +177,37 @@ only its author can read its scope ("surface, do not adjudicate").
   "notes": "Deploy HELD at leg 2; nothing is half-landed. The artifact is uploaded to s3://opal-313476888478-lambda-artifacts/yang-pipeline/yang-model-portfolio-benchmarks.zip (new version g0NaQztk...), but the live function still points at the base version Pzl.iT8... and still reads CodeSha256 dHTjheKz..., so the deployed bytes are unchanged and the served keys are untouched. Three routes for the CTO: (a) an addendum naming the SFN definition CRLF->LF normalization as in-radius with DELTA=0 verified, then one untargeted apply; (b) authorize a TARGETED apply on module.model_portfolio_benchmarks.aws_lambda_function.this only, leaving the drift standing; (c) a separate act for the drift first. This seat recommends (a): the drift is measured at DELTA=0, CLAUDE.md NEVER-1 already says a verified DELTA=0 needs no hold, and (b) leaves the next operator the same STOP."
 }
 ```
+
+### OPAL_BBGTML-Z-S7 -- record-terraform-deploy.sh cannot run on site Z, so deployment Rule 4's last_deployed_commit is silently stale for every yang-pipeline deploy from this device
+
+Filed by 0.7.0_AE_CloudOps~RV after TO-GUARD-1's apply, running the post-deploy hygiene the
+/cloud-ops profile makes canonical. Not a TO-GUARD-1 acceptance criterion; surfaced, not chased.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S7",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-06T17:38:38Z",
+  "one_line": "infra/aws/lambda/ci/record-terraform-deploy.sh dies 'line 463: /c/Users/Opal: Is a directory' on site Z: line 218 prefers bun and stores its RESOLVED PATH, which contains a space here, and four invocation sites pass it unquoted (250, 348, 448, 463). The python fallback can never fire because lines 249 and 446 gate it on $JSON_TOOL being the literal string 'python3' or 'python', which a resolved bun path never equals. Consequence: deployment Rule 4's last_deployed_commit stays at 0ce5aa5ada (2026-08-18) for yang-model-portfolio-benchmarks while the deployed bytes are 513b25f522 -- the source map now MISREPRESENTS the deployed commit, which is the exact code-currency trap Rule 4's own text warns about.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Invocation: bash infra/aws/lambda/ci/record-terraform-deploy.sh yang-pipeline --function yang-model-portfolio-benchmarks --version yang-pipeline-v1.5.9 --author '0.7.0_AE_CloudOps~RV <...>'. Output: 'Using: /c/Users/Opal Bloomberg/AppData/Local/Microsoft/WinGet/Packages/Oven-sh.Bun_.../bun' then 'record-terraform-deploy.sh: line 463: /c/Users/Opal: Is a directory'.",
+      "Line 218-225 detection order: bun FIRST (JSON_TOOL=\"$(command -v bun)\", a full path), then python3, then python, then node. Lines 249 and 446 test [ \"$JSON_TOOL\" = \"python3\" ] -- false for a resolved path, so the python heredocs at 250 and 448 are unreachable on this device.",
+      "Unquoted invocation sites: 250, 348, 448, 463 (grep over the file). Four, not one.",
+      "The sibling builder infra/aws/lambda/ci/build-and-upload.sh ALREADY carries the fix in its own comment: 'Prefer node over bun on Windows -- bun cannot resolve MSYS2 /tmp/ paths', and it selected node cleanly in the same session.",
+      "Line 787 of the recorder already names 'the $JSON_TOOL hazard' in a comment, and line 796 works around it with JS_RUNTIME=\"$(command -v node || command -v bun || true)\" -- so the defect is known in one half of the file and unfixed in the other.",
+      "No partial write: git status --porcelain infra/aws/lambda/ci/ is clean after the failure, so it died before touching the source map. Nothing to reset.",
+      "lambda-source-map.json for yang-model-portfolio-benchmarks still reads last_deployed_commit 0ce5aa5ada0aead068225a8e8d1551b1849358e2, last_deployed_at 2026-08-18T16:43:32Z. artifact_sha256 IS current (FLFjTpv...) because build-and-upload.sh wrote it on the working path."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Deployment Rule 4 (/cloud-ops canonical): every Lambda carries a source-map entry, and record-terraform-deploy.sh closes the parity loop after every apply by setting last_deployed_commit to the last commit touching that function's source_dir.",
+  "world_is": "On site Z the recorder cannot run at all, so the loop never closes and the staleness is SILENT -- the apply succeeds, the 0-diff plan passes, and nothing reads the source map's commit field at deploy time. Rule 4's own text already disclaims being a byte-currency control; this makes its commit field actively wrong rather than merely uninformative.",
+  "notes": "NOT fixed by this seat. Shared CI tooling for 7 pipelines across 2 devices, outside any open task order, and the /cloud-ops profile names this tool a known failure to 'surface in RAVC'. Two candidate fixes, both small: (a) quote all four $JSON_TOOL sites -- minimal, but may trade the space failure for the MSYS /tmp failure the sibling script documents for bun; (b) reorder detection to prefer node as build-and-upload.sh already does, which is the fix the sibling arrived at by measurement. This seat recommends (b) plus (a) together: (b) removes the space from the common path and (a) makes the remaining paths space-safe. Owner: an AE/DT seat holding infra/aws/lambda/ci/ under an authoring order. SEPARATE AND UNTAKEN: deployment Rule 6's post-deploy tag. yang-pipeline-v1.5.9 was NOT created -- 11 of 11 yang-pipeline tags and 256 of 264 pipeline tags across the repo were created by Andrew Berman (7 by 0.0.0_AB_MSTR, 1 by 0.7.0_AE_CloudOps~V), so tagging is not this seat's measured practice, and the Rule 6 'push --follow-tags' half is barred to every seat but the integrator anyway."
+}
+```
