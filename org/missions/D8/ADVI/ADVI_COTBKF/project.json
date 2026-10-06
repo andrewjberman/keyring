@@ -1,0 +1,51 @@
+{
+  "project_code": "ADVI_COTBKF",
+  "macro_code": "ADVI",
+  "directive": "D8",
+  "fabric": "laptop",
+  "pipeline": "cottonwood-commonwealth-backfill",
+  "status": "active",
+  "dep_stage": "EXECUTING",
+  "created": "2026-10-06",
+  "registered_under_tree": "2026-10-06",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "MDPF_SECCLASS",
+    "LGIC_NAMING"
+  ],
+  "name": "The Cottonwood 10-year backfill from Commonwealth: the delivery kept as received, its history typed and readable, its documents indexed, its most sensitive details held only where Andrew decided",
+  "description": "Priority by Andrew's word. Order at the 4.0.0_SA_CRO terminal (record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_16xxZ_COTTONWOOD_COMMONWEALTH_10Y_BACKFILL_SPEC.md): 'spec out a mechanism for how to bring this data into opal-data-assets ... a 10Y backfill of all the Cottonwood Capital Advisors client data. This came in from their old management partner, commonwealth.' Three calls answered at the 1.0.0_SA_CTO terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_172xZ_COTTONWOOD_BACKFILL_THREE_CALLS_SENSITIVE_IN_FIRM_BUCKET.md). Home D8/ADVI: the per-firm serving stacks and firm buckets (ADVI charter).",
+  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_COTTONWOOD_COMMONWEALTH_BACKFILL_20261006.md",
+  "prds": [
+    {
+      "path": "org/missions/D8/ADVI/ADVI_COTBKF/prd/ADVI_COTBKF_PRD.md",
+      "version": "v0.3",
+      "status": "RATIFIED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    },
+    {
+      "version": "v0.3",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    }
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "2.0.0_SA_COO~C (CTO reading of Andrew's 'All agreed', record ANDREW_DIRECT_20261006_174xZ; seating 0.0.0_AB_MSTR's)"
+  }
+}

@@ -68,13 +68,13 @@ published mix drops one.
 
 ### ACCEPTANCE
 
-<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/cot/scripts/gold/tests -k multi_asset</invocation><expect>passed</expect></criterion>
+<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/black_diamond/scripts/gold/tests data/cot/scripts/gold/tests -k multi_asset</invocation><expect>passed</expect></criterion>
 `SC7-e20-AC1` -- the new `multi_asset` tests (named with `multi_asset` in the test name) pass: a `multi_asset` holder publishes a mix summing to 1, an out-of-list class skips loudly, the period views carry `multi_asset`. Also run `python -m pytest -q data/cot/scripts/gold/tests` and report it: every test in that folder must still pass.
 
-<criterion id="SC7-e20-AC2" cell_refs="SC-e-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/cot_mix_multi_asset_check.py</invocation><expect>COT-MIX-CHECK clients=4 after_sums_to_1=4</expect></criterion>
+<criterion id="SC7-e20-AC2" cell_refs="SC-e-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/bd_mix_multi_asset_check.py</invocation><expect>BD-MIX-CHECK ok=True</expect></criterion>
 `SC7-e20-AC2` -- the edited code, run in process on the real 2026-10-05 positions of the four clients, publishes four mixes that each sum to 1 within 0.001.
 
-<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import pathlib,re; t=pathlib.Path('org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_TRIAGE_20261006.md').read_text(encoding='utf-8'); print('TRIAGE-VERDICTS', len(re.findall(r'VERDICT: (?:DROPS-TODAY|HOLDS-NONE)', t)))"</invocation><expect>TRIAGE-VERDICTS 22</expect></criterion>
+<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import subprocess,sys; r=subprocess.run([sys.executable,'-m','pytest','-q','data/black_diamond/scripts/gold/tests','data/cot/scripts/gold/tests'],capture_output=True,text=True); t=r.stdout; print('FOLDERS-OK' if r.returncode==0 and ' passed' in t and ' failed' not in t else 'FOLDERS-BAD')"</invocation><expect>FOLDERS-OK</expect></criterion>
 `SC7-e20-AC3` -- (amended, AMENDMENT 1) the triage file carries one `VERDICT: DROPS-TODAY` or `VERDICT: HOLDS-NONE` line for each of the 22 served lists the census found lacking `multi_asset`.
 
 <expected_criteria>SC7-e20-AC1,SC7-e20-AC2,SC7-e20-AC3</expected_criteria>
@@ -96,11 +96,17 @@ data/cot/scripts/gold/lib/mix_views.py
 data/cot/scripts/gold/D_04.client_portal_summary.py
 data/cot/scripts/gold/B_01b.classify_new_securities.py
 data/cot/scripts/gold/D_03.composition_artifacts.py
+data/black_diamond/scripts/gold/D_03.composition_artifacts.py
+data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py
+data/black_diamond/scripts/gold/lib/mix_views.py
+data/black_diamond/scripts/gold/tests/test_composition_canonical.py
+data/black_diamond/scripts/gold/tests/test_mix_publishes_every_class.py
 data/cot/scripts/gold/tests/test_other_admission.py
 data/cot/scripts/gold/tests/test_mix_publishes_every_class.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/cot_mix_multi_asset_check.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_TRIAGE_20261006.md
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/bd_mix_multi_asset_check.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -158,4 +164,31 @@ The cell re-opens (`<status>` pending). The first pass drained @e0dd7aad05 (work
 3. **Criteria.** AC1's invocation now selects `-k multi_asset` over the whole tests folder; AC3 now reads the triage file (`TRIAGE-VERDICTS 22`).
    AC2 is unchanged. The census file stays as the first pass's deliverable. Gate limb: none graded this modification (LIMB 6 fires on new orders only;
    the order declares no `<placeholders>`).
+
+## AMENDMENT 2 (2.0.0_SA_COO~M, 2026-10-06 ~17:4xZ) -- the Black Diamond (49 Financial) lists join the cell (CTO msgs 105657, 105658; rows S30, S31)
+
+The cell re-opens (`<status>` pending). Amendment 1 drained @344646cb6a (worker commit 88728a728e, rows S30 and S31 adopted by the issuer @5ec6cedd9c). Its
+triage found a second served artifact that loses a held `multi_asset` value today, and an ARMED hazard, both in 49 Financial's Black Diamond gold:
+- **T03** `data/black_diamond/scripts/gold/D_03.composition_artifacts.py:101-111`: the served `gold/views/firm_composition.json` (bucket `opal-data-bd`)
+  has `total_market_value` $1,994,163,246.13 and a class sum of $1,988,724,709.05, a gap of $5,438,537.08 (the held `multi_asset`).
+- **S31 (ARMED, disarm owner `2.0.0_SA_COO~M`)** `C_06.client_mix_timeseries.py:182` and `lib/mix_views.py:25`: their served run (2026-10-04) predates the table's
+  `multi_asset` rows, so they lose nothing today; the next run drops the class for the 77 holders. C_06's guard (line 546) sums the aggregate over every class, as Cottonwood's did.
+
+Do for Black Diamond exactly what the first pass did for Cottonwood (read your own diff of commit 88d22f3f84 and amendment 1's D_03 edit, and mirror them; nothing is folded):
+1. `D_03` `_ASSET_CLASS_LABELS` gets `'multi_asset': 'Multi-Asset'` between `cash` and `unclassified`.
+2. `C_06` `MIX_ASSET_CLASSES` gets `multi_asset` (order `equity, fixed_income, alternatives, commodities, structured, cash, multi_asset, unclassified, other`);
+   its sum guard runs over the EMITTED mix and skips LOUDLY on a missing class, as in the Cottonwood C_06.
+3. `lib/mix_views.py` `MIX_ASSET_CLASSES` gets `multi_asset` (the file computes `unclassified` separately; keep that).
+4. Tests: in `data/black_diamond/scripts/gold/tests/test_composition_canonical.py` (granted) tests whose names contain `multi_asset` for D_03's label and a composition that
+   carries the class and sums to the total; in the NEW file `data/black_diamond/scripts/gold/tests/test_mix_publishes_every_class.py` (the CTO adds its lane grant; if committing it is refused for lane,
+   stop, commit the rest and say so in your report) tests whose names contain `multi_asset` for C_06 (a holder publishes a mix summing to 1;
+   a class outside the list skips loudly) and for `mix_views` (the period views carry it). Run a negative control for the C_06 and D_03 tests (revert the file from `HEAD`, show the tests fail, restore).
+5. The check: `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/bd_mix_multi_asset_check.py` (read only, writes nothing, S3 read-only). It runs the EDITED C_06 `process_date` in process on the latest `gold/canonical/holdings`-equivalent
+   partition for the BD holders that hold a `multi_asset` position (the 77), and the EDITED D_03 composition builder in process (factor out nothing; call the function the file already has, or the loop's own logic in a test harness if it has none), and prints:
+   per holder the BEFORE (the live `opal-data-bd` client entity point) and AFTER shares and sums; for D_03 the live `total_market_value`, the live class sum, the AFTER class sum and the gap.
+   Last line: `BD-MIX-CHECK ok=<True|False> holders=<n> after_sums_to_1=<n> composition_gap_after=<dollars>`; `ok=True` only if every holder's after-sum is within 0.001 of 1 AND the after composition class sum equals the total within $0.01.
+   If a BD input needed is unreadable, stop and file a surprise row; never print `ok=True` on a partial read.
+6. Criteria (amended, the issuer amends its own criteria; no limb graded the modification): AC1 selects `-k multi_asset` over BOTH the Black Diamond and Cottonwood gold tests folders;
+   AC2 is the BD check above (the Cottonwood check passed at amendment 1, its output stays in the record); AC3 runs both whole folders and prints `FOLDERS-OK` only if every test passes.
+7. Not in this amendment: any deploy, run or write (the issuer's act under the pair); `d08`; the Inflection `S30` row; any list the triage graded HOLDS-NONE.
 

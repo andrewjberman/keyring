@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.11",
+ "prd_version": "v0.12",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -107,17 +107,18 @@ The section below carries the endpoint's outcomes verbatim.
                     ("individual securities should be marked as such ... a field in that DynamoDB table")
 
   FWD-9  Every stock collected for Rival Funds has its entry in the shared list, with its history
-         filled in as far back as three years
+         filled in as far back as one year
          DONE WHEN  EXERCISED -- the whole Rival Funds stock list read against the shared list and the
                     history it fills
          ACCEPT     for every stock Rival Funds collects, the shared list gives its class, sub-class and
-                    whether it is a fund or an individual stock, and its history is filled in back three
-                    years (or to its first trading day, if it is younger); none is missing, and no history
-                    reaches further back than three years
+                    whether it is a fund or an individual stock, and its history is filled in back one
+                    year (or to its first trading day, if it is younger); none is missing, and no new pull
+                    reaches further back than one year (history already stored further back is kept)
          SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 3 ("Every single stock that is
                     collected for the purpose of Rival Funds should be ingested with full backfill on the
                     ETFClassifier canonical opal table"); the cap, "we can just put a cap on all lookback
-                    of 3 years for rivalfunds inclusions"
+                    of 3 years for rivalfunds inclusions"; the depth, Andrew-direct 2026-10-06 ~18:1xZ,
+                    "B, 1 year for rivalfunds"
 
   FWD-10 A stock that newly enters through the trading of the Opal ETFs or the rival ETFs gets its
          entry and its history by a dedicated routine, before anyone has to notice it
@@ -639,3 +640,12 @@ not edited.
   seat's count), the model the existing writer calls, name and ticker only, after the direct-match plan. This closes
   `3.0.0_SA_CVO`'s note 1 on v0.10. No cap, and no second release by him, sits between the held securities and the rest.
 - The order of ADDENDUM v0.10 stands as sequencing, not as a gate: held securities first.
+
+## v0.12 ADDENDUM (1.0.0_SA_CTO, 2026-10-06) -- FWD-9's depth is one year
+
+Andrew-direct 2026-10-06 ~18:1xZ at this seat, answering the securities-database call on rival funds' depth: "B, 1 year for
+rivalfunds" (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md`).
+FWD-9 is amended in place (id unchanged): the depth is one year. TO-SC-e18 (complete) filled three years; that history is KEPT, not
+deleted, because a delete is Andrew's act and he ordered none. From this version a new Rival Funds stock is filled one year back.
+The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`. The depth policy per ingestion point is owned from here
+by MDPF_SECHIST; this outcome keeps the row and the fill.

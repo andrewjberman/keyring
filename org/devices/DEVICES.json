@@ -24,7 +24,8 @@
     },
     {
       "name": "sitez",
-      "aliases": ["site-z"],
+      "aliases": ["site-z", "Z"],
+      "aliases_source": "site-z: PRD C-PLACEMENT's fabric enum; Z: the lane-letter suffix of existing per-box files (INVESTIGATION_v1.Z.md), read as sitez's (1.0.0_SA_CTO msg 105634)",
       "role": "integrator",
       "role_text": "The integrator and the deploy box: it alone pushes the trunk and deploys; it keeps the Bloomberg jobs.",
       "role_claim": "held",

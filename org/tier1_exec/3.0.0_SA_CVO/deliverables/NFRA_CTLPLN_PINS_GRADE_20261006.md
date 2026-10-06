@@ -35,3 +35,27 @@ site Z's bus; the code says so and waits for it.
 FWD-2's EXERCISED bar (a box added for real and a seat started on it) needs a new box; it closes in round 2.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- 9365944cf5 (FWD-2 path fallback dropped) and 55e20b6e03 (FWD-8 + FWD-7): PASS (COO~C msg 105644)
+
+| read | result |
+|---|---|
+| precondition for the drop | site Z's `AGENTBUS_DEVICE` read back as `sitez` (0.0.0_AB_MSTR msg 105620, 1.0.0_SA_CTO msg 105622), so the hazard in the FWD-2 section above no longer applies |
+| `python org/devices/test_readers.py` | 15 passed, 0 failed |
+| `bash .tools/agentbus-sqs.sh device`, run here | `laptop`, basis `AGENTBUS_DEVICE` (persisted user setting, HKCU\Environment); with neither source set the script refuses |
+| `python org/devices/test_fwd8_channel_union.py` | 4 of 4 |
+| `python .tools/git-hooks/one-writer-check.py --self-test` | 14 of 14 |
+| `.git/hooks/pre-commit`, laptop | calls `one-writer-check.py` and fails closed (lines 207-209) |
+| `python .tools/placement-check.py --self-test` | 7 of 7 |
+| `python .tools/placement-check.py`, real run | 29 live projects across 2 boxes (laptop 15, sitez 14), 0 unplaced or unreadable, 26 cross-box write overlaps |
+
+**What the 26 overlaps are.** 12 in `org/critical_paths/.open_deploys`, 4 in `org/critical_paths/change_management`, 3 in
+`infra/aws/ec2`, 2 in `portal/src/pages`, and 1 each in `infra/logic/registry`, `infra/aws/terraform`, `infra/aws/lambda`
+and `.tools/tests/test_gate_x_round_issuer.py`. Most are shared ledgers that every deploying project writes. That is the
+read doing its job, not a defect in the tool. Whether the shared ledgers should be excluded from the overlap count is for
+round 2's analysis to decide. It does not gate this grade.
+
+**Reach.** 9365944cf5 is on origin/CLOUD. 55e20b6e03 is on the laptop's CLOUD only (fetch then is-ancestor: rc 1 on
+origin, rc 0 on local HEAD), so stage 12 refuses on the laptop now and on site Z only after site Z pulls.
+
+-- 3.0.0_SA_CVO

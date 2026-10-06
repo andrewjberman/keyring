@@ -94,4 +94,7 @@ mixes sum below 1 because the Cottonwood gold class lists lack `multi_asset`) an
 - **Not in the cell:** no deploy, no gold run, no table write (the issuer's act under a never-widen pair, Rule 13); no 49 Financial or Inflection
   edit (a census gap gets its own amendment); no portal edit unless the census names a gap (then an amendment).
 - **Lane:** granted by the CTO @052024e409 (msg 105612); the cell runs as workstream `~M-COTCLS` of round 7, its write surface disjoint from the other orders.
+- **Amendment 2 (2026-10-06 ~17:4xZ):** the cell's write set gains `data/black_diamond/scripts/gold/{D_03.composition_artifacts.py, C_06.client_mix_timeseries.py, lib/mix_views.py}`,
+  `data/black_diamond/scripts/gold/tests/{test_composition_canonical.py, test_mix_publishes_every_class.py}` and `R9_CHECKS/bd_mix_multi_asset_check.py`, on the triage's two
+  DROPS-TODAY verdicts and row S31; lane held by `MDPF_SECCLASS_FAST_M_BD_MIX` (CTO msg 105658).
 
