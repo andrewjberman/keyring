@@ -9,7 +9,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-09-22",
   "registered_under_tree": "2026-09-22",
-  "last_updated": "2026-10-05T15:00:00Z",
+  "last_updated": "2026-10-06T03:50:00Z",
   "pods": [
     "1.0.0",
     "2.0.0",
@@ -73,8 +73,8 @@
     "THE BACKLOG POPULATION IS HIS, SEPARATELY. Andrew-direct ~18:3xZ, VERBATIM: 'all of the Research folders in the Opal Sharepoint Shared Asset Management/Research/ subfolder will be the basis for our backfill and initial pool.' Record ANDREW_DIRECT_20260922_183xZ_RESEARCH_FOLDERS_ARE_THE_BACKFILL_BASIS_AND_INITIAL_POOL.md. The folder list is a MEASURED DENOMINATOR (93 at the 2026-09-22 scan), never a transcribed list, and an unresolved folder is printed, never dropped.",
     "SENDING BLOOMBERG MODEL-BLOCK FIGURES TO THE CLAUDE API IS ALLOWED (same record, '3.) That is allowed.') -- this closes the CRO's card 1 for both this project and the addendum."
   ],
-  "phase": "ROUND 37 CLOSED (1.0.0_SA_CTO~Z analysis @b12904724c; FWD-20 open on its currency page limb); ROUND 38 ISSUED (2.0.0_SA_COO~X, 2026-10-05 ~15:0xZ): CRPS-an-1 counts and ratios carry no currency (~1) -> an-2 re-derive 96 + re-pin (issuer pair) -> an-6 currency page read; an-4 walker closes the timeline day (~2); an-3 the 10-06 13:00Z fire read; an-5 today's recovery run on MSTR~Z's line. Decomposition v38.0.",
-  "blocking": "None at L6. an-5 waits on MSTR~Z's line (OPAL_BBGTML re-run OK first, after COO~RV's Bloomberg probe). an-2 needs the CTO never-widen half and lands after an-3 + an-5. an-6 needs a walker slot.",
+  "phase": "ROUND 38 (2.0.0_SA_COO~X; decomposition v38.1): an-1 + an-4 drained; an-2 SERVED re-derive + re-pin to 6f6e472641 CLOSED @d1b66b2562 (CTO AMENDMENT 1 @dc3aa39ada; an-5 struck); an-6 currency page read and an-7 FWD sweep done; an-3 reads the 2026-10-06 13:00Z fire (first on the new pin), then the L8 packet to 3.0.0_SA_CVO~Z.",
+  "blocking": "None. an-3 is the scheduled 13:00Z fire's own clock.",
   "threads": [],
   "thread_counter": 0
 }
