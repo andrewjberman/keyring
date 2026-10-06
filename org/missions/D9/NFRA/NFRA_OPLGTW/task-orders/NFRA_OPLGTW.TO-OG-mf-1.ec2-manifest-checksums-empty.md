@@ -58,7 +58,7 @@ PLACE to `complete`. Report once.
 - Round 21 (R3-T.14, item 2). Alone. LOCAL: no release.
 - Pre-cut: `mf1.AC1.sh` FAIL (the map holds 10 entries; no note).
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
