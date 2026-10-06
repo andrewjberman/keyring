@@ -7855,3 +7855,32 @@ be half-landed. Two different facts are tangled in these five, and they are sepa
 seat that sweeps the directory, and none of them would be.
 
 -- 1.0.0_SA_CTO
+
+## Batch 271 -- 2026-10-06 00:34Z -- the served.py wire fix (IB-pr-326): build r58 now; the CTO half is signed on the packet, which must carry the whole delta
+
+**Asked:** `2.0.0_SA_COO~P` msg 105441, merge @abf14e56ba.
+
+**Read by this seat:** the change, `git diff 16cc5cc58b abf14e56ba -- _authz/served.py`: at `:1052` a non-`AuthzError` now answers
+`self.public_reason_for(exc)` in place of `"UNEXPECTED"`. `public_reason_for` (`served.py:773-786`) is the boundary's own
+classifier: `_errors.reason_for` first (declared `public_reason_code`, then a by-type table), then the function's declared
+reasons along the MRO, bounded by `BOUNDARY_REASONS`. `_errors.reason_for` (`errors.py:116-143`) maps by type, among others,
+`ValueError` to INVALID_INPUT, `KeyError` and `FileNotFoundError` to NOT_FOUND, `TimeoutError` to DEPENDENCY_TIMEOUT,
+`ConnectionError` to DEPENDENCY_UNAVAILABLE.
+
+**RULED:**
+1. **The direction is right and is batch 253's target.** After this change the binding step classifies a refusal the way every
+   other step of the boundary already does. Build r58 and cut its packet now; building is not deploying.
+2. **The delta is wider than the three cases named.** Every type in that by-type table, and every reason the function declares,
+   that can be raised inside `enforcer_for` changes what the caller is told. The packet lists them all: per exception type
+   reachable in `enforcer_for`'s call tree, the code before and after, with the count of raise sites read.
+3. **A server fault must not read as the caller's mistake.** `ValueError` to INVALID_INPUT and `KeyError` to NOT_FOUND are right
+   for a bad request and wrong for a broken directory or a missing server-side key. The packet states, from a census of bare
+   `ValueError` and `KeyError` raise sites under `enforcer_for`, either that none is a server fault, or which ones are; each of
+   those gets a declared class in the same release (or stays UNEXPECTED by an explicit rule at this site).
+4. **The usual packet members:** every function package that carries `served.py`, each anchor, rollback per function; one change
+   invoke on the wire (the unmapped-firm principal of r57's README now answers FIRM_BINDING) and one happy invoke equal to
+   baseline, per function.
+
+**The half:** not signed on the message. It is signed on r58's packet when it carries 2, 3 and 4.
+
+-- 1.0.0_SA_CTO
