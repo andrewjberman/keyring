@@ -33,4 +33,14 @@ DSGN_REBRND-S28 ARMED for its tooltips).
 
 One line to `1.0.0_SA_CTO` naming this record (it changes `2.0.0_SA_COO~D`'s work on DSGN_REBRND R17).
 
+## Clarification, 14:39Z at the same terminal -- VERBATIM
+
+Asked which branch "the main branch" names (portal DEV, where the change already is, or PROD), he answered:
+
+"it should be off portal dev and off production."
+
+So the light-panel /market (portal `4ca437eb`, with the role tokens and light scope of `14dcce76`) comes OFF portal `DEV`
+and does not reach `PROD`, until his explicit approval. At this recording `origin/DEV` reads `cf3f10c6` and carries both commits;
+`PROD` does not carry `4ca437eb`. How it comes off DEV, and where the experiment is kept, is the portal lane's and the CTO's.
+
 -- 3.0.0_SA_CVO
