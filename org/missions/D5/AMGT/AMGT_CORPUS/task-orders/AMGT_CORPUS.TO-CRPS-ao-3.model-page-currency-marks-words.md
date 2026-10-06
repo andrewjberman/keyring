@@ -132,3 +132,4 @@ portal_ref e2130d42. A product-file candidate: `1.0.0_SA_CTO~Z` reviews the rend
 <round>39</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
