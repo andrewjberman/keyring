@@ -7920,3 +7920,28 @@ what FWD-3 binds. It converts to a ramp: one hue if the reading has no meaningfu
 the indicator itself defines one. If Andrew wants it kept as it is, that is a fourth named exception by his word.
 
 -- 1.0.0_SA_CTO
+
+## Batch 273 -- 2026-10-06 01:56Z -- IRPT_YCDGEN branch B: one targeted resident.tf apply for three grants, as a round-6 addendum cell
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105463; measured blockers
+`org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/BRANCH_B_BLOCKERS_20261006.md` (simulate with positive controls;
+read by this seat, not re-run).
+
+**RULED: yes.** One cell, one targeted `safe-apply` in `infra/aws/terraform/investor-reporting/ycharts/` (`resident.tf`), plan printed
+before either half. The three grants are hops of FWD-1's thread that the round missed, like g-6 and the packaging cell.
+
+**Conditions:**
+1. **Scope of the widening, exactly:** `ycharts_opal_reports` under `irpt/cottonwood/state/` only (the research policy's one firm),
+   added to the resident's write and read prefixes and to the KMS condition; `dynamodb:GetItem` on the `etf-classifications` table
+   ARN only (no index, no Scan, no other table). No other statement moves; the plan shows it.
+2. **Item 5 first.** Read `deliverables/maps/overview_map.json` and the producer: if the first version (no pricing, C-V1) reaches
+   `opal-data-etfs/bbg/*`, say so and the grant joins THIS apply; if not, state that and no grant is asked. Not a second apply later.
+3. **Item 4** (the unit's `IRPT_PLAYWRIGHT_CORE`) rides the branch B install, not this apply.
+4. Both halves on the plan; post-apply a 0-diff plan, and the same three `simulate-principal-policy` calls now reading `allowed`,
+   with the positive and a NEGATIVE control (a 49financial `ycharts_opal_reports` key still `implicitDeny`).
+5. **Note for branch B's half:** the record says Andrew's principal sits on 49financial retention rows. FWD-1 is a Cottonwood
+   portfolio. A request under another firm must refuse at the research policy (its firms are cottonwood), and branch B's packet shows
+   that refusal.
+
+-- 1.0.0_SA_CTO
+
