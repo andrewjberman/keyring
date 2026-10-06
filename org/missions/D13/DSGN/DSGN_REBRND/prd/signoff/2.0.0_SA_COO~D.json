@@ -1,13 +1,14 @@
 {
   "prd": "DSGN_REBRND_PRD.md",
-  "prd_version": "v0.14",
-  "prd_pin": "15576da1ee147327decd2ba8694506e9a4ebbeec",
+  "prd_version": "v0.15",
+  "prd_pin": "7d3a9e131624bfe86886e7c01a40b4a60bc122a1",
   "half": "brief",
-  "half_hash": "14ad06443fe789f5424cbb520bf9a93f02d1fe115a5e64dc423621bfa70ddc69",
-  "endpoint_hash": "2ff42dda15d6916f8c4d84508ad8ebd29b8c01e4dbfc2e56921d647f7b954ea7",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/2.0.0_SA_COO/deliverables/laneD_L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.11.md@740e1eb136",
+  "half_hash": "c73733065951b369ef1988e114f309b0edc960715e428c08601d237e31de3265",
+  "endpoint_hash": "c2b4b2f0f20a41599122973c688234a5375f324992b606effddc9000efd61319",
+  "verdict": "REFUSED",
+  "review_ref": "org/missions/D13/DSGN/DSGN_REBRND/deliverables/2.0.0_SA_COO~D/L4R_BRIEF_HALF_REVIEW_DSGN_REBRND_v0.15.md@aa0b14f58e",
   "signed_by": "2.0.0_SA_COO~D",
-  "signed_at": "2026-10-04T22:42:13Z",
+  "signed_at": "2026-10-06T04:11:18Z",
+  "reason": "CELL CANDIDATES R4 row (PRD line 126) still names the ladder the named positive case and says two exceptions; contradicts v0.15 ENDPOINT",
   "designated_by": "designated by org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260911_080xZ_DSGN_REBRND_COO_D_SIGNS_CVO_ADVERSARIAL_SELF_DRIVE_WIDENED.md@2daf4d8b85"
 }
