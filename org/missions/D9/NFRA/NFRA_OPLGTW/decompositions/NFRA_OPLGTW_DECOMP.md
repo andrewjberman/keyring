@@ -1543,3 +1543,23 @@ or a ruling creates one. The project waits on:
 - Z-S43.
 
 R25.3 is carried to NFRA_OPALAI.
+
+## ADDENDUM R3-T.15 (2.0.0_SA_COO~O, 2026-10-06 ~18:4xZ) -- round 22, R28 un-park event 1 (Z-W15-S41 YES)
+
+**Source.** Andrew-direct ~18:1xZ, "Yes go ahead", to the COO~O `/open-calls` card. Record
+`org/tier1_exec/2.0.0_SA_COO~O/deliverables/ANDREW_DIRECT_20261006_181xZ_S41_DOWNLOAD_FILTERED_GRANT_YES.md` @ca460bf9fe.
+R28 (`ledger/ROUND_ANALYSIS.round21.md:32`): on a yes, one grant cell with a post-act read of a real C3 download.
+
+Label `<round>22</round>`, ONE issuance, one WORLD cell, no release.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ga-1` | 1 | Write `download_filtered` onto the one in-force dim_asset grant (one new revision, operations only), then run one on-host dim_asset download as the real holder. | WORLD | ~28 | worker |
+
+**Chains.** None. **fanout:** 1 start, cap 8.
+
+**NEVER-1: does not apply.** The write set is one principal's `POLICY#` partition, a literal key list the actor controls,
+and Andrew worded the exact widening. The change-management ledger is kept.
+
+**After round 22.** FWD-4 becomes exercisable. Its acceptance stays OG-v-7 (the holder's own walk). The remaining park
+conditions (OG-v-7, G-E, R7, Z-S43) stand.

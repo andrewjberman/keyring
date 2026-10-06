@@ -9002,3 +9002,108 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T19:10Z",
+  "one_line": "OG-ga-1 AC2 cannot be met as written: the real holder's dim_asset download (OK) returns 2173 rows incl. 23 with a BLANK cusip, so held_check.unheld_returned reads 23, not 0 (all 2150 held CUSIPs are present, 0 non-blank unheld rows).",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN ga1.AC2.sh -> 'body fields held-only real-holder download: no; ssm status Success; digest in host output: yes; RESULT: FAIL; exit=1' (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/GA1_DOWNLOAD.json, ssm dca27ce0-6fdf-4304-bf61-44c74f5e69a3, instance i-07dccb1615503ac99).",
+      "RUN on-host GA1_DIAG (same program, counts only): 'returned=2173 blank_cusip_rows=23 nonblank_unheld_rows=0 duplicate_rows=22 held_cusips_missing_from_download=0' (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/GA1_PROBE_AFTER_final.out); body held_check = {returned 2173, distinct_returned 2151, held_cusips_in_dim_position 2150, unheld_returned 23}.",
+      "READ RL6_DOWNLOAD.r17.json (synthetic 10-account grant): returned 49 = distinct 49 = held 49, unheld 0 -- no blank-cusip rows appeared there, so the blank rows are specific to the real holder's 7477-account grant and the full dim_asset universe."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-ga-1 step 8 / AC2: a real-holder download returns held CUSIPs only (held_check.unheld_returned 0; unheld = a returned cusip not in the holder's dim_position cusips, as in RL6_DOWNLOAD.r17.json).",
+  "world_is": "After the write (grant_revision 3) the download is OK and returns every held CUSIP plus 23 dim_asset rows whose cusip is blank (null/whitespace), which the held-set test counts as unheld (blank is never in the held set). The asset policy keys the held restriction on cusip, so blank-cusip rows pass it; whether that is the intended policy or a leak of non-held asset rows is not decided here. AC2 grades FAIL; the grant stays in force (AC1 PASS, so no rollback per step 7); the order is left open.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here: the criterion, the probe's blank-row rule and the gateway's asset policy are not this worker's to change. Decision for the issuer: either treat blank-cusip rows as out of the held test (amend the criterion) or treat the 23 rows as a defect of the asset policy (a gateway change). The rollback file stays in X if Andrew wants the grant reverted meanwhile."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T19:10Z",
+  "one_line": "OG-ga-1 step 3: the operator role opal-gateway-access-admin cannot dynamodb:Scan the state table, so the holder's pk had to be found by a read-only Scan under the caller's own identity; and the in-process prepare() diff prints the holder's granted account ids as dict keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python .scratch/mkcand.py under the assumed role -> AccessDeniedException: ... not authorized to perform: dynamodb:Scan on resource: arn:aws:dynamodb:us-east-1:<acct>:table/gateway-access-state-table because no identity-based policy allows the dynamodb:Scan action.",
+      "RUN prepare() / activate output: 'accounts: {<master>: {added: [], removed: []}, ...}' -- the two master ids (account-number-shaped) appear on stdout; they were printed once into the worker's own tool transcript; the saved diff stays in the off-repo directory X and no committed file carries them (the preflight records the changed-key list and line count only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 3: strongly read the holder's grant under the operator role; the diff prints and 'Never print ... an account id'.",
+  "world_is": "The operator role holds GetItem-style access only, so the pk was listed by the Scan the instrument ga1_state.py itself uses (caller identity, read-only), saved off-repo, and then passed to the operator-role process. The scope diff necessarily names master ids as keys, so a worker following the order literally sees them on stdout; the redaction has to be in the redirect, which this worker did from the activate step onward.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT: a form observation for the next cut of an operator-command order (suggest 'redirect prepare()/activate output to X and print only the operations line')."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T19:10Z",
+  "one_line": "OG-ga-1 step 8: the probe's served_release is the committed EC2_MANIFEST services.opal-gateway.deployed_commit (2c27f3a7958de0aa644374cdd08fc188a27e9e3f), not a value the host reported; the host exposes no commit marker the worker was pointed to.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/EC2_MANIFEST.json at HEAD: services.opal-gateway.deployed_commit 2c27f3a7958de0aa644374cdd08fc188a27e9e3f, previous cf4b036e62b5074600086e1d670dc3c6bdab004f.",
+      "READ the RL6/RL7/RL8 verify scripts (deliverables ~15): served_release was always passed in as --served-release from the manifest/deploy wrapper, never read from the host by the probe."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order step 8: served_release is 'the host's deployed gateway commit'.",
+  "world_is": "The value in GA1_DOWNLOAD.json body.served_release is the manifest's, passed into the host process as GA1_SERVED_RELEASE so it is covered by the digest the host prints; it was not independently derived on the host in this order (the md5-vs-release comparison belongs to the deploy orders' verify scripts).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "INERT: consistent with how every earlier release record carried it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S59",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-06T19:11Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S1"
+  ],
+  "one_line": "Z-W28-S1 DISARMED for the OG-ga-1 act, NOT resolved: the 23 blank-cusip dim_asset rows come from a pre-existing asset-policy rule that the dim_asset QUERY path already serves; the grant widened no row set. Whether a blank cusip may qualify an asset row is routed to 1.0.0_SA_CTO~O at L10.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:341 position_cusips = frozenset(row[0] for row in pos_rows): a held position with a blank cusip puts the blank into the held set, so every dim_asset row with a blank cusip passes the PolicyFilter appended at app/integrations/schwab/semantics.py qualify_asset_plan.",
+      "FILE integration.py:656-661 (query path) and :939-946 (download/export path) build the held set through the same _asset_holdings and qualify_asset_plan, so the holder's dim_asset QUERY admitted the same 23 rows before grant_revision 3. The act added an operation, not a row.",
+      "RUN issuer re-grade from worktree coo-o-r22 @5d36cd195c: ga1.AC1 PASS, ga1.AC2 FAIL (held-only no; ssm Success; digest yes), ga1.AC3 PASS. GA1_PROBE_AFTER_final.out: blank_cusip_rows=23, nonblank_unheld_rows=0, held_cusips_missing_from_download=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C3 / OG-q-7: a dim_asset read returns only the CUSIPs the grant's accounts hold.",
+  "world_is": "Every non-blank CUSIP returned is held (0 non-blank unheld). 23 rows with a blank cusip are returned because a blank is in the held set. They cannot be tied to a held security by cusip, on the query and download paths alike, since OG-q-7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer ruling: no rollback, because reverting the grant removes no exposure (the query path serves the same rows). AC2 is NOT amended: it stays FAIL as the record of the policy gap, and OG-ga-1 closes FAILED on AC2 with AC1/AC3 PASS. Fix candidate for the CTO's round-22 analysis: drop blank or null from position_cusips (one line at :341) plus a test, then a release under the usual halves."
+}
+```
