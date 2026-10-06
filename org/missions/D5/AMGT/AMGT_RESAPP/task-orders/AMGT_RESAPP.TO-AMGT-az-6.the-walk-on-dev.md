@@ -16,7 +16,7 @@ comp-adversary: RUN by the issuer at the cut -- FWD-7, 18 and 1 are built and we
 EGRESS CLASS, declared: NONE. Localhost dev build only; no client data leaves the device.
 </preflight>
 
-**Your worktree:** `C:/tmp/r76-266` (branch `wk-AMGT_RESAPP-266`, cut from the issuer's tree after az-5 and Andrew's DEV push, with `--portal-ref <the DEV head carrying 1d6d2573 and 6de76f0509>`). Work and commit only there. Start every shell call with `cd /c/tmp/r76-266`: a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout.
+**Your worktree:** `C:/tmp/r76-266` (branch `wk-AMGT_RESAPP-266`, cut from the issuer's tree after az-5 and Andrew's DEV push, with `--portal-ref 6b4e89a8`, the origin/DEV head carrying 1d6d2573 and 6de76f0509). Work and commit only there. Start every shell call with `cd /c/tmp/r76-266`: a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout.
 
 ## 1. THE ACT -- `AMGT-az-6` (round 76, decomposition s.84)
 
@@ -80,3 +80,8 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~21:2xZ):** both preconditions are met. Andrew's DEV push landed (MSTR~Z msg 30198, portal DEV e2130d42; DEV is now 6b4e89a8 and still carries 1d6d2573 and 6de76f05). az-5 is deployed and closed @1014126140 (CodeSha256 OVpDhfwD). The portal ref is `6b4e89a8`. Companies: BA, AMD and ASML_NA. FWD-16's top band is NOT on this ref (DSGN round 45 has not landed), so that act is skipped. Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
+
+<status>pending</status>
+
