@@ -21201,6 +21201,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "python -X importtime run in worktree C:/tmp/r76-265 on 2026-10-06; deployed phase lines in org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~265/PHASE_TABLE.md"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-S360",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-06T20:31:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The az-5 redeploy cut the cold chatter PHASE SUM by about 1.8 s, but cold Duration barely moved, because time OUTSIDE every phase line grew by about the same amount -- and the emitted phase LABEL SET changed between rounds, so part of that growth may be instrumentation coverage rather than world.",
+  "spec_asserts": "The COO half @6c06cabc3f expected-outcome table: cold chatter read 'before 2,987-3,177 ms (generation read 1,632 ms)', 'expected after: reported; inferred about 2.4-2.7 s'; CTO half @9c5a2a4b61 condition 5 reports it and does not grade it. Row AMGT_RESAPP-Z-W265-S2 recorded the outside-every-phase remainder as 761-808 ms on the pre-az-5 deployed artifact D29LJCXh.",
+  "world_is": "On the deployed az-5 artifact OVpDhfwDG3BzKE++wDxMlFA6JrwpTnH3FiHC+NrzsrE=, 6 cold and 26 warm chatter invokes (leadpanel_cold_warm.py --label after at 2026-10-06T20:13:11Z; 948 CloudWatch events over 6 containers, joined PER LOG STREAM in timestamp order because AMGT_PHASE lines carry no requestId; the reconstruction's Init+Duration 3148-3887 ms equals the leadpanel script's own figure, which is the control that the join is right). PHASES fell as az-4 predicted: generation read cold 77-97 ms against the 1501-1632 ms baseline, and the phase SUM 370-613 ms against 2226-2380 ms -- about 1.8 s removed from inside the phase lines. But cold Duration moved only 2987-3177 -> 2580-3137 ms, and the remainder outside every chatter phase line grew 761-808 -> 1967-2628 ms (n=6), while Init Duration moved 633-683 -> 568-1043 ms. So the in-phase saving is very nearly offset by out-of-phase growth. TWO readings are open and this measurement cannot separate them: (a) real work moved out of the instrumented region, or (b) the instrumented region SHRANK -- the label set is not the same across rounds (az-4 emitted 'compute (counts)' AND 'compute (rows, ranking, tone, vintage)' as two lines; az-5 emits a single 'compute'), so a phase line that no longer exists reports as outside-phase time with no regression having occurred. Settling it needs a phase-COVERAGE read (which spans of the handler emit a line at this vintage), not another latency run. CONSEQUENCE FOR THE RECORD: 'sum of the chatter phases' is NOT comparable across rounds without the label set beside it, and a reader comparing only that figure would book an about-1.8 s win the cold Duration does not show. The graded criteria are unaffected -- AC1's c62/c63 and AC2 are served checks, and condition 5 is report-only; cold Duration remains above about 2 s, so provisioned concurrency stays on Andrew's list on its own standing disposition.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch Logs /aws/lambda/opal-amgt-scoped-api from 2026-10-06T20:13:00Z, REPORT lines joined to AMGT_PHASE lines per log stream; C:/tmp/az5-phasetable.txt and C:/tmp/az5-leadpanel-after.txt (device-local)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~265/PHASE_TABLE.md section 1 (the D29LJCXh baseline this is measured against)",
+      "org/critical_paths/change_management/20261006T1946Z_amgt-resapp-r76-az5_deploy_completion.md leg L3"
+    ]
+  }
 }
 ]
 ```
