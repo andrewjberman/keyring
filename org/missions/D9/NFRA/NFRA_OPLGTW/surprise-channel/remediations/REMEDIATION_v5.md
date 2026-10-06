@@ -73,11 +73,11 @@ moot, waits on the issuer's disarm). Z-W16-S5's re-measure ran (Z-W27-S3) and co
     "owner": "1.0.0_SA_CTO~O",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v5"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W15-S51",
@@ -97,11 +97,11 @@ moot, waits on the issuer's disarm). Z-W16-S5's re-measure ran (Z-W27-S3) and co
     "owner": "2.0.0_SA_COO~O",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v5"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-S55",
