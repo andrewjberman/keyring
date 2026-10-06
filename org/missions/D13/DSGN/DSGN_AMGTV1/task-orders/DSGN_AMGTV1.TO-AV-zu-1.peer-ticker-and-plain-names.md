@@ -101,7 +101,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Proof at close:** a render on the deployed payload (AC1) plus a :5174 walk by the issuer. The DEV push and PROD are each Andrew's
   word.
 
-<status>pending</status>
+<status>complete</status>
 <round>43</round>
 <slot>~104</slot>
 <fabric>site-z</fabric>
