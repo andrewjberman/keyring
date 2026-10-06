@@ -2022,3 +2022,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "For the CTO: whether the ongoing producer should skip a US key whose held node already reads a sub-class, until FWD-12 lands. That is a producer change for the next round. Not read: dollar amounts of the held BG, BKD and NBIS nodes."
 }
 ```
+
+
+## MDPF_SECCLASS-S29 -- Cottonwood leg S: four client mixes sum below 1 on the 10-05 point; the Cottonwood gold scripts have no multi_asset class
+
+```json
+{
+  "id": "MDPF_SECCLASS-S29",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T14:55Z",
+  "one_line": "Cottonwood leg S: the scheduled 11:36Z run's 10-05 point leaves 4 of 219 client mixes summing below 1 (0.904 to 0.973); the Cottonwood gold scripts have no multi_asset class, so a position the table now classes multi_asset drops out of the shares.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cot_client_mix_read.py --since 2026-10-06T11:30Z: 1,101 client files rewritten, 219 mix timeseries with a 10-05 point, 215 sum to 1 within 0.001, 4 do not: z09305578 0.9634, z09305621 0.9041, z09305679 0.9572, z09305703 0.9733 (leg R, 10-01 data: 219 of 219 summed to 1)",
+      "the same four clients summed to 1.0 on every point 2026-09-28 to 2026-10-02; the shortfall first appears on 2026-10-05",
+      "platinum/firm/mix_summary.json (LastModified 2026-10-06T11:38:31Z, data_as_of 2026-10-05): 8 classes, pct sum 0.999524, market_value sum 559,610,115.04 = composition total_market_value",
+      "Grep over data/cot/scripts/gold: 0 files mention multi_asset; C_06.client_mix_timeseries.py:177 MIX_ASSET_CLASSES and B_01b.classify_new_securities.py:48 VALID_ASSET_CLASSES carry no multi_asset",
+      "table rows classed multi_asset were written 2026-10-04 (7 moves, 13 ticker rows, 12 CUSIP rows, ledger secclass-multi-asset-rows-and-remint-m-20261004); leg V read 5 cottonwood packet nodes as multi_asset ($159,905.56, 2026-10-02)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cottonwood re-point acceptance 2 (leg S): the scheduled run's served keys read as in acceptance 1 (client mixes sum to 1).",
+  "world_is": "The client shares leave out a class the table now produces. CAUSE INFERRED, not shown on the four clients: a held multi_asset ticker was not confirmed in their positions; the firm shortfall ($266,374 of the 0.999524 sum) does not equal the holdings read's $159,905 (different source and date). The portal's Cottonwood readers (normalizeMixTo4Class and the legend) also list no multi_asset.",
+  "notes": "Not read: the four clients' positions; the page walk. The UI walker cannot select the Cottonwood partner (page state, no deep link; the press flag drives buttons and tabs, not the select), so the firm Mix chart, Books donut and an advisor Mix chart for Cottonwood were not walked; a 49 Financial Mix chart drew no bars in the walk (plot area empty beside a filled legend and tiles). Leg S stays open."
+}
+```
