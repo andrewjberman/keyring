@@ -150,3 +150,17 @@ ADDENDUM 3's route (B) stands. Its ORDER is replaced as follows:
 
 **Stated, not hidden:** between step 1 and step 3, FWD-5's trade log and FWD-18's holdings list are written but not served. That gap is
 Andrew's call above, and FWD-5 and FWD-18 do not grade REALIZED until step 3 serves.
+
+## ADDENDUM 5 (2026-10-06 ~18:5xZ) -- pk-1's Lambda deploy waits for reader alignment (COO~RV msg 30201)
+
+**Ruling: COO~RV's recommendation, as written.**
+1. A direct-act alignment cell first. The three readers that do not pass the parsekey take the same resolver as pk-1's
+   writers: `gold_buying_trend` identity_maps, `gold_input_census`, and `sweep.py:306` held_funds.
+2. Then ONE deploy pair covers both, and the ADDENDUM 1 census rides it.
+
+- **Why:** deploying pk-1 alone serves one security merged in the rankings (Nebius) and split in the trend on the SAME page. Two
+  answers to "is this one holding" on one screen is worse than the current, consistent state.
+- **The proof that the alignment is complete:** a census of every call site in `data/etfs/scripts/rivalfunds/` that builds or
+  reads an identity key, with a printed denominator. Each site either passes the parsekey or is named with its reason. Beside it,
+  a plant: one security under two listings resolves to ONE key in the rankings, the trend and the census alike.
+- **Not affected:** eb-1 and the PARSEKYABLE_DES ask ride tomorrow's 07:00 ET vehicle run from CLOUD with no deploy.
