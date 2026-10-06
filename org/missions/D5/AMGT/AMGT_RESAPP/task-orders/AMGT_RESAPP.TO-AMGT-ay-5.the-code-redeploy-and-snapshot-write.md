@@ -110,3 +110,7 @@ Gate limb: GATE (viii) on a modify.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** both halves are signed: COO @265f85f8fe (`deliverables/2.0.0_SA_COO~Z/round75/NEVER_WIDEN_HALF_COO_AY5.md`) and CTO @452acb4e68 (`ledger/NEVER_WIDEN_ROUND75_AY5_CTO_HALF.md`, conditions 1-7). The build is a DETACHED worktree at EXACTLY `ab28d0ba01`, never "at or after". The CONTENT-DIFF is CHANGED 3 + ADDED 3; any other file is a STOP. The schedule input is exactly `{"amgt_scheduled_action": "refresh_freshness_snapshot"}`.
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~12:4xZ):** CLOSED. The function 0MZWPl7n -> `D29LJCXhOStZ51JD4TTt2Jk0QUVDUbXDouXRTUS1ULI=` (11:28:32Z, memory 1769), built at EXACTLY ab28d0ba01: CHANGED 3 + ADDED 3. Grant: Get/PutObject on the one snapshot key; the issuer simulated a sibling key as implicitDeny. Schedule `amgt-global-freshness-snapshot-daily` ENABLED; first fire 11:32:38Z, 302 rows, ETag cd40eb2d. Proof @970d3861c7: proof-of-spec-check VALID (rc=0), re-run by the issuer. NEVER-2 `amgt-resapp-r75-ay5` closed. STOP 30010 (row Z-S359) ruled (a): the c59 deployed arm was re-cut @bf909b6665 to judge `rot` within one environment. Noted, no recut: c59 C2 needs an idle window to observe a cold invoke; it read 'cold invokes 0' after AE~A's own runs and passed at 1,087 ms after 11 minutes idle.
+
+<status>complete</status>
