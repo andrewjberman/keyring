@@ -2075,3 +2075,32 @@
   "notes": "INERT for the colour grades (they read cell colours, not labels). Owner 2.0.0_SA_COO~D: draw /correlations once with the same fixture and check label-to-row alignment; CorrelationMatrix.tsx was rewritten in 4fa0312e (438 lines)."
 }
 ```
+
+## DSGN_REBRND-S28 -- light-world /market: indigo tooltips print navy role ink (1.9:1 and below)
+
+```json
+{
+  "id": "DSGN_REBRND-S28",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-06T08:17:00Z",
+  "one_line": "On the light-world /market (portal DEV 4ca437eb) two indigo tooltips print navy role ink on #5F3BE3: the Daily Cloud word tooltip --ink-1 at 1.87:1 (white before, 5.41:1) and the Fear and Greed component tooltip --ink-3 at 1.32:1; the walk does not open either.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D -- disarms when both tooltips read 4.5:1 or better on their indigo ground in the light world, before any PROD promote of DEV carries 4ca437eb",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 4ca437eb:src/components/market-performance/TopicCloud.tsx line 191-196: bg-[hsl(var(--palette-indigo))] with text-[hsl(var(--ink-1))]; at 4ca437eb^ the same lines read text-white/85 and text-white, with the comment 'Ink follows its ground: the text is white'",
+      "git -C portal show 4ca437eb:src/components/market-performance/FearGreedModal.tsx line 279: the indigo tooltip with text-[hsl(var(--ink-3))]",
+      "src/index.css at 4ca437eb: [data-surface-world=\"light\"] --ink-1 223 68% 27% (#163174), --ink-3 220 28% 33% (#3D4C6C); design/themes/opal-capital.css --palette-indigo #5F3BE3; contrast computed by this seat",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_FWD3_PINS_GRADE_20261006.md, the 4ca437eb addendum"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DSGN_REBRND FWD-13: every text reads 4.5:1 or better on its ground; the tooltip look is solid indigo with white text (Andrew-direct, quoted in TopicCloud.tsx's own comment).",
+  "world_is": "The role rewrite treats every light-on-dark text as a role ink, but a tooltip's ground does not change with the world, so in the light world its text turns navy on indigo and falls below 2:1. The walk reports 0 below because it never opens these tooltips.",
+  "notes": "ARMED because DEV is the PROD candidate. A fix keeps tooltip text on a world-independent light ink. The same class may exist on other indigo tooltips inside any page that opts into the light world later."
+}
+```

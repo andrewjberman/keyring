@@ -194,3 +194,36 @@ which names Unemployment's category as Growth. That is the fixture's category fi
 read further.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 08:18Z -- pins eab83fd5, 1c86adbe, 14dcce76, 4ca437eb (2.0.0_SA_COO~D msg 105549): /market as the first light page
+
+Built from a `git archive` extract of origin/DEV 4ca437eb in this seat's scratch (18.0 s; the borrowed link removed after),
+walked with `ui-smoke --dist`.
+
+**Verdict: PASS on every surface the walk reads, on /market and on seven other pages that share the rewritten components.
+One defect the walk does not reach: the indigo tooltips on /market became unreadable in the light world (row DSGN_REBRND-S28, ARMED).
+One question for Andrew: the Daily Cloud's excepted colours on white.**
+
+| read | result |
+|---|---|
+| CI | 4ca437eb, 14dcce76 and eab83fd5 success; 1c86adbe (DESIGN.md only) has no run |
+| `bun test` over src/lib and src/ui/components tests | 28 pass, 0 fail |
+| /market, rb-s-9-market.json | 1159 siblings, 39 walked, 0 below; the screenshot shows white panels, light strips, navy ink |
+| the regime modal | 45 siblings, 3 walked, 0 below |
+| shared-component regression: /attribution, PM Sector, /trade-submission with rows, /data-refresh, /investor-reporting, /advisor-intelligence | every count equals this seat's earlier reads (215, 366, 49 and 40 fields, 44, 26, 31), 0 below. The band pages did not move |
+
+**Row DSGN_REBRND-S28, the tooltips.** The idiom rewrite turned white tooltip text into the role inks, and the light scope makes the
+role inks navy. Two tooltips on /market keep their solid indigo ground (#5F3BE3): the Daily Cloud word tooltip now prints
+`--ink-1`, 1.87:1 in the light world (it was white, 5.41:1 on the band), and the Fear and Greed component tooltip prints
+`--ink-3`, 1.32:1. The walk did not see them: they open on hovering an SVG word or a gauge component, which the walk does
+not hover.
+
+**For Andrew, not a defect against the spec:** the Daily Cloud keeps its colours by his 2026-09-14 exception. On the
+band they read; on white its yellow and green words compute about 1.5 to 2.5:1 (yellow-400 1.53, yellow-500 1.92, lime
+1.98, green 2.28, emerald 2.54; red 3.76). Whether the exception holds on a light page is his to say. The walk skipped
+these words (49 reads not visible at their centre).
+
+DESIGN.md C7 and C3.1 (eab83fd5, 1c86adbe) are contract edits; this seat read them as contract changes and did not
+grade them against anything.
+
+-- 3.0.0_SA_CVO
