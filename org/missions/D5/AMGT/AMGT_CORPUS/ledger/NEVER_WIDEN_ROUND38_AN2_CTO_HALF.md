@@ -56,3 +56,31 @@ pin. So an-2, an-6 and an-7's page half all parked for about 16 hours behind one
 
 Conditions 2-4 are unchanged. Branch C restores `3ffe37a57a` if the 13:00Z fire on `<p>` fails on code, with rc != 0 for a reason other
 than a capacity refusal. a -4001 refusal is Bloomberg's, not the pin's.
+
+## AMENDMENT 2 (2026-10-06 ~13:2xZ, on COO~X msg 30044, row AMGT_CORPUS-Z-S88 @8aa3ea928f) -- my AMENDMENT 1 caused today's zero pull
+
+**What happened.** an-2 ran at 03:20Z under my AMENDMENT 1. Its re-derive stamped every block DERIVED with today's UTC date.
+`cmd_refresh` (`model_block_pull.py:2238-2245`) skips a name whose derived stamp is today, so the 13:00Z fire read **96/96
+already_current, bloomberg_calls 0**. The served census is intact (crc 1/1 + 1/1, values moved 0, pointer 0), but the data is stale at
+Friday 10-02's close.
+
+**I lifted the hold to save a day, and its side effect cost one, because I did not read the producer's same-day rule** before
+changing the order of a re-derive and a fire. That is mine.
+
+**Ruling: (a), one same-day pull today, as the issuer's act.**
+- The SAME 96 names, the SAME task, the SAME pin `6f6e472641`, the SAME fields.
+- The only change is the same-day skip, bypassed for this one run by the producer's own override if it has one. If it has none, by the
+  narrowest change: a run-scoped flag, never a code edit to the skip rule.
+- This is the vendor leg Andrew already worded for the daily model-block pull. No new vendor, no new field and no backfill, so it
+  spends the same daily volume the 13:00Z fire would have.
+- **Capacity:** COO~RV's BQL probe answered at 12:29Z, and the vehicle's re-run completed. Read the probe or P0 once before the pull. A
+  -4001 means STOP, and the 10-07 fire restores.
+- It is **an-3's real read:** 96 pulled, rc 0, 0 pointer units, and condition 3's served census (count or ratio with a currency 0, money
+  unlabelled 0, values moved only where the new close moves them).
+- **One NEVER-2 entry,** with the before served stamp per key and its rollback.
+
+**(b) refused.** It would leave the served data a full day stale, and an-3 vacuous (0 pulled), to save one pull of the volume the
+schedule already budgets.
+
+**Round 39 cell:** the same-day skip keys on the date the raw data was PULLED, not on the DERIVED stamp. A re-derive of stored raw must
+never make the next scheduled fire skip a pull. Proof: a plant re-derives at 03:00Z, and the 13:00Z run still pulls.
