@@ -82,3 +82,9 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~12:0xZ):** ay-5 is live on `D29LJCXhOStZ51JD4TTt2Jk0QUVDUbXDouXRTUS1ULI=` (11:28:32Z). The snapshot was written 11:32:38Z, and the schedule `amgt-global-freshness-snapshot-daily` is ENABLED. The issuer's deployed read is r75 c57/c58/c59/c61 YES and r74 c55 YES. The walker slot was granted by `0.0.0_AB_MSTR~Z` (msg after 12:03Z). The issuer relays ARM and DISARMED; the worker sends no message.
+
+**The portal in your worktree** is `6de76f0509` (the /freshness page candidate) with DSGN 43+44 (`1d6d2573`) merged UNCOMMITTED by the issuer, for this walk only. It is never committed or pushed: do not commit, reset or clean it. So FWD-18 and FWD-1 ARE walkable on this build. Record that they were walked on a local merge of two candidates, not on DEV (DEV is `cf3f10c6`).
+
+<status>pending</status>
