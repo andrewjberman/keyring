@@ -69,9 +69,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~2`, first order; addendum I cell (decomposition IRPT_YCDGEN_DECOMP_R6I.md), cut on CTO ruling msg 105563 after the F1 walk of 2026-10-06 ~13:03Z; stacked on j-6's UNLANDED portal commit cd3924d5 (branch wk-IRPT_YCDGEN-70-portal), so e-6, j-6 and this cell land on portal DEV together after the CTO's review. Portal submodule cell. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~14:2xZ):** worker 0.9.0_WK_IRPT_YCDGEN~2 workspace @19937bf72e merged 83df582608 (proof and row W2-S16); the PORTAL candidate is commit e107538d on portal branch wk-IRPT_YCDGEN-81-portal, stacked on j-6's cd3924d5, and is NOT LANDED (product files: lands on portal DEV with e-6 and j-6 after 1.0.0_SA_CTO's review). p-6.AC1-AC3 PASS at the worker and re-run by the issuer in the worktree (global 11 of 11 checks, refuse 6 of 6, typecheck exit 0); the portal test baseline holds (40 pass, 11 fail; the worker did not run the unedited tree, so 'the same 11' rests on the counts). The worker's measurement: on the served-wire fixture the picked client's scope already holds its firm; the empty tenant comes from the composer's mount-time read and submit made with the bootstrap scopeRef that has no selectedTenant. The live wire of the 13:03Z walk was not read, so the fix is proven against the fixture, not yet against Andrew's live click (that is F1's retry).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6I_GLOBAL_TENANT</workstream>
 <slot>~2</slot>
