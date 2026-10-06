@@ -187,8 +187,16 @@ class Reader:
         CLOUD, so the checked-out branch can no longer say which fabric this is; BRANCH_FABRIC stays only as the
         last fallback for a checkout that predates the change."""
         env = os.environ.get("AGENTBUS_DEVICE", "").strip().lower()
-        if env in ("laptop", "sitez"):
-            return env, "AGENTBUS_DEVICE=%s" % env
+        if env:
+            # The device register's one reader (NFRA_CTLPLN FWD-2), loaded by FILE PATH: .tools/lib is a package
+            # too, and with .tools first on sys.path `from lib import` would find it.
+            spec = importlib.util.spec_from_file_location("opal_devices", os.path.join(ROOT, "lib", "devices.py"))
+            devices = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(devices)
+            canon = devices.resolve(env)
+            if canon:
+                return canon, "AGENTBUS_DEVICE=%s (device register)" % env
+        # Path fallback KEPT until AGENTBUS_DEVICE is set and read back on every box (1.0.0_SA_CTO msg 105617).
         low = os.path.abspath(self.root).replace("\\", "/").lower()
         if "opal bloomberg" in low or "opalbl~1" in low:
             return "sitez", "workspace path %s" % self.root
