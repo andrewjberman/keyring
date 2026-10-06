@@ -18852,6 +18852,2295 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "lib/research/api/top_band.py news_items and lib/research/api/scoped_amgt.py _overlay_top_band on branch wk-AMGT_RESAPP-263; r76_served.py --cell c62 --where local output (items 3); gold snapshot day counts printed by the worker 2026-10-06"
     ]
   }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W7-S3: BLOCKED -- the identity layer still resolves 33 of 89 covered crosswalk records to a security key and 56 to none (the S117 ruling row, OPEN at HEAD, owes whether coverage grades against 89 or the keyed names and which cell resolves the unkeyed); no cell is cut for the 57 UNRESOLVED keys. Blocker: that ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W7-S3 is OPEN (remediation owner AMGT-s-12's cell owner via 2.0.0_SA_COO~ZZZ -- resolve the 57 UNRESOLVED keys, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the identity layer still resolves 33 of 89 covered crosswalk records to a security key and 56 to none (the S117 ruling row, OPEN at HEAD, owes whether coverage grades against 89 or the keyed names and which cell resolves the unkeyed); no cell is cut for the 57 UNRESOLVED keys. Blocker: that ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the identity layer still resolves 33 of 89 covered crosswalk records to a security key and 56 to none (the S117 ruling row, OPEN at HEAD, owes whether coverage grades against 89 or the keyed names and which cell resolves the unkeyed); no cell is cut for the 57 UNRESOLVED keys. Blocker: that ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W7-S1: CUT -- the always-fails AC4 string check sat in a round-1 order (AMGT-s-7 era) that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W7-S1 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ (criterion text) / 1.0.0_SA_CTO~Z (shape), round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the always-fails AC4 string check sat in a round-1 order (AMGT-s-7 era) that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the always-fails AC4 string check sat in a round-1 order (AMGT-s-7 era) that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W2-S2: CUT -- AC6's comp-routes behaviors invocation sat in AMGT-s-2, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W2-S2 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: AC6's comp-routes behaviors invocation sat in AMGT-s-2, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): AC6's comp-routes behaviors invocation sat in AMGT-s-2, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S4",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W3-S4: CUT -- AC2's figure_ids key check sat in AMGT-s-9, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W3-S4 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: AC2's figure_ids key check sat in AMGT-s-9, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): AC2's figure_ids key check sat in AMGT-s-9, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S5",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W7-S5: CUT -- the regenerate-versus-lane-grant contradiction was between AMGT-s-7's terminal order and the issuer's regenerate instruction; the freshness work later ran under later orders' own grants (ay-2 AMENDMENTS 1 and 2, per row Z-S358) and no open order repeats the instruction -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W7-S5 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the regenerate-versus-lane-grant contradiction was between AMGT-s-7's terminal order and the issuer's regenerate instruction; the freshness work later ran under later orders' own grants (ay-2 AMENDMENTS 1 and 2, per row Z-S358) and no open order repeats the instruction -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the regenerate-versus-lane-grant contradiction was between AMGT-s-7's terminal order and the issuer's regenerate instruction; the freshness work later ran under later orders' own grants (ay-2 AMENDMENTS 1 and 2, per row Z-S358) and no open order repeats the instruction -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S6",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W3-S2: CLOSED BY EVIDENCE -- the worker face now names the full task-order-filename stem: this very order's face says 'Instance at .../AMGT_RESAPP.TO-AMGT-az-3.remediation-row-triage.proof_of_spec.json' (the face issued at 111e312e46), the stem to-pipeline-gate check_complete_flip discovers.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W3-S2 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the worker face now names the full task-order-filename stem: this very order's face says 'Instance at .../AMGT_RESAPP.TO-AMGT-az-3.remediation-row-triage.proof_of_spec.json' (the face issued at 111e312e46), the stem to-pipeline-gate check_complete_flip discovers",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the worker face now names the full task-order-filename stem: this very order's face says 'Instance at .../AMGT_RESAPP.TO-AMGT-az-3.remediation-row-triage.proof_of_spec.json' (the face issued at 111e312e46), the stem to-pipeline-gate check_complete_flip discovers",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S7",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S2: BLOCKED -- receiving-check.py at HEAD still takes one artifact per invocation (359 lines, 0 hits for a set-level or issuance-set limb); the coverage limb has no set grain. Blocker: the CTO ruling on set-level dispatch versus UNCHECKED per file. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S2 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: receiving-check.py at HEAD still takes one artifact per invocation (359 lines, 0 hits for a set-level or issuance-set limb); the coverage limb has no set grain. Blocker: the CTO ruling on set-level dispatch versus UNCHECKED per file",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): receiving-check.py at HEAD still takes one artifact per invocation (359 lines, 0 hits for a set-level or issuance-set limb); the coverage limb has no set grain. Blocker: the CTO ruling on set-level dispatch versus UNCHECKED per file",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S8",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W1-S2: CLOSED BY EVIDENCE -- the fiscal-period join landed: integrations/bloomberg/research/fye_join.py fiscal_period_join @17f7cba834 (AMGT-r-1), with a non-December-FYE control in integrations/bloomberg/research/tests/test_stage_derive_fye.py.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W1-S2 is OPEN (remediation owner AMGT-s-1's cell owner via 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the fiscal-period join landed: integrations/bloomberg/research/fye_join.py fiscal_period_join @17f7cba834 (AMGT-r-1), with a non-December-FYE control in integrations/bloomberg/research/tests/test_stage_derive_fye.py",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the fiscal-period join landed: integrations/bloomberg/research/fye_join.py fiscal_period_join @17f7cba834 (AMGT-r-1), with a non-December-FYE control in integrations/bloomberg/research/tests/test_stage_derive_fye.py",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S9",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W4-S1: CUT -- f6_remeasure.py (deliverables/0.9.0_WK_AMGT_RESAPP~3, OUTPUT_PATH from __file__ at :65, open('w') at :234, unchanged) is named only by AMGT-s-8, AMGT-s-12 and AMGT-av-5, all complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W4-S1 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: f6_remeasure.py (deliverables/0.9.0_WK_AMGT_RESAPP~3, OUTPUT_PATH from __file__ at :65, open('w') at :234, unchanged) is named only by AMGT-s-8, AMGT-s-12 and AMGT-av-5, all complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): f6_remeasure.py (deliverables/0.9.0_WK_AMGT_RESAPP~3, OUTPUT_PATH from __file__ at :65, open('w') at :234, unchanged) is named only by AMGT-s-8, AMGT-s-12 and AMGT-av-5, all complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S10",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W3-S1: BLOCKED -- no precedence ruling for the two ONE PAGER workbooks exists at HEAD: git grep of 'ONE PAGER' over the PRD and decomposition finds the singular phrasing only, no precedence rule. Blocker: the ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W3-S1 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: no precedence ruling for the two ONE PAGER workbooks exists at HEAD: git grep of 'ONE PAGER' over the PRD and decomposition finds the singular phrasing only, no precedence rule. Blocker: the ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): no precedence ruling for the two ONE PAGER workbooks exists at HEAD: git grep of 'ONE PAGER' over the PRD and decomposition finds the singular phrasing only, no precedence rule. Blocker: the ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S11",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W5-S1: BLOCKED -- lib/research/lists/rot.py at HEAD still reads one top-level reviewed_at per list (module docstring), so staleness is list-wide; security_key is not declared once for social_accounts.json. Blocker: no lists cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W5-S1 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/lists/rot.py at HEAD still reads one top-level reviewed_at per list (module docstring), so staleness is list-wide; security_key is not declared once for social_accounts.json. Blocker: no lists cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/lists/rot.py at HEAD still reads one top-level reviewed_at per list (module docstring), so staleness is list-wide; security_key is not declared once for social_accounts.json. Blocker: no lists cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S12",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S1: CUT -- the missing S1->S6 dependency edge is moot: AMGT-s-1 and AMGT-s-6 are both complete and the opal-data-research store exists -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S1 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the missing S1->S6 dependency edge is moot: AMGT-s-1 and AMGT-s-6 are both complete and the opal-data-research store exists -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the missing S1->S6 dependency edge is moot: AMGT-s-1 and AMGT-s-6 are both complete and the opal-data-research store exists -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S13",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W2-S4: CLOSED BY EVIDENCE -- the PATH shim now resolves to the caller's toplevel: ~/bin/comp-routes carries CALLER-TOPLEVEL RESOLUTION (provision-path-shims.sh @13df262a9b, 2026-09-09); the W2-S3 floor limb is triaged on its own row.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W2-S4 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the PATH shim now resolves to the caller's toplevel: ~/bin/comp-routes carries CALLER-TOPLEVEL RESOLUTION (provision-path-shims.sh @13df262a9b, 2026-09-09); the W2-S3 floor limb is triaged on its own row",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the PATH shim now resolves to the caller's toplevel: ~/bin/comp-routes carries CALLER-TOPLEVEL RESOLUTION (provision-path-shims.sh @13df262a9b, 2026-09-09); the W2-S3 floor limb is triaged on its own row",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S14",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W1-S3: CLOSED BY EVIDENCE -- git check-ignore -v lib/research/x/new.py exits 1 at HEAD (not ignored; .gitignore line ~46 records the blanket lib/ was removed 2026-09-11) and .gitmodules maps portal; this worktree's portal/ is populated.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W1-S3 is OPEN (remediation owner 1.0.0_SA_CTO~Z to route, round v1).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: git check-ignore -v lib/research/x/new.py exits 1 at HEAD (not ignored; .gitignore line ~46 records the blanket lib/ was removed 2026-09-11) and .gitmodules maps portal; this worktree's portal/ is populated",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): git check-ignore -v lib/research/x/new.py exits 1 at HEAD (not ignored; .gitignore line ~46 records the blanket lib/ was removed 2026-09-11) and .gitmodules maps portal; this worktree's portal/ is populated",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v1.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S15",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W17-S4: CUT -- AC2's status-line expectation sat in a round-10 order that is complete; the divergence is preserved on the row -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W17-S4 is OPEN (remediation owner 2.0.0_SA_COO~W, round v10).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: AC2's status-line expectation sat in a round-10 order that is complete; the divergence is preserved on the row -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): AC2's status-line expectation sat in a round-10 order that is complete; the divergence is preserved on the row -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v10.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S16",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W17-S5: CUT -- AC5's 22-versus-23 state-resources bar sat in a round-10 order that is complete; the import is not to be repeated -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W17-S5 is OPEN (remediation owner 2.0.0_SA_COO~W, round v10).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: AC5's 22-versus-23 state-resources bar sat in a round-10 order that is complete; the import is not to be repeated -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): AC5's 22-versus-23 state-resources bar sat in a round-10 order that is complete; the import is not to be repeated -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v10.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S17",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S1: CUT -- the zero-collected unittest command sat in AMGT-rj-1, complete; rj-2/rj-9 were already moved to pytest -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S1 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the zero-collected unittest command sat in AMGT-rj-1, complete; rj-2/rj-9 were already moved to pytest -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the zero-collected unittest command sat in AMGT-rj-1, complete; rj-2/rj-9 were already moved to pytest -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S18",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S2: CUT -- the sparse-checkout closure was a worker-environment condition of a complete order; wk-provision.sh (@48102a8e9f) provisions the portal and this worktree is a full checkout -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S2 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the sparse-checkout closure was a worker-environment condition of a complete order; wk-provision.sh (@48102a8e9f) provisions the portal and this worktree is a full checkout -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the sparse-checkout closure was a worker-environment condition of a complete order; wk-provision.sh (@48102a8e9f) provisions the portal and this worktree is a full checkout -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S19",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S5: CUT -- the pipe-ending-in-tail exit-code reading sat in a complete order; no open order uses it -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S5 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the pipe-ending-in-tail exit-code reading sat in a complete order; no open order uses it -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the pipe-ending-in-tail exit-code reading sat in a complete order; no open order uses it -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S20",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S8: CLOSED BY EVIDENCE -- D-1 now carries held_uncited with its basis: lib/research/api/scoped_amgt.py:2652-2660 (HELD_BASIS_OBJECT 'object.held_uncited') and _held_uncited at :2867.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S8 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: D-1 now carries held_uncited with its basis: lib/research/api/scoped_amgt.py:2652-2660 (HELD_BASIS_OBJECT 'object.held_uncited') and _held_uncited at :2867",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): D-1 now carries held_uncited with its basis: lib/research/api/scoped_amgt.py:2652-2660 (HELD_BASIS_OBJECT 'object.held_uncited') and _held_uncited at :2867",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S21",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S9: CUT -- the identity-token scanner criterion sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S9 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the identity-token scanner criterion sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the identity-token scanner criterion sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S22",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S11: CLOSED BY EVIDENCE -- the Price generation writer exists: lib/research/price/generation.py landed @f838560c46 (AMGT-rk-3, 2026-09-16), with lib/research/price/tests/test_generation.py.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S11 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the Price generation writer exists: lib/research/price/generation.py landed @f838560c46 (AMGT-rk-3, 2026-09-16), with lib/research/price/tests/test_generation.py",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the Price generation writer exists: lib/research/price/generation.py landed @f838560c46 (AMGT-rk-3, 2026-09-16), with lib/research/price/tests/test_generation.py",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S23",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S12: CLOSED BY EVIDENCE -- numeric driver series are served: AMGT-zz-6 'the driver chart series' complete, proof instance @f3d0223a34 (AC1 YES exit=0, AC2 118 passed).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S12 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: numeric driver series are served: AMGT-zz-6 'the driver chart series' complete, proof instance @f3d0223a34 (AC1 YES exit=0, AC2 118 passed)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): numeric driver series are served: AMGT-zz-6 'the driver chart series' complete, proof instance @f3d0223a34 (AC1 YES exit=0, AC2 118 passed)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S24",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S13: BLOCKED -- lib/research/peers/csc.py:21-31 still keeps the ABSENT partition (the seventeen minus the present ones) with derivable_from; values, periods and currencies are not carried for the absent columns. Blocker: the CSC column contract the CTO owes. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S13 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/peers/csc.py:21-31 still keeps the ABSENT partition (the seventeen minus the present ones) with derivable_from; values, periods and currencies are not carried for the absent columns. Blocker: the CSC column contract the CTO owes",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/peers/csc.py:21-31 still keeps the ABSENT partition (the seventeen minus the present ones) with derivable_from; values, periods and currencies are not carried for the absent columns. Blocker: the CSC column contract the CTO owes",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S25",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S15: CLOSED BY EVIDENCE -- a typed absence_class replaced prose parsing: lib/research/management/ceo_search.py absence_class landed @83da68c00a (AMGT-rk-48).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S15 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: a typed absence_class replaced prose parsing: lib/research/management/ceo_search.py absence_class landed @83da68c00a (AMGT-rk-48)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): a typed absence_class replaced prose parsing: lib/research/management/ceo_search.py absence_class landed @83da68c00a (AMGT-rk-48)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S26",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S19: CLOSED BY EVIDENCE -- the bundle time contract was cut: AMGT-rk-25 'thesis bundle as-of date' complete, proof instance @2bb8fcf293.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S19 is OPEN (remediation owner 1.0.0_SA_CTO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the bundle time contract was cut: AMGT-rk-25 'thesis bundle as-of date' complete, proof instance @2bb8fcf293",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the bundle time contract was cut: AMGT-rk-25 'thesis bundle as-of date' complete, proof instance @2bb8fcf293",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S27",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W18-S20: CUT -- the two-route mechanical exercise limit sat in a complete order; the round-76 walk (az-6) declares its own route set -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W18-S20 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the two-route mechanical exercise limit sat in a complete order; the round-76 walk (az-6) declares its own route set -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the two-route mechanical exercise limit sat in a complete order; the round-76 walk (az-6) declares its own route set -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S28",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S1: CUT -- the substring-count holdings census sat in a complete order's criterion -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S1 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the substring-count holdings census sat in a complete order's criterion -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the substring-count holdings census sat in a complete order's criterion -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S29",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S2: CLOSED BY EVIDENCE -- the served crosswalk now carries its vintage: AMGT-rk-74 'served crosswalk vintage field' complete, proof @a27aa0902a.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S2 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the served crosswalk now carries its vintage: AMGT-rk-74 'served crosswalk vintage field' complete, proof @a27aa0902a",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the served crosswalk now carries its vintage: AMGT-rk-74 'served crosswalk vintage field' complete, proof @a27aa0902a",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S30",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S3: CLOSED BY EVIDENCE -- the association key is a documented, returned convention: lib/research/corpus/backlog.py:66 calls crosswalk.harvester_key(folder, pilots), which returns (key, convention).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S3 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the association key is a documented, returned convention: lib/research/corpus/backlog.py:66 calls crosswalk.harvester_key(folder, pilots), which returns (key, convention)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the association key is a documented, returned convention: lib/research/corpus/backlog.py:66 calls crosswalk.harvester_key(folder, pilots), which returns (key, convention)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S31",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S5: CLOSED BY EVIDENCE -- punctuated keys are encoded at the artifact boundary: AMGT-rk-23 'artifact name encoding' complete (proof @62e79b9778) and lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S5 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: punctuated keys are encoded at the artifact boundary: AMGT-rk-23 'artifact name encoding' complete (proof @62e79b9778) and lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): punctuated keys are encoded at the artifact boundary: AMGT-rk-23 'artifact name encoding' complete (proof @62e79b9778) and lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S32",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S6: BLOCKED -- 167 of 170 holdings identifiers still have no CUSIP/FIGI/SEDOL join: lib/research/posture/membership.py:30-38 keeps the tri-state because the join is undecided (S117/S120 carry no decision). Blocker: the identity ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S6 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: 167 of 170 holdings identifiers still have no CUSIP/FIGI/SEDOL join: lib/research/posture/membership.py:30-38 keeps the tri-state because the join is undecided (S117/S120 carry no decision). Blocker: the identity ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): 167 of 170 holdings identifiers still have no CUSIP/FIGI/SEDOL join: lib/research/posture/membership.py:30-38 keeps the tri-state because the join is undecided (S117/S120 carry no decision). Blocker: the identity ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S33",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S7: CUT -- the before/after probe schema mismatch concerned one complete order's scoped write -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S7 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the before/after probe schema mismatch concerned one complete order's scoped write -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the before/after probe schema mismatch concerned one complete order's scoped write -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S34",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S10: CUT -- the sparse source closure omitted a module for one complete order's test worktree; wk-provision.sh now provisions workers -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S10 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the sparse source closure omitted a module for one complete order's test worktree; wk-provision.sh now provisions workers -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the sparse source closure omitted a module for one complete order's test worktree; wk-provision.sh now provisions workers -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S35",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S11: CUT -- the 170-character display truncation concerned a complete order's acceptance output -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S11 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the 170-character display truncation concerned a complete order's acceptance output -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the 170-character display truncation concerned a complete order's acceptance output -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S36",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S13: CLOSED BY EVIDENCE -- the deployed adapter reads the model-block pool: lib/research/api/scoped_amgt.py:160-191 reads derived/model_block/<key>/<timestamp>/model_block.json under AMGT_MODEL_BLOCK_ROOT, landed @7b25bb398a (2026-09-16).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S13 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the deployed adapter reads the model-block pool: lib/research/api/scoped_amgt.py:160-191 reads derived/model_block/<key>/<timestamp>/model_block.json under AMGT_MODEL_BLOCK_ROOT, landed @7b25bb398a (2026-09-16)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the deployed adapter reads the model-block pool: lib/research/api/scoped_amgt.py:160-191 reads derived/model_block/<key>/<timestamp>/model_block.json under AMGT_MODEL_BLOCK_ROOT, landed @7b25bb398a (2026-09-16)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S37",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S16: BLOCKED -- the ten legacy price rows written 18:55 outside the authorized act have no recorded disposition at HEAD (lib/research/price/backfill_legacy_generation.py republishes the legacy partition but names no disposition of those rows). Blocker: the owner's evidenced disposition. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S16 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the ten legacy price rows written 18:55 outside the authorized act have no recorded disposition at HEAD (lib/research/price/backfill_legacy_generation.py republishes the legacy partition but names no disposition of those rows). Blocker: the owner's evidenced disposition",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the ten legacy price rows written 18:55 outside the authorized act have no recorded disposition at HEAD (lib/research/price/backfill_legacy_generation.py republishes the legacy partition but names no disposition of those rows). Blocker: the owner's evidenced disposition",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S38",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S19: CUT -- the late rollback receipt belongs to a complete order; the row says not to replay the deployment -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S19 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the late rollback receipt belongs to a complete order; the row says not to replay the deployment -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the late rollback receipt belongs to a complete order; the row says not to replay the deployment -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S39",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W19-S20: CUT -- the AC8 glob selecting four captures sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W19-S20 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the AC8 glob selecting four captures sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the AC8 glob selecting four captures sat in a complete order -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S40",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S1: CUT -- the all-five/never-under quantifier sat in a complete order; cold timing is now measured by az-4 (the round-76 c65 phase table) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S1 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the all-five/never-under quantifier sat in a complete order; cold timing is now measured by az-4 (the round-76 c65 phase table) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the all-five/never-under quantifier sat in a complete order; cold timing is now measured by az-4 (the round-76 c65 phase table) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S41",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S7: CLOSED BY EVIDENCE -- comp-secrets get --json --reveal now emits JSON carrying the value: AMGT-rk-67 @c6ab1dc199 (2026-09-21).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S7 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: comp-secrets get --json --reveal now emits JSON carrying the value: AMGT-rk-67 @c6ab1dc199 (2026-09-21)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): comp-secrets get --json --reveal now emits JSON carrying the value: AMGT-rk-67 @c6ab1dc199 (2026-09-21)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S42",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S8: BLOCKED -- no named-section coverage field exists in lib/research/filings/passages.py or battery.py at HEAD (git grep 'coverage' returns 0 in both); excerpt coverage for BABA stays unreported. Blocker: no filings cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S8 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: no named-section coverage field exists in lib/research/filings/passages.py or battery.py at HEAD (git grep 'coverage' returns 0 in both); excerpt coverage for BABA stays unreported. Blocker: no filings cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): no named-section coverage field exists in lib/research/filings/passages.py or battery.py at HEAD (git grep 'coverage' returns 0 in both); excerpt coverage for BABA stays unreported. Blocker: no filings cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S43",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S9: CLOSED BY EVIDENCE -- the preset codes are read from the preset file: lib/research/posture/fit.py (AMGT-rk-14 @afb50db7d6) says 'unnamed is now EMPTY for both presets' (DIVZ 13, PFOE 16).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S9 is OPEN (remediation owner 1.0.0_SA_CTO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the preset codes are read from the preset file: lib/research/posture/fit.py (AMGT-rk-14 @afb50db7d6) says 'unnamed is now EMPTY for both presets' (DIVZ 13, PFOE 16)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the preset codes are read from the preset file: lib/research/posture/fit.py (AMGT-rk-14 @afb50db7d6) says 'unnamed is now EMPTY for both presets' (DIVZ 13, PFOE 16)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S44",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S10: CLOSED BY EVIDENCE -- factor values reach the fit: lib/research/peers/universe.py PRESET_VALUE_CODES (26 codes, the union of both presets) landed with AMGT-rk-14 @afb50db7d6.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S10 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: factor values reach the fit: lib/research/peers/universe.py PRESET_VALUE_CODES (26 codes, the union of both presets) landed with AMGT-rk-14 @afb50db7d6",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): factor values reach the fit: lib/research/peers/universe.py PRESET_VALUE_CODES (26 codes, the union of both presets) landed with AMGT-rk-14 @afb50db7d6",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S45",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S11: BLOCKED -- the comparable-pack obligation is still the CTO's choice (complete construction, restricted selection, or an absent verdict); no ruling at HEAD. Blocker: that ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S11 is OPEN (remediation owner 1.0.0_SA_CTO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the comparable-pack obligation is still the CTO's choice (complete construction, restricted selection, or an absent verdict); no ruling at HEAD. Blocker: that ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the comparable-pack obligation is still the CTO's choice (complete construction, restricted selection, or an absent verdict); no ruling at HEAD. Blocker: that ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S46",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S12: BLOCKED -- DE is outside the 33-key crosswalk (S117 OPEN); AMGT-av-5 @9811cae1ca makes numeric member tickers resolve or carry a plain reason but does not put DE in the crosswalk. Blocker: the identity ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S12 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: DE is outside the 33-key crosswalk (S117 OPEN); AMGT-av-5 @9811cae1ca makes numeric member tickers resolve or carry a plain reason but does not put DE in the crosswalk. Blocker: the identity ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): DE is outside the 33-key crosswalk (S117 OPEN); AMGT-av-5 @9811cae1ca makes numeric member tickers resolve or carry a plain reason but does not put DE in the crosswalk. Blocker: the identity ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S47",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S13: CLOSED BY EVIDENCE -- unknown membership stays explicit: lib/research/posture/membership.py:30-38 returns held None as a third value and says 'held is False, never truthiness' (AMGT-rj-11 @7d6d93d46a).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S13 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: unknown membership stays explicit: lib/research/posture/membership.py:30-38 returns held None as a third value and says 'held is False, never truthiness' (AMGT-rj-11 @7d6d93d46a)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): unknown membership stays explicit: lib/research/posture/membership.py:30-38 returns held None as a third value and says 'held is False, never truthiness' (AMGT-rj-11 @7d6d93d46a)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S48",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W20-S14: CUT -- the key-reorder rewrite of posture objects concerned a complete order's acceptance probe -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W20-S14 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the key-reorder rewrite of posture objects concerned a complete order's acceptance probe -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the key-reorder rewrite of posture objects concerned a complete order's acceptance probe -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S49",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W21-S3: BLOCKED -- lib/research/posture/comparable.py has no company-FIGI deduplication (git grep -i figi returns 0 there); the S106 bounded disarm stands only for the current 33 objects. Blocker: no cell is cut under the CTO ruling. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W21-S3 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/posture/comparable.py has no company-FIGI deduplication (git grep -i figi returns 0 there); the S106 bounded disarm stands only for the current 33 objects. Blocker: no cell is cut under the CTO ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/posture/comparable.py has no company-FIGI deduplication (git grep -i figi returns 0 there); the S106 bounded disarm stands only for the current 33 objects. Blocker: no cell is cut under the CTO ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S50",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W21-S4: BLOCKED -- 33 of 256 union names carry keys (S117 OPEN at HEAD); the 23 empty subjects and the unresolved union members are unchanged at the source. Blocker: the identity ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W21-S4 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: 33 of 256 union names carry keys (S117 OPEN at HEAD); the 23 empty subjects and the unresolved union members are unchanged at the source. Blocker: the identity ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): 33 of 256 union names carry keys (S117 OPEN at HEAD); the 23 empty subjects and the unresolved union members are unchanged at the source. Blocker: the identity ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S51",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W21-S5: CLOSED BY EVIDENCE -- lib/research/peers/engine.py:381-414 states the quote currency, applies no FX rate and says 'NO FX rate is applied or invented here', and lib/research/peers/price_currency.py landed @bbc3328344 (2026-10-05).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W21-S5 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: lib/research/peers/engine.py:381-414 states the quote currency, applies no FX rate and says 'NO FX rate is applied or invented here', and lib/research/peers/price_currency.py landed @bbc3328344 (2026-10-05)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/peers/engine.py:381-414 states the quote currency, applies no FX rate and says 'NO FX rate is applied or invented here', and lib/research/peers/price_currency.py landed @bbc3328344 (2026-10-05)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S52",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W21-S6: BLOCKED -- lib/research/peers/csc.py keeps the ABSENT partition for the CSC columns with no value, horizon, currency and source carried (same state as W18-S13). Blocker: the CSC column contract. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W21-S6 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/peers/csc.py keeps the ABSENT partition for the CSC columns with no value, horizon, currency and source carried (same state as W18-S13). Blocker: the CSC column contract",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/peers/csc.py keeps the ABSENT partition for the CSC columns with no value, horizon, currency and source carried (same state as W18-S13). Blocker: the CSC column contract",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S53",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S1: CLOSED BY EVIDENCE -- the CEO search is no longer a bare SERP link read: AMGT-rk-48 @83da68c00a ('the CEO search as a SERP on the NAME with an organizing agent') plus a typed absence_class.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S1 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the CEO search is no longer a bare SERP link read: AMGT-rk-48 @83da68c00a ('the CEO search as a SERP on the NAME with an organizing agent') plus a typed absence_class",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the CEO search is no longer a bare SERP link read: AMGT-rk-48 @83da68c00a ('the CEO search as a SERP on the NAME with an organizing agent') plus a typed absence_class",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S54",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S2: BLOCKED -- enrich.py:53 bounds credits per call (CREDIT_BOUND_PER_NAME = 2) but no cumulative per-name ledger-backed budget exists at HEAD; any further billable call needs Andrew's per-use word. Blocker: that word and the budget design. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S2 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: enrich.py:53 bounds credits per call (CREDIT_BOUND_PER_NAME = 2) but no cumulative per-name ledger-backed budget exists at HEAD; any further billable call needs Andrew's per-use word. Blocker: that word and the budget design",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): enrich.py:53 bounds credits per call (CREDIT_BOUND_PER_NAME = 2) but no cumulative per-name ledger-backed budget exists at HEAD; any further billable call needs Andrew's per-use word. Blocker: that word and the budget design",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S55",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S3: BLOCKED -- the CEO X profile sits behind a client-rendered surface and FWD-11 social has no admitted source (ROUND_ANALYSIS.round75.md lines 26 and 55: 'needs a source or Andrew'). Blocker: Andrew's source decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S3 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the CEO X profile sits behind a client-rendered surface and FWD-11 social has no admitted source (ROUND_ANALYSIS.round75.md lines 26 and 55: 'needs a source or Andrew'). Blocker: Andrew's source decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the CEO X profile sits behind a client-rendered surface and FWD-11 social has no admitted source (ROUND_ANALYSIS.round75.md lines 26 and 55: 'needs a source or Andrew'). Blocker: Andrew's source decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S56",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S6: BLOCKED -- social collection has no admitted source (ROUND_ANALYSIS.round75.md:26); the namespaced append-only social object identity is unbuilt. Blocker: Andrew's source decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S6 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: social collection has no admitted source (ROUND_ANALYSIS.round75.md:26); the namespaced append-only social object identity is unbuilt. Blocker: Andrew's source decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): social collection has no admitted source (ROUND_ANALYSIS.round75.md:26); the namespaced append-only social object identity is unbuilt. Blocker: Andrew's source decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S57",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S7: BLOCKED -- social/collect.py:998-1017 derives cost from a balance difference when the progress body lacks it; the billing 403 is a permission the row says not to widen, and no social source is admitted. Blocker: the billing owner and Andrew's decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S7 is OPEN (remediation owner 1.0.0_SA_CTO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: social/collect.py:998-1017 derives cost from a balance difference when the progress body lacks it; the billing 403 is a permission the row says not to widen, and no social source is admitted. Blocker: the billing owner and Andrew's decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): social/collect.py:998-1017 derives cost from a balance difference when the progress body lacks it; the billing 403 is a permission the row says not to widen, and no social source is admitted. Blocker: the billing owner and Andrew's decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S58",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W22-S8: BLOCKED -- the asynchronous collection and per-post attribution contract is unbuilt and FWD-11 has no admitted source (ROUND_ANALYSIS.round75.md:26). Blocker: Andrew's source decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W22-S8 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the asynchronous collection and per-post attribution contract is unbuilt and FWD-11 has no admitted source (ROUND_ANALYSIS.round75.md:26). Blocker: Andrew's source decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the asynchronous collection and per-post attribution contract is unbuilt and FWD-11 has no admitted source (ROUND_ANALYSIS.round75.md:26). Blocker: Andrew's source decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S59",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S107: CLOSED BY EVIDENCE -- a served capture after rj-12 carries both: deliverables/0.7.0_AE_CloudOps~A/ad2-pre/served/BABA_US_Equity.json contains 'packs' and 'comparable_name' (committed @bcada3e9ea, 2026-09-30).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S107 is OPEN (remediation owner 2.0.0_SA_COO~W, round v11).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: a served capture after rj-12 carries both: deliverables/0.7.0_AE_CloudOps~A/ad2-pre/served/BABA_US_Equity.json contains 'packs' and 'comparable_name' (committed @bcada3e9ea, 2026-09-30)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): a served capture after rj-12 carries both: deliverables/0.7.0_AE_CloudOps~A/ad2-pre/served/BABA_US_Equity.json contains 'packs' and 'comparable_name' (committed @bcada3e9ea, 2026-09-30)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v11.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S60",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S121: CLOSED BY EVIDENCE -- the practice ran at this round's cut: the issuance commit 111e312e46 prints each criterion's dry run at the base (c62 95 of 95 absent, c63 95 of 95 absent, c64 109 OPEN with 0 citing rows, c65 1,242 ms against 1,000).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S121 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v12).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the practice ran at this round's cut: the issuance commit 111e312e46 prints each criterion's dry run at the base (c62 95 of 95 absent, c63 95 of 95 absent, c64 109 OPEN with 0 citing rows, c65 1,242 ms against 1,000)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the practice ran at this round's cut: the issuance commit 111e312e46 prints each criterion's dry run at the base (c62 95 of 95 absent, c63 95 of 95 absent, c64 109 OPEN with 0 citing rows, c65 1,242 ms against 1,000)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v12.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S61",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S117: BLOCKED -- still 33 of 89 covered records keyed and 56 not (lib/research/identity/crosswalk.py; the served crosswalk is the only copy); the ruling on the grading denominator and the resolving cell is not at HEAD. Blocker: that ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S117 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v12).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: still 33 of 89 covered records keyed and 56 not (lib/research/identity/crosswalk.py; the served crosswalk is the only copy); the ruling on the grading denominator and the resolving cell is not at HEAD. Blocker: that ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): still 33 of 89 covered records keyed and 56 not (lib/research/identity/crosswalk.py; the served crosswalk is the only copy); the ruling on the grading denominator and the resolving cell is not at HEAD. Blocker: that ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v12.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S62",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S119: BLOCKED -- the schedule 'amgt-resapp-chatter-axis-daily' is still declared at infra/aws/terraform/harvest/chatter-axis-schedule.tf:235; no ruling on its being collection or ranking is at HEAD. Blocker: that ruling. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S119 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v12).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the schedule 'amgt-resapp-chatter-axis-daily' is still declared at infra/aws/terraform/harvest/chatter-axis-schedule.tf:235; no ruling on its being collection or ranking is at HEAD. Blocker: that ruling",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the schedule 'amgt-resapp-chatter-axis-daily' is still declared at infra/aws/terraform/harvest/chatter-axis-schedule.tf:235; no ruling on its being collection or ranking is at HEAD. Blocker: that ruling",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v12.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S63",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S154: CLOSED BY EVIDENCE -- the gate refuses a second issuance into a round keyed to the round: .tools/to-pipeline-gate.py:2102 ('already has an issuance at HEAD ... ONE ISSUER') @432033882e (AMGT-rk-55).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S154 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the gate refuses a second issuance into a round keyed to the round: .tools/to-pipeline-gate.py:2102 ('already has an issuance at HEAD ... ONE ISSUER') @432033882e (AMGT-rk-55)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the gate refuses a second issuance into a round keyed to the round: .tools/to-pipeline-gate.py:2102 ('already has an issuance at HEAD ... ONE ISSUER') @432033882e (AMGT-rk-55)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S64",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S153: CLOSED BY EVIDENCE -- the gate refuses an order with no <status> element: .tools/to-pipeline-gate.py _status_element_violations with a RED and GREEN control (lines 1044-1049) @c867dd8ea7 (AMGT-rk-56).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S153 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the gate refuses an order with no <status> element: .tools/to-pipeline-gate.py _status_element_violations with a RED and GREEN control (lines 1044-1049) @c867dd8ea7 (AMGT-rk-56)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the gate refuses an order with no <status> element: .tools/to-pipeline-gate.py _status_element_violations with a RED and GREEN control (lines 1044-1049) @c867dd8ea7 (AMGT-rk-56)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S65",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S162: BLOCKED -- lib/research/scores/peers_v.py carries no absent_reason (0 hits at HEAD), so part 1 is undone; part 3 (what Peers V means where a peer set is short) is reserved to Andrew. Blocker: Andrew's answer. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S162 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/scores/peers_v.py carries no absent_reason (0 hits at HEAD), so part 1 is undone; part 3 (what Peers V means where a peer set is short) is reserved to Andrew. Blocker: Andrew's answer",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/scores/peers_v.py carries no absent_reason (0 hits at HEAD), so part 1 is undone; part 3 (what Peers V means where a peer set is short) is reserved to Andrew. Blocker: Andrew's answer",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S66",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W32-S3: CLOSED BY EVIDENCE -- the slash sites were fixed in one pass: lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4 (AMGT-rk-76, 2026-09-30).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W32-S3 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the slash sites were fixed in one pass: lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4 (AMGT-rk-76, 2026-09-30)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the slash sites were fixed in one pass: lib/research/identity/tests/test_slash_safe_key_sites.py @8d9adec9f4 (AMGT-rk-76, 2026-09-30)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S67",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W31-S1: CLOSED BY EVIDENCE -- a provisioning mechanism exists: .tools/wk-provision.sh (@48102a8e9f, AMGT-rk-60) checks the portal out at the gitlink; this worker's own worktree has portal/ populated (portal/package.json present).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W31-S1 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: a provisioning mechanism exists: .tools/wk-provision.sh (@48102a8e9f, AMGT-rk-60) checks the portal out at the gitlink; this worker's own worktree has portal/ populated (portal/package.json present)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): a provisioning mechanism exists: .tools/wk-provision.sh (@48102a8e9f, AMGT-rk-60) checks the portal out at the gitlink; this worker's own worktree has portal/ populated (portal/package.json present)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S68",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W31-S2: CLOSED BY EVIDENCE -- the ARMED hazard has no live instance: git grep 'npx' over the six open orders returns 0, and portal/package.json:6 pins packageManager bun@1.0.0 with a typecheck script (tsc -b --noEmit); the row's ARMED owner 0.4.0_DT_ClientPlatform holds no order in this project.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W31-S2 is OPEN (remediation owner 0.4.0_DT_ClientPlatform, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the ARMED hazard has no live instance: git grep 'npx' over the six open orders returns 0, and portal/package.json:6 pins packageManager bun@1.0.0 with a typecheck script (tsc -b --noEmit); the row's ARMED owner 0.4.0_DT_ClientPlatform holds no order in this project",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the ARMED hazard has no live instance: git grep 'npx' over the six open orders returns 0, and portal/package.json:6 pins packageManager bun@1.0.0 with a typecheck script (tsc -b --noEmit); the row's ARMED owner 0.4.0_DT_ClientPlatform holds no order in this project",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S69",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W31-S3: BLOCKED -- mandatory MFA still gates the automation logins; the headed-session versus MFA-exempt-identity choice is Andrew's. Blocker: Andrew's decision relayed by the CTO. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W31-S3 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: mandatory MFA still gates the automation logins; the headed-session versus MFA-exempt-identity choice is Andrew's. Blocker: Andrew's decision relayed by the CTO",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): mandatory MFA still gates the automation logins; the headed-session versus MFA-exempt-identity choice is Andrew's. Blocker: Andrew's decision relayed by the CTO",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S70",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W32-S2: CLOSED BY EVIDENCE -- the enrichment domain no longer depends on domains.json alone: lib/research/management/enrich.py:149-159 falls back to the filings battery's issuer-verified site (AMGT-rk-110 verified_domain_for); AMGT-rk-43 'management honest states' is complete (@c4d4e43d08).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W32-S2 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the enrichment domain no longer depends on domains.json alone: lib/research/management/enrich.py:149-159 falls back to the filings battery's issuer-verified site (AMGT-rk-110 verified_domain_for); AMGT-rk-43 'management honest states' is complete (@c4d4e43d08)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the enrichment domain no longer depends on domains.json alone: lib/research/management/enrich.py:149-159 falls back to the filings battery's issuer-verified site (AMGT-rk-110 verified_domain_for); AMGT-rk-43 'management honest states' is complete (@c4d4e43d08)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S71",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W32-S4: CLOSED BY EVIDENCE -- git grep CACHE_DIR_DEFAULT over lib returns 0 at HEAD; the remaining cache default is lib/research/filings/analyze.py:1606 DEFAULT_CACHE_DIR = .scratch/filings_cache, not a worker folder.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W32-S4 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v13).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: git grep CACHE_DIR_DEFAULT over lib returns 0 at HEAD; the remaining cache default is lib/research/filings/analyze.py:1606 DEFAULT_CACHE_DIR = .scratch/filings_cache, not a worker folder",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): git grep CACHE_DIR_DEFAULT over lib returns 0 at HEAD; the remaining cache default is lib/research/filings/analyze.py:1606 DEFAULT_CACHE_DIR = .scratch/filings_cache, not a worker folder",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v13.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S72",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S341: CLOSED BY EVIDENCE -- WITHDRAWN is now terminal: .tools/to-decomp-ref-lint.py:90-91 TERMINAL_STATUS includes 'WITHDRAWN' @3e537ca81b (2026-10-04).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S341 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: WITHDRAWN is now terminal: .tools/to-decomp-ref-lint.py:90-91 TERMINAL_STATUS includes 'WITHDRAWN' @3e537ca81b (2026-10-04)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): WITHDRAWN is now terminal: .tools/to-decomp-ref-lint.py:90-91 TERMINAL_STATUS includes 'WITHDRAWN' @3e537ca81b (2026-10-04)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S73",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W173-S3: BLOCKED -- no value or currency data attribute exists on a served case: git grep for data-case-value and data-case-currency over portal/src returns 0. Blocker: no portal cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W173-S3 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: no value or currency data attribute exists on a served case: git grep for data-case-value and data-case-currency over portal/src returns 0. Blocker: no portal cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): no value or currency data attribute exists on a served case: git grep for data-case-value and data-case-currency over portal/src returns 0. Blocker: no portal cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S74",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W37-S2: BLOCKED -- 24 production .py files under lib/ and integrations/ still name a 0.9.0_WK_AMGT_RESAPP~<n> deliverables folder (git grep count at HEAD), including lib/research/peers/engine.py:83 and lib/research/posture/fit.py:81. Blocker: no cell moves them. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W37-S2 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: 24 production .py files under lib/ and integrations/ still name a 0.9.0_WK_AMGT_RESAPP~<n> deliverables folder (git grep count at HEAD), including lib/research/peers/engine.py:83 and lib/research/posture/fit.py:81. Blocker: no cell moves them",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): 24 production .py files under lib/ and integrations/ still name a 0.9.0_WK_AMGT_RESAPP~<n> deliverables folder (git grep count at HEAD), including lib/research/peers/engine.py:83 and lib/research/posture/fit.py:81. Blocker: no cell moves them",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S75",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W42-S5: CUT -- the below-bar live sample (1/1/2 and 85.1 percent) belonged to AC3/AC4 of a complete filings order and was traced to the filing's own content -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W42-S5 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the below-bar live sample (1/1/2 and 85.1 percent) belonged to AC3/AC4 of a complete filings order and was traced to the filing's own content -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the below-bar live sample (1/1/2 and 85.1 percent) belonged to AC3/AC4 of a complete filings order and was traced to the filing's own content -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S76",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W88-S1: BLOCKED -- lib/research/harvest/bright_data_serp.py:81 still accepts max_pages=1 default with no multi-page refusal and :130-132 attributes every row to the last page's bronze key. Blocker: no wiring cell exists. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W88-S1 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/harvest/bright_data_serp.py:81 still accepts max_pages=1 default with no multi-page refusal and :130-132 attributes every row to the last page's bronze key. Blocker: no wiring cell exists",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/harvest/bright_data_serp.py:81 still accepts max_pages=1 default with no multi-page refusal and :130-132 attributes every row to the last page's bronze key. Blocker: no wiring cell exists",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S77",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S218: BLOCKED -- lib/research/api/scoped_amgt.py:6954 still does 'pdf_path, _ = build_pack(...)' and lib/research/print/render_pack.py:750-757 still extracts the full text with pypdf. Blocker: the removal is not cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S218 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/api/scoped_amgt.py:6954 still does 'pdf_path, _ = build_pack(...)' and lib/research/print/render_pack.py:750-757 still extracts the full text with pypdf. Blocker: the removal is not cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/api/scoped_amgt.py:6954 still does 'pdf_path, _ = build_pack(...)' and lib/research/print/render_pack.py:750-757 still extracts the full text with pypdf. Blocker: the removal is not cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S78",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S230: BLOCKED -- the Bloomberg username stays in 4 tracked artifacts by the ruling at dbb9fedb27 and the rotation decision is Andrew's, carded. Blocker: Andrew's rotation decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S230 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the Bloomberg username stays in 4 tracked artifacts by the ruling at dbb9fedb27 and the rotation decision is Andrew's, carded. Blocker: Andrew's rotation decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the Bloomberg username stays in 4 tracked artifacts by the ruling at dbb9fedb27 and the rotation decision is Andrew's, carded. Blocker: Andrew's rotation decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S79",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S242: BLOCKED -- git ls-files --eol shows infra/aws/terraform/yang-pipeline/etf-classifications.tf as i/crlf against attr eol=lf at HEAD; the LF re-commit has not landed. Blocker: an LF re-commit by the infra owner. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S242 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: git ls-files --eol shows infra/aws/terraform/yang-pipeline/etf-classifications.tf as i/crlf against attr eol=lf at HEAD; the LF re-commit has not landed. Blocker: an LF re-commit by the infra owner",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): git ls-files --eol shows infra/aws/terraform/yang-pipeline/etf-classifications.tf as i/crlf against attr eol=lf at HEAD; the LF re-commit has not landed. Blocker: an LF re-commit by the infra owner",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S80",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S343: BLOCKED -- the pytest collection interaction (test_am1_marker_once.py / test_al2_content_key.py with management tests) has no fix commit; both files are still under lib/research/harvest. Blocker: no cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S343 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the pytest collection interaction (test_am1_marker_once.py / test_al2_content_key.py with management tests) has no fix commit; both files are still under lib/research/harvest. Blocker: no cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the pytest collection interaction (test_am1_marker_once.py / test_al2_content_key.py with management tests) has no fix commit; both files are still under lib/research/harvest. Blocker: no cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S81",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W173-S4: BLOCKED -- the export still prints the chart-ABSENT line for an undrafted thesis whose page renders no chart; no ruling settles that limb. Blocker: the ruling the CTO owes. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W173-S4 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the export still prints the chart-ABSENT line for an undrafted thesis whose page renders no chart; no ruling settles that limb. Blocker: the ruling the CTO owes",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the export still prints the chart-ABSENT line for an undrafted thesis whose page renders no chart; no ruling settles that limb. Blocker: the ruling the CTO owes",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S82",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W212-S2: BLOCKED -- overlay feed items carry url plus a url_reason since au-3 @07d85dd504, but the gold article_security_mention still lacks a url column and az-2 (round 76, live) grades each item's non-empty url. Blocker: a HARVST gold rebuild; az-2 covers the served half only. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W212-S2 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: overlay feed items carry url plus a url_reason since au-3 @07d85dd504, but the gold article_security_mention still lacks a url column and az-2 (round 76, live) grades each item's non-empty url. Blocker: a HARVST gold rebuild; az-2 covers the served half only",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): overlay feed items carry url plus a url_reason since au-3 @07d85dd504, but the gold article_security_mention still lacks a url column and az-2 (round 76, live) grades each item's non-empty url. Blocker: a HARVST gold rebuild; az-2 covers the served half only",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S83",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W45-S1: BLOCKED -- the producer re-run that populates absence_class on the 4 pilot objects was held under Andrew's no-fleet-rerun word and no backfill is at HEAD. Blocker: Andrew's word to re-run. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W45-S1 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the producer re-run that populates absence_class on the 4 pilot objects was held under Andrew's no-fleet-rerun word and no backfill is at HEAD. Blocker: Andrew's word to re-run",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the producer re-run that populates absence_class on the 4 pilot objects was held under Andrew's no-fleet-rerun word and no backfill is at HEAD. Blocker: Andrew's word to re-run",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S84",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S283: BLOCKED -- rcg/rulings/RULINGS.jsonl:22 still holds only the coordination R-0021 (2026-08-03); the vendor-grant R-21 has no ratified row. Blocker: the CTO's citation rule or renumbering. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S283 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: rcg/rulings/RULINGS.jsonl:22 still holds only the coordination R-0021 (2026-08-03); the vendor-grant R-21 has no ratified row. Blocker: the CTO's citation rule or renumbering",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): rcg/rulings/RULINGS.jsonl:22 still holds only the coordination R-0021 (2026-08-03); the vendor-grant R-21 has no ratified row. Blocker: the CTO's citation rule or renumbering",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S85",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W117-S5: CUT -- AC0's dapi_check.py baseline step sat in a complete order, and the Bloomberg issue is recorded resolved (8555ce7e12) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W117-S5 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: AC0's dapi_check.py baseline step sat in a complete order, and the Bloomberg issue is recorded resolved (8555ce7e12) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): AC0's dapi_check.py baseline step sat in a complete order, and the Bloomberg issue is recorded resolved (8555ce7e12) -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S86",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W2-S3: BLOCKED -- .tools/_comprail.py:340-341 EPHEMERAL_DIRS lacks .terraform at HEAD, so a gitignored provider binary is still searched. Blocker: the comp-tool rail owner's edit. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W2-S3 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: .tools/_comprail.py:340-341 EPHEMERAL_DIRS lacks .terraform at HEAD, so a gitignored provider binary is still searched. Blocker: the comp-tool rail owner's edit",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): .tools/_comprail.py:340-341 EPHEMERAL_DIRS lacks .terraform at HEAD, so a gitignored provider binary is still searched. Blocker: the comp-tool rail owner's edit",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S87",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W45-S2: BLOCKED -- wk-provision.sh covers the portal checkout and node_modules (portal worktree on a named branch, junction handling 1 mention) but has 0 mentions of terraform, so the pre-warmed terraform init and build zip are not in the spawn path. Blocker: no provisioning cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W45-S2 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: wk-provision.sh covers the portal checkout and node_modules (portal worktree on a named branch, junction handling 1 mention) but has 0 mentions of terraform, so the pre-warmed terraform init and build zip are not in the spawn path. Blocker: no provisioning cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): wk-provision.sh covers the portal checkout and node_modules (portal worktree on a named branch, junction handling 1 mention) but has 0 mentions of terraform, so the pre-warmed terraform init and build zip are not in the spawn path. Blocker: no provisioning cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S88",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S220: BLOCKED -- lib/research/harvest/bright_data_serp.py:6-8 still partitions SERP bronze by date= with no security key; no key design is at HEAD. Blocker: the key design the CTO owes. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S220 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/harvest/bright_data_serp.py:6-8 still partitions SERP bronze by date= with no security key; no key design is at HEAD. Blocker: the key design the CTO owes",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/harvest/bright_data_serp.py:6-8 still partitions SERP bronze by date= with no security key; no key design is at HEAD. Blocker: the key design the CTO owes",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S89",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S238: BLOCKED -- scoped_amgt.py logs only _phase_log timing lines (AMGT_PHASE route= phase= ms=, :6284) for chatter and rankings; there is no per-request line carrying route_key, security_key and the edge firm id. Blocker: no cell is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S238 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: scoped_amgt.py logs only _phase_log timing lines (AMGT_PHASE route= phase= ms=, :6284) for chatter and rankings; there is no per-request line carrying route_key, security_key and the edge firm id. Blocker: no cell is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): scoped_amgt.py logs only _phase_log timing lines (AMGT_PHASE route= phase= ms=, :6284) for chatter and rankings; there is no per-request line carrying route_key, security_key and the edge firm id. Blocker: no cell is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S90",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S221: BLOCKED -- detection was fixed by rk-107, but git grep text_translated over lib/research/api returns 0 outside drafting_build.py and translate.py, so the scoped API still serves no translated text. Blocker: no cell carries it to the route. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S221 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: detection was fixed by rk-107, but git grep text_translated over lib/research/api returns 0 outside drafting_build.py and translate.py, so the scoped API still serves no translated text. Blocker: no cell carries it to the route",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): detection was fixed by rk-107, but git grep text_translated over lib/research/api returns 0 outside drafting_build.py and translate.py, so the scoped API still serves no translated text. Blocker: no cell carries it to the route",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S91",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S278: BLOCKED -- lib/research/api/scoped_amgt.py:3419-3420 still serves chatter and price as by_axis.get(...), a bare None when absent. Blocker: no ruling names axis_reads.absent_reason as the remedy. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S278 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/api/scoped_amgt.py:3419-3420 still serves chatter and price as by_axis.get(...), a bare None when absent. Blocker: no ruling names axis_reads.absent_reason as the remedy",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/api/scoped_amgt.py:3419-3420 still serves chatter and price as by_axis.get(...), a bare None when absent. Blocker: no ruling names axis_reads.absent_reason as the remedy",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S92",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W40-S1: CLOSED BY EVIDENCE -- the second sanctioned seed option was cut and landed: AMGT-rk-72 'CSL second sanctioned seed' complete, AC1-AC6 PASS, proof @890623d689 (2026-09-21).",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W40-S1 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CLOSED BY EVIDENCE: the second sanctioned seed option was cut and landed: AMGT-rk-72 'CSL second sanctioned seed' complete, AC1-AC6 PASS, proof @890623d689 (2026-09-21)",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the second sanctioned seed option was cut and landed: AMGT-rk-72 'CSL second sanctioned seed' complete, AC1-AC6 PASS, proof @890623d689 (2026-09-21)",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S93",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S228: BLOCKED -- no name search exists: scoped_amgt.py has no name-resolution route and the page search passes the raw string as a key. Blocker: the CTO's name-search contract. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S228 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: no name search exists: scoped_amgt.py has no name-resolution route and the page search passes the raw string as a key. Blocker: the CTO's name-search contract",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): no name search exists: scoped_amgt.py has no name-resolution route and the page search passes the raw string as a key. Blocker: the CTO's name-search contract",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v14.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S94",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S2: BLOCKED -- receiving-check.py still grades one artifact per invocation (same measure as Z-S2). Blocker: the CTO ruling on set-level dispatch. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S2 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: receiving-check.py still grades one artifact per invocation (same measure as Z-S2). Blocker: the CTO ruling on set-level dispatch",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): receiving-check.py still grades one artifact per invocation (same measure as Z-S2). Blocker: the CTO ruling on set-level dispatch",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S95",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S3: BLOCKED -- the one live member is W2-S3: .tools/_comprail.py:340-341 EPHEMERAL_DIRS still lacks .terraform; the other three instruments are fixed (shims @13df262a9b, lib/ not ignored, .gitmodules maps portal). Blocker: the comp-tool rail owner. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S3 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the one live member is W2-S3: .tools/_comprail.py:340-341 EPHEMERAL_DIRS still lacks .terraform; the other three instruments are fixed (shims @13df262a9b, lib/ not ignored, .gitmodules maps portal). Blocker: the comp-tool rail owner",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the one live member is W2-S3: .tools/_comprail.py:340-341 EPHEMERAL_DIRS still lacks .terraform; the other three instruments are fixed (shims @13df262a9b, lib/ not ignored, .gitmodules maps portal). Blocker: the comp-tool rail owner",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S96",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S4: BLOCKED -- composite of seven; its children are triaged on their own rows (W1-S2 CLOSED, W4-S1 CUT, W3-S1 and W5-S1 BLOCKED, S1 CUT). Blocker: W3-S1's precedence ruling and W5-S1's lists cell. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S4 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: composite of seven; its children are triaged on their own rows (W1-S2 CLOSED, W4-S1 CUT, W3-S1 and W5-S1 BLOCKED, S1 CUT). Blocker: W3-S1's precedence ruling and W5-S1's lists cell",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): composite of seven; its children are triaged on their own rows (W1-S2 CLOSED, W4-S1 CUT, W3-S1 and W5-S1 BLOCKED, S1 CUT). Blocker: W3-S1's precedence ruling and W5-S1's lists cell",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S97",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S369: BLOCKED -- lib/__init__.py is still absent at HEAD (ls reports no such file); the repo-wide package marker or import convention is not built. Blocker: an estate-wide CTO decision. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S369 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/__init__.py is still absent at HEAD (ls reports no such file); the repo-wide package marker or import convention is not built. Blocker: an estate-wide CTO decision",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/__init__.py is still absent at HEAD (ls reports no such file); the repo-wide package marker or import convention is not built. Blocker: an estate-wide CTO decision",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S98",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S35: BLOCKED -- lib/research/watchlist/tests/test_watchlist.py applies the block_all_sockets fixture to 3 of its tests (lines 154, 167, 178) and no conftest.py exists under lib/research/watchlist. Blocker: no test edit is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S35 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/watchlist/tests/test_watchlist.py applies the block_all_sockets fixture to 3 of its tests (lines 154, 167, 178) and no conftest.py exists under lib/research/watchlist. Blocker: no test edit is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/watchlist/tests/test_watchlist.py applies the block_all_sockets fixture to 3 of its tests (lines 154, 167, 178) and no conftest.py exists under lib/research/watchlist. Blocker: no test edit is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S99",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S46: BLOCKED -- no handoff rule (path plus commit plus current resource identifier) exists in CLAUDE.md, docs/ or .claude at HEAD (git grep returns 0). Blocker: the CTO's carrier. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S46 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: no handoff rule (path plus commit plus current resource identifier) exists in CLAUDE.md, docs/ or .claude at HEAD (git grep returns 0). Blocker: the CTO's carrier",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): no handoff rule (path plus commit plus current resource identifier) exists in CLAUDE.md, docs/ or .claude at HEAD (git grep returns 0). Blocker: the CTO's carrier",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S100",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S372: BLOCKED -- same state as W88-S1: harvest_serp still accepts max_pages above 1 (bright_data_serp.py:81, :130-132). Blocker: no wiring cell exists. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S372 is OPEN (remediation owner 2.0.0_SA_COO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: same state as W88-S1: harvest_serp still accepts max_pages above 1 (bright_data_serp.py:81, :130-132). Blocker: no wiring cell exists",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): same state as W88-S1: harvest_serp still accepts max_pages above 1 (bright_data_serp.py:81, :130-132). Blocker: no wiring cell exists",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S101",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S24: BLOCKED -- prd_signoff_lib.py:232 still compares prd_version for a legacy record without half_hash (the STALE detail at :260 says 'the comparison that ran was the VERSION STRING, NOT the bytes'). Blocker: the sign-off gate owner's byte-bound re-sign. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S24 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v80).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: prd_signoff_lib.py:232 still compares prd_version for a legacy record without half_hash (the STALE detail at :260 says 'the comparison that ran was the VERSION STRING, NOT the bytes'). Blocker: the sign-off gate owner's byte-bound re-sign",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): prd_signoff_lib.py:232 still compares prd_version for a legacy record without half_hash (the STALE detail at :260 says 'the comparison that ran was the VERSION STRING, NOT the bytes'). Blocker: the sign-off gate owner's byte-bound re-sign",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v15.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S102",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S8: CUT -- the order text naming FISCAL_YEAR_END as the mapped carrier sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S8 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v2).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the order text naming FISCAL_YEAR_END as the mapped carrier sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the order text naming FISCAL_YEAR_END as the mapped carrier sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v2.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S103",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-C-S9: CUT -- the BABA/RTX/+1 exercise population sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-C-S9 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v2).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the BABA/RTX/+1 exercise population sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the BABA/RTX/+1 exercise population sat in a round-2 order that is complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v2.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S104",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S6: BLOCKED -- same state as C-S24: .tools/prd_signoff_lib.py:232 version-string comparison for a half_hash-less record. Blocker: the sign-off gate owner's change. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S6 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v5).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: same state as C-S24: .tools/prd_signoff_lib.py:232 version-string comparison for a half_hash-less record. Blocker: the sign-off gate owner's change",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): same state as C-S24: .tools/prd_signoff_lib.py:232 version-string comparison for a half_hash-less record. Blocker: the sign-off gate owner's change",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S105",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W7-S6: CUT -- the tail -12 invocation sat in the rd7 order, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W7-S6 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v5).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads CUT: the tail -12 invocation sat in the rd7 order, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the tail -12 invocation sat in the rd7 order, complete -- the task-orders folder holds 374 order files and only 6 are open (az-1..az-6, round 76); 357 read complete, 8 superseded, 3 withdrawn; no open order carries the criterion it names.",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S106",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W7-S7: BLOCKED -- same state as C-S35: block_all_sockets reaches 3 of the 5 watchlist tests and there is no conftest. Blocker: no test edit is cut. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W7-S7 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v5).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: same state as C-S35: block_all_sockets reaches 3 of the 5 watchlist tests and there is no conftest. Blocker: no test edit is cut",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): same state as C-S35: block_all_sockets reaches 3 of the 5 watchlist tests and there is no conftest. Blocker: no test edit is cut",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S107",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S14: BLOCKED -- the generated VINTAGEID fixture is still excluded only by name (.gitignore and integrations/bloomberg/research/tests/test_vintage_derivation_identity.py); no provenance-based discriminator exists. Blocker: the CTO's compiler classification. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S14 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v5).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: the generated VINTAGEID fixture is still excluded only by name (.gitignore and integrations/bloomberg/research/tests/test_vintage_derivation_identity.py); no provenance-based discriminator exists. Blocker: the CTO's compiler classification",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): the generated VINTAGEID fixture is still excluded only by name (.gitignore and integrations/bloomberg/research/tests/test_vintage_derivation_identity.py); no provenance-based discriminator exists. Blocker: the CTO's compiler classification",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S108",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-W2-S10: BLOCKED -- same state as C-S46: no path-plus-commit-plus-resource-identifier handoff rule is at HEAD. Blocker: the CTO and the CRO migration owner's carrier. Owner: 1.0.0_SA_CTO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-W2-S10 is OPEN (remediation owner 1.0.0_SA_CTO~Z, round v5).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: same state as C-S46: no path-plus-commit-plus-resource-identifier handoff rule is at HEAD. Blocker: the CTO and the CRO migration owner's carrier",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): same state as C-S46: no path-plus-commit-plus-resource-identifier handoff rule is at HEAD. Blocker: the CTO and the CRO migration owner's carrier",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v5.md"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W264-S109",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~264",
+ "surfaced_at": "2026-10-06T18:27:29Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "TRIAGE AMGT_RESAPP-Z-S78: BLOCKED -- lib/research/lists/build_lists.py:129 and :156 still emit owner_status 'UNASSIGNED' for both lists. Blocker: an authorized lists cell delivering the named owner. Owner: 2.0.0_SA_COO~Z.",
+ "spec_asserts": "CTO ruling 4 (round 75 analysis @326aea63b3): every OPEN remediation row carries a citing triage row. AMGT_RESAPP-Z-S78 is OPEN (remediation owner 2.0.0_SA_COO~ZZZ, round v9).",
+ "world_is": "At branch wk-AMGT_RESAPP-264 HEAD f42219ebfe the row reads BLOCKED: lib/research/lists/build_lists.py:129 and :156 still emit owner_status 'UNASSIGNED' for both lists. Blocker: an authorized lists cell delivering the named owner",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "measured at HEAD of wk-AMGT_RESAPP-264 (HEAD f42219ebfe): lib/research/lists/build_lists.py:129 and :156 still emit owner_status 'UNASSIGNED' for both lists. Blocker: an authorized lists cell delivering the named owner",
+   "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v9.md"
+  ]
+ }
 }
 ]
 ```
