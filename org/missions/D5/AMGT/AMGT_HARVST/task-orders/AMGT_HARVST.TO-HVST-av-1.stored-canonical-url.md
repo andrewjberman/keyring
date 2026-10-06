@@ -82,9 +82,18 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - `article_url` was written by AMGT_RESAPP (au-3 @69c017d520, aw-5 @9d2b7b3d7c); `2.0.0_SA_COO~Z` is told at the issuance.
 - av-2 (gold rebuild #7 under a new pair) follows the merge.
 
+**COMPLETE 2026-10-06 ~07:2xZ (issuer):**
+- **Built:** worker ~98 @da3c89dc54 + @19839a8923; merged @a44bc80e9d (7 files, dropped 0, foreign 0).
+- **AC1 PASS:** 6 of 6 (issuer re-run on CLOUD identical).
+- **AC2 PASS:** research harvest 361 passed (issuer re-run on CLOUD identical).
+- **Census** (`av-1.link_census.out`, S3 reads only, no publisher contact):
+  - ft: 185/185 with a link (14 top-level url, 171 og:url); foreign host refused 0.
+  - wsj: 463/463 with a link (15 top-level url, 448 og:url); og:url == sourceUrl on 448/448; refused 0.
+- **Rows:** none. av-2 (gold rebuild #7) follows.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>49</round>
 <slot>~98</slot>
 <fabric>site-z</fabric>
