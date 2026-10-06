@@ -1823,3 +1823,41 @@ replaces three latest.json keys frozen at 09-25. Round 56 (IB-pr-324) drained @f
 | `IB-pr-325` | S335: the 09:40 ET retry schedule + the latest.json never-widen packet | WORLD (Terraform under infra/; the apply is the issuer's after both halves) | none | P57 |
 
 fanout: 1 of 1 chains, cap 8, reason: one schedule edit + packet. Worker 0.9.0_WK_IRPT_BCKEND~128 in its own worktree.
+
+## 51. ROUND 58, WORKSTREAM ~P (2026-10-06T00:19Z, issuer 2.0.0_SA_COO~P, on CTO batch 265 @aee5b1d269 item 2, release r57 served)
+
+Release r57 is served on four functions (ledger closed @7091e7b1d9). Its first finding: the guarded path's enforcer_for call site
+(`_authz/served.py:1050-1054`) hard-codes the public code, so the classes IB-pr-321/322 declared (BucketUnmapped FIRM_BINDING,
+FirmArtifactIncomplete NOT_READY) reach only the log record's classifier_code, never the wire. Batch 265 item 2 names the wire fix as this
+seat's cell; its release changes a served public_reason_code and takes its own never-widen half (batch 253 stays the target).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-326` | the refusal classes at the enforcer_for call site reach the wire (S260/W124-S2 class rule, batch 253) | WORLD (code under infra/aws/lambda; the order applies nothing, the build and apply are the issuer's after both halves) | none | P58 |
+
+fanout: 1 of 1 chains, cap 8, reason: one call-site edit plus its tests. Worker 0.9.0_WK_IRPT_BCKEND~129 in its own worktree.
+
+## 52. ROUND 59, WORKSTREAM ~P (2026-10-06T00:55Z, issuer 2.0.0_SA_COO~P, on CTO batch 271 and the r58 CTO half @38fbca18a2 condition 1)
+
+IB-pr-326 drained @abf14e56ba. The r58 packet @c847d5fceb found that `_authz/loaders.py:204` (`pointer["key"]`) is a KeyError that
+`errors.reason_for` maps to NOT_FOUND once the call site classifies, so a broken server-side pointer would read as a client fault. Batch 271
+item 2: a server fault gets a declared class in the same release. The CTO half is signed on the packet, 327 before 328.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-327` | a latest.json pointer that is not a dict or has no non-empty `key` raises FirmArtifactIncomplete (NOT_READY) | WORLD (code under infra/aws/lambda; applies nothing, the re-pin cell IB-pr-328 and the release follow) | none | P59 |
+
+fanout: 1 of 1 chains, cap 8, reason: one guard plus its tests. Worker 0.9.0_WK_IRPT_BCKEND~130 in its own worktree.
+
+## 53. ROUND 60, WORKSTREAM ~P (2026-10-06T01:10Z, issuer 2.0.0_SA_COO~P, on the r58 CTO half @38fbca18a2 condition 1)
+
+IB-pr-327 drained @d8d8e7d868. Every function stages `_authz/served.py` and `_authz/loaders.py` from a per-member pin in
+`infra/aws/lambda/ci/lambda-source-map.json` (`staged_from[].pin` + `sha256`), so IB-pr-326 and IB-pr-327 ship only when those pins move
+(the IB-pr-324 pattern). This cell moves them, for the four functions this seat releases, to the merged blobs. The changed-member census, the
+builds and the applies follow under the CTO half; for `irpt-directory-search` and `irpt-holdings` the census diff goes to the CTO first.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-328` | the served.py and loaders.py staged_from pins of reporting-read, export-render, directory-search, holdings -> d8d8e7d868 | WORLD (the source map is the build input of four served functions; the order applies nothing) | IB-pr-327 (drained) | P60 |
+
+fanout: 1 of 1 chains, cap 8, reason: one source-map edit, eight members. Worker 0.9.0_WK_IRPT_BCKEND~131 in its own worktree.

@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "contract": "NFRA_CTLPLN C-REGISTRY (FWD-2): the ONE place a box is named. Every script that names devices reads this file; a box is added here once and nowhere else.",
+  "identity": "A box's own name comes from the user environment variable AGENTBUS_DEVICE, set once at bring-up. It is never derived from a path (LD-0405).",
+  "claim_values": ["measured", "inferred", "held", "absent"],
+  "devices": [
+    {
+      "name": "laptop",
+      "aliases": [],
+      "role": "control-plane",
+      "role_text": "Writes the registers, receives Andrew's word, orders the merge queue, runs the planning seats (CTO, CRO, CVO); at most one execution lane.",
+      "role_claim": "held",
+      "role_source": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md C-ROLES",
+      "inbound_queue": "agentbus-ajbdev-sitez-to-laptop.fifo",
+      "inbound_queue_claim": "measured",
+      "inbound_queue_source": "git:4ec79c0472:.tools/agentbus-sqs.sh queue_for (moved here by FWD-2); live read aws sqs get-queue-url 2026-10-06 15:4xZ, queue exists",
+      "seat_limit": {"coo_sessions": 3, "coo_sessions_exception": "4 for the IRPT seating of 2026-09-24 and today, on Andrew's word", "execution_lanes_target": 1},
+      "seat_limit_claim": "held",
+      "seat_limit_source": "Andrew's standing word (three COO sessions, Codex included); target one execution lane per PRD C-ROLES; ruled by 1.0.0_SA_CTO msg 105617 (batch 284)",
+      "lane_letters": [],
+      "lane_letters_default": true,
+      "lane_letters_claim": "inferred",
+      "lane_letters_source": "every ~lane not claimed by another box runs on the laptop"
+    },
+    {
+      "name": "sitez",
+      "aliases": ["site-z"],
+      "role": "integrator",
+      "role_text": "The integrator and the deploy box: it alone pushes the trunk and deploys; it keeps the Bloomberg jobs.",
+      "role_claim": "held",
+      "role_source": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md C-ROLES",
+      "inbound_queue": "agentbus-ajbdev-laptop-to-sitez.fifo",
+      "inbound_queue_claim": "measured",
+      "inbound_queue_source": "git:4ec79c0472:.tools/agentbus-sqs.sh queue_for (moved here by FWD-2); live read aws sqs get-queue-url 2026-10-06 15:4xZ, queue exists",
+      "seat_limit": {"execution_lanes": null},
+      "seat_limit_claim": "absent",
+      "seat_limit_source": "no ruling read",
+      "lane_letters": ["Z"],
+      "lane_letters_default": false,
+      "lane_letters_claim": "measured",
+      "lane_letters_source": "org/mcp/agentbus-trunk/messages/*__0.0.0_AB_MSTR~Z__*.json (the ~Z lanes are site Z's)"
+    }
+  ]
+}

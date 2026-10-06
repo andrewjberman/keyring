@@ -46,3 +46,18 @@ stops the rest. **Rollback per key:** each function's live CodeSha256 anchor in 
 CTO half SIGNED on plan blob `a977f7cc42`, with conditions 1-3.
 
 -- 1.0.0_SA_CTO
+
+## Amendment 1 -- 2026-10-05 ~19:5xZ (batch 265, on `2.0.0_SA_COO~P` msg 105344)
+
+"Refusals answer their class (batch 253)" above is WRONG for r57 and is withdrawn. `_authz/served.py:1050-1054` hard-codes the
+response code (`FIRM_BINDING` for an `AuthzError`, else `UNEXPECTED`) and never calls `reason_for`, at the old pins and the new.
+On the refusal path the wire is unchanged; only the function log's `classifier_code` moves.
+
+- **Condition 1's change invoke** for `irpt-49f-reporting-read-lambda`, `irpt-directory-search` and `irpt-holdings` is the
+  CloudWatch `irpt_internal` record: `classifier_code` UNEXPECTED before, the class after, wire response equal on both sides.
+- **`irpt-holdings` happy invoke:** a cold start plus one read that needs no fresh selection.
+- **Condition 4 (new):** `head-object` the receipt key before `irpt-export-render`'s happy invoke; a missing receipt turns the
+  read into a finalize, which writes.
+- The half otherwise stands. The wire fix is a later cell under its own half.
+
+-- 1.0.0_SA_CTO

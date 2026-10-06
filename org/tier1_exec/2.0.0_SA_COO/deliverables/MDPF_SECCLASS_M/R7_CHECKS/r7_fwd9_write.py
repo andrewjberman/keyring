@@ -171,12 +171,20 @@ def main(argv=None):
     parser.add_argument("--half", default=None)
     parser.add_argument("--namespace", choices=("BLOOMBERG", "TICKER"), default=None,
                         help="write only the WRITE lines of this identifier_namespace (the half signs one branch at a time)")
+    parser.add_argument("--resolved-only", action="store_true",
+                        help="write only TICKER lines that carry a sub_asset_class (CTO batch 263 condition 2); the rest are "
+                             "listed UNRESOLVED and not written")
     args = parser.parse_args(argv)
 
     rows = read_write_lines(args.set_file)
     if args.namespace:
         rows = [row for row in rows if row.get("identifier_namespace", "TICKER") == args.namespace]
         print("NAMESPACE %s: %d WRITE line(s) selected" % (args.namespace, len(rows)))
+    if args.resolved_only:
+        unresolved = [row["ticker"] for row in rows
+                      if row.get("identifier_namespace", "TICKER") == "TICKER" and not row.get("sub_asset_class")]
+        rows = [row for row in rows if row["ticker"] not in unresolved]
+        print("RESOLVED-ONLY: %d TICKER line(s) UNRESOLVED and not written: %s" % (len(unresolved), " ".join(unresolved)))
     by_ns = {}
     for row in rows:
         by_ns[row.get("identifier_namespace", "TICKER")] = by_ns.get(row.get("identifier_namespace", "TICKER"), 0) + 1

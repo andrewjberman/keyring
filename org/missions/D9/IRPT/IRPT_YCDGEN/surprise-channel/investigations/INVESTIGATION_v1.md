@@ -881,3 +881,996 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: owner 2.0.0_SA_COO~Y at the round-5 close; if a floor on held values is wanted it is one constant in _compute_opal_held."
 }
 ```
+
+## IRPT_YCDGEN-S9 -- the held risk-free object stopped updating on 2026-08-05 (last observation 2026-08-04)
+
+```json
+{
+  "id": "IRPT_YCDGEN-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-05T19:55:00Z",
+  "one_line": "The held risk-free object (portal FRED Treasury yields) was last written 2026-08-05 and its last observation is 2026-08-04, so it is two months behind as well as two years short.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Handoff HANDOFF_TO_CRO_ONPREM_GENERATION_20261005.md section 6 family 5 and row IRPT_YCDGEN-W2-S9: opal-data-portal-v2/json/macro/yield_curve_fred.json is written daily (EventBridge 6pm ET) with a 2-year lookback; W2-S9 says the object itself was not read.",
+  "world_is": "Read 2026-10-05 ~19:5xZ: head-object LastModified 2026-08-05T23:02:30Z; body data_as_of 2026-08-05, generated_at 2026-08-05T23:02:29Z; series 'US Treasury 3M' has 499 observations, first 2024-08-05, last 2026-08-04. No later write exists at that key. Whether the ingestion schedule is disabled, failing, or writing elsewhere was not read. An in-house 1y alpha, Sharpe or Sortino computed from this object today would use a risk-free series ending two months before the report date.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 s3 head_object + get_object opal-data-portal-v2 json/macro/yield_curve_fred.json (ContentLength 675314), keys and first/last list entries printed",
+      "positive control: same session read opal-data-bd silver/historical_prices.parquet with max date 2026-10-02"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no served report reads this object today (layout_overview.py takes it as a CLI file). Owner of the ingestion Lambda is outside this project; placed here because the in-house build would make the object load-bearing. Feasibility analysis: docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md."
+}
+```
+
+## IRPT_YCDGEN-W2-S11 -- AC5 pin @62301f71e0 predates the v1 schema file; v1_untouched pins by content hash and published copy
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T21:21:00Z",
+  "one_line": "AC5 asks the v1 schema file be byte-identical to its pin @62301f71e0, but that pin is the PRD pin and the file did not exist at it; v1_untouched pins the file by content hash and by its byte-equal published copy instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order AC5 / PRD v0.28 item 29: the generated v1 schema _contracts/AnalysisReport.schema.json (pinned @62301f71e0) is untouched; test -k v1_untouched compares the file to its pin.",
+  "world_is": "git cat-file at 62301f71e0 holds no infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json (git show: path exists on disk, but not in 62301f71e0); the file was added later (c4214773c9) and edited since (98d579cd1b date_claim, 1dae563e21), 366 lines at the cut base b091a522e9. 62301f71e0 is the PRD pin the schema is generated from. The test therefore asserts sha256 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f (measured at b091a522e9) and byte-equality with docs/contracts/investor-reporting/v1/AnalysisReport.schema.json, the published copy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 62301f71e0:infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.schema.json -> fatal: exists on disk, but not in 62301f71e0",
+      "git log --oneline on the file: 1dae563e21, 98d579cd1b, c4214773c9",
+      "sha256sum of the _contracts file and the docs/contracts copy are equal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the criterion passes on the stated substitute; a later legitimate v1 edit would need the hash constant in test_analysisreport_v2.py updated."
+}
+```
+
+## IRPT_YCDGEN-W2-S12 -- R4 leaves v2 section typing open; the schema fixes nullability, inputs_as_of and coverage one way
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T21:21:00Z",
+  "one_line": "Contract R4 leaves the OPAL_ENGINE section's nullability, the inputs_as_of shape, the coverage type and the VALUE-branch reason open; the v2 schema fixes them one way that a consumer may need to confirm.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R4 names the section members section_id, section_type, units, as_of_date, status, reason, method, coverage (page optional) and effective_inputs.inputs_as_of 'the as-of date of each input', without types or nullability.",
+  "world_is": "AnalysisReport.v2.schema.json chooses: inputs_as_of is an object of input name to YYYY-MM-DD, at least one; section coverage is a number 0..1 or null; as_of_date is a date string, or null only when status is NOT_AVAILABLE (a NOT_IN_THIS_VERSION section has no date of its own); value and method and coverage are required on every section; reason is required, a string from the closed set (INPUT_MISSING:<name> with a non-empty name), and value null when NOT_AVAILABLE; under VALUE reason is absent or null and value is a number or string. computation_validation.status reuses v1's CERTIFIED/UNCERTIFIED/FAILED. Any of these is one line in the schema to change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json $defs.opal_engine",
+      "IRPT_BCKEND PRD v0.28 item 29 read at HEAD: no types given for these members",
+      "tests test_analysisreport_v2.py: 5 passed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: no producer or consumer reads the v2 schema yet."
+}
+```
+
+## IRPT_YCDGEN-W1-S3 -- the round-6 methods are not in overview_map.json, and pricing=False is a parameter whose default stays True
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "Round 6 b-6's classified elements need three new computed method names the shipped overview_map.json does not carry, and the no-pricing mode is switched on by pricing=False (default True), so the producer that calls build must pass it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "YCD-b-6 / R2: price-based elements print NOT_AVAILABLE with NOT_IN_THIS_VERSION; allocation by asset class and sub asset class is computed; the order also says keep every existing test in test_layout_overview.py passing.",
+  "world_is": "Existing tests call compute_element, compute_all, build and main with no mode argument and expect OWN_SERIES statistics to compute (test_six_statistic_*, test_wired_both_render_paths_pass_the_two_series), so the no-pricing behaviour cannot be the default. It is built as pricing=False on compute_element, compute_all and build, and --no-pricing on main; default True is the YCharts-priced path, unchanged. The new computed methods are HOLDINGS_CLASSIFIED, ALLOCATION_ASSET_CLASS and ALLOCATION_SUB_ASSET_CLASS (constants CLASSIFY_METHODS); deliverables/maps/overview_map.json carries none of them (its computed methods are OPAL_HELD 158, OWN_SERIES 9, and 65 BUILDER_ONLY), so a map the a-6 producer uses must name them. A producer that calls build or compute_all without pricing=False prints the OWN_SERIES elements from kept answers (INPUT_MISSING:<call> when nothing is kept), not NOT_IN_THIS_VERSION.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python count of overview_map.json elements by source.computed: OPAL_HELD 153+4+1 (158 per the existing map test), OWN_SERIES 8+1, BUILDER_ONLY 52+9+2+2, plain 11+4+4+3",
+      "pytest test_layout_overview.py -k not_in_this_version: 1 passed (pricing=False on the six price-based forms and the 9 real OWN_SERIES elements; positive control with pricing on computes)",
+      "layout_overview.py compute_element, compute_all, build, main signatures on branch wk-IRPT_YCDGEN-61"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until a-6's order names pricing=False (or its own map) at its build call and its test asserts a price element reads NOT_IN_THIS_VERSION through the producer. Owner 2.0.0_SA_COO~Y at the a-6 cut."
+}
+```
+
+## IRPT_YCDGEN-W1-S4 -- R2's closed reason set is narrower than the module's other reasons, and _scan_classifications is kept (retired from the path) because an existing test calls it
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "R2 states a closed reason set (COVERAGE_BELOW_0.95, STALE_INPUT, INPUT_MISSING:<name>, NOT_IN_THIS_VERSION); the module's existing paths still produce NOT_HELD:<reason>, SERIES_TOO_SHORT, OUTSIDE_TIME_BUDGET and others, and plain vendor-call elements carry no price marker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R2: two states only, a value or NOT_AVAILABLE with a reason from the closed set COVERAGE_BELOW_0.95, STALE_INPUT, INPUT_MISSING:<name>, NOT_IN_THIS_VERSION. R1: the module's own _scan_classifications path is removed from the Overview path.",
+  "world_is": "The new classified methods use only COVERAGE_BELOW_0.95 and INPUT_MISSING:<name>, and pricing=False uses NOT_IN_THIS_VERSION. The older OPAL_HELD path still returns NOT_HELD:<reason> (pinned by existing tests test_opal_held_*), the series methods return SERIES_TOO_SHORT / SERIES_INVALID / STATISTIC_UNKNOWN:<id>, and a map-less call returns OUTSIDE_TIME_BUDGET; none are in the closed set. A plain (non-computed) element reading a YCharts call has no marker saying it is price-based, so pricing=False does not turn it into NOT_IN_THIS_VERSION: with nothing kept it prints the existing 'YCharts gave no answer' line. _scan_classifications is no longer called by load_held_rows, main, compute_all or build (test no_second_classification_read asserts it); the function body stays, marked retired, because the existing test test_opal_held_default_readers_are_read_only_s3_get_and_dynamodb_scan calls it directly and the order says keep every existing test passing.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py on branch wk-IRPT_YCDGEN-61: reasons raised by _NA(...) in _compute_held, _compute_opal_held, statistic_of, compute_element",
+      "pytest test_layout_overview.py: 38 passed (the 6 held tests and the scan test unchanged)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the a-6 producer maps each reason to the v2 schema's status; whether NOT_HELD:<reason> and the series reasons map into the closed set is its and YCD-s-6's call. Deleting the retired scan function and its test is a one-line follow-up for a cell that owns the test."
+}
+```
+
+## IRPT_YCDGEN-W1-S5 -- the criterion expectations anchor at the line start, and this shell forces ANSI colour into pytest output
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S5",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:25:51Z",
+  "one_line": "With FORCE_COLOR=3 in the environment the literal pytest invocations print their summary line behind ANSI escapes, so an expectation anchored at the line start (^[1-9][0-9]* passed) does not match the raw bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Proof of spec AC1-AC6: each invocation's output matches ^[1-9][0-9]* passed (AC6 ^[0-9]+ passed).",
+  "world_is": "env in the worker shell shows FORCE_COLOR=3; the last output line of `python -m pytest ... -q -p no:cacheprovider -k not_in_this_version` begins with bytes 033 [ 3 2 m 033 [ 3 2 m 033 [ 1 m then '1 passed'. With the escape sequences stripped the line reads '1 passed, 37 deselected' and each criterion matches. The recorded outputs in the proof instance are the stripped lines, and the raw-bytes difference is stated here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "env | grep -i color -> FORCE_COLOR=3",
+      "od -c of the pytest summary line printed 033 [ 3 2 m before the count"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a checker that runs the invocation with FORCE_COLOR unset, or strips ANSI, reads the same pass."
+}
+```
+
+## IRPT_YCDGEN-W1-S6 -- the retained-report validator and the publication path are bound to the v1 AnalysisReport; an OPAL_ENGINE document is refused there
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S6",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "reports/resident_installed.py binds ANALYSIS to AnalysisReport.schema.json (v1) and publisher.py / publication_worker.py accept only a vendor metadata key set, so an OPAL_ENGINE document cannot be persisted or published on the existing path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Order a-6 section 3: if publisher.py or publication_worker.py would reject an OPAL_ENGINE document, file a row naming the line; the document is written where OwnedAnalysisReader reads a report.",
+  "world_is": "infra/aws/lambda/investor-reporting/reports/resident_installed.py:47 REPORT_SCHEMAS = {ANALYSIS: AnalysisReport.schema.json} and :121 (the validator the ReportRepository is built with, so persist and get both validate against v1: an OPAL_ENGINE document carries opal_artifact and computation_validation, which the v1 schema's additionalProperties false refuses). ycharts/generate/publisher.py:107 and ycharts/generate/publication_worker.py:47 require set(metadata) == {request_ref, vendor_artifact, effective_inputs, release}. opal_producer.produce calls reports.persist directly on the injected repository, so it does not pass through the publisher, but the repository's validate callable is the issuer's to build against the v2 schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/resident_installed.py:47,121@wk-IRPT_YCDGEN-63",
+      "ycharts/generate/publisher.py:107@wk-IRPT_YCDGEN-63",
+      "ycharts/generate/publication_worker.py:47@wk-IRPT_YCDGEN-63",
+      "opal_producer tests persist through a recording fake; no test builds the real ReportRepository"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the first Opal request persisted through a repository validating v1 is refused at persist ('report schema validation failed'), loudly. Another lane's files; the owner cuts the change (a v2-aware validate callable keyed by provider)."
+}
+```
+
+## IRPT_YCDGEN-W1-S7 -- OwnedAnalysisReader reads vendor members an OPAL_ENGINE report does not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "ops/owned_report.py reads report['extraction_validation'] in sections() and report['vendor_artifact'] / release.protected_pdf_ref in pdf(); an OPAL_ENGINE document has computation_validation and opal_artifact instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Order a-6 section 1 and PRD item 29: a consumer that needs a vendor member rejects the document; the v2 document is written where OwnedAnalysisReader reads a report.",
+  "world_is": "infra/aws/lambda/investor-reporting/ops/owned_report.py:49 builds the public projection with report[key] for request_ref, sections and extraction_validation (KeyError on an OPAL_ENGINE document, which has no extraction_validation); :126-133 pdf() needs release.protected_pdf_ref with server_only true and vendor_artifact.sha256/byte_length, and the OPAL_ENGINE release carries released_revision only (the artifact is opal_artifact). The class is not edited by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ops/owned_report.py:49,125-133@wk-IRPT_YCDGEN-63"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: reading or downloading an Opal report through the existing reader fails (KeyError / ANALYSIS_PDF_NOT_RETAINED) until the reader's owner reads provider and opal_artifact. Whether the PDF is reached through release.protected_pdf_ref (the producer does not write one) or opal_artifact is that owner's decision."
+}
+```
+
+## IRPT_YCDGEN-W1-S8 -- under pricing=False the layout still prints YCharts wording on a report with no YCharts data
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "layout_overview.py prints 'Not available from YCharts' data endpoints.' for builder-only elements, 'YCharts gave no answer' / 'outside the run's time budget' for vendor-call elements, and a 'Data: YCharts' footer on every page of the Opal report.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order a-6 R2: every price-based element prints NOT_AVAILABLE with NOT_IN_THIS_VERSION; the producer calls build with pricing=False.",
+  "world_is": "layout_overview.py:56-59,67,943 and the footer in build (:1088): only elements the layout classes as price-based (_price_based) print the NOT_IN_THIS_VERSION line. In the real Overview map the 65 BUILDER_ONLY and 22 call-sourced elements are not price-based by that test, so the page prints the YCharts / time-budget lines while run.json and the AnalysisReport section carry reason NOT_IN_THIS_VERSION (the producer's closed-set mapping). The footer credit 'Data: YCharts' prints on pages that hold no YCharts figure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py:56,57,59,67,943,1088@wk-IRPT_YCDGEN-63",
+      "opal_producer on the real overview_map.json (scratch run): 65 BUILDER_ONLY, 22 VENDOR_SOURCED, 9 OWN_SERIES are NOT_AVAILABLE / NOT_IN_THIS_VERSION in run.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for the record (the document and run.json are consistent); the printed page is not. layout_overview.py is YCD-b-6's merged file, outside this cell's paths."
+}
+```
+
+## IRPT_YCDGEN-W1-S9 -- three choices the order left to the producer: the classified element list, the reason mapping and a table value inside a scalar section
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "The layout has no element list of its own for the three classified methods, the closed reason set excludes NOT_HELD:<r>, OUTSIDE_TIME_BUDGET and METHOD_UNKNOWN, and the v2 section value is number|string|null while the layout's table values are lists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Order a-6 section 3: the producer reads the layout's own element list for the classified methods, never the map; R2 two states with a closed reason set; R4 section value.",
+  "world_is": "layout_overview.py defines the method names (HOLDINGS_CLASSIFIED, ALLOCATION_ASSET_CLASS, ALLOCATION_SUB_ASSET_CLASS) and consumes elements from the map, but holds no element list. opal_producer builds three elements (ids opal.classified.holdings, .asset_class, .sub_asset_class, on a page after the map's last) from those constants and adds them to a copy of the map when the map has none. Reasons: NOT_HELD:<r> -> INPUT_MISSING:held_<group>; OUTSIDE_TIME_BUDGET -> NOT_IN_THIS_VERSION; any other layout word -> INPUT_MISSING:<word>; the layout's own word is kept as layout_reason in the run.json entry. A table or chart value is written as canonical JSON in the string value with units 'json'. The map copy the producer passes has calls = [] because the run makes no vendor call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "opal_producer.py _classified_elements, _opal_map, closed_reason, _section",
+      "test_opal_producer.py test_closed_reason_maps_every_layout_word_into_the_closed_set"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: each choice is stated in the code and covered by a test. YCD-s-6 (schema) or the CTO may rule a different mapping; closed_reason is the one place to change."
+}
+```
+
+## IRPT_YCDGEN-W1-S10 -- the held tables carry no as-of date the producer can read, so every input's as-of is its read date
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T21:56:59Z",
+  "one_line": "run.json inputs and the document's inputs_as_of carry the date the run read each input (as_of_basis READ_DATE), because the layout's held-row loaders return rows without the dated folder or the table's own date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R3: run.json holds each input read with its as-of date; R4: inputs_as_of is an object of input name to date.",
+  "world_is": "layout_overview._read_characteristics picks the latest dated bbg/<YYYY-MM-DD>/characteristics.parquet folder and returns rows only, so the folder date is not exposed; read_classifications returns classifier rows with no table date; read_holdings returns no acceptance date. The producer therefore records the UTC date of the run for every input and marks it READ_DATE in run.json (not in the schema-bound document, whose inputs_as_of has no basis member). A stale held table would not read STALE_INPUT.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "layout_overview.py _read_characteristics, read_classifications@wk-IRPT_YCDGEN-63",
+      "runner.py read_holdings@wk-IRPT_YCDGEN-63"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the STALE_INPUT reason cannot fire from this producer until a loader returns the table's own date; exposing the dated folder is a small change in the layout's loader (another cell's file)."
+}
+```
+
+## IRPT_YCDGEN-W2-S13 -- the published analysis-report response contract is closed to the v1 form, so the Opal sections answer does not validate against it
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T22:46:55Z",
+  "one_line": "OwnedAnalysisReader.sections now answers provider, request_ref, sections and computation_validation for an OPAL_ENGINE document, but the published response schema for the sections route requires extraction_validation and forbids any other member, so that answer is outside the published contract.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-c-6: sections returns provider, request_ref, sections and computation_validation (never extraction_validation) for an OPAL_ENGINE document.",
+  "world_is": "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json data: additionalProperties false, required request_ref, sections, extraction_validation; sections and extraction_validation are $ref to the v1 AnalysisReport schema. The existing test test_sections_projection_matches_existing_closed_response_schema validates only the v1 projection. Whether ops/entry.py validates a served response against this schema at runtime was not read (not in this cell's paths). The docs/ schema and any frontend parser are outside this order's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json lines 46-64 @wk-IRPT_YCDGEN-64",
+      "infra/aws/lambda/investor-reporting/ops/entry.py sections 194-195 (read only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT until an OPAL_ENGINE report is READY on a served route: the response contract needs a v2 data branch (provider discriminator) and the frontend consumer a matching parse before the first Opal report is opened."
+}
+```
+
+## IRPT_YCDGEN-W3-S8 -- the Opal artifact family OPAL_REPORT_PDF is named by the publisher but registered nowhere, and the producer does not write the PDF through the artifact store
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "The Opal artifact family OPAL_REPORT_PDF is named by the publisher but registered nowhere, and the producer does not write the PDF through the artifact store.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: the Opal path takes an artifact reference of its own family, not ORIGINAL_VENDOR_PDF; the family is named in a surprise row.",
+  "world_is": "publisher.py (OPAL_FAMILY) and publication_worker.py accept a retained ref of family OPAL_REPORT_PDF (application/pdf, immutable, retention_ref). The reporting policy irpt-x10-v1 holds 13 families (lib/tests/test_irpt_destination.py FAMILIES) and none is OPAL_REPORT_PDF, so ArtifactRepository.put refuses that family until a registry row exists in infra/logic/registry/ (not this cell's file). opal_producer.produce writes the PDF straight to the ycharts_opal_reports S3 family through an injected put_object and never calls artifacts.put, so no retained Opal artifact_ref exists for the publisher to take. Tests register the family in the retention world themselves.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/publisher.py OPAL_FAMILY, _publish_opal@wk-IRPT_YCDGEN-65",
+      "lib/tests/test_irpt_destination.py FAMILIES (13 members)@wk-IRPT_YCDGEN-65",
+      "ycharts/research/opal_producer.py produce (put_object, no artifacts.put)@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the live Opal request reaches the publisher only after (a) the family is registered in the reporting policy and (b) the driver of the Opal request retains the PDF as that family and hands the ref in. Until then publish() refuses with a loud policy/registry error. The name is this worker's choice; the owner of the registry may rule another."
+}
+```
+
+## IRPT_YCDGEN-W3-S9 -- resident_worker reopens a READY job through provenance.extraction_evidence_ref, which an Opal report's provenance does not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S9",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "Resident_worker reopens a READY job through provenance.extraction_evidence_ref, which an Opal report's provenance does not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: an Opal job reaches READY; a redelivered message for a READY job reopens the retained report and checks its certification.",
+  "world_is": "ycharts/generate/resident_worker.py:513-519 reads retained['provenance']['extraction_evidence_ref']['sha256'] and compares it to detail['certification_sha256'] for a READY job. The Opal publication writes provenance {schema_version irpt-opal-publication.v1, provider, composition_ref, opal_artifact_ref} (no extraction evidence exists) and the READY receipt's certification_sha256 is the Opal PDF's own sha256, so a redelivery of a READY Opal job raises KeyError there. Not this cell's file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py:513-519@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publisher.py _publish_opal provenance@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (KeyError) on the first redelivery of an Opal job's SQS message after READY. The resident-worker owner reads provenance by provider (opal_artifact_ref.sha256 against certification_sha256 for OPAL_ENGINE)."
+}
+```
+
+## IRPT_YCDGEN-W3-S10 -- the job-state sequence for an Opal job is RECEIVED -> CERTIFYING -> READY, and the READY receipt's certification_sha256 is the PDF's sha256
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "The job-state sequence for an Opal job is RECEIVED -> CERTIFYING -> READY, and the READY receipt's certification_sha256 is the PDF's sha256.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R7: the job reaches READY without DOWNLOADING, EXTRACTING and CERTIFYING, or through a state sequence named in a surprise row if the machine forces one.",
+  "world_is": "durable_job.put_state accepts READY only from CERTIFYING (condition '#state = :certifying') and demands report_id, revision and certification_sha256 in the receipt. The Opal path therefore passes through CERTIFYING alone: PublicationWorker.finish sets CERTIFYING (phase opal_report_publication) from RECEIVED (the accepted job's first state; CLAIMED also admitted), the caller then puts READY. DOWNLOADING and EXTRACTING are never entered. With no extraction wrapper, certification_sha256 is the sha256 of the Opal PDF (pdf_ref.sha256, equal to document.opal_artifact.sha256). The vendor path's states are unchanged and a vendor checkpoint is still refused in RECEIVED.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/durable_job.py put_state (143-153)@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publication_worker.py OPAL_STATES, finish@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/tests/test_publication_worker.py test_opal_engine_worker_reaches_ready_without_the_vendor_download_states@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: stated in code and covered by a test. CERTIFYING for an Opal job means 'document persisted', not 'extraction certified'; the status wire shows the same word for both."
+}
+```
+
+## IRPT_YCDGEN-W3-S11 -- a full OPAL_ENGINE document does not fit the 32 KiB pdf checkpoint when its sections carry tables, and the Opal path has no spill
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "A full OPAL_ENGINE document does not fit the 32 KiB pdf checkpoint when its sections carry tables, and the Opal path has no spill.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R7: the Opal metadata key set and the sections and computation_validation the v2 schema carries are accepted by the worker.",
+  "world_is": "PublicationWorker.checkpoint_pdf stores {pdf_ref, census, metadata} in the job row via put_checkpoint, which refuses more than CHECKPOINT_BYTES = 32 KiB (WORKER_CHECKPOINT_SIZE). The vendor path spills only the census to an EXTRACTION_EVIDENCE artifact. The Opal metadata is the whole v2 document (opal_producer writes table values as canonical JSON strings inside sections), so an Overview with the three classified tables over a large portfolio can exceed 32 KiB; the Opal path does not spill (it is skipped for kind OPAL) and the store refuses loudly. The 99-holding Cottonwood portfolio was not measured here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/durable_job.py CHECKPOINT_BYTES, put_checkpoint@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/publication_worker.py checkpoint_pdf@wk-IRPT_YCDGEN-65",
+      "ycharts/research/opal_producer.py _section (table values as JSON strings)@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (WORKER_CHECKPOINT_SIZE) for a large document. A fix is a spill of the sections to a retained artifact of a registered family (needs the registry row of S8) or a checkpoint of the document's hash with the document read from the repository; neither is in this cell's paths."
+}
+```
+
+## IRPT_YCDGEN-W3-S12 -- test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails when test_resident_installed.py is run alone
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T22:57:27Z",
+  "one_line": "Test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails when test_resident_installed.py is run alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell g-6: keep every existing test in test_resident_installed.py passing.",
+  "world_is": "Run alone (python -m pytest reports/tests/test_resident_installed.py -q -p no:cacheprovider) the test fails at resident_worker.py:18 'import extract' (ModuleNotFoundError): the file's sys.path list names reports, ycharts/generate, ycharts/session, _scope, _ids, _keys, _authz, intake and ops but not ycharts/extract. With PYTHONPATH=infra/aws/lambda/investor-reporting/ycharts/extract all 14 original tests pass (and the 3 added). The failure does not depend on R7: resident_installed's import list and the test's imports are unchanged by this cell. The AC4 criterion (-k resident_validator_v2) selects only the added tests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "reports/tests/test_resident_installed.py:18-22@wk-IRPT_YCDGEN-65",
+      "ycharts/generate/resident_worker.py:18@wk-IRPT_YCDGEN-65"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: an order-dependent test (it passes when a sibling test file has already put ycharts/extract on sys.path). A one-line path addition in the test file's loop is the owner's."
+}
+```
+}
+```
+
+
+
+## IRPT_YCDGEN-W2-S14 -- the Analysis tab renderer and typed contracts are outside the e-6 paths and still v1-shaped
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T23:02:10Z",
+  "one_line": "The Opal sections reach the Analysis tab only through the adapter's carried members; NativeSections and the typed contracts are outside the e-6 paths and still speak the v1 vendor wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-e-6: sections render from status, method and coverage; a NOT_AVAILABLE section shows its reason; no visual change beyond the sections the form adds.",
+  "world_is": "adapt.ts now returns OpalReportSection (a ReportSection plus status, reason, method, coverage) and names the reason in the NOT_AVAILABLE value label, which the existing Label column prints. tabs/analysis/NativeSections.tsx (outside the order's paths) still prints the heading 'Certified sections', 'Extraction validation:' and 'Vendor attribution:' (null source coordinate prints 'no source coordinate stated for this section'), and reads only the base ReportSection members, so method and coverage are not printed. contracts/index.ts (ReportSection), contracts/wire/index.ts (no AnalysisReportOpalWire export), wire/consumed.ts 64-65 (AnalysisReport reads list names vendor_artifact), wire/responses.ts 162-166 (slice wire typed on the v1 members) and api/endpoints/investor-reporting.ts 1093 and 1188 (send<AnalysisReportWire,...>) are outside the paths and unchanged; the adapter's parameter types are the wider unions so those call sites still typecheck (tsc -b --noEmit rc 0).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx lines 106-176 @wk-IRPT_YCDGEN-67-portal",
+      "portal/src/pages/InvestorReporting/contracts/wire/consumed.ts lines 64-65 @wk-IRPT_YCDGEN-67-portal",
+      "portal/scripts/adapt-analysis-report-opal-exercise.mjs opal: RESULT: opal PASS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT until an OPAL_ENGINE report is served to the tab (also IRPT_YCDGEN-W2-S13). A later cell owning NativeSections.tsx would print method and coverage with isOpalReportSection(section) and drop the vendor wording for the Opal form."
+}
+```
+
+## IRPT_YCDGEN-W2-S15 -- eleven fe-s-13 tests are red in this worktree on route, envelope and pin checks unrelated to the adapter
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-05T23:02:40Z",
+  "one_line": "Eleven tests in portal src/pages/InvestorReporting/__tests__/fe-s-13 are red in this worktree on route-table, response-envelope and content-pin checks, none of them on the AnalysisReport adapter.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-e-6 AC3 names tsc -b --noEmit only; no test run was required of this cell.",
+  "world_is": "bun test src/pages/InvestorReporting/__tests__/fe-s-13 src/pages/InvestorReporting/tabs/analysis on the worktree after the e-6 edits: 40 pass, 11 fail (51 tests, 9 files). The failures name the routes table (expected 19 DECLARED routes, received 18), the response envelope ('unprojected_grant' no longer declared on comparison-catalogue and analysis-request-pdf) and the content pins; field-map.test.ts, which adapts the v1 AnalysisReport fixture, is not among them. The run on the unedited tree was not made (git stash is refused in this tree), so the reds are not shown to pre-date the edit; their messages do not touch AnalysisReport.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test output, run 2026-10-05T23:00Z in C:/tmp/wk-ycdgen-6-67/portal",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/routes.test.ts line 239 @wk-IRPT_YCDGEN-67-portal"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this order (AC3 is the typecheck). Left for the issuer to compare against portal DEV @481b3bcc5f."
+}
+```
+
+## IRPT_YCDGEN-W1-S11 -- the resident installer composes no ports for the Opal producer, so a listed principal's job is refused until it does
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T23:26:38Z",
+  "one_line": "ResidentAssembly now takes an opal_stores(principal, record) port, but reports/resident_installed.py (outside the d-6 paths) does not pass one, so an allow-listed principal's job raises OPAL_STORES_REQUIRED until the issuer wires it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R6: a principal on the allow list gets opal_producer.produce. The order's paths are resident_worker.py and its test file.",
+  "world_is": "opal_producer.produce(request_ref, firm, stores) needs dynamodb, s3 (host-role read clients), classifier (ETFClassifier), objects (the firm's research-principal put_object client) and map (the Overview element map); reports, principal and owner the worker supplies. build_resident_runtime (reports/resident_installed.py:269) constructs ResidentAssembly with none of those, and the file is outside this order's paths. resident_worker.py adds an optional opal_stores keyword; with it absent a listed principal's job raises ValueError OPAL_STORES_REQUIRED at the switch (loud, retried by the queue, never served by the YCharts producer). With the shipped placeholder allow list no real principal is listed, so nothing is affected until the issuer sets Andrew's principal id.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py ResidentAssembly.__init__ and execute@wk-IRPT_YCDGEN-68",
+      "reports/resident_installed.py:269-272@wk-IRPT_YCDGEN-68",
+      "ycharts/research/opal_producer.py produce docstring (the stores dict)@wk-IRPT_YCDGEN-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the installer passes opal_stores AND the allow list names Andrew's id; setting the list first makes his Overview request fail loud on every receive. Both are the issuer's release acts (a never-widen half). The ports are built from the instance role's clients; the worker adds no client of its own."
+}
+```
+
+## IRPT_YCDGEN-W1-S12 -- five choices the order left to the switch: the persist port, the PDF family call, the attempt id, the refusal code and the missing-ports outcome
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-05T23:26:38Z",
+  "one_line": "The order says only 'choose the producer'; the worker took five unstated choices to make an Opal job reach READY through the existing entry points.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R6 names the switch only; g-6 and i-6 name checkpoint_pdf and finish as the persist entry points.",
+  "world_is": "(1) produce() calls stores['reports'].persist itself; the worker hands it a capture port that keeps the document and writes nothing, then retains the PDF (family OPAL_REPORT_PDF, read from the objects.put_object call whose ContentType is application/pdf) and publishes through checkpoint_pdf(census={}) and finish, so the repository is written once, by _publish_opal. (2) request_ref is {request_id, request_revision, attempt_id, attempt_number}, with attempt_id ATT- plus the first 24 hex of sha256 of request_id|revision|opal. (3) producer.ProducerRefused ends the job as ATTENTION code OPAL_PRODUCER_REFUSED; any other exception propagates for queue redelivery; a producer that wrote no PDF or no document ends as ATTENTION OPAL_PRODUCER_OUTPUT. (4) A retained 'pdf' checkpoint skips the producer on redelivery. (5) The reopen of a READY job reads provenance.provider: OPAL_ENGINE compares opal_artifact_ref.sha256, every other form keeps extraction_evidence_ref.sha256 (row W3-S9).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/resident_worker.py run_opal, _OpalCapture, execute@wk-IRPT_YCDGEN-68",
+      "ycharts/generate/tests/test_resident_worker.py test_allow_listed_principal_opal_producer and test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error@wk-IRPT_YCDGEN-68"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: each choice is in the code and under a test. The produce-side objects.put_object for the PDF reaches the firm's store before the retained copy is made, so a redelivery before the checkpoint writes the same key again (a deterministic address)."
+}
+```
+
+## IRPT_YCDGEN-W4-S7 -- The order's path for the endpoint client does not exist; the file is portal/src/api/endpoints/investor-reporting.ts, outside the grant, so its two sen
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S7",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T23:28:45Z",
+  "one_line": "The order's path for the endpoint client does not exist; the file is portal/src/api/endpoints/investor-reporting.ts, outside the grant, so its two send<AnalysisReportWire,...> call sites are untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-j-6 names portal/src/pages/InvestorReporting/api/endpoints/investor-reporting.ts (cell: 'all under portal/src/pages/InvestorReporting/') and R10 says the typed contracts name the Opal members so the adapter's wider unions are the declared types.",
+  "world_is": "That path does not exist: portal/src/pages/InvestorReporting has no api directory. The client is portal/src/api/endpoints/investor-reporting.ts (git ls-files line src/api/endpoints/investor-reporting.ts), whose lines 1093 and 1188 still declare send<AnalysisReportWire, ...>. It is outside <paths>, so it was not edited and no file was created at the named path. The adapters accept AnalysisReportAnyWire, so those call sites typecheck unchanged (tsc -b --noEmit rc 0); the declared wire type at the two call sites is still the v1 one. Everything else of R10 is in portal commit cd3924d5.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/api/endpoints/investor-reporting.ts lines 1093 and 1188 @wk-IRPT_YCDGEN-70-portal cd3924d5",
+      "portal/src/pages/InvestorReporting directory listing: no api entry @cd3924d5"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A later cell owning portal/src/api/endpoints/investor-reporting.ts would change both generics to AnalysisReportAnyWire (and the slice call to the union slice type). INERT: no behaviour differs, only the declared type."
+}
+```
+
+## IRPT_YCDGEN-W4-S8 -- The adapter does not set AnalysisReport.provider, so the tab tells the Opal form from its sections; an Opal report with an empty section list renders 
+
+```json
+{
+  "id": "IRPT_YCDGEN-W4-S8",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~4",
+  "surfaced_at": "2026-10-05T23:28:45Z",
+  "one_line": "The adapter does not set AnalysisReport.provider, so the tab tells the Opal form from its sections; an Opal report with an empty section list renders the v1 wording.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-j-6 R10: for a section list whose report has provider OPAL_ENGINE the tab prints the Opal wording; the typed contract names the Opal members.",
+  "world_is": "contracts/adapt.ts (outside <paths>) builds AnalysisReport without a provider member, so NativeSections decides on `report.provider === 'OPAL_ENGINE' || (sections.length > 0 && every section isOpalReportSection)`. An OPAL_ENGINE report whose sections array is empty therefore prints the v1 heading 'Certified sections' and the v1 'Extraction validation:' line (exercise leg 'V1 empty list keeps its v1 wording' pins that no-provider case). Also: wire/consumed.ts is marked GENERATED by __tests__/fe-s-13/gen-consumed.ts; WIRE_CONSUMED_OPAL_FIELDS was added by hand beside the generated table (the v1 content pins would red on members v1 does not publish), so a regeneration would drop it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/tabs/analysis/NativeSections.tsx isOpalReport @wk-IRPT_YCDGEN-70-portal cd3924d5",
+      "portal/src/pages/InvestorReporting/contracts/adapt.ts adaptOpalAnalysisReport @81bbeba2: returns no provider member"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT until an OPAL_ENGINE report with zero sections is served. A later cell owning adapt.ts would add `provider: 'OPAL_ENGINE'` in adaptOpalAnalysisReport; the tab already honours it. A cell owning gen-consumed.ts would emit WIRE_CONSUMED_OPAL_FIELDS."
+}
+```
+
+## IRPT_YCDGEN-W3-S13 -- the Opal document spills to the EXTRACTION_EVIDENCE family, always, for an Opal checkpoint
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "The Opal document is spilled to an artifact of the existing json family EXTRACTION_EVIDENCE, on every Opal checkpoint rather than only past the limit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R9 (3): spill to an existing registered json family; name the choice in a surprise row.",
+  "world_is": "R9 (3) asks the Opal path to spill an over-limit document to an EXISTING registered json family. Chosen: EXTRACTION_EVIDENCE (tier state, json, 30 unreferenced days, 2555 ceiling), the family the vendor path spills its census to; no family was added. The spill is unconditional for kind OPAL (checkpoint = pdf_ref, census {}, metadata_ref, metadata_sha256), not size-gated as the vendor census is, so one code path and one checkpoint shape serve every Opal job; the logical id is request_id-opal-document-<sha256> so a replay retains to the same ref. finish reads the document back, verifies the digest and promotes the artifact beside the PDF. A checkpoint stored in the earlier inline form (metadata) is still read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/generate/publisher.py retain_document, read_document@wk-IRPT_YCDGEN-69",
+      "ycharts/generate/publication_worker.py checkpoint_pdf, finish@wk-IRPT_YCDGEN-69",
+      "ycharts/generate/tests/test_publication_worker.py test_opal_checkpoint_is_a_reference_to_the_retained_document_and_finish_publishes_the_document@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the choice is named and tested. The family also holds the vendor evidence wrapper, so a retention sweep of EXTRACTION_EVIDENCE sees Opal documents beside vendor ones; the owner may rule a family of its own."
+}
+```
+
+## IRPT_YCDGEN-W3-S14 -- adding OPAL_REPORT_PDF changes irpt-x10-v1's policy_sha256, and a retention row stored under the old digest is refused 'retention binding changed' by a deployed registry that carries the new one
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "Registering OPAL_REPORT_PDF changes irpt-x10-v1's policy_sha256 from e0046398... to a65635d3..., and retention.py refuses any retained artifact stored under the old digest once the deployed registry carries the new one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R9 (1): add family OPAL_REPORT_PDF to irpt-x10-v1 with the retention fields of its sibling.",
+  "world_is": "reporting_policies.json now holds 14 families in irpt-x10-v1 (OPAL_REPORT_PDF, table opal_report_documents, added). reporting_policy('irpt-x10-v1')['policy_sha256'] is a65635d318c6c10f9466fc831c36417a3c934294ed3e27391bbfcbc4fd62c3ab; before it was e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85 (test_s12_active_policy_row_is_unchanged pinned it; re-pinned in this cell's test file). reports/retention.py:108-113 compares each stored retention row's policy_sha256 with the packaged registry's and raises RetentionRefused('retention binding changed') on a difference; generate_installed.py:105-110 and status_installed.py:125 publish the digest as destination_revision. Nothing here deploys: the packaged registry in the live Lambda still carries the old digest until the issuer's deploy.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/reporting_policies.json OPAL_REPORT_PDF@wk-IRPT_YCDGEN-69",
+      "infra/aws/lambda/investor-reporting/reports/retention.py:108-113@wk-IRPT_YCDGEN-69",
+      "lib/tests/test_irpt_destination.py ACTIVE_ROW_SHA@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: loud (RetentionRefused) at the first read of an already-retained artifact (a vendor PDF, a composition, a report) after the registry with the new digest is deployed. The issuer deploys the registry and the code together and reads whether the existing retention rows carry the old digest; retention.py and the live rows are not this cell's. reports/tests (retention, generate_installed: 31 tests) pass in this worktree."
+}
+```
+
+## IRPT_YCDGEN-W3-S15 -- produce retains the PDF only when its caller injects an artifact store, and no caller of produce injects one yet
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "opal_producer.produce retains the PDF through put only when stores carry artifacts; resident_worker (cell d-6) is the caller that must inject it and hand the returned artifact_ref to the checkpoint.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R9 (2): produce retains the PDF through put and returns the retained artifact_ref; the publisher takes that ref.",
+  "world_is": "produce(request_ref, firm, stores) keeps its signature. With stores['artifacts'] (an ArtifactRepository-shaped put) it retains the PDF as OPAL_REPORT_PDF (logical id request-overview-<sha256>, dependencies stores['retention_dependencies']) and returns the run record with artifact_ref; without it the PDF still goes to the ycharts_opal_reports S3 family and the record has no artifact_ref (the 12 earlier producer tests build stores without it and must keep passing). resident_worker.py is d-6's file and was not read here for its call.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/research/opal_producer.py produce@wk-IRPT_YCDGEN-69",
+      "ycharts/research/tests/test_opal_producer.py test_produce_retains_pdf_artifact_through_put_and_returns_its_artifact_ref@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: a live Opal request whose caller omits artifacts writes the PDF to S3 only, has no ref, and the publisher refuses it (RETAINED_OPAL_PDF_REQUIRED). The caller also passes the accepted composition's retention ref as retention_dependencies and then calls checkpoint_pdf with pdf_ref=record['artifact_ref'] and metadata=the document."
+}
+```
+
+## IRPT_YCDGEN-W3-S16 -- with the PDF retained, the run record's report.key still names the layout's ycharts_opal_reports address, where no object is written
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:29:10Z",
+  "one_line": "When the PDF is retained as an artifact, run.json's report.key (the layout's own key) names an S3 address nothing is written to; the retained location is artifact_ref.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R9 (2): the PDF is a retained artifact; run.json's report key is the layout's.",
+  "world_is": "layout_overview.finish sets report.key from _report_key(run_doc) and produce checks it equals the builder's ycharts_opal_reports address. In the retained path produce skips the S3 put of the PDF, so that key is an address with no object, and the record's artifact_ref (top level) is the true location. Left as is: the layout and run.json shape are not this cell's, and the check keeps the key equal to the builder output.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ycharts/research/opal_producer.py produce@wk-IRPT_YCDGEN-69",
+      "ycharts/research/layout_overview.py finish (1157-1172)@wk-IRPT_YCDGEN-69"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a reader of run.json who follows report.key finds nothing; the reader should follow artifact_ref when present."
+}
+```
+
+## IRPT_YCDGEN-W3-S17 -- resident_worker.py still retains the Opal PDF under OPAL_REPORT_PDF, which no policy registers after l-6, and the deployed composition does not opt in to the research revision
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S17",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:55:30Z",
+  "one_line": "ycharts/generate/resident_worker.py:122 (OPAL_PDF_FAMILY = OPAL_REPORT_PDF, put at :429) and its test file are outside cell l-6's paths; with l-6 the worker's put refuses and 4 tests of test_resident_worker.py fail; reports/resident_installed.py builds the repositories without the research revision.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Cell l-6: the producer, publisher and publication worker name YCHARTS_OPAL_REPORT where they named OPAL_REPORT_PDF; paths exclude resident_worker.py and test_resident_worker.py.",
+  "world_is": "After l-6 publication_worker and publisher require pdf_ref family YCHARTS_OPAL_REPORT, but resident_worker.py:122/:429 puts the PDF as OPAL_REPORT_PDF (no longer registered anywhere). test_resident_worker.py::test_allow_listed_principal_opal_producer, test_one_producer_per_request, test_one_producer_per_request_a_retained_opal_pdf_publishes_without_producing_again and test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error fail with RequestReadRefused at publication_worker.py:76 (base checkout: 53 passed, 8 skipped before l-6). test_resident_worker.py:51 and :697 also name OPAL_REPORT_PDF. Cell l-6 adds the mechanism instead: composition.build_retained_repositories(additional_policy_revisions=('irpt-ycdgen-research-v1',)) and ArtifactRepository(revisions={family: revision}) / put(policy_revision=...) retain a family under its own revision; reports/resident_installed.py (build_resident_runtime) does not pass it, since test_resident_installed.py cannot run here (S18) and the order does not wire the deployment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:122,429@wk-IRPT_YCDGEN-72",
+      "infra/aws/lambda/investor-reporting/reports/composition.py build_retained_repositories@wk-IRPT_YCDGEN-72",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:253-256@wk-IRPT_YCDGEN-72"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the live Opal request would fail at the PDF put (unregistered family) until a cell renames the family in resident_worker.py and its test, passes the research revision in resident_installed.py, and the row irpt-ycdgen-research-v1 is ACTIVE (CTO acceptance, ruling item 5)."
+}
+```
+
+## IRPT_YCDGEN-W3-S18 -- reports/tests/test_resident_installed.py::test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails on the base checkout with ModuleNotFoundError: extract
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S18",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:55:31Z",
+  "one_line": "One test of a file under l-6's reports/tests/*.py fails identically before and after l-6: resident_worker.py:20 imports extract, which is not on that test's path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell l-6: keep every existing test in the touched files passing.",
+  "world_is": "python -m pytest reports/tests/test_resident_installed.py -q gives 1 failed, 13 passed in the worktree and in the base checkout (no l-6 change): ModuleNotFoundError: No module named 'extract' at ycharts/generate/resident_worker.py:20. Not caused by this cell; reports/tests/test_resident_installed.py was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py test_factory_returns_exactly_the_resident_shape_without_any_aws_call@wk-IRPT_YCDGEN-72 and CLOUD base checkout"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: runs of the whole reports/ directory report this one failure; the criteria name test_retention.py and test_publisher.py, which pass."
+}
+```
+
+## IRPT_YCDGEN-W1-S13 -- the Opal Overview element map has no installed home, and the default classifier and research S3 openers read paths the package may not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T00:18:40Z",
+  "one_line": "The producer's `map` store has no file in the investor-reporting package; the installer reads it from an optional pinned `opal_map` binding that no installed bindings file carries yet, and the two default openers reach outside the package.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R11 (1): the factory builds the stores opal_producer.produce takes (holdings reader, classifier, firm-store put, artifacts, clock); the order names no source for the `map` store.",
+  "world_is": "opal_producer.produce requires stores['map'] (the Overview element map). The only maps in the tree are test fixtures and the issuer's close artifact org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/overview_map_r3_close.json; none sits in the package. reports/resident_installed.py now reads it from an optional bindings member opal_map {path, sha256} (pinned by content like the census, read only when a listed principal's job asks, refusing OPAL_MAP_BINDING_REQUIRED / PINNED_FILE_ABSENT:opal_map / PINNED_FILE_DIFFERS:opal_map). The shipped resident_bindings.json is not in this order's paths and carries no opal_map. Two defaults are also unproven offline: the classifier opener calls layout_overview._default_classifier(), which imports etf_classifications_dynamodb from the Lambda's v2_portal/_shared folder (absent from an installed investor-reporting package, then LayoutRefused), and the firm-store opener calls runner.research_s3 (an STS assume of the firm's ycharts-research role). Both were exercised only as injected fakes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py make_opal_stores, _opal_map_loader, _open_research_s3, _open_classifier@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _default_classifier@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/research/runner.py research_s3@wk-IRPT_YCDGEN-73"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the issuer, at release: (a) installs the map file beside the resident module and adds opal_map {path, sha256} to resident_bindings.json, (b) confirms the classifier client module is importable on the host, (c) confirms the firm research role is assumable by the host role. Until then a listed principal's job raises loud on every receive and is retried by the queue; the placeholder allow list keeps every real principal on the YCharts path."
+}
+```
+
+## IRPT_YCDGEN-W1-S14 -- the worker prefers the artifact_ref produce returns, and keeps the objects-port retention for a producer that returns none
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T00:18:40Z",
+  "one_line": "run_opal reads artifact_ref from the run record produce returns and checkpoints it as is; with none it still retains the PDF captured from the objects port, now as YCHARTS_OPAL_REPORT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R11 (2): the artifact_ref produce returns reaches the publisher's checkpoint; W3-S17: rename OPAL_REPORT_PDF at the two lines.",
+  "world_is": "resident_worker.run_opal had one retention route (capture the PDF from objects.put_object, put it as OPAL_PDF_FAMILY). With the repository's artifacts in the stores, produce retains the PDF itself (so objects.put_object never sees it) and returns artifact_ref; the old route would have found no PDF and ended the job ATTENTION OPAL_PRODUCER_OUTPUT. The worker now takes the returned ref when present and keeps the old route for a producer without it (the existing fake-producer tests of test_resident_worker.py). The legacy put passes no policy_revision: the repository's family-to-revision map decides it, so a repository built without the research revision refuses it loudly. OPAL_PDF_FAMILY is now YCHARTS_OPAL_REPORT; test_resident_worker.py registers that family in its fixture registry in place of OPAL_REPORT_PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py run_opal@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_opal_thread_integration.py test_opal_artifact_ref_reaches_checkpoint@wk-IRPT_YCDGEN-73"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: tested both ways (the thread test fails with OPAL_PRODUCER_OUTPUT when the worker ignores the ref). The legacy route is dead code in the installed service once the installer supplies artifacts; the release that deletes the YCharts producer may delete it. Also: reports/tests/test_resident_installed.py now puts ycharts/extract on its test path, so the whole file passes run alone (the cure of row W3-S18, whose one failing test was the only one importing resident_worker)."
+}
+```
+
+## IRPT_YCDGEN-W1-S15 -- the gate learns the opal map's repo path from the bindings provenance, and --research under --base-pin reads P's tree
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T01:37:30Z",
+  "one_line": "R13 names no way for the gate to find the opal map's repo path, nor which tree --research reads under --base-pin; the worker chose provenance.opal_map_source and the base tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R13 (2) packages --opal-map REPO_PATH as ycharts/research/overview_map.json; (5) the gate compares each listed member to git show <pin>:<path> and every other member to git show P:<path>; (1) --research packages the research files 'at the pin'.",
+  "world_is": "The map's package name (ycharts/research/overview_map.json) is not its repo path (org/missions/.../maps/overview_map.json), and the gate takes only --base-pin and --files-from, so it cannot invert the name. The builder therefore records provenance.opal_map_source (the repo path) in the bindings and the gate reads it from the package's own bindings; the map is always expected from --pin, never P. Under --base-pin the --research files are read from P's tree like every other rule member (a research file that P lacks must be in LIST), because the spec says no unlisted member differs from P. The gate also fails when a listed path is not in the package. A build without --opal-map carries no opal_map_source and a build with no flags adds no key (test default_build_unchanged compares against the builder at 4d2331db75).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py main@wk-IRPT_YCDGEN-74",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/resident_package_gate.py main@wk-IRPT_YCDGEN-74",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/tests/test_build_resident_package_listed.py@wk-IRPT_YCDGEN-74"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: one extra provenance key and one extra gate read; both are covered by the tests. The issuer may rule the key name."
+}
+```
+
+## IRPT_YCDGEN-W1-S16 -- f-6 AC5 cannot pass on the contract's own List statement: the check reads the condition key "s3:prefix" as a second action
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T02:12:30Z",
+  "one_line": "f-6.check.py AC5 collects every quoted s3:<word> in the List statement as an action, so the Condition key s3:prefix that R14 (5) requires makes it FAIL; the HCL follows R14 literally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R14 (5) ListTheHeldFundCharacteristicsFolder: Action [s3:ListBucket], Condition { StringLike = { \"s3:prefix\" = [\"bbg/\", \"bbg/*\"] } }; AC5 passes when that statement is correct.",
+  "world_is": "AC5 runs re.findall of a quoted s3:<letters> token over the statement block and demands exactly [\"s3:ListBucket\"]; the required Condition key \"s3:prefix\" is also a quoted s3:<letters> token, so findall returns [\"s3:ListBucket\", \"s3:prefix\"] and the check prints `f-6.AC5 RESULT: FAIL list statement missing, wrong, or not cut to the bbg/ prefix`. Measured on the worktree resident.tf (statement present, action exactly s3:ListBucket, resource exactly \"arn:aws:s3:::opal-data-etfs\", condition exactly as R14 (5)). The worker did not reshape the HCL (an interpolated key, or a key moved out of the statement) to defeat a defective regex; AC1-AC4 and AC6 PASS. The fix is in the issuer's check (match the action list from the Action line only), outside the worker's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/checks/f-6.check.py (AC5 branch) main@wk-IRPT_YCDGEN-77",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf (ListTheHeldFundCharacteristicsFolder) main@wk-IRPT_YCDGEN-77"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a check-side defect; the HCL is the contract's. The issuer amends the check or grades AC5 on the statement's text."
+}
+```
+
+## IRPT_YCDGEN-S10 -- the resident package does not carry the classification client the Opal producer imports
+
+```json
+{
+  "id": "IRPT_YCDGEN-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T02:54:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the resident package does not carry the classification client the Opal producer imports; the first Opal request from a listed principal ends as an ATTENTION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Branch B installed (ledger irpt-ycdgen-r6-branch-b-20261006 V1): a listed principal's request is served by the Opal producer, which reads classifications through ETFClassifier.",
+  "world_is": "layout_overview._default_classifier imports etf_classifications_dynamodb, else looks for HERE.parents[2]/v2_portal/_shared. In the installed package HERE is <root>/ycharts/research, so parents[2] is /opt/irpt-resident, which has no v2_portal; the module lives in infra/aws/lambda/v2_portal/_shared (MDPF_SECCLASS's file) and is in no packaged directory. resident_installed._open_classifier calls it, so the producer raises LayoutRefused before any output and the job ends ATTENTION for the listed principal; other principals are unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host read SSM 30b2fdeb (host_real_stack_reads.sh, root 09139ee34d-st23): 'No module named etf_classifications_dynamodb' with the package paths on sys.path",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _default_classifier; reports/resident_installed.py _open_classifier",
+      "the module imports only boto3 and botocore (357 lines)"
+    ]
+  },
+  "notes": "Not found by any fake-backed test because every test injects a classifier. Fix: package the one file as ycharts/research/etf_classifications_dynamodb.py (the research directory is on sys.path when load_opal_producer runs, so the first-try import finds it); needs a builder member mapping (cell YCD-n-6). Until then Andrew's own requests fail by name; nobody else is affected. F1 is held."
+}
+```
+
+## IRPT_YCDGEN-S11 -- pyarrow is not installed on the resident host, so the held fund characteristics (81 of the Overview map's 153 held groups) read INPUT_MISSING
+
+```json
+{
+  "id": "IRPT_YCDGEN-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T02:54:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "pyarrow is not installed on the resident host, so the held fund characteristics (81 of the Overview map's 153 held groups) read INPUT_MISSING",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Opal Overview reads the Bloomberg characteristics parquet under opal-data-etfs/bbg/ for 81 held groups.",
+  "world_is": "host pydeps and the system python3.12 carry no pyarrow (pydeps probe SSM 8d5e6fd5); layout_overview._read_characteristics imports pyarrow.parquet; opal_producer._characteristics_reader catches any exception and returns None, so those elements read INPUT_MISSING:<table> with the reason on the page. The IAM path itself works: ListBucket read 31 dated folders, latest bbg/2026-10-02/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host read SSM 30b2fdeb and 8d5e6fd5",
+      "opal_producer.py _characteristics_reader"
+    ]
+  },
+  "notes": "Inert for FWD-1's thread (cover, holdings with the table's names and classes, allocation by the table's classes do not read characteristics) and honest by contract (a figure Opal cannot work out says so with the reason). A host dependency (a pyarrow wheel into pydeps through S3) is its own act with its own half; the sector and look-through pages (FWD-13) need it."
+}
+```
+
+## IRPT_YCDGEN-S12 -- the Analysis tab lets an internal user submit with no firm selected; the request then fails as UNEXPECTED
+
+```json
+{
+  "id": "IRPT_YCDGEN-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T13:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the Analysis tab lets an internal user submit with no firm selected; the intake function refuses it as BucketUnmapped, shown to the user as 'Needs attention' with no reason",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A submit from the Analysis tab either carries the firm the request is for or the page asks for one first.",
+  "world_is": "F1 walk 2026-10-06 ~13:03Z, Andrew signed in as andrew@opalinvest.com: the page showed 'Needs attention -- areq-efd72c44'; the resident host saw no job (0 rows naming it, 0 handled polls); irpt-ycharts-generate logged operation comparison-catalogue, exception BucketUnmapped 'no directory bucket declared for firm token in IRPT_DIRECTORY_BUCKET_MAP', public code UNEXPECTED. The map holds 49financial, cottonwood, inflection. CTO read (msg 105558): an internal principal is tenant opal-capital unless the request names selected_tenant, and opal-capital is unmapped. The firm token in the request is NOT in the log, so this is inferred, not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-ycharts-generate stream 2026/10/06/[$LATEST]3731eb19282f4b7684ea79bbb91ba11d, correlation_id corr-a589f1e24fb0",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/F1_AREQ_READ_20261006.txt",
+      "IRPT_DIRECTORY_BUCKET_MAP read from the live function configuration"
+    ]
+  },
+  "notes": "Owner of the fix is a next-round portal cell (the composer asks for a firm before Generate) and the intake's reason code (UNEXPECTED hides BucketUnmapped; CTO says r58 ships a named code). F1 retries with Cottonwood selected in the firm selector."
+}
+```
+
+## IRPT_YCDGEN-W2-S16 -- on a served Global wire the picked client's scope already holds its firm as registryTenant; the empty tenant comes from the no-tenant composer mount and fallback, not a lost field
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-06T13:34:00Z",
+  "one_line": "For a Global principal who picked a client, selectedScope.registryTenant and the global firm's tenant both hold the firm on the repo's served-wire fixture; the empty tenant comes from GenerateComposer reading and submitting with the bootstrap scopeRef, which carries none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-p-6 section 3: measure what selectedScope.registryTenant and the global firm's tenant hold, then fix the one place it is lost.",
+  "world_is": "Through the real strict reader (readDirectoryResolution) on tests/opal-scope/server-wire.json with the first member relabelled cottonwood: registryTenant=cottonwood, globalFirm.tenant=cottonwood, verifiedRequestFirm.tenant=cottonwood, scope.scope.tenant=the opaque fir_ id, principalClass=global. The Global arm of the reader refuses a scope without registry_tenant, so no field is lost in the adapters. The paths that carry no tenant are AnalysisTab's `selectedScopeRef ?? scopeRef` (the bootstrap ref has no selectedTenant, mounted before any client is accepted) into GenerateComposer, whose effect called fetchCatalogue(undefined) and whose submit sent no selected_tenant. The fix is therefore a guard (no read, no send, a plain-words line when the tenant is missing) plus selectedTenantFor reading the global firm's tenant first. The live wire at 2026-10-06 ~13:03Z was not read here (no live call is permitted to a worker).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun portal/scripts/global-tenant-exercise.mjs global (MEASURE line)",
+      "portal/src/pages/InvestorReporting/contracts/directory-context.ts lines 77-88"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer's live close still shows a request with no firm after this lands, the live wire or the row's firmId differs from the fixture; the exercise's MEASURE line is the thing to compare."
+}
+```

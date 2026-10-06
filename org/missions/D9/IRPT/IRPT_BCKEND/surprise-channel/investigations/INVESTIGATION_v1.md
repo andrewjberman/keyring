@@ -18398,3 +18398,137 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the object read has no entries to count; the field counted is entry_count, which matches the 4,620 / 292 / 258 the order states."
 }
 ```
+
+## IRPT_BCKEND-S338 -- Inflection's holdings_performance_daily gold lacks a partition for three 2026 trading days (05-11, 06-30, 08-10); ledger irpt-inf-performance-serving-20261002 leg A1 cannot close
+
+```json
+{
+  "id": "IRPT_BCKEND-S338",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T00:12:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Inflection's holdings_performance_daily gold holds no date= partition for 2026-05-11, 2026-06-30 and 2026-08-10, three trading days of 2026, so leg A1 of ledger irpt-inf-performance-serving-20261002 (a trading day without a partition FAILS it, CTO batch 202 section 1) cannot close although the 10-05 14:00Z scheduled fire itself landed 2026-10-02 with 974 rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 --bucket opal-data-inflection --prefix irpt/inflection/gold/holdings_performance_daily/ --delimiter / : 1615 date= partitions, min 2020-04-27, max 2026-10-02 (the bucket opal-data-inf holds nothing at that prefix; a first listing there returned None and was not read as an absence)",
+      "lib/trading_calendar.py is_trading_day over 2026-01-01..2026-10-02: 189 trading days, 3 missing from the listing: 2026-05-11, 2026-06-30, 2026-08-10",
+      "CloudWatch /aws/lambda/irpt-inf-holdings-performance-lambda 2026-10-05 14:00Z: computing date=2026-10-02 upload=True; 2026-10-02 rows=974 LANDED computable=798 not_computable=176 complete=True census OK 798 NON-POSITIVE-BASE 176; EMIT 1 day(s) landed, 0 not computed"
+    ]
+  },
+  "spec_asserts": "Ledger leg A1 (amended per CTO batch 202 @8da55ee13b): census + rows landed, AND every trading day of 2026 through the fire's day has a date= partition under Inflection's holdings gold; a trading day without one FAILS A1.",
+  "world_is": "MEASURED: the first half holds (the scheduled fire landed 2026-10-02, census complete). The second half does NOT: 3 of 189 trading days have no partition. NOT MEASURED: whether Inflection had positions on those three days (a no-data day would be a legitimate gap the calendar cannot see), and whether the adapter's missing-trading-day disclosure (round 36 D1) names them. The leg stays OPEN; this seat did not backfill (a landing is a write and the producer's dry-run census is the CTO's condition)."
+}
+```
+
+## IRPT_BCKEND-S339 -- the resident package builder ships the whole tree at its pin: other seats' unreleased merges ride every resident build
+
+```json
+{
+  "id": "IRPT_BCKEND-S339",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T01:17:33Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "build_resident_package.py packages the WHOLE tree at its --pin (no member override by default), so any resident build ships every merged-but-unreleased change of every seat under the package directories; the resident build of IRPT_YCDGEN round 6 at d2b625e697 would have carried 13 members of other seats' unreleased work, including the IRPT_BCKEND reason-code merges whose release is blocked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py main(): members = every tracked .py/.json/.sh/.md under PACKAGE_DIRS at --pin; the only per-member lever is --override REPO_PATH=PIN",
+      "gate census, 2026-10-06 ~00:50Z: build at d2b625e697 against the running st21 (3f29017cfc) read G5 added 5, changed 23; 10 of the 23 are IRPT_YCDGEN round-6 members and 13 are not: _authz/loaders.py (IB-pr-321, IB-pr-322 @8e6011bda1, @8540c9dd8f), _authz/served.py (IB-pr-320 @cd41c4e24f), _scope/canonical_profile_reads.py, _scope/maintained_sources.py, _scope/retained_input_authorizer.py (IB-pr-321/322), _contracts/ExportBundle.schema.json and docs/contracts/investor-reporting/v1/ExportBundle.schema.json (IB-pr-317 @73d0bbc37b, @239b895bc7), docs/contracts/investor-reporting/v1/routes.json (IRPT_DASHBD DB-b-23 @a414382a19), infra/logic/registry/systems.json (NFRA_SPRINTWIN @4201d79857), ops/owned_requests.py (@44cc631396) and ops/prospect_dates.py (@780c86d763) (the last two are earlier 2.0.0_SA_COO~Y fixes)",
+      "the IRPT_YCDGEN release was instead built from an ephemeral pin of st21 plus the 14 named round-6 files (commit 3d705e700f on scratch branch rel-ycdgen-r6-a): census added 5, removed 0, changed 10, identical 241; ledger irpt-ycdgen-r6-branch-a-20261006 CLOSED"
+    ]
+  },
+  "spec_asserts": "A resident release ships what its never-widen halves sign. The CTO half of IRPT_YCDGEN round 6 signs 'one resident package of the round-6 files'; the whole-tree rule (resident_package_gate.py G2: every member equal to git show <pin>:<path>) contradicts a named scope whenever other seats' merges sit under the package directories.",
+  "world_is": "MEASURED: at d2b625e697 the tree under the package directories differs from the running st21 package by 13 members that no half of this release names, and 2.0.0_SA_COO~P's r57 release (which holds the IB-pr-320..322 reason-code work) is blocked on a CTO ruling, so a whole-tree build would have released it to the resident unsigned. NOT MEASURED: whether P's own earlier resident builds carried the same extras (st21 3f29017cfc was built at a quiet tree). Consequence: every resident build needs a named file list or a base pin plus an overlay list; cell YCD-m-6 (IRPT_YCDGEN round 6 addendum E, CTO ruling 105454) adds that mode to the builder and the gate, and the disarm is that cell merged and used. Until then a builder user must read G5 and refuse any changed member that no signed half names."
+}
+```
+
+## IRPT_BCKEND-S340 -- irpt-export-async-submit-20260927: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S340",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-async-submit-20260927 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change f3995c0d31 (async submit): entry.py: 65 added lines, 59 present live and the other 6 absent from HEAD source too (later-edited); submit_async.py: 134 added, 128 present and 6 later-edited; submit_service.py and submit_async.py are in the live zip",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-async-submit-20260927 leg A1 (next K8 window): ONE POST answers QUEUED with an exr_ revision in under 29 s; the pointer goes BUILDING -> SUBMITTED; the receipt goes NOT_READY -> READY %PDF (or a named FAILED); the grant and receipt name the caller; nothing outside the export's write set.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```
+
+## IRPT_BCKEND-S341 -- irpt-export-receipt-running-20260928: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S341",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-receipt-running-20260928 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change 5c0185fee2 (pending receipt answers RUNNING): entry.py: 19 added lines, 19 present live, 0 absent; 7 removed lines gone from HEAD and absent live",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-receipt-running-20260928 leg A1 (next K8 window): a pending receipt reads RUNNING and the page keeps polling to READY.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```
+
+## IRPT_BCKEND-S342 -- irpt-export-reopen-rule-20260927: the A1 proof was never exercised; the change is present in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S342",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T02:36:15Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-export-reopen-rule-20260927 closed SUPERSEDED on a content read of the running bytes (the change is live), but its A1 proof was NOT EXERCISED: no recorded invoke shows the behaviour; the owed proof is this row (CTO batch 270 item 2).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "change f92445392d (reopen rule): retained_export.py: 6 added lines, 5 present live and 1 later-edited; 4 removed lines gone at HEAD and absent live",
+      "live irpt-export-render CodeSha256 exDoi/uo5eB9RdFt7/xkZ8OD28Pq6bCejYb7n/zitlg= (r58, 2026-10-06 01:35Z); live zip fetched by get-function Code.Location and read member by member",
+      "negative controls: a fabricated line reads absent from the live zip; lines the commit removed and HEAD no longer has read absent from the live member (one zip-wide hit was submit_async.py, not entry.py)",
+      "the ledger's own log and leg proofs carry no invoke for A1 (read in full 2026-10-06); the only live READY export, EXP-e29b5415a06f90f943481c41a1a4821b (pending.json 10-03 22:13:04Z, receipt 22:13:15Z), records no caller and no QUEUED answer, so it is not read as A1 evidence"
+    ]
+  },
+  "spec_asserts": "Ledger irpt-export-reopen-rule-20260927 leg A1 (next K8 window): a second in-scope principal exports READY; a principal missing one account refused; owner unchanged; grant/receipt name the caller.",
+  "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
+}
+```

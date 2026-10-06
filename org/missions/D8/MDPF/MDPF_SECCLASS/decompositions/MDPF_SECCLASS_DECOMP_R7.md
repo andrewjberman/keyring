@@ -78,3 +78,20 @@ FWD-10 are cuttable now ... leg V's 10:15Z read does not gate them".
 
 **Lane:** the new paths of `SC-e-17` and `SC-e-19` need a lane grant (`.owned-paths.yaml`, the CTO's carrier); it is asked in the
 issuance message.
+
+## AMENDMENT (2.0.0_SA_COO~M, 2026-10-06 ~15:0xZ) -- cell `SC-e-20`, on the CTO ruling msg 105604
+
+The round's spec is frozen; this cell is cut on the CTO's ruling, which names the cause (row `MDPF_SECCLASS-S29`: four Cottonwood client
+mixes sum below 1 because the Cottonwood gold class lists lack `multi_asset`) and orders it THIS round.
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `SC-e-20` | `multi_asset` joins the Cottonwood gold class lists (C_06, lib/mix_views, D_04, B_01b) and C_06's sum guard checks the emitted mix; the four affected clients' shares before and after; a read-only census of the same class lists in the 49 Financial and Inflection gold and the portal pages | FWD-2 | NOT-EVALUATED | laptop | SERVED | D, `0.9.0_WK_MDPF_SECCLASS~20` |
+
+- **Write set:** `data/cot/scripts/gold/{C_06.client_mix_timeseries.py, lib/mix_views.py, D_04.client_portal_summary.py, B_01b.classify_new_securities.py}`,
+  `data/cot/scripts/gold/tests/{test_other_admission.py, test_mix_publishes_every_class.py}`,
+  `R9_CHECKS/cot_mix_multi_asset_check.py`, `R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md`, the surprise channel.
+- **Not in the cell:** no deploy, no gold run, no table write (the issuer's act under a never-widen pair, Rule 13); no 49 Financial or Inflection
+  edit (a census gap gets its own amendment); no portal edit unless the census names a gap (then an amendment).
+- **Lane:** granted by the CTO @052024e409 (msg 105612); the cell runs as workstream `~M-COTCLS` of round 7, its write surface disjoint from the other orders.
+

@@ -1964,3 +1964,174 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The producer compares day unions as ordered. A per-fund previous day would be a design change for the issuer to rule on; the write itself is put-on-absence either way."
 }
 ```
+
+
+## MDPF_SECCLASS-S27 -- leg V: CUSIP:808516306 reads unclassified because the producer keys on display.symbol SCGB1
+
+```json
+{
+  "id": "MDPF_SECCLASS-S27",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-05T20:05Z",
+  "one_line": "49financial leg V: CUSIP:808516306 reads unclassified on 9 nodes ($175,356.90) because the producer classifies by display.symbol (SCGB1) and never consults the CUSIP row it was written to serve.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "LEG-V firm=49financial post=2026-10-02 merged 8 of 8 shards: post_classes multi_asset 25, unclassified 9; every unclassified node is key 808516306; reader pin T valid and reconciled",
+      "served node: security_id {CUSIP, 808516306}, display.symbol SCGB1, asset_class unclassified, basis NONE, facts ticker=SCGB1; node 453320103 by contrast shows display.symbol AMECX, basis TABLE, multi_asset",
+      "etf-classifications (key attribute 'ticker') holds CUSIP:808516306 multi_asset / Fixed Mix (updated_by mdpf-secclass-cusip-rows, 2026-10-04T20:15:19Z); no row keyed SCGB1 was read",
+      "holdings_snapshot.py annotate_classification passes display.symbol to classify_security; canonical_lookup(ticker) reads that one key; security_id is never read"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The packet wrote a CUSIP row for 808516306 so the node reads multi_asset.",
+  "world_is": "A CUSIP row serves only a node whose display.symbol is that CUSIP or whose symbol has its own ticker row; a Schwab node carrying a ticker the table lacks never reaches the CUSIP row. Fix options (a served-output move, so never-widen applies): a SCGB1 ticker row, or a producer fallback to CUSIP:<security_id> after the symbol misses.",
+  "notes": "Leg V closes only with this fixed or ruled. Not tested here: whether other firms hold CUSIP-only rows with the same shape; cottonwood and inflection read PASS."
+}
+```
+
+
+## MDPF_SECCLASS-S28 -- FWD-10 first fire wrote BG, BKD and NBIS, which firms hold; BG swaps a region label for a sector label
+
+```json
+{
+  "id": "MDPF_SECCLASS-S28",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T14:08Z",
+  "one_line": "The FWD-10 first writing fire (14:00:25Z) wrote 8 US rows; three are held at firms, and BG would swap a region label (Developed) for a sector label (Consumer Staples), the swap CTO batch 268 held out for HDB and RYAAY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FWD-10 log 14:00:25Z: new_stocks=39 planned_writes=0 written=8 present=30 unresolved=1; list object date=2026-10-06 exists (9,305 bytes); no BLOCKED",
+      "consistent get-item of the 8 written keys: BG Consumer Staples, BKD Health Care, CACI Industrials, GENI Consumer Discretionary, KB Financials, NBIS Information Technology, SPHR Communication Services, THC Health Care; each equity, classified_by scheduled, updated_by rivalfunds-backfill; JAN listed UNRESOLVED and not written (batch 263 condition 2 held)",
+      "the 30 present keys: 30 of 30 last_updated before 14:00Z (unchanged)",
+      "leg V censuses of 2026-10-05 (served nodes, latest revision 2026-10-02): BG held at cottonwood 2 accounts and 49financial 1, today 'equity | Developed | TABLE'; BKD at inflection 1, 'equity | None | TICKER_SHAPE'; NBIS at 49financial 1, 'equity | None | TICKER_SHAPE'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10 half (batch 263 condition 2): a NEW US bare-ticker row is written only with a resolved sub-class; a held US ticker newly entering an ETF gains a TABLE row.",
+  "world_is": "BKD and NBIS move from no sub-class to a GICS sector (an improvement). BG moves from Developed to Consumer Staples at its next three builds, a region label replaced by a sector label, which batch 268 declined to write for HDB and RYAAY pending FWD-12 (sector in its own field). The row was written by the scheduled producer under the signed half, so it stands; a delete is on Andrew's word only.",
+  "notes": "For the CTO: whether the ongoing producer should skip a US key whose held node already reads a sub-class, until FWD-12 lands. That is a producer change for the next round. Not read: dollar amounts of the held BG, BKD and NBIS nodes."
+}
+```
+
+
+## MDPF_SECCLASS-S29 -- Cottonwood leg S: four client mixes sum below 1 on the 10-05 point; the Cottonwood gold scripts have no multi_asset class
+
+```json
+{
+  "id": "MDPF_SECCLASS-S29",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T14:55Z",
+  "one_line": "Cottonwood leg S: the scheduled 11:36Z run's 10-05 point leaves 4 of 219 client mixes summing below 1 (0.904 to 0.973); the Cottonwood gold scripts have no multi_asset class, so a position the table now classes multi_asset drops out of the shares.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cot_client_mix_read.py --since 2026-10-06T11:30Z: 1,101 client files rewritten, 219 mix timeseries with a 10-05 point, 215 sum to 1 within 0.001, 4 do not: z09305578 0.9634, z09305621 0.9041, z09305679 0.9572, z09305703 0.9733 (leg R, 10-01 data: 219 of 219 summed to 1)",
+      "the same four clients summed to 1.0 on every point 2026-09-28 to 2026-10-02; the shortfall first appears on 2026-10-05",
+      "platinum/firm/mix_summary.json (LastModified 2026-10-06T11:38:31Z, data_as_of 2026-10-05): 8 classes, pct sum 0.999524, market_value sum 559,610,115.04 = composition total_market_value",
+      "Grep over data/cot/scripts/gold: 0 files mention multi_asset; C_06.client_mix_timeseries.py:177 MIX_ASSET_CLASSES and B_01b.classify_new_securities.py:48 VALID_ASSET_CLASSES carry no multi_asset",
+      "table rows classed multi_asset were written 2026-10-04 (7 moves, 13 ticker rows, 12 CUSIP rows, ledger secclass-multi-asset-rows-and-remint-m-20261004); leg V read 5 cottonwood packet nodes as multi_asset ($159,905.56, 2026-10-02)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cottonwood re-point acceptance 2 (leg S): the scheduled run's served keys read as in acceptance 1 (client mixes sum to 1).",
+  "world_is": "The client shares leave out a class the table now produces. CAUSE INFERRED, not shown on the four clients: a held multi_asset ticker was not confirmed in their positions; the firm shortfall ($266,374 of the 0.999524 sum) does not equal the holdings read's $159,905 (different source and date). The portal's Cottonwood readers (normalizeMixTo4Class and the legend) also list no multi_asset.",
+  "notes": "Not read: the four clients' positions; the page walk. The UI walker cannot select the Cottonwood partner (page state, no deep link; the press flag drives buttons and tabs, not the select), so the firm Mix chart, Books donut and an advisor Mix chart for Cottonwood were not walked; a 49 Financial Mix chart drew no bars in the walk (plot area empty beside a filled legend and tiles). Leg S stays open."
+}
+```
+
+
+## MDPF_SECCLASS-W20-S1 -- Cottonwood's C_06 reads gold/views/rel_architect_lookup.parquet, which is absent from s3://opal-data-cot, so t
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "Cottonwood's C_06 reads gold/views/rel_architect_lookup.parquet, which is absent from s3://opal-data-cot, so the advisor-level mix aggregation is skipped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.load_static_tables on 2026-10-06 (read only, from cot_mix_multi_asset_check.py): 'WARN: could not load rel_architect_lookup.parquet: NoSuchKey ... skipping advisor aggregation'",
+      "data/cot/scripts/gold/lib/s3_layout.py:151 REL_ARCHITECT_LOOKUP = 'gold/views/rel_architect_lookup.parquet'; list-objects-v2 Prefix gold/views/ in opal-data-cot returned 5 keys: firm_composition.json, mix_daily_summary.json, nna_aua_by_advisor.parquet, nna_aua_by_geography.parquet, nna_aua_by_geography_city.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06's own docstring (_load_rel_architect_lookup): the file may be missing and C_06 then continues with the firm-level mix only.",
+  "world_is": "The file is missing in the live bucket, so an incremental C_06 run publishes no advisor-level mix daily summary. Not read: whether the advisor mix is produced elsewhere for Cottonwood, or when the key was last present.",
+  "notes": "Off-task for SC-e-20; it does not affect the four client mixes. Found when the check script reused load_static_tables."
+}
+```
+
+
+## MDPF_SECCLASS-W20-S2 -- Two Cottonwood gold files outside the SC-e-20 grant still lack multi_asset and change what a multi_asset holde
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "Two Cottonwood gold files outside the SC-e-20 grant still lack multi_asset and change what a multi_asset holder's served composition shows: D_03 drops the class, runners_cot d08 raises on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/D_03.composition_artifacts.py:102-111 _ASSET_CLASS_LABELS has no multi_asset and :387 'for asset_class in _ASSET_CLASS_LABELS' is the only iteration that builds the composition mix, so a multi_asset holding row is never emitted",
+      "data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py:51 known = {equity, fixed_income, alternatives, UNCLASSIFIED-LOUD}; :52-54 raises SystemExit 'CLASS-DOMAIN FAIL' for any other class",
+      "census: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md (36 rows, 28 lacking multi_asset, 22 feeding a served artifact)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-20 names four Cottonwood files; the order's census step says a gap becomes an amendment.",
+  "world_is": "After SC-e-20 the client mix sums to 1, but the composition artifact still has no multi_asset line. Not read: whether D_03's composition total is reconciled against the mix total, whether runners_cot d08 is scheduled, and the Cottonwood effect of D_00 and D_00b (scheduler not read).",
+  "notes": "Reported, not edited: neither file is in the order's paths."
+}
+```
+
+
+## MDPF_SECCLASS-W20-S3 -- The order's premises differ from the tree in four places: the C_06 function is process_date, runners_cot is un
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "The order's premises differ from the tree in four places: the C_06 function is process_date, runners_cot is under data/cot, the guard sat at :467, and the worktree's portal submodule is empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.client_mix_timeseries.py has no process_partition; _process_partition (:140) calls process_date (:392); the sum check was at :467-470 before the edit",
+      "data/assets/scripts/gold/runners_cot does not exist in the worktree or the base checkout; data/cot/scripts/gold/runners_cot has 25 .py and json files",
+      "C:/tmp/wk-secclass-r7-20/portal is an empty directory (git ls-tree HEAD portal = gitlink ec65c5d6); the base checkout's portal working copy is at 481b3bcc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'runs process_partition', 'runners_cot' under data/assets/scripts/gold, portal read from the worktree root.",
+  "world_is": "I used process_date, scanned data/cot/scripts/gold/runners_cot, and read the portal rows from the base checkout's working copy (not the pinned commit). The census says so.",
+  "notes": "The criteria were met as written; only the names differed."
+}
+```

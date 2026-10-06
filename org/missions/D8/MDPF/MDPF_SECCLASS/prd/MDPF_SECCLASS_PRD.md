@@ -5,10 +5,10 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
  "status": "RATIFIED"
 }
 ```
@@ -76,11 +76,13 @@ The section below carries the endpoint's outcomes verbatim.
          can tell which rule a security follows
          DONE WHEN  EXERCISED -- a reader looks up securities on the screens that follow another
                     authority and can say, for each, which rule applied and who owns it
-         ACCEPT     each declared exception names its owner and its reason; a reader of Positioning's
-                    ETF view or the Schwab firm data can tell a class that came from the shared list
-                    from one that came from the declared exception; the old quiet rules such as "treat
-                    hedges as alternatives" or "VXX is equity" are gone, not declared
-         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision)
+         ACCEPT     an exception exists only where Andrew has agreed to that one by name; each names its
+                    owner and its reason; a reader of a screen that keeps one can tell a class that came
+                    from the shared list from one that came from the exception; the old quiet rules such
+                    as "treat hedges as alternatives" or "VXX is equity" are gone, not declared
+         SOURCE     brief O6 (l.68-73); section 2 below (the CTO's decision); Andrew-direct
+                    2026-10-05 21:05Z ("consolidating sector onto this table"); midstream brief O3
+                    (l.80-85)
 
   FWD-7  A security that newly appears in any firm's daily holdings gets its entry in the shared
          list on a regular schedule, before anyone has to notice it
@@ -128,6 +130,75 @@ The section below carries the endpoint's outcomes verbatim.
          SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 4 ("As new stocks enter from trading
                     activity of the Opal ETFs and the Rival ETFs, those stocks should be backfilled and
                     included in the ETFClassifier table through some kind of routine, dedicated mechanism")
+
+  FWD-11 A security that no source Opal already holds can place still gets its entry in the shared
+         list, classified by Opal's AI classifier, and every entry made that way can be listed
+         DONE WHEN  EXERCISED -- the classifier has run on a security nothing else could place, its
+                    entry has been read, and the list of AI-made entries has been read and holds it
+         ACCEPT     a security nothing else can place gets an entry with an asset class, a sub class and
+                    a clean, properly capitalized name, and no person has to review it first. Anyone can
+                    pull up one list of every entry the AI made
+         SOURCE     Andrew-direct 2026-10-05 ~20:2xZ ("new rows are added for unrecognized securities and
+                    theyre cleaned up and proper capitalized in that table") and ~20:5xZ ("Yes add the AI
+                    Classifier. Those can land without human review, but we want an index somewhere of
+                    all those that land by AI")
+
+  FWD-12 The shared list carries each security's sector and industry group, and the Positioning
+         page's ETF view shows sector, industry group, class and sub-class from the shared list
+         DONE WHEN  EXERCISED -- the ETF view opened for one Opal ETF and its holdings' sectors read
+                    against the shared list
+         ACCEPT     every holding in an ETF's view shows the sector and the industry group the shared
+                    list gives it, and the page takes no sector, industry group or class from anywhere
+                    else. The list holds no measurements about a security, only what kind of thing it is
+         SOURCE     Andrew-direct 2026-10-05 21:05Z ("I am ok with consolidating sector onto this table.
+                    The question at that point isw whether the characteristics would need to be handled
+                    here as well, which I'd prefer they were not"); Andrew-direct 2026-10-05 ~20:4xZ
+                    ("consistently using ONLY the canonical ETFClassifier table"); Andrew-direct
+                    2026-10-05 21:49Z (industry group moves onto the list with sector: "Yes agreed")
+
+  FWD-13 An advisor opens any client's Holdings tab on Investor Reporting and every security's
+         class and sub-class is the shared list's
+         DONE WHEN  EXERCISED -- one Cottonwood client's Holdings tab opened and its securities read
+                    against the shared list
+         ACCEPT     every security on the page shows the class and sub-class the shared list gives it.
+                    None is labelled from the old list, from a match on its name, from a word in its
+                    name, or from the shape of its ticker. A security the shared list does not hold is
+                    shown as unclassified, by name
+         SOURCE     midstream brief O1 (l.67-71) and its candidate thread (l.60-65)
+
+  FWD-14 An advisor reads a properly written security name wherever holdings are listed
+         DONE WHEN  EXERCISED -- Andrew has opened a Cottonwood client's Holdings tab and read the names
+         ACCEPT     the name beside each holding is the shared list's clean, properly capitalized name,
+                    not the custody feed's capital-letter string. Andrew opens a Cottonwood client's
+                    Holdings tab and cannot find a security name he would want cleaned up
+         SOURCE     midstream brief O2 (l.73-78) and PART III item 1 (l.149)
+
+  FWD-15 A person filling the shared list can pull, for each firm, the held securities that have no
+         entry, and sees the count reach zero
+         DONE WHEN  EXERCISED -- the list pulled for each of the three firms and read at zero
+         ACCEPT     on demand, for each firm, a person gets the list of held securities with no entry
+                    and its total. It reads zero for all three firms
+         SOURCE     midstream brief O4 (l.87-91)
+
+  FWD-16 Anyone looking at a mix by asset class on any screen can say how the shared list's six
+         classes became that screen's groups
+         DONE WHEN  EXERCISED -- a reader has looked up the mapping for each screen that groups
+                    differently from the shared list
+         ACCEPT     each screen that shows fewer groups than the shared list's six classes has one
+                    stated mapping that the person looking at it can read. Every security that changes
+                    group when a screen switches to the shared list was named before the switch
+         SOURCE     midstream brief O6 (l.100-104) and PART III item 3 (l.152)
+
+  FWD-17 Every security the old Black Diamond list holds has its entry in the shared list, placed
+         again under the shared list's six classes
+         DONE WHEN  EXERCISED -- the count of old-list securities with no entry in the shared list
+                    read at zero
+         ACCEPT     every security in the old list, held today or not, has an entry in the shared
+                    list. Each was placed again under the shared list's own six classes and its own
+                    wording, not carried across as the old list had it
+         SOURCE     Andrew-direct 2026-10-05 21:49Z ("B all of it"; "i meant the asset classes"); his
+                    word of ~21:4xZ the same day ("run it on a 6 field basis with the new
+                    nomenclature/fields as part of the adaptation/reclassifier process")
 
 ```
 
@@ -334,3 +405,237 @@ spec and decomposition stay frozen, with the multi_asset leg V on Monday 10:15Z.
 
 **Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: this is Andrew's own word,
 recorded at site Z, so no CRO brief precedes it.
+
+## ADDENDUM v0.4 (1.0.0_SA_CTO, 2026-10-05 ~21:0xZ) -- an ENDPOINT change: FWD-11 added on Andrew's word
+
+**Word:** Andrew-direct at the `1.0.0_SA_CTO` terminal, three records in `org/tier1_exec/1.0.0_SA_CTO/deliverables/`:
+- `ANDREW_DIRECT_20261005_202xZ_YCDGEN_INHOUSE_ENDPOINT_THREE_CALLS_ANSWERED_CLASSIFICATION_THROUGH_CANONICAL_TABLE.md`
+  ("all security classification for ALL Opal applications passes through that table");
+- `ANDREW_DIRECT_20261005_204xZ_YCDGEN_TYPO_AND_SWAP_AI_PIPELINE_CLASSIFY_IN_ETFCLASSIFIER_SHAPE.md`;
+- `ANDREW_DIRECT_20261005_205xZ_AI_CLASSIFIER_YES_NO_HUMAN_REVIEW_INDEX_OF_AI_ROWS_YAHOO_PRICE_TABLE_OK_IF_NECESSARY.md`.
+
+**What the table does today** (`2.0.0_SA_COO~M`,
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ETF_CLASSIFICATIONS_VOCABULARY_AND_UNKNOWN_ROW_PATH_20261005.md`
+@73a3c60af8): a new security gets a row only from a direct match; one with no match is listed UNRESOLVED; no model is called.
+13 rows are `classified_by model`, landed once from a reviewed set.
+
+**What changed and why (endpoint re-entry):**
+- FWD-7 and FWD-10 were RIGHT and INCOMPLETE: both end at UNRESOLVED when no held source matches. They stand unchanged. FWD-11
+  is added at the next unused number. No outcome is retired.
+
+**Contract notes (bind the next round's cells):**
+- **C-WRITER.** The `model` value already exists in `org/standards/MDPF_SECCLASS_CONTRACT.json` (`classified_by.values`), with its
+  writer `infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py` and its two confidence fields. FWD-11 puts that
+  writer in service after the direct-match plan, for the tickers the plan leaves UNRESOLVED. It writes by the same conditional
+  put, so it never replaces a row. The contract's precedence stands: a seed row always wins, and a correction is made in the seed
+  source.
+- **C-VENDOR.** Andrew's ~20:5xZ word is the recorded word for this use: the AI classifier in this path, with no human review
+  before a row lands. It names no model. The cell uses the model the existing writer already calls and sends what that writer
+  sends today (the security's name and ticker only). A different model, or a wider payload, needs his word.
+- **Value bound.** A model verdict lands only if its `asset_class` and `sub_asset_class` are members of the table's own
+  vocabulary; a verdict outside it leaves the ticker UNRESOLVED. The model never mints a class.
+- **Clean naming.** The row's `name` is written in proper case from the source name, with vendor suffixes and all-caps removed.
+  The rule is one function with a test table, not a model output.
+- **C-AIINDEX (new).** The index of AI-landed rows is the rows themselves: `classified_by = model` with
+  `classification_confidence`, `low_confidence` and the write time. One readable listing of them is rewritten by each classifier
+  run. Builder output printed at this addendum: `address('mdpf','global','gold','ai_classified_securities','date=2026-10-05',
+  object='index.json')` -> `s3://opal-data-mdpf/mdpf/global/gold/ai_classified_securities/date=2026-10-05/index.json`. This amends
+  C-NAMES' "no new S3 address" by this one. A row a later seed run corrects leaves the listing, because it is no longer
+  `classified_by model`.
+- **Consumers named, not built here:** IRPT_YCDGEN PRD v0.4 (C-CLASSIFY, C-RESOLVE) reads the table and asks for a row through
+  this path. It adds no writer.
+- **Moratorium:** the classifier is a scheduled producer. The listing is an artifact, not a notification.
+
+**Placement:** the next MDPF_SECCLASS round, cut by `2.0.0_SA_COO~M` from this seat's next round analysis. The current round's
+spec and decomposition stay frozen.
+
+**Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word, recorded
+at this seat, so no CRO brief precedes it.
+
+## ADDENDUM v0.5 (1.0.0_SA_CTO, clock read 21:06Z 2026-10-05) -- an ENDPOINT change: FWD-6 amended in place, FWD-12 added
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2105Z_SECTOR_CONSOLIDATED_ONTO_THE_TABLE_CHARACTERISTICS_NOT.md`,
+and his word at the `4.0.0_SA_CRO` terminal
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_204xZ_HOLDINGS_SURFACES_ONLY_CANONICAL_ETFCLASSIFIER_TABLE.md`).
+The check behind it: `docs/briefs/holdings-surfaces-canonical-classifier-check-20261005.md` @35859eb97d, placed by
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261005_2056Z_HOLDINGS_SURFACES_CANONICAL_ONLY_INTO_MDPF_SECCLASS.md`.
+
+**What changed and why (endpoint re-entry):**
+- FWD-6 was WRONG in one member: it named Positioning's ETF view as a declared exception. Andrew's "ONLY" removes it. FWD-6 is
+  amended in place, id unchanged; the Schwab firm data stays a declared exception, since no word of his names it.
+- FWD-12 is added at the next unused number. No outcome is retired.
+
+**Read by this seat (measured):** `data/etfs/scripts/gold/etf_positioning_gold.py:986-1009` and `:1208-1219`. The ETF producer
+takes each holding's `GICS_SECTOR_NAME` from the daily Bloomberg characteristics file and serves it as `sub_asset_class`, accepted
+only if it is one of the 11 adopted names (`:121-150`); `asset_class` comes from the cash flag. The table has no sector field:
+its equity `sub_asset_class` mixes ten GICS names with size and region labels (`2.0.0_SA_COO~M`'s scan @73a3c60af8).
+
+**Contract notes (bind the next round's cells):**
+- **C-SECTOR (new).** One new attribute on `etf-classifications`, its name and closed values declared as data in
+  `org/standards/MDPF_SECCLASS_CONTRACT.json` with the four-postulate record and a token census (rule 24). It is NOT the legacy
+  `sector` attribute (179 seed rows of another grain), which keeps its bytes. Its values are the 11 names the ETF producer
+  already adopts, so the page's vocabulary does not change. `sub_asset_class` is not rewritten by this change.
+- **The writer.** The Bloomberg characteristics file is an INPUT: a scheduled writer copies `GICS_SECTOR_NAME` onto the security's
+  row. A correction is made in the seed source and wins, as for every field (C-WRITER).
+- **C-NOCHAR (new; Andrew's preference).** No measurement enters the table: no ratio, market value, yield, duration, beta or
+  price. The characteristics file keeps its home and its readers. The table says what kind of thing a security is.
+- **C-DEPARTURE** loses its Positioning member when FWD-12's move lands; until then it stands as written.
+- **The move is a served-output move** (C-SERVED): per ETF, the sector of every holding is listed before and read after, and
+  delta 0 is the expected read. A holding the table lacks is added first (FWD-9, FWD-10, FWD-11), never shown blank.
+- **Not decided:** the ETF view's finer level, `industry_group`, stays on its current path until Andrew says.
+
+**Placement:** the next MDPF_SECCLASS round. The current round's spec and decomposition stay frozen.
+
+**Sign-off:** an ENDPOINT change, so `3.0.0_SA_CVO` re-signs the ratified-text half. The brief half: Andrew's own word.
+
+## ADDENDUM v0.6 (1.0.0_SA_CTO, clock read 21:12Z 2026-10-05) -- form only, on `3.0.0_SA_CVO`'s refusal of the v0.5 half
+
+Review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS_PRD_V05_RATIFIED_TEXT_REVIEW_20261005.md` @4d959d5ee5. Two SOURCE
+lines in the ENDPOINT block are corrected: FWD-6's carries no dated history clause (ADDENDUM v0.5 records the amendment), and
+FWD-12's names no seat serial. No outcome's meaning changes.
+
+**Andrew-direct, 21:12Z at this terminal:** "I am having CRO run an analysis and brief of this. It seems like this should be able
+to be folded into the MDPF_SECCLASS project." Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2112Z_CRO_BRIEF_ON_SECTOR_FOLD_INTO_MDPF_SECCLASS.md`. FWD-12 and
+ADDENDUM v0.5 are that fold as this seat wrote it from his direct words, before the brief. When the brief lands, this seat
+reconciles FWD-12 and the contract notes to it here, by amendment or a next-id outcome. No second project is opened.
+
+## ADDENDUM v0.7 (1.0.0_SA_CTO, clock read 21:27Z 2026-10-05) -- an ENDPOINT change on the midstream brief: FWD-6 amended, FWD-13 to FWD-16 added
+
+**Brief (L1, midstream):** `docs/briefs/mdpf-secclass-one-classification-table-midstream-brief-20261005.md` @6636ceef4c, 252 lines,
+on Andrew's word at the research seat's terminal
+(`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_211xZ_ONE_CLASSIFICATION_TABLE_CONSOLIDATE_BD_SECURITIES.md`).
+Evidence: `docs/briefs/one-classification-table-consolidation-analysis-20261005.md`. Its measurements are the brief's; this seat
+re-measured none. NOT READ at this re-entry: the analysis file itself, the task-order register, the decompositions.
+
+**The brief's finding: the direction is unchanged.** It asks for one outcome the endpoint lacked, one exception closed, and
+surfaces the manifest did not name.
+
+| Brief | Endpoint | What happened |
+|---|---|---|
+| O1 the Holdings tab reads only the shared list | FWD-13, new | RIGHT and INCOMPLETE: FWD-2 says "one answer" but no outcome owned this page. It is the thread of this phase |
+| O2 clean names wherever holdings are listed | FWD-14, new | missing: FWD-11 promised a clean name only for rows the AI makes |
+| O3 no second authority without Andrew's say | FWD-6, amended in place | an exception now needs his agreement by name |
+| O4 the missing list, pulled on demand, reaching zero | FWD-15, new | the staying-at-zero half is FWD-7, unchanged |
+| O5 sector from the shared list on the ETF view | FWD-12, unchanged | the field question is C-SECTOR (ADDENDUM v0.5): a new field, not `sector`, not `sub_asset_class` |
+| O6 six classes to each screen's groups | FWD-16, new | -- |
+| O7 no ticker list in the portal | FWD-4, unchanged | "anywhere in Opal's code" already includes the portal; the surfaces are named below |
+| O8 nothing reads or writes the old list, then it is deleted | FWD-5, unchanged | the newly found readers and writers are named below |
+
+**Rulings this re-entry closes (the brief's two "the CTO may need"):**
+1. **FWD-11's word covers the securities labelled by ticker shape today** (the brief counts 668). FWD-11's text is "a security
+   that no source Opal already holds can place"; a guess from a ticker's shape is not a source. They go to the AI classifier
+   after the direct-match plan, like any other.
+2. **Whether FWD-6 reaches the Schwab firm composition is Andrew's.** Until he says, that exception stands and FWD-6 does not
+   grade REALIZED.
+
+**Contract notes (bind the next round's cells):**
+- **The Holdings fallback ends.** Ruling 103169's declared exception (the old list plus three guess layers behind the shared
+  list) is withdrawn by FWD-6 as amended. It is REMOVED only after the shared list holds the securities it labels today; removal
+  is a served move per firm (C-SERVED), every moving security named first.
+- **The `CUSIP:` lookup (RULINGS batch 266, option (b), now RULED IN).** The brief measures 187 held securities that have a
+  `CUSIP:<id>` row the Holdings producer never tries. The producer reads `CUSIP:<security_id>` after a symbol miss. It is a
+  second key form of the same list, not a second authority. Its own half, with the 187 listed.
+- **The old list stops growing first.** Three writers add rows to it daily (brief PART V). Each is stopped, as a named cell in
+  its own tree, before FWD-5's check can read zero.
+- **A key form for a security with no ticker and no CUSIP** (the brief counts 58 held). It is declared in
+  `org/standards/MDPF_SECCLASS_CONTRACT.json` with the four-postulate record before any such row is written.
+- **Names (FWD-14).** The clean-name rule of ADDENDUM v0.4 applies to every row, not only model rows. The Holdings page prints
+  the list's name; the custody description stays available as its own field. The published `HoldingsSnapshot` contract changes
+  with its consumer first (the page refuses a field it does not know).
+- **Which security is this.** Working out which security a custody name refers to keeps a home after the old list is gone; it
+  reads the shared list and writes nothing to it.
+- **Boundary.** The list is this project's. The Holdings producer and `HoldingsSnapshot` are IRPT_BCKEND's Holdings workstream;
+  the ETF producer is ETFS_POSITIONING's; each firm's chain is its own tree. A cell that touches one of them is cut in that
+  owner's tree and ships through that owner's release.
+- **Surfaces the manifest did not name (brief 0.2), added as S21 to S26:**
+
+| id | outcome_ref | surface | claim | owner |
+|---|---|---|---|---|
+| S21 | FWD-13, FWD-14 | `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` and `bd_securities_fallback.py` | held (brief); `:938-972` and `:999-1011` measured by this seat today | IRPT_BCKEND Holdings workstream |
+| S22 | FWD-5 | `infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py`, a reader of the old list | held (brief) | the news pipeline |
+| S23 | FWD-4 | `portal/src/pages/Attribution/constants/etf-categories.ts`, `holdings-shared.tsx` | held (brief) | portal |
+| S24 | FWD-4 | `portal/src/lib/tickerRegistry.ts` | held (brief) | portal |
+| S25 | FWD-5 | `data/black_diamond/scripts/classification/resolve_tickers.py` | held (brief) | the Black Diamond chain |
+| S26 | FWD-16 | the geography list in `yang-generate-positioning/lambda_function.py:95` | held (brief) | the yang pipeline; no home in the list is decided |
+
+**Placement:** the next MDPF_SECCLASS round, cut from this seat's round analysis. The current round stays frozen.
+
+**Sign-off:** an ENDPOINT change, so the ratified-text half re-opens. The brief half: the brief's author is the research seat.
+The four new DONE WHEN lines are put to Andrew for confirmation.
+
+## ADDENDUM v0.8 (1.0.0_SA_CTO, clock read 21:31Z 2026-10-05) -- contract notes only: two of ADDENDUM v0.7's rulings answered by Andrew
+
+**Word:** Andrew-direct at the research seat's terminal, "Recs approved", record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_213xZ_THREE_RECS_APPROVED_AND_CIK_QUESTION.md`
+@a998e96856 (relayed by msg 105404). The ENDPOINT section is not edited.
+
+- **The AI classifier covers the 668 securities labelled today by a guess** (his card 1, with the index of AI-made rows as the
+  condition already set). This confirms ADDENDUM v0.7 ruling 1; it is now his word, not this seat's reading.
+- **The Schwab firm composition stays an exception, agreed by name** (his card 3: "keep it as the one named exception for now;
+  revisit once the canonical table covers every held security"). This answers ADDENDUM v0.7 ruling 2. Under FWD-6 as amended it
+  is the one exception that exists; C-DEPARTURE names it and nothing else once FWD-12's move lands.
+- **Not a ruling:** in the same record he asks whether a CIK field belongs on the table beside sector. It is a question, answered
+  to him by the research seat; nothing is added to the table's shape on it.
+
+## ADDENDUM v0.9 (1.0.0_SA_CTO, clock read 21:33Z 2026-10-05) -- contract notes only: no CIK field for now; the old list migrates through reclassification
+
+**Words:** two Andrew-direct records at the research seat's terminal, @e21062c19b (relayed by msg 105407):
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_213xZ_NO_CIK_FIELD_FOR_NOW.md` and
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_214xZ_LEGACY_MIGRATION_RECLASSIFIED_ONE_TABLE_FOR_CONSISTENCY.md`. The ENDPOINT section is
+not edited.
+
+- **No CIK field.** "No we can hold off of CIK for now ... ticker is probably stable enough for that if need be." The table's
+  shape gains sector (C-SECTOR) and nothing else. "For now" is his qualifier: a hold, not an exclusion.
+- **The old list's rows reach the shared list through reclassification, never as they are.** His words: "we would have to run it
+  on a 6 field basis with the new nomenclature/fields as part of the adaptation/reclassifier process." This agrees with what
+  already binds here: the shared list is never overwritten from the old one (C-WRITER; his rule of 2026-09-29), an old row is
+  read as an INPUT only, and a value lands only if it is a member of the shared list's own vocabulary (ADDENDUM v0.4).
+- **A consumer named by product: Advisor Intelligence.** He says the old list exists because it serves that application. Which of
+  its screens read the old list was not traced by the brief. That trace is a cell of the next round, before any reader there
+  is switched (C-SERVED).
+- **Two points he has not settled, put to him by the research seat, and NOT decided here:**
+  1. "a 6 field basis": the shared list's six asset classes, or six fields per row.
+  2. How much of the old list migrates: the securities held today (the brief counts 2,053 of 10,873 rows labelling something
+     held), or all of it.
+  FWD-15 as written counts HELD securities with no entry. If his answer to point 2 is "all of it", FWD-15's bar changes and this
+  seat amends it then; no cell that fills rows is cut on the wider reading before he says.
+
+## ADDENDUM v0.10 (1.0.0_SA_CTO, clock read 21:49Z 2026-10-05) -- an ENDPOINT change on Andrew's five answers: FWD-12 amended, FWD-17 added
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2149Z_FIVE_CALLS_ALL_OF_BD_SECURITIES_SIX_ASSET_CLASSES_INDUSTRY_GROUP_ONTO_TABLE.md`.
+
+**What changed and why (endpoint re-entry):**
+- **FWD-17 is new** (his call 1, "all of it"). FWD-15 was RIGHT and INCOMPLETE: it counts HELD securities with no entry. It stands
+  unchanged, and the whole old list gets its own outcome at the next unused number. This replaces ADDENDUM v0.9's statement that
+  FWD-15's bar would be amended.
+- **FWD-12 is amended in place** (his call 5): the industry group moves onto the list with sector. ADDENDUM v0.5's "not decided"
+  line on `industry_group` is closed.
+- **FWD-13 to FWD-16:** their DONE WHEN lines are confirmed by him (call 3).
+- No outcome is retired.
+
+**Contract notes (bind the next round's cells):**
+- **Six means the six asset classes** (his call 2). The reclassifier places every old row under the shared list's six
+  `asset_class` values; the old list's four classes and its two quiet folds are not carried. FWD-16's mapping is where a screen
+  that shows fewer groups states how the six became its own.
+- **The whole old list, in this order:** securities held today first (FWD-13 and FWD-15 depend on them), then the rest. The
+  research seat's brief counts 10,873 old rows, 2,378 of them already in both lists. Each remaining row goes through the
+  direct-match plan, then the AI classifier (FWD-11), with the value bound and the index of AI-made rows as already set. A row
+  nothing can place is listed UNRESOLVED by name; FWD-17 does not grade REALIZED while that list is not empty.
+- **Key forms.** The old list keys some rows `NAME::<slug>`. The key form for a security with no ticker and no CUSIP (ADDENDUM
+  v0.7) is declared before any such row is written; it now gates part of FWD-17, not only the 58 held.
+- **C-SECTOR gains a second attribute for the industry group.** Same rule: its own new attribute, its closed values declared as
+  data in the contract file with the four-postulate record and a token census. Its source is the Bloomberg industry-group name
+  the ETF producer already reads (`etf_positioning_gold.py`, `GICS_INDUSTRY_GROUP_FIELD`). That producer's own header says the
+  field's values were not yet measured in the served artifact; the values are measured before they are declared.
+- **C-NOCHAR stands:** sector and industry group are labels. No measurement enters the list. No CIK field (ADDENDUM v0.9).
+
+**Placement:** the next MDPF_SECCLASS round. **Sign-off:** an ENDPOINT change, so the ratified-text half re-opens.
+
+## ADDENDUM v0.11 (1.0.0_SA_CTO, clock read 00:03Z 2026-10-06) -- contract note only: Andrew's word for the AI classifier at the full old-list volume
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_0003Z_AI_CLASSIFIER_RUNS_ON_THE_FULL_OLD_TABLE.md`: "RUn on the full old table". The ENDPOINT section is not edited.
+
+- **C-VENDOR.** His word covers the outside-model use for FWD-17 at its full volume: up to 8,495 old-list rows (the research
+  seat's count), the model the existing writer calls, name and ticker only, after the direct-match plan. This closes
+  `3.0.0_SA_CVO`'s note 1 on v0.10. No cap, and no second release by him, sits between the held securities and the rest.
+- The order of ADDENDUM v0.10 stands as sequencing, not as a gate: held securities first.

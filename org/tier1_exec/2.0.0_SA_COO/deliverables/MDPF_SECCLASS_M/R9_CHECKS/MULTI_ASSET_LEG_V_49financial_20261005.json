@@ -1,0 +1,153 @@
+{
+ "claim": "measured (served platinum, streamed; deployed reader bytes)",
+ "current_manifest_last_modified": "2026-10-06T14:20:48+00:00",
+ "firm": "49financial",
+ "packet_keys": 32,
+ "post": {
+  "accounts": 32,
+  "amount_by_class": {
+   "multi_asset": 2515601.18
+  },
+  "as_of_timestamp": "2026-10-06T14:16:53Z",
+  "by_key": {
+   "140193103": {
+    "multi_asset": 3
+   },
+   "140193780": {
+    "multi_asset": 1
+   },
+   "32008F606": {
+    "multi_asset": 3
+   },
+   "353496490": {
+    "multi_asset": 5
+   },
+   "453320103": {
+    "multi_asset": 3
+   },
+   "808516306": {
+    "multi_asset": 9
+   },
+   "ABALX": {
+    "multi_asset": 7
+   },
+   "MDLOX": {
+    "multi_asset": 2
+   },
+   "VWENX": {
+    "multi_asset": 2
+   }
+  },
+  "fwd9_us_held": {
+   "ATI": {
+    "account_ids": [
+     "acc_46680b73aca5c2470951d0b3",
+     "acc_49f35fa2cbf5ea59471904a9",
+     "acc_6fb77f37d9f5db305170891d",
+     "acc_76e6e40e3c6557b541f75da3",
+     "acc_a703b27b283da3184d8d2b45",
+     "acc_a82ec04141222fd78ad91d17",
+     "acc_b36a02c1efe888727c268c3d",
+     "acc_cd66b5f03bbe3607089321be",
+     "acc_e7a23570ee4868d194ef5d77",
+     "acc_fd1acfdbe79ec1e71d489fe2"
+    ],
+    "accounts": 10,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 10
+    }
+   },
+   "BG": {
+    "account_ids": [
+     "acc_fd1acfdbe79ec1e71d489fe2"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | Consumer Staples | TABLE": 1
+    }
+   },
+   "JAN": {
+    "account_ids": [
+     "acc_49f35fa2cbf5ea59471904a9",
+     "acc_a703b27b283da3184d8d2b45",
+     "acc_b36a02c1efe888727c268c3d",
+     "acc_fd1acfdbe79ec1e71d489fe2"
+    ],
+    "accounts": 4,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 4
+    }
+   },
+   "NBIS": {
+    "account_ids": [
+     "acc_c5e5d7cb0f2dae351296b5d4"
+    ],
+    "accounts": 1,
+    "class_sub_basis": {
+     "equity | Information Technology | TABLE": 1
+    }
+   },
+   "SUNB": {
+    "account_ids": [
+     "acc_6fb77f37d9f5db305170891d",
+     "acc_76e6e40e3c6557b541f75da3",
+     "acc_a703b27b283da3184d8d2b45",
+     "acc_a82ec04141222fd78ad91d17",
+     "acc_b36a02c1efe888727c268c3d",
+     "acc_cd66b5f03bbe3607089321be",
+     "acc_e7a23570ee4868d194ef5d77"
+    ],
+    "accounts": 7,
+    "class_sub_basis": {
+     "equity | None | TICKER_SHAPE": 7
+    }
+   }
+  },
+  "keys_held": 9,
+  "nodes_by_class": {
+   "multi_asset": 35
+  },
+  "partitions_declared": 188,
+  "parts_read": 188,
+  "revision": "94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd"
+ },
+ "post_custody_total": 1825384091.11,
+ "post_date": "2026-10-05",
+ "post_reconcile": {
+  "difference": 0.0,
+  "reconciled": true,
+  "tolerance": 0.01,
+  "total_after": 1825384091.11,
+  "total_before": 1825384091.11
+ },
+ "pre_date": "2026-10-02",
+ "reader": {
+  "accounts": 25,
+  "business_date": "2026-10-05",
+  "class_totals_classes": [
+   "cash",
+   "commodities",
+   "equity",
+   "fixed_income",
+   "multi_asset",
+   "unclassified"
+  ],
+  "code_sha256": "SRANzIGzWj0cR9dl4YOuLVOECV9dt9omPQZ80uzoR5g=",
+  "last_modified": "2026-10-06T01:44:23.000+0000",
+  "multi_asset_row": {
+   "amount": {
+    "units": "USD",
+    "value": 2069184.49
+   },
+   "asset_class": "multi_asset"
+  },
+  "pin_t_match": false,
+  "reconciled": true,
+  "validate": {
+   "available": true,
+   "errors": [],
+   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_1860bbwf\\contracts\\HoldingsSnapshot.schema.json",
+   "valid": true
+  }
+ }
+}
