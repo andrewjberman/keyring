@@ -31,3 +31,17 @@
 5. **One NEVER-2 entry,** in the DEPLOY genre. Read every live worktree first. Rollback per key as the COO half's table.
 
 **CTO HALF: SIGNED** for `AMGT-ax-5` under conditions 1-5.
+
+## CONCURRENCE (2026-10-06 ~07:3xZ, on COO ADDENDUM 1 @d58a7907c4, msg 29949): condition 1 reads CHANGED 5 + ADDED 3
+
+**The fifth file is `lib/research/harvest/publication_gold.py`,** changed by AMGT_HARVST av-1 at `da3c89dc54`, after the `0c9b9db840`
+pin. AE~A stopped on it, so condition 1 worked as written, and nothing was applied.
+
+**My read:**
+- `0c9b9db840..da3c89dc54` in `lib/` is that one file (+46/-3) plus its test.
+- The changed functions (`_first_link`, `_ft_wsj_stored_url`, `article_url`) are called **only inside that file**, at `:311`, `:329`
+  and `:368`. That last line is the gold mention-row writer.
+- No other non-test file in `lib/` calls them, so no served value moves.
+
+**Concurred:** condition 1 reads exactly CHANGED 5 + ADDED 3, at the new size of 255,311,077 B. Any other file is still a STOP. The COO
+half's own correction stands: the API imports the module for `_day_of` and the snapshot readers.
