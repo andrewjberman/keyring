@@ -5462,6 +5462,31 @@ carries none.
     "world_is": "A plan cut before the upload cannot contain the change, and uploading in PHASE A would stage a new latest version at the live key that any other plan or apply on the bd-pipeline root would deploy without the never-widen halves. PHASE A therefore built the zip (6936 B, sha256 9PbO1/mVokBTWGNn8NjjTyjkhWvBdZ6pZk2zcCE0/eY=) and did NOT upload it.",
     "notes": "INERT. The expected post-upload plan is one in-place update of module.bd_49f_runner.aws_lambda_function.this (s3_object_version, source_code_hash); that is inferred from the module's attributes, not a plan output. PHASE B step 4 should be: upload (verify size + content-sha256), cut the saved plan, read the plan line (a destroy is BLOCKING), then safe-apply it.",
     "id": "NFRA_MCPINDEX-Z-W24-S12"
-  }
+  },
+{
+  "id": "NFRA_MCPINDEX-Z-S82",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T21:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "one_line": "MX-s-17 PHASE B published NOTHING: the transaction document's target instance i-00c7568bc510f7423 has NO boto3, so repointing it at the code/silver script would have turned the gap-day transactions merge into a silent green no-op. Row Z-W24-S9 is CONFIRMED, not disarmed, and it is confirmed on only ONE of the two instances.",
+  "spec_asserts": "MX-s-17 amendment A1: run one read-only SSM import check on the documents' target instance; \"OK:\" disarms Z-W24-S9; \"An ImportError is a BLOCKING row: publish nothing, close the ledger as not-applied, report.\" ANNOUNCE_MX-s-17 section 6 filed Z-W24-S9 as ARMED with the reason \"the instance's boto3 is declared in user-data, not measured\".",
+  "world_is": "Declared is not present, and the two boxes DISAGREE. Measured 2026-10-06 21:46-21:55Z while both instances were up on their own 21:45Z/21:53Z schedule (no instance was started):\n  - i-0800437d1dbb0b5cc (realized doc) cmd 7ffa4edf-7a1e-4db3-87a4-df3d027ec7a6: Status Success, ResponseCode 0, stdout 'OK: 1.42.97 2.3.3'.\n  - i-00c7568bc510f7423 (transaction doc) cmd fd0656b1-d849-4859-b03f-c57c8bda3292: Status Failed, ResponseCode 1, stderr \"ModuleNotFoundError: No module named 'boto3'\".\nWHY THE FAILURE WOULD HAVE BEEN SILENT, read from the deployed code/silver bytes (s3://opal-data-bd/code/silver/merge-daily-incremental.py, ETag 91eaf2486fc56ece76db2f0d862096f7): lines 39-42 catch the ImportError and set boto3 = None; _s3c() then returns None; _s3_list_names() returns [] on a None client; load_manifest() falls through _s3_get_json to the empty default; so incremental_merge() sees 0 forwardfill files, prints \"No new files to process\" and EXITS 0. The SSM command would report Success. By contrast the old scripts/ script shells to the aws CLI (a separate binary, present on the box), which is why it works there today.\nSERVED CONSEQUENCE AVOIDED: on a sentinel-withheld Monday/Tuesday the transaction document is currently the ONLY same-day merger of silver/transactions (11 of 34 dates 2026-09-03..10-06 had no bronze sentinel). A repointed, boto3-less document would have stopped advancing that table on exactly those days with every instrument -- SSM status, the uploaded log, the merge exit code -- reading green.\nNOTHING WAS PUBLISHED, verified at 2026-10-06T21:56:55Z: both documents DefaultVersion 3 = LatestVersion 3, Active, and list-document-versions returns 3,2,1 on each -- no v4 exists.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws ssm get-command-invocation for both command ids, read 2026-10-06T21:47Z and 21:55Z",
+      "aws ssm describe-document + list-document-versions on both documents, read 2026-10-06T21:56:55Z",
+      "s3://opal-data-bd/code/silver/merge-daily-incremental.py lines 39-42, 93-165 (the guarded import and the None-client branches)",
+      "org/critical_paths/change_management/20261006T2142Z_nfra-mcpindex-r7-bd-doc-repoint_deploy_completion.md (ledger CLOSED, all 3 legs proven, D1/D2 proofs read NOT APPLIED)",
+      "ANNOUNCE_MX-s-17 section 6 @3709ae40d6 (Z-W24-S9 as filed)"
+    ]
+  },
+  "notes": "INERT, and the enum is why that word is used: hazard_standing admits only ARMED or INERT, and the accurate state is NEITHER -- the hazard was never armed in the world because the publish that would arm it did not happen. It is INERT by NOT ACTING, not by remedy. ARMING CONDITION, named: any publish that points a document on i-00c7568bc510f7423 at the code/silver script while boto3 is absent there. Filed rather than merely reported because: the ledger is CLOSED as not-applied and the served state is unchanged, so nothing is half-landed and nothing is stranded. The UNDERLYING defect is OPEN and belongs to the issuer.\nWHAT THIS DOES NOT SAY: it does not say the realized document is safe to repoint alone. Its own box passed, but the two documents are one signed act and NEVER-2 forbids a half-landed deploy, so neither was published.\nWHAT THIS DOES NOT COVER: whether the OTHER boxes that run code/silver-era scripts carry boto3. Only the two MX-s-17 instances were read; i-0e6f6dc014fdcf1cd (bd-assets, opal-bd-asset-dim-download, rule ENABLED) was NOT read and is outside this order.\nCANDIDATE REMEDIES, none this cell's call and none attempted: (i) install boto3 on i-00c7568bc510f7423 and re-measure, then re-run PHASE B; (ii) let MX-s-19 retire the two documents and drop the repoint entirely, which the MX-a-1 verdict already argues for; (iii) have the document pip-install boto3 the way the same script already self-heals pandas (lines 45-48 print \"Installing pandas...\"). Route (ii) makes this row moot.\nKNOCK-ON: MX-s-18 PHASE B is HELD and not started. Its GO reads \"Only AFTER MX-s-17's ledger is closed\" and the CTO half's review item 2 reads \"s-17 must land before s-18\". The ledger is closed but s-17 did NOT land, which is a state the signed halves do not cover, so proceeding would be acting outside them. The issuer rules."
+}
 ]
 ```
