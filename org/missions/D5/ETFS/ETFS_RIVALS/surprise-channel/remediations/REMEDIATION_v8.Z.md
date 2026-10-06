@@ -55,11 +55,11 @@ C-S35 and C-S36. The slug goes to `1.0.0_SA_CTO~Z` with the review
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-S29",
@@ -76,11 +76,11 @@ C-S35 and C-S36. The slug goes to `1.0.0_SA_CTO~Z` with the review
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-C-S35",
