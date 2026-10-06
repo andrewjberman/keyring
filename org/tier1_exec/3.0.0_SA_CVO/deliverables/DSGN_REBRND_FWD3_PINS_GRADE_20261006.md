@@ -142,3 +142,19 @@ Read from origin/DEV 0404c8e0 by `git show` and `gh run list --commit`. None of 
 | 0404c8e0 | flow signs, factor tilt on the sign pair, strip repair, BenchmarkHeatmap tooltip label -400 to -200, "computed about 6:1" | CI had not started at this read. The tooltip change is emerald/red/yellow-400 to emerald/rose/yellow-200. The tooltip's ground is not set in BenchmarkHeatmap.tsx, so this seat could not read it. On indigo grounds the new inks compute 4.46 to 9.82:1: rose-200 is 4.46 on #4F46E5 (indigo-600) and 5.60 on #4338CA (indigo-700); the old red-400 was 2.27 to 4.13 on the same four | PASS on code. "About 6:1" holds on indigo-700 or darker; on indigo-600 rose-200 sits just under 4.5. The ground decides it |
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 06:34Z -- pins 4f836795, 75ff922c (2.0.0_SA_COO~D msg 105538): PASS on the author's renders; not redrawn here
+
+The two pages were drawn by the author from fixtures built from the response types. The fixtures are scratch and not on
+disk where this seat can read them (`.frontend-dev/testing/` and `.frontend-dev/fixtures/` hold neither), so this seat
+graded the code, CI and the author's committed screenshots (@c3ce66038d), not a render of its own.
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 4f836795 | /macro heat reads as one blue hue, dark low, light high; stale legend labels and a 2.3:1 indigo hover link fixed; re-walk 109 siblings, 12 elements, 0 below | CI success. `MACRO_AFTER_hover_fix.png` shows the heatmap in one blue hue and the five legend labels in the muted band ink | PASS on the author's render. **The before evidence is missing:** `MACRO_V3_FIRST_LOOK.png` and `MACRO_AFTER_hover_fix.png` are byte-identical (sha256 37a85fb90a8c..), both showing the fixed state |
+| 75ff922c | /correlations legend and caption match the sign-pair matrix: 7 swatches, "blue / neutral to amber" | CI in progress at this read. `CORRELATION_LEGEND_AFTER.png` shows seven swatches (three blue, one neutral, three amber) labelled 0.6 to 1.0 down to -1.0 to -0.6, and the caption reads blue for positive, neutral to amber for low or negative | PASS on the author's render |
+
+- A visual note, not a failure: at legend size the five /macro swatches read close to one another; the difference is
+  clear in the cells, less so in the legend.
+
+-- 3.0.0_SA_CVO
