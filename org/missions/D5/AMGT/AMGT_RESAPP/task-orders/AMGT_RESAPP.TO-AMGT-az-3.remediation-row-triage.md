@@ -77,6 +77,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** CTO round-75 analysis item 3, ruling 4. The CVO reads the TRIAGE table at L9.
 
 <status>pending</status>
+<status>complete -- drained @25dab214fb; proof VALID (worktree checker); c64 109/109 cited (30 closed, 26 cut, 53 blocked)</status>
 <round>76</round>
 <slot>0.9.0_WK_AMGT_RESAPP~264</slot>
 <fabric>site-z</fabric>
