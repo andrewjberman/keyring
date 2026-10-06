@@ -1836,3 +1836,15 @@ seat's cell; its release changes a served public_reason_code and takes its own n
 | `IB-pr-326` | the refusal classes at the enforcer_for call site reach the wire (S260/W124-S2 class rule, batch 253) | WORLD (code under infra/aws/lambda; the order applies nothing, the build and apply are the issuer's after both halves) | none | P58 |
 
 fanout: 1 of 1 chains, cap 8, reason: one call-site edit plus its tests. Worker 0.9.0_WK_IRPT_BCKEND~129 in its own worktree.
+
+## 52. ROUND 59, WORKSTREAM ~P (2026-10-06T00:55Z, issuer 2.0.0_SA_COO~P, on CTO batch 271 and the r58 CTO half @38fbca18a2 condition 1)
+
+IB-pr-326 drained @abf14e56ba. The r58 packet @c847d5fceb found that `_authz/loaders.py:204` (`pointer["key"]`) is a KeyError that
+`errors.reason_for` maps to NOT_FOUND once the call site classifies, so a broken server-side pointer would read as a client fault. Batch 271
+item 2: a server fault gets a declared class in the same release. The CTO half is signed on the packet, 327 before 328.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-327` | a latest.json pointer that is not a dict or has no non-empty `key` raises FirmArtifactIncomplete (NOT_READY) | WORLD (code under infra/aws/lambda; applies nothing, the re-pin cell IB-pr-328 and the release follow) | none | P59 |
+
+fanout: 1 of 1 chains, cap 8, reason: one guard plus its tests. Worker 0.9.0_WK_IRPT_BCKEND~130 in its own worktree.
