@@ -27,9 +27,22 @@ Real-holder probe to reuse: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0
 
 - **Live:** `2c27f3a7958de0aa644374cdd08fc188a27e9e3f`.
 - **Ledger:** `nfra-oplgtw-gateway-release-r23`.
-- **The release set:** `app/integrations/schwab/integration.py` (OG-q-8's one-line change) and
-  `tests/test_schwab_q8_blank_cusip.py`. The only other live..CLOUD gateway difference,
-  `runbooks/SCHWAB_PILOT_RUNBOOK.md`, is CLOUD-only (LINEAGE_R18) and does not ship.
+- **The release set (AMENDED A1, 20:5xZ):** every gateway difference between live `2c27f3a795` and CLOUD at the
+  hand-off, except the CLOUD-only `runbooks/SCHWAB_PILOT_RUNBOOK.md` (LINEAGE_R18), so that after the drain-back CLOUD
+  equals live. That is two parts:
+  - OG-q-8: `app/integrations/schwab/integration.py` and `tests/test_schwab_q8_blank_cusip.py`.
+  - ETFS_RIVALS gw-1 (CLOUD `291bb5bb4b`, requested by `2.0.0_SA_COO~RV` msg 30294 on a `1.0.0_SA_CTO~Z` ruling; R28
+    lets a foreign route ride the train): `app/rivalfunds_view.py` (adds `audit_key` and `rivalfunds_audit`),
+    `app/server.py` (ONE Route line for `/rivalfunds/{day}/audit`, placed before `/rivalfunds/{day}`),
+    `app/tests/test_rivalfunds_view.py`, and `tests/test_principal_cutover.py` (ROUTE_CLASS declares the route).
+  - Merge local branch `CLOUD` into your worker branch first, so the worktree carries `291bb5bb4b`.
+  - **Form step 7a NOW APPLIES** (a route is added): the ROUTE_CLASS inventory and the route census, each in its own
+    process, green before GO.
+  - The ANNOUNCE names the route as an ADDITIVE part with its own two branches: a signed-in GET of
+    `/rivalfunds/<day>/audit` on a day whose `audit.html` exists returns 200; a day with no audit object returns 404.
+    The read policy is unchanged. Rollback per key: redeploying live `2c27f3a795` removes the route.
+  - The verify script adds those two arms. Record them in `W/RL9_ROUTE.json` as `{day_200, status_200, bytes_200,
+    day_404, status_404}`. Use 2026-10-06 for the 200 arm. A FAIL of a route arm is a rollback trigger like any other.
 - **Served output NARROWS.** The ANNOUNCE names, for the one live dim_asset grant, the blank-cusip rows that leave the
   query and download answers (expected 23 at the 2026-10-01 snapshot). Per key: the blank-cusip key leaves; every
   non-blank held CUSIP stays. Both branches: a holder with non-blank holdings keeps all of them; a holder whose
@@ -97,6 +110,9 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-9.gateway-release-r23.proof_
 **ISSUER NOTES:**
 - Round 23 (R3-T.16, item 2), after `OG-q-8`. Halves: CTO + COO + CVO (R30.2). Served output narrows on both
   dim_asset paths.
+- AMENDMENT 1 (20:5xZ, issuer; no gate limb graded it beyond GATE (viii) on the modify): the release set widens to
+  every live..CLOUD gateway difference, as OG-rl-8's A1 did, because `291bb5bb4b` landed on CLOUD after the cut and
+  rl9.AC1's drain-back arm reads CLOUD against live. No criterion changed.
 - Pre-cut 20:0xZ:
   - `rl9.AC1` FAIL: deployed is the live sha, 0 shipped, no ledger; the floor reads yes/yes.
   - `rl9.AC2` FAIL: the r22 record, 23 blank rows.
