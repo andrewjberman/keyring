@@ -4119,6 +4119,28 @@
     "spec_asserts": "Andrew-direct 2026-10-06 ~16:3xZ and ADDENDUM 4 step 2: every ticker mention is a popovertarget button to its modal (mentions = buttons, 0 dead).",
     "world_is": "Mentions in tables and most AI text link; the residual is the ln-1 ambiguity class, where one company name is carried by two listings and the AI account cites neither key. A link there would have to pick one listing's modal (or a combined one), which is a ruling, not a renderer fix.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For 1.0.0_SA_CTO~Z: does Andrew's word supersede ln-1's plain-span rule for shared names, and if so which modal does a shared name open (first-held listing, the fund's own holding, or a merged dialog)?"
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-06T18:27:41Z",
+    "one_line": "RIV-pk-1 check pk-1.AC1.py arm (a) cannot pass on this device's pandas 3.0.3: a null security_parsekey reads back as NaN, and `not pk.get(\"NBIS_US_Equity\")` is False for NaN.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round12/checks/pk-1.AC1.py at wk-ETFS_RIVALS-2 working tree: the arm-(a) print reads parsekey {'999999999': 'ZZZ US Equity', 'N97284108': 'NBIS US Equity', 'NBIS_US_Equity': nan}, asked PARSEKYABLE_DES for ['/cusip/999999999', '/cusip/N97284108'] (exactly the two identifier keys), then `FAIL: (a)`; arms (b) and (c) print OK; AC1 RESULT: FAIL 1 failures, rc=1.",
+        "pk-1.AC1.py line 99-100: the (a) conjunct `not pk.get(\"NBIS_US_Equity\")`. python -c \"print(not float('nan'))\" -> False; pandas 3.0.3 / pyarrow 24.0.0: pa.table({'a': pa.array(['x', None], type=pa.string())}).to_pandas()['a'] -> dtype str, ['x', nan] (not None).",
+        "every other conjunct of (a) holds in the same run: asked == the two identifier keys, pk['N97284108'] == 'NBIS US Equity', pk['999999999'] == 'ZZZ US Equity'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pk-1 interface and check docstring: G4 column security_parsekey is 'null when not asked or not answered', and arm (a) accepts NBIS_US_Equity's parsekey as falsy.",
+    "world_is": "A true parquet null (what the interface prescribes, and what the code writes) is NaN after to_pandas on pandas 3.0.3, which is truthy, so arm (a) fails for any correct implementation on this device. The only ways to satisfy it as written are to store an empty string (not null, against the interface) or to hand-write pandas object-dtype metadata into the G4 parquet (a storage hack for one check). Neither is in the order.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. One-line amendment of the check within the issuer's own authority: replace `not pk.get(\"NBIS_US_Equity\")` with `pd.isna(pk.get(\"NBIS_US_Equity\"))` (or `pk.get(...) in (None, '') or pk.get(...) != pk.get(...)`). Everything else is built; nothing in the worker's tree depends on the choice."
   }
 ]
 ```
