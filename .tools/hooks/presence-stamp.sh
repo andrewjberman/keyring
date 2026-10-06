@@ -32,8 +32,9 @@ root="${CLAUDE_PROJECT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)}
 common="$(git -C "$root" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)"
 [ -n "$common" ] && root="$(dirname "$common")"
 dev="$(bash "$root/.tools/agentbus-sqs.sh" device | sed -n 's/^device: //p')"
+# `device` prints only a device the register holds (org/devices/DEVICES.json, NFRA_CTLPLN FWD-2) or UNKNOWN.
 case "$dev" in
-  laptop|sitez)
-    mkdir -p "$root/org/mcp/presence" && date -u +%s > "$root/org/mcp/presence/$dev.last" ;;
+  ""|UNKNOWN) ;;
+  *) mkdir -p "$root/org/mcp/presence" && date -u +%s > "$root/org/mcp/presence/$dev.last" ;;
 esac
 exit 0

@@ -77,14 +77,30 @@ export PYTHONIOENCODING=utf-8
 
 ACCOUNT=313476888478
 REGION=us-east-1
-PREFIX="https://sqs.${REGION}.amazonaws.com/${ACCOUNT}/agentbus-ajbdev"
+QUEUE_BASE="https://sqs.${REGION}.amazonaws.com/${ACCOUNT}"
+
+# THE DEVICE REGISTER (NFRA_CTLPLN FWD-2, C-REGISTRY): every box -- its name, aliases and inbound
+# queue -- is read from org/devices/DEVICES.json through its one reader, lib/devices.py. A box is
+# added there once; nothing in this file lists boxes. Fail-closed: no python or an unreadable
+# register refuses loudly (rc 3), never a built-in list.
+_devices() {
+    local _root _p
+    _root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
+    for _p in python python3; do
+        if command -v "$_p" >/dev/null 2>&1; then
+            "$_p" "$_root/lib/devices.py" "$@" | tr -d '\r'
+            return "${PIPESTATUS[0]}"
+        fi
+    done
+    echo "agentbus-sqs: no python to read the device register (lib/devices.py) -- refusing" >&2
+    return 3
+}
 
 queue_for() {
-    case "$1" in
-        laptop) echo "${PREFIX}-sitez-to-laptop.fifo" ;;   # site Z sends, laptop drains
-        sitez)  echo "${PREFIX}-laptop-to-sitez.fifo" ;;   # laptop sends, site Z drains
-        *) echo "agentbus-sqs: unknown device '$1' (expected: laptop | sitez)" >&2; exit 2 ;;
-    esac
+    local q
+    q="$(_devices queue "$1")" || {
+        echo "agentbus-sqs: unknown device '$1' (register holds: $(_devices names | tr '\n' ' '))" >&2; exit 2; }
+    echo "${QUEUE_BASE}/${q}"   # the box's INBOUND queue: the queue it drains
 }
 
 # --- THE DECLARED DEVICE SET (RV-0058 F-004) ------------------------------------------------------
@@ -101,12 +117,11 @@ queue_for() {
 # still prints a complete-looking two-device set, silently. That is the guard's own failure mode one
 # level up, which is why the fix is derivation and not a fourth copy of the list.
 #
-# DERIVED FROM queue_for's OWN CASE LABELS, so queue_for stays the single source of truth and a
-# device added there is picked up here with no second edit. The `*)` fallback is excluded by the
-# [a-z] class -- it is a guard branch, not a device.
+# READ FROM THE DEVICE REGISTER (NFRA_CTLPLN FWD-2): the same register queue_for reads, through
+# lib/devices.py, so the declared set and the queue map cannot disagree, and a box added to
+# org/devices/DEVICES.json is picked up here with no edit to this file.
 declared_devices() {
-    sed -n '/^queue_for()/,/^}/p' "${BASH_SOURCE[0]}" \
-        | grep -oE '^[[:space:]]*[a-z]+\)' | tr -d ' )'
+    _devices names
 }
 
 # --- JQ RESOLUTION (NFRA_TOOLARCH.PATHFIX) --------------------------------------------------------
@@ -147,11 +162,13 @@ fi
 # lane, but nothing stops a bare serial from being launched here).
 this_device() {
     if [ -n "${AGENTBUS_DEVICE:-}" ]; then
-        case "$AGENTBUS_DEVICE" in
-            laptop|sitez) echo "$AGENTBUS_DEVICE"; return 0 ;;
-            *) echo "agentbus-sqs: AGENTBUS_DEVICE='$AGENTBUS_DEVICE' is not laptop|sitez" >&2; exit 2 ;;
-        esac
+        local canon
+        if canon="$(_devices resolve "$AGENTBUS_DEVICE")"; then echo "$canon"; return 0; fi
+        echo "agentbus-sqs: AGENTBUS_DEVICE='$AGENTBUS_DEVICE' is not in the device register ($(_devices names | tr '\n' ' '))" >&2
+        exit 2
     fi
+    # Path fallback KEPT until AGENTBUS_DEVICE is set and read back on every box (1.0.0_SA_CTO msg
+    # 105617, batch 284 item 3); then it goes, with a loud refusal when the variable is unset.
     root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
     case "$root" in
         *Opal?Bloomberg*|*OPALBL~1*) echo sitez ;;
@@ -480,7 +497,7 @@ case "$cmd" in
     echo "  basis: $([ -n "${AGENTBUS_DEVICE:-}" ] && echo "AGENTBUS_DEVICE override" || echo "workspace path")"
     echo "  root:  $(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
     if [ "$me" = "UNKNOWN" ]; then
-        echo "  -> UNRESOLVED. Set AGENTBUS_DEVICE=laptop|sitez. Refusing to guess is deliberate." >&2
+        echo "  -> UNRESOLVED. Set AGENTBUS_DEVICE to a device in org/devices/DEVICES.json ($(_devices names | tr '\n' ' ')). Refusing to guess is deliberate." >&2
         exit 2
     fi
     echo "  my inbound queue: $(queue_for "$me")"
@@ -492,7 +509,7 @@ case "$cmd" in
     # queue is not a declared device, it is a typo. Printing a list without resolving it would be a
     # config-read standing in for a behavioural check (Rule 22a), which is the same substitution the
     # guard this feeds was built to stop.
-    echo "declared devices (derived from queue_for's own case labels -- single source of truth):"
+    echo "declared devices (read from the device register org/devices/DEVICES.json -- single source of truth):"
     n=0
     for d in $(declared_devices); do
         printf "  %-8s -> %s\n" "$d" "$(queue_for "$d")"

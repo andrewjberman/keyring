@@ -4,10 +4,11 @@ Run: python org/devices/test_devices.py   (exit 0 = every check passed)
 
 Checks the register is one consistent source: unique box names and aliases, one control plane, one integrator,
 disjoint lane letters with one default box, every value's claim in the declared claim set, and every MEASURED
-inbound queue present in the source the register cites for it.
+inbound queue present in the pinned bytes (git:<commit>:<path>) the register cites for it.
 """
 import json
 import pathlib
+import subprocess
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -46,10 +47,16 @@ def check(reg):
         if d["lane_letters_default"]:
             defaults.append(d["name"])
         if d["inbound_queue_claim"] == "measured":
-            src = ROOT / d.get("inbound_queue_source", "").split(" ")[0]
-            if not src.is_file() or d["inbound_queue"].replace("agentbus-ajbdev-", "") not in src.read_text(
-                    encoding="utf-8", errors="replace"):
-                fails.append("%s: measured queue %r not found in %s" % (d["name"], d["inbound_queue"], src))
+            # A measured value names the pinned bytes it was read from: "git:<commit>:<path> ...".
+            pin = d.get("inbound_queue_source", "").split(" ")[0]
+            parts = pin.split(":", 2)
+            text = ""
+            if len(parts) == 3 and parts[0] == "git":
+                r = subprocess.run(["git", "-C", str(ROOT), "show", "%s:%s" % (parts[1], parts[2])],
+                                   capture_output=True, text=True, encoding="utf-8", errors="replace")
+                text = r.stdout if r.returncode == 0 else ""
+            if d["inbound_queue"].replace("agentbus-ajbdev-", "") not in text:
+                fails.append("%s: measured queue %r not found at %r" % (d["name"], d["inbound_queue"], pin))
     roles = [d.get("role") for d in devices]
     for role in ("control-plane", "integrator"):
         if roles.count(role) != 1:
