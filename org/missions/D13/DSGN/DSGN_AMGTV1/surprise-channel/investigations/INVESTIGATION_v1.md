@@ -1409,6 +1409,28 @@
  "spec_asserts": "TO-AV-zu-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after the four-file change.",
  "world_is": "The battery fails on one harness check whose input is the adapter's control ranking (adapter.control), a surface outside this order's paths; it was not measured red-or-green at the unedited base (git stash is barred here), only with the RankedList edit removed.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W105-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~105",
+ "surfaced_at": "2026-10-06T05:58Z",
+ "one_line": "AC2 battery29 reads 13 of 14 harnesses green: drafting.harness.cjs throws 'Cannot find module ../components/SegmentBreakdown' because its import loader stubs each ThesisTab import by name and the new import is unstubbed; the harness file is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D -- amend the order's <paths> to admit portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs and add one stub line beside its ThesisDriverChart stub (name === '../components/SegmentBreakdown' returns { SegmentBreakdown: () => null }); until then the drain's combined battery29 run is red on this harness.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh on portal c123c5a0 + this order's 4 files (uncommitted at the run): 'ALL BOUND: 13 of 14 harnesses green [rc=1]', 'HARNESS RED drafting.harness.cjs :: rc=1', 'BATTERY29: FAIL (0 skipped)', exit=1; tsc -b rc=0; eslint --quiet rc=0; r44.cjs 5 of 5 exit=0.",
+   "node portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs: 'Error: Cannot find module ../components/SegmentBreakdown' at drafting.harness.cjs:116 (load -> req(name)) from ThesisTab.tsx:19; the harness stubs ../components/ThesisDriverChart at line 98 and falls through to req() for any other unnamed import."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zv-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after mounting SegmentBreakdown in ThesisTab.tsx as the order directs (bounds item 4 and <paths> name no harness file).",
+ "world_is": "The mount the order directs adds an import the drafting harness cannot resolve, and the one-line stub that would resolve it sits in a file the order's write grant does not name; this worker did not edit it. Other 13 harnesses incl. tabs and thesisLadder are green.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
