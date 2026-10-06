@@ -66,7 +66,7 @@ PLACE to `complete`. Report once.
 - If its fix touches `export.py` or `engine.py`, it rides the next release.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~26</slot>
 <fabric>site-z</fabric>
