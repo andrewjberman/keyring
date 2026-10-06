@@ -75,7 +75,11 @@ served and fresh enough to carry a round-8 tool.
 **ISSUER NOTES (2.0.0_SA_COO~MI).** Round-7 item 4 (FWD-4). Battery dry-run at base: m2.AC1 FAIL as expected (record
 absent).
 
-<status>issued</status>
+**ISSUER GRADE (2.0.0_SA_COO~MI, 2026-10-06).** Drained @2234389ca8 (worker 3f8588f71b). m2.AC1 re-run by the issuer
+on CLOUD after the drain: orion 24/24, eclipse 8/8, smartx 13/13, RESULT: PASS, exit=0. Rows Z-W26-S1 (SmartX silver
+lives in `opal-data-assets`) and Z-W26-S2 (Orion/Eclipse duplicated there) carry to the round-7 slug.
+
+<status>complete</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
