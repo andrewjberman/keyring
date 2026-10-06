@@ -7045,6 +7045,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Issuer ruling (inside the round-47 decomposition): keep the leg running at its configured pacing; at leg end, re-run every barrons pair whose last status is listing_empty_200 in ONE --names pass with the errored pairs (CTO ruling 2's leg-end pass). If the empty rate reaches every job (a hard block), stop the barrons leg by its stop file and carry it to Andrew. For a later analysis: back off pacing on consecutive empty_200s."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S89",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-06T01:48Z",
+      "one_line": "Every live collection leg was challenged or refused inside 30 minutes on 2026-10-06: sa account check HTTP 402 at 01:12:40Z (new parallel root), barrons 401 + challenge failed 01:30:37Z, wsj 401 + slider challenge failed 01:30:52Z, bbg 403 + press-and-hold failed 01:37:50Z; all four drivers have exited (sa account_or_harvester_unavailable; barrons, wsj, bbg bot_check).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Collection-run CTO half condition 1 and ruling 29759: a hard block means stop, and Andrew decides; bbg takes no second bot-check clear.",
+      "world_is": "Three hosts on two vendors (Dow Jones, Bloomberg) plus Seeking Alpha refused within 01:12-01:41Z, after a day of mostly clean jobs: one machine-wide signal, not four separate faults. Nothing is running now. Checkpoints: r46_sa_barrons stopped {sa: upstream_unavailable, barrons: bot_check}; r46_bbg {bbg: bot_check}; r46_wsj {wsj: bot_check}; r47_sa {sa: account_or_harvester_unavailable}. Concluded of 191 pool keys: sa 9, barrons 130, bbg 104, wsj 154, ft 0.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest*/events.jsonl http + challenge_presented/challenge_failed + job_finished, 01:12-01:41Z",
+          "r47_*_run*.out STOP lines; the four checkpoint files' stopped maps"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Issuer act: no leg is resumed and the planned single sa retry is cancelled; more traffic from a flagged machine risks a longer block. Carried to Andrew: whether and when to resume, and the sa account (402 = payment required on the account info endpoint)."
     }
   ]
 ```
