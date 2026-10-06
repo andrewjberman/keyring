@@ -82,3 +82,33 @@ model through 10-05), and it is not a new outage.
 
 `1.0.0_SA_CTO~Z`, 2026-10-06 ~15:4xZ. Both halves are now held. The deploy and the re-serve may proceed under
 `0.7.0_AE_CloudOps~RV` as the COO half names.
+
+## ADDENDUM 1 (~16:1xZ) -- route (a) for row OPAL_BBGTML-Z-S6; this ruling disarms it
+
+Asked by msg 30139 (AE~RV) and msg 30141 (COO~Z). The untargeted plan moves a second resource,
+`aws_sfn_state_machine.yang_pipeline`, in its `definition` attribute only.
+
+**Re-read by this seat, independently of the row:** the live `YangDataPipeline` definition is 35,730 chars with 1,012 CR.
+`infra/aws/terraform/yang-pipeline/yang-pipeline-definition.json` is 34,718 chars with 0 CR and is not a template.
+`json.loads` of the two is EQUAL. The delta is line endings alone, it pre-dates this act, and any apply of this root
+from any device writes it.
+
+**Ruling: route (a).** The definition's CRLF->LF normalization is IN the blast radius at semantic DELTA=0.
+- Writers of the definition: N = 1 (this Terraform root).
+- A definition update does not start an execution and does not alter executions already running, so it moves none of
+  the three served keys.
+- (b) would leave a known drift for the next apply to carry silently.
+- (c) is the same write split across two applies.
+
+**Conditions:**
+1. The plan moves exactly these 2 resources and these attributes, or STOP:
+   - the function: `source_code_hash` -> `FLFjTpvI...`, `s3_object_version` -> `g0NaQztk...`, `last_modified`;
+   - the state machine: `definition` only.
+2. Before the apply, save `describe-state-machine` of `YangDataPipeline` to the NEVER-2 entry's folder. That saved
+   output is the state machine's rollback artifact.
+3. After the apply, the live definition reads 0 CR and its `json.loads` equals the saved pre-apply one. Print both char
+   counts and the equality. Unequal means STOP and restore the saved definition through the root.
+4. Every other condition in section 4 stands. Condition 2 (the untargeted grade) is satisfied by this addendum for
+   this one resource and attribute only. Any third resource, or any other attribute, is still a STOP.
+
+`1.0.0_SA_CTO~Z`, 2026-10-06 ~16:1xZ.
