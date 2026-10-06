@@ -1,0 +1,56 @@
+# QUARTERLY_GOALS.yaml -- Andrew's three quarterly goals, persisted where they are easy to find.
+#
+# A STANDALONE RECORD. It is read by no tool and edits no other register: it does not touch
+# GOALS.yaml (the root mission goals, a strategic file that needs a ledger entry to change),
+# SEQUENCE.yaml (the ordering document) or DIRECTIVES.yaml (the live directives register).
+# Directives ops and the canonical loop do not read it. To make one of these a directive, the CTO
+# registers it through the normal L1-L10 path; nothing here does that.
+#
+# Source: Andrew-direct ~18:3xZ 2026-10-06 (record
+#   org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_183xZ_FOUR_BOX_ACCELERATION_PROJECT_CENSUS_AND_Q4_GOALS.md);
+# detail: docs/briefs/four-box-acceleration-plan-20261006.md section 7 @d13ddab4d1 (4.0.0_SA_CRO).
+# Andrew asked that the list "sit somewhere persisted"; on 2026-10-06 he approved persisting it as
+# a standalone file ("shouldnt be in a place that interferes with any ongoing directives ops, just
+# an easy to find place"). Written by 0.0.0_AB_MSTR.
+# Deadline, his words: "it has to be done by january 1st".
+
+status: RECORDED            # not a directive, not a PRD; the phases below are the CRO brief's, not ratified
+recorded_at: "2026-10-06"
+deadline: "2027-01-01"
+
+goals:
+  - id: Q-1
+    name: "Investor reporting from the custodian level, replacing Black Diamond"
+    deadline: "2027-01-01"
+    done_looks_like: >
+      Performance reporting done natively from the custodian for every advisor at 49 Financial (first,
+      through Schwab) and Cottonwood (next), with a report template per advisor firm. Inflection is low priority.
+    projects_serving: [IRPT_BCKEND, IRPT_DASHBD, ADVI_PERFRP, ADVI_49F, MDPF_SECCLASS, MDPF_SECHIST, ADVI_COTBKF, DSGN_IRPTV1]
+    projects_cold: [ADVI_BDPARITY, ADVI_STITCH, ADVI_COTKEY]
+    gaps_no_project:
+      - "the Cottonwood consolidation adapter (Commonwealth history plus daily Black Diamond data in one shape)"
+      - "per-advisor-firm report templates"
+      - "one plan tying the eight-plus projects to the January date, with the order of work"
+    phase_now: PLANNING
+
+  - id: Q-2
+    name: "Billing: buy or build"
+    deadline: "2027-01-01"
+    done_looks_like: >
+      Andrew knows who runs billing for these advisors today and how; whether Opal fronts an existing platform
+      (his lead hypothesis: a simple interface sending advisors to the Morningstar Wealth platform he named) or
+      builds; what information billing needs, where it goes, and which workflows overlap. Plaid, DTCC and a
+      home-value API are a separate later project, not Q-2.
+    projects_serving: []
+    phase_now: RESEARCH
+
+  - id: Q-3
+    name: "The requirements for a trade-submission flow through Opal"
+    deadline: "2027-01-01"
+    done_looks_like: >
+      At least a clear picture, if not the pipeline: a ticketing workflow feeding the operations lead's system.
+      The ticketing system's first workflow is the YCharts inflow (an advisor uploads holdings, the in-house
+      report runs, AI investor commentary follows).
+    projects_serving: [IRPT_YCDGEN, NFRA_TRNSPT]
+    projects_cold: [OPAL_TICKET_VNEXT, TRSB_LEDGER]
+    phase_now: "RESEARCH, after Q-1 planning"
