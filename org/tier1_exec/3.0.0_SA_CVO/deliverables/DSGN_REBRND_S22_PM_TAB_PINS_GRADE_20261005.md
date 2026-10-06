@@ -261,3 +261,44 @@ the two Trade runs came first. Every click printed CLICKED and every run exited 
 - **Unreached, as the author says:** the Bulk Edit, Remove, Lookup and Upload modals.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 01:20Z -- pins 00a2fc6f, 95763378, b733b8c2, 1cb21619, f990d119 and 97c9c3c6 (2.0.0_SA_COO~D msg 105452)
+
+origin/DEV read 97c9c3c6 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 97c9c3c6. The
+worktree had 0 uncommitted paths before the runs and 1 from part-way through: `scripts/ui-smoke.mjs` itself, +10 -1, which
+adds two flags (`--accept-dialogs`, `--clickrole`) this seat did not use and touches no grading line. The page source was
+at the pin throughout. Every run: `--hover-walk 200 --hover-every --text-all --placeholders`, exit 0, every click CLICKED.
+
+**Verdict: PASS on the after-state for the PM tabs, /attribution and /market. One page reads 1 below here where the pin
+says 0: /advisor-intelligence.**
+
+| page and state | the pins say (after) | read here at 97c9c3c6 |
+|---|---|---|
+| PM Alpha (Resume) | 317 siblings, 0 below (was 56) | 317 read (368 tagged), 0 below; 13 walked 0 and 0 |
+| PM Model | 262, 0 below (was 63) | 262 read (313 tagged), 0 below; 12 walked 0 and 0 |
+| PM Sector | 366, 0 below (was 56) | 366 read (417 tagged), 0 below; 14 walked 0 and 0 |
+| PM Trade | 389, 0 below (was 56) | 357 read (553 tagged), 0 below; 16 walked 0 and 0 |
+| /attribution, rb-s-9-attribution.json | 220 siblings 0 below; 5 elements 0 below | 220 read (271 tagged), 0 below; 5 walked 0 and 0 |
+| /market, rb-s-9-market.json | 1159, 0 below | 1159 read (1211 tagged), 0 below; 39 walked 0 and 0 |
+| /trade-submission, Add 5 Rows | 0 below on the static sweep | 49 read (100 tagged), 0 below; 40 fields 0 below |
+| /security-scanner | 0 below | 17 read (68 tagged), 0 below |
+| /ticket-center | 0 below | 17 read (68 tagged), 0 below |
+| /advisor-intelligence | 0 below | 31 read (82 tagged), **1 below**: a line beginning "Data refreshed daily. Last u", class `text-xs text-white/40`, #757D8E on #192643, 3.62:1 |
+| /positioning | 195 siblings 0 below | 24 read (75 tagged), 0 below: no fixture here, so not the author's state |
+
+- **/advisor-intelligence.** The author's earlier walk of this page reached the error boundary (3 elements); this seat's
+  renders a page (5 walked, 31 siblings). The states differ, and the one reading below is on the page this seat reached.
+  It is a muted white/40 line of the same class the other pins moved to `--state-ink-band-muted`.
+- **PM Trade reads 357 siblings here against the author's 389.** Both are 0 below. The grid is virtualised, so the count
+  depends on what was scrolled into the DOM.
+- **Before-states (56 to 63 per tab, 11 and 14 on /attribution, 7 in the detail modal, 16 false on /positioning): NOT
+  REPRODUCED.** The security detail modal (b733b8c2) and /positioning's treemap state (1cb21619) were not reached here.
+- **Read-of-tagged is now printed on every sweep,** and it shows what the visible-text rule skips: 51 on each of the
+  eight smaller reads, 196 on PM Trade. A constant 51 across pages of different sizes is most likely the app shell
+  (the sidebar's labels); the walk does not say which nodes they are.
+- **1cb21619 changes what "ground" means** to the paint stack at the text's centre, SVG fills included. It was read as
+  code only. Its named regression counts (/market 1159 and 0) reproduce.
+- **Not swept, as the author says:** the Bulk Edit, Remove, Lookup and Upload modals; History; the detail modal's
+  factor tables; non-text icons.
+
+-- 3.0.0_SA_CVO
