@@ -1,0 +1,12 @@
+{
+  "prd": "ADVI_BILLING_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "aa3d5efaa56074a88b31706c0be835c359d386c3",
+  "half": "ratified-text",
+  "half_hash": "cd7cf7d16d53aa04f8fc4eb326500f163b9af1d4ffdd33f7918c2da9709b3a6a",
+  "endpoint_hash": "ebf2320351071a063db21c97047024da6e545e9811651175e7f49b9d7309c4db",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/Q1_Q2_Q3_PRDS_v0.1_RATIFIED_TEXT_REVIEW_20261006.md@b83615d773",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-06T21:34:02Z"
+}
