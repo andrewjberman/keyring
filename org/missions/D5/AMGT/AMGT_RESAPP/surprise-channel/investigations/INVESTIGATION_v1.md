@@ -18446,6 +18446,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~253/render_freshness.txt: 'rows flagged stale 95' under each sort"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-S357",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-06T07:47:30Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "ax-5 condition 2 grades the route change on a TARGETED plan, and -target excludes terraform_data.scoped_amgt_route_count_check from the graph -- so the gate was graded on a plan that structurally could not show the violation the guard then caught.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "AMGT_RESAPP.TO-AMGT-ax-5 section 1 and AMENDMENT 1 item 2, and CTO half condition 2: 'The route leg adds exactly ONE entry to local.scoped_amgt_routes... The plan is 1 to add, 0 to change, 0 to destroy on aws_apigatewayv2_route.scoped_amgt_api, or it is a STOP' -- a plan scoped to that one resource address.",
+ "world_is": "The targeted plan (terraform plan -target=aws_apigatewayv2_route.scoped_amgt_api -out) returned rc=0 and graded CLEAN: 25 resource_changes, 24 no-op plus 1 create of aws_apigatewayv2_route.scoped_amgt_api['GET /api/scoped/amgt/security/{proxy+}'] with authorization_type CUSTOM, authorizer_id naqxlm, target integrations/352l7td; 0 changes, 0 destroys. Condition 2 read MET on it. BUT the 25 rows contain only aws_* types and do NOT include terraform_data.scoped_amgt_route_count_check -- -target removed the guard from the plan graph. That guard (scoped-amgt-api.tf:553) asserts length(local.scoped_amgt_routes) == 18 and exists, by its own comment, so that an apply 'stops here, with both numbers printed, rather than silently mounting seventeen of eighteen'. With the 19th route it fails, and it fired on the APPLY's refresh: safe-apply failed closed, rc=4, nothing applied -- verified afterwards at 10 security routes, 0 greedy, function still satkY3HX. The UNtargeted plan fails at PLAN time, rc=1. TWO SEPARATE FACTS, and the second is the one worth keeping: (1) the guard held, so no harm reached the world; (2) the CONDITION that was supposed to grade this change was blind to it, because the method the condition names is the method that hides the guard. A targeted plan shows only the targeted address, preconditions on other resources included. So 'the plan is exactly 1 to add' is a weaker statement than it reads: it cannot see anything the targeting excluded. SECOND-ORDER EFFECT this act hit: because the route edit was COMMITTED before the apply (the half-landed-deploy discipline), the tree now declares 19 routes and the precondition blocks EVERY apply in this root -- the code leg's own untargeted plan fails too, so one blocked leg blocked the other. Not adjudicated by this seat: the guard's fix is the issuer's and the CTO's (bump 18 to 19, which stops the equality meaning list == adapter table; or exclude {proxy+} keys so the non-greedy list must still equal 18, which keeps the meaning). Loosening a pre-existing mechanical gate is not an executor's call.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "terraform show -json on the targeted plan C:/tmp/ax5_route.tfplan: 25 resource_changes, types ['aws_apigatewayv2_integration','aws_apigatewayv2_route','aws_dynamodb_table','aws_iam_role','aws_lambda_function','aws_lambda_layer_version'] -- no terraform_data entry",
+   "the untargeted plan log mentions scoped_amgt_route_count_check twice (refresh line and the error) and exits rc=1 at plan time",
+   "safe-apply stderr, quoted whole: 'Error: Resource precondition failed ... on scoped-amgt-api.tf line 553 ... condition = length(local.scoped_amgt_routes) == 18 ... local.scoped_amgt_routes is tuple with 19 elements'",
+   "the guard's own comment at scoped-amgt-api.tf:546-549 stating its purpose",
+   "applied-plane re-read after the failure: 112 rows retrieved, 10 security GET routes, 0 greedy, function CodeSha256 satkY3HXAhzfU7zYZ5fk+EmNHaqIRfj7bBtVlG4XfIY= -- nothing landed"
+  ]
+ }
 }
 ]
 ```
