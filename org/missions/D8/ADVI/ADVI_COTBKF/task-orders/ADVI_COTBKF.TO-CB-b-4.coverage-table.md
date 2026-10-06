@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~7</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-06</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -100,3 +100,13 @@ lane: the <paths> block IS the grant (worker RULING 1).
 </preflight>
 
 Source: PRD v0.4 @51a7c07278 backlog item 2, C-COVERAGE, FWD-6; decomposition round 2.
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-06 ~21:3xZ) -- positions' account column; the order re-opens
+
+The issuer's dry run on the real S3 tables (`commonwealth_coverage.py --out .scratch/advi_cotbkf/coverage_r2`, after this round's applies)
+printed `kind=positions ... rows=469 accounts=0`. The positions table's account column is `AccountNumber` (no underscore; the decomposition's
+measured constraint 3), so `distinct_accounts` reads 0 where the file holds 83 accounts -- the miss row ADVI_COTBKF-W7-S1 predicted.
+1. `distinct_accounts` counts `Account_Number`, else `AccountNumber`, else writes null with the note saying no account column exists (never 0).
+2. A test whose name contains `account_column`: a positions fixture keyed `AccountNumber` yields its true distinct count.
+3. CB2b4-AC1 and CB2b4-AC2 are unchanged and must still pass. Gate limb: none graded this modification (LIMB 6 fires on new orders only;
+   the order declares no `<placeholders>`).
