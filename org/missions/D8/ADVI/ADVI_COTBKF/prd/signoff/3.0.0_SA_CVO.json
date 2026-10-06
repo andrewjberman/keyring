@@ -1,12 +1,12 @@
 {
   "prd": "ADVI_COTBKF_PRD.md",
   "prd_version": "v0.4",
-  "prd_pin": "9517e153b4ec6a70324811c73c0e28eb56e8431a",
+  "prd_pin": "51a7c07278fae376ea05e66e662dc9e725618c76",
   "half": "ratified-text",
-  "half_hash": "0ff822d2cc2e0c6952f838aa626660e6204f02ba2b0c117e08bf6f458cdb4c8e",
+  "half_hash": "58a566854d1939762e07e31f9e1bf49f517778e5964cf4ba241fa60e3f1b89d7",
   "endpoint_hash": "d0930e2c138b4eb287c6e12290ff4f8b268741db8d904fd6fdd20b06f58792f7",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.1_RATIFIED_TEXT_REVIEW_20261006.md@4ca0072bbc",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_PRD_v0.1_RATIFIED_TEXT_REVIEW_20261006.md@03c2d28c0e",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-06T19:56:22Z"
+  "signed_at": "2026-10-06T20:09:14Z"
 }
