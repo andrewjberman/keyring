@@ -187,6 +187,21 @@ def _frontier_verdict(as_of_date, now, warn_tdb, fail_tdb, severity, tcal):
         status = "PASS"
     return status, tdb, expected.isoformat()
 
+def _weekly_verdict(last_modified, now, weekday, severity, tcal):
+    """PURE weekly trading-day-frontier verdict -> (status, due_iso). NFRA_MCPINDEX MX-f-1 (CTO Z-S74).
+    A WEEKLY producer's table is STALE only when its last write predates the most recent scheduled
+    weekly production day that has PASSED (strictly before today's UTC date), per the shared calendar
+    (tcal.weekly_production_day rolls a holiday production day back). So: FRESH on every day after the
+    weekly run landed, FRESH on the production day itself before the run lands, STALE only once the
+    production day is past with no write on/after it. Dates are UTC (the S3 LastModified clock)."""
+    now_d = now.date() if hasattr(now, "date") else now
+    due = tcal.weekly_production_day(now_d - datetime.timedelta(days=1), weekday)
+    lm_d = last_modified.date() if hasattr(last_modified, "date") else last_modified
+    if lm_d >= due:
+        return "PASS", due.isoformat()
+    return ("FAIL" if severity == "ERROR" else "WARN"), due.isoformat()
+
+
 CADENCE_LABELS = {
     "daily":          "daily",
     "business-daily": "business-daily (Mon-Fri)",
@@ -866,6 +881,29 @@ def _evaluate_artifact(entry: dict, now: datetime.datetime,
                            f"{round(age_h,1)}h is >= {round(escalate_h,1)}h "
                            f"({WARN_ESCALATE_MULTIPLE}x the {fail_h}h fail ceiling) -- a WARN "
                            f"this far past ceiling is a freeze, not a tolerable lag").strip(" |")
+
+    # ---- WEEKLY TRADING-DAY-FRONTIER BASIS (NFRA_MCPINDEX MX-f-1, CTO Z-S74) ----
+    # A WEEKLY producer's table (cadence: weekly + freshness_basis: trading-day-frontier + a declared
+    # weekly_production_weekday) is graded against the most recent scheduled weekly production day,
+    # NOT flat wall-clock hours (a 48h fail on a once-a-week table is stale 5 days in 7). Daily
+    # entries, and weekly entries that do not declare the weekday, are untouched.
+    if (cadence == "weekly" and entry.get("freshness_basis") == "trading-day-frontier"
+            and entry.get("weekly_production_weekday") is not None and not entry.get("_pk_check")):
+        if _tcal is None or not hasattr(_tcal, "weekly_production_day"):
+            result["status"] = "UNVERIFIABLE-BASIS"
+            result["notes"] = (result["notes"] + " | UNVERIFIABLE-BASIS: weekly trading-day-frontier "
+                               "entry but lib/trading_calendar.py weekly_production_day is "
+                               "unavailable -- refusing a flat-wall-clock verdict").strip(" |")
+            return result
+        w_status, w_due = _weekly_verdict(last_modified, now, entry["weekly_production_weekday"],
+                                          severity, _tcal)
+        result["mtime_status"] = mtime_status
+        result["status"] = w_status
+        result["weekly_due"] = w_due
+        result["notes"] = (result["notes"] + f" | WEEKLY-BASIS: last write {last_modified.date().isoformat()} "
+                           f"vs most recent passed production day {w_due} "
+                           f"({entry['weekly_production_weekday']})").strip(" |")
+        return result
 
     # ---- PARTITION-KEY MODE override (as_of_source: silver-partition-key) ----
     # The stamped as_of is the MAX silver date-PARTITION-key (silver/<table>/YYYY-MM-DD.parquet),

@@ -24,6 +24,7 @@ Public API:
   expected_last_trading_day(now) -> date          # the "expected last-settled priced frontier"
   trading_days_behind(as_of, expected) -> int     # the lag (trading-day count, not flat hours)
   trading_days_between(start, end) -> list[date]   # inclusive
+  weekly_production_day(on_or_before, weekday) -> date   # most recent scheduled WEEKLY production day
   trading_days_mtd / trading_days_ytd / total_trading_days_in_window
   calendar_source() -> str                         # provenance
 
@@ -118,6 +119,39 @@ def trading_days_behind(as_of: object, expected: object) -> int:
             n += 1
         c -= dt.timedelta(days=1)
     return n
+
+
+_WEEKDAY_NAMES = ("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+
+
+def _to_weekday(weekday: object) -> int:
+    """Weekday as 0=Monday..6=Sunday, from an int or a (case-insensitive) English name/3-letter abbreviation."""
+    if isinstance(weekday, bool):
+        raise TypeError("weekday must be an int 0-6 or a weekday name, not bool")
+    if isinstance(weekday, int):
+        if 0 <= weekday <= 6:
+            return weekday
+        raise ValueError(f"weekday int out of range 0-6: {weekday}")
+    if isinstance(weekday, str):
+        w = weekday.strip().lower()
+        for i, n in enumerate(_WEEKDAY_NAMES):
+            if w in (n, n[:3]):
+                return i
+    raise ValueError(f"unrecognised weekday: {weekday!r}")
+
+
+def weekly_production_day(on_or_before: object, weekday: object) -> dt.date:
+    """The most recent scheduled WEEKLY production day on or before `on_or_before`, for a producer
+    that runs on `weekday` (int 0=Mon..6=Sun, or a name). The candidate is the latest calendar date
+    <= `on_or_before` falling on that weekday. A candidate that is a Mon-Fri NYSE HOLIDAY rolls BACK
+    to the prior trading day (the holiday-roll); a Saturday/Sunday candidate is never rolled -- a
+    weekend producer's weekday is its own, not a trading-day question."""
+    d = _to_date(on_or_before)
+    wd = _to_weekday(weekday)
+    c = d - dt.timedelta(days=(d.weekday() - wd) % 7)
+    if c.weekday() < 5 and not is_trading_day(c):
+        c = prev_trading_day(c)
+    return c
 
 
 def trading_days_between(start: object, end: object) -> list[dt.date]:
