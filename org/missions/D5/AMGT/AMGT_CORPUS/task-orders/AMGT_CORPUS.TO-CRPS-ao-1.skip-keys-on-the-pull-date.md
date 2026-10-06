@@ -101,3 +101,5 @@ served proof (re-pin, the BA plant, the 2026-10-07 13:00Z fire read) is the issu
 <round>39</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
