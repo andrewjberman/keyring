@@ -88,3 +88,7 @@ The `<status>` flip is the issuer's.
 **The portal in your worktree** is `6de76f0509` (the /freshness page candidate) with DSGN 43+44 (`1d6d2573`) merged UNCOMMITTED by the issuer, for this walk only. It is never committed or pushed: do not commit, reset or clean it. So FWD-18 and FWD-1 ARE walkable on this build. Record that they were walked on a local merge of two candidates, not on DEV (DEV is `cf3f10c6`).
 
 <status>pending</status>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~12:3xZ):** CLOSED -- drained @539b33f1bf. AC1 reads 3 PDFs. AC2 is disarmed, re-read by the issuer at 12:28Z; DISARMED was relayed to 0.0.0_AB_MSTR~Z. Proof VALID. AC3 (`WALK_ROUND75.md`) is the CVO's at L9. The walk-only portal merge in the worktree was aborted and the worktree removed, so nothing was committed or pushed in portal. Rows Z-W261-S1/S2 are INERT and carried to the drain-end read.
+
+<status>complete</status>
