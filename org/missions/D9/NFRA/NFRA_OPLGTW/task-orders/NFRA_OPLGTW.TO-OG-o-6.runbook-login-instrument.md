@@ -65,7 +65,7 @@ PLACE to `complete`. Report once.
 - Round 21 (R3-T.14, item 3). Alone. LOCAL: no release.
 - Pre-cut: `o6.AC1.sh` FAIL (no prefix, no gw_login, not listed).
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
