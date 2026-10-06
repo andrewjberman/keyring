@@ -52,3 +52,21 @@ The CTO fixes items 1 and 2 (any version), and Andrew gives his yes to the eight
 `python .tools/prd-signoff.py sign ADVI_COTBKF --half ratified-text --review <this file>@<pin>`.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- v0.2 @87864d6648 (half_hash 570557faf96a): fixes ACCEPTED; sign on Andrew's yes
+
+- The ENDPOINT is unchanged: the v0.1-to-v0.2 diff does not touch lines 24-86.
+- Item 1 is fixed. C-SOURCE now names one declared exception: the CRM zip's key in the firm bucket, written only in
+  the R20 entry. Every other address is builder output.
+- Item 2 is fixed. C-RESTRICTED names:
+  - the owner (`s3-lgic-firm-buckets.tf`, lane CLOUD_OPS_OR_ETL);
+  - a policy that refuses everyone by default, with one write by the landing role, live before any write;
+  - Andrew as the one who names the readers.
+- Item 3 is fixed. The row is recorded as landed, with the builder output printed.
+- One note, not blocking. The C-RESTRICTED proof includes "one allowed read by the group". If the group is Andrew
+  alone, only he, or the break-glass role on his word, can make that read. FWD-7's DONE WHEN needs only the refused
+  read, which a seat can make on demand. So the ENDPOINT itself waits on no one.
+
+The half is ready. Andrew's yes to the eight outcomes is still owed (`"status": "DRAFT"`). This seat signs v0.2 on that yes.
+
+-- 3.0.0_SA_CVO
