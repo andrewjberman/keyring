@@ -18752,6 +18752,47 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "head-object on the snapshot: ETag cd40eb2d2ad71f765537c037d753c9a1 equal to the function's self-report, VersionId MWfKsTyq1Yi4JOWms7F4eSBCWTRbu17o, 2850172 B"
   ]
  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W261-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~261",
+  "surfaced_at": "2026-10-06T12:19:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The three PDFs saved under print/ were fetched by the page's own print GET inside the walker, not captured from the Print button's response.",
+  "spec_asserts": "AMGT-ay-6 worker face: 'print BA, AMD and ASML_NA from the page and save the PDFs'.",
+  "world_is": "The Print button was pressed on all three names (captures fwd5-<key>-print-modal, 200 application/pdf on 3 of 3), but Playwright could not read the blob response body (r73 and r74 recorded the same). The bytes saved are from a second walker run that GETs /api/scoped/amgt/security/<key>/print with the page's own bearer, the call the button makes: BA 134,639, AMD 136,569, ASML_NA 140,885 bytes, 200 application/pdf. The button's own response bytes were not recorded, so equality of the two is not measured. Instrument: copy of the r74 instrument (walk_ay6.mjs, one env hook), under deliverables/0.9.0_WK_AMGT_RESAPP~261/instrument/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~261/WALK_ROUND75.md; walk stamps tmp/ui-walk/20261006T121316Z (12 shots) and 20261006T121547Z (print GETs), gitignored on this device; portal 6de76f0509 + 1d6d2573 uncommitted merge"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W261-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~261",
+  "surfaced_at": "2026-10-06T12:19:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "On the walked build the BA, AMD and ASML_NA printed packs carry a Recommendation section built from filing sentences, and market header lines print 'date not stored with this figure'.",
+  "spec_asserts": "PRD v0.40 FWD-5 DONE WHEN: each printed pack 'reads as a document: Opal Brand form, every figure traceable to its page field, no raw code, no dashboard chrome (a JUDGMENT read at L9)'.",
+  "world_is": "Printed 2026-10-06; Lato only, ink #163372, no images, 0 of 3 with upper-case underscore code tokens, figures of 5+ decimals or Python repr marks. Header market lines read '... - date not stored with this figure - Bloomberg' (11 BA, 11 AMD, 10 ASML_NA); fiscal-year 2016-2025 lines carry no date; fiscal-year 2026-2028 consensus lines read 'period ending <date>' (35, 36, 36 lines). Recommendation: BA 9 sentences taken from the filing (production-rate and backlog sentences) while the page's Recommendation card says 'the research team's base case is not in this pack'; AMD 'No recommendation has been written for this company yet.'; ASML_NA one sentence about the Dutch Corporate Governance Code 2025. Thesis and risks: BA 2 and 3 filing sentences (page shows 2 and 3 points); AMD and ASML_NA 'No investment thesis / No risks or considerations has been written for this company yet.'",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~261/WALK_ROUND75.md; walk stamps tmp/ui-walk/20261006T121316Z (12 shots) and 20261006T121547Z (print GETs), gitignored on this device; portal 6de76f0509 + 1d6d2573 uncommitted merge",
+      "PyMuPDF text and font dict over deliverables/0.9.0_WK_AMGT_RESAPP~261/print/*.pdf (22, 24, 24 pages)"
+    ]
+  }
 }
 ]
 ```
