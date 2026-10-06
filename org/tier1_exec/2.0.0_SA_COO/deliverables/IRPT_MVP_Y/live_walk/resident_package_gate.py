@@ -2,7 +2,7 @@
 """Gate a BUILT resident package before it is uploaded or installed, and write its tarball and install script.
 
     python resident_package_gate.py <package-dir> <pin> <running-tar.gz> <new-root-name> <old-root-name> \
-        <ledger-slug> <out-dir>
+        <ledger-slug> <out-dir> [--base-pin P --files-from LIST]
 
 `<package-dir>` is the output of IRPT_MVP_P/build_resident_package.py at `<pin>`. `<running-tar.gz>` is the package
 the host runs now (downloaded by its S3 version). No AWS call is made here. Checks, each with its denominator:
@@ -14,6 +14,11 @@ the host runs now (downloaded by its S3 version). No AWS call is made here. Chec
   G4  the route table and the installed boundary agree (every operation `entry.ROUTES` names is served by
       reports/generate_installed.py), the pair whose mismatch raises at Entry construction;
   G5  the member census against the running package: added, removed, changed, identical.
+
+With `--base-pin P --files-from LIST` (IRPT_YCDGEN R13, the builder's named-list build) G2 expects each member whose repo
+path is named in LIST to equal `git show <pin>:<path>` and every other member to equal `git show P:<path>`; the
+opal_map member is read from the bindings' `provenance.opal_map_source` at the pin. A member that differs fails G2 with
+the count printed. Without the flags G2 is the whole-tree-at-the-pin rule above.
 
 Then it writes `<out-dir>/<new-root-name>.tar.gz` (members in sorted order, mtime 0), its sha256, the census JSON,
 and the host install script with member pins read from THIS package. Exit 0 only when G1-G4 hold. ASCII only.
@@ -62,8 +67,29 @@ def repo_path(member):
     return IR + member
 
 
+def split_flags(argv):
+    """(positionals, base_pin, files_from) -- the two optional flags may sit anywhere after the program name."""
+    rest, flags, i = [], {}, 1
+    while i < len(argv):
+        if argv[i] in ("--base-pin", "--files-from"):
+            if i + 1 >= len(argv):
+                raise SystemExit("%s needs a value" % argv[i])
+            flags[argv[i]] = argv[i + 1]
+            i += 2
+        else:
+            rest.append(argv[i])
+            i += 1
+    if ("--base-pin" in flags) != ("--files-from" in flags):
+        raise SystemExit("--base-pin and --files-from go together")
+    return rest, flags.get("--base-pin"), flags.get("--files-from")
+
+
 def main(argv):
-    pkg, pin, running_tar, new_root, old_root, slug, out_dir = argv[1:8]
+    rest, base_pin, files_from = split_flags(argv)
+    pkg, pin, running_tar, new_root, old_root, slug, out_dir = rest[:7]
+    listed = set()
+    if files_from:
+        listed = {line.strip() for line in open(files_from, encoding="utf-8").read().splitlines() if line.strip()}
     os.makedirs(out_dir, exist_ok=True)
     sums = parse_sums(open(os.path.join(pkg, "SHA256SUMS"), encoding="utf-8").read())
     ok = True
@@ -72,20 +98,42 @@ def main(argv):
     print("G1 manifest: %d of %d members hash to their SHA256SUMS line" % (len(sums) - len(bad), len(sums)))
     ok &= not bad
 
-    differ, checked, skipped = [], 0, []
+    opal_source = None
+    if base_pin:
+        bindings = json.load(open(os.path.join(pkg, "reports/resident_bindings.json"), encoding="utf-8"))
+        opal_source = bindings.get("provenance", {}).get("opal_map_source")
+    differ, checked, skipped, from_list = [], 0, [], 0
     for member in sorted(sums):
         path = repo_path(member)
         if member == "reports/resident_bindings.json" or path is None:
             skipped.append(member)
             continue
-        blob = subprocess.run(["git", "show", "%s:%s" % (pin, path)], capture_output=True)
+        expect_pin = pin
+        if base_pin:
+            if member == "ycharts/research/overview_map.json" and opal_source:
+                path, expect_pin = opal_source, pin
+            elif path in listed:
+                from_list += 1
+            else:
+                expect_pin = base_pin
+        blob = subprocess.run(["git", "show", "%s:%s" % (expect_pin, path)], capture_output=True)
         checked += 1
         if blob.returncode != 0 or sha(blob.stdout) != sums[member]:
             differ.append(member)
-    print("G2 whole tree at the pin: %d of %d members equal `git show %s:<path>`; not compared %d (%s)"
-          % (checked - len(differ), checked, pin[:10], len(skipped), ", ".join(skipped)))
+    if base_pin:
+        print("G2 named list: %d of %d members equal their expected blob (%d listed members from `git show %s:<path>`, "
+              "the rest from `git show %s:<path>`); not compared %d (%s); %d member(s) differ"
+              % (checked - len(differ), checked, from_list, pin[:10], base_pin[:10], len(skipped),
+                 ", ".join(skipped), len(differ)))
+    else:
+        print("G2 whole tree at the pin: %d of %d members equal `git show %s:<path>`; not compared %d (%s)"
+              % (checked - len(differ), checked, pin[:10], len(skipped), ", ".join(skipped)))
     for member in differ:
         print("   DIFFERS:", member)
+    if base_pin:
+        unpackaged = sorted(path for path in listed if (path[len(IR):] if path.startswith(IR) else path) not in sums)
+        print("G2 named list: %d listed path(s), %d not in the package %s" % (len(listed), len(unpackaged), unpackaged or ""))
+        differ.extend(unpackaged)
     ok &= not differ
 
     failed, nonascii, pys = [], 0, 0

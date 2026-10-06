@@ -14,6 +14,13 @@ Usage (from the backend worktree):
   python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py \
       --pin <commit> --enrolled-user-id <int> --out .runtime/resident-package \
       [--census-pin 2874e37647] [--dry-run]
+      [--research] [--opal-map REPO_PATH] [--base-pin P --files-from LIST] [--state-json FILE]
+
+IRPT_YCDGEN R13: `--research` also packages the tracked non-test files of ycharts/research/; `--opal-map` packages
+one tracked file as ycharts/research/overview_map.json and pins it in the bindings (`opal_map`); `--base-pin P
+--files-from LIST` builds P's tree by the rule below except the listed repo paths, which come from `--pin`;
+`--state-json` reads the core state document from a file instead of S3. A build with none of these flags is the
+build of before.
 
 Bindings come from the core root's canonical outputs read from its remote state (queue URL,
 table names) and are recorded with that state's serial; the region is the estate's. ASCII only.
@@ -41,6 +48,9 @@ REGION = "us-east-1"
 # Source directories packaged whole (tracked .py/.json/.sh members, tests excluded on the host).
 PACKAGE_DIRS = ("_authz", "_contracts", "_gate", "_ids", "_keys", "_scope", "intake", "ops",
                 "reports", "ycharts/generate", "ycharts/session", "ycharts/extract")
+RESEARCH_DIR = "ycharts/research"
+RESEARCH_EXT = (".py", ".json", ".sh", ".md", ".cjs")
+OPAL_MAP_MEMBER = RESEARCH_DIR + "/overview_map.json"
 EXTRA_FILES = ("lib/opal_naming.py", "data/firm_registry.json", "org/standards/NAMING_SCHEMA.json")
 EXTRA_DIRS = ("infra/logic/registry", "docs/contracts/investor-reporting/v1")
 
@@ -64,7 +74,33 @@ def wanted(path):
     return path.endswith((".py", ".json", ".sh", ".md"))
 
 
-def core_outputs():
+def research_wanted(path):
+    parts = path.split("/")
+    if "tests" in parts or "fixtures" in parts or "__pycache__" in parts or path.endswith(".pyc"):
+        return False
+    return path.endswith(RESEARCH_EXT)
+
+
+def exists_at(pin, path):
+    return subprocess.run(["git", "cat-file", "-e", "%s:%s" % (pin, path)], cwd=WORKTREE, check=False,
+                          stdout=subprocess.PIPE, stderr=subprocess.PIPE).returncode == 0
+
+
+def packaged_name(repo_path):
+    """The package member name for a repo path (the gate's repo_path inverted for the investor-reporting tree)."""
+    return repo_path[len(IR) + 1:] if repo_path.startswith(IR + "/") else repo_path
+
+
+def read_list(path):
+    raw = Path(path).read_bytes()
+    names = [line.strip() for line in raw.decode("utf-8").splitlines() if line.strip()]
+    return names, hashlib.sha256(raw).hexdigest()
+
+
+def core_outputs(state_json=None):
+    if state_json:
+        state = json.loads(Path(state_json).read_text(encoding="utf-8"))
+        return state["serial"], {k: v["value"] for k, v in state["outputs"].items()}
     # Windows Python cannot exec the bash shim `.tools/aws`; its `.cmd` sibling is the
     # Win32-callable form (CLAUDE.md Git: "the .tools/aws shim (+aws.cmd, both or neither)").
     shim = WORKTREE / ".tools/aws.cmd"
@@ -89,20 +125,46 @@ def main(argv=None):
     parser.add_argument("--override", action="append", default=[], metavar="REPO_PATH=PIN",
                         help="package ONE member from another commit (e.g. a fix landed after --pin); recorded in the "
                              "bindings provenance. The member must already exist at --pin")
+    parser.add_argument("--research", action="store_true",
+                        help="also package the tracked non-test files under ycharts/research/")
+    parser.add_argument("--opal-map", metavar="REPO_PATH", default=None,
+                        help="tracked file at --pin packaged as ycharts/research/overview_map.json and pinned as bindings opal_map")
+    parser.add_argument("--base-pin", default=None, help="build the package from this commit's tree except --files-from")
+    parser.add_argument("--files-from", default=None, metavar="LIST",
+                        help="file of repo paths (one per line), each existing at --pin, taken from --pin")
+    parser.add_argument("--state-json", default=None, metavar="FILE",
+                        help="read the core state document from FILE instead of S3 (offline tests)")
     args = parser.parse_args(argv)
+    if bool(args.base_pin) != bool(args.files_from):
+        raise SystemExit("--base-pin and --files-from go together")
 
     pin = git("rev-parse", args.pin).strip()
+    base = git("rev-parse", args.base_pin).strip() if args.base_pin else pin
+    listed, list_sha = (read_list(args.files_from) if args.files_from else ([], None))
+    for path in listed:
+        if not exists_at(pin, path):
+            raise SystemExit("listed file %s does not exist at --pin %s" % (path, args.pin))
     members = {}
     for directory in PACKAGE_DIRS:
-        for path in tracked_under(pin, IR + "/" + directory):
+        for path in tracked_under(base, IR + "/" + directory):
             if wanted(path):
-                members[path[len(IR) + 1:]] = (pin, path)
+                members[path[len(IR) + 1:]] = (base, path)
+    if args.research:
+        for path in tracked_under(base, IR + "/" + RESEARCH_DIR):
+            if research_wanted(path):
+                members[path[len(IR) + 1:]] = (base, path)
     for path in EXTRA_FILES:
-        members[path] = (pin, path)
+        members[path] = (base, path)
     for directory in EXTRA_DIRS:
-        for path in tracked_under(pin, directory):
+        for path in tracked_under(base, directory):
             if path.endswith(".json"):
-                members[path] = (pin, path)
+                members[path] = (base, path)
+    for path in listed:
+        members[packaged_name(path)] = (pin, path)
+    if args.opal_map:
+        if not exists_at(pin, args.opal_map):
+            raise SystemExit("--opal-map %s is not tracked at --pin" % args.opal_map)
+        members[OPAL_MAP_MEMBER] = (pin, args.opal_map)
     overrides = {}
     for item in args.override:
         repo_path, _, other = item.partition("=")
@@ -113,10 +175,10 @@ def main(argv=None):
         members[packaged] = (other, repo_path)
         overrides[repo_path] = other
     members["census/" + CENSUS.rsplit("/", 1)[1]] = (git("rev-parse", args.census_pin).strip(), CENSUS)
-    members["ycharts-host/run-ycharts-session.sh"] = (pin, WRAPPER)
-    members["ycharts-host/ycharts_session.js"] = (pin, LIBRARY)
+    members["ycharts-host/run-ycharts-session.sh"] = (base, WRAPPER)
+    members["ycharts-host/ycharts_session.js"] = (base, LIBRARY)
 
-    serial, outputs = core_outputs()
+    serial, outputs = core_outputs(args.state_json)
     out = Path(args.out)
     sums = []
     for packaged, (blob_pin, path) in sorted(members.items()):
@@ -153,6 +215,12 @@ def main(argv=None):
                        "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
                        "generated_by": "2.0.0_SA_COO~P build_resident_package.py"},
     }
+    if args.opal_map:
+        bindings["opal_map"] = {"path": "../" + OPAL_MAP_MEMBER,
+                                "sha256": next(d for d, p in sums if p == OPAL_MAP_MEMBER)}
+        bindings["provenance"]["opal_map_source"] = args.opal_map
+    if args.files_from:
+        bindings["provenance"].update({"base_pin": base, "files_from_sha256": list_sha, "files_from_count": len(listed)})
     bindings_bytes = (json.dumps(bindings, indent=2, sort_keys=True) + "\n").encode()
     sums.append((hashlib.sha256(bindings_bytes).hexdigest(), "reports/resident_bindings.json"))
     sums.sort(key=lambda item: item[1])
@@ -166,6 +234,9 @@ def main(argv=None):
               "queue_url": bindings["queue_url"], "jobs_table": bindings["jobs_table"],
               "requests_table": bindings["requests_table"], "wrapper_sha256": wrapper_sha,
               "library_sha256": library_sha, "out": None if args.dry_run else str(out)}
+    if args.files_from:
+        report.update({"base_pin": base, "files_from": listed, "files_from_count": len(listed),
+                       "files_from_sha256": list_sha})
     print(json.dumps(report, indent=2))
     return 0
 
