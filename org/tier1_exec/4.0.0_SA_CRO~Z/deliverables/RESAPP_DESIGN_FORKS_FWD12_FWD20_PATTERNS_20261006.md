@@ -114,3 +114,27 @@ Scope: DCF/WACC/terminal value across the whole repo (58 files; `research_transc
 `companyfacts` and XBRL across the whole repo; FWD-20 and the forecast terms in `org/missions/D5/AMGT`, `lib/research`,
 `integrations/bloomberg/research`, `portal/src`, `docs/briefs`, `data/`, `rcg/rulings`, dated Tier-0/1 records.
 "EGRAPH" has no project by that name. Not searched: SharePoint workbooks, live S3.
+
+---
+
+## ADDENDUM 1 (2026-10-06 ~20:3xZ) -- two points raised by Andrew at this terminal, and one measured answer
+
+**FWD-12, Andrew's objection (verbatim):** "Why does anybody need to press the button? why does there even need to be a
+button? dont we just run an automated job in the morning and that is it? ... It seems to me futile/moot because we dont
+get intraday activity anyway." The re-run half traces to this seat's own L1 brief (O12,
+`docs/briefs/amgt-resapp-security-analysis-20260910.md:72-76`), not to an ask from Andrew or Adam Muller; its stated
+reason (inputs refresh on different clocks) supports SHOWING each input's last run, not pressing one. AMGT_CORPUS FWD-22
+already promises the scheduled refresh "without anyone starting a run"
+(`org/missions/D5/AMGT/AMGT_CORPUS/prd/AMGT_CORPUS_PRD.md:598-606`). **This seat's revised recommendation: retire the
+re-run half of FWD-12 and keep the provenance half.** NOT yet Andrew's decision -- he asked the question and has not
+ruled; an ENDPOINT change is the CTO's on his word.
+
+**FWD-20, the question "does the team's own model already produce F_model?" -- MEASURED, answer NO for FCF, YES for the
+method.** `org/tier1_exec/4.0.0_SA_CRO/deliverables/RESEARCH_CORPUS_SCAN_20260922/RESEARCH_CORPUS_SCAN_20260922.md:76-91`
+(78 of 78 workbooks read; 60 with model content): the forward FCF line in 58 of 60 is `BEST_ESTIMATE_FCF`, which is
+Bloomberg consensus, so reading it as the house forecast would make D zero by construction. The house's own forward
+view is the **Opal Case Assumptions** block, present in 58 workbooks: REVENUE GROWTH and EARNINGS MARGIN, each taken
+from the name's history (min / max / average / median), driving EPS x multiple -> price. The first version recommended
+above (revenue growth x FCF margin from the name's own history) is that same house method applied to the FCF Margin row
+(57 of 60 workbooks), so it is the team's mechanism, not a new one. Andrew's 09-15 text assumed "the output your model
+already produces deterministically"; the workbooks produce that for EPS cases, not for FCF.
