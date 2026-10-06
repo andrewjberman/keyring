@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
  "status": "RATIFIED"
 }
 ```
@@ -43,12 +43,14 @@
                     lists boxes by hand
          SOURCE     brief O1
 
-  FWD-3  A seat on any box sends a message to a seat on any other box, and the sender can show it
-         was read
+  FWD-3  A seat on any box reaches a seat on any other box through the two boxes' fabric
+         managers, and the sender can show it was read
          DONE WHEN  EXERCISED -- one message each way between every pair of boxes in use
-         ACCEPT     a message sent from one box reaches the right seat on another, and the sender can
-                    show that it was read, not only delivered
-         SOURCE     brief O2
+         ACCEPT     a message from a seat on one box goes to its own box's fabric manager, which passes
+                    it to the other box's fabric manager, which delivers it to the right seat; the sender
+                    can show that it was read, not only delivered. No other seat talks across boxes
+         SOURCE     brief O2; Andrew-direct 2026-10-06 ~14:0xZ ("only the MSTR agents are the ones that
+                    communicate between boxes")
 
   FWD-4  A finished round from any working box reaches the shared trunk without that box pushing
          it, and no lane falls more than one round behind
@@ -72,11 +74,12 @@
                     terminal; a round with one waits until he says so
          SOURCE     brief O5; Andrew's card 1
 
-  FWD-7  Anyone can see which box runs each project, and no project is split across boxes
-         DONE WHEN  EXERCISED -- the placement read for every live project
-         ACCEPT     each project names its box; one project is on one box; two projects on different
-                    boxes change different files; a box with room and nothing placed on it is visible
-         SOURCE     brief O6
+  FWD-7  Anyone can see which box runs each project or workstream, and none is split across boxes
+         DONE WHEN  EXERCISED -- the placement read for every live project and workstream
+         ACCEPT     each project or workstream names its box; one is on one box; two on different boxes
+                    change different files; a box with room and nothing placed on it is visible
+         SOURCE     brief O6; Andrew-direct 2026-10-06 ~14:0xZ (the workstream as the unit, by the CRO's
+                    stated reading, not corrected by him)
 
   FWD-8  Two boxes never edit the same file at the same time
          DONE WHEN  EXERCISED -- two boxes working in parallel through one full round each, with no
@@ -112,6 +115,17 @@
                     answer there reaches the box that asked; no lane sits waiting on a terminal he is
                     not at
          SOURCE     proposal section 5.8; Andrew's confirmation (added at his word)
+
+  FWD-13 When one box can no longer hold its work, a project or workstream moves to another box
+         between rounds without losing anything, placed where there is the most room
+         DONE WHEN  EXERCISED -- one live project moved between rounds and its next round finished on
+                    the new box
+         ACCEPT     the CTO decides a project or workstream should move; the box with the most free room
+                    is chosen by its measured load, not by guess; the move happens between rounds, never
+                    in the middle of one; the next round on the new box starts from exactly where the
+                    last one ended, with nothing redone or lost
+         SOURCE     Andrew-direct 2026-10-06 ~14:0xZ (the CTO elects, the box's MSTR runs the bid) and
+                    "agreed on all points go ahead"
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -137,6 +151,8 @@
 | C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (deployed by site Z) | Each box acts under its own identity so the record names the box. The Dells' identities are DENIED deploys, infrastructure applies and production writes by policy, so "a Dell never deploys" is something the cloud refuses, not a rule people follow. **Name, builder output at L4:** `name('cloudops','global','dell1-agent','role')` -> `cloudops-global-dell1-agent-role` (likewise `dell2`). The IAM traps in `/cloud-ops` apply. |
 | C-RESTART: rounds survive a box restart (FWD-11) | this project | A lane on any box publishes its work-in-progress branch at each cell close, so a disk loss loses at most one cell. The round's state is read from the published branches and the ledger, never from one box's memory. Proposal 5.9 lists the cases (a Dell, site Z or the laptop down; a box whose bus consumer is not running). |
 | C-ATTENTION: one decision list (FWD-12) | this project | A box records each decision it needs from Andrew as a file on its own tree plus one bus line to the laptop; the laptop shows one list of every box's open decisions; his answer is recorded on the laptop and reaches the asking box as a file and one bus line. No lane on an unattended box blocks on a prompt at that box. |
+| C-SERIALS: one fabric manager per box | Andrew, "agreed on all points go ahead" | `0.0.0_AB_MSTR` (laptop), `0.0.0_AB_MSTR~SITEZ`, `0.0.0_AB_MSTR~DELL1`, `0.0.0_AB_MSTR~DELL2`, each with its own tier-0 folder. Site Z's `~Z` stays as an ALIAS in the device register so every past record still resolves; the rename lands at a site-Z restart. Only these seats talk across boxes (FWD-3). |
+| C-BID: placement of a move (FWD-13) | Andrew; `.tools/remote-job.py` | One CTO, on the laptop, elects a move and tells the laptop's fabric manager. That fabric manager offers it to the boxes' fabric managers, which bid with measured load; it awards the move. MEASURED at L4 by the CRO (record @ab368f2e7c): `remote-job.py` bids CPU and memory via `psutil`, knows two devices (`DEVICES = ("laptop", "sitez")`), and its awards run through LDO-001; disk and storage are not measured. The bid adds disk and storage and reads devices from the register (C-REGISTRY). LDO-001 keeps awarding Teams remote jobs; the laptop's fabric manager awards moves. A move happens only between rounds: the old box publishes its last round (C-QUEUE), the new box pulls the trunk and seats the lane. |
 | C-NAMES | CLAUDE.md rule 30 | Every new queue, identity, register home and branch prefix is builder output, printed in the order that creates it. A builder refusal is a missing registry row to add. |
 | C-MORATORIUM | law | No alert, alarm, SNS, SES send, freshness checker or monitor. A box that has not acknowledged is visible on the control plane as a state, not a notification. |
 | C-NO-SHADOW | law | No standing comparator between boxes and no second bus or trunk run beside the first; each change replaces the old path in the same window. |
@@ -222,9 +238,10 @@ start the work that needs no Dell, FWD-5 first"). So:
 | S09 | FWD-6 | gate 5 under the standing push rule | measured (gate 5's header, brief F4) | C-PUSH-RULE | wire | Andrew's text | law edit by his order |
 | S10 | FWD-9 | the lease register | unmeasured | C-LEASE | wire | S05 | expiry, not release by hand |
 | S11 | FWD-11 | work-in-progress publication at cell close | unmeasured | C-RESTART | wire | S07 | at most one cell lost |
+| S13 | FWD-13 | the bid for a move: four devices, disk and storage measured, the laptop's fabric manager awards | measured (the CRO's read of `remote-job.py`) | C-BID | wire | S02, S05 | between rounds only |
 | S12 | FWD-12 | one decision list on the laptop | unmeasured | C-ATTENTION | wire | S05 | no blocking prompt on an unattended box |
 
-MECE check: every one of the 12 outcomes has at least one row.
+MECE check: every one of the 13 outcomes has at least one row.
 
 ## 8. BRIEF COVERAGE -- content carried, not just cited
 
@@ -238,3 +255,17 @@ MECE check: every one of the 12 outcomes has at least one row.
 | PART VII, not claimed | no Dell measured; integration time unmeasured; overlap uncensused; site Z capacity unread; other hooks unchecked; cost unestimated | S-row claims; round 2 measures the thread's timings |
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM v0.2 (1.0.0_SA_CTO, clock read 14:16Z 2026-10-06) -- an ENDPOINT change on Andrew's word: FWD-3 and FWD-7 amended, FWD-13 added
+
+**Words**, at the `4.0.0_SA_CRO` terminal, records in `org/tier1_exec/4.0.0_SA_CRO/deliverables/`:
+`ANDREW_DIRECT_20261006_14xxZ_FOUR_DEVICE_MSTR_RELAY_PER_BOX_FOLDERS_SPLIT_BY_BID.md` @ab368f2e7c and
+`ANDREW_DIRECT_20261006_14xxZ_FOUR_DEVICE_THREE_POINTS_AGREED.md` @3bee43ca11 ("agreed on all points go ahead").
+
+- FWD-3 amended in place: box-to-box messages go fabric manager to fabric manager only.
+- FWD-7 amended in place: the placed unit is a project or a workstream.
+- FWD-13 added: a move between boxes, elected by the one CTO on the laptop, placed by bid, between rounds only.
+- New contracts C-SERIALS and C-BID; manifest row S13.
+- Unchanged: the push-rule law text is still not approved by Andrew (C-PUSH-RULE).
+
+**Sign-off:** an ENDPOINT change, so the ratified-text half re-opens.
