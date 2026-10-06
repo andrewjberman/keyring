@@ -8750,3 +8750,61 @@ fanout:
   egress: none
   portal_ref: 4ca437eb   # the portal DEV head at the cut (origin/DEV); the api suite reads a portal fixture
 ```
+
+## 84. ROUND 76 -- /freshness RENDER FOR REVIEW, TOP BAND + INPUT PROVENANCE, REMEDIATION TRIAGE, COLD-PHASE TABLE + CUT, REDEPLOY, WALK ON DEV. Six orders
+
+**Input:** the CTO's round-75 analysis `ledger/ROUND_ANALYSIS.round75.md` @326aea63b3 (msg 30046), section 4 items 1-6 and rulings
+1-5. PRD v0.40, ADMITTED. FWD-12's re-run half and FWD-20 are design forks at the CRO (ruling 3); not cut. DSGN round 45 draws the
+band and the panel (`2.0.0_SA_COO~D`).
+
+### 84a. MEASURED AT THE CUT (deployed `D29LJCXh` unless named)
+
+- Ruling 1: no render of the /freshness candidate `6de76f0509` is in the record. Round 75's walk captures were in a gitignored folder
+  of a removed worktree.
+- c62: `top_band` absent on 95 of 95 covered names' /overlay.
+- c63: `input_provenance` absent on 95 of 95.
+- c64 (local): 109 OPEN remediation rows (of 461; 352 REMEDIATED), 0 with a TRIAGE citing row. Owners: ~W 41, ~Z 23, CTO~Z 21, ~ZZZ 15,
+  others 9.
+- c65 (local, fresh process): chatter phases generation read 1,242 ms, mentions decode 467, compute 320 + 908, names 0, classification
+  4. The deployed cold chatter read is 3,339-3,774 ms (ay-5).
+- The schedule `amgt-global-freshness-snapshot-daily` fired organically at 12:30:45Z; the snapshot stamp moved 11:32Z -> 12:30:45Z.
+
+### 84b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-az-1` | /freshness rendered for the CTO's review, captures kept in the record (ruling 1; thread-breaking: it unblocks the DEV ask) | `~262` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-az-2` | /overlay `top_band` (FWD-16 news half) and `input_provenance` (FWD-12 provenance half) | `~263` | worker | LOCAL | `scoped_amgt.py`, new `top_band.py` |
+| `AMGT-az-3` | a TRIAGE citing row for each of the 109 OPEN remediation rows (ruling 4) | `~264` | worker | LOCAL | the investigation file (append), own deliverables |
+| `AMGT-az-4` | the deployed cold phase table and a cut of any phase above 1 s, bodies equal (ruling 5) | `~265` | worker | LOCAL | `monthly_chatter.py`, `names_read.py`, `pool_reader.py` |
+| `AMGT-az-5` | the redeploy carrying az-2 and az-4; r74 c55 and r75 c59 pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, ledger |
+| `AMGT-az-6` | the walk on DEV after Andrew's push: FWD-7, 18, 1 (and 16 if DSGN 45 is on the ref) | `~266` | worker | LOCAL (a read) | own deliverables |
+
+### 84c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-6 plus ruling 1's render. Items 1 and 2 share one function's body (/overlay), so they are one
+  cell (az-2).
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - az-1 and az-6 move nothing (reads);
+  - az-2 changes no existing /overlay value;
+  - az-3 edits no existing row;
+  - az-4 changes no body (EQUAL 3 of 3).
+
+### 84d. EDGES AND FAN-OUT
+```
+az-1 (render) --> the CTO's review --> Andrew's DEV ask (with DSGN 43+44) --> az-6 (walk on DEV)
+az-2, az-4 --> az-5 (redeploy, one pair) --> az-6
+az-3 (independent)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [az-1 ~262, az-2 ~263, az-3 ~264, az-4 ~265]
+  wave_1: [az-5 0.7.0_AE_CloudOps~A]   # after az-2 and az-4 drain and its pair
+  wave_2: [az-6 ~266]                  # after az-5 AND Andrew's DEV push
+  no_s3_deletes: true
+  egress: none
+  portal_ref: cf3f10c6   # the portal DEV head at the cut; az-1 runs on the /freshness candidate 6de76f0509
+```
