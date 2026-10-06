@@ -140,7 +140,14 @@ Rows: id `NFRA_OPLGTW-Z-W28-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Hazard carried: the post-act download is in-process on the host as the holder's principal key. It is not her own
   sign-in. That walk is OG-v-7's.
 
-<status>pending</status>
+- CLOSE 19:1xZ (issuer re-grade @5d36cd195c): FAILED on AC2. AC1 PASS: grant_revision 2 -> 3, operations gain
+  download_filtered only, other dimensions and principals unchanged. AC3 PASS: ledger nfra-oplgtw-ga1-grant-write
+  closed. AC2 FAIL: the real-holder download is OK, 2173 rows, every held CUSIP present, 0 non-blank unheld, but 23
+  blank-cusip rows pass because a blank is in the held set (integration.py:341). The query path has served the same
+  rows since OG-q-7. Rows Z-W28-S1 and Z-S59 (disarmed, not resolved). The grant stays in force; reverting it removes no
+  exposure. AC2 is not amended. The blank-cusip rule goes to the CTO at L10.
+
+<status>failed</status>
 <round>22</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>

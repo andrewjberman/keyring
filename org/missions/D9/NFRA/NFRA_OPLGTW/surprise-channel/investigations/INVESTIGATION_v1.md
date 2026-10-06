@@ -9078,3 +9078,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: consistent with how every earlier release record carried it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S59",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-06T19:11Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S1"
+  ],
+  "one_line": "Z-W28-S1 DISARMED for the OG-ga-1 act, NOT resolved: the 23 blank-cusip dim_asset rows come from a pre-existing asset-policy rule that the dim_asset QUERY path already serves; the grant widened no row set. Whether a blank cusip may qualify an asset row is routed to 1.0.0_SA_CTO~O at L10.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py:341 position_cusips = frozenset(row[0] for row in pos_rows): a held position with a blank cusip puts the blank into the held set, so every dim_asset row with a blank cusip passes the PolicyFilter appended at app/integrations/schwab/semantics.py qualify_asset_plan.",
+      "FILE integration.py:656-661 (query path) and :939-946 (download/export path) build the held set through the same _asset_holdings and qualify_asset_plan, so the holder's dim_asset QUERY admitted the same 23 rows before grant_revision 3. The act added an operation, not a row.",
+      "RUN issuer re-grade from worktree coo-o-r22 @5d36cd195c: ga1.AC1 PASS, ga1.AC2 FAIL (held-only no; ssm Success; digest yes), ga1.AC3 PASS. GA1_PROBE_AFTER_final.out: blank_cusip_rows=23, nonblank_unheld_rows=0, held_cusips_missing_from_download=0."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C3 / OG-q-7: a dim_asset read returns only the CUSIPs the grant's accounts hold.",
+  "world_is": "Every non-blank CUSIP returned is held (0 non-blank unheld). 23 rows with a blank cusip are returned because a blank is in the held set. They cannot be tied to a held security by cusip, on the query and download paths alike, since OG-q-7.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer ruling: no rollback, because reverting the grant removes no exposure (the query path serves the same rows). AC2 is NOT amended: it stays FAIL as the record of the policy gap, and OG-ga-1 closes FAILED on AC2 with AC1/AC3 PASS. Fix candidate for the CTO's round-22 analysis: drop blank or null from position_cusips (one line at :341) plus a test, then a release under the usual halves."
+}
+```
