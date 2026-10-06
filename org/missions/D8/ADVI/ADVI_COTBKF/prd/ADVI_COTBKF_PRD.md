@@ -5,10 +5,10 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.3",
+ "prd_version": "v0.4",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
  "status": "RATIFIED"
 }
 ```
@@ -26,8 +26,9 @@ place to daily; both R20 departures acknowledged; the restricted prefix's reader
 ## ENDPOINT (step 2, /endpoint --forward)
 
 ```
-  FWD-1  An analyst picks one Cottonwood account and reads its whole transaction history, 2013 to
-         June 2026, from Opal's own store, and can trace each row to the file Commonwealth sent
+  FWD-1  An analyst picks one Cottonwood account and reads its whole transaction history, as far back
+         as Commonwealth recorded it, from Opal's own store, and can trace each row to the file
+         Commonwealth sent
          DONE WHEN  EXERCISED -- one real account's history read end to end and one row traced back
          ACCEPT     an analyst names one Cottonwood account and reads every transaction Commonwealth
                     recorded for it, oldest to newest, from Opal's store; for any row they can say which
@@ -87,6 +88,16 @@ place to daily; both R20 departures acknowledged; the restricted prefix's reader
          ACCEPT     for each Commonwealth account, a person sees the matching current Cottonwood account,
                     or a plain statement that it is not yet matched, and why
          SOURCE     brief O8
+
+  FWD-9  A client's history follows them when Commonwealth moved them to a new account number
+         DONE WHEN  EXERCISED -- one client read across an account change inside Commonwealth, oldest
+                    account to newest
+         ACCEPT     where a client's account was replaced by a new one inside Commonwealth, an analyst
+                    reads the client's history as one line from the oldest account to the newest, and
+                    sees which account each row came from; a link that cannot be shown is listed with
+                    its reason, never guessed
+         SOURCE     round 1 finding, row ADVI_COTBKF-S2: no single account spans 2013 to 2026; every 2013
+                    account ends by 2017-12
 ```
 
 ## CONTRACTS
@@ -100,7 +111,7 @@ place to daily; both R20 departures acknowledged; the restricted prefix's reader
 | C-SENSITIVE: the most sensitive details (FWD-7) | Andrew's call 1, "Agreed", and his "maybe" on the bucket | Tax IDs, dates of birth, driver's license and passport numbers exist ONLY in the raw delivered files. The silver tables carry each person without those four fields; a date of birth becomes the birth year. This departs from R10's every-column rule and is declared as an R20 register entry for Andrew's acknowledgement. **Placement of the raw files that carry those fields** (the CRM zip, which holds contacts and insurance): Andrew's thought is that they "maybe" stay in `opal-data-cottonwood` rather than `opal-data-assets`. This PRD proposes exactly that, as a second R20 departure: the CRM zip is written to the Cottonwood firm bucket under a prefix readable by a small named group only; the other four zips go to `opal-data-assets` per C-HOMES. Both departures ACKNOWLEDGED by Andrew ("All agreed", record 174xZ); no byte of the CRM zip is written before C-RESTRICTED's policy is live. |
 | C-RESTRICTED: the firm-bucket prefix for the CRM zip (FWD-7) | the bucket's Terraform owner (`infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`, lane `CLOUD_OPS_OR_ETL`, an AE seat); Andrew names the readers | ONE prefix in `opal-data-cottonwood`, its key fixed in the R20 entry. Its bucket policy DENIES every read to every principal except the named group, and denies every write except the one landing role, once. The named group, by Andrew's word ("All agreed"): Andrew alone, plus a break-glass role used only on his word; no agent seat is in it. The policy is a Terraform change in that file, applied by its owner under a never-widen pair, and proven by one refused read from an agent's identity and one allowed read by the group. Nothing is written to the prefix before the policy is live. |
 | C-DAILY: daily returns are derived, not delivered (FWD-3) | this project; Andrew's word for any outside price vendor | MEASURED by the brief (F2): the performance file holds Month, Year and Inception-to-date rows only. Daily returns are built: (1) daily holdings per account rebuilt from the transactions, each account's opening state from its own history (positions exist for one day only, 2026-06-23, 83 of 1,533 accounts); (2) each holding valued daily with a closing price; (3) a daily after-fee time-weighted return with the day's flows taken out; (4) the days chained per month and compared with Commonwealth's monthly return, each month graded MATCH within a stated tolerance or DIFF with its reason. Price history is read from Opal's existing stores first (build ladder rung 2), with the coverage of those stores over these securities printed; a security no Opal store prices leaves its days UNPRICED, and any outside price vendor (Bloomberg, Yahoo Finance or other) waits for Andrew's per-use word. A day not computable is UNKNOWN, never interpolated. |
-| C-SILVER: typed tables (FWD-1, 3, 4) | this project | One typed, de-duplicated parquet table per delivered data file: transactions, performance, positions, and one per CRM file; every vendor column kept except C-SENSITIVE's four; hive partitions; each row carries the file it came from. |
+| C-SILVER: typed tables (FWD-1, 3, 4) | this project | One typed parquet table per delivered data file, holding EVERY row of the file: two identical lines are two rows, each carrying its source line number; "de-duplicated" means only that re-landing the same delivery adds nothing. Row count equals the file's record count (a quoted field may span lines), printed beside it; transactions, performance, positions, and one per CRM file; every vendor column kept except C-SENSITIVE's four; hive partitions; each row carries the file it came from. |
 | C-DOCUMENTS: one index, unique documents (FWD-5) | Andrew's call 3, "Agreed" | The 51 listing files become one de-duplicated document index (account, type, date, page count, source archive or archives). Each UNIQUE document is unpacked once into a declared documents table; the three archives also stay whole in bronze. |
 | C-COVERAGE: what the backfill covers (FWD-6) | this project | One coverage table, generated from the data itself: for each record kind, its earliest and latest date and its row count. The brief's measurements (F5) are the expectation, not the source. |
 | C-CROSSWALK: old account to current account (FWD-8) | this project | A first crosswalk from Commonwealth account to current Cottonwood account; every Commonwealth account is either matched, with the rule that matched it, or listed as not yet matched with the reason. No match is guessed. |
@@ -181,3 +192,21 @@ C-SOURCE: the row has landed (the stale "builder refuses" line replaced) and the
 ## v0.3 (1.0.0_SA_CTO, 2026-10-06) -- RATIFIED on Andrew's "All agreed"; FWD-3 amended to daily
 
 FWD-3 amended in place (id unchanged; outcome was right and its grain too coarse, Andrew's word). C-DAILY added; manifest S10. C-SENSITIVE and C-RESTRICTED carry his acknowledgement and the named readers. The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`.
+
+## v0.4 ADDENDUM (1.0.0_SA_CTO, 2026-10-06, L10 of round 1) -- two rulings from this seat's own read of the WORLD cells
+
+**Read by this seat (not the producer's report):** the landed ClientDelivery zip's SHA-256 is
+`a3a2772efa3447fd3adaa4b6eb5dacdf400667743c4f4040e2d0cad3296d658b`, equal to the manifest AND to the same member read directly
+from Andrew's `Files.zip` (FWD-2 bronze: PASS). The transactions file holds 1,416,497 records (1,416,500 physical lines: three records of one account carry a line break inside
+a quoted note, row ADVI_COTBKF-S3, recounted by this seat as records); silver holds 1,415,137 rows = 1,416,497 less 1,360
+record-level repeats. Nothing else is unexplained.
+
+1. **C-SILVER clarified: every delivered row is kept.** Without a transaction id, two identical lines may be two real events (two
+   equal reinvestments on one day); dropping them changes flows and every daily return built on them (FWD-3). The word
+   "de-duplicated" was this seat's and is now bounded to re-landing. Silver transactions is rebuilt with all 1,416,497 records and the
+   source record number on each (corrected from "1,416,500 rows" on row S3: lines, not records).
+2. **FWD-1 amended in place and FWD-9 added** on row S2: no single account spans 2013 to 2026, so FWD-1 reads "as far back as
+   Commonwealth recorded it"; following a client across a Commonwealth account change is FWD-9 (next unused id).
+
+Ruled under the self-adjudication order (`ANDREW_DIRECT_20260903_052xZ_..._TWO_READS.md`). The ENDPOINT changed: the ratified-text
+half re-opens for `3.0.0_SA_CVO`.

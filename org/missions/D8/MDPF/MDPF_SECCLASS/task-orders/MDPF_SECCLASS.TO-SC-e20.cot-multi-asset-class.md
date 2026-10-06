@@ -68,13 +68,13 @@ published mix drops one.
 
 ### ACCEPTANCE
 
-<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/black_diamond/scripts/gold/tests data/cot/scripts/gold/tests -k multi_asset</invocation><expect>passed</expect></criterion>
+<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/black_diamond/scripts/gold/tests -k multi_asset</invocation><expect>passed</expect></criterion>
 `SC7-e20-AC1` -- the new `multi_asset` tests (named with `multi_asset` in the test name) pass: a `multi_asset` holder publishes a mix summing to 1, an out-of-list class skips loudly, the period views carry `multi_asset`. Also run `python -m pytest -q data/cot/scripts/gold/tests` and report it: every test in that folder must still pass.
 
 <criterion id="SC7-e20-AC2" cell_refs="SC-e-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/bd_mix_multi_asset_check.py</invocation><expect>BD-MIX-CHECK ok=True</expect></criterion>
 `SC7-e20-AC2` -- the edited code, run in process on the real 2026-10-05 positions of the four clients, publishes four mixes that each sum to 1 within 0.001.
 
-<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import subprocess,sys; r=subprocess.run([sys.executable,'-m','pytest','-q','data/black_diamond/scripts/gold/tests','data/cot/scripts/gold/tests'],capture_output=True,text=True); t=r.stdout; print('FOLDERS-OK' if r.returncode==0 and ' passed' in t and ' failed' not in t else 'FOLDERS-BAD')"</invocation><expect>FOLDERS-OK</expect></criterion>
+<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import subprocess,sys; r=subprocess.run([sys.executable,'-m','pytest','-q','data/black_diamond/scripts/gold/tests'],capture_output=True,text=True); t=r.stdout; print('FOLDER-OK' if r.returncode==0 and ' passed' in t and ' failed' not in t else 'FOLDER-BAD')"</invocation><expect>FOLDER-OK</expect></criterion>
 `SC7-e20-AC3` -- (amended, AMENDMENT 1) the triage file carries one `VERDICT: DROPS-TODAY` or `VERDICT: HOLDS-NONE` line for each of the 22 served lists the census found lacking `multi_asset`.
 
 <expected_criteria>SC7-e20-AC1,SC7-e20-AC2,SC7-e20-AC3</expected_criteria>
@@ -191,4 +191,14 @@ Do for Black Diamond exactly what the first pass did for Cottonwood (read your o
 6. Criteria (amended, the issuer amends its own criteria; no limb graded the modification): AC1 selects `-k multi_asset` over BOTH the Black Diamond and Cottonwood gold tests folders;
    AC2 is the BD check above (the Cottonwood check passed at amendment 1, its output stays in the record); AC3 runs both whole folders and prints `FOLDERS-OK` only if every test passes.
 7. Not in this amendment: any deploy, run or write (the issuer's act under the pair); `d08`; the Inflection `S30` row; any list the triage graded HOLDS-NONE.
+
+## AMENDMENT 2, CORRECTION (2.0.0_SA_COO~M, 2026-10-06 ~19:5xZ) -- the two gold trees cannot share one pytest process; the registry; the rows
+
+Worker ~20's report (amendment 2) found, and the issuer confirmed: (1) AC1 and AC3 as written ran the Black Diamond and Cottonwood tests folders in ONE pytest process. They cannot: two files
+share the name `test_mix_publishes_every_class.py`, and both trees carry a `lib` package, so BD's shadows Cottonwood's. The criteria now name the Black Diamond folder only (AC1 `-k multi_asset`,
+AC3 the whole folder, printing `FOLDER-OK`); the Cottonwood folder is a separate invocation, `python -m pytest -q data/cot/scripts/gold/tests` (27 passed at the drain). A compound criterion is refused, so
+it stays out of the list and is reported. (2) The commit gate refused the BD `C_06` and `lib/mix_views.py` edits because `comp-constants.config.yaml` registers `MIX_ASSET_CLASSES` at both sites:
+the issuer re-canonized it (canonical value, both site values, C_06's line 182 to 183) in the same commit @b71700fe64 as the worker's held edits. (3) The worker's rows W20-S6, S7 and S8 are adopted as seat rows
+S32, S33 and S34 (a seat commit cannot carry a W id). AC2 is unchanged and read `BD-MIX-CHECK ok=True holders=47 after_sums_to_1=47 composition_gap_after=0.00` on the worker's tree with its held edits.
+Gate limb: none graded this modification (no new order; no `<placeholders>`).
 

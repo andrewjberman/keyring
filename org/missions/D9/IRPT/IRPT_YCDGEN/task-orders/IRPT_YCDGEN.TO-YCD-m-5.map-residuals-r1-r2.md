@@ -104,9 +104,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 5 cut from the CTO's round-4 analysis @a1b47e6b3f sections 2-3 (E1-E6) and REMEDIATION_v4 (W3-S6, S7) with W4-S4; decomposition round 5 v1.0 (`IRPT_YCDGEN_DECOMP_R5.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~4`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: m-5.AC1 FAIL as expected; m-5.AC2 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~11:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~4 @3951983575, merged bb0c22bd1e; m-5.AC1 PASS (0 placeholder labels; Multi p9.e08 lists the 'No data available' row), m-5.AC2 PASS (4) on the merged tree. The seven labels come from the rule (map edited by id, labels from the rule's output; a section-label guard and its test keep Multi p13.e08). The rule also marks the portfolio's own p9.e03 no_data; the map does not carry that flag this round. AC3 is the CVO's judgment at L9.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>5</round>
 <slot>~4</slot>
 <fabric>laptop</fabric>

@@ -1,0 +1,46 @@
+{
+  "project_code": "NFRA_OPSWKF",
+  "macro_code": "NFRA",
+  "directive": "D9",
+  "fabric": "laptop",
+  "pipeline": "nfra_opswkf",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-06",
+  "registered_under_tree": "2026-10-06",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "NFRA_OPLGTW",
+    "NFRA_OPALAI",
+    "NFRA_MCPINDEX",
+    "TRSB_LEDGER",
+    "OPAL_TICKET_VNEXT",
+    "IRPT_YCDGEN",
+    "NFRA_TRNSPT"
+  ],
+  "name": "Q-3: trade submission through Opal, led by the operations lead's Excel workflow (dashboard intake, SharePoint workbook, Claude access, one trail)",
+  "description": "Confirmed by Andrew 2026-10-06 ~21:0xZ at the 1.0.0_SA_CTO terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_210xZ_SEVEN_CALLS_RDP_LOCK_Q1_Q2_Q3_CONFIRMED_NO_BD_SHAPE.md).",
+  "brief_ref": "docs/briefs/q3-trade-submission-ops-workflow-brief-20261006.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_Q3_TRADE_SUBMISSION_OPS_WORKFLOW_20261006.md",
+  "prds": [
+    {
+      "path": "org/missions/D9/NFRA/NFRA_OPSWKF/prd/NFRA_OPSWKF_PRD.md",
+      "version": "v0.1",
+      "status": "RATIFIED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    }
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED at registration; seating is 0.0.0_AB_MSTR's on Andrew's word"
+  }
+}

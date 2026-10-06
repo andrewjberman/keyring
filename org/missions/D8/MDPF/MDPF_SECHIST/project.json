@@ -8,7 +8,7 @@
   "dep_stage": "PRD",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
-  "placement": "LAPTOP",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "MDPF_SECCLASS",
@@ -20,7 +20,7 @@
   "description": "Andrew-direct at the 4.0.0_SA_CRO terminal 2026-10-06 ('this is really how Opal builds its internal securities database and the associated ingestion and maintenance logic'; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_160xZ_NEW_SECURITY_LIFECYCLE_AND_HISTORY_BACKFILL.md). New project, outcomes confirmed, at the 1.0.0_SA_CTO terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_181xZ_COO_C_BOTH_SECHIST_REGISTER_HOLD_RIVALS_1Y.md): 'get it set up but not distributed just yet, just get it registered and PRD Cosigned.' MDPF_SECCLASS owns what a security IS (the table row); this owns what it DID (its stored history, the depth rules, the pull plan).",
   "brief_ref": "docs/briefs/securities-database-ingestion-maintenance-brief-20261006.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_SECURITIES_DATABASE_INGESTION_20261006.md",
-  "distribution": "HELD by Andrew's word 2026-10-06 ~18:1xZ: registered and co-signed only; no COO seated, no decomposition, no task order until his word",
+  "distribution": "LIFTED for round 1 on dell1 by Andrew's word 2026-10-06 ~19:2xZ ('Ok that is fine', record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_192xZ_DELLS_SECHIST_LIFT_PUSH_RHYTHM_RESEARCH_EGRESS_Q3_OPS_WORKFLOW.md); was HELD at ~18:1xZ",
   "prds": [
     {
       "path": "org/missions/D8/MDPF/MDPF_SECHIST/prd/MDPF_SECHIST_PRD.md",
@@ -39,6 +39,6 @@
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "UNSEATED: distribution held by Andrew's word"
+    "coo": "UNSEATED: a dell1 COO lane, seated by the dell1 MSTR (0.0.0_AB_MSTR~DELL1) on the laptop MSTR's award"
   }
 }

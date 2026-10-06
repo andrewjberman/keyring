@@ -1874,3 +1874,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "If the issuer's live close still shows a request with no firm after this lands, the live wire or the row's firmId differs from the fixture; the exercise's MEASURE line is the thing to compare."
 }
 ```
+
+## IRPT_YCDGEN-S13 -- the picked-client (custody) Generate path cannot submit from the browser: snapshot_id is minted server-side and no route returns it; the composer fails before sending and shows "Needs attention" with no reason
+
+```json
+{
+  "id": "IRPT_YCDGEN-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T18:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the picked-client Generate path sends a snapshot_id the browser builds from source_set_revision; the server needs the opaque cst_ id it minted, and no route returns it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A submit from the Analysis tab for a picked client either reaches the server with the id the server holds for that selection or the page says why it cannot.",
+  "world_is": "Andrew's HAR 2026-10-06 ~18:23Z (Downloads~~~~~~~~/localhost testing.har): every API call carried selected_tenant=cottonwood and returned 200; Generate sent NO submit request. GenerateComposer snapshotIdOf = HoldingsSnapshot.sourceSetRevision, joined at contracts/adapt.ts:1123 as source:revision entries with ',' (3 entries here: 225 chars, containing ',', '/' and '@'); contracts/submission-request.ts identifier() allows 200 chars and [A-Za-z0-9_.:-], so readSubmissionRequest throws TypeError before any send and composer.ts:469 shows 'Needs attention' with no reason code. The server applies the same rule (ycharts/generate/submission.py:40-42) and requires browser snapshot_id == owner snapshot_id (submission.py:152), which _scope/accepted_custody.py:106 mints as 'cst_' + token_hex(32), 'trusted server writer only; never installed as an HTTP request route'. The holdings reply carries source_set_revision only. In the same HAR REQ-6eaec4e9e48b4d4f409148b6 is operation_kind analysis_generate, state UNAVAILABLE. This SUPERSEDES the one_line of IRPT_YCDGEN-S12 (the firm was sent; the firm fix p-6 worked).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Downloads/localhost testing.har entries 7, 8, 24 (not committed: client data)",
+      "portal e107538d contracts/adapt.ts:1123; contracts/submission-request.ts:4-36; tabs/analysis/composer.ts:439-471",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/submission.py:40-42,152; _scope/accepted_custody.py:106"
+    ]
+  },
+  "notes": "Inert for FWD-1: the thread is the Prospect portfolio upload (PRD v0.8 FWD-1 and s2 step 1; input_id, snapshot_id null). CTO ruling msgs 105681 and 105683: one definition, the server's; no cell now; for the CTO's round analysis."
+}
+```

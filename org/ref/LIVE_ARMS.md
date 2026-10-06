@@ -9,13 +9,22 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
-- DSGN_REBRND (`2.0.0_SA_COO~D`): STOPPED and HELD by Andrew-direct ~14:35Z 2026-10-06 at the `2.0.0_SA_COO~D` terminal, VERBATIM:
+- DSGN_REBRND: **CLOSED** by Andrew-direct ~20:1xZ 2026-10-06 at the `1.0.0_SA_CTO` terminal ("Yeah REBRND should be closed definitively."; record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_DSGN_REBRND_CLOSED_AND_RDP_DIRECTIONS.md`); no seat works it. Before that,
+  `2.0.0_SA_COO~D`: STOPPED and HELD by Andrew-direct ~14:35Z 2026-10-06 at the `2.0.0_SA_COO~D` terminal, VERBATIM:
   "Stop work on REBRND", then "Any work on DSGN_REBRND from this point forward is on hold and not to be merged to the main branch
   unless I explicitly ask for it." Record: `org/missions/D13/DSGN/DSGN_REBRND/STATUS.md` "Open at Andrew" (@2ddf3afa91). Its light
   /market page is "kept off the main branch without explicit approval" (`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261006_1414Z_LIGHT_MARKET_EXPERIMENT_OFF_MAIN_BRANCH.md`).
   DSGN_IRPTV1 is not stopped. Lifted only by his explicit word. Landed by 1.0.0_SA_CTO.
 
 ## Arms
+
+- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` DIRECTED (Andrew-direct ~20:1xZ 2026-10-06 at the `2.0.0_SA_COO~C` terminal, VERBATIM:
+  "I think you should run these task orders /canonical-drive ADVI_COTBKF style. There is too much work on your plate with fielding
+  CTLPLN and COTBKF at the same time to be solo driving."). Record
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md` @45b266dcdb. He named no cadence
+  and no stop: event-driven, no cron; stop when every ADVI_COTBKF FWD grades REALIZED (read from the register), at HELD-AT-STOP, or on
+  his stand-down. NFRA_CTLPLN stays with ~C outside this drive. Landed by 1.0.0_SA_CTO.
 
 - RELAUNCH 2026-09-28 (Andrew-direct ~17:3xZ, record
   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
