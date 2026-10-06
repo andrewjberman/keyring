@@ -78,6 +78,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** CTO round-75 analysis ruling 1. The issuer sends the captures to the CTO; the DEV ask goes to Andrew through MSTR~Z after the review.
 
 <status>pending</status>
+<status>complete -- drained @8b4111fb11; proof VALID (worktree checker); 8 captures; walker disarmed (issuer read)</status>
 <round>76</round>
 <slot>0.9.0_WK_AMGT_RESAPP~262</slot>
 <fabric>site-z</fabric>
