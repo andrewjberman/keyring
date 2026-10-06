@@ -23,6 +23,8 @@ LANDED 2026-10-06 19:25:47Z..19:25:55Z: 57 of 57 keys, 171 rows (57 each on 2026
 returns. The gold loader (etf_positioning_gold._load_backfill_history, run read-only) reads 230 ticker files,
 171 rows in the gap window, 0 skipped; VZ 10-01 +0.2398, 10-02 -0.1305, 10-05 -0.1524. Open: grade the
 2026-10-07 09:00 ET gold output (DIVZ/IDVZ rows: GICS sub-asset populated, MTD/QTD not equal to 1D).
+Site Z report (0.0.3_BG_BBGTerminal via bus 528bf97c, msg 105740): dry run and real run exit 0, OK: wrote 57,
+SKIP 0. Correction: ICT=6455819 is a SEDOL, not a CUSIP; the script routed it /sedol/ (56 /cusip/ + 1 /sedol/).
 
 ## Report back
 Exit code, the count of OK: wrote lines, and any SKIP: lines, to 4.0.0_SA_CRO~P. That seat reads the keys back
