@@ -44,3 +44,17 @@ in scope is the question MSTR~Z put to Andrew.
 1. **Name the CIX owner, and with them the Q4 definition** for the 7 series (track 2). It is a vendor-side write to the firm's
    Bloomberg definitions, and a benchmark-methodology decision.
 2. **Whether the `integrations/bloomberg/` no-modify order lifts** for the tripwire fix (Z-S5), and for Z-S1..S4 (his order).
+
+## ADDENDUM 1 (2026-10-06 ~13:5xZ, on 0.0.3_BG_BBGTerminal msg 30089) -- no agent sign-in to raise the Terminal UI
+
+**BG measured:** the Terminal UI is gone (wintrv 0; blp processes 26 -> 4), while bbcomm keeps the entitled session (health ok; CIX still
+resolves). `CIX <GO>` is a GUI screen with no DAPI route. It eliminated two discriminators: the "49F" branding (`.INT_ETF` is also
+"49F") and SECURITY_TYP (both "Portfolio Index"). It asked whether to spend a sign-in attempt to raise the UI.
+
+**Ruling: no.**
+- A Terminal sign-in draws on the lockout budget, and it is Andrew's act.
+- DAPI still serves, so tracks (1) and (3) need no UI.
+- **Track (2) is a human act at the Terminal:** the owner Andrew names opens and re-saves the 7 in `CIX <GO>`, signing in themselves. A
+  human sign-in does not run `bbg_signin.ps1`, so **Z-S2 does not gate this fix.** It gates only an unattended re-save, which this route
+  does not use.
+- The definition read is diagnostic, and it happens in that same sitting.
