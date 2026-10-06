@@ -4141,6 +4141,27 @@
     "spec_asserts": "RIV-pk-1 interface and check docstring: G4 column security_parsekey is 'null when not asked or not answered', and arm (a) accepts NBIS_US_Equity's parsekey as falsy.",
     "world_is": "A true parquet null (what the interface prescribes, and what the code writes) is NaN after to_pandas on pandas 3.0.3, which is truthy, so arm (a) fails for any correct implementation on this device. The only ways to satisfy it as written are to store an empty string (not null, against the interface) or to hand-write pandas object-dtype metadata into the G4 parquet (a storage hack for one check). Neither is in the order.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. One-line amendment of the check within the issuer's own authority: replace `not pk.get(\"NBIS_US_Equity\")` with `pd.isna(pk.get(\"NBIS_US_Equity\"))` (or `pk.get(...) in (None, '') or pk.get(...) != pk.get(...)`). Everything else is built; nothing in the worker's tree depends on the choice."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S51",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T18:37:30Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W2-S14: the defect was the issuer's check, not the build -- pk-1.AC1 arm (a) read a stored null with `not pk.get(...)`, and a null reads back as NaN (truthy) on pandas 3.0.3 / pyarrow 24; the check now treats None and NaN alike (amend 6ff7fc5dbc) and AC1 PASSES 3/3 (instance fc705a1bd4).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round12/checks/pk-1.AC1.py at 6ff7fc5dbc: `_null(x)` = x is None or x != x; arm (a) uses it in place of `not pk.get(\"NBIS_US_Equity\")`",
+        "re-run on wk-ETFS_RIVALS-2 by the issuer: AC1 RESULT: PASS 0 failures; at base the arm still FAILS (PARSEKYABLE_DES never asked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pk-1 interface: security_parsekey is null when not asked or not answered.",
+    "world_is": "The build stores a true null; the check's truthiness test was the wrong instrument for a null on this toolchain.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Resolves the S14 entry in the pk-1 instance's surprises list; the row's final disposition stays the CVO's."
   }
 ]
 ```
