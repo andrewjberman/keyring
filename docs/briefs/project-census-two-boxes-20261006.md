@@ -1,6 +1,6 @@
 # PROJECT CENSUS -- every project touched in the last two weeks, which box it is on, and what state it is in
 
-- **Author:** `4.0.0_SA_CRO` (base), 2026-10-06 ~19:0xZ (3:0x PM Eastern). Read-only.
+- **Author:** `4.0.0_SA_CRO` (base), 2026-10-06 ~18:5xZ (2:5x PM Eastern). Read-only.
 - **Order:** Andrew-direct ~18:3xZ, verbatim with his full voice transcript in
   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_183xZ_FOUR_BOX_ACCELERATION_PROJECT_CENSUS_AND_Q4_GOALS.md`.
   This is his "Document 1". Document 2, the plan, is `docs/briefs/four-box-acceleration-plan-20261006.md`.

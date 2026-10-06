@@ -1,6 +1,6 @@
 # BRIEF -- bringing dell1 and dell2 in now: what goes where, in light of the control plane, for the three quarterly goals
 
-- **Author:** `4.0.0_SA_CRO` (base), 2026-10-06 ~19:1xZ (3:1x PM Eastern).
+- **Author:** `4.0.0_SA_CRO` (base), 2026-10-06 ~18:5xZ (2:5x PM Eastern); RDP section added ~19:0xZ.
 - **Order:** Andrew-direct ~18:3xZ, verbatim with his voice transcript in
   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_183xZ_FOUR_BOX_ACCELERATION_PROJECT_CENSUS_AND_Q4_GOALS.md`.
   This is his "Document 2". Document 1, the census it stands on, is `docs/briefs/project-census-two-boxes-20261006.md`
@@ -33,6 +33,9 @@
    research now.
 7. **Seven decisions for you** (section 8). The one that gates everything: confirm the Dells are physically set up, so
    the control plane's round 2 can be cut today.
+8. **Your added requirement, NOT yet in the control plane: Remote Desktop on every box, reachable over the tailnet,
+   above all from your MacBook** (section 3a). Today it works for the laptop and site Z only, by setup, not by design;
+   the Dells are not on the tailnet yet. It goes to the CTO as a new outcome.
 
 ---
 
@@ -69,6 +72,9 @@ the control plane's round 2.
 | 6 | **integrate, interim:** until the queue and the standing push rule land (FWD-4, FWD-6), site Z's fabric manager merges the round branch and pushes the trunk **on your word**, exactly as today's rule requires | site Z's fabric manager; you | -- |
 | 7 | the thread exercised once (FWD-1): the round is graded on the laptop with each hop's time printed | the CVO | -- |
 
+**Step 1 also includes, on your word (section 3a):** each Dell joins the tailnet with Remote Desktop on, reachable from
+your MacBook.
+
 **Why step 6 is acceptable:** it uses the push rule that is in force today, so nothing waits on new law. Its cost is that
 each integration needs your word. Recommended: one word per integration window (morning and evening), not per round,
 until FWD-6 lands.
@@ -79,6 +85,38 @@ by the same lane.
 
 **Hard rules the Dells keep from day one:** they never push the trunk, deploy, call a vendor or write a register (the
 PRD's C-ROLES). Any round that ends in a deploy (an S3 write, a Lambda, a Terraform apply) hands its deploy to site Z.
+
+---
+
+## 3a. Remote Desktop over the tailnet on every box (Andrew-direct ~18:5xZ; NOT covered by the control plane today)
+
+Your words: "we need RDP on all devices accessible via tailnet" and "we are going to need to have that RDP ability from
+any device in the tailnet, namely the macbook" (record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_185xZ_CTLPLN_RDP_ON_ALL_DEVICES_VIA_TAILNET.md`).
+
+**Is it covered? No.** MEASURED: the NFRA_CTLPLN PRD, its STATUS file, the device register, the brief and the proposal
+mention Remote Desktop, RDP, Tailscale or the tailnet zero times. It is a new outcome for the CTO to add.
+
+**What exists today (MEASURED from the laptop, ~19:0xZ):**
+
+| Tailnet device | Address | Remote Desktop port 3389 over the tailnet |
+|---|---|---|
+| laptop (`andrew`, Windows) | 100.96.167.100 | answers; Remote Desktop is enabled in Windows |
+| site Z (`opal-bloomberg`, Windows) | 100.99.180.19 | answers |
+| your MacBook (`andrews-macbook-pro`, macOS) | 100.98.173.75 | the client; on the tailnet |
+| iPhone (`iphone181`) | -- | offline 13 days |
+| `muse` | -- | on the tailnet; unidentified |
+| dell1, dell2 | -- | **not on the tailnet yet** |
+
+The tailnet account is `Andrew@opalinvest.com` (MSTR record, 2026-08-18). Site Z joined it on 2026-08-18.
+
+**What the outcome should say (PROPOSED, for the CTO's endpoint):** from the MacBook (or any device on the tailnet),
+Andrew opens a Remote Desktop session to any box in the device register, laptop, site Z, dell1 and dell2; the register
+records each box's tailnet name and address; and Remote Desktop answers over the tailnet only, not on the public
+internet. Proven by one session from the MacBook to each of the four boxes.
+
+**Not measured:** whether each box's Remote Desktop is limited to the tailnet by firewall scope, or open on every
+network; whether the MacBook has a Remote Desktop client installed; who `muse` is.
 
 ---
 
