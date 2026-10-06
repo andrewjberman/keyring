@@ -43,3 +43,10 @@ Analysis: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_SECURITY_LIFECYCLE_ANAL
 - CALL 2 -> (c), showing (d) until it lands: money-market returns on a Bloomberg-null day come from the
   total-return index level; until that is built the window shows blank. Carried into the securities-database brief
   (O9).
+
+## Site Z pull-merge, answered (Andrew-direct, same session, ~19:0xZ), verbatim
+
+> Yes go ahead
+
+Answering /open-calls CALL 1 of 1: "May site Z pull-merge origin CLOUD (9394f87ac2) now?" -- YES. Relayed to
+0.0.0_AB_MSTR for the cross-device bus. The Terminal sign-in at site Z remains a human act.
