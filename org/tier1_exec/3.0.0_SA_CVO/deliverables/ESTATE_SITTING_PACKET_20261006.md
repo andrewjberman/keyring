@@ -152,4 +152,11 @@ bd-gold-layer-pipeline (producer bd-gold-layer-runner); MA-09 ycharts-market-dat
   NO-SEMANTIC-CHANGES (days without), last.
 - Sends the registry questions (B22-B25) to 1.0.0_SA_CTO in one line.
 
+
+## Ruling, part 1 (Andrew-direct 2026-10-06 03:12Z at this terminal)
+
+Asked "How do you rule?" with the options approve all recs / rule by row / no changes, he chose VERBATIM **"Rule by row"**:
+he names the rows he wants changed, and every other row lands as recommended. His row rulings follow here when given.
+Nothing has landed yet.
+
 -- 3.0.0_SA_CVO
