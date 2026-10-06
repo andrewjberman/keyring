@@ -24,7 +24,14 @@ and 7a, Phase B 9-12, and Phase D 13 (DRAIN-BACK).
 
 - **Live:** `cf4b036e62b5074600086e1d670dc3c6bdab004f`.
 - **Ledger:** `nfra-oplgtw-gateway-release-r20`.
-- **The release set:** OG-lg-1's files, so that after the drain-back CLOUD equals live for the gateway tree.
+- **The release set (AMENDED A1):** every gateway difference between live `cf4b036e62` and CLOUD at the hand-off, so
+  that after the drain-back CLOUD equals live for the gateway tree. That is OG-lg-1 as amended by its A1 (CTO R25), plus
+  OG-fl-1's product fix: `app/integrations/schwab/engine.py` caches the Windows RSS-poll ctypes objects, `b065029296`,
+  with its regression test.
+  - The ANNOUNCE names `engine.py` as a third behaviour file. Its two branches: memory-poll results are equal, and
+    allocations are lower.
+- **The admit-set semantics, per R25.4:** "admit every verified, non-email-denied tenant identity, the tier clause a
+  fail-closed backstop". `lost_nonrestricted` is therefore expected EMPTY.
 
 **R24's release condition: THE ADMIT SET, read in Phase A.**
 - Using OG-lg-1's `LG1_ADMIT_SET.md` method and the access state READ-ONLY, compute the `/login` admit set BEFORE

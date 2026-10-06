@@ -49,7 +49,8 @@ Build, on CLOUD source (`app/server.py` `login()`, the audit write site, and tes
    - `test_oglg1_ac02`: a restricted principal gets 403, audited;
    - `test_oglg1_ac03`: the server-held identity is admitted, as before;
    - `test_oglg1_ac04`: empty settings plus an unresolvable tier admit nobody;
-   - `test_oglg1_ac05`: the Analyst's service identity is refused;
+   - `test_oglg1_ac05`: AS AMENDED BY A1 (R25.1). opalbloomberg@ (the Teams concierge, the `identity_scope` key) is
+     ADMITTED at `/login`, AND its allowlist still DENIES an out-of-scope tool at dispatch;
    - `test_oglg1_ac06`: one audit record per request, with outcome, digest and reason.
 
    Negative control: with the tier clause removed, ac01 fails. Record that run.
@@ -96,7 +97,18 @@ PLACE to `complete`. Report once.
 - Round 20 (R3-T.13, item 1). Chain: `OG-lg-1` -> `OG-rl-8`.
 - Pre-cut: see the issuance commit.
 
-<status>complete</status>
+- **A1 (2026-10-06 ~07:1xZ, issuer, on CTO R25 @ec022d2734, msg 29941): REOPENED.** Drain 67bcd6d519 refused
+  opalbloomberg@ through a `scoped_service_identity` clause, per R24. R25.1 withdraws that: opalbloomberg@ is the Teams
+  concierge, whose allowlist is Graph tools, and a 403 at `/login` dead-ends it.
+  - (a) Strike the `scoped_service_identity` refusal from `login_admit_decision`.
+  - (b) Restate `test_oglg1_ac05`: opalbloomberg@ is ADMITTED, and its allowlist still DENIES an out-of-scope tool.
+  - (c) R25.4: correct the docstring to the semantics in effect. `/login` has no principal on the GUI path, so
+    `resolve_tier(None)` is the READ_ONLY floor, which carries read Graph tools. The rule in effect is "admit every
+    verified, non-email-denied tenant identity". Restricted profiles are refused by the email-deny guard (W3-S22). The
+    tier clause is a fail-closed backstop: an unverified provider, an unresolvable tier, or no Graph tool.
+  - The audit record stays as built. Criteria are unchanged; `lg1.AC1` re-reads ac05's new meaning.
+
+<status>pending</status>
 <round>20</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
