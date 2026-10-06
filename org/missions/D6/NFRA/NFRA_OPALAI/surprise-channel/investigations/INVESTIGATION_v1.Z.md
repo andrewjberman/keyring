@@ -2353,6 +2353,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "CLAUDE.md 14a: every commit goes through .tools/safe-commit.sh; 1.0.0_SA_CTO~O msg 30323 named the fix as chmod +x on 2 files.",
     "world_is": "safe-commit's commit --only path cannot carry an index-only mode change on a core.fileMode=false checkout, so the directed mechanism was unreachable inside the rule. No bare git commit was made.",
     "notes": "INERT: nothing is blocked today. Owner of .tools/safe-commit.sh decides whether a mode-only path is wanted."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S59",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T22:25Z",
+    "one_line": "Cites NFRA_OPALAI-Z-S57: its build-side disarm condition is met by OA-f-14 amendment A1 (every non-tool get_token caller is mapped, 10 call sites in 8 modules, 0 unmapped). The release-side condition stays open and belongs to the release order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-grade on wk-NFRA_OPALAI-29 @ed194dbbda: f14.AC1 'named arms passed 7 of 7; failed/errored tests 0; get_token callers outside tools.py: 10', RESULT: PASS; f14.AC2 36 passed / failed []; f14.AC3 4 gateway files changed, 0 outside the order.",
+        "Worker negative control (reported, not re-run by the issuer): removing taxsma_workbook from CALLER_GRAPH_SCOPES makes the census arm flag app/taxsma_workbook.py:317.",
+        "1.0.0_SA_CTO~O msg 30365: 'Z-S57 stays ARMED until (3) passes'; (3) is the census arm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S57's disarm (a): the map names every non-tool caller of a scoped identity's token with its measured scopes.",
+    "world_is": "Met on the branch, not on CLOUD and not on any host. STILL OPEN, by ruling 30365 item (5): before GO, the release order reads on the live host whether OG_TAXSMA_WORKBOOK_IDENTITY (and MS_INGEST_IDENTITY, OTP_MAILBOX) is a scoped identity. Under a <tid>/<oid> Tax binding the concierge's consent is 9 scopes, the 8 plus Files.ReadWrite.All.",
+    "notes": "Z-S57 itself is not edited (append-only). Remedy standing is the CVO's."
   }
 ]
 ```

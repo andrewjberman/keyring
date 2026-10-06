@@ -193,7 +193,11 @@ rule and a seventh arm; items (4) and (5) of the ruling are bound 5 above and th
 binding rule (union when set) is the issuer's reading of "without a dead end". Gate limb that graded this
 modification: stated in the amendment commit. Z-S57 stays ARMED until the seventh arm passes.
 
-<status>pending</status>
+CLOSE (issuer, 2026-10-06 ~22:2xZ): A1 built by worker ~29 @ee22aced29, proof @ed194dbbda. Issuer re-grade: AC1 7 of 7
+(get_token callers outside tools.py: 10, 0 unmapped), AC2 36 passed / failed [], AC3 4 files / 0 outside. Row Z-S59 cites
+Z-S57. Undrained: the branch waits on the fabric hold's RELEASE and on NFRA_OPLGTW OG-rl-9 being terminal.
+
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~29</slot>
 <fabric>site-z</fabric>
