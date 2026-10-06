@@ -1431,6 +1431,28 @@
  "spec_asserts": "TO-AV-zv-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after mounting SegmentBreakdown in ThesisTab.tsx as the order directs (bounds item 4 and <paths> name no harness file).",
  "world_is": "The mount the order directs adds an import the drafting harness cannot resolve, and the one-line stub that would resolve it sits in a file the order's write grant does not name; this worker did not edit it. Other 13 harnesses incl. tabs and thesisLadder are green.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S21",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-06T22:10Z",
+ "one_line": "Re-owned from AMGT_RESAPP-Z-W173-S3 (2.0.0_SA_COO~Z msg 30368, ruling round76 section F @fb9ca91ad5): a SERVED model case on the Security Analysis page carries no value or currency data attribute, so a reader keys a served case on name and formula only.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal DEV 6b4e89a8, regex data-(model-)?case-(value|currency|formula) over src: 2 hits, both in __harness__/exportCompare.harness.cjs (lines 297, 307) reading data-model-case-formula; 0 hits for a value or currency attribute.",
+   "AMGT_RESAPP surprise-channel/remediations/REMEDIATION_v14.md row AMGT_RESAPP-Z-W173-S3: remedy 'the value and currency attributes asked of DSGN_AMGTV1 were never added'."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "A served model case on the page exposes its value and its currency as data attributes a walk can read.",
+ "world_is": "Neither attribute exists in portal src. The case line lives in ModelTab.tsx, which AMGT_CORPUS round 39 (ao-3/ao-4, 2.0.0_SA_COO~X msg 30247) is writing; a DSGN cell for it waits for that drain to reach DEV. Gates nothing.",
+ "notes": "Backlog row for the next DSGN round cut; not armed."
 }
 ]
 ```
