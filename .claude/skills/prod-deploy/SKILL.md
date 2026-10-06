@@ -194,6 +194,22 @@ procedure; ruled in by 1.0.0_SA_CTO~Z + 2.0.0_SA_COO~Z.)*
   silence is NOT a stall signal and NOT a success signal. Always confirm the final outcome via
   `gh run view --json conclusion` (DT anomaly, v2.1.121 promote 2026-06-12). `conclusion:
   "success"` is the gate.
+- **A job NO RUNNER PICKS UP: ONE re-run, then roll back + escalate** (Andrew "recs approved" 2026-10-06 ~18:1xZ,
+  record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_181xZ_RECS_APPROVED_DSGN_DEV_PUSH_PROD_AFTER_READ_PRODDEPLOY_RUNNER_RULE.md`).
+  The signature: a job sits `queued` with no step started, then fails with "The job was not acquired by Runner of type
+  hosted" (run 37368605578, 2026-10-05). The PROD branch has moved and the site has not, so the promote is HALF-LANDED
+  (NEVER-2). It is NOT a code failure, and a wait with no limit is the defect.
+  1. **Re-run once:** `gh -R Opal-Capital/portal run rerun <run-id> --failed`, then read `conclusion` as above. If it is
+     `success`, the promote continues at the tag check.
+  2. **The re-run also gets no runner (or no step starts in 15 min):** `gh -R Opal-Capital/portal run cancel <run-id>`.
+     Then put the PROD branch back to `$PROD_BASE` in the ephemeral worktree with
+     `git revert -m 1 <merge-sha> --no-edit`, and push PROD. Never force-push and never reset; PROD is a shared branch.
+     Cancel the deploy run the revert push queues, because the site still serves `$PROD_BASE`. Branch and site now agree.
+  3. **Escalate the same turn** to 2.0.0_SA_COO, 1.0.0_SA_CTO and 0.0.0_AB_MSTR. Send the run id, the annotation text
+     and the rollback commit. Close the change-management ledger entry ROLLED-BACK. A later promote of the same DEV
+     state reverts the revert, and it needs Andrew's word again.
+  This rule covers ONLY the no-runner class, where no deploy step ran. A step that ran and failed keeps the Abort path
+  below.
 - **Tag verification — peel the annotated tag:** `git ls-remote --tags` shows the TAG OBJECT sha,
   not the commit. Compare `git rev-parse <tag>^{commit}` against the PROD head
   (`reference_annotated_tag_lsremote_shows_object_sha_not_commit` — the v2.1.114 false
@@ -258,5 +274,5 @@ RAVC report to COO (releases the DEV-push hold) + session log. The artifact tabl
 Any gate failure (typecheck red, VALGATE block, CI `conclusion != success`, merge conflict you
 cannot adjudicate): STOP, do not improvise around the gate. Tear down the worktree, leave PROD
 untouched (or if the push landed but CI failed: surface to COO + CTO immediately — do NOT
-re-push or revert unilaterally), release the freeze window with an ABORTED status, log the
+re-push or revert unilaterally; the one exception is Step 5's no-runner rule), release the freeze window with an ABORTED status, log the
 failure with the actual output.
