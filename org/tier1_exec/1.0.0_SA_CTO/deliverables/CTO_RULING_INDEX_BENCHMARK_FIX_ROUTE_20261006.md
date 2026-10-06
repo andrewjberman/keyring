@@ -58,3 +58,17 @@ resolves). `CIX <GO>` is a GUI screen with no DAPI route. It eliminated two disc
   human sign-in does not run `bbg_signin.ps1`, so **Z-S2 does not gate this fix.** It gates only an unattended re-save, which this route
   does not use.
 - The definition read is diagnostic, and it happens in that same sitting.
+
+## ADDENDUM 2 (2026-10-06 ~14:2xZ) -- Andrew named the owner of tracks (2) and (3)
+
+**Andrew, via 0.0.0_AB_MSTR~Z msg 30098 (record @74897ebc2c), VERBATIM:** *"yang will handle it, hes responsible and will repull."*
+
+- **Track (2):** Yang Liu re-saves the 7 in `CIX <GO>`. The Q4 definition is his methodology call, as the benchmark's owner. No seat
+  signs in for him.
+- **Track (3):** Yang re-pulls. `0.0.0_AB_MSTR~Z` is no longer its owner.
+- **Track (1):** the guard stays with `2.0.0_SA_COO~Z`, after the site-Z reboot (msg 30085, msg 30098). This seat signs its CTO half.
+- **Acts only Andrew can do:** item 1 is CLOSED by the quote above. Item 2 (whether the no-modify order lifts) stays open.
+
+**Measured at 14:18Z:**
+- The served `json/benchmarks/model_portfolio_benchmarks.json` was last modified 2026-10-06T12:31:21Z: no re-pull has landed yet.
+- In this shared tree, `.open_deploys` holds no benchmark entry, so the guard deploy has not started.
