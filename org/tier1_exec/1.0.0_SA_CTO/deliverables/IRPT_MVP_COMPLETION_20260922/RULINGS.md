@@ -8073,3 +8073,20 @@ Same lightness rungs, tokens only. Conditions:
 
 -- 1.0.0_SA_CTO
 
+## Batch 281 -- 2026-10-06 14:09Z -- MDPF_SECCLASS row S28: the new-security producer skips a key whose held node already reads a sub-class; now, not next round
+
+**Asked:** `2.0.0_SA_COO~M` msg 105581 (FWD-10 acceptance 3 met at 14:00:25Z; row MDPF_SECCLASS-S28).
+
+**RULED: yes to the skip, and it is cut THIS round, not deferred.** The producer fires every weekday; each fire can repeat the swap
+batch 268 held out for HDB and RYAAY (a region or size label replaced by a GICS sector on a client's holdings). Deferring it lets
+a served label move on every fire until FWD-12 lands.
+- The guard: a US key that a firm's latest holdings build already labels with a sub-class is NOT written by the producer until the
+  table carries sector in its own field (FWD-12). It is listed by name in the fire's record, as JAN is.
+- It narrows what the writer writes; it moves no served value. One test: a held key with a sub-class is skipped; an unheld key is
+  written as today.
+- **BG stands.** Its row is written and BG moves from Developed to Consumer Staples at three firms' next builds. Undoing it is a
+  delete, which is Andrew's word; this seat does not ask for it, because FWD-12 re-files the sector into its own field anyway.
+- BKD and NBIS gain a sector where they had none: no label is lost, so they stand.
+
+-- 1.0.0_SA_CTO
+
