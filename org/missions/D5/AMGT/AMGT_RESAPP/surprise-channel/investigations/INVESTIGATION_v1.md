@@ -18726,6 +18726,32 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round74.md@82afef1fd8 ADDENDUM 1: option (b), a scheduled writer"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-S359",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-06T11:54:00Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "r75 c59's DEPLOYED arm compares a Lambda-built snapshot against a LOCALLY computed baseline, and one field (rot) resolves per environment, so the clause reads 0 of 302 EQUAL however correct the producer is; the same comparison run entirely locally reads 302 of 302.",
+ "spec_asserts": "r75_served.py c59 --where deployed C1: 'the snapshot object the route reads exists and its rows EQUAL a locally computed view'. The COO half's outcome table reads the FAIL branch as 'grant or fire fault: the route falls back; a row, then the reverse of the grant and schedule legs'.",
+ "world_is": "At CLOUD @598b791b19 with the grant, schedule and first fire landed, c59 --where deployed reads 'served from snapshot: True ... age_hours 0.06; rows EQUAL 0 of 302' and C1 FAILS, while C2 (cold 881/858 ms) and C3 (post-hold 744 ms) PASS. The 0 is NOT 302 wrong values: the served and computed sets carry the SAME 302 keys and the SAME 10 fields, with nothing present on one side only, and exactly ONE field differs in all 302 rows -- rot. Ignoring rot alone, 302 of 302 rows are byte-equal. Each side carries ONE uniform rot value: served 'publishers: not stale (0/2 stale, reviewed 2026-09-10T22:42Z) | social_accounts: not stale (0/267 stale, reviewed 2026-09-10T22:42Z)', computed 'no rot signal at this vintage'. So it is one environment difference replicated 302 times, not a per-row data fault. THE DISCRIMINATOR: c59 --where local, which compares build_freshness_snapshot() against read_coverage_freshness() BOTH in one environment, reads 'snapshot rows EQUAL 302 of 302; e.g. differing []' and PASSES -- so builder and compute agree, and the deployed arm's failure is produced by crossing environments rather than by the producer. The rot signal is not read from S3 (no objects under lists/ in opal-data-harvest) and no rot_signal.json is packaged in the artifact (the zip carries lib/research/lists/rot.py plus data/publishers.json and data/social_accounts.json); the repo's only rot_signal.json sits in a worker deliverable directory, on neither path. WHICH SIDE IS RIGHT IS NOT SETTLED HERE: the Lambda's value is the richer computed signal and the local one is the 'no signal' fallback, but no measurement in this round establishes that the richer value is the correct one to store, and the opposite reading -- that the Lambda is carrying a stale 2026-09-10 review date where 'none at this vintage' is correct -- is not excluded by anything measured. That question is the issuer's, not this seat's. CONSEQUENCE FOR THE ACT: the half's FAIL branch prescribes reversing the grant and schedule legs, but neither named fault is present -- the route IS serving the snapshot, the grant's control pair discriminates (snapshot key implicitDeny -> allowed on both actions while a sibling key STAYS implicitDeny), and the fire wrote 302 rows correct on 9 of 10 fields with the function's self-reported ETag equal to an independent head-object read. Reversing would undo correct work on the strength of a cross-environment oracle. The legs are left LANDED and leg L6 is left OPEN pending the issuer's ruling; nothing is half-landed, since every act of L0-L5 completed and was verified.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round75/checks/r75_served.py c59 --where deployed: 'rows EQUAL 0 of 302', C1 FAIL, C2 and C3 PASS",
+   "the same script, c59 --where local: 'snapshot rows EQUAL 302 of 302; e.g. differing []', C1 PASS, SERVED: YES",
+   "field-level diff of one row (1299_HK_Equity): 10 fields each side, 0 only-in-served, 0 only-in-computed, 1 differing (rot); rows equal ignoring rot = 302 of 302",
+   "rot value distribution: served 302 rows / 1 distinct value; computed 302 rows / 1 distinct value",
+   "aws s3api list-objects-v2 --bucket opal-data-harvest --prefix lists -> None",
+   "the built artifact's zip entries matching rot: ['jsonschema/protocols.py', 'lib/research/lists/rot.py'] -- no rot_signal.json",
+   "head-object on the snapshot: ETag cd40eb2d2ad71f765537c037d753c9a1 equal to the function's self-report, VersionId MWfKsTyq1Yi4JOWms7F4eSBCWTRbu17o, 2850172 B"
+  ]
+ }
 }
 ]
 ```
