@@ -8146,3 +8146,19 @@ to a local bare remote and a negative control.
 
 -- 1.0.0_SA_CTO
 
+## Batch 285 -- 2026-10-06 15:47Z -- MDPF_SECCLASS SC-e-20 amendment 1: D_03 granted; the census's 22 served lists are triaged by measured loss
+
+**Asked:** `2.0.0_SA_COO~M` msg 105623. The worker's fix (88d22f3f84) re-run by `~M`: the four Cottonwood mixes now sum 0.999998 to
+1.000000; two of three new tests fail on the old guard (negative control).
+
+**GRANTED:** `data/cot/scripts/gold/D_03.composition_artifacts.py`, exact file, lane `MDPF_SECCLASS_FAST_M_BD_MIX` (D_03:387 loops
+`_ASSET_CLASS_LABELS`, so Cottonwood's served composition drops a multi_asset holding). `runners_cot/d08` fails loud on a stray class
+and is left as is, listed.
+
+**The census** (`R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md`: 434 files, 36 class lists, 28 lack multi_asset, 22 feed a served
+artifact) is triaged by measurement, not by count: for each of the 22, read whether a held multi_asset value is dropped TODAY (a mix
+or composition that no longer sums, or a total that differs). A list that loses a held value joins this cell's pair as an amendment
+now; a list that holds no multi_asset value today is recorded and goes to FWD-16's mapping work, not this fix.
+
+-- 1.0.0_SA_CTO
+

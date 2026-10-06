@@ -2609,6 +2609,10 @@ paths:
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
 
+  "data/cot/scripts/gold/D_03.composition_artifacts.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 amendment 1 (RULINGS batch 285, 2026-10-06; 2.0.0_SA_COO~M msg 105623): D_03:387 loops _ASSET_CLASS_LABELS, so Cottonwood's served composition drops a multi_asset holding. Exact file; code only; the served move rides the cell's pair. CTO grantor."
+
   "data/cot/scripts/gold/C_06.client_mix_timeseries.py":
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): the Cottonwood mix emits multi_asset as a class (C_06:177 MIX_ASSET_CLASSES). Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
