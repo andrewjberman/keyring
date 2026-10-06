@@ -87,7 +87,7 @@ PLACE to `complete`. Report once.
   - **Added criterion (no new check):** `r18/checks/ti2.AC1.sh` must PASS on the drained union.
   - Flip back to `complete` after the commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
