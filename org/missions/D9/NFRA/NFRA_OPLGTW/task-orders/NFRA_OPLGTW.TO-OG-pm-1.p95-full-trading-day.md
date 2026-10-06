@@ -94,7 +94,7 @@ PLACE to `complete`. Report once.
   - The verdict stays on the full day.
   - Handed at ~00:1xZ, after the window closed.
 
-<status>pending</status>
+<status>complete</status>
 <round>17</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>
