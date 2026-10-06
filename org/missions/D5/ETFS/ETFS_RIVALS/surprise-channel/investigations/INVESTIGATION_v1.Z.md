@@ -4184,6 +4184,28 @@
     "spec_asserts": "A slug gate grades an order's TERMINAL state: its last <status> tag, and its cells as issued.",
     "world_is": "It grades the first tag and the decomposition at HEAD, so a true terminal state reads INVALID and invites routine overrides.",
     "notes": "disarm_owner (n/a, INERT): the gate's lane owner (the L8 slug gate / proof-of-spec checker), not this project's cells (round-11 analysis item 4). Filed by 2.0.0_SA_COO~RV as the analysis directs; the in-place replacement that triggered the cell_ref half was this seat's, now avoided by appending."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S53",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T22:00:02Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S52: .tools/to-check.py carries the same first-status-tag read as the slug gate. It lists ETFS_RIVALS.TO-RIV-iam-1 as PENDING for 0.7.0_AE_CloudOps~RV (1 active TO) while the order's last <status> tag is complete -- so 'what does this seat owe' over-counts a closed order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/to-check.py --all --assignee 0.7.0_AE_CloudOps~RV at 21:59Z: '1 active TOs ... [PENDING] ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants'",
+        "the order file: line 82 <status>pending</status>, line 86 <status>complete</status> (issuer close in the round-10 drain-end packet 64459cbbb1)",
+        "the same call for 2.0.0_SA_COO~RV at session start returned 0 active TOs (no order addressed to it), so the two reads are not comparable evidence of 'nothing owed'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "to-check reports an order's CURRENT status (org/XXX.md Step 1b B.1: 'find the work you hold').",
+    "world_is": "It reports the FIRST status tag; orders append their flips, so every issuer-closed tree order that began pending reads PENDING forever.",
+    "notes": "disarm_owner (n/a, INERT): the owner of .tools/to-check.py, with Z-S52's gate fix (read the LAST tag). Found while answering MSTR~Z's pre-integrate state ask; it changed nothing in that answer (the order is complete)."
   }
 ]
 ```
