@@ -18163,5 +18163,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "python r72_served.py --cell c43 --where local: names 95 with segment rows 12 non-200 0"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-S355",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-05T23:59:54Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "av-8's cold Lead Panel read did not come down as the COO half expected: 6998-8638 ms against round 71's 7306-7777, a band that widened rather than moved.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "NEVER_WIDEN_HALF_COO_AV8.md EXPECTED OUTCOMES: 'cold first read (leadpanel after) | before chatter 5.3-10.0 s | reported only: lower expected (60/72 calls from 153/167)'.",
+ "world_is": "Measured on the deployed round-72 build 2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ= at 2026-10-05T23:41:18Z, 10 s after the apply and before any other check touched the function: cold chatter n 6, min 6998 ms, max 8638 ms. Round 71's au-7 measurement on wbIT0PHv was min 7306, max 7777. The round-72 min is LOWER and the max is HIGHER, so the band widened rather than moved down, and it sits inside the half's stated 5.3-10.0 s before-band rather than below it. On two runs of n 6 that is not a distinguishable change in either direction, and none is claimed. THE LIKELY REASON THE EXPECTATION AND THE MEASUREMENT DO NOT MEET: the half's expectation is stated in CALL COUNTS (60/72 calls from 153/167), and leadpanel_cold_warm.py measures WALL TIME. A call-count reduction can be real and still not show in wall time if the removed calls were not the critical path, so the two are not the same quantity and this row is NOT evidence the call reduction failed -- it is evidence the instrument in hand cannot see it. Nothing was rolled back: the half marks the cold read report-only and expressly not a rollback trigger, since av-6 changes no value, and the warm column is unambiguous (warm chatter 532-682 ms, warm price 61-297 ms, all 9 routes 200). Not adjudicated by this seat: whether to re-measure the cold leg on the call-count plane the expectation was written on, which would need an instrument that counts S3 calls per cold invoke rather than timing the route.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/LEADPANEL_AFTER_av8.txt -- the raw output with its provenance and this comparison written out",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/NEVER_WIDEN_HALF_COO_AV8.md EXPECTED OUTCOMES table, read at the bytes (5282 B, present at its cited pin 30b3ff704d)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/LEADPANEL_AFTER_au7.txt -- round 71's cold figures for the comparison",
+   "the measuring script self-reports the CodeSha256 it measured, so the figures are pinned to the round-72 build"
+  ]
+ }
 }]
 ```
