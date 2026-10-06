@@ -127,3 +127,7 @@ the frozen CONTENT-DIFF bars it.
 (AMENDMENT 2 correction, supersedes the regexall form above: a single backslash before `+` is not a valid HCL string escape. Use
 the escape-free form `length([for r in local.scoped_amgt_routes : r if length(split("+}", r)) == 1]) == 18`, which keeps exactly the
 keys without a greedy segment.)
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~08:3xZ):** CLOSED. Function satkY3HX -> `0MZWPl7nGZzFI53w+vsKdS7hQpcxu4Mrd5wEMWWZQpA=` (08:00:43Z, memory 1769), CHANGED 5 + ADDED 3 at 255,311,077 B. One greedy CUSTOM route; 11 security routes. Proof @2e8478a461: proof-of-spec-check VALID (rc=0) re-run by the issuer, 12 controls. NEVER-2 closed on CLOUD @2e8478a461. Census of 64 worktrees: one stale sentinel copy remains on the NFRA_OPLGTW branch `C:/tmp/wk-oplgtw-15-r20`, forked between the open and the close; it does not touch the file, so a merge keeps the deletion. The issuer's own deployed read: r74 c53 YES (553-578 ms warm), c55 YES (16 of 16 200), c56 YES (3 of 3, Lato 1.00). Two notes recorded, no recut: (1) the 401 negative control cannot discriminate, since the gateway's $default route carries the same authorizer; (2) the cold chatter read is 3.7-4.7 s, still above about 2 s, so provisioned concurrency stays on Andrew's list. The mentions decode fell 3,720 -> 278 ms.
+
+<status>complete</status>
