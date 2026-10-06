@@ -19,6 +19,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` DIRECTED (Andrew-direct ~20:1xZ 2026-10-06 at the `2.0.0_SA_COO~C` terminal, VERBATIM:
+  "I think you should run these task orders /canonical-drive ADVI_COTBKF style. There is too much work on your plate with fielding
+  CTLPLN and COTBKF at the same time to be solo driving."). Record
+  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md` @45b266dcdb. He named no cadence
+  and no stop: event-driven, no cron; stop when every ADVI_COTBKF FWD grades REALIZED (read from the register), at HELD-AT-STOP, or on
+  his stand-down. NFRA_CTLPLN stays with ~C outside this drive. Landed by 1.0.0_SA_CTO.
+
 - RELAUNCH 2026-09-28 (Andrew-direct ~17:3xZ, record
   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
   placement `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20260928_174xZ_RELAUNCH_CANONICAL_DRIVE_PMY_CLOSER_D.md`).
