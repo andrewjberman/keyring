@@ -18663,6 +18663,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "git diff --stat on the worktree: scoped_amgt.py (import line, _segment_rows, _point_passage), segment_labels.py, tests/test_segment_labels.py only"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W258-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~258",
+ "surfaced_at": "2026-10-06T10:05:06Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AMGT-ay-2: scoped_amgt.py holds no step that writes the pack ledgers, so the snapshot writer has no caller yet; until one calls it, the first snapshot written under ay-5 goes stale and /freshness serves it as current.",
+ "spec_asserts": "TO AMGT-ay-2 section 1 item 3: 'The step that refreshes the pack ledgers (the refresh path in scoped_amgt.py, ~:5758) calls write_freshness_snapshot after its ledger write.'",
+ "world_is": "At lib/research/api/scoped_amgt.py@cecef87d4a the only refresh path is POST /refresh, which DECLARES a carrier and writes nothing (AMGT-rk-7; it must enqueue nothing). The only ledger readers are _ledger_date/_ledger_dates; the ledger writer is lib/research/ledger/ledger.py, outside this order's paths. So I added scoped_amgt.refresh_freshness_snapshot(client=None) (builds and writes once, never raises) and tested it, but wired it to no caller. A stored snapshot is served by the route with no age check. Needs an owner to call refresh_freshness_snapshot after the ledger write (ledger.py or the box-side refresh), or ay-5 to name the caller.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py@cecef87d4a lines 5377-5440 and the POST /refresh branch of handler",
+   "lib/research/api/tests/test_freshness_snapshot.py::test_the_refresh_step_writes_once"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W258-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~258",
+ "surfaced_at": "2026-10-06T10:05:06Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "lib/research/api/tests/ reads 673 passed, 2 failed: test_scoped_amgt_mount.py counts 19 terraform routes against 18 handled (the greedy GET /api/scoped/amgt/security/{proxy+}); not touched by ay-2.",
+ "spec_asserts": "TO AMGT-ay-2 section 1: run lib/research/api/tests/ before the commit and report its last line; only a failure from a portal function absent at the worktree's portal ref is excused.",
+ "world_is": "test_mounted_routes_and_handled_routes_are_the_same_set and test_the_route_set_is_not_vacuously_empty fail with 'MOUNTED BUT NOT HANDLED: GET /api/scoped/amgt/security/{proxy+}'. The route table and tf are unchanged by this order (git diff touches scoped_amgt.py only in the freshness functions). The cause is the terraform mount, not a portal function, so it is filed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest -q -p no:cacheprovider lib/research/api/tests/ in C:/tmp/r75-258 : 2 failed, 673 passed",
+   "lib/research/api/tests/test_scoped_amgt_mount.py:105 and :129"
+  ]
+ }
 }
 ]
 ```
