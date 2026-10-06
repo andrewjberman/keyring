@@ -13878,3 +13878,122 @@
 2026-10-01T22:30:00Z  KILL-NOOP  2.0.0_SA_COO~MS  by 0.0.0_AB_MSTR~Z  reason=verify-after  found=0  watchers_reaped=0
 2026-10-01T22:30:45Z  KILL  2.0.0_SA_COO~MP  by 0.0.0_AB_MSTR~Z  pid=36088  reason=parked on CTO~O ruling 28068 (Alyssa sitting G-CLOSE); parking line @fb46b85bd8
 2026-10-01T22:30:53Z  KILL-NOOP  2.0.0_SA_COO~MP  by 0.0.0_AB_MSTR~Z  reason=verify-after  found=0  watchers_reaped=0
+2026-10-03T01:41:04.186254+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 200 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T01:41:17.326037+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 185 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T02:02:31.757709+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 192 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T02:02:47.993323+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 164 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T02:03:03.806287+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 157 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T02:03:23.295911+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=10540 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 155 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T17:56:05Z  SPAWN  2.0.0_SA_COO~X  by 0.0.0_AB_MSTR~Z  pid=37620  host_pid=36232
+2026-10-03T17:57:52.830810+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~X pid=3496
+2026-10-03T18:22:41Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=35144  host_pid=16412
+2026-10-03T18:24:22.357240+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=28600
+2026-10-03T21:34:38.248283+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=2.0.0_SA_COO~O pid=7624 reason='to=1.0.0_SA_CTO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 173 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-03T23:07:42.218542+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=28600 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 200 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-04T18:32:08.443140+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~Z pid=20760 reason='to=2.0.0_SA_COO~X,2.0.0_SA_COO~Z,2.0.0_SA_COO~H,2.0.0_SA_COO~D,2.0.0_SA_COO~RV,3.0.0_SA_CVO~Z,0.7.0_AE_CloudOps~A,0.0.0_AB_MSTR~Z' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-04T19:00:46.960878+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=3352
+2026-10-04T19:01:33.674757+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356
+2026-10-04T19:15:18Z  SPAWN  1.0.0_SA_CTO~Z  by 0.0.0_AB_MSTR~Z  pid=24492  host_pid=26752
+2026-10-04T19:15:19Z  SPAWN  1.0.0_SA_CTO~O  by 0.0.0_AB_MSTR~Z  pid=8344  host_pid=15800
+2026-10-04T19:15:57.422083+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~Z pid=25272
+2026-10-04T19:16:08.389824+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~O pid=26436
+2026-10-04T19:29:23.725113+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~Z pid=19916
+2026-10-04T19:31:50Z  SPAWN  2.0.0_SA_COO~RV  by 0.0.0_AB_MSTR~Z  pid=20628  host_pid=25036
+2026-10-04T19:31:52Z  SPAWN  2.0.0_SA_COO~D  by 0.0.0_AB_MSTR~Z  pid=20136  host_pid=8300
+2026-10-04T19:31:54Z  SPAWN  3.0.0_SA_CVO~Z  by 0.0.0_AB_MSTR~Z  pid=23452  host_pid=18848
+2026-10-04T19:32:42.347363+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~RV pid=2092
+2026-10-04T19:32:47.318802+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D pid=20496
+2026-10-04T19:33:02Z  SPAWN  2.0.0_SA_COO~Z  by 0.0.0_AB_MSTR~Z  pid=14744  host_pid=28648
+2026-10-04T19:33:04Z  SPAWN  2.0.0_SA_COO~H  by 0.0.0_AB_MSTR~Z  pid=21248  host_pid=19840
+2026-10-04T19:33:07Z  SPAWN  2.0.0_SA_COO~X  by 0.0.0_AB_MSTR~Z  pid=28944  host_pid=5680
+2026-10-04T19:33:27.573418+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=25244
+2026-10-04T19:34:05.326067+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Z pid=27108
+2026-10-04T19:34:06.954106+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H pid=26196
+2026-10-04T19:34:15.606099+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~X pid=28916
+2026-10-04T19:53:43Z  SPAWN  2.0.0_SA_COO~O  by 0.0.0_AB_MSTR~Z  pid=14844  host_pid=28160
+2026-10-04T19:54:29.023853+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~O pid=29684
+2026-10-04T19:54:43.397842+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~O pid=2556
+2026-10-04T19:53:46Z  SPAWN  3.0.0_SA_CVO~O  by 0.0.0_AB_MSTR~Z  pid=26228  host_pid=27540  BACKFILL by 0.0.0_AB_MSTR~Z at 2026-10-04T19:55:40Z: spawn-agent.ps1:302 Add-Content IOException, file locked by another process
+2026-10-04T21:00:32Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=31680  host_pid=32488
+2026-10-04T21:00:59.452301+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=30776
+2026-10-04T22:13:25.810677+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~O pid=29684 reason='to=2.0.0_SA_COO~O' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~O -> 2.0.0_SA_COO~O. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one se"
+2026-10-04T23:45:48.035207+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=27108 reason='to=0.7.0_AE_CloudOps~A' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-05T00:03:28.190471+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=30776 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 176 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-05T02:57:31.413421+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=30776 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 170 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-05T04:14:37Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=35104  host_pid=38780
+2026-10-05T04:15:17.058220+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=32456
+2026-10-05T13:19:01Z  SPAWN  3.0.0_SA_CVO~RV  by 2.0.0_SA_COO~RV  pid=33860  host_pid=40620
+2026-10-05T13:20:28.250545+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV pid=13928
+2026-10-05T16:45:49.028439+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~RV pid=13928 reason='to=0.0.0_AB_MSTR~Z' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~RV -> 0.0.0_AB_MSTR~Z. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one "
+2026-10-05T18:36:13Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=55384  host_pid=40080
+2026-10-05T18:36:40.438698+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=52952
+2026-10-05T22:49:40Z  SPAWN  0.7.0_AE_CloudOps~RV  by 2.0.0_SA_COO~RV  pid=36016  host_pid=40792
+2026-10-05T22:50:13.838469+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV pid=36400
+2026-10-05T23:47:45.803593+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=1.0.0_SA_CTO~Z pid=25272 reason='to=0.7.0_AE_CloudOps~RV,2.0.0_SA_COO~RV' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 1.0.0_SA_CTO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T01:50:45.837905+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=27108 reason='to=0.7.0_AE_CloudOps~A' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T07:47:42.377365+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=52952 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 164 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T11:30:03Z  SPAWN  0.0.3_BG_BBGTerminal  by unknown  pid=47280  host_pid=25996
+2026-10-06T11:30:22.256637+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=25392
+2026-10-06T13:44:35.229127+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=25392 reason='to=4.0.0_SA_CRO~Z,1.0.0_SA_CTO~Z,0.0.0_AB_MSTR~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 162 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:08.104519+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=1.0.0_SA_CTO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:17.863960+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:23.802506+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~RV' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:32.136032+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~X' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:40.228045+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~D' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:45.969633+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~H' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:51.391832+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=2.0.0_SA_COO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:48:56.650014+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=1.0.0_SA_CTO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:49:02.064515+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=3.0.0_SA_CVO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:49:07.443189+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=3.0.0_SA_CVO~RV' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:49:12.566565+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=3.0.0_SA_CVO~O' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:49:17.807532+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=4.0.0_SA_CRO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:49:22.973813+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=4356 reason='to=0.0.3_BG_BBGTerminal' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 152 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T13:51:33.181957+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=27108 reason='to=0.7.0_AE_CloudOps~RV' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T13:53:37.072291+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~O pid=29684 reason='to=0.0.0_AB_MSTR~Z' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~O -> 0.0.0_AB_MSTR~Z. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one s"
+2026-10-06T13:54:44.452770+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~Z pid=25244 reason='to=0.0.0_AB_MSTR~Z' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~Z -> 0.0.0_AB_MSTR~Z. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one s"
+2026-10-06T13:58:26.013258+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~RV pid=13928 reason='to=0.0.0_AB_MSTR~Z' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~RV -> 0.0.0_AB_MSTR~Z. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one "
+2026-10-06T13:58:42.634761+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~RV pid=13928 reason='Andrew-direct reboot order relayed by 0.0.0_AB_MSTR~Z msg 30108: "this device however is having an issue and we need to reboot. tell all workers to write a /handoff and save it with state so they can get back to work post reboot". MSTR~Z tells Andrew it is safe only after every seat replies HANDOFF SAVED; the L8 gate would otherwise leave the reboot waiting on this seat.' conflict='to=0.0.0_AB_MSTR~Z'
+2026-10-06T14:01:30.747209+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=25244 reason="Andrew-direct reboot order (record @74897ebc2c, relayed in msg 30107/30125): every seat must reply HANDOFF SAVED to 0.0.0_AB_MSTR~Z before Andrew reboots site Z; the CVO gate refused the direct reply and the CTO relay had not landed, and Andrew's reboot waits on this one reply" conflict='to=0.0.0_AB_MSTR~Z'
+2026-10-06T15:13:16.291737+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=20252
+2026-10-06T15:14:41.504437+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=20260
+2026-10-06T15:24:03Z  SPAWN  2.0.0_SA_COO~Z  by 0.0.0_AB_MSTR~Z  pid=25264  host_pid=22820
+2026-10-06T15:24:07Z  SPAWN  1.0.0_SA_CTO~Z  by 0.0.0_AB_MSTR~Z  pid=15040  host_pid=5176
+2026-10-06T15:24:11Z  SPAWN  4.0.0_SA_CRO~Z  by 0.0.0_AB_MSTR~Z  pid=1176  host_pid=20736
+2026-10-06T15:24:50.360056+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~Z pid=23184
+2026-10-06T15:25:01.452849+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~Z pid=9120
+2026-10-06T15:25:12.797800+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO~Z pid=16056
+2026-10-06T15:33:00Z  SPAWN  0.7.0_AE_CloudOps~RV  by 2.0.0_SA_COO~Z  pid=9356  host_pid=21948
+2026-10-06T15:33:09.596903+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=23184 reason='to=0.7.0_AE_CloudOps~RV' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T15:34:06.673117+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV pid=8120
+2026-10-06T16:25:28.837485+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~RV pid=20204
+2026-10-06T17:38:51Z  SPAWN  3.0.0_SA_CVO~RV  by 2.0.0_SA_COO~RV  pid=17332  host_pid=29064
+2026-10-06T17:39:37.030575+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~RV pid=12256
+2026-10-06T17:39:42.944913+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.7.0_AE_CloudOps~RV pid=8120 reason='to=2.0.0_SA_COO~Z,1.0.0_SA_CTO~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 212 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T17:46:46Z  SPAWN  1.0.0_SA_CTO~O  by 0.0.0_AB_MSTR~Z  pid=28936  host_pid=30616
+2026-10-06T17:46:51Z  SPAWN  3.0.0_SA_CVO~Z  by 0.0.0_AB_MSTR~Z  pid=26968  host_pid=30612
+2026-10-06T17:46:56Z  SPAWN  3.0.0_SA_CVO~O  by 0.0.0_AB_MSTR~Z  pid=30900  host_pid=30924
+2026-10-06T17:47:43.011368+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=1.0.0_SA_CTO~O pid=30508
+2026-10-06T17:48:00.207200+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~Z pid=8532
+2026-10-06T17:48:01.120031+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=3.0.0_SA_CVO~O pid=31284
+2026-10-06T17:48:06Z  SPAWN  2.0.0_SA_COO~D  by 0.0.0_AB_MSTR~Z  pid=28292  host_pid=28348
+2026-10-06T17:48:13Z  SPAWN  2.0.0_SA_COO~H  by 0.0.0_AB_MSTR~Z  pid=30144  host_pid=25140
+2026-10-06T17:48:19Z  SPAWN  2.0.0_SA_COO~O  by 0.0.0_AB_MSTR~Z  pid=33688  host_pid=32220
+2026-10-06T17:49:26.300122+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~D pid=14260
+2026-10-06T17:49:30.292958+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~H pid=32796
+2026-10-06T17:49:29Z  SPAWN  2.0.0_SA_COO~X  by 0.0.0_AB_MSTR~Z  pid=32364  host_pid=31352
+2026-10-06T17:49:35.767366+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~O pid=25568
+2026-10-06T17:51:12.907985+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~X pid=35836
+2026-10-06T18:10:35.582678+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO~O pid=31284 reason='to=0.0.0_AB_MSTR~Z' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO~O -> 0.0.0_AB_MSTR~Z. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the CVO's one s"
+2026-10-06T18:10:47.670792+00:00 IDENTITY_SEND_GATE_OVERRIDE guard=GA-3 serial=3.0.0_SA_CVO~O pid=31284 reason='Andrew at the 3.0.0_SA_CVO~O terminal ~18:09Z: "GET COO~MI relaunched and active" -- the CVO cannot spawn; MSTR~Z is the relauncher' conflict='to=0.0.0_AB_MSTR~Z'
+2026-10-06T18:12:16Z  SPAWN  2.0.0_SA_COO~MI  by 0.0.0_AB_MSTR~Z  pid=27984  host_pid=28320
+2026-10-06T18:13:28.825179+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~MI pid=25120
+2026-10-06T19:20:10Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=38456  host_pid=9328
+2026-10-06T19:21:30.009031+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=37496
+2026-10-06T19:56:06Z  SPAWN  0.7.0_AE_CloudOps~MI  by 2.0.0_SA_COO~MI  pid=6440  host_pid=3812
+2026-10-06T19:58:42.306461+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~MI pid=15460
+2026-10-06T21:15:54Z  SPAWN  2.0.0_SA_COO~AI  by 0.0.0_AB_MSTR~Z  pid=25040  host_pid=36840
+2026-10-06T21:17:18.518731+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=2.0.0_SA_COO~AI pid=41404
+2026-10-06T21:58:43.354552+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.3_BG_BBGTerminal pid=20252 reason='to=0.0.0_AB_MSTR~Z' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 153 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
+2026-10-06T21:59:51.036558+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=23184 reason='to=0.7.0_AE_CloudOps~A,0.7.0_AE_CloudOps~RV' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T22:09:38.354912+00:00 IDENTITY_SEND_TIER2_ACT_REFUSED guard=GA-3 serial=2.0.0_SA_COO~Z pid=23184 reason='to=0.7.0_AE_CloudOps~A,0.7.0_AE_CloudOps~RV' conflict='SEND REFUSED (LD-0529, Andrew-direct 2026-09-03: a Tier-2 seat acts only on a task order in its own home): 2.0.0_SA_COO~Z -> a Tier-2 seat with an ACT in the body and no task order assigned to that re'
+2026-10-06T23:14:22.048983+00:00 IDENTITY_SEND_WORD_CAP_REFUSED guard=GA-3 serial=0.0.0_AB_MSTR~Z pid=20260 reason='to=0.0.3_BG_BBGTerminal' conflict='SEND REFUSED (CLAUDE.md Rule 31, enforced at the broker): the body is 167 words; the cap is 150. Put the content in a file and send its path plus one line, or cut it to one ask. Nothing was written fo'
