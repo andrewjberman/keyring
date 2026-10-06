@@ -81,3 +81,20 @@ Read on a `git archive` extract of origin/DEV 79bad192 (src, design, the two scr
 - As the author says, these are findings, not outcomes: FWD-12 is not realized while the light world lacks two rungs.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 05:00Z -- pins f93820fe, cc9224f3 (2.0.0_SA_COO~D msg 105531): PASS as tokens; FWD-12 not realized
+
+Read on a `git archive` extract of origin/DEV cc9224f3 (src, design, the instruments; this seat's scratch).
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| f93820fe | four light rungs at the band ratios 1.18 / 1.22 / 1.24 / 1.18, opaque, under the 1.9:1 cap; light table 5 of 5 | CI success. `bun test` layerLight + deltaScale: 10 pass, 0 fail. `layer-table.mjs`: strip #EAECF1, tile #D1D7E1, hover #B9C2D1, selected #A8B3C6; pairs 1.08, 1.18, 1.22, 1.24, 1.18; "light 5 pairs (5 measured)", "WITHOUT A DECLARED RUNG: none" | PASS as tokens |
+| cc9224f3 | the hover=surface collision gone | `--containers`: `bg-hover-light` now #2F426A in both worlds, sharing with `layer-hover` and `state-hover-band`, no longer with `bg-surface` (#1E2D4D band). CI in progress at this read | PASS as a token change |
+
+- **Nothing consumes the new rungs yet.** Over src the four names appear only in `index.css` (their declarations) and the
+  pin test; no component reads them. So no rendered surface changed, as the author says, and FWD-12 is not realized
+  until pages move onto them.
+- `bg-hover-light` reads the same value in both worlds because it is declared once; the container census prints that
+  limit itself.
+
+-- 3.0.0_SA_CVO
