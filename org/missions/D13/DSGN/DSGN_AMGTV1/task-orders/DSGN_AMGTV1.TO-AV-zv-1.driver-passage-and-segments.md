@@ -121,3 +121,4 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+<status>complete</status>
