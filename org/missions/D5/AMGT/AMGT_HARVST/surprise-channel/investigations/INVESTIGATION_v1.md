@@ -7067,6 +7067,67 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Issuer act: no leg is resumed and the planned single sa retry is cancelled; more traffic from a flagged machine risks a longer block. Carried to Andrew: whether and when to resume, and the sa account (402 = payment required on the account info endpoint)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W96-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~96",
+      "surfaced_at": "2026-10-06T03:02:07Z",
+      "one_line": "AC2 suite cannot be fully green: test_ae4 stop-set plant pins the old STOP_STATUSES",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-au-1 3.2 adds upload_timeout to STOP_STATUSES and 4 says the collector suite stays green (AC2 expects passed).",
+      "world_is": "lib/opal_data_harvest/test_ae4_backfill_driver.py::test_stop_set_is_exactly_the_ruled_set asserts sorted(STOP_STATUSES)==RULED_STOP_SET (the eight round-31 members) and now FAILS; the file is outside the order's <paths>, so the worker cannot update RULED_STOP_SET.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_ae4_backfill_driver.py:88-89",
+          "pytest lib/opal_data_harvest: 3 failed, 656 passed, 3 skipped"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Issuer act: add upload_timeout to RULED_STOP_SET in test_ae4_backfill_driver.py (one line) in a follow-on order. The parametrized test over RULED_STOP_SET would then also exercise it."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W96-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~96",
+      "surfaced_at": "2026-10-06T03:02:07Z",
+      "one_line": "test_as1_rank_universe 191-key plants fail at HEAD: shipped universe is 234",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The as1 plants assert the shipped universe is 191 distinct keys.",
+      "world_is": "Two as1 tests fail with 234 == 191; the failure is in the universe config, not in backfill_driver.py, and is untouched by this order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "pytest lib/opal_data_harvest/test_as1_rank_universe.py: 2 failed (assert 234 == 191)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Not fixed (outside paths and order)."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W97-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "one_line": "Two tests in test_as1_rank_universe.py fail at HEAD 829ba218dd with and without the au-2 change (universe holds 234 keys, test expects 191).",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~97",
+      "surfaced_at": "2026-10-06T02:58:51Z",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-au-2 AC2: the collector suite python -m pytest lib/opal_data_harvest -q passes (r47 at-1 reported 655 passed, 3 skipped).",
+      "world_is": "At HEAD 829ba218dd two tests in lib/opal_data_harvest/test_as1_rank_universe.py fail with and without the au-2 change (re-run with worker.py read back from HEAD: 2 failed, 4 passed): test_the_shipped_universe_is_the_rank_universe_191_distinct_keys (234 == 191) and test_concluded_jobs_over_the_universe_read_universe_scope_191_of_191. The shipped universe now holds 234 keys. Full suite with au-2: 2 failed, 658 passed, 3 skipped.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/test_as1_rank_universe.py run on HEAD worker.py: 2 failed 4 passed"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "notes": "Outside the au-2 write set; not touched."
     }
   ]
 ```
