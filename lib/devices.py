@@ -6,6 +6,7 @@ Fail-closed: an unreadable or empty register raises (CLI: rc 3); it never falls 
     python lib/devices.py names             # one canonical name per line
     python lib/devices.py resolve <label>   # canonical name for a name or alias (case-insensitive); rc 2 if unknown
     python lib/devices.py queue <label>     # the box's inbound queue name; rc 2 if unknown
+    python lib/devices.py this              # this box, from its own AGENTBUS_DEVICE setting; rc 2 if unset/unknown
 
 OPAL_DEVICE_REGISTER=<path> points every reader at another register file (fixtures and proofs only).
 """
@@ -65,10 +66,44 @@ def inbound_queue(label: str, reg: dict | None = None) -> str | None:
     return None
 
 
+def setting() -> tuple:
+    """(claim, basis): the box's own AGENTBUS_DEVICE setting -- the process environment, else the persisted user setting
+    (HKCU\\Environment; AGENTBUS_REG_KEY overrides the key for proofs) for a process started before it was made.
+    ("", "unset") when neither holds it. Never derived from a path (LD-0405)."""
+    claim = os.environ.get("AGENTBUS_DEVICE", "").strip()
+    if claim:
+        return claim, "process environment"
+    key = os.environ.get("AGENTBUS_REG_KEY", "HKCU\\Environment")
+    try:
+        import winreg
+        with winreg.OpenKey(winreg.HKEY_CURRENT_USER, key.split("\\", 1)[1]) as k:
+            claim = str(winreg.QueryValueEx(k, "AGENTBUS_DEVICE")[0]).strip()
+    except (ImportError, IndexError, OSError):
+        claim = ""
+    return (claim, "persisted user setting %s" % key) if claim else ("", "unset")
+
+
+def this_device(reg: dict | None = None) -> tuple:
+    """(name or None, basis): this box's canonical register name, resolved from its own setting."""
+    claim, basis = setting()
+    if not claim:
+        return None, "AGENTBUS_DEVICE unset (process environment and persisted user setting)"
+    name = resolve(claim, reg)
+    return (name, "AGENTBUS_DEVICE=%s (%s)" % (claim, basis)) if name else (
+        None, "AGENTBUS_DEVICE=%s is not in the device register" % claim)
+
+
 def main(argv: list) -> int:
     try:
         if argv[:1] == ["names"] and len(argv) == 1:
             print("\n".join(names()))
+            return 0
+        if argv == ["this"]:
+            name, basis = this_device()
+            if name is None:
+                print("ERROR: this box is unresolved: %s" % basis, file=sys.stderr)
+                return 2
+            print(name)
             return 0
         if argv[:1] in (["resolve"], ["queue"]) and len(argv) == 2:
             out = resolve(argv[1]) if argv[0] == "resolve" else inbound_queue(argv[1])
@@ -81,7 +116,7 @@ def main(argv: list) -> int:
     except RegisterError as exc:
         print(str(exc), file=sys.stderr)
         return 3
-    print("usage: python lib/devices.py names | resolve <label> | queue <label>", file=sys.stderr)
+    print("usage: python lib/devices.py names | resolve <label> | queue <label> | this", file=sys.stderr)
     return 64
 
 
