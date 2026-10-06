@@ -107,3 +107,6 @@ Leg 3 (the snapshot write) becomes a SCHEDULE plus its first fire:
 
 Gate limb: GATE (viii) on a modify.
 
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~10:5xZ):** both halves are signed: COO @265f85f8fe (`deliverables/2.0.0_SA_COO~Z/round75/NEVER_WIDEN_HALF_COO_AY5.md`) and CTO @452acb4e68 (`ledger/NEVER_WIDEN_ROUND75_AY5_CTO_HALF.md`, conditions 1-7). The build is a DETACHED worktree at EXACTLY `ab28d0ba01`, never "at or after". The CONTENT-DIFF is CHANGED 3 + ADDED 3; any other file is a STOP. The schedule input is exactly `{"amgt_scheduled_action": "refresh_freshness_snapshot"}`.
+
+<status>pending</status>
