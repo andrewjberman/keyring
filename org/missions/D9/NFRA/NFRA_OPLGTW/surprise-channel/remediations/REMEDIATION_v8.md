@@ -28,11 +28,11 @@ grade.
     "owner": "1.0.0_SA_CTO~O",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W15-S64",
@@ -48,11 +48,11 @@ grade.
     "owner": "1.0.0_SA_CTO~O",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W15-S65",
@@ -68,11 +68,11 @@ grade.
     "owner": "1.0.0_SA_CTO~O",
     "round": "v8",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v8"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
