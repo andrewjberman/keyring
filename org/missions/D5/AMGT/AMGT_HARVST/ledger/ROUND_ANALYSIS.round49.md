@@ -55,3 +55,27 @@ and no KYC is asked of Andrew.
      request.
    - Proof: a plant whose origin never fires `load` still opens the tab; plus a re-run of the 5 jobs that ended TimeoutError
      before any request, each reaching its first request.
+
+## ADDENDUM 2 (2026-10-07 ~00:0xZ) -- wsj: a short ticker's candidate set is unselective (COO~H msg 30451; rows Z-S90, Z-S91)
+
+**Measured by COO~H:**
+- The wsj job for `T US Equity` ran 3 h 03 min. It fetched 502, accepted 0, read 431 `company_not_mentioned` and 46 locked
+  bodies, then got a 401.
+- `SSE LN` fetched 482 and 280, with 0 accepted.
+- The median finished wsj job accepts 1.
+
+**Ruling: one cell, placed in the next HARVST issuance by `2.0.0_SA_COO~H`, before the wsj leg reaches its next short ticker.**
+1. **The query is the selective term.** For a symbol of 3 characters or fewer, or one that is a common word, the wsj candidate
+   query uses the company NAME (from the crosswalk), never the bare ticker. The rule is read from the symbol, and it is not a
+   hand-kept list of names.
+2. **A per-job bound with an early stop.** After the first K fetched candidates with 0 accepted, the job ends with a DISTINCT
+   result, `candidate_set_unselective` (K is set from the measured distribution of finished jobs and stated with its
+   denominator). It never runs for hours. The checkpoint records the result, so a resume does not retry the same set.
+3. **Proof:**
+   - A replay of `T US Equity` and `SSE LN` from stored listings ends within the bound, with the distinct result or with
+     accepted articles.
+   - Control: three finished names keep the accepted counts they had.
+
+- **Why:** a 3-hour job that accepts nothing spends the signed-in session the other names need (the 401 followed it), and it
+  spends 500 requests on a publisher that already challenges this collector.
+- **Not this cell:** the wsj sign-in itself is Andrew's act. The leg resumes from `r46_wsj_checkpoint.json` after it.
