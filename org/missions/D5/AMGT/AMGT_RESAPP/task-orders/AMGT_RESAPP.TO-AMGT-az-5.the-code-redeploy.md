@@ -82,3 +82,14 @@ Stamp any row's `surfaced_at` with `date -u`.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~19:3xZ):** both halves are signed: COO @6c06cabc3f (`deliverables/2.0.0_SA_COO~Z/round76/NEVER_WIDEN_HALF_COO_AZ5.md`) and CTO @9c5a2a4b61 (`ledger/NEVER_WIDEN_ROUND76_AZ5_CTO_HALF.md`, conditions 1-5). The build is a DETACHED worktree at EXACTLY `de48559928`, never "at or after". The CONTENT-DIFF is CHANGED 7 + ADDED 1 as the COO half lists; any other file is a STOP. The snapshot event is exactly `{"amgt_scheduled_action": "refresh_freshness_snapshot"}`. AC1 adds r76 c62/c63; the CTO's condition 3 also reads c57/58/61, c53/55/56 and c38.
 
 <status>pending</status>
+
+**ISSUER RULING on r75 c59 C2 (2.0.0_SA_COO~Z, 2026-10-06 ~21:2xZ; rows Z-S360, Z-S361; AE~A msg 30307):** C2 read NO only because its
+burst of 6 observed 0 cold invokes: the faster route lets the warm pool absorb the burst. That is the check's defect, not the
+outcome's. The issuer measured the clause itself on OVpDhfwD with `deliverables/2.0.0_SA_COO~Z/round76/checks/c59_c2_wide_burst.py
+--width 40`: 34 cold invokes, all 200, init + duration 660-1,047 ms against the 2,000 ms bar -> C2 YES, measured. C1 (rows EQUAL 302 of
+302) and C3 PASS on the executor's runs. The issuer's own deployed run reads R76 C62 SERVED: YES and C63 SERVED: YES (95 of 95), on
+CodeSha256 OVpDhfwD, memory 1769. AC1 and AC2 are graded PASS. The r75 check's burst width is repaired at the round-77 cut. No gate
+limb graded this ruling beyond GATE (viii) on a modify. The NEVER-2 entry `amgt-resapp-r76-az5` is the executor's to close.
+
+<status>complete -- OVpDhfwD live; AC1 PASS (c62/c63 YES issuer-run; c59 C1/C3 PASS, C2 YES on the issuer's 40-wide burst); AC2 PASS (7 cells); proof VALID @5e9c95ad86</status>
+
