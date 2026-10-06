@@ -18295,6 +18295,94 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "r73 c49 on the deployed build: 'population: covered rows 95 status 200', 'PASS C1 every covered row's pack clock is a date NEVER 0', R73 C49 SERVED: YES; the pre-code base arm read 'NEVER 95'"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W251-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~251",
+ "surfaced_at": "2026-10-06T05:17:08Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "FWD-18 on the page: clicking a driver-chart figure on BA and ASML_NA opens 'The filing passage for this point is not shown on this page.' for every point, although the served point carries its passage text.",
+ "spec_asserts": "PRD v0.40 FWD-18 DONE WHEN: a seat clicks a filing-derived figure on a covered company through to the passage it came from.",
+ "world_is": "Dev build (portal DEV + aw-4, fb939c4a) against deployed satkY3HX, Thesis tab. BA_US_Equity: 3 points, 3 of 3 clicks opened the sentence 'The filing passage for this point is not shown on this page.' ASML_NA_Equity: 3 points (all cite passage P0086), the same sentence on every open. The served /thesis body carries thesis_driver_chart.points[].passage_text (BA 168, 92 and 93 chars; ASML 101 chars) and passage_cite, so the text is served and the page does not show it: ThesisDriverChart.tsx:146-162 looks the id up with findEvidenceById(passageId, sections) and never reads point.passage_text. Observation only; no verdict on the DONE WHEN.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~251/WALK_ROUND73.md; walk stamps tmp/ui-walk/20261006T050158Z (81 shots), 20261006T050953Z (print PDFs), 20261006T051201Z (12 shots), gitignored on this device; portal fb939c4a",
+   "data/fwd18/BA_US_Equity.json and ASML_NA_Equity.json in the stamp folder: per click passage_text_shown, says_not_shown, served_passage_text_chars",
+   "portal/src/pages/SecurityAnalysis/components/ThesisDriverChart.tsx:145-163 read at fb939c4a"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W251-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~251",
+ "surfaced_at": "2026-10-06T05:17:08Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "FWD-1 on the page: the 12 names whose /thesis serves a segment_breakdown show no segment breakdown on any of the five tabs or in the opened About-the-company disclosure; the portal has no reader of that key.",
+ "spec_asserts": "PRD v0.40 FWD-1 DONE WHEN: on a covered company the model numbers, the business description and the segment breakdown are on screen with no spreadsheet or terminal.",
+ "world_is": "12 of 95 covered names serve segment_breakdown.rows (ASML_NA 5, BABA 11, BA 11, COST 10, HAL 12, HD 10, INTU 9, KMB 9, NU 10, PBR 8, SAP_GY 11, VLO 10). Each was opened and all five tabs read (60 captures), then About the company opened (12 captures). Model figures and the business description are on screen; no tab or disclosure draws the served rows as a breakdown: the portal source holds 0 references to segment_breakdown (Grep over portal/src at fb939c4a). Whole served row sentences found on a page: 1 of 116 rows (COST, a drafted thesis sentence that happens to equal the row text); segment labels appear only as incidental words in other text. Positive control: the same text reader finds BABA's segment label 'Alibaba China E-commerce Group' words on its Thesis page.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~251/WALK_ROUND73.md; walk stamps tmp/ui-walk/20261006T050158Z (81 shots), 20261006T050953Z (print PDFs), 20261006T051201Z (12 shots), gitignored on this device; portal fb939c4a",
+   "data/fwd1/fwd1.json and data/fwd1_about.json: per name, per tab labels/sentences found",
+   "lib/research/api/scoped_amgt.py:3624-3626 serves the key"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W251-S3",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~251",
+ "surfaced_at": "2026-10-06T05:17:08Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "FWD-7 /freshness page (aw-4) renders its table dark-blue on a navy card (text near-unreadable in the capture), takes about 12 s to show rows, and flags 95 of 95 covered names stale.",
+ "spec_asserts": "PRD v0.40 FWD-7 DONE WHEN: a seat opens the one place, sees every covered company with its last-refreshed date, and finds a stale one without opening folders.",
+ "world_is": "Dev build, route /freshness, 95 rows, last-refreshed 2026-10-04 on all 95, pack clock a date (aw-3 landed). Table first row at 11,958 ms. Summary line: '95 of 95 covered companies have an input that is stale (older than 7 trading days, or never read).' because Seeking Alpha and Web search read Never on most names (Alibaba BABA: Seeking Alpha last read 2026-09-11). The capture (fwd7-freshness-default) shows the Card as a dark navy ground with dark-blue text and navy-bordered sort buttons; the DOM text reads fully. A page that flags every row does not let a seat tell one stale name from the rest by the flag; the three sort buttons left the first five rows unchanged (every row ties).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~251/WALK_ROUND73.md; walk stamps tmp/ui-walk/20261006T050158Z (81 shots), 20261006T050953Z (print PDFs), 20261006T051201Z (12 shots), gitignored on this device; portal fb939c4a",
+   "data/fwd7.json: summary, row counts, headers, flags, waited_ms",
+   "shots/078..081 in stamp 20261006T050158Z"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W251-S4",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~251",
+ "surfaced_at": "2026-10-06T05:17:08Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "FWD-31 census reads 42 names (passage served, no roster object) of 93 readable covered names, not the round-72 '44 of 94'; BP/_LN_Equity and NG/_LN_Equity cannot be read at all (/thesis answers 404 for a slash key).",
+ "spec_asserts": "CTO round-72 ruling 5: 44 of 94 names serve a passage but no roster object; a census with a reason per name.",
+ "world_is": "Today's census over the 95 covered names of /freshness: 93 readable, 46 with a served passage, 4 of those with a roster, 42 with none (22 'no company filing stored', 19 'no filing could be matched', 1 'filing found, officer section empty'). The round-72 scan used a different population (94 names with a research-report folder) and day. BP/_LN_Equity and NG/_LN_Equity: GET /api/scoped/amgt/security/BP%2F_LN_Equity/thesis answers 404 'Route not found' (the page has the same gap), so they are in neither count.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~251/WALK_ROUND73.md; walk stamps tmp/ui-walk/20261006T050158Z (81 shots), 20261006T050953Z (print PDFs), 20261006T051201Z (12 shots), gitignored on this device; portal fb939c4a",
+   "FWD31_CENSUS.md beside the walk record, 42 rows",
+   "stamp 20261006T050158Z api_issues: two 404s on the BP and NG keys"
+  ]
+ }
 }
 ]
 ```
