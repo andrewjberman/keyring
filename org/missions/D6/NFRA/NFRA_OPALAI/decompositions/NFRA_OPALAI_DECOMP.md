@@ -580,3 +580,15 @@ sublayers (F11_SUBLAYER_EVIDENCE.json, from Andrew's elevated `netsh wfp show st
 `1.0.0_SA_CTO~O` msg 28164 point 2 tied the fix to an elevated diagnosis; that dump is the diagnosis. The live read-back
 weight is read at the next elevated run. It does NOT precede the item-0 close run and rides the cutover push, never the
 pending G-PUSH of bd7cd5d.
+
+## ADDENDUM R2-A12 -- a scoped identity's /login consent narrowed to its allowlist's Graph scopes (`1.0.0_SA_CTO~O` ruling R25.3, msg 30323)
+
+| Cell | Builds | Risk |
+|---|---|---|
+| `OA-f-14` | new `app/graph_scope_map.py` (one Graph scope set per tool a scoped identity may call); `identity_scope.consent_scopes(email)` (None for an unscoped identity, else the union over its allowlist plus `User.Read`); `token_broker.build_consent_url` and `redeem_consent` ask for that list on both legs; `get_token`'s silent acquire for a scoped owner is the tier's scopes intersected with it; an unscoped identity's requests are unchanged | WORLD (infra floor; nothing deploys) |
+
+Chain: alone, slot `~29`, direct act, base CLOUD @821fca2410. The ruling is
+`org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round19.md:100`, carried here by NFRA_OPLGTW's round-20 analysis
+(`ROUND_ANALYSIS.round20.md:72`). The silent-acquire bound is the issuer's decomposition judgment (the order's record
+face states why). The drain waits on NFRA_OPLGTW OG-rl-9 being terminal, because that release names the whole gateway
+tree. The release of this cell is a later order under CTO+COO+CVO halves.
