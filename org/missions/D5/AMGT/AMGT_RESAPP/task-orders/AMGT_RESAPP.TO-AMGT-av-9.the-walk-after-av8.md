@@ -82,3 +82,14 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~00:5xZ):** CLOSED -- drained @edba4192b6. Walked on deployed 2lUlZomo with portal DEV
+327b7d8e (newer than the order's a3ab197f, so the walk saw the current page).
+- **AC1:** FWD-31 byte arm, ROSTER ROWS BYTE-EQUAL 32 of 32 over 4 names (ASML_NA, BABA, SAP_GY, BA); the negative control broke
+  4 of 4.
+- **AC2:** the walker reads disarmed (DISARMED sent to MSTR~Z 00:47Z).
+- **AC3** (judgment): the CVO's L9 read of WALK_ROUND72.md (FWD-7, FWD-19).
+- proof VALID. Row Z-W244-S1 INERT: the /freshness pack clock reads NEVER for 95 of 95, while the packs/ prefix lists 105 objects.
+
+<status>complete</status>
+
