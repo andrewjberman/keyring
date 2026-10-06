@@ -68,14 +68,14 @@ published mix drops one.
 
 ### ACCEPTANCE
 
-<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/cot/scripts/gold/tests/test_mix_publishes_every_class.py -k multi_asset</invocation><expect>passed</expect></criterion>
+<criterion id="SC7-e20-AC1" cell_refs="SC-e-20"><invocation>python -m pytest -q data/cot/scripts/gold/tests -k multi_asset</invocation><expect>passed</expect></criterion>
 `SC7-e20-AC1` -- the new `multi_asset` tests (named with `multi_asset` in the test name) pass: a `multi_asset` holder publishes a mix summing to 1, an out-of-list class skips loudly, the period views carry `multi_asset`. Also run `python -m pytest -q data/cot/scripts/gold/tests` and report it: every test in that folder must still pass.
 
 <criterion id="SC7-e20-AC2" cell_refs="SC-e-20"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/cot_mix_multi_asset_check.py</invocation><expect>COT-MIX-CHECK clients=4 after_sums_to_1=4</expect></criterion>
 `SC7-e20-AC2` -- the edited code, run in process on the real 2026-10-05 positions of the four clients, publishes four mixes that each sum to 1 within 0.001.
 
-<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import pathlib; t=pathlib.Path('org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md').read_text(encoding='utf-8'); print('CENSUS-ROWS', t.count('| `'), 'DENOMINATOR' in t)"</invocation><expect>DENOMINATOR</expect></criterion>
-`SC7-e20-AC3` -- the census file exists, carries its rows and prints its denominator (the worker's report states the counts).
+<criterion id="SC7-e20-AC3" cell_refs="SC-e-20"><invocation>python -c "import pathlib,re; t=pathlib.Path('org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_TRIAGE_20261006.md').read_text(encoding='utf-8'); print('TRIAGE-VERDICTS', len(re.findall(r'VERDICT: (?:DROPS-TODAY|HOLDS-NONE)', t)))"</invocation><expect>TRIAGE-VERDICTS 22</expect></criterion>
+`SC7-e20-AC3` -- (amended, AMENDMENT 1) the triage file carries one `VERDICT: DROPS-TODAY` or `VERDICT: HOLDS-NONE` line for each of the 22 served lists the census found lacking `multi_asset`.
 
 <expected_criteria>SC7-e20-AC1,SC7-e20-AC2,SC7-e20-AC3</expected_criteria>
 
@@ -95,10 +95,12 @@ data/cot/scripts/gold/C_06.client_mix_timeseries.py
 data/cot/scripts/gold/lib/mix_views.py
 data/cot/scripts/gold/D_04.client_portal_summary.py
 data/cot/scripts/gold/B_01b.classify_new_securities.py
+data/cot/scripts/gold/D_03.composition_artifacts.py
 data/cot/scripts/gold/tests/test_other_admission.py
 data/cot/scripts/gold/tests/test_mix_publishes_every_class.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/cot_mix_multi_asset_check.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_TRIAGE_20261006.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -130,3 +132,30 @@ workstream: `~M-COTCLS` is a second workstream of round 7 (disjoint write surfac
 </preflight>
 
 Source: CTO ruling msg 105604 (2026-10-06 14:51Z); row S29 @4dc751ec59; cause confirmed in msg to the CTO 14:55Z.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M, 2026-10-06 ~15:5xZ) -- the CTO's census ruling and the D_03 gap (msgs 105623, 105624)
+
+The cell re-opens (`<status>` pending). The first pass drained @e0dd7aad05 (worker commit 88d22f3f84): AC1 3 passed, folder 25 passed, AC2
+`COT-MIX-CHECK clients=4 after_sums_to_1=4`, the census 434 files, 36 rows, 28 lacking `multi_asset`, 22 feeding a served artifact.
+
+1. **D_03** (`data/cot/scripts/gold/D_03.composition_artifacts.py`, granted exact file): `_ASSET_CLASS_LABELS` has no `multi_asset`, and the
+   per-class loop at line 387 walks it, so a `multi_asset` holding is dropped from the served composition. Add `multi_asset` with the label
+   `Multi-Asset` (the portal's own label). Never folded into another class. Add tests whose names contain `multi_asset`, in
+   `test_other_admission.py` (granted): the label exists; a composition of positions that includes a `multi_asset` one carries it and its classes sum to the total.
+   Re-run AC1 and the whole folder.
+2. **Triage the 22 served lists by measured loss TODAY** (CTO ruling): write
+   `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_TRIAGE_20261006.md`, one block per list (the 22 of the
+   census's served rows lacking `multi_asset`):
+   - the list (file:line) and the served artifact it writes (bucket and key, read from the code);
+   - a READ of that served artifact now (read only): does a held `multi_asset` value exist for that firm (49 Financial, Inflection and Cottonwood
+     hold `multi_asset` nodes per `R9_CHECKS/MULTI_ASSET_LEG_V_<firm>_20261005.json`), and does the artifact lose it: a mix or composition that no
+     longer sums, or a total that differs from the custody total, by the held `multi_asset` dollars? State the dollars and both sides of the sum;
+   - last line of the block: `VERDICT: DROPS-TODAY` (the artifact today loses a held `multi_asset` value) or `VERDICT: HOLDS-NONE` (it
+     loses none today: the list is not exercised, the firm holds none in that surface, or the artifact passes the class through), with the evidence.
+   - Where you cannot read the artifact, say so in the block and use `VERDICT: HOLDS-NONE` only if a read of the code and an artifact you CAN read
+     shows nothing is lost; otherwise stop and file a surprise row. Never guess a verdict.
+   - Do NOT edit any list outside the granted files. The triage reports; the issuer decides what joins the pair.
+3. **Criteria.** AC1's invocation now selects `-k multi_asset` over the whole tests folder; AC3 now reads the triage file (`TRIAGE-VERDICTS 22`).
+   AC2 is unchanged. The census file stays as the first pass's deliverable. Gate limb: none graded this modification (LIMB 6 fires on new orders only;
+   the order declares no `<placeholders>`).
+
