@@ -133,7 +133,7 @@ validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
 - AC2 grades the drain-back: CLOUD equals live afterwards.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
