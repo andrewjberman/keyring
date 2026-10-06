@@ -72,9 +72,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** Round-47 analysis @acc5c6e750 ruling 3 and enrichment item 1; decomposition section 61. Every collection leg is
 stopped (Z-S89), so this lands with no stop-and-resume dance; a resumed leg picks it up from the working tree.
 
+**COMPLETE 2026-10-06 ~03:3xZ (issuer):**
+- **Built:** worker ~96 @0e52b3639b + @d4adadab63; merged on the landing branch @09c9795948. `Collector.upload` returns `UPLOAD_TIMEOUT` on `TimeoutExpired`; `drive()` maps it to `upload_timeout` (STOP + TRANSIENT).
+- **AC1 PASS:** 4 of 4 (issuer re-run identical).
+- **AC2:** the worker read 3 failures, none caused by au-1. Two were as-1 plants pinned at 191: the issuer's at-5 defect, repaired @2148adb922. One was the ae4 plant pinning the stop set, which this order extends: issuer repair at the landing, ae4 `RULED_STOP_SET` + `upload_timeout`. Issuer re-run on the landing branch: collector suite 665 passed, 3 skipped. **PASS.**
+- **Rows:** Z-W96-S1 (ae4 pin, repaired at the landing), Z-W96-S2 (as-1 pin, repaired @2148adb922).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>48</round>
 <slot>~96</slot>
 <fabric>site-z</fabric>

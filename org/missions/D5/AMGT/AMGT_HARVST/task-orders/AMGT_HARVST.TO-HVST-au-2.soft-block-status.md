@@ -73,9 +73,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 **ISSUER NOTES:** Round-47 analysis @acc5c6e750 ruling 4 and enrichment item 2; decomposition section 61. The CTO's pause rule
 (29759: pause at a majority of the last 25 barrons jobs) counts `soft_block` together with `listing_empty_200` once this lands.
 
+**COMPLETE 2026-10-06 ~03:3xZ (issuer):**
+- **Built:** worker ~97 @5235d0ba0f + @079559d648; merged on the landing branch @b4aa9aa26b. The channel conflict was resolved as a union: Z-W96-S1/S2 + Z-W97-S1.
+- **AC1 PASS:** 5 of 5 (issuer re-run identical).
+- **AC2:** the worker read 2 failures, both as-1 plants pinned at 191 (the issuer's at-5 defect, repaired @2148adb922). Issuer re-run on the landing branch: collector suite 665 passed, 3 skipped. **PASS.**
+- **Row:** Z-W97-S1 (the as-1 pin, repaired).
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>48</round>
 <slot>~97</slot>
 <fabric>site-z</fabric>
