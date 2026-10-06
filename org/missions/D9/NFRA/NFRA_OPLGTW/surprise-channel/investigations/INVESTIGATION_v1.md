@@ -8474,3 +8474,125 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S52",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T04:25Z",
+  "one_line": "OG-rl-7 Phase A, OA-e-10 precondition: the gateway audit lake CANNOT answer 'which identities used /login' -- login() and GuardMiddleware write no audit record for the route, so the lake reads 0 /login-attributable records of 97,430 over 32 days by construction; the 0 outsiders in RL7_LOGIN.json rests on the host journal (0 bare /login requests in 257,393 access-log lines, 32 of 32 days), a plane that names no identity.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_lake_census.json (from r19_lake_census.py, run 2026-10-06T03:46Z): bucket opal-mcp-audit, audit/dt=2026-09-05..2026-10-06, objects 97430, records 97430, read_failures 0, distinct_shapes 58, login_like_records 0, bare_login_route_records 0 (top shapes are ms_site_children, gw_cred_observe, poll_addressed_teams_messages, hx_teams: tool-call and credential-observe records only)",
+      "FILE: infra/aws/ec2/opal-gateway/app/server.py@619e8ddfd6 login() (:462) and GuardMiddleware (:156-:236) call no audit.log_call/log_credential; the only log_call/log_credential callers in server.py are teams_poll, the /otp/* and /ms/* routes, and the denied-tool path",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_login_journal.out (SSM efaa7e3a, journalctl _COMM=uvicorn --since 2026-09-05): access-log lines 257393, covers 2026-09-05..2026-10-06 (32 distinct days), LOGIN_BARE_COUNT 0, LOGIN_SUBSTRING_COUNT 7 = '/schwab/download/login 404' x7 (a different route); extends E10's 0 (2026-07-14..2026-09-28, E10_LOGIN_CENSUS.md) by 8 days; an access-log line carries no identity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-rl-7 s.1: read every identity that used /login over the 30 days from the gateway audit lake (opal-mcp-audit); any identity outside the AFTER set BLOCKS.",
+  "world_is": "The lake holds no record of the route, so a lake zero is the instrument's blindness, not an absence of use (an ABSENT instrument is not EXERCISED-AGAINST). The count that does see the route (the journal) names no identity, so it proves NO use at all, not 'no outsider'. Both give the same answer, outsiders_in_window = [], and RL7_LOGIN.json carries both readings and the plane each came from. The ARMED hazard: a half reading outsiders_in_window [] as 'the lake was read and was clean'. Disarm: each half's ANNOUNCE says the zero is the journal's, identity-blind.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S53",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T04:25Z",
+  "one_line": "OG-rl-7 Phase A: after the release /login cannot RE-MINT an email-keyed Graph cache for any identity but the configured one; the host holds email-keyed caches for two non-configured identities (labelled alyssa and opalbloomberg by sha256, both mtime 2026-09-17) and one more opalinvest.com identity (mtime 2026-08-12) -- none is evidence of /login use in the window, and none showed outcome needs_login in 97,441 lake records, but E10's DEPENDENTS count (1) did not name them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_login_journal.out TOKEN_CACHE lines (SSM efaa7e3a): 7 files in /opt/opal-gateway/.token_cache, 6 modified in the window; e271f8dc = sha256('alyssa@opalinvest.com') mtime 2026-09-17, f39c9b20 = sha256('opalbloomberg@opalinvest.com') mtime 2026-09-17, 7b1bca22 = the configured identity mtime 2026-10-06, 81948e0b (unattributed) mtime 2026-08-12, three more (237e6967, 8a8ce2fa, a1de31f5) matching none of the three candidate emails (principal-keyed owners hash 'principal:<tid>/<oid>')",
+      "FILE: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_lake_users.json: alyssa 199 records on 8 days (last 2026-09-17), opalbloomberg 14622 records on 13 days (last 2026-10-01), needs_login records 0 across all 7 identities; the 81948e0b digest equals one lake identity (1 record, 2026-09-29)",
+      "FILE: org/missions/D6/NFRA/NFRA_OPALAI/deliverables/0.9.0_WK_NFRA_OPALAI~16/E10_LOGIN_CENSUS.md: 'the email-keyed cache is written in exactly one place ... reached only from the legacy branch of callback() on a state minted by /login'; DEPENDENTS 1; '5 other files not attributable from names and are not counted'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OA-e-10 / TO s.1: /login admits only the configured server-held identities; any identity that used it in the window and falls outside BLOCKS.",
+  "world_is": "Two attributable non-configured identities hold email-keyed caches that only /login (+ legacy callback) can re-mint. Their tool traffic since 2026-09-17 shows no needs_login and no cache rewrite (mtime frozen at 2026-09-17), which fits principal-keyed use after OG-a-2, but it is not proven that neither reads the email-keyed file. Under the release a lapsed email-keyed refresh token of either would have no /login recovery (403). Left for the halves; not an outsider by the order's definition (no /login use).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S54",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T04:25Z",
+  "one_line": "OG-rl-7 Phase A: the order names app/integrations/schwab/envelope.py (OG-o-4) as a behaviour change, 'the narrow page'; the release diff for the file is DOCSTRING-ONLY (5 lines, AST equal to live with docstrings removed), so served envelope behaviour is identical in both branches and only the shipped md5 changes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: python org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_envelope_ast.py: 'raw text equal: False / AST equal with docstrings removed: True / negative control (one executable statement added) AST equal: False / RESULT: PASS' (output org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_envelope_ast.out)",
+      "FILE: git diff 37be3485db ea483704fe -- infra/aws/ec2/opal-gateway/app/integrations/schwab/envelope.py: one docstring paragraph reworded ('rows counted once ...'); deliverables/0.9.0_WK_NFRA_OPLGTW~22/LINEAGE_R18.json already reads '3-line docstring change ... no code line differs'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO s.1: the ANNOUNCE names each of admin_refusals.py, envelope.py (OG-o-4: the narrow page) and server.py as a behaviour change with both branches.",
+  "world_is": "Only admin_refusals.py and server.py change served behaviour. envelope.py changes a docstring: both branches behave identically; it ships because the host md5 list is by file. The ANNOUNCE says so rather than inventing a second branch.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S55",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T04:25Z",
+  "one_line": "OG-rl-7 Phase A step 3: on the RELEASE tree (live + the 23 gateway files, everything else at live's bytes) tests/test_schwab_host_inputs.py::test_grant_writer_stages_the_contract_only_from_the_standard FAILS (AttributeError: no '_Source') because CLOUD's test pairs with CLOUD's mcportal build_package.py, which lies OUTSIDE the gateway tree and so is not in the release; it PASSES on CLOUD (9 passed). Live's own copy of the file fails a different test of the same file (len(raw)==50 vs the 51-key template). Seven failures on each tree, six identical ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: each of 70 test files in its own process on /c/tmp/og-rel14 @619e8ddfd6 (r19_perfile_tests.sh): 588 passed, 7 failed in 6 files; the same 6 files on /c/tmp/og-rb14 @37be3485db (r19_baseline_files.sh): 7 failed; ids equal in 6 of 7 (test_ogv2_a12, test_mx_t13_catalog_gated, 2x test_portal_grant, test_portal_tools_catalog_refs_resolve, test_ogx4_ac03); the 7th differs: release fails test_grant_writer_stages_the_contract_only_from_the_standard, live fails test_values_that_can_hold_whitespace_are_rendered_quoted",
+      "RUN: cd C:/tmp/wk-oplgtw-15-r19/infra/aws/ec2/opal-gateway && python -m pytest tests/test_schwab_host_inputs.py -> '9 passed in 4.42s' (CLOUD ea483704fe); git rev-parse of infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py: 37be3485db bcba173aaa, ea483704fe 7d0412a308 (differ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Form step 3: tests on the release tree, each file in its own process; name the baseline failures.",
+  "world_is": "The release tree's failing set is live's set with one id swapped, a property of carrying only the gateway subtree: the test file ships (tests/ is not extracted to the host), its sibling builder does not. No served behaviour is involved; after the drain-back CLOUD is green on this file. Baselines are recorded in r19_tests_release.out / r19_tests_baseline.out.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S56",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T04:25Z",
+  "one_line": "OG-rl-7 Phase A step 7: rl7.AC1.sh anchors its first line to the MANIFEST's deployed_commit, not to the release sha, so on a pre-act worktree whose manifest still names live it reads 'host shipped app files equal the release bytes: 3 of 3' against the unchanged host (vacuous); the line only discriminates after the step-12 manifest edit, which Phase B does AFTER the verify.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_rl7.AC1_negative_controls.out, control 2 (real pre-act worktree, real host): 'deployed_commit 37be3485db; host shipped app files equal the release bytes: 3 of 3 / served_release: False / RESULT: FAIL' -- the 3 of 3 compares the host to live's own blobs",
+      "RUN: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_rl7.AC1_expected_pass_form.out (scratch clone with the manifest = release sha and a stood-in ssm answer): '3 of 3 ... RESULT: PASS exit=0'; org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_rl7.AC1_negative_controls.out control 1 (that clone against the real undeployed host): '0 of 3 ... RESULT: FAIL'; re.search of the order's <expect> on both: org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19_expect_match.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO AC1: 'host shipped app files equal the release bytes: 3 of 3' grades that the host serves the RELEASE's three files.",
+  "world_is": "It grades the host against whatever sha the manifest at HEAD names. With the manifest at the release sha (the step-12 hand edit) it discriminates (0 of 3 on the undeployed host, 3 of 3 after); with the manifest at live it is vacuous. AC1 is only ever graded after step 12, so no action is needed; recorded so a pre-act run of AC1 is not read as a deploy check. The expected-PASS form needed a scratch clone and a stood-in ssm answer because the pass state exists only after the deploy.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
