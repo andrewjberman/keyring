@@ -30,6 +30,10 @@ underline); 16 kept as measurement scripts with no product file; 4 already net z
 commit changed a font. After it, the tree differs from PROD only by rounds 43+44, /freshness, that underline and the scripts. If
 Andrew says it is not right, the FULL group is reverted instead. Nothing is pushed to DEV until his word after the smoke.
 
+**Andrew's verdict after his smoke of 6b4e89a8 on localhost:5174, ~20:2xZ, verbatim:** "Yep were good here, great job."
+The selective revert stands. 6b4e89a8 goes to `0.0.0_AB_MSTR~Z` for the portal DEV push (a fast-forward of DEV e2130d42). The
+full-group revert is not needed.
+
 ## What it sets
 
 1. **DSGN_REBRND: INDEFINITE HOLD from ~13:00Z (9a ET) 2026-10-06.** Andrew said it at the laptop. A search of commit
