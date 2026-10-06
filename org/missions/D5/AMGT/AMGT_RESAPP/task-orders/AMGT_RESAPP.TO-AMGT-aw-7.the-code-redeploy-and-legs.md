@@ -107,3 +107,21 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~03:3xZ):** both halves are committed.
+- COO: `round73/NEVER_WIDEN_HALF_COO_AW7.md` @ea483704fe.
+- CTO: `ledger/NEVER_WIDEN_ROUND73_AW7_CTO_HALF.md` @78ed2b6bc6, conditions 1-6. **Read the CTO half whole before the first act.**
+
+The legs are as AMENDMENT 1 states, with no grant:
+1. code at `9d2b7b3d7c`;
+2. the keep-prior pool write to `universe/v1/2026-10-06.json` from CLOUD at or after `1aa1d8f2df`, with no sec.gov call (failing
+   closed).
+
+After the code leg:
+- read the live `/freshness` pack clock (CTO condition 4);
+- run `leadpanel_cold_warm.py --label after` with the `AMGT_PHASE` lines (condition 5).
+
+Base: `2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ=`, re-read live.
+
+<status>go</status>
+
