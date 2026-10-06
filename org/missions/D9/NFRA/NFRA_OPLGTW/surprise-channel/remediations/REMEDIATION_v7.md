@@ -31,11 +31,11 @@ Author: 3.0.0_SA_CVO~O. Round: v7. Fabric: site-z. Recorded: 2026-10-06T05:55:00
     "owner": "2.0.0_SA_COO~O",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v7"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
