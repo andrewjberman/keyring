@@ -38,3 +38,15 @@
 
 SA resumes (r47_sa checkpoint, root `.runtime/opal-data-harvest-sa`, `--clear-stop sa`) only after Andrew's KYC and an account
 check that answers 200.
+
+## ANDREW-DIRECT ~19:2xZ -- SA runs on the tab pattern, no Bright Data (supersedes the route-(a) ruling above)
+
+> "SA shouldnt need Bright Data, we should be able to run th same pattern on SA as we use with all the others which is logging
+> in via google credentials, then in the browser window using the same session to pull the relevant rest api endpoints"
+
+Route: SA moves to `transport: tab` like wsj, barrons and bbg -- its own persistent Chrome profile
+(`browser-profiles/sa`), Google sign-in in that profile, and the SA REST endpoints called in-tab (`TabSession.get`, which
+already carries the per-page Referer). No residential proxy and no KYC act. The 09-10 PerimeterX block was a curl session
+off a datacenter IP replaying harvested cookies; an in-tab fetch runs inside the browser that executes PerimeterX itself.
+First act: an in-tab probe of the account and listing endpoints after Andrew's Google sign-in in the sa profile; the build
+(contracts.json `sa.transport`, `TAB_ORIGINS["sa"]`, the sa sign-in route) is cut after the probe reads 200.
