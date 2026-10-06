@@ -9183,3 +9183,56 @@ name the one known failure instead of silently inheriting it.
   "notes": "The ALB path is the one the other /rivalfunds* routes already use (ROUTE_CLASS access-layer); nothing in the release touches the ALB."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S60",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-06T21:45Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S4"
+  ],
+  "one_line": "Z-W28-S4 REMEDIED by the issuer: rl9.AC1.sh now drops the top-level tests/ files from the host md5 list (they are source-only), so its pass form can reach N of N. The order's <expect> is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC1.sh: the shipped list L gains `grep -v '^tests/'`, the same one-line correction worker ~28 exercised pre-GO (pass form 4 of 4, negative controls 0 of 4 and 0 of 0).",
+      "RUN issuer, worktree coo-o-r23 before the act: rl9.AC1 prints 'descends from 2c27f3a795=no; host shipped files equal the release bytes: 0 of 0' and RESULT: FAIL, as a pre-act read must."
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The check defect is fixed in place by its author before GO (form step 7). No criterion text or expect changed; the deploy tarball ships app/, deploy/, requirements.txt and identity_tool_allowlist.txt only (row Z-W15-S42).",
+  "spec_asserts": "RELEASE_ORDER_FORM step 7: a check whose output cannot match its expect is fixed BEFORE GO.",
+  "world_is": "rl9.AC1 as cut compared 6 files on the host, of which 2 top-level tests/ files never ship, so it could read at most 4 of 6.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S61",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-06T21:45Z",
+  "one_line": "After the round-23 drain landed at cf0060b448, the shared CLOUD index held the PRE-drain tree for 12 of 12 drained paths (staged deletions and reverts nobody staged), which refused every seat's safe-merge for about 15 minutes and would have reverted the drain under any commit without --only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-06 ~20:20Z in the shared tree: `git diff --cached --name-only` listed 12 paths with no MERGE_HEAD; each index entry equalled the blob at cf0060b448^1 (12 of 12); the worktree bytes equalled HEAD (12 of 12); cf0060b448 was an ancestor of HEAD.",
+      "RUN `git reset -q HEAD -- <12 paths>`: staged count 12 -> 0, no worktree byte changed. Reported by 2.0.0_SA_COO~RV msgs 30275 and 30276; answered 20:22Z."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 14b and .tools/safe-merge.sh: a drain lands the merged index and leaves the shared index equal to HEAD for its paths.",
+  "world_is": "An index written by a concurrent commit (a peer's `commit --only` window overlapping the merge) replaced the merged index, so HEAD moved forward while the index stayed behind for the drained paths. The mechanism is inferred from the entries equalling the pre-drain tree; the overlapping commit is not identified.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Fabric-wide, not OPLGTW's: a candidate guard is a post-merge `git diff --cached --quiet` read in safe-merge.sh. Routed to 1.0.0_SA_CTO~O in the round slug; no fix is cut here."
+}
+```
