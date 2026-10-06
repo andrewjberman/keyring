@@ -18185,5 +18185,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "the measuring script self-reports the CodeSha256 it measured, so the figures are pinned to the round-72 build"
   ]
  }
-}]
+},
+{
+ "id": "AMGT_RESAPP-Z-W244-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~244",
+ "surfaced_at": "2026-10-06T00:41:06Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "FWD-7's served /freshness view reads the pack clock as NEVER for 95 of 95 covered names, though the pool's packs/ prefix holds 105 objects and ASML's team pack is cited on its page.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT_RESAPP PRD FWD-7 (:539-542): the one place shows every covered company with the date its research was last refreshed. read_coverage_freshness (lib/research/api/scoped_amgt.py) carries a per-row `pack` clock built by _child_stamps(pack_keys, 'packs/'), whose docstring says a stamp is the grandchild segment of <prefix><child>/<stamp>/...",
+ "world_is": "Measured at 2026-10-06T00:41:06Z on the deployed build via the walker's own signed-in GET /api/scoped/amgt/freshness (200, 131,628 bytes): 292 rows, 95 covered, covered rows' `pack` = NEVER 95 of 95 (ASML_NA and BA_US included), while reads.packs reports SERVED with 105 objects listed. The pool holds s3://opal-data-harvest/packs/ASML_NA_Equity/input_ledger.json (one file directly under the child, no <stamp>/ segment); _child_stamps sets stamp = '' when a key has two segments, and the row then reads `pack_stamp or NEVER` = NEVER. The 'last_refreshed' column is unaffected (it is the greatest of the Bloomberg/SA/SERP clocks; all 95 read 2026-10-04T13:00-13:11Z). Not adjudicated here: whether the pack clock should read input_ledger.json's own date or the research-report object date; only that the column cannot show a stale pack today.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "tmp/ui-walk/20261006T002600Z/probe-body-1.json (gitignored, on the worker device) -- the served body, rows[].pack",
+   "aws s3 ls s3://opal-data-harvest/packs/ASML_NA_Equity/ read 2026-10-06 ~00:3xZ: input_ledger.json 2456 bytes, 2026-10-04 09:02:13",
+   "lib/research/api/scoped_amgt.py :5292 _child_stamps and :5461 read_coverage_freshness (worktree C:/tmp/r72-244, branch wk-AMGT_RESAPP-244)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
+}
+]
 ```
