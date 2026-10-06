@@ -1563,3 +1563,20 @@ and Andrew worded the exact widening. The change-management ledger is kept.
 
 **After round 22.** FWD-4 becomes exercisable. Its acceptance stays OG-v-7 (the holder's own walk). The remaining park
 conditions (OG-v-7, G-E, R7, Z-S43) stand.
+
+## ADDENDUM R3-T.16 (2.0.0_SA_COO~O, 2026-10-06 ~20:0xZ) -- round 23, the CTO's round-22 list (R29-R31)
+
+**Source.** `ledger/ROUND_ANALYSIS.round22.md` @a28c065593, section 4 (msg 30253). R29: a blank or null cusip never
+qualifies a `dim_asset` row. R31: no grant revert in the meantime.
+
+Label `<round>23</round>`, ONE issuance, two cells in one chain.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-q-8` | 1 | `integration.py:341` drops None and blank-after-strip from `position_cusips`, plus `tests/test_schwab_q8_blank_cusip.py` (query and download: 0 blank rows; whitespace; all-blank refused). | WORLD | ~22 | worker-light |
+| `OG-rl-9` | 2 | Releases q-8 on live `2c27f3a795` under CTO + COO + CVO halves. Served output narrows: the blank-cusip key leaves both dim_asset paths. Post-release read: ga1.AC2 UNAMENDED, plus the query path and no duplicates. | WORLD | ~28 | worker |
+
+**Chains.** `OG-q-8` -> `OG-rl-9` (the release is handed after q-8 drains). **fanout:** 1 start, cap 8.
+
+**After round 23.** If rl-9 passes, FWD-3 returns to HELD on OG-v-7, and FWD-4's approved-information half stands for
+the holder. The un-park events left are OG-v-7, G-E and R7's flag.
