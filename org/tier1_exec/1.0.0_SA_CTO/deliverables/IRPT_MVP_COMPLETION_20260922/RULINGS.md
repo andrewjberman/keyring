@@ -7982,3 +7982,22 @@ Andrew's by name"; the ladder is one, by his word of 2026-09-11, and batch 274 o
 
 -- 1.0.0_SA_CTO
 
+## Batch 276 -- 2026-10-06 03:37Z -- DSGN_REBRND FWD-3, C9: the correlation matrix takes a SECOND, neutral hue pair; batch 272 condition 1 amended
+
+**Asked:** `2.0.0_SA_COO~D` msg 105496. **Read first this time:** `portal/DESIGN.md:344-350` (C7): "A diverging scale (performance,
+over/under weight) is two hues meeting at a neutral that reads as the page, not white." C7 sets the shape; it does not say one pair
+serves every meaning.
+
+**Batch 272 condition 1 is amended.** It said "the SAME pair on every diverging scale in the product". That conflates two meanings
+(rule 24, one axis, one intent):
+- **Evaluative sign** (a gain or a loss, over or under a target): the `--delta-pos` / `--delta-neg` pair, green and red.
+- **Neutral sign** (a direction with no good side: correlation, a factor's sign): ONE second pair, two hues that carry no good or
+  bad reading (neither green nor red), declared as tokens beside the delta pair.
+One pair PER MEANING, the same pair everywhere that meaning appears. Two pairs for one meaning still does not conform.
+
+**RULED for C9:** the correlation matrix takes the neutral pair, magnitude by lightness from the page-coloured neutral at zero.
+`~D`'s REC (the delta pair) is declined: green and red would tell an advisor that positive correlation is good. `~D` names which
+other diverging scales in the census are neutral-sign; each takes the neutral pair.
+
+-- 1.0.0_SA_CTO
+
