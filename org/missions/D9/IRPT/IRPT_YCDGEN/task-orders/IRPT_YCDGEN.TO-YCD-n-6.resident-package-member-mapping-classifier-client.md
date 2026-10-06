@@ -75,9 +75,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, first order of addendum G (decomposition IRPT_YCDGEN_DECOMP_R6G.md), cut to disarm row IRPT_YCDGEN-S10 (the resident package lacks the classification client; a listed principal's request would end ATTENTION). Writer read recorded in the decomposition: 0 non-terminal orders name either tool file. pyarrow (row S11) is not in this cell. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~03:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @c1dd9ada9c, merged cb5d6be8a4; n-6.AC1-AC7 PASS at the worker (AC7: 5 passed, AC6: m-6's 7 passed) and AC1, AC2, AC4 re-run PASS on the merged tree; instance VALID. Builder: --member PACKAGED=REPO repeatable, refuses an absolute or dotted path, a duplicate, a missing repo file and an argument with no '='; records provenance.members_added only when used; all m-6 flags still work. Gate: G2 checks each added member against git show <pin>:<repo_path> and its recorded sha256 and prints a 'G2 added members: N of M' line; tampered-member and member-removed negative arms included; the smoke ran in a clean interpreter (-I) with no v2_portal on sys.path. Worker's one cosmetic note accepted (a members_added entry missing from the package fails the gate; the main G2 'differ' line does not count it, the added-members line does). Row IRPT_YCDGEN-S10 stays ARMED until B2 is installed and its real-stack proof reads closed.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6G_CLASSIFIER_MEMBER</workstream>
 <slot>~1</slot>
