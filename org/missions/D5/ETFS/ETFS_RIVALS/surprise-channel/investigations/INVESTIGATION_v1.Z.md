@@ -4076,6 +4076,27 @@
     "spec_asserts": "A deployed stage Lambda's CloudWatch log group can witness whether its S3 calls were authorized, so an absence of AccessDenied there is evidence the grant served.",
     "world_is": "It cannot. The application emits nothing, so an AccessDenied the code catches and fail-softs leaves no trace, and an unhandled one would only ever appear as a traceback. The COO half for RIV-iam-1 notes a fail-soft repair already serves holding_contribution, so swallowing is live behaviour in this codebase. The sound oracle is the S3 ARTIFACT: gold/security_universe/date=2026-10-05/universe-20261006T130739Z-b845e2cc9c8c.parquet, 58411 B, LastModified 2026-10-06T13:07:40Z (s3api UTC; aws s3 ls renders LOCAL and read 09:07:40), written inside the 13:00Z sweep's own 447 s invocation -- a write that was implicitDeny on both roles before the RIV-iam-1 apply.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Filed off-task while closing RIV-iam-1; it does not affect that cell, whose AC1 oracle is simulate-principal-policy and whose condition-6 evidence is the artifact above. It DOES bound any future claim of the form 'the logs are clean' about these five functions, including one this seat nearly made: I reported '0 AccessDenied with positive controls firing' one tick before reading the 4 events whole."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S48",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-06T17:08Z",
+    "one_line": "RIV-au-1: the new audit.html is written with no size guard (publish_page checks only index.html against MAX_PAGE_BYTES), and the data-status section (absences, input-census absences) now appears only on the audit page when a fund is updated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py (this worktree, uncommitted at filing): MAX_PAGE_BYTES is compared to len(html_b) of the main page only; audit_b is written unconditionally. The cell cites the closed audit block at 1,119,671 B of the 10-06 page, so the audit document plus its own dialogs is expected near 1.2-1.3 MB, under the 2 MB gateway cap today.",
+        "render._render_page_body (main page, n_updated > 0) no longer appends _status_section; it moved with the audit trail into render._render_audit_body, as the cell prescribes ('trades, holdings, refused and status sections' on the audit page)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-au-1 interface: publish_page writes audit.html with read-back and names it in the manifest; the audit route and link land in a later round.",
+    "world_is": "audit.html has the same soft-cap fallback as the main page (its dialogs go off over DIALOG_SOFT_CAP, reported by the same FAIL line and audit_holding_dialogs in the manifest) but no refusal over the gateway's 2 MB cap, so a very large day could write an audit object the later gateway route cannot serve. The status section (the A1 absences) is no longer reachable from the main page until the audit route and link exist.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For the audit-gateway round: decide whether the audit page needs its own MAX bytes check or a split, and where the data status should live on the main page."
   }
 ]
 ```
