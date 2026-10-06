@@ -117,7 +117,7 @@ The section below carries the endpoint's outcomes verbatim.
          SOURCE     Andrew-direct 2026-10-05 ~03:3xZ at site Z, item 3 ("Every single stock that is
                     collected for the purpose of Rival Funds should be ingested with full backfill on the
                     ETFClassifier canonical opal table"); the cap, "we can just put a cap on all lookback
-                    of 3 years for rivalfunds inclusions"; AMENDED v0.12 to one year, Andrew-direct 2026-10-06 ~18:1xZ,
+                    of 3 years for rivalfunds inclusions"; the depth, Andrew-direct 2026-10-06 ~18:1xZ,
                     "B, 1 year for rivalfunds"
 
   FWD-10 A stock that newly enters through the trading of the Opal ETFs or the rival ETFs gets its
