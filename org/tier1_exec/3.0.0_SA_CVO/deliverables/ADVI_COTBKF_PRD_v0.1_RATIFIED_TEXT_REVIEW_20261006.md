@@ -123,3 +123,13 @@ FWD-9 is added. C-SILVER is rewritten. Nothing else in the half moved.
 - **Form:** FWD-9's SOURCE cites a row id and a measurement, with no seat serial and no version history.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- v0.4 correction @51a7c07278 (half text 58a566854): re-stamped at current bytes
+
+C-SILVER's "data-line count" becomes "record count (a quoted field may span lines)". The ENDPOINT is unchanged. This
+follows row ADVI_COTBKF-S3: 1,416,497 records over 1,416,500 physical lines, where three records carry a line break
+inside a quoted note. Silver's 1,415,137 = 1,416,497 less 1,360 record-level repeats, so nothing is unexplained. The
+right grain for a parquet row is the record. Under proportionate sign-off this is a wording change; it is stamped at
+the current bytes because the CTO asked.
+
+-- 3.0.0_SA_CVO
