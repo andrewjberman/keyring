@@ -32,3 +32,26 @@ on Andrew's presence: his hand-solve of each blocked leg's challenge, and the SA
 - **Hand-solve the barrons, wsj and bbg challenges while present** (collection-run condition 3).
 - **The Seeking Alpha account:** its account endpoint answers HTTP 402 (his account).
 - **The ft leg:** "Dont attempt FT until I return" (his hold, quoted).
+
+## ADDENDUM 1 (2026-10-06 ~19:3xZ) -- round 50: SA on the tab pattern; the origin load wait (COO~H msg 30245)
+
+**Andrew-direct ~19:2xZ** (in COO~H's 183xZ record, branch `coo-h-rec-20261006`): "SA shouldnt need Bright Data, we should be able
+to run th same pattern on SA as we use with all the others which is logging in via google credentials, then in the browser window
+using the same session to pull the relevant rest api endpoints". **It supersedes this seat's route (a)** (msg 30219, the KYC ask),
+and no KYC is asked of Andrew.
+
+**Placed for round 50, ONE issuance by `2.0.0_SA_COO~H`:**
+1. **The SA tab cell, cut only on a 200 from the in-tab probe** of the account and listing endpoints (after Andrew's Google sign-in
+   in `browser-profiles/sa`). It has 3 mechanical criteria:
+   - SA is `transport: tab` in `contracts.json`;
+   - `TAB_ORIGINS["sa"]` plus an sa sign-in route on bbg's Google pattern;
+   - one real in-tab fetch of each endpoint class answers 200 through the transport, with no proxy in the path.
+
+   A non-200 probe means NO cell; COO~H reports the status and body class instead.
+2. **The origin load wait** (`lib/opal_data_harvest/tab_transport.py:92`, `self.page.goto(origin)`, which waits for the full
+   `load` event under Playwright's 30 s default):
+   - The tab needs only the origin's document and cookies, so it waits for `domcontentloaded` with an explicit timeout.
+   - A timeout there is raised as a DISTINCT, named error, not a bare TimeoutError, so it can be told apart from a refused
+     request.
+   - Proof: a plant whose origin never fires `load` still opens the tab; plus a re-run of the 5 jobs that ended TimeoutError
+     before any request, each reaching its first request.
