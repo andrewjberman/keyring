@@ -3968,6 +3968,26 @@
     "spec_asserts": "The probe ruling (CTO~Z @b5167de528) has two outcomes: 'ID' (capacity back) or 'Daily Capacity' (still capped).",
     "world_is": "A third state: the request is accepted but unresolved at read time. It may be a slow first answer after the allowance reset, or a Terminal session that is not serving data; one probe per hour cannot tell which. The 07:00 ET vehicle (11:00Z) depends on it.",
     "notes": "No act taken under the ruling (no line to MSTR~Z, no leg re-run, no backfill). MSTR~Z's 10:45Z P0 probe owns the Terminal read before the vehicle; this row is the record it can read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S45",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T07:39Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S44: CAUSE named by 0.0.0_AB_MSTR~Z msg 29955 -- the Terminal is not running and there is no 8194 listener (P0 layer 1 FAIL at 07:21Z and 07:37Z); the box was in Modern Standby 03:09Z-07:36Z, which contains the 03:57Z anchor change; held for Andrew's sign-in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 29955 (P0 layer 1: bbcomm restart, network and socket eliminated; wintrv absent)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The Z-S24 probe reads the Terminal's capacity state ('ID' or 'Daily Capacity').",
+    "world_is": "'#N/A Requesting Data...' was a Terminal that was not running, not a capacity state; the hourly probe keeps running and its first 'ID' read after the sign-in is MSTR~Z's trigger to re-run OPAL_BBGTML.",
+    "notes": "Cites ETFS_RIVALS-Z-S44. The row's disposition stays the CVO's."
   }
 ]
 ```
