@@ -85,9 +85,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~3`, third order (after g-6 and i-6, merged); addendum D cell (decomposition IRPT_YCDGEN_DECOMP_R6D.md), the implementation of the CTO's ruling batch 269 (msg 105429) on row W3-S14. AC1 runs in lib/tests/test_irpt_destination.py, AC5 in test_opal_producer.py and AC7 in test_publisher.py. Runs BEFORE k-6. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~00:0xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @f60e6f1d2a, merged 6e4e325b5d; l-6.AC1-AC7 PASS on the merged tree (lib test_irpt_destination 73 passed; test_retention 21 passed, 18 existing untouched plus 3 new; publisher 25 passed), instance VALID. The irpt-x10-v1 policy_sha256 is e0046398e23951451498c0fcfec29154db5b26d4c70d80c4121f50fd3dfc8c85, printed from `opal_naming.reporting_policy('irpt-x10-v1')` after the edit and equal to the pre-i-6 ACTIVE_ROW_SHA; the registry and the lib test were byte-restored from e923e0f463^. retention.py resolves the policy from the reference's own policy_revision among ACTIVE registered revisions (`_registered`), POLICY_REVISION kept as the default for new reservations (composition.py and ops/pdf_link.py import it); repository.py binds against the reference's revision; composition.build_retained_repositories takes an opt-in additional_policy_revisions. The Opal PDF is retained as YCHARTS_OPAL_REPORT under irpt-ycdgen-research-v1. Row W3-S14 DISARMED. W3-S17 ARMED (resident_worker.py:122 and :429 still put the PDF as OPAL_REPORT_PDF; four d-6 tests in test_resident_worker.py are red on CLOUD until k-6; the installer does not pass the research revision) -> DISARMED by cell YCD-k-6. W3-S18 INERT, accepted (the pre-existing `extract` import failure, identical on the base). CTO batch 269 items 4-6 remain: the live read of one stored v1 row and the deployed-versus-built v1 digest are the issuer's acts at the close; the research row goes ACTIVE only on the CTO's acceptance; everything ships with d-6 and g-6 in one packet.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6D_POLICY</workstream>
 <slot>~3</slot>
