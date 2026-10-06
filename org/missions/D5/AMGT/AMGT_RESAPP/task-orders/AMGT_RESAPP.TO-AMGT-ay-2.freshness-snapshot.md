@@ -111,3 +111,20 @@ goes to the CTO. This amendment DISARMS the hazard, in which a stale snapshot is
 
 Gate limb: GATE (viii) on a modify.
 
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~10:4xZ) -- the scheduled refresh event (CTO ROUND_ANALYSIS.round74.md ADDENDUM 1 @82afef1fd8, option (b)).**
+The CTO ruled a scheduled writer: one EventBridge Scheduler schedule (built by ay-5) invokes the EXISTING `opal-amgt-scoped-api`
+with a refresh event once per trading day at about 12:30Z. This cell builds the function's side:
+1. **The handler accepts the schedule's event.** It is a direct-invoke JSON object with no `rawPath`:
+   `{"amgt_scheduled_action": "refresh_freshness_snapshot"}`. Recognise it BEFORE the HTTP path parsing in `scoped_amgt.handler`,
+   call `refresh_freshness_snapshot()`, and return `{"statusCode": 200, "body": <JSON {object, generated_at, rows, etag}>}`.
+   - A failed build or write returns `statusCode` 500 with a plain reason; nothing is written.
+   - Any other value of `amgt_scheduled_action` returns 400 and writes nothing.
+2. **The 24 h fallback compute stays** (AMENDMENT 1) as the miss path, with no write.
+3. **Plant tests** in `test_freshness_snapshot.py`:
+   - the event writes once through the stub;
+   - an unknown action writes nothing (400);
+   - an HTTP GET never writes.
+4. **Report** the exact event JSON for ay-5's schedule `input`.
+
+Gate limb: GATE (viii) on a modify.
+

@@ -81,3 +81,29 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~10:4xZ) -- the snapshot's scheduled writer (CTO ROUND_ANALYSIS.round74.md ADDENDUM 1 @82afef1fd8, option (b)).**
+Leg 3 (the snapshot write) becomes a SCHEDULE plus its first fire:
+- **Schedule leg.** In `infra/aws/terraform/harvest/`, add a sibling of `chatter-axis-schedule.tf`'s `aws_scheduler_schedule`
+  `chatter_axis_daily`:
+  - ONE `aws_scheduler_schedule`, named by `lib/opal_naming.py name()` output (CLAUDE.md rule 30; a refusal is a registry row added
+    under this pair, never a hand-typed name);
+  - `cron(30 12 ? * MON-FRI *)` UTC;
+  - target the EXISTING `opal-amgt-scoped-api` with `input` exactly the event ay-2 reports
+    (`{"amgt_scheduled_action": "refresh_freshness_snapshot"}`);
+  - its own scheduler role, with `lambda:InvokeFunction` on that one function only.
+- **Grant leg.** The function's role gains `s3:PutObject` (and `s3:GetObject`, if not already held) on EXACTLY
+  `arn:aws:s3:::opal-data-harvest/amgt/harvest/state/freshness_snapshot/current/snapshot.json`, nothing wider.
+- **First fire.** Invoke the function once with that event, as the schedule would, and read the snapshot's stamp and ETag. Then
+  read c59 deployed.
+- **Proof (CTO):**
+  - the fire moves the snapshot's stamp;
+  - a cold first visit after it is under about 2 s (c59 C2/C3);
+  - values EQUAL on every row (c59 C1);
+  - a NEGATIVE control: `simulate-principal-policy` for the function's role, `s3:PutObject` on a SIBLING key under
+    `amgt/harvest/state/`, reads implicitDeny.
+- **The plan names exactly** the schedule, the scheduler role and its policy, and the function role's policy change, or it is a
+  STOP.
+
+Gate limb: GATE (viii) on a modify.
+
