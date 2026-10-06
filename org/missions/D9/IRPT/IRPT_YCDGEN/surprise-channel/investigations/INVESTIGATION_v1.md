@@ -1660,3 +1660,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: runs of the whole reports/ directory report this one failure; the criteria name test_retention.py and test_publisher.py, which pass."
 }
 ```
+
+## IRPT_YCDGEN-W1-S13 -- the Opal Overview element map has no installed home, and the default classifier and research S3 openers read paths the package may not carry
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S13",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T00:18:40Z",
+  "one_line": "The producer's `map` store has no file in the investor-reporting package; the installer reads it from an optional pinned `opal_map` binding that no installed bindings file carries yet, and the two default openers reach outside the package.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "R11 (1): the factory builds the stores opal_producer.produce takes (holdings reader, classifier, firm-store put, artifacts, clock); the order names no source for the `map` store.",
+  "world_is": "opal_producer.produce requires stores['map'] (the Overview element map). The only maps in the tree are test fixtures and the issuer's close artifact org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/close/overview_map_r3_close.json; none sits in the package. reports/resident_installed.py now reads it from an optional bindings member opal_map {path, sha256} (pinned by content like the census, read only when a listed principal's job asks, refusing OPAL_MAP_BINDING_REQUIRED / PINNED_FILE_ABSENT:opal_map / PINNED_FILE_DIFFERS:opal_map). The shipped resident_bindings.json is not in this order's paths and carries no opal_map. Two defaults are also unproven offline: the classifier opener calls layout_overview._default_classifier(), which imports etf_classifications_dynamodb from the Lambda's v2_portal/_shared folder (absent from an installed investor-reporting package, then LayoutRefused), and the firm-store opener calls runner.research_s3 (an STS assume of the firm's ycharts-research role). Both were exercised only as injected fakes.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py make_opal_stores, _opal_map_loader, _open_research_s3, _open_classifier@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _default_classifier@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/research/runner.py research_s3@wk-IRPT_YCDGEN-73"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED until the issuer, at release: (a) installs the map file beside the resident module and adds opal_map {path, sha256} to resident_bindings.json, (b) confirms the classifier client module is importable on the host, (c) confirms the firm research role is assumable by the host role. Until then a listed principal's job raises loud on every receive and is retried by the queue; the placeholder allow list keeps every real principal on the YCharts path."
+}
+```
+
+## IRPT_YCDGEN-W1-S14 -- the worker prefers the artifact_ref produce returns, and keeps the objects-port retention for a producer that returns none
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T00:18:40Z",
+  "one_line": "run_opal reads artifact_ref from the run record produce returns and checkpoints it as is; with none it still retains the PDF captured from the objects port, now as YCHARTS_OPAL_REPORT.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R11 (2): the artifact_ref produce returns reaches the publisher's checkpoint; W3-S17: rename OPAL_REPORT_PDF at the two lines.",
+  "world_is": "resident_worker.run_opal had one retention route (capture the PDF from objects.put_object, put it as OPAL_PDF_FAMILY). With the repository's artifacts in the stores, produce retains the PDF itself (so objects.put_object never sees it) and returns artifact_ref; the old route would have found no PDF and ended the job ATTENTION OPAL_PRODUCER_OUTPUT. The worker now takes the returned ref when present and keeps the old route for a producer without it (the existing fake-producer tests of test_resident_worker.py). The legacy put passes no policy_revision: the repository's family-to-revision map decides it, so a repository built without the research revision refuses it loudly. OPAL_PDF_FAMILY is now YCHARTS_OPAL_REPORT; test_resident_worker.py registers that family in its fixture registry in place of OPAL_REPORT_PDF.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py run_opal@wk-IRPT_YCDGEN-73",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_opal_thread_integration.py test_opal_artifact_ref_reaches_checkpoint@wk-IRPT_YCDGEN-73"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: tested both ways (the thread test fails with OPAL_PRODUCER_OUTPUT when the worker ignores the ref). The legacy route is dead code in the installed service once the installer supplies artifacts; the release that deletes the YCharts producer may delete it. Also: reports/tests/test_resident_installed.py now puts ycharts/extract on its test path, so the whole file passes run alone (the cure of row W3-S18, whose one failing test was the only one importing resident_worker)."
+}
+```
