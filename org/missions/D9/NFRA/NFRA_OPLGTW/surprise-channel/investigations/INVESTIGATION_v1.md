@@ -8329,3 +8329,51 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T01:20Z",
+  "one_line": "OG-pm-2: the OG-p-1 order and record name ALB rules and a latency window but no route list, so the at_ogp1 set was derived from the Gateway source at the commit OG-p-1 digest-compared (7bd89b5d71).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: task-orders/NFRA_OPLGTW.TO-OG-p-1.baseline.md and deliverables/0.9.0_WK_NFRA_OPLGTW~2/BASELINE.json: OGP1-AC3 lists ALB rule priorities 10, 20, 30-33 and the default OIDC rule; OGP1-AC11 gives the latency window; neither lists the application's own routes.",
+      "READ: BASELINE.json OGP1-AC1: host sha256 equal to the tree at 7bd89b5d71, 50 of 50 files; git show 7bd89b5d71:infra/aws/ec2/opal-gateway/app/server.py gives 26 Route paths plus the /mcp Mount; PM2_CAUSE.json route_set_at_ogp1 carries the list."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-pm-2 item 2: mark each route at_ogp1 by using the OG-p-1 order and record under this project's task-orders/ and deliverables/ to establish that set.",
+  "world_is": "The OG-p-1 record establishes the ALB rule set and the deployed commit, not the route set. The set was taken from the application source at the AC1-verified commit, with ALB rules from AC3 as a cross-check. Paths that are 404 probes (/favicon.ico, /hx/teams/x) are at_ogp1 false and exist at no release.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T01:20Z",
+  "one_line": "OG-pm-2 side read: 2026-10-03 was a worse day than 10-05 (CloudWatch p95 1.6547 s over 3,003 requests; GET /hx/teams/chats p95 1.85 s); its cause was not read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: CloudWatch AWS/ApplicationELB 2026-10-03 (one 86400 s period): RequestCount 3003, TargetResponseTime SampleCount 2996, p95 1.6547 s; ALB access logs forwarded rows 3003 of 3003.",
+      "READ: PM2_CAUSE.json context_days 2026-10-03: GET /hx/teams/chats 1440 requests at p95 1.8525 s against 1.0227 / 1.0062 / 1.018 s on 10-02 / 10-04 / 10-05; routes at OG-p-1 p95 0.6171 s that day."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-pm-2 reads 2026-10-05 and 2026-09-30 only; the cap in force is 0.6642 s.",
+  "world_is": "Beyond the two ruled days, the same poller route read 1.85 s on 10-03, so its latency is not constant at about 1.0 s. The extra days (09-30..10-05) were read from the same two read-only instruments; nothing was investigated further.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
