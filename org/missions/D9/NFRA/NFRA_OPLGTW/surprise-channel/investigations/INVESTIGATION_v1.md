@@ -9107,3 +9107,79 @@ name the one known failure instead of silently inheriting it.
   "notes": "Issuer ruling: no rollback, because reverting the grant removes no exposure (the query path serves the same rows). AC2 is NOT amended: it stays FAIL as the record of the policy gap, and OG-ga-1 closes FAILED on AC2 with AC1/AC3 PASS. Fix candidate for the CTO's round-22 analysis: drop blank or null from position_cusips (one line at :341) plus a test, then a release under the usual halves."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T21:15Z",
+  "one_line": "OG-rl-9 step 7: rl9.AC1.sh as written can never print 'N of N' -- its shipped-file list is every live..release gateway file outside runbooks/, which includes the two source-only top-level tests/ files that the host does not carry, so the pass form is unreachable.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC1.sh: L=$(git diff --name-only $LIVE0 $c -- $GW | sed ... | grep -v '^runbooks/' ...) then md5sum on the host over every name in L; eq counts only names the host answers.",
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_host_tests_absent.out (SSM, read-only): md5sum tests/test_schwab_q8_blank_cusip.py and tests/test_principal_cutover.py -> 'No such file or directory'; ls tests -> absent; app/tests present. The deploy ships app/, deploy/, identity_tool_allowlist.txt, requirements.txt only.",
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_rl9.AC1_as_written.out (scratch clone x23, manifest = release sha, ledger entry present, no sentinel, the host's md5 answer stood in with exactly what the real host prints): 'host shipped files equal the release bytes: 4 of 6', RESULT: FAIL. org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_expect_match.out: re.search(<expect>) NO MATCH on the as-written form; MATCH on the corrected copy org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_rl9.AC1.corrected.sh.txt (one change: also grep -v '^tests/'), 4 of 4, RESULT: PASS."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order AC1 <expect>: 'host shipped files equal the release bytes: (\\d+) of \\1'. Form step 7: a check whose output cannot match its expect is fixed BEFORE GO (rows S38, S42, S50).",
+  "world_is": "With the A1 release set (6 gateway files, 4 on the host), the check's n is 6 and eq at most 4, so AC1 FAILs after a correct deploy; a Phase B that deploys correctly would still close AC1 FAIL. The check lives in the issuer's deliverables dir, outside this worker's <paths>, so it is NOT edited here.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Proposed one-line fix for the issuer: append `| grep -v '^tests/'` after the existing grep -v '^runbooks/' on the L line (app/tests/ is untouched: it ships). A re-exercise after the amendment is owed (form step 7). Phase B must not start until AC1 is amended or the issuer rules otherwise."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S5",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T21:15Z",
+  "one_line": "OG-rl-9 step 5: the 'holder whose holdings are all blank is refused asset_read_denied_unqualified' branch cannot be exercised on live data -- 0 of 6337 accounts hold only blank cusips; the branch's evidence is the fixture test test_ogq8_ac04 only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_before_synth.out (SSM 80c5cec9, in-memory store, live code): R23_POPULATION positions=104027 accounts=6337 accounts_with_blank_cusip=16 accounts_only_blank=0 accounts_clean=6321; the only_blank arm reads 'no such accounts in the population'.",
+      "RUN release tree test file tests/test_schwab_q8_blank_cusip.py: 4 passed (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_tests_release.out), test_ogq8_ac04 asserts the refusal reason on a planted fixture."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order blast radius: 'a holder whose holdings are all blank is refused asset_read_denied_unqualified' (both branches named for the halves).",
+  "world_is": "The branch is proven by the release-tree fixture run, not by a synthetic or real principal on the host; no live account would take it today.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Stated in the ANNOUNCE so the halves know which arm the refusal rests on."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S6",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T21:15Z",
+  "one_line": "OG-rl-9 A1 route arms: the /rivalfunds/<day>/audit arms run in-process on the host (GuardMiddleware of the installed code, a locally signed synthetic identity, real S3 read), not through the public ALB; and the 200 arm depends on the 2026-10-06 audit object existing at Phase B.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_route_before.out (live, SSM 210b214f): route not registered, audit URL 404, day page control 200. org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_route_after_stage.out (release files staged in a host scratch copy): registered, 200 with 1337761 bytes for 2026-10-06, 404 for 2000-01-01 with the audit-handler body, no identity 401.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_route_host.py.txt: ELB key fetch replaced by a local test ES256 key; email-deny stubbed; audit sink scratch; AUDIT_S3_BUCKET asserted empty."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A1: 'a signed-in GET of /rivalfunds/<day>/audit on a day whose audit.html exists returns 200; a day with no audit object returns 404. A FAIL of a route arm is a rollback trigger.'",
+  "world_is": "The arms prove the installed code's route, guard and S3 read; they do not prove the ALB rule or the browser sign-in path for this URL. If the 2026-10-06 audit.html were removed before Phase B, ROUTE ARM 1 would FAIL on a correct deploy and read as a rollback trigger.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The ALB path is the one the other /rivalfunds* routes already use (ROUTE_CLASS access-layer); nothing in the release touches the ALB."
+}
+```
