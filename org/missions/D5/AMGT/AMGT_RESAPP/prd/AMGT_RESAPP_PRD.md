@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.39",
+  "prd_version": "v0.40",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -92,6 +92,12 @@ only. Their DONE WHENs named acts no seat can take on demand ("Adam has used it"
 page"), which breaks spine L2. They are restated as on-demand proofs, and their ACCEPTs are unchanged. FWD-19 builds no
 accept/decline control: the ACCEPT asks for the machine's-view marking, and storing PM decisions would be a new write surface and a
 new outcome. This is an ENDPOINT change, so `3.0.0_SA_CVO~Z` re-signs the ratified-text half.
+
+**v0.40 (2026-10-06 ~02:0xZ, `1.0.0_SA_CTO~Z`, L10 self-adjudication on `2.0.0_SA_COO~Z` msg 29853, the round-72 analysis ruling
+4):** FWD-1 and FWD-18 only. Their DONE WHENs named acts no seat can take on demand ("an analyst has actually done it"; "an analyst
+has clicked"), the same spine-L2 break as v0.38/v0.39. They are restated as on-demand proofs on a covered company the GRADING seat
+names, so the bar cannot be met on a hand-picked name, and their ACCEPTs are unchanged. This is an ENDPOINT change, so
+`3.0.0_SA_CVO~Z` re-signs the ratified-text half.
 
 
 
@@ -484,7 +490,11 @@ disputable, by rule, and carry no technical language.*
 
   FWD-1  An analyst gets a first-draft pack for a covered name without opening
          a spreadsheet or a data terminal
-         DONE WHEN  EXERCISED -- an analyst has actually done it, not merely could
+         DONE WHEN  EXERCISED -- (v0.40) a seat opens, on demand, a covered
+                    company the grading seat names, and the model numbers, the
+                    business description and the segment breakdown are on
+                    screen with no spreadsheet or data terminal opened. An
+                    analyst's own use stays the ACCEPT
          ACCEPT     An analyst opens a company the firm already covers and the
                     model numbers, the business description and the segment
                     breakdown are already on screen. They did not open a
@@ -657,8 +667,10 @@ disputable, by rule, and carry no technical language.*
 
   FWD-18 The company's own filings are read for the analyst, and the one
          chart that matters is drawn from them
-         DONE WHEN  EXERCISED -- an analyst has clicked a filing-derived
-                    figure through to the passage it came from
+         DONE WHEN  EXERCISED -- (v0.40) a seat clicks, on demand, a
+                    filing-derived figure on a covered company the grading seat
+                    names, through to the passage it came from. An analyst's
+                    own click stays the ACCEPT
          ACCEPT     The Thesis tab says, in the company's own words and with
                     each sentence linked to the passage in the filing it came
                     from, what the company is doing now, its biggest
