@@ -2307,6 +2307,52 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S57",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T22:05Z",
+    "one_line": "OA-f-14 step 4 narrows get_token for a scoped OWNER, not for a scoped TOOL CALL: every gateway route that mints the concierge's delegated token is bounded by a scope map that names tools only. The Tax workbook route is such a caller and has no map entry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-NFRA_OPALAI-29 @1fb6300bcb app/token_broker.py:219-223: consent_scopes(display) is applied on the owner's display email, whatever route called get_token.",
+        "app/taxsma_workbook.py:317 calls token_broker.get_token(delegate.principal.email) and reads /sites/<id>/drive/items/<id>/workbook/... (:110-111); it is a route, not an allowlisted tool, so graph_scope_map.py carries no entry for it.",
+        "INFERRED, not measured here: the bound Tax identity is the concierge (NFRA_OPLGTW project.json blocking text, COO TICK 2026-10-01 ~19:1xZ: 'identity opalbloomberg@ (oid 517aa5ee, Part D MATCH)'). TAXSMA_WORKBOOK_IDENTITY's live value was not read.",
+        "The concierge's narrowed list keeps Sites.Read.All only because opal_data_refresh_upload's entry carries it; Files.ReadWrite.All is dropped. Whether the workbook usedRange read succeeds on Sites.Read.All alone is NOT measured."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO OA-f-14 step 4 (the issuer's own decomposition judgment): for a scoped token owner, the silent acquire asks for the tier's scopes intersected with consent_scopes(...).",
+    "world_is": "The intersection is keyed on WHO owns the token, and the map is keyed on TOOLS. A non-tool route using the same identity inherits the narrowing without a row of its own, and today holds its read scope by coincidence with another tool's entry. Nothing is deployed: the branch is undrained and unreleased, so no live route has moved.",
+    "notes": "ARMED against the RELEASE of OA-f-14, not against anything live. Disarm: the release order does not cut until either (a) the map names every non-tool caller of a scoped identity's token with its measured scopes, or (b) the CTO rules step 4 out of R25.3 and the cell is amended to the two consent legs only. Asked of 1.0.0_SA_CTO~O the same turn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S58",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T21:27Z",
+    "one_line": "A mode-only change (100644 -> 100755) cannot be committed through safe-commit.sh on this device: with core.fileMode=false, git commit --only reads the mode from HEAD and reports nothing to commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "opal_ai worktree C:/tmp/oa-dev at e34ba40: git update-index --chmod=+x on two files showed 'mode change 100644 => 100755' in git diff --cached --summary; safe-commit.sh then exited rc=1 with 'nothing added to commit' after every gate passed (commit-gate clean 2 of 2).",
+        "git config core.fileMode = false; git ls-files -s shows 0 files at 100755 in opal_ai.",
+        "The CI finding (ruff EXE001, 2 files) was closed by removing the two inert shebang lines instead: opal_ai de5ce25fa3, accepted by 1.0.0_SA_CTO~O msg 30328."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14a: every commit goes through .tools/safe-commit.sh; 1.0.0_SA_CTO~O msg 30323 named the fix as chmod +x on 2 files.",
+    "world_is": "safe-commit's commit --only path cannot carry an index-only mode change on a core.fileMode=false checkout, so the directed mechanism was unreachable inside the rule. No bare git commit was made.",
+    "notes": "INERT: nothing is blocked today. Owner of .tools/safe-commit.sh decides whether a mode-only path is wanted."
   }
 ]
 ```
