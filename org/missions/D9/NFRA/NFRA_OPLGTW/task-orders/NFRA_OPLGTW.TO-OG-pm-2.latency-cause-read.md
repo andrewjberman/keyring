@@ -85,7 +85,7 @@ PLACE to `complete`. Report once: the finding and its deciding numbers, coverage
   the CTO rules (R17).
 - Pre-cut: `pm2.AC1` FAIL (the record is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~27</slot>
 <fabric>site-z</fabric>
