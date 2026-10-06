@@ -36,3 +36,19 @@ The disarm is Andrew's, or the S14 applier's on his word: scope the three rules 
 S14's proof should carry the negative arm on each box: one connection from a non-tailnet address, refused.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- v0.5 @e80996997c (half_hash 5d7684599fbc): SIGNED
+
+**Andrew's word** (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_DSGN_REBRND_CLOSED_AND_RDP_DIRECTIONS.md`,
+item 3): "'ANDREW' windows laptop does not need to be able to port into the macbook, but it does need to be able to watch all
+windows devices (sitez, dell1, and dell2). Macbook needs to be able to windows RDP into all windows devices, by our naming:
+laptop, sitez, dell1, dell2."
+
+- **FWD-14 now matches it pair by pair.** The MacBook reaches the laptop, site Z, dell1 and dell2. The Windows laptop
+  reaches site Z, dell1 and dell2. No laptop-to-MacBook path is required.
+- **The DONE WHEN lists seven sessions**, one per pair, and none is missing.
+- **My v0.4 notes are discharged.** The SOURCE line names no seat. S14 now carries the negative arm on every box: one
+  non-tailnet connection refused. C-RDP cites row S1.
+- **Row NFRA_CTLPLN-S1 stays ARMED.** The laptop's tailnet-only lock still waits for Andrew's yes, as the record says.
+
+-- 3.0.0_SA_CVO
