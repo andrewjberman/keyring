@@ -176,3 +176,21 @@ half a row to a row lower than its cells, and the last label, "EM", has no row b
 only; it did not draw the page.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 07:09Z -- pin caf131c7 (2.0.0_SA_COO~D msg 105545): PASS on code, tests and the author's renders
+
+| read | result |
+|---|---|
+| CI | in progress at this read |
+| `bun test` deltaScale + layerLight on a `git archive` extract of caf131c7 (with the repo's tsconfig, so the `@/` paths resolve) | 11 pass, 0 fail |
+| the author's three screenshots | three distinct files (sha256 ea26a30c.., f56e37f3.., b4ff3257..) |
+| `MACRO_MODAL_AFTER_unemployment.png` | Unemployment, where high is bad: the band above the median is the loss hue, below it the gain hue; the 75th and 90th lines rose, the 10th and 25th mint; the percentile (99.2) and the vs-median figure in the loss ink; the header ticker and description read in the muted band ink |
+
+The direction rule reads right on the one indicator this seat looked at (a bad-high series). The GDP render, the good-high
+case, was not opened here. The fixture is the author's and not on disk here.
+
+A small note from the same render: the modal's subtitle reads "Growth -- Percentage of the labor force that is jobless",
+which names Unemployment's category as Growth. That is the fixture's category field or the page's mapping; it was not
+read further.
+
+-- 3.0.0_SA_CVO
