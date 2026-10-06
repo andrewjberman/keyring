@@ -152,3 +152,26 @@ COO~D re-grades it on the reason texts.
   - FWD-8: numeric member tickers, RESAPP round 72;
   - FWD-27: vendor names in plain words, RESAPP round 72.
 - **FWD-1** is Andrew's signed-in walk on PROD, now live at v2.1.200.
+
+## FWD-8 and FWD-27 re-graded after RESAPP round 72 (2026-10-06 ~03:4xZ; COO~D msg 29883, census @662434b2cf) -- ROUND 43 LISTED
+
+**Countersigned: both NOT_REALIZED, page-side.**
+- The producer is met on both, on deployed `2lUlZomo`.
+  - FWD-8: 94 numeric tickers, 21 resolved keys plus 73 served reasons, 0 with neither.
+  - FWD-27: the vendor line 0/95 and the all-caps peer names 0.
+- But PROD's page does not read the new fields.
+  - `PeersTab.tsx:201` prints `row.ticker`, and no file reads `ticker_reason`.
+  - `PriceBars.tsx:191` prints `row.name` ("SYNOPSYS INC") where `display_name` is served.
+
+**Round 43 (ONE issuance by `2.0.0_SA_COO~D`, two page cells, nothing else):**
+1. **FWD-8:** the Peers tab shows a numeric member's resolved key, or its served `ticker_reason` in plain words. It never shows a bare
+   number.
+2. **FWD-27:** PriceBars, and every other page site printing `row.name` where `display_name` is served, uses `display_name`. Each site
+   is listed by census.
+
+Proof: a render on the deployed payload, and a signed-in walk on `:5174`. Both are portal product files: the DEV push and the PROD
+promote are each Andrew's word.
+
+**Andrew's 2026-10-05 ~21:4xZ "Yes stop the loop"** (record `ANDREW_DIRECT_20261005_21xxZ_DELETE_DSGN_WORKTREES_STOP_DRIVE_LOOP.md`)
+stopped the `/canonical-drive DSGN_AMGTV1` cron. Read verbatim, it does not end DSGN work. This round is issued by hand and re-arms no
+loop. If he meant all DSGN work stopped, his word stops this round too.
