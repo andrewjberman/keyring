@@ -1741,3 +1741,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: one extra provenance key and one extra gate read; both are covered by the tests. The issuer may rule the key name."
 }
 ```
+
+## IRPT_YCDGEN-W1-S16 -- f-6 AC5 cannot pass on the contract's own List statement: the check reads the condition key "s3:prefix" as a second action
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T02:12:30Z",
+  "one_line": "f-6.check.py AC5 collects every quoted s3:<word> in the List statement as an action, so the Condition key s3:prefix that R14 (5) requires makes it FAIL; the HCL follows R14 literally.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R14 (5) ListTheHeldFundCharacteristicsFolder: Action [s3:ListBucket], Condition { StringLike = { \"s3:prefix\" = [\"bbg/\", \"bbg/*\"] } }; AC5 passes when that statement is correct.",
+  "world_is": "AC5 runs re.findall of a quoted s3:<letters> token over the statement block and demands exactly [\"s3:ListBucket\"]; the required Condition key \"s3:prefix\" is also a quoted s3:<letters> token, so findall returns [\"s3:ListBucket\", \"s3:prefix\"] and the check prints `f-6.AC5 RESULT: FAIL list statement missing, wrong, or not cut to the bbg/ prefix`. Measured on the worktree resident.tf (statement present, action exactly s3:ListBucket, resource exactly \"arn:aws:s3:::opal-data-etfs\", condition exactly as R14 (5)). The worker did not reshape the HCL (an interpolated key, or a key moved out of the statement) to defeat a defective regex; AC1-AC4 and AC6 PASS. The fix is in the issuer's check (match the action list from the Action line only), outside the worker's paths.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/checks/f-6.check.py (AC5 branch) main@wk-IRPT_YCDGEN-77",
+      "infra/aws/terraform/investor-reporting/ycharts/resident.tf (ListTheHeldFundCharacteristicsFolder) main@wk-IRPT_YCDGEN-77"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: a check-side defect; the HCL is the contract's. The issuer amends the check or grades AC5 on the statement's text."
+}
+```
