@@ -42,6 +42,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 - `publish_page.handler_entry` already prints `FAIL: holding dialogs off ...` and writes `holding_dialogs` into the manifest (round 12): add `fund_sections` the same way.
 - `security_names.handler_entry` (~133) reads the newest holding_contribution within LOOKBACK_DAYS; read the newest buying_trend the same way.
 - You run fe-1 FIRST; lk-1 follows on the same branch.
+- AMENDMENT 1 (issuer, 2026-10-06 ~20:5xZ; CTO half @2f44b42430, the Alphabet case 1): the order is REOPENED with a third criterion, AC3. Measured on the served 10-06 page after your build: WCMG's account text "Alphabet Inc" (citing `WCMG|R30|GOOGL_US_Equity`; WCMG holds GOOGL, page name "Alphabet Inc") renders as a button to GOOG_US_Equity reading "Alphabet Inc-Cl C" -- 2 of the 10 fund-section misses. Cause read in `render._collect_aliases`: a row names GOOG with a casing variant of "Alphabet Inc", the alias "alphabet inc" maps to GOOG's page name, and the second loop's `setdefault` keeps it over GOOGL's own page name, so the text is rewritten before your fund-aware rule sees it. Read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/fe-1.AC3.py` (its docstring is the interface): inside fund F's panel a name or alias that resolves to several keys' names links to the key F holds or traded and reads THAT key's page name; the cited key breaks a remaining tie. Work in the NEW worktree your issuer names (based on CLOUD, WITHOUT lk-1); AC1 and AC2 must still PASS.
 
 ## 3. SURFACES AND BOUNDS
 
@@ -65,6 +66,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-fe-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/fe-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="AC2" cell_refs="RIV-fe-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/fe-1.AC2.py</invocation><expect>AC2 RESULT: PASS 0 failures</expect></criterion>
+  <criterion id="AC3" cell_refs="RIV-fe-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/fe-1.AC3.py</invocation><expect>AC3 RESULT: PASS 0 failures</expect></criterion>
   <criterion id="J1" cell_refs="RIV-fe-1" judgment="true"/>
 </proof_of_spec>
 
@@ -76,6 +78,8 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~RV, 2026-10-06 ~20:5xZ):** REOPENED (never re-cut): criterion AC3 added on the CTO half @2f44b42430 (Alphabet case 1: WCMG holds exactly one Alphabet listing, GOOGL; measured on the served rv-publish-1006r13 page). fe-1.AC3 dry-run at CLOUD 98de9868ce: FAIL (2; control (c) PASS) as expected. Four mechanical criteria would exceed the diet's three only if AC3 were new work; it is the SAME built behaviour (rule 1) on the real name shape -- stated here as the one-line reason. No gate limb grades a modification (LIMB 6 fires on new orders).
+
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** ROUND_ANALYSIS.round11.md @3ae96d6bc7 section 3; decomposition v1.3 (round 13 appended). Chain `~2`, slot `~2`, position 1 of 2. Checks dry-run at base: fe-1.AC1 FAIL (3: SpaceX 3 buttons missing TXUE's section, census function absent, Alphabet unlinked; control (d) PASS) as expected; fe-1.AC2 FAIL (1: asks only BBB; control (b) PASS) as expected.
 
 <risk>SERVED</risk>
@@ -85,3 +89,4 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <slot>~2</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+<status>in_progress</status>
