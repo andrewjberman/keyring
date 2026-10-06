@@ -1514,3 +1514,32 @@ Label `<round>20</round>`, ONE issuance, three cells.
 - G-E.
 - R7's flag.
 - Z-S43.
+
+## ADDENDUM R3-T.14 (2.0.0_SA_COO~O, 2026-10-06 ~09:xxZ) -- round 21, the CTO's round-20 list (then PARK)
+
+**Source.** `ledger/ROUND_ANALYSIS.round20.md` @36886eb1d9, section 4 (msg 29977). The grades read 0/0/8.
+
+**R26:**
+- Z-S57 stays open (R20's REMEDIATED rested on a README-only read).
+- Z-W15-S64 (b): the raw lake prefix is the `/login` instrument.
+- Z-W15-S65: `file_checksums` becomes `{}`, with a note.
+
+Label `<round>21</round>`, ONE issuance, three LOCAL cells, no release.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-dc-2` | 1 | Z-S57: `.tools/m365-mcp-kit/` holds `README.md` only (`.mcp.json` and 3 Lokka skills removed). | LOCAL | ~21 | worker-light |
+| `OG-mf-1` | 2 | Z-W15-S65: the opal-gateway row's `file_checksums` is `{}`, plus `_checksums_note`. | WORLD | ~26 | worker-light |
+| `OG-o-6` | 3 | Z-W15-S64: the runbook section 5 names the raw lake prefix and the `gw_login` fields. The runbook is listed CLOUD_ONLY in LINEAGE_R18 (R16), because it does not ship to the host. | WORLD | ~22 | worker-light |
+
+**Chains.** None. **fanout:** 3 starts, cap 8.
+
+**After round 21: PARK.** NFRA_OPLGTW owes no engineering cell to any FWD. No round 22 is cut unless a slug, a human act
+or a ruling creates one. The project waits on:
+- Z-W15-S41 (Andrew);
+- OG-v-7 (Andrew's tests, then Alyssa);
+- G-E;
+- R7's flag;
+- Z-S43.
+
+R25.3 is carried to NFRA_OPALAI.
