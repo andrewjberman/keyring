@@ -83,3 +83,4 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.7.0_AE_Cl
 <round>10</round>
 <slot>~RV</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
