@@ -3047,3 +3047,34 @@ Issuer `2.0.0_SA_COO~H`. Series **`av`**.
 
 **Checks dry-run at the base before the cut:**
 - `av-1` AC1 (`pytest lib/research/harvest/test_av1_stored_canonical_url.py`) base: FAIL as expected (the test is absent).
+
+## 63. ROUND 50 -- the round-49 analysis ADDENDUM 1 (`ledger/ROUND_ANALYSIS.round49.md` @3bf4e2ea1e), 2026-10-06 ~19:3xZ
+
+Round 50 is triggered by the 18:39Z resume of bbg, barrons and wsj (Andrew-direct ~18:3xZ, record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_183xZ_HARVST_SA_PAID_FT_LATER_RESUME_BBG_BARRONS_WSJ_REMOVE_WORKTREES.md`).
+FT stays deferred. Andrew-direct ~19:2xZ moves SA to the tab pattern (Google sign-in in its own profile, REST in-tab, no proxy).
+
+**Measured at the cut (issuer):** since 18:39Z, 5 of 15 resumed jobs (bbg 2, wsj 2, barrons 1) ended `error` / `TimeoutError`
+with ZERO request attempts, each right after `stored_token_used`. That is the tab build, whose `TabSession.__init__` runs
+`self.page.goto(origin)` (`lib/opal_data_harvest/tab_transport.py:92`) under Playwright's default: wait for `load`, 30 s. The
+historical rate was 16 of 880 jobs across the three roots. Machine load at the time: 37.6 of 63.5 GB free, CPU 14%.
+
+Issuer `2.0.0_SA_COO~H`. Series **`aw`**.
+- **Fan-out:** 2 of 2 chains, cap 8. The in-tab probe read 200 (account 200 / 4,774 B; listing 200 / 5 items) after Andrew's
+  Google sign-in, so `aw-2` is cut in this issuance. Write sets are disjoint (`aw-1`: `tab_transport.py` + its test; `aw-2`:
+  `publishers.py`, `contracts.json` + its test).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-aw-1` | `aw-1` | **The origin load wait.** `TabSession.__init__` opens the origin with `wait_until="domcontentloaded"` and an explicit timeout (module constant `ORIGIN_TIMEOUT_MS = 60000`). A timeout there raises a NAMED error `OriginLoadTimeout` (a `RuntimeError` subclass defined in `tab_transport.py`) whose message names the publisher and origin, so a run record's `error_type` reads `OriginLoadTimeout`, never a bare `TimeoutError`. The context is still closed on failure. Plants on a LOCAL http server (no publisher host): a page whose `load` never fires opens the tab; a page whose document never arrives raises `OriginLoadTimeout`; a mutant that restores the `load` wait makes the first plant fail. | LOCAL | worker `~99` |
+| `HVST-aw-2` | `aw-2` | **SA on the tab pattern.** `contracts.json` sa `transport: tab` (egress native in-tab, no proxy); `TAB_ORIGINS["sa"]`; an sa sign-in route on bbg's Google pattern; one real in-tab fetch per endpoint class answering 200 through the transport. | LOCAL | worker `~100` |
+
+**The close run (issuer, after `aw-1` merges):** the next jobs of the three live legs build their tab from the merged code (each
+job spawns a fresh collector from the shared tree); the 5 `TimeoutError` pairs are re-run with `--names` and each must reach its
+first request. That is the round's one real run for `aw-1`.
+
+**Checks dry-run at the base before the cut:**
+- `aw-1` AC1 (`pytest lib/opal_data_harvest/test_aw1_origin_load_wait.py`) base: FAIL as expected (the test is absent).
+- `aw-1` AC2 / `aw-2` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (667 passed, 1 skipped).
+- `aw-2` AC1 (`pytest lib/opal_data_harvest/test_aw2_sa_tab.py`) base: FAIL as expected (the test is absent).
+- `aw-2` AC2 (`cat .../aw-2.live_probe.out`) base: FAIL as expected (no such file).
