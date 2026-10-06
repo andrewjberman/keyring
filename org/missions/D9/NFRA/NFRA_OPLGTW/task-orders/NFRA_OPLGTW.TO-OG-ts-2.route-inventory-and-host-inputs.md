@@ -78,7 +78,16 @@ PLACE to `complete`. Report once.
   inventory arm green.
 - Pre-cut: see the issuance commit.
 
-<status>complete</status>
+- **A1 (2026-10-06 ~03:xxZ, issuer): REOPENED.** At drain c23d8914e6, AC1 and AC2 PASSed on CLOUD, but the issuer's
+  re-grade of the round-18 floor `ti2.AC1` FAILed. In the one-process whole set, `test_ogts2_export_dir_per_process`
+  hit `import conftest` resolving to `tests/acceptance/conftest.py`. The re-hand fix is a uniquely named
+  `tests/proc_tmp_root.py`.
+  - The fix was refused at commit (row Z-W25-S4) because this order read `complete`. That was the issuer's error, and
+    the status returns to `pending` so the fix can land.
+  - **Added criterion (no new check):** `r18/checks/ti2.AC1.sh` must PASS on the drained union.
+  - Flip back to `complete` after the commit.
+
+<status>pending</status>
 <round>19</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
