@@ -72,6 +72,26 @@ run the deploy script.
    ledger. The first live exercise is the scheduled 00:00Z run; report its log line (OK after read-back, or WARN
    naming tables).
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- the issuer's disposition of BLOCKING row Z-W24-S11 (PHASE A
+@3709ae40d6).**
+- **Ruling: option (a).** Add ONE statement to `aws_iam_role_policy.bd_49f_runner_policy` in
+  `infra/aws/terraform/bd-pipeline/bd-49f-interim.tf`: Sid `ReadBackBdBronzeSentinel`, Effect Allow, Action
+  `["s3:GetObject"]`, Resource `["arn:aws:s3:::opal-data-bd/bronze/*/_BRONZE_COMPLETE.json"]`. No other statement
+  changes. The existing `EmitBdBronzeSentinel` (PutObject `bronze/*`) is untouched.
+- **Measured at the amendment (2026-10-06T18:29Z):** `simulate-principal-policy` on `bd-49f-runner-role` reads
+  GetObject implicitDeny and PutObject allowed on `bronze/2026-10-06/_BRONZE_COMPLETE.json`; the sentinel is absent
+  for run dates 2026-10-05 and 2026-10-06 and present for 10-01..10-04. Deployed CodeSha256 `q37ovM...`, artifact
+  VersionId `AVNCLX4F...` -- both equal the PHASE A rollback pins.
+- **PHASE B order of acts (replaces step 4's plan clause):** upload the zip with `--metadata content-sha256=<sha>` and
+  read size + metadata back; cut ONE saved plan targeted to `module.bd_49f_runner` AND
+  `aws_iam_role_policy.bd_49f_runner_policy`; it must read `0 to add, 2 to change, 0 to destroy` (the function in place,
+  the policy in place). Any other line is BLOCKING and nothing applies. `safe-apply` the saved plan; then read back
+  BOTH the CodeSha256 against your built zip AND `simulate-principal-policy` GetObject on the sentinel key = allowed.
+- **Apply window:** outside 23:45-00:45Z (the runner's 00:00Z cron).
+- Row Z-W24-S11 disarms on the applied simulate read; cite this amendment as its disposition.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds no
+  `<placeholders>`).
+
 ## 2. BOUNDS
 
 1. Nothing under `data/cot/` changes (AC2 is that control). No ad-hoc runner invocation (it pulls from Black Diamond).

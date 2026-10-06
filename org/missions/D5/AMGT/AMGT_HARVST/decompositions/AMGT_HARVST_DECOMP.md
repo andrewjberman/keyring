@@ -3021,3 +3021,29 @@ Issuer `2.0.0_SA_COO~H`. Series **`au`**.
 **Checks dry-run at the base before the cut:**
 - `au-1` AC1 (`pytest lib/opal_data_harvest/test_au1_upload_timeout.py`) base: FAIL as expected (the test is absent).
 - `au-2` AC1 (`pytest lib/opal_data_harvest/test_au2_soft_block.py`) base: FAIL as expected (the test is absent).
+
+## 62. ROUND 49 -- the round-48 analysis enrichment list (`ledger/ROUND_ANALYSIS.round48.md` @6d005e5261), 2026-10-06 ~07:0xZ
+
+Round 48 is CLOSED (board 8/17; 9 a qualified wait on Andrew). Ruling 1 asks for a census of the stored ft and wsj records for an
+address constructed with no request, and a plain "no link was stored" where there is none. No ft.com or wsj.com host is contacted,
+and Andrew's FT hold stands.
+
+**Census at the cut (issuer, read-only, silver_latest, no publisher contact):** the records already STORE their own canonical
+address, so nothing needs to be constructed.
+- **ft:** 185 articles. 171 carry `html_meta["og:url"]` (`https://www.ft.com/content/<uuid>`) and no top-level `url`; the other 14
+  are normalised records that carry the top-level `url` and no `html_meta`.
+- **wsj:** 463 articles. 448 carry `html_meta["og:url"]` and `articleData.sourceUrl`; the other 15 carry the top-level `url`.
+- The two sets are DISJOINT in both publishers, so no article carries both, and the byte-equality proof is run on the shared FORM
+  instead (scheme, host, path shape) plus, for wsj, `og:url` == `articleData.sourceUrl` on every article carrying both.
+- The union covers every stored article: 185/185 and 463/463.
+
+Issuer `2.0.0_SA_COO~H`. Series **`av`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (av-2 depends on av-1).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-av-1` | `av-1` | **ft/wsj stored canonical address.** `publication_gold.article_url` for ft and wsj reads the top-level `url`, else `html_meta["og:url"]` (first value if a list), else for wsj `articleData.sourceUrl`. The address is accepted only on the publisher's own host (`https://www.ft.com/content/...`, `https://www.wsj.com/...`), else None; never constructed or guessed, and no host is fetched. A census script prints article-level link coverage per publisher, with the og:url/sourceUrl agreement on wsj. | LOCAL | worker `~98` |
+| `HVST-av-2` | issuer act, after av-1 merges | **Served gold rebuild #7** under a NEW never-widen pair, on the rebuild-#6 rule with ft/wsj `url` the only moved field class. | SERVED -> CTO half | `2.0.0_SA_COO~H` |
+
+**Checks dry-run at the base before the cut:**
+- `av-1` AC1 (`pytest lib/research/harvest/test_av1_stored_canonical_url.py`) base: FAIL as expected (the test is absent).

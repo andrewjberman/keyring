@@ -3766,6 +3766,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The fire ran on its own clock and pin and refused cleanly (no blocks written; the served newest blocks remain the 2026-10-04 19:56Z re-derive, which already carries Friday 2026-10-02's close). FWD-22's regression on the new pin is NOT read today; it is not retried (round-34 CTO half: a REFUSED day is recorded, never retried in a loop).",
   "notes": "Not a CORPUS producer defect: the refusal precedes any CORPUS call. The regression read moves to the 2026-10-06 13:00Z fire. CRPS-am-2 (re-derive from landed raw, no vendor call) is unaffected.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-S88",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~X",
+  "surfaced_at": "2026-10-06T13:05:19Z",
+  "one_line": "The 2026-10-06 13:00Z amgt-induction-daily fire (first on pin 6f6e472641) pulled NOTHING: 96 of 96 'already_current', bloomberg_calls 0, rc 0 -- because CRPS-an-2's re-derive at 03:20-03:23Z wrote today-dated derived stamps and cmd_refresh skips any name whose latest derived stamp is today's UTC date. The Monday 2026-10-05 close is still not pulled; served blocks carry Friday 10-02's close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Opal Bloomberg/AppData/Local/opal/amgt-induction-daily/2026-10-06.log: 'refresh population registered 96 with_block 96 already_current 96 pulled 0 bloomberg_calls 0'; 'induction_scheduled mode fire as_of 2026-10-06 rc 0' (fire 13:00:00-13:00:28Z).",
+      "integrations/bloomberg/research/model_block_pull.py:2238-2245 cmd_refresh: today = utcnow %Y%m%d; a name with latest derived stamp[:8] == today is counted already_current and skipped.",
+      "evidence/r38_an2_leg_d.txt: 96 derived stamps 20261006T0320-0323Z (CRPS-an-2 leg Ld, run on CTO AMENDMENT 1 @dc3aa39ada at 03:20Z, same UTC day as the fire).",
+      "evidence/r38_an3_fire_20261006.txt: served census unchanged (count/ratio with a currency 0, money unlabelled 0, v35 values moved 0, pointer units 0); lib/trading_calendar trading_days_behind(2026-10-02, 2026-10-06) = 2."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-22 (REALIZED round 35): the daily scheduled fire re-pulls every registered name; CTO an-2 condition 3: the first fire on <p> reads 96 pulled, rc 0; CRPS-an-3 reads it.",
+  "world_is": "The fire ran clean on the new pin and pulled 0 by design of its same-day skip rule, which keys on the DERIVED stamp; a re-derive earlier the same UTC day reads as 'refreshed today'. Neither the pair halves nor the AMENDMENT 1 timing named this interaction. Two consecutive trading closes (10-05 capacity refusal, 10-06 skip) are unpulled; the next scheduled fire (10-07 13:00Z) pulls normally.",
+  "notes": "Issuer's own act's side effect. Remedy options are the CTO's (a same-day pull is a Bloomberg call outside the schedule; CTO an-2 condition 4 says no vendor call is added). Without a ruling the 2026-10-07 fire restores freshness. Possible producer fix for a later round: key the skip on the RAW pull stamp, not the derived stamp.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```

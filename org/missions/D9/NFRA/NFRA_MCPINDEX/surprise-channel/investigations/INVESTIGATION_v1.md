@@ -5372,6 +5372,92 @@ carries none.
     "spec_asserts": "Z-S72 notes: retire unrealized's document merge only when bd-silver-merge processes the 6 files or they are ruled out with evidence.",
     "world_is": "bd-silver-merge processed all 6 as recorded empty stubs with failures=0 on its first scheduled run after the fix.",
     "notes": "MX-s-16 completes on unrealized + allocations (A3). Transactions and realized stay 2-writer by the A2 HOLD, carried in REMEDIATION_v5 with the cot sentinel fix."
-  }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The order's SmartX location s3://opal-data-smartx-v2/ does not exist in this account; SmartX served silver sits in opal-data-assets smartx/platform/silver/ (13 datasets), found by listing opal-data-assets's top level.",
+    "spec_asserts": "MX-m-2 'Where to look': SmartX at s3://opal-data-smartx-v2/ (no silver tier found).",
+    "world_is": "list-buckets (40 buckets) has no bucket named smartx; s3api list-objects-v2 on opal-data-smartx-v2 returns NoSuchBucket. SmartX data is in opal-data-assets smartx/{account,allocation,model,platform}/ (platform/silver/ holds 13 fact datasets, newest date=2026-10-01) and opal-data-bd smartx/{bronze,raw,jwt}/ (bronze, not silver). The census record uses opal-data-assets.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: the order's own bound 3 and the mdpf012 probe (BUCKET constant opal-data-smartx-v2) name a bucket that no longer exists; no work depends on it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Orion and Eclipse silver is served from TWO places with equal row counts (opal-data-inf silver/ and opal-data-assets {orion,eclipse}/inflection/silver/), and the order's silver/aum_snapshot/ is absent.",
+    "spec_asserts": "MX-m-2 'Where to look': Orion under opal-data-inf silver/{api_dims,transactions,aum_snapshot,accounts_dim}; Eclipse under silver/eclipse/{date}/.",
+    "world_is": "opal-data-inf silver/ lists 12 prefixes and has no aum_snapshot. opal-data-assets orion/inflection/silver/ holds fact_{assets,performance,positions,transactions} and eclipse/inflection/silver/ holds fact_{model_composition,models,portfolios_full,portfolios_simple}; on 2026-10-01 the newest-partition row counts equal the opal-data-inf counterparts (transactions 1,495,705; performance 479,016; positions/assets 36,111; eclipse 9/18/859/845). The census counts both copies (denominator orion 24, eclipse 8) with the bucket in each key; a round-8 tool names one source of truth.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: a census; the duplicate copies are recorded, not judged."
+  },
+{
+  "id": "NFRA_MCPINDEX-Z-W25-S1",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~25",
+  "surfaced_at": "2026-10-02T01:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "silver/unrealized/ carries six 8,016-byte objects (2026-07-03..07-09) written 2026-09-30T21:39Z, so the newest mtime under the prefix is a backfill write, not the weekly 2026-09-27 production write the weekly basis grades.",
+  "spec_asserts": "MX-f-1 Build 2/3: the weekly branch grades a table STALE when its last write predates the most recent passed weekly production day; the last write is get_latest_modified (the newest object LastModified under the prefix).",
+  "world_is": "aws s3api list-objects-v2 --prefix silver/unrealized/ (2026-10-02T01Z): the weekly partitions 2026-07-10..09-25 were written Sundays 00:14-00:32Z (latest 2026-09-27T00:16:18Z), but 2026-07-03,04,05,06,07,09 were written 2026-09-30T21:39:18-27Z (empty stubs, Z-S76). get_latest_modified takes the max over a flat prefix, so a stub or backfill write landing after a missed weekly run resets the clock and reads that missed run FRESH. Today the 09-30 write is before the 2026-10-04 due day, so today's verdict is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~25/SKIP_PATH_RECORD.json (weekday measurement block)",
+      "s3://opal-data-bd/silver/unrealized/ list-objects-v2 read 2026-10-02T01Z"
+    ]
+  },
+  "notes": "INERT: the reader is not deployed to the gold EC2 and the production gate takes the not_on_path skip (SKIP_PATH_RECORD.json), so no verdict is served from this reader on the production path. Becomes ARMED if comp-freshness is installed on the gold EC2 and a stub or backfill write lands after a missed weekly run. Disposition left to the issuer; a partition-key basis (as_of_source: silver-partition-key) is the existing alternative the reader already carries."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-W25-S2",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~25",
+  "surfaced_at": "2026-10-02T01:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The measured weekly production weekday is SUNDAY on the UTC clock (00:12-00:32Z), which is Saturday evening US Eastern; the partition's own date is the Friday before.",
+  "spec_asserts": "MX-f-1 Build 2: measure which weekday BD produces each table from the partitions' write dates and state it; the order does not name the clock.",
+  "world_is": "For both silver/allocations/ and silver/unrealized/, 12 of 12 weekly partitions 2026-07-10..2026-09-25 (partition date a Friday) have LastModified Sunday 00:12:53-00:32:14Z (Saturday 20:12-20:32 EDT). weekly_production_weekday: sunday is on the UTC clock, the clock S3 LastModified and comp-freshness both use; the partition key is the Friday, so a partition-key reader would need friday. silver/allocations/ is documented FROZEN at 2026-07-10 (feed DEPRECATED) yet still receives a new weekly partition, so its mtime moves while its content vintage is pinned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~25/SKIP_PATH_RECORD.json (weekday measurement block)",
+      "s3://opal-data-bd/silver/allocations/ and silver/unrealized/ list-objects-v2 read 2026-10-02T01Z"
+    ]
+  },
+  "notes": "INERT: recorded so the weekday value is not later read on the wrong clock."
+}
 ]
 ```

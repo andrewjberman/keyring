@@ -66,3 +66,101 @@ duplicates.
 3. **The census is not only Nebius.** After the field lands, list every (CUSIP/ISIN key, ticker key) pair the join merges across all
    funds, with a count. A name merged that is not the same security is the failure arm.
 4. **ok-1's J1 is graded after that deploy,** under its own pair. The NBIS label from ruling 4 rides it.
+
+## ADDENDUM 2 (2026-10-06 ~11:5xZ) -- RIV-e-1 eats the vehicle's window when Bloomberg is down (MSTR~Z msg 30005)
+
+**A correction of mine first.** At ~11:2xZ (msg 30002) I told COO~RV to leave RIV-e-1 retrying, "it proceeds on its own if Andrew
+signs in". That premise was false. `OPAL_BBGTML_daily_pull` has `ExecutionTimeLimit PT30M`, and Task Scheduler killed it at 11:30:01Z
+(Last Result 0x41306). So a sign-in does not resume it. The names stage and the D12 leg never ran today. Recovery is MSTR~Z's re-run on
+the first OK probe after the sign-in.
+
+**The finding.** With the DAPI precondition already FAILED (the vehicle logged it and skipped the pull), RIV-e-1
+(`rivalfunds.enrichment_bloomberg`) still ran. It retried blpapi sessions about once a minute until the 30-minute kill, so every stage
+after it lost its turn.
+
+**Ruling: a round-12 cell for `2.0.0_SA_COO~RV`, beside the PARSEKYABLE_DES cell (ADDENDUM 1).**
+- `enrichment_bloomberg` bounds its session attempts (a small fixed count) and exits with a DISTINCT code when Bloomberg is unreachable,
+  so the vehicle reaches its later stages.
+- First measure whether the names stage and the D12 leg need Bloomberg. If they do, the bound still matters: a failed day then ends in
+  minutes, with each stage's own clear refusal, instead of one silent timeout.
+- eg-1's guard is unchanged (no empty G4 lands).
+- **The change is in `data/etfs/scripts/rivalfunds/`, which is ETFS_RIVALS's own code.** The vehicle script under
+  `integrations/bloomberg/` is under Andrew's no-modify order and is NOT touched.
+- **Proof:** a plant with blpapi refused, in which the module exits within the bound with its distinct code, plus a control in which a
+  reachable session still enriches.
+
+## ADDENDUM 3 (2026-10-06 ~16:4xZ) -- Z-S47: every ticker mention links to its modal (COO~RV msg 30147)
+
+**Andrew's word:** `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261006_163xZ_RIVALFUNDS_SECURITY_LINKS_GONE_EVERY_TICKER_MENTION_LINKS.md`
+@05c469e083. **Cause, as COO~RV measured it:** the served 10-05 and 10-06 pages carry `data-holding-dialogs="off"` and 0 links. The
+all-or-nothing fallback at `render.py:1793-1802` (`DIALOG_SOFT_CAP` 1,950,000 B, set under the gateway's 2 MB refusal) strips every
+dialog once the page is over the cap. The closed audit block is 1,119,671 B of the 1,813,001 B page.
+
+**Ruling: route (B), a round-12 cell for `2.0.0_SA_COO~RV`.** The audit trail moves to its own dated object, and the main page keeps
+every dialog.
+- **Why not (A).** "Latest N trades per fund" removes trades. FWD-5's DONE WHEN reads "for every fund Andrew reads its trades", and the
+  trade log is that outcome's carrier. FWD-18 asks that trade detail and holdings lists "stay one step away", which allows them to
+  move, not to be cut. (A) also leaves the cap to bite again as the log grows every day.
+- **Why not (C).** Partial dialogs leave dead text. That breaks FWD-21's ACCEPT ("no ticker on the page is dead text") and Andrew's
+  "any mention".
+- **Round-8 ruling 3 (link once per face) is SUPERSEDED** by Andrew's word: every ticker mention is a link. The cost is a button per
+  mention. The dialog count does not change, because dialogs are written once per security by `_sec_dialogs`.
+
+**The cell's shape:**
+1. **Renderer** (`data/etfs/scripts/rivalfunds/`):
+   - The publisher writes a second platinum object for the day, the audit trail (trades, holdings, status). Its address is
+     `lib/opal_naming.py` output, never typed (rule 30).
+   - The main page replaces the closed block with a plain link to it, keeping the "one step away" wording.
+   - The modals open by `popovertarget`, which works within one document only. So the audit page carries its own dialogs for the
+     securities it names, from the same `_sec_dialogs`. The no-script rule holds on both pages, and FWD-21 holds on both.
+2. **Gateway** (`infra/aws/ec2/opal-gateway/app/rivalfunds_view.py` plus the read policy from `gen_rivalfunds_location.py`):
+   - Add one route, `GET /rivalfunds/YYYY-MM-DD/audit`, behind the same identity wall.
+   - This is a deploy under a never-widen pair. The publisher's switch to the split page lands only after the route serves, so
+     the link is never a 404.
+3. **The fallback stops being silent.** Over the cap, the pre-publish check prints the dialogs-off state as a FAIL line. The day still
+   publishes, and a surprise row is filed. A silent strip is what hid this defect.
+
+**Proof:**
+- On the 10-06 data, the main page renders with every dialog and at least 20% headroom under `DIALOG_SOFT_CAP`. Print the bytes.
+- Every ticker mention on both pages is a `popovertarget` button whose target exists in the same document. Print the count of
+  mentions, the count of buttons, and 0 dead.
+- The audit page serves through the gateway, signed in.
+- A planted over-cap page prints the FAIL line (the failure arm).
+
+## ADDENDUM 4 (2026-10-06 ~16:5xZ) -- Andrew re-sequences ADDENDUM 3: usability first, the audit route last
+
+**Andrew-direct** (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_164xZ_RIVALFUNDS_AUDIT_OFF_PAGE_LINKS_FIRST_AUDIT_ROUTE_AFTER.md`):
+"Audit is not a huge priority. We should have it, but it should not get in the way of useability ... 1.) Pull audit off the page
+2.) Get those linking schemas up and running 3.) Make an audit gateway after 2.) is done."
+
+ADDENDUM 3's route (B) stands. Its ORDER is replaced as follows:
+1. **Round 12, step 1: audit off the page.**
+   - The renderer drops the closed audit block from the served page.
+   - The publisher still writes the day's audit trail as its own platinum object (address from `lib/opal_naming.py`), so no day
+     is lost and step 3 can serve back-days.
+   - The page carries NO link to the audit trail until the route serves (never a 404).
+2. **Round 12, step 2: the links.**
+   - Every ticker mention is a `popovertarget` button to its modal, and every dialog is on the page.
+   - Proof: ADDENDUM 3's first two bullets (headroom of at least 20% under the cap; mentions = buttons, 0 dead).
+   - The over-cap FAIL line also lands in this step.
+3. **After step 2 is graded: the audit route.**
+   - `GET /rivalfunds/YYYY-MM-DD/audit` is a gateway deploy under a never-widen pair. The audit page carries its own dialogs.
+   - Only then does the main page get its one-step-away link.
+   - ADDENDUM 3's "the publisher's switch lands only after the route serves" is withdrawn.
+
+**Stated, not hidden:** between step 1 and step 3, FWD-5's trade log and FWD-18's holdings list are written but not served. That gap is
+Andrew's call above, and FWD-5 and FWD-18 do not grade REALIZED until step 3 serves.
+
+## ADDENDUM 5 (2026-10-06 ~18:5xZ) -- pk-1's Lambda deploy waits for reader alignment (COO~RV msg 30201)
+
+**Ruling: COO~RV's recommendation, as written.**
+1. A direct-act alignment cell first. The three readers that do not pass the parsekey take the same resolver as pk-1's
+   writers: `gold_buying_trend` identity_maps, `gold_input_census`, and `sweep.py:306` held_funds.
+2. Then ONE deploy pair covers both, and the ADDENDUM 1 census rides it.
+
+- **Why:** deploying pk-1 alone serves one security merged in the rankings (Nebius) and split in the trend on the SAME page. Two
+  answers to "is this one holding" on one screen is worse than the current, consistent state.
+- **The proof that the alignment is complete:** a census of every call site in `data/etfs/scripts/rivalfunds/` that builds or
+  reads an identity key, with a printed denominator. Each site either passes the parsekey or is named with its reason. Beside it,
+  a plant: one security under two listings resolves to ONE key in the rankings, the trend and the census alike.
+- **Not affected:** eb-1 and the PARSEKYABLE_DES ask ride tomorrow's 07:00 ET vehicle run from CLOUD with no deploy.

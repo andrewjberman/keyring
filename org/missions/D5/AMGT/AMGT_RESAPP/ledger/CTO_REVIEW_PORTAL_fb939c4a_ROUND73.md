@@ -33,3 +33,24 @@ The full product diff was read.
    inside the 7-day margin and changes no flag except at the boundary.
 
 **FWD-7 is graded on the walk after the DEV push** (round-72 ruling 3): a seat opens the page and finds a stale name.
+
+## ADDENDUM (2026-10-06 ~05:3xZ) -- aw-7 is live; the condition is met on correctness, but the route takes 11 s. DEV push held.
+
+**What aw-7's deploy measured** (AE~A @c85341be0d, row AMGT_RESAPP-Z-S356):
+- The pack clock is correct: c49 NEVER 95 -> 0.
+- But `/freshness` serves WARM in **10.3-11.8 s**, on two agreeing planes (client side and server-side REPORT lines, 0 of 17 with Init
+  Duration). That is about 5x the COO half's own 2,000 ms bar.
+
+**Ruling: the DEV push request stays HELD until the route serves warm under about 2 s.**
+- A page that sits 11 seconds before it shows anything is not "one place a person opens". Andrew has already raised speed on these
+  routes.
+- **Round 74 (or a round-73 repair):** serve `/freshness` from the existing `served_cache` (version-keyed, TTL), or a precomputed
+  view built once per refresh rather than about 105 ledger reads per request. No new infrastructure and no spend.
+- Proof: a warm read under 2 s, values EQUAL to the uncached route on all 292 rows.
+- Then the push goes to Andrew together with DSGN round 43's candidate.
+
+**The cold read, for the same round:**
+- The names phase aw-1 targeted fell from 2.5-3.0 s to 1,175 ms.
+- "mentions decode" (up to 3,720 ms) is now the largest cold phase, about half the read, and the cold chatter is 6.4-7.8 s.
+- The next no-spend cut targets mentions decode. Provisioned concurrency stays on Andrew's list as the spend fallback, because the read
+  is still above 2 s.

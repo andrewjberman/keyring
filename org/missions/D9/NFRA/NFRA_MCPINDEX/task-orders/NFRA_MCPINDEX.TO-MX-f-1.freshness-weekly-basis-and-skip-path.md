@@ -97,7 +97,7 @@ hold keeps agent reads of BD configs off (f1.AC3 reads the YAML's two entries as
 Battery dry-run at base: f1.AC1 FAIL as expected (record absent); f1.AC2 FAIL as expected (test absent); f1.AC3 FAIL
 as expected (allocations cadence business-daily, unrealized daily, no basis).
 
-<status>issued</status>
+<status>complete</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>

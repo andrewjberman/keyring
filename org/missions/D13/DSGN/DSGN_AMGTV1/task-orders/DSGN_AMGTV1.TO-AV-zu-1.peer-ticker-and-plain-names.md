@@ -40,10 +40,21 @@ The page ignores both. Presentation only: read what is served and change no serv
 - `postureCites.ts` (~:298, the peer cite's name).
 Officer names are people's names and stay as they are.
 
+**3. AMENDMENT 1 (issuer, 2026-10-06 ~04:3xZ): the tabs harness clears the producer's cache between its scenarios**
+(`src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs`, the Python adapter `PY`).
+- On current CLOUD the producer caches the rankings pointer per (axis, date) for 60 s (`lib/research/api/scoped_amgt.py:456`,
+  `served_cache`, RESAPP au-6).
+- The adapter runs its "mismatch" and "control" scenarios in ONE process, so the control reuses the mismatch's pointer
+  (row_count 10) and is refused SHORT_READ. `short_read_control_served` reads false WITHOUT your change (issuer-measured on the
+  shared tree and on the adapter alone).
+- Fix: in the adapter, import `served_cache` from `lib.research.api` and call `served_cache.clear()` at the top of each
+  scenario (each loop pass and before the `series` read), so each scenario is a fresh read.
+- Change nothing else in the harness, and no assertion.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
-2. Only the four files above change (plus your deliverables, the surprise channel, and `types.ts` ONLY to declare the optional
+2. Only the four files above and the tabs harness's adapter (item 3) change (plus your deliverables, the surprise channel, and `types.ts` ONLY to declare the optional
    served fields `display_name`, `security_key` and `ticker_reason` if TypeScript needs them).
 3. Portal files commit inside `portal/` on your portal branch, then the outer commit. Do not commit the portal gitlink.
 4. Edit tool ONLY; keep each file's line endings.
@@ -56,6 +67,7 @@ portal/src/pages/SecurityAnalysis/components/PriceBars.tsx
 portal/src/pages/SecurityAnalysis/components/RankedList.tsx
 portal/src/pages/SecurityAnalysis/postureCites.ts
 portal/src/pages/SecurityAnalysis/types.ts
+portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~104/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -77,6 +89,11 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
+- **AMENDMENT 1 (~04:3xZ):** AC2 went red on `tabs.harness.cjs short_read_control_served`. It is green at base DEV 4fa0312e with the old
+  outer and red on current CLOUD without any round-43 change. Cause: the au-6 `served_cache` pointer (60 s TTL) is shared across the
+  adapter's two in-process scenarios. Granted the harness file plus a cache clear between scenarios. No gate limb graded the modification
+  (to-pipeline-gate fires on new orders only). Production effect: a regenerated list within 60 s is refused SHORT_READ (designed
+  state) until the TTL passes.
 - **Source:** CTO countersign + list @0bcdb77515 (msg 29884): FWD-8 and FWD-27 NOT_REALIZED page-side.
 - **Census:** `deliverables/2.0.0_SA_COO~D/round42/fwd8-27-census/` @662434b2cf.
 - **Fixtures:** `round43/fixtures/*.deployed-2lUlZomo.json`.
@@ -84,7 +101,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Proof at close:** a render on the deployed payload (AC1) plus a :5174 walk by the issuer. The DEV push and PROD are each Andrew's
   word.
 
-<status>pending</status>
+<status>complete</status>
 <round>43</round>
 <slot>~104</slot>
 <fabric>site-z</fabric>

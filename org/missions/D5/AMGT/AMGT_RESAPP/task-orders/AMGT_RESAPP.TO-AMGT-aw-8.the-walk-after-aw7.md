@@ -81,3 +81,17 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~05:3xZ):** CLOSED -- drained @cdc5184187. Walked on deployed satkY3HX with portal fb939c4a
+(the /freshness candidate).
+- **AC1:** CENSUS 42 names, 42 with a reason, over 93 readable covered names. BP/_LN and NG/_LN return 404 on /thesis (row Z-W251-S4).
+- **AC2:** the walker reads disarmed (DISARMED sent to MSTR~Z 05:26Z).
+- **AC3** (judgment) goes to the CVO's L9 via WALK_ROUND73.md.
+- proof VALID. Rows Z-W251-S1..S4 INERT:
+  - S1: FWD-18's served passage is not shown by the page;
+  - S2: FWD-1's served segments are drawn by no tab;
+  - S3: the /freshness page takes ~12 s, flags 95/95 stale, has low contrast, and its sorts are ineffective;
+  - S4: the census is 42, not 44, and the slash-key 404.
+
+<status>complete</status>
+

@@ -49,7 +49,13 @@ trigger rule disabled through Terraform (`infra/aws/terraform/bd-pipeline/`) wit
 3. Open the NEVER-2 ledger `nfra-mcpindex-r7-bd-doc-retire`, naming BOTH the entry under
    `org/critical_paths/change_management/` AND `org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json`.
 4. Publish, apply, read back, run s19.AC1. Leave the ledger OPEN until the acceptance: s19.AC2 reads the scheduled runs
-   of 2026-10-05 and 2026-10-06. On 2 of 2 close it; on a failure roll back that table per the ANNOUNCE and report.
+   of 2026-10-12 and 2026-10-13. On 2 of 2 close it; on a failure roll back that table per the ANNOUNCE and report.
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- acceptance re-dated.** The seat was down from 2026-10-02 04:26Z
+to 10-06 18:1xZ, so MX-s-17/s-18 did not apply before 10-05 and the original dates (10-05, 10-06) ran with the old
+writers: both read sentinel ABSENT (measured 18:29Z). The acceptance is now the first Mon/Tue pair after this order's
+apply: 2026-10-12 and 2026-10-13. `s19.AC2.sh` carries the same dates. If the apply lands after 2026-10-12T00:00Z, the
+issuer re-dates to the next Mon/Tue pair before the halves. Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS
 
@@ -80,7 +86,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC1.sh; echo "exit=$?"</invocation><expect>WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC2.sh; echo "exit=$?"</invocation><expect>2026-10-05 and 2026-10-06 each: sentinel present, transactions SUMMARY failures=0, partitions written 00:00-03:00Z >=1; empty-window acceptance dates passing 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC2.sh; echo "exit=$?"</invocation><expect>2026-10-12 and 2026-10-13 each: sentinel present, transactions SUMMARY failures=0, partitions written 00:00-03:00Z >=1; empty-window acceptance dates passing 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC3.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/NFRA_MCPINDEX.TO-MX-s-19.bd-doc-merge-retire.proof_of_spec.json</instance_path>
 </proof_of_spec>
