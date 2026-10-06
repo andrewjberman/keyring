@@ -17,7 +17,8 @@
  "chains": 2,
  "join_cells": 0,
  "frozen": true,
- "revision": "1.2",
+ "revision": "1.3",
+ "revision_1_3": "2026-10-06 ~19:4xZ: round 13 (main workstream) cells APPENDED below; no earlier cell is replaced (round-11 analysis ruling 4: an issued order's cells stay readable).",
  "revision_1_2": "2026-10-06 ~19:1xZ, issuer amendment on ADDENDUM 5 @a8fb9c1df1 (CTO~Z msg 30204/30218): RIV-al-1 is cut as ROUND 13 of workstream BBGLEG (round 12 BBGLEG already issued; ONE ISSUER PER ROUND per (round, workstream)). The main workstream's round 13 (ADDENDUM 4 step 3 + the Z-S50 rule) waits on J1.",
  "revision_1_1": "2026-10-06 ~17:5xZ (workstream BBGLEG: eb-1 + pk-1, the Bloomberg leg, disjoint write surface from au-1), issuer amendment on Andrew's word lifting the site-Z Bloomberg hold (MSTR~Z msg 30169, record @8555ce7e12): the two cells the v1.0 narrowing held (ADDENDUM 1 @982e914b1d pk-1; ADDENDUM 2 @b555e81836 eb-1) are added. RIV-au-1 is unchanged and complete (drained c34e0875e9, deployed 8c40451259).",
  "round11_decomposition": "org/missions/D5/ETFS/ETFS_RIVALS/decompositions/ETFS_RIVALS_DECOMP.round11.md"
@@ -97,3 +98,53 @@ written but not served.
   the sweep's hold gate, from `gold_trade_schedule.load_parsekeys(s, canonical)`; `gold_buying_trend.build(..., g4)` derives it
   from its `g4` argument. A reader with no G4 passes an empty map (today's behaviour). No other site changes.
 - **Organic trigger:** the 07:00 ET marker publish (A1: trend, census) and the 09:00 ET sweep (the hold gate).
+
+---
+
+## ROUND 13 (main workstream) -- APPENDED, the cells above stay for the orders that cite them
+
+Source: `org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round11.md` @3ae96d6bc7 section 3 (items 1, 2; item 3 is BBGLEG round
+13 RIV-al-1, drained 2d78ef2151; item 4 is a surprise row against the gate). Author 2.0.0_SA_COO~RV; frozen; revision 1.3 of this
+file. Edges: none of data. fe-1 and lk-1 both write `render.py`: ONE chain (`~2`: fe-1 then lk-1). gw-1 (`~1`) is disjoint.
+Deploy order (record): gw-1's gateway release under its pair BEFORE the publisher Lambda carrying lk-1's link.
+
+| item | cell | chain | risk |
+|---|---|---|---|
+| 1a the audit gateway route | RIV-gw-1 | ~1 | SERVED (build) / WORLD (release, issuer act) |
+| 2 fund-engagement: C-S47 + Z-S50 + per-button section census + C-S36 names | RIV-fe-1 | ~2 (1 of 2) | SERVED |
+| 1b the page link + citation lines to the audit page | RIV-lk-1 | ~2 (2 of 2) | SERVED |
+
+### `RIV-gw-1` -- the gateway serves the day's audit page at GET /rivalfunds/YYYY-MM-DD/audit (ADDENDUM 4 step 3; round-11 analysis item 1)
+- Measured 2026-10-06: `infra/aws/ec2/opal-gateway/app/rivalfunds_view.py` serves only `<key_prefix>date=<day>/index.html`
+  (`object_key`, `_PAGE_NAME`); server.py mounts `/rivalfunds`, `/rivalfunds/`, `/rivalfunds/archive`, `/rivalfunds/{day}`. The
+  publisher has written `audit.html` beside index.html every day since round 12 (10-06: 1,326,857 B). The read policy
+  (`gen_rivalfunds_location.py` `policy_doc`) already grants GetObject on `<key_prefix>*`: no new grant.
+- Interface: `audit_key(day)` = `<key_prefix>date=<day>/audit.html` from the generated location (never typed) and the handler
+  `rivalfunds_audit(request)`: no viewer 401; a bad date 400; a missing object 404 naming the day's audit page with a link to the
+  day's page; otherwise the bytes with `_HEADERS`, under the same 2 MB cap and TTL cache as the page. The server.py Route line is
+  the issuer's hookup at the merge; the gateway release is the issuer's act under a never-widen pair, BEFORE lk-1's link deploys.
+- **Organic trigger:** a signed-in viewer following the main page's audit link.
+
+### `RIV-fe-1` -- every mention in fund F's panel opens a modal with F's engagement; the page counts it; the trend's ticker-named keys get names (round-11 analysis rulings 1, 2, 5: C-S47 + Z-S50 + C-S36)
+- Measured on the served 10-06 page (CVO census, C-S47): 15 mentions (3 securities, 2 funds) open a modal with no section for the
+  linking fund -- Nebius (two keys; pk-1 + al-1), Alphabet (a share-class name crossing to the other listing), SpaceX (a fresh
+  GQGU entry with no contribution row and no YTD trend row, so `_sec_dialogs` writes no GQGU section). Four securities still read
+  in ticker form (C-S36): 8053 JP, RBLX US (rankings / AI text), 9433 JP, 000270 KS (trend only) -- the names stage reads only
+  holding_contribution keys.
+- Interface: a name mention inside fund F's panel links to the key F holds or traded among the keys carrying that name (a name two
+  listings share resolves by F's own holdings, Z-S50; when F holds none, the page-wide rule applies). `_sec_dialogs` writes a
+  `section data-fund=<_fid(F)>` for EVERY fund F with a contribution row OR a trend row (any period) for that key -- a trend-only
+  fund's section states its buying. `render.fund_section_census(html) -> {"buttons", "with_section", "missing"}` over every
+  `data-sec` button inside a `data-fund-panel`; `publish_page` puts it in the manifest (`fund_sections`) and prints a line starting
+  `FAIL: fund sections missing` when missing > 0. `security_names` asks for the ticker-named keys of the newest holding_contribution
+  AND buying_trend objects.
+- **Organic trigger:** the 07:00 ET marker publish; the names stage on the vehicle's daily run.
+
+### `RIV-lk-1` -- the main page's one audit link; the AI citation lines move to the audit page (ADDENDUM 4 step 3; round-11 analysis ruling 3)
+- Measured on the served 10-06 page (CVO): the AI modals carry 148 machine keys in 89 citation lines ("Cited rows: ..."), plain;
+  the main page has no audit link (au-1, by design until the route serves).
+- Interface: `render.render_page(ctx)` carries exactly one `<a href="/rivalfunds/<day>/audit">` worded as "one step away"; no AI modal
+  on the main page carries a "Cited rows:" line (grade line, full text, Observed/Inferred, invalidation stay). `render_audit_page`
+  carries a section `id="citations"` with, per fund and account, its "Cited rows:" line (and [web] reads when present), each block
+  `data-cited-fund="<fund>"` `data-ai-kind="<kind>"`. Deploys only after RIV-gw-1's route serves (never a 404).
+- **Organic trigger:** the 07:00 ET marker publish after the route serves.
