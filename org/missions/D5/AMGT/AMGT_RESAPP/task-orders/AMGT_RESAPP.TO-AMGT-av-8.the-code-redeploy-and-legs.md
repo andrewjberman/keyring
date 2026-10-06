@@ -147,3 +147,15 @@ The legs are as AMENDMENT 2 states: grant, then code at `7889ef1ae4`, then the d
 
 <status>go</status>
 
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~00:3xZ):** CLOSED. LANDED and VERIFIED. AE~A msg 29827; instance @a329b1eb00 VALID;
+NEVER-2 closed 7/7.
+- **Grant:** NO -> YES @7e4fc71394.
+- **Code:** wbIT0PHv -> `2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ=`, memory 1769. The CONTENT-DIFF matches the halves to the byte.
+- **Splice:** the 2 keys only, 0 fields outside the two paths; ASML's `thesis_driver_provenance` intact.
+- **Issuer re-read, 00:15Z on 2lUlZomo** (`round72/REAL_RUN_r72_deployed_20261006.txt`): r72 c39, c41, c42, c43, c44 and c45
+  YES; R72 AV8 GRANT YES; r71 c38 (9 of 9 under 2,000 ms warm), c34 and c36 YES.
+- **Row Z-S355 RULED:** the cold first read is 7.0-8.6 s wall, unchanged, while the first-request calls fell 153/167 -> 60/72. The
+  call count was not the dominant cold cost; that is a round-73 finding. Provisioned concurrency goes on Andrew's list (CTO ruling 2).
+
+<status>complete</status>
+
