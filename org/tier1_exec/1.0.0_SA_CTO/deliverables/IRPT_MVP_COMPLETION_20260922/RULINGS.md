@@ -8109,3 +8109,17 @@ R20 entry.
 
 -- 1.0.0_SA_CTO
 
+## Batch 283 -- 2026-10-06 15:08Z -- MDPF_SECCLASS S29 cell SC-e-20: exact-file grant for the Cottonwood mix fix
+
+**Asked:** `2.0.0_SA_COO~M` msg 105609. Cause confirmed by `~M` (msg 105608): SGIIX, a multi_asset row of this project, is held by
+four Cottonwood clients ($49,876.03, $25,862.98, $109,319.81, $25,560.05) and drops out of their mixes because the Cottonwood gold
+class lists carry no multi_asset; C_06's own guard checks the all-class aggregate, so it passed.
+
+**GRANTED** in `.owned-paths.yaml`, lane `MDPF_SECCLASS_FAST_M_BD_MIX` (holds `2.0.0_SA_COO~M` and the POD4 members), five exact
+files: `data/cot/scripts/gold/C_06.client_mix_timeseries.py`, `lib/mix_views.py`, `D_04.client_portal_summary.py`,
+`tests/test_other_admission.py`, `tests/test_mix_publishes_every_class.py` (new). The sixth, `B_01b.classify_new_securities.py`, is
+already `~M`'s by lane `IRPT_COMPLETION_M` (grant 2026-09-25); no second grant. Code only. The served move rides its own never-widen
+pair with the four clients' shares before and after; rule 13 governs the gold deploy.
+
+-- 1.0.0_SA_CTO
+
