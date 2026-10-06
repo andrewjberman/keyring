@@ -88,3 +88,41 @@ after it lost its turn.
   `integrations/bloomberg/` is under Andrew's no-modify order and is NOT touched.
 - **Proof:** a plant with blpapi refused, in which the module exits within the bound with its distinct code, plus a control in which a
   reachable session still enriches.
+
+## ADDENDUM 3 (2026-10-06 ~16:4xZ) -- Z-S47: every ticker mention links to its modal (COO~RV msg 30147)
+
+**Andrew's word:** `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261006_163xZ_RIVALFUNDS_SECURITY_LINKS_GONE_EVERY_TICKER_MENTION_LINKS.md`
+@05c469e083. **Cause, as COO~RV measured it:** the served 10-05 and 10-06 pages carry `data-holding-dialogs="off"` and 0 links. The
+all-or-nothing fallback at `render.py:1793-1802` (`DIALOG_SOFT_CAP` 1,950,000 B, set under the gateway's 2 MB refusal) strips every
+dialog once the page is over the cap. The closed audit block is 1,119,671 B of the 1,813,001 B page.
+
+**Ruling: route (B), a round-12 cell for `2.0.0_SA_COO~RV`.** The audit trail moves to its own dated object, and the main page keeps
+every dialog.
+- **Why not (A).** "Latest N trades per fund" removes trades. FWD-5's DONE WHEN reads "for every fund Andrew reads its trades", and the
+  trade log is that outcome's carrier. FWD-18 asks that trade detail and holdings lists "stay one step away", which allows them to
+  move, not to be cut. (A) also leaves the cap to bite again as the log grows every day.
+- **Why not (C).** Partial dialogs leave dead text. That breaks FWD-21's ACCEPT ("no ticker on the page is dead text") and Andrew's
+  "any mention".
+- **Round-8 ruling 3 (link once per face) is SUPERSEDED** by Andrew's word: every ticker mention is a link. The cost is a button per
+  mention. The dialog count does not change, because dialogs are written once per security by `_sec_dialogs`.
+
+**The cell's shape:**
+1. **Renderer** (`data/etfs/scripts/rivalfunds/`):
+   - The publisher writes a second platinum object for the day, the audit trail (trades, holdings, status). Its address is
+     `lib/opal_naming.py` output, never typed (rule 30).
+   - The main page replaces the closed block with a plain link to it, keeping the "one step away" wording.
+   - The modals open by `popovertarget`, which works within one document only. So the audit page carries its own dialogs for the
+     securities it names, from the same `_sec_dialogs`. The no-script rule holds on both pages, and FWD-21 holds on both.
+2. **Gateway** (`infra/aws/ec2/opal-gateway/app/rivalfunds_view.py` plus the read policy from `gen_rivalfunds_location.py`):
+   - Add one route, `GET /rivalfunds/YYYY-MM-DD/audit`, behind the same identity wall.
+   - This is a deploy under a never-widen pair. The publisher's switch to the split page lands only after the route serves, so
+     the link is never a 404.
+3. **The fallback stops being silent.** Over the cap, the pre-publish check prints the dialogs-off state as a FAIL line. The day still
+   publishes, and a surprise row is filed. A silent strip is what hid this defect.
+
+**Proof:**
+- On the 10-06 data, the main page renders with every dialog and at least 20% headroom under `DIALOG_SOFT_CAP`. Print the bytes.
+- Every ticker mention on both pages is a `popovertarget` button whose target exists in the same document. Print the count of
+  mentions, the count of buttons, and 0 dead.
+- The audit page serves through the gateway, signed in.
+- A planted over-cap page prints the FAIL line (the failure arm).
