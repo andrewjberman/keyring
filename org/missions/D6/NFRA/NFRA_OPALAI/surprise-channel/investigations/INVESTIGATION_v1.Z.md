@@ -2287,6 +2287,26 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W29-S1",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~29",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "one_line": "Two tests in tests/test_asker_scope.py (test_unprofiled_asker_refused, test_agent_supplied_identity_ignored) pass alone (4 passed) but FAIL when run in one pytest process after test_email_deny / test_data_entitlement_guard / test_browser_oidc; the same two fail on a pristine copy of base ea4f02487a, so OA-f-14 did not cause them.",
+    "surfaced_at": "2026-10-06T21:55Z",
+    "spec_asserts": "TO OA-f-14 AC2 reads four suites (login_admit_r24, identity_scope, tier_principal, principal_cutover) at 36 passed; it says nothing about the other gateway suites sharing a process.",
+    "world_is": "Cross-file test-order coupling in the gateway suite: a multi-file run of tests/test_email_deny.py tests/test_data_entitlement_guard.py tests/test_browser_oidc.py tests/test_asker_scope.py tests/test_taxsma_workbook.py gave 2 failed / 53 passed with the OA-f-14 change and 6 failed / 28 passed / 21 skipped on a git-archive copy of base HEAD (the extra base failures are in test_browser_oidc, FileNotFoundError, an artifact of the archive copy). The two asker_scope failures appear on both sides. Root cause not investigated (off-task).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest tests/test_asker_scope.py -q alone from the gateway dir: 4 passed.",
+        "The five-file command above run from the gateway dir of /c/tmp/oa-29 (changed): 2 failed, 53 passed; run from a git-archive copy of HEAD ea4f02487a: the same two asker_scope tests FAILED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
   }
 ]
 ```
