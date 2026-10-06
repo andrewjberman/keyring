@@ -1,0 +1,42 @@
+{
+  "project_code": "ADVI_BILLING",
+  "macro_code": "ADVI",
+  "directive": "D8",
+  "fabric": "laptop",
+  "pipeline": "advi_billing",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-06",
+  "registered_under_tree": "2026-10-06",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "IRPT_CUSTDY",
+    "ADVI_PERFRP",
+    "ADVI_49F"
+  ],
+  "name": "Q-2: advisory-fee billing, buy or build: fees worked out from Opal's own data, traced to the agreement, the Schwab fee file without Black Diamond",
+  "description": "Confirmed by Andrew 2026-10-06 ~21:0xZ at the 1.0.0_SA_CTO terminal (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_210xZ_SEVEN_CALLS_RDP_LOCK_Q1_Q2_Q3_CONFIRMED_NO_BD_SHAPE.md).",
+  "brief_ref": "docs/briefs/q2-billing-buy-or-build-brief-20261006.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_Q2_BILLING_BUY_OR_BUILD_20261006.md",
+  "prds": [
+    {
+      "path": "org/missions/D8/ADVI/ADVI_BILLING/prd/ADVI_BILLING_PRD.md",
+      "version": "v0.1",
+      "status": "RATIFIED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    }
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED at registration; seating is 0.0.0_AB_MSTR's on Andrew's word"
+  }
+}
