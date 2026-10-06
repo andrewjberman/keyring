@@ -1,0 +1,748 @@
+{
+ "page": "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\78418ecd-8845-40a2-9d4b-c51cb47e8982\\scratchpad\\p\\index.html",
+ "bytes": 1294421,
+ "dialog_keys": 424,
+ "funds": [
+  "IDVZ",
+  "TXUE",
+  "BIDD",
+  "CGIC",
+  "INEQ",
+  "SCHY",
+  "PFOE",
+  "WCMG",
+  "GQGU",
+  "TSEL",
+  "BASG",
+  "ETFT",
+  "PCLG"
+ ],
+ "a_static": {
+  "buttons": 2073,
+  "unresolved": [],
+  "no_fund_section": [
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:GOOG_US_Equity:Alphabet Inc-Cl C",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:GOOG_US_Equity:Alphabet Inc-Cl C",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:N97284108:Nebius Group Nv",
+   "WCMG:N97284108:Nebius Group Nv",
+   "GQGU:SPCX_US_Equity:Space Exploration Technologies Corp",
+   "GQGU:SPCX_US_Equity:Space Exploration Technologies Corp",
+   "GQGU:SPCX_US_Equity:Space Exploration Technologies Corp",
+   "GQGU:SPCX_US_Equity:Space Exploration Technologies Corp",
+   "GQGU:SPCX_US_Equity:Space Exploration Technologies Corp"
+  ],
+  "outside_panel": 0,
+  "per_fund": {
+   "IDVZ": 154,
+   "TXUE": 152,
+   "BIDD": 165,
+   "CGIC": 180,
+   "INEQ": 165,
+   "SCHY": 184,
+   "PFOE": 165,
+   "WCMG": 142,
+   "GQGU": 196,
+   "TSEL": 126,
+   "BASG": 167,
+   "ETFT": 126,
+   "PCLG": 151
+  },
+  "no_fund_section_n": 15
+ },
+ "b_clicks": {
+  "periods": [
+   "rf-period-R30",
+   "rf-period-QTD",
+   "rf-period-YTD"
+  ],
+  "clicks": 234,
+  "fails_n": 3,
+  "clicking_fund_section_first": 132,
+  "fails": [
+   {
+    "fund": "WCMG",
+    "period": "rf-period-R30",
+    "key": "N97284108",
+    "text": "Nebius Group Nv",
+    "open": true,
+    "fund_section": false,
+    "h3": "Nebius Group Nv"
+   },
+   {
+    "fund": "WCMG",
+    "period": "rf-period-QTD",
+    "key": "N97284108",
+    "text": "Nebius Group Nv",
+    "open": true,
+    "fund_section": false,
+    "h3": "Nebius Group Nv"
+   },
+   {
+    "fund": "WCMG",
+    "period": "rf-period-YTD",
+    "key": "N97284108",
+    "text": "Nebius Group Nv",
+    "open": true,
+    "fund_section": false,
+    "h3": "Nebius Group Nv"
+   }
+  ]
+ },
+ "b_nested_ai_modal": {
+  "key": "PBR_US_Equity",
+  "open": true
+ },
+ "c_plain_ticker": {
+  "ticker_vocab": 415,
+  "hits": 456,
+  "hits_fund_codes": 0,
+  "by_ticker": {
+   "AI": 60,
+   "PBR": 4,
+   "TSM": 19,
+   "ASML": 8,
+   "LNVGY": 1,
+   "UBSG": 1,
+   "JD": 1,
+   "AZN": 13,
+   "BNPQY": 4,
+   "SNY": 1,
+   "ORANY": 2,
+   "MTD": 23,
+   "ATD": 4,
+   "ENR": 4,
+   "ORA": 4,
+   "2330": 12,
+   "EOAN": 2,
+   "RKT": 2,
+   "8306": 3,
+   "6501": 1,
+   "BNP": 1,
+   "GXYYY": 1,
+   "6475395Z": 2,
+   "ACEVECTO": 1,
+   "000660": 7,
+   "005930": 7,
+   "005935": 1,
+   "2454": 5,
+   "300750": 2,
+   "700": 3,
+   "9988": 2,
+   "ASM": 2,
+   "HDB": 1,
+   "NOVOB": 4,
+   "8035": 1,
+   "IVN": 1,
+   "051910": 1,
+   "032830": 1,
+   "DBS": 5,
+   "SHEL": 1,
+   "TTE": 4,
+   "8058": 4,
+   "RIO": 4,
+   "8053": 4,
+   "EBS": 6,
+   "8591": 1,
+   "DTE": 1,
+   "MSCI": 5,
+   "DG": 4,
+   "ULVR": 1,
+   "BATS": 2,
+   "ENEL": 5,
+   "ST": 2,
+   "WES": 4,
+   "ALV": 1,
+   "INFO": 4,
+   "BHP": 4,
+   "ROP": 4,
+   "DHL": 1,
+   "939": 1,
+   "FER": 1,
+   "NFLX": 4,
+   "AVGO": 1,
+   "PWR": 5,
+   "INTU": 5,
+   "NOW": 3,
+   "HESAY": 3,
+   "UBER": 4,
+   "SPOT": 6,
+   "GEV": 1,
+   "TEVA": 2,
+   "7974": 2,
+   "VEEV": 5,
+   "VLO": 2,
+   "TPR": 5,
+   "NBIS": 3,
+   "GOOGL": 1,
+   "BAB": 1,
+   "GLE": 1,
+   "285A": 3,
+   "30233Q108": 3,
+   "060505104": 1,
+   "SPCX": 1,
+   "24703L202": 4,
+   "NVDA": 15,
+   "30303M102": 1,
+   "037833100": 5,
+   "N07059210": 1,
+   "907818108": 4,
+   "GE": 6,
+   "05464C101": 1,
+   "MSFT": 4,
+   "BE": 1,
+   "META": 9,
+   "AMD": 1,
+   "SNDK": 3,
+   "CRS": 1,
+   "AXON": 1,
+   "XYZ": 1,
+   "SPHR": 3,
+   "LRCX": 2,
+   "STX": 4,
+   "MRVL": 5,
+   "MPWR": 4,
+   "EFX": 6,
+   "SCHW": 1,
+   "ARES": 1,
+   "KKR": 4,
+   "AJG": 7,
+   "FTNT": 1,
+   "SYK": 1,
+   "AMS": 3,
+   "APP": 1,
+   "TXN": 3,
+   "ADYEY": 4,
+   "ABNB": 1,
+   "CSGP": 3,
+   "LLY": 1
+  },
+  "sample": [
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, IDVZ"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "PBR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "holding_contribution IDVZ|R30|PBR_US_Equity = 0.00465537; holdi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "TSM",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00465537; holding_contribution IDVZ|R30|TSM_US_Equity = 0.00379772; holdi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "ASML",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00379772; holding_contribution IDVZ|R30|ASML_US_Equity = 0.00156315; trade"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "LNVGY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "|ASML_US_Equity = 0.00156315; trade_schedule IDVZ|LNVGY_US_Equity|2026-09-23 = 3.9474"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "UBSG",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-23 = 3.94744e+06; trade_schedule IDVZ|UBSG_SW_Equity|2026-09-23 = -3.807"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "JD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-23 = -3.8076e+06; trade_schedule IDVZ|JD_US_Equity|2026-09-11 = -2.856"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ty|2026-09-11 = -2.85631e+06; trade_schedule IDVZ|AZN_LN_Equity|2026-09-11 = 2.1986"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "BNPQY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-11 = 2.19865e+06; trade_schedule IDVZ|BNPQY_US_Equity|2026-09-11 = 1.2069"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "BNPQY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "9-11 = 1.20697e+06; holding_contribution IDVZ|R30|BNPQY_US_Equity = -0.00598634; hold"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "SNY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity = -0.00598634; holding_contribution IDVZ|R30|SNY_US_Equity = -0.00429841; hold"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "ORANY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity = -0.00429841; holding_contribution IDVZ|R30|ORANY_US_Equity = -0.00426754; trad"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "ORANY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "RANY_US_Equity = -0.00426754; trade_schedule IDVZ|ORANY_US_Equity|2026-09-11 = -1.018"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "MTD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "6-09-11 = -1.01816e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; "
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "-11 = -1.01816e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; buyi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ZN_LN_Equity = -0.00106957; buying_trend IDVZ|YTD|AZN_LN_Equity = 5.7262e+06; marke"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, IDVZ"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "PBR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "holding_contribution IDVZ|R30|PBR_US_Equity = 0.00465537; holdi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "ASML",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00465537; holding_contribution IDVZ|R30|ASML_US_Equity = 0.00156315; holdi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "PBR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00156315; holding_contribution IDVZ|YTD|PBR_US_Equity = 0.0212167; holdin"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "ASML",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "Equity = 0.0212167; holding_contribution IDVZ|YTD|ASML_US_Equity = 0.0125344; holdin"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "BNPQY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "Equity = 0.0125344; holding_contribution IDVZ|R30|BNPQY_US_Equity = -0.00598634; trad"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "BNPQY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "NPQY_US_Equity = -0.00598634; trade_schedule IDVZ|BNPQY_US_Equity|2026-09-11 = 1.2069"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-11 = 1.20697e+06; trade_schedule IDVZ|AZN_LN_Equity|2026-09-11 = 2.1986"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "y|2026-09-11 = 2.19865e+06; buying_trend IDVZ|YTD|AZN_LN_Equity = 5.7262e+06; holdi"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "MTD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "LN_Equity = 5.7262e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; "
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 5.7262e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; mark"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TXUE"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ATD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "trade_schedule TXUE|ATD_CN_Equity|2026-09-30 = -7.669"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ENR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ty|2026-09-30 = -7.66924e+06; trade_schedule TXUE|ENR_GR_Equity|2026-09-01 = 2.7392"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ORA",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-01 = 2.73928e+06; trade_schedule TXUE|ORA_FP_Equity|2026-09-04 = 2.0317"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "2330",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-04 = 2.03178e+06; trade_schedule TXUE|2330_TT_Equity|2026-09-04 = 1.6647"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ENR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-04 = 1.66474e+06; trade_schedule TXUE|ENR_GR_Equity|2026-09-02 = 1.5479"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ENR",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-02 = 1.54794e+06; trade_schedule TXUE|ENR_GR_Equity|2026-09-09 = 1.2372"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "EOAN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity|2026-09-09 = 1.2372e+06; trade_schedule TXUE|EOAN_GR_Equity|2026-09-30 = 1.1507"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AZN",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-30 = 1.15077e+06; trade_schedule TXUE|AZN_LN_Equity|2026-09-30 = 1.0540"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "RKT",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-30 = 1.05406e+06; trade_schedule TXUE|RKT_LN_Equity|2026-09-04 = 818,17"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "RKT",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "_Equity|2026-09-04 = 818,174; trade_schedule TXUE|RKT_LN_Equity|2026-09-09 = 702,64"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "8306",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "26-09-09 = 702,640; holding_contribution TXUE|R30|8306_JP_Equity = 0.00189796; holdi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "2330",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00189796; holding_contribution TXUE|R30|2330_TT_Equity = 0.00152767; holdi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "6501",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00152767; holding_contribution TXUE|R30|6501_JP_Equity = 0.00131315; holdi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ORA",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00131315; holding_contribution TXUE|R30|ORA_FP_Equity = -0.00510844; hold"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "BNP",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity = -0.00510844; holding_contribution TXUE|R30|BNP_FP_Equity = -0.00411485; hold"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "GXYYY",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity = -0.00411485; holding_contribution TXUE|R30|GXYYY_US_Equity = -0.00283235; buyi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ATD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "YY_US_Equity = -0.00283235; buying_trend TXUE|YTD|ATD_CN_Equity = -7.38036e+06; mar"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TXUE"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "8306",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "holding_contribution TXUE|R30|8306_JP_Equity = 0.00189796; holdi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "8306",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00189796; holding_contribution TXUE|YTD|8306_JP_Equity = 0.0131136; holdin"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "2330",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "Equity = 0.0131136; holding_contribution TXUE|R30|2330_TT_Equity = 0.00152767; holdi"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "2330",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "quity = 0.00152767; holding_contribution TXUE|YTD|2330_TT_Equity = 0.010785; buying_"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "2330",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "|2330_TT_Equity = 0.010785; buying_trend TXUE|YTD|2330_TT_Equity = 1.01907e+07; hold"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ORA",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "uity = 1.01907e+07; holding_contribution TXUE|R30|ORA_FP_Equity = -0.00510844; trad"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ORA",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "|ORA_FP_Equity = -0.00510844; trade_schedule TXUE|ORA_FP_Equity|2026-09-04 = 2.0317"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ATD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "ity|2026-09-04 = 2.03178e+06; trade_schedule TXUE|ATD_CN_Equity|2026-09-30 = -7.669"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "ATD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "|2026-09-30 = -7.66924e+06; buying_trend TXUE|YTD|ATD_CN_Equity = -7.38036e+06; tra"
+   }
+  ]
+ },
+ "c_equity_form_visible_text": {
+  "n": 0,
+  "sample": []
+ },
+ "d_whole": {
+  "IDVZ": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16461,
+   "buttons": 154
+  },
+  "TXUE": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16610,
+   "buttons": 152
+  },
+  "BIDD": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 18191,
+   "buttons": 165
+  },
+  "CGIC": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 18298,
+   "buttons": 180
+  },
+  "INEQ": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16441,
+   "buttons": 165
+  },
+  "SCHY": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 17744,
+   "buttons": 184
+  },
+  "PFOE": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16567,
+   "buttons": 165
+  },
+  "WCMG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 18050,
+   "buttons": 142
+  },
+  "GQGU": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 18801,
+   "buttons": 196
+  },
+  "TSEL": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 14671,
+   "buttons": 126
+  },
+  "BASG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 17932,
+   "buttons": 167
+  },
+  "ETFT": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16654,
+   "buttons": 126
+  },
+  "PCLG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 3434,
+   "buttons": 151
+  },
+  "_audit_block": false,
+  "_audit_href": 0,
+  "_audit_text": 0
+ }
+}
