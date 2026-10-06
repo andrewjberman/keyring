@@ -103,7 +103,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   analysis.
 - **Issued by hand, no loop.**
 
-<status>pending</status>
+<status>complete</status>
 <round>44</round>
 <slot>~105</slot>
 <fabric>site-z</fabric>
