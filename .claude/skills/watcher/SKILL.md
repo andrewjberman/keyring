@@ -21,10 +21,16 @@ History and the incidents behind each trap: `docs/references/WATCHER_HISTORY.md`
 1. **Registration:** `get_agent_status(<serial>)`; if STALE or absent, `register_agent(<serial>, summary=...)`.
 2. **Census your script rows** (PowerShell; the `@( )` wrap is load-bearing in 5.1):
    ```powershell
-   $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" |
-     Where-Object { $_.CommandLine -match 'inbox-watch\.sh <serial-regex> stream' -and $_.CommandLine -notmatch ' -c ' })
+   $me = '<full serial, e.g. 0.0.0_AB_MSTR~Z>'
+   $rows = @(Get-CimInstance Win32_Process -Filter "Name='bash.exe'" | Where-Object {
+     $_.CommandLine -notmatch ' -c ' -and
+     $_.CommandLine -match 'inbox-watch\.sh"?\s+(\S+)\s+stream' -and $matches[1] -eq $me })
    $rows | Select-Object ProcessId, CreationDate ; "script rows: $($rows.Count)"
    ```
+   The `"?` is load-bearing: where the workspace path has a space (site Z), the launch QUOTES the script path, so the
+   CommandLine reads `inbox-watch.sh" <serial> stream`. A pattern without it reads 0 against a live row, and 0 means
+   "arm one", so the watchers stack. The serial is EXTRACTED and compared with `-eq`, never matched as a substring: a
+   base serial is a prefix of its lanes, and a loose match would put a peer's watcher in the reap set.
    - **0 rows:** arm (step 3).
    - **1 row:** healthy if you armed it this session. Reap nothing.
    - **N>1:** `Stop-Process -Id <pid> -Force` every row EXCEPT the pid you RECORDED at your last arm. No recorded

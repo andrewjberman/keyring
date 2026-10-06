@@ -82,3 +82,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @18931420f3. Worker AC2: c36 local covered 95, missing 0. On the shared tree, test_model_words and the freshness tests read 27 passed. proof VALID. No rows. Served by au-7.
+
+<status>complete</status>

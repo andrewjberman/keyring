@@ -27,8 +27,8 @@ WHAT IT FLAGS, per project:
 CAPACITY (Andrew-direct 2026-09-14 ~07:0xZ, "We can only have 3 COOs running their respective projects/subagents at
 any one time"): the live COO lanes on THIS box, read from the broker's org/mcp/liveness.json (a 2.0.0_SA_COO lane seen
 within LIVE_SECONDS, the broker's own LIVE threshold), set beside the file's per-fabric cap. The box's fabric comes
-from the DEVICE (AGENTBUS_DEVICE, else the workspace path -- both devices commit to CLOUD since 2026-09-24, so the
-checked-out branch cannot say which box this is). A liveness row is the broker's claim, not process
+from the DEVICE (the box's AGENTBUS_DEVICE setting through the device register org/devices/DEVICES.json; never the
+workspace path or the checked-out branch). A liveness row is the broker's claim, not process
 truth, and the line says which instrument it read.
 
 A VIEWER, NOT A CHECKER: findings never change the exit code (the monitor moratorium; Andrew ~01:xxZ card 1 chose
@@ -93,7 +93,6 @@ def state_violations(code, text):
 GATE_FORMS = ("prd_admitted", "dep_stage_at_least", "status", "manual")
 LIVE_SECONDS = 120          # org/mcp/server.py STALE_THRESHOLD: a registration older than this is not LIVE
 COO_BASE = "2.0.0_SA_COO"
-BRANCH_FABRIC = {"CLOUD": "laptop", "SITEZ": "sitez"}  # fallback only; see box_fabric() -- one trunk since 2026-09-24
 
 
 def _gate_enum_matches():
@@ -182,30 +181,33 @@ class Reader:
         return live, "org/mcp/liveness.json (%d registrations; LIVE = seen within %ds)" % (len(d), LIVE_SECONDS)
 
     def box_fabric(self):
-        """The DEVICE this box is, read the way .tools/agentbus-sqs.sh reads it: AGENTBUS_DEVICE first, then the
-        workspace path. Since 2026-09-24 (Andrew-direct "recs approved", card 1 (a): ONE TRUNK) both devices work on
-        CLOUD, so the checked-out branch can no longer say which fabric this is; BRANCH_FABRIC stays only as the
-        last fallback for a checkout that predates the change."""
-        env = os.environ.get("AGENTBUS_DEVICE", "").strip().lower()
-        if env:
-            # The device register's one reader (NFRA_CTLPLN FWD-2), loaded by FILE PATH: .tools/lib is a package
-            # too, and with .tools first on sys.path `from lib import` would find it.
-            spec = importlib.util.spec_from_file_location("opal_devices", os.path.join(ROOT, "lib", "devices.py"))
-            devices = importlib.util.module_from_spec(spec)
-            spec.loader.exec_module(devices)
-            canon = devices.resolve(env)
-            if canon:
-                return canon, "AGENTBUS_DEVICE=%s (device register)" % env
-        # Path fallback KEPT until AGENTBUS_DEVICE is set and read back on every box (1.0.0_SA_CTO msg 105617).
-        low = os.path.abspath(self.root).replace("\\", "/").lower()
-        if "opal bloomberg" in low or "opalbl~1" in low:
-            return "sitez", "workspace path %s" % self.root
-        if "andrewberman" in low or "andrew~1" in low:
-            return "laptop", "workspace path %s" % self.root
-        r = subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"], cwd=self.root, capture_output=True, text=True,
-                           encoding="utf-8", errors="replace")
-        branch = r.stdout.strip()
-        return BRANCH_FABRIC.get(branch), "branch %s (fallback; path did not resolve a device)" % (branch or "?")
+        """The DEVICE this box is, read the way .tools/agentbus-sqs.sh reads it: the box's own setting AGENTBUS_DEVICE
+        (the process environment, else the persisted user setting for a process started before it was made), resolved
+        through the device register (NFRA_CTLPLN C-REGISTRY). Never the workspace path or the branch: both fallbacks
+        were dropped on 1.0.0_SA_CTO msg 105622. Unset or unregistered -> (None, the refusal); callers read None as no
+        fabric."""
+        claim, basis = os.environ.get("AGENTBUS_DEVICE", "").strip(), "process environment"
+        if not claim:
+            key = os.environ.get("AGENTBUS_REG_KEY", "HKCU\\Environment")
+            try:
+                import winreg
+                with winreg.OpenKey(winreg.HKEY_CURRENT_USER, key.split("\\", 1)[1]) as k:
+                    claim = str(winreg.QueryValueEx(k, "AGENTBUS_DEVICE")[0]).strip()
+                basis = "persisted user setting %s" % key
+            except (ImportError, IndexError, OSError):
+                claim = ""
+        if not claim:
+            return None, ("REFUSED: AGENTBUS_DEVICE is not set (process environment or persisted user setting); "
+                          "set it once at bring-up -- no path fallback")
+        # The device register's one reader (NFRA_CTLPLN FWD-2), loaded by FILE PATH: .tools/lib is a package too, and
+        # with .tools first on sys.path `from lib import` would find it.
+        spec = importlib.util.spec_from_file_location("opal_devices", os.path.join(ROOT, "lib", "devices.py"))
+        devices = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(devices)
+        canon = devices.resolve(claim)
+        if not canon:
+            return None, "REFUSED: AGENTBUS_DEVICE=%s is not in the device register" % claim
+        return canon, "AGENTBUS_DEVICE=%s (%s; device register)" % (claim, basis)
 
     def last_activity(self, row):
         home = (row or {}).get("home")

@@ -92,3 +92,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @69c017d520. AC1: 15 plant cases passed. AC2 dry build: bbg 1376/1376, barrons 162/162, sa 10220/10220, ft and wsj 0 (url_reason). No gold write. proof VALID. Rows Z-W233-S1..S3 INERT. S3 (test_aj7's byte pin) is fixed in this commit; the harvest suite on the shared tree reads 353 passed. The gold rebuild is au-7's leg. COO~H is told (msg 29746) and holds HARVST builds until this commit lands.
+
+<status>complete</status>

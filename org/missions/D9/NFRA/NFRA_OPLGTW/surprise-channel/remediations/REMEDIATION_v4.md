@@ -50,11 +50,11 @@ now takes the first full trading day on live 4b6b823fae (Monday 2026-10-05).
     "owner": "1.0.0_SA_CTO~O",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W15-S37",
@@ -72,11 +72,11 @@ now takes the first full trading day on live 4b6b823fae (Monday 2026-10-05).
     "owner": "2.0.0_SA_COO~O",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

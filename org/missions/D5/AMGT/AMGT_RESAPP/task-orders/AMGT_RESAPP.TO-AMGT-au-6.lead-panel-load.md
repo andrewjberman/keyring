@@ -88,3 +88,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-05 ~18:0xZ):** CLOSED -- drained @066bbc25d2. AC1: c38 local 9 of 9 under 6000 ms (warm 0.15-1.0 s). AC2: EQUAL 9 of 9. The api suite on the shared tree after all four build drains reads 612 passed. proof VALID. Row Z-W236-S1 INERT (the cold-container producer remainder). The deployed 2,000 ms bar is au-7's AC2.
+
+<status>complete</status>

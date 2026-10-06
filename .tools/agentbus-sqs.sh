@@ -156,33 +156,46 @@ fi
 # `recv` therefore DEFAULT to the measured device and refuse the other one without an explicit,
 # stated override.
 #
-# The discriminator is the workspace path's user component, because the two checkouts live under
-# different Windows profiles. Deliberately NOT the agent serial: a ~Z suffix is an attribution
-# convention, not a device fact, and base-serial agents run on site Z too (1.0.0_SA_CTO~Z is a
-# lane, but nothing stops a bare serial from being launched here).
-this_device() {
+# The discriminator is the box's own setting, AGENTBUS_DEVICE, made once at bring-up as a user
+# environment variable and resolved through the device register (NFRA_CTLPLN C-REGISTRY). Never the
+# workspace path (LD-0405; the path fallback was dropped on 1.0.0_SA_CTO msg 105622 once both boxes
+# read the setting back) and never the agent serial (a ~Z suffix is attribution, not a device fact).
+# A process started BEFORE the setting was made lacks it in its environment, so the persisted user
+# setting (HKCU\Environment) is read next; it is the same setting, not a derivation. Neither present
+# -> UNKNOWN plus a loud line on stderr; every caller refuses on UNKNOWN.
+device_setting() {
     if [ -n "${AGENTBUS_DEVICE:-}" ]; then
-        local canon
-        if canon="$(_devices resolve "$AGENTBUS_DEVICE")"; then echo "$canon"; return 0; fi
-        echo "agentbus-sqs: AGENTBUS_DEVICE='$AGENTBUS_DEVICE' is not in the device register ($(_devices names | tr '\n' ' '))" >&2
-        exit 2
+        echo "${AGENTBUS_DEVICE}"; echo "AGENTBUS_DEVICE (process environment)" >&3; return 0
     fi
-    # Path fallback KEPT until AGENTBUS_DEVICE is set and read back on every box (1.0.0_SA_CTO msg
-    # 105617, batch 284 item 3); then it goes, with a loud refusal when the variable is unset.
-    root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
-    case "$root" in
-        *Opal?Bloomberg*|*OPALBL~1*) echo sitez ;;
-        *AndrewBerman*|*ANDREW~1*)   echo laptop ;;
-        *) echo "UNKNOWN" ;;
-    esac
+    local key="${AGENTBUS_REG_KEY:-HKCU\\Environment}" out
+    if command -v reg >/dev/null 2>&1; then
+        out="$(MSYS_NO_PATHCONV=1 reg query "$key" /v AGENTBUS_DEVICE 2>&1 | tr -d '\r')"
+        out="$(echo "$out" | awk '$1=="AGENTBUS_DEVICE" && $2 ~ /^REG_(EXPAND_)?SZ$/ {print $3}')"
+        if [ -n "$out" ]; then
+            echo "$out"; echo "AGENTBUS_DEVICE (persisted user setting, $key)" >&3; return 0
+        fi
+    fi
+    return 1
+}
+
+this_device() {
+    local claim canon
+    if ! claim="$(device_setting 3>/dev/null)"; then
+        echo "agentbus-sqs: AGENTBUS_DEVICE is not set (process environment or persisted user setting) --" \
+             "set it once at bring-up to a device in org/devices/DEVICES.json; refusing to derive it from a path" >&2
+        echo "UNKNOWN"; return 0
+    fi
+    if canon="$(_devices resolve "$claim")"; then echo "$canon"; return 0; fi
+    echo "agentbus-sqs: AGENTBUS_DEVICE='$claim' is not in the device register ($(_devices names | tr '\n' ' '))" >&2
+    exit 2
 }
 
 # Guard: refuse to act on a device that is not this one unless the caller says so out loud.
 assert_own_device() {
     want="$1"; me="$(this_device)"
     if [ "$me" = "UNKNOWN" ]; then
-        echo "agentbus-sqs: CANNOT RESOLVE THIS DEVICE from the workspace path." >&2
-        echo "  Set AGENTBUS_DEVICE=laptop|sitez explicitly. Refusing to guess -- guessing wrong" >&2
+        echo "agentbus-sqs: CANNOT RESOLVE THIS DEVICE: AGENTBUS_DEVICE is not set." >&2
+        echo "  Set it to one of: $(_devices names | tr '\n' ' '). Refusing to guess -- guessing wrong" >&2
         echo "  drains the other machine's mail (the orphan-thief pattern)." >&2
         exit 2
     fi
@@ -494,7 +507,7 @@ case "$cmd" in
     # getting burned by.
     me="$(this_device)"
     echo "device: ${me}"
-    echo "  basis: $([ -n "${AGENTBUS_DEVICE:-}" ] && echo "AGENTBUS_DEVICE override" || echo "workspace path")"
+    echo "  basis: $(device_setting 3>&1 >/dev/null || echo "none")"
     echo "  root:  $(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
     if [ "$me" = "UNKNOWN" ]; then
         echo "  -> UNRESOLVED. Set AGENTBUS_DEVICE to a device in org/devices/DEVICES.json ($(_devices names | tr '\n' ' ')). Refusing to guess is deliberate." >&2

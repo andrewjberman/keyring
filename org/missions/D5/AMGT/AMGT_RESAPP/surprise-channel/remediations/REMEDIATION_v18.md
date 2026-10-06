@@ -19,16 +19,16 @@ Author: 3.0.0_SA_CVO~Z. Round: v85. Fabric: site-z. Recorded: 2026-10-05T14:0xZ.
   "owner": "2.0.0_SA_COO~Z",
   "round": "v85",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~Z",
-   "at": null
+   "at": "2026-10-05T16:25Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~Z",
    "round": "v85"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
