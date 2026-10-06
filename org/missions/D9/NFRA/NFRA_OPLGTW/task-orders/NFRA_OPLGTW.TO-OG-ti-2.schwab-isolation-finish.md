@@ -68,7 +68,7 @@ PLACE to `complete`. Report once.
   `test_schwab_host_inputs.py`). The issuer re-runs `ti2.AC1` on the drained union.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
