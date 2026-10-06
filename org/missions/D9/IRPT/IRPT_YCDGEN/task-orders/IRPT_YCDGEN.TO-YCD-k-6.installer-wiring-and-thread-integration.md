@@ -82,9 +82,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~1`, the round's JOIN, after every other cell merged; addendum C cell (decomposition IRPT_YCDGEN_DECOMP_R6C.md), cut by the issuer to disarm worker rows W1-S11 and W3-S15. AC1 and AC2 run in test_resident_installed.py; AC3-AC5 and AC6 in the integration file. Release order: this cell, then the issuer sets Andrew's principal id. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-06 ~00:3xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @2c721e21f2, merged d2b625e697; k-6.AC1-AC8 PASS on the merged tree and at the worker (AC7: 53 passed, 8 skipped, the four red d-6 tests green; AC6: 3 passed), instance VALID. Cross-cell check on the merged tree: every test directory of the touched packages passes together (ycharts/research/tests, ycharts/generate/tests, reports/tests, ops/tests, _contracts/tests, and lib/tests/test_irpt_destination.py 73 passed), no failure. The worker's negative control (the worker ignoring the returned artifact_ref) fails two of three integration tests with ATTENTION OPAL_PRODUCER_OUTPUT. Rows: W1-S11, W3-S15 and W3-S17 DISARMED by this cell; W3-S18 cured (the installer test file now puts ycharts/extract on its path and passes alone, 19 passed); W1-S14 INERT, accepted. **W1-S13 ARMED, carried to the release:** the Overview element map has no installed home; the installer reads it from a new optional pinned `opal_map` binding that no bindings file carries yet, and the default classifier opener (`layout_overview._default_classifier`) and the default firm-store opener (`runner.research_s3`) were exercised only as fakes. Disarm owner 2.0.0_SA_COO~Y: the release package carries `deliverables/maps/overview_map.json` with its sha256 in the `opal_map` binding, and the issuer's close run exercises both default openers once against the real stores.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6C_WIRING</workstream>
 <slot>~1</slot>
