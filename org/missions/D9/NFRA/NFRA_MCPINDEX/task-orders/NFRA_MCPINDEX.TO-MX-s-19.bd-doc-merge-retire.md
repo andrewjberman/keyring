@@ -75,6 +75,9 @@ issuer re-dates to the next Mon/Tue pair before the halves. Graded by: no gate l
   touched. Retiring the documents, trigger Lambdas and instances is a later order after one observed week.
 - **Acceptance (s19.AC2):** the first Monday and Tuesday after the disable, 2026-10-19 and 2026-10-20; `s19.AC2.sh`
   carries those dates. If the disable lands later, the issuer re-dates.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS

@@ -129,6 +129,13 @@ Write the proof instance at the `<instance_path>`, flip `<status>` to `complete`
   its write surface is the AE seat's deliverables, disjoint from the first issuance.
 - `<risk>SERVED</risk>`: it reads live AWS state and changes none.
 - Battery dry-run at base: a1.AC1 FAIL as expected (record absent).
+- **ISSUER CORRECTIONS (2026-10-06 ~21:2xZ, on the seat's rows Z-S81 and msg 30308):** the id `MX-a-1` was already a
+  decomposition cell (the portal property row, decomp line 377); this order is the Andrew-direct BD run-shape cell of
+  workstream BDOPS and serves no decomposition row. The gate's "1 owned cell resolves" matched that other cell. The id
+  is kept because the order is terminal and cited. The prescribed row-id form `Z-AEMI-S<k>` was wrong; the seat minted
+  Z-S77..Z-S81.
+- **ISSUER GRADE:** a1.AC1 re-run on CLOUD @b4e1284fad: 4 tables, fetches_from_bd=False, evening_extraneous=True,
+  RESULT: PASS. AC2 is the CVO's at L9.
 - MX-s-17 (repoint the evening documents) is likely superseded if the verdict reads `evening_extraneous: true`. The
   issuer rules that on the verdict, not before.
 

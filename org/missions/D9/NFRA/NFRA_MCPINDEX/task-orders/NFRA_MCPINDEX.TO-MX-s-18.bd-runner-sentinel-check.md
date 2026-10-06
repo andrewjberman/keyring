@@ -105,6 +105,9 @@ run the deploy script.
   scheduled runs of Monday 2026-10-12 and Tuesday 2026-10-13: sentinel present, and `silver/transactions/` plus
   `silver/realized/` written by `bd-silver-merge` between 00:00 and 03:00Z, while the evening rules are STILL ENABLED
   (the safety net). That read is MX-s-19's precondition. PHASE B only on the issuer's GO.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS

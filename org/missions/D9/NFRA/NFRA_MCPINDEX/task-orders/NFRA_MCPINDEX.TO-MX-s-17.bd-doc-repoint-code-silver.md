@@ -75,6 +75,9 @@ step at `code/silver/`, the script `bd-silver-merge` runs. Disarm read: both doc
 - This order stays FIRST in the chain: until the evening rules are disabled (MX-s-19, after a proven Monday and
   Tuesday) the documents keep running, and the verdict measured their frozen 2026-06-29 script writing transactions
   WITHOUT the `cusip` column. The repoint removes that divergence for the interim. PHASE B only on the issuer's GO.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS
