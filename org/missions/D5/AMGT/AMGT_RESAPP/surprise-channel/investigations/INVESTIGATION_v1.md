@@ -18793,6 +18793,45 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "PyMuPDF text and font dict over deliverables/0.9.0_WK_AMGT_RESAPP~261/print/*.pdf (22, 24, 24 pages)"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W262-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~262",
+  "surfaced_at": "2026-10-06T17:58:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "The task order's captures (1280 and 390 px, one capture per sort button, first-paint time) cannot be produced by walk.mjs, so a one-pass driver was used instead.",
+  "spec_asserts": "AMGT-az-1 renders /freshness with the ui-walk skill; SKILL.md names walk.mjs, whose context is fixed at 1440x900, takes no viewport option and has no per-sort capture or first-paint timing.",
+  "world_is": "Wrote .scratch/freshness_render.mjs (not committed; its text is in deliverables/.../instrument/freshness_render.mjs): arms and disarms through ui_walker_account.py (arm, secret with UI_WALK_CHILD, disarm <holder> in a finally block), the same GET/HEAD/OPTIONS-plus-auth-POST guard, login via /login, then fresh contexts from the signed-in storage state at 1280 and 390. Guard aborts 0. Disarm read REFUSED on the login control; status disabled.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~262/RENDER_FRESHNESS.md; captures/ and contrast-readings.json beside it; portal 6de76f0509 served from C:/tmp/r76-262/portal"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W262-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~262",
+  "surfaced_at": "2026-10-06T17:58:39Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "On the rendered /freshness page the never-collected line ('Web search is not collected yet.') reads 2.16:1 against its ground, under the 4.5:1 bar; 95 of 95 covered companies read stale.",
+  "spec_asserts": "Freshness.tsx comment: 'Contrast comes from the design system's tokens only'; the muted text colour is used for the quiet line.",
+  "world_is": "Computed on 6de76f0509 at 1280 px: uncollected note ink rgb(168,177,194) on rgb(255,255,255) = 2.16:1 (canvas-read colours, WCAG relative luminance); body, input and stale cells ink rgb(22,51,114) on white = 12:1. The summary reads '95 of 95 covered companies have an input that is stale'; the one uncollected input is Web search. A 390 px full page has no document-level horizontal overflow (scrollWidth 390) but the table's right-hand columns are cut at the card edge in the capture.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~262/RENDER_FRESHNESS.md; captures/ and contrast-readings.json beside it; portal 6de76f0509 served from C:/tmp/r76-262/portal"
+    ]
+  }
 }
 ]
 ```
