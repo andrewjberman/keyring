@@ -109,3 +109,18 @@ Stamp any row's `surfaced_at` with `date -u`.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~07:1xZ):** both halves signed -- COO @ef57fb9fdc, CTO @1b2be81842 (`ledger/NEVER_WIDEN_ROUND74_AX5_CTO_HALF.md`, conditions 1-5, including the route leg's 401 negative and 200 positive controls). The build commit is item 0's commit, on CLOUD at or after `0c9b9db840`. The rows served are 302, not 292: EQUAL is over every row served.
 
 <status>pending</status>
+
+**AMENDMENT 2 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~07:4xZ, on AE~A's STOP msg 29959) -- the route-count guard counts the non-greedy keys.**
+`terraform_data.scoped_amgt_route_count_check` (`scoped-amgt-api.tf` ~:553) requires `length(local.scoped_amgt_routes) == 18`. The
+greedy key makes it 19, so the apply failed closed before any change. Nothing was applied.
+
+RULING (b): keep the guard's meaning, that the NON-GREEDY list equals the adapter's `scoped_amgt_route_table()` (18). The greedy key
+re-routes paths the existing handlers already serve, so it is not an adapter route. The condition becomes
+`length([for r in local.scoped_amgt_routes : r if length(regexall("\+}", r)) == 0]) == 18`. Add a second precondition on the same
+resource, `length(local.scoped_amgt_routes) - 18 <= 1`, so at most ONE greedy key exists. Update the comment and error message to say
+both.
+
+A precondition is not a resource attribute, so the plan stays exactly 1 to add, 0 to change, 0 to destroy (CTO condition 2). Any other
+change is a STOP. Option (a), bumping to 19, is refused: the equality would stop meaning list == adapter table. Option (c) is refused:
+the frozen CONTENT-DIFF bars it.
+
