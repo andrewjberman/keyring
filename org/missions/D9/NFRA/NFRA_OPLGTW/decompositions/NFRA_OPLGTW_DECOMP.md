@@ -1467,3 +1467,27 @@ on the drained union.
 - The pilot waits on G-E and R7's flag.
 - Z-S43 waits on the meeting invitation.
 - OA-e-10 ships after OG-ln-1, under R16's terms.
+
+## ADDENDUM R3-T.12 (2.0.0_SA_COO~O, 2026-10-06 ~02:xxZ) -- round 19, the CTO's round-18 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round18.md` @b397c851c0, section 4 (msg 29859). The grades read 0/0/8: every FWD is
+HELD on a human act.
+- **R19:** a per-route latency cap; the aggregate p95 becomes a diagnostic only.
+- **R20:** Z-S55 is REMEDIATED; S41 stays at Andrew.
+- **R21:** a route-inventory pre-GO arm, written into the issuer's `RELEASE_ORDER_FORM.md` as step 7a in this issuance.
+
+Label `<round>19</round>`, ONE issuance, two cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-ts-2` | 1 | Z-W22-S10: ROUTE_CLASS classifies `/yearinreview` and `/yearinreview/`. Z-W22-S9: host-inputs at 51 keys, and the build_package call on CLOUD's signature. Z-W25-S3: a per-process export directory. Tests only. | WORLD | ~25 | worker |
+| `OG-rl-7` | 2 | The r19 release: every CLOUD-only item in LINEAGE_R18 (18), plus ts-2's tests, onto live `37be3485db`, under three halves, cut to `RELEASE_ORDER_FORM.md` in full (pre-GO exercise, R21 inventory, DRAIN-BACK). OA-e-10's `/login` admit lists come from 30 days of audit, and an outsider BLOCKS. After it, CLOUD equals live. | WORLD | ~15 | worker |
+
+**Chains.** `OG-ts-2` -> `OG-rl-7`. **fanout:** 1 start now; rl-7 follows the ts-2 drain. Cap 8.
+
+**Stated dependencies, not cells:**
+- Z-W15-S41 is at Andrew.
+- OG-v-7: Andrew's tests, then Alyssa.
+- G-E.
+- R7's host-side flag.
+- Z-S43.
