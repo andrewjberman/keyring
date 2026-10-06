@@ -88,3 +88,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @7c1c07bd20. On the shared tree, c51 local reads 0/0 model-block reads on the first request (from 24/25), YES. Worker AC2: EQUAL 9 of 9. The names come from stored bronze refdata (already granted; raw/ is ungranted, row Z-W245-S1). PHASES.md: local first request rankings ~4.6 -> 2.5 s, chatter 7.0 -> 5.1 s. Deployed phases are read at aw-7. proof VALID.
+
+<status>complete</status>

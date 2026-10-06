@@ -75,3 +75,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @829ba218dd. On the shared tree, c49 local reads 95 of 95 dated, NEVER 0, YES. proof VALID. /freshness now reads ~105 ledgers per request; timed at aw-7. Served by aw-7.
+
+<status>complete</status>

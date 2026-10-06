@@ -82,3 +82,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @edd7c8b57b. On the shared tree, c48 local reads 0 unit codes / 0 long decimals / 0 reprs / 0 clipped spans over 3 prints (from 2719/86/3/742), YES. Print suite 78 passed. proof VALID. Row Z-W246-S1 INERT. Served by aw-7; the CVO reads BA's pages.
+
+<status>complete</status>

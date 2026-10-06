@@ -77,3 +77,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @fcfcef77ca. On the shared tree, c52 local reads 95 of 95 named, 13 of 13 prior forms kept, 0 regressions, YES. Identity suite 216 passed. proof VALID. The pool write is aw-7's leg at universe/v1/<as-of>.json.
+
+<status>complete</status>

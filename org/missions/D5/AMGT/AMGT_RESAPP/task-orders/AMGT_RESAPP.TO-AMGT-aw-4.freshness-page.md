@@ -86,3 +86,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @4921e89618 (deliverables). Candidate on portal branch wk-AMGT_RESAPP-248-portal: worker 8adcf3f728 plus the issuer's App.tsx hookup fb939c4a (lazy route, requireInternal, Tools nav, requiresTier internal); bun test 6/6; tsc clean on the touched files. proof VALID. The CTO review was asked; the DEV push is Andrew's word through MSTR~Z. AC2 (judgment) goes to the CVO at L9 after aw-8 walks the page.
+
+<status>complete</status>

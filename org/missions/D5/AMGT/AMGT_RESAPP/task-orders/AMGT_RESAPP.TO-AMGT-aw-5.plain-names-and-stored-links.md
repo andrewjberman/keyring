@@ -82,3 +82,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~03:2xZ):** CLOSED -- drained @9d2b7b3d7c. On the shared tree, c50 local reads 383 names, 0 caps (from 131), YES. Link plant tests 13 passed. Dry build with url: ft 17/316, wsj 20/409 (stored only; no publisher fetch). proof VALID. Row Z-W249-S1 INERT. The gold rebuild is COO~H's (asked).
+
+<status>complete</status>
