@@ -18398,3 +18398,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the object read has no entries to count; the field counted is entry_count, which matches the 4,620 / 292 / 258 the order states."
 }
 ```
+
+## IRPT_BCKEND-S338 -- Inflection's holdings_performance_daily gold lacks a partition for three 2026 trading days (05-11, 06-30, 08-10); ledger irpt-inf-performance-serving-20261002 leg A1 cannot close
+
+```json
+{
+  "id": "IRPT_BCKEND-S338",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P",
+  "surfaced_at": "2026-10-06T00:12:21Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Inflection's holdings_performance_daily gold holds no date= partition for 2026-05-11, 2026-06-30 and 2026-08-10, three trading days of 2026, so leg A1 of ledger irpt-inf-performance-serving-20261002 (a trading day without a partition FAILS it, CTO batch 202 section 1) cannot close although the 10-05 14:00Z scheduled fire itself landed 2026-10-02 with 974 rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-objects-v2 --bucket opal-data-inflection --prefix irpt/inflection/gold/holdings_performance_daily/ --delimiter / : 1615 date= partitions, min 2020-04-27, max 2026-10-02 (the bucket opal-data-inf holds nothing at that prefix; a first listing there returned None and was not read as an absence)",
+      "lib/trading_calendar.py is_trading_day over 2026-01-01..2026-10-02: 189 trading days, 3 missing from the listing: 2026-05-11, 2026-06-30, 2026-08-10",
+      "CloudWatch /aws/lambda/irpt-inf-holdings-performance-lambda 2026-10-05 14:00Z: computing date=2026-10-02 upload=True; 2026-10-02 rows=974 LANDED computable=798 not_computable=176 complete=True census OK 798 NON-POSITIVE-BASE 176; EMIT 1 day(s) landed, 0 not computed"
+    ]
+  },
+  "spec_asserts": "Ledger leg A1 (amended per CTO batch 202 @8da55ee13b): census + rows landed, AND every trading day of 2026 through the fire's day has a date= partition under Inflection's holdings gold; a trading day without one FAILS A1.",
+  "world_is": "MEASURED: the first half holds (the scheduled fire landed 2026-10-02, census complete). The second half does NOT: 3 of 189 trading days have no partition. NOT MEASURED: whether Inflection had positions on those three days (a no-data day would be a legitimate gap the calendar cannot see), and whether the adapter's missing-trading-day disclosure (round 36 D1) names them. The leg stays OPEN; this seat did not backfill (a landing is a write and the producer's dry-run census is the CTO's condition)."
+}
+```
