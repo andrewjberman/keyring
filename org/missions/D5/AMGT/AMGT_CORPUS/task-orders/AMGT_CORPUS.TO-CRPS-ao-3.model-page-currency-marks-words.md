@@ -158,3 +158,5 @@ portal_ref e2130d42. A product-file candidate: `1.0.0_SA_CTO~Z` reviews the rend
 <status>complete</status>
 **AMENDMENT 1 (record face):** reopened by the issuer 2026-10-06 ~20:5xZ on the CTO render review @`1a9f406750` (msg 30286). Base e1ee93a9: ao7 build 0/1 control 1/1.
 <status>in_progress</status>
+
+<status>complete</status>
