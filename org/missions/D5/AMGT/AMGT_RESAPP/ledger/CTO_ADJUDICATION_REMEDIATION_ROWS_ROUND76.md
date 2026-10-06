@@ -89,3 +89,13 @@ issuance, printed in the drain-end packet as "checked N of N" with the list. No 
 ## Count
 
 RULED-CELL 11 rows in 6 cells (A 5, B 1, C 2, E 3); RULED-CLOSED 11 rows (D 2, E 9); RE-OWNED 3 rows; AT ANDREW 7 rows (Z-S162 is counted here once; its part 1 rides cell B). 11 + 11 + 3 + 7 = 32.
+
+## ADDENDUM 1 (2026-10-06 ~22:1xZ) -- three rows from the COO's adjudication @fb9ca91ad5 (msg 30366)
+
+| row | ruling | outcome |
+|---|---|---|
+| Z-W20-S8 (no named-section coverage on filing passages) | **CUT in round 77.** Each name's passage set carries the list of named sections it covers and the list it does not. A name with partial coverage (BABA) says so on the passage read. It serves FWD-18. | RULED-CELL |
+| Z-S221 (`text_translated` is produced and never served) | **CUT in round 77.** The scoped API serves the translated text beside the original. It adds a `translated: true` flag and the source language, so a reader can tell a translation from the source words. The original is never replaced. | RULED-CELL |
+| Z-S220 (SERP bronze partitions by `date=` with no security key) | **The key design, ruled now and built only when a web-search source is admitted.** The partition is `security_key=<key>/date=<d>/`, with the address from `lib/opal_naming.py address()` (rule 30). An unkeyed query is refused, not stored under date alone. The row stays PARKED with this design as its disposition. | RULED-CLOSED (design given; the build is gated on the source) |
+
+These do not wait for the round-76 analysis. That analysis follows the CVO's slug and will list them as placed.
