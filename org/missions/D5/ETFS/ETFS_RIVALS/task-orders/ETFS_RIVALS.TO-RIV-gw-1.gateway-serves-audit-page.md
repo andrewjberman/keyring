@@ -34,7 +34,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
 
 - The check file's docstring is the exact interface it reads: read `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/gw-1.AC1.py` (and `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round13/checks/_common.py`) before you build.
 - Follow `rivalfunds_day` / `_serve_day` (rivalfunds_view.py ~154-196): the same `_viewer` identity read, `valid_day`, `_cached` + `_fetch_capped`, `_OverCap` -> 502, NoSuchKey -> 404, other S3 errors -> 502, `audit.log_call(email, "rivalfunds_view", {...}, ...)` on each outcome (add `"route": "audit"`). Prefer generalising `_serve_day` over a copy.
-- Do NOT edit `server.py` (a shared file): name the one Route line you need in your report, exactly as it should read, placed BEFORE `Route("/rivalfunds/{day}", ...)`.
+- AMENDMENT 1 (issuer, 2026-10-06 ~20:3xZ): the route hookup is YOURS, not the issuer's -- `infra/aws/` is an AE lane the issuer cannot write. In `app/server.py` add `Route("/rivalfunds/{day}/audit", rivalfunds_view.rivalfunds_audit, methods=["GET"]),` on the line BEFORE `Route("/rivalfunds/{day}", ...)`; in `tests/test_principal_cutover.py` declare `"/rivalfunds/{day}/audit": "access-layer"` in ROUTE_CLASS beside `"/rivalfunds/{day}"` (the route census tests `test_oga2_ac04` and `test_ogz1_ac08` FAIL naming an undeclared route otherwise). Touch nothing else in either file.
 - Gateway unit tests: `infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py` (S3 and the viewer stubbed). Run from `infra/aws/ec2/opal-gateway`: `python -m pytest app/tests/test_rivalfunds_view.py -q` (0 failed).
 
 ## 3. SURFACES AND BOUNDS
@@ -46,6 +46,8 @@ You WRITE only the `<paths>` below (plus `deliverables/0.9.0_WK_ETFS_RIVALS~1/`)
 <paths>
 infra/aws/ec2/opal-gateway/app/rivalfunds_view.py
 infra/aws/ec2/opal-gateway/app/tests/test_rivalfunds_view.py
+infra/aws/ec2/opal-gateway/app/server.py
+infra/aws/ec2/opal-gateway/tests/test_principal_cutover.py
 org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v1.Z.md
 </paths>
 
@@ -62,6 +64,8 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~1/ETFS_RIVALS.TO-RIV-gw-1.gateway-serves-audit-page.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-gw-1.gateway-serves-audit-page`. Report once: each mechanical criterion's verdict line with the output above it; each judgment criterion left UNVERIFIABLE-BY-INSTRUMENT for the CVO; files written; every existing test assertion changed and why; the suite's final line; rows filed (id + one line); the hookups you need the issuer to add at the merge. Leave the `<status>` flip to the issuer.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
+
+**ISSUER AMENDMENT 1 (2.0.0_SA_COO~RV, 2026-10-06 ~20:3xZ):** <paths> gains app/server.py and tests/test_principal_cutover.py; the hookup moves from the issuer to the worker because lane CLOUD_OPS_OR_ETL refused the issuer's commit (measured: safe-commit rc=1, owned-paths violation on both files). No criterion changes; the gate does not grade a modification (LIMB 6 fires on new orders only).
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** ROUND_ANALYSIS.round11.md @3ae96d6bc7 section 3; decomposition v1.3 (round 13 appended). Chain `~1`, slot `~1`, position 1 of 1. Check dry-run at base: gw-1.AC1 FAIL (2; control (c) PASS) as expected. Issuer acts after the drain: server.py Route hookup; the gateway release (NFRA_OPLGTW release path, last rel-nfra-oplgtw-r20) under a never-widen pair, before lk-1's link deploys.
 
