@@ -99,6 +99,7 @@ the `__harness__/` files, and the issuer's checks, fixture and snapshots under
   <criterion id="AC2" cell_refs="CRPS-ao-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round39/ao3_check.cjs" marks portal</invocation><expect>(?m)^ao3 marks build 1/1 control 1/1$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-ao-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round39/ao3_check.cjs" words portal</invocation><expect>(?m)^ao3 words build 1/1 control 1/1$</expect></criterion>
   <criterion id="AC4" cell_refs="CRPS-ao-3" judgment="true"/>
+  <criterion id="AC5" cell_refs="CRPS-ao-3"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round39/ao7_check.cjs" portal</invocation><expect>(?m)^ao7 build 1/1 control 1/1$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the real `modelSheet.ts` on TSM, BA and ASML captured from the real read path): build -- every header fact whose served
@@ -110,6 +111,28 @@ the `__harness__/` files, and the issuer's checks, fixture and snapshots under
 - AC4 (JUDGMENT, graded by the CVO at L9 on the issuer's real run of the page): a PM reads each header fact's currency, why each
   "--" is empty, and each unmeasured reason, in plain words. Record it as `UNVERIFIABLE-BY-INSTRUMENT` with `status_reason`
   naming `3.0.0_SA_CVO~Z`; no verdict.
+
+- AC5 (AMENDMENT 1; a fourth mechanical criterion because the CTO's render review refused one tile after AC1-AC3 passed): the
+  real `formatStatValue` on the header figures of TSM, BA and ASML: build -- every UNMEASURED-basis money figure renders with no
+  digit and no machine token in both money formats (2 figures, 4 renders at the cut); control -- the 24 resolved money renders
+  are unchanged.
+
+## 4a. AMENDMENT 1 (2026-10-06, the issuer) -- an unmeasured currency shows no number
+
+The CTO read the running page (portal `e1ee93a9`: this order's commit `d0c3f21b` and ao-4, merged with origin/DEV `6b4e89a8`) and
+approved it, with one tile refused: TSM's Net debt reads "-2.00T (currency not confirmed by Bloomberg)" beside a Market cap tile
+reading "USD 2.52T". A number with no confirmed currency next to a USD number reads as the same currency.
+
+**Build, in `formatStatValue` (`components/StatTile.tsx`) only:** for the money formats (`price`, `currency-abs`,
+`currency-millions`), a figure whose `currencyBasis` begins `UNMEASURED` shows NO number at all: one short sentence in a PM's
+words saying the figure is not shown because Bloomberg does not confirm its currency (e.g. "Not shown: Bloomberg does not confirm
+this figure's currency"). No digit, no basis text, no cell id, no UPPER_SNAKE token. The full served value stays in the tile's
+tooltip. Every figure with a served currency and a resolved unit renders exactly as now. The unresolved-unit sentence is unchanged.
+
+**Your portal for the amendment:** branch `wk-AMGT_CORPUS-2-portal` at `e1ee93a9`. Build on it; do not revert or redo it. Only
+`StatTile.tsx` changes in the portal. Re-run AC1, AC2, AC3 and AC5; update the SAME proof instance (AC5 added, AC1-AC3 re-run,
+AC4 unchanged), and run `python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3,AC4,AC5 --governing-order <this order>`
+after your final commit. Then append a new status tag reading complete at the END of this file in the same outer commit.
 
 ## 5. WHEN YOU ARE DONE
 
@@ -133,3 +156,5 @@ portal_ref e2130d42. A product-file candidate: `1.0.0_SA_CTO~Z` reviews the rend
 <slot>~2</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+**AMENDMENT 1 (record face):** reopened by the issuer 2026-10-06 ~20:5xZ on the CTO render review @`1a9f406750` (msg 30286). Base e1ee93a9: ao7 build 0/1 control 1/1.
+<status>in_progress</status>
