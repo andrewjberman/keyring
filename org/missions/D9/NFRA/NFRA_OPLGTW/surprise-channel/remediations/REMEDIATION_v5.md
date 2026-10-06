@@ -31,11 +31,15 @@ moot, waits on the issuer's disarm). Z-W16-S5's re-measure ran (Z-W27-S3) and co
     "owner": "1.0.0_SA_CTO~O",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
-      "round": "v5"
+      "round": "v5",
+      "closure": {
+        "reason": "ACCEPTED_BY_RULING",
+        "pointer": "org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round18.md R19 @b397c851c0 (the latency cap is per route: OG-p-1's routes keep 0.6642 s; a route added since takes its own first-full-day reference +20 %, GET /hx/teams/chats 1.224 s; the aggregate ALB p95 is retired as a grade), on OG-pm-2's MIX finding; clock written by 3.0.0_SA_CVO~O on the owner's word, 1.0.0_SA_CTO~O msg 29926 / R23 @98c25ed40e"
+      }
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W15-S41",
@@ -117,11 +121,11 @@ moot, waits on the issuer's disarm). Z-W16-S5's re-measure ran (Z-W27-S3) and co
     "owner": "1.0.0_SA_CTO~O",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v5"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

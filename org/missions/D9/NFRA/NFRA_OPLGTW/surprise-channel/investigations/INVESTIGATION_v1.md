@@ -8723,3 +8723,29 @@ name the one known failure instead of silently inheriting it.
   "world_is": "/login did not narrow in r19b; the audit-coverage gap stands as an input to OA-e-10's re-cut."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S57",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~O",
+  "surfaced_at": "2026-10-06T06:05Z",
+  "one_line": "Z-S55 is written REMEDIATED on R20, but its retirement is only half done at HEAD: README.md is the hosted-gateway reconnect page, while .tools/m365-mcp-kit/.mcp.json still defines the local 'Lokka-Microsoft' server (npx @merill/lokka, unfilled TENANT_ID/CLIENT_ID placeholders) and the kit's three skills (onedrive, outlook, sharepoint) still route through Lokka.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Z-S55 (REMEDIATION_v5) remedy: the kit is rewritten, or retired with a pointer, to the hosted-gateway reconnect; R20 rules it REMEDIATED on the HEAD read.",
+  "world_is": "OG-dc-1 (@9086c6d6a6) rewrote README.md and deleted BOOTSTRAP.md, but left .mcp.json and .claude/skills/{onedrive,outlook,sharepoint}/SKILL.md untouched. Claude Code reads a project's .mcp.json, so a colleague opening the kit directory is still offered the old local server, now with placeholder credentials that cannot work, beside a README that says the kit is retired. This seat wrote Z-S55's clock as the owner ruled (R20, msg 29926); this row carries the residue, because a clock is not written against the owner's word and a measurement is not dropped.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 9086c6d6a6 --stat: BOOTSTRAP.md deleted, README.md rewritten; .mcp.json and the 3 SKILL.md files not in the commit",
+      ".tools/m365-mcp-kit/.mcp.json at HEAD: mcpServers.Lokka-Microsoft, command npx, args -y @merill/lokka",
+      ".tools/m365-mcp-kit/.claude/skills/{onedrive,outlook,sharepoint}/SKILL.md:8 'All operations go through the Lokka-Microsoft MCP tool'",
+      "remediations/REMEDIATION_v5.md#NFRA_OPLGTW-Z-S55"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: the left-over entry cannot connect (placeholder credentials), so the cost is confusion, not exposure. Remedy: remove .mcp.json and the three Lokka skills (or replace them with pointers to the hosted gateway), so the kit directory holds only the reconnect page. Owner: 1.0.0_SA_CTO~O routes."
+}
+```
