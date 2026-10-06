@@ -18469,6 +18469,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "applied-plane re-read after the failure: 112 rows retrieved, 10 security GET routes, 0 greedy, function CodeSha256 satkY3HXAhzfU7zYZ5fk+EmNHaqIRfj7bBtVlG4XfIY= -- nothing landed"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W256-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~256",
+ "surfaced_at": "2026-10-06T08:45:50Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "BA, AMD and ASML_NA printed packs say no investment thesis and no recommendation has been written, while the BA page shows a drafted thesis and recommendation card; every fiscal-year line (2016-2028) is stamped 'as of 2026-10-06'.",
+ "spec_asserts": "PRD v0.40 FWD-5 DONE WHEN: each printed pack 'reads as a document: Opal Brand form, every figure traceable to its page field, no raw code, no dashboard chrome'.",
+ "world_is": "Print GET /api/scoped/amgt/security/<key>/print on deployed 0MZWPl7n: BA 139,161 bytes 23 pages, AMD 146,408 bytes 25 pages, ASML_NA 151,417 bytes 26 pages (200, application/pdf). Fonts Lato-Regular and Lato-Bold only, ink #163372 on all text, no images, 612x792 pt. 0 of 3 carry upper-case underscore codes, 5+ decimal figures or Python repr marks. In all 3 the Recommendation, Investment thesis and Risks and considerations sections read 'No <x> has been written for this company yet.' On the BA page (same walk) the Thesis tab shows an Investment thesis card (2 points), a Risks card (3 points) and a Recommendation card (9 points) labelled as a machine draft. In all 3 packs 100% of 'as of' dates read 2026-10-06 (BA 743 of 743), including lines under Fiscal year 2016-2024 headings. Whether the print is meant to omit machine drafts, and whether the as-of date is the read date, is not decided here; no verdict on the judgment read.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~256/WALK_ROUND74.md; walk stamps tmp/ui-walk/20261006T083846Z (9 shots) and 20261006T084238Z (print GETs), gitignored on this device; portal 6de76f0509",
+   "PyMuPDF text and font dict over deliverables/0.9.0_WK_AMGT_RESAPP~256/print/*.pdf",
+   "shot 001-fwd4-BA-feed.png in stamp 20261006T083846Z shows the three cards"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W256-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~256",
+ "surfaced_at": "2026-10-06T08:45:50Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "/freshness after ax-2: 95 of 95 rows still flagged stale and every Last refreshed reads 2026-10-04, so no stale name stands out; first row at 9,135 ms cold (answer 8,139 ms, 2.85 MB decoded), 1,993 ms warm.",
+ "spec_asserts": "PRD v0.39 FWD-7 DONE WHEN: a seat 'sees every covered company with its last-refreshed date, and finds a stale one without opening any folders'.",
+ "world_is": "Walked /freshness on the dev build (portal 6de76f0509) against the deployed backend. Table: 95 rows, headers Company, Last refreshed, Bloomberg, Seeking Alpha, Web search, Research pack, Stale; summary '95 of 95 covered companies have an input that is stale'; 95 of 95 rows carry the stale flag; one distinct Last refreshed value (2026-10-04); first rows read 'Seeking Alpha has never been read' (92 rows) or 'Seeking Alpha last read 2026-09-11' (3 rows). Timing from navigation start: first table row 9,135 ms (cold, the freshness read 8,139 ms, 2,850,172 bytes decoded, 1,065,906 encoded), second visit 1,993 ms (read 545 ms). The page face is now a light ground with dark text (the r73 dark-navy card is gone). A stale name is findable without opening a folder but the flag does not distinguish one from the rest.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~256/WALK_ROUND74.md; walk stamps tmp/ui-walk/20261006T083846Z (9 shots) and 20261006T084238Z (print GETs), gitignored on this device; portal 6de76f0509",
+   "data/fwd7/fwd7-first.json and fwd7-second.json in stamp 20261006T083846Z",
+   "shots 005-009 in that stamp"
+  ]
+ }
 }
 ]
 ```
