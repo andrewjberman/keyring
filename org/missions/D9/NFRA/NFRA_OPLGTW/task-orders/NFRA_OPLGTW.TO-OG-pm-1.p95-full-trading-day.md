@@ -28,13 +28,23 @@ Row Z-W16-S5 (REMEDIATION_v3, OPEN): p95 after `4231bd2ddc` read 0.955 s over 5 
    `2026-10-05T00:00:00Z`..`2026-10-06T00:00:00Z`.
    - Also read `RequestCount` and the 5xx sum for the same window.
    - Also read the 24 hourly p95s, for the record only.
-2. **Served release over the whole window:** `EC2_MANIFEST.json` git history shows `4b6b823fae` deployed at
-   `2026-10-04T23:12:32Z` and no later deploy before the window end. A host md5 read at the run time is the second
-   witness. If another release landed inside the window, record `served_whole_window: false`; the record still stands
-   but cannot PASS, so file a row.
+2. **Served releases over the window (AMENDED A1).** Two releases landed inside the window, per the `EC2_MANIFEST.json`
+   git history: r17 `e91819e281` at `2026-10-05T02:17:58Z`, and r17c `37be3485db` at `2026-10-05T14:22:36Z`. Record
+   `served_segments` as exactly these three:
+
+   | release | start | end |
+   |---|---|---|
+   | `4b6b823fae` | `2026-10-05T00:00:00Z` | `2026-10-05T02:17:58Z` |
+   | `e91819e281` | `2026-10-05T02:17:58Z` | `2026-10-05T14:22:36Z` |
+   | `37be3485db` | `2026-10-05T14:22:36Z` | `2026-10-06T00:00:00Z` |
+
+   - Re-read the manifest history yourself. If it differs from this table, STOP and file a row.
+   - A host md5 read at run time (live = `37be3485db`) is the second witness.
+   - The verdict grades the FULL-day p95.
+   - Also record, for information only, the p95 of each segment, read as one period per segment.
 3. Write `P95_R17.json`:
    - `window_start`, `window_end`;
-   - `served_release`, `served_whole_window`;
+   - `served_segments: [{release, start, end, p95_seconds, request_count}]` (A1);
    - `request_count`, `5xx_sum`, `p95_seconds`, `hourly_p95`;
    - `reference_seconds: 0.5535`, `cap_fraction: 0.20`;
    - `verdict`: `WITHIN_CAP` when `p95 <= 0.6642`, else `REGRESSION`;
@@ -59,7 +69,7 @@ Rows: id `NFRA_OPLGTW-Z-W27-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after your commit)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-pm-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/pm1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)window 2026-10-05T00:00:00Z\.\.2026-10-06T00:00:00Z; served 4b6b823fae whole window True;.*verdict (WITHIN_CAP|REGRESSION); consistent True.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-pm-1"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r17/checks/pm1.AC1.sh; echo "exit=$?"</invocation><expect>(?s)window 2026-10-05T00:00:00Z\.\.2026-10-06T00:00:00Z; served segments match the manifest True \(3\);.*verdict (WITHIN_CAP|REGRESSION); consistent True.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 ## 5. WHEN YOU ARE DONE
@@ -77,6 +87,12 @@ PLACE to `complete`. Report once.
   trading day on 4b6b823fae (Monday 2026-10-05)"). The issuer hands the order after 2026-10-06T00:00Z.
 - AC1 passes on either verdict: the cell grades and does not tune.
 - Pre-cut: `pm1.AC1` FAIL (the record is absent).
+- **A1 (2026-10-06 ~00:1xZ, issuer).** The order assumed one release for the whole window. In fact OG-rl-6 deployed r17
+  (`e91819e281`, 02:17:58Z) and r17c (`37be3485db`, 14:22:36Z) during it, so "served whole window" could never hold.
+  Row Z-W16-S5 grades the gateway's p95 against the cap, not one release's.
+  - The record now carries the three manifest segments, with per-segment p95 for information.
+  - The verdict stays on the full day.
+  - Handed at ~00:1xZ, after the window closed.
 
 <status>pending</status>
 <round>17</round>
