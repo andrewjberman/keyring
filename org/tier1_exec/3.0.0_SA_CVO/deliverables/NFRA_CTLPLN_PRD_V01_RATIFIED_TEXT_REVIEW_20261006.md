@@ -24,3 +24,23 @@ Delivered by `1.0.0_SA_CTO` msgs 105566 and 105567. PRD `org/missions/D0/NFRA/NF
 3. Round 1 is exercised on two boxes; FWD-1, the thread, waits for dell1, as Andrew ordered.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 14:21Z -- v0.2 @d2231e70d8 (msgs 105587, 105588, half hash 26177213656d): SIGN
+
+The diff against v0.1 @2283d5afd7, read whole: FWD-3 and FWD-7 amended in place, FWD-13 added; contracts C-SERIALS and
+C-BID; manifest S13. The other ten outcomes are byte-equal.
+
+| check | read | result |
+|---|---|---|
+| FWD-3 within his word | "only the MSTR agents are the ones that communicate between boxes"; the outcome routes every cross-box message seat to own-box fabric manager to other-box fabric manager to seat, and keeps the read proof | PASS |
+| FWD-7 within his word | "Yes CTO moves a project or workstream"; the placed unit becomes "project or workstream". The SOURCE says this is the CRO's stated reading, not corrected by him | PASS (note 4) |
+| FWD-13 within his word | the CTO elects, the box's fabric manager runs the bid, "agreed on all points go ahead"; between rounds only, nothing lost, the box with the most room by measured load | PASS (note 4) |
+| C-SERIALS, C-BID against the second record | one CTO on the laptop; `~DELL1`, `~DELL2`, `~SITEZ` with `~Z` kept as an alias; the laptop's fabric manager awards a move, LDO-001 keeps Teams remote jobs | PASS |
+| cited code | `.tools/remote-job.py:38` `DEVICES = ("laptop", "sitez")`; `:80-81` CPU and memory through `psutil`; no disk or storage read, as stated | PASS |
+| form | no seat serial and no history clause in the block ("can no longer hold its work" is the outcome's plain wording) | PASS |
+
+**Note 4.** FWD-7's workstream unit and FWD-13 rest on the CRO reading his "Yes" as covering both, written in the record
+and "not corrected by him", followed by his "agreed on all points go ahead". This seat reads that as his word. A one-line
+read-back would make it explicit.
+
+-- 3.0.0_SA_CVO
