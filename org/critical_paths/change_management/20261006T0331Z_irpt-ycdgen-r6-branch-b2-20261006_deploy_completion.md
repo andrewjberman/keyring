@@ -13,10 +13,10 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | U2 | s3-prefix | irpt-resident-409e3066d1-st24.tar.gz, resident_host_install_409e3066d1-st24.sh and the pinned pyarrow tar staged in S3 | read back by version, sha256 equal | all three keys 404 before (the B2 tar and script) and absent (the pyarrow tar under resident/deps/); B2 tar irpt-resident-409e3066d1-st24.tar.gz version nmBP0Y17T7x.kglMG7.y9gW_ZBZX7GZ2 (871424 bytes) sha256 91d23ab3367bed1cc3dbb7f5cba0ac51dfec0816f6a2a6679341ed5596b51a04; install script resident_host_install_409e3066d1-st24.sh version UT9UcMwONgu2fQhH.SSD3fpGfzupizJ_ (8717 bytes) sha256 c9ad01d7f1a15108e7b59424b30cc845651af55269f4aa78153bf21b3782e9b0; pyarrow tar deps/pyarrow-18.1.0-cp312-awssdkpandas16.tar.gz version 4oc.2naPXytcEzYL7K5zyMB5ShhhJaCr (17751495 bytes) sha256 dad8a09e088722e1fc4b506b921583a3d62b7097a7eacf0907bce6f284393506, built from the estate's own AWSSDKPandas-Python312:16 layer (zip sha256 4ea9482ddb6d...); staged BEFORE the ledger was opened (S3 only; no host change); gate G1 267/267, G2 265/265 + added 1/1, G5 added 11 removed 0 changed 3 | CLOSED 20261006T033109Z |
-| R1 | verify | retention module of the B2 tar vs the running st22 module over the live v1 rows, read-only | 0 differences |  | OPEN |
-| P1 | verify | pre-install step-2 answers | recorded |  | OPEN |
-| D2 | activation | install_branch_b2.sh via SSM | root 409e3066d1-st24 active; pyarrow in the root; members equal |  | OPEN |
-| V1 | verify | post-install step-2 equal; real classifier and characteristics reads from the running root, exit code 0 | equal or rolled back |  | OPEN |
+| R1 | verify | retention module of the B2 tar vs the running st22 module over the live v1 rows, read-only | 0 differences | 721 of 721 rows, 0 verdict differences, 0 refusals; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/STEP1C_HOST_OUTPUT_20261006.txt | CLOSED 20261006T034427Z |
+| P1 | verify | pre-install step-2 answers | recorded | pre-install answers recorded; equal to branch B pre; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/STEP2C_PRE_ANSWER_20261006.txt | CLOSED 20261006T034427Z |
+| D2 | activation | install_branch_b2.sh via SSM | root 409e3066d1-st24 active; pyarrow in the root; members equal | root 409e3066d1-st24 active, rc=0, 14 members OK, pyarrow in root, MainPID 622977 NRestarts 0; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/D2C_INSTALL_HOST_OUTPUT_20261006.txt | CLOSED 20261006T034427Z |
+| V1 | verify | post-install step-2 equal; real classifier and characteristics reads from the running root, exit code 0 | equal or rolled back | step-2 answers equal pre (only root name differs); real classifier SPY and characteristics 3 of 3 from running root, exit 0; queue 0/0, 0 tracebacks; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/STEP2C_POST_ANSWER_20261006.txt | CLOSED 20261006T034428Z |
 | F1 | verify | Andrew's first real Overview | opened by Andrew |  | OPEN |
 | M1 | git | the allow-list constant lands on CLOUD after F1 | commit |  | OPEN |
 
@@ -24,3 +24,7 @@
 
 - 20261006T033109Z OPENED by 2.0.0_SA_COO~Y with 7 leg(s)
 - 20261006T033109Z LEG U2 closed: all three keys 404 before (the B2 tar and script) and absent (the pyarrow tar under resident/deps/); B2 tar irpt-residen
+- 20261006T034427Z LEG R1 closed: 721 of 721 rows, 0 verdict differences, 0 refusals; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/
+- 20261006T034427Z LEG P1 closed: pre-install answers recorded; equal to branch B pre; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6
+- 20261006T034427Z LEG D2 closed: root 409e3066d1-st24 active, rc=0, 14 members OK, pyarrow in root, MainPID 622977 NRestarts 0; org/missions/D9/IRPT/IRPT
+- 20261006T034428Z LEG V1 closed: step-2 answers equal pre (only root name differs); real classifier SPY and characteristics 3 of 3 from running root, exi
