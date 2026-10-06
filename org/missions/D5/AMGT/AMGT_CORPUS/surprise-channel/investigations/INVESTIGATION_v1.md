@@ -3790,6 +3790,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The fire ran clean on the new pin and pulled 0 by design of its same-day skip rule, which keys on the DERIVED stamp; a re-derive earlier the same UTC day reads as 'refreshed today'. Neither the pair halves nor the AMENDMENT 1 timing named this interaction. Two consecutive trading closes (10-05 capacity refusal, 10-06 skip) are unpulled; the next scheduled fire (10-07 13:00Z) pulls normally.",
   "notes": "Issuer's own act's side effect. Remedy options are the CTO's (a same-day pull is a Bloomberg call outside the schedule; CTO an-2 condition 4 says no vendor call is added). Without a ruling the 2026-10-07 fire restores freshness. Possible producer fix for a later round: key the skip on the RAW pull stamp, not the derived stamp.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-S89",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~X",
+  "surfaced_at": "2026-10-06T21:20:37Z",
+  "one_line": "Two served research dossiers cite a management passage whose whole value is 'Management/Board 80' (8306_JP_Equity, 8316_JP_Equity): a heading and a score, not a passage. Found while reading the 96 registered names for FWD-11's absent case in round 39 (CRPS-ao-5).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Served read 2026-10-06 ~21:0xZ over scoped_amgt._read_dossier_document for the 96 registered keys: fields.management carries a citation on 47 names, is absent with a reason on 48, 1 name has no dossier; on 8306_JP_Equity and 8316_JP_Equity the cited value is exactly 'Management/Board 80'.",
+      "For contrast, 8035_JP_Equity's value begins 'Management and capital allocation: President and CEO Toshiki Kawai joined TEL in 1986.' and ASML_NA_Equity's is a full paragraph (walk tmp/ui-walk/20261006T210244Z, evidence/r39_ao5_walk/asml_exec_management.png)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-11: the team's own management passage renders beside the roster, cited to the pack; a name whose pack carries none reads ABSENT with its reason.",
+  "world_is": "On two names the dossier's management field holds a scorecard heading with its score as if it were the passage, so the page would show 'Management/Board 80' as the research team's words on management. Not walked on those two names; the count of such values among the 47 cited is 2 by an exact-string read, and other short non-passage values were not searched for.",
+  "notes": "Off-task finding, no cell cut. A candidate for a round-40 dossier cell: a management value must be prose from a MANAGEMENT section, never a scorecard line. Carried in ROUND39_DRAIN_END_PACKET.md section 6.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```
