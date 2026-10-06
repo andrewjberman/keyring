@@ -111,7 +111,7 @@ on 3.0.0_SA_CVO's review `org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_SECCLASS
 | Needs | From (owner) | Interface / pin | State |
 |---|---|---|---|
 | The exercise run ends | the run fired 06:33:00Z | EC2 state of `i-01003b035d2988dfb` and its log on `s3://opal-data-bd/logs/gold-layer/` | AWAITED: a watch is armed |
-| Andrew's call: may a per-firm value FILL an absent `instrument_kind` on an existing row | Andrew (CTO 103218 routed it) | -- | AWAITED; no item above depends on it |
+| Andrew's call: may a per-firm value FILL an absent `instrument_kind` on an existing row | Andrew (CTO 103218 routed it) | `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_192xZ_INSTRUMENT_KIND_NO_FIRM_FILL_AI_CLASSIFIER_FILLS.md` @b9e5d795c8 | CLOSED 2026-10-06 ~19:2xZ, Andrew: no. A firm's own label never fills `instrument_kind`; only the AI classifier fills a blank one (it lands without review and is listed in the AI-landed index). Relayed by 1.0.0_SA_CTO msg 105702. |
 
 ## Parked
 
