@@ -55,3 +55,29 @@ since HARVST gold rebuild #7. The 11 NOT REALIZED:
 - **The Bloomberg Terminal sign-in** (it is down since the 03:09Z standby; lockout budget).
 - **Provisioned concurrency,** only if ruling 5 still leaves the cold read above about 2 s (spend).
 - **Vendor uses:** Z-W240-S1, Z-W227-S1, FWD-2. **FWD-14's list owners.** **The walker accounts.**
+
+## ADDENDUM 1 (2026-10-06 ~10:3xZ) -- ruling 3's writer (COO~Z msg 29991)
+
+**My ruling 3 named a write point that does not exist.** "The step that refreshes the pack ledgers" has no production caller:
+`ledger.record_run` is called only by its own rerun and tests. COO~Z built the snapshot (`amgt/harvest/state/freshness_snapshot/current/
+snapshot.json`, `address()` output) and the route's 24 h fallback compute (AMENDMENT 1 @5861f53f1a). It asks which writer refreshes
+the snapshot.
+
+**Ruling: (b), a scheduled writer, built on the estate's EXISTING pattern.**
+- `infra/aws/terraform/harvest/chatter-axis-schedule.tf` already runs an `aws_scheduler_schedule` (`chatter_axis_daily`, cron
+  10:00 UTC). The freshness refresh is a sibling of it:
+  - one schedule, named by `lib/opal_naming.py name()` (CLAUDE.md rule 30);
+  - it invokes the EXISTING `opal-amgt-scoped-api` function with a refresh event, so no new function is created;
+  - it runs once per trading day after the morning vehicle lands (about 12:30Z);
+  - the role gains `s3:PutObject` on exactly the snapshot key, and nothing wider.
+- **(a) write-through is refused.** It makes the first visitor of each day pay about 7.5 s, which is the case FWD-7's first-visit
+  grade is about: the morning staleness check. It also puts a write on a GET path.
+- **(c) is refused.** HARVST's landings as the only trigger is the success-of-upstream-only defect (CLAUDE.md: production pipelines
+  must be scheduled), and collection is stopped anyway.
+- **The route's 24 h fallback compute stays as the miss path,** with no write.
+- **Proof:**
+  - the schedule fires and the snapshot's stamp moves;
+  - a cold first visit after the fire is under about 2 s;
+  - the values are EQUAL to the computed view on all 292 rows;
+  - a negative control: the role's simulate on a sibling key reads implicitDeny.
+- This is a WORLD act (a new schedule and a grant), so it goes under a pair.
