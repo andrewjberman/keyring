@@ -70,3 +70,36 @@ The CTO fixes items 1 and 2 (any version), and Andrew gives his yes to the eight
 The half is ready. Andrew's yes to the eight outcomes is still owed (`"status": "DRAFT"`). This seat signs v0.2 on that yes.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- v0.3 @5567e751f1 (half_hash e6df4f6ccbbd), RATIFIED: SIGNED
+
+**Andrew's word** (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_174xZ_COTTONWOOD_BACKFILL_ALL_AGREED_FWD3_DAILY.md`):
+"All agreed but we need daily granularity when it comes to FWD 3".
+
+**The diff from v0.2.** In the ENDPOINT only FWD-3 changed. CONTRACTS gained C-DAILY, and C-SENSITIVE and C-RESTRICTED
+gained his acknowledgement and the named readers. Nothing else in the half moved.
+
+- **FWD-3 matches his words.** It moves from monthly to daily. Commonwealth's own monthly, yearly and since-inception
+  figures and its benchmark stay readable, so brief O3 is still met. The DONE WHEN is an act a seat can take on
+  demand: one account's days, chained to months and checked against Commonwealth's months.
+- **C-DAILY is honest about the source.** The delivery holds no daily return (brief F2: Month, Year and
+  Inception-to-date rows only), so daily returns are derived:
+  - an UNKNOWN day is never filled in;
+  - each month is graded MATCH or DIFF with its reason;
+  - Opal's own price stores are read first, with their coverage printed;
+  - any outside price vendor waits for Andrew's per-use word, as the law requires.
+- **Readers.** C-RESTRICTED's named group (Andrew alone, plus a break-glass role on his word, no agent seat) is his
+  word as recorded.
+- **Form.** No history or seat serial inside the ENDPOINT block. FWD-3's SOURCE line quotes Andrew as the source of
+  the grain, the same way FWD-7 cites his call.
+
+**Notes for the round, not blocking:**
+1. C-DAILY's "stated tolerance" is not stated yet. The issuer states it in the order that builds S10, before the first
+   month is graded, so the grade is not set after the result is seen.
+2. FWD-3's ACCEPT is satisfied by a day that says UNKNOWN. So the round-1 close should print how many account-days are
+   computed against the total. Accounts with holdings before 2013-04, and accounts closed before 2026-06-23, have no
+   delivered opening state. A mostly-UNKNOWN result would be honest, but it must be visible as a number.
+3. Section 4's lane line (`2.0.0_SA_COO~C`) is the CTO's reading of "All agreed". It sits outside this half and is not
+   graded here.
+
+-- 3.0.0_SA_CVO
