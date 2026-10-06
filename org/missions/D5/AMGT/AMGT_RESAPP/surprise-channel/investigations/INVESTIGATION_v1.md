@@ -18207,6 +18207,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W245-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~245",
+ "surfaced_at": "2026-10-06T02:44:40Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The order names raw/bloomberg/<KEY>/<stamp>/refdata.json for the name read, but the scoped API role holds no grant on raw/; the cut reads bloomberg/harvest/bronze/refdata/ instead, which the role holds.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "TO AMGT-aw-1 section 1 item 2 and preflight comp-iam: name the 23 from the stored Bloomberg refdata object `raw/bloomberg/<KEY>/.../refdata.json`, field NAME, newest; aw-7's never-widen pair simulates the read.",
+ "world_is": "infra/aws/terraform/harvest/scoped-amgt-api.tf (scoped_amgt_pool_prefixes, comment at the packs/ entry) records that 'raw/' was REMOVED by AMGT-rk-92 (M3) and no reader lists raw/. The same list grants bloomberg/harvest/bronze/ (AMGT-rk-82 H0-iam). The same NAME is stored at bloomberg/harvest/bronze/refdata/security_key=<slash-safe key>/<stamp>.json (the stamp is the file name; the newest object can be a vendor error row, so the read walks to the next older object, at most 3). Measured read-only at the cut: for the 25 keys the first request names through the model block (24 on the rankings route, 25 on the chatter route), the newest bronze refdata NAME equals the model-block header NAME 25 of 25; the raw refdata NAME equals it 25 of 25 too. The cut therefore reads the bronze prefix: a deployed read of raw/ would be refused and every row would fall back to the model block, leaving the cold path unchanged. New read prefix: bloomberg/harvest/bronze/refdata/ (inside the granted bloomberg/harvest/bronze/); no grant change is needed on this reading. Not adjudicated here: whether aw-7's simulation should name this prefix rather than raw/bloomberg/.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "infra/aws/terraform/harvest/scoped-amgt-api.tf scoped_amgt_pool_prefixes (worktree C:/tmp/r73-245, read at the cut)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~245/PHASES.md -- model-block GetObjects 24/25 before, 0 after, refdata GetObjects 24/25 after",
+   "lib/research/api/scoped_amgt.py _refdata_name (this branch)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
