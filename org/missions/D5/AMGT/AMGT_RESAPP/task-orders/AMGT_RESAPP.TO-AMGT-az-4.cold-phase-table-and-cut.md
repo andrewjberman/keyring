@@ -80,6 +80,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** CTO round-75 analysis item 4, ruling 5. The deployed cold read after the cut is measured at az-5.
 
 <status>pending</status>
+<status>complete -- drained @de48559928; proof VALID (worktree checker); issuer AC1 re-run 3/3 PASS (c65 SERVED YES); AC2 EQUAL 3 of 3</status>
 <round>76</round>
 <slot>0.9.0_WK_AMGT_RESAPP~265</slot>
 <fabric>site-z</fabric>
