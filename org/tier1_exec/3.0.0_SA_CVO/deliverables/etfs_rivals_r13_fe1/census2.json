@@ -1,0 +1,662 @@
+{
+ "vocab": 414,
+ "hits": [
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, IDVZ"
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "Equity|2026-09-11 = -1.01816e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; buying_tre"
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=ai|comp=ai-face",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, IDVZ"
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "Z|YTD|AZN_LN_Equity = 5.7262e+06; holding_contribution IDVZ|MTD|AZN_LN_Equity = -0.00106957; market_con"
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=ai|comp=ai-face",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "IDVZ",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "TXUE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "TXUE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, TXUE"
+  },
+  {
+   "fund": "TXUE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, TXUE"
+  },
+  {
+   "fund": "TXUE",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "_Equity|2026-09-30 = 1.05406e+06; holding_contribution TXUE|MTD|AZN_LN_Equity = -0.000855906; trade_sch"
+  },
+  {
+   "fund": "TXUE",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "BIDD",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, BIDD"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "R30|9988_HK_Equity = -0.00276863; holding_contribution BIDD|MTD|ASM_NA_Equity = 0.00145764; holding_con"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "D|MTD|ASM_NA_Equity = 0.00145764; holding_contribution BIDD|MTD|700_HK_Equity = -0.000773445; market_co"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, BIDD"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "0_KS_Equity|2026-09-10 = 223,208; holding_contribution BIDD|MTD|ASM_NA_Equity = 0.00145764; holding_con"
+  },
+  {
+   "fund": "BIDD",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "CGIC",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "CGIC",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, CGIC"
+  },
+  {
+   "fund": "CGIC",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, CGIC"
+  },
+  {
+   "fund": "CGIC",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "INEQ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, INEQ"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "MTD",
+   "where": "LI.|pop=ai|comp=ai-face",
+   "ctx": " was the second-worst MTD contributor at -0.14% and the second-wo"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "Q|R30|RIO_LN_Equity = -0.0040002; holding_contribution INEQ|MTD|EBS_AV_Equity = -0.00141941; holding_co"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, INEQ"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "MTD",
+   "where": "LI.|pop=ai|comp=ai-face",
+   "ctx": " was entered for $1.6 million and was the second-worst MTD contributor at -0.14% and the second-wo"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "_Equity|2026-09-01 = 1.64471e+06; holding_contribution INEQ|MTD|EBS_AV_Equity = -0.00141941; holding_co"
+  },
+  {
+   "fund": "INEQ",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "SCHY",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "MSCI",
+   "where": "P.rf-lead|pop=|comp=ai-face",
+   "ctx": "earlier in the period. Observed trading shows an entry into MSCI EAFE Dec26 for $17.2 million and an exi"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, SCHY"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "MSCI",
+   "where": "P.|pop=ai|comp=ai-face",
+   "ctx": "earlier in the period. Observed trading shows an entry into MSCI EAFE Dec26 for $17.2 million and an exi"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "MSCI",
+   "where": "LI.|pop=ai|comp=ai-face",
+   "ctx": "MSCI EAFE Dec26 was entered for $17.2 millio"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, SCHY"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "_Equity|2026-09-21 = 4.47404e+06; holding_contribution SCHY|MTD|INFO_IN_Equity = 0.000992296; holding_c"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "MTD|INFO_IN_Equity = 0.000992296; holding_contribution SCHY|MTD|ENEL_IM_Equity = 0.000594166; market_co"
+  },
+  {
+   "fund": "SCHY",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "PFOE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "PFOE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, PFOE"
+  },
+  {
+   "fund": "PFOE",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, PFOE"
+  },
+  {
+   "fund": "PFOE",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, WCMG"
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=ai|comp=ai-face",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, WCMG"
+  },
+  {
+   "fund": "WCMG",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "G|YTD|285A_JP_Equity = 0.0326256; holding_contribution WCMG|MTD|285A_JP_Equity = 0.00194357; holding_co"
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=ai|comp=ai-face",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "WCMG",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "GQGU",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, GQGU"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "30233Q108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": " trade_schedule GQGU|30233Q108|2026-08-31 = -1.80061e+07; trade_schedu"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "060505104",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "GU|30233Q108|2026-08-31 = -1.80061e+07; trade_schedule GQGU|060505104|2026-08-31 = -1.40403e+07; trade_schedu"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "24703L202",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "PCX_US_Equity|2026-10-05 = 1.21407e+07; trade_schedule GQGU|24703L202|2026-09-03 = 1.18888e+07; trade_schedul"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "30233Q108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|24703L202|2026-09-03 = 1.18888e+07; trade_schedule GQGU|30233Q108|2026-09-04 = -1.13824e+07; trade_schedu"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "30303M102",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "NVDA_US_Equity|2026-08-27 = 1.1041e+07; trade_schedule GQGU|30303M102|2026-09-14 = 1.05924e+07; trade_schedul"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "037833100",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|30303M102|2026-09-14 = 1.05924e+07; trade_schedule GQGU|037833100|2026-09-10 = 8.11737e+06; trade_schedul"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "N07059210",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|037833100|2026-09-10 = 8.11737e+06; trade_schedule GQGU|N07059210|2026-08-31 = 6.33121e+06; trade_schedul"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "907818108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|N07059210|2026-08-31 = 6.33121e+06; trade_schedule GQGU|907818108|2026-09-10 = -6.25312e+06; trade_schedu"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "30233Q108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "GU|907818108|2026-09-10 = -6.25312e+06; trade_schedule GQGU|30233Q108|2026-08-27 = -6.15351e+06; trade_schedu"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "24703L202",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "|NVDA_US_Equity = 0.00969163; holding_contribution GQGU|R30|24703L202 = 0.00669735; holding_contribution GQGU"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "037833100",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "U|R30|24703L202 = 0.00669735; holding_contribution GQGU|R30|037833100 = 0.00614862; holding_contribution GQGU"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "05464C101",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "U|R30|037833100 = 0.00614862; holding_contribution GQGU|R30|05464C101 = -0.00357321; holding_contribution GQG"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "907818108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "|R30|05464C101 = -0.00357321; holding_contribution GQGU|R30|907818108 = -0.00341191; holding_contribution GQG"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, GQGU"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "037833100",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|YTD|NVDA_US_Equity = 5.27036e+07; buying_trend GQGU|YTD|037833100 = 4.38805e+07; buying_trend GQGU|YTD|MS"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "24703L202",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "NVDA_US_Equity|2026-08-27 = 1.1041e+07; trade_schedule GQGU|24703L202|2026-09-03 = 1.18888e+07; trade_schedul"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "037833100",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "QGU|24703L202|2026-09-03 = 1.18888e+07; trade_schedule GQGU|037833100|2026-09-10 = 8.11737e+06; holding_contr"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "24703L202",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "100|2026-09-10 = 8.11737e+06; holding_contribution GQGU|R30|24703L202 = 0.00669735; holding_contribution GQGU"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "037833100",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "U|R30|24703L202 = 0.00669735; holding_contribution GQGU|R30|037833100 = 0.00614862; trade_schedule GQGU|GE_US"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "907818108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "on GQGU|R30|GE_US_Equity = -0.00286932; trade_schedule GQGU|907818108|2026-09-10 = -6.25312e+06; holding_cont"
+  },
+  {
+   "fund": "GQGU",
+   "tok": "907818108",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "08|2026-09-10 = -6.25312e+06; holding_contribution GQGU|R30|907818108 = -0.00341191; market_context "
+  },
+  {
+   "fund": "GQGU",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, TSEL"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "TD|NVDA_US_Equity = -7.57347e+06; holding_contribution TSEL|MTD|STX_US_Equity = -0.00407409; market_con"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, TSEL"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "P.|pop=ai|comp=ai-face",
+   "ctx": " date. That says the manager\u2019s ranking in semiconductor and AI-linked exposure is still broadly right,"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "LI.|pop=ai|comp=ai-face",
+   "ctx": "The manager appears broadly right on semiconductor and AI-linked exposure, despite trimming "
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "P.|pop=ai|comp=ai-face",
+   "ctx": " show the fund has materially reduced the semiconductor and AI-linked exposures that are currently sup"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "|R30|SNDK_US_Equity = 0.00606606; holding_contribution TSEL|MTD|LRCX_US_Equity = 0.00231067; holding_co"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "EL|YTD|STX_US_Equity = 0.0221181; holding_contribution TSEL|MTD|STX_US_Equity = -0.00407409; holding_co"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "R30|SPOT_US_Equity = -0.00453335; holding_contribution TSEL|MTD|SPOT_US_Equity = -0.00107013; holding_c"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "R30|SPHR_US_Equity = -0.00296153; holding_contribution TSEL|MTD|SPHR_US_Equity = -0.000813982; market_c"
+  },
+  {
+   "fund": "TSEL",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "BASG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "BASG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, BASG"
+  },
+  {
+   "fund": "BASG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, BASG"
+  },
+  {
+   "fund": "BASG",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "ETFT",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=|comp=ai-face",
+   "ctx": "e (matches more than one uncited fact; cite one): -0.10%: C-MTD-worst3, C-QTD-worst3. Shown for audit, "
+  },
+  {
+   "fund": "ETFT",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, ETFT"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "e (matches more than one uncited fact; cite one): -0.10%: C-MTD-worst3, C-QTD-worst3. Shown for audit, "
+  },
+  {
+   "fund": "ETFT",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=ai|comp=ai-face",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "ETFT",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, ETFT"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "FT|YTD|TXN_US_Equity = 0.0306106; holding_contribution ETFT|MTD|TXN_US_Equity = 0.0014345; holding_cont"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "FT|YTD|TSM_US_Equity = 0.0244356; holding_contribution ETFT|MTD|TSM_US_Equity = 0.00111523; holding_con"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "MTD",
+   "where": "P.rf-cite|pop=ai|comp=ai-face",
+   "ctx": "T|YTD|VEEV_US_Equity = 0.0150503; holding_contribution ETFT|MTD|VEEV_US_Equity = -0.00203185; holding_c"
+  },
+  {
+   "fund": "ETFT",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  },
+  {
+   "fund": "PCLG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=|comp=",
+   "ctx": "AI analysis"
+  },
+  {
+   "fund": "PCLG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, PCLG"
+  },
+  {
+   "fund": "PCLG",
+   "tok": "AI",
+   "where": "SPAN.rf-eyebrow|pop=ai|comp=ai-face",
+   "ctx": "AI analysis, PCLG"
+  },
+  {
+   "fund": "PCLG",
+   "tok": "AI",
+   "where": "SPAN.rf-reading|pop=|comp=",
+   "ctx": "nt of the trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+  }
+ ],
+ "nfs": [],
+ "nbis_dialog_exists": true,
+ "goog_keys": [
+  [
+   "GOOGL_US_Equity",
+   [
+    "WCMG",
+    "TSEL",
+    "ETFT"
+   ]
+  ],
+  [
+   "GOOG_US_Equity",
+   [
+    "PFOE",
+    "GQGU",
+    "BASG",
+    "PCLG"
+   ]
+  ]
+ ]
+}

@@ -28,11 +28,11 @@ Two items graduate: C-S47 and S43 (C-S47 adjudicates it; S43's own row carries i
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-S43",
