@@ -631,9 +631,9 @@ not edited.
 
 **Placement:** the next MDPF_SECCLASS round. **Sign-off:** an ENDPOINT change, so the ratified-text half re-opens.
 
-## ADDENDUM v0.11 (1.0.0_SA_CTO, clock read 00:03Z 2026-10-05) -- contract note only: Andrew's word for the AI classifier at the full old-list volume
+## ADDENDUM v0.11 (1.0.0_SA_CTO, clock read 00:03Z 2026-10-06) -- contract note only: Andrew's word for the AI classifier at the full old-list volume
 
-**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_0003Z_AI_CLASSIFIER_RUNS_ON_THE_FULL_OLD_TABLE.md`: "RUn on the full old table". The ENDPOINT section is not edited.
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_0003Z_AI_CLASSIFIER_RUNS_ON_THE_FULL_OLD_TABLE.md`: "RUn on the full old table". The ENDPOINT section is not edited.
 
 - **C-VENDOR.** His word covers the outside-model use for FWD-17 at its full volume: up to 8,495 old-list rows (the research
   seat's count), the model the existing writer calls, name and ticker only, after the direct-match plan. This closes
