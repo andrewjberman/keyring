@@ -18272,6 +18272,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-S356",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.7.0_AE_CloudOps~A",
+ "surfaced_at": "2026-10-06T04:08:41Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "one_line": "/api/scoped/amgt/freshness serves WARM in 10.3-11.8 s after aw-3, about 5x over the COO half's own 2,000 ms row-bar -- and CTO condition 4 reads this same route to clear the portal condition for Andrew's DEV push.",
+ "hazard_standing": "INERT",
+ "spec_asserts": "NEVER_WIDEN_HALF_COO_AW7.md EXPECTED OUTCOMES: '/freshness latency (now ~105 ledger reads per request) | -- | reported; a warm read over 2,000 ms is a row, not a rollback'. This row is that row, filed as the half directs.",
+ "world_is": "Measured on the deployed round-73 build satkY3HXAhzfU7zYZ5fk+EmNHaqIRfj7bBtVlG4XfIY= at 2026-10-06T03:5xZ, on TWO independent planes that agree. CLIENT SIDE, 3 calls after a discarded warm-up invoke, invoked exactly as round 73's own check invokes (boto3 lambda.invoke, same HTTP-shaped event): 10622.2, 11012.9, 10996.7 ms, status 200 on all three, 292 rows returned each time; 3 of 3 over the bar. SERVER SIDE, from the function's own REPORT lines over the same window: 17 of 17 events parsed, 0 carrying Init Duration (so every one WARM, not a scaled-out cold container), durations 10274-11825 ms, 10 of 17 over 2000 ms. The figure is therefore the steady-state warm cost of the route, not an init artifact. THE SHAPE OF THE COST: aw-3 made the route read about 105 ledgers per request to build the pack clock, and c49 confirms the clock is now correct -- NEVER went from 95 of 95 to 0 of 95. The correctness aw-3 bought is real; the price is an 11-second warm route. WHY THIS IS MORE THAN A LATENCY NOTE: CTO condition 4 makes a live read of this exact route the thing that 'clears my portal condition (review @1434fdc5ee) for asking Andrew's DEV push'. The condition is satisfied on CORRECTNESS. But a portal page calling this route will sit for about 11 seconds, and that is a fact the DEV-push decision should be taken WITH rather than after. NOT a rollback: the half says so expressly and no criterion fails. Not adjudicated by this seat: whether the pack clock should be precomputed, cached or paginated instead of read per request, which is a design call for the issuer and the CTO.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/aw7_freshness_latency.py -- the probe, committed; invokes as r73_served.py does and prints the 292-row denominator beside the latency",
+   "its output: 3 calls 10622.2 / 11012.9 / 10996.7 ms, status 200, rows 292, over-bar 3 of 3",
+   "CloudWatch REPORT events for the same window, read with --output json. NOT --output text: a REPORT message carries native tabs, so a tab-split shreds it and 'Init Duration' falls outside the kept fragment, making the cold count read a FALSE ZERO. The first pass here hit exactly that and was redone before being relied on.",
+   "deliverables/2.0.0_SA_COO~Z/round73/NEVER_WIDEN_HALF_COO_AW7.md EXPECTED OUTCOMES table, read at the bytes",
+   "r73 c49 on the deployed build: 'population: covered rows 95 status 200', 'PASS C1 every covered row's pack clock is a date NEVER 0', R73 C49 SERVED: YES; the pre-code base arm read 'NEVER 95'"
+  ]
+ }
 }
 ]
 ```
