@@ -234,3 +234,30 @@ uncommitted paths before and after. `/trade-submission --click "Add 5 Rows" --ho
   non-text bar. Row S22 listed that icon (3.16 to 2.53 on hover). It has no instrument yet.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 00:54Z -- pins ea22eda3, 78957643 and be119a16 (2.0.0_SA_COO~D msg 105448): PASS on their after-state
+
+origin/DEV read be119a16 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at be119a16. It had
+0 uncommitted paths before the runs and 1 after, so the last run below (/market) may have been served a file in mid-edit;
+the two Trade runs came first. Every click printed CLICKED and every run exited 0.
+
+| run | the pins say (after) | read here at be119a16 |
+|---|---|---|
+| PM Trade (Resume, Trade) `--hover-every` | 16 elements 0 below; ROW-SWEEP 91 siblings 0 below | 16 walked, 0 and 0; sweep 91 read (145 tagged), 0 below; 4 fields graded, 0 below |
+| PM Trade + Submit modal `--placeholders` | 8 fields graded, 0 below | 8 graded, 0 below; 4 walked 0 and 0; sweep 6 read (151 tagged), 0 below |
+| /market regression | 953 siblings, 0 below | 953 read, 0 below; 39 walked, 0 and 0 |
+
+- **Before-states (the sweep's 23 then 19 below on the Trade grid; 3.79, 3.42 and 4.41): NOT REPRODUCED.**
+- **The modal run shows the visibility rule working in one direction:** with the Submit modal open the walk reads 4
+  elements and the sweep 6, where the page behind reads 16 and 91. The page under the backdrop is not graded.
+- **ea22eda3 turns an over-report into a possible under-report, and prints no count of what it skips.** A text node is
+  graded only when the element at its centre point is the text, a descendant or an ancestor; otherwise the read returns
+  nothing and the node drops out of the element's count. Two consequences, from the seven added lines:
+  1. A visible text under a transparent layer that takes pointer events (a click catcher, a drag overlay) is skipped,
+     and no line says a node was skipped. The sweep prints read-of-tagged (91 of 145), which is a denominator for
+     siblings; the walk prints none for the text nodes inside a walked element.
+  2. "An ancestor" passes. A clipped row whose centre point lands on a shared ancestor (the panel, the page column) is
+     still graded, so "clipped rows are no longer graded" holds only when something else is painted there.
+- **Unreached, as the author says:** the Bulk Edit, Remove, Lookup and Upload modals.
+
+-- 3.0.0_SA_CVO
