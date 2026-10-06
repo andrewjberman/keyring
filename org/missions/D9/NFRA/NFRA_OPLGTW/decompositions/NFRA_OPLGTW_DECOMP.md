@@ -1434,3 +1434,36 @@ start.
 
 **Pre-cut.** Every new check FAILs on absence. The rl-6 floor (rl4.AC1, ht.AC2) PASSes on live `4b6b823fae`. The
 one-process and per-file suite readings are in the issuance commit.
+
+## ADDENDUM R3-T.11 (2.0.0_SA_COO~O, 2026-10-06 ~01:xxZ) -- round 18, the CTO's round-17 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round17.md` @5c352b300b, section 4 (msg 29841). The grades read 0/1/7: FWD-7 is
+NOT_REALIZED on the p95 breach.
+- **R16:** CLOUD is the source of record, with a DRAIN-BACK step.
+- **R17:** the cause is read before any fix or cap ruling.
+- **R18:** S41 is at Andrew. Z-S55 becomes a doc cell. Z-W15-S51's pre-GO check exercise becomes a standing step.
+
+Label `<round>18</round>`, ONE issuance, four cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-pm-2` | 1 | Read-only latency cause read. Per-route counts and p95 for 2026-10-05 and 2026-09-30 from a named instrument, with routes at OG-p-1 split from those added since. Hypothesis (i) tested first; finding in {MIX, SLOWDOWN, BOTH, UNDETERMINED}; 0 writes. | WORLD | ~27 | worker |
+| `OG-ln-1` | 2 | R16 reconcile. Every CLOUD-vs-live difference under the gateway tree is classified, LIVE-ONLY hunks are ported to CLOUD, and CLOUD-ONLY items are listed with owner and disposition (OA-e-10 first). No release. | WORLD | ~22 | worker |
+| `OG-dc-1` | 3 | Z-S55: `.tools/m365-mcp-kit/` rewritten (or retired with a pointer) to the hosted reconnect. | LOCAL | ~21 | worker-light |
+| `OG-ti-2` | 4 | Z-W15-S37/S40: isolation finished. No per-module reset seam, and the whole set and the S40 subset green in one process. Tests only. | WORLD | ~25 | worker |
+
+**The issuer's own act, in this issuance (not a cell).** `deliverables/2.0.0_SA_COO~O/RELEASE_ORDER_FORM.md` is the
+gateway release-order form, with R16's DRAIN-BACK (Phase D) and R18's pre-GO check exercise (step 7). Every later
+`OG-rl-*` is cut to it.
+
+**Chains.** None: four independent starts. `OG-ti-2` and `OG-ln-1` both touch `tests/`. The issuer re-runs `ti2.AC1`
+on the drained union.
+
+**fanout.** 4 independent starts, cap 8.
+
+**Stated dependencies, not cells:**
+- Z-W15-S41's grant is at Andrew (R18; REC yes).
+- OG-v-7 waits on Andrew's tests, then Alyssa.
+- The pilot waits on G-E and R7's flag.
+- Z-S43 waits on the meeting invitation.
+- OA-e-10 ships after OG-ln-1, under R16's terms.
