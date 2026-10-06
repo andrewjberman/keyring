@@ -78,3 +78,7 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~19:3xZ):** both halves are signed: COO @6c06cabc3f (`deliverables/2.0.0_SA_COO~Z/round76/NEVER_WIDEN_HALF_COO_AZ5.md`) and CTO @9c5a2a4b61 (`ledger/NEVER_WIDEN_ROUND76_AZ5_CTO_HALF.md`, conditions 1-5). The build is a DETACHED worktree at EXACTLY `de48559928`, never "at or after". The CONTENT-DIFF is CHANGED 7 + ADDED 1 as the COO half lists; any other file is a STOP. The snapshot event is exactly `{"amgt_scheduled_action": "refresh_freshness_snapshot"}`. AC1 adds r76 c62/c63; the CTO's condition 3 also reads c57/58/61, c53/55/56 and c38.
+
+<status>pending</status>
