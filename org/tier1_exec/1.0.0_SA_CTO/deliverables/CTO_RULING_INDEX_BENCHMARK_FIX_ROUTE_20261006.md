@@ -72,3 +72,32 @@ resolves). `CIX <GO>` is a GUI screen with no DAPI route. It eliminated two disc
 **Measured at 14:18Z:**
 - The served `json/benchmarks/model_portfolio_benchmarks.json` was last modified 2026-10-06T12:31:21Z: no re-pull has landed yet.
 - In this shared tree, `.open_deploys` holds no benchmark entry, so the guard deploy has not started.
+
+### ADDENDUM 3 (2026-10-06 ~17:5xZ) -- Andrew: resolved at the source; the guard STAYS; track 3 is not yet served
+
+**Andrew-direct** (MSTR~Z msg 30159, record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261006_1744Z_BLOOMBERG_RESOLVED_YANG_CIX_USER_ERROR_SITEZ_RESUMES_REGULAR_WORK.md`
+@8555ce7e12): "the Bloomberg issue has since been resolved. It was a user error on behalf of Yang where he did not update the CIX
+in bloomberg terminal."
+
+**Ruling on the step-(1) guard: it STAYS.**
+- It is live (TO-GUARD-1, closed @98d34b175a, CTO half @78a9e8a39e).
+- It turned seven days of silently wrong benchmark numbers into a visible N/A with a date, and it goes quiet by itself once a
+  series reaches `data_as_of`. No code change is needed for the fix to show.
+- Removing it would re-open the silent-wrong-number class for the next CIX lapse, at the cost of a deploy.
+
+**Measured at ~17:5xZ, so "resolved" is not read as "served":**
+- The served `model_portfolio_benchmarks.json` is still the guard's 16:16:52Z re-serve, `data_as_of` 2026-10-05: 273 of 300
+  benchmark cells null, `benchmark_last_date` index 2026-09-29 on all 5 models.
+- The newest PKL is `benchmarks/data_20261005_v1.pkl` at 12:29:21Z. `uploads/` holds no new PKL.
+- So the CIX fix has NOT reached the portal. The panel still reads N/A, correctly.
+
+**What closes track 3:**
+- either Yang's same-day re-pull plus `/data-refresh`;
+- or the next scheduled daily pull (T-1 = 2026-10-06), which carries the fixed series without any other act.
+
+**Proof:**
+- 0 null `index_benchmark`, `etf_benchmark`, `index_spread` and `etf_spread` cells (200 of 200 numbers).
+- A volatility cell is null only where its window holds fewer than `calculate_volatility`'s `min_points=5`. This now
+  applies to every model's WTD/MTD/QTD, not only INT's, so the null count is graded from the window lengths, not assumed
+  to be 3.
+- `benchmark_last_date` = `data_as_of` on every model. This seat grades it on the first served write after a new PKL.
