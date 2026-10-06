@@ -74,3 +74,45 @@ The disarm owner decides and the CVO writes (@cc05804f8f). The CVO applies both 
 
 It deploys, applies and grants nothing. It re-measured nothing beyond the slug and the terminal message. The r19b
 facts are the CVO's guard reads on the deployed host.
+
+## 6. Addendum ~07:0xZ 2026-10-06 -- R25, `/login` admits opalbloomberg@ (`2.0.0_SA_COO~O` msg 29939, rows Z-W22-S11, S12)
+
+**R25.1 -- (b): ADMIT opalbloomberg@opalinvest.com. Strike lg-1's `scoped_service_identity` refusal.**
+- **What the identity is.** It is the Bloomberg Teams concierge (`identity_scope.py:53+`, OPAL_ANALYST TO-3). Its
+  allowlist is almost entirely delegated Graph Teams tools: `poll_addressed_teams_messages`, `list_chats`,
+  `read_chat_messages`, `send_chat_message` and the channel set. A lapsed cache sends it to `/login` (`NeedsLogin`,
+  `token_broker.py:55-62`).
+- **Why not refuse it.** The refusal rests on "its Graph token is minted by its operator's bridge sign-in". The bridge
+  redeems with `AUTHENTICATION_SCOPES` (`email`, `:353`). Whether that refresh token mints Graph tokens silently depends
+  on tenant consent, and nobody has measured it. A production identity is not dead-ended on an unproven premise.
+- **No widening.** Today's live `/login` admits it.
+- **Its fence stands.** `identity_scope`'s allowlist is enforced at both dispatch chokepoints. `/login` only re-mints
+  its token.
+
+**R25.2 -- withdrawn and corrected.**
+- **R24's clause withdrawn:** "the Analyst's service identity stays refused". This seat wrote it from OA-e-10's stated
+  purpose without reading `identity_scope.py`; that identity IS the concierge, whose duty is Graph tools.
+- **R22's premise corrected.** It said "/login is the ONLY path that grants a person delegated Graph scopes", and that
+  is UNPROVEN, not established. The bridge's principal cache is documented as the source Graph-using tools acquire from
+  (`:346-356`). R22's outcome stands on the narrower ground: `NeedsLogin` directs users to `/login`, so a 403 there is a
+  dead end in the product. The rows citing R22 carry this correction.
+
+**R25.3 -- least privilege for a scoped identity, as a later enrichment, not a `/login` refusal.** A scoped identity's
+`/login` consent requests only the Graph scopes its allowlisted tools need, instead of the full `GRAPH_SCOPES`
+envelope. That meets OPAL_ANALYST PRD 4.3's intent without a dead end. It needs its own cell with a scope map per tool.
+
+**R25.4 -- Z-W22-S11 accepted, with the semantics stated truthfully.**
+- On the GUI path, `/login` has no principal, so `resolve_tier(None)` answers the READ_ONLY floor, which carries read
+  Graph tools.
+- So the rule in effect is: ADMIT every verified, non-email-denied tenant identity.
+  - Restricted profiles are refused by the email-deny guard (row W3-S22).
+  - The tier clause is a fail-closed backstop: an unverified provider, an unresolvable tier, or no Graph tool.
+- lg-1's docstring and the rl-8 ask say exactly this.
+- The release's real gains over live: the `/login` audit record (S52 closed by construction) and the fail-closed
+  ordering.
+
+**The write surface.** The issuer amends OG-lg-1 under R25.1 and R25.4:
+- strike the clause;
+- make the test assert opalbloomberg@ is admitted AND its allowlist still denies an out-of-scope tool;
+- correct the docstring.
+Then rl-8 is cut on the amended drain.
