@@ -18207,6 +18207,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W249-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~249",
+ "surfaced_at": "2026-10-06T02:51:50Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The round-73 c50 check reads the ranked row's and the freshness row's `name` field, so serving plain names required re-casing `name` itself, which two existing api tests pinned to the vendor capitals.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "AMGT-aw-5 worker face item 1 names the ranked row via _with_display_name, which at the base kept `name` as stored ('the stored name keeps its value; only display_name changes', lib/research/api/tests/test_display_name_case.py test_every_route_chain_ends_in_the_seam); the c50 check (r73_served.py) fails a ranked row or a freshness row whose `name` is all capitals.",
+ "world_is": "At the base, c50 --where local read 383 names with 131 all-capital failing, every failure on `name` (ranked rows carry the stored vendor name; freshness rows have no display_name). To pass AC1 the worker set the ranked row's `name` to its plain form in _with_display_name and cleaned the freshness row `name`; casing is the only served change, plus the 'CO/THE' and bare legal-form tail the order's own examples name (BOEING CO/THE -> Boeing, BP PLC -> BP). Three existing tests that pinned the old capitals were updated: test_display_name_case.py (ranking name; BP PLC case) and test_lead_list_names_and_places_moved.py (ADOBE INC served as Adobe Inc). Not adjudicated: whether the portal reads `name` on a ranked row for anything other than display. After the change the api suite reads 650 passed and the harvest suite 355 passed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/scoped_amgt.py _clean_display_name and _with_display_name on branch wk-AMGT_RESAPP-249 (C:/tmp/r73-249)",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round73/checks/r73_served.py c50 branch reads r.get('name') for rankings and freshness"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
