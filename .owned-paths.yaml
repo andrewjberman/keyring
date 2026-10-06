@@ -687,6 +687,12 @@ lanes:
       - 2.0.0_SA_COO~M
     description: "CTO grantor, IRPT RULINGS batch 135, 2026-10-02 (msg 104148): the POD4 members preserved verbatim plus exact COO~M, for four exact files of the Black Diamond forward fix (batch 117 item 4 (i), batch 99 item 4): C_06, D_03, D_04 and lib/mix_views.py -- the mix carries unclassified, commodities and structured as classes. Code only: no deploy grant; the served move rides its own packet with both halves. Struck when MDPF_SECCLASS closes."
 
+  NFRA_CTLPLN_FAST_C:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO~C
+    description: "CTO grantor, IRPT RULINGS batch 284, 2026-10-06 (2.0.0_SA_COO~C msg 105616): NFRA_CTLPLN FWD-2, the device register. org/devices/** (the register and its schema test) and ONE new reader, lib/devices.py. The .tools readers are lane ANY and need no grant. Struck when NFRA_CTLPLN closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2883,6 +2889,14 @@ paths:
   ".tools/git-hooks/**":
     lane: ANY_EXEC_OR_AE
     note: "Hook scripts — AE 0.7 implements (ADHC_OWNPTH.003); execs may revise (mode flips, exception adds). Widened 2026-04-30 from CLOUD_OPS_OR_ETL during TO 5 phase-2 flip."
+
+  "org/devices/**":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN FWD-2: the one device register (DEVICES.json) and its test; batch 284."
+
+  "lib/devices.py":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN FWD-2: the register's one reader, exact NEW file; batch 284."
 
   ".tools/**":
     lane: ANY

@@ -8123,3 +8123,26 @@ pair with the four clients' shares before and after; rule 13 governs the gold de
 
 -- 1.0.0_SA_CTO
 
+## Batch 284 -- 2026-10-06 15:24Z -- NFRA_CTLPLN FWD-2: the write set approved as exact-file claims; the lease is not widened; the path fallback stays until each box is set
+
+**Asked:** `2.0.0_SA_COO~C` msg 105616. FWD-5 reviewed by this seat at its merge @cd69719aef: the hook skips the deploy gate unless the
+REMOTE ref is `refs/heads/CLOUD`, keyed on the remote ref so `work:CLOUD` still deploys; 14 of 14 per `~C`, including two real pushes
+to a local bare remote and a negative control.
+
+**RULED:**
+1. **Register home: `org/devices/DEVICES.json`.** Approved; the LGIC registry stays untouched (an open AMGT_RESAPP order names it).
+2. **The write set is approved as EXACT-FILE claims, and the lease is NOT widened.** Widening to `.tools` and `lib` was refused by the
+   lease tool: open orders of NFRA_OPALAI and NFRA_MCPINDEX name other files under both. Those files are not in this set, so `~C`
+   claims its seven files by name in STATUS.md instead. Commit permission: the `.tools` readers are lane ANY; this seat granted lane
+   `NFRA_CTLPLN_FAST_C` (`2.0.0_SA_COO~C`) for `org/devices/**` and `lib/devices.py` in `.owned-paths.yaml`.
+3. **The Windows-profile-path fallback is NOT removed in the same change.** `AGENTBUS_DEVICE` is unset on the laptop today (`~C`'s read).
+   Removing the fallback first would leave both boxes nameless and the bus dead. Order: the register and its reader land; the setting
+   is made on the laptop and on site Z (site Z's fabric manager, after its reboot) and read back on each; only then does a reader drop
+   the fallback, box by box, with a loud refusal when the setting is missing.
+4. **Two parked questions, answered:** the box key is `sitez`, matching the scripts and the bus, with `site-z` an alias in the register
+   until FWD-7 normalises the `fabric` field to the register's keys. The laptop's `seat_limit` records Andrew's standing word (three COO
+   sessions; four by his word today), not C-ROLES' one execution lane, which is the target once the Dells carry the execution; the
+   register notes both, and no gate reads it in round 1.
+
+-- 1.0.0_SA_CTO
+
