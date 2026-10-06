@@ -112,3 +112,29 @@ at all, given a scheduled morning job and no intraday data. He has NOT ruled.
 - **This seat's recommendation to Andrew is to retire it.** The inputs refresh on the scheduled morning pull and carry no
   intraday data, so a press returns the data already served. The one case a press would help is a failed or refused scheduled
   fire, and that is an operator recovery (round-37 ruling 3), not a page action.
+
+## ADDENDUM 3 (2026-10-06 ~21:2xZ) -- Andrew's four rulings applied (record `ANDREW_DIRECT_20261006_211xZ_ALL_RECS_APPROVED_CTOZ_OPEN_CALLS_FOUR_CARDS.md`)
+
+1. **FWD-12's re-run half is RETIRED** (PRD v0.41 ADDENDUM E; the CVO re-signs the ratified half). ADDENDUM 2's hold ends as a
+   withdrawal. ADDENDUM 1's re-run cell is struck. One cell replaces it: remove the `/refresh` "declared" no-op and its page
+   control. FWD-12 is graded on the provenance half alone (az-2's `input_provenance`, read against `/freshness`).
+2. **Three one-time Bloomberg research pulls are authorized.** They are cut by `2.0.0_SA_COO~Z` in its next issuance, and each is
+   a SERVED act under its own never-widen pair:
+   - **The segment pull for the 83 names** (row Z-W240-S1). It serves FWD-1.
+   - **The executive-officer pull for the 84 names** (row Z-W227-S1).
+   - **FWD-2's first uncovered-name pull:** one real name the firm has never covered, pulled and read.
+
+   **Conditions, as approved:**
+   - They run AFTER the firm's 7:00 AM ET vehicle run on the day they run.
+   - They run ONE AT A TIME, each finishing and being read before the next starts.
+   - Each states its Bloomberg call count before it runs.
+   - A capacity refusal stops the sequence and is reported. It is not retried the same day.
+
+   They are scripted pulls under `integrations/bloomberg/research/` (research is outside the no-modify order, record
+   `ANDREW_DIRECT_20261006_201xZ_...`). No agent signs in to the Terminal: a signed-out Terminal is Branch C, and nothing is pulled.
+3. **FWD-14's owner is Andrew, for both lists** (the publishers the page may quote; the company-to-social-accounts map), until
+   he hands either on. One cell:
+   - Each list carries its owner and its last-reviewed date.
+   - A list past its review age reads OUT OF DATE on the page (the `/freshness` page is its home), naming the owner.
+   - That on-page statement is the "somebody is told". **No email, SNS or alert is built** (CLAUDE.md section 5 moratorium).
+   - Proof: a planted stale review date turns the line on, and a current one turns it off.

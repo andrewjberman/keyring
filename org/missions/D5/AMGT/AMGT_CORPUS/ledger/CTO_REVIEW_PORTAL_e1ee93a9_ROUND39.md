@@ -37,3 +37,11 @@ currency is unknown.
 
 The push is by the author as a fast-forward if it touches no product file under the portal rule. This candidate DOES touch
 product files, so the push follows the normal DEV path on this approval.
+
+## ADDENDUM (2026-10-06 ~21:2xZ) -- f8d92450 APPROVED; it supersedes e1ee93a9 as the candidate for the one DEV push
+
+`2.0.0_SA_COO~X` msg 30306. f8d92450 = e1ee93a9 + ONE file (`StatTile.tsx`, +2/-1; CRPS-ao-3 AMENDMENT 1).
+- Capture read: `evidence/r39_ao5_walk/tsm_header_amended.png` @9b0a488030. The Net debt tile reads "Not shown: Bloomberg does
+  not confirm this figure's currency", with no magnitude.
+- The Enterprise value tile and the USD tiles are unchanged from the capture read above.
+- The amendment owed is met. **APPROVED for the one DEV push of f8d92450.**
