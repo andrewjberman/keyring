@@ -54,6 +54,11 @@ mounted in `tabs/ThesisTab.tsx`).
 - **Types:** declare `segment_breakdown` on the thesis bundle type, and the point's optional `passage_text` / `passage_cite`, in
   `types.ts`.
 
+**AMENDMENT 1 (issuer, 2026-10-06 ~06:3xZ): the drafting harness stubs the new import.**
+`src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs` stubs each ThesisTab import by name (ThesisDriverChart at ~:98) and throws
+`Cannot find module '../components/SegmentBreakdown'`. Add ONE stub beside the others:
+`name === '../components/SegmentBreakdown'` returning `{ SegmentBreakdown: () => null }`. Change nothing else in that file.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
@@ -68,6 +73,7 @@ portal/src/pages/SecurityAnalysis/components/ThesisDriverChart.tsx
 portal/src/pages/SecurityAnalysis/components/SegmentBreakdown.tsx
 portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx
 portal/src/pages/SecurityAnalysis/types.ts
+portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs
 org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/0.9.0_WK_DSGN_AMGTV1~105/
 org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -89,6 +95,9 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
+- **AMENDMENT 1 (~06:3xZ):** on ~105's AC2 red (row Z-W105-S1, BLOCKING, ARMED, disarm_owner this seat), granted
+  drafting.harness.cjs for the one-line stub of the new ThesisTab import. The row disarms when AC2 reads ALL PASS. No gate limb graded
+  this modification (to-pipeline-gate fires on new orders only).
 - **Source:** AMGT_RESAPP `ROUND_ANALYSIS.round73.md` @cf0d03deb2 item 1 (msg 29921); rows Z-W251-S1 and Z-W251-S2.
 - **Base:** the round-43 candidate (portal c123c5a0 = DEV bacc2a22 + round 43), so rounds 43 and 44 go to Andrew as ONE DEV push, per the
   analysis.

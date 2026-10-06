@@ -8692,3 +8692,34 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S56",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-06T06:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Round 19 close. (1) Z-W15-S52 (ARMED: the audit lake has no /login records, so a /login admit list cannot come from audit) is DISARMED for this project: the only act it gated, OA-e-10's /login narrowing, did NOT ship (CTO R22; reverted on CLOUD, and r19b cf4b036e62 leaves server.py byte-equal to live, with /login before == after per the CVO V2 record). The blind spot itself is routed to the CTO as an input to OA-e-10's re-cut under NFRA_OPALAI: that acceptance needs an identity-bearing /login instrument. (2) Z-W15-S53 (email-keyed caches of non-configured identities) is moot: /login is unchanged, so their re-mint path is intact. (3) Z-W15-S57 (5 OG-ts-2 files unlisted in LINEAGE_R18) is closed: they shipped in r19b, and ln1.AC1 reads 0 files differing live..CLOUD at drain 16b05eff3a. (4) Z-W15-S59 (an AC1b pass form that hit the real host) was caught by the expect match and re-run; recorded.",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W15-S52",
+    "NFRA_OPLGTW-Z-W15-S53",
+    "NFRA_OPLGTW-Z-W15-S57",
+    "NFRA_OPLGTW-Z-W15-S59"
+  ],
+  "one_line": "Round 19 close: S52 disarmed (the /login narrowing it gated did not ship; the blind spot goes to OA-e-10's re-cut), S53 moot, S57 closed by r19b (CLOUD == live), S59 recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: rl7.AC2.sh at CLOUD 16b05eff3a: deployed cf4b036e62; gateway files differing live..CLOUD 0; RESULT: PASS",
+      "RUN: ln1.AC1.sh at CLOUD 16b05eff3a: files differing live..HEAD 0; RESULT: PASS",
+      "FILE: deliverables/0.9.0_WK_NFRA_OPLGTW~15/r19b_phaseB_login_before.out == r19b_phaseB_login_after.out (12 arms)"
+    ]
+  },
+  "spec_asserts": "S52: the /login admit list comes from 30 days of audit before /login narrows.",
+  "world_is": "/login did not narrow in r19b; the audit-coverage gap stands as an input to OA-e-10's re-cut."
+}
+```
