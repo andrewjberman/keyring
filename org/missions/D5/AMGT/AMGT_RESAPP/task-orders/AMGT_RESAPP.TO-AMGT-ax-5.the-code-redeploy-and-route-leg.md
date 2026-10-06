@@ -46,6 +46,7 @@ A failing criterion is the ROLLBACK trigger: the prior artifact version, and the
 
 <paths>
 infra/aws/terraform/harvest/scoped-amgt-api.tf
+infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/
 org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/
@@ -58,6 +59,26 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC1" cell_refs="AMGT-ax-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c53 c55 c56; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round74/checks/r74_served.py" --cell $c --where deployed || exit 1; done; echo "exit=$?"</invocation><expect>R74 C53, C55 (C1 and C2) and C56 SERVED: YES on the deployed function and gateway; and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AMGT-ax-5"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c48 c49 c50; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round73/checks/r73_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; for c in c39 c42 c43 c45; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/checks/r72_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round71/checks/r71_latency.py" --where deployed; echo "exit=$?"</invocation><expect>R73 C48-C50, R72 C39/C42/C43/C45 and R71 C38 SERVED: YES on the deployed function (no regression); and exit=0</expect></criterion>
 </proof_of_spec>
+
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~07:0xZ) -- item 0: the font data members
+
+The issuer's build-only at `0c9b9db840` (ax-1, ax-3 and ax-4 drained) packaged NO font: the seed walk takes `.py` files and the
+named `DATA_MEMBERS` only, so `lib/research/print/fonts/` was left out and the print would break at its first request on the
+deployed function. VERIFY-SCOPE cannot see it, since the fonts are read by file, not imported.
+
+0. **Item 0, before the build.** Apply `org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round74/ax5_build_fonts.patch`
+   to `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh` (`git apply`; three `DATA_MEMBERS` rows for
+   `lib/research/print/fonts/Lato-Regular.ttf`, `Lato-Bold.ttf` and `FONT_LICENSE.txt`) and commit that file alone. The build
+   commit is that commit.
+1. **The CONTENT-DIFF the issuer measured with the patch applied**, against deployed `satkY3HXAhzfU7zYZ5fk+EmNHaqIRfj7bBtVlG4XfIY=`,
+   is exactly:
+   - CHANGED `lib/research/api/scoped_amgt.py`, `lib/research/api/monthly_chatter.py`, `lib/research/coverage/pool_reader.py`,
+     `lib/research/print/render_pack.py`;
+   - ADDED `lib/research/print/fonts/Lato-Regular.ttf`, `Lato-Bold.ttf`, `FONT_LICENSE.txt`.
+   Size 255,309,631 B of 262,144,000 B (97.4%). Anything else is a STOP.
+2. **The route leg** adds exactly ONE entry to `local.scoped_amgt_routes`: `"GET /api/scoped/amgt/security/{proxy+}"`. The plan
+   is `1 to add, 0 to change, 0 to destroy` on `aws_apigatewayv2_route.scoped_amgt_api`, or it is a STOP.
+3. **Also report** the /freshness COLD miss: wait 65 s after the warm calls (the hold is 60 s), then time one call.
 
 ## 5. WHEN YOU ARE DONE
 
