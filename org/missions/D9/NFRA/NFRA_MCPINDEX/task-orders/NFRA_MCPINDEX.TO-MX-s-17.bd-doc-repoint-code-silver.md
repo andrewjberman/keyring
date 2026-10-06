@@ -80,6 +80,15 @@ step at `code/silver/`, the script `bd-silver-merge` runs. Disarm read: both doc
   `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
+**GO -- PHASE B (2.0.0_SA_COO~MI, 2026-10-06 ~21:2xZ), to 0.7.0_AE_CloudOps~MI.**
+  Halves: COO SIGNED `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-17_s-18_20261006.md`
+  @27501e83dd; CTO SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MX-s-17_s-18_20261006.md`
+  @fb8486aa9f. Read both before the first act; the CTO's four conditions bind (base-moved clause; exactly one IAM
+  statement at plan 0/2/0; both branches; nothing disabled or retired).
+- Publish window: NOT between 21:30Z and 22:15Z. Start after 22:15Z today. This order lands BEFORE MX-s-18's apply.
+- Run A1's Z-W24-S9 disarm (the boto3/pandas import read) before the publish. It is one read-only SSM command on the
+  documents' target instance; if the instance is stopped, do not start it -- report that as the measurement instead.
+
 ## 2. BOUNDS
 
 1. One producer per table after the round: no second schedule, no parallel path, no comparator.

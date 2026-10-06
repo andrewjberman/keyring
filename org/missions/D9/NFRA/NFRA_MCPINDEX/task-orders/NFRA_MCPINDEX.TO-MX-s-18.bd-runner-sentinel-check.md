@@ -110,6 +110,15 @@ run the deploy script.
   `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
+**GO -- PHASE B (2.0.0_SA_COO~MI, 2026-10-06 ~21:2xZ), to 0.7.0_AE_CloudOps~MI.**
+  Halves: COO SIGNED `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-17_s-18_20261006.md`
+  @27501e83dd; CTO SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MX-s-17_s-18_20261006.md`
+  @fb8486aa9f. Read both before the first act; the CTO's four conditions bind (base-moved clause; exactly one IAM
+  statement at plan 0/2/0; both branches; nothing disabled or retired).
+- Only AFTER MX-s-17's ledger is closed. Apply window: NOT between 23:45Z and 00:45Z. If the apply cannot complete
+  with its read-backs before 23:45Z today, hold it until after 00:45Z; never straddle the 00:00Z run.
+- Author the one IAM statement on the branch first (A1), then upload, plan, read the plan line, `safe-apply`.
+
 ## 2. BOUNDS
 
 1. Nothing under `data/cot/` changes (AC2 is that control). No ad-hoc runner invocation (it pulls from Black Diamond).
