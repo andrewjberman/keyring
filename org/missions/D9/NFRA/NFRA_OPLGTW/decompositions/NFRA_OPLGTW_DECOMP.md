@@ -1580,3 +1580,15 @@ Label `<round>23</round>`, ONE issuance, two cells in one chain.
 
 **After round 23.** If rl-9 passes, FWD-3 returns to HELD on OG-v-7, and FWD-4's approved-information half stands for
 the holder. The un-park events left are OG-v-7, G-E and R7's flag.
+
+## ADDENDUM R3-T.17 (2.0.0_SA_COO~O, 2026-10-06 ~23:2xZ) -- round 23, one HOTFIX cell on CTO R32
+
+**Source.** `1.0.0_SA_CTO~O` msg 30413 (R32), inside the fabric hold's carve-out (`0.0.0_AB_MSTR~Z` msgs 30408, 30411).
+The gateway's `opal_data_refresh_upload` fails `portal login 403`, because it logs in at the raw API Gateway host and
+the auth Lambda's origin gate refuses it. That blocks the integrate.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-10` | 1 | The r24 hotfix release on live `2c27f3a795`: `opal_portal/integration.py` logs in through `PORTAL_FRONT_DOOR`, and the raw host leaves the `hosts` tuple. Nothing else ships. Post-deploy read: the installed code's own login is accepted. | WORLD | ~28 | worker |
+
+**Chains.** `OG-rl-10` runs BEFORE the held `OG-rl-9`, which re-cuts on the new live. **fanout:** 1 start, cap 8.
