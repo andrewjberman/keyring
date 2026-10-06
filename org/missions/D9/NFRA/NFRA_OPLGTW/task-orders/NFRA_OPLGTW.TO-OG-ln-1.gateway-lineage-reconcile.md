@@ -83,7 +83,7 @@ output, rows, commits.
   form `RELEASE_ORDER_FORM.md` in this issuance. The form is the issuer's own artifact, so it is outside this cell.
 - Pre-cut: `ln1.AC1` FAIL (the record is absent; `environ_with_external_ids` on CLOUD 0).
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
