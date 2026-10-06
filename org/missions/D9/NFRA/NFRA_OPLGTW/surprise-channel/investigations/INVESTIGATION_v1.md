@@ -8450,3 +8450,27 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W25-S4",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~25",
+  "surfaced_at": "2026-10-05T02:10Z",
+  "one_line": "The re-hand of OG-ts-2 (status complete) cannot be committed: the lane gate admits a worker only to the <paths> of a NON-TERMINAL order, and the order reads complete.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash .tools/safe-commit.sh ... -- tests/proc_tmp_root.py tests/conftest.py tests/test_schwab_export.py ended 'ERROR: owned-paths lane violation(s)' on all 3 paths: 'no NON-TERMINAL task order at HEAD issued_to this serial names this path' (rc=1, nothing committed)",
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r18/checks/ti2.AC1.sh on the uncommitted fix ended 'collected 148, errors 0, failures beyond baseline 0 []; S40 subset: passed 48, failed 0, errors 0 / RESULT: PASS'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Issuer re-hand: fix tests/ and commit with safe-commit; the order's status stays complete.",
+  "world_is": "The fix sits uncommitted in worktree C:/tmp/wk-oplgtw-25-r19 (3 files under infra/aws/ec2/opal-gateway/tests/, proc_tmp_root.py new). The gate needs the order reopened (status non-terminal) for the grant to exist; I did not edit the status as told.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
