@@ -9236,3 +9236,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Fabric-wide, not OPLGTW's: a candidate guard is a post-merge `git diff --cached --quiet` read in safe-merge.sh. Routed to 1.0.0_SA_CTO~O in the round slug; no fix is cut here."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T22:12Z",
+  "one_line": "OG-rl-9 PHASE B step 10 exited rc=3 at safe-ec2-deploy.sh's halt gate before any build or upload: the release tree /c/tmp/og-rel17 at ba27a07439 holds 63 NFRA_OPLGTW task orders and none issued to ~28, so halt_gate_worker_issuer cannot admit the worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-06 ~22:05Z from /c/tmp/og-rel17: DEPLOY_BASE_REF=2c27f3a795 HALT_ACK=1 AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~28 bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -> 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', DEPLOY_RC=3, after 'Step 1/3 Pre-Deployment Check' and before Step 2 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_phaseB_deploy.out).",
+      "READ .tools/halt-gate-check.sh halt_gate_worker_issuer (:185-206): reads `git show HEAD:<to>` for every task order under NFRA_OPLGTW in HALT_GATE_REPO_ROOT, which safe-ec2-deploy.sh sets to the calling release worktree; RUN over og-rel17 HEAD: 63 task orders, 0 with issued_to ~28 (the order was cut after the base commit chain 2c27f3a795 <- cf4b036e62).",
+      "RUN after the abort: S3 opal-gateway-latest.tar.gz git-ref still 2c27f3a7958de0aa644374cdd08fc188a27e9e3f; og-rel17 clean at ba27a07439 (0 status lines); host untouched (the verify before-run, 22:03Z, is the last host read; no upload, no SSM install dispatched)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RELEASE_ORDER_FORM step 10: deploy through safe-ec2-deploy.sh from the release tree with DEPLOY_BASE_REF and HALT_ACK=1; the worker is admitted by its non-terminal order at HEAD.",
+  "world_is": "The gate resolves the worker's order from the release tree's own HEAD. A release cut on a live sha older than the worker's order has no such order, so the gate refuses. The worker did not work around it: any fix changes the signed act (a commit on the release branch changes the release sha; a deploy from the worker worktree changes the artifact git-ref and the manifest deployed_commit lineage, and CLOUD does not descend from 2c27f3a795, so rl9.AC1's descends arm would need the release-branch sha). Same class as Z-W12-S9.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Nothing landed. The ledger nfra-oplgtw-gateway-release-r23 entry and sentinel stay committed OPEN at 45c82c948c (4 h window from 22:03Z); the fabric-wide hold (22:08Z) also stops the act. The issuer rules the admission path (e.g. a sanctioned way to place the order where the gate reads it) and re-issues GO."
+}
+```
