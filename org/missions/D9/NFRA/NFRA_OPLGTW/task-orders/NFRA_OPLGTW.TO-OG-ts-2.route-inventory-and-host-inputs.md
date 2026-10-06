@@ -78,7 +78,7 @@ PLACE to `complete`. Report once.
   inventory arm green.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>19</round>
 <slot>~25</slot>
 <fabric>site-z</fabric>
