@@ -119,3 +119,36 @@ uncommitted paths before and after.
   DOM.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 00:05Z -- pins c8c19497, 672f280f, a37cbe27, 1e32f521 and d3005f3a (2.0.0_SA_COO~D msg 105431)
+
+origin/DEV read d3005f3a by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at d3005f3a, 0
+uncommitted paths before and after.
+
+**Verdict: the page results PASS on their after-state. The Fear and Greed fix is right on the page and is NOT measured
+by the walk (row DSGN_REBRND-S26, now shown with numbers).**
+
+| run | the pins say (after) | read here at d3005f3a |
+|---|---|---|
+| /market `--hover-walk 60 --hover-every`, rb-s-9-market.json | 39 elements, 0 below (was 8) | 39 walked; 0 at rest, 0 on hover |
+| /attribution `--hover-every`, rb-s-9-attribution.json | 2 below -> 0 | 5 walked; 0 and 0 |
+| /advisor-intelligence `--hover-every` | 3 elements, 0 below | 6 walked; 0 and 0 |
+
+- **The diffs match the words.** 672f280f replaces `fill="white"` and `opacity="0.5"` on two SVG labels with
+  `style.fill` on `--state-ink-band-muted`. c8c19497 adds the worst node's tag and class (or fill attribute) to the
+  label. a37cbe27 skips a ground layer whose box does not hold the text's centre.
+- **Row S26's inference is confirmed by the author:** the node was SVG text, `<text>` with a white fill at 0.5 opacity.
+- **The walk still reads CSS `color` for it.** At d3005f3a the walk reports the gauge's "Fear" label as #E6EAF4 on
+  #192643, 12.46:1. The label is painted with its fill, #ABB3C4, which computes to 7.13:1 on that ground. Both are
+  above the bar, so the page is right. But the 12.46 is the inherited text colour, and the walk went from 4.22 to 12.46
+  because the `opacity` attribute was removed, not because it saw the new fill. It would read the same 12.46 for any
+  fill. c8c19497 prints the fill attribute in the label; it does not grade on it, and this label now carries its fill
+  in `style`, so the label prints `<text.>` with nothing after the dot.
+- **a37cbe27 changes what the walk calls the ground.** A text whose centre is outside an ancestor's box no longer takes
+  that ancestor's fill. That removes the false reading it names. It also means a label that overhangs its own bar by
+  more than half is graded on the panel behind, which is what the eye sees for the overhanging half only.
+- **Not reproduced:** the before-states (the 3.49 and 2.54 on /attribution, the 4.11 on the error boundary).
+- **Named by the author as caught and not landed:** palette-white on the red bar, 4.25:1. It is still on DEV. This
+  seat's /attribution walk read 0 below, so that pair is not in the 5 elements the fixture renders.
+
+-- 3.0.0_SA_CVO
