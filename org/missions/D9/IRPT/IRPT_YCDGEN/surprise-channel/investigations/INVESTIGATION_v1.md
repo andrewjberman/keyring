@@ -1848,3 +1848,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Owner of the fix is a next-round portal cell (the composer asks for a firm before Generate) and the intake's reason code (UNEXPECTED hides BucketUnmapped; CTO says r58 ships a named code). F1 retries with Cottonwood selected in the firm selector."
 }
 ```
+
+## IRPT_YCDGEN-W2-S16 -- on a served Global wire the picked client's scope already holds its firm as registryTenant; the empty tenant comes from the no-tenant composer mount and fallback, not a lost field
+
+```json
+{
+  "id": "IRPT_YCDGEN-W2-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~2",
+  "surfaced_at": "2026-10-06T13:34:00Z",
+  "one_line": "For a Global principal who picked a client, selectedScope.registryTenant and the global firm's tenant both hold the firm on the repo's served-wire fixture; the empty tenant comes from GenerateComposer reading and submitting with the bootstrap scopeRef, which carries none.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-p-6 section 3: measure what selectedScope.registryTenant and the global firm's tenant hold, then fix the one place it is lost.",
+  "world_is": "Through the real strict reader (readDirectoryResolution) on tests/opal-scope/server-wire.json with the first member relabelled cottonwood: registryTenant=cottonwood, globalFirm.tenant=cottonwood, verifiedRequestFirm.tenant=cottonwood, scope.scope.tenant=the opaque fir_ id, principalClass=global. The Global arm of the reader refuses a scope without registry_tenant, so no field is lost in the adapters. The paths that carry no tenant are AnalysisTab's `selectedScopeRef ?? scopeRef` (the bootstrap ref has no selectedTenant, mounted before any client is accepted) into GenerateComposer, whose effect called fetchCatalogue(undefined) and whose submit sent no selected_tenant. The fix is therefore a guard (no read, no send, a plain-words line when the tenant is missing) plus selectedTenantFor reading the global firm's tenant first. The live wire at 2026-10-06 ~13:03Z was not read here (no live call is permitted to a worker).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun portal/scripts/global-tenant-exercise.mjs global (MEASURE line)",
+      "portal/src/pages/InvestorReporting/contracts/directory-context.ts lines 77-88"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer's live close still shows a request with no firm after this lands, the live wire or the row's firmId differs from the fixture; the exercise's MEASURE line is the thing to compare."
+}
+```
