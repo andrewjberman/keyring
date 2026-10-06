@@ -18555,6 +18555,49 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "lib/research/print/tests/conftest.py"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W259-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~259",
+ "surfaced_at": "2026-10-06T10:05:24Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "AMGT-ay-3: the `names` phase now logs 0 ms because the names are read beside the gold reads, not because they cost less; the same work is about 1.4 s and the whole first chatter request fell about 0.5-0.8 s (4.2-4.5 s to 3.5-4.0 s, three runs each).",
+ "spec_asserts": "Task order AMGT-ay-3 / r75_served.py c60: 'fresh-process names phase within 300 ms'; the cell: cut the phase, read once and in parallel what is read serially.",
+ "world_is": "In a fresh process the names work still takes about 1.4 s (identity list 460 ms, classifications 190 ms, stored names for 25 keys 820 ms with eight at a time). It now starts right after the covered keys are read and runs beside the generation read, mentions decode and compute; `read_monthly_chatter` waits for it at the `names` phase, which logs 0 ms. The 25 stored-name reads now run all at once (chunks of 8). Measured whole request, fresh process, same session: before 4212 / 4486 / 4293 ms, after 3468 / 3962 / 3476 ms (network noise is about +/-500 ms). The bar is met by overlap, so a later change that makes the gold reads faster than the names would put the wait back into the phase. Served bodies equal at days 30/90/365 (EQUAL 3 of 3).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/api/names_read.py and lib/research/api/monthly_chatter.py on branch wk-AMGT_RESAPP-259",
+   "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~259/after_equal.py output",
+   "per-call timing wrapper run in a fresh process, 3 runs each way"
+  ]
+ }
+},
+{
+ "id": "AMGT_RESAPP-Z-W259-S2",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~259",
+ "surfaced_at": "2026-10-06T10:05:24Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "The api suite fails 2 of 669 at this worktree, both in test_scoped_amgt_mount.py: terraform mounts GET /api/scoped/amgt/security/{proxy+} and the handler set has 18 routes against 19 mounted.",
+ "spec_asserts": "Task order section 1: run lib/research/api/tests/ before the commit and report its last line; a failure that reads a portal function absent at the worktree's portal ref is named, not filed.",
+ "world_is": "The two failing tests compare the Terraform route mounts with the routes `scoped_amgt.handler` serves: 19 mounted, 18 handled, the extra one being the greedy `security/{proxy+}` route round 74 deployed (723b8cefd6 reports 'deployed with one greedy route'). Neither test touches a portal function and neither reads a file this cell changed; `git diff --stat` shows only monthly_chatter.py, names_read.py and a new test. Full run: 2 failed, 667 passed.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python -m pytest lib/research/api/tests -q at C:/tmp/r75-259: 2 failed, 667 passed",
+   "commit 723b8cefd6 message"
+  ]
+ }
 }
 ]
 ```
