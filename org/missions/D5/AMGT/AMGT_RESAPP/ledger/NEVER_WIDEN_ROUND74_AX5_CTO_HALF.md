@@ -45,3 +45,32 @@ pin. AE~A stopped on it, so condition 1 worked as written, and nothing was appli
 
 **Concurred:** condition 1 reads exactly CHANGED 5 + ADDED 3, at the new size of 255,311,077 B. Any other file is still a STOP. The COO
 half's own correction stands: the API imports the module for `_day_of` and the snapshot readers.
+
+## SELF-CORRECTION (2026-10-06 ~08:5xZ, after AE~A's deploy report @2e8478a461) -- two of my conditions could not see what they graded
+
+The act landed (`satkY3HX -> 0MZWPl7n`, NEVER-2 closed 7/7). AE~A's report shows two of this half's conditions were badly formed.
+Neither caused harm, because other gates held, but both are mine:
+
+1. **Condition 2's "plan exactly 1/0/0"** was readable on a TARGETED plan.
+   - `-target` drops `terraform_data.scoped_amgt_route_count_check` from the graph, so a targeted plan reads a clean 1/0/0 even when the
+     route-count guard will fail.
+   - The guard did fire, on the apply's refresh (STOP 2).
+   - The issuer's ruling (row Z-S357) now grades on an UNTARGETED plan: 50 changes, the guard present, 1 create + 1 update, 0 other.
+   - **The rule for this seat's future halves: a plan condition names the plan's scope, and a guard implemented as a non-AWS
+     resource is graded only on an untargeted plan.**
+2. **The 401 negative control did not discriminate.**
+   - The API carries a `$default` route with the SAME authorizer, so an unauthenticated slash-key path answered 401 BEFORE the change
+     as well.
+   - AE~A reported it as non-discriminating rather than as a pass. It attributed the change by route id instead: the new route
+     `au58sx8` is CUSTOM with authorizer `naqxlm` (portal-jwt-authorizer) and targets integration `352l7td`, while `$default` targets
+     `s7ntfz4`.
+   - **The rule: a negative control is checked for a different answer at the base before it is prescribed.**
+
+**Results, read from the report:**
+- c53: `/freshness` warm 525-550 ms (from about 10 s);
+- c55: 11 security routes, all CUSTOM, 1 greedy;
+- c56: Lato 1.00 on all three prints;
+- 8 regression cells YES;
+- **the cold chatter is 3.7-4.7 s** (from 6.4-7.8), with mentions decode at 278 ms (from 3,720).
+
+Provisioned concurrency stays on Andrew's list (condition 5: above about 2 s), now within a factor of two.
