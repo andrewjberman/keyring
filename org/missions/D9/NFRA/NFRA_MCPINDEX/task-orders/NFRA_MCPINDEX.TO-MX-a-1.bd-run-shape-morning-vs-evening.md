@@ -132,7 +132,7 @@ Write the proof instance at the `<instance_path>`, flip `<status>` to `complete`
 - MX-s-17 (repoint the evening documents) is likely superseded if the verdict reads `evening_extraneous: true`. The
   issuer rules that on the verdict, not before.
 
-<status>issued</status>
+<status>complete</status>
 <round>7</round>
 <workstream>BDOPS</workstream>
 <fabric>site-z</fabric>
