@@ -4162,6 +4162,28 @@
     "spec_asserts": "RIV-pk-1 interface: security_parsekey is null when not asked or not answered.",
     "world_is": "The build stores a true null; the check's truthiness test was the wrong instrument for a null on this toolchain.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Resolves the S14 entry in the pk-1 instance's surprises list; the row's final disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-06T20:16:23Z",
+    "one_line": "Round 12's au-1.AC1 arm (a) and au-1.AC2 arm (a) assert the main page carries NO /rivalfunds/<day>/audit link; RIV-lk-1 adds exactly that one link by order, so both arms now FAIL by design (lk-1.AC1 PASSES).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round12/checks/au-1.AC1.py at wk-ETFS_RIVALS-2 working tree on top of c8ef93438b: 'FAIL: (a) the main page carries no audit trail and no /rivalfunds/2026-10-02/audit link yet'; arms (b) and (c) OK; AC1 RESULT: FAIL 1 failures.",
+        "python .../round12/checks/au-1.AC2.py, same tree: 'FAIL: (a) index.html and audit.html written; ... index has no audit, no link'; arms (b) and (c) OK; AC2 RESULT: FAIL 1 failures.",
+        "python .../round13/checks/lk-1.AC1.py, same tree: AC1 RESULT: PASS 0 failures (main page: 1 link, 0 'Cited rows:')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "au-1 AC1 (a) and AC2 (a), round 12: the main page carries no audit link 'yet'; the RIV-lk-1 order: render.render_page carries exactly one <a href=\"/rivalfunds/<day>/audit\">.",
+    "world_is": "The two round-12 checks still grade the superseded state; running them on a tree that carries lk-1 fails their (a) arms. The one existing unit assertion of the same state (test_r12au1_audit_page, main page has no /rivalfunds/<day>/audit) was changed in this cell to assert the one link.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A drain-time or regression run of the round-12 au-1 checks after lk-1 merges reads FAIL; amend arm (a) of each check (issuer's own authority) or retire them as superseded by lk-1.AC1. Nothing in the worker's tree depends on the choice."
   }
 ]
 ```
