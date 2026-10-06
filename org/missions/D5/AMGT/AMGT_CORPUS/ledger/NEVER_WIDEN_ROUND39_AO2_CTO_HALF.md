@@ -2,7 +2,15 @@
 
 **Pairs with:** `deliverables/2.0.0_SA_COO~X/NEVER_WIDEN_ROUND39_AO2_SERVED_ACT.md` @92cf1f322b (msg 30254).
 
-## VERDICT: HELD. The technical review is clean, and one scope question is with Andrew.
+## VERDICT: SIGNED (2026-10-06 ~20:1xZ). It supersedes the HELD verdict of ~19:5xZ kept below.
+
+**Andrew answered the scope question at ~20:13Z:** "Research is outside it, yes. What i wanted to avoid with this process was
+accidentally overwriting any operations in the "Positioning" pipeline and ETFS view operations. Research is outside of that
+edict." Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md`.
+The technical review and the four conditions below now bind as the signed half. Legs (r), (p) and (v) may proceed.
+
+## The HELD verdict as first written (~19:5xZ): the technical review is clean, and one scope question is with Andrew.
 
 **The question:** Andrew re-affirmed at ~18:18Z (`ANDREW_DIRECT_20261006_1818Z_ALL_RECS_APPROVED_MSTRZ_OPEN_CALLS.md`, call 5) that
 the `integrations/bloomberg/` no-modify order STANDS.
