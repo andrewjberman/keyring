@@ -5,7 +5,7 @@
  "project": "ADVI_COTBKF",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/cottonwood-commonwealth-10y-backfill-brief-20261006.md@902feb3a4f",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -88,11 +88,12 @@
 
 | Contract | Direction / owner | Binding agreement |
 |---|---|---|
-| C-SOURCE: Commonwealth is a registered source | the naming registry's owner (`4.0.0_SA_CRO`, lane `PLATFORM_LOGIC_DOCS`) | One VENDOR row, key `commonwealth`, display name "Commonwealth Financial Network", owner D8 (Andrew: "COmmonwealth is a source"). MEASURED at L4: the builder refuses `address('commonwealth', ...)` today. No address in this project is typed by hand: each is builder output printed in the order that writes it, after the row lands. |
+| C-SOURCE: Commonwealth is a registered source | the naming registry's owner (`4.0.0_SA_CRO`, lane `PLATFORM_LOGIC_DOCS`) | One VENDOR row, key `commonwealth`, display name "Commonwealth Financial Network", owner D8 (Andrew: "COmmonwealth is a source"). The row LANDED @8e39143feb (the registry's owner); builder output read at L4: `address('commonwealth','cottonwood','bronze','crm','date=2026-06-23')` -> `s3://opal-data-assets/commonwealth/cottonwood/bronze/crm/date=2026-06-23`. Every address in this project is builder output printed in the order that writes it, with ONE declared exception: the CRM zip's home in the firm bucket (C-SENSITIVE), for which `address()` has no route. That key is written once, in the R20 register entry Andrew acknowledges, and nowhere else is typed. |
 | C-HOMES: where each layer lives | the canon (`infra/logic/02_DOCTRINE.md` R4, R9, R10); Andrew's order | Bronze and silver of client custodial data have ONE home, `opal-data-assets`, key grammar `{source}/{scope}/{tier}/{table}/{partition}` (the builder reads `address('blackdiamond','cottonwood','bronze','crm','date=2026-06-23')` -> `s3://opal-data-assets/blackdiamond/cottonwood/bronze/crm/date=2026-06-23` at L4; the `commonwealth` form follows the row). Scope is the firm, `cottonwood`; Commonwealth's advisor plan IDs and rep codes are entity identifiers and sit in the partition, never the scope (R2). |
 | C-RAW: the delivery kept as received (FWD-2) | this project | The five delivered zips are written once, byte for byte, never unpacked in bronze (R9). A manifest beside them carries each file's name as shipped, size and SHA-256, and both dates: the data's date and the received date. |
 | C-DATE: which date labels the delivery | Andrew's call 2, "Yes agreed" | The partition date is the vendor's stamp, `date=2026-06-23`; the received date (2026-10-06) is in the manifest. |
 | C-SENSITIVE: the most sensitive details (FWD-7) | Andrew's call 1, "Agreed", and his "maybe" on the bucket | Tax IDs, dates of birth, driver's license and passport numbers exist ONLY in the raw delivered files. The silver tables carry each person without those four fields; a date of birth becomes the birth year. This departs from R10's every-column rule and is declared as an R20 register entry for Andrew's acknowledgement. **Placement of the raw files that carry those fields** (the CRM zip, which holds contacts and insurance): Andrew's thought is that they "maybe" stay in `opal-data-cottonwood` rather than `opal-data-assets`. This PRD proposes exactly that, as a second R20 departure: the CRM zip is written to the Cottonwood firm bucket under a prefix readable by a small named group only; the other four zips go to `opal-data-assets` per C-HOMES. Both departures wait for his acknowledgement before any byte of the CRM zip is written; the other zips do not wait. |
+| C-RESTRICTED: the firm-bucket prefix for the CRM zip (FWD-7) | the bucket's Terraform owner (`infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf`, lane `CLOUD_OPS_OR_ETL`, an AE seat); Andrew names the readers | ONE prefix in `opal-data-cottonwood`, its key fixed in the R20 entry. Its bucket policy DENIES every read to every principal except the named group, and denies every write except the one landing role, once. The named group is Andrew's to name (proposed: Andrew alone, plus a break-glass role used only on his word); no agent seat is in it. The policy is a Terraform change in that file, applied by its owner under a never-widen pair, and proven by one refused read from an agent's identity and one allowed read by the group. Nothing is written to the prefix before the policy is live. |
 | C-SILVER: typed tables (FWD-1, 3, 4) | this project | One typed, de-duplicated parquet table per delivered data file: transactions, performance, positions, and one per CRM file; every vendor column kept except C-SENSITIVE's four; hive partitions; each row carries the file it came from. |
 | C-DOCUMENTS: one index, unique documents (FWD-5) | Andrew's call 3, "Agreed" | The 51 listing files become one de-duplicated document index (account, type, date, page count, source archive or archives). Each UNIQUE document is unpacked once into a declared documents table; the three archives also stay whole in bronze. |
 | C-COVERAGE: what the backfill covers (FWD-6) | this project | One coverage table, generated from the data itself: for each record kind, its earliest and latest date and its row count. The brief's measurements (F5) are the expectation, not the source. |
@@ -148,7 +149,8 @@ Round 1 does not touch the CRM zip (it waits for Andrew's acknowledgement of C-S
 | S02 | FWD-2 | bronze: the five zips and the manifest (sizes, SHA-256, both dates) | held (brief F1) | wire | S01 | byte for byte |
 | S03 | FWD-1 | silver transactions (1,416,497 rows, 20 columns, per the brief) | held | wire | S02 | every column, row lineage |
 | S04 | FWD-3 | silver performance (88,654 rows) and positions (469) | held | wire | S02 | as reported |
-| S05 | FWD-4, FWD-7 | the CRM zip's home and the CRM silver tables without the four fields | held (brief F3, F6) | wire | S01, Andrew's acknowledgement | R20 entries first |
+| S05 | FWD-4, FWD-7 | the CRM zip's home and the CRM silver tables without the four fields | held (brief F3, F6) | wire | S01, S09, Andrew's acknowledgement | R20 entries first |
+| S09 | FWD-7 | the restricted prefix's bucket policy in `s3-lgic-firm-buckets.tf` | unmeasured | wire | Andrew names the group | live before any write |
 | S06 | FWD-5 | the document index and the unique documents | held (brief F4) | wire | S02 | de-duplicated |
 | S07 | FWD-6 | the coverage table | unmeasured | wire | S03-S06 | generated from the data |
 | S08 | FWD-8 | the account crosswalk | unmeasured | wire | S03 | no guessed match |
@@ -164,3 +166,7 @@ Round 1 does not touch the CRM zip (it waits for Andrew's acknowledgement of C-S
 | PART V, must be true | the registry row; Andrew's word on sensitive fields; the date; where PDFs live; cross-firm guard; no shadow; the Downloads copy | C-SOURCE, C-SENSITIVE, C-DATE, C-DOCUMENTS, C-FIRM, C-ONE-TIME, section 4 |
 
 -- 1.0.0_SA_CTO
+
+## v0.2 (1.0.0_SA_CTO, 2026-10-06) -- CONTRACTS fixes on `3.0.0_SA_CVO`'s review @35572399b9
+
+C-SOURCE: the row has landed (the stale "builder refuses" line replaced) and the CRM zip's firm-bucket key is the one declared exception, written only in the R20 entry. C-RESTRICTED added: the prefix's owner, its deny-by-default policy, Andrew naming the readers. Manifest S09. The ENDPOINT is not edited.
