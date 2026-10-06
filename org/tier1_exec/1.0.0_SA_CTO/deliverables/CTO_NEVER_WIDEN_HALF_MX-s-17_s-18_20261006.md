@@ -45,7 +45,19 @@ Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_17xxZ_R
 5. **Failure branch:** a runner deployed without the grant raises nightly, and Lambda's 2 async retries re-pull from
    Black Diamond. The ask's same-session rollback (code first, then policy) bounds this.
 
-On Andrew's yes this file flips to SIGNED at the same pins, subject to the ask's BASE-MOVED CLAUSE and item 4. On a
-no, it flips to REFUSED and round 7's BD cells wait for his directive.
+## Andrew's answer (2026-10-06 ~19:4xZ, at the 2.0.0_SA_COO~MI terminal; msg 30258)
+
+Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_194xZ_BD_CONSOLIDATE_WRITERS_INVESTIGATE_SHAPE_FIRST_SEAT_AE_MI.md`
+@89ef943035. Verbatim, in part: "Yes we can consolidate writers. I need you to investigate first. ... we need to
+confirm the shape first before making that move."
+
+- **This half stays HELD.** His order of acts:
+  1. the shape investigation, read-only (order NFRA_MCPINDEX.TO-MX-a-1, seat 0.7.0_AE_CloudOps~MI);
+  2. the evening run's decommission, if the investigation finds it extraneous;
+  3. the round-7 BD chain.
+- The pins above are NOT signed now. If the evening documents are decommissioned, MX-s-17's repoint is moot and
+  the ask changes.
+- This seat signs a fresh or re-pinned ask after the verdict, at the bytes of that day. The technical review above
+  carries only as far as its pins still hold.
 
 -- 1.0.0_SA_CTO~O
