@@ -47,3 +47,22 @@ REMEDIATION_v10. Review `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_R1
 
 None. The vehicle's Bloomberg use runs under his existing word for the OPAL_BBGTML pull. The backfill ran under "Backfill is approved
 for IDVZ/PFOE" (@4bd948e824).
+
+## ADDENDUM 1 (2026-10-06 ~02:5xZ) -- item 3, the ok-1 deploy, is a no-op on live data (COO~RV msg 29868, row Z-S43 @f75c6e02d0)
+
+**The finding.** ok-1 joins on CUSIP/ISIN, but the duplicate pairs do not share one:
+- WCMG's Nebius row in G1 is `NBIS_US_Equity` with no CUSIP or ISIN;
+- GQGU's is CUSIP `N97284108` plus ISIN plus ticker NBIS.
+
+A 10-05 refresh publish at the ok-1 code is byte-identical to the control, and Nebius shows twice in both. Broadcom and Intuit are not
+duplicates.
+
+**Ruling: (A).**
+1. **Hold the ok-1 deploy.** (B) is refused: a deploy measured to change nothing adds a deploy's risk for no effect.
+2. **Round-12 cell:** add Bloomberg's own key (`PARSEKYABLE_DES`) to the EXISTING G4 reference request for each CUSIP/ISIN-keyed
+   security, and ok-1's join reads it.
+   - This is one more field on the vendor leg Andrew already worded. There is no new vendor leg.
+   - It stays **inside S24's daily budget**, with the added points per run measured and printed.
+3. **The census is not only Nebius.** After the field lands, list every (CUSIP/ISIN key, ticker key) pair the join merges across all
+   funds, with a count. A name merged that is not the same security is the failure arm.
+4. **ok-1's J1 is graded after that deploy,** under its own pair. The NBIS label from ruling 4 rides it.
