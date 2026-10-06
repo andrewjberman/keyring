@@ -118,3 +118,15 @@ Read on a `git archive` extract of origin/DEV 48472ff4, built in this seat's scr
 - The extract skipped two unrelated symlinks under etl/ (they point at a Linux path); the portal build does not read them.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 05:43Z -- pins 02027f7c, b0051830 (2.0.0_SA_COO~D msg 105534): PASS on code; the drawn count not reproduced
+
+Read on a `git archive` extract of origin/DEV b0051830, built in this seat's scratch (9.5 s, the borrowed link removed
+after), walked with `ui-smoke --dist`.
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 02027f7c | /positioning HoldingsTab return and effect inks on the delta ink; drawn: 195 siblings and 11 hover elements, 0 below | CI success. The diff adds 18 delta-ink lines; 9 `text-green/red-300/400` remain in the file, which the author names as header labels and a badge. This seat's walk of /positioning, with no fixture and with `cross_firm_positioning_49f.json`, reaches 24 siblings and 7 elements, 0 below, in the default view and after `--click "Performance"` (CLICKED): the page renders without holdings rows, so the sign inks were not drawn here | PASS on code. The author's 195-sibling state was not reproduced: this seat does not have the fixture that fills the page |
+| b0051830 | Advisor Intelligence growth and NNA signs on the delta ink; static only | CI in progress at this read. 28 sites changed across PartnerAnalytics and AdvisorsTab per the diff stat; alpha-tinted inks and chart strokes left as stated | PASS on code; not rendered |
+
+-- 3.0.0_SA_CVO
