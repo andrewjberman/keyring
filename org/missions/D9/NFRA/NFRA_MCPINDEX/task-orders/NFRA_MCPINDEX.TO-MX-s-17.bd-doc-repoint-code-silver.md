@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-17</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~24</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -63,6 +63,20 @@ step at `code/silver/`, the script `bd-silver-merge` runs. Disarm read: both doc
   at your first act, stop and report.
 - Graded by: no gate limb graded this modification.
 
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-06 ~20:5xZ) -- re-addressed; kept in the chain.**
+- **Re-addressed** from `0.9.0_WK_NFRA_MCPINDEX~24` to `0.7.0_AE_CloudOps~MI` on Andrew-direct 2026-10-06 ~19:4xZ
+  ("bringing on a 0.7.0_AE_CloudOps~MI ... to handle these operations"; record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_194xZ_BD_CONSOLIDATE_WRITERS_INVESTIGATE_SHAPE_FIRST_SEAT_AE_MI.md`).
+  The PHASE A work stands as built on branch `wk-nfra_mcpindex-r7-24` @3709ae40d6 (worktree
+  `C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r7-24`); work there and commit there. Your write surface adds
+  `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**`; the proof instance goes there under the
+  same file name.
+- Basis: the MX-a-1 verdict (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.md`): the evening documents fetch nothing from BD and emit
+  no field the morning path lacks; they remain the only same-day merger on sentinel-withheld days.
+- This order stays FIRST in the chain: until the evening rules are disabled (MX-s-19, after a proven Monday and
+  Tuesday) the documents keep running, and the verdict measured their frozen 2026-06-29 script writing transactions
+  WITHOUT the `cusip` column. The repoint removes that divergence for the interim. PHASE B only on the issuer's GO.
+- Graded by: no gate limb graded this modification.
+
 ## 2. BOUNDS
 
 1. One producer per table after the round: no second schedule, no parallel path, no comparator.
@@ -77,6 +91,7 @@ infra/aws/ssm/opal-bd-realized-download.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-repoint.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
