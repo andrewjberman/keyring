@@ -20,4 +20,17 @@ Same session, earlier answers recorded in commit messages: "Sure MSTR can do tha
 handled tomorrow automatically, right?" (no same-day Bloomberg re-pull); "I feel like it does not, as long as we have
 weights" (per-holding price not needed on Positioning).
 
-Analysis: `org/tier1_exec/4.0.0_SA_CRO/deliverables/` brief written from this record (same seat, same day).
+Analysis: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ETFS_SECURITY_LIFECYCLE_ANALYSIS_20261006.md`.
+
+## Ruling on the analysis (Andrew-direct, same session, ~16:4xZ), verbatim
+
+> I agree with you on this, the only difference is that we need backfill based on the ingestion point of the
+> security. If it is coming into our database by way of "Positioning" page needs, then yes, 1Y and incremental forward
+> is fine. If however it is coming in from Client Model Holdings (Investor Reporting) ((or commensurately via Advisor
+> Intelligence, if there is piping there that comes through the securities table)), then we need backfill based on the
+> first appearance in the client account, and then day over day incremental from then on. Accordingly, this is a
+> larger project than simply the Positioning page, this is really how Opal builds its internal securities database and
+> the associated ingestion and maintenance logic.
+
+Open from the analysis, not answered by this ruling: the 2026-10-01..05 DIVZ/IDVZ gap pull, and the money-market
+(SALXX) return rule.
