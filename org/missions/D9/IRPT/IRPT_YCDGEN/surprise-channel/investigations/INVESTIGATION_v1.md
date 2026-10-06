@@ -1767,3 +1767,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a check-side defect; the HCL is the contract's. The issuer amends the check or grades AC5 on the statement's text."
 }
 ```
+
+## IRPT_YCDGEN-S10 -- the resident package does not carry the classification client the Opal producer imports
+
+```json
+{
+  "id": "IRPT_YCDGEN-S10",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T02:54:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the resident package does not carry the classification client the Opal producer imports; the first Opal request from a listed principal ends as an ATTENTION",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Branch B installed (ledger irpt-ycdgen-r6-branch-b-20261006 V1): a listed principal's request is served by the Opal producer, which reads classifications through ETFClassifier.",
+  "world_is": "layout_overview._default_classifier imports etf_classifications_dynamodb, else looks for HERE.parents[2]/v2_portal/_shared. In the installed package HERE is <root>/ycharts/research, so parents[2] is /opt/irpt-resident, which has no v2_portal; the module lives in infra/aws/lambda/v2_portal/_shared (MDPF_SECCLASS's file) and is in no packaged directory. resident_installed._open_classifier calls it, so the producer raises LayoutRefused before any output and the job ends ATTENTION for the listed principal; other principals are unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host read SSM 30b2fdeb (host_real_stack_reads.sh, root 09139ee34d-st23): 'No module named etf_classifications_dynamodb' with the package paths on sys.path",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py _default_classifier; reports/resident_installed.py _open_classifier",
+      "the module imports only boto3 and botocore (357 lines)"
+    ]
+  },
+  "notes": "Not found by any fake-backed test because every test injects a classifier. Fix: package the one file as ycharts/research/etf_classifications_dynamodb.py (the research directory is on sys.path when load_opal_producer runs, so the first-try import finds it); needs a builder member mapping (cell YCD-n-6). Until then Andrew's own requests fail by name; nobody else is affected. F1 is held."
+}
+```
+
+## IRPT_YCDGEN-S11 -- pyarrow is not installed on the resident host, so the held fund characteristics (81 of the Overview map's 153 held groups) read INPUT_MISSING
+
+```json
+{
+  "id": "IRPT_YCDGEN-S11",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T02:54:14Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "pyarrow is not installed on the resident host, so the held fund characteristics (81 of the Overview map's 153 held groups) read INPUT_MISSING",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The Opal Overview reads the Bloomberg characteristics parquet under opal-data-etfs/bbg/ for 81 held groups.",
+  "world_is": "host pydeps and the system python3.12 carry no pyarrow (pydeps probe SSM 8d5e6fd5); layout_overview._read_characteristics imports pyarrow.parquet; opal_producer._characteristics_reader catches any exception and returns None, so those elements read INPUT_MISSING:<table> with the reason on the page. The IAM path itself works: ListBucket read 31 dated folders, latest bbg/2026-10-02/.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "host read SSM 30b2fdeb and 8d5e6fd5",
+      "opal_producer.py _characteristics_reader"
+    ]
+  },
+  "notes": "Inert for FWD-1's thread (cover, holdings with the table's names and classes, allocation by the table's classes do not read characteristics) and honest by contract (a figure Opal cannot work out says so with the reason). A host dependency (a pyarrow wheel into pydeps through S3) is its own act with its own half; the sector and look-through pages (FWD-13) need it."
+}
+```
