@@ -1952,3 +1952,18 @@ redirect or backend work. **Base:** portal DEV e6ab82ad. **Parity hold** (MSTR~Z
 At base e6ab82ad it reads 2 of 5: ROG SW-shaped bundle 3 tiles with none of the 4 served reasons; the tooltip lacks the full values; the Exec
 "yet:" run-on. KEEP and PLANTED pass. Green 5 of 5 on scratch reference edits (CHECK_SRC_OVERRIDE, issuer run).
 **Fan-out:** 1 of 1 worker chains, cap 8. **Risk:** LOCAL. **Then:** candidate -> CTO review -> DEV push on Andrew's word; PROD held.
+
+## v43 -- ROUND 43 (issuer, 2026-10-06 ~03:5xZ, by hand, no loop) -- ONE BATCHED REPAIR: PEER TICKERS + PLAIN NAMES
+
+**Rectangle:** CTO countersign + list @0bcdb77515 (msg 29884): FWD-8 and FWD-27 NOT_REALIZED page-side. The producer (deployed
+2lUlZomo) serves `display_name`, `security_key` and `ticker_reason`, and the page reads none of them (census
+`round42/fwd8-27-census/` @662434b2cf). **Base:** portal DEV 4fa0312e (no SecurityAnalysis change since PROD ce6f0721).
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zu-1` REPAIRS (batched) | FWD-8 (no bare number as a peer ticker), FWD-27 (display_name at every served-name site) | `cscTable.ts`, `components/PriceBars.tsx`, `components/RankedList.tsx`, `postureCites.ts` (+ `types.ts` declarations) | ~104 (worker-light) |
+
+**Check:** `round43/checks/r43/r43.cjs` on fixtures captured from the deployed API (`round43/fixtures/`). At base it reads 2 of 5 (bare
+numbers 688910/677172/677381/645026; SYNOPSYS INC, ADOBE INC and CADENCE DESIGN SYS on the price face; three name-first sites). KEEP and
+PLANTED pass. Green 5 of 5 on scratch reference edits (CHECK_SRC_OVERRIDE, issuer run).
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Then:** a :5174 walk, CTO review, and the DEV push and PROD on Andrew's word.
