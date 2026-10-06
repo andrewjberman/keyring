@@ -15,12 +15,18 @@ Usage (from the backend worktree):
       --pin <commit> --enrolled-user-id <int> --out .runtime/resident-package \
       [--census-pin 2874e37647] [--dry-run]
       [--research] [--opal-map REPO_PATH] [--base-pin P --files-from LIST] [--state-json FILE]
+      [--member PACKAGED_PATH=REPO_PATH ...]
 
 IRPT_YCDGEN R13: `--research` also packages the tracked non-test files of ycharts/research/; `--opal-map` packages
 one tracked file as ycharts/research/overview_map.json and pins it in the bindings (`opal_map`); `--base-pin P
 --files-from LIST` builds P's tree by the rule below except the listed repo paths, which come from `--pin`;
 `--state-json` reads the core state document from a file instead of S3. A build with none of these flags is the
 build of before.
+
+IRPT_YCDGEN R15: `--member PACKAGED_PATH=REPO_PATH` (repeatable) packages the tracked file REPO_PATH at `--pin` as the member
+PACKAGED_PATH and records `{"packaged", "repo_path", "sha256"}` under the bindings provenance key `members_added` (absent
+when no `--member` is given). A PACKAGED_PATH that is absolute, holds `..`, or is already a member, and a REPO_PATH absent at
+`--pin`, are refused. Under `--base-pin` the member is read from `--pin` and needs no entry in the `--files-from` list.
 
 Bindings come from the core root's canonical outputs read from its remote state (queue URL,
 table names) and are recorded with that state's serial; the region is the estate's. ASCII only.
@@ -129,6 +135,9 @@ def main(argv=None):
                         help="also package the tracked non-test files under ycharts/research/")
     parser.add_argument("--opal-map", metavar="REPO_PATH", default=None,
                         help="tracked file at --pin packaged as ycharts/research/overview_map.json and pinned as bindings opal_map")
+    parser.add_argument("--member", action="append", default=[], metavar="PACKAGED_PATH=REPO_PATH",
+                        help="package the tracked file REPO_PATH at --pin as the member PACKAGED_PATH (repeatable); "
+                             "recorded in the bindings provenance as members_added")
     parser.add_argument("--base-pin", default=None, help="build the package from this commit's tree except --files-from")
     parser.add_argument("--files-from", default=None, metavar="LIST",
                         help="file of repo paths (one per line), each existing at --pin, taken from --pin")
@@ -178,6 +187,22 @@ def main(argv=None):
     members["ycharts-host/run-ycharts-session.sh"] = (base, WRAPPER)
     members["ycharts-host/ycharts_session.js"] = (base, LIBRARY)
 
+    added_members = []
+    for item in args.member:
+        packaged, sep, repo_path = item.partition("=")
+        if not sep or not packaged or not repo_path:
+            raise SystemExit("--member %r is not PACKAGED_PATH=REPO_PATH" % item)
+        if packaged.startswith(("/", "\\")) or (len(packaged) > 1 and packaged[1] == ":"):
+            raise SystemExit("--member packaged path %s is absolute" % packaged)
+        if ".." in packaged.replace("\\", "/").split("/"):
+            raise SystemExit("--member packaged path %s contains '..'" % packaged)
+        if packaged in members:
+            raise SystemExit("--member packaged path %s is already a member of the package" % packaged)
+        if not exists_at(pin, repo_path):
+            raise SystemExit("--member repo path %s does not exist at --pin %s" % (repo_path, args.pin))
+        members[packaged] = (pin, repo_path)
+        added_members.append((packaged, repo_path))
+
     serial, outputs = core_outputs(args.state_json)
     out = Path(args.out)
     sums = []
@@ -219,6 +244,10 @@ def main(argv=None):
         bindings["opal_map"] = {"path": "../" + OPAL_MAP_MEMBER,
                                 "sha256": next(d for d, p in sums if p == OPAL_MAP_MEMBER)}
         bindings["provenance"]["opal_map_source"] = args.opal_map
+    if added_members:
+        bindings["provenance"]["members_added"] = [
+            {"packaged": packaged, "repo_path": repo_path, "sha256": next(d for d, p in sums if p == packaged)}
+            for packaged, repo_path in added_members]
     if args.files_from:
         bindings["provenance"].update({"base_pin": base, "files_from_sha256": list_sha, "files_from_count": len(listed)})
     bindings_bytes = (json.dumps(bindings, indent=2, sort_keys=True) + "\n").encode()
@@ -234,6 +263,8 @@ def main(argv=None):
               "queue_url": bindings["queue_url"], "jobs_table": bindings["jobs_table"],
               "requests_table": bindings["requests_table"], "wrapper_sha256": wrapper_sha,
               "library_sha256": library_sha, "out": None if args.dry_run else str(out)}
+    if added_members:
+        report["members_added"] = bindings["provenance"]["members_added"]
     if args.files_from:
         report.update({"base_pin": base, "files_from": listed, "files_from_count": len(listed),
                        "files_from_sha256": list_sha})

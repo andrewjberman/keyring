@@ -20,6 +20,11 @@ path is named in LIST to equal `git show <pin>:<path>` and every other member to
 opal_map member is read from the bindings' `provenance.opal_map_source` at the pin. A member that differs fails G2 with
 the count printed. Without the flags G2 is the whole-tree-at-the-pin rule above.
 
+IRPT_YCDGEN R15: the gate reads `provenance.members_added` from the package's own `reports/resident_bindings.json` (the
+builder's `--member PACKAGED=REPO` records). G2 expects each added member equal to `git show <pin>:<repo_path>` (and its
+recorded sha256 equal to its SHA256SUMS line), with or without the named-list flags; a member that differs fails G2 with the
+count printed. G5 counts each added member as added against a running package that lacks it.
+
 Then it writes `<out-dir>/<new-root-name>.tar.gz` (members in sorted order, mtime 0), its sha256, the census JSON,
 and the host install script with member pins read from THIS package. Exit 0 only when G1-G4 hold. ASCII only.
 """
@@ -99,17 +104,22 @@ def main(argv):
     ok &= not bad
 
     opal_source = None
-    if base_pin:
-        bindings = json.load(open(os.path.join(pkg, "reports/resident_bindings.json"), encoding="utf-8"))
-        opal_source = bindings.get("provenance", {}).get("opal_map_source")
-    differ, checked, skipped, from_list = [], 0, [], 0
+    bindings_path = os.path.join(pkg, "reports/resident_bindings.json")
+    bindings = json.load(open(bindings_path, encoding="utf-8")) if os.path.isfile(bindings_path) else {}
+    provenance = bindings.get("provenance", {})
+    opal_source = provenance.get("opal_map_source") if base_pin else None
+    added_members = {row["packaged"]: row for row in provenance.get("members_added", [])}
+    differ, checked, skipped, from_list, from_added = [], 0, [], 0, 0
     for member in sorted(sums):
         path = repo_path(member)
         if member == "reports/resident_bindings.json" or path is None:
             skipped.append(member)
             continue
         expect_pin = pin
-        if base_pin:
+        if member in added_members:
+            path = added_members[member]["repo_path"]
+            from_added += 1
+        elif base_pin:
             if member == "ycharts/research/overview_map.json" and opal_source:
                 path, expect_pin = opal_source, pin
             elif path in listed:
@@ -119,6 +129,8 @@ def main(argv):
         blob = subprocess.run(["git", "show", "%s:%s" % (expect_pin, path)], capture_output=True)
         checked += 1
         if blob.returncode != 0 or sha(blob.stdout) != sums[member]:
+            differ.append(member)
+        elif member in added_members and added_members[member].get("sha256") != sums[member]:
             differ.append(member)
     if base_pin:
         print("G2 named list: %d of %d members equal their expected blob (%d listed members from `git show %s:<path>`, "
@@ -130,6 +142,12 @@ def main(argv):
               % (checked - len(differ), checked, pin[:10], len(skipped), ", ".join(skipped)))
     for member in differ:
         print("   DIFFERS:", member)
+    if added_members:
+        absent = sorted(m for m in added_members if m not in sums)
+        bad_added = sorted(set(m for m in added_members if m in differ) | set(absent))
+        print("G2 added members: %d of %d members_added equal `git show %s:<repo_path>`; %d differ or are absent %s"
+              % (len(added_members) - len(bad_added), len(added_members), pin[:10], len(bad_added), bad_added or ""))
+        differ.extend(absent)
     if base_pin:
         unpackaged = sorted(path for path in listed if (path[len(IR):] if path.startswith(IR) else path) not in sums)
         print("G2 named list: %d listed path(s), %d not in the package %s" % (len(listed), len(unpackaged), unpackaged or ""))
