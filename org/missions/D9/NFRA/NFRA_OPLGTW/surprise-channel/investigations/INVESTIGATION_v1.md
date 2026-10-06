@@ -8828,3 +8828,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: additive log lines through the existing sink; no alarm or monitor. If the CTO meant 'consent' for a /login that skips Microsoft (none exists), the callback records are the part to drop."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W26-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~26",
+  "surfaced_at": "2026-10-06T06:00Z",
+  "one_line": "OG-fl-1: test_ogx2_ac01's intermittent failure is a PRODUCT defect, not the test: on Windows engine.process_rss_bytes (polled every few ms by ExecutionEngine.submit) builds a new ctypes.WinDLL and a new ctypes.Structure class per poll; those are reference cycles only the cyclic GC frees, so the gateway PARENT's tracemalloc footprint during an export is a function of the job's duration and of GC timing, and the test's parent ratio (100k <= 1.2 x 10k) flips on that noise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 12 concurrent own-process runs of the test on this device (20 cores): 4 failed, all on `assert big[\"parent\"] <= 1.2 * small[\"parent\"]` with parent ratios 1.212, 1.286, 1.255, 1.245 (child ratio 1.07-1.08 in every run); 8 passed. 8 sequential idle runs and 4 concurrent runs all passed (parent ratio 0.96-1.00).",
+      "RUN probe: tracemalloc snapshot at the start of write_csv (after export_query returned, before any row is read): current=403-431 KB for 10k exports and 290-318 KB for 100k; top allocations engine.py:885 (the per-call _Counters class) 129 KiB, ctypes/__init__.py:421 and :491 (WinDLL function pointers) 97 KiB + 64 KiB, ctypes/_layout.py:282 37 KiB. That is ~60 pct of the 0.65-0.9 MiB parent peak, and it varies run to run with poll count and GC timing.",
+      "RUN same probe after the fix (module-level cached kernel32 + Structure class): current at write_csv start 22-25 KB, parent peak 612-615 KB for 10k AND 100k in all 6 runs (ratio 1.000)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-fl-1 and row Z-W15-S58: the failure is a job_failed in the export stream (timing, shared path or engine deadline).",
+  "world_is": "No job_failed was reproduced in 8 + 4 + 12 + 6 runs: the assertion that fails is the PARENT tracemalloc ratio, and the cause is per-poll ctypes garbage in engine.py (timing-dependent via poll count and GC). The product fix is two cached module-level objects in engine.py (separate commit); test_ogx2_ac01 itself is unchanged. The change touches engine.py, so it rides the next release; the Linux and psutil branches are untouched.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
