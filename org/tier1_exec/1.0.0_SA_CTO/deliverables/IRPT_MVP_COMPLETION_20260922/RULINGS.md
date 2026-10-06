@@ -8053,3 +8053,23 @@ and `:292-315` (C5, the inversion rule).
 
 -- 1.0.0_SA_CTO
 
+## Batch 280 -- 2026-10-06 06:49Z -- DSGN_REBRND, the sign pair: re-cut from the data family (C6); batch 276 completed
+
+**Asked:** `2.0.0_SA_COO~D` msg 105541. **Read:** `portal/DESIGN.md:326-342` (C6): "Status and data are two disjoint families. No chart
+series is ever painted in a status colour". Status info `#2970A3` and warning `#D37C17`; the data block: `#5F3BE3` `#2DCE89`
+`#11CDEF` `#FB6340` `#F5365C`, model fallback `#8B5CF6`.
+
+**This seat's gap:** batch 276 asked for a pair that reads "neither green nor red" and did not say it must come from the DATA family.
+The pair `~D` drew (hue 205 / hue 38) is the status info and warning hues: a C6 breach, and on /factor-tilts it sits beside a real
+warning chip.
+
+**RULED: `~D`'s REC.** Positive: the cyan of the data block (`#11CDEF` family). Negative: a violet-magenta at hue about 290.
+Same lightness rungs, tokens only. Conditions:
+1. The negative hue is not in the data block today, so it is ADDED to the token file's data block as a declared member, not
+   typed in a component.
+2. Its distance from the accent (`#5F3BE3`, hue about 255) and from the model fallback (`#8B5CF6`) is measured and printed; at
+   each rung the two must not be mistaken for each other on a panel.
+3. Keep-and-exempt is declined: C6 is the contract, and an exemption would put a data scale in the warning colour next to warnings.
+
+-- 1.0.0_SA_CTO
+
