@@ -8596,3 +8596,75 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S57",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T05:10Z",
+  "one_line": "OG-rl-7 A2-2: after the R22 revert the issuer's ln1.AC1.sh (r18) reads RESULT: FAIL, but NOT because its disposition enum rejects REVERTED_PENDING_RECUT -- the enum is never reached, because the two reverted paths no longer differ live..CLOUD and the check grades only paths that differ; the FAIL is 5 OG-ts-2 test-fixture files that differ live..CLOUD and were never itemised in LINEAGE_R18.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r18/checks/ln1.AC1.sh on wk-NFRA_OPLGTW-15-r19 @c2a3de67c5 + the A2-2 LINEAGE edit: 'live 37be3485db; files differing live..HEAD 21; classified 16; missing 5 [tests/acceptance/conftest.py, tests/fresh_gateway_app.py, tests/proc_tmp_root.py, tests/test_schwab_host_inputs.py (+ tests/test_schwab_rl5_asset_query.py, past the check's [:4] print)]; malformed 0 []; live_only_remaining 0; environ_with_external_ids on CLOUD 1 / RESULT: FAIL' exit=1",
+      "FILE: the check iterates `diff` (git diff --name-only live HEAD) for both `miss` and `bad`, so an item absent from the diff is never tested against the enum; the 5 missing paths are OG-ts-2's fixes (r19_equality.out: 'release-set files beyond the 18 lineage items (OG-ts-2 fixes, expected 5): 5'), a set the order itself names ('plus OG-ts-2's test fixes')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO A2-2: re-run the issuer's r18/checks/ln1.AC1.sh; if its disposition enum rejects the new value, record that as a row.",
+  "world_is": "The enum does not reject the new value (it is not consulted for a path that no longer differs); the check FAILS on 5 unlisted OG-ts-2 files, which predates this amendment (the same 5 were in the 23-file diff at 619e8ddfd6). I did not edit the check, and did not add the 5 files to LINEAGE_R18.json (the order asks for the two OA-e-10 items only); LINEAGE_R18.json now carries an r22_amendment note naming them. ln1.AC1 is not a criterion of OG-rl-7.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S58",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T05:10Z",
+  "one_line": "OG-rl-7 A2-4 step 3: tests/test_schwab_export_stream.py::test_ogx2_ac01 is INTERMITTENT on BOTH trees (live 37be3485db baseline run failed it, then the identical re-run passed it; the release tree passed it in the 69-file run, then failed it on a single-file re-run), so the baseline failing set is 7 or 8 ids depending on the run; every other id is stable.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: r19b_tests_release.out (69 files, each in its own process, /c/tmp/og-rel15 @cf4b036e62): 586 passed, 7 failed in 6 files, ids equal to the r19 release run's 7 (test_ogv2_a12, test_mx_t13_catalog_gated, 2x test_portal_grant, test_portal_tools_catalog_refs_resolve, test_ogx4_ac03, test_grant_writer_stages_the_contract_only_from_the_standard); r19b_tests_baseline.out (/c/tmp/og-rb14 @37be3485db, the same 6 files): 8 failed = the 6 shared ids + test_ogx2_ac01 + test_values_that_can_hold_whitespace_are_rendered_quoted",
+      "RUN: r19b_ogx2_rerun.out: tests/test_schwab_export_stream.py alone: og-rb14 (live) -> 1 failed (test_ogx4_ac03) 2 passed; og-rel15 (release) -> 2 failed (test_ogx2_ac01, test_ogx4_ac03) 1 passed. Same test, opposite outcomes on the two trees across runs: load-dependent (the file runs a child process, 26-37 s)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Form step 3: tests on the release tree, each named file in its own process; name the baseline failures.",
+  "world_is": "test_ogx2_ac01 is a flake on this device (job_failed in the export stream), not a release difference: it fails on live bytes too. Named here so a half does not read a one-id difference between two runs as a regression. Release vs baseline differs only by the S55 swap (test_grant_writer... on the release, test_values_that_can_hold_whitespace... on live).",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S59",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T05:10Z",
+  "one_line": "OG-rl-7 A2-4 step 7: the FIRST expected-PASS exercise of rl7.AC1b.sh silently ran against the REAL aws and graded the real host (1 of 3), because the stand-in `aws` directory was put on PATH in Windows form (C:/...), which MSYS does not resolve as a PATH entry; the re.search of the order's <expect> caught it (NO MATCH on the pass form) before any claim was made.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN: first r19b_step7.sh run: 'AC1 r19b_rl7.AC1b_expected_pass_form.out: re.search(<expect>) NO MATCH -> WRONG (must MATCH)'; its output read 'host shipped app files equal the release bytes: 1 of 3' with the real host's md5 (bash -x: SSM_OUT=b13b1e54... 0337c94c... 651359f1..., the live bytes), i.e. the fake aws was not found",
+      "FILE: r19b_step7.sh now passes the directory as $(cygpath -u \"$W\")/.scratch/fakeaws; the re-run reads 3 of 3 / RESULT: PASS exit=0 on the pass form and 1 of 3 / FAIL against the real host (control 1), r19b_rl7.AC1b_expected_pass_form.out and r19b_rl7.AC1b_negative_controls.out"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Form step 7 (R18, row Z-W15-S51): record the expected-PASS form and one negative control; check each literal output against the order's <expect> with re.search.",
+  "world_is": "A stand-in on a Windows-form PATH entry is skipped without error and the real tool runs; an exercise with the stand-in found would have looked like a pass or fail by accident. The re.search against <expect> is what exposed it. The corrected exercise is in the deliverable; the earlier wrong output was overwritten, not committed.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
