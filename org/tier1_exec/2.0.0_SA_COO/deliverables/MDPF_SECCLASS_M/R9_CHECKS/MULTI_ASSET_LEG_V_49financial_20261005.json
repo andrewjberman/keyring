@@ -1,15 +1,14 @@
 {
  "claim": "measured (served platinum, streamed; deployed reader bytes)",
- "current_manifest_last_modified": "2026-10-05T14:20:45+00:00",
+ "current_manifest_last_modified": "2026-10-06T14:20:48+00:00",
  "firm": "49financial",
  "packet_keys": 32,
  "post": {
-  "accounts": 31,
+  "accounts": 32,
   "amount_by_class": {
-   "multi_asset": 2323757.91,
-   "unclassified": 175356.9
+   "multi_asset": 2515601.18
   },
-  "as_of_timestamp": "2026-10-05T14:17:01Z",
+  "as_of_timestamp": "2026-10-06T14:16:53Z",
   "by_key": {
    "140193103": {
     "multi_asset": 3
@@ -27,10 +26,10 @@
     "multi_asset": 3
    },
    "808516306": {
-    "unclassified": 9
+    "multi_asset": 9
    },
    "ABALX": {
-    "multi_asset": 6
+    "multi_asset": 7
    },
    "MDLOX": {
     "multi_asset": 2
@@ -64,7 +63,7 @@
     ],
     "accounts": 1,
     "class_sub_basis": {
-     "equity | Developed | TABLE": 1
+     "equity | Consumer Staples | TABLE": 1
     }
    },
    "JAN": {
@@ -85,7 +84,7 @@
     ],
     "accounts": 1,
     "class_sub_basis": {
-     "equity | None | TICKER_SHAPE": 1
+     "equity | Information Technology | TABLE": 1
     }
    },
    "SUNB": {
@@ -106,26 +105,25 @@
   },
   "keys_held": 9,
   "nodes_by_class": {
-   "multi_asset": 25,
-   "unclassified": 9
+   "multi_asset": 35
   },
   "partitions_declared": 188,
   "parts_read": 188,
-  "revision": "f8bf8dcb53cd61abdc0acf2d2de67f21b9df0bf0bbf3f964b49ecd58b68eb43d"
+  "revision": "94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd"
  },
- "post_custody_total": 1804791631.4,
- "post_date": "2026-10-02",
+ "post_custody_total": 1825384091.11,
+ "post_date": "2026-10-05",
  "post_reconcile": {
   "difference": 0.0,
   "reconciled": true,
   "tolerance": 0.01,
-  "total_after": 1804791631.4,
-  "total_before": 1804791631.4
+  "total_after": 1825384091.11,
+  "total_before": 1825384091.11
  },
- "pre_date": "2026-10-01",
+ "pre_date": "2026-10-02",
  "reader": {
   "accounts": 25,
-  "business_date": "2026-10-02",
+  "business_date": "2026-10-05",
   "class_totals_classes": [
    "cash",
    "commodities",
@@ -134,21 +132,21 @@
    "multi_asset",
    "unclassified"
   ],
-  "code_sha256": "RmruvCeoZtaxgSSFgmeFCL7ioOJTJrGv7MCsUJi8jxU=",
-  "last_modified": "2026-10-05T00:12:28.000+0000",
+  "code_sha256": "SRANzIGzWj0cR9dl4YOuLVOECV9dt9omPQZ80uzoR5g=",
+  "last_modified": "2026-10-06T01:44:23.000+0000",
   "multi_asset_row": {
    "amount": {
     "units": "USD",
-    "value": 2210189.51
+    "value": 2069184.49
    },
    "asset_class": "multi_asset"
   },
-  "pin_t_match": true,
+  "pin_t_match": false,
   "reconciled": true,
   "validate": {
    "available": true,
    "errors": [],
-   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_fobw8osx\\contracts\\HoldingsSnapshot.schema.json",
+   "schema_path": "C:\\Users\\AndrewBerman\\AppData\\Local\\Temp\\legv_reader_1860bbwf\\contracts\\HoldingsSnapshot.schema.json",
    "valid": true
   }
  }
