@@ -115,9 +115,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - The close run is the issuer's: after the merge, the sa leg resumes from `r47_sa_checkpoint.json` (root
   `.runtime/opal-data-harvest-sa`, `--clear-stop sa`) and its account check must answer 200.
 
+**COMPLETE 2026-10-06 ~20:0xZ (issuer):**
+- **Built:** worker ~100 @fd977bdcb6 + @9d3d783e9b; merged @a1cd91d953 (8 files, dropped 0, foreign 0).
+- **AC1 PASS:** 4 of 4. **AC2 PASS:** live probe ALL 200 (account 200; listing 200 items=5; article 200 body_chars=16537),
+  3 requests in-tab, one run. **AC3 PASS:** 669 passed on the branch; issuer re-run on merged CLOUD 674 passed, 1 skipped.
+- **Beyond the face (accepted):** `check_auth` maps `sa_rest_fetch.NotAuthorized` to `AuthExpired`, which plant (iii) needs.
+- **Tests updated for the route change:** `test_ae2_hookup.py` (`test_sa_keeps_its_rest_route`), `test_ae2_one_identity.py`
+  (`test_iii_contracts_transport`).
+- **Close run:** the sa leg resumed 20:05Z from `r47_sa_checkpoint.json` (`r50_launch_sa.json`); the collector's own account
+  check answered 200 (5,150 B) and its first listing 200 (91,447 B), no proxy.
+- **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>50</round>
 <slot>~100</slot>
 <fabric>site-z</fabric>
