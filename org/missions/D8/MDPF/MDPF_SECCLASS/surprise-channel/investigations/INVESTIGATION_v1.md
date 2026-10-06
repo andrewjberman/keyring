@@ -1993,3 +1993,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Leg V closes only with this fixed or ruled. Not tested here: whether other firms hold CUSIP-only rows with the same shape; cottonwood and inflection read PASS."
 }
 ```
+
+
+## MDPF_SECCLASS-S28 -- FWD-10 first fire wrote BG, BKD and NBIS, which firms hold; BG swaps a region label for a sector label
+
+```json
+{
+  "id": "MDPF_SECCLASS-S28",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-06T14:08Z",
+  "one_line": "The FWD-10 first writing fire (14:00:25Z) wrote 8 US rows; three are held at firms, and BG would swap a region label (Developed) for a sector label (Consumer Staples), the swap CTO batch 268 held out for HDB and RYAAY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FWD-10 log 14:00:25Z: new_stocks=39 planned_writes=0 written=8 present=30 unresolved=1; list object date=2026-10-06 exists (9,305 bytes); no BLOCKED",
+      "consistent get-item of the 8 written keys: BG Consumer Staples, BKD Health Care, CACI Industrials, GENI Consumer Discretionary, KB Financials, NBIS Information Technology, SPHR Communication Services, THC Health Care; each equity, classified_by scheduled, updated_by rivalfunds-backfill; JAN listed UNRESOLVED and not written (batch 263 condition 2 held)",
+      "the 30 present keys: 30 of 30 last_updated before 14:00Z (unchanged)",
+      "leg V censuses of 2026-10-05 (served nodes, latest revision 2026-10-02): BG held at cottonwood 2 accounts and 49financial 1, today 'equity | Developed | TABLE'; BKD at inflection 1, 'equity | None | TICKER_SHAPE'; NBIS at 49financial 1, 'equity | None | TICKER_SHAPE'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-10 half (batch 263 condition 2): a NEW US bare-ticker row is written only with a resolved sub-class; a held US ticker newly entering an ETF gains a TABLE row.",
+  "world_is": "BKD and NBIS move from no sub-class to a GICS sector (an improvement). BG moves from Developed to Consumer Staples at its next three builds, a region label replaced by a sector label, which batch 268 declined to write for HDB and RYAAY pending FWD-12 (sector in its own field). The row was written by the scheduled producer under the signed half, so it stands; a delete is on Andrew's word only.",
+  "notes": "For the CTO: whether the ongoing producer should skip a US key whose held node already reads a sub-class, until FWD-12 lands. That is a producer change for the next round. Not read: dollar amounts of the held BG, BKD and NBIS nodes."
+}
+```
