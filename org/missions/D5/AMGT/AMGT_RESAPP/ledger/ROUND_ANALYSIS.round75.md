@@ -97,3 +97,18 @@ The pause lifted with the Bloomberg hold (Andrew-direct @8555ce7e12). Both forks
    - (b), an EDGAR XBRL companyfacts pull, is the enrichment. It is egress off Opal infrastructure and needs Andrew's word.
    - The PRD text at `:703-733` ("the filing it came from") is met in v1 by the reported period, under that label. The
      CONTRACT wording moves at this round's PRD addendum.
+
+## ADDENDUM 2 (2026-10-06 ~21:0xZ) -- FWD-12's re-run half is HELD; Andrew questions the button (CRO~Z msg 30295)
+
+`4.0.0_SA_CRO~Z` reports (its notes' ADDENDUM 1 @225555fa61) that Andrew, at the CRO~Z terminal, asked why a re-run button exists
+at all, given a scheduled morning job and no intraday data. He has NOT ruled.
+
+- **HELD:** ADDENDUM 1's FWD-12 re-run cell (the market_data re-run, the cost gate, the consumer wiring pair) is NOT cut until
+  Andrew answers.
+- **NOT held:** FWD-12's provenance half (round 76 az-2, `input_provenance`), and all of FWD-20.
+- **If Andrew retires the re-run:** FWD-12's DONE WHEN loses "a re-run of one input alone". That is an ENDPOINT amendment (PRD
+  addendum, with the ratified-text half re-signed by the CVO). The `/refresh` "declared" no-op (`scoped_amgt.py:6859-6876`) is
+  still retired, because a button that does nothing breaks PRD `:1393-1395` either way.
+- **This seat's recommendation to Andrew is to retire it.** The inputs refresh on the scheduled morning pull and carry no
+  intraday data, so a press returns the data already served. The one case a press would help is a failed or refused scheduled
+  fire, and that is an operator recovery (round-37 ruling 3), not a page action.
