@@ -145,3 +145,30 @@ round.** Never edit an existing row.
   "notes": "Confirms v0.4's ruling (keep every row); corrects only its count. Owner of the PRD text: 1.0.0_SA_CTO, before 3.0.0_SA_CVO re-signs the ratified-text half."
 }
 ```
+
+## ADVI_COTBKF-W7-S1 -- two commit gates refused correct code on name shape (a `build_*` function returning a list; a "silver/%s" label); renamed, tests untouched
+
+```json
+{
+  "id": "ADVI_COTBKF-W7-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~7",
+  "surfaced_at": "2026-10-06T20:30Z",
+  "one_line": "commit-gate's silver-ids check demanded coerce_silver_ids() on a function named build_rows that returns a list of dicts, and the naming gate refused a human-readable source_file label 'silver/%s' as an out-of-pattern S3 key; both were name-shape false positives, so the function became coverage_rows and the label '<table> table'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit run 1: commonwealth_coverage.py:130 BLOCKED: build function 'build_rows' returns DataFrame but missing coerce_silver_ids() call -- build_rows returns list[dict], no DataFrame",
+      "safe-commit run 2: NAMING REFUSE commonwealth_coverage.py:139 silver/%s -> {source}/{scope}/silver/%s (NEW and OUT-OF-PATTERN as S3Key)",
+      "commit 815db65dbc passes both gates after the two renames; 9 tests passed before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-4 names no function names or labels; the worker expected the generator to commit as written.",
+  "world_is": "The silver-ids check keys on a build_ name prefix, not on a DataFrame return; the naming gate grades any slash-bearing literal shaped like a key.",
+  "notes": "Assumption INFERRED, not measured: the generator counts distinct accounts on Account_Number in all three tables and falls back to ReportingPeriod or the reporting_period partition; the real performance and positions silver (CB-b-2) was not read, so the issuer's real run should confirm those column names (distinct_accounts=0 would show a miss)."
+}
+```
