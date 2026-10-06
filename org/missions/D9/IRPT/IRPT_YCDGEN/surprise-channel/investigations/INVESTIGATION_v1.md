@@ -1607,3 +1607,56 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: a reader of run.json who follows report.key finds nothing; the reader should follow artifact_ref when present."
 }
 ```
+
+## IRPT_YCDGEN-W3-S17 -- resident_worker.py still retains the Opal PDF under OPAL_REPORT_PDF, which no policy registers after l-6, and the deployed composition does not opt in to the research revision
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S17",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:55:30Z",
+  "one_line": "ycharts/generate/resident_worker.py:122 (OPAL_PDF_FAMILY = OPAL_REPORT_PDF, put at :429) and its test file are outside cell l-6's paths; with l-6 the worker's put refuses and 4 tests of test_resident_worker.py fail; reports/resident_installed.py builds the repositories without the research revision.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Y",
+  "spec_asserts": "Cell l-6: the producer, publisher and publication worker name YCHARTS_OPAL_REPORT where they named OPAL_REPORT_PDF; paths exclude resident_worker.py and test_resident_worker.py.",
+  "world_is": "After l-6 publication_worker and publisher require pdf_ref family YCHARTS_OPAL_REPORT, but resident_worker.py:122/:429 puts the PDF as OPAL_REPORT_PDF (no longer registered anywhere). test_resident_worker.py::test_allow_listed_principal_opal_producer, test_one_producer_per_request, test_one_producer_per_request_a_retained_opal_pdf_publishes_without_producing_again and test_redelivered_ready_opal_job_is_acknowledged_without_a_key_error fail with RequestReadRefused at publication_worker.py:76 (base checkout: 53 passed, 8 skipped before l-6). test_resident_worker.py:51 and :697 also name OPAL_REPORT_PDF. Cell l-6 adds the mechanism instead: composition.build_retained_repositories(additional_policy_revisions=('irpt-ycdgen-research-v1',)) and ArtifactRepository(revisions={family: revision}) / put(policy_revision=...) retain a family under its own revision; reports/resident_installed.py (build_resident_runtime) does not pass it, since test_resident_installed.py cannot run here (S18) and the order does not wire the deployment.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:122,429@wk-IRPT_YCDGEN-72",
+      "infra/aws/lambda/investor-reporting/reports/composition.py build_retained_repositories@wk-IRPT_YCDGEN-72",
+      "infra/aws/lambda/investor-reporting/reports/resident_installed.py:253-256@wk-IRPT_YCDGEN-72"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED: the live Opal request would fail at the PDF put (unregistered family) until a cell renames the family in resident_worker.py and its test, passes the research revision in resident_installed.py, and the row irpt-ycdgen-research-v1 is ACTIVE (CTO acceptance, ruling item 5)."
+}
+```
+
+## IRPT_YCDGEN-W3-S18 -- reports/tests/test_resident_installed.py::test_factory_returns_exactly_the_resident_shape_without_any_aws_call fails on the base checkout with ModuleNotFoundError: extract
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S18",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-05T23:55:31Z",
+  "one_line": "One test of a file under l-6's reports/tests/*.py fails identically before and after l-6: resident_worker.py:20 imports extract, which is not on that test's path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Cell l-6: keep every existing test in the touched files passing.",
+  "world_is": "python -m pytest reports/tests/test_resident_installed.py -q gives 1 failed, 13 passed in the worktree and in the base checkout (no l-6 change): ModuleNotFoundError: No module named 'extract' at ycharts/generate/resident_worker.py:20. Not caused by this cell; reports/tests/test_resident_installed.py was not edited.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/tests/test_resident_installed.py test_factory_returns_exactly_the_resident_shape_without_any_aws_call@wk-IRPT_YCDGEN-72 and CLOUD base checkout"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: runs of the whole reports/ directory report this one failure; the criteria name test_retention.py and test_publisher.py, which pass."
+}
+```
