@@ -96,7 +96,7 @@ PLACE to `complete`. Report once.
 - Round 20 (R3-T.13, item 1). Chain: `OG-lg-1` -> `OG-rl-8`.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
