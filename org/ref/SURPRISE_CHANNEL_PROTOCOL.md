@@ -110,8 +110,9 @@ a tree home; `org/surprise_channel/<CODE>/INVESTIGATION_v<N>.md` for a project w
 `org/surprise_channel/ESTATE_GOVERNANCE/INVESTIGATION_v<N>.md` for a finding that belongs to NO project -- the audit
 archive, a gate or hook every seat runs, a registry, the fabric's own mechanism (added 3.6: the carrier rule assumed a
 channel existed, and a governance finding had none, so a broker message was its only carrier -- 94210/94239). That
-channel is the residual, never the default: a finding a project owns goes to that project. Site Z writes
-`INVESTIGATION_v<N>.Z.md` beside the laptop file. The lane on both roots admits every seat; the row gate is the control.
+channel is the residual, never the default: a finding a project owns goes to that project. A box other than the laptop
+writes `INVESTIGATION_v<N>.<device>.md` beside the laptop file, `<device>` being its name in `org/devices/DEVICES.json`
+(`.sitez.md`); an existing `.Z.md` file reads as sitez's through the register alias. The lane on both roots admits every seat; the row gate is the control.
 
 **Who writes.** The seat or worker that meets the surprise appends its own row, in its own worktree when it is a
 worker, merged to HEAD by the COO with the task order. The CVO writes nothing here: its dispositions, corrections and
@@ -137,7 +138,7 @@ read surprises and nothing else.
 ## 4a. The adjudication document -- the CVO's rows about the rows
 
 **Homes.** `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/adjudications/ADJUDICATION_v<N>.md`, or
-`org/surprise_channel/<CODE>/ADJUDICATION_v<N>.md` for a project without a tree home; `.Z.md` on site Z. One document,
+`org/surprise_channel/<CODE>/ADJUDICATION_v<N>.md` for a project without a tree home; `.<device>.md` off the laptop. One document,
 one fenced block, the same schema as the investigation document. The lane admits the CVO only.
 
 **Who writes.** The CVO, and only the CVO: every disposition, every scoped correction, every closure row, every
@@ -178,7 +179,7 @@ arrives with its four-postulate record and token census or it is not a proposal.
 ## 5. The remediation document -- graduated rows only
 
 **Homes.** `org/missions/D<n>/<MACRO>/<CODE>/surprise-channel/remediations/REMEDIATION_v<N>.md`, or
-`org/surprise_channel/<CODE>/REMEDIATION_v<N>.md` for a project without a tree home; `.Z.md` on site Z. The lane admits
+`org/surprise_channel/<CODE>/REMEDIATION_v<N>.md` for a project without a tree home; `.<device>.md` off the laptop. The lane admits
 the CVO only.
 
 **When.** Cut at round close, once the L10 precondition of section 8 holds, and issued to `1.0.0_SA_CTO` as the slug:
@@ -306,7 +307,8 @@ in the adjudication document.
 row count as its denominator.
 
 **One investigation file per fabric per round, with a fabric-distinct filename.** The laptop fabric writes
-`INVESTIGATION_v<N>.md`; site Z writes `INVESTIGATION_v<N>.Z.md`; the same for adjudication and remediation files unless
+`INVESTIGATION_v<N>.md`; every other box writes `INVESTIGATION_v<N>.<device>.md` with its register name (site Z
+`.sitez.md`; existing `.Z.md` files read as sitez); the same for adjudication and remediation files unless
 the two certifiers agree at handover on one merged remediation authored by one of them. The two files are never merged;
 a same-path add on both branches resolves by rename, keeping each file's content. Ids carry the fabric coordinate
 (`<CODE>-S<n>` and `<CODE>-Z-S<n>`) and the allocator coordinate (`<CODE>-W<n>-S<k>` for a worker's rows, `<CODE>-C-S<k>`
