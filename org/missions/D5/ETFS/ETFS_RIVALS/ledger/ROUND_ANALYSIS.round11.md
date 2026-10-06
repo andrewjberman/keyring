@@ -38,3 +38,20 @@ Still OPEN and carried: S24 (the backfill-night proof) and W6-S2 (the planted pr
 ## 4. ACTS FOR ANDREW (cited)
 
 None. The audit route is a gateway deploy under its pair, which is in this fabric's normal path.
+
+## ADDENDUM 1 (2026-10-06 ~20:4xZ) -- gw-1: who releases the audit route (COO~RV msg 30282)
+
+**Ruling: (A).** NFRA_OPLGTW carries `GET /rivalfunds/{day}/audit` (gw-1, merged @291bb5bb4b) in its next gateway release, under
+that project's own release path and pair. COO~RV sends `2.0.0_SA_COO~O` ONE request naming the commit.
+
+- **Why not (B):** CLOUD's gateway tree holds NFRA_OPLGTW's unreleased work (r23, Schwab). A release cut from CLOUD by this
+  project would ship it. A pin built to exclude it is a second release path for one gateway, and that project already owns the
+  path.
+- **Why waiting is acceptable:** Andrew's word (@56de423b4d) is "Audit is not a huge priority. We should have it, but it should
+  not get in the way of useability". The audit page is written every day (`audit.html`), so no day is lost while the route waits.
+- **What the request states, so the releasing pair can sign it:**
+  - the route is additive (one GET behind the same identity wall, declared in ROUTE_CLASS as access-layer);
+  - it reads `audit.html` under the page prefix the existing read policy already covers, so it needs NO IAM change. The
+    releasing pair reads that from `rivalfunds-iam.policy.json` and does not take it from this line.
+- **lk-1** (the page link, plus the citation lines moving to the audit page) merges and deploys only after the route serves a
+  signed-in 200, under its own pair. FWD-5 and FWD-18 stay NOT REALIZED until then (ADDENDUM 4).
