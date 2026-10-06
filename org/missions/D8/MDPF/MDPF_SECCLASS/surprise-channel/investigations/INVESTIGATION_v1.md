@@ -2052,3 +2052,86 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not read: the four clients' positions; the page walk. The UI walker cannot select the Cottonwood partner (page state, no deep link; the press flag drives buttons and tabs, not the select), so the firm Mix chart, Books donut and an advisor Mix chart for Cottonwood were not walked; a 49 Financial Mix chart drew no bars in the walk (plot area empty beside a filled legend and tiles). Leg S stays open."
 }
 ```
+
+
+## MDPF_SECCLASS-W20-S1 -- Cottonwood's C_06 reads gold/views/rel_architect_lookup.parquet, which is absent from s3://opal-data-cot, so t
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "Cottonwood's C_06 reads gold/views/rel_architect_lookup.parquet, which is absent from s3://opal-data-cot, so the advisor-level mix aggregation is skipped.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.load_static_tables on 2026-10-06 (read only, from cot_mix_multi_asset_check.py): 'WARN: could not load rel_architect_lookup.parquet: NoSuchKey ... skipping advisor aggregation'",
+      "data/cot/scripts/gold/lib/s3_layout.py:151 REL_ARCHITECT_LOOKUP = 'gold/views/rel_architect_lookup.parquet'; list-objects-v2 Prefix gold/views/ in opal-data-cot returned 5 keys: firm_composition.json, mix_daily_summary.json, nna_aua_by_advisor.parquet, nna_aua_by_geography.parquet, nna_aua_by_geography_city.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C_06's own docstring (_load_rel_architect_lookup): the file may be missing and C_06 then continues with the firm-level mix only.",
+  "world_is": "The file is missing in the live bucket, so an incremental C_06 run publishes no advisor-level mix daily summary. Not read: whether the advisor mix is produced elsewhere for Cottonwood, or when the key was last present.",
+  "notes": "Off-task for SC-e-20; it does not affect the four client mixes. Found when the check script reused load_static_tables."
+}
+```
+
+
+## MDPF_SECCLASS-W20-S2 -- Two Cottonwood gold files outside the SC-e-20 grant still lack multi_asset and change what a multi_asset holde
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "Two Cottonwood gold files outside the SC-e-20 grant still lack multi_asset and change what a multi_asset holder's served composition shows: D_03 drops the class, runners_cot d08 raises on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/D_03.composition_artifacts.py:102-111 _ASSET_CLASS_LABELS has no multi_asset and :387 'for asset_class in _ASSET_CLASS_LABELS' is the only iteration that builds the composition mix, so a multi_asset holding row is never emitted",
+      "data/cot/scripts/gold/runners_cot/d08_cot_mix_summary.py:51 known = {equity, fixed_income, alternatives, UNCLASSIFIED-LOUD}; :52-54 raises SystemExit 'CLASS-DOMAIN FAIL' for any other class",
+      "census: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md (36 rows, 28 lacking multi_asset, 22 feeding a served artifact)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-20 names four Cottonwood files; the order's census step says a gap becomes an amendment.",
+  "world_is": "After SC-e-20 the client mix sums to 1, but the composition artifact still has no multi_asset line. Not read: whether D_03's composition total is reconciled against the mix total, whether runners_cot d08 is scheduled, and the Cottonwood effect of D_00 and D_00b (scheduler not read).",
+  "notes": "Reported, not edited: neither file is in the order's paths."
+}
+```
+
+
+## MDPF_SECCLASS-W20-S3 -- The order's premises differ from the tree in four places: the C_06 function is process_date, runners_cot is un
+
+```json
+{
+  "id": "MDPF_SECCLASS-W20-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~20",
+  "surfaced_at": "2026-10-06T16:30Z",
+  "one_line": "The order's premises differ from the tree in four places: the C_06 function is process_date, runners_cot is under data/cot, the guard sat at :467, and the worktree's portal submodule is empty.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C_06.client_mix_timeseries.py has no process_partition; _process_partition (:140) calls process_date (:392); the sum check was at :467-470 before the edit",
+      "data/assets/scripts/gold/runners_cot does not exist in the worktree or the base checkout; data/cot/scripts/gold/runners_cot has 25 .py and json files",
+      "C:/tmp/wk-secclass-r7-20/portal is an empty directory (git ls-tree HEAD portal = gitlink ec65c5d6); the base checkout's portal working copy is at 481b3bcc"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'runs process_partition', 'runners_cot' under data/assets/scripts/gold, portal read from the worktree root.",
+  "world_is": "I used process_date, scanned data/cot/scripts/gold/runners_cot, and read the portal rows from the base checkout's working copy (not the pinned commit). The census says so.",
+  "notes": "The criteria were met as written; only the names differed."
+}
+```
