@@ -11,7 +11,7 @@
 <placeholders>NONE</placeholders>
 <preflight>
 comp-schedule: DECLARED-NOT-APPLICABLE thread round; no schedule, trigger or EventBridge rule is added or read
-comp-iam: DECLARED-NOT-APPLICABLE no IAM grant, role or policy changes in this cell; the resident host's role is proved by the issuer's close run
+comp-iam: DECLARED-NOT-APPLICABLE this cell DOES edit an IAM policy file (the resident runner role's inline policy), but the instrument cannot grade it: comp-iam models (action) not (action, resource) and fails green on a new resource, and the resident host's role is not a Lambda's. The live primitive is `iam simulate-principal-policy`, one resource per call with positive and negative controls, run by the issuer after the apply (CTO batch 273 condition 4)
 comp-adversary: DECLARED-NOT-APPLICABLE thread round; the lens runs on the enrichment round that touches this surface
 </preflight>
 
@@ -39,7 +39,7 @@ comp-adversary: DECLARED-NOT-APPLICABLE thread round; the lens runs on the enric
 
 ## 4. SURFACES AND BOUNDS
 
-You READ (never edit): everything outside your `<paths>`, including `lib/`, `infra/logic/`, `docs/`, `org/missions/D9/IRPT/IRPT_YCDGEN/` (the PRD, the decompositions). NEVER: a vendor call (YCharts, Yahoo, Bloomberg or any other), an S3 or DynamoDB write, a live AWS call of any kind, a deploy, a Terraform command, a cookie, token or session value in any file, a figure value from a client file in any committed file, and none of another cell's files. A check you cannot satisfy inside your `<paths>` is a surprise row appended to `org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v1.md` (one `## <ROW-ID> -- <title>` section with a fenced json row; ids `IRPT_YCDGEN-W1-S<k>`, next unused k; `surfaced_at` the real UTC time), never an edit outside them.
+You READ (never edit): everything outside your `<paths>`, including `lib/`, `infra/logic/`, `docs/`, `org/missions/D9/IRPT/IRPT_YCDGEN/` (the PRD, the decompositions). NEVER: a vendor call (YCharts, Yahoo, Bloomberg or any other), an S3 or DynamoDB write, a live AWS call of any kind, a deploy, a Terraform command other than `terraform fmt` on your one file (no plan, apply, init or state read), a cookie, token or session value in any file, a figure value from a client file in any committed file, and none of another cell's files. A check you cannot satisfy inside your `<paths>` is a surprise row appended to `org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v1.md` (one `## <ROW-ID> -- <title>` section with a fenced json row; ids `IRPT_YCDGEN-W1-S<k>`, next unused k; `surfaced_at` the real UTC time), never an edit outside them.
 
 <paths>
 infra/aws/terraform/investor-reporting/ycharts/resident.tf
