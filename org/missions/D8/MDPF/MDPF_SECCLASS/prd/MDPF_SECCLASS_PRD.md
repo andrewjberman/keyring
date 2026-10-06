@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -630,3 +630,12 @@ not edited.
 - **C-NOCHAR stands:** sector and industry group are labels. No measurement enters the list. No CIK field (ADDENDUM v0.9).
 
 **Placement:** the next MDPF_SECCLASS round. **Sign-off:** an ENDPOINT change, so the ratified-text half re-opens.
+
+## ADDENDUM v0.11 (1.0.0_SA_CTO, clock read 00:03Z 2026-10-05) -- contract note only: Andrew's word for the AI classifier at the full old-list volume
+
+**Word:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_0003Z_AI_CLASSIFIER_RUNS_ON_THE_FULL_OLD_TABLE.md`: "RUn on the full old table". The ENDPOINT section is not edited.
+
+- **C-VENDOR.** His word covers the outside-model use for FWD-17 at its full volume: up to 8,495 old-list rows (the research
+  seat's count), the model the existing writer calls, name and ticker only, after the direct-match plan. This closes
+  `3.0.0_SA_CVO`'s note 1 on v0.10. No cap, and no second release by him, sits between the held securities and the rest.
+- The order of ADDENDUM v0.10 stands as sequencing, not as a gate: held securities first.
