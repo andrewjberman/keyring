@@ -159,4 +159,11 @@ Asked "How do you rule?" with the options approve all recs / rule by row / no ch
 he names the rows he wants changed, and every other row lands as recommended. His row rulings follow here when given.
 Nothing has landed yet.
 
+## Ruling, part 2 (Andrew-direct 2026-10-06 ~03:2xZ at this terminal)
+
+After a plain-language summary (3 of 223 suggestions worth landing; the rest repeats, one-day facts, co-change
+signals or text already ruled) and the question "Shall I land the 3 and close the 32 days?", he answered VERBATIM
+**"yeah agreed"**. He named no row under "Rule by row", so every row lands as recommended. Whether the daily
+suggestion step is kept, made weekly or dropped was put to him as his own later decision; nothing here decides it.
+
 -- 3.0.0_SA_CVO

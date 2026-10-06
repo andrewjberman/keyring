@@ -647,6 +647,12 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate-report loop, one sitting over 32 days, Andrew "yeah agreed";
+    # decision record org/estate-reports/2026-09-07.md, packet ESTATE_SITTING_PACKET_20261006.md row A1).
+    description: >-
+      Portal-critical modeled market data product. s3://opal-market-data-v2 is not one of its sources:
+      that bucket was deleted on 2026-07-30 after a dependency sweep found no reference to it in the
+      deployed code of the estate's portal-critical modeled readers.
   - family: MA-02-market-rsi-tiered
     named_thread: market-overview
     owning_tool: portal-consumer-tools
@@ -1059,6 +1065,12 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate-report loop, one sitting over 32 days, Andrew "yeah agreed";
+    # decision record org/estate-reports/2026-10-03.md, packet ESTATE_SITTING_PACKET_20261006.md row A2).
+    description: >-
+      Partner-data component. Its deployed environment sets USERS_TABLE=opal-users-v2, the estate's
+      official user database by the 2026-07-30 ruling; opal-users is the deprecated predecessor.
+      trade-auth-handler carries the same setting, so a change to the opal-users-v2 contract touches both.
 
   # ---- comp-estate portal-infra (6) ----
   - family: PPI-01-auth-validator-edge
@@ -1329,6 +1341,13 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate-report loop, one sitting over 32 days, Andrew "yeah agreed";
+    # decision record org/estate-reports/2026-10-03.md, packet ESTATE_SITTING_PACKET_20261006.md row A3).
+    description: >-
+      Trade-submission authentication handler. It resolves user identity against opal-users-v2: its
+      deployed environment sets USERS_TABLE=opal-users-v2, the official user database by the 2026-07-30
+      ruling. The older opal-users table is the deprecated predecessor and is not this handler's user
+      table.
   - family: TS-7-trade-authorizer
     named_thread: trade-submission
     owning_tool: none
