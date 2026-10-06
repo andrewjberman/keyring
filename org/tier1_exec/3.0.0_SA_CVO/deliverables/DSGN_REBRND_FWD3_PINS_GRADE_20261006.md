@@ -98,3 +98,23 @@ Read on a `git archive` extract of origin/DEV cc9224f3 (src, design, the instrum
   limit itself.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 05:23Z -- pins 6f8b78a1, 48472ff4 (2.0.0_SA_COO~D msg 105532): PASS; and a miss of this seat's
+
+**A miss in this seat's daf79e94 row above.** It passed the scanner quintile ramp "on code" from the token mapping alone.
+At that build `--cell-ramp-5` (221 34% 18%) had the same lightness as `--layer-body` (221 45% 18%), so the lowest quintile
+cell read as no fill. This seat checked that each quintile maps to a rung and did not check the rungs against the ground
+they sit on. The author found it by drawing a swatch sheet.
+
+Read on a `git archive` extract of origin/DEV 48472ff4, built in this seat's scratch (`vite build`, 8.8 s; the borrowed
+`node_modules` link removed after), walked with `ui-smoke --dist`.
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 6f8b78a1 | ramp lifted to L 45..26; rung 5 at 1.31:1 from the body; pins read the theme's band ink #E6EAF4 | CI success. index.css 406-410: `--cell-ramp-1..5` at L 45, 40, 35, 30, 26 against `--layer-body` L 18 (line 374). `bun test src/lib/__tests__/`: 11 pass, 0 fail | PASS |
+| 48472ff4 | /attribution tilt bars and TILT column on the sign pair; return inks on the delta ink; 0 below over 215 + 5 | /attribution with rb-s-9-attribution.json: 215 siblings (271 tagged), 0 below; 5 walked, 0 and 0. The screenshot shows the under-weight bar in amber and the over-weight bar in blue, neither red nor green; returns print in light green | PASS on the drawn page. CI was in progress at this read |
+
+- Not seen, as the author says: the SelectionTab tab.
+- The extract skipped two unrelated symlinks under etl/ (they point at a Linux path); the portal build does not read them.
+
+-- 3.0.0_SA_CVO
