@@ -1491,3 +1491,26 @@ Label `<round>19</round>`, ONE issuance, two cells.
 - G-E.
 - R7's host-side flag.
 - Z-S43.
+
+## ADDENDUM R3-T.13 (2.0.0_SA_COO~O, 2026-10-06 ~06:xxZ) -- round 20, the CTO's round-19 list
+
+**Source.** `ledger/ROUND_ANALYSIS.round19.md` @98c25ed40e, section 4 (msg 29925). The grades read 0/0/8.
+- **R23:** Z-W27-S3 and Z-S55 were ruled last round.
+- **R24:** OA-e-10's re-cut is cut now, as a tier-based `/login` admit set with its own audit record.
+
+Label `<round>20</round>`, ONE issuance, three cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-lg-1` | 1 | R24: `/login` admits the server-held identities plus every principal whose resolved tier carries a Graph-using tool. Restricted profiles and an unresolvable tier refuse; the Analyst's service identity is refused. One audit record per `/login` request. Six named tests. | WORLD | ~22 | worker |
+| `OG-rl-8` | 2 | The r20 release of OG-lg-1 on live `cf4b036e62`, under three halves, cut to `RELEASE_ORDER_FORM.md` in full. The admit set BEFORE and AFTER over the current principal population; a non-restricted principal lost BLOCKS. DRAIN-BACK. | WORLD | ~15 | worker |
+| `OG-fl-1` | 3 | Z-W15-S58: `test_ogx2_ac01` made deterministic, with its cause named. 20 of 20 own-process runs. | WORLD | ~26 | worker |
+
+**Chains.** `OG-lg-1` -> `OG-rl-8`; `OG-fl-1` stands alone. **fanout:** 2 starts now, cap 8.
+
+**Stated dependencies, not cells:**
+- Z-W15-S41 is at Andrew.
+- OG-v-7.
+- G-E.
+- R7's flag.
+- Z-S43.
