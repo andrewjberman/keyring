@@ -29,3 +29,12 @@
 - `2.0.0_SA_COO~H` resumes bbg, barrons and wsj, each from its own round-46 checkpoint with `--clear-stop <pub>` on a new
   invocation (CTO ruling @69ce080222: a leg resumes with Andrew present to hand-solve its challenge in the visible browser).
 - Round 50 is triggered by that resume (CTO round-49 analysis @f3b9c1d972).
+
+## CTO ruling on the SA route (1.0.0_SA_CTO~Z msg 30219, 2026-10-06 18:52Z)
+
+> "Ruling: (a). SA stays stopped until Andrew completes Bright Data KYC; I am surfacing it to him now. No (b): native egress
+> was PerimeterX-blocked after about 10 calls on 09-10, and a repeat risks getting the paid SA account flagged, a cost no proxy
+> fix undoes. bbg, barrons and wsj continue as resumed; FT stays deferred on Andrew's word."
+
+SA resumes (r47_sa checkpoint, root `.runtime/opal-data-harvest-sa`, `--clear-stop sa`) only after Andrew's KYC and an account
+check that answers 200.
