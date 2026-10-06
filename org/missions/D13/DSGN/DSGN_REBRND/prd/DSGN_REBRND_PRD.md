@@ -5,7 +5,7 @@
  "project": "DSGN_REBRND",
  "directive": "D13",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/portal-visual-elevation-brief-20260911.md@bed01b226a",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -40,10 +40,10 @@ This is an EXECUTION-ONLY PRD: it names cells, contracts, paths, fixtures and th
 
   FWD-3  An advisor reads the ORDER of an ordered scale off its colour, without a legend
          DONE WHEN  APPLIED -- every ordered quantity in the product is one hue ramped light to dark
-         ACCEPT     shown a duration ladder, a performance band or an over/under-weight scale with the legend covered, an advisor puts the steps in the right order
-         PROOF      a census of every ordered scale in portal/src/ (denominator printed) and, for each, the ramp it now uses; the /positioning five-hue segmented control (UST/ST/INT/LT/ULT) is the named positive case
+         ACCEPT     shown a performance band, an over/under-weight scale or any other ordered scale (the duration ladder is the named exception, below) with the legend covered, an advisor puts the steps in the right order
+         PROOF      a census of every ordered scale in portal/src/ (denominator printed) and, for each, the ramp it now uses; the /positioning and /attribution five-hue duration ladder (UST/ST/INT/LT/ULT) is a named EXCEPTION (Andrew-direct 2026-09-11, `portal/DESIGN.md` C4; "1a" 2026-10-06 ~03:5xZ, msg 105508) and is listed in the census as excepted, not converted
          SOURCE     brief O3; III.4; VI (the five-hue segmented control)
-         CONSTRAINT the charts keep their colour; what goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only; two named exceptions keep their original colour by Andrew's word (2026-09-14 ~19:0xZ): the Fear & Greed chart's gradient and the Daily Cloud's yellow family; and a third by Andrew's word (2026-10-04 ~22:0xZ): /market's Global RSI bars keep their overbought/oversold zone colours
+         CONSTRAINT the charts keep their colour; what goes quiet is the chrome; a ramp replaces unordered hue on ORDERED quantities only; two named exceptions keep their original colour by Andrew's word (2026-09-14 ~19:0xZ): the Fear & Greed chart's gradient and the Daily Cloud's yellow family; a third by Andrew's word (2026-10-04 ~22:0xZ): /market's Global RSI bars keep their overbought/oversold zone colours; and a fourth by Andrew's word (2026-09-11, locked in `portal/DESIGN.md` C4, kept by "1a" 2026-10-06 ~03:5xZ): the five-hue duration ladder UST/ST/INT/LT/ULT keeps its five canonical hues, in the same order
 
   FWD-4  An advisor can tell at a glance which single thing on a screen is the action to take
          DONE WHEN  APPLIED -- each view spends the accent on AT MOST ONE PERSISTENT primary action -- none on a view that has no primary action -- plus a CLOSED SET OF IDENTITY accents: the page-title vertical bar, the header subtext, the active tab's label and underline, the sidebar's active item, the user avatar, and the sidebar rail's faint edge; the ring that follows keyboard focus, the highlight on selected text and every tooltip share the accent as TRANSIENT feedback and are budgeted separately, as is the data palette
@@ -306,3 +306,5 @@ Surfaces this project writes, reads, deletes or executes. Nothing here is deploy
 | `design/brand/opalinvest.com.{md,json}`; `deck_generation/brand_spec/brand.json`; the guidelines PDF; `DESIGN_BIBLE.md`; `FONT_LICENSE.txt`; `design/SKILLS_MANIFEST.md` | read | R1, R2, R4, R5, R7, R8, R12 | their existing owners; reading never widens ownership |
 | the gitignored third-party skills the manifest pins | execute locally | R7, R12 | never committed |
 | `opalinvest.com`, any competitor site, the backend API, `deck_generation/` outputs, route/auth code | excluded | -- | -- |
+
+- **v0.15 (FWD-3 names the duration ladder as an exception, by Andrew's word).** Andrew "1a" (2026-10-06 ~03:5xZ, via `0.0.0_AB_MSTR` msg 105508; record `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261006_035xZ_OPEN_CALLS_1A_KEEP_DURATION_LADDER_LOCK_2_BLOCKED_3A_4A.md`): keep his 2026-09-11 lock (DESIGN.md C4); the amendment is `2.0.0_SA_COO~D`'s per his card. FWD-3's ACCEPT, PROOF and CONSTRAINT lines changed: the five-hue ladder is no longer "the named positive case" but a fourth named exception. It re-opens the ratified-text half (`3.0.0_SA_CVO`) because FWD-3 is in the hashed ENDPOINT block.
