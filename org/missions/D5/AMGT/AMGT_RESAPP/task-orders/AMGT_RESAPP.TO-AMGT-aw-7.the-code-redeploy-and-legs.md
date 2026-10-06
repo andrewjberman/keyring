@@ -59,6 +59,28 @@ org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/investigations/INVESTIGATION_v
   <criterion id="AC3" cell_refs="AMGT-aw-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; for c in c39 c41 c42 c43 c44 c45; do PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round72/checks/r72_served.py" --cell $c --where deployed || exit 1; done &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round71/checks/r71_latency.py" --where deployed; echo "exit=$?"</invocation><expect>R72 C39-C45 and R71 C38 SERVED: YES on the deployed function (no regression); and exit=0</expect></criterion>
 </proof_of_spec>
 
+## 4a. AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~03:2xZ) -- TWO legs, no grant
+
+**No grant leg:** aw-1 reads `bloomberg/harvest/bronze/refdata/security_key=<key>/<stamp>.json` (not `raw/bloomberg/`, which is
+ungranted). The role already holds it: GetObject and ListBucket(s3:prefix) were simulated allowed at signing.
+
+1. **Code leg.** Build commit `9d2b7b3d7c`. The CONTENT-DIFF against deployed `2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ=` is
+   exactly CHANGED `lib/research/api/scoped_amgt.py`, `lib/research/api/monthly_chatter.py`, `lib/research/print/render_pack.py`,
+   `lib/research/harvest/publication_gold.py`. ONE code-only `safe-apply`. Then `leadpanel_cold_warm.py --label after` and the cold
+   invokes' `AMGT_PHASE` lines.
+2. **Pool write leg.** `python -m lib.research.identity.build_universe --as-of 2026-10-06 --write-pool`, from CLOUD at or after
+   `1aa1d8f2df`. It writes the NEW key `universe/v1/2026-10-06.json` (absent at signing). Run its `--dry-run` first: covered 95 of 95,
+   0 regressions (c52).
+   **Rollback:** re-put the `universe/v1/2026-09-16.json` bytes at the new key (readers take the newest key), never an S3 delete.
+
+**Also report** the warm latency of `/api/scoped/amgt/freshness` (3 calls): it now reads ~105 ledgers per request (aw-3).
+
+Halves:
+- COO: `deliverables/2.0.0_SA_COO~Z/round73/NEVER_WIDEN_HALF_COO_AW7.md`;
+- CTO: `ledger/NEVER_WIDEN_ROUND73_AW7_CTO_HALF.md` (owed).
+
+Gate limb that graded this modification: GATE (viii) on a modify (`<placeholders>NONE</placeholders>`).
+
 ## 5. WHEN YOU ARE DONE
 
 The instance is genre DEPLOY, with a NAMED rollback and base-vs-new CodeSha256 as the discriminating control, at
