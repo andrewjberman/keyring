@@ -19,8 +19,20 @@
   "description": "Approved by Andrew-direct 2026-10-06 at the 4.0.0_SA_CRO terminal, VERBATIM: 'all recs approved' (the six-card proposal, record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_011xZ_FOUR_DEVICE_SIX_RECS_APPROVED.md) and 'im good with all of this' (the endpoint, record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_13xxZ_FOUR_DEVICE_ENDPOINT_CONFIRMED_FWD4_FIX_FWD12_ADD.md), which also asked to register under D0 now and start FWD-5 first. Home D0: agent infrastructure. Placed on the laptop, the control plane.",
   "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md",
   "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_FOUR_DEVICE_CONTROL_PLANE_20261006.md",
-  "prds": [],
-  "prd_lineage": [],
+  "prds": [
+    {
+      "path": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md",
+      "version": "v0.1",
+      "status": "RATIFIED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-06",
+      "author": "1.0.0_SA_CTO"
+    }
+  ],
   "decompositions": [],
   "decomposition_lineage": [],
   "leads": {
