@@ -158,3 +158,21 @@ graded the code, CI and the author's committed screenshots (@c3ce66038d), not a 
   clear in the cells, less so in the legend.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 07:00Z -- pins 8cc3b769, 33db2f95, 5e31a702 (2.0.0_SA_COO~D msg 105544): PASS; one finding (row DSGN_REBRND-S27)
+
+The author's fixtures are again scratch and not on disk here, so these are graded on code, CI, the pin tests on a
+`git archive` extract of 5e31a702, and the author's screenshots (each a distinct file this time).
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 8cc3b769 | /valuations gains a colour key; the Expand link at 3.77:1 fixed | CI success; 2 files, 3 lines | PASS on code and the author's render |
+| 33db2f95 | /factor-tilts chips on the sign pair; six abbreviation labels at 3.6:1 fixed | CI success; 2 files | PASS on code and the author's render |
+| 5e31a702 | the sign pair re-cut out of the status hues into the data family: cyan 191, violet-magenta 300, declared in the theme | CI success. `bun test src/lib/__tests__/`: the colour tests pass (10); one unrelated test file fails only because the extract has no path aliases (`@/lib/dateUtils`). index.css 412-419 and the theme's `--data-sign-negative` (300 55% 58%) read as stated. The author's `CORRELATION_AFTER_SIGN_RECUT.png` shows cyan positives, violet negatives, navy near zero, and a matching seven-swatch key | PASS |
+
+**Finding, from the author's own screenshot (row DSGN_REBRND-S27):** on /correlations the row labels sit one row below their cells.
+The first row of cells (Cash's column, value -0.68) has no label beside it, every label from "Gov/Credit 1-3Y" down sits
+half a row to a row lower than its cells, and the last label, "EM", has no row beside it. This seat read it in the PNG
+only; it did not draw the page.
+
+-- 3.0.0_SA_CVO

@@ -2049,3 +2049,29 @@
   "notes": "INERT: nothing was changed on the strength of the 4.22 (the author parked it). Remedy is the instrument owner's (2.0.0_SA_COO~D): for an SVG text or tspan read the computed fill and fill-opacity, and print the tag in the label."
 }
 ```
+
+## DSGN_REBRND-S27 -- /correlations row labels sit one row below their cells (from the author's render)
+
+```json
+{
+  "id": "DSGN_REBRND-S27",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-06T06:59:00Z",
+  "one_line": "On /correlations the matrix's row labels sit one row below their cells: the first row of cells has no label, each label from 'Gov/Credit 1-3Y' down is offset by about a row, and the last label 'EM' has no row beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_REBRND/deliverables/2.0.0_SA_COO~D/CORRELATION_AFTER_SIGN_RECUT.png (2.0.0_SA_COO~D's render of portal DEV 5e31a702 with a type-built fixture, 13 tickers): row label 'Gov/Credit 1-3Y' at y about 286 px beside the first cell row at y about 258; label 'EM' at y about 902 below the last cell row at y about 874; no label at the first row",
+      "this seat's read of that PNG 2026-10-06 ~07:0xZ; the page was not drawn by this seat (the fixture is not on disk where this seat can read it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 and FWD-13 grade what an advisor reads on a drawn page; a correlation matrix is read by pairing a cell with its row and column labels.",
+  "world_is": "In the one render on record the row labels are offset from the cells by about one row, so a reader pairs each value with the wrong ticker. The offset is layout, not fixture data, so it would show with served data too, unless the fixture's ticker list or the render width caused it. Whether it pre-dates the colour work is not read here.",
+  "notes": "INERT for the colour grades (they read cell colours, not labels). Owner 2.0.0_SA_COO~D: draw /correlations once with the same fixture and check label-to-row alignment; CorrelationMatrix.tsx was rewritten in 4fa0312e (438 lines)."
+}
+```
