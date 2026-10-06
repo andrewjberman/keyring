@@ -8329,3 +8329,52 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T23:55Z",
+  "one_line": "OG-ln-1: live's tests/test_schwab_host_inputs.py, ported byte-for-byte onto CLOUD, fails 2 of 9 on CLOUD: the key-count assertion (51 keys vs 50) fails on live's own tree too, and the build_package test calls a helper CLOUD's lambda build_package.py has re-signed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN: infra/aws/ec2/opal-gateway/tests/test_schwab_host_inputs.py at ebf5fca97d, own process, rc=1, '2 failed, 7 passed': test_values_that_can_hold_whitespace_are_rendered_quoted -> 'assert 51 == 50' (line 137); test_grant_writer_stages_the_contract_only_from_the_standard -> TypeError '_derive_import_closure() missing 1 required positional argument: src' (line 157).",
+      "RAN: git archive 37be3485db of the gateway dir, the same test file in its own process: the 51 == 50 assertion fails identically on live's own tree (the file and deploy-to-ec2.sh are byte-equal to live's); the other two live-tree failures there are the sparse archive lacking org/standards and build_package.py.",
+      "GIT: the '== 50' was set at af2d762970 (OG-rl-4); 37be3485db (r17c release) added the 51st key YEARINREVIEW_VIEW_ALLOWED_EMAILS to the printf without updating the count. The build_package.py is outside this order's <paths> (infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-ln-1 step 2: run the gateway's schwab and login test files, each in its own process; no new failure beyond the per-file baseline r17/Q7_SUITE_BASELINE.txt (which names only test_schwab_export_stream.py).",
+  "world_is": "The ported live-only file adds two red tests the baseline did not list; neither was introduced by this port's content (the first is live's own stale count; the second is a live test against CLOUD's newer lambda builder). Left red and unedited, so the file stays equal to live and no CLOUD_ONLY item is minted for it. A fix is a count bump 50 -> 51 in the test and a call-shape fix against build_package.py, issuer's choice of cell."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-05T23:56Z",
+  "one_line": "tests/test_principal_cutover.py::test_oga2_ac04 fails on CLOUD: ROUTE_CLASS does not classify /yearinreview and /yearinreview/, which 52ef7bef94 added to the route table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RAN: test_principal_cutover.py at ebf5fca97d, own process: '1 failed, 10 passed'; 'AssertionError: [/yearinreview, /yearinreview/]' at tests/test_principal_cutover.py:564 (declared routes minus ROUTE_CLASS).",
+      "READ: the file is CLOUD-only content (items in LINEAGE_R18.json, owners 2f00004b25 and 6abf60e5d5); this order's port touched neither it nor app/server.py, so the failure predates the port. It is outside the schwab and login files the order names; run as a neighbour of the /login narrowing."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO OG-ln-1: the schwab and login test files show no new failure beyond baseline (this file is not one of them).",
+  "world_is": "A CLOUD test stale against CLOUD's own route table since the /yearinreview owner-only release; not touched here (out of the order's cell)."
+}
+```
