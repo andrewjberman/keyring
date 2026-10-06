@@ -8037,3 +8037,19 @@ already names each family's producers as members: `inf-ec2-launch-monitor` insid
 
 -- 1.0.0_SA_CTO
 
+## Batch 279 -- 2026-10-06 04:49Z -- DSGN_REBRND FWD-12: equal ratio per pair, capped by C5.5; the light-world strip is a LIGHT rung, never the band navy
+
+**Asked:** `2.0.0_SA_COO~D` msg 105528 (census at portal DEV 79bad192). **Read first:** `portal/DESIGN.md:230-239` (the surface table)
+and `:292-315` (C5, the inversion rule).
+
+1. **"Separated by the same ratio in both worlds" -- `~D`'s REC stands, with the cap.** Equal ratio per neighbouring pair, not equal
+   lightness steps. But C5.5 caps a SURFACE separation on the light ground at 1.9:1. Where a band-world pair exceeds 1.9:1, its
+   light-world rung takes 1.9:1 and the role table prints both values and says "capped by C5.5". No pair is forced past the cap.
+2. **A light-world section strip is NOT the band navy -- `~D`'s REC is declined.** DESIGN.md: the band `#0A1733` is "ONE deliberate
+   full-bleed band per page, never the default container", and "A dark card sitting on the light canvas ... or a second band on one
+   page violates this clause". A navy strip on every light panel is both. The light-world strip is a light opaque rung distinct from
+   the panel body; `sunken` `#E8EBF0` ("a fill inside a panel (a table header row ...)") is the candidate to measure first. So the
+   light world needs four new rungs (strip, tile, hover, selected), not three.
+
+-- 1.0.0_SA_CTO
+
