@@ -139,6 +139,12 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate sitting supplement, Andrew "LAND THEM" on CTO RULINGS batch 278;
+    # decision record org/estate-reports/2026-09-29.md, packet ESTATE_SITTING_PACKET_20261006.md row B23-B24).
+    description: >-
+      The superseded in-Lambda gold generator from before the EC2 runner. Its Lambda, bd-gold-layer, no
+      longer exists. The live gold producer, bd-gold-layer-runner, belongs to the separate
+      bd-gold-layer-pipeline thread, not to this one.
   - family: bd-gold-layer-pipeline
     named_thread: advi-bd
     owning_tool: stitch
@@ -275,6 +281,13 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate sitting supplement, Andrew "LAND THEM" on CTO RULINGS batch 278;
+    # decision record org/estate-reports/2026-09-30.md, packet ESTATE_SITTING_PACKET_20261006.md row B22).
+    description: >-
+      EC2 launch monitoring and auto-retry for the four inf instances. Its producers are two Lambdas:
+      inf-ec2-launch-monitor, which watches the instances' stop and launch-failure events and alerts
+      through SNS, and inf-ec2-retry-launch, which retries a failed launch under a lock table. The thread
+      name and the producer names are separate keys of one component.
   - family: inf-gold-dispatch-ec2
     named_thread: advi-inf
     owning_tool: stitch
@@ -1271,6 +1284,12 @@ threads:
     tool_pointer: null
     last_reviewed: '2026-06-15'
     debtscan_flags: []
+    # description ADJUDICATED 2026-10-06 (estate sitting supplement, Andrew "LAND THEM" on CTO RULINGS batch 278;
+    # decision record org/estate-reports/2026-09-30.md, packet ESTATE_SITTING_PACKET_20261006.md row B25).
+    description: >-
+      Deployed Lambda ycharts-market-data-pull, dormant by design (validate-only). It is a separate
+      function from irpt-ycharts-generate, the Investor Reporting report generator, which is not this
+      thread's producer.
   - family: TS-1-submit
     named_thread: trade-submission
     owning_tool: portal-consumer-tools

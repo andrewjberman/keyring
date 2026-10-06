@@ -166,4 +166,21 @@ signals or text already ruled) and the question "Shall I land the 3 and close th
 **"yeah agreed"**. He named no row under "Rule by row", so every row lands as recommended. Whether the daily
 suggestion step is kept, made weekly or dropped was put to him as his own later decision; nothing here decides it.
 
+## Ruling, part 3 -- rows B22-B25 (04:09Z)
+
+1.0.0_SA_CTO ruled (RULINGS batch 278): no rename; land these rows as descriptions naming the producer as the thread's
+member; bd-gold-layer-legacy and -pipeline stay two threads; MA-09 by the same rule unless the thread no longer exists
+apart from generation. Then Andrew-direct 2026-10-06 ~04:0xZ at the 3.0.0_SA_CVO terminal, VERBATIM "LAND THEM, AND OK TO DELETE THE TMP YES", answering "the 4 registry rows the CTO ruled on: land them or leave them" after 1.0.0_SA_CTO RULINGS batch 278 (msg 105504).
+
+Landed, each read live before it was written (lambda get-function-configuration, 2026-10-06):
+
+- **inf-ec2-launch-resilience** (B22), landed on 2026-09-30: EC2 launch monitoring and auto-retry for the four inf instances. Its producers are two Lambdas: inf-ec2-launch-monitor, which watches the instances' stop and launch-failure events and alerts through SNS, and inf-ec2-retry-launch, which retries a failed launch under a lock table. The thread name and the producer names are separate keys of one component.
+- **bd-gold-layer-legacy** (B23-B24), landed on 2026-09-29: The superseded in-Lambda gold generator from before the EC2 runner. Its Lambda, bd-gold-layer, no longer exists. The live gold producer, bd-gold-layer-runner, belongs to the separate bd-gold-layer-pipeline thread, not to this one.
+- **MA-09-ycharts-market-data-pull** (B25), landed on 2026-09-30: Deployed Lambda ycharts-market-data-pull, dormant by design (validate-only). It is a separate function from irpt-ycharts-generate, the Investor Reporting report generator, which is not this thread's producer.
+
+Measured differences from the rows as proposed: the Lambda bd-gold-layer no longer exists (ResourceNotFoundException),
+and bd-gold-layer-runner sits in the bd-gold-layer-pipeline thread (resolver), so the legacy text says that. Both
+ycharts-market-data-pull and irpt-ycharts-generate exist as separate Lambdas, so MA-09's thread exists apart from
+generation and its producer is its own function. bd-gold-layer-legacy may now be a retirement row; that is the CTO's.
+
 -- 3.0.0_SA_CVO
