@@ -1714,3 +1714,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT: tested both ways (the thread test fails with OPAL_PRODUCER_OUTPUT when the worker ignores the ref). The legacy route is dead code in the installed service once the installer supplies artifacts; the release that deletes the YCharts producer may delete it. Also: reports/tests/test_resident_installed.py now puts ycharts/extract on its test path, so the whole file passes run alone (the cure of row W3-S18, whose one failing test was the only one importing resident_worker)."
 }
 ```
+
+## IRPT_YCDGEN-W1-S15 -- the gate learns the opal map's repo path from the bindings provenance, and --research under --base-pin reads P's tree
+
+```json
+{
+  "id": "IRPT_YCDGEN-W1-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~1",
+  "surfaced_at": "2026-10-06T01:37:30Z",
+  "one_line": "R13 names no way for the gate to find the opal map's repo path, nor which tree --research reads under --base-pin; the worker chose provenance.opal_map_source and the base tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "R13 (2) packages --opal-map REPO_PATH as ycharts/research/overview_map.json; (5) the gate compares each listed member to git show <pin>:<path> and every other member to git show P:<path>; (1) --research packages the research files 'at the pin'.",
+  "world_is": "The map's package name (ycharts/research/overview_map.json) is not its repo path (org/missions/.../maps/overview_map.json), and the gate takes only --base-pin and --files-from, so it cannot invert the name. The builder therefore records provenance.opal_map_source (the repo path) in the bindings and the gate reads it from the package's own bindings; the map is always expected from --pin, never P. Under --base-pin the --research files are read from P's tree like every other rule member (a research file that P lacks must be in LIST), because the spec says no unlisted member differs from P. The gate also fails when a listed path is not in the package. A build without --opal-map carries no opal_map_source and a build with no flags adds no key (test default_build_unchanged compares against the builder at 4d2331db75).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py main@wk-IRPT_YCDGEN-74",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/resident_package_gate.py main@wk-IRPT_YCDGEN-74",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/tests/test_build_resident_package_listed.py@wk-IRPT_YCDGEN-74"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT: one extra provenance key and one extra gate read; both are covered by the tests. The issuer may rule the key name."
+}
+```
