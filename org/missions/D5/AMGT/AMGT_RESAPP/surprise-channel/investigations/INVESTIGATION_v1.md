@@ -21141,6 +21141,66 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "census: python .tools/comp-surprise.py --project AMGT_RESAPP --json -> remediation_rows 461, OPEN 109; row file org/missions/D5/AMGT/AMGT_RESAPP/surprise-channel/remediations/REMEDIATION_v9.md"
   ]
  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W265-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~265",
+  "surfaced_at": "2026-10-06T18:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "A fresh local chatter request sometimes stalls 8-21 s in a TLS handshake (a names read, or the ranking read), which would fail the 1,000 ms bar on that run.",
+  "spec_asserts": "AMGT-az-4 AC1: every chatter phase of a fresh first request within 1,000 ms on r76_served.py --cell c65 --where local.",
+  "world_is": "After the cut 12 of 12 c65 runs passed (max phase 750 ms), but across about 50 fresh-process runs of the chatter route this device showed 4 stalls of 8-21 s: c65 once (names 21,330 ms), two of 14 faulthandler runs (stacks at 8 s: ssl do_handshake in scoped_amgt._refdata_name under the names pool; and _places_moved_index), and one before any edit (names result 20,089 ms). 21 s is the sum of three SYN retransmit waits (3+6+12). Cause on the code side: scoped_amgt._s3_client() builds a NEW boto3 client for every refdata read, so each of the ~25 pending names opens its own connection at once (scoped_amgt.py:2682-2687, :1244); not in this order's paths. Names-only runs (30) never stalled. One faulthandler run also ended in a segmentation fault of the interpreter (1 of 14); not reproduced.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~265/PHASE_TABLE.md section 3; lib/research/api/scoped_amgt.py:1244 and :2687 @bfe10cb2a4; stack dumps in .scratch/w10.txt of worktree C:/tmp/r76-265 (untracked)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W265-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~265",
+  "surfaced_at": "2026-10-06T18:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "On the deployed D29LJCXh function a cold chatter request spends 761-808 ms outside every chatter phase line, besides Init 633-683 ms.",
+  "spec_asserts": "AMGT-az-4 / CTO ruling 5: the AMGT_PHASE table names where a cold chatter request spends its time; cut what is cuttable for free.",
+  "world_is": "6 cold invokes of /lead-panel/timeseries/collected/chatter?days=30: Duration 2987-3177 ms, chatter phase lines sum 2226-2380 ms, difference 761-808 ms (21 warm invokes: 3-7 ms). Init Duration 633-683 ms. The remainder is paid once per container before the first phase or after the last, in code outside monthly_chatter.py, names_read.py and pool_reader.py (the handler, its imports and clients); the phase lines cannot place it. It is a part of the cold figure no cut in the three files reaches.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch Logs /aws/lambda/opal-amgt-scoped-api, 2026-10-06T17:55Z-17:58Z, REPORT lines joined to AMGT_PHASE lines per invoke; org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~265/PHASE_TABLE.md section 1"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W265-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~265",
+  "surfaced_at": "2026-10-06T18:34:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The local 1,000 ms bar carries a cost the deployed function does not pay: on this device pyarrow imports pandas (about 380 ms) at its first Python-to-column conversion.",
+  "spec_asserts": "AMGT-az-4 AC1 reads the local plane as the stand-in for the deployed cold request.",
+  "world_is": "python -X importtime on this device: pa.scalar(1) imports pandas (462 ms cumulative). The deployed cold 'compute' phase (counts) is 209-214 ms against 181-203 warm, so the deployed package pays no such cost. The cut therefore moves local and deployed time by different amounts: locally generation read fell 1964 to about 620 and the pandas cost left the counts; deployed the gain is the read overlap and the one-object read, estimated, not measured (no deploy allowed).",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "python -X importtime run in worktree C:/tmp/r76-265 on 2026-10-06; deployed phase lines in org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~265/PHASE_TABLE.md"
+    ]
+  }
 }
 ]
 ```
