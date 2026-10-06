@@ -86,7 +86,7 @@ Rows: id `NFRA_OPLGTW-Z-W22-S<k>` (next unused), fabric `site-z`, disarm_owner `
 - Pre-cut 19:5xZ: `q8.AC1` FAIL (the test file is absent). `q8.AC2` PASS (4 passed + 2 passed): it is the regression
   guard and is expected to stay green.
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
