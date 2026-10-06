@@ -8749,3 +8749,82 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: the left-over entry cannot connect (placeholder credentials), so the cost is confusion, not exposure. Remedy: remove .mcp.json and the three Lokka skills (or replace them with pointers to the hosted gateway), so the kit directory holds only the reconnect page. Owner: 1.0.0_SA_CTO~O routes."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-06T08:20Z",
+  "one_line": "R24's tier clause cannot see a principal at /login: the request carries the ALB email only, so resolve_tier(None) answers the READ_ONLY floor and the clause admits every verified non-restricted, non-scoped identity; a restricted profile is refused through its email's deny record, not through its tier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: infra/aws/ec2/opal-gateway/app/context.py (module docstring) -- 'The GUI paths (/login, /sprint*) carry an access-layer (ALB OIDC) email and NO principal'; set_current_email sets principal None; app/identity.py _alb_oidc_identity returns an email string only.",
+      "READ: app/tier.py resolve_tier step 2 -- principal None -> Tier.READ_ONLY; app/guard.py enforce -- a SAFE (read) tool passes any tier, so READ_ONLY carries the read Graph tools.",
+      "READ: app/access_state.py:458 -- a restricted activate / the deny-backfill writes an email_deny record per email; app/server.py GuardMiddleware /login branch refuses it 403 before login() runs.",
+      "RAN: tests/test_login_admit_r24.py test_oglg1_ac01 -- admitted with tier 'read_only'; test_oglg1_ac02 -- the principal branch refuses a restricted principal (data_entitlement.current_access stubbed) and the route refuses the deny-listed email."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R24: /login admits every principal whose tier.resolve_tier result carries at least one Graph-using tool; restricted profiles are refused.",
+  "world_is": "At /login there is an email and no principal, so the tier is the READ_ONLY floor for everyone and the clause discriminates nothing beyond 'a verified provider and a non-empty registry'. Built as ruled: login_admit_decision(email, principal=None) with a principal branch (restricted profile, tier) for a path that carries one, and the restricted refusal through the existing email-deny guard. A restricted profile with NO email_deny record would be admitted; LG1_ADMIT_SET.md section 4 lists that case as restricted_not_denied.",
+  "notes": "INERT: nothing deploys in this order. Whether a principal can be derived at /login (an ALB claim, or an email->principal index) is the CTO's design question; the rule is ready for it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-06T08:21Z",
+  "one_line": "The CTO texts read the Analyst's service identity two ways: round-18 s.3 lists opalbloomberg@ among the non-restricted WRITE_CAPABLE principals an /login narrowing strands, and R22/R24 say the Analyst's service identity stays REFUSED; OG-rl-8 then says any non-restricted principal lost BLOCKS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: ROUND_ANALYSIS.round18.md s.6 -- 'Every non-restricted principal (WRITE_CAPABLE_EMAILS: alyssa@, opalbloomberg@) whose cache lapses then meets a 403 dead end' and R22 item 2 'Restricted profiles and the Analyst's service identity stay REFUSED'.",
+      "READ: ROUND_ANALYSIS.round19.md s.3 R24 -- 'The cell names the Analyst's service identity and proves the tier rule refuses it'; 'A principal admitted today and refused after ... blocks unless it is restricted'.",
+      "READ: app/identity_scope.py _SEED -- the one scoped identity is opalbloomberg@opalinvest.com (a named Teams allowlist).",
+      "RAN: tests/test_login_admit_r24.py test_oglg1_ac05 -- its STANDARD tier carries every Graph-using tool (so the tier is not why it is refused); the refusal is the scoped-service-identity clause (reason scoped_service_identity), and removing the scope map admits it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "R24: the tier rule refuses the Analyst's service identity; and the release blocks on any non-restricted principal admitted before and refused after.",
+  "world_is": "A tier that carries Graph tools cannot refuse the Analyst (its allowlist is itself all Graph tools), so the refusal is an explicit clause keyed on identity_scope's scoped map, not a tier outcome. Built that way. Consequence for OG-rl-8: if the Analyst's service identity has signed in, it appears in lost_nonrestricted by design (reason scoped_service_identity) and the 'non-restricted lost BLOCKS' rule would fire on it; the issuer must treat it as the ruled refusal.",
+  "notes": "INERT: nothing deploys. The clause reads the live scope map (seed + overlay file), so a second scoped identity is refused the same way without an edit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W22-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~22",
+  "surfaced_at": "2026-10-06T08:22Z",
+  "one_line": "The order's audit outcomes are admitted / refused / consent but name only /login requests; the 'consent' outcome has no /login request to attach to, so it is written by the legacy /callback branch the /login state leads to (success = consent; its refusals = refused).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: the order s.1 item 2 -- 'Every /login request writes exactly ONE audit record ... outcome of admitted, refused or consent'; app/server.py login() only redirects (admitted) or refuses; redeem_consent runs in callback().",
+      "RAN: tests/test_login_admit_r24.py test_oglg1_ac01 -- the /login request writes ONE 'admitted' record, the /callback that completes the consent writes ONE 'consent' record carrying the principal key; test_oglg1_ac06 asserts one record per request over five requests."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "One audit record per /login request, outcome in {admitted, refused, consent}.",
+  "world_is": "/login ends at the redirect to Microsoft; the consent completes in a second request (/callback, shared with the Model-B bridge). To make 'consent' observable, the legacy branch of callback() writes one gw_login record per request (consent on success; refused on an invalid state, a deny, or an upstream refusal). The bridge branch writes none. A /callback is therefore audited as gw_login only when its state came from /login.",
+  "notes": "INERT: additive log lines through the existing sink; no alarm or monitor. If the CTO meant 'consent' for a /login that skips Microsoft (none exists), the callback records are the part to drop."
+}
+```
