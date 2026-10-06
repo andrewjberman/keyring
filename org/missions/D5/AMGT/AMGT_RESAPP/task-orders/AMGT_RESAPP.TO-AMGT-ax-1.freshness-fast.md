@@ -78,3 +78,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~07:0xZ):** CLOSED -- drained @467456684e. On the shared tree, r74 c53 local YES (warm 12-13 ms, covered 95); api 666 passed. Worker AC2: EQUAL 302 of 302 rows. The cold miss (the 60 s hold) is timed at ax-5.
+
+<status>complete</status>

@@ -79,3 +79,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~07:0xZ):** CLOSED -- drained @aaed0da1f7. On the shared tree, r74 c54 local YES (307 ms fresh-process mentions decode, from 1,290); api 666 passed. Worker AC2: EQUAL 3 of 3 (days30 drift from a snapshot landing noted).
+
+<status>complete</status>

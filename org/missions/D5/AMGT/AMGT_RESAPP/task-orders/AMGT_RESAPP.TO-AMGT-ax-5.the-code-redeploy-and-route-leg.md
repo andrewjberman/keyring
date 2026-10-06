@@ -105,3 +105,7 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~07:1xZ):** both halves signed -- COO @ef57fb9fdc, CTO @1b2be81842 (`ledger/NEVER_WIDEN_ROUND74_AX5_CTO_HALF.md`, conditions 1-5, including the route leg's 401 negative and 200 positive controls). The build commit is item 0's commit, on CLOUD at or after `0c9b9db840`. The rows served are 302, not 292: EQUAL is over every row served.
+
+<status>pending</status>

@@ -88,3 +88,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~07:0xZ):** CLOSED -- drained @55b7a7b626. On the shared tree, r74 c56 local YES (3 of 3, Lato 1.00, 1/1/0, floor 0); print 91 passed. The build-only showed the fonts were not packaged: ax-5 AMENDMENT 1 item 0 @ef57fb9fdc. Row Z-W255-S1 INERT.
+
+<status>complete</status>

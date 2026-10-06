@@ -87,3 +87,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~07:0xZ):** CLOSED -- drained @5378ac7af5 (deliverables); portal candidate 6de76f0509 on wk-AMGT_RESAPP-253-portal (on fb939c4a), not pushed. AC1 14 pass. AC2 is the CVO/CTO judgment on the render. Rows: S1 INERT (the pack-field premise did not reproduce); S2 RULED: 95 of 95 stale is correct under ruling 3c, since Seeking Alpha has never been read for 92 names, which is real staleness, not a page defect.
+
+<status>complete</status>
