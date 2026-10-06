@@ -293,8 +293,8 @@ says 0: /advisor-intelligence.**
   depends on what was scrolled into the DOM.
 - **Before-states (56 to 63 per tab, 11 and 14 on /attribution, 7 in the detail modal, 16 false on /positioning): NOT
   REPRODUCED.** The security detail modal (b733b8c2) and /positioning's treemap state (1cb21619) were not reached here.
-- **Read-of-tagged is now printed on every sweep,** and it shows what the visible-text rule skips: 51 on each of the
-  eight smaller reads, 196 on PM Trade. A constant 51 across pages of different sizes is most likely the app shell
+- **Read-of-tagged is now printed on every sweep,** and it shows what the visible-text rule skips: 51 on nine of the
+  eleven reads, 52 on /market and 196 on PM Trade. A constant 51 across pages of different sizes is most likely the app shell
   (the sidebar's labels); the walk does not say which nodes they are.
 - **1cb21619 changes what "ground" means** to the paint stack at the text's centre, SVG fills included. It was read as
   code only. Its named regression counts (/market 1159 and 0) reproduce.
