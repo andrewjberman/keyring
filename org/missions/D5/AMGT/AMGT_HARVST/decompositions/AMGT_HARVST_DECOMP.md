@@ -3001,3 +3001,23 @@ Andrew-direct 2026-10-05 ~16:3xZ, verbatim, answering "Do you want me to add the
 - **Not moved:** the declared-set denominator. `publisher_universe_verdicts` reads the pool universe (`universe/v1/2026-09-16.json`,
   191 resolved keys), not this file; rebuilding that pool universe is the identity owner's act, not this cell's.
 - **Gate limb:** none graded this amendment. It is recorded here.
+
+## 61. ROUND 48 -- the round-47 analysis enrichment list (`ledger/ROUND_ANALYSIS.round47.md` @acc5c6e750), 2026-10-06 ~03:0xZ
+
+Round 47 is CLOSED. Board: REALIZED 8 of 17; 9 a qualified wait on Andrew's presence. Every collection leg is STOPPED (row Z-S89,
+CTO @69ce080222). A leg resumes only once Andrew hand-solves its challenge, and sa only once its account answers 200. The FWD-7 bar
+is 95% of the run universe (223 of 234), per ruling 1.
+
+Issuer `2.0.0_SA_COO~H`. Series **`au`**.
+- **Fan-out:** 2 of 2 chains, cap 8. The two cells write disjoint files: `backfill_driver.py` for au-1 and `worker.py` for au-2.
+- **Not cut:** enrichment item 3 (the RESAPP gold rebuild) is event-gated on `2.0.0_SA_COO~Z`'s ask; it is cut by amendment when
+  the ask arrives, as a served write under a pair. Item 4 (the resume) is an issuer act, not a cell.
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-au-1` | `au-1` | **Upload timeout caught** (row Z-S87, ruling 3). `Collector.upload` catches `subprocess.TimeoutExpired`; `drive()` records `upload_timeout` as a transport-class stop (in `STOP_STATUSES` and `TRANSIENT_STOPS`), so it auto-resumes within budget, and otherwise writes the stop to the checkpoint and prints its SUMMARY. A planted timeout proves it. | LOCAL | worker `~96` |
+| `HVST-au-2` | `au-2` | **Soft-block status** (row Z-S88, ruling 4). In `worker.py`, a job that would read `listing_empty_200` reads `soft_block` when the publisher already held at least one article for the name (`result["previously_stored"] > 0`); otherwise it stays `listing_empty_200`. `soft_block` is not a driver stop status and is outside `SUCCESSFUL_RUN_STATUSES`, so it never counts toward the 95% bar. | LOCAL | worker `~97` |
+
+**Checks dry-run at the base before the cut:**
+- `au-1` AC1 (`pytest lib/opal_data_harvest/test_au1_upload_timeout.py`) base: FAIL as expected (the test is absent).
+- `au-2` AC1 (`pytest lib/opal_data_harvest/test_au2_soft_block.py`) base: FAIL as expected (the test is absent).
