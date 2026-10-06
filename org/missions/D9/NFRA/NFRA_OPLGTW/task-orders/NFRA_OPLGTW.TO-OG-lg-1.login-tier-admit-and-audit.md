@@ -108,7 +108,7 @@ PLACE to `complete`. Report once.
     tier clause is a fail-closed backstop: an unverified provider, an unresolvable tier, or no Graph tool.
   - The audit record stays as built. Criteria are unchanged; `lg1.AC1` re-reads ac05's new meaning.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~22</slot>
 <fabric>site-z</fabric>
