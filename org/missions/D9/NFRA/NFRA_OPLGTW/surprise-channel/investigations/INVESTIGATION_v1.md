@@ -8304,3 +8304,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "INERT: nothing breaks on its own; it misdirects whoever follows it. The remedy is a doc cell for the issuer (retire or rewrite the kit to the hosted-gateway reconnect), cut when convenient. Answer given to Andrew in-session on 2026-10-05."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W27-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~27",
+  "surfaced_at": "2026-10-06T00:45Z",
+  "one_line": "OG-pm-1 REGRESSION for the CTO: the full-day 2026-10-05 ALB TargetResponseTime p95 of the opal-gateway target is 0.9473 s over 3,328 requests, +71.1 % against OG-p-1's 0.5535 s, above the 20 % cap (0.6642 s).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ: deliverables/0.9.0_WK_NFRA_OPLGTW~27/P95_R17.json: one 86400 s period 2026-10-05T00:00Z..2026-10-06T00:00Z, p95 0.9473 s, SampleCount 3326, RequestCount 3328, 5xx no datapoint (null, not filled); segments 4b6b823fae 0.7313 s (1451 req), e91819e281 1.0154 s (930 req), 37be3485db 0.9683 s (992 req); segments widened outward to whole minutes (CloudWatch period multiple of 60).",
+      "READ: EC2_MANIFEST.json git history matches A1's table (e0664cc9d5 4b6b823fae 2026-10-04T23:12:32Z; 37bd6ea0ad e91819e281 02:17:58Z; ab3d9965f2 37be3485db 14:22:36Z); SSM 0832efca-9969-48d0-a58e-233626be877a md5 of yearinreview_view.py, server.py, config.py equal 37be3485db blobs, 3 of 3.",
+      "READ: hourly p95 (24 periods): 23 of 24 hours exceed 0.6642 s; the only hour under is 02:00Z (1356 requests, 0.656 s); the other 23 hours carry 60-151 requests each at 0.89-1.07 s."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Z-W16-S5 / OG-pm-1: the gateway's p95 over the first full trading day stays within 20 % of OG-p-1's 0.5535 s, i.e. <= 0.6642 s.",
+  "world_is": "Full-day p95 0.9473 s (3,328 requests, 3,326 samples, no 5xx datapoint) exceeds the cap on every served release (segment p95s 0.73 / 1.02 / 0.97 s). The hourly profile is flat near 1 s in the low-volume hours; only the 1,356-request deploy hour 02Z reads under the cap. Cause not investigated beyond this profile.",
+  "disarm_owner": "2.0.0_SA_COO~O"
+}
+```
