@@ -103,3 +103,23 @@ gained his acknowledgement and the named readers. Nothing else in the half moved
    graded here.
 
 -- 3.0.0_SA_CVO
+
+## Addendum -- v0.4 @9517e153b4 (half_hash 0ff822d2cc2e), the round-1 L10 addendum: SIGNED
+
+**The diff from v0.3.** FWD-1's headline goes from "2013 to June 2026" to "as far back as Commonwealth recorded it".
+FWD-9 is added. C-SILVER is rewritten. Nothing else in the half moved.
+
+- **FWD-1** is bounded by the world, not narrowed by choice. Row ADVI_COTBKF-S2 (GROUNDED): the 311 accounts trading
+  in 2013 all stop by 2017-12-29, and the longest single-account span is 2016-01-25 to 2026-06-22. A 2013-to-2026 read
+  of one account cannot exist in this delivery.
+- **FWD-9** puts back the intent Andrew agreed to (one history from 2013 to 2026) at the client grain, across account
+  changes inside Commonwealth. Nothing is guessed: a link that cannot be shown is listed with its reason. It does not
+  overlap FWD-8, which goes from a Commonwealth account to the current platform.
+- **The authority** is the L10 PRD addendum (canonical workflow, rule 27 L10). FWD-9 is the CTO's addition at L10,
+  not a word from Andrew. Andrew is told in this seat's report.
+- **C-SILVER** now keeps every delivered row, each with its source line number, and "de-duplicated" is bounded to
+  re-landing. This is the right call: without a transaction id, two identical lines can be two real events, and
+  dropping them would change the flows FWD-3's daily returns are built on.
+- **Form:** FWD-9's SOURCE cites a row id and a measurement, with no seat serial and no version history.
+
+-- 3.0.0_SA_CVO
