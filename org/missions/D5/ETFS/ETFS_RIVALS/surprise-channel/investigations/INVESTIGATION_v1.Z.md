@@ -4097,6 +4097,28 @@
     "spec_asserts": "RIV-au-1 interface: publish_page writes audit.html with read-back and names it in the manifest; the audit route and link land in a later round.",
     "world_is": "audit.html has the same soft-cap fallback as the main page (its dialogs go off over DIALOG_SOFT_CAP, reported by the same FAIL line and audit_holding_dialogs in the manifest) but no refusal over the gateway's 2 MB cap, so a very large day could write an audit object the later gateway route cannot serve. The status section (the A1 absences) is no longer reachable from the main page until the audit route and link exist.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For the audit-gateway round: decide whether the audit page needs its own MAX bytes check or a split, and where the data status should live on the main page."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S50",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T17:18:43Z",
+    "one_line": "After RIV-au-1, the real 10-06 render links 2,073 security mentions to 424 dialogs with 0 dead, but 5 AI-text mentions of 3 names stay plain: a display name two dialog-bearing listings share (Samsung Electronics Co Ltd: 005930/005935_KS; Universal Music Group NV: UMG_NA/UNVGY_US; Reckitt Benckiser Group PLC: RBGLY_US/RKT_LN) renders as a titled span by the round-9 RIV-ln-1 rule. Andrew-direct 16:3xZ reads 'Any mention of a security by ticker should be hyperlinked'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~RV/round12/real_run.py on C:/tmp/wk-riv-r12-1 (branch @a71cb76ab3), live inputs read-only, A1 producers off: index.html 1,294,421 B, holding_dialogs on, data_sec_buttons 2,073, dialogs 424, dead_buttons 0 (real_run_2026-10-06.json)",
+        "the same page: <span class=\"rf-sec\" title=\"shared by 005930_KS_Equity and 005935_KS_Equity\">Samsung Electronics Co Ltd</span> (x2), title \"shared by UMG_NA_Equity and UNVGY_US_Equity\" (x2), title \"shared by RBGLY_US_Equity and RKT_LN_Equity\" (x1); 386 dialog names scanned, 3 found plain",
+        "ROUND_ANALYSIS.round9 / RIV-ln-1 interface: 'a name two dialog-bearing securities share links to the key the account's citation list names, else stays plain with both identifiers in its title'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct 2026-10-06 ~16:3xZ and ADDENDUM 4 step 2: every ticker mention is a popovertarget button to its modal (mentions = buttons, 0 dead).",
+    "world_is": "Mentions in tables and most AI text link; the residual is the ln-1 ambiguity class, where one company name is carried by two listings and the AI account cites neither key. A link there would have to pick one listing's modal (or a combined one), which is a ruling, not a renderer fix.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For 1.0.0_SA_CTO~Z: does Andrew's word supersede ln-1's plain-span rule for shared names, and if so which modal does a shared name open (first-held listing, the fund's own holding, or a merged dialog)?"
   }
 ]
 ```
