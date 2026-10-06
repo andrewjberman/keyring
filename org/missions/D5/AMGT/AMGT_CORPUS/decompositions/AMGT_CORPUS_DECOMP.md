@@ -1,100 +1,102 @@
-# AMGT_CORPUS -- L5 decomposition v38.0 -- ROUND 38 (counts and ratios carry no currency; the FWD-20 currency page read; the 10-06 fire read; today's recovery run)
+# AMGT_CORPUS -- L5 decomposition v39.0 -- ROUND 39 (the skip key; FWD-20's three page defects; FWD-21's FY+3 fit; the FWD drive; the FWD-14 four-class census)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-10-05 ~14:5xZ.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-10-06 ~18:5xZ.
 
-**Source:** `1.0.0_SA_CTO~Z` round-37 analysis `ledger/ROUND_ANALYSIS.round37.md` @`b12904724c` s.4 (msg 29603, READ-acked). The
-rectangle is its four items, plus one instrument repair the page read needs. Round 37's decomposition is kept as
-`AMGT_CORPUS_DECOMP.round37.md`. Base: CLOUD HEAD at the cut.
+**Source:** `1.0.0_SA_CTO~Z` round-38 analysis `ledger/ROUND_ANALYSIS.round38.md` @`9619211bcf` s.4 (msg 30195, READ-acked);
+PRD v0.8 (ADDENDUM C), both L4-R halves SIGNED (`prd-signoff.py status` reads ADMITTED; CVO sign @`daa0645141`). The rectangle is
+the analysis's five items. Item 1 splits into the code cell and the issuer's served act that proves it. Round 38's decomposition is
+kept as `AMGT_CORPUS_DECOMP.round38.md`. Base: CLOUD HEAD at the cut; portal origin/DEV `e2130d42`.
 
 ## 0. What this round IS
 
 | # | item (analysis s.4) | cell | path | risk |
 |---|---|---|---|---|
-| 1a | Count and ratio fields carry NO currency: the producer (row Z-W1-S35) | `CRPS-an-1` | worker `0.9.0_WK_AMGT_CORPUS~1` (worker-light, direct act) | LOCAL |
-| 1b | The served re-derive of the 96 + re-pin; census of count/ratio figures with a currency reads 0 | `CRPS-an-2` | the issuer's paired act (pair to `1.0.0_SA_CTO~Z`), after an-1 drains, an-3 reads and an-5 settles | SERVED |
-| 3 | FWD-22's regression read on the 2026-10-06 13:00Z fire on pin `3ffe37a57a` | `CRPS-an-3` | the issuer's read | LOCAL (read) |
-| 2 (repair) | The /ui-walk walker closes the timeline day it opened before pressing the tabs (the TSM walk of 10-05 was occluded) | `CRPS-an-4` | worker `0.9.0_WK_AMGT_CORPUS~2` (worker-light, direct act) | LOCAL |
-| 4 | Today's recovery run of the refused 10-05 fire (row Z-S87), on MSTR~Z's line after OPAL_BBGTML re-runs OK | `CRPS-an-5` | the issuer's act: the same pinned task re-invoked | LOCAL (the daily pull, re-run once) |
-| 2 | FWD-20's currency limb read on the page: a signed-in walk on TSM (TWD), SAP (EUR) and BA (USD, the positive control) | `CRPS-an-6` | the issuer's read, after an-2 and an-4 | LOCAL (read) |
-| v38.1 | The FWD sweep: the 9 outcomes whose grade is stale (10, 11, 12, 14, 15, 18, 19), conflicting (16) or absent (21), each exercised against its DONE WHEN on the served product and carried in the drain packet for the CVO to grade whole | `CRPS-an-7` | the issuer's read: the census reads for FWD-14/19 now; the 7 page outcomes ride an-6's walk | LOCAL (read) |
+| 1a | The daily refresh's same-day skip keys on the PULL date, not the derived stamp (ruling 6, row Z-S88) | `CRPS-ao-1` | worker `0.9.0_WK_AMGT_CORPUS~1` (worker-light, direct act) | LOCAL |
+| 1b | Re-pin `amgt-induction-daily` to the ao-1 drain; one same-UTC-day re-derive PLANT on one name before 13:00Z; read the 2026-10-07 13:00Z scheduled fire: the plant name is pulled, 96 pulled, rc 0. Disarms Z-S88 | `CRPS-ao-2` | the issuer's paired act (pair to `1.0.0_SA_CTO~Z`), after ao-1 drains | SERVED |
+| 2 | FWD-20's page cell: the header-fact line names its currency; every in-row "--" carries a cell mark; each `UNMEASURED:` basis reads in a PM's words, the bare raw figure suppressed (rulings 2-4) | `CRPS-ao-3` | worker `0.9.0_WK_AMGT_CORPUS~2` (worker) | LOCAL (portal DEV candidate, CTO render review) |
+| 3 | FWD-21's fit: the Model sheet shows FY+3 (2028E) unclipped at 1440 px on TSM and ASML; history byte-unchanged (ruling 5) | `CRPS-ao-4` | worker `0.9.0_WK_AMGT_CORPUS~2`, queued after ao-3 (same write set) | LOCAL (portal DEV candidate, CTO render review) |
+| 4 | The read-only drive of FWD-10/11/12/15/16/18, each named limb, plus the round's one real run of FWD-20/21 on the page (ruling 8) | `CRPS-ao-5` | the issuer's read, after ao-3 and ao-4 land on DEV; walker slot from `0.0.0_AB_MSTR~Z` | LOCAL (read) |
+| 5 | The FWD-14 four-class census: resolved / ambiguous / empty-or-workbook-only / unresolved-with-reason, summing to the folder count (ruling 1, ADDENDUM C) | `CRPS-ao-6` | the issuer's read (v0.8 is signed, so it runs at the cut) | LOCAL (read) |
 
 **Chains:**
-- `an-1 -> an-2 -> an-6`;
-- `an-4 -> an-6`;
-- `an-3` (the 10-06 fire's own clock);
-- `an-5` (on MSTR~Z's signal; struck at the 10-06 fire if capacity does not return today).
+- `ao-1 -> ao-2` (the 2026-10-07 13:00Z fire is the acceptance clock);
+- `ao-3 -> ao-4 -> ao-5` (ao-3 and ao-4 write the same Model-tab files, so they are one worker's queue; ao-5 walks the landed page);
+- `ao-6` (no edge).
 
-`fanout: 2 of 2 worker chains, cap 8`. an-2's re-pin lands after an-3 has read the 10-06 fire on `3ffe37a57a`, and after an-5 has run
-or been struck. Both use the old pin, so no new code goes under a fire being read.
+`fanout: 2 of 2 worker chains, cap 8`. Slot `~1` runs ao-1; slot `~2` runs ao-3, then ao-4 by continuation. The issuer runs ao-2,
+ao-5 and ao-6.
 
-**Write sets:**
-- an-1: `integrations/bloomberg/research/model_block_pull.py` (the currency classification only) + one new test + the granted
-  currency tests;
-- an-4: `.claude/skills/ui-walk/walk.mjs` (the timeline step only).
+**Write sets (disjoint):**
+- ao-1: `integrations/bloomberg/research/model_block_pull.py` (`cmd_refresh` and its stamp helper only) + one new test + the
+  round-34 refresh test's planting (it plants "current" through derived keys);
+- ao-3: `portal/src/pages/SecurityAnalysis/modelSheet.ts`, `tabs/ModelTab.tsx`, `components/StatTile.tsx`,
+  `components/HeaderCards.tsx`, `components/model/WhatChangedPanel.tsx` (the callers that pass the basis);
+- ao-4: `tabs/ModelTab.tsx` (the sheet table's layout only) and `modelSheet.ts` (value formatting only, if the fit needs it).
 
-COO~D maintains walk.mjs; DSGN's open round-38 cells write other files.
+No non-terminal order on any project names these portal files in `<paths>` (census at the cut over every task-order folder).
+DSGN_AMGTV1 (`2.0.0_SA_COO~D`) maintains the Model tab's design; told at the cut.
 
 ## 1. The cells
 
-**CRPS-an-1.** Measured at the cut over the 96 served blocks: 34,894 count/ratio figures (unit containing "(share count)", or
-beginning RATIO / PERCENT), of which **932 carry a currency, all `IS_SH_FOR_DILUTED_EPS`** (unit `MILLIONS (share count)`). It
-sits in `_CURRENCY_SENSITIVE_FIELDS` (`model_block_pull.py:230`), so `_figure_currency` gives it the reporting currency. Money
-stays as round 37 left it: 31,985 money figures, 0 unlabelled. Every other currency on a non-money unit is legitimate: `PX_LAST`
-is a price, and money fields with an unresolved unit are still money.
-- **Check** `checks/round38/count_ratio_currency.py --derive BA_US_Equity,SAP_GY_Equity,BABA_US_Equity,TSM_US_Equity` at the
-  base: `crc derive build 0/1 control 2/2` (31 IS_SH figures with a currency; money unlabelled 0, values moved 0, money labels
-  changed 0; 4 puts captured, none sent). As expected.
+**CRPS-ao-1.** `cmd_refresh` (`model_block_pull.py:2227`) skips a name when `_model_block_latest_stamps(s3)` (the newest
+DERIVED stamp) reads today's UTC date (`:2243`). Round 38's an-2 re-derived the 96 at 03:20Z, so the 10-06 13:00Z fire skipped
+all 96 and pulled 0 (Z-S88). The skip must key on the name's last PULL: the newest stamp under the pull-log state prefix
+(`_state_pull_log_prefix`) or the bronze refdata/histdata stamps (`_bronze_prefix`). A same-day re-derive no longer silences the
+fire; a same-day pull still skips.
+- **Check** `checks/round39/skip_key_check.py` at the base: `skip build 0/1 control 2/2` (the PLANT name, derived 03:00Z today and
+  pulled yesterday, is skipped). As expected.
 
-**CRPS-an-2.** Like round 37's am-2:
-- (0) gate: the census dry run, and `-Plan -Commit <an-1 drain>`;
-- (d) 96 re-derives;
-- (r) re-pin;
-- (v) `count_ratio_currency.py --served` reads `crc served build 1/1 control 1/1`, plus v35 and al5.
+**CRPS-ao-2.** Like round 38's an-2 shape, paired:
+- (0) the pair: COO half + CTO half, blast radius = the task's pin and ONE plant name's derived stamp (its values re-derive from
+  the same raw stamp, so values move 0);
+- (r) re-pin `amgt-induction-daily` to the ao-1 drain commit;
+- (p) after 00:00Z 2026-10-07 and before 13:00Z, re-derive ONE name (`BA_US_Equity`) from its current raw stamp;
+- (v) read the 13:00Z fire's log: the plant name is in the pulled set, `pulled 96`, rc 0. That read, then the CVO's, is FWD-22's
+  acceptance. Z-S88 disarms on it.
 
-**CRPS-an-3.** The 2026-10-06 13:00Z fire's log (96 pulled, rc 0), v35 over its stamp (0 pointer units) and the served money
-census (0 unlabelled). It is a regression read, not a re-grade.
+**CRPS-ao-3.** Measured at the cut on portal origin/DEV `e2130d42` with `checks/round39/ao_fixture.json` (captured from the real
+read path for TSM, BA and ASML):
+- (currency) `buildModelSheet`'s `v3Facts` carry `{mnemonic, label, value, unit}` and never `currency`
+  (`modelSheet.ts:431`). 6 of 6 header facts with a served currency drop it. **Check** `ao3_check.cjs currency`: `build 0/1
+  control 1/1`.
+- (marks) TSM shows 99 in-row "--" cells with no reason: EPS, DPS and P/E across 2016-2025 (30, no history served), and 23 lines
+  across 2026E-2028E (69, no consensus served). TSM's `fiscal_unresolved` is empty, so `cellReasons` is null on all 99.
+  **Check** `ao3_check.cjs marks`: `build 0/1 control 1/1`.
+- (words) `formatStatValue` renders TSM enterprise value as "unit not resolved -- raw figure 77,689,148.37" and net debt as
+  "-2.00T currency not stated"; both figures' `currency_basis` read `UNMEASURED: ...`. **Check** `ao3_check.cjs words`:
+  `build 0/1 control 1/1` (BA's resolved EV and net debt unchanged: "USD 184B", "USD 26.96B").
 
-**CRPS-an-4.** `walkTimeline` presses the newest day bar and waits for the day's state. It then leaves the day dialog open, and the
-tab steps' shots are taken under it (10-05 TSM walk, `tmp/ui-walk/20261005T135401Z`, shots 012/013).
-- **Check** `checks/round38/an4_check.cjs` at the base: `an4 build 0/1 control 1/1` (no close after the last day wait;
-  `node --check` passes). As expected. Its real proof is an-6's walk.
+**CRPS-ao-4.** At 1440 px the Model sheet clips 2028E on TSM and ASML (2027E too on ASML) at the card edge
+(`ADJUDICATION_v44.md`). The table is `w-full` inside `overflow-x-auto` (`ModelTab.tsx:480-481`). **Check** `ao4_check.cjs` at the
+base: `ao4 control 2/2` (history and full sheet values unchanged; a control, so PASS at the base). The fit itself is the judgment
+criterion, graded on ao-5's 1440 px walk.
 
-**CRPS-an-5.** On MSTR~Z's line (msg 29607: OPAL_BBGTML re-run and read OK first), `schtasks /run amgt-induction-daily` once, on
-its own pin `3ffe37a57a`. Read the log: pulled 96, rc 0. One NEVER-2 entry. If the capacity does not return before the 10-06
-13:00Z fire, the cell is struck there (analysis ruling 3).
+**CRPS-ao-5.** With a walker slot from MSTR~Z (ARM, DISARM through it), after `:5174` answers 200, on the DEV build carrying ao-3
+and ao-4:
+- FWD-20: TSM, SAP, BA Model tab -- header facts with currency, every "--" marked, EV and net debt in words;
+- FWD-21: TSM and ASML Model tab at 1440 px -- 2028E unclipped;
+- FWD-10: IMB LN, open one pillar to its report and passage;
+- FWD-11: a name whose pack carries no management reads ABSENT; ASML's roster count unchanged against round 38's 7;
+- FWD-12: one name's cases against the SharePoint template's rows, order and labels;
+- FWD-15: the header posture line cited; the Posture tab byte-unchanged against the round-38 capture;
+- FWD-16: the docx control's recovered count before (round-38 served object) and now;
+- FWD-18: the feed filtered to one pillar term.
+Each limb is a named capture or read in the drain packet.
 
-**CRPS-an-6.** Run only with a walker slot from MSTR~Z (ARM and DISARMED through it). Run only after verifying the local `:5174`
-answers 200 before arming. Each money row on the Model tab names its currency: TSM TWD, SAP EUR, BA USD.
-
-**CRPS-an-7 (amendment v38.1, 2026-10-05 ~20:5xZ, the issuer's own ruling under the CTO's word).**
-
-- **Source:** `1.0.0_SA_CTO~Z` msg 29786 ("Put the sweep in your round-38 drain packet if it is cheap; otherwise it goes in round
-  39"). The issuer's ledger-gap record is `deliverables/2.0.0_SA_COO~X/FWD_LEDGER_GAP_20261005.md` @`d1acde2040`.
-- **Why it is cheap:** it is read-only. Two of the nine are CLI census reads (`python -m lib.research.corpus.backlog
-  --coverage-dry-run`, `--folder <name>`). The other seven are page reads that ride an-6's walk slot, adding names and tabs to the
-  same session:
-  - FWD-10: IMB LN (pillars);
-  - FWD-11: Exec Management;
-  - FWD-12 and FWD-21: the Model tab;
-  - FWD-15: the posture line and the Posture tab;
-  - FWD-16: one PDF-only name and one docx control;
-  - FWD-18: a pillar's terms and the filtered feed.
-- **No new code, no write, no worker.**
-- **Gate:** the amendment changes only this decomposition. `.tools/to-pipeline-gate.py` grades task orders, so no limb graded this
-  modification.
+**CRPS-ao-6.** `python -m lib.research.corpus.backlog --coverage-dry-run` (read-only, `written NONE`): the four counts and the
+folder count, beside FWD-19's partition.
 
 ## 2. Found at the cut (rows, not cells)
 
-None new. Row Z-W1-S34 is INERT (no cell, analysis ruling 4).
+None new. Z-S88 stays ARMED until ao-2's fire read. Z-S87 is carried (analysis ruling 9).
 
 ## 3. Coverage
 
 | cell | order | slot |
 |---|---|---|
-| CRPS-an-1 | `AMGT_CORPUS.TO-CRPS-an-1.counts-and-ratios-carry-no-currency.md` | `~1` |
-| CRPS-an-2 | the issuer's paired act (no order) | -- |
-| CRPS-an-3 | the issuer's read (no order) | -- |
-| CRPS-an-4 | `AMGT_CORPUS.TO-CRPS-an-4.walker-closes-the-timeline-day.md` | `~2` |
-| CRPS-an-5 | the issuer's act (no order) | -- |
-| CRPS-an-6 | the issuer's read (no order) | -- |
-| CRPS-an-7 | the issuer's read (no order); amendment v38.1 | -- |
+| CRPS-ao-1 | `AMGT_CORPUS.TO-CRPS-ao-1.skip-keys-on-the-pull-date.md` | `~1` |
+| CRPS-ao-2 | the issuer's paired act (no order) | -- |
+| CRPS-ao-3 | `AMGT_CORPUS.TO-CRPS-ao-3.model-page-currency-marks-words.md` | `~2` |
+| CRPS-ao-4 | `AMGT_CORPUS.TO-CRPS-ao-4.sheet-fits-fy3-at-1440.md` | `~2` (after ao-3) |
+| CRPS-ao-5 | the issuer's read (no order) | -- |
+| CRPS-ao-6 | the issuer's read (no order) | -- |
