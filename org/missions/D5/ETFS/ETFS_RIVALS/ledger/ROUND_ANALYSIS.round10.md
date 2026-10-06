@@ -66,3 +66,25 @@ duplicates.
 3. **The census is not only Nebius.** After the field lands, list every (CUSIP/ISIN key, ticker key) pair the join merges across all
    funds, with a count. A name merged that is not the same security is the failure arm.
 4. **ok-1's J1 is graded after that deploy,** under its own pair. The NBIS label from ruling 4 rides it.
+
+## ADDENDUM 2 (2026-10-06 ~11:5xZ) -- RIV-e-1 eats the vehicle's window when Bloomberg is down (MSTR~Z msg 30005)
+
+**A correction of mine first.** At ~11:2xZ (msg 30002) I told COO~RV to leave RIV-e-1 retrying, "it proceeds on its own if Andrew
+signs in". That premise was false. `OPAL_BBGTML_daily_pull` has `ExecutionTimeLimit PT30M`, and Task Scheduler killed it at 11:30:01Z
+(Last Result 0x41306). So a sign-in does not resume it. The names stage and the D12 leg never ran today. Recovery is MSTR~Z's re-run on
+the first OK probe after the sign-in.
+
+**The finding.** With the DAPI precondition already FAILED (the vehicle logged it and skipped the pull), RIV-e-1
+(`rivalfunds.enrichment_bloomberg`) still ran. It retried blpapi sessions about once a minute until the 30-minute kill, so every stage
+after it lost its turn.
+
+**Ruling: a round-12 cell for `2.0.0_SA_COO~RV`, beside the PARSEKYABLE_DES cell (ADDENDUM 1).**
+- `enrichment_bloomberg` bounds its session attempts (a small fixed count) and exits with a DISTINCT code when Bloomberg is unreachable,
+  so the vehicle reaches its later stages.
+- First measure whether the names stage and the D12 leg need Bloomberg. If they do, the bound still matters: a failed day then ends in
+  minutes, with each stage's own clear refusal, instead of one silent timeout.
+- eg-1's guard is unchanged (no empty G4 lands).
+- **The change is in `data/etfs/scripts/rivalfunds/`, which is ETFS_RIVALS's own code.** The vehicle script under
+  `integrations/bloomberg/` is under Andrew's no-modify order and is NOT touched.
+- **Proof:** a plant with blpapi refused, in which the module exits within the bound with its distinct code, plus a control in which a
+  reachable session still enriches.
