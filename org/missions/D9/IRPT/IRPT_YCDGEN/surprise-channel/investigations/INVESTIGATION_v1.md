@@ -1821,3 +1821,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Inert for FWD-1's thread (cover, holdings with the table's names and classes, allocation by the table's classes do not read characteristics) and honest by contract (a figure Opal cannot work out says so with the reason). A host dependency (a pyarrow wheel into pydeps through S3) is its own act with its own half; the sector and look-through pages (FWD-13) need it."
 }
 ```
+
+## IRPT_YCDGEN-S12 -- the Analysis tab lets an internal user submit with no firm selected; the request then fails as UNEXPECTED
+
+```json
+{
+  "id": "IRPT_YCDGEN-S12",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y",
+  "surfaced_at": "2026-10-06T13:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the Analysis tab lets an internal user submit with no firm selected; the intake function refuses it as BucketUnmapped, shown to the user as 'Needs attention' with no reason",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "A submit from the Analysis tab either carries the firm the request is for or the page asks for one first.",
+  "world_is": "F1 walk 2026-10-06 ~13:03Z, Andrew signed in as andrew@opalinvest.com: the page showed 'Needs attention -- areq-efd72c44'; the resident host saw no job (0 rows naming it, 0 handled polls); irpt-ycharts-generate logged operation comparison-catalogue, exception BucketUnmapped 'no directory bucket declared for firm token in IRPT_DIRECTORY_BUCKET_MAP', public code UNEXPECTED. The map holds 49financial, cottonwood, inflection. CTO read (msg 105558): an internal principal is tenant opal-capital unless the request names selected_tenant, and opal-capital is unmapped. The firm token in the request is NOT in the log, so this is inferred, not measured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudWatch /aws/lambda/irpt-ycharts-generate stream 2026/10/06/[$LATEST]3731eb19282f4b7684ea79bbb91ba11d, correlation_id corr-a589f1e24fb0",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/F1_AREQ_READ_20261006.txt",
+      "IRPT_DIRECTORY_BUCKET_MAP read from the live function configuration"
+    ]
+  },
+  "notes": "Owner of the fix is a next-round portal cell (the composer asks for a firm before Generate) and the intake's reason code (UNEXPECTED hides BucketUnmapped; CTO says r58 ships a named code). F1 retries with Cottonwood selected in the firm selector."
+}
+```
