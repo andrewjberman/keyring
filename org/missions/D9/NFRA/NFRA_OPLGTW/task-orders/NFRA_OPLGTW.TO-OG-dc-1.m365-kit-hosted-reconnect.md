@@ -64,7 +64,7 @@ PLACE to `complete`. Report once.
 - Round 18 (R3-T.11, item 3). Alone.
 - Pre-cut: `dc1.AC1` FAIL (the record is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>18</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
