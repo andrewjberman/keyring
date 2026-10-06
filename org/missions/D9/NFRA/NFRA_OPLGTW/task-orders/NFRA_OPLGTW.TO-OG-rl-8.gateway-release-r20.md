@@ -84,7 +84,7 @@ validate it with `python .tools/proof-of-spec-check.py <instance>`. Report once 
   changes to the tier rule, and `/login` gains an audit record.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>20</round>
 <slot>~15</slot>
 <fabric>site-z</fabric>
