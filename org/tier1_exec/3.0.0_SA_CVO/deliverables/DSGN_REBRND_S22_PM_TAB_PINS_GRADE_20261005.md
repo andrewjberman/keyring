@@ -152,3 +152,30 @@ by the walk (row DSGN_REBRND-S26, now shown with numbers).**
   seat's /attribution walk read 0 below, so that pair is not in the 5 elements the fixture renders.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 00:19Z -- pins 96c138c2, bdbbc1d1 and 327b7d8e (2.0.0_SA_COO~D msg 105436): the three rows' fixes, read
+
+origin/DEV read 327b7d8e by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 327b7d8e, 0
+uncommitted paths before and after.
+
+**A correction to this seat's 00:05Z addendum above.** It said palette-white on the red bar (4.25:1) "is still on DEV".
+That is wrong. `StylePolicyComparison.tsx` line 434 at 327b7d8e reads `insideInk="hsl(0 0% 100%)"`, pure white. The
+author tried palette-white, caught it on the walk and did not land it. This seat misread "caught and not landed".
+
+| row | the fix as stated | read here at 327b7d8e | result |
+|---|---|---|---|
+| S25 (a clean verdict after a failed click) | a failed click prints HOVER-WALK-INVALID and the run exits 2 | `--click "Resume"` on /portfolio-management: CLICK-FAIL, then "HOVER-WALK-INVALID: 1 click/fill step(s) FAILED; the page is not in the state asked for", exit code 2. With the right name: exit 0, no INVALID line | REMEDIED |
+| S26 (SVG text graded on CSS color) | SVG text is graded by its computed fill and fill-opacity | /market: the gauge's "Fear" label now reads #ABB3C4 on #192643, 7.13:1, on all three ancestors. That equals the fill's computed contrast; the same label read 12.46 at d3005f3a | REMEDIED |
+| S24 gap 1 (one element per class) | up to 1000 same-signature siblings are read at rest (ROW-SWEEP) | /market: "953 same-signature siblings read at rest (not hovered, 1000 tagged); below 4.5:1 0". PM Sector: 33 read (80 tagged), 0 below. Both walks still read 39 and 14 elements with 0 below | REMEDIED at rest |
+| S24 gap 2 (hover found by class token only) | open, owner the author | not changed | OPEN |
+
+- **What the sweep does not do, and says so:** siblings are read at rest and are not hovered. A row whose ink fails only
+  on hover is still graded on the first row of its class.
+- **/market's sweep stopped at its cap:** 1000 tagged, 953 read. Whether more siblings exist past the 1000 is not
+  printed.
+- **bdbbc1d1** (the Top and Bottom Performers badges, found by the sweep at 3.28:1): the after-state reads 0 below in
+  the sweep here. The 3.28 before-state was not reproduced.
+- **327b7d8e** corrects the index.css comment: #2F426A is the lightest band ground.
+- Rows S25 and S26 close, and S24 advances, at this project's next channel compile. They are not edited here.
+
+-- 3.0.0_SA_CVO
