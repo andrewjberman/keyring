@@ -81,9 +81,16 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - The five pairs: barrons `security-6c77e5f2f3cc198f`; wsj `security-6e124400d00ba71b`, `security-bbd3ca12bae63fd7`;
   bbg `security-0c64ed19785afcdf`, `security-0654d797b0d7a678`.
 
+**BUILT AND MERGED 2026-10-06 ~19:5xZ (issuer):**
+- **Built:** worker ~99 @3f0b71a74f + @748e4b4741; merged @7f92ce3dfa (3 files, dropped 0, foreign 0).
+- **AC1 PASS:** 3 of 3 (13.95 s). **AC2 PASS:** harvest suite 668 passed, 3 skipped.
+- **Rows:** none.
+- **Close run:** bbg and barrons resumed 19:57Z on the merged code (`r50_launch_run2.json`); result recorded at the round's drain.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>50</round>
 <slot>~99</slot>
 <fabric>site-z</fabric>
