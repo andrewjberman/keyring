@@ -18207,6 +18207,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   ]
  },
  "disposition": "UNDER_INVESTIGATION"
+},
+{
+ "id": "AMGT_RESAPP-Z-W246-S1",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~246",
+ "surfaced_at": "2026-10-06T02:46:48Z",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "one_line": "The order named render_print.py under checkface, but the pack's figure lines come from lib/research/provenance/render_print.py; and four existing assertions in lib/research/print/tests/test_av2_export_equals_page.py pinned the old unit-code wording.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Task order AMGT-aw-2 section 1: each figure line prints its unit code from lib/research/checkface/render_print.py (~:212, :244) called via render_pack.py ~:319; fix it in render_pack.py, render_print read only; plant tests in lib/research/print/.",
+ "world_is": "render_pack.py imports render_figure_line from lib/research/provenance/render_print.py (lines :209-244 there), not from checkface/render_print.py (98 lines; no :212 or :244). The fix is still in render_pack.py alone: _plain_figure_line re-words the value segment of that function's output, and neither render_print file was edited. Four existing assertions in lib/research/print/tests/test_av2_export_equals_page.py (test_pdf_text_carries_no_field_code_and_names_every_line_in_words) read the old wording ('100.0 PRICE (local)', '1.5 PER SHARE (local)', '8.0 PERCENT', '2.0 PER SHARE (local)'); they are inside the order's lib/research/print/ write grant and were updated to the new wording, plus two assertions on 1.0 -> '1 [unit not stated]' and 'local currency 1.00 per share', and one prefix shortened because the line now wraps. Also observed once: lib/research/api/tests/test_print_format_rich.py::test_default_and_fmt_pdf_are_byte_identical_to_build_pack_itself failed one run (a SHA256 of empty bytes e3b0c44298fc... on one side) and passed on the next two runs with no change in between; not in this order's paths and not investigated.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/print/render_pack.py import block and _plain_figure_line, worktree C:/tmp/r73-246 branch wk-AMGT_RESAPP-246",
+   "lib/research/provenance/render_print.py :209-244 render_figure_line",
+   "pytest lib/research/print lib/research/api/tests/test_print_fiscal_year_sort.py lib/research/api/tests/test_print_format_rich.py: 86 passed on two consecutive runs after the edits"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION"
 }
 ]
 ```
