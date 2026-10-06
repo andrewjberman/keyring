@@ -211,3 +211,71 @@ Filed by 0.7.0_AE_CloudOps~RV after TO-GUARD-1's apply, running the post-deploy 
   "notes": "NOT fixed by this seat. Shared CI tooling for 7 pipelines across 2 devices, outside any open task order, and the /cloud-ops profile names this tool a known failure to 'surface in RAVC'. Two candidate fixes, both small: (a) quote all four $JSON_TOOL sites -- minimal, but may trade the space failure for the MSYS /tmp failure the sibling script documents for bun; (b) reorder detection to prefer node as build-and-upload.sh already does, which is the fix the sibling arrived at by measurement. This seat recommends (b) plus (a) together: (b) removes the space from the common path and (a) makes the remaining paths space-safe. Owner: an AE/DT seat holding infra/aws/lambda/ci/ under an authoring order. SEPARATE AND UNTAKEN: deployment Rule 6's post-deploy tag. yang-pipeline-v1.5.9 was NOT created -- 11 of 11 yang-pipeline tags and 256 of 264 pipeline tags across the repo were created by Andrew Berman (7 by 0.0.0_AB_MSTR, 1 by 0.7.0_AE_CloudOps~V), so tagging is not this seat's measured practice, and the Rule 6 'push --follow-tags' half is barred to every seat but the integrator anyway."
 }
 ```
+
+### OPAL_BBGTML-Z-S8 -- record-terraform-deploy.sh writes the pipeline CHANGELOG outside any task order's <paths>, and the criterion written to bound it is path-scoped so it cannot see the overrun
+
+Filed by 0.7.0_AE_CloudOps~RV while grading TO-GUARD-2's AC3. Not caused by the Z-S7 fix; the fix
+is what made it reachable, because the script previously died before either writer.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S8",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-06T18:06:48Z",
+  "one_line": "record-terraform-deploy.sh commits infra/aws/terraform/<pipeline>/CHANGELOG.json alongside the source map -- 48 insertions here -- which is outside TO-GUARD-2's <paths> and outside infra/aws/lambda/ci/ entirely; and TO-GUARD-2's AC3 proof invocation is path-scoped to the very directory the write escaped, so it returns a clean one-file answer and the criterion PASSES while the overrun stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AC3 LITERAL invocation, git show --stat 4ddd25eee8 -- infra/aws/lambda/ci/ -> '1 file changed, 5 insertions(+), 4 deletions(-)', lambda-source-map.json only. READS CLEAN.",
+      "The SAME commit unscoped, git show --stat 4ddd25eee8 -> '2 files changed, 53 insertions(+), 4 deletions(-)': lambda-source-map.json AND infra/aws/terraform/yang-pipeline/CHANGELOG.json (+48).",
+      "TO-GUARD-2 @304b05698f <paths> names three files: the recorder, lambda-source-map.json, and this channel. The pipeline CHANGELOG is not among them, and the owned-paths hook did not refuse the commit.",
+      "The source-map diff ALSO added a per-function key recorded_by that AC3 does not name. AC3 named _updated and _last_deploy_recorded; _last_deploy_recorded did move, _updated did not.",
+      "The CHANGELOG entry records agent=devops_technician, a hardcoded label, not the --author serial that was passed and that the git commit correctly carries (0.7.0_AE_CloudOps~RV).",
+      "That entry's deployed_commit is 8555ce7e1255d8d0af58fd8280bd8cd184b55a71 -- HEAD at run time, an unrelated record commit -- NOT the deployed code commit 513b25f522 that the source map correctly carries. Two fields named for the same idea disagree by design across the two files."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A task order's <paths> is the write surface of the act (owned-paths-validate), and an acceptance criterion's invocation measures the thing the criterion claims to bound.",
+  "world_is": "A seat running the recorder under ANY order whose <paths> omit infra/aws/terraform/<pipeline>/CHANGELOG.json overruns its write surface, under its own author line, in a commit the tool makes for it. And the criterion written to bound the diff is scoped to a directory the overrun is not in, so it certifies nothing about it -- a census scoped to where the question is filed, missing the answer filed elsewhere.",
+  "notes": "Surfaced, not chased. No fix attempted and none wanted from this seat without an order: changing where the recorder writes touches 7 pipelines on 2 devices. Three candidate scopes for an owner, cheapest first: (i) add the pipeline CHANGELOG to the <paths> of any order that runs the recorder -- a template fix, not a code fix; (ii) re-word the AC3 pattern to grade an UNSCOPED git show --stat, since a path-scoped proof of a path-containment claim is circular; (iii) decide whether agent and deployed_commit in that file should carry the real serial and the real code commit, which is a semantics question about what the file is FOR, not a bug report. Owner: an AE/DT seat holding infra/aws/lambda/ci/. Cites OPAL_BBGTML-Z-S7 (the defect that hid this) and ETFS_RIVALS-Z-S40 (same class: a granted path a seat could not actually write)."
+}
+```
+
+### OPAL_BBGTML-Z-S9 -- Z-S7's fix has LANDED, but its disposition is not this seat's to move: RESOLVED is not in the gate's closed enum and GRADUATED is the CVO's
+
+Filed by 0.7.0_AE_CloudOps~RV as a NEW row citing OPAL_BBGTML-Z-S7, because the channel is
+APPEND-ONLY. I first tried to mark Z-S7 RESOLVED in place, as TO-GUARD-2 directs, and the gate
+refused twice -- correctly, and on two different grounds. Both refusals are recorded below, because
+the second is a rule this seat had exactly backwards.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S9",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-06T18:06:48Z",
+  "one_line": "The Z-S7 defect is FIXED @8be38c9dec and verified (AC1 exit 0 with no 'Is a directory'; AC2 last_deployed_commit now 513b25f52259dcfe10500cdffd564c025d08afda), but Z-S7's disposition still reads UNDER_INVESTIGATION because TO-GUARD-2's instruction to mark Z-S7 RESOLVED is not executable by this seat: RESOLVED is not a member of the closed disposition enum, and the terminal value GRADUATED is resolved from a REMEDIATION row, which stays the CVO's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "THE FIX: @8be38c9dec. Detection reordered to node FIRST (node resolves as a bare name, so no device path enters the invocation); all four JSON_TOOL invocation sites quoted, with the census asserted before any byte was written (4 unquoted before, 0 after, 4 quoted after); both python gates now compare the basename, so a resolved path still selects the python branch; and the comment at line 217 corrected, which had claimed bun was 'derived with command -v, no device path' -- the opposite of what command -v bun returns, and the sentence that made the original choice look safe.",
+      "VERIFIED: bash -n exits 0, with a live negative control -- a copy with a truncated if appended is REJECTED by the same bash -n, so the pass discriminates. commit-gate clean 1 of 1.",
+      "AC1 PASS: the recorder ran to exit 0, no 'Is a directory', committing @4ddd25eee8.",
+      "AC2 PASS: lambda-source-map.json last_deployed_commit 0ce5aa5ada (2026-08-18) -> 513b25f52259dcfe10500cdffd564c025d08afda, last_deployed_at -> 2026-10-06T17:47:56Z. Deployment Rule 4's parity loop is closed for the guard deploy.",
+      "REFUSAL 1, on the enum: the gate blocked the commit at /disposition. surprise-row-gate.py:174 defines UNDISPOSITIONED as ('UNDER_INVESTIGATION', None, ''); :164-166 resolves the terminal value GRADUATED from a REMEDIATION row bearing the id, else a row whose adjudicates list names it. RESOLVED is in neither set. CLAUDE.md section 2: REMEDIATION rows stay the CVO's.",
+      "REFUSAL 2, on append-only, after the enum value was reverted but the row left edited: 'EXISTING row OPAL_BBGTML-Z-S7 was MUTATED in place (content hash 775ec48bffef -> 48ecd6b0ea3f). Corrections are NEW items citing the old id; an edited history is a history nobody can audit.' The rule was inverted here: supersede-in-place is for STATE carriers, while a surprise row is corrected by a NEW row. Z-S7 was restored to its committed bytes (17757) and this row carries the correction instead."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-GUARD-2's gates: Mark Z-S7 RESOLVED in its own row, citing the fix commit.",
+  "world_is": "That step cannot be performed as written by any non-CVO seat. The word RESOLVED does not exist in the grammar, and the two mechanisms that CAN terminate an item -- a remediation row, or a CVO L9 adjudication -- are both the CVO's. A seat following the instruction literally either gets refused, as this one did, or forces an out-of-enum string past an override and leaves the corpus carrying a value no consumer can read.",
+  "notes": "Two asks, neither taken unilaterally. (1) For 3.0.0_SA_CVO~RV or whoever holds L9 on this project: graduate Z-S7, whose fix is landed and verified. (2) For 2.0.0_SA_COO~Z: the order template's wording. 'Mark <row> RESOLVED' should read 'record the fix in a new row citing <row>, and hand the disposition to the CVO', or the next order repeats this. No override was used for either refusal; the gate was right both times."
+}
+```
