@@ -3923,6 +3923,29 @@
     "spec_asserts": "A rebuild_funds replay at current code writes a new G5 revision for the planned funds (RIV-nf-1, RIV-rp-2 served act).",
     "world_is": "gold_trade_schedule._g5_target returns the existing object when the live G5 is already at the newest G1 revision with the same held funds, so the replay would read OK and write nothing.",
     "notes": "Cites ETFS_RIVALS-Z-W3-S23. The fix (gold_trade_schedule.py) is outside round 10's frozen decomposition; it rides the round-10 slug to 1.0.0_SA_CTO~Z. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S43",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T02:44Z",
+    "one_line": "RIV-ok-1's measured premise is false on the live data: the WCMG Nebius row carries no CUSIP/ISIN, so the CUSIP/ISIN join cannot merge it with GQGU's CUSIP-only row; a 10-05 refresh publish at the ok-1 code is byte-identical to the control (A1 content sha unchanged).",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "G1 2026-10-01 holdings-20261005T054409Z-9357ccb096f1: GQGU row security_id null, raw N97284108, cusip N97284108, isin NL0009805522, ticker NBIS; WCMG row security_id NBIS_US_Equity, raw 'NBIS US Equity', cusip null, isin null, ticker NBIS",
+        "publish_page.handler_entry 2026-10-05 refresh_a1 on a post-replay mirror (C:/tmp/r8measure/ov_ok1): control @59805c595c and ok-1 @6d83ff68bb both 1,875,806 B, no new holding_contribution object (content-sha reuse), Nebius keys N97284108 + NBIS_US_Equity, 2 dialogs, in both",
+        "G4 security_market 2026-10-02 holds N97284108 (/cusip/N97284108) and NBIS_US_Equity with equal px_close 242.81 and total_return_index, but no field that maps one to the other; security_universe carries the two as separate keys",
+        "Broadcom (AVGO_US_Equity) shows one key; 'Intuit' matched INTU and ISRG (Intuitive Surgical), different securities; the only within-table two-key name is Samsung 005930/005935 (common vs preferred, correct)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-ok-1 cell: 'WCMG reports the Bloomberg id, the same CUSIP on the row'; a CUSIP-only row takes the Bloomberg key another row carries for that CUSIP, so Nebius renders once.",
+    "world_is": "WCMG's row has no CUSIP or ISIN; the only shared identifier is the bare ticker NBIS. ok-1 is a no-op for Nebius on real data and J1 cannot pass. The cut's premise was written from the page's name map, not measured on G1.",
+    "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer; the cut's defect). The ok-1 deploy (round-11 item 3) is HELD: it would ship a no-op for J1. Remedy options go to 1.0.0_SA_CTO~Z (a Bloomberg-key lookup per CUSIP in the G4 reference request, joined by ok-1)."
   }
 ]
 ```
