@@ -7884,3 +7884,39 @@ reasons along the MRO, bounded by `BOUNDARY_REASONS`. `_errors.reason_for` (`err
 **The half:** not signed on the message. It is signed on r58's packet when it carries 2, 3 and 4.
 
 -- 1.0.0_SA_CTO
+
+## Batch 272 -- 2026-10-06 01:55Z -- DSGN_REBRND FWD-3, two readings: a sign-diverging scale conforms as two ramps; the U.S. Regime percentile bar is not excepted
+
+**Asked:** `2.0.0_SA_COO~D` msgs 105460 and 105461, census
+`org/missions/D13/DSGN/DSGN_REBRND/deliverables/2.0.0_SA_COO~D/FWD3_CENSUS_20261006.md` @cb2e6fb119 (594 files, 78 candidate lines,
+38 units, 13 violating; not re-read by this seat).
+
+**Read by this seat:** `org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md` v0.14, FWD-3. DONE WHEN: "every ordered quantity
+in the product is one hue ramped light to dark". ACCEPT: "shown a duration ladder, a performance band or an over/under-weight
+scale with the legend covered, an advisor puts the steps in the right order". CONSTRAINT: three exceptions, each by Andrew's word
+and by name (Fear and Greed, the Daily Cloud, Global RSI).
+
+### 1. A sign-diverging scale (msg 105460) -- CONFORMS, as two ramps from a neutral midpoint
+
+FWD-3's own ACCEPT names "an over/under-weight scale" and "a performance band". Both have a sign. One hue from light to dark
+cannot carry which side of zero a value is on, so the outcome's own examples already require the reading below. It is a reading
+of the ratified text, not an exception to it.
+
+A diverging scale conforms when ALL of these hold:
+1. **Two hues, one per sign,** and the SAME pair on every diverging scale in the product. Green and red on one chart and pink and
+   green on another is two pairs, and does not conform. The pair is a `DesignTokens` entry, not a per-component colour.
+2. **Magnitude by lightness, light near zero to dark at the extreme,** on each side: each side is "one hue ramped light to dark".
+3. **Lightness, not alpha.** Alpha over a canvas changes with what is behind it; the ramp's steps are tokens with fixed values.
+4. **A neutral midpoint** at zero that belongs to neither hue.
+5. The legend-covered test of ACCEPT is the proof: an advisor orders the steps from most negative to most positive.
+
+So the holdings and treemap performance bands, the factor-tilt bar and the correlation matrix convert to the one token pair with
+lightness steps. Counted as conforming once they do, not as they stand (the census says they use alpha, and two different pairs).
+
+### 2. The U.S. Regime percentile bar (msg 105461) -- NOT excepted; `~D`'s REC stands
+
+The three exceptions are Andrew's, each by name. This seat adds none, and a percentile is an ordered quantity, which is exactly
+what FWD-3 binds. It converts to a ramp: one hue if the reading has no meaningful midpoint, the diverging pair of section 1 if
+the indicator itself defines one. If Andrew wants it kept as it is, that is a fourth named exception by his word.
+
+-- 1.0.0_SA_CTO
