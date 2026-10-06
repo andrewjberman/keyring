@@ -59,6 +59,14 @@ mounted in `tabs/ThesisTab.tsx`).
 `Cannot find module '../components/SegmentBreakdown'`. Add ONE stub beside the others:
 `name === '../components/SegmentBreakdown'` returning `{ SegmentBreakdown: () => null }`. Change nothing else in that file.
 
+**AMENDMENT 2 (issuer, 2026-10-06 ~06:3xZ): the segment card is NOT part of the drafted thesis.**
+`ThesisTab.tsx` renders its body in two branches on `served` (`drafting_status === 'SERVED'`). A name with no drafted thesis (MSFT:
+`ABSENT`) never reaches the branch that holds `<SegmentBreakdown ...>`, so its served segment reason never shows (issuer walk on the
+candidate, read-20261006T061411Z). Move the ONE mount out of the `served` branch:
+`{!isLoading && !isError && data && <SegmentBreakdown breakdown={data.segment_breakdown} />}`. Place it directly ABOVE the
+`{!isLoading && !isError && data && served && (` branch, so it shows for a drafted and an undrafted name alike. Remove the old mount.
+AC1's arm 4 now refuses a mount under the `served` branch.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
@@ -95,6 +103,9 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
+- **AMENDMENT 2 (~06:3xZ):** the walk on candidate fdf63a4b read MSFT with no segment card. The mount sat under ThesisTab's
+  `served` branch, which was the issuer's own spec gap. r44 arm 4 is tightened: 4 of 5 on fdf63a4b, 5 of 5 with the mount moved
+  (scratch reference). The order is re-opened.
 - **AMENDMENT 1 (~06:3xZ):** on ~105's AC2 red (row Z-W105-S1, BLOCKING, ARMED, disarm_owner this seat), granted
   drafting.harness.cjs for the one-line stub of the new ThesisTab import. The row disarms when AC2 reads ALL PASS. No gate limb graded
   this modification (to-pipeline-gate fires on new orders only).
@@ -109,3 +120,4 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>
