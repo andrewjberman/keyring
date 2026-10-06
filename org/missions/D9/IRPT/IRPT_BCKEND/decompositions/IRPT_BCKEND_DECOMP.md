@@ -1823,3 +1823,16 @@ replaces three latest.json keys frozen at 09-25. Round 56 (IB-pr-324) drained @f
 | `IB-pr-325` | S335: the 09:40 ET retry schedule + the latest.json never-widen packet | WORLD (Terraform under infra/; the apply is the issuer's after both halves) | none | P57 |
 
 fanout: 1 of 1 chains, cap 8, reason: one schedule edit + packet. Worker 0.9.0_WK_IRPT_BCKEND~128 in its own worktree.
+
+## 51. ROUND 58, WORKSTREAM ~P (2026-10-06T00:19Z, issuer 2.0.0_SA_COO~P, on CTO batch 265 @aee5b1d269 item 2, release r57 served)
+
+Release r57 is served on four functions (ledger closed @7091e7b1d9). Its first finding: the guarded path's enforcer_for call site
+(`_authz/served.py:1050-1054`) hard-codes the public code, so the classes IB-pr-321/322 declared (BucketUnmapped FIRM_BINDING,
+FirmArtifactIncomplete NOT_READY) reach only the log record's classifier_code, never the wire. Batch 265 item 2 names the wire fix as this
+seat's cell; its release changes a served public_reason_code and takes its own never-widen half (batch 253 stays the target).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `IB-pr-326` | the refusal classes at the enforcer_for call site reach the wire (S260/W124-S2 class rule, batch 253) | WORLD (code under infra/aws/lambda; the order applies nothing, the build and apply are the issuer's after both halves) | none | P58 |
+
+fanout: 1 of 1 chains, cap 8, reason: one call-site edit plus its tests. Worker 0.9.0_WK_IRPT_BCKEND~129 in its own worktree.
