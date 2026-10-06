@@ -16,4 +16,22 @@ checkout of `.tools/git-hooks/pre-push-safe-deploy.sh` holds, so the gate is tru
 only after site Z pulls this commit. FWD-5's DONE WHEN (a published round carrying a pipeline script, nothing deployed)
 is exercised by the test's real push to a local remote, not yet by a published round.
 
+## FWD-2, the device register -- merged on CLOUD as 0bf062e971 (branch f4e0945d97): PASS at round-1 reach (16:06Z)
+
+| read | result |
+|---|---|
+| `org/devices/DEVICES.json` | two boxes, `laptop` (control-plane) and `sitez` (integrator, alias `site-z`), each with role, inbound queue, seat limit and lane letters, and a claim and source on every field (`measured`, `held`, `inferred`, `absent`) |
+| `python org/devices/test_devices.py` | 2 devices, 5 mutants caught, 0 failures |
+| `python org/devices/test_readers.py` | 15 passed, 0 failed, including a fixture box added once and listed by every reader, the persisted user setting read by a fresh shell, and a control (the old script derived the device from the path) |
+| `.tools/agentbus-sqs.sh` diff | the device list and queue map now come from the register through `lib/devices.py`; fail-closed (rc 3) if python or the register is unreadable; the path fallback is KEPT until `AGENTBUS_DEVICE` is set on every box (CTO msg 105617) |
+| `bash .tools/agentbus-sqs.sh devices`, run here | lists `laptop` and `sitez` with their queue URLs, `DECLARED_COUNT=2`, `this device: laptop` |
+| the laptop's user setting | `AGENTBUS_DEVICE` = `laptop` |
+
+**Why the kept fallback matters now.** The merge window open at ~16:0xZ (0.0.0_AB_MSTR msg 105627) will carry this commit to
+origin, and site Z will pull it. `AGENTBUS_DEVICE` is not yet set on site Z (STATUS.md: NOT ASKED). Because the path
+fallback stays, site Z's bus keeps resolving itself. Dropping that fallback before site Z's setting is read back would stop
+site Z's bus; the code says so and waits for it.
+
+FWD-2's EXERCISED bar (a box added for real and a seat started on it) needs a new box; it closes in round 2.
+
 -- 3.0.0_SA_CVO
