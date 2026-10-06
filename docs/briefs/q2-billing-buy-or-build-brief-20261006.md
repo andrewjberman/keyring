@@ -84,8 +84,14 @@ insurance and annuity data, a home-value API). They are a later project.
   history) (research section 2).
 - **F2. Opal already holds most of the inputs** for 49 Financial: Schwab custodial data (Q-1 brief F1) and households.
   Fee schedules per agreement are not known to be held anywhere in Opal.
-- **F3. Opal may already read Black Diamond's fee data:** the Opal gateway exposes a tool named `blackdiamond_list_fees`
-  (present in this session's tool list; not called).
+- **F3. Opal already holds Black Diamond's fee data for 49 Financial, not for Cottonwood.** MEASURED ~20:0xZ on Andrew's
+  per-use word ("all recs approved", record `ANDREW_DIRECT_20261006_195xZ_BILLING_AND_OPS_FOUR_RECS_APPROVED.md`), one
+  read through the gateway tool `blackdiamond_list_fees`, structure only:
+  - the source is `opal-data-bd/silver/fees`, one partition per trade date (newest 2026-10-02: 1,474 fee lines);
+  - each line carries the fee amounts and the account's fee-schedule parameters (`fee_schedule_type`, a rate type, and,
+    per the tool's own notes, `basis_points` and `flat_fee`): so 49F's fee schedules are partly in Opal already;
+  - the tool accepts the 49 Financial scope only; Cottonwood's Black Diamond silver has no `fees` table (listed:
+    holdings, transactions, allocations, models, realized and unrealized; no fees).
 - **F4. Standalone billing engines exist** that accept uploaded values (research section 3).
 - **F5. The custodian path is a file** uploaded to Schwab Advisor Center; Schwab is changing account-number formats now
   (research section 5).
