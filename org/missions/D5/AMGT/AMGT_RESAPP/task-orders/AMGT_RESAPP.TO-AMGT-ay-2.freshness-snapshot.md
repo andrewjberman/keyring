@@ -93,3 +93,21 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Z`, 2026-10-06 ~10:2xZ) -- on rows Z-W258-S1 (ARMED) and Z-W258-S2. Same worker, same branch.**
+
+The issuer confirmed S1's premise failure: `lib/research/ledger/ledger.py` `record_run` has no production caller (only its own
+`rerun` and tests). No step refreshes the pack ledgers, so nothing re-writes the snapshot after ay-5's first write. The write cadence
+goes to the CTO. This amendment DISARMS the hazard, in which a stale snapshot is served as current:
+1. **A maximum age.** The route serves the snapshot only while its `generated_at` is within 24 hours (one trading day). Past that it
+   treats the snapshot as absent: it computes the view, says so in plain words in `snapshot_fallback`, and never answers 500.
+   - Every body that serves the snapshot carries `snapshot: {"object", "generated_at", "age_hours"}`.
+   - Add plant tests for an aged snapshot (it falls back) and a fresh one (it is served).
+2. **The mount test (S2).** `lib/research/api/tests/test_scoped_amgt_mount.py` compares terraform's mounted routes with the handled
+   routes. Since ax-5 it fails 19 vs 18 on `GET /api/scoped/amgt/security/{proxy+}`. Apply the same rule as the terraform guard
+   (ax-5 AMENDMENT 2): compare the NON-greedy keys for equality, and allow at most one greedy key, which must sit under
+   `/api/scoped/amgt/security/`. The test file is in your paths.
+3. **Criteria unchanged** (c59 local; your test file). Also report the full api suite's last line: it must read 0 failed.
+
+Gate limb: GATE (viii) on a modify.
+
