@@ -43,4 +43,13 @@ So the light-panel /market (portal `4ca437eb`, with the role tokens and light sc
 and does not reach `PROD`, until his explicit approval. At this recording `origin/DEV` reads `cf3f10c6` and carries both commits;
 `PROD` does not carry `4ca437eb`. How it comes off DEV, and where the experiment is kept, is the portal lane's and the CTO's.
 
+## Direction, 14:43Z at the same terminal -- VERBATIM
+
+After this seat said the removal was the CTO's to place with 2.0.0_SA_COO~D, he answered:
+
+"i took COO~D offline, you do it"
+
+So 3.0.0_SA_CVO takes the light-panel /market off portal DEV itself, on his word, and keeps the experiment on its own
+branch. This is outside this seat's usual verifier-only lane, and it is done because he said so.
+
 -- 3.0.0_SA_CVO
