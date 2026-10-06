@@ -58,7 +58,7 @@ PLACE to `complete`. Report once.
 - Round 21 (R3-T.14, item 1). Alone. LOCAL: no release.
 - Pre-cut: `dc2.AC1.sh` FAIL (kit files 5; files naming Lokka 4).
 
-<status>pending</status>
+<status>complete</status>
 <round>21</round>
 <slot>~21</slot>
 <fabric>site-z</fabric>
