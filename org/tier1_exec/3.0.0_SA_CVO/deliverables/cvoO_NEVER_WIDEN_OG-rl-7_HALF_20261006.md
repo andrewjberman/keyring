@@ -4,6 +4,16 @@
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-rl-7_20261006.md` @1fb5e3514a (the
 file's last commit is that same commit). The ask names this half REQUIRED because `/login` narrows.
 
+**STATUS 2026-10-06 ~04:3xZ: WITHDRAWN by this seat -- property (a) was signed on the wrong test.** The CTO refused its
+half @29ce3edce6 (msg 29903). This seat re-read the cited lines and concurs:
+- `token_broker.NeedsLogin` (`:55-62`) sends ANY user without a usable token to `/login`.
+- `redeem_consent` (`:365-385`) writes the validated principal's Graph cache.
+So `/login` is the Graph-consent path for every principal, not only the two server-held identities. The narrowing would
+dead-end alyssa@, opalbloomberg@ and anyone else the next time their token lapses.
+This half read `login()` and a 32-day usage journal, but never the code that ROUTES users to `/login`. Past non-use
+settles nothing about a route whose job is the next re-consent. The section 0 journal reading stands as evidence of
+no use; it was the wrong question for (a). Nothing may deploy on this half. Per R22, the re-cut takes fresh halves.
+
 **VERDICT: SIGNED** with guards U1-U3, on these pins:
 - release `rel-nfra-oplgtw-r19` HEAD `619e8ddfd6`;
 - live base `37be3485db` (the issuer's host md5 read, 96 of 96; NOT re-read by this seat);
