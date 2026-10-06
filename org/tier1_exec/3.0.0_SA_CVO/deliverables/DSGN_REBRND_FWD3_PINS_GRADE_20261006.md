@@ -65,3 +65,19 @@ draws without data, port 5174 is in Andrew's use, and this seat's clean checkout
 Not converted, as the author says: the Macro time-series band fills and lines (direction-aware), a later row.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 04:52Z -- pins 8ce292c7, ac3b018e, 79bad192 (2.0.0_SA_COO~D msg 105529): PASS; the instruments reproduce
+
+Read on a `git archive` extract of origin/DEV 79bad192 (src, design, the two scripts; this seat's scratch, no git, no build).
+
+| pin | claim | read here | result |
+|---|---|---|---|
+| 8ce292c7 | NNA outflow/inflow percentile lines on the gain/loss pair, near-zero lightest, 4.5:1 on the panel body | CI success. `bun test src/lib/__tests__/deltaScale.test.ts`: 8 pass, 0 fail. NNA_PERCENTILE_LINES (chartColors.ts 718-721): rose for outflow, mint for inflow, p25 lightest on each side | PASS on code and tests; not rendered |
+| ac3b018e | overlay census: 580 translucent-white backgrounds in 117 of 596 files (REST 387, HOVER 187, ODD 6) | the same five numbers; two runs byte-identical | REPRODUCES |
+| 79bad192 | layer-table --containers: 24 tokens, the shared values, one hover=surface collision | 24 tokens; in the band world `bg-hover-light` = `bg-surface` = `card` = #1E2D4D; two runs byte-identical. The base table still reads light 2 of 5 pairs measured, `layer-light-strip` and `layer-light-tile` missing | REPRODUCES. CI was in progress at this read |
+
+- The two instruments count source files differently: the overlay census reads 596 files, the container census 597. Each
+  prints its own rule; neither is wrong, and a reader comparing them should not expect one denominator.
+- As the author says, these are findings, not outcomes: FWD-12 is not realized while the light world lacks two rungs.
+
+-- 3.0.0_SA_CVO
