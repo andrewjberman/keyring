@@ -1,9 +1,9 @@
-# CTO never-widen half -- NFRA_MCPINDEX MX-s-17 + MX-s-18 PHASE B -- HELD (scope question at Andrew)
+# CTO never-widen half -- NFRA_MCPINDEX MX-s-17 + MX-s-18 PHASE B -- SIGNED 2026-10-06 ~21:2xZ (was HELD)
 
 - **Seat:** 1.0.0_SA_CTO~O, 2026-10-06 ~19:0xZ.
 - **Ask:** `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-17_s-18_20261006.md`
   @27501e83dd (msg 30199). The COO half is SIGNED there.
-- **State: HELD.** Not SIGNED and not REFUSED. The technical review below is clean. One scope question goes to Andrew
+- **State: SIGNED** (section "SIGNED" at the end). Earlier state, kept for the record: HELD, not SIGNED and not REFUSED. The technical review below is clean. One scope question goes to Andrew
   first, because this seat does not adjudicate the scope of his word.
 
 ## Why HELD
@@ -59,5 +59,38 @@ confirm the shape first before making that move."
   the ask changes.
 - This seat signs a fresh or re-pinned ask after the verdict, at the bytes of that day. The technical review above
   carries only as far as its pins still hold.
+
+-- 1.0.0_SA_CTO~O
+
+## SIGNED -- 1.0.0_SA_CTO~O, 2026-10-06 ~21:2xZ (ask msg 30316)
+
+**Why it can be signed now.** Andrew's order of acts put the investigation first. It is done:
+`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.md` @b4e1284fad.
+- The evening run fetches nothing from Black Diamond.
+- It emits no field the morning path lacks, and its transactions output lacks `cusip`.
+- It is still the only same-day merger on sentinel-withheld days.
+
+So his "Yes we can consolidate writers" applies. MX-s-18 is what makes the evening run extraneous as a scheduler,
+and MX-s-17 puts both writers on one script for the interim. The decommission (MX-s-19) is NOT in this half.
+
+**Pins, re-read by this seat at 2026-10-06T21:19:43Z (4 of 4 equal to the ask's section 0):**
+- both SSM documents Default 3 = Latest 3, Active;
+- `bd-49f-runner` CodeSha256 `q37ovM/F07p39ObyY6bML9tmIEXDN1S/OhyJv1oDH00=`;
+- `code/silver/merge-daily-incremental.py` ETag `91eaf2486fc56ece76db2f0d862096f7`, 59,820 B.
+
+**Signed for:** the acts of the ask's section 1, in that order (s-17 first), and the blast radius and rollbacks of
+its section 2. The executor is `0.7.0_AE_CloudOps~MI` (A2 @2c8d840b67, A3 @5017a9cc7f), on branch
+`wk-nfra_mcpindex-r7-24` @3709ae40d6.
+
+**Conditions (each voids this half if unmet):**
+1. The ask's BASE-MOVED CLAUSE: PHASE B re-reads every pin at its first act.
+2. The IAM change is exactly one added statement, and the printed plan diff shows only it:
+   - Effect Allow, Action `s3:GetObject`, Resource `arn:aws:s3:::opal-data-bd/bronze/*/_BRONZE_COMPLETE.json`;
+   - the plan reads `0 to add, 2 to change, 0 to destroy`.
+3. Both branches as the ask states them. In particular: a read-back simulate that is not `allowed` after the apply
+   rolls back BOTH keys in the same session, code first.
+4. No rule is disabled, and no document or Lambda is retired, under this half.
+
+GO to the executor is the issuer's.
 
 -- 1.0.0_SA_CTO~O
