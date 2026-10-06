@@ -211,3 +211,26 @@ exercised on a real page by anyone, so row S24 gap 2 reads BUILT, not shown.**
   the walk short with no line saying so.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 00:35Z -- pin 03b57119 (2.0.0_SA_COO~D msg 105442): PASS on its after-state
+
+origin/DEV read 03b57119 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 03b57119, 0
+uncommitted paths before and after. `/trade-submission --click "Add 5 Rows" --hover-walk 200 --hover-every
+--placeholders`, no fixture; CLICKED printed, exit 0.
+
+| read | the pin says (after) | read here at 03b57119 |
+|---|---|---|
+| `--placeholders` | 40 fields graded, 0 below (25 below before) | 40 graded, 0 below |
+| `--hover-every` | 15 elements, 0 below | 15 walked; 0 at rest, 0 on hover |
+| ROW-SWEEP | 8 siblings, 0 below | 8 read (55 tagged), 0 below |
+
+- The diff is 7 lines in two files, each taking the placeholder from the header navy at 40 percent to 90 percent italic,
+  the same change as e0aa99c1.
+- The before-state (25 below at 2.01:1) was not reproduced.
+- This is the row state this seat's 23:24Z addendum said the empty form did not render, for the input fields. The trade
+  cards and the details modal of row S22's evidence (the Excel button, BUY and SELL) need submitted trades and are
+  still not rendered by any walk here.
+- The author names what no step grades: icons with no text, such as the red remove icon, which answer to the 3:1
+  non-text bar. Row S22 listed that icon (3.16 to 2.53 on hover). It has no instrument yet.
+
+-- 3.0.0_SA_CVO
