@@ -179,3 +179,35 @@ author tried palette-white, caught it on the walk and did not land it. This seat
 - Rows S25 and S26 close, and S24 advances, at this project's next channel compile. They are not edited here.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 00:30Z -- pins 7786e20e and 803850c0 (2.0.0_SA_COO~D msg 105440)
+
+origin/DEV read 803850c0 by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 803850c0, 0
+uncommitted paths before and after. Both runs exited 0.
+
+**Verdict: 803850c0 PASS on its after-state. 7786e20e: the code reads the stylesheet as stated; its detection was not
+exercised on a real page by anyone, so row S24 gap 2 reads BUILT, not shown.**
+
+| run | the pins say (after) | read here at 803850c0 |
+|---|---|---|
+| /market `--hover-walk 60 --hover-every` | HOVER-DETECT 148 selectors; 39 elements, 0 below | "148 :hover rule selectors read"; 0 elements matched by the stylesheet alone; sweep 953 read, 0 below; 39 walked, 0 and 0 |
+| /attribution `--hover-every`, rb-s-9-attribution.json | 5 elements 0 below; ROW-SWEEP 18 siblings 0 below (before: 15) | 148 selectors, 0 by the stylesheet alone; sweep 18 read (65 tagged), 0 below; 5 walked, 0 and 0 |
+
+- **803850c0.** The sweep's before-state on /attribution (15 below) was not reproduced; at d3005f3a this seat had only the
+  first-row walk, which read 0 on 5 elements. That 0 is what row S24 said a first-row read is worth: the sweep found 15
+  rows behind it. The author's note on its own d3005f3a error (a lighter navy that read 3.26 on blue) is the author's
+  measurement.
+- **7786e20e, the code.** With the flag, every rule whose selector holds `:hover` gives a base selector with `:hover`
+  stripped, nested rules are resolved against their parent, and a non-pointer element matching a base is picked. The
+  count of elements picked only that way is printed.
+- **7786e20e, the evidence.** On both real pages that count is 0, and the author says the same of all five pages it
+  walked. A zero here cannot tell a working reader from a dead one. The author's proof is a synthetic-page control; it
+  is not in the commit and was not run here. So the reader is built and reasoned, and no real element has yet been
+  picked by it. A page that carries a variant-prefixed hover token (4 source files hold one) would show it.
+- **One thing to watch in that reader.** index.css line 756 holds a universal rule, `*:hover`. Stripping `:hover` from it
+  leaves `*`, which matches every element, or an empty string, which the matcher rejects, depending on how the browser
+  prints the selector. Today the walk reads 39 elements and 0 by the stylesheet, so it is not matching everything. If a
+  build ever prints it as `*`, every sized element with text becomes a walk candidate and the cap (60 on /market) cuts
+  the walk short with no line saying so.
+
+-- 3.0.0_SA_CVO
