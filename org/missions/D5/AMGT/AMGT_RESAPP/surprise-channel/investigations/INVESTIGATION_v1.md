@@ -18383,6 +18383,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
    "stamp 20261006T050158Z api_issues: two 404s on the BP and NG keys"
   ]
  }
+},
+{
+ "id": "AMGT_RESAPP-Z-W255-S1",
+ "project": "AMGT_RESAPP",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_AMGT_RESAPP~255",
+ "surfaced_at": "2026-10-06T06:30:56Z",
+ "class": "OBSERVATION",
+ "disposition": "UNDER_INVESTIGATION",
+ "hazard_standing": "INERT",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "one_line": "With Lato in the print, pypdf's default text extractor splits a word after a wide capital (Information T echnology) in the .txt build_pack writes beside the PDF; the PDF's own text layer is correct. build_pack now writes the .txt with the layout extractor.",
+ "spec_asserts": "AMGT-ax-4 order section 1 lists six edits to render_pack.py; none touches how the .txt beside the PDF is extracted, and render_pack.py's module note says text drawn round-trips through pypdf extract_text byte-identical.",
+ "world_is": "ASML_NA_Equity print, pypdf 6.16.2: default extract_text() reads 'Sector: Information T echnology', 'T otal assets', 'Ro TA'; pymupdf get_text() and pypdf extraction_mode='layout' read the same layer without the false space. The .txt is not read by the print route (scoped_amgt._print_pack takes only the pdf path). Changed build_pack to write the .txt from the layout extractor, trailing spaces and blank lines dropped; the PDF bytes are unaffected. Print size per PDF 109,244 -> 150,994 bytes (ASML) with the two Lato faces embedded as TrueType subsets (fonttype 42, needed so the font name reads Lato).",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "lib/research/print/render_pack.py build_pack text extraction block, branch wk-AMGT_RESAPP-255",
+   "lib/research/print/tests/test_ax4_brand_form.py test_the_text_layer_is_clean_without_a_false_space"
+  ]
+ }
 }
 ]
 ```
