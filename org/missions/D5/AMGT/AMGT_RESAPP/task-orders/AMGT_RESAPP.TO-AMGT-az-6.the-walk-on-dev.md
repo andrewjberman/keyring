@@ -84,4 +84,4 @@ The `<status>` flip is the issuer's.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-06 ~21:2xZ):** both preconditions are met. Andrew's DEV push landed (MSTR~Z msg 30198, portal DEV e2130d42; DEV is now 6b4e89a8 and still carries 1d6d2573 and 6de76f05). az-5 is deployed and closed @1014126140 (CodeSha256 OVpDhfwD). The portal ref is `6b4e89a8`. Companies: BA, AMD and ASML_NA. FWD-16's top band is NOT on this ref (DSGN round 45 has not landed), so that act is skipped. Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
 
 <status>pending</status>
-
+<status>complete -- drained @16924b8b1d; proof VALID (worktree checker); AC1 21 captures, AC2 walker disarmed (issuer read); AC3 is the CVO's L9 read on WALK_ROUND76.md</status>
