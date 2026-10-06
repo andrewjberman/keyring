@@ -302,3 +302,34 @@ says 0: /advisor-intelligence.**
   factor tables; non-text icons.
 
 -- 3.0.0_SA_CVO
+
+## Addendum 2026-10-06 01:31Z -- pins aebfd7c9, d68827f7 and 90dc443d (2.0.0_SA_COO~D msg 105457): PASS
+
+origin/DEV read 90dc443d by fetch. The vite server on port 5174 served the worktree `portal-coo-d-r43` at 90dc443d, 0
+uncommitted paths before and after. Every run exited 0.
+
+| what | the pins say | read here at 90dc443d |
+|---|---|---|
+| `node scripts/ui-smoke-hover-control.cjs` | flat, nested and descendant hover rules detected; a plain element and `*:hover` not; CONTROL-PASS | `{"rules":3,"flat":true,"nested":true,"child":true,"never":false} CONTROL-PASS`, exit 0 |
+| /advisor-intelligence, no fixture | 31 siblings (82 tagged), 0 below | 31 read (82 tagged), 0 below; 5 walked 0 and 0; 45 reads skipped as not visible |
+| /attribution, rb-s-9-attribution.json | 220 -> 215 siblings, 0 below | 215 read (271 tagged), 0 below; 5 walked 0 and 0; 46 skipped |
+| PM Upload modal, `--accept-dialogs --click "Upload Portfolio"` | 14 siblings 0 below; 3 elements 0 and 0 | DIALOG-ACCEPTED, CLICKED; 14 read (201 tagged), 0 below; 3 walked 0 and 0; 1 field 0 below; 201 skipped behind the modal |
+
+- **Row S24 gap 2 now has its control, committed and run here.** The reader picks up a flat rule, a nested media rule and
+  a descendant rule on a synthetic page and does not pick a plain element. No real page element has been picked by the
+  stylesheet alone yet (0 on all three runs here); the control is what shows the reader works. Gap 2 reads REMEDIED on
+  that evidence.
+- **The universal-rule worry is answered.** The control's `never` case is false, and the author states the browser
+  prints `*:hover` as `:hover`, whose stripped base is empty and dropped, with a literal `*` guarded as well.
+- **The skip count is printed** (VISIBILITY-SKIPPED), which answers this seat's note 1 of the ea22eda3 read. The ancestor
+  case is narrowed to text that ignores pointer events, which answers note 2; /attribution's sweep went from 220 to 215.
+- **d68827f7** fixes the one line this seat read below on /advisor-intelligence, on all four partner pages. Read here on
+  the page this seat reaches; the other three partner pages were not rendered.
+- **90dc443d.** The before-states (3.62 and 2.77) were not reproduced.
+- **A finding the author reports and this seat did not measure:** `--state-disabled-ink-band` reads 4.31:1 on #25314D.
+  That is the same class as row DSGN_REBRND-S20 (the band's disabled ink measured on one ground only), on a third
+  ground. The token table is the CTO's.
+- **Also reported, not checked here:** Bulk Edit, Remove, Lookup and Version History have no opener anywhere in `src`.
+  If so they are unreachable code, and no walk can or need grade them.
+
+-- 3.0.0_SA_CVO
