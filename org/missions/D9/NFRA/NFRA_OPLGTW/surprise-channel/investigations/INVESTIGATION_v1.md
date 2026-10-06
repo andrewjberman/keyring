@@ -8853,3 +8853,98 @@ name the one known failure instead of silently inheriting it.
   "disarm_owner": "2.0.0_SA_COO~O"
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S61",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T07:52Z",
+  "one_line": "OG-rl-8 Phase A: the documented admit-set run (`python lg1_admit_set.py population.json > admit_set.json`, LG1_ADMIT_SET.md section 3) does not produce valid JSON: importing app.server prints an '[integrations] enabled: ...' line to STDOUT before the JSON, so the redirected file fails json.load at char 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python <deliverables ~22>/lg1_admit_set.py.txt population.json > admit_set.json, cwd = release gateway dir: rc 0, then json.load on the file -> JSONDecodeError 'Expecting value: line 1 column 1 (char 0)'; the first stdout line is '[integrations] enabled: [...]' (app/integrations/__init__.py register_enabled report).",
+      "RUN workaround: take the text from the first line that is exactly '{' (the script's own json.dump block); the result is deliverables/0.9.0_WK_NFRA_OPLGTW~15/r20_admit_set.json (population 4, admit_before 3 rows, admit_after 3 rows, lost [], lost_nonrestricted []) and r20_admit_set_negative_control.json (IDENTITY_PROVIDER=header: rc 1, lost_nonrestricted 1, reason tier_unresolvable)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "LG1_ADMIT_SET.md section 3: `python lg1_admit_set.py population.json > admit_set.json` writes the admit set; 'It prints, by digest only: admit_before, admit_after, lost, lost_nonrestricted, ...'.",
+  "world_is": "stdout carries one non-JSON log line ahead of the JSON object, so the redirect is not parseable as written; no value is wrong, only the carrier. A later cut of the method could write the JSON to a path argument or silence the integrations report; the admit-set arrays in RL8_LOGIN.json were taken from the JSON block unchanged."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S62",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T07:53Z",
+  "one_line": "OG-rl-8 Phase A: the 'current principal population' the access state can name is 3 persons (plus the server-held entry, which duplicates one of them) -- the persons who completed an OAuth sign-in -- not the identities that can reach /login; lost_nonrestricted is empty by the RULE (any verified non-email-denied identity is admitted on the GUI path, R25.4), and the population check only confirms it on those 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN r20_attr_census.py (Scan of gateway-access-state-table, 419 items, ConsistentRead, attribute NAMES only): 395 oauth_refresh_family records, of which 9 are family HEADS carrying tid/oid/email/principal/status and 386 are generation records carrying none of them; 1 principal_profile; 1 email_deny; 10 oauth_client; 8 probe/PROFILE/AUDIT/data_entitlement/operator_audit records (r20_attr_census.out).",
+      "RUN r20_population.py: 3 distinct principals (9 heads + 1 principal_profile), 3 with an email, 1 with a profile AND an email_deny record; population written with the 1 server-held entry = 4 rows; two rows share one digest (the server-held identity is also a person) so admit_before/admit_after list that digest twice in lg1's raw output (RL8_LOGIN.json carries the de-duplicated sets). r20_population.out, r20_population_rows.out.",
+      "READ app/server.py login_admit_decision: on the GUI path `principal` is None, so after the server-held check the rule reaches resolve_tier(None, cfg) = READ_ONLY (carries the read Graph tools) and admits; the only per-identity refusals are the email-deny guard and the blocklist (both in GuardMiddleware, before the rule runs); a server-held identity is admitted first. The host has no blocklist.txt and no KILL_SWITCH (r20_blocklist_host.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-8 / R24: compute the admit set BEFORE and AFTER 'over the CURRENT principal population'; any principal admitted before and refused after that is not restricted BLOCKS.",
+  "world_is": "The readable population is the OAuth sign-in set (3 persons; 1 restricted: refused before AND after by its email-deny record; the other 2 admitted before and after, one of them the Analyst service identity under R25.1). An identity that has never completed a gateway sign-in has no access-state record, so it is outside the population by construction; its outcome is given by the rule (admitted unless email-denied or blocked), not by the population. lost = 0 and lost_nonrestricted = 0 therefore holds for the population AND, by the rule's text, for every non-denied verified identity.",
+  "notes": "For the halves: the 0 is rule-derived for the unlisted; what the population adds is the one restricted principal's refusal-before-and-after and the two admitted identities' digests."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S63",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T07:54Z",
+  "one_line": "OG-rl-8 Phase A: rl8.AC1.sh grades non-restricted ADMITTED, restricted REFUSED, server-held ADMITTED and requests == audit_records, but never reads the Analyst service identity's arm -- the R25.1 property the release was re-cut for; RL8_LOGIN.json carries it (after.analyst_service_identity) and the verify script checks it, the criterion does not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ deliverables/2.0.0_SA_COO~O/r20/checks/rl8.AC1.sh lines 22-30: the nine graded keys name served_release, admit sets, lost_nonrestricted, nonrestricted, restricted, server_held, audit-record count and grants_written; no key reads an opalbloomberg@ / scoped-identity arm.",
+      "RUN step-7 expected-PASS form (r20_rl8.AC1_expected_pass_form.out): all nine keys True, RESULT: PASS, exit=0, matches the order's <expect> by re.search (r20_expect_match.out); the Analyst arm is in the RL8_LOGIN.json the script read but is not a graded key. The Phase A rehearsal on staged release bytes shows the Analyst identity ADMITTED 307 with ONE 'admitted' gw_login record (r20_login_after_stage.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-8 (A1): R25.4 -- 'admit every verified, non-email-denied tenant identity'; the admit-set semantics carry the Analyst's service identity as ADMITTED.",
+  "world_is": "AC1 passes on a release that would refuse the Analyst identity so long as the non-restricted synthetic principal is admitted; the property is recorded in RL8_LOGIN.json and in r20_verify.py's 10 /login arms (Phase B), where a refusal fails the verify and triggers rollback, but it is not a graded criterion key. Issuer's call whether to amend AC1; the worker has not edited the check."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W15-S64",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~15",
+  "surfaced_at": "2026-10-06T08:05Z",
+  "one_line": "OG-rl-8 Phase A: the Glue table that reads the audit lake (opal_mcp.mcp_audit) declares six columns -- ts, user, tool, args, outcome, detail -- so once the release ships, a gw_login record is queryable through it as only its ts and outcome ('admitted'/'refused'/'consent', values outside the tool-call vocabulary), with user and tool NULL; event, route, reason, email_digest, tier and principal sit in the S3 object but in no column.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/terraform/opal-gateway/audit-lake.tf lines 85-150 at the worker base ad0fbec245: aws_glue_catalog_table mcp_audit, JsonSerDe with ignore.malformed.json=true, projection partition dt, columns ts / user / tool / args / outcome / detail (+ partition key dt).",
+      "READ app/audit.py log_login (release): the record fields are ts, event, route, outcome, reason, email_digest, tier and (when known) principal; _emit ships the same line to s3://opal-mcp-audit/audit/dt=<day>/ when AUDIT_S3_BUCKET is set (it is, in the committed template: AUDIT_S3_BUCKET=opal-mcp-audit)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-8 / OG-lg-1 (R24): /login gains an audit record, written through the same sink as every other record (local JSONL floor + the S3 audit lake).",
+  "world_is": "The record is written to both sinks (rehearsed on staged release bytes against the local sink only: no lake write was made in Phase A). An Athena query over mcp_audit sees it as a row with tool NULL, user NULL and outcome in a new value set; a consumer that counts or filters `outcome` over all rows (e.g. 'denied'/'needs_login' tallies) is unaffected, one that assumes every row has a tool is not. Reading the reason or the digest takes the S3 objects or a Glue column add (Terraform, outside this order's bounds). Phase A did not census Athena consumers of mcp_audit.",
+  "notes": "INERT: no record exists until the release ships. For the CTO half (served output): the release adds a new record shape to the lake."
+}
+```
