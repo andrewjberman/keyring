@@ -35,7 +35,15 @@ LOCK = os.path.join(HERE, ".remote-job.json")   # gitignored: this device's open
 LDO_RUNTIME = os.path.join(ROOT, "infra", "aws", "terraform", "modules", "ldo", "runtime")
 LDO_ID = "LDO-001"
 REGION = "us-east-1"
-DEVICES = ("laptop", "sitez")
+def device_names() -> tuple:
+    """The boxes in the device register org/devices/DEVICES.json (NFRA_CTLPLN FWD-2), read through lib/devices.py.
+    No device list is kept in this file: a box added to the register can bid with no edit here."""
+    # Loaded by FILE PATH: .tools/lib is a package too, and with .tools first on sys.path `from lib import` finds it.
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("opal_devices", os.path.join(ROOT, "lib", "devices.py"))
+    devices = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(devices)
+    return tuple(devices.names())
 JOB_RE = re.compile(r"^J\d{3}$")
 JSON_PREFIX = "REMOTE-JOB-JSON"
 
@@ -57,13 +65,14 @@ def job_id(value: str) -> str:
 
 # -- which machine is this: the agent bus's own resolver, never a second copy of its rule ----------------------------
 def parse_device(output: str, rc: int) -> str:
-    """`agentbus-sqs.sh device` prints `device: <laptop|sitez|UNKNOWN>`. Anything but a known device is refused:
-    a bid under the wrong device name would win jobs for the other machine."""
+    """`agentbus-sqs.sh device` prints `device: <a register device | UNKNOWN>`. Anything but a device in the register
+    is refused: a bid under the wrong device name would win jobs for the other machine."""
     m = re.search(r"^device:\s*(\S+)", output or "", re.M)
     dev = m.group(1) if m else ""
-    if rc != 0 or dev not in DEVICES:
-        raise SystemExit("ERROR: this device is UNRESOLVED (%r, rc=%s); set AGENTBUS_DEVICE=laptop|sitez -- "
-                         "refusing to guess" % (dev or "no answer", rc))
+    known = device_names()
+    if rc != 0 or dev not in known:
+        raise SystemExit("ERROR: this device is UNRESOLVED (%r, rc=%s); set AGENTBUS_DEVICE to one of %s -- "
+                         "refusing to guess" % (dev or "no answer", rc, "|".join(known)))
     return dev
 
 

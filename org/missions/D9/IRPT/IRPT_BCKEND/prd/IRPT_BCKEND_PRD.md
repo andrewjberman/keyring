@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.27",
+ "prd_version": "v0.28",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -156,7 +156,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `ResolvedScope` | BCKEND B2/B15 | FNTEND | B2, B15 | viewer policy, principal class, entitlement revision; permitted-firm catalogue/selection for Global; verified request firm; unique permitted account set + fingerprint; requested vs resolved scope + partial reason; vendor ids server-side |
 | `PerformanceReport` | BCKEND B11 | FNTEND | B11 | source/provider/tenant lineage; requested and actual dates; currency/method/fee/accrual/annualization; summary/period returns, daily cumulative series, account detail; optional benchmark/value facts only when supported |
 | `AnalysisRequest` | BCKEND B5/B6/B7 (intake); B2 (`resolved`, v0.10) | FNTEND | B5, B6, B7, B2 | immutable tenant/request/revision + ingestion-gate/destination-policy revision; verified original-sender evidence; message/attachment refs; normalized holdings with source fields and units; variant + ordered comparisons; settings; findings/corrections; stage + release policy/state; **(v0.10, UI_CONTRACT.md) the browser REQUEST half: `request_id` (a stable idempotency key per click, preserved across transport retries; changed inputs = a new request/revision), `client_id`, `account_ids` (exact permitted ids; an account NUMBER is a display label, never a vendor identity), `snapshot_id` (the immutable normalized holdings snapshot, shown with its as-of; never a "latest" fetched mid-job), `variant` (`auto` resolves from the comparison count; explicit allowed, inconsistent rejected), `comparison_keys` (0-5 OPAQUE catalog keys in order; vendor ids never shown to the browser), `report_title` (optional; else derived from client/account label + comparison names), profile overrides only where policy allows; the `resolved` half (server-only); the RESULTS half (vendor portfolio id, effective settings, receipt, PDF hash/pages/bytes, timestamps, incidents, status) is never accepted from the browser as evidence of ownership** |
-| `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference |
+| `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference **(contract v2, ADDENDUM v0.28)** a `provider` member, `YCHARTS` or `OPAL_ENGINE`; under `OPAL_ENGINE`: Opal artifact hash + run record reference in place of the vendor artifact hash; effective inputs/settings with the as-of date of each input and no vendor read-back; typed sections with units/dates and, per section, status, reason, method and coverage in place of source coordinates; computation validation in place of extraction validation |
 | `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
 | `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export (exactly one, never null; ADDENDUM v0.24); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
@@ -652,3 +652,31 @@ agreement was one-sided. Written by `1.0.0_SA_CTO` 2026-10-03 ~21:1xZ under the 
 **Source.** `org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/RULINGS.md` batch 247, on `2.0.0_SA_COO~P` msg 105036 (row S324: the READY PATH B export carries neither ref ADDENDUM v0.24 requires).
 
 28. **The `ExportBundle` row gains a third named case.** A bundle carries a narrative packet for a client report; OR the retained Analysis report revision for an Analysis export (v0.24); OR, for a PATH B performance export (49 Financial's served figure, IRPT_DASHBD's total return), neither, and then it carries `narrative_state: NOT_ATTACHED` with the reason. v0.24's principle stands: absence by design is a named field, never a null, so "none by design" stays distinguishable from "missing". A bundle with no narrative, no Analysis ref and no `narrative_state` is refused. **FWD-8 is unchanged and stays NOT REALIZED** until a branded export carries its narrative page: this row admits served reality and claims no outcome.
+
+## ADDENDUM v0.28 -- `AnalysisReport` gains an Opal-producer form as contract v2 (CONTRACTS changed: the ratified-text half re-opens)
+
+**Source.** IRPT_YCDGEN PRD v0.5 @e6a801f7f0, contract C-REPORT and manifest S20 (Andrew's in-house direction, records named in that
+PRD's header); the design `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_DESIGN_ANALYSISREPORT_OPAL_PRODUCER_FORM_20261005.md`
+@cf8c4759e7; `2.0.0_SA_COO~Y` msg 105384 (three round-6 cells of IRPT_YCDGEN wait on this row). Written by `1.0.0_SA_CTO`, clock read
+21:04Z 2026-10-05.
+
+29. **The `AnalysisReport` row gains contract v2. v1 is untouched.** The six v1 items stand word for word, and the generated v1
+    schema (`_contracts/AnalysisReport.schema.json`, pinned @62301f71e0) is not regenerated. v2 is one contract with a `provider`
+    member, on the precedent of `PerformanceReport`'s provider lineage:
+    - `provider: YCHARTS` carries exactly the v1 members.
+    - `provider: OPAL_ENGINE` carries `request_ref`, `disclosures` and `release` as v1, and in place of the vendor members:
+      `opal_artifact` (`sha256`, `byte_length`, `generated_at`, `run_record_key`); `effective_inputs` with
+      `holdings_fingerprint`, `settings` and `inputs_as_of`, and no `read_back`; sections with `section_id`, `section_type`,
+      `units`, `as_of_date`, `status` (`VALUE` or `NOT_AVAILABLE`), `reason`, `method`, `coverage`, with `page` optional;
+      `computation_validation` (`status`, `checks_run`, `checks_failed`, `notes`).
+    - Under `OPAL_ENGINE` the vendor members are ABSENT, never null and never defaulted. A consumer that needs one rejects the
+      document.
+    - `NOT_AVAILABLE` carries a null `value` and a `reason` from IRPT_YCDGEN's closed set (`COVERAGE_BELOW_0.95`, `STALE_INPUT`,
+      `INPUT_MISSING:<name>`, `NOT_IN_THIS_VERSION`).
+    - The enforced version stays the `X-Contract-Version` request header. Nothing already stored is re-read under v2.
+30. **Who writes what.** The v2 schema file and its producer fixtures are cut by IRPT_YCDGEN's issuer (`2.0.0_SA_COO~Y`) as cells of
+    that project, under this row; the consumer fixtures are the page's half, as for every contract here. No cell of
+    `2.0.0_SA_COO~P`'s round reads this row, and its frozen decomposition is not touched.
+31. **The `YCHARTS` branch of v2 is removed** in the release that removes the YCharts producer (IRPT_YCDGEN FWD-11).
+
+ENDPOINT is not edited.

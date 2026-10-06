@@ -9,6 +9,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 ## Holds
 
 - `2.0.0_SA_COO` (base): D2 off until Andrew lifts it.
+- DSGN_REBRND (`2.0.0_SA_COO~D`): STOPPED and HELD by Andrew-direct ~14:35Z 2026-10-06 at the `2.0.0_SA_COO~D` terminal, VERBATIM:
+  "Stop work on REBRND", then "Any work on DSGN_REBRND from this point forward is on hold and not to be merged to the main branch
+  unless I explicitly ask for it." Record: `org/missions/D13/DSGN/DSGN_REBRND/STATUS.md` "Open at Andrew" (@2ddf3afa91). Its light
+  /market page is "kept off the main branch without explicit approval" (`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261006_1414Z_LIGHT_MARKET_EXPERIMENT_OFF_MAIN_BRANCH.md`).
+  DSGN_IRPTV1 is not stopped. Lifted only by his explicit word. Landed by 1.0.0_SA_CTO.
 
 ## Arms
 
@@ -76,6 +81,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_194xZ_SELF_DRIVE_60M_AMGT_FRIDAY_RESTART_AFTER_SENTINELONE_CRASH.md`.
     Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z. The terms above carry unchanged. Each paired seat re-arms
     its own loop (MSTR~Z relays). `2.0.0_SA_COO~RV` stays on `/canonical-drive` FULL.
+- `2.0.0_SA_COO~C` `/closer-drive` over NFRA_CTLPLN (the four-device control plane), FAST lease armed by 1.0.0_SA_CTO 14:43Z
+  2026-10-06 (`org/mcp/drive_mode/NFRA_CTLPLN.json`, surface `.tools/git-hooks`, the project tree, `org/devices`). Class DIRECTED,
+  chooser Andrew ("Let's bring on COO~C to take it on, /closer-drive instruction"), record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_144xZ_SEAT_COO_C_NFRA_CTLPLN_CLOSER_DRIVE.md`. Landed by
+  1.0.0_SA_CTO. Stop: NFRA_CTLPLN round 1 graded by the CVO, the lease lapsing to FULL (then `/canonical-drive`), or his stand-down.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:

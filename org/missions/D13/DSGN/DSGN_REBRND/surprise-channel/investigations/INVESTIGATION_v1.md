@@ -1965,3 +1965,142 @@
   "dismissal_reason": "Disarmed by its owner's act and confirmed by the grader: the regressing batch is reverted byte-exact (f1cdccd7) and the one element below the bar before the batch (BUY/SELL) is fixed (cab2b039); 3.0.0_SA_CVO's re-walk at cab2b039 reads every S22 element at or above its bar (105296)."
 }
 ```
+
+## DSGN_REBRND-S24 -- ui-smoke --hover-every walks one element per class and finds hover by class token only
+
+```json
+{
+  "id": "DSGN_REBRND-S24",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T21:29:00Z",
+  "one_line": "ui-smoke --hover-every at portal DEV a3ab197f does not walk every hover-styled element: it keeps one element per tag-and-class signature (a 44-row table is graded on its first row only) and finds hover by the class attribute alone, so a variant-prefixed hover token or a stylesheet :hover rule on a non-pointer element is not walked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show a3ab197f:scripts/ui-smoke.mjs line 654 (the hoverStyled pattern, hover: or group-hover: at the start of a class token) and lines 658-659 (sig = tagName + '|' + class; a signature already seen is skipped)",
+      "this seat's runs 2026-10-05 ~21:2xZ against the vite server of worktree portal-coo-d-r43 at a3ab197f (0 uncommitted paths before and after): /market --hover-walk 60 reads 11 walked, 0 below; with --hover-every 39 walked, 8 below at rest (4 distinct inks), worst 2.84:1",
+      "source census at that worktree: a variant-prefixed hover token in 4 files, 5 occurrences (2 in src/ui/components/catalyst/table.tsx); src/index.css holds 5 :hover selectors, among them .card-hover:hover and [data-state-retry]:hover",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_INSTRUMENT_PIN_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The pin (2.0.0_SA_COO~D msg 105399; commit a3ab197f): the walk 'hovers every hover-styled element (rows too) and grades every text descendant'; row S22's redo is walked slice by slice on this instrument.",
+  "world_is": "Every text descendant of a walked element is graded, and rows are reached. But a class of rows is represented by its first row, and an element whose hover comes from a prefixed utility or a stylesheet rule is not picked unless it is cursor:pointer. So a batch-2 slice can read 0 below while a later row's ink, or a prefixed-hover element, sits below the bar. The measured claims of the pin reproduce exactly.",
+  "notes": "INERT: no redo slice has been graded on the instrument yet. Remedy is the instrument owner's (2.0.0_SA_COO~D): walk every element of a signature or every distinct ink within it, and read hover from the matched CSS rules or a wider token pattern. Until then a slice's 0-below is a statement about first rows."
+}
+```
+
+## DSGN_REBRND-S25 -- the hover walk prints a clean verdict after a failed click
+
+```json
+{
+  "id": "DSGN_REBRND-S25",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T22:47:00Z",
+  "one_line": "ui-smoke's hover walk carries on after a failed --click or --clicktext and prints a clean verdict for the page it did reach: on /portfolio-management a mistyped Resume name read 7 walked, 0 below on three tabs, where the opened session reads 12 to 14 walked and up to 5 below.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "this seat's runs 2026-10-05 ~22:4xZ against the vite server of worktree portal-coo-d-r43 at fb46d507 (0 uncommitted paths): --click \"Resume\" printed CLICK-FAIL (locator.click timeout 30000 ms) and --clicktext \"Resume\" printed CLICKTEXT-FAIL (15000 ms); each run then printed CLICKED for the tab and HOVER-WALK 7 walked, below at rest 0, on hover 0, on Model, Alpha and Sector",
+      "the same command with --click \"Resume (3d ago)\": CLICKED twice; Model 12 walked 1 below at rest 1 on hover; Alpha 13 walked 0 and 0; Sector 14 walked 5 below at rest 3 on hover",
+      "portal src/pages/PortfolioManagement/components/OptimizationSummaryHeader.tsx lines 185-187: the button's text is Resume (<time ago>) when an autosave exists, so its name changes with the clock",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_PM_TAB_PINS_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md 22a RETRIEVAL: a failed retrieval returns a value. A walk's '0 below' is read as a statement about the state its clicks were meant to reach.",
+  "world_is": "A failed click is printed on its own line and does not stop or mark the walk, so the HOVER-WALK line that follows reads the same as a pass. A pin that quotes only the HOVER-WALK line cannot be told from a walk of the empty page; the element count is the only tell (7 against 12 to 14 here). The Resume button's name carries a time-ago string, so a recorded command stops matching as the fixture's date ages.",
+  "notes": "INERT: the two pins graded today each reached the session (their counts and worst values reproduce). Remedy is the instrument owner's (2.0.0_SA_COO~D): make a failed click fail the run or stamp the HOVER-WALK line, and match the Resume button by a stable name."
+}
+```
+
+## DSGN_REBRND-S26 -- the hover walk grades SVG text on CSS color, not on fill
+
+```json
+{
+  "id": "DSGN_REBRND-S26",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-05T23:41:00Z",
+  "one_line": "ui-smoke's hover walk reads every text ink as the CSS color property, so SVG text, which is painted with fill, is graded on a colour that may not be the one on screen; the three /market readings left below the bar (the Fear and Greed card, 4.22:1, empty label) are probably such a node.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show d128211c:scripts/ui-smoke.mjs, the hover walk's readOne: ink is rgba(getComputedStyle(textEl).color); no read of fill anywhere in that step; the label is taken from innerText",
+      "this seat's run 2026-10-05 ~23:4xZ at d128211c (worktree portal-coo-d-r43, 0 uncommitted paths): /market 39 walked, 3 below, each #80889C on #192643 4.22:1, each labelled worst of 11 or 7 with an empty text",
+      "portal commit d128211c's own message: 'the Fear & Greed card's #80889C 4.22:1 (not located; parked)'",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_S22_PM_TAB_PINS_GRADE_20261005.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-13's PROOF instrument grades the ink a reader sees against its ground. For SVG text the visible ink is the fill.",
+  "world_is": "The code fact is certain: the walk never reads fill. Whether the card's node is SVG text was not confirmed in the DOM; the empty label is the evidence for it. If it is, its real contrast is unknown and the 4.22 is the inherited CSS colour's. The same holds for any chart axis or gauge label on any page the walk grades.",
+  "notes": "INERT: nothing was changed on the strength of the 4.22 (the author parked it). Remedy is the instrument owner's (2.0.0_SA_COO~D): for an SVG text or tspan read the computed fill and fill-opacity, and print the tag in the label."
+}
+```
+
+## DSGN_REBRND-S27 -- /correlations row labels sit one row below their cells (from the author's render)
+
+```json
+{
+  "id": "DSGN_REBRND-S27",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-06T06:59:00Z",
+  "one_line": "On /correlations the matrix's row labels sit one row below their cells: the first row of cells has no label, each label from 'Gov/Credit 1-3Y' down is offset by about a row, and the last label 'EM' has no row beside it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D13/DSGN/DSGN_REBRND/deliverables/2.0.0_SA_COO~D/CORRELATION_AFTER_SIGN_RECUT.png (2.0.0_SA_COO~D's render of portal DEV 5e31a702 with a type-built fixture, 13 tickers): row label 'Gov/Credit 1-3Y' at y about 286 px beside the first cell row at y about 258; label 'EM' at y about 902 below the last cell row at y about 874; no label at the first row",
+      "this seat's read of that PNG 2026-10-06 ~07:0xZ; the page was not drawn by this seat (the fixture is not on disk where this seat can read it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-3 and FWD-13 grade what an advisor reads on a drawn page; a correlation matrix is read by pairing a cell with its row and column labels.",
+  "world_is": "In the one render on record the row labels are offset from the cells by about one row, so a reader pairs each value with the wrong ticker. The offset is layout, not fixture data, so it would show with served data too, unless the fixture's ticker list or the render width caused it. Whether it pre-dates the colour work is not read here.",
+  "notes": "INERT for the colour grades (they read cell colours, not labels). Owner 2.0.0_SA_COO~D: draw /correlations once with the same fixture and check label-to-row alignment; CorrelationMatrix.tsx was rewritten in 4fa0312e (438 lines)."
+}
+```
+
+## DSGN_REBRND-S28 -- light-world /market: indigo tooltips print navy role ink (1.9:1 and below)
+
+```json
+{
+  "id": "DSGN_REBRND-S28",
+  "project": "DSGN_REBRND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-06T08:17:00Z",
+  "one_line": "On the light-world /market (portal DEV 4ca437eb) two indigo tooltips print navy role ink on #5F3BE3: the Daily Cloud word tooltip --ink-1 at 1.87:1 (white before, 5.41:1) and the Fear and Greed component tooltip --ink-3 at 1.32:1; the walk does not open either.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D -- disarms when both tooltips read 4.5:1 or better on their indigo ground in the light world, before any PROD promote of DEV carries 4ca437eb",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal show 4ca437eb:src/components/market-performance/TopicCloud.tsx line 191-196: bg-[hsl(var(--palette-indigo))] with text-[hsl(var(--ink-1))]; at 4ca437eb^ the same lines read text-white/85 and text-white, with the comment 'Ink follows its ground: the text is white'",
+      "git -C portal show 4ca437eb:src/components/market-performance/FearGreedModal.tsx line 279: the indigo tooltip with text-[hsl(var(--ink-3))]",
+      "src/index.css at 4ca437eb: [data-surface-world=\"light\"] --ink-1 223 68% 27% (#163174), --ink-3 220 28% 33% (#3D4C6C); design/themes/opal-capital.css --palette-indigo #5F3BE3; contrast computed by this seat",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/DSGN_REBRND_FWD3_PINS_GRADE_20261006.md, the 4ca437eb addendum"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DSGN_REBRND FWD-13: every text reads 4.5:1 or better on its ground; the tooltip look is solid indigo with white text (Andrew-direct, quoted in TopicCloud.tsx's own comment).",
+  "world_is": "The role rewrite treats every light-on-dark text as a role ink, but a tooltip's ground does not change with the world, so in the light world its text turns navy on indigo and falls below 2:1. The walk reports 0 below because it never opens these tooltips.",
+  "notes": "ARMED because DEV is the PROD candidate. A fix keeps tooltip text on a world-independent light ink. The same class may exist on other indigo tooltips inside any page that opts into the light world later."
+}
+```

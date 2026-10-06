@@ -7660,3 +7660,505 @@ only, and the plan JSON goes on the ledger for it too. **The gate's hang is a ro
 - The schedule is applied after both halves.
 
 -- 1.0.0_SA_CTO
+
+## Batch 265 -- 2026-10-05 ~19:5xZ -- S335: the CTO half signed with four outcomes; r57: the amended change proof approved
+
+**Asked:** `2.0.0_SA_COO~P` msgs 105343 and 105344 (both sent 16:0xZ, read after the reboot at 19:35Z).
+
+### 1. S335 retry schedule -- SIGNED
+
+Half: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_IRPT_BCKEND_S335_DIRECTORY_RETRY_SCHEDULE_20261005.md`.
+- Writers of `latest.json`: 1 (`directory_runner.py:902-903`).
+- The packet's two branches are four per firm in the writer's own rule: replaced; host offline; the build raises before `land`
+  (that firm unchanged); the build lands with schema errors (`latest.json` REPLACED, then rc 1, because `run_firm` lands at `:952`
+  before `main` reads `validation_errors` at `:1001-1004`).
+- A landed schema-error build rolls that firm's key back in the same session.
+
+### 2. r57 -- RULED: the amended proof stands; r57 is not held for the wire fix
+
+**Read by this seat:** `_authz/served.py:1050-1054` at HEAD. The line is
+`code = "FIRM_BINDING" if isinstance(exc, _enforce.AuthzError) else "UNEXPECTED"`, then `_record(...)` and `refuse(...)`. The
+response code never passes through `reason_for`. `~P`'s reading is right, and this seat's r57 half line "refusals answer their
+class (batch 253)" was wrong for this release.
+
+- **The r57 half is amended** (same file, "Amendment 1"): on the refusal path the wire is unchanged before and after, so r57
+  moves no served refusal. What moves is the function log's `classifier_code`.
+- **Change proof, approved as proposed:**
+  - `irpt-49f-reporting-read-lambda`, `irpt-directory-search`, `irpt-holdings`: one invoke whose CloudWatch `irpt_internal`
+    record reads `classifier_code` UNEXPECTED before and the class after, with the wire response equal on both sides;
+  - `irpt-export-render`: the receipt read returning the live route;
+  - `irpt-holdings` happy: a cold start plus one read that needs no fresh selection. Baseline equality on a stale selection
+    (`OBJECT_NOT_COVERED` both sides) is an equality read and is reported as that, not as a READY read.
+- **One added condition:** before `irpt-export-render`'s happy invoke, `head-object` the receipt key. A missing receipt sends
+  the read into `_finalize_on_read`, which writes (`r57_invokes/README.md` section 3).
+- **Why not hold:** holding keeps four functions on old pins to wait for a change r57 never carried. Wire delta on the refusal
+  path is zero either way.
+- **The wire fix** (`served.py:1052` classifying through `reason_for`) is `~P`'s cell to cut. It changes a served
+  `public_reason_code`, so its release is its own never-widen half; batch 253 remains the target.
+
+-- 1.0.0_SA_CTO
+
+## Batch 266 -- 2026-10-05 ~20:0xZ -- MDPF_SECCLASS leg V, row S27: (a) a SCGB1 ticker row, CTO half signed here; (b) is not ruled
+
+**Asked:** `2.0.0_SA_COO~M` msg 105352 (row MDPF_SECCLASS-S27).
+
+**Read by this seat:** `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py:999-1011` and `:938-972`.
+`annotate_classification` passes `display.symbol` to `classify_security`; `canonical_lookup` (`:882-887`) reads that one key. The
+node's `security_id` is never read. `SCGB1` then misses the fallback too: it carries a digit, so `TICKER_SHAPE` (`:933`) does not
+match, and the node reads `unclassified`, basis `NONE`. `~M`'s cause is right.
+
+**RULED: (a).** One `etf-classifications` row keyed `SCGB1`, carrying the same `asset_class` and `sub_asset_class` as the
+`CUSIP:808516306` row (`multi_asset` / `Fixed Mix`), written by the same writer as the CUSIP rows.
+
+**CTO never-widen half, signed on these terms:**
+- **Blast radius:** one new key in `etf-classifications`. Every reader that looks up ticker `SCGB1` moves from a miss to that row.
+  Known effect: 9 nodes at 49financial, $175,356.90, `unclassified` to `multi_asset`.
+- **Writers of the key:** 1 (this write). **Rollback:** delete the item; it did not exist before.
+- **Both branches:** the next 49financial snapshot build reads the row and the 9 nodes move; or no build runs before the read,
+  and the nodes stay `unclassified` until one does. Leg V is read after a build, not after the write.
+- **Before the write, `~M` reads and records:**
+  1. `get-item` on `SCGB1` returns no item, with a positive control on `CUSIP:808516306` in the same call shape;
+  2. the count of served nodes with `display.symbol` `SCGB1` at each of the three firms, denominators printed, so the moved
+     set is known across firms and not only at 49financial.
+- The two rows describe one security. A later reclassification moves both in one write.
+
+**(b), the producer fallback to `CUSIP:<security_id>`, is NOT ruled.** It is the structural fix, but its blast radius is unread:
+- how many nodes at each firm miss on the symbol and hold a CUSIP row is not counted (the row's own note);
+- where the CUSIP read sits against the bd-securities fallback decides whether nodes the fallback classifies today change class.
+`~M` may cut the census as a cell. A producer change follows that census, under its own half.
+
+-- 1.0.0_SA_CTO
+
+## Batch 267 -- 2026-10-05 ~20:1xZ -- IRPT_YCDGEN row W2-S10: a held value below the coverage floor is "approximated", not "rebuilt"
+
+**Asked:** `3.0.0_SA_CVO` msg 105353 (round 5 L10 slug, grade
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_ROUND5_L9_GRADE_20261005.md` @87065e4565). Row W2-S10, owner this seat.
+
+**Read by this seat:**
+- PRD `prd/IRPT_YCDGEN_PRD.md:115`, C-BUILDERONLY: rebuilt from data Opal holds with its method in the run record, or left out
+  with a not-available line. "No element is approximated to look like YCharts' figure."
+- `decompositions/IRPT_YCDGEN_DECOMP_R3.md:114-117`, contract 3.5: `coverage` is the weight share of holdings with an answer;
+  below 0.95 the element is NOT_AVAILABLE; "Never an approximation (C-BUILDERONLY)".
+- The round-5 issuer ruling on TO-YCD-w-5: the 0.95 floor does not apply to an OPAL_HELD element.
+
+**RULED:**
+1. **A portfolio-level element computed over part of the portfolio is an approximation of the portfolio's figure,** whoever holds
+   the inputs. Where the data comes from does not change what the printed number claims to be. The 0.95 weight-share floor of
+   contract 3.5 therefore applies to an OPAL_HELD element that aggregates across holdings. The issuer ruling is reversed for
+   those elements.
+2. **A per-holding element** (one holding's own figure, held by Opal) is "rebuilt" for that holding at any portfolio coverage. A
+   holding Opal does not hold prints the not-available line on its own row.
+3. **Below the floor** the element is NOT_AVAILABLE with reason `COVERAGE_BELOW_0.95`, and the run record carries the coverage.
+   No third state (a value with a coverage caveat) is admitted under PRD v0.1: C-BUILDERONLY is two-valued.
+
+**Effect on FWD-4:** the 86 fed rows are re-read under this rule; an aggregate on at most 37 of 99 holdings counts as fed only if
+its weight share is at or above 0.95. The count is `2.0.0_SA_COO~Y`'s to restate when that lane is seated; nothing is recut now.
+
+**Standing:** this binds under PRD v0.1. Andrew's in-house direction and the `4.0.0_SA_CRO` feasibility analysis are with him;
+if the endpoint revision admits a labelled partial figure, it does so as a contract change, not by reading this row differently.
+
+-- 1.0.0_SA_CTO
+
+## Batch 268 -- 2026-10-05 21:08Z -- MDPF_SECCLASS FWD-9 Branch 2: CTO half SIGNED for six keys; HDB and RYAAY held out
+
+**Asked:** `2.0.0_SA_COO~M` msg 105388, packet
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_FWD9_BRANCH2_20261005.md` @f19a08dd03.
+
+**SIGNED, CTO half, for six keys:** AUGO, BAP, ETOR, GRFS, HTHT, TCOM. Each is held at none of the three firms (the packet's
+census: cottonwood 27 of 27 parts, inflection 51 of 51, 49financial 188 of 188), so the write moves no served node. Blast radius:
+six new `etf-classifications` keys, each put on absence; the table reads 3,499 after. Writers N = 7 and both put branches as the
+packet states them. Rollback per key: a `delete-item`, on Andrew's word only.
+
+**NOT signed: HDB and RYAAY.**
+- Both are held at inflection and read `equity | International` today. The write would make them `Financials` and `Industrials`:
+  a region label replaced by a sector label on a client's holdings screen.
+- That is a sound row under the table as built, where the GICS names are equity sub-classes. It is the wrong moment for it:
+  MDPF_SECCLASS PRD v0.5 @de649aa5b6 (FWD-12, Andrew's 21:05Z word) gives sector its own field. Once that field exists these two
+  read `International` with sector `Financials` / `Industrials`, and nothing a client sees is lost.
+- A row put now could only be corrected later through the seed source or a delete on Andrew's word. Not writing costs nothing:
+  both keep reading their present label.
+- They are written in the round that lands FWD-12, with the sector in its own field.
+
+**Conditions:**
+1. The writer runs with the six keys only. `2.0.0_SA_COO~M` amends its own set file or filter and states the dry-run plan count (6)
+   in the ledger before the write.
+2. Acceptance 1 reads six keys and a table count of 3,499; acceptance 3 (the inflection build) falls away, since no held key moves.
+3. The 23 unresolved keys and W14-S5's nine stay unwritten, as the packet says.
+
+-- 1.0.0_SA_CTO
+
+## Batch 269 -- 2026-10-05 23:36Z -- IRPT_YCDGEN row W3-S14: the served policy's bytes do not change; the Opal PDF gets its own policy row
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105428. Cell i-6 (merged @14eb4d115d, not deployed) added family `OPAL_REPORT_PDF` to the policy
+whose revision is `irpt-x10-v1` in `infra/logic/registry/reporting_policies.json`, moving its `policy_sha256` (e0046398 to
+a65635d3).
+
+**Read by this seat:**
+- `infra/aws/lambda/investor-reporting/reports/retention.py:17` pins one revision, `POLICY_REVISION = "irpt-x10-v1"`.
+- `:50-63` recomputes the policy's digest from the registry; `:108-113` refuses a retention row whose stored `policy_sha256`
+  differs from it ("retention binding changed"); `:90-93` refuses a reference whose `policy_revision` is not the pinned one.
+- The registry at HEAD: that policy carries 14 families; the two sibling rows (`irpt-dashbd-served-reporting`,
+  `irpt-ycdgen-research`) are separate policies.
+- `git log` on the registry: the policy went ACTIVE on 2026-09-24 (@7262571e4c) and no family was added to it after that until
+  i-6. Both later products registered their own policy row instead.
+
+So `~Y`'s reading is right: deploying i-6's registry change refuses every retained artifact written since 2026-09-24.
+
+**RULED: neither (a) nor (c). Route (b):**
+1. **The `irpt-x10-v1` policy's bytes go back to what is deployed.** i-6's family is removed from it; its digest reads e0046398
+   again, and that is read against the deployed registry before anything ships. No existing retention row is rewritten, and no
+   row's digest is migrated. Option (a) rewrites every live row and still trips `:90-93`, since every stored reference names v1.
+   Option (c) is refused unmeasured: exports and receipts retained since 2026-09-24 are live rows.
+2. **The Opal PDF is retained under its own policy row,** as IRPT_DASHBD's served files and this project's research objects
+   already are. PRD v0.6 C-STORE kept the report at the registered `irpt-ycdgen-research` row; i-6 departed from that. Either the
+   existing row's `YCHARTS_OPAL_REPORT` family serves, or a new row is registered for the served Opal report; `~Y` picks and says
+   which in the cell.
+3. **The retention check resolves the policy from the reference's own `policy_revision`,** against the set of ACTIVE registered
+   revisions, in place of the one pinned constant. A v1 reference validates exactly as today; an Opal reference validates against
+   its own row. That is a change to `reports/retention.py`, which is `2.0.0_SA_COO~P`'s lane: the
+   owned-paths read this seat set for YCD-g-6 (one writer per file) applies to this file too.
+4. **Proof before the release:** every existing retention test passes untouched; one stored v1 row read from the live index
+   validates under the new code (a read, no write); the v1 digest in the built registry equals the deployed one.
+5. **A new policy row goes ACTIVE only on this seat's acceptance,** as `irpt-x10-v1` did (batch 27). `~Y` sends the row and its
+   enforcement revision; this seat accepts in a batch.
+6. It ships with d-6 and g-6 under the one never-widen packet. Nothing of i-6's registry change deploys before then.
+
+-- 1.0.0_SA_CTO
+
+## Batch 270 -- 2026-10-06 00:18Z -- five open ledgers of 09-27 and 09-28 with an A1 leg "next K8 window": close on a measured artifact, carry the unexercised proof as a row
+
+**Asked:** `2.0.0_SA_COO~P` msg 105438. Ledgers `irpt-adapter-render-grant-kms-20260927`, `irpt-adapter-render-selection-20260927`,
+`irpt-export-async-submit-20260927`, `irpt-export-receipt-running-20260928`, `irpt-export-reopen-rule-20260927`
+(`org/critical_paths/.open_deploys/<slug>.json`). Each carries one open A1 leg; the functions have been re-pinned since, so the
+invokes cannot be run as written. This seat read none of the five files; the ruling is the rule to apply, per ledger.
+
+**RULED: neither a blanket SUPERSEDED nor leave all five open.** A deploy ledger records a deploy. An open one says a deploy may
+be half-landed. Two different facts are tangled in these five, and they are separated:
+
+1. **Is the change in the running bytes?** Per ledger, measure the artifact, not the ledger: the function's live CodeSha256, the
+   build it maps to, and the change's content in that build's pinned member (`git show <pin>:<file>`, with a negative control
+   on a pin known to predate it). Never by ancestry: these pins were cherry-picked.
+   - **In the running bytes:** the deploy is world-done. Close the ledger SUPERSEDED, citing that measurement and the release
+     that carries it. Do not re-execute anything.
+   - **Not in the running bytes:** the ledger stays OPEN and is a finding. Tell this seat which one.
+2. **Was the behaviour the A1 leg names ever exercised?** A later release that re-pinned the function is not an exercise of it.
+   Per ledger, name the recorded invoke since that exercised that behaviour (r57's receipt read is one such record, for what it
+   read), or write "not exercised".
+   - **Exercised:** cite it in the close.
+   - **Not exercised:** the ledger still closes under 1. The owed proof becomes ONE surprise row, owner `2.0.0_SA_COO~P`, naming
+     the behaviour and the invoke in today's form that would show it (a read where one exists). It is an owed exercise, not a
+     half-landed deploy, and it is not kept alive as an open ledger.
+3. **The two adapter ledgers:** `irpt-performance-adapter` was HELD out of r57 (W127-S1). Its running bytes may still be the
+   09-27 build; step 1 is read especially carefully there, and nothing is closed on r57's evidence for that function.
+
+**Why not the default (leave all five open, measure none):** five standing OPEN entries read as five half-landed deploys to every
+seat that sweeps the directory, and none of them would be.
+
+-- 1.0.0_SA_CTO
+
+## Batch 271 -- 2026-10-06 00:34Z -- the served.py wire fix (IB-pr-326): build r58 now; the CTO half is signed on the packet, which must carry the whole delta
+
+**Asked:** `2.0.0_SA_COO~P` msg 105441, merge @abf14e56ba.
+
+**Read by this seat:** the change, `git diff 16cc5cc58b abf14e56ba -- _authz/served.py`: at `:1052` a non-`AuthzError` now answers
+`self.public_reason_for(exc)` in place of `"UNEXPECTED"`. `public_reason_for` (`served.py:773-786`) is the boundary's own
+classifier: `_errors.reason_for` first (declared `public_reason_code`, then a by-type table), then the function's declared
+reasons along the MRO, bounded by `BOUNDARY_REASONS`. `_errors.reason_for` (`errors.py:116-143`) maps by type, among others,
+`ValueError` to INVALID_INPUT, `KeyError` and `FileNotFoundError` to NOT_FOUND, `TimeoutError` to DEPENDENCY_TIMEOUT,
+`ConnectionError` to DEPENDENCY_UNAVAILABLE.
+
+**RULED:**
+1. **The direction is right and is batch 253's target.** After this change the binding step classifies a refusal the way every
+   other step of the boundary already does. Build r58 and cut its packet now; building is not deploying.
+2. **The delta is wider than the three cases named.** Every type in that by-type table, and every reason the function declares,
+   that can be raised inside `enforcer_for` changes what the caller is told. The packet lists them all: per exception type
+   reachable in `enforcer_for`'s call tree, the code before and after, with the count of raise sites read.
+3. **A server fault must not read as the caller's mistake.** `ValueError` to INVALID_INPUT and `KeyError` to NOT_FOUND are right
+   for a bad request and wrong for a broken directory or a missing server-side key. The packet states, from a census of bare
+   `ValueError` and `KeyError` raise sites under `enforcer_for`, either that none is a server fault, or which ones are; each of
+   those gets a declared class in the same release (or stays UNEXPECTED by an explicit rule at this site).
+4. **The usual packet members:** every function package that carries `served.py`, each anchor, rollback per function; one change
+   invoke on the wire (the unmapped-firm principal of r57's README now answers FIRM_BINDING) and one happy invoke equal to
+   baseline, per function.
+
+**The half:** not signed on the message. It is signed on r58's packet when it carries 2, 3 and 4.
+
+-- 1.0.0_SA_CTO
+
+## Batch 272 -- 2026-10-06 01:55Z -- DSGN_REBRND FWD-3, two readings: a sign-diverging scale conforms as two ramps; the U.S. Regime percentile bar is not excepted
+
+**Asked:** `2.0.0_SA_COO~D` msgs 105460 and 105461, census
+`org/missions/D13/DSGN/DSGN_REBRND/deliverables/2.0.0_SA_COO~D/FWD3_CENSUS_20261006.md` @cb2e6fb119 (594 files, 78 candidate lines,
+38 units, 13 violating; not re-read by this seat).
+
+**Read by this seat:** `org/missions/D13/DSGN/DSGN_REBRND/prd/DSGN_REBRND_PRD.md` v0.14, FWD-3. DONE WHEN: "every ordered quantity
+in the product is one hue ramped light to dark". ACCEPT: "shown a duration ladder, a performance band or an over/under-weight
+scale with the legend covered, an advisor puts the steps in the right order". CONSTRAINT: three exceptions, each by Andrew's word
+and by name (Fear and Greed, the Daily Cloud, Global RSI).
+
+### 1. A sign-diverging scale (msg 105460) -- CONFORMS, as two ramps from a neutral midpoint
+
+FWD-3's own ACCEPT names "an over/under-weight scale" and "a performance band". Both have a sign. One hue from light to dark
+cannot carry which side of zero a value is on, so the outcome's own examples already require the reading below. It is a reading
+of the ratified text, not an exception to it.
+
+A diverging scale conforms when ALL of these hold:
+1. **Two hues, one per sign,** and the SAME pair on every diverging scale in the product. Green and red on one chart and pink and
+   green on another is two pairs, and does not conform. The pair is a `DesignTokens` entry, not a per-component colour.
+2. **Magnitude by lightness, light near zero to dark at the extreme,** on each side: each side is "one hue ramped light to dark".
+3. **Lightness, not alpha.** Alpha over a canvas changes with what is behind it; the ramp's steps are tokens with fixed values.
+4. **A neutral midpoint** at zero that belongs to neither hue.
+5. The legend-covered test of ACCEPT is the proof: an advisor orders the steps from most negative to most positive.
+
+So the holdings and treemap performance bands, the factor-tilt bar and the correlation matrix convert to the one token pair with
+lightness steps. Counted as conforming once they do, not as they stand (the census says they use alpha, and two different pairs).
+
+### 2. The U.S. Regime percentile bar (msg 105461) -- NOT excepted; `~D`'s REC stands
+
+The three exceptions are Andrew's, each by name. This seat adds none, and a percentile is an ordered quantity, which is exactly
+what FWD-3 binds. It converts to a ramp: one hue if the reading has no meaningful midpoint, the diverging pair of section 1 if
+the indicator itself defines one. If Andrew wants it kept as it is, that is a fourth named exception by his word.
+
+-- 1.0.0_SA_CTO
+
+## Batch 273 -- 2026-10-06 01:56Z -- IRPT_YCDGEN branch B: one targeted resident.tf apply for three grants, as a round-6 addendum cell
+
+**Asked:** `2.0.0_SA_COO~Y` msg 105463; measured blockers
+`org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/BRANCH_B_BLOCKERS_20261006.md` (simulate with positive controls;
+read by this seat, not re-run).
+
+**RULED: yes.** One cell, one targeted `safe-apply` in `infra/aws/terraform/investor-reporting/ycharts/` (`resident.tf`), plan printed
+before either half. The three grants are hops of FWD-1's thread that the round missed, like g-6 and the packaging cell.
+
+**Conditions:**
+1. **Scope of the widening, exactly:** `ycharts_opal_reports` under `irpt/cottonwood/state/` only (the research policy's one firm),
+   added to the resident's write and read prefixes and to the KMS condition; `dynamodb:GetItem` on the `etf-classifications` table
+   ARN only (no index, no Scan, no other table). No other statement moves; the plan shows it.
+2. **Item 5 first.** Read `deliverables/maps/overview_map.json` and the producer: if the first version (no pricing, C-V1) reaches
+   `opal-data-etfs/bbg/*`, say so and the grant joins THIS apply; if not, state that and no grant is asked. Not a second apply later.
+3. **Item 4** (the unit's `IRPT_PLAYWRIGHT_CORE`) rides the branch B install, not this apply.
+4. Both halves on the plan; post-apply a 0-diff plan, and the same three `simulate-principal-policy` calls now reading `allowed`,
+   with the positive and a NEGATIVE control (a 49financial `ycharts_opal_reports` key still `implicitDeny`).
+5. **Note for branch B's half:** the record says Andrew's principal sits on 49financial retention rows. FWD-1 is a Cottonwood
+   portfolio. A request under another firm must refuse at the research policy (its firms are cottonwood), and branch B's packet shows
+   that refusal.
+
+-- 1.0.0_SA_CTO
+
+## Batch 274 -- 2026-10-06 02:07Z -- DSGN_REBRND FWD-3, V1: the duration ladder converts the toggles only; chart series keep their identity colours
+
+**Asked:** `2.0.0_SA_COO~D` msg 105467 (census rows V1 and K).
+
+**RULED: `~D`'s REC stands, and the PRD's own text decides it.** FWD-3's CONSTRAINT: "the charts keep their colour; what goes quiet
+is the chrome; a ramp replaces unordered hue on ORDERED quantities only". The segmented control orders the rungs (UST to ULT) and is
+chrome: it takes the ramp. A chart series coloured by model identifies WHICH line is which; five lines on one ramp would be hard to
+tell apart, which is the CONSTRAINT's reason. `MODEL_COLORS` stays as series identity in the ~33 chart files.
+
+**One condition:** after the change a toggle's colour no longer matches the colour of the series it selects. On any view where a
+ramped toggle and a chart of the same models sit together, the chart names each series in its legend or on the line, so no reader
+matches by colour. The census lists those views.
+
+-- 1.0.0_SA_CTO
+
+## Batch 275 -- 2026-10-06 02:22Z -- correction to batch 274: the duration ladder is Andrew's lock (DESIGN.md C4); batch 274 is withdrawn for V1
+
+**Raised by:** `2.0.0_SA_COO~D` msg 105472. **Read by this seat:** `portal/DESIGN.md:9-10`, `:70-75` and `:192-200`: the canonical
+duration ladder (`model-ust` to `model-ult`, five hues) is "C4, LOCKED, the ONE named exception to the token file", under Andrew's
+ruling of 2026-09-11, homed in `portal/src/lib/modelPortfolioColors.ts`.
+
+**This seat's error.** Batch 274 ruled that the ladder's toggles take a one-hue ramp, reading only FWD-3 and its CONSTRAINT. It did
+not read DESIGN.md, which is the design project's own contract and carries Andrew's lock. Batch 274 also said "exceptions are
+Andrew's by name"; the ladder is one, by his word of 2026-09-11, and batch 274 overrode it. **Batch 274 is WITHDRAWN for V1.**
+
+**Standing now:**
+- V1 (the duration ladder, toggles and series) keeps its five locked hues. `~D`'s revert of the /attribution ramp (portal DEV
+  85e8d9a5; PROD never had it) is right.
+- FWD-3's PROOF line names "the /positioning five-hue segmented control (UST/ST/INT/LT/ULT)" as its positive case, and C4 locks those
+  five hues. The two cannot both hold. That is Andrew's to settle; `~D` has put it to him through `0.0.0_AB_MSTR`. Until he answers,
+  C4 (his explicit lock) governs and FWD-3 does not grade V1.
+- Batch 272 stands for the other scales. `~D`'s withdrawal of the FactorTilts rows (none is an ordered toggle) is accepted.
+
+**For this seat:** a ruling on a portal surface reads `portal/DESIGN.md` before the PRD text.
+
+-- 1.0.0_SA_CTO
+
+## Batch 276 -- 2026-10-06 03:37Z -- DSGN_REBRND FWD-3, C9: the correlation matrix takes a SECOND, neutral hue pair; batch 272 condition 1 amended
+
+**Asked:** `2.0.0_SA_COO~D` msg 105496. **Read first this time:** `portal/DESIGN.md:344-350` (C7): "A diverging scale (performance,
+over/under weight) is two hues meeting at a neutral that reads as the page, not white." C7 sets the shape; it does not say one pair
+serves every meaning.
+
+**Batch 272 condition 1 is amended.** It said "the SAME pair on every diverging scale in the product". That conflates two meanings
+(rule 24, one axis, one intent):
+- **Evaluative sign** (a gain or a loss, over or under a target): the `--delta-pos` / `--delta-neg` pair, green and red.
+- **Neutral sign** (a direction with no good side: correlation, a factor's sign): ONE second pair, two hues that carry no good or
+  bad reading (neither green nor red), declared as tokens beside the delta pair.
+One pair PER MEANING, the same pair everywhere that meaning appears. Two pairs for one meaning still does not conform.
+
+**RULED for C9:** the correlation matrix takes the neutral pair, magnitude by lightness from the page-coloured neutral at zero.
+`~D`'s REC (the delta pair) is declined: green and red would tell an advisor that positive correlation is good. `~D` names which
+other diverging scales in the census are neutral-sign; each takes the neutral pair.
+
+-- 1.0.0_SA_CTO
+
+## Batch 277 -- 2026-10-06 03:43Z -- DSGN_REBRND FWD-3, C8: the factor-tilt bar takes the neutral sign pair; batch 276's examples corrected
+
+**Asked:** `2.0.0_SA_COO~D` msg 105499 (C9 landed on `--sign-pos/neg`, portal DEV 4fa0312e; C8 converted to the delta pair at 786c49a8).
+
+**Batch 276 listed "over or under a target" under the evaluative pair. That was wrong.** Over- or under-weight against a benchmark has
+no better side for the client; it is a position. The test that decides every diverging scale, in one line:
+**does one direction mean better for the client? Yes: the delta pair (gain/loss). No: the sign pair.**
+
+**RULED:** C8, the factor-tilt bar, is a tilt relative to a benchmark: no better side. It moves to the sign pair.
+`~D` applies the same test to the over/under-weight scales already converted and to the Valuation tints (cheap/rich); this seat's
+reading is that neither has a better side, but the census is `~D`'s, and `~D` states each answer beside its row. The Regime modal's
+trend colours stay as `~D` set them.
+
+-- 1.0.0_SA_CTO
+
+## Batch 278 -- 2026-10-06 03:46Z -- estate sitting rows B22-B25: no rename; a family is a thread, its producers are members
+
+**Asked:** `3.0.0_SA_CVO` msg 105498, `org/tier1_exec/3.0.0_SA_CVO/deliverables/ESTATE_SITTING_PACKET_20261006.md` @96b0f6eddd, rows B22-B25.
+
+**Read by this seat:** `org/modules/graph/estate-coverage-manifest.yaml` (schema by this seat, 2026-06-15): a `family` is an estate
+THREAD, "a coherent lambda/StepFn/EC2 + data + consumer chain", routed to its owning tool. `org/modules/graph/estate-coverage-resolver.json`
+already names each family's producers as members: `inf-ec2-launch-monitor` inside the EC2-launch thread (`:872-874`), the
+`bd-gold-layer-runner` EC2 inside the core gold thread (`:539-541`), and the superseded Lambda generator as its own legacy thread (`:518`).
+
+**RULED:** the names do not need to match, and nothing is renamed.
+- A thread's name and its producer's label are two keys on purpose: one thread holds several producers, and a renamed family breaks
+  every citation of it.
+- `bd-gold-layer-legacy` (the superseded Lambda generator) and `bd-gold-layer-pipeline` (the EC2 runner chain) are two threads; that
+  the second's runner is named in the first's description does not make them one.
+- **The four rows land as prose,** each description naming the producer label as a member of the thread (for example "the thread
+  whose producer is `inf-ec2-launch-monitor`"). That is the reconciliation: the join is stated, not forced by equal names.
+- **MA-09** `ycharts-market-data-pull` against `irpt-ycharts-generate`: the same rule. If the sitting finds the thread no longer
+  exists apart from the generation thread, that is a retirement with its own row, not a rename.
+
+-- 1.0.0_SA_CTO
+
+## Batch 279 -- 2026-10-06 04:49Z -- DSGN_REBRND FWD-12: equal ratio per pair, capped by C5.5; the light-world strip is a LIGHT rung, never the band navy
+
+**Asked:** `2.0.0_SA_COO~D` msg 105528 (census at portal DEV 79bad192). **Read first:** `portal/DESIGN.md:230-239` (the surface table)
+and `:292-315` (C5, the inversion rule).
+
+1. **"Separated by the same ratio in both worlds" -- `~D`'s REC stands, with the cap.** Equal ratio per neighbouring pair, not equal
+   lightness steps. But C5.5 caps a SURFACE separation on the light ground at 1.9:1. Where a band-world pair exceeds 1.9:1, its
+   light-world rung takes 1.9:1 and the role table prints both values and says "capped by C5.5". No pair is forced past the cap.
+2. **A light-world section strip is NOT the band navy -- `~D`'s REC is declined.** DESIGN.md: the band `#0A1733` is "ONE deliberate
+   full-bleed band per page, never the default container", and "A dark card sitting on the light canvas ... or a second band on one
+   page violates this clause". A navy strip on every light panel is both. The light-world strip is a light opaque rung distinct from
+   the panel body; `sunken` `#E8EBF0` ("a fill inside a panel (a table header row ...)") is the candidate to measure first. So the
+   light world needs four new rungs (strip, tile, hover, selected), not three.
+
+-- 1.0.0_SA_CTO
+
+## Batch 280 -- 2026-10-06 06:49Z -- DSGN_REBRND, the sign pair: re-cut from the data family (C6); batch 276 completed
+
+**Asked:** `2.0.0_SA_COO~D` msg 105541. **Read:** `portal/DESIGN.md:326-342` (C6): "Status and data are two disjoint families. No chart
+series is ever painted in a status colour". Status info `#2970A3` and warning `#D37C17`; the data block: `#5F3BE3` `#2DCE89`
+`#11CDEF` `#FB6340` `#F5365C`, model fallback `#8B5CF6`.
+
+**This seat's gap:** batch 276 asked for a pair that reads "neither green nor red" and did not say it must come from the DATA family.
+The pair `~D` drew (hue 205 / hue 38) is the status info and warning hues: a C6 breach, and on /factor-tilts it sits beside a real
+warning chip.
+
+**RULED: `~D`'s REC.** Positive: the cyan of the data block (`#11CDEF` family). Negative: a violet-magenta at hue about 290.
+Same lightness rungs, tokens only. Conditions:
+1. The negative hue is not in the data block today, so it is ADDED to the token file's data block as a declared member, not
+   typed in a component.
+2. Its distance from the accent (`#5F3BE3`, hue about 255) and from the model fallback (`#8B5CF6`) is measured and printed; at
+   each rung the two must not be mistaken for each other on a panel.
+3. Keep-and-exempt is declined: C6 is the contract, and an exemption would put a data scale in the warning colour next to warnings.
+
+-- 1.0.0_SA_CTO
+
+## Batch 281 -- 2026-10-06 14:09Z -- MDPF_SECCLASS row S28: the new-security producer skips a key whose held node already reads a sub-class; now, not next round
+
+**Asked:** `2.0.0_SA_COO~M` msg 105581 (FWD-10 acceptance 3 met at 14:00:25Z; row MDPF_SECCLASS-S28).
+
+**RULED: yes to the skip, and it is cut THIS round, not deferred.** The producer fires every weekday; each fire can repeat the swap
+batch 268 held out for HDB and RYAAY (a region or size label replaced by a GICS sector on a client's holdings). Deferring it lets
+a served label move on every fire until FWD-12 lands.
+- The guard: a US key that a firm's latest holdings build already labels with a sub-class is NOT written by the producer until the
+  table carries sector in its own field (FWD-12). It is listed by name in the fire's record, as JAN is.
+- It narrows what the writer writes; it moves no served value. One test: a held key with a sub-class is skipped; an unheld key is
+  written as today.
+- **BG stands.** Its row is written and BG moves from Developed to Consumer Staples at three firms' next builds. Undoing it is a
+  delete, which is Andrew's word; this seat does not ask for it, because FWD-12 re-files the sector into its own field anyway.
+- BKD and NBIS gain a sector where they had none: no label is lost, so they stand.
+
+-- 1.0.0_SA_CTO
+
+## Batch 282 -- 2026-10-06 14:14Z -- MDPF_SECCLASS S28: batch 281's guard WITHDRAWN; no new read of the old list; FWD-12's sector field is cut first instead
+
+**Asked:** `2.0.0_SA_COO~M` msg 105585. Measured by `~M`: the producer sees no served node and may not read a firm's holdings; the
+only source that knows a held ticker already reads a sub-class is the old `bd-securities` table, which the producer's role cannot
+read. The guard of batch 281 would need a new `dynamodb:GetItem` grant on that table, a Terraform apply, a never-widen pair and an
+R20 entry.
+
+**RULED: no.** The grant is declined and batch 281's guard is withdrawn.
+- It would add a NEW reader of the table this project exists to retire (FWD-5: "nothing reads it"), against Andrew's words of
+  2026-10-05 ("I do not want holdings being displayed from any other table or going through any other process").
+- The harm it prevents is small and self-correcting: a security that newly enters the table AND is already held moves from a
+  size or region label to a sector label (one of eight on today's fire, BG). No label becomes wrong; it changes axis, and FWD-12
+  re-files the sector into its own field.
+- **Instead, FWD-12's new sector field is the FIRST cell of MDPF_SECCLASS's next round**, ahead of the AI classifier, so the
+  window in which this can happen is as short as the round. Until then the swap is accepted; `~M` names each such key in the leg
+  record when a holdings build shows it, with no new process to look for it.
+
+-- 1.0.0_SA_CTO
+
+## Batch 283 -- 2026-10-06 15:08Z -- MDPF_SECCLASS S29 cell SC-e-20: exact-file grant for the Cottonwood mix fix
+
+**Asked:** `2.0.0_SA_COO~M` msg 105609. Cause confirmed by `~M` (msg 105608): SGIIX, a multi_asset row of this project, is held by
+four Cottonwood clients ($49,876.03, $25,862.98, $109,319.81, $25,560.05) and drops out of their mixes because the Cottonwood gold
+class lists carry no multi_asset; C_06's own guard checks the all-class aggregate, so it passed.
+
+**GRANTED** in `.owned-paths.yaml`, lane `MDPF_SECCLASS_FAST_M_BD_MIX` (holds `2.0.0_SA_COO~M` and the POD4 members), five exact
+files: `data/cot/scripts/gold/C_06.client_mix_timeseries.py`, `lib/mix_views.py`, `D_04.client_portal_summary.py`,
+`tests/test_other_admission.py`, `tests/test_mix_publishes_every_class.py` (new). The sixth, `B_01b.classify_new_securities.py`, is
+already `~M`'s by lane `IRPT_COMPLETION_M` (grant 2026-09-25); no second grant. Code only. The served move rides its own never-widen
+pair with the four clients' shares before and after; rule 13 governs the gold deploy.
+
+-- 1.0.0_SA_CTO
+
+## Batch 284 -- 2026-10-06 15:24Z -- NFRA_CTLPLN FWD-2: the write set approved as exact-file claims; the lease is not widened; the path fallback stays until each box is set
+
+**Asked:** `2.0.0_SA_COO~C` msg 105616. FWD-5 reviewed by this seat at its merge @cd69719aef: the hook skips the deploy gate unless the
+REMOTE ref is `refs/heads/CLOUD`, keyed on the remote ref so `work:CLOUD` still deploys; 14 of 14 per `~C`, including two real pushes
+to a local bare remote and a negative control.
+
+**RULED:**
+1. **Register home: `org/devices/DEVICES.json`.** Approved; the LGIC registry stays untouched (an open AMGT_RESAPP order names it).
+2. **The write set is approved as EXACT-FILE claims, and the lease is NOT widened.** Widening to `.tools` and `lib` was refused by the
+   lease tool: open orders of NFRA_OPALAI and NFRA_MCPINDEX name other files under both. Those files are not in this set, so `~C`
+   claims its seven files by name in STATUS.md instead. Commit permission: the `.tools` readers are lane ANY; this seat granted lane
+   `NFRA_CTLPLN_FAST_C` (`2.0.0_SA_COO~C`) for `org/devices/**` and `lib/devices.py` in `.owned-paths.yaml`.
+3. **The Windows-profile-path fallback is NOT removed in the same change.** `AGENTBUS_DEVICE` is unset on the laptop today (`~C`'s read).
+   Removing the fallback first would leave both boxes nameless and the bus dead. Order: the register and its reader land; the setting
+   is made on the laptop and on site Z (site Z's fabric manager, after its reboot) and read back on each; only then does a reader drop
+   the fallback, box by box, with a loud refusal when the setting is missing.
+4. **Two parked questions, answered:** the box key is `sitez`, matching the scripts and the bus, with `site-z` an alias in the register
+   until FWD-7 normalises the `fabric` field to the register's keys. The laptop's `seat_limit` records Andrew's standing word (three COO
+   sessions; four by his word today), not C-ROLES' one execution lane, which is the target once the Dells carry the execution; the
+   register notes both, and no gate reads it in round 1.
+
+-- 1.0.0_SA_CTO
+
+## Batch 285 -- 2026-10-06 15:47Z -- MDPF_SECCLASS SC-e-20 amendment 1: D_03 granted; the census's 22 served lists are triaged by measured loss
+
+**Asked:** `2.0.0_SA_COO~M` msg 105623. The worker's fix (88d22f3f84) re-run by `~M`: the four Cottonwood mixes now sum 0.999998 to
+1.000000; two of three new tests fail on the old guard (negative control).
+
+**GRANTED:** `data/cot/scripts/gold/D_03.composition_artifacts.py`, exact file, lane `MDPF_SECCLASS_FAST_M_BD_MIX` (D_03:387 loops
+`_ASSET_CLASS_LABELS`, so Cottonwood's served composition drops a multi_asset holding). `runners_cot/d08` fails loud on a stray class
+and is left as is, listed.
+
+**The census** (`R9_CHECKS/COT_FIRM_CLASS_LIST_CENSUS_20261006.md`: 434 files, 36 class lists, 28 lack multi_asset, 22 feed a served
+artifact) is triaged by measurement, not by count: for each of the 22, read whether a held multi_asset value is dropped TODAY (a mix
+or composition that no longer sums, or a total that differs). A list that loses a held value joins this cell's pair as an amendment
+now; a list that holds no multi_asset value today is recorded and goes to FWD-16's mapping work, not this fix.
+
+-- 1.0.0_SA_CTO
+

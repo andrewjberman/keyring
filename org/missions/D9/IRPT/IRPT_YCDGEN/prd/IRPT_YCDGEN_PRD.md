@@ -1,48 +1,53 @@
-# IRPT_YCDGEN -- YCharts direct-API generation, Opal-branded (kept answers, the element map, Opal's own script)
+# IRPT_YCDGEN -- the Analysis report generated in house, Opal-branded, with no YCharts call
 
 ```json
 {
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.8",
  "step": 4,
- "brief_ref": "docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md@45f673c2ea",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
+ "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
+ "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
  "status": "RATIFIED"
 }
 ```
 
-Author: `1.0.0_SA_CTO`. D9 / IRPT / laptop. Register row `org/missions/D9/IRPT/IRPT_YCDGEN/project.json` @ec37b10ed2, with one
-workstream issued by `2.0.0_SA_COO~Y`.
+Author: `1.0.0_SA_CTO`. D9 / IRPT / laptop. v0.2 of 2026-10-05 replaces v0.1 (@ec37b10ed2 lineage; v0.1's text is in git).
+v0.3 (same day) corrects C-CLASSIFY to the table as `2.0.0_SA_COO~M` measured it and points C-REPORT at its design; the ENDPOINT
+section is unchanged from v0.2 @4635d40c62.
+v0.4 answers `3.0.0_SA_CVO`'s refusal of the v0.2 half (review @3bd1104913): the history line is out of the ENDPOINT block, FWD-16's
+ACCEPT carries only Andrew's words, and C-PRICES names its bucket, its universe address and the carrier of the cross-firm rule.
+v0.5 takes pricing out of the first version on Andrew's word of 20:50Z (C-V1; the ENDPOINT section is unchanged from v0.4).
+v0.6 (clock read 21:31Z) adds the sector pages' scheme to C-CLASSIFY on Andrew's ~21:3xZ word; the ENDPOINT section is unchanged.
 
-Brief: `docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md` @45f673c2ea (`4.0.0_SA_CRO`, 195 lines). Andrew's
-order, verbatim: `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/RESEARCH/CRO_REQUEST_YCHARTS_DIRECT_GENERATION_20261003.md`
-@ee801b0505. Endpoint: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCHARTS_DIRECT_GENERATION_20261003.md`
-@c3f2fb4bb3, CONFIRMED by Andrew ("all approved", record
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_203xZ_ALL_APPROVED_YCHARTS_DIRECT_GEN_ENDPOINT_AND_SITEZ_SCOPE.md`).
-The section below carries its outcomes unchanged.
+**Why v0.2.** Andrew turned the project from "Opal's script on YCharts' data endpoints" to "the report made entirely in Opal's
+cloud". Inputs:
+- Brief (parent): `docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md` @69141b561e (`4.0.0_SA_CRO`).
+- Brief (addendum): `docs/briefs/irpt-ycharts-inhouse-generation-yfinance-probe-20261005.md` @8e50ace95c (`4.0.0_SA_CRO`).
+- Base brief, carried through v0.1: `docs/briefs/irpt-ycharts-direct-generation-opal-branded-brief-20261003.md` @45f673c2ea.
+- Andrew's words: `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_195xZ_YCDGEN_FIVE_RECS_APPROVED_EXPLORE_YFINANCE.md`
+  (five recommendations approved; yfinance for now) and
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_202xZ_YCDGEN_INHOUSE_ENDPOINT_THREE_CALLS_ANSWERED_CLASSIFICATION_THROUGH_CANONICAL_TABLE.md`
+  (the endpoint's three calls).
+- Endpoint: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_IRPT_YCDGEN_INHOUSE_GENERATION_20261005.md` @0bb26ab898,
+  confirmed by the second record. FWD-15 was added from his answer to call 2, and FWD-16 from his word of ~20:4xZ
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_204xZ_YCDGEN_TYPO_AND_SWAP_AI_PIPELINE_CLASSIFY_IN_ETFCLASSIFIER_SHAPE.md`).
+  The DONE WHEN lines of FWD-15 and FWD-16 are this seat's wording of his words; he confirmed them at 20:50Z
+  (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2050Z_YCDGEN_V1_NO_PRICING_SEAT_COO_Y_DONE_WHEN_CONFIRMED_COO_D_CAN_RIDE.md`).
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
 ```
-  FWD-1  Andrew asks for an Overview report on one Cottonwood portfolio and opens an Opal-branded
-         version that Opal's own script made, end to end on the live YCharts account
+  FWD-1  Andrew submits one real Cottonwood portfolio for an Overview and opens an Opal-made
+         report in the same sitting, with nothing asked of YCharts
          DONE WHEN  EXERCISED -- one live run, ending in Andrew opening the report
-         ACCEPT     Andrew opens an Opal-branded Overview for a real Cottonwood portfolio, made by Opal's
-                    own script from YCharts answers it asked for live, and kept with those answers in
-                    Opal's own store. Every number in it can be traced to one of those answers, or is
-                    marked as not available. A step that used a saved example instead of asking YCharts
-                    live fails the outcome
-         SOURCE     brief PART I, "The candidate thread" (lines 22-27)
-
-  FWD-2  An analyst can read what any YCharts call in a run gave back, from Opal's own store,
-         without asking YCharts again
-         DONE WHEN  EXERCISED -- an analyst has looked one up
-         ACCEPT     for a finished run, an analyst picks any one call and sees what it gave back, whether
-                    that was identifiers, data or a document, and whether it changed since the previous
-                    run. Nothing kept contains a password, a login session or a key
-         SOURCE     brief O1 (lines 29-33); PART V "No secret in any artifact"
+         ACCEPT     Andrew, signed in as himself, submits a real Cottonwood portfolio the way he does
+                    today and opens an Opal-branded Overview without coming back to it later. Every
+                    figure was worked out by Opal from data Opal already keeps. Nothing was asked of
+                    YCharts during the run. A figure Opal cannot work out says so on the page, with the
+                    reason. A step that used a saved example fails the outcome
+         SOURCE     parent brief section 6, stage 1; addendum section 6; Andrew, call 1
 
   FWD-3  For each of the three report types, an analyst can point at anything on a YCharts-made
          report and say where it came from
@@ -50,7 +55,7 @@ The section below carries its outcomes unchanged.
          ACCEPT     for an Overview, a Comparison and a Multi report, every number, table and chart on the
                     page is either tied to a named YCharts answer, or listed plainly as something YCharts
                     works out only inside its own report builder. Nothing on the page is left unaccounted for
-         SOURCE     brief O2 (lines 35-40)
+         SOURCE     base brief O2; parent brief section 3
 
   FWD-4  An analyst can make the Comparison and Multi reports too, Opal-branded, with Opal's own
          script
@@ -59,23 +64,22 @@ The section below carries its outcomes unchanged.
                     report in Opal's branding without YCharts' report builder. Anything YCharts works out
                     only inside its builder is rebuilt from data Opal holds, or left out with a note saying
                     so. It is never imitated
-         SOURCE     brief O3 (lines 42-46); PART III item 5
+         SOURCE     base brief O3; parent brief section 6, stage 4
 
-  FWD-5  The Opal-made report and the answers behind it are found in Opal's own store, private to the
+  FWD-5  The Opal-made report and the data behind it are found in Opal's own store, private to the
          client's firm
          DONE WHEN  EXERCISED -- an analyst has found one by its request
-         ACCEPT     given a request, an analyst finds its report and every YCharts answer behind it in the
-                    client firm's private area of Opal's store. Nobody at another firm can reach them, and
-                    nothing the analyst needs exists only on YCharts
-         SOURCE     brief O4 (lines 48-51); PART V "Client holdings stay inside their firm"
+         ACCEPT     given a request, an analyst finds its report and the client's own holdings behind
+                    it in the client firm's private area. Nobody at another firm can reach them
+         SOURCE     base brief O4; parent brief section 4
 
   FWD-6  A report run is something Andrew waits for at his desk, and every run shows where its time
          went
          DONE WHEN  EXERCISED -- Andrew has waited for one, and its timing record has been read
-         ACCEPT     Andrew asks for a report and has it in the same sitting, without coming back to it
-                    later. The run's record shows how long each stage took, with the time YCharts spent
-                    working kept apart from the time Opal spent waiting
-         SOURCE     brief O5 (lines 53-56); Andrew: "It has no need to take 15-20 minutes"
+         ACCEPT     Andrew asks for a report and has it in the same sitting. The run's record shows how
+                    long each stage took: reading the holdings, working out the figures, and making the
+                    pages
+         SOURCE     parent brief section 1 item 4, and section 9
 
   FWD-7  For the same inputs, an analyst sees which figures on the YCharts report and the Opal report
          agree, and why any differ
@@ -84,169 +88,259 @@ The section below carries its outcomes unchanged.
                     that differs, each difference with its reason: different dates, a different way of
                     calculating, or something only YCharts works out. It is a one-time check of the new
                     script, not a comparison that keeps running
-         SOURCE     brief O6 (lines 58-61)
+         SOURCE     base brief O6; parent brief section 6, stage 6
+
+  FWD-8  Opal keeps the market and fund data the report needs for every security a live client
+         holds, refreshed on a schedule, so a report never waits on an outside source
+         DONE WHEN  EXERCISED -- a scheduled refresh has run, and a report has been made from what it left
+         ACCEPT     for each security in a live client portfolio, Opal has its price history as far back
+                    as the report's longest period (or as long as the security has existed), and a
+                    description of it: for a stock its sector, country and size; for a fund what it
+                    holds, what it costs and when it started. Each carries the date it was true. A
+                    security Opal has never seen is fetched once, when a client's file first names it.
+                    A report made at any hour reads only what Opal already has
+         SOURCE     parent brief section 5; addendum sections 3 and 5
+
+  FWD-9  For any figure on an Opal-made report, an analyst can see how it was worked out, from what
+         data, and how old that data was
+         DONE WHEN  EXERCISED -- an analyst has picked one figure and followed it back
+         ACCEPT     an analyst picks any figure and finds the method in words, the holdings it covered
+                    and the date of each input. A figure that covers too little of the portfolio, or
+                    rests on an input that has gone stale, is printed as not available with the reason,
+                    never as a number
+         SOURCE     parent brief section 7; RULINGS batch 267
+
+  FWD-10 Returns on the report count dividends
+         DONE WHEN  EXERCISED -- one dividend-paying holding checked by hand
+         ACCEPT     for one holding that pays dividends, the one-year return on the report equals the
+                    price change plus the dividends paid, worked out by hand from the same dates
+         SOURCE     parent brief G1; addendum section 5
+
+  FWD-11 Everyone who uses the Analysis tab gets the Opal-made report, and Opal stops calling
+         YCharts for it
+         DONE WHEN  EXERCISED -- an advisor other than Andrew has submitted a portfolio and opened one
+         ACCEPT     after the one-time side-by-side of each report type, and on Andrew's word, an
+                    advisor who submits a portfolio gets the Opal-made report. No step signs in to
+                    YCharts or waits on it. The old way is switched off in the same change, not left
+                    running beside the new one
+         SOURCE     parent brief section 6, stage 6, and section 4
+
+  FWD-12 An analyst can run the same portfolio again as another report type, or against another
+         comparison, without a fresh wait
+         DONE WHEN  EXERCISED -- a second run of one portfolio, timed against the first
+         ACCEPT     having made one report for a portfolio, an analyst asks for a second with a
+                    different comparison or type and gets it at least as quickly as the first, with no
+                    limit on how many they ask for
+         SOURCE     parent brief section 1 item 5
+
+  FWD-13 The sector and bond-quality pages show what the client's funds actually hold
+         DONE WHEN  EXERCISED -- one fund-heavy portfolio's sector page read against its funds
+         ACCEPT     for a portfolio mostly in funds, the sector page adds up each fund's own mix by the
+                    fund's share of the portfolio, not one label per fund. Where a fund's mix is not
+                    known, as with countries today, the page says so
+         SOURCE     parent brief section 1 item 3; addendum sections 3 and 4
+
+  FWD-14 Opal records each day, from Bloomberg, how the funds its clients hold are spread across
+         sectors and countries, so a report as of a past date can be made later
+         DONE WHEN  EXERCISED -- two days recorded, and the first day's figures read back on the second
+         ACCEPT     for the funds live clients hold, each day's spread is kept under its date and is
+                    still there the next day
+         SOURCE     parent brief section 5; Andrew's card 2 (approved, not started: Bloomberg quota)
+
+  FWD-15 Every security on an Opal-made report takes its name and its classes from Opal's one
+         classification table, and a security the table does not know gets a row there
+         DONE WHEN  EXERCISED -- a report made for a portfolio holding one security the table did not know
+         ACCEPT     each holding on the report shows the clean, properly capitalized name and the asset
+                    class and sub asset class that Opal's own table gives it. For a security the table
+                    had never seen, a row now exists there, tidied up, and the report used that row. No
+                    outside source's own labels are printed in place of Opal's
+         SOURCE     Andrew, call 2 (2026-10-05 ~20:2xZ)
+
+  FWD-16 When a client's file names a security Opal cannot place, Opal suggests the security that
+         was probably meant, or a comparable one to stand in for it
+         DONE WHEN  EXERCISED -- one file with a mistyped ticker and one with a security Opal has no
+                    data for, each taken through to a report
+         ACCEPT     a mistyped ticker gets a suggested correction that is a real security. A security
+                    Opal has no data for gets suggested stand-ins of the same kind, taken first from
+                    the funds Opal's own table already knows for stocks, bonds, commodities and the
+                    rest. Whatever is accepted has a row in Opal's table, in the
+                    same shape as every other security there
+         SOURCE     Andrew, 2026-10-05 ~20:4xZ ("typo" check 1 and "swap" check 2)
 ```
 
 ## PROVENANCE (outside the ratified section)
 
-- FWD-1 is the brief's candidate thread (PART I). FWD-2 to FWD-7 are the brief's O1 to O6, one to one.
-- **Andrew settled three readings.** On "the same endpoints", the CTO's reading is the YCharts endpoints that supply the
-  report's DATA, stated with the DONE WHEN lines he confirmed. On egress, "COO~Y and any underlying agents have whitelisted
-  egress to YCharts". On the subscription, "yes we are cleared for use". Record of the last two:
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/ANDREW_DIRECT_20261003_173xZ_YCHARTS_EGRESS_WHITELIST_AND_SUBSCRIPTION_CLEARED.md`
-  @ce20ca6854.
-- A word of his that amends an FWD becomes an addendum under the next unused id (FWD-8), or an in-place amendment. It is
-  never a cell's choice.
+- v0.1 to v0.2: FWD-1, FWD-5 and FWD-6 amended in place; FWD-2 retired, its number vacant; FWD-3, FWD-4 and FWD-7 unchanged;
+  FWD-8 to FWD-15 added. Ids are permanent.
+- Andrew settled: the thread is submitted on the Analysis tab of the development build under his sign-in (call 1); classification
+  passes through the canonical table (call 2); FWD-2 is dropped (call 3); Opal's own method, Overview first, no Bloomberg
+  query-language purchase, a standing word for pulls scoped to live client holdings, and yfinance for now (the five cards).
+- The standing of v0.1's work: the three element maps, the research layout module and its statistics, the keeper and the kept
+  YCharts answers all stay. v0.2 changes where the figures come from, not what the page is.
+- C-CLASSIFY's reading of the sector pages (Yahoo's sector names there only; names, asset class and sub asset class from the
+  table) was confirmed by Andrew at 21:49Z (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2149Z_FIVE_CALLS_ALL_OF_BD_SECURITIES_SIX_ASSET_CLASSES_INDUSTRY_GROUP_ONTO_TABLE.md`, call 4).
+- A word of his that amends an FWD becomes an addendum under the next unused id (FWD-16), or an in-place amendment. It is never
+  a cell's choice.
 
 ## CONTRACTS
 
 | Contract | Direction / owner | Binding agreement |
 |---|---|---|
-| C-SCOPE: research plus one thread | Andrew's order; the endpoint's boundaries | This project builds Opal's own path for calling YCharts, keeping the answers, mapping the report and generating it. It runs ON DEMAND only: no schedule, and no second producer beside the served YCharts generation (the standing veto on shadow and build-alongside pipelines). Research runs are QA runs, and their artifacts are never production evidence. Adoption of Opal generation is a later decision, and adopting it REPLACES the served path in the same window. |
-| C-ENDPOINTS: "the same endpoints" | Andrew-confirmed reading 1 | The endpoints are the YCharts DATA endpoints that supply a report's figures. The `custom_pdf_reports` calls (template, upload, create, validate, generate, download; `recipe.py:1-45`) return identifiers, links and YCharts' own PDF (brief F2). They are mapped for FWD-3 as "identifiers" or "document" answers, and they are never the source of a figure in an Opal report. |
-| C-VENDOR: who may call YCharts | Andrew's egress word | Only `2.0.0_SA_COO~Y` and its underlying agents (its workers, `0.9.0_WK_IRPT_YCDGEN~<n>`) make YCharts calls. The CTO, the CVO and the CRO grade from Opal's store and never call YCharts. A seat outside that scope needs his word. |
-| C-SESSION: one session, one lease, one pace | IRPT_BCKEND (the served path owns the session and the lease); consumed | Every research call is made inside the served path's provider-account operation lease: the same key and the same store as `infra/aws/lambda/investor-reporting/ycharts/session/operation_lease.py`, composed through `resident_session.py`. The lease serializes research runs with `~Y`'s served runs, so the two never interleave. Its `next_allowed_at` keeps the call rate inside what the YCharts firewall tolerates (rows S233; batch 97). Sign-in stays Andrew's act. A firewall challenge or a lost session STOPS research: the run releases the lease, files a row and makes no retry storm. The served path keeps the session. This project adds no lock, no second session and no sign-in. |
-| C-KEEP: every answer kept and labelled | this project | Each call of a run is kept as one object: the request (method, path, the body's keys, with every value that names a person, credential or session removed), the response bytes with any cookie, token or credential scrubbed, a shape label from the closed set `IDENTIFIERS`, `DATA`, `DOCUMENT` (rule 24: one axis, what the call gave back), the response's sha256, and `changed_since_previous` (`true`, `false` or `no_previous`, computed from the same call's previous kept sha256 for the same portfolio). A planted secret in a test response must be absent from the kept object, or the scrub fails. |
-| C-STORE: addresses from the builder | CLAUDE.md rule 30; X10 | Three state tables in the client firm's bucket, keyed by the request. Builder output printed at L4 (2026-10-03 20:4xZ): `address('irpt','cottonwood','state','ycharts_responses','request=REQ-329a56182b2668d44a28c8d7', object='step=04_create.json')` -> `s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_responses/request=REQ-329a56182b2668d44a28c8d7/step=04_create.json`; `...,'ycharts_runs',...,object='run.json')` -> `s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_runs/request=REQ-329a56182b2668d44a28c8d7/run.json`; `...,'ycharts_opal_reports',...,object='overview.pdf')` -> `s3://opal-data-cottonwood/irpt/cottonwood/state/ycharts_opal_reports/request=REQ-329a56182b2668d44a28c8d7/overview.pdf`. The same calls with `49financial` or `inflection` give those firms' buckets. A request id with a slash is refused by the builder (READ at L4). The `bronze` tier is NOT used: for `cottonwood` it resolves to the shared bucket `opal-data-assets` (READ at L4), and kept answers carry client holdings. |
-| C-REGISTER: the X10 policy row | this project, round 1, before the first write | No X10 family names YCharts answers today (brief F5; `infra/logic/registry/reporting_policies.json` READ at L4: PERFORMANCE_SOURCE_EVIDENCE names SmartX, Black Diamond and Orion only). Round 1 adds ONE policy row, `irpt-ycdgen-research`, with three families: `YCHARTS_RESPONSE` (state, `ycharts_responses`, json), `YCHARTS_RUN` (state, `ycharts_runs`, json) and `YCHARTS_OPAL_REPORT` (state, `ycharts_opal_reports`, pdf). Retention follows the sibling state families (`unreferenced_days` 30, `accepted_ceiling_days` 2555). The row lands before any object is written under those tables. |
-| C-RUN: the run record | this project | `run.json` per request holds: the request (portfolio, template, comparisons, window), the lease's fencing token, one entry per call (step, kept object key, shape label, sha256, `changed_since_previous`), stage timings, and the trace from each report element to the answer and field it came from, or `NOT_AVAILABLE` with the reason. **Timing (FWD-6)** separates three clocks: YCharts working (request sent to last byte), Opal waiting (time held by `next_allowed_at`, the lease queue or a poll interval), and Opal building (layout and render). No time target is set in this PRD (brief PART VII). FWD-6's bar is Andrew's own sitting. |
-| C-MAP: the element map | this project | For each report type (Overview 14141822, Comparison 14141824, Multi 14141847; `recipe.py:121-146`), every number, table and chart on a YCharts PDF of that type is listed with its source: a named data endpoint and field, or `BUILDER_ONLY` (YCharts computes it only inside its report builder). The map is drawn from the served path's RETAINED certified PDFs (family ORIGINAL_VENDOR_PDF), so mapping costs no generate call. A type with no retained PDF waits for `~Y`'s served run of that type under its own sequence; this project makes no extra generate call. The map file names element ids and sources only. Figure values stay in the firm's store. |
-| C-BRAND: Opal's branding, not YCharts' | this project; reuse the export path's assets | The Opal report uses the approved brand asset set of the IRPT export path (`infra/aws/lambda/investor-reporting/export/bundle.py`: `render_options.brand_revision` and its approved assets). It carries no YCharts logo, layout imitation or YCharts wording beyond a plain source credit. The output is a PDF. Rendering touches no portal page, no portal deploy and no PROD export surface. |
-| C-BUILDERONLY: never imitated | FWD-4; brief PART III item 5 | An element marked `BUILDER_ONLY` is either rebuilt from data Opal already holds, with its method stated in the run record, or left out with a line on the report saying it is not available. No element is approximated to look like YCharts' figure. |
-| C-SECRET: no secret anywhere | law; brief PART V | No cookie, token, password, session or key appears in a kept object, a run record, a log, a commit or a message. The session is read in memory through the served path's broker and never written. Kept objects carry the scrub (C-KEEP). Grading reads the store, never the session. |
-| C-FIRM: client data stays in its firm | law (CLAUDE.md section 5) | Uploaded holdings, kept answers, run records and reports live only in the client firm's bucket (C-STORE). No object of one firm is written under another firm's prefix. Git holds no client figure. The element map (C-MAP) and the side-by-side check (C-COMPARE) carry element ids, verdicts and reasons; their figure values are cited by store key. |
-| C-COMPARE: one-time, per type | FWD-7; the standing veto on parity comparators | For one report of each type, the same inputs as a retained YCharts PDF. Each figure is listed as `MATCH` or `DIFFER`, and each DIFFER carries one reason from the closed set `AS_OF` (different dates), `CONVENTION` (a different way of calculating) or `BUILDER_ONLY`. It runs once per type and is recorded. Nothing schedules it, and no code path repeats it. |
-| C-MORATORIUM: no alerts | law (CLAUDE.md section 5) | No alarm, SNS, SES send, freshness checker or monitor. A failed run is a row and a run record, never a notification. |
-| C-DELIVERY: Andrew opens the report | FWD-1 | At run end, the runner prints the report's store key and a short-lived signed link for Andrew. The link is not stored, and its query string is never logged. No portal surface is built for this project. |
+| C-SCOPE: in-house generation, one producer per request | Andrew's direction; the standing veto on shadow pipelines | This project builds the Analysis report's generation inside Opal's cloud. Any one request has exactly ONE producer. Until FWD-11, the Opal producer serves only the principals of C-SWITCH; every other request is served by the YCharts path, unchanged. No code path runs both producers on one request, and nothing compares them on a schedule (C-COMPARE is one-time). At FWD-11 the YCharts producer is removed in the same release that opens the Opal producer to everyone. |
+| C-SWITCH: who gets the Opal producer before FWD-11 | this project; the served path's owner applies it | Selection is made on the server from the signed-in principal, against one short allow list that starts with Andrew's sign-in only. A client-sent flag never selects the producer. The list changes only on Andrew's word. FWD-11 deletes the list and the branch together. |
+| C-ENDPOINTS | RETIRED in v0.2 | v0.1 named YCharts' data endpoints as the source of figures. No figure in an Opal-made report comes from a YCharts call. |
+| C-VENDOR: which outside sources, and when | Andrew's cards 1, 2 and 5; his yfinance word | **Yahoo (through yfinance):** allowed for the securities in live client portfolios only. It is called by the scheduled refresh and by the one first-seen fetch (C-MART), never while a report is being made. **Bloomberg:** scheduled batches on the Terminal seat only, `integrations/bloomberg/READ_HERE.md` read first; FWD-14's capture is approved and waits on quota; no cell starts it on a day the quota is spent. **SEC filings:** inside card 1; no cell uses them until a round-N analysis names one. **YCharts:** no call in an in-house run. `2.0.0_SA_COO~Y`'s existing egress word stands for FWD-7 only. A source not named here needs Andrew's word. |
+| C-V1: no pricing in the first version | Andrew, 2026-10-05 20:50Z ("let's avoid pricing for the v1") | The first version is the breakdowns: holdings, names and classes, allocation by the table's labels, and the fund look-through pages as their data arrives. Everything that needs a price history is OUT of the first version: returns, risk statistics, the benchmark and risk-free comparisons, FWD-10, FWD-12's timing of price-based re-runs, and the price-history clause of FWD-8. Those elements print as not available with the reason `NOT_IN_THIS_VERSION`. The C-PRICES table, the benchmark read and the risk-free read are NOT built, and no cell is cut for them, until Andrew asks for the price-based pages. Holding weights come from the dollar amounts in the accepted file, never from a price. |
+| C-MART: the security data Opal keeps | this project (new tables); the existing Yahoo price pull (extended) | Per security: (1) a daily price history (C-PRICES; deferred by C-V1); (2) a reference snapshot (for a stock: sector, industry, country, market value and the ratios Yahoo serves; for a fund: asset mix, costs, yield, size, start date); (3) a fund look-through (sector weights, credit-quality weights, bond averages, top holdings). Every row carries its as-of date and its fetch date. The universe is the union of securities in live client portfolios; it carries tickers only, never a firm, an account or a weight. A security first named by an upload is fetched once, then joins the schedule. Snapshot fields have no history at the source, so history accrues from the first capture. |
+| C-PRICES: the report's price history, in the shared market-data home | this project (new table); CLAUDE.md section 5 (no other firm's bucket) | **DEFERRED by C-V1: specified, not built.** The existing Yahoo price table is `s3://opal-data-bd/silver/historical_prices.parquet` (parent brief M1). `opal-data-bd` is 49financial's firm bucket, so a report for any other firm may NOT read it: that is a cross-firm reference by bucket. The report therefore reads ONE new table, builder output printed at L4: `address('marketdata','global','silver','security_total_return_prices','date=2026-10-05',object='prices.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_total_return_prices/date=2026-10-05/prices.parquet`, with the close, the dividend-adjusted close and the dividends as separate named columns, written by the C-MART refresh. **The universe** is `address('marketdata','global','silver','security_universe','date=2026-10-05',object='universe.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_universe/date=2026-10-05/universe.parquet`: bare tickers and first-seen dates, no firm, account or weight. **The carrier of the cross-firm rule:** a ticker reaches the universe only when a firm's OWN step pushes it (the upload's resolution, or that firm's own holdings job); no global job reads a firm bucket to build it, and no firm-scoped job reads another firm's bucket. `.tools/ds-precommit-check.py`'s foreign-bucket limb grades the refresh and the producer like any pipeline tree. The `opal-data-bd` table is not read, not modified and not extended by this project; folding that pull into the shared home is its own migration (R19), never a rider here. |
+| C-STORE: addresses from the builder | CLAUDE.md rule 30; X10 | **Where each object lands (corrected at v0.7 and v0.8):** `run.json` is written to the FIRM bucket through the research role (`opal-data-cottonwood`, table `ycharts_runs`, the generic builder's address below). The report PDF and the Opal document are RETAINED artifacts, written to the reporting policy's registered destination, never through the generic builder: `opal_naming.reporting_destination('cottonwood','YCHARTS_OPAL_REPORT', <ART>, <digest>, policy_revision='irpt-ycdgen-research-v1')` -> `('opal-data-irpt', 'irpt/cottonwood/state/ycharts_opal_reports/<ART>/<digest>.pdf')` (READ 02:23Z 2026-10-06), the same bucket-and-firm-prefix shape as every `irpt-x10-v1` family; firm separation there is the key prefix plus IAM. The generic-builder addresses below, which name the firm bucket, were v0.1's and do not describe where the producer writes: `address('irpt','cottonwood','state','ycharts_runs','request=<REQ>',object='run.json')` and `address('irpt','cottonwood','state','ycharts_opal_reports','request=<REQ>',object='overview.pdf')` (X10 row `irpt-ycdgen-research`). Renaming them is not this revision. **New, builder output printed at L4 (2026-10-05 ~20:4xZ), beside C-PRICES' two:** `address('marketdata','global','silver','security_reference','date=2026-10-05',object='reference.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/security_reference/date=2026-10-05/reference.parquet`; `address('marketdata','global','silver','fund_lookthrough','date=2026-10-05',object='lookthrough.parquet')` -> `s3://opal-data-assets/marketdata/global/silver/fund_lookthrough/date=2026-10-05/lookthrough.parquet`. `opal-data-assets` is a shared bucket: these tables hold public market data only (C-MART's universe rule). **Raw Yahoo answers:** `address('yahoo', ...)` is REFUSED today ("source 'yahoo' is not a systems.json key", READ at L4). Round 1 adds the `yahoo` vendor row to `infra/logic/registry/systems.json`; the order that writes raw answers prints the builder's output after the row lands. No address is typed by hand. |
+| C-REGISTER: registry rows before writes | this project, round 1 | (1) the `yahoo` vendor row in `systems.json`; (2) the X10 families for each new `marketdata` table a round writes (first version: `security_reference`, `fund_lookthrough` and `security_universe`), in the grammar of the sibling families. Each lands before any object is written under it. Resource names are `name()` output printed in the order: `name('marketdata','global','security-reference-refresh','lambda')` -> `marketdata-global-security-reference-refresh-lambda` (READ at L4). The schedule's name is printed by its order; `name(..., 'schedule')` is refused, and the kind is a cadence. |
+| C-SCHEDULE: production refresh is scheduled | law (CLAUDE.md section 5) | The reference and look-through refresh runs on its own daily schedule, on the trading-day frontier of `lib/trading_calendar.py`. An ad hoc run is QA and is never the acceptance of FWD-8. |
+| C-CLASSIFY: one classification table | Andrew, call 2; the table is MDPF_SECCLASS's | Every name, asset class, sub asset class and sector the report prints FOR A SECURITY is read from `etf-classifications` through its one client (`infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py`). A security the table does not hold gets a row added by the table's own classifier mechanism, cleaned and properly capitalized; Yahoo's labels are an INPUT to that row and are never printed in its place. This project adds no second writer to the table: it asks for the row through MDPF_SECCLASS's mechanism, and until the row exists the holding prints as not yet classified. **The table as measured by `2.0.0_SA_COO~M`** (`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ETF_CLASSIFICATIONS_VOCABULARY_AND_UNKNOWN_ROW_PATH_20261005.md` @73a3c60af8; 3,493 rows): `asset_class` has 6 values; the GICS sector names ARE the equity `sub_asset_class` values, with no separate sector field; the legacy `sector` attribute (179 rows) is a different grain and is NOT read by this project. So a stock's sector on the report is its `sub_asset_class` where that is a GICS name, and a fund's sector weights are keyed to those same ten names plus Real Estate. **An unknown security gets a row today** only through the scheduled plan and one conditional put, from a direct match in an existing source; a security with no direct match gets no row and is listed UNRESOLVED; no model is called. A model verdict fits the row shape only as `classified_by model` with its confidence fields, landed from a reviewed set (13 rows). Andrew's AI classifier is put in service by MDPF_SECCLASS PRD FWD-11, and this project consumes the row it writes. **The sector pages, while Yahoo is the source (Andrew, ~21:3xZ at the research seat's terminal, `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261005_213xZ_THREE_RECS_APPROVED_AND_CIK_QUESTION.md`, card 2: "Yahoo's scheme for now, stated on the page; switch to GICS when the canonical table is the sector source for the report"):** a page that adds up sector weights, a fund's look-through mix included, prints Yahoo's sector names and says so on the page. This is the one place a source's own labels are printed, because the table has no sector field yet and a fund's sector weights arrive keyed to those names. A security's NAME, asset class and sub asset class still come from the table alone. The pages switch to the table's sector field when MDPF_SECCLASS FWD-12 has landed it. |
+| C-RESOLVE: the typo check and the swap check | Andrew, ~20:4xZ; the intake gate is IRPT_BCKEND's | The upload's two advisory checks exist: `check` (a likely ticker for a row not found) and `swap` (a stand-in), in `intake/upload_suggestions.py` and `intake/resolution_kimi.py`, on an AI model, advisory until the person accepts. Today both are VERIFIED against YCharts (`intake/security_resolution.py` reads its `securities_info`), and `swap` refuses pending vendor QA. In house: (1) a suggestion is verified against Opal's own data, that is, the security exists in C-MART or is fetched once as first-seen; (2) a swap's candidates come FIRST from `etf-classifications` rows of the same asset class and sub asset class, ETFs before other kinds (Andrew's recommendation), and only then from the model's own proposal; (3) the security given, and the security accepted, are each classified in the table's row shape through C-CLASSIFY; (4) nothing is substituted until the person accepts, as today. Which model runs the advice is not decided here; the existing advisory is the starting point. |
+| C-METHOD: Opal's own method, stated | Andrew's card 3 | (The return, benchmark and risk-free lines apply when C-V1 lifts.) Total return (C-PRICES' adjusted close, or close plus dividends). Benchmark: the S&P 500 total return series Opal holds. Opal-defined market-value buckets, for the stock sleeve. No style box. Top holdings of a fund are the ten the source serves, and the page says ten. Each method is printed in words on the page it governs. **Risk-free rate:** the Bloomberg 3-month yield Opal already receives each morning (no new call). The FRED object is not used while row `IRPT_YCDGEN-S9` is open. |
+| C-COVERAGE: print or "not available" | RULINGS batch 267; decomposition contract 3.5 | A figure that aggregates across holdings prints only when the holdings with an answer are at least 0.95 of the portfolio by weight; otherwise `NOT_AVAILABLE` with `COVERAGE_BELOW_0.95`. A per-holding figure prints for the holdings Opal has. An input older than its own declared age limit fails the figure with `STALE_INPUT` and its date; it never prints. Two states only: a value, or not available with the reason. |
+| C-RUN: the run record | this project | `run.json` per request holds: the request (portfolio, type, comparisons, window); each input read with its as-of date; one entry per report element with `method`, `inputs`, `coverage`, `status`, `reason`; and stage timings on three clocks: reading (holdings and data), computing, rendering. No time target is typed; FWD-6's bar is Andrew's own sitting. |
+| C-REPORT: the page's contract | IRPT_BCKEND owns `AnalysisReport`; this seat amends it | `AnalysisReport` v1 requires `vendor_artifact` and `effective_inputs.read_back`, which describe a vendor PDF. The Opal producer needs a form without them, on the precedent of `PerformanceReport`'s `provider: OPAL_ENGINE`. The design is `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_DESIGN_ANALYSISREPORT_OPAL_PRODUCER_FORM_20261005.md`: `AnalysisReport` v2 with a `provider` discriminator, where the Opal form carries `opal_artifact`, `inputs_as_of`, per-section `status`, `method` and `coverage`, and `computation_validation`. The contract's source of record is IRPT_BCKEND's PRD CONTRACTS table; this seat lands the row there at that project's next round boundary, before the thread's page hop is cut. |
+| C-BRAND: Opal's branding | this project; the export path's assets | Unchanged from v0.1: the approved brand asset set by revision; no YCharts logo, layout imitation or wording. |
+| C-BUILDERONLY: never imitated | FWD-4; base brief PART III item 5 | Unchanged from v0.1, and now the rule for every element: rebuilt from data Opal holds with its method stated, or left out with a line saying it is not available. Nothing is approximated to look like YCharts' figure. |
+| C-KEEP, C-SESSION | v0.1; not used by an in-house run | The kept YCharts answers stay where they are. An in-house run opens no YCharts session and takes no lease. |
+| C-SECRET, C-FIRM | law | Unchanged from v0.1. Client holdings, run records and reports live only in the client firm's bucket. The shared market-data tables carry no client fact. Git holds no client figure. |
+| C-COMPARE: one-time, per type | FWD-7; the standing veto on parity comparators | For one report of each type, against a RETAINED YCharts PDF of the same inputs. Each figure is `MATCH` or `DIFFER`, each DIFFER with one reason from `AS_OF`, `CONVENTION` or `BUILDER_ONLY`. Once per type; nothing schedules or repeats it. Where no retained PDF matches the inputs, one served run by `2.0.0_SA_COO~Y` supplies it. |
+| C-MORATORIUM: no alerts | law | No alarm, SNS, SES send, freshness checker or monitor. A stale input fails the figure on the page (C-COVERAGE); a failed refresh is a row and a run record. |
+| C-DELIVERY: the page opens the report | FWD-1; Andrew, call 1 | The report opens from the Analysis tab's own status and section view. v0.1's printed signed link is withdrawn. |
 
 ## 1. The arc
 
-**Start.** One served YCharts generation path: seven calls, a 34-key generate body, YCharts' own PDF certified and retained. A
-Multi report took 17 m 43 s, 15 m 19 s of it SUBMITTING, mostly Opal's paced waiting by inference (brief F7). Today, no kept
-answer exists. No map from report elements to calls exists. Opal cannot brand a YCharts report, because the figures exist only
-inside YCharts' PDF (F2).
+**Start.** The Analysis tab's reports are made by YCharts: a resident worker signs in, uploads the holdings, holds 900 seconds
+for the vendor's firewall, and downloads a PDF that Opal re-reads figure by figure. Rounds 1 to 5 of this project built the
+element maps of all three report types, a research layout with its statistics, and a store of kept answers.
 
 **End.**
-- Every YCharts call of a research run is kept in the client firm's private store, labelled and scrubbed.
-- Every element of the three report types is traced to a data endpoint, or named as computed only inside YCharts.
-- Opal's own script makes Overview, Comparison and Multi reports in Opal's branding from the data endpoints.
-- Each run shows where its time went.
-- A one-time check per type says which figures agree and why any differ.
+- An advisor submits a portfolio on the Analysis tab and gets a report Opal made from data Opal keeps.
+- That data is refreshed on a schedule for every security live clients hold, and every figure says how it was made and from
+  what date.
+- Every security's name and classes come from the one classification table.
+- A one-time check per type has said which figures agree with YCharts and why any differ, and the YCharts calls have stopped.
 
-## 2. THREAD -- FWD-1, one Cottonwood Overview end to end (round 1)
+## 2. THREAD -- FWD-1, one Cottonwood Overview end to end
 
-1. **Request.** Andrew names one Cottonwood portfolio for an Overview (template 14141822, no comparison, default window).
-   The research runner records the request and acquires the operation lease (C-SESSION).
-2. **Map (Overview only).** The Overview elements are traced from a retained certified Overview PDF (C-MAP). This names the
-   data endpoints the thread must call. If no retained Overview exists, the map waits for `~Y`'s served Overview run.
-3. **Live calls.** The runner calls those data endpoints for the portfolio, one at a time under the lease's pace. Each answer
-   is kept and labelled at the builder's address (C-KEEP, C-STORE). This happens after the X10 row lands (C-REGISTER).
-4. **Build.** Opal's script reads the kept answers from the store, never from a saved example, and lays out an Opal-branded
-   Overview (C-BRAND, C-BUILDERONLY). It writes the PDF to `ycharts_opal_reports` and `run.json` with the element trace and
-   the three clocks (C-RUN).
-5. **Open.** Andrew opens the report from the printed link (C-DELIVERY) in the same sitting. An analyst picks one number and
-   finds its answer in the store. A hop fed by a saved example fails the outcome.
+1. **Submit.** Andrew, signed in as himself on the development build of the Analysis tab against the real backend, submits the
+   reference Cottonwood portfolio for an Overview. Intake, acceptance and the job row are unchanged.
+2. **Select.** The server reads his principal against the allow list and gives the request to the Opal producer (C-SWITCH).
+3. **Read.** The producer reads the accepted holdings from the firm's store and resolves each to a security.
+4. **Classify.** Each security's name and classes are read from the classification table (C-CLASSIFY).
+5. **Data.** The producer reads what the first version's pages need from Opal's store: the fund look-through and reference
+   rows that exist for the portfolio's securities (C-MART). Nothing is fetched from outside during the run.
+6. **Compute.** Weights from the accepted dollar amounts; allocation by asset class and sub asset class; the look-through
+   pages under the coverage rule (C-COVERAGE). Price-based elements are marked not in this version (C-V1).
+7. **Render and record.** An Opal-branded Overview, and `run.json` with the trace and the three clocks (C-BRAND, C-RUN).
+8. **Open.** The status reads ready in the Opal form of the report contract (C-REPORT), and Andrew opens it on the page.
 
-Round 1 builds only this thread. The cells, the COO's to cut at L5:
-- the X10 row, the keeper and the scrub test;
-- the Overview map from a retained PDF;
-- the runner inside the lease, with the run record;
-- the Overview layout in Opal's branding.
-
-Nothing outside this project blocks round 1, except a session Andrew must sign in to. That is his act, as today.
+Round 1 builds only this thread: cover, holdings with the table's names and classes, and allocation by asset class and sub
+asset class. A row Opal cannot yet compute says so with the reason. The cells are the COO's to cut at L5, over these hops. What
+round 1 needs that does not exist yet: the Opal form of C-REPORT and the C-SWITCH branch.
 
 ## 3. ENRICHMENT BACKLOG (ordered, one line each)
 
-1. The Comparison map, then the Multi map, from retained certified PDFs (FWD-3).
-2. Comparison and Multi layouts in Opal's branding; each `BUILDER_ONLY` element is rebuilt from held data or noted (FWD-4).
-3. `changed_since_previous` exercised across two runs of the same portfolio, and an analyst look-up of one call (FWD-2).
-4. The firm-private read: one report and its answers found by request; one other firm's seat refused (FWD-5).
-5. The timing read: Andrew waits for one run, and an analyst reads its three clocks (FWD-6).
-6. The one-time side-by-side check for each of the three types (FWD-7).
-7. A second firm (49 Financial or Inflection) through the same path, only when a round-N analysis names it.
+1. The scheduled refresh of reference and look-through data for the client-holdings universe, with the first-seen fetch (FWD-8).
+2. The trace followed back by an analyst (FWD-9).
+3. A security the table did not know, through the table's own mechanism, onto a report (FWD-15).
+3a. The typo and swap checks verified against Opal's data, with swaps drawn first from the table's ETFs (FWD-16).
+4. Sector and bond-quality pages from fund look-through, after MDPF_SECCLASS states the sector vocabulary (FWD-13).
+5. DEFERRED by C-V1, on Andrew's word only: the price table, returns and risk, dividends (FWD-10), long windows.
+6. Comparison and Multi (FWD-4), then a timed second run of one portfolio (FWD-12).
+7. The timing read (FWD-6) and the firm-private read (FWD-5).
+8. The analyst's trace of one element of each YCharts type (FWD-3).
+9. The one-time side-by-side per type (FWD-7), then the release and the removal of the YCharts producer on Andrew's word (FWD-11).
+10. The daily Bloomberg fund capture, on a day with quota (FWD-14).
 
 ## 4. Engines (one row per engine)
 
 | Engine | Serving shape | Role here | Deploy mechanics |
 |---|---|---|---|
-| the research runner and Opal generation script (NEW, `infra/aws/lambda/investor-reporting/ycharts/research/`) | an on-demand Python run in the resident session's environment, beside the served generator | calls, keeps, maps, builds, records | It reuses `session/resident_session.py`, `operation_lease.py` and the served recipe's request helpers (build ladder rung 2). It needs no new compute resource; a later round that needs one prints `name()` output in its order |
-| the served YCharts generation (`ycharts/generate/`, the resident host) | IRPT_BCKEND's `~Y` Analysis workstream | the lease holder it shares; the retained PDFs it maps | IRPT_BCKEND; consumed, unchanged |
-| the IRPT export path's brand assets (`export/bundle.py`) | the approved brand asset set by revision | C-BRAND | IRPT_BCKEND (`~P`); read only |
-| the Opal gateway YCharts integration (`infra/aws/ec2/opal-gateway/app/integrations/ycharts/`) | four read-only data tools | prior art for data-endpoint calls (brief F3); read, not imported across the host boundary | NFRA_OPLGTW; consumed |
-| the X10 register (`infra/logic/registry/reporting_policies.json`) | policy rows per family | C-REGISTER | this project adds one row; LGIC grammar |
+| the Opal producer (`infra/aws/lambda/investor-reporting/ycharts/research/`: `layout_overview.py`, `held_data.py`, the runner) | today an on-demand research run; in v0.2 the producer the generation worker calls for C-SWITCH principals | reads, classifies, computes, renders, records | the existing resident host and renderer; no new compute class (parent brief section 4, INHERITED) |
+| the served generation worker and queue `irpt-generation` (IRPT_BCKEND) | the resident worker | carries the C-SWITCH branch | IRPT_BCKEND's release path, under a never-widen half |
+| the reference and look-through refresh (NEW) | a scheduled daily job | C-MART tables | names and addresses from the builders (C-STORE, C-REGISTER) |
+| the classification table and its classifier (`etf-classifications`; MDPF_SECCLASS) | one table, one client | C-CLASSIFY | MDPF_SECCLASS; consumed |
+| the Bloomberg morning pull (the Terminal seat) | scheduled batches | the risk-free series (held); FWD-14's capture | `integrations/bloomberg/READ_HERE.md` first |
+| the export path's brand assets (`export/bundle.py`) | the approved asset set by revision | C-BRAND | IRPT_BCKEND; read only |
 
 ## 5. WORKSTREAMS AND OWNERS
 
-- **One workstream, issued by `2.0.0_SA_COO~Y`.** The egress word names that seat and its agents only (C-VENDOR). `~Y` also
-  issues IRPT_BCKEND's Analysis workstream. A Tier-1 seat may hold several projects, and the lease (C-SESSION) is what keeps
-  the two from colliding on the one session.
-- **Write surface:** `infra/aws/lambda/investor-reporting/ycharts/research/` (new), its tests, the one X10 policy row, the three
-  state tables of C-STORE, and `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/`.
-- **Not written here:** `ycharts/generate/`, `ycharts/session/` and `export/`. A change any of them needs is a row routed to
-  IRPT_BCKEND.
-- **Owned elsewhere, named and NOT built here:**
-  - the session, its sign-in and the lease (IRPT_BCKEND);
-  - the retained PDFs (IRPT_BCKEND);
-  - the brand assets (IRPT_BCKEND);
-  - the gateway data tools (NFRA_OPLGTW).
-- **L4-R:** the CVO (`3.0.0_SA_CVO`) signs the ratified-text half. The CRO wrote the brief, so the brief half is accepted by
-  authorship (proportionate sign-off).
+- **One workstream, issued by `2.0.0_SA_COO~Y`.** That lane is not seated at this writing; seating it is Andrew's word.
+- **Write surface:** `ycharts/research/` and its tests; the C-MART refresh job and its tables; the registry rows of
+  C-REGISTER; `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/`.
+- **Written through another owner's release, as a named cell with its half:** the C-SWITCH branch in the served worker
+  (IRPT_BCKEND).
+- **Not written here:** `etf-classifications` (MDPF_SECCLASS, `2.0.0_SA_COO~M`); the `AnalysisReport` contract file (this
+  seat); the session and lease modules; the export path.
+- **L4-R:** the ENDPOINT changed, so `3.0.0_SA_CVO` re-signs the ratified-text half. The CRO wrote both briefs, so the brief
+  half is accepted by authorship (proportionate sign-off).
 
 ## 6. Rulings closed at L4 (no decide-first question enters L5)
 
-1. "The same endpoints" means the data endpoints (C-ENDPOINTS). This reading was put to Andrew with the outcomes he confirmed.
-2. Only `~Y` and its workers call YCharts (C-VENDOR). Graders read the store.
-3. Research runs share the served path's lease, key and pace (C-SESSION). A firewall challenge stops research, never the served
-   path. No retry loop outlives one lease.
-4. The maps come from retained certified PDFs (C-MAP). This project makes no extra generate call. A type with no retained PDF
-   waits for the served sequence.
-5. Kept answers, run records and Opal reports live in the firm's bucket under the `state` tier (C-STORE). `bronze` is refused
-   because it resolves to a shared bucket. The X10 row lands first (C-REGISTER).
-6. Branding reuses the export path's approved brand assets, and the output is a PDF (C-BRAND). No portal page or PROD export
-   surface is touched.
-7. A `BUILDER_ONLY` element is rebuilt from held data with its method stated, or noted as not available. It is never imitated.
-8. No time target is typed (brief PART VII). The run record measures three clocks, and FWD-6 is graded on Andrew's sitting.
-9. On demand only: no schedule, no second production path, and no repeating comparison. Adoption is a later decision that
-   replaces the served path in the same window.
-10. Any new capability (a client-facing release, another firm by default, a schedule) is a PRD addendum under the next unused
-    FWD id.
+1. One producer per request; the Opal producer serves only the allow list until FWD-11; the list is server-side (C-SWITCH).
+2. Nothing is fetched from an outside source while a report is being made (C-VENDOR, C-MART).
+3. The report's price history is one new table at the shared market-data address; the 49financial-bucket price table is not read
+   and not changed (C-PRICES).
+4. New market-data tables live at the `marketdata` / `global` builder addresses; raw Yahoo answers wait for the `yahoo` registry
+   row (C-STORE, C-REGISTER).
+5. A security's printed name and classes come from the classification table only; this project never writes that table
+   (C-CLASSIFY).
+6. Opal's own method, stated on the page; no style box; the risk-free rate is the Bloomberg series already received (C-METHOD).
+7. A value or "not available with the reason"; the 0.95 weight floor binds every aggregate (C-COVERAGE; batch 267).
+8. The run and report tables keep v0.1's names (C-STORE).
+9. The side-by-side is one-time per type and precedes the release; the release removes the YCharts producer (C-COMPARE, FWD-11).
+10. FWD-14 does not start on a day the Bloomberg quota is spent, and no round waits for it.
+10a. The first version carries no price-based content and builds no price table (C-V1).
+11. Any new capability is a PRD addendum under the next unused FWD id.
 
 ## 7. SURFACE MANIFEST (step 4 -> step 5)
 
-`claim` names the evidence class. `measured` means read at L4 (2026-10-03 ~20:4xZ) by this seat. Paths cited from the brief
-are `held`. NEW surfaces are `unmeasured`.
+`claim`: `measured` = read at L4 by this seat (2026-10-05 ~20:3xZ to ~20:4xZ); `held` = taken from the briefs (`4.0.0_SA_CRO`'s
+measurements, not re-read); `unmeasured` = new. v0.1's rows S01 to S12 are in git; S02, S04 and S09's maps are built, and S03
+and S05 are not used by an in-house run.
 
-| id | outcome_ref | surface | claim | MEASURED-BY / evidence | lane | verb | depends_on | accept | bound |
-|---|---|---|---|---|---|---|---|---|---|
-| S01 | FWD-2, FWD-5 | X10 policy row `irpt-ycdgen-research` in `infra/logic/registry/reporting_policies.json` (NEW row) | measured (file; no YCharts family) | read at L4 | ~Y | wire | -- | FWD-5 | lands before any write |
-| S02 | FWD-1, FWD-2 | the keeper: kept object, shape label, sha256, `changed_since_previous`, the scrub (NEW, `ycharts/research/`) | unmeasured | C-KEEP | ~Y | wire | S01 | FWD-2 | planted-secret test |
-| S03 | FWD-1, FWD-6 | the runner inside the operation lease (`session/operation_lease.py`, `resident_session.py`) | measured (module headers) | read at L4 | ~Y | consume | -- | FWD-1 | same key, same store |
-| S04 | FWD-1, FWD-3 | the Overview element map from a retained certified Overview PDF (ORIGINAL_VENDOR_PDF family) | unmeasured; no PDF opened (brief PART VII) | C-MAP | ~Y | measure | -- | FWD-3 | ids and sources only in git |
-| S05 | FWD-1 | the YCharts data endpoints the map names, called live | unmeasured; the gateway's four tools are held (`integration.py:134-173`) | brief F3 | ~Y | wire | S03, S04 | FWD-1 | one at a time |
-| S06 | FWD-1, FWD-6 | `run.json` with the element trace and the three clocks at `.../state/ycharts_runs/request=<REQ>/run.json` (builder) | unmeasured | `address()` printed at L4 | ~Y | wire | S02, S05 | FWD-6 | no secret |
-| S07 | FWD-1, FWD-4 | Opal's Overview layout and PDF at `.../state/ycharts_opal_reports/request=<REQ>/overview.pdf` (builder), with the export path's brand assets (`bundle.py`) | unmeasured; `bundle.py` header held (brief F4) | C-BRAND | ~Y | wire | S06 | FWD-1 | never imitated |
-| S08 | FWD-1 | the signed link printed at run end | unmeasured | C-DELIVERY | ~Y | wire | S07 | FWD-1 | not stored, not logged |
-| S09 | FWD-3, FWD-4 | the Comparison and Multi maps and layouts | unmeasured | C-MAP, C-BUILDERONLY | ~Y | wire | S04, S07 | FWD-3, FWD-4 | retained PDFs only |
-| S10 | FWD-5 | the firm-private read by request, and a refused foreign-firm read | unmeasured | C-FIRM | ~Y | verify | S06, S07 | FWD-5 | no cross-firm key |
-| S11 | FWD-7 | the one-time side-by-side record per type (`deliverables/`) | unmeasured | C-COMPARE | ~Y | measure | S09 | FWD-7 | runs once per type |
-| S12 | FWD-1..FWD-7 | NEW journey test across S01-S11, reading served artifacts in the store | unmeasured | the seven ACCEPT lines | verification | verify | S07 | all | reads the store, never YCharts |
+| id | outcome_ref | surface | claim | evidence | lane | verb | depends_on | bound |
+|---|---|---|---|---|---|---|---|---|
+| S13 | FWD-1, FWD-11 | the C-SWITCH branch in the served generation worker | unmeasured | C-SWITCH | ~Y, through IRPT_BCKEND's release | wire | S20 | server-side; never-widen half |
+| S14 | FWD-1 | the Opal producer reading accepted holdings from the firm's store | held (handoff; 99 holdings read by the CRO) | parent brief section 2 | ~Y | wire | -- | no saved example |
+| S15 | FWD-1, FWD-15 | the classification read through the one client | measured (client's record shape carries `asset_class`, `sub_asset_class`, `sector`, `name`) | client file header | ~Y | consume | -- | no second writer |
+| S16 | FWD-10 (DEFERRED by C-V1; `security_universe` alone moves to S22) | `security_total_return_prices` and `security_universe` at the `marketdata`/`global` builder addresses | measured (addresses printed); coverage held (addendum: 98 of 99 on yfinance) | C-PRICES | ~Y | wire | S21 | no firm bucket read; tickers only |
+| S17 | DEFERRED by C-V1 | the S&P 500 total return series and the Bloomberg 3-month yield | held (INHERITED in the brief) | parent brief G3, G4 | ~Y | measure, then consume | -- | row S9: no FRED |
+| S18 | FWD-1, FWD-9 | the computed trace and coverage rule in `layout_overview.py` | held (methods exist; floor per batch 267) | parent brief section 3 | ~Y | wire | S22 | two states only |
+| S19 | FWD-1, FWD-6 | `run.json` v2 with inputs' dates and three clocks | unmeasured | C-RUN | ~Y | wire | S18 | no client figure in git |
+| S20 | FWD-1, FWD-11 | the Opal form of `AnalysisReport` | measured as absent by the brief's contract note; not re-read | C-REPORT | this seat | amend | -- | lands before S13 |
+| S21 | FWD-8 | registry rows: `yahoo` in `systems.json`; X10 families for the tables a round writes | measured (`address('yahoo',...)` refused; `marketdata`/`global` addresses printed) | C-STORE | ~Y | wire | -- | before any write |
+| S22 | FWD-8, FWD-13 | the scheduled refresh writing `security_reference` and `fund_lookthrough` | unmeasured; yfinance coverage held (addendum section 3) | C-MART | ~Y | wire | S21 | universe carries tickers only |
+| S23 | FWD-8 | the first-seen fetch at upload resolution | unmeasured | C-MART | ~Y | wire | S22 | once per security |
+| S24 | FWD-15 | a row requested through MDPF_SECCLASS's classifier for an unknown security | unmeasured | C-CLASSIFY | ~Y asks; ~M's mechanism writes | consume | S15 | no second writer |
+| S25 | FWD-13 | sector and credit-quality pages from look-through | unmeasured | C-CLASSIFY (vocabulary owed by MDPF_SECCLASS) | ~Y | wire | S22 | "not available" for countries |
+| S26 | FWD-4, FWD-12 | Comparison and Multi through the Opal producer; a timed second run | held (maps READY) | round-5 grade | ~Y | wire | S18 | same store |
+| S27 | FWD-7 | the one-time side-by-side record per type | unmeasured | C-COMPARE | ~Y | measure | S26 | once per type |
+| S28 | FWD-11 | the release: allow list and YCharts producer removed together | unmeasured | C-SCOPE | ~Y, on Andrew's word | wire | S27 | one change |
+| S29 | FWD-14 | the daily Bloomberg fund-allocation capture | held (proven on ETFs; untested on mutual funds) | parent brief G6 | ~Y | wire | quota | READ_HERE first |
+| S30 | FWD-1..FWD-16 | the journey test across the thread, reading served artifacts | unmeasured | the ACCEPT lines | verification | verify | S19 | reads the store |
+| S31 | FWD-16 | the check gate's verification moved from YCharts' `securities_info` to Opal's data | measured (file headers: `upload_suggestions.py:1-10`, `security_resolution.py:1-22`) | C-RESOLVE | ~Y, through IRPT_BCKEND's release | wire | S22, S23 | advisory until accepted |
+| S32 | FWD-16 | swap candidates from `etf-classifications` by asset class and sub asset class, ETFs first | measured (`resolution_kimi.py:1-22`: swap refuses today) | C-RESOLVE | ~Y | wire | S15, S31 | the table first, the model second |
 
-MECE check: all 7 outcomes have at least one row. Every dependency named in section 5 either has a row (S03, S04 and S07
-consume) or is named as owned elsewhere.
+MECE check: every one of the 15 live outcomes has a row (FWD-3 and FWD-5 ride S26/S30 and v0.1's built maps and S10).
 
 ## 8. BRIEF COVERAGE -- content carried, not just cited
 
 | Brief heading | Carried content | Consuming sections / surfaces |
 |---|---|---|
-| Order (Andrew's words) | four calls and a generation; kept and categorized answers; where each contract lands in the three types; Opal's own script on the same endpoints; bucketed on Opal's side | ENDPOINT; C-SCOPE, C-KEEP, C-MAP, C-STORE |
-| PART I (thread, O1-O6) | the Cottonwood Overview thread; O1-O6 | ENDPOINT FWD-1..FWD-7; section 2 |
-| PART II (boundary) | owns the research and its outputs; relies on the served path, the session, the gateway tools, the export path, X10; owns no terms, no vendor word, no client release | section 5; C-SESSION, C-BRAND, C-REGISTER; engines |
-| PART III (the bar) | no number explained away; answers from Opal's store; a wait at the desk; no lost session; say so, never approximate | C-BUILDERONLY, C-RUN, C-SESSION; FWD-1, FWD-6 |
-| PART IV F1-F2 | the seven-step contract; the calls return identifiers and links, never figures | C-ENDPOINTS; ruling 6.1 |
-| PART IV F3-F4 | the gateway's data tools; the export path's brand revision | engines; C-BRAND; S05, S07 |
-| PART IV F5 | no X10 family names YCharts answers | C-REGISTER; S01 |
-| PART IV F6 | the 2026-09-11 captures and variant proof | prior art for S04 and S05; still unopened (PART VII) |
-| PART IV F7 | 15 m 19 s SUBMITTING, mostly Opal's paced wait by inference; the firewall spacing | C-RUN's three clocks; C-SESSION's pace; ruling 6.8 |
-| PART V | egress and terms answered; the session survives; no secret; builder addresses; firm privacy; the served path undisturbed | C-VENDOR, C-SESSION, C-SECRET, C-STORE, C-FIRM, C-SCOPE |
-| PART VI | Y-3 timings; `~Y` V1 runs continue | arc; C-SESSION |
-| PART VII | no PDF opened; endpoint coverage unknown; "same endpoints" interpreted; captures unopened; calculation time unmeasured; no time target | C-MAP (`BUILDER_ONLY` is a finding); ruling 6.1; ruling 6.8 |
+| Parent 1 (verdict) | nothing is YCharts-only; prices cover 96 of 99; fund look-through is the build; the wait disappears; re-runs are free | ENDPOINT FWD-1, FWD-8, FWD-12, FWD-13; arc |
+| Parent 2 (measurements) | M1 prices; M4 unlabelled kinds; M6 stale risk-free; M7 element classes | S16, S15, S17; C-METHOD |
+| Parent 3 (element classes) | 25 percent ready, 17 percent on held data, 58 percent on a reference mart | C-MART; backlog 1, 4 |
+| Parent 4 (process; contract note) | which steps go; `AnalysisReport` assumes a vendor PDF | section 2; C-REPORT; S20 |
+| Parent 5 (gaps G1-G11) | G1 C-PRICES; G2 backlog 5; G3 and G4 C-METHOD; G5 to G7 C-MART; G8 to G11 partly served by Yahoo, the rest "not available" | C-PRICES, C-MART, C-METHOD, C-COVERAGE |
+| Parent 6 (sequence) | the thread, then enrichment; the one-time acceptance | sections 2 and 3 |
+| Parent 7 (risks) | mixed price series; coverage elsewhere; stale inputs; contract change on a served page | FWD-10; C-COVERAGE; C-REPORT; C-SCOPE |
+| Parent 8 (five decisions) | all approved by Andrew | C-METHOD, C-VENDOR; ruling 6.10 |
+| Parent 9 (not claimed) | run time unmeasured; no figure compared; one portfolio | FWD-6; FWD-7; S-row claims marked `held` |
+| Addendum 3 (what Yahoo returns) | adjusted close and dividends; stock reference; fund mix, sectors, costs, credit quality, top ten | C-MART; C-METHOD |
+| Addendum 3 (sector names) | Yahoo's names match YCharts' scheme | superseded by Andrew's call 2: C-CLASSIFY |
+| Addendum 4 (what Yahoo lacks) | fund countries; top 25; maturity buckets; style box; loads; history of snapshots | C-COVERAGE ("not available"); C-METHOD; FWD-14 |
+| Addendum 5 (conditions) | unofficial reader; fetch on a schedule; source's own as-of date; one portfolio; fix the price columns first | C-VENDOR; C-SCHEDULE; C-MART; C-PRICES |

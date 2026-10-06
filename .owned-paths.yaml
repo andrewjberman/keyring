@@ -687,6 +687,12 @@ lanes:
       - 2.0.0_SA_COO~M
     description: "CTO grantor, IRPT RULINGS batch 135, 2026-10-02 (msg 104148): the POD4 members preserved verbatim plus exact COO~M, for four exact files of the Black Diamond forward fix (batch 117 item 4 (i), batch 99 item 4): C_06, D_03, D_04 and lib/mix_views.py -- the mix carries unclassified, commodities and structured as classes. Code only: no deploy grant; the served move rides its own packet with both halves. Struck when MDPF_SECCLASS closes."
 
+  NFRA_CTLPLN_FAST_C:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO~C
+    description: "CTO grantor, IRPT RULINGS batch 284, 2026-10-06 (2.0.0_SA_COO~C msg 105616): NFRA_CTLPLN FWD-2, the device register. org/devices/** (the register and its schema test) and ONE new reader, lib/devices.py. The .tools readers are lane ANY and need no grant. Struck when NFRA_CTLPLN closes."
+
   IRPT_BCKEND_FAST_P_INF_NNA:
     permitted_agents:
       - 0.4.0_DE_ClientPlatform
@@ -2603,6 +2609,30 @@ paths:
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
 
+  "data/cot/scripts/gold/D_03.composition_artifacts.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 amendment 1 (RULINGS batch 285, 2026-10-06; 2.0.0_SA_COO~M msg 105623): D_03:387 loops _ASSET_CLASS_LABELS, so Cottonwood's served composition drops a multi_asset holding. Exact file; code only; the served move rides the cell's pair. CTO grantor."
+
+  "data/cot/scripts/gold/C_06.client_mix_timeseries.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): the Cottonwood mix emits multi_asset as a class (C_06:177 MIX_ASSET_CLASSES). Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
+
+  "data/cot/scripts/gold/lib/mix_views.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): the class list the Cottonwood mix views read. Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
+
+  "data/cot/scripts/gold/D_04.client_portal_summary.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): the Cottonwood portal summary carries multi_asset. Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
+
+  "data/cot/scripts/gold/tests/test_other_admission.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): test, exact file. Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
+
+  "data/cot/scripts/gold/tests/test_mix_publishes_every_class.py":
+    lane: MDPF_SECCLASS_FAST_M_BD_MIX
+    note: "S29 cell SC-e-20 (RULINGS batch 283, 2026-10-06; 2.0.0_SA_COO~M msg 105609): test, exact NEW file: every class the table holds is published in the mix. Four Cottonwood client mixes sum 0.904-0.973 because SGIIX, a multi_asset row of this project, drops out of a class list without multi_asset. Code only; the served move rides its own never-widen pair. CTO grantor."
+
   "data/black_diamond/scripts/gold/lib/mix_views.py":
     lane: MDPF_SECCLASS_FAST_M_BD_MIX
     note: "Black Diamond forward fix, exact file; POD4 members kept plus COO~M; CTO grantor batch 135 (2026-10-02)."
@@ -2863,6 +2893,14 @@ paths:
   ".tools/git-hooks/**":
     lane: ANY_EXEC_OR_AE
     note: "Hook scripts — AE 0.7 implements (ADHC_OWNPTH.003); execs may revise (mode flips, exception adds). Widened 2026-04-30 from CLOUD_OPS_OR_ETL during TO 5 phase-2 flip."
+
+  "org/devices/**":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN FWD-2: the one device register (DEVICES.json) and its test; batch 284."
+
+  "lib/devices.py":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN FWD-2: the register's one reader, exact NEW file; batch 284."
 
   ".tools/**":
     lane: ANY
