@@ -124,3 +124,6 @@ A precondition is not a resource attribute, so the plan stays exactly 1 to add, 
 change is a STOP. Option (a), bumping to 19, is refused: the equality would stop meaning list == adapter table. Option (c) is refused:
 the frozen CONTENT-DIFF bars it.
 
+(AMENDMENT 2 correction, supersedes the regexall form above: a single backslash before `+` is not a valid HCL string escape. Use
+the escape-free form `length([for r in local.scoped_amgt_routes : r if length(split("+}", r)) == 1]) == 18`, which keeps exactly the
+keys without a greedy segment.)
