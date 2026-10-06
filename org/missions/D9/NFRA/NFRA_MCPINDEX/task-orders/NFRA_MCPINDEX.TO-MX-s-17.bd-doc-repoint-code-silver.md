@@ -52,6 +52,17 @@ step at `code/silver/`, the script `bd-silver-merge` runs. Disarm read: both doc
 5. Publish both documents, set DEFAULT, read Default == Latest back, run s17.AC1, close the ledger. Roll back on any
    failed leg; never half-landed.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- disarm row Z-W24-S9 before the publish.**
+- Between steps 4 and 5: on the instance the documents target, run ONE read-only SSM command,
+  `python3 -c "import boto3, pandas; print('OK:', boto3.__version__, pandas.__version__)"`, from the documents' working
+  directory, and quote its output. `OK:` disarms Z-W24-S9 (cite this amendment). An ImportError is a BLOCKING row:
+  publish nothing, close the ledger as not-applied, report.
+- Publish window: outside 21:30-22:15Z (the two document crons, 21:45Z and 21:53Z).
+- Base pins re-read by the issuer at 2026-10-06T18:29Z: both documents Default 3 = Latest 3, Active, which equals the
+  ANNOUNCE's rollback version. `code/silver/merge-daily-incremental.py` ETag `91eaf248...`, 59,820 B. If either differs
+  at your first act, stop and report.
+- Graded by: no gate limb graded this modification.
+
 ## 2. BOUNDS
 
 1. One producer per table after the round: no second schedule, no parallel path, no comparator.

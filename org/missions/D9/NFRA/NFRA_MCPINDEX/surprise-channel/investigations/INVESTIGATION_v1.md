@@ -5372,6 +5372,48 @@ carries none.
     "spec_asserts": "Z-S72 notes: retire unrealized's document merge only when bd-silver-merge processes the 6 files or they are ruled out with evidence.",
     "world_is": "bd-silver-merge processed all 6 as recorded empty stubs with failures=0 on its first scheduled run after the fix.",
     "notes": "MX-s-16 completes on unrealized + allocations (A3). Transactions and realized stay 2-writer by the A2 HOLD, carried in REMEDIATION_v5 with the cot sentinel fix."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The order's SmartX location s3://opal-data-smartx-v2/ does not exist in this account; SmartX served silver sits in opal-data-assets smartx/platform/silver/ (13 datasets), found by listing opal-data-assets's top level.",
+    "spec_asserts": "MX-m-2 'Where to look': SmartX at s3://opal-data-smartx-v2/ (no silver tier found).",
+    "world_is": "list-buckets (40 buckets) has no bucket named smartx; s3api list-objects-v2 on opal-data-smartx-v2 returns NoSuchBucket. SmartX data is in opal-data-assets smartx/{account,allocation,model,platform}/ (platform/silver/ holds 13 fact datasets, newest date=2026-10-01) and opal-data-bd smartx/{bronze,raw,jwt}/ (bronze, not silver). The census record uses opal-data-assets.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: the order's own bound 3 and the mdpf012 probe (BUCKET constant opal-data-smartx-v2) name a bucket that no longer exists; no work depends on it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Orion and Eclipse silver is served from TWO places with equal row counts (opal-data-inf silver/ and opal-data-assets {orion,eclipse}/inflection/silver/), and the order's silver/aum_snapshot/ is absent.",
+    "spec_asserts": "MX-m-2 'Where to look': Orion under opal-data-inf silver/{api_dims,transactions,aum_snapshot,accounts_dim}; Eclipse under silver/eclipse/{date}/.",
+    "world_is": "opal-data-inf silver/ lists 12 prefixes and has no aum_snapshot. opal-data-assets orion/inflection/silver/ holds fact_{assets,performance,positions,transactions} and eclipse/inflection/silver/ holds fact_{model_composition,models,portfolios_full,portfolios_simple}; on 2026-10-01 the newest-partition row counts equal the opal-data-inf counterparts (transactions 1,495,705; performance 479,016; positions/assets 36,111; eclipse 9/18/859/845). The census counts both copies (denominator orion 24, eclipse 8) with the bucket in each key; a round-8 tool names one source of truth.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: a census; the duplicate copies are recorded, not judged."
   }
 ]
 ```

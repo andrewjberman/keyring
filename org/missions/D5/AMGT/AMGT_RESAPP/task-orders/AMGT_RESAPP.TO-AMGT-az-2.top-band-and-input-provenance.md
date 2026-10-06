@@ -83,6 +83,7 @@ The `<status>` flip is the issuer's.
 **ISSUER NOTES:** CTO round-75 analysis items 1-2, rulings 2-3. Served by az-5. DSGN round 45 draws the band and the panel from these fields.
 
 <status>pending</status>
+<status>complete -- drained @1ef4cd99de; proof VALID (worktree checker); c62/c63 95/95; 23 plant cases; api suite 726 passed in the worktree</status>
 <round>76</round>
 <slot>0.9.0_WK_AMGT_RESAPP~263</slot>
 <fabric>site-z</fabric>
