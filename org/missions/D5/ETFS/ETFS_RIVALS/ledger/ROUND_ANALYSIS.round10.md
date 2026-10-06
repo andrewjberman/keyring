@@ -126,3 +126,27 @@ every dialog.
   mentions, the count of buttons, and 0 dead.
 - The audit page serves through the gateway, signed in.
 - A planted over-cap page prints the FAIL line (the failure arm).
+
+## ADDENDUM 4 (2026-10-06 ~16:5xZ) -- Andrew re-sequences ADDENDUM 3: usability first, the audit route last
+
+**Andrew-direct** (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_164xZ_RIVALFUNDS_AUDIT_OFF_PAGE_LINKS_FIRST_AUDIT_ROUTE_AFTER.md`):
+"Audit is not a huge priority. We should have it, but it should not get in the way of useability ... 1.) Pull audit off the page
+2.) Get those linking schemas up and running 3.) Make an audit gateway after 2.) is done."
+
+ADDENDUM 3's route (B) stands. Its ORDER is replaced as follows:
+1. **Round 12, step 1: audit off the page.**
+   - The renderer drops the closed audit block from the served page.
+   - The publisher still writes the day's audit trail as its own platinum object (address from `lib/opal_naming.py`), so no day
+     is lost and step 3 can serve back-days.
+   - The page carries NO link to the audit trail until the route serves (never a 404).
+2. **Round 12, step 2: the links.**
+   - Every ticker mention is a `popovertarget` button to its modal, and every dialog is on the page.
+   - Proof: ADDENDUM 3's first two bullets (headroom of at least 20% under the cap; mentions = buttons, 0 dead).
+   - The over-cap FAIL line also lands in this step.
+3. **After step 2 is graded: the audit route.**
+   - `GET /rivalfunds/YYYY-MM-DD/audit` is a gateway deploy under a never-widen pair. The audit page carries its own dialogs.
+   - Only then does the main page get its one-step-away link.
+   - ADDENDUM 3's "the publisher's switch lands only after the route serves" is withdrawn.
+
+**Stated, not hidden:** between step 1 and step 3, FWD-5's trade log and FWD-18's holdings list are written but not served. That gap is
+Andrew's call above, and FWD-5 and FWD-18 do not grade REALIZED until step 3 serves.
