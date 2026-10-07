@@ -1453,6 +1453,27 @@
  "spec_asserts": "A served model case on the page exposes its value and its currency as data attributes a walk can read.",
  "world_is": "Neither attribute exists in portal src. The case line lives in ModelTab.tsx, which AMGT_CORPUS round 39 (ao-3/ao-4, 2.0.0_SA_COO~X msg 30247) is writing; a DSGN cell for it waits for that drain to reach DEV. Gates nothing.",
  "notes": "Backlog row for the next DSGN round cut; not armed."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W106-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~106",
+ "surfaced_at": "2026-10-07T02:15Z",
+ "one_line": "AC2 battery29 read 13 of 14 harnesses green after the re-run button was removed: shell.harness.cjs graded exactly 1 purple primary fill on the Security view, which was the retired Refresh button; re-anchored to 0 inside this order's <paths>.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh before the edit: 'ALL BOUND: 13 of 14 harnesses green [rc=1]'; node portal/src/pages/SecurityAnalysis/__harness__/shell.harness.cjs: 'CHECK primary_actions_security 0 (expected 1)' then 'CHECKS-WRONG-WAY primary_actions_security' (line 337: check('primary_actions_security', primaryFillCount, 1)).",
+   "After changing the expected value to 0 (one line, shell.harness.cjs, inside the order's __harness__/ grant): battery29.sh 'ALL BOUND: 14 of 14 harnesses green [rc=0]', 'BATTERY29: ALL PASS (0 skipped)', exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zw-1 (d): remove the re-run button; the order names posture.harness.cjs only among the harnesses and AC2 expects BATTERY29 ALL PASS.",
+ "world_is": "shell.harness.cjs carried a check that counts the Refresh button's purple fill (the 'ONE purple fill on this view', FWD-18); removing the button makes the count 0, so the order's literal edits alone leave AC2 red. The Security view now has no primary-fill control; whether a later cell wants one is not decided here.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
