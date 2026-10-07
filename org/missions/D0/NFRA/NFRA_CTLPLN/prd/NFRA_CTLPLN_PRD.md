@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"],
  "status": "RATIFIED"
 }
 ```
@@ -145,6 +145,65 @@
          SOURCE     Andrew-direct 2026-10-06 ~18:5xZ, "we need RDP on all devices accessible
                     via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook";
                     the directions, Andrew-direct ~20:1xZ
+
+  FWD-15 A lane on a Dell that needs a package the box does not have gets it from the laptop, checked,
+         without the Dell ever asking the internet for it
+         DONE WHEN  EXERCISED -- one real package taken the whole way for one Dell lane, and the lane's
+                    work then runs
+         ACCEPT     a lane on a Dell needs a package its box cannot use as delivered; the laptop gets the
+                    one exact file, checks it, and sends it over Opal's private network; the Dell installs
+                    it from that file alone and the lane's work runs; during all of it the Dell asks no
+                    outside site for anything; a file taken from a saved example instead of the real route
+                    fails the outcome
+         SOURCE     brief I.0, the candidate thread; Andrew-direct 2026-10-07 ~13:39Z, "it is preferable
+                    for the laptop device to check it out first, and if clean and clear, it can be
+                    taildropped"
+
+  FWD-16 Anyone can tell whether a package is approved, ask for one that is not, and later read who
+         said yes or no and why
+         DONE WHEN  EXERCISED -- one request made, one approved and one refused, and both decisions read
+                    back by someone who was not part of them
+         ACCEPT     two people on two boxes asked "may I install this?" give the same answer without
+                    asking anyone; a person who needs something not approved files one request that says
+                    what, which exact version, what needs it and why nothing approved will do; a reviewer
+                    answers yes or no; afterwards Andrew can read who approved which package, on what
+                    evidence, and when; a refusal reads as clearly as an approval
+         SOURCE     brief O1, O2, O3; Andrew-direct 2026-10-07 ~14:0xZ, "some kind of request pipeline
+                    for additions to requirements.txt and a review process"
+
+  FWD-17 For anything that reached a box, a person can say what was checked before it was sent and
+         what those checks cannot rule out
+         DONE WHEN  EXERCISED -- one delivered package's record read aloud to Andrew, including what
+                    was not checked
+         ACCEPT     for a package on a Dell, someone states the checks the laptop ran before sending it
+                    and names the risks those checks leave; asked "would this have caught a package whose
+                    own maker's account was taken over?", the answer given is the true one, even when it
+                    is no; nothing is called clean beyond what was looked at
+         SOURCE     brief O4 and Part V.1
+
+  FWD-18 A Dell that tries to get a package, a script or a program from the internet is stopped on
+         the box and told the route that works
+         DONE WHEN  EXERCISED -- a download tried on purpose and stopped, and the delivered file then
+                    installed
+         ACCEPT     on a Dell someone tries, on purpose, to install a package from the public internet
+                    and is stopped, and what they are told names the route that works; a script or a
+                    program off the raw internet has no route at all and comes only from another Opal box;
+                    building the website on a Dell downloads nothing, including what a tool would fetch
+                    on its own without being asked; what is counted is requests leaving the box, not the
+                    absence of an error
+         SOURCE     brief O5, O6, O7; Andrew-direct 2026-10-07 ~13:39Z, scripts and executables off the
+                    raw internet "never, ever"
+
+  FWD-19 Andrew can ask what a box downloaded and get an answer from a record, and a lane waiting on
+         a package is seen, not stuck
+         DONE WHEN  EXERCISED -- the question asked about one box for one day and answered from what was
+                    written at the time
+         ACCEPT     Andrew asks "what did this box download today?" and someone answers from a record
+                    made at the time, not from memory; a lane that needs a package not yet delivered
+                    loses that one piece of work, keeps going elsewhere, and its wait shows in the same
+                    place he sees every box's open decisions; nothing here watches or sends him anything
+                    on its own
+         SOURCE     brief O8, O10; the standing rule that no monitor is built unless he asks
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -484,3 +543,49 @@ own boxes; nothing is fetched from PyPI by a Dell. Cell for round 4: the list of
 each Dell's installed set, N of N printed, and the transfer of what is missing.
 
 A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.15 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: package intake and download tiers. FWD-15 to FWD-19; contract C-INTAKE
+
+**Words (verbatim in their own records):** dell2 terminal ~13:39Z (record @50df0c2e97, branch `q/dell2/record-download-tiers/r1`);
+dell1 terminal ~14:0xZ (record @9e5f28e155, branch `q/dell1/record-package-intake/r1`), "all work that should be researched,
+designed, and folded in to NFRA_CTLPLN". **Brief:** `docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md`
+@adc8997f1b (`4.0.0_SA_CRO`), read in Parts I, II, III and V. Its ten outcomes are carried as five: O1+O2+O3 -> FWD-16; O4 ->
+FWD-17; O5+O6+O7 -> FWD-18; O8+O10 -> FWD-19; the thread -> FWD-15. **O9** (every box runs the same version of each tool the
+gates call) is already contract C-KIT-PYTHON's and takes no new outcome.
+
+**The thread of this addition (round 5 builds it; every later round enriches):** FWD-15 on `PyYAML==6.0.3` for one dell2 lane,
+then the other 29 packages of the first batch by the same route
+(`org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md` @bd489b912b).
+
+### Contract C-INTAKE
+
+1. **What "checked" is.** The eight checks of the brief's Part V.1, in that order, each recorded as passed, failed or not
+   applicable, with the brief's own "leaves" column written beside every delivery. Running the package on the laptop is NOT a
+   check: the laptop holds Andrew's administrator sign-in. Check 8 (a person signs the batch) is `1.0.0_SA_CTO`'s.
+2. **One file by exact name.** The laptop fetches one named file for one approved line; no dependency resolution. So the approved
+   list is closed under dependencies BEFORE a batch is fetched (the brief's F12: 73 dependencies are not lines today).
+3. **A holding place.** A fetched file waits in one folder on the laptop between fetched and checked; only a file whose record
+   reads checked is ever sent.
+4. **The approved list.** `requirements.txt` is generated with a do-not-hand-edit header (F2). Round 5's first cell decides, by
+   measurement, how a reviewed addition and a regeneration stop overwriting each other; until it lands, no line is added by hand.
+5. **The Dell's proof.** The laptop has no Python 3.14 (F13), so a delivered file is proven on the Dell: an install with no
+   index, then an import, read back.
+6. **No monitor.** FWD-19 is an answer on demand from a record written at the time of each fetch. Nothing is built that watches
+   or notifies.
+
+### The brief's six calls, ruled (each on the brief's own recommendation unless said)
+
+- **A, which boxes the tiers bind:** the two Dells as receivers, and the laptop as the one box that fetches a package, through
+  the checked route only. That is the scope of his words, which were spoken at the Dells about the Dells. Site Z, and the
+  laptop's own seats as receivers, are NOT bound by this addendum; binding them is his word to give and is not inferred here.
+- **B, programs the kit already carries:** red. They reach a Dell only from the laptop over the private network, as the kit does
+  today. The automation browser download moves to that route or is dropped from the Dells.
+- **C, what a Lambda bundles:** not this scope.
+- **D, who approves:** `1.0.0_SA_CTO` approves a version change to a package already on the list; a NEW package name is
+  approved by Andrew, once per name.
+- **E, the website's packages:** as today's kit: the laptop packs the existing tree and sends it; a new one takes the same
+  request and review.
+- **F, running a package before a Dell does:** not for the first batch (all 30 are versions the laptop already runs). For a new
+  name, yes, and only in a place that holds no sign-in; building that place is its own outcome when the first new name is asked.
+
+An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to FWD-14 are unchanged.
