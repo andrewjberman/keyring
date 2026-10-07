@@ -653,3 +653,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Two of the 15 protected functions have names that carry firm tokens (a bd and a cot name), and the saved census lists all 233 function names, 100 or more of them with a firm token. The rendered policy needs the literal ARN of a function, and a policy file cannot call lookup(). Without a waiver the gate refuses the commit of the three data files, so the criteria cannot hold at any committed HEAD. In the worktree, uncommitted, the three criteria printed: CT3c5-AC1 'PROTECTED-CENSUS functions=233 regions=17 refused_regions=0 protected=15 by_authorizer=1 by_edge=5 name_only=9 in_sync=True ok=True'; CT3c5-AC2 'POLICY-SIM allowed_ok=21/21 denied_ok=18/18 passrole_ok=5/5 protected_ok=8/8 all_ok=True'; CT3c5-AC3 'IDENTITY-STATIC ... names_from_builder=7/7 policy_size_ok=True ok=True' (deploy policy 5532 of 6144). The worker did not weaken a criterion, did not touch org/mcp/naming-gate.enforce and did not use any override. Ways forward that are not the worker's to take: an R20 declared exception or a NAMING_LEGACY_READS entry for the literals (org/standards and the register are outside the grant), a registry row that lets the renderer read the names through lookup() (infra/logic/registry is outside the grant), or an order that moves the saved census under a tests/ path (the gate does not grade strings under */tests/*) while the two firm-token ARNs in the policy remain a CTO or issuer ruling."
 }
 ```
+
+## NFRA_CTLPLN-W4-S11 -- CT-c-5: the /apikeys simulator arm cannot discriminate the Deny
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:42:11Z",
+  "one_line": "CT-c-5 AMENDMENT 3's denied arm on the bare ARN /apikeys cannot discriminate the new Deny: iam:SimulateCustomPolicy matches no statement at all for it and returns implicitDeny, so the arm is graded implicitDeny and the Deny is shown on /apikeys/<id>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SimulateCustomPolicy, apigateway:GET on arn:aws:apigateway:us-east-1::/apikeys with the three real policy documents: implicitDeny, MatchedStatements empty; the same with DenyApiKeyReads removed from the deploy policy: implicitDeny, MatchedStatements empty (the Allow on * matches /apis and /apikeys/abc but not /apikeys)",
+      "same call on /apikeys/abc: explicitDeny with the Deny (matched PolicyInputList.1), allowed without it (matched PolicyInputList.2)",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py: the arm is kept at the order's resource with required decision implicitDeny (the file's own rule counts either deny decision as denied), and an uncounted APIKEY-ITEM-PROBE line prints the /apikeys/x decision (explicitDeny)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-5 AMENDMENT 3 item 4: the first simulation block gains one DENIED arm, apigateway:GET on arn:aws:apigateway:us-east-1::/apikeys, as evidence that the typed DenyApiKeyReads statement denies the key read.",
+  "world_is": "The simulator treats the bare collection ARN as matching no statement, Allow or Deny, so the arm returns implicitDeny with or without the Deny statement and proves nothing about it; the statement does deny the item ARN /apikeys/<id> (explicitDeny). Whether real IAM evaluates the list call GET /apikeys against the bare ARN (the statement lists it, so it would match) is carried from the policy text, not exercised: no AWS call that lists API keys was made. The count 19/19 holds as ordered; the issuer may prefer the arm on /apikeys/<id> with explicitDeny."
+}
+```
