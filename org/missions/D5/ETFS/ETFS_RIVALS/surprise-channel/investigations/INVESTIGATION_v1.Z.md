@@ -4296,6 +4296,28 @@
     "spec_asserts": "render_audit_page returns a document of at most AUDIT_SOFT_CAP bytes when a cut can achieve it, dropping trade trace panels oldest first (face section 1); publish_page adds audit_trades_left_out and the FAIL line (face section 2).",
     "world_is": "The cut is exact (the fewest trades that fit) and costs repeated renders only on a day that is over the cap; a day under it renders once, as before. On a real day the cut would run inside the 07:00 ET publish Lambda, whose per-render time at the served size (1,381,244 B on 2026-10-07) was not measured by this cell. Within one window end, rows are dropped last-fund-first, so a partial cut of one window end is possible; the count and the oldest window end shown are still stated.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The first real over-cap day is the measure of the render time; until then the page is 34.1% under the cap and the path does not run."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-07T09:13:30Z",
+    "one_line": "RIV-co-1: chart objects are written only when the page's bytes change, and a refused or failed object leaves the day's earlier object at its address",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py handler_entry (this branch): _build_charts and _write_charts run only after the `prior_html == html_b and prior_audit == audit_b` early return, so a rerun over an unchanged page writes no chart object and rewrites no manifest (face: write once per revision, like audit.html)",
+        "publish_page._write_charts: a fund whose new object is over the cap gets the manifest entry {uri: null, bytes, refused: true}, but no delete is issued, so an object written by an earlier revision of the same day stays at homes.page(day, charts/<FUND>.json) and the gateway route would still serve it; the prior object is copied to revisions/<ts>/charts/ only when the new one is written",
+        "tests: test_r15co1_chart_objects.py (5 passed); co-1.AC1 and co-1.AC2 PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The publisher writes one chart object per fund beside the page, once per revision like audit.html; a fund whose object is refused has the manifest entry {uri: null, bytes, refused: true} (face section 1, rulings at the cut).",
+    "world_is": "Both hold as built. On the first deploy day, a day whose page bytes do not change on the rerun gets no chart objects until its page changes (the issuer's backfill, being ad hoc, is the route for past days). A refused object leaves an older same-day object in place; the sink interface used here is put/get/list/exists, and a delete is outside this cell's paths. Neither path is reached by the fixtures.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The real-day run at L9 (J1) shows whether a day republishes with an unchanged page and an absent chart object. Also: price_series.load and the fund-value read each read the 365-day G1 range once per publish (two reads of the same objects, the second column-narrow); not measured on a real day."
   }
 ]
 ```
