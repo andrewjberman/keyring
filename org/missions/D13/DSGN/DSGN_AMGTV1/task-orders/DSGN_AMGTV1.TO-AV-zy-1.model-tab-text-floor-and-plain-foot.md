@@ -89,7 +89,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   `round47/FWD21_READ.md` @8a1ebcf475, 10 of 10 by hover.
 - **Issued when** `prd-signoff status DSGN_AMGTV1` read ADMITTED on PRD v0.17 @8730d6c042 (LIMB 6; CTO msgs 30802 and 30806).
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <slot>~108</slot>
 <fabric>site-z</fabric>
