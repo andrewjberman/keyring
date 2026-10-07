@@ -538,3 +538,28 @@ lot tables follows E1 under its own halves, carrying W20-S1 and W20-S3.
 | `DB-b-40` | E3: the pandas option once per process; the served classify_and_sum hardened against None in source (W21-S6) | LOCAL | DB-b-39 (write set) | B25 |
 
 fanout: 1 of 2 chains, cap 8, reason: E1 re-runs with E2's LEG_LAG_DAYS (a data edge); E3 has no data edge but edits the same producer file as both, so it runs last in the one queue (cut by write set). Worker 0.9.0_WK_IRPT_DASHBD~22 in its own worktree.
+
+## 26. ROUND 26, WORKSTREAM B (2026-10-07 ~20:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-25 analysis @3543da2f4d, msg 1079)
+
+Round 25 is closed: DB-b-38..40 @5ffd7b740d (REMEDIATION_v11 @80d6ea4ef3). The round-24 sample ties except for rounding: 58 of 91
+within one cent, 33 within 0.05, 0 missing a term. FWD-4 grades REALIZED only when a person reads the served tables; the next act is
+their release.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-41` | E1: release prep for the activity and lot tables in the served reporting-gold function (contracts complete with keys and basis_source; source names into sources.json; handler, bundle, role; never-widen packet covering the whole next apply of the root, the unapplied class release included) | WORLD (paths floor; the analysis classes it SERVED) | DB-b-40 (merged) | B26-1 |
+| `DB-b-42` | E2 criterion (2): can a served input to classify_and_sum carry a repeated index label; refuse with a named reason if so | LOCAL | DB-b-40 (merged) | B26-2 |
+
+E2 criterion (1) (the None hardening tested on pandas 2.2.3) is NOT cut: dell2 has Python 3.14 with pandas 3.0.6 only and downloads are
+barred; the environment is requested from the laptop through 1.0.0_SA_CTO~DELL2, and the cell is cut when it lands.
+
+fanout: 2 of 2 chains, cap 8, reason: no data edge between E1 and E2, and the write sets are disjoint (E1: handler, terraform, activity producer, sources.json, contracts; E2: account_return_daily.py and its None test file). Workers 0.9.0_WK_IRPT_DASHBD~23 and ~24, each in its own worktree.
+
+### 26a. Round 26 amendment (2026-10-07 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 1092)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-43` | E2 criterion (1): the None-hardening test (`tests/test_account_return_daily_none.py`) run on the served layer's pandas 2.2.3 by LAPTOP RELAY: the test and the producer at pin b65c14f4df, relayed by 0.0.0_AB_MSTR~DELL2, the result returned as a FILE (pandas version printed beside the pytest summary). An issuer act, no worker; graded by the issuer on the returned file | LOCAL | DB-b-40 (merged) | B26-3 |
+
+The pandas 2.2.3 kit goes through the package route in parallel (4.0.0_SA_CRO~D2 intake, then 1.0.0_SA_CTO~DELL2). If DB-b-42 changes
+`classify_and_sum` (verdict CAN), the relay re-runs at the drain's pin.

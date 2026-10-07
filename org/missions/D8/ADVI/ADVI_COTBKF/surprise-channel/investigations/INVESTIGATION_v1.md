@@ -1888,3 +1888,55 @@ round.** Never edit an existing row.
   "notes": "The 3753 silver conflicts differ by a median factor of 5.6 (highest row over lowest), which looks like two different securities or units under one key and day, not rounding."
 }
 ```
+
+## ADVI_COTBKF-D2-S27 -- Security transfers in and out mostly carry no Amount, so once prices land their days will read FLOW_UNVALUED instead of a return
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S27",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T20:52Z",
+  "one_line": "Of the external-flow rows, lo 18,157 / trco 147 (all) / trfo 611 / li 1,424 / trfi 60 carry Amount 0; CB-p-2 blanks such a day (FLOW_UNVALUED), so today only 101 days are blanked for it because the rest are already UNPRICED",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer census on the drained code (b07434a3f5): external flow rows by sign of Amount -- li 59,720 positive / 1,424 zero; lo 31,532 / 18,157; trfo 1,298 / 611; trfi 2,613 / 60; trco 0 / 147; ftax 4,156 NEGATIVE / 56 positive; stax 112 negative",
+      "real run: DAILY-RETURNS account_days=1691729 computed=127300 blank=1564429; blank_reason UNPRICED 1,560,217, ZERO_BASE 2,578, FIRST_DAY 1,533, FLOW_UNVALUED 101"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2: a flow's amount is its Amount; a flow row with Amount zero or null blanks that day (FLOW_UNVALUED).",
+  "world_is": "Amount is unsigned for the in/out types (direction comes from the type, as the worker built) but signed negative for ftax/stax; a security transfer usually carries no Amount at all, so its value is quantity x that day's close, which step 2 already has. Answers W33-S1: direction x |Amount| is right for every type measured.",
+  "notes": "Enrichment candidate: value a zero-Amount security flow at quantity x the same-day close from the valuation step; still blank when that close is missing."
+}
+```
+
+## ADVI_COTBKF-D2-S28 -- On the 4,231 months graded today, months with a flow mostly DIFF (866 of 1,138, median |diff| 7.4 pct pts); months with no flow MATCH 1,675 of 3,093
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S28",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T20:52Z",
+  "one_line": "The monthly grade on the stores Opal already holds: 1,947 MATCH, 2,284 DIFF, 78,362 UNGRADABLE (a blank day); the DIFFs concentrate in months with an external flow, so the end-of-day flow convention or a flow class is off",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MONTHLY-GRADE months=82593 match=1947 diff=2284 ungradable=78362 tolerance_pct=0.05 (shared tree after the drain, b07434a3f5)",
+      "graded months by has-flow: no flow MATCH 1,675 DIFF 1,418 (median |diff| 0.353); with flow MATCH 272 DIFF 866 (median |diff| 7.445); 280 accounts graded, 57 with 12 or more MATCH months"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-DAILY step 4: the days chained per month give Commonwealth's monthly return, MATCH within the stated tolerance or DIFF with its reason.",
+  "world_is": "Chaining works where nothing enters or leaves (half of no-flow months MATCH inside 0.05 points); a month with a flow is usually far off, which points at the flow (timing: end of day vs start of day; class: ftax/stax as external; sign) rather than the prices.",
+  "notes": "Enrichment candidate: grade the flow months under start-of-day vs end-of-day flow and with tax withholding internal, and keep the convention that MATCHes more; a DIFF still carries its reason."
+}
+```

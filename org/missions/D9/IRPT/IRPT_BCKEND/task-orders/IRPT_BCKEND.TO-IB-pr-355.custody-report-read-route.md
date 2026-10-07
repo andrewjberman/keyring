@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~164</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete -- flipped by issuer 2.0.0_SA_COO~P2: IB72-1-AC1, IB72-1-AC2 and IB72-G-164 PASS, re-run at dell2 HEAD 5c3067c649. AC2 had read FAIL in the worker proof only through the issuer check defect (row W164-S3, fixed by AMENDMENT 1 @169e6c8150); the worker proof instance stays as filed, VALID</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
