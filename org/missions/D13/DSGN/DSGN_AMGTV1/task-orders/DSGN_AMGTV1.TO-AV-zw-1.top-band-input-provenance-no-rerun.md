@@ -174,4 +174,4 @@ now render for BA and MSFT. Re-write your proof instance on the new commits, and
 <worker_class>worker</worker_class>
 
 **AMENDMENT 1 (issuer, 2026-10-07):** CTO render review `ledger/CTO_RENDER_REVIEW_ROUND45_0aa353a6.md` @e3d1e62b06 (msg 30533), re-opened for one change. No gate limb graded this modification.
-<status>pending</status>
+<status>complete</status>
