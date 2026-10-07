@@ -4674,6 +4674,29 @@
     "spec_asserts": "Cell RIV-pl-1: ml-1.AC1 arms (a) and (e) may change to the 13-cell rule and nothing else in that file.",
     "world_is": "The parser line is outside those two arms, so it was left alone; arm (a) expects the parsed labels Oct, Nov .. Sep, Oct for 13 cells; arm (e) expects the named months unique except the one repeated Oct.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Widen the regex to carry the year if the issuer wants arm (a) to."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S63",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T16:13:28Z",
+    "one_line": "Deploy preparation for rounds 15 to 22: the deployed daily Lambda already peaks at 864 MB of its 1,024 MB, and the new code's stages peak at 1,247 MB and 1,552 MB on this machine",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/etfs-rivalfunds-daily-lambda, the 2026-10-07 11:0xZ run of the deployed round-14 code (RequestId de6ac642-50b3-46b4-a26f-5a528f8f4086): Duration 439,946.98 ms of a 900 s timeout; Memory Size 1024 MB; Max Memory Used 864 MB. One REPORT line was read; the sweep's and the publish Lambda's lines were not",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round22/timing_2026-10-07.json (time_publish.py at CLOUD a4542de7f9, day 2026-10-07, live inputs, local writes only, one process on site Z): gold holding_contribution 61.0 s, peak working set 1,247 MB; gold buying_trend 110.2 s; publish-page with the 13 chart objects 125.2 s, peak 1,552 MB",
+        "infra/aws/terraform/etfs-rivalfunds/gen_policies.py line 229: every rivalfunds Lambda is memory_size 1024; timeout 900 (fetch-holdings 300). The plan made at the pin (rv_apply22.plan.at_1024MB.txt: 0 to add, 5 to change, 0 to destroy; source_code_hash and last_modified only) leaves that as it is",
+        "The new code reads more than round 14's: the tables' windows reach 365 calendar days back (round 14: the year to date), and the publisher builds chart objects from a year of G1, G5 and G4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-2 and the never-widen rule: a deploy's sign-off names the act's blast radius and the outcome on both branches; the 11:00Z daily run and the 13:00Z sweep must publish the page after the deploy as they do today",
+    "world_is": "Nothing measures the new code's memory on Lambda. The two figures are from different machines and allocators and are not comparable as numbers; together they say the margin is 160 MB today and the new code needs more than the old on the one machine where both are known to run. An out-of-memory kill of the daily Lambda would leave the day's page unpublished",
+    "notes": "disarm_owner (n/a, INERT: nothing is deployed): 2.0.0_SA_COO~RV. BLOCKING for the Lambda deploy at 1,024 MB. Shape for 1.0.0_SA_CTO~Z: raise memory_size in the same apply (the one line in gen_policies.py; REC 3008 MB for the five, or for the daily and publish-page Lambdas only), and read Max Memory Used on the first run of each as a leg of the deploy ledger. Time: the three stages sum to 296 s here against a 900 s timeout and a 440 s run today; not measured on Lambda either."
   }
 ]
 ```
