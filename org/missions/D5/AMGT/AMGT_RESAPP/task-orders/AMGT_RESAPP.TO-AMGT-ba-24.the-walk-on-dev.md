@@ -16,7 +16,7 @@ comp-adversary: RUN by the issuer at the cut -- round 76's walk on DEV (portal 6
 EGRESS CLASS, declared: NONE. Localhost dev build only; no client data leaves the device.
 </preflight>
 
-**Your worktree:** `C:/tmp/r77-286` (branch `wk-AMGT_RESAPP-286`, cut from the issuer's tree after the round-77 redeploy and the portal DEV push, with `--portal-ref 13509c52`, the origin/DEV head the GO names). Work and commit only there. Start every shell call with `cd /c/tmp/r77-286`: a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout.
+**Your worktree:** `C:/tmp/r77-286` (branch `wk-AMGT_RESAPP-286`, cut from the issuer's tree after the round-77 redeploy and the portal DEV push, with `--portal-ref 8ddfe409`, the origin/DEV head at the GO, read by ls-remote 2026-10-07 05:44Z; AMENDMENT 2). Work and commit only there. Start every shell call with `cd /c/tmp/r77-286`: a call that starts elsewhere resolves `git rev-parse --show-toplevel` to the base checkout.
 
 ## 1. THE ACT -- `AMGT-ba-24` (round 77, decomposition s.85)
 
@@ -56,6 +56,15 @@ with its reason.
   - **RESOLVE THROUGH THE GATEWAY:** the name search route `GET /api/scoped/amgt/resolve?q=` was only ever exercised by a direct
     invoke of the function. From the signed-in dev build, read `/api/scoped/amgt/resolve?q=Lenovo` through the page's own API
     client or address bar, and record the status and whether the answer lists `992_HK_Equity`. A 404 or a 403 here is a row.
+- **AMENDMENT 2 (issuer, at the GO, 2026-10-07 ~05:5xZ). The GO's facts, and what changes:**
+  - **The portal ref is `8ddfe409`** (origin/DEV). DSGN round 45's page work IS on it: walk FWD-16 and FWD-12.
+  - **The AMD segment pull has NOT run** (it runs after 11:00Z today). Walk FWD-1 on AMD as it stands and write
+    `SEGMENT PULL NOT YET RUN` beside the act's heading; record what the page shows in place of the breakdown. Walk BA as written.
+  - **No name carries a planted old read.** If no row is stale on the day, record that with the capture and the sort you used,
+    and end the FWD-7 visit there. Do not plant anything.
+  - **DEV-ONLY (a further act; Andrew-direct 2026-10-07, the /freshness page is dev only):** the walker account reads role admin,
+    userType Dev. Record that the Freshness nav entry is drawn for it and that /freshness opens. Capture the nav with the entry.
+    The walker cannot sign in as a non-Dev user: say so under the heading DEV-ONLY, and do not try another account.
 - Companies: BA, AMD and ASML_NA unless the GO names others. Then disarm.
 
 **Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing.** Rows: id form `AMGT_RESAPP-Z-W286-S<k>`, `disarm_owner` `2.0.0_SA_COO~Z`.
@@ -110,3 +119,4 @@ expected (the account reads disarmed).
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>
