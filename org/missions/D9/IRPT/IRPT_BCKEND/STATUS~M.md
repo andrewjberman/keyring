@@ -45,9 +45,9 @@ Each order was cut on a delivered FILE, pinned by commit and sha256, because del
 
 ## Constraints this lane works under
 
-- **Firm buckets from dell2:** 49financial and inflection READ since the fence join (~10:44Z). Cottonwood is still refused
-  (head-object 403, last probed 14:02Z), so a Cottonwood read goes to the laptop as a FILE under the standing rule
-  (`1.0.0_SA_CTO~DELL2` msgs 217 and 361). Measured.
+- **Firm buckets from dell2:** all three READ. 49financial and inflection read since the fence join (~10:44Z); cottonwood
+  reads from 15:02Z (head-object answered, manifest LastModified 2026-10-07T14:18:11Z). M reads now run on dell2 with no
+  laptop relay. Measured.
 - **`holdings_snapshot.py`** has one writer: dell1's SC-e-56 (`2.0.0_SA_COO~M1`), decision 106191. No dell2 seat edits it.
   Its RELEASE runs through IRPT_BCKEND: `~M2` gives the COO never-widen half and `1.0.0_SA_CTO~DELL2` the CTO half.
 - **Row ids:** only dell2 mints IRPT_BCKEND ids (08:5xZ ruling). S370 exists twice, here and on origin (laptop ~C's).
@@ -72,7 +72,7 @@ Each order was cut on a delivered FILE, pinned by commit and sha256, because del
 | round-32 sweep and slug | `3.0.0_SA_CVO` | packet READ 13:15Z (id 605) |
 | FWD-5 share grade, round-33 items | `1.0.0_SA_CTO~DELL2` | after the slug |
 | release ask for `holdings_snapshot.py` | dell1 `2.0.0_SA_COO~M1` | not yet sent |
-| Cottonwood read access for dell2 | NFRA_CTLPLN fence apply (TO-APPLY-4) | 403 at 14:02Z |
+| Cottonwood read access for dell2 | NFRA_CTLPLN fence apply (TO-APPLY-4) | MET: reads at 15:02Z |
 
 ## Retired from the 10-02 list
 
