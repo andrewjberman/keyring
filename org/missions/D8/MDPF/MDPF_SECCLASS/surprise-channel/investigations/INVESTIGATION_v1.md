@@ -3735,6 +3735,110 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
 }
 ```
 
+## MDPF_SECCLASS-W32-S1 -- a07's --parity-control fails at the base with the switch OFF (1,690 of 4,136 mismatches) because the ORIGINAL lib it diffs against became a 
+
+```json
+{
+  "id": "MDPF_SECCLASS-W32-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~32",
+  "surfaced_at": "2026-10-07T12:09Z",
+  "one_line": "a07's --parity-control fails at the base with the switch OFF (1,690 of 4,136 mismatches) because the ORIGINAL lib it diffs against became a canonical-ticker-only reader at SC-t-1; so the face's 'parity changed set equals the before/after changed set' cannot hold.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/A07_SWITCH_BEFORE_AFTER_20261007.json (parity_before_strict, parity_after)",
+      "data/black_diamond/scripts/gold/lib/etf_classifier.py @206b90e359 (class docstring: ONE LAYER ONLY, direct ticker lookup)",
+      "local run log .scratch/ba_run.log (uncommitted)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e42 WORKER FACE: 'the parity control will report the switch's deltas ... the set of keys parity reports as changed must equal the set your before/after file names as changed'; a07 header: --parity-control diffs the port against data/black_diamond/scripts/gold/lib/etf_classifier.py on the full population and the port is faithful.",
+  "world_is": "etf_classifier.py at 206b90e359 (SC-t-1) classifies from etf-classifications by bare ticker only (no name layer, no CUSIP form); a07's port still carries the 4-layer old-list logic. Local run 2026-10-07 with canonical OFF: 'A5-A07-PARITY-VS-SERVED: 2446 of 4136 agree ... mismatches 1690' then SystemExit PARITY FAIL (the control was already dead before this edit). Switch ON: 1,282 unsanctioned mismatches + 447 canonical-* deltas; the 447 contain all 164 changed keys and 283 more (before == after class; the lib answers UNCLASSIFIED-LOUD for all 283, 273 resolved by a CUSIP: row the lib never reads). Sets: 0 only in before/after, 283 only in parity, so equality is False.",
+  "notes": "Filed on dell1 (the project tree is laptop-fabric; row ids follow the order, W32). The parity code was kept (never removed, never loosened to a pass): a canonical-sourced disagreement is now printed in full as a switch delta, every other disagreement still raises. The control needs its own repair (re-port against the current lib, or retire the control by ruling); not done here. a07's parity is opt-in (never in a chain run)."
+}
+```
+
+## MDPF_SECCLASS-W32-S2 -- a07 gives every held key with no ticker the class `equity` by ticker shape
+
+```json
+{
+  "id": "MDPF_SECCLASS-W32-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~32",
+  "surfaced_at": "2026-10-07T12:09Z",
+  "one_line": "a07 gives every held key with no ticker the class `equity` by ticker shape: a NaN ticker is truthy, str(NaN).upper() is 'NAN', and 'NAN' fullmatches [A-Z]{1,5}. 228 of 4,136 held keys are affected at the base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/A07_SWITCH_BEFORE_AFTER_20261007.json (rows with before_source regex-name and a CUSIP: key)",
+      "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py:249-253 at b55059ee33"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "a07 classify() layer 4 (line ~249-253 at base): equity only for a 1-5 letter ticker; the R8 trace's MISSING-ROW line says 'a 1-5 letter ticker is equity'.",
+  "world_is": "In the local base build (canonical OFF), 228 keys have ticker NaN, class equity, source regex-name (201 carry a CUSIP; 173 have no name); e.g. 49F key 00130HCH6 (ticker NaN, cusip 00130HCH6) reads equity/regex-name. The layer-1 guard excludes 'NAN' but layer 4 does not. The canonical switch re-classes 119 of the 228 (canonical-cusip: 114 fixed_income, 4 structured, 1 alternatives); the other 109 stay `equity`. Served effect: those CUSIP-only holdings are in the equity bucket of the 49 Financial mix today.",
+  "notes": "Filed on dell1 (the project tree is laptop-fabric; row ids follow the order, W32). Pre-existing and served; this order's edit neither causes nor fixes it, so no code change was made. A fix is a deliberate reclassification of the remaining 109 keys (a CTO call: UNCLASSIFIED-LOUD or a name-pattern class)."
+}
+```
+
+## MDPF_SECCLASS-W32-S3 -- a07's _classifier_vintage does not cover the canonical substrate it now reads first, so a change to etf-classifications alone does not move 
+
+```json
+{
+  "id": "MDPF_SECCLASS-W32-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~32",
+  "surfaced_at": "2026-10-07T12:09Z",
+  "one_line": "a07's _classifier_vintage does not cover the canonical substrate it now reads first, so a change to etf-classifications alone does not move the vintage.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py build(): classifier_vintage composition",
+      "data/assets/scripts/gold/runners_49f/tests/test_a07_vintage_digest.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "a07 VINTAGE block: the vintage is 'a pure function of its two inputs: the loaded classifier substrate AND the classifier library's bytes'; the field answers 'did the classifier substrate change?'.",
+  "world_is": "classifier_vintage is sha256(canon-json of ticker_map (bd-securities) + lib_hash). After the switch the class of 2,346 of 4,136 keys comes from etf-classifications, which is in neither term. The vintage form `canon-json-v1` is pinned by CTO 87535/91555 and test_a07_vintage_digest.py (12 tests pass unchanged), so a form change was not made here.",
+  "notes": "Filed on dell1 (the project tree is laptop-fabric; row ids follow the order, W32). Left unchanged on purpose. The fix is a vintage-form amendment (fold the canonical rows into the payload and name the form v2) for the CTO to rule; the dim's own classification_source/asset_class columns do show every class change."
+}
+```
+
+## MDPF_SECCLASS-W32-S4 -- The rollback VersionId of the live a07 cannot be read from this device
+
+```json
+{
+  "id": "MDPF_SECCLASS-W32-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~32",
+  "surfaced_at": "2026-10-07T12:09Z",
+  "one_line": "The rollback VersionId of the live a07 cannot be read from this device: opal-data-49financial answers 403 on head-object and AccessDenied on list-object-versions to cloudops-dell1-agent-user, so the half's rollback key is named but its VersionId is UNREAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_A07_CANONICAL_FIRST_20261007.md (Rollback per key)",
+      ".tools/safe_deploy_core.py:462 (advi layer) and :663-703"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e42 WORKER FACE: 'Rollback per key (the S3 VersionId of the live a07 copy, read with list-object-versions)'.",
+  "world_is": "safe_deploy_core.file_to_s3_target('data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py') = (opal-data-49financial, _code/a07_dim_asset_classification.py, advi), second_targets_for = []. boto3 head_object -> 403 Forbidden; list_object_versions -> AccessDenied s3:ListBucketVersions (2026-10-07 ~12:0xZ). Same family of firm-bucket denies as W25-S1.",
+  "notes": "Filed on dell1 (the project tree is laptop-fabric; row ids follow the order, W32). AC3 greps for the section words only, so it reads HALF-READY; the half states the VersionId as UNREAD and puts the read on the deploying seat before the act (condition 1). A seat with firm-bucket access can write the VersionId into the half in one line."
+}
+```
 ## MDPF_SECCLASS-W33-S1 -- resolve_tickers.py failed the commit gate on three lint findings that predate the edit; fixed annotation- and comment-only
 
 ```json
