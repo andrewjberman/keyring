@@ -136,7 +136,7 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-9.gateway-release-r23.proof_
   - `rl9.AC2` FAIL: the r22 record, 23 blank rows.
   - `rl9.AC3` FAIL: GA1_QUERY.json is absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>
