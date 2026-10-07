@@ -4473,6 +4473,29 @@
     "spec_asserts": "FWD-22 (PRD v0.18 F.7; cell RIV-md-1): the dialog lists the fund's trades in the security, one line per trade, and a fund with no trade in the security says \"No trades in the last 365 days\"",
     "world_is": "The static list holds only the trades the page context carries, so its \"none in the last 365 days\" is said about a shorter window than it names; the chart's markers and the buying section above it show the year's trades. Where the chart draws (a stored currency), the markers correct the reader; where it does not (no stored currency, or the script fails), the false sentence stands alone",
     "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 17 is deployed): 2.0.0_SA_COO~RV. BLOCKING because the sentence is false on most dialogs; the Lambda deploy does not go out with it open. Not caught by a check: md-1's fixture has one trade inside the page window. Repair shape is small (say the window the list really covers, or build the list from the same 365-day trades): for the round analysis, with the J1 grades."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S57",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:25:31Z",
+    "one_line": "Morning pass 2026-10-07: the parsekey join merges holding_contribution (13 pairs, Nebius included) but buying_trend still carries 7 securities under two keys",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round14/morning_pass_2026-10-06.after_vehicle_20261007.json (morning_pass.py, read-only, page day 2026-10-06, G4 date 2026-10-06): G4 object market-20261007T110920Z holds 26 rows with a parsekey; holding_contribution MERGED 13, SPLIT 0, IDENTIFIER_ONLY 13 (each held by one fund under its CUSIP key with no fund on the Bloomberg key); buying_trend MERGED 2, SPLIT 7, IDENTIFIER_ONLY 9, NEITHER 8",
+        "The 7 SPLIT pairs in buying_trend, each with GQGU on the identifier key and other funds on the Bloomberg key: AMD (007903107), AAPL (037833100), META (30303M102), LRCX (512807306), MU (595112103), PM (718172109), ASML (N07059210). All 7 are MERGED in holding_contribution on the same run",
+        "Nebius control: holding_contribution MERGED (GQGU and WCMG both on NBIS_US_Equity; names 'Nebius Group NV' and 'Nebius Group Nv', a case-only difference); buying_trend NEITHER (no trend row for it)",
+        "The tables read are the 2026-10-06 revisions written 11:12:53Z and 11:13:37Z on 2026-10-07, after the G4 write at 11:09:20Z; the 2026-10-07 page-day tables were written 11:04Z, before it, and read SPLIT 13 (morning_pass_2026-10-07.early_page.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey, so one security under two listings is one key on the whole page",
+    "world_is": "One reader does and one does not on the same build: holding_contribution carries one key for every pair two funds hold; buying_trend carries GQGU's rows under the CUSIP key beside the other funds' rows under the Bloomberg key for 7 securities. No merged pair has disagreeing names, so there is no wrong merge and nothing to roll back",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Served today, and it was split before the deploy as well, so the act made nothing worse. Unread: whether the trend's GQGU rows come from trade history keyed before the parsekey existed (then they merge as that history is rebuilt) or from the reader not applying the join. For the round analysis. The 13 IDENTIFIER_ONLY pairs keep a CUSIP as the page key, with the name from G4."
   }
 ]
 ```
