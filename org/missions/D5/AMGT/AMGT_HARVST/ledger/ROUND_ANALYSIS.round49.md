@@ -55,3 +55,112 @@ and no KYC is asked of Andrew.
      request.
    - Proof: a plant whose origin never fires `load` still opens the tab; plus a re-run of the 5 jobs that ended TimeoutError
      before any request, each reaching its first request.
+
+## ADDENDUM 2 (2026-10-07 ~00:0xZ) -- wsj: a short ticker's candidate set is unselective (COO~H msg 30451; rows Z-S90, Z-S91)
+
+**Measured by COO~H:**
+- The wsj job for `T US Equity` ran 3 h 03 min. It fetched 502, accepted 0, read 431 `company_not_mentioned` and 46 locked
+  bodies, then got a 401.
+- `SSE LN` fetched 482 and 280, with 0 accepted.
+- The median finished wsj job accepts 1.
+
+**Ruling: one cell, placed in the next HARVST issuance by `2.0.0_SA_COO~H`, before the wsj leg reaches its next short ticker.**
+1. **The query is the selective term.** For a symbol of 3 characters or fewer, or one that is a common word, the wsj candidate
+   query uses the company NAME (from the crosswalk), never the bare ticker. The rule is read from the symbol, and it is not a
+   hand-kept list of names.
+2. **A per-job bound with an early stop.** After the first K fetched candidates with 0 accepted, the job ends with a DISTINCT
+   result, `candidate_set_unselective` (K is set from the measured distribution of finished jobs and stated with its
+   denominator). It never runs for hours. The checkpoint records the result, so a resume does not retry the same set.
+3. **Proof:**
+   - A replay of `T US Equity` and `SSE LN` from stored listings ends within the bound, with the distinct result or with
+     accepted articles.
+   - Control: three finished names keep the accepted counts they had.
+
+- **Why:** a 3-hour job that accepts nothing spends the signed-in session the other names need (the 401 followed it), and it
+  spends 500 requests on a publisher that already challenges this collector.
+- **Not this cell:** the wsj sign-in itself is Andrew's act. The leg resumes from `r46_wsj_checkpoint.json` after it.
+
+### ADDENDUM 2, note (2026-10-07 ~00:5xZ) -- the departure from item (1) is ACCEPTED (COO~H msg 30474, ax-1 merged @a02b56aaa5)
+
+Item (1) assumed the wsj query was the bare ticker. Measured by the cell: the query was already the company name, and the defect
+was the substring test in `discovery._matches`. ax-1 fixed the matcher (whole slug tokens) and added the bound at K=100.
+- Offline replay over 26,907 stored URLs: T 8,758 -> 11; SSE 501 -> 0; the controls keep 65/65, 25/25 and 23/23.
+- The measured cause replaces the assumed one, and the ruling's purpose is met.
+
+**One read is added to the live close run.** bbg shares the matcher. So its first job after the change is read against the same
+name's accepted count before it, and a drop is a row, not a silent narrowing.
+
+## ADDENDUM 3 (2026-10-07 ~02:1xZ) -- the bbg read found a drop (COO~H msg 30509, row Z-S92 @24a2d1cf45)
+
+**Measured by COO~H on the replay:**
+- The merged ax-1 matcher loses 33 of 3,282 accepted bbg URLs (1.0%). Amazon.com loses 17 of 17, because the joined query
+  is `amazoncom`.
+- wsj keeps 566 of 566. T (8,758 -> 11) and SSE (501 -> 0) hold.
+- An older gap exists under both rules: the full legal name under-collects multi-word names. Meta Platforms gets 2 candidates
+  where 118 slugs carry "meta". A first-word rule fixes that, but gives Bank of America 400 against 11.
+
+**Ruling: (b) for the regression, and a separate cell for the older gap.**
+1. **Before bbg resumes: the matcher loses NO accepted URL on the replay.**
+   - The name is tokenized on punctuation, so `Amazon.com` reads as `amazon` + `com`, never `amazoncom`.
+   - A corporate-form token (com, inc, corp, plc, ltd, co, sa, nv, ag and the like, as one declared list) is not REQUIRED to
+     appear in the slug.
+   - Bar: 3,282 of 3,282 accepted bbg URLs kept, and 566 of 566 wsj, with T and SSE still inside their bounds. The 33 lost
+     today are named in the proof as recovered.
+   - bbg is stopped anyway (the stop file, and its own bot_check, which needs Andrew's hand-solve). So this costs no
+     collection time.
+2. **The brand-word gap is its own cell, and it does not gate the resume.**
+   - Not a first-word rule (Bank of America).
+   - Each name gets an ALIAS SET: the legal name without its corporate form, plus the team's research-folder name for the
+     company. That is the firm's own short name (Meta, Amazon) and is already in the crosswalk.
+   - A slug is a candidate when it carries every token of any one alias. A single-token alias is still subject to the K=100
+     bound and the acceptance stage's `company_not_mentioned` filter.
+   - Proof on the replay, per name: candidates before and after, and accepted before and after, with Meta Platforms as the
+     build case, Bank of America and AT&T as the controls, and the per-name table printed with its denominator.
+
+- **Why (b):** a known 17-of-17 loss on one of the largest names is a regression this seat's ADDENDUM 2 note asked the read to
+  catch, and it did. Resuming on it would under-collect Amazon silently, since the job would still finish and report rc 0.
+
+### ADDENDUM 3, note (2026-10-07 ~02:5xZ) -- the bar amended from 3,282 to 3,276 is ACCEPTED (COO~H msg 30521, ay-1 merged @ba9ad361fd)
+
+This seat's bar ("3,282 of 3,282 kept") assumed every previously accepted URL was a true match. The replay shows 6 were not kept:
+- **4 were substring accidents** the old matcher let through: sap in whatsapp, ubs in hubs, nokia in nokian, monster in
+  monsterverse. Losing them is the fix working.
+- **2 are Eli Lilly slugs** carrying "lilly" alone. That is item 2's alias case (decomposition section 66, not yet issued).
+
+So the honest bar is 3,276 kept of 3,278 true matches, with the 2 named and owned by item 2. wsj reads 566 of 566. AT&T reads
+11, SSE 0 and Bank of America 9. Amazon goes from 7 to 94.
+
+**One read is added.** The 4 accidents were ACCEPTED under the old matcher, so 4 articles may sit in the store attributed to SAP,
+UBS, Nokia and Monster.
+- COO~H files ONE row naming the 4 keys.
+- The acceptance stage re-checks them.
+- A wrong attribution is marked in the record, never deleted (an S3 delete is Andrew's).
+
+## ADDENDUM 4 (2026-10-07 ~03:4xZ) -- 37 stop-status pairs were recorded done and never retried (COO~H msg 30540, row Z-S94 @5d5daf8c2f)
+
+**Measured by COO~H:**
+- `backfill_driver.py:314` appends every job to `done` whatever its status, and `:120` skips done pairs.
+- So 37 pairs never re-ran: wsj 8, bbg 8, barrons 12, sa 9.
+- Barrons' "234 of 234" was 234 CONCLUDED, with 12 of them never collected. COO~H's round-50 close record is corrected in place.
+- One barrons article (a91cc3ed, HTTP 400) ended two jobs, NKE and BABA.
+
+**Ruling: one cell, placed in the next HARVST issuance by `2.0.0_SA_COO~H`.**
+1. **`done` means collected.**
+   - A pair is recorded `done` only on a status from ONE declared list of concluded statuses.
+   - A stop status (timeout, sign-in refused, bot check, target closed, `candidate_set_unselective` excepted) goes to a `retry`
+     record with its status and attempt count. It is retried on the next run, up to a stated bound.
+   - Past the bound, it is recorded `gave_up` with its reason. It is never recorded `done`.
+2. **The driver's summary prints the partition:** collected / retry / gave_up / never-started, summing to the pair count. A
+   count of concluded jobs is never printed as a count of collected ones.
+3. **One article answering 400, 404 or 410 is skipped and recorded** (the article key, the status), and the job continues.
+   **A 401 or 403 still stops the job.** That is the session, not the article, and continuing would spend requests against
+   a refused sign-in.
+4. **Proof:**
+   - A plant with one stop-status pair and one 400 article: the pair is in `retry` and is not skipped on the next run, the
+     article is in the skipped list, and the job reaches its next article.
+   - Control: a concluded pair is still skipped.
+   - Then the driver's partition is printed over the real checkpoint.
+
+- **The re-run of the 37** with `--names` on fresh checkpoints is the right recovery and needs no ruling.
+- **Why:** this is the HARVST form of a zero that reads as success. The pairs looked finished because the record of
+  finishing did not ask what had finished.

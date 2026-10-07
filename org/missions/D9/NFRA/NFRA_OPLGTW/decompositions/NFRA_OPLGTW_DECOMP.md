@@ -1580,3 +1580,65 @@ Label `<round>23</round>`, ONE issuance, two cells in one chain.
 
 **After round 23.** If rl-9 passes, FWD-3 returns to HELD on OG-v-7, and FWD-4's approved-information half stands for
 the holder. The un-park events left are OG-v-7, G-E and R7's flag.
+
+## ADDENDUM R3-T.17 (2.0.0_SA_COO~O, 2026-10-06 ~23:2xZ) -- round 23, one HOTFIX cell on CTO R32
+
+**Source.** `1.0.0_SA_CTO~O` msg 30413 (R32), inside the fabric hold's carve-out (`0.0.0_AB_MSTR~Z` msgs 30408, 30411).
+The gateway's `opal_data_refresh_upload` fails `portal login 403`, because it logs in at the raw API Gateway host and
+the auth Lambda's origin gate refuses it. That blocks the integrate.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-10` | 1 | The r24 hotfix release on live `2c27f3a795`: `opal_portal/integration.py` logs in through `PORTAL_FRONT_DOOR`, and the raw host leaves the `hosts` tuple. Nothing else ships. Post-deploy read: the installed code's own login is accepted. | WORLD | ~28 | worker |
+
+**Chains.** `OG-rl-10` runs BEFORE the held `OG-rl-9`, which re-cuts on the new live. **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.18 (2.0.0_SA_COO~O, 2026-10-07 ~03:0xZ) -- round 24, the CTO's round-23 list (R33, R35) plus OA-f-14's release
+
+**Source.** `ledger/ROUND_ANALYSIS.round23.md` @c8a3b2911e, section 4 (msg 30512). For the release's second part:
+`2.0.0_SA_COO~AI`'s release request (OA-f-14 on CLOUD @af10f7d42b) and the CTO's msg 30365 (the pre-GO host read).
+
+Label `<round>24</round>`, ONE issuance, three cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-up-1` | 1 | R33: `opal_data_refresh_upload` returns right after `/trigger`; a new read-only `opal_data_refresh_status`; an idempotent re-send; the two caller texts; the 01:26Z execution read. | WORLD | ~29 | worker |
+| `OG-hg-1` | 2 | R35 cell 1: the halt gate reads a worker's order from the shared root and reads the LAST status tag, with a four-case fixture. | LOCAL | ~30 | worker |
+| `OG-rl-11` | 3 | The r25 release on live `7d65a28db0` under CTO + COO + CVO halves: OG-up-1, plus NFRA_OPALAI OA-f-14 (the scoped identity's consent narrows 17 -> 8 or 9). Pre-GO: the three host identity keys are read. | WORLD | ~28 | worker |
+
+**Chains.** `OG-up-1` -> `OG-rl-11`. `OG-hg-1` stands alone. **fanout:** 2 starts, cap 8.
+
+**No cell (form edits, the issuer's):** R35 part 2 (the deploy identity and who commits the manifest), Z-W28-S9 (a
+per-run host scratch name) and Z-W28-S2 (operator-command output).
+
+**After round 24.** The project parks again on OG-v-7, G-E and R7's flag (R28).
+
+## ADDENDUM R3-T.19 (2.0.0_SA_COO~O, 2026-10-07 ~04:3xZ) -- round 25, the concierge's status-tool row (Andrew-direct)
+
+**Source.** Andrew-direct 2026-10-07 ~04:1xZ, "rec approved", at the `1.0.0_SA_CTO~O` terminal. Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_041xZ_CONCIERGE_MAY_CALL_DATA_REFRESH_STATUS_TOOL_YES.md`
+@4403ac63df. Routed by the CTO's msg 30555: one cell, shipped in the release AFTER r25, under three halves.
+
+Label `<round>25</round>`, ONE issuance, two cells in one chain.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-al-2` | 1 | ONE row in `identity_tool_allowlist.txt`: the scoped concierge identity may call `opal_data_refresh_status`, unqualified, with its authorization above it; plus a four-test file. | WORLD | ~29 | worker-light |
+| `OG-rl-12` | 2 | The r26 release on live r25 (`240ac2fe5a`) under CTO + COO + CVO halves. Served output widens by that one tool for that one identity. | WORLD | ~28 | worker |
+
+**Chains.** `OG-al-2` -> `OG-rl-12`. **fanout:** 1 start, cap 8.
+
+**Ordering against round 24.** `OG-al-2` is BUILT now and held on its worker branch. It drains to CLOUD only after r25
+(`OG-rl-11`) closes, because `rl11.AC1`'s drain-back arm reads CLOUD against live.
+
+## ADDENDUM R3-T.20 (2.0.0_SA_COO~O, 2026-10-07 ~05:2xZ) -- round 25, workstream SEND-DEDUPE-R36 (CTO R36)
+
+**Source.** `1.0.0_SA_CTO~O` msg 30594 (R36), on the evidence in `0.0.0_AB_MSTR~Z` msg 30592: three pulls of
+`model 20261005 v1.pkl` at one size, 17,919,590 bytes, with different content.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-up-2` | 1 | The re-send signature becomes (name, size, content hash) per file, the hash read from the drive item already resolved. An unreadable hash does not dedupe: the send fires. | WORLD | ~29 | worker-light |
+
+**Chains.** `OG-al-2` (complete) -> `OG-up-2` -> `OG-rl-12`. Release r26 now carries three things: the status-tool row
+for the concierge, the execution-id shape check (Z-S65) and this cell. **fanout:** 1 start, cap 8.

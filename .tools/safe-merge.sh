@@ -35,10 +35,12 @@
 #         bash .tools/safe-merge.sh --self-test
 #
 #         bash .tools/safe-merge.sh --verify-merge <commit>      # read-only tree check of a landed merge
+#         bash .tools/safe-merge.sh --verify-index <commit>      # read-only: does the index of THIS worktree agree with HEAD on that merge's paths
 #
 # EXIT CODES: 0 merged | 1 refused, merge aborted | 2 usage/precondition, nothing done
 #             4 CONFLICT, THE MERGE IS OPEN AND YOURS TO RESOLVE (nothing landed)
 #             5 COMMITTED BUT THE BRANCH WAS NOT CARRIED, in whole or in part (tree check, see _verify_merge_tree)
+#             6 COMMITTED AND CARRIED, BUT THE INDEX DISAGREES WITH HEAD on merged path(s) (see _verify_shared_index)
 #
 # Owner 2.0.0_SA_COO (the drain is the COO's limb). Lane .tools/ (ANY).
 set -uo pipefail
@@ -107,6 +109,11 @@ if [ "${1:-}" = "--self-test" ]; then
   # reads it. Taken after the grade, a peer staging inside HEAD..MERGE_HEAD during the minutes-long grade rode in.
   chk "the private index is snapshotted before the grade, and the grade reads it" \
       "[ \"\$(grep -n 'could not snapshot the index after the merge' '$0' | tail -1 | cut -d: -f1)\" -lt \"\$(grep -n 'grading the MERGED index' '$0' | tail -1 | cut -d: -f1)\" ] && grep -q 'GIT_INDEX_FILE=\"\$_PRIV_IDX\" python \"\$GATE\"' '$0'"
+  # REGRESSION ARM (NFRA_OPLGTW-Z-S61): the commit path reads the INDEX against HEAD after the merge lands.
+  chk "the commit path reads the index against HEAD after MERGED (exit 6 when merged paths are stale)" \
+      "grep -q '_verify_shared_index HEAD' '$0' && grep -q 'THE INDEX DISAGREES WITH HEAD ON' '$0'"
+  chk "--verify-index refuses a non-merge commit" \
+      "! bash '$0' --verify-index \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   chk "--verify-merge refuses a non-merge commit" \
       "! bash '$0' --verify-merge \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   echo "DENOMINATOR: $((n-fails)) of $n arm(s) passed"
@@ -114,7 +121,7 @@ if [ "${1:-}" = "--self-test" ]; then
   echo "     self-test has NO GREEN MERGE ARM -- a version of this script that refused"
   echo "     EVERYTHING would pass all of them. A self-test cannot safely perform a real"
   echo "     merge in the SHARED tree, so the permit path is covered by EXERCISE, not here:"
-  echo "       .tools/tests/exercise-safe-merge-continue.sh -- 30 arms, ALL GREEN 2026-09-04"
+  echo "       .tools/exercise-safe-merge-continue.sh -- 30 arms, ALL GREEN 2026-09-04"
   echo "       (1.0.0_SA_CTO) in an ISOLATED worktree on real bytes: a genuine append-only"
   echo "       conflict left OPEN at rc 4; --continue refused while unresolved; --continue"
   echo "       refused a FOREIGN staged file BY NAME; a merge that FAILED WITHOUT OPENING ONE"
@@ -204,6 +211,45 @@ if [ "${1:-}" = "--verify-merge" ]; then
   [ -n "${2:-}" ] || { echo "safe-merge: usage: safe-merge.sh --verify-merge <commit>" >&2; exit 2; }
   _vrc=0; _verify_merge_tree "$2" || _vrc=$?
   exit "$_vrc"
+fi
+
+# ---------------------------------------------------------------- post-commit INDEX check
+# Row NFRA_OPLGTW-Z-S61 (2.0.0_SA_COO~O; 1.0.0_SA_CTO~O ruling R34, ROUND_ANALYSIS.round23.md). The merge commit is
+# written from a PRIVATE index (Z-S23), so nothing in this script re-reads the SHARED index after the commit. When a
+# peer's act resets the shared index while the commit's hooks run, HEAD carries the merge and the shared index still
+# holds the pre-merge blobs for the merged paths: they read as staged reverts nobody made, and a `git commit` without
+# --only lands them and reverts the drain. The tree check cannot see it (it reads commits). This reads the INDEX.
+# MERGED = paths the merge commit changed against its first parent. STALE = MERGED paths where the index != HEAD.
+# Read-only and REPORT-only: resetting a shared index entry would also unstage a peer's own change to that path, so
+# the repair is printed for the seat to run, never run here. rc 6 when STALE is non-empty; rc 2 when m is not HEAD
+# (the index can only be compared with the commit it sits on).
+_verify_shared_index() {
+  local m="$1" merged stale ns nm
+  git rev-parse -q --verify "$m^2" >/dev/null 2>&1 || { echo "safe-merge: $m is not a merge commit -- no index check" >&2; return 2; }
+  [ "$(git rev-parse "$m")" = "$(git rev-parse HEAD)" ] || { echo "safe-merge: $m is not HEAD -- the index check reads the index against HEAD only" >&2; return 2; }
+  merged="$(git diff --name-only "$m^1" "$m" | LC_ALL=C sort)"
+  stale="$(LC_ALL=C comm -12 <(printf '%s\n' "$merged" | sed '/^$/d') <(git diff --cached --name-only HEAD | LC_ALL=C sort))"
+  nm="$(printf '%s\n' "$merged" | sed '/^$/d' | wc -l | tr -d ' ')"
+  ns="$(printf '%s\n' "$stale" | sed '/^$/d' | wc -l | tr -d ' ')"
+  echo "safe-merge: index check $(git rev-parse --short "$m"): ${ns} of ${nm} merged path(s) differ between the index and HEAD"
+  if [ "$ns" -gt 0 ]; then
+    echo "safe-merge: *** THE MERGE IS COMMITTED AND CARRIED, BUT THE INDEX DISAGREES WITH HEAD ON ${ns} OF ITS ${nm} PATH(S). ***" >&2
+    echo "            They read as staged changes nobody made. A commit WITHOUT --only (or a 'git commit -a')" >&2
+    echo "            lands them and REVERTS this merge. Nothing is lost yet: HEAD and the working tree are right." >&2
+    printf '%s\n' "$stale" | sed '/^$/d; s/^/              /' >&2
+    echo "            Repair (index only; the working tree is not touched). First check no peer staged one of" >&2
+    echo "            these paths on purpose, then:" >&2
+    echo "                git reset -q HEAD -- <the paths above>" >&2
+    echo "            and re-run:  bash .tools/safe-merge.sh --verify-index HEAD" >&2
+    return 6
+  fi
+  return 0
+}
+
+if [ "${1:-}" = "--verify-index" ]; then
+  [ -n "${2:-}" ] || { echo "safe-merge: usage: safe-merge.sh --verify-index <commit>" >&2; exit 2; }
+  _irc=0; _verify_shared_index "$2" || _irc=$?
+  exit "$_irc"
 fi
 
 # ---------------------------------------------------------------- --abort
@@ -503,3 +549,7 @@ if [ "$_vrc" -eq 5 ]; then
 fi
 echo "safe-merge: MERGED and committed -- $(git rev-parse --short HEAD)"
 echo "safe-merge: remember the drain's remaining steps -- remove the worktree and its branch explicitly."
+# The index is read LAST and after MERGED is printed: the merge did land, and rc 6 says only that the index is stale.
+_irc=0; _verify_shared_index HEAD || _irc=$?
+[ "$_irc" -eq 6 ] && exit 6
+exit 0

@@ -7150,6 +7150,136 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Not measured: which matcher admits the candidates (sitemap title match on the ticker token or the company name), and the rejection reasons of the T job, which is still running. The job is left to finish so its run record carries them. Carried to the round-50 analysis."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S91",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-06T23:54:28Z",
+      "one_line": "The wsj leg STOPPED at 23:22:27Z on sign_in_refused: its T US Equity job ran 3 h 03 min, fetched 502 articles, accepted 0 (431 company_not_mentioned), met 46 locked bodies and then a 401 under --no-sign-in. Completes row AMGT_HARVST-Z-S90 with the finished job's record.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Row AMGT_HARVST-Z-S90 left unmeasured the rejection reasons of the T job. Collection-run condition 1: a leg that meets a sign-in refusal stops and resumes from its own checkpoint after Andrew's sign-in.",
+      "world_is": "Run 20261006T201945Z-wsj-5eb7443985 (T US Equity, 20:19:45Z to 23:22:27Z): request_attempts 545, fetched_keys 502, skipped 14, accepted 0, rejected 515. fetch_outcomes by first issue: company_not_mentioned 431; publisher_did_not_unlock_body 39; short_or_partial_body 30 (7 of them with a locked body); publisher_word_count_mismatch 1; no outcome 1. Status sign_in_refused, detail '401 under --no-sign-in: no refresh'. The driver then printed STOP wsj: sign_in_refused. So two things are true of one job: the candidate set for a one-letter ticker is 86% articles that never mention the company (431 of 502), and the wsj profile's session ended during the run.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-wsj/runs/20261006T201945Z-wsj-5eb7443985.json (status, counts, fetch_outcomes)",
+          ".runtime/harvest-backfill/r50_wsj_run1.out: JOB wsj security-f0731ffb117030c8 status=sign_in_refused; STOP wsj: sign_in_refused"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not measured: which matcher admitted the 431 (the candidate rule for wsj), and how many of the remaining wsj names are short tickers. Issuer act: wsj is not resumed until Andrew signs in inside the wsj profile; the resume is from r46_wsj_checkpoint.json with --clear-stop wsj. Carried to the round-50 analysis: a cell that bounds or tightens the wsj candidate set before the leg reaches the next short ticker."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W101-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~101",
+      "surfaced_at": "2026-10-07T00:29:20Z",
+      "one_line": "HVST-ax-1 replay: a wsj run record does not carry the company query, so the three control names' queries were recovered from the harvest_listing_outbox table, and K was taken as the first-accept POSITION.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order section 1 item 5: the controls are the three finished wsj jobs with the most accepted articles, printed as `<name>: accepted <a>, still admitted <b>`; the NEW rule needs a query per control. Item 2: K = articles fetched BEFORE the first accepted one 'if the record's order gives it'.",
+      "world_is": "A wsj run record (runs/*.json) holds ticker (None for 3 of the top 6), security_key, fetched_keys and fetch_outcomes but no company or query. The ax-1.replay.py derives each control's query from progress.sqlite3 table harvest_listing_outbox (column query, 'sitemap:<Company>', rows whose fetched_at lies inside the job's started_at..finished_at): Netflix (65 accepted), Visa (25), BP (23, the tie among three 23-accepted jobs broken by job id). All three had exactly one query. For K the script counts the 1-based position of the first accepted article in fetched_keys (fetch n needs K >= n); 55 of 68 jobs give an order, 13 fall back to total fetched; max 93 (AAPL, total 116), so K = 100 under either reading (the 'before' count 92 also rounds to 100).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~101/ax-1.replay.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~101/ax-1.k_derivation.out",
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest-wsj/progress.sqlite3 (harvest_listing_outbox)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S92",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T01:57:04Z",
+      "one_line": "The merged ax-1 slug matcher loses 33 of 3,279 previously accepted bbg article URLs (1.0%; Amazon.com 17 of 17), and the same replay shows a pre-existing gap: the full legal name as the query under-collects multi-word names under BOTH rules (Meta Platforms 2 candidates where 118 wsj slugs carry `meta`).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order HVST-ax-1 (issuer 2.0.0_SA_COO~H): the whole-token matcher keeps every accepted article; its control was three wsj names (Netflix, Visa, BP), all one-word queries. CTO msg 30475 added a bbg read to the close run: a drop is a row.",
+      "world_is": "bbg, all 131 finished jobs with an accept: 3,279 accepted URLs, all admitted by the old substring rule; the merged rule keeps 3,246 and loses 33 (AMZN 17 of 17, ICICIBC 4, LLY 2, IBN 2, JNJ 1, 7 with no ticker). The Amazon loss is the joined query `amazoncom`; the old rule admitted those slugs only because `com` is a substring of `commerce`, `companies`, `custom`. wsj, all 68 jobs with an accept: 566 of 566 kept by every rule tried. Selectivity in the 26,907 stored wsj URLs: AT&T 8,758 -> 11, SSE 501 -> 0 (the ax-1 outcome holds). Pre-existing, under old and merged alike: Meta Platforms 2 candidates, General Motors 7, Amazon.com 7 old and 1 merged, where a first-word match finds 118, 89 and 94; but that same first-word rule gives Bank of America 400 against 11. The live bbg leg was listing on the merged rule from its job after 00:40Z; one pair concluded on it (OMAB US Equity, security-7f05ac6ae2894d23, no_new_articles).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round51/ax-1.bbg_matcher_control.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round51/ax-1.matcher_rules_eval.out (five rules: recall on bbg and wsj accepted URLs, candidates for 15 names in the stored wsj sitemaps)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "DISARMED same turn by the issuer: `.runtime/harvest-backfill/R46_STOP_BBG` written 01:53Z, so the bbg leg ends after its current job and marks no further name done on the merged rule; sa does not use the sitemap matcher; wsj is stopped and loses nothing under the merged rule. Not measured: how many of bbg's remaining names are multi-word. Carried to the CTO: resume bbg on the merged rule (about 1% of accepted URLs at stake, re-runnable with --names), or change the rule first; and whether the query for a multi-word company should be a brand word, which no slug rule decides on its own."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S93",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T02:44:57Z",
+      "one_line": "Four bbg articles were ACCEPTED and stored under a company whose name the URL slug carried only inside a longer word (substring discovery): bbg:TECB4IKGZAJP00 (Monster), bbg:TKDRIWKIJH9600 (Nokia), bbg:T8WSYMT96OSH00 (SAP), bbg:TB9RP0KIJH8I00 (UBS). Their attribution is to be re-checked; nothing is deleted.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CTO msg 30522 (round-49 analysis ADDENDUM 3 note @24e57a8ef8): the 4 URLs the whole-token matcher no longer admits were accepted under the old matcher, so 4 articles may sit in the store attributed to SAP, UBS, Nokia and Monster; one row names the keys, the acceptance stage re-checks them, and a wrong attribution is marked, never deleted.",
+      "world_is": "From the bbg run records and the stored publication files (read only). (1) bbg:TECB4IKGZAJP00, security-e2ce94312c10d29a (Monster), job 20261001T211200Z-bbg-d4dfcdf997, title 'How Many Godzillas Is Too Many Godzillas?', slug token `monsterverse`; the body carries `monster` as a whole word 6 times of 12 occurrences. (2) bbg:TKDRIWKIJH9600, security-8dcf604f2bad81d2 (Nokia), job 20261001T224621Z-bbg-b112d53de3, title 'Nokian Renkaat CEO Says Rebuild Gathers Pace as Tire Sales Boom', slug token `nokian`; `Nokia` whole-word 1 of 10. (3) bbg:T8WSYMT96OSH00, security-a25abbc791077a07 (SAP), job 20261002T080621Z-bbg-dfb10aa2a3, title 'Venezuelan Oil Industry Is Running on WhatsApp After Cyberattack', slug token `whatsapp`; `SAP` whole-word 1 of 3. (4) bbg:TB9RP0KIJH8I00, security-e42479b2b86da0c7 (UBS), job 20261002T144234Z-bbg-0a5d095cd6, title 'Iran War Prompts Rethink of Middle East Finance Hubs Stability Premium', slug token `hubs`; `UBS` whole-word 1 of 5. Each body does carry the name at least once as a whole word, so the body check passed on a word and the discovery was the accident; whether that one mention is the company (a common noun `monster`; a passing reference) is a reading, not a count.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~102/ay-1.replay.out (the 4 `LOST substring_accident` lines)",
+          ".runtime/opal-data-harvest-bbg/runs/*.json accepted[] entries for the 4 article keys and their stored publication files (title, body_blocks)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not measured: whether the served gold carries these four as mentions of the four companies, and whether the acceptance check tests the name as a whole word or as a substring (the substring counts above exceed the whole-word counts in all four). Carried to the acceptance stage's re-check per CTO 30522."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S94",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T03:34:11Z",
+      "one_line": "A pair whose job ends on a STOP status is recorded done and never retried: 37 (publisher, name) pairs across the four live checkpoints (wsj 8, bbg 8, barrons 12, sa 9) were skipped by every later resume, and the issuer's round-50 close record wrongly said the timed-out pairs re-ran.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Collection-run condition 1 and the driver's own help text: a stopped publisher 'resumes from its next undone pair'. ROUND50_CLOSE_RUN.md (issuer, @e8c062b598): 'The five TimeoutError pairs are undone in their checkpoints, so each leg's resume re-runs them'; and the issuer's report that barrons finished 234 of 234 with its two timed-out names re-run.",
+      "world_is": "`lib/opal_data_harvest/backfill_driver.py:314` appends EVERY job to `checkpoint[\"done\"]` whatever its status, and `:120` builds the skip set from `done`. So the pair a leg stopped on is done, and `--clear-stop` resumes at the pair AFTER it. Counted from the checkpoints' `done` rows whose status is in STOP_STATUSES: r46_wsj 8 (error 6, bot_check 1, sign_in_refused 1 -- the last is T US Equity); r46_bbg 8 (error 5, bot_check 3); r46_sa_barrons 16 (barrons error 11, barrons bot_check 1, sa upstream_unavailable 4); r47_sa 5 (upstream_unavailable 4, account_or_harvester_unavailable 1). Barrons' 234 of 234 is 234 CONCLUDED, of which 12 never collected, including security-6c77e5f2f3cc198f and security-26e22dc37b6dba24, the two the issuer reported as re-run. The T US Equity pair did not re-run at the 03:21Z wsj resume (the first job was UAL US Equity).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/backfill_driver.py:120 and :314 at CLOUD HEAD",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round52/stop_status_pairs.json (the 37 pairs, with status, run id and checkpoint)",
+          ".runtime/harvest-backfill/r52_wsj_run1.out first JOB line (UAL US Equity) against r46_wsj_checkpoint.json done row for security-f0731ffb117030c8 (sign_in_refused)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "DISARMING by re-run, issuer act: barrons' 12 pairs relaunched 03:3xZ on their own checkpoint (`r52_barrons_retry_checkpoint.json`, `--names`); the wsj 8, bbg 8 and sa 9 are re-run the same way when each leg's profile is free (a second driver on a live profile would collide). Not measured: how many of the 37 would have collected anything. The per-leg report (at-3) counts concluded pairs, so FWD-7's coverage figure includes these 37 until they are re-run. Carried to the CTO: the driver should not record a stop-status pair done."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W103-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~103",
+      "surfaced_at": "2026-10-07T03:58:28Z",
+      "one_line": "transport.request_kind labels a Bloomberg article URL (/news/articles/...) `listing`, so the order's 'article request answering 400' could not be keyed on request_kind alone; the 400 conversion keys on request_kind OR an article path part.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ba-1 item 5: an ARTICLE request answering 400 is skipped, a LISTING or account request answering 400 keeps today's behaviour; the transport already distinguishes the two (request_kind).",
+      "world_is": "lib/opal_data_harvest/transport.py request_kind() labels any URL whose path+query contains '/news', 'search', 'page=' or '/symbol' `listing`. A bloomberg sitemap article URL (https://www.bloomberg.com/news/articles/<date>/<slug>) contains '/news', so request_kind says `listing`; a plant of a 400 on such an article was NOT converted when keyed on request_kind == 'article' (RuntimeError(400) from raise_for_status instead). Added transport.is_article_request(): request_kind == 'article' OR the path names an article route ('/news/articles/', '/article/api/', '/articles/'), never a sitemap or an auth check. request_kind itself (the run record's attempt-row label) is unchanged. Not measured: whether any live wsj or barrons slug path carries '/news' and so reads `listing` (such an article's 400 would keep today's behaviour, i.e. a safe degradation, not a regression).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py request_kind and is_article_request on branch wk-AMGT_HARVST-103",
+          "lib/opal_data_harvest/test_ba1_stopped_pair_is_retried.py::test_vi_a_bbg_sitemap_article_answering_400_is_skipped (failed under the request_kind-only key, passes under is_article_request)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

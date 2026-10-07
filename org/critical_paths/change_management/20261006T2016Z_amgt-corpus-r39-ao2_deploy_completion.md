@@ -13,10 +13,11 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | Lr | activation | schedule_induction.ps1 -Register -Commit 662cd2b11d; -Status | Status reads the 662cd2b11d pinned workdir, Python311, trigger unchanged | REGISTERED amgt-induction-daily rc 0 at 2026-10-06 ~20:2xZ; schtasks Start In = C:\Users\Opal Bloomberg\Desktop\opal-pinned\amgt-induction-daily\662cd2b11df0 (rev-parse 662cd2b11d; _pull_log_latest_stamps present); Python311; Status Ready, next 10/7/2026 9:00 local (13:00Z) | CLOSED 20261006T202144Z |
-| Lp | activation | model_block_pull derive --securities 'BA US Equity' --no-sa-fallback between 00:00Z and 12:30Z 2026-10-07 | BA newest derived stamp 20261007; newest pull-log stamp 20261006; refresh --dry-run lists DRY-RUN REFRESH: BA_US_Equity |  | OPEN |
+| Lp | activation | model_block_pull derive --securities 'BA US Equity' --no-sa-fallback between 00:00Z and 12:30Z 2026-10-07 | BA newest derived stamp 20261007; newest pull-log stamp 20261006; refresh --dry-run lists DRY-RUN REFRESH: BA_US_Equity | 2026-10-07T00:10:51Z derive --securities 'BA US Equity' --no-sa-fallback rc 0 (after RELEASE msg 30441): BA newest derived stamp 20261007T001051Z; newest pull-log stamp 20261006T132334Z; same raw_stamp_used 20261006T132334Z as the prior block 20261006T132342Z, 745 of 745 figures, value/unit/currency moved 0; refresh --dry-run on producer == pin 662cd2b11d: 'DRY-RUN REFRESH: BA_US_Equity', already_current 0 of 96 (1 of 96 derived today, 0 of 96 pulled today) | CLOSED 20261007T001242Z |
 | Lv | verify | the 2026-10-07 13:00Z scheduled fire log + count_ratio_currency --served | already_current 0 pulled 96 rc 0 with BA in the REFRESH set (or each failure named, Branch B; or rc 4 Terminal refusal, Branch C); crc served 1/1+1/1 |  | OPEN |
 
 ## Log
 
 - 20261006T201645Z OPENED by 2.0.0_SA_COO~X with 3 leg(s)
 - 20261006T202144Z LEG Lr closed: REGISTERED amgt-induction-daily rc 0 at 2026-10-06 ~20:2xZ; schtasks Start In = C:\Users\Opal Bloomberg\Desktop\opal-pin
+- 20261007T001242Z LEG Lp closed: 2026-10-07T00:10:51Z derive --securities 'BA US Equity' --no-sa-fallback rc 0 (after RELEASE msg 30441): BA newest deriv

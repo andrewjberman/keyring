@@ -83,6 +83,31 @@ Do:
 - `test_r253_silent_acquire_within_consent`: for the concierge as token owner, the scopes `get_token` passes to
   `acquire_token_silent` are a subset of `consent_scopes(...)` and are not empty.
 
+## 1a. AMENDMENT A1 (2026-10-06 ~22:0xZ; `1.0.0_SA_CTO~O` ruling msg 30365 on row `NFRA_OPALAI-Z-S57`)
+
+Step 4 bounds `get_token` by the token OWNER, but the map names TOOLS. A gateway route that is not a tool and mints a
+scoped identity's token (for example `app/taxsma_workbook.py:317`) is narrowed with no entry of its own. Add:
+1. **A second table** in `app/graph_scope_map.py`, `CALLER_GRAPH_SCOPES`, for every NON-TOOL caller of
+   `token_broker.get_token`: the caller's name (its module), the `config` key that names the identity it mints under,
+   and its MEASURED Graph scopes with `file:line` beside each entry. Every scope is in the default `GRAPH_SCOPES`.
+2. **`consent_scopes` unions a caller's scopes** when that caller's configured identity IS the scoped identity:
+   - a key whose value is an email: when it equals the scoped email (case-insensitive);
+   - a key whose value is set but is not an email (a `<tid>/<oid>` binding): the caller's scopes ARE unioned, because
+     the match cannot be decided from configuration and the ruling forbids a dead end;
+   - a key that is unset or empty: not unioned.
+3. **One more test**, `test_r253_every_get_token_caller_is_mapped`: it enumerates every `get_token(` call site under
+   `app/` outside `app/tools.py` and `app/token_broker.py` by reading the source files, PRINTS the denominator
+   (`get_token callers outside tools.py: <n>`), and fails on a call site whose module has no `CALLER_GRAPH_SCOPES`
+   entry. A call site that is on a TOOL's path (it serves a tool already in `TOOL_GRAPH_SCOPES`) is entered in the
+   caller table with that tool named, never skipped.
+4. `test_r253_concierge_consent_is_narrow` now computes its expected union with the caller table included, under the
+   test's own configuration; its STRICT-subset and no-`Mail.`/`Calendars.`/`Notes.`/`OnlineMeetings.` assertions hold
+   for a configuration in which no mail-reading caller is bound to the concierge.
+5. Do NOT edit `app/taxsma_workbook.py`, `app/mail_route.py`, `app/teams_route.py`, `app/transcript_route.py`,
+   `app/ms_ingest.py`, `app/otp.py` or `app/config.py`. Read them; change only the files in `<paths>`.
+
+AC1 now reads seven named arms. AC2 and AC3 are unchanged.
+
 ## 2. BOUNDS
 
 1. Only the five gateway files in `<paths>` change. `config.py`, `tier.py`, `tools.py`, `context.py`,
@@ -112,7 +137,7 @@ Rows: `org/missions/D6/NFRA/NFRA_OPALAI/surprise-channel/investigations/INVESTIG
 ## 4. PROOF OF SPEC (literal; run from your worktree root, after your commits)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OA-f-14"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f14.AC1.sh; echo "exit=$?"</invocation><expect>named arms passed 6 of 6; failed/errored tests 0 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OA-f-14"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f14.AC1.sh; echo "exit=$?"</invocation><expect>named arms passed 7 of 7; failed/errored tests 0; get_token callers outside tools.py: a printed count >= 1 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OA-f-14"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f14.AC2.sh; echo "exit=$?"</invocation><expect>passed >= 36 (base 36); failed=[] (base []) -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OA-f-14"><invocation>bash org/missions/D6/NFRA/NFRA_OPALAI/deliverables/2.0.0_SA_COO~AI/round2/checks/f14.AC3.sh; echo "exit=$?"</invocation><expect>gateway files changed >= 1; outside the order: 0; scope map file changed: 1; audit.jsonl changed: 0; allowlist overlay changed: 0; uncommitted gateway paths: 0 -- RESULT: PASS -- exit=0</expect></criterion>
 </proof_of_spec>
@@ -162,7 +187,17 @@ Dry-run at base (821fca2410, ~21:5xZ):
 
 fanout: 1 of 1 chains, cap 8.
 
-<status>pending</status>
+AMENDMENT A1 (issuer, 2026-10-06 ~22:0xZ): on `1.0.0_SA_CTO~O` ruling msg 30365 (a) on row Z-S57. First build: worker
+~29 @95028d4d69, issuer re-grade AC1 6 of 6, AC2 36 / [], AC3 4 files / 0 outside. A1 adds the caller table, the union
+rule and a seventh arm; items (4) and (5) of the ruling are bound 5 above and the later release order. The non-email
+binding rule (union when set) is the issuer's reading of "without a dead end". Gate limb that graded this
+modification: stated in the amendment commit. Z-S57 stays ARMED until the seventh arm passes.
+
+CLOSE (issuer, 2026-10-06 ~22:2xZ): A1 built by worker ~29 @ee22aced29, proof @ed194dbbda. Issuer re-grade: AC1 7 of 7
+(get_token callers outside tools.py: 10, 0 unmapped), AC2 36 passed / failed [], AC3 4 files / 0 outside. Row Z-S59 cites
+Z-S57. Undrained: the branch waits on the fabric hold's RELEASE and on NFRA_OPLGTW OG-rl-9 being terminal.
+
+<status>complete</status>
 <direct_act>true</direct_act>
 <slot>~29</slot>
 <fabric>site-z</fabric>

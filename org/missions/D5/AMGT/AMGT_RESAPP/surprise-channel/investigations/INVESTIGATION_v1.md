@@ -21316,6 +21316,280 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd18/ASML_click.json"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-S362",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-07T01:29:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "45 OTHER tracked files carry CR in their index blob while their own eol attribute reads lf -- the same state row Z-S242 named for etf-classifications.tf, measured across the whole repo and NOT normalised here.",
+  "spec_asserts": "AMGT-ba-26 section 1 item 3: answer the row's unmeasured question as a NUMBER, without fixing what is found -- how many OTHER tracked files carry CR in their blob while their eol attribute reads lf, from one pass over `git ls-files --eol`. Row AMGT_RESAPP-Z-S242 established the class on one file: its blob carried 82 CR while `git check-attr eol` read lf, so `git status` called it MODIFIED in 1 worktree and CLEAN in 14 on identical bytes.",
+  "world_is": "ONE pass over `git ls-files --eol`, denominator PRINTED: 59555 tracked files listed; 11619 carry eol=lf in their attribute (this is the POSITIVE CONTROL that the probe discriminates -- see the trap below); index-marker distribution across that set is i/lf 11490, i/none 78, i/crlf 45, i/-text 6. So the answer is 45 OTHER files with i/crlf under attr eol=lf, after this order's own file was renormalised out of the set (verified: it now reads i/lf and is absent from the list). No i/mixed appeared. First 10 paths: data/smartx/API/test_api_connectivity.py, data/smartx/API/test_token_generation.py, data/smartx/scripts/aggregate_smartx_to_daily.py, data/smartx/scripts/aggregate_smartx_to_timeseries.py, data/smartx/scripts/check_packages.py, data/smartx/scripts/config.py, data/smartx/scripts/consolidate_smartx_to_parquet.py, data/smartx/scripts/lambda_smartx_query.py, data/smartx/scripts/organize_smartx_csvs.py, data/smartx/scripts/pipeline_monitor.py. The set is concentrated rather than scattered -- top-level distribution infra/aws 32, data/smartx 13 -- which suggests a few historical imports added before the attribute was in force, not continuing drift. EACH behaves exactly as Z-S242 described: `git status` reports MODIFIED or CLEAN by the stat cache rather than by content, so the same bytes read dirty in one worktree and clean in another. NOT normalised here: the order says more than zero is one row naming the count and is not this order's to fix. A TRAP worth recording for whoever does normalise them: `git ls-files --eol` prints the attribute field as 'attr/text eol=lf' WITH A SPACE, so a parse that captures it with a non-whitespace class (\\S*) grabs only 'text' and reports 0 of 59555 files as eol=lf -- a clean, plausible, wholly false ZERO. That is how this census first read, and the only reason it was caught is that the file being committed was known to carry eol=lf, so a 0 was impossible. Split on the TAB, then test the whole marker string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`git ls-files --eol` over the whole index, 2026-10-07, denominator 59555 printed with the eol=lf subset 11619 as the positive control",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ba-26.etf-classifications-lf-recommit.md section 1 item 3",
+      "row AMGT_RESAPP-Z-S242 and 1.0.0_SA_CTO~Z's adjudication ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md section F"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W275-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~275",
+  "surfaced_at": "2026-10-07T01:21:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Name search: 138 of 237 keyed crosswalk records carry no research folder name and no stored registration name, so a company name typed for them (for example Apple for AAPL US) lists nothing; only their ticker root matches.",
+  "spec_asserts": "TO AMGT-ba-9 section 1: the name is the research folder name the record already carries (source_row.folder, such as 'Lenovo 992 HK'); a typed name matches a record's company name.",
+  "world_is": "Measured on the pool crosswalk s3://opal-data-harvest/crosswalk/v1/2026-09-29.json, 237 keyed records: source_row.folder is set on 96, identity.name on 67 (64 of them also have a folder), so 99 records carry some stored name and 138 carry neither. I added identity.name as a second name source (read from the same record, no crosswalk edit) beside the folder, and a ticker-root fallback so every candidate name is non-empty; that is beyond the order's folder-only wording. Even so resolve_query('apple') answers none for AAPL US (no stored name), while resolve_query('aapl') lists it. A name for those 138 needs a name source the order did not name (e.g. the classifications table); not built here. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/name_search.py (_stored_names, _candidate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba9.py"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W281-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~281",
+  "surfaced_at": "2026-10-07T02:00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "60 of 167 holding rows in the 2026-10-06 union universe carry no key; none carries a CUSIP, FIGI or SEDOL field, so joining them needs a vendor identifier map. Not built.",
+  "spec_asserts": "Ruling item 3 (CTO round-76 section A, row Z-W19-S6): holdings identifiers stay held None; after the resolving cell membership is re-read, and a residual that needs a vendor identifier map comes back as ONE row with its count; it is not built speculatively. The ruling's count was 167 of 170.",
+  "world_is": "universe/v1/2026-10-06.json (latest of 3 objects under universe/v1/), universe_denominators: names 302, holding rows 167, resolved 107, unresolved 60. The 60: 0 carry a CUSIP, FIGI or SEDOL field, 60 name a root-equal candidate in their reason, 57 carry positioning-chain CUSIP evidence in the reason text, 11 share a ticker root with a research-library key; they are ADR and ordinary-share lines (BBSEY, BKRKY, NSRGY and similar) and cash/money-market lines (CASH, FXFXX, SALXX). Also: all 89 coverage folders are keyed by the served crosswalk 2026-09-29.json (corpus contributed 0); DE_US_Equity is not among the library's 96 keys. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~281/GRADING_READ.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~281/covered_keyed.out.txt"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W287-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~287",
+  "surfaced_at": "2026-10-07T02:04:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "plan officers run against the live stores names 86 of 95 covered names needing a new officer pull (86 calls), not the 84 the order states; the other 9 are 7 served by a stored filing and 2 served by a stored Bloomberg officer list.",
+  "spec_asserts": "Order AMGT-ba-25 s.1 item 1: officers = the names whose chain needs a new pull, read as exec_roster_chain does (needs_new_pull, :195); '84 of 95 at the cut' (row Z-W227-S1).",
+  "world_is": "Measured 2026-10-07 ~02:00Z from C:/tmp/r77-287: covered_security_keys = 95; exec_roster_chain.run_chain(key, s3) per name, no dossier_read passed. Signature distribution: (not served, bloomberg leg needs_new_pull=True, 'not tried') 86; (served by filing) 7: BABA, BA, COST, HD, NU, SAP GY, VLO; (served by bloomberg stored list) 2: 2317 TT, ASML NA. plan officers prints 'names 86 calls 86'. The issuer's paired act ba-22 confirms with --confirm-calls, so it must state 86, or the difference of 2 names is explained by a store change since the cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/research_pulls.py (plan, _officer_names)",
+      "lib/research/management/exec_roster_chain.py:195 (needs_new_pull)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W287-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~287",
+  "surfaced_at": "2026-10-07T02:04:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The repository records no Bloomberg segment mnemonic, so the segment fields in research_pull_fields.json are proposals from field-naming convention, all UNPROBED; the issuer's one-name probe decides them.",
+  "spec_asserts": "Order AMGT-ba-25 s.1 item 1: 'Propose the segment mnemonics from what the repository already records about Bloomberg fields (integrations/bloomberg/research/field_map.json, integrations/bloomberg/docs/)'.",
+  "world_is": "field_map.json holds fundamentals mnemonics (ARD_*, IS_* and similar) and no segment field; integrations/bloomberg/ has no docs/ directory; a repo-wide search of lib/, integrations/, docs/, prd/ and infra/ for SEG_*, *_SEGMENT*, PRODUCT_SEG*, GEO_SEG*, BS_SEG* finds only unrelated code identifiers (AMGT_SEGMENT timing logs, segment_labels.py filing-text parsing). Proposed (not from the repo, no Bloomberg call made): SEGMENT_NAME, SEGMENT_REVENUE, GEOGRAPHIC_SEGMENT_NAME beside NAME (known, from the officer pull). The segment pull's bulk-field shape and any override it needs are also unknown; plan counts 1 call per name on that assumption.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/research_pull_fields.json",
+      "integrations/bloomberg/research/field_map.json"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W285-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~285",
+  "surfaced_at": "2026-10-07T02:10:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "A cold chatter request prints four AMGT_PHASE lines of ANOTHER route (rankings/TRENDING/PRICE) from a worker thread inside its second compute span, so a join by label alone double-counts them; the unlabelled time is 734-1,000 ms before the first phase line.",
+  "spec_asserts": "Task order ba-19 step 1: the label set is `AMGT_PHASE route=chatter` lines, and the in-phase sum plus the time outside every phase equals the Duration; the issuer's preflight reads outside time as 'no number says where it goes'.",
+  "world_is": "On OVpDhfwD, 6 cold chatter invokes (burst 2026-10-07T01:55:42Z): each request's log carries 11 AMGT_PHASE lines, 7 route=chatter and 4 route=rankings/TRENDING/PRICE (generation read 92-124 ms, classification 10-18, names 3-47, compute 96-138), emitted by names_read.start(_places_moved_index) at monthly_chatter.py:342 and finished before the second chatter compute line. The seven route=chatter values sum to 2,053-2,773 ms of a 2,811-3,777 ms Duration; the remainder (758-1,004 ms) sits before the first phase line (734-1,000 by log timestamps) and 3-4 ms after serialize. Local fresh-process import of the monthly_chatter chain is 97-223 ms (inference). Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/PHASE_COVERAGE.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/PHASE_COVERAGE.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/cloudwatch_events_raw.json"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W282-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~282",
+  "surfaced_at": "2026-10-07T02:12:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "No stored identity record carries a company-level FIGI field, so comparable.company_identifier reads company_figi (which nothing stores today) and then the LEI; the company dedupe reaches only the names whose record carries an LEI.",
+  "spec_asserts": "AMGT-ba-16 section 1 item 2: company_identifier returns the member's own identity cell when it carries one, else the served identity record for the key: the company-level FIGI, else the LEI; None when neither is stored.",
+  "world_is": "The identity object a registration record carries (lib/research/identity/registrations.json, 71 registrations; crosswalk.schema.json identity.properties) has the keys bloomberg_security, name, exchange, lei, cik, sec_id, composite_figi, figi, isin, sedol, website -- no company-level FIGI. composite_figi and figi name a listing, so they cannot join two share classes of one company and are not read. Built: company_identifier reads company_figi then lei from the member's own cell, then from crosswalk.record_for(key)['identity']. Measured on the registrations file only (no pool read): 67 of 71 carry an identity object, 65 of 71 carry an lei. A crosswalk record without an identity object, and a member the registrations do not cover, return None and are kept, never guessed. The served pool crosswalk was not read in this cell, so how many of the served peer members carry an lei is unmeasured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json identity.properties (the key list above)",
+      "lib/research/identity/registrations.json: 71 registrations, 67 with identity, 65 with lei (python count, this worktree)",
+      "lib/research/posture/comparable.py COMPANY_ID_FIELDS and company_identifier"
+    ]
+  }
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~280",
+  "surfaced_at": "2026-10-07T02:13:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W280-S1",
+  "one_line": "AMGT-ba-14 item 2 says a not-served universe gate writes every name's D ABSENT with the summary's reason; AMENDMENT 1 says D is ABSENT with exactly 'consensus dispersion is not yet pulled'. With no dispersion figure on any name the two collide.",
+  "spec_asserts": "AMGT-ba-14 section 1 item 2: when the universe summary reads served False, every name's D, U and Delta are written ABSENT with the summary's reason. Item 3 AMENDMENT 1: where the dispersion statistics are missing, D is ABSENT with exactly the reason 'consensus dispersion is not yet pulled'.",
+  "world_is": "Measured in the dry run (python -m lib.research.scores.run_scores --dry-run, 237 keyed names): 0 names carry dispersion statistics, so 0 names have a measured D, so check_degeneracy reads fewer than two values and the gate reads served False on every run. Read literally, item 2 would overwrite the amendment's exact reason on all 237 names. Done: the gate overwrites only a name whose D is MEASURED; a name whose D is already ABSENT keeps its own, more specific reason, and the summary (served False, its reason, sd_D, the correlation) rides in every record as universe_gate. Once dispersion is pulled and some names measure, the gate's overwrite applies as item 2 says. Pinned by test_gate_not_served_writes_a_measured_d_absent_and_keeps_an_absent_reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/scores/run_scores.py _apply_universe_gate on the worktree branch wk-AMGT_RESAPP-280",
+      "dry run 2026-10-06 summary: names_with_dispersion_statistics 0, universe_gate.served false, n 0"
+    ]
+  }
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~280",
+  "surfaced_at": "2026-10-07T02:13:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W280-S2",
+  "one_line": "AMGT-ba-14's premise was measured on one name (BA); across the 237 keyed names the house forecast measures on 92, and 137 have no reported history pulled at all.",
+  "spec_asserts": "AMGT-ba-14 preflight: measured on BA_US_Equity's newest model block, 10 fiscal years of SALES_REV_TURN and CF_FREE_CASH_FLOW. The order reads as if the history is there for the keyed names.",
+  "world_is": "Dry run over the crosswalk's 237 keyed names, denominator printed: forecasts MEASURED 92; ABSENT 145 = 137 with no model block pulled, 7 with revenue but no CF_FREE_CASH_FLOW years ('only 0 years of reported free cash flow beside revenue'), 1 whose reported revenue years are not consecutive. Of the 92 measured, 4 carry no annual announcement date (reference.announcement_date null with its reason). Consensus FY1 free cash flow is carried on 86 names; 84 carry both, so the correlation is over n=84 (0.943). Consensus and revenue units and currencies matched on all 84. Not a defect in the producer: a coverage fact the next round's enrichment list may want.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dry run 2026-10-06: forecasts_measured 92, forecasts_absent 145, names_with_consensus_fy1 86, n_correlation 84",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~280/DRY_RUN.md"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Hookup 1's premise that the caller's news read fetches one day is not true at the base: it already reads the name's whole stored history, so no widening was made.",
+  "spec_asserts": "AMENDMENT 1, hookup 1: 'the caller's read fetches one day today, so widen that read to the window, or the rule cannot find an older day.'",
+  "world_is": "_overlay_top_band at lib/research/api/scoped_amgt.py reads _timeline_snapshot_rows('article_security_mention') with no day filter and filters only on security_key; top_band.news_items did the one-day cut inside itself. The rows passed to news_items_newest(rows, day) therefore already span every stored day. Result on 95 covered names: 57 with items, 38 'No news in the last 30 days', 0 failed reads, 0 bad (r77_ba11 AC1 C4 PASS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (_overlay_top_band, _timeline_snapshot_rows)",
+      ".scratch/ac1.txt in worktree C:/tmp/r77-277 (r77_ba11 AC1 output)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Hookup 3 merged verbatim on the description header would blank every translation: a sentence from read_drafted_sections already carries the three served keys but not the stored translation block.",
+  "spec_asserts": "AMENDMENT 1, hookup 3: the description header (read_description) takes **translated_text.served_translation(sentence).",
+  "world_is": "read_description's `sentence` is a served sentence from read_drafted_sections (already merged with the three keys by the sections builder); served_translation() reads the stored `translation` block, which the served shape does not carry, so on that input it returns translated False and text_translated None. The header therefore copies the three keys when the sentence already carries them and projects with served_translation() only on a raw stored sentence. Both sites serve the three keys; the original text is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (read_description; sections builder in read_drafted_sections)",
+      "lib/research/api/translated_text.py (served_translation)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "GET /freshness?view=page on the local adapter is 66,350 B with 95 rows and 3 stale, not the 22,855 B ba-2 measured on the module alone; the owner line reads both lists as having no readable owner.",
+  "spec_asserts": "AMENDMENT 1: 'ba-2 measured 22,855 B and 95 rows on the module alone; ba-1 measured 3 stale of 95' (a deployed-shape check to report).",
+  "world_is": "Measured 2026-10-06 on the local adapter (live stores, snapshot generated 2026-10-06T20:18Z, age 6.65 h): status 200, body 66,350 bytes, 95 rows, 3 stale (92 not), keys rows/generated_at/snapshot/denominators/lists. lists.owner_line = 'The publisher list has no owner that could be read; The social account list has no owner that could be read.'; both list entries carry owner null, reviewed null, due null. The plain GET /freshness body is 2,889,557 bytes with 302 rows (not the page view). The size difference from ba-2 is the rows carrying per_input detail; the unreadable owners come from read_list_register() on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (handler, /freshness view=page)",
+      "lib/research/lists/owner_line.py (lists_statement)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Skipping the print text step saves 0.9 to 1.5 s per name on this device, against the 0.22 to 0.40 s the order states.",
+  "spec_asserts": "Order section 1(c): the text step costs 0.22-0.40 s that the served route throws away.",
+  "world_is": "Median of 4 build_pack calls per mode after one warm call, from the same landed block: BA_US_Equity 3.77 s with the text step, 2.84 s without (saved 0.93); AMD_US_Equity 4.32 / 2.82 (1.50); ASML_NA_Equity 4.16 / 2.78 (1.38). Whole print route (handler, one call each, first call cold): before 7.24 / 5.30 / 5.72 s, after 4.16 / 3.72 / 3.65 s. The three PDFs are equal in page count (22/24/24) and extracted text, and equal in size.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/print_equal.py",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/capture_print.py"
+    ]
+  }
 }
 ]
 ```

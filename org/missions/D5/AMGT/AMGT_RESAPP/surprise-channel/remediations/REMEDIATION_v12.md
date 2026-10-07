@@ -232,11 +232,15 @@ closed is for the round-12 analysis to read against the served plane.
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
-      "round": "v12"
+      "round": "v12",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: a ranking producer on its own clock, not collection"
+      }
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "AMGT_RESAPP-Z-W24-S1",

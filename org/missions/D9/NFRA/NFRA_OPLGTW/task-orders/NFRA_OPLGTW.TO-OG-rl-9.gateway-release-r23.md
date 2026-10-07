@@ -1,4 +1,4 @@
-# NFRA_OPLGTW task order -- `OG-rl-9` -- the r23 release: OG-q-8's blank-cusip fix on live 2c27f3a795, then the real-holder read
+# NFRA_OPLGTW task order -- `OG-rl-9` -- the r23 release: OG-q-8's blank-cusip fix on live 9d3e2eb3fc (A2), then the real-holder read
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -25,9 +25,24 @@ Release tooling to reuse: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_W
 Real-holder probe to reuse: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/` (`ga1_ssm.py`,
 `ga1_host_prelude.py.txt`, `ga1_host.py.txt`).
 
-- **Live:** `2c27f3a7958de0aa644374cdd08fc188a27e9e3f`.
+- **Live (AMENDED A2, 2026-10-07 00:2xZ):** `9d3e2eb3fce3ceabbf06f6c1819451894291be05`. The r24 hotfix (OG-rl-10) went live
+  at 2026-10-06T23:59:57Z, so the Phase A cut on `2c27f3a795` (release `ba27a07439`, `/c/tmp/og-rel17`) is SUPERSEDED and
+  its three halves are void.
+  - RE-CUT: a NEW branch `rel-nfra-oplgtw-r23b` in a NEW worktree `/c/tmp/og-rel19` at the new live sha, carrying the
+    same two cells' hunks (OG-q-8 `31043ba49b`; ETFS_RIVALS gw-1 `291bb5bb4b`). Prove hunk equality again.
+  - A NEW rollback worktree `/c/tmp/og-rb18` at `9d3e2eb3fc`, proven against the live S3 artifact.
+  - Re-run Phase A steps 1-8 on the new base. The r23_* scripts in `W` are reusable; change only the live sha and paths.
+    Every pin to `2c27f3a795` in this order now reads `9d3e2eb3fc`, including the rollback target and `DEPLOY_BASE_REF`.
+  - The ledger `nfra-oplgtw-gateway-release-r23` was opened at 22:03Z with NO act behind it (entry and sentinel are on
+    CLOUD). Reuse it: add a line to the entry recording the re-cut and the new release sha before the act.
+  - The halt gate (row Z-W28-S7): in the deploy shell `unset OPAL_AGENT_SERIAL`, create no `org/mcp/sessions/` in the
+    release tree, and pass `AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~28 HALT_ACK=1`. The gate then resolves `2.0.0_SA_COO~O`.
+    That route deployed r24.
+  - Deploy line that worked for r24: `bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh`.
+    The wrapper's own manifest commit is refused by the lane gate (row Z-W28-S8); record the manifest by hand in your
+    worktree, as r24 did.
 - **Ledger:** `nfra-oplgtw-gateway-release-r23`.
-- **The release set (AMENDED A1, 20:5xZ):** every gateway difference between live `2c27f3a795` and CLOUD at the
+- **The release set (AMENDED A1, 20:5xZ):** every gateway difference between live `9d3e2eb3fc` and CLOUD at the
   hand-off, except the CLOUD-only `runbooks/SCHWAB_PILOT_RUNBOOK.md` (LINEAGE_R18), so that after the drain-back CLOUD
   equals live. That is two parts:
   - OG-q-8: `app/integrations/schwab/integration.py` and `tests/test_schwab_q8_blank_cusip.py`.
@@ -40,13 +55,13 @@ Real-holder probe to reuse: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0
     process, green before GO.
   - The ANNOUNCE names the route as an ADDITIVE part with its own two branches: a signed-in GET of
     `/rivalfunds/<day>/audit` on a day whose `audit.html` exists returns 200; a day with no audit object returns 404.
-    The read policy is unchanged. Rollback per key: redeploying live `2c27f3a795` removes the route.
+    The read policy is unchanged. Rollback per key: redeploying live `9d3e2eb3fc` removes the route.
   - The verify script adds those two arms. Record them in `W/RL9_ROUTE.json` as `{day_200, status_200, bytes_200,
     day_404, status_404}`. Use 2026-10-06 for the 200 arm. A FAIL of a route arm is a rollback trigger like any other.
 - **Served output NARROWS.** The ANNOUNCE names, for the one live dim_asset grant, the blank-cusip rows that leave the
   query and download answers (expected 23 at the 2026-10-01 snapshot). Per key: the blank-cusip key leaves; every
   non-blank held CUSIP stays. Both branches: a holder with non-blank holdings keeps all of them; a holder whose
-  holdings are all blank is refused `asset_read_denied_unqualified`. Rollback per key: redeploy live `2c27f3a795`.
+  holdings are all blank is refused `asset_read_denied_unqualified`. Rollback per key: redeploy live `9d3e2eb3fc`.
 - **BEFORE run (form step 5):** besides the synthetic arms, run the `~28` real-holder probe READ-ONLY on the live code,
   for both the query and the download path. Record the blank-cusip row count of each in `W/RL9_BEFORE.json` (counts only).
 
@@ -91,7 +106,7 @@ Rows: id `NFRA_OPLGTW-Z-W28-S<k>` (next unused), fabric `site-z`, disarm_owner `
 ## 4. PROOF OF SPEC (literal; run from your worktree root after the drain-back and ledger close are committed)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="OG-rl-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from 2c27f3a795=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; gateway files differing live\.\.CLOUD after drain-back \(CLOUD-only runbook excluded\) 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="OG-rl-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC1.sh; echo "exit=$?"</invocation><expect>(?s)descends from 9d3e2eb3fc=yes; host shipped files equal the release bytes: (\d+) of \1.*sentinel at HEAD=no; gateway files differing live\.\.CLOUD after drain-back \(CLOUD-only runbook excluded\) 0.*floor: rl4.AC1 yes; ht.AC2 yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-rl-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC2.sh; echo "exit=$?"</invocation><expect>(?s)held-only real-holder download: yes; ssm status Success; digest in host output: yes.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="OG-rl-9"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r23/checks/rl9.AC3.sh; echo "exit=$?"</invocation><expect>(?s)download exact held set, no duplicates: yes; query exact held set: yes; query ssm status Success; query digest in host output: yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
@@ -113,12 +128,15 @@ Write the proof instance at `W/NFRA_OPLGTW.TO-OG-rl-9.gateway-release-r23.proof_
 - AMENDMENT 1 (20:5xZ, issuer; no gate limb graded it beyond GATE (viii) on the modify): the release set widens to
   every live..CLOUD gateway difference, as OG-rl-8's A1 did, because `291bb5bb4b` landed on CLOUD after the cut and
   rl9.AC1's drain-back arm reads CLOUD against live. No criterion changed.
+- AMENDMENT 2 (2026-10-07 00:2xZ, issuer; GATE (viii) grades the modify): live moved to `9d3e2eb3fc` under the r24 hotfix, so
+  the release re-cuts on it and the three halves are re-asked on the new sha. AC1's constant and its `<expect>` text follow
+  the new live sha; no criterion's meaning changed.
 - Pre-cut 20:0xZ:
   - `rl9.AC1` FAIL: deployed is the live sha, 0 shipped, no ledger; the floor reads yes/yes.
   - `rl9.AC2` FAIL: the r22 record, 23 blank rows.
   - `rl9.AC3` FAIL: GA1_QUERY.json is absent.
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>

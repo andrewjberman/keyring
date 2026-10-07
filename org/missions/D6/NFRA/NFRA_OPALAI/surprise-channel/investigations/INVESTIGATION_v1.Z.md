@@ -2287,6 +2287,116 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
       ]
     },
     "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-W29-S1",
+    "surfaced_by": "0.9.0_WK_NFRA_OPALAI~29",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "one_line": "Two tests in tests/test_asker_scope.py (test_unprofiled_asker_refused, test_agent_supplied_identity_ignored) pass alone (4 passed) but FAIL when run in one pytest process after test_email_deny / test_data_entitlement_guard / test_browser_oidc; the same two fail on a pristine copy of base ea4f02487a, so OA-f-14 did not cause them.",
+    "surfaced_at": "2026-10-06T21:55Z",
+    "spec_asserts": "TO OA-f-14 AC2 reads four suites (login_admit_r24, identity_scope, tier_principal, principal_cutover) at 36 passed; it says nothing about the other gateway suites sharing a process.",
+    "world_is": "Cross-file test-order coupling in the gateway suite: a multi-file run of tests/test_email_deny.py tests/test_data_entitlement_guard.py tests/test_browser_oidc.py tests/test_asker_scope.py tests/test_taxsma_workbook.py gave 2 failed / 53 passed with the OA-f-14 change and 6 failed / 28 passed / 21 skipped on a git-archive copy of base HEAD (the extra base failures are in test_browser_oidc, FileNotFoundError, an artifact of the archive copy). The two asker_scope failures appear on both sides. Root cause not investigated (off-task).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest tests/test_asker_scope.py -q alone from the gateway dir: 4 passed.",
+        "The five-file command above run from the gateway dir of /c/tmp/oa-29 (changed): 2 failed, 53 passed; run from a git-archive copy of HEAD ea4f02487a: the same two asker_scope tests FAILED."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION"
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S57",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T22:05Z",
+    "one_line": "OA-f-14 step 4 narrows get_token for a scoped OWNER, not for a scoped TOOL CALL: every gateway route that mints the concierge's delegated token is bounded by a scope map that names tools only. The Tax workbook route is such a caller and has no map entry.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~AI",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "wk-NFRA_OPALAI-29 @1fb6300bcb app/token_broker.py:219-223: consent_scopes(display) is applied on the owner's display email, whatever route called get_token.",
+        "app/taxsma_workbook.py:317 calls token_broker.get_token(delegate.principal.email) and reads /sites/<id>/drive/items/<id>/workbook/... (:110-111); it is a route, not an allowlisted tool, so graph_scope_map.py carries no entry for it.",
+        "INFERRED, not measured here: the bound Tax identity is the concierge (NFRA_OPLGTW project.json blocking text, COO TICK 2026-10-01 ~19:1xZ: 'identity opalbloomberg@ (oid 517aa5ee, Part D MATCH)'). TAXSMA_WORKBOOK_IDENTITY's live value was not read.",
+        "The concierge's narrowed list keeps Sites.Read.All only because opal_data_refresh_upload's entry carries it; Files.ReadWrite.All is dropped. Whether the workbook usedRange read succeeds on Sites.Read.All alone is NOT measured."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO OA-f-14 step 4 (the issuer's own decomposition judgment): for a scoped token owner, the silent acquire asks for the tier's scopes intersected with consent_scopes(...).",
+    "world_is": "The intersection is keyed on WHO owns the token, and the map is keyed on TOOLS. A non-tool route using the same identity inherits the narrowing without a row of its own, and today holds its read scope by coincidence with another tool's entry. Nothing is deployed: the branch is undrained and unreleased, so no live route has moved.",
+    "notes": "ARMED against the RELEASE of OA-f-14, not against anything live. Disarm: the release order does not cut until either (a) the map names every non-tool caller of a scoped identity's token with its measured scopes, or (b) the CTO rules step 4 out of R25.3 and the cell is amended to the two consent legs only. Asked of 1.0.0_SA_CTO~O the same turn."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S58",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T21:27Z",
+    "one_line": "A mode-only change (100644 -> 100755) cannot be committed through safe-commit.sh on this device: with core.fileMode=false, git commit --only reads the mode from HEAD and reports nothing to commit.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "opal_ai worktree C:/tmp/oa-dev at e34ba40: git update-index --chmod=+x on two files showed 'mode change 100644 => 100755' in git diff --cached --summary; safe-commit.sh then exited rc=1 with 'nothing added to commit' after every gate passed (commit-gate clean 2 of 2).",
+        "git config core.fileMode = false; git ls-files -s shows 0 files at 100755 in opal_ai.",
+        "The CI finding (ruff EXE001, 2 files) was closed by removing the two inert shebang lines instead: opal_ai de5ce25fa3, accepted by 1.0.0_SA_CTO~O msg 30328."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md 14a: every commit goes through .tools/safe-commit.sh; 1.0.0_SA_CTO~O msg 30323 named the fix as chmod +x on 2 files.",
+    "world_is": "safe-commit's commit --only path cannot carry an index-only mode change on a core.fileMode=false checkout, so the directed mechanism was unreachable inside the rule. No bare git commit was made.",
+    "notes": "INERT: nothing is blocked today. Owner of .tools/safe-commit.sh decides whether a mode-only path is wanted."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S59",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-06T22:25Z",
+    "one_line": "Cites NFRA_OPALAI-Z-S57: its build-side disarm condition is met by OA-f-14 amendment A1 (every non-tool get_token caller is mapped, 10 call sites in 8 modules, 0 unmapped). The release-side condition stays open and belongs to the release order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuer re-grade on wk-NFRA_OPALAI-29 @ed194dbbda: f14.AC1 'named arms passed 7 of 7; failed/errored tests 0; get_token callers outside tools.py: 10', RESULT: PASS; f14.AC2 36 passed / failed []; f14.AC3 4 gateway files changed, 0 outside the order.",
+        "Worker negative control (reported, not re-run by the issuer): removing taxsma_workbook from CALLER_GRAPH_SCOPES makes the census arm flag app/taxsma_workbook.py:317.",
+        "1.0.0_SA_CTO~O msg 30365: 'Z-S57 stays ARMED until (3) passes'; (3) is the census arm."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S57's disarm (a): the map names every non-tool caller of a scoped identity's token with its measured scopes.",
+    "world_is": "Met on the branch, not on CLOUD and not on any host. STILL OPEN, by ruling 30365 item (5): before GO, the release order reads on the live host whether OG_TAXSMA_WORKBOOK_IDENTITY (and MS_INGEST_IDENTITY, OTP_MAILBOX) is a scoped identity. Under a <tid>/<oid> Tax binding the concierge's consent is 9 scopes, the 8 plus Files.ReadWrite.All.",
+    "notes": "Z-S57 itself is not edited (append-only). Remedy standing is the CVO's."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S60",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-07T04:58Z",
+    "one_line": "Cites NFRA_OPALAI-Z-S57 and Z-S59: the release-side disarm condition is met. NFRA_OPLGTW OG-rl-11 (gateway r25, live 240ac2fe5a since 2026-10-07T04:33:31Z) read the three identity keys on the live host before GO and exercised the narrowed consent. Z-S57 is DISARMED by its disarm_owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/NFRA_OPLGTW.TO-OG-rl-11.gateway-release-r25.proof_of_spec.json:151 (AC3 denominator, the releasing lane's measurement, read by this seat and not re-run): 'unscoped 17, scoped 9 (subset of 17), silent acquire OK, probes 9 of 9 200, sharepoint site resolve 200, identity keys read (Tax true, MS_INGEST false, OTP_MAILBOX false)'.",
+        "Content check by this seat (the release ref is not a descendant of the drain, so ancestry is not the instrument): git rev-parse of app/identity_scope.py, app/token_broker.py and tests/test_scoped_consent_r253.py at 240ac2fe5a equals the blob at the OA-f-14 drain af10f7d42b, 3 of 3, and differs from the prior live 7d65a28db0 where the file existed (negative control). app/graph_scope_map.py differs from the drain by one added entry, opal_data_refresh_status -> empty set (NFRA_OPLGTW OG-up-1, a357b3bdf6).",
+        "2.0.0_SA_COO~O msg 30584: 'the concierge's consent is 9 scopes, taking hold at its next /login'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S57's release-side condition (1.0.0_SA_CTO~O msg 30365 item 5): before GO, read on the live host whether OG_TAXSMA_WORKBOOK_IDENTITY, MS_INGEST_IDENTITY and OTP_MAILBOX name a scoped identity.",
+    "world_is": "Read and covered: the Tax workbook binding IS the scoped identity, and the A1 caller table unions its Files.ReadWrite.All, the ninth scope; the other two keys are not scoped. STILL TRUE AND NOT A DEFECT OF THIS CELL (NFRA_OPLGTW row Z-W28-S11): the concierge's refresh token still carries its full earlier consent, so its effective Graph reach narrows only at its next /login; until then only the REQUEST is narrow.",
+    "notes": "Z-S57 itself is not edited (append-only). The next concierge /login is a planned act outside a send window, per msg 30584; it is not this lane's to schedule."
   }
 ]
 ```

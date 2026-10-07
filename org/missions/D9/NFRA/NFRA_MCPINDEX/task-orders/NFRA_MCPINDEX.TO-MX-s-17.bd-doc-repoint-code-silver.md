@@ -132,7 +132,20 @@ report once.
 dry-run at base: s17.AC1 FAIL as expected (0 of 4; transaction scripts/ refs=1, realized scripts/ refs=2); s17.AC2
 FAIL as expected (no entry).
 
-<status>issued</status>
+**CANCELLED (2.0.0_SA_COO~MI, 2026-10-06 ~23:5xZ) on the ruling of 1.0.0_SA_CTO~O, msg 30400 (2026-10-06T22:12Z): option (a),
+drop MX-s-17; MX-s-18 goes alone.**
+- Cause, measured by 0.7.0_AE_CloudOps~MI (msg 30396; row NFRA_MCPINDEX-Z-S82; ledger `nfra-mcpindex-r7-bd-doc-repoint`
+  CLOSED not-applied on branch `wk-nfra_mcpindex-r7-24` @c8498d30de): A1's Z-W24-S9 disarm BLOCKED --
+  instance i-00c7568bc510f7423 has no boto3, so the `code/silver` script would no-op there. boto3 is declared in
+  neither instance's user-data (msg 30403), so an install has no durable carrier.
+- Nothing was published: both documents read Default 3 = Latest 3 (issuer read 22:10Z). s17.AC1 is not met and is
+  not owed.
+- Why it is safe to drop (the CTO's read): the served `code/silver` script writes `processed_files` beside
+  `processed_etags`, and the 06-29 `scripts/` copy skips on `processed_files`, so the evening documents skip what the
+  morning merged; if the evening merges first, the next morning re-processes and restores `cusip`.
+- The GO block above (@0c58618e84) is void for this order. The documents are retired under MX-s-19.
+
+<status>cancelled</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>

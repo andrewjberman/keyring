@@ -3812,6 +3812,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "On two names the dossier's management field holds a scorecard heading with its score as if it were the passage, so the page would show 'Management/Board 80' as the research team's words on management. Not walked on those two names; the count of such values among the 47 cited is 2 by an exact-string read, and other short non-passage values were not searched for.",
   "notes": "Off-task finding, no cell cut. A candidate for a round-40 dossier cell: a management value must be prose from a MANAGEMENT section, never a scorecard line. Carried in ROUND39_DRAIN_END_PACKET.md section 6.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-S90",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T03:05:40Z",
+  "one_line": "The read-only code census now exits 1 on the shared tree: 6 write-like call sites in the induction files read 'unresolved', so lib/research/corpus/tests/test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry fails (1 failed of 2,785 in one pytest lib/research run). Found off-task at AMGT_RESAPP's round-77 drain; no RESAPP cell touches lib/research/corpus/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m lib.research.corpus.readonly_proof --code-census at shared-tree HEAD (2026-10-07 ~03:0xZ): 'tristate library 0 unresolved 6 clear 80 write_like_calls 86', rc=1, scratch_removed True",
+      "the six unresolved sites as printed: induction_request.py:475 os.makedirs; induction_request.py:476 open; induction_scheduled.py:150 os.makedirs; induction_scheduled.py:152 open; tests/test_induction_request_pick_writes_nothing.py:73 old.parent.mkdir; tests/test_induction_request_pick_writes_nothing.py:74 old.write_bytes",
+      "pytest -q lib/research on the shared tree after AMGT_RESAPP's wave-0 merges: 1 failed, 2784 passed; the one failure is this test at its 'assert rc == 0' line (:87)",
+      "git log on the two induction files: last touched by bd93ac5f1b (CRPS-am-4, --write <path> as the opt-in); not by any AMGT_RESAPP round-77 commit"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The read-only proof's code-census arm exits 0 with every write-like call in the corpus package resolved as library-clear or declared; the bound test asserts rc == 0.",
+  "world_is": "The census resolves 80 of 86 write-like calls clear and 6 unresolved (origins 'unknown'), all in the induction request/scheduled files and one induction test, and exits 1. Whether the six are legitimate opt-in writes the census cannot classify, or a regression of the bound, is not decided here.",
+  "notes": "Filed by another project's issuer as an off-task observation; nothing was changed. NOT measured: whether the test failed before today (no base run was made), and whether the six sites need a census rule or a code change. Owner: the AMGT_CORPUS issuer.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```

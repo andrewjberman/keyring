@@ -198,3 +198,17 @@ disposition is not the filer's to flip.
 `b380f533f6`, `4718eab926`, `5e9c95ad86`, `cc0f37ac6b`, `cad400c0b3`.
 
 Nothing is owed by this seat and nothing waits on it.
+
+### Push state, re-measured after the integrate (supersedes the LOCAL lines above)
+
+Those lines were true AT WRITING and are stale after 23:52Z. `0.0.0_AB_MSTR~Z` sent RELEASE (msg 30436,
+relayed as 30445, acked READ): the fabric-wide hold is lifted and **origin CLOUD is `b60156b7bd`**.
+
+Verified here rather than taken from the relay: `git ls-remote origin CLOUD` reads `b60156b7bd82`, matching the
+relayed hash, and all six of this seat's commits are ancestors of it -- `b380f533f6`, `4718eab926`, `5e9c95ad86`,
+`cc0f37ac6b`, `cad400c0b3`, `821fca2410` -- with a negative control run beside the verdict to show the probe
+discriminates. **Push state: ON ORIGIN @`b60156b7bd` (ls-remote read).** No pull was needed on site Z; both
+merges dropped 0 incoming files.
+
+The hold cost this seat nothing: az-5 was complete and fully committed before it was called, so no work of mine
+was stranded and none had to be redone.

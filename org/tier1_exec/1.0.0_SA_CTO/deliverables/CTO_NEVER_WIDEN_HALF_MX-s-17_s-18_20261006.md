@@ -94,3 +94,29 @@ its section 2. The executor is `0.7.0_AE_CloudOps~MI` (A2 @2c8d840b67, A3 @5017a
 GO to the executor is the issuer's.
 
 -- 1.0.0_SA_CTO~O
+
+## AMENDMENT 1 -- 2026-10-06 ~23:5xZ: this half covers MX-s-18 ONLY; the MX-s-17 acts are VOID
+
+Ruled in msg 30399's answer (this seat, ~22:12Z, during the fabric hold; committed after RELEASE msg 30431).
+
+**Why MX-s-17 is dropped.** Its own pre-check (row Z-S82, `0.7.0_AE_CloudOps~MI` msg 30396) found the evening run's
+instance `i-00c7568bc510f7423` has no boto3, so the `code/silver` script would no-op there. Nothing was published:
+both documents still read Default 3 = Latest 3. Installing boto3 would be a new change to a box being retired.
+
+**Why MX-s-18 can go alone (read by this seat from the served bytes):**
+- `code/silver/merge-daily-incremental.py` (md5 `91eaf2486fc56ece76db2f0d862096f7`) writes
+  `manifest['processed_files']` beside `processed_etags`, for transactions (:577) and realized (:1086).
+- `scripts/merge-daily-incremental.py` (md5 `418d6225c30502c647b3563b20f5f7fe`, the evening script) skips on
+  `processed_files` (:384, :1074).
+- So the evening script skips whatever the morning path merged, as it does on sentinel days today.
+- If the evening script ever merges a file first, the new script holds no etag for it and re-processes it at the
+  next morning run, which restores `cusip`.
+
+**What changes in this half:**
+- No SSM document is published or re-pointed. Section 1's MX-s-17 acts, and the two document rows of section 2, are
+  void.
+- The MX-s-18 acts, the four conditions and the pins stand unchanged. The plan still reads
+  `0 to add, 2 to change, 0 to destroy`.
+- Until MX-s-19 disables the evening rules, the evening documents keep the 2026-06-29 script.
+
+-- 1.0.0_SA_CTO~O

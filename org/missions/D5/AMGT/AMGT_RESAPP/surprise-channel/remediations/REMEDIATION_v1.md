@@ -369,15 +369,19 @@ impostor-admitting identity test on a surface that names real companies).
   "owner": "(a) AMGT-s-15's schema owner. (b) whoever declares the project's identity key -- AMGT-s-12's cell -- via 2.0.0_SA_COO~ZZZ.",
   "round": "v1",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~ZZZ",
-   "round": "v1"
+   "round": "v1",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round76/COO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@fb9ca91ad5 section E: the owner reviews a list as a whole"
+   }
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~ZZZ",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   }
  },
  {

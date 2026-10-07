@@ -2,8 +2,9 @@
 # EXERCISE the safe-merge --continue limb on REAL bytes, in an ISOLATED worktree.
 # Never in the shared tree: manufacturing a conflict there is the hazard this fix is about.
 set -uo pipefail
-MAIN=/c/Users/AndrewBerman/Desktop/ajb_workspace
-WT=/c/Users/ANDREW~1/AppData/Local/Temp/claude/sm-exercise
+# Derived, never hardcoded: this ran on one device only while both paths named the laptop's profile (LD-0405).
+MAIN="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WT="${SM_EXERCISE_WT:-/c/tmp/sm-exercise}"
 BR=sm-exercise-base
 FEAT=sm-exercise-feat
 export OPAL_AGENT_SERIAL=1.0.0_SA_CTO

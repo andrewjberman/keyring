@@ -1532,11 +1532,15 @@ This seat validated all 147 rows against `remediation_row.schema.json` (0 errors
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v80",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "ACCEPTED_BY_RULING",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: rcg cited R-00NN, PRD-local cited PRD R-NN"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S292",
@@ -1816,11 +1820,15 @@ This seat validated all 147 rows against `remediation_row.schema.json` (0 errors
   "owner": "2.0.0_SA_COO~Z",
   "round": "v80",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round76/COO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@fb9ca91ad5 section E: a worker does not deploy"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S346",
@@ -2001,16 +2009,20 @@ This seat validated all 147 rows against `remediation_row.schema.json` (0 errors
   "owner": "2.0.0_SA_COO~Z",
   "round": "v80",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "ACCEPTED_BY_RULING",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round76/COO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@fb9ca91ad5 section E: not cut; returns as a new row when an outcome needs it"
+   }
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~Z",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S247",

@@ -159,11 +159,25 @@ different filenames, so a tzero file sitting beside a tplus1 file makes "latest"
 in exactly the situation where getting it wrong is invisible.
 
 Server-side it: finds the two PKLs (`data/model YYYYMMDD v1.pkl`) in the SharePoint output
-folder -> uploads through the portal /data-refresh channel -> fires the Yang pipeline ->
-watches to completion -> confirms against the LIVE portal manifest. **Read all three
-confirmations: uploaded / pipeline / displayed.** Any missing leg = the tool says which; report
-it, do not improvise a manual S3 path (the uploads/ + manifest.json trigger contract is the
-pipeline owner's surface, not this skill's).
+folder -> uploads through the portal /data-refresh channel -> fires the Yang pipeline, then
+**RETURNS RIGHT AFTER THE TRIGGER** (OG-up-1, CTO R33) with the uploaded list, `upload_id`,
+`execution_id` and the status read once. It does not wait for the run: the client transport
+drops near 120 s, so the run is read in a second call.
+
+**After a real send, read `opal_data_refresh_status(execution_id=<the returned id>)`** until
+the status is terminal (SUCCEEDED / FAILED / TIMED_OUT / ABORTED); it returns the run's status and
+the LIVE portal manifest's displayed date and text. If `opal_data_refresh_status` is not
+available to your identity, read the portal's displayed date instead.
+
+Never re-send on a dropped transport.
+
+A dropped reply does not mean the send failed: the send landed. A `confirm=True` call that repeats the same
+two files inside 30 minutes returns the first `execution_id` with `already_triggered: true` and
+fires nothing (the record is in the gateway process and a gateway restart clears it).
+
+**Read all three confirmations: uploaded / pipeline / displayed.** Any missing leg = the tool
+says which; report it, do not improvise a manual S3 path (the uploads/ + manifest.json trigger
+contract is the pipeline owner's surface, not this skill's).
 
 ## Step 4 — Independent verify (do not end on the tool's self-report)
 

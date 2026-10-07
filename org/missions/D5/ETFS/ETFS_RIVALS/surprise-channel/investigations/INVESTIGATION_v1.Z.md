@@ -4206,6 +4206,96 @@
     "spec_asserts": "to-check reports an order's CURRENT status (org/XXX.md Step 1b B.1: 'find the work you hold').",
     "world_is": "It reports the FIRST status tag; orders append their flips, so every issuer-closed tree order that began pending reads PENDING forever.",
     "notes": "disarm_owner (n/a, INERT): the owner of .tools/to-check.py, with Z-S52's gate fix (read the LAST tag). Found while answering MSTR~Z's pre-integrate state ask; it changed nothing in that answer (the order is complete)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S15",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-06T20:16:23Z",
+    "one_line": "Round 12's au-1.AC1 arm (a) and au-1.AC2 arm (a) assert the main page carries NO /rivalfunds/<day>/audit link; RIV-lk-1 adds exactly that one link by order, so both arms now FAIL by design (lk-1.AC1 PASSES).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round12/checks/au-1.AC1.py at wk-ETFS_RIVALS-2 working tree on top of c8ef93438b: 'FAIL: (a) the main page carries no audit trail and no /rivalfunds/2026-10-02/audit link yet'; arms (b) and (c) OK; AC1 RESULT: FAIL 1 failures.",
+        "python .../round12/checks/au-1.AC2.py, same tree: 'FAIL: (a) index.html and audit.html written; ... index has no audit, no link'; arms (b) and (c) OK; AC2 RESULT: FAIL 1 failures.",
+        "python .../round13/checks/lk-1.AC1.py, same tree: AC1 RESULT: PASS 0 failures (main page: 1 link, 0 'Cited rows:')."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "au-1 AC1 (a) and AC2 (a), round 12: the main page carries no audit link 'yet'; the RIV-lk-1 order: render.render_page carries exactly one <a href=\"/rivalfunds/<day>/audit\">.",
+    "world_is": "The two round-12 checks still grade the superseded state; running them on a tree that carries lk-1 fails their (a) arms. The one existing unit assertion of the same state (test_r12au1_audit_page, main page has no /rivalfunds/<day>/audit) was changed in this cell to assert the one link.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A drain-time or regression run of the round-12 au-1 checks after lk-1 merges reads FAIL; amend arm (a) of each check (issuer's own authority) or retire them as superseded by lk-1.AC1. Nothing in the worker's tree depends on the choice."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S54",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T03:13:44Z",
+    "one_line": "On the served 2026-10-06 page the AI accounts quote figures of an EARLIER build of the tables than the panels beside them: 22 of 26 accounts carry at least one figure that differs from the rankings on the same page (149 of 197 cited contribution figures moved), each under a 'Grounded' badge. Andrew's example: IDVZ direction verdict says Petrobras +0.47% over thirty days; the rankings panel says +0.93%.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/research_hypotheses date=2026-10-06: one object, written 13:00:20Z, 26 accounts over 13 funds; all 197 holding_contribution cited rows carry revision 20261006T110357Z-9717671d0d45",
+        "gold/holding_contribution date=2026-10-06 has two revisions: 11:03:57Z (IDVZ R30: PBR +0.47, TSM +0.38, ASML +0.16) and 13:05:56Z (PBR +0.93, TSM +0.47, BBSEY +0.26); the page serves the 13:05Z one; buying_trend likewise 11:04Z -> 13:06Z",
+        "census by this seat: 149 of 197 cited figures differ from the newest table by more than 0.005 percentage points; 0 cited keys are gone; accounts with a moved figure 22 of 26 (11 funds x 2)",
+        "the served page carries 13 'Written against earlier tables' lines (one per fund) stating both build times; the badge on each account still reads 'Grounded'",
+        "Andrew-direct record cooRV_ANDREW_DIRECT_20261007_031xZ_RIVALFUNDS_AI_NUMBERS_VS_PANEL_NUMBERS_VARIANCE.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An AI account graded 'Grounded' states figures a reader can find in the panels of the same page (the grounding gate matches every figure to a cited row).",
+    "world_is": "The grade is true against the cited revision, not against the page. On 2026-10-06 the 13:00Z sweep ran the AI step at 13:00:20Z and THEN rebuilt the contribution and trend tables at 13:05-13:06Z (newer inputs had landed from the 12:3xZ Bloomberg re-run after the Terminal outage), and an account is never rewritten once written. The earlier tables were built at 11:03Z while that morning's Bloomberg data was missing, which is why the figures moved this much. The disclosure exists but sits in a small line under the card, below a green 'Grounded'.",
+    "notes": "disarm_owner (n/a, INERT): 1.0.0_SA_CTO~Z for the ruling. Options measured, not chosen: (A) the sweep refreshes the tables BEFORE the AI step, so an account is written against the build the page serves (no extra vendor call); (B) when a table an account cites is rebuilt after it, the account is re-run once (one more OpenAI run per rebuild: a cost and vendor-egress call, Andrew's); (C) the badge says so on its face ('Grounded on an earlier build') whenever the cited revision is not the served one. For round 14."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S49",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T03:41:33Z",
+    "one_line": "RIV-ab-1: the cell asks for the AI deadline to be computed AFTER the table refresh, and AC2 asks that nothing be refreshed when no time is left; both hold only if the time test runs twice, and the Lambda has no bound on the refresh itself.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/sweep.py run_ai_step (this branch): _ai_deadline_s is called before the refresh (applicability: <= 0 returns SKIPPED_TIME with no a1_refresh) and again after it (the deadline the AI step runs under; <= 0 returns SKIPPED_TIME carrying a1_refresh)",
+        "data/etfs/scripts/rivalfunds/publish_page.py produce_a1: the rebuild is mod.handler_entry per table with no deadline argument, so a refresh that outlasts the remaining time cannot be cut short from the sweep",
+        "tests: test_r14ab1_served_build_badge.py test_the_ai_deadline_is_computed_after_the_refresh and test_a_refresh_that_eats_the_time_skips_the_ai_step_but_keeps_its_record (stub clocks, not a measured Lambda run)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The AI deadline is computed after the refresh and nothing is refreshed when the step does not apply (face section 2; ab-1.AC2 docstring).",
+    "world_is": "Two deadline reads bracket the refresh. The second shrinks the AI step by the time the refresh took (a measured day: about one minute for holding_contribution and buying_trend, 13:05-13:06Z). If the refresh alone exceeded remaining time less REPUBLISH_RESERVE_S, the AI step is skipped and the republish does not run either; the page then serves the refreshed tables on the NEXT sweep or republish, not this one. The badge rule leaves an account 'served' when the page serves no revision of a table it cites (same rule as the 'Written against earlier tables' line).",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. No action needed for the cell; a real-day run at L9 (J1) is the only measure of the refresh's time cost."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S50",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T03:54:37Z",
+    "one_line": "RIV-as-1: finding the fewest trades to drop re-renders the whole audit document about log2(trades)+2 times, and a cut page needed two existing counts adjusted (validate_audit's expected panel count and the detail's trades_shown); neither cost is measured on a real-size day.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/render.py render_audit_page (this branch): one full render, one render with every trade cut, then a binary search over the count dropped, each probe a full _render_doc (two passes when a name has several key forms)",
+        "data/etfs/scripts/rivalfunds/publish_page.py: validate_audit is handed trades inferred less audit_trades_left_out (a cut page carries one trace panel per trade it shows) and detail.trades_shown is reduced by the same count; the per-fund manifest trades_shown is the main page's and is unchanged",
+        "tests: test_r14as1_audit_size_rule.py (5 passed; fixture pages are about 30 KB, so the render time at 1.4 MB over a few thousand trades is not measured here)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "render_audit_page returns a document of at most AUDIT_SOFT_CAP bytes when a cut can achieve it, dropping trade trace panels oldest first (face section 1); publish_page adds audit_trades_left_out and the FAIL line (face section 2).",
+    "world_is": "The cut is exact (the fewest trades that fit) and costs repeated renders only on a day that is over the cap; a day under it renders once, as before. On a real day the cut would run inside the 07:00 ET publish Lambda, whose per-render time at the served size (1,381,244 B on 2026-10-07) was not measured by this cell. Within one window end, rows are dropped last-fund-first, so a partial cut of one window end is possible; the count and the oldest window end shown are still stated.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The first real over-cap day is the measure of the render time; until then the page is 34.1% under the cap and the path does not run."
   }
 ]
 ```

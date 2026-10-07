@@ -396,6 +396,23 @@ if [ -n "$BASELINE" ]; then
   done <<< "$BASELINE"
 fi
 
+# OPEN-MERGE PATHS (row NFRA_OPLGTW-Z-S61, 0.0.0_AB_MSTR~Z 2026-10-07). The refusal-residue loops below unstage
+# "staged-now MINUS the lock-entry BASELINE". A drain that OPENS after the baseline stages its own paths into the
+# shared index, so that subtraction attributes them to THIS call; and git refuses `commit --only` during a merge, so
+# this call fails and the loop resets the merge's paths to the pre-merge HEAD. safe-merge.sh then commits from its
+# private index: HEAD carries the merge, the shared index holds the old blobs, and they read as staged reverts nobody
+# made. Reproduced in a scratch repo (2 of 2 merged paths stale). Called at residue time, never cached: the merge
+# may open or land at any point after the baseline. Paths in this set are LEFT STAGED and counted, never reset.
+declare -A _OPEN_MERGE_SET=()
+_load_open_merge_set() {
+  _OPEN_MERGE_SET=()
+  local _mh _p
+  _mh="$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo "")"
+  [ -n "$_mh" ] && [ -f "$_mh" ] || return 0
+  while IFS= read -r _p; do if [ -n "$_p" ]; then _OPEN_MERGE_SET["$_p"]=1; fi; done < <(git diff --name-only HEAD MERGE_HEAD 2>/dev/null || true)
+  return 0   # set -e is on: this helper must never be the reason a refusal path exits early
+}
+
 # (2) Stage our declared pathspec inside the lock (-f past .gitignore).
 #
 # The staging error must NOT be swallowed. A failed `git add` here -- index.lock
@@ -880,11 +897,13 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
       # MINUS the lock-entry BASELINE), not only the gate files -- a non-gate path in the pathspec is staged too. A file
       # still staged after the reset is REPORTED, never claimed unstaged; a failed read counts as still staged, and an
       # unreadable index is said out loud (an empty listing must never read as "nothing left").
-      _sr_reset=0; _sr_stuck=0
+      _sr_reset=0; _sr_stuck=0; _sr_merge=0
+      _load_open_merge_set
       _sr_list="$(git diff --cached --name-only 2>/dev/null)"; _sr_lrc=$?
       while IFS= read -r _sf; do
         [ -z "$_sf" ] && continue
         [ -n "${BASELINE_SET[$_sf]+x}" ] && continue
+        if [ -n "${_OPEN_MERGE_SET[$_sf]+x}" ]; then _sr_merge=$((_sr_merge + 1)); continue; fi
         git reset -q HEAD -- "$_sf" 2>/dev/null || true
         if git diff --cached --quiet -- "$_sf" 2>/dev/null; then _sr_reset=$((_sr_reset + 1)); else _sr_stuck=$((_sr_stuck + 1)); fi
       done <<< "$_sr_list"
@@ -898,6 +917,7 @@ if [ ${#PATHSPEC[@]} -gt 0 ] && [ -f "$SCRIPT_DIR/surprise-row-gate.py" ]; then
       else
         echo "       Unstaged $_sr_reset file(s) staged by THIS call; none remains staged; staging from before it is untouched." >&2
       fi
+      [ "$_sr_merge" -gt 0 ] && echo "       Left $_sr_merge path(s) staged that belong to a merge OPEN in this worktree (Z-S61); they are the draining seat's." >&2
       printf '%s\n' "$SRGATE_OUT" | sed 's/^/  /' >&2
       exit 1
     elif [ -n "$SRGATE_OUT" ]; then
@@ -1137,14 +1157,17 @@ printf '%s
 # silently left -- an unreported residue is the whole hazard.
 # ============================================================================
 if [ "$_commit_rc" -ne 0 ]; then
-  _resid=0; _stuck=0
+  _resid=0; _stuck=0; _mleft=0
+  _load_open_merge_set
   while IFS= read -r _sf; do
     [ -z "$_sf" ] && continue
     [ -n "${BASELINE_SET[$_sf]+x}" ] && continue
+    if [ -n "${_OPEN_MERGE_SET[$_sf]+x}" ]; then _mleft=$((_mleft + 1)); continue; fi
     if git reset -q HEAD -- "$_sf" 2>/dev/null; then _resid=$((_resid + 1)); else _stuck=$((_stuck + 1)); fi
   done < <(git diff --cached --name-only 2>/dev/null || true)
   echo "ERROR: safe-commit did NOT commit (rc=$_commit_rc). The refusal text is printed above." >&2
   echo "       Unstaged $_resid file(s) staged by THIS call; anything staged beforehand is untouched." >&2
+  [ "$_mleft" -gt 0 ] && echo "       Left $_mleft path(s) staged that belong to a merge OPEN in this worktree (Z-S61); they are the draining seat's. Re-run after the merge lands." >&2
   if [ "$_stuck" -gt 0 ]; then
     echo "  WARN: $_stuck file(s) could NOT be unstaged and REMAIN STAGED -- another seat can adopt" >&2
     echo "        them under their author line. Clear them yourself: git reset HEAD -- <path>" >&2

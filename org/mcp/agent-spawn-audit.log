@@ -17868,3 +17868,8 @@
 2026-10-07T02:15:25.461426+00:00 IDENTITY_SEND_CVO_WORKER_REFUSED guard=GA-3 serial=3.0.0_SA_CVO pid=29980 reason='to=2.0.0_SA_COO~M,0.0.0_AB_MSTR' conflict="SEND REFUSED (spine v3.1 L8: the CVO's one send of a round is the slug to the CTO): 3.0.0_SA_CVO -> 2.0.0_SA_COO~M, 0.0.0_AB_MSTR. The CVO sends to 1.0.0_SA_CTO, in the slug at L10 (spine v3.1 L8: the"
 2026-10-07T02:27:52.828226+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=4.0.0_SA_CRO pid=404
 2026-10-07T02:45:27.958401+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.0.0_AB_MSTR pid=21868
+2026-10-07T04:06:35Z  SPAWN  0.7.0_AE_CloudOps~A  by 2.0.0_SA_COO~Z  pid=28940  host_pid=3184
+2026-10-07T04:07:13.205123+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~A pid=40264
+2026-10-07T04:26:06Z  SPAWN  0.7.0_AE_CloudOps~RV  by 2.0.0_SA_COO~Z  pid=49256  host_pid=47252
+2026-10-07T04:27:48.452867+00:00 IDENTITY_GUARD_ACTIVE guard=GA-3 serial=0.7.0_AE_CloudOps~RV pid=49972
+2026-10-07T04:28:04Z  ORPHAN-CLEANUP-FAILED  serial=0.7.0_AE_CloudOps~RV  rc=1 bash=C:\Program Files\Git\bin\bash.exe out_bytes=92 out=[kill-orphans] start pid=3138800 flags: force=1 stale=0 global=0 serial=0.7.0_AE_CloudOps~RV

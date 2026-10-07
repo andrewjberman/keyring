@@ -1,0 +1,589 @@
+{
+ "page": "C:\\Users\\Opal Bloomberg\\AppData\\Local\\Temp\\claude\\C--Users-Opal-Bloomberg-Desktop-ajb-workspace\\78418ecd-8845-40a2-9d4b-c51cb47e8982\\scratchpad\\p13c\\index.html",
+ "bytes": 1276544,
+ "dialog_keys": 423,
+ "funds": [
+  "IDVZ",
+  "TXUE",
+  "BIDD",
+  "CGIC",
+  "INEQ",
+  "SCHY",
+  "PFOE",
+  "WCMG",
+  "GQGU",
+  "TSEL",
+  "BASG",
+  "ETFT",
+  "PCLG"
+ ],
+ "a_static": {
+  "buttons": 2076,
+  "unresolved": [],
+  "no_fund_section": [],
+  "outside_panel": 0,
+  "per_fund": {
+   "IDVZ": 154,
+   "TXUE": 153,
+   "BIDD": 165,
+   "CGIC": 180,
+   "INEQ": 165,
+   "SCHY": 184,
+   "PFOE": 167,
+   "WCMG": 142,
+   "GQGU": 196,
+   "TSEL": 126,
+   "BASG": 167,
+   "ETFT": 126,
+   "PCLG": 151
+  },
+  "no_fund_section_n": 0
+ },
+ "b_clicks": {
+  "periods": [
+   "rf-period-R30",
+   "rf-period-QTD",
+   "rf-period-YTD"
+  ],
+  "clicks": 234,
+  "fails_n": 0,
+  "clicking_fund_section_first": 135,
+  "fails": []
+ },
+ "b_nested_ai_modal": {
+  "key": "PBR_US_Equity",
+  "open": true
+ },
+ "c_plain_ticker": {
+  "ticker_vocab": 414,
+  "hits": 62,
+  "hits_fund_codes": 0,
+  "by_ticker": {
+   "AI": 55,
+   "MTD": 4,
+   "MSCI": 3
+  },
+  "sample": [
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, IDVZ"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, IDVZ"
+   },
+   {
+    "fund": "IDVZ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TXUE"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TXUE"
+   },
+   {
+    "fund": "TXUE",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "BIDD",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "BIDD",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, BIDD"
+   },
+   {
+    "fund": "BIDD",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, BIDD"
+   },
+   {
+    "fund": "BIDD",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "CGIC",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "CGIC",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, CGIC"
+   },
+   {
+    "fund": "CGIC",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, CGIC"
+   },
+   {
+    "fund": "CGIC",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, INEQ"
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "MTD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "was the second-worst MTD contributor at -0.14% and the"
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, INEQ"
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "MTD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "entered for $1.6 million and was the second-worst MTD contributor at -0.14% and the"
+   },
+   {
+    "fund": "INEQ",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "MSCI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": " the period. Observed trading shows an entry into MSCI EAFE Dec26 for $17.2 million "
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, SCHY"
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "MSCI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": " the period. Observed trading shows an entry into MSCI EAFE Dec26 for $17.2 million "
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "MSCI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "MSCI EAFE Dec26 was entered for $1"
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, SCHY"
+   },
+   {
+    "fund": "SCHY",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "PFOE",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "PFOE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, PFOE"
+   },
+   {
+    "fund": "PFOE",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, PFOE"
+   },
+   {
+    "fund": "PFOE",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "WCMG",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "WCMG",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, WCMG"
+   },
+   {
+    "fund": "WCMG",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, WCMG"
+   },
+   {
+    "fund": "WCMG",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "GQGU",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "GQGU",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, GQGU"
+   },
+   {
+    "fund": "GQGU",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, GQGU"
+   },
+   {
+    "fund": "GQGU",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TSEL"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, TSEL"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "t says the manager\u2019s ranking in semiconductor and AI-linked exposure is still broa"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "anager appears broadly right on semiconductor and AI-linked exposure, despite trim"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "fund has materially reduced the semiconductor and AI-linked exposures that are cur"
+   },
+   {
+    "fund": "TSEL",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "BASG",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "BASG",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, BASG"
+   },
+   {
+    "fund": "BASG",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, BASG"
+   },
+   {
+    "fund": "BASG",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "MTD",
+    "in_modal": false,
+    "visible": true,
+    "ctx": " more than one uncited fact; cite one): -0.10%: C-MTD-worst3, C-QTD-worst3. Shown f"
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, ETFT"
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "MTD",
+    "in_modal": true,
+    "visible": false,
+    "ctx": " more than one uncited fact; cite one): -0.10%: C-MTD-worst3, C-QTD-worst3. Shown f"
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, ETFT"
+   },
+   {
+    "fund": "ETFT",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": false,
+    "ctx": "trending topic \"Reflection Debuts Lower-Cost Beam AI Model\""
+   },
+   {
+    "fund": "PCLG",
+    "ticker": "AI",
+    "in_modal": false,
+    "visible": true,
+    "ctx": "AI analysis"
+   },
+   {
+    "fund": "PCLG",
+    "ticker": "AI",
+    "in_modal": true,
+    "visible": false,
+    "ctx": "AI analysis, PCLG"
+   }
+  ]
+ },
+ "c_equity_form_visible_text": {
+  "n": 0,
+  "sample": []
+ },
+ "d_whole": {
+  "IDVZ": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 13702,
+   "buttons": 154
+  },
+  "TXUE": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 14696,
+   "buttons": 153
+  },
+  "BIDD": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 15891,
+   "buttons": 165
+  },
+  "CGIC": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16454,
+   "buttons": 180
+  },
+  "INEQ": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 14384,
+   "buttons": 165
+  },
+  "SCHY": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 15284,
+   "buttons": 184
+  },
+  "PFOE": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 14659,
+   "buttons": 167
+  },
+  "WCMG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 13403,
+   "buttons": 142
+  },
+  "GQGU": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 16546,
+   "buttons": 196
+  },
+  "TSEL": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 12911,
+   "buttons": 126
+  },
+  "BASG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 15829,
+   "buttons": 167
+  },
+  "ETFT": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 13474,
+   "buttons": 126
+  },
+  "PCLG": {
+   "head": true,
+   "ai": 2,
+   "rankings": true,
+   "text_chars": 3398,
+   "buttons": 151
+  },
+  "_audit_block": false,
+  "_audit_href": 1,
+  "_audit_text": 0
+ }
+}

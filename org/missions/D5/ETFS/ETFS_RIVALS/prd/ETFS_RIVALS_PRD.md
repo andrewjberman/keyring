@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.17",
+ "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
  "status": "DRAFT"
 }
 ```
@@ -396,6 +396,45 @@ approved it.
                     ("anytime a stock/ticker is mentioned, it should be
                     clickable to the modal, and we should be able to see
                     backfill on it")
+
+  FWD-22 (NEW, v0.18) On a fund's security modal Andrew sees the security's
+         price over time with that fund's buys and sells marked on it
+         DONE WHEN  EXERCISED -- on the live page, the security modal opened
+                    from a fund's section draws the security's price curve
+                    for the last 30d, 90d or 365d (one switch, 30d first);
+                    each of that fund's trades in the range is a hollow
+                    marker on the curve, green for a purchase and red for a
+                    sale, sized by the trade's share of the fund; pointing at
+                    a marker reads the trade's date or window, its dollar
+                    value, its size in basis points of the fund, and how many
+                    trades the range holds
+         ACCEPT     The modal reads as the Market Overview security modal
+                    does. The largest marker is a trade of 5% of the fund or
+                    more and the smallest is 20 bps or less. A trade known
+                    only as a window between two reports is drawn across its
+                    window, never on a guessed day. A stretch with no price
+                    is a gap in the curve with its reason, never a drawn
+                    line. The curve says where its prices come from.
+         SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
+                    (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
+                    SECURITY_MODAL_PRICE_SERIES_WITH_TRADE_MARKERS.md)
+         RESERVED   Two points are Andrew's, carded by the CTO (ADDENDUM F):
+                    whether pointing at ANY day of the curve reads that day's
+                    price (it needs a script on a page whose rule is no
+                    script), and whether a Bloomberg price backfill is
+                    authorized for the days the pipeline does not hold.
+
+  FWD-23 (NEW, v0.18) Every period on the page is 30d, 90d or 365d rolling
+         DONE WHEN  EXERCISED -- every ranking, trend, account and modal on
+                    the live page offers exactly 30d, 90d and 365d, opens on
+                    30d, and shows no QTD, YTD or MTD; the QTD and YTD
+                    figures are still computed and stored
+         ACCEPT     90d sits where QTD sat and 365d where YTD sat. A period a
+                    fund's history does not reach reads partial with its
+                    reason. The AI accounts name the same three periods.
+         SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
+                    (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
+                    PERIODS_30D_90D_365D_EVERYWHERE.md)
 
   CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
   - The fund picker shows one fund at a time, grouped under its Opal fund, and
@@ -978,3 +1017,62 @@ the `/sprint` precedent files.
 - the bucket's other products and prefixes;
 - any agent-turn vendor call;
 - any notifier.
+
+## ADDENDUM F, v0.18, 2026-10-07 -- the price-and-trades modal (`FWD-22`) and the three rolling periods (`FWD-23`)
+
+**L2 by `1.0.0_SA_CTO~Z`** on two Andrew-direct words of 2026-10-07 ~04:5xZ at the COO~RV terminal (both records are in
+`org/tier1_exec/2.0.0_SA_COO/deliverables/`, named in the fences) and on COO~RV's scoping facts
+(`deliverables/2.0.0_SA_COO~RV/round15_prep/MODAL_PRICE_SERIES_AND_PERIODS_SCOPING_FACTS.md` @82bb78106e). The definitions are in
+the ENDPOINT section. This addendum holds the contracts and the reserved points.
+
+### F.1 -- CONTRACTS for `FWD-22`
+
+- **`C-MODAL-PRICE-SOURCE` (v1: no vendor call).**
+  - The curve is drawn from prices this pipeline already holds: the market close in `gold/security_market` where a row exists,
+    and otherwise the price implied by a universe fund's reported holding on that day (market value over quantity).
+  - Each point's source is one of the existing `price_source` values, and the modal names the source in words.
+  - A day with neither is a GAP, with its reason.
+  - Measured at the cut: `security_market` holds 4 days (2026-09-29 to 2026-10-05), and `trade_schedule` holds 504 days. So v1's
+    curve is the implied price where a fund held the security, with gaps elsewhere.
+  - A Bloomberg history backfill is the enrichment. It is a vendor pull, and it is RESERVED to Andrew's word (F.3 card 2).
+- **`C-TRADE-MARKER`.**
+  - A marker's size is the trade's estimated dollar value over the fund's total reported market value at the trade's window
+    end, in basis points.
+  - The size is clamped: 20 bps or less draws the smallest marker, and 500 bps or more draws the largest.
+  - A trade whose window is one trading day is a marker on that day. A wider window is drawn as a span over the window with
+    the marker at its end, and it reads "between <start> and <end>".
+  - Green is a purchase, and red is a sale. Colour is never the only carrier: the marker's text reads Bought or Sold.
+- **`C-NO-SCRIPT` stands for v1** (the ENDPOINT's CTO rulings; `FWD-21`'s ACCEPT).
+  - The curve is inline SVG.
+  - The range switch is the page's existing no-script switch.
+  - A trade marker's detail shows on pointing at it, without a script.
+  - Pointing at an arbitrary day of the curve to read its price is NOT deliverable without a script inside the page's size cap.
+    That one behaviour is F.3 card 1.
+- **`C-PAGE-CAP`.** With every modal's curve on the page, the main page keeps at least 20% headroom under `DIALOG_SOFT_CAP`. The
+  365d view may be drawn at a coarser step than the 30d view, and it says so. The over-cap FAIL line (round-10 ADDENDUM 3)
+  covers it.
+
+### F.2 -- CONTRACTS for `FWD-23`
+
+- **Scope is the rivalfunds page.** That is the narrowest reading of "consistent everywhere", as COO~RV relayed it. A wider
+  reach (the portal's pages) is Andrew's to say and is not inferred.
+- **MTD is not displayed either.** He named QTD and YTD. The page's stated metrics are the three rolling periods, and a
+  fourth, calendar period beside them breaks "consistent". MTD keeps computing, as QTD and YTD do.
+- **90d and 365d are NEW calculations** in `gold_buying_trend` and `holding_contribution`, on the same price rule as today's
+  periods (`C-MODAL-PRICE-SOURCE`'s sources). They are not relabels of QTD and YTD.
+- **A fund whose history is shorter than the period reads `partial` with its reason** (the existing CALL 3 rule).
+- **The AI accounts** are generated on the same three periods from the first sweep after the tables carry them. An account
+  that still names QTD or YTD is not shown as current.
+
+### F.3 -- RESERVED to Andrew (two cards; the build of everything else does not wait)
+
+1. **Does pointing at ANY day of the curve read that day's price, as Market Overview does?** It needs one script on a page
+   whose rule is no script. Without it, v1 reads prices at the axis and at the trade markers only.
+2. **Is a Bloomberg price-history backfill authorized for the securities and days the pipeline does not hold?** Without it,
+   the curve has gaps wherever no universe fund held the security.
+
+### F.4 -- L4-R
+
+ENDPOINT lines and CONTRACTS are added, so the RATIFIED half re-opens to `3.0.0_SA_CVO~RV`. The brief half is Andrew's own
+words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-1`..`FWD-21` and every existing contract are
+unchanged.

@@ -9236,3 +9236,289 @@ name the one known failure instead of silently inheriting it.
   "notes": "Fabric-wide, not OPLGTW's: a candidate guard is a post-merge `git diff --cached --quiet` read in safe-merge.sh. Routed to 1.0.0_SA_CTO~O in the round slug; no fix is cut here."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S7",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-06T22:12Z",
+  "one_line": "OG-rl-9 PHASE B step 10 exited rc=3 at safe-ec2-deploy.sh's halt gate before any build or upload: the release tree /c/tmp/og-rel17 at ba27a07439 holds 63 NFRA_OPLGTW task orders and none issued to ~28, so halt_gate_worker_issuer cannot admit the worker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-06 ~22:05Z from /c/tmp/og-rel17: DEPLOY_BASE_REF=2c27f3a795 HALT_ACK=1 AGENT_NAME=0.9.0_WK_NFRA_OPLGTW~28 bash infra/aws/ec2/safe-ec2-deploy.sh opal-gateway infra/aws/ec2/opal-gateway/deploy-to-ec2.sh -> 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)', DEPLOY_RC=3, after 'Step 1/3 Pre-Deployment Check' and before Step 2 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23_phaseB_deploy.out).",
+      "READ .tools/halt-gate-check.sh halt_gate_worker_issuer (:185-206): reads `git show HEAD:<to>` for every task order under NFRA_OPLGTW in HALT_GATE_REPO_ROOT, which safe-ec2-deploy.sh sets to the calling release worktree; RUN over og-rel17 HEAD: 63 task orders, 0 with issued_to ~28 (the order was cut after the base commit chain 2c27f3a795 <- cf4b036e62).",
+      "RUN after the abort: S3 opal-gateway-latest.tar.gz git-ref still 2c27f3a7958de0aa644374cdd08fc188a27e9e3f; og-rel17 clean at ba27a07439 (0 status lines); host untouched (the verify before-run, 22:03Z, is the last host read; no upload, no SSM install dispatched)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RELEASE_ORDER_FORM step 10: deploy through safe-ec2-deploy.sh from the release tree with DEPLOY_BASE_REF and HALT_ACK=1; the worker is admitted by its non-terminal order at HEAD.",
+  "world_is": "The gate resolves the worker's order from the release tree's own HEAD. A release cut on a live sha older than the worker's order has no such order, so the gate refuses. The worker did not work around it: any fix changes the signed act (a commit on the release branch changes the release sha; a deploy from the worker worktree changes the artifact git-ref and the manifest deployed_commit lineage, and CLOUD does not descend from 2c27f3a795, so rl9.AC1's descends arm would need the release-branch sha). Same class as Z-W12-S9.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Nothing landed. The ledger nfra-oplgtw-gateway-release-r23 entry and sentinel stay committed OPEN at 45c82c948c (4 h window from 22:03Z); the fabric-wide hold (22:08Z) also stops the act. The issuer rules the admission path (e.g. a sanctioned way to place the order where the gate reads it) and re-issues GO."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:03Z",
+  "one_line": "OG-rl-10 PHASE B: the deploy LANDED (23:59:57Z) but safe-ec2-deploy.sh's own manifest safe-commit on the release branch was refused by the owned-paths lane gate (SHARED_CLOUD_OPS, worker not permitted for EC2_MANIFEST.json); the manifest was recorded by hand on the worker branch as the order says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-06 23:57:43Z-00:00:13Z from /c/tmp/og-rel18 (HALT_GATE serial resolved 2.0.0_SA_COO~O, no OPAL_AGENT_SERIAL, no serial file): DEPLOY_RC=0; output lines 'ERROR: owned-paths lane violation(s) ... infra/aws/ec2/EC2_MANIFEST.json -- lane=SHARED_CLOUD_OPS ... no NON-TERMINAL task order at HEAD issued_to this serial names this path' and 'The deploy LANDED -- record manually' (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r24_phaseB_deploy.out).",
+      "READ: the release tree HEAD (9d3e2eb3fc, cut on live 2c27f3a795) holds no order issued to ~28, the same cause as row S7 on the commit side; /c/tmp/og-rel18 carries the wrapper's EC2_MANIFEST.json edit uncommitted (deployed_commit 9d3e2eb3fc, deployed_at 2026-10-06T23:59:57Z); the worker branch carries the hand edit at cba8c1e345; manifest leg closed in ledger nfra-oplgtw-gateway-hotfix-r24 at a88b3b9d21."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ANNOUNCE_OG-rl-10 (COO act): the wrapper's own manifest commit lands on the release branch only; form step 12: record the manifest by hand.",
+  "world_is": "The wrapper's manifest commit did not land on the release branch: the lane gate refused it for the worker serial. The deploy itself and the hand-recorded manifest are unaffected; the only consequence is that /c/tmp/og-rel18 holds an uncommitted EC2_MANIFEST.json edit (not merged anywhere) and the manifest base in that tree (daa56d81ac) differs from the worker branch manifest base.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "No action taken beyond the hand edit; the release worktree was left as is (uncommitted manifest edit) for the issuer to remove at drain."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S62",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T00:16Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S7"
+  ],
+  "one_line": "Z-W28-S7 admission path found and EXERCISED: a worker deploy from a release tree resolves the ISSUER's serial when the shared session file exists and OPAL_AGENT_SERIAL is unset; r24 (OG-rl-10) deployed that way. The gate's worker-order lookup still cannot admit a slot whose first order postdates the release base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN issuer dry run in /c/tmp/og-rel17, 2026-10-06 ~22:15Z: halt_gate_resolve_serial printed 2.0.0_SA_COO~O; halt_gate_validate_serial rc=0, after org/mcp/sessions/<session>.serial was written in the shared tree (org/XXX.md step A.1, skipped at this seat's relaunch).",
+      "RUN worker ~28, 2026-10-06T23:59:57Z: safe-ec2-deploy.sh rc=0 for 9d3e2eb3fc with OPAL_AGENT_SERIAL unset, AGENT_NAME set, HALT_ACK=1 (deliverables/0.9.0_WK_NFRA_OPLGTW~28/ANNOUNCE_OG-rl-10.md and the r24 deploy output).",
+      "FILE .tools/halt-gate-check.sh halt_gate_worker_issuer reads `git show HEAD:<order>` under HALT_GATE_REPO_ROOT, the release tree. At 2c27f3a795 that tree holds 15 non-terminal-reading orders, 0 issued to ~28; slot ~15 passed earlier releases only because the first-match <status> parse reads its stale `staged` tags."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RELEASE_ORDER_FORM step 10: a worker deploys the release tree through safe-ec2-deploy.sh.",
+  "world_is": "The form does not say which identity the deploy presents. Two routes exist: the worker's own serial (needs a non-terminal order for that slot in the release tree's HEAD, impossible for a new slot) and the issuer's session serial (works, and a [STOP] to the issuer halts the deploy).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer act: the release form gains the issuer-serial route as a standing step at the next form edit. The gate's order lookup (read the order from the shared root, and read the LAST status tag) is the gate owner's, routed to 1.0.0_SA_CTO~O in the round slug."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "OG-rl-9 re-cut Phase A: two host runs of r23b_ssm.py started within seconds of each other share ONE host scratch dir (/tmp/og_r23b_run) and corrupt each other: the second run's rm -rf and cp collided, and the 'real' run executed the 'synth' program.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~00:45Z: a real-holder rehearsal was started in the background and a synthetic rehearsal in the foreground; the synthetic run's SSM stderr read \"cp: cannot create regular file '/tmp/og_r23b_run/gw/app/rivalfunds_view.py': File exists\"; the real run's stderr read \"md5sum: /tmp/og_r23b_run/gw/app/integrations/schwab/integration.py: No such file or directory\" and its stdout carried R23_SYNTH where GA1_BODY was expected (AssertionError GA1_BODY in r23b_ssm.py --json).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23b_ssm.py (copied from r23_ssm.py): S = \"/tmp/og_r23b_run\" is a constant, rm -rf $S first and rm -rf $S last, in every kind (synth, real, route) and in r23b_ssm_prog.py (SCR). The r23 and r24 scripts carry the same constant.",
+      "RUN the rehearsal was then redone strictly in sequence (real, synth, route): all three clean (STAGE_RC=0 x4, RUN_RC=0, SCRATCH_REMOVED=yes, 0 leftovers); the two corrupted outputs were overwritten and none is in the record."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Form step 5: remove every host scratch copy; the r23 scripts are reusable by copying with the sha and paths changed.",
+  "world_is": "The host runner has no per-run scratch name, so it is safe only when one run is in flight. The corruption was self-inflicted and was caught and redone before anything was recorded; nothing on the host or in the state store was left changed.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Phase B: run the host runners (r23b_ssm.py, r23b_ssm_prog.py, r23b_verify.sh) strictly one at a time. A per-run scratch name (the SSM pid or a uuid in S) would remove the hazard at the next form edit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "OG-rl-9 re-cut Phase A: the hand-off said to merge local CLOUD into the worker branch first, but the worker base e27046f80f already carries both cells (31043ba49b and 291bb5bb4b), so no merge was made; and the re-cut is ONE commit, not two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git merge-base --is-ancestor 291bb5bb4b HEAD and 31043ba49b HEAD, in /c/tmp/wk-oplgtw-r23b-28 at e27046f80f: both yes.",
+      "RUN git diff --stat 9d3e2eb3fc CLOUD -- infra/aws/ec2/opal-gateway at CLOUD 44afa800fc (read at start) and again at 3196659a5b (read 00:34Z): the 6 release files plus the CLOUD-only runbooks/SCHWAB_PILOT_RUNBOOK.md; git diff --stat 7d65a28db0 CLOUD -- infra/aws/ec2/opal-gateway: the runbook alone (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23b_equality.out).",
+      "READ order AMENDMENT 2 text: 'Merge local branch CLOUD into your worker branch first, so the worktree carries 291bb5bb4b'; the worktree already does. The first cut (2c27f3a795) was two commits only because A1 arrived after the first commit; here all six files are known, so one commit 7d65a28db0 (R13 (a), audit-log lines 23325-23326, N_FILES 6)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A1/A2: merge local CLOUD into the worker branch first; the release carries the same two cells' hunks.",
+  "world_is": "The merge would add nothing to the gateway tree and would drag the whole CLOUD delta into the sparse worker worktree; the release bytes are taken from the worker head's gateway files and proven equal to the cells' own diffs (r23b_hunk_equality.out, 6 of 6 EQUAL) and to CLOUD (runbook only).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "If the issuer wants the merge for the drain-back, it is a Phase D act on the worker branch; nothing in Phase A depends on it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S63",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T01:30Z",
+  "one_line": "opal_data_refresh_upload(confirm=True) holds the MCP call open while it polls the pipeline for up to 15 minutes; the client transport drops at about 120 s, so the caller loses the tool response although the send lands (2 of 2 real sends on 2026-10-07).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py:271-280: after POST /trigger the tool loops `for _ in range(45): time.sleep(20)` on the status route, about 15 minutes, inside the one tool call.",
+      "REPORT 0.0.0_AB_MSTR~Z msgs 30469 and 30499: both confirm=True sends (~00:17Z and ~01:26Z) lost the tool response when the opalgateway MCP transport dropped after 120 s; the served model_portfolio_benchmarks.json (generated_at 00:18:26Z, then 01:28:16Z) shows each send landed. Not re-measured by this seat."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The tool's docstring: it returns uploaded / pipeline / displayed confirmations.",
+  "world_is": "On a real send the confirmations are computed but never reach the caller, who must read the served artifact to know the outcome. A caller that reads the dropped transport as a failure may re-send, which fires the live pipeline again.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. Candidate for the CTO's next enrichment list: return the execution id right after /trigger and leave the polling to a second read-only status tool. Whether the second send at 01:26Z overlapped the r23 gateway restart is unread."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S64",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T03:18Z",
+  "one_line": "The gateway's audit record for a rivalfunds page view cannot say WHICH page was served: its args are omitted fail-closed (the tool is not in the R8-PRIV allowlist) and it carries no bytes, so the day and the route (page, audit, archive) are recoverable only by joining the uvicorn access log by timestamp.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN ssm 338918d8-a37d-4a8f-bef6-2ecd1df192b1, 2026-10-07 ~03:2xZ: 4 of 4 rivalfunds_view audit records in 02:33-03:10Z read args {'_omitted': 'args fail-closed (tool not in R8-PRIV allowlist)'} and bytes null; outcome ok; user is Andrew 4 of 4 (digest compare).",
+      "RUN ssm c8827af1-d815-4b57-8020-fc4dd73432d5: the access log for the same four seconds reads 2 GET /rivalfunds/2026-10-06/audit 200 and 2 GET /rivalfunds 200.",
+      "FILE infra/aws/ec2/opal-gateway/app/rivalfunds_view.py:171-178 passes {'day', 'route'} to audit.log_call and no bytes_returned; app/audit.py _safe_args drops them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ETFS_RIVALS round-13 ruling 1 (1.0.0_SA_CTO~Z): the proof of a served audit page is the gateway's access record, showing status, identity, size and time.",
+  "world_is": "No single gateway record shows all four. Path and status are in journald, which is not shipped to the audit lake; identity is in the audit record; size is in neither.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. Candidate: admit rivalfunds_view's day and route to the R8-PRIV args allowlist and pass bytes_returned. That widens what the audit lake stores, so it is the CTO's call; routed in the round-24 slug."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-rl-11 Phase A rehearsal: the scoped identity's silent acquire asked Entra for the 9 narrowed scopes and was GRANTED its full previously consented set; the narrowing takes hold at the identity's next /login consent, not at the release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:40Z, host rehearsal of the staged release bytes (installed tree untouched), the scoped identity's cache COPIED to a host scratch dir so nothing live was written: R25_ACQUIRE_CALL requested 9 scopes (Channel.ReadBasic.All, ChannelMessage.Read.All, ChannelMessage.Send, Chat.ReadWrite, ChatMessage.Send, Files.ReadWrite.All, Sites.Read.All, Team.ReadBasic.All, User.Read) and ok=True; the granted scope names of that token and of a forced refresh-token exchange for the same 9 are 17 consented Graph scopes plus CallTranscripts.Read.All and the OIDC scopes (Mail.Read, Mail.ReadWrite, Mail.Send, Calendars.ReadWrite, Notes.ReadWrite.All, OnlineMeetings.ReadWrite included). Scope names only; no token printed. (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_scopes.out)",
+      "RUN the consent leg, same run: token_broker.build_consent_url for the scoped identity carries 9 scopes, for an unscoped probe email 17 (R25_SCOPED[0], R25_UNSCOPED). Live code BEFORE: 17 and 17 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_before_scopes.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-11 / OA-f-14: the scoped identity's /login consent and silent acquire narrow from 17 Graph scopes to 8, or 9 under a Tax binding.",
+  "world_is": "The consent URL and the silent-acquire REQUEST narrow to 9 (measured). The ACCESS TOKEN Entra returns from the existing refresh token still lists the full consent already granted to that refresh token, so the identity's effective Graph scopes stay 17+ until it signs in through /login again under the narrowed consent. All 9 read probes answered 200 on that token.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not a hazard the release creates (the identity's reach is unchanged by the release); it bounds what 'narrowed' means on the day of the release. Whether to re-consent the concierge through /login after the release is the issuer's and Andrew's call; nothing in Phase A depends on it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-rl-11 pre-GO identity-key read: the host .env carries TAXSMA_WORKBOOK_IDENTITY, not OG_TAXSMA_WORKBOOK_IDENTITY; that key names the scoped concierge (true), so the release's consent is 9 scopes not 8; MS_INGEST_IDENTITY and OTP_MAILBOX name no scoped identity (false).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:3xZ, live code, read in-process on the host (.env parsed as text, never sourced; only booleans printed): R25_ENV_KEY_NAMED_OG_TAXSMA_WORKBOOK_IDENTITY_PRESENT_IN_ENV False; R25_IDENTITY_KEY OG_TAXSMA_WORKBOOK_IDENTITY scoped=True (the value is a tid/oid binding compared in-process with the scoped identity's cached account), MS_INGEST_IDENTITY scoped=False, OTP_MAILBOX scoped=False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_before_scopes.out).",
+      "FILE infra/aws/ec2/opal-gateway/app/config.py:280 reads TAXSMA_WORKBOOK_IDENTITY; infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:174 says the OG_TAXSMA_WORKBOOK_IDENTITY variable is a deploy-shell input that is 'not read at all'.",
+      "RUN the staged release bytes: consent_scopes for the scoped identity = 9 (Files.ReadWrite.All is the Tax caller's scope); R25_IDENTITY_KEY_COVERED OG_TAXSMA_WORKBOOK_IDENTITY covered_by_consent=True (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_scopes.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-11: read whether each of OG_TAXSMA_WORKBOOK_IDENTITY, MS_INGEST_IDENTITY and OTP_MAILBOX names a scoped identity; a true key whose caller scopes the release's consent_scopes does not cover is a STOP before GO.",
+  "world_is": "The Tax key is true and IS covered (the A1 caller table unions its Files.ReadWrite.All), so no STOP. The first key is read under its host name TAXSMA_WORKBOOK_IDENTITY, reported under the order's name in the record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The order's '8, or 9 under a Tax binding' resolves to 9 on this host. RL11_SCOPES.json's identity_keys_scoped keeps the order's three key names."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-up-1: opal_data_refresh_status returns displayed_date null for the live served manifest (its date-key list matches none of the manifest's five top-level keys), and as a tool of the mutating opal_portal spec it is gated at min_tier standard like the upload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:50Z, host, staged release bytes, one portal login POST and one GET of the served manifest: R25_MANIFEST_KEYS generated_at:str, pipeline_execution_id:str, pipeline_started_at:str, source_count:int, sources:dict; R25_MANIFEST_DATE_FOUND_BY_TOOL False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_manifest_keys.out); the status tool's own answer: status SUCCEEDED, terminal True, displayed_date_present False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_send.out).",
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py:152-160 @240ac2fe5a: _manifest_date looks for displayed_date, date, as_of, asof, vintage, latest_date, data_date, updated; none is a key of the served manifest. The text field still carries str(body)[:300].",
+      "FILE integration.py:104 (SPEC min_tier=\"standard\") and app/integrations/base.py:163 (guard.enforce_min_tier(tool, tier, spec.min_tier)): the floor is per integration spec, so the read-only status tool is refused to a read_only-tier caller as the upload is. The rehearsal called the registered tool through its wrapper with the tier gate, the entitlement lookup and the audit sink stubbed (a caller tier needs a real principal); the tool's own code (portal login, status GET, manifest GET) was the real one."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-up-1: the status tool returns the status and the served manifest's displayed date and text; it is read-only.",
+  "world_is": "Status and text are returned; the structured displayed_date field is null against today's manifest (the date is readable inside displayed, as generated_at). The through-the-wrapper path with a real principal was not exercised in Phase A.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here (the cell is drained). The caller texts already say 'or the portal's displayed date if that tool is not available to your identity'. Nothing in AC2 depends on displayed_date."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S65",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~O",
+  "surfaced_at": "2026-10-07T04:17Z",
+  "one_line": "OG-up-1's new tool opal_data_refresh_status formats the CALLER-supplied execution_id into the status URL path with no shape check; httpx collapses dot segments, so an id of '../../../general/x' sends the portal service account's GET to /api/general/x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py at release 240ac2fe5a (opal_data_refresh_status): httpx.get(PORTAL_FRONT_DOOR + STATUS_PATH.format(execution_id=execution_id), headers=ph, ...) after only an empty-string check.",
+      "RUN python -c \"import httpx; print(httpx.URL('https://www.opalinvest.dev/api/scoped/data-refresh/status/' + '../../../general/x').path)\" -> /api/general/x (httpx 0.28.1 on this device; the host's httpx version is unread).",
+      "READ the pre-release code (live 7d65a28db0): the only execution_id ever formatted into STATUS_PATH came from the /trigger response, never from a caller."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-up-1 / R33: the status tool reads the status route and the served manifest, GETs only, and fires nothing.",
+  "world_is": "The tool can be steered to GET any path under www.opalinvest.dev with the service account's JWT. What comes back to the caller is narrow: the top-level 'status' key of a 200 JSON object, else 'status HTTP <code>', else an error naming the exception class. So it is a path-existence and status-code oracle under the service identity, plus whatever a portal GET does on being read. The callers are signed-in identities at the integration's min_tier (standard); the scoped concierge is not on the tool's allowlist. Not exercised against the host or the portal by this seat.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Found reading the r25 release for the CVO never-widen half (signed with this row named). Candidate fix, one line: refuse an execution_id that does not match the id shape /trigger returns (for example ^[A-Za-z0-9:_-]{1,128}$) before formatting it. INERT: low exposure, internal callers, read-only."
+}
+```

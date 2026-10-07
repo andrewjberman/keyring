@@ -8808,3 +8808,142 @@ fanout:
   egress: none
   portal_ref: cf3f10c6   # the portal DEV head at the cut; az-1 runs on the /freshness candidate 6de76f0509
 ```
+
+## 85. ROUND 77 -- THE STALE RULE ON THE SERVER, THE /freshness PAGE VIEW, THE NEWS DAY, THE REFUSED TABLES, THE ADAPTER CELL, FOUR RULED REPAIR CELLS, FWD-20, THE RESEARCH-PULL DRIVER, REDEPLOY, WALK. Twenty-two orders and three issuer acts
+
+**Input:** the CTO's round-76 analysis `ledger/ROUND_ANALYSIS.round76.md` @c8bbeeac10 (msg 30465), rulings 1-9 and enrichment items
+1-10; the CTO's remediation rulings `ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md` @4a89bef967 with ADDENDUM 1 @3bad4be9e0;
+the COO's `deliverables/2.0.0_SA_COO~Z/round76/COO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md` @fb9ca91ad5; Andrew's word @b5f90bbf8d
+(PRD v0.41: the re-run button retired; three Bloomberg research pulls; the FWD-14 owner). PRD v0.41, ratified-text half SIGNED
+@30bc4c03e6. Drafted in five groups; the group notes are `deliverables/2.0.0_SA_COO~Z/round77/GROUP_{A..E}_NOTES.md`.
+
+### 85a. MEASURED AT THE CUT (deployed `OVpDhfwD` unless named; shared tree at the issuance base)
+
+- **/freshness body:** 2,889,557 B decoded. `reads` is 2,758,266 B (95.5%): `seeking_alpha_bronze` 2,139,211 and `bloomberg_bronze`
+  611,254. `rows` is 130,333 B over 302 rows; the 95 covered rows are 43,965 B. The page renders none of `reads`.
+- **The stale flag is computed by the PAGE today** (`portal/src/pages/Freshness/freshnessRows.ts`); the function serves stamps only.
+  Under ruling 1 the covered population reads 3 stale (Seeking Alpha last read 2026-09-11) and 92 not stale.
+- **Lists:** publishers 2 entries (90-day interval), social_accounts 267 (30-day); both reviewed 2026-09-10T22:42Z, both UNASSIGNED;
+  the social list falls due 2026-10-10.
+- **The adapter (r77_ba11 AC1, local):** `POST /refresh` answers 200 and is listed; `/resolve` answers 404; 95 bare axis nulls across
+  95 names; 95 of 95 top bands on the last-settled-day rule; 0 of 210 served sentences carry translation keys.
+- **Crosswalk:** 237 records, all keyed, 1,044 indexed forms. `resolve("Lenovo")` reads UNRESOLVED.
+- **Filings (95 names):** a filing driver chart is served on 2 (BA, ASML NA) and segment rows on 12. The class prototype refuses the
+  driver on 1 of 2 (ASML NA) and the segments on 2 of 12 (ASML NA, PBR), and keeps BA, BABA and HD. Newest stored source object:
+  a filing read on 12, a reason on 41, no object on 42; of the 12, both sections on 9; BABA keeps 70,000 of 350,005 characters.
+- **The FWD-18 defects are on the PAGE:** one press opens 3 passages (ASML NA's 3 points share passage P0086); the route already
+  serves BA's `passage_table` (columns 737, 747, 767, 777, 787, Total) and the page reads it in 0 places.
+- **Identity:** the served crosswalk (`crosswalk/v1/2026-09-29.json`) keys 89 of 89 coverage folders. The "33 of 89" in ruling A is the
+  2026-09-10 snapshot's ticker cell. CORPUS registered keys 96; `covered_security_keys()` 95.
+- **CSC:** 5 of 17 columns PRESENT; 0 of 5 carry period, currency and source. **Peers V:** a 12-peer scanner-vocabulary set yields 0
+  measured z-scores on fixtures.
+- **FWD-20:** BA's newest model block carries 10 fiscal years of `SALES_REV_TURN` and `CF_FREE_CASH_FLOW` and `BEST_ESTIMATE_FCF` for
+  FY1-FY3, and NONE of the six CFPS/EPS dispersion statistics, so D cannot be served from landed data.
+- **Worker-folder reads (row Z-W37-S2):** 19 production files and 44 lines under `lib/`, 5 files under `integrations/bloomberg/` (left
+  untouched), 2 packaging scripts with 3 lines. The row's "24" is 19 + 5.
+- **Row Z-W19-S16's rows** are the chatter partition `TRENDING_CHATTER#2026-09-15` in `opal-harvest-security-metrics`, not price rows.
+- **r75 c59 with its repaired 40-wide burst** (one run, 00:31:58Z): C1 302 of 302, C2 32 cold of 40 inside 2,000 ms, C3 807 ms; YES.
+- **Research pulls:** officers have a producer (`lib/research/management/bloomberg_fallback.py:179`, one call per name; 84 of 95 need a
+  pull). Segments have NONE; the segment mnemonics are unprobed. The vehicle is the scheduled task `OPAL_BBGTML_daily_pull`, 07:00
+  America/New_York.
+- **Portal:** origin/DEV `13509c52`; the shared tree's portal checkout is stale (`a3ab197f`).
+
+### 85b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ba-1` | FWD-7 rulings 1-2: the stale rule on the server; the flag keys only on collected inputs; the keyed date | `~267` | worker | LOCAL | new `freshness/stale_rule.py` + test |
+| `AMGT-ba-2` | ruling 3: the /freshness body attribution, then the page view (covered rows, no `reads`) | `~268` | worker | LOCAL | new `freshness/page_body.py` + test |
+| `AMGT-ba-3` | FWD-14: the lists' named owner (Andrew) and the out-of-date statement (row Z-S78) | `~269` | worker | LOCAL | `lists/build_lists.py`, new `lists/owner_line.py`, two packaged list files |
+| `AMGT-ba-4` | the /freshness page: the served flag and keyed date, the hidden column, the contrast, the owner line | `~270` | worker | LOCAL (portal, DEV only) | `portal/src/pages/Freshness/`, `amgt-lead-panel.ts` |
+| `AMGT-ba-6` | ruling 7: the share-capital and one-label class refusal | `~272` | worker | LOCAL | new `filings/table_class.py` + test |
+| `AMGT-ba-7` | the passage section coverage (row Z-W20-S8) | `~273` | worker | LOCAL | new `filings/section_coverage.py` + test |
+| `AMGT-ba-8` | ruling 5: the top band's newest news day inside 30 days (row Z-W263-S1) | `~274` | worker | LOCAL | `api/top_band.py` + its test |
+| `AMGT-ba-9` | the name-search resolver (row Z-S228) | `~275` | worker | LOCAL | new `api/name_search.py` + test |
+| `AMGT-ba-10` | the translated text on a served sentence (row Z-S221) | `~276` | worker | LOCAL | new `api/translated_text.py` + test |
+| `AMGT-ba-11` | THE ADAPTER CELL: `/refresh` removed (PRD v0.41), a reason beside an absent axis (Z-S278), the print's dead text step (Z-S218), and every hookup of the round | `~277` | worker | WORLD by the path floor only (applies nothing) | `api/scoped_amgt.py`, `print/render_pack.py` (build_pack only), one `.tf` route line as text, `identity/build_universe.py` (one line) |
+| `AMGT-ba-12` | the batched repairs: watchlist socket block, the pytest collection, the SERP single-page refusal, the Z-W19-S16 read | `~278` | worker-light | LOCAL | watchlist and harvest tests, `harvest/bright_data_serp.py` |
+| `AMGT-ba-13` | no production read of a worker folder (row Z-W37-S2), copies never moves | `~279` | worker | WORLD by the path floor only | twelve `lib/research/` directories, two packaging scripts |
+| `AMGT-ba-14` | FWD-20: the house FCF forecast v1 with the sd(D) gate | `~280` | worker | LOCAL | new `scores/house_fcf.py`, `scores/run_scores.py`, `scores/divergence.py` |
+| `AMGT-ba-15` | the identity grading read (89 with the keyed count) and the ONE PAGER precedence (row Z-W3-S1) | `~281` | worker | LOCAL | new `identity/covered_keyed.py`, new `identity/one_pager_precedence.py` + tests |
+| `AMGT-ba-16` | the comparable pack as stated restricted selection, the Peers V mapping, company deduplication (rows Z-W20-S11, Z-S162, Z-W21-S3) | `~282` | worker | LOCAL | `scores/peers_v.py`, `posture/comparable.py` |
+| `AMGT-ba-17` | the CSC present-column fields (rows Z-W18-S13, Z-W21-S6) | `~283` | worker | LOCAL | `peers/csc.py` |
+| `AMGT-ba-18` | the export chart line mirrors the page (row Z-W173-S4) | `~284` | worker-light | LOCAL | `print/render_pack.py` (:1351-1361), after ba-11 |
+| `AMGT-ba-19` | ruling 4: the chatter phase-coverage read | `~285` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-ba-20` | the redeploy carrying every build cell and the one gateway route swap; r76 c62/c63 and r75 c59 pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, one route, ledger |
+| `AMGT-ba-24` | the walk on DEV: FWD-7 on ruling 2's closing condition, FWD-14's owner line, and FWD-18/16/12 if their page work is on the ref | `~286` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-ba-25` | the research-pull driver: plan, call count, capacity stop, on fakes | `~287` | worker | LOCAL | `integrations/bloomberg/research/research_pulls.py` (outside the no-modify order), `harvest/bloomberg.py` (one tuple entry) |
+| `AMGT-ba-26` | row Z-S242: `etf-classifications.tf` re-committed with LF endings (applies nothing) | `0.7.0_AE_CloudOps~A` | seat order | WORLD by the path floor only | one `.tf` file |
+| `AMGT-ba-21`, `-22`, `-23` | the three Bloomberg research pulls (segments for 83, officers for 84, FWD-2's uncovered name) | the issuer | ISSUER ACTS, no order file | SERVED, each under its own pair | bronze at the builder's address |
+
+**Not an AMGT_RESAPP order:**
+- **`AMGT-ba-5`** (ruling 6's three FWD-18 repairs, and one heading per segment on BA) is PAGE work on the DSGN lane's page
+  (`portal/src/pages/SecurityAnalysis/`). The issuer RE-POINTS it to DSGN_AMGTV1 (`2.0.0_SA_COO~D`): DSGN round 45 edits the same
+  files for the top band, and two lanes writing one page collide at the portal merge. The draft, its check and its fixture travel:
+  `round77/handoff_dsgn/DRAFT_ba-5...md`, `round77/checks/r77_ba5.py`, `r77_ba5_harness.cjs`, `r77_groupB_fixture.json`. The
+  `/refresh` control (`SecurityAnalysis.tsx:72`, `useLeadPanelApi.ts:130`) goes the same way.
+- **The served reader of the Bloomberg `segments` bronze** is NOT cut: its shape depends on ba-21's one-name probe (the mnemonics are
+  unprobed), so the cell has an unmet dependency. FWD-1's re-read on AMD US cannot change this round. It is the first item offered
+  to the round-77 analysis.
+
+### 85c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is enrichment items 1-10. Subtraction against the list: item 1 -> ba-1, ba-4, ba-24; item 2 -> ba-2;
+  item 3 -> ba-19; item 4 -> ba-8 (the page half rides DSGN round 45); item 5 -> ba-6, with ruling 6 re-pointed (ba-5); item 6 ->
+  ba-25, ba-21, ba-22, ba-23; item 7 -> ba-11 (server) and DSGN (the control); item 8 -> ba-3, ba-4; item 9 -> ba-14; item 10 ->
+  ba-15, ba-16, ba-17, ba-18, ba-9, ba-7, ba-10, ba-12, ba-13. Ruling 9 (the burst width) was repaired in the round-75 check at
+  the cut. Row Z-S242 -> ba-26. Uncovered: the segments reader, stated above.
+- **(ii) Same grain:** one module, one page, one read or one act per cell.
+- **(iii) Intent.** One axis per cell. ba-11 is the declared exception: it is the round's ONLY writer of `scoped_amgt.py`, so every
+  shared-file edit and every hookup rides it.
+- **(iv) What a cell does NOT move:**
+  - ba-1, ba-2, ba-3 leave the default `GET /freshness` body unchanged (r75 c59 compares it 302 of 302);
+  - ba-11 changes no existing /overlay, /thesis or print value: one route removed, one added, and ADDED fields;
+  - ba-13 copies and never moves (`integrations/bloomberg/research/price_axis_pull.py` still reads a worker folder);
+  - ba-14 runs its producer `--dry-run` only; ba-16 and ba-17 rebuild no stored peer set (a pool write no cell here does);
+  - ba-19, ba-24 and ba-25 make no vendor call; ba-26 applies nothing.
+- **Write sets:** no two cells of one wave share a file (measured: 0 same-wave overlaps of 231 pairs). The 13 cross-wave overlaps
+  are a later cell running after the earlier one drains: ba-11 after its exporters, ba-18 after ba-11, ba-13 last.
+
+### 85d. EDGES AND FAN-OUT
+```
+ba-1, ba-2, ba-3, ba-6, ba-7, ba-8, ba-9, ba-10, ba-15 --> ba-11 (the adapter: every hookup) --> ba-18 (render_pack.py)
+ba-11, ba-18, ba-12, ba-14, ba-16, ba-17 --> ba-20 (redeploy, one pair, one route swap) --> ba-13 ; ba-24
+ba-4 --> the CTO's render review --> the portal DEV push --> ba-24
+ba-25 --> ba-21 (one-name probe on AMD first) --> ba-22 --> ba-23      # issuer acts, one at a time
+ba-19, ba-26 (independent)
+fanout:
+  cap: 8
+  orders_total: 22
+  issuer_acts: 3
+  chains_total: 17              # wave-0 cells with no unmet dependency
+  wave_0: [ba-1 ~267, ba-2 ~268, ba-3 ~269, ba-6 ~272, ba-7 ~273, ba-8 ~274, ba-9 ~275, ba-10 ~276,   # first eight: the adapter's exporters
+           ba-15 ~281, ba-4 ~270, ba-25 ~287, ba-19 ~285, ba-12 ~278, ba-14 ~280, ba-16 ~282, ba-17 ~283,   # queued; a slot frees as each drains
+           ba-26 0.7.0_AE_CloudOps~A]
+  wave_1: [ba-11 ~277]                          # after its nine exporters drain
+  wave_2: [ba-18 ~284]                          # after ba-11
+  wave_3: [ba-20 0.7.0_AE_CloudOps~A]           # after every build cell drains, and its pair
+  wave_4: [ba-13 ~279, ba-24 ~286]              # ba-13 after ba-20; ba-24 after ba-20 AND the portal DEV push
+  issuer: [ba-21, ba-22, ba-23]                 # after ba-25 drains and the 07:00 America/New_York vehicle; each its own pair
+  no_s3_deletes: true
+  egress: none in any order; the three issuer acts are the authorized Bloomberg calls
+  portal_ref: 13509c52   # origin/DEV at the cut
+```
+
+### 85e. ADDENDUM 1 (2026-10-07 ~04:4xZ) -- ONE CELL ADDED MID-ROUND ON ANDREW'S DIRECT WORD
+
+**Andrew, verbatim, at the `2.0.0_SA_COO~Z` terminal ~04:2xZ:** "is freshness page dev only? if not it should be". Record:
+`org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20261007_042xZ_FRESHNESS_PAGE_DEV_ONLY.md`. The decomposition is frozen
+mid-round; his word is what opens it, and it opens it for this cell only.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ba-27` | the /freshness page carries the portal's dev-only mark: `requiresDev: true` on its nav entry and `requireDev` on its route | `~288` | worker-light, DIRECT ACT | LOCAL (portal, DEV only) | `portal/src/App.tsx` |
+
+- **Measured at the cut:** portal PROD `ab3191d0` and DEV `659104f4` both carry the page behind `requiresTier: 'internal'` and
+  `requireInternal` only, so every Opal-internal user sees it. The mark exists already (Investor Reporting: 1 nav entry, 2 routes).
+- **What it does NOT move:** no other page's mark; no /freshness page file; the function.
+- **Edge:** ba-4's approved candidate `504ddb3d` --> ba-27 (merged first, then the mark) --> the CTO's review --> the DEV push
+  --> a PROD promote, which is where the mark takes effect for the users who see the page today.
+- **The reading not taken:** the page off the PROD branch altogether. It is named in the record for Andrew.
+- `fanout` change: `orders_total: 23`; `wave_0` gains `ba-27 ~288`. ba-27 writes `App.tsx`, which no other cell of the round writes.

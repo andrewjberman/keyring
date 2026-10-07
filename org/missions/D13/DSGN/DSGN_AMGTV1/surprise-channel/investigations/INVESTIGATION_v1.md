@@ -1453,6 +1453,97 @@
  "spec_asserts": "A served model case on the page exposes its value and its currency as data attributes a walk can read.",
  "world_is": "Neither attribute exists in portal src. The case line lives in ModelTab.tsx, which AMGT_CORPUS round 39 (ao-3/ao-4, 2.0.0_SA_COO~X msg 30247) is writing; a DSGN cell for it waits for that drain to reach DEV. Gates nothing.",
  "notes": "Backlog row for the next DSGN round cut; not armed."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W106-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~106",
+ "surfaced_at": "2026-10-07T02:15Z",
+ "one_line": "AC2 battery29 read 13 of 14 harnesses green after the re-run button was removed: shell.harness.cjs graded exactly 1 purple primary fill on the Security view, which was the retired Refresh button; re-anchored to 0 inside this order's <paths>.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh before the edit: 'ALL BOUND: 13 of 14 harnesses green [rc=1]'; node portal/src/pages/SecurityAnalysis/__harness__/shell.harness.cjs: 'CHECK primary_actions_security 0 (expected 1)' then 'CHECKS-WRONG-WAY primary_actions_security' (line 337: check('primary_actions_security', primaryFillCount, 1)).",
+   "After changing the expected value to 0 (one line, shell.harness.cjs, inside the order's __harness__/ grant): battery29.sh 'ALL BOUND: 14 of 14 harnesses green [rc=0]', 'BATTERY29: ALL PASS (0 skipped)', exit=0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zw-1 (d): remove the re-run button; the order names posture.harness.cjs only among the harnesses and AC2 expects BATTERY29 ALL PASS.",
+ "world_is": "shell.harness.cjs carried a check that counts the Refresh button's purple fill (the 'ONE purple fill on this view', FWD-18); removing the button makes the count 0, so the order's literal edits alone leave AC2 red. The Security view now has no primary-fill control; whether a later cell wants one is not decided here.",
+ "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W107-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~107",
+ "surfaced_at": "2026-10-07T02:10Z",
+ "one_line": "r44.cjs (round 44 issuer check) reads 2 of 5 arms after AV-zw-2: arms 1, 2 and 4 grade the pre-AV-zw-2 contract (open state keyed on passage id, segment label on every row in served order) that this order's items 1 and 4 change; the check file is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node r44.cjs on portal 34803ef6 + this order's 4 files (uncommitted at the run): ARM FAIL 'A CLICKED DRIVER POINT SHOWS ITS SERVED PASSAGE (FWD-18)' (served passage_text not shown), ARM FAIL 'THE SEGMENTS ARE DRAWN WITH THEIR CITES (FWD-1)' (row 4: segment not at rest; rows 5-11 text/cite not at rest), ARM FAIL 'MOUNT + KEEP' (a point resolved through sections lost its passage); ARM PASS arms 3 and 5; last line '2 of 5 arms'.",
+   "r44.cjs renderOpen() stubs React.useState so that init === null returns the PASSAGE ID as the open state (r44.cjs lines 62-67); ThesisDriverChart now keys the open state on the point index (order item 1), so no point reads open under that stub. r44.cjs gradeSegments() pairs the i-th data-segment-row with the i-th SERVED row and expects the segment name inside each row; item 4 groups rows by segment (BA: served order CA,CA,BDS,BDS,GS,GS,GS,CA,BDS,GS,CA is drawn CA x4, BDS x3, GS x4) and prints the name once as the heading.",
+   "The same checks r77_ba5.py AC1, AC2, AC3 read C1-C5, C1-C10, C1-C6 PASS and exit=0; tsc -b rc=0; eslint --quiet rc=0; drafting, posture, shell, tabs, thesisLadder harnesses green with no assertion edited. The r44 baseline on 34803ef6 was not re-run by this worker (git stash is refused on this tree); the three failing arms are attributed from the code lines cited."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The worker's order text: the existing round-44 check must stay green after the change; if a required change moves an arm, report which and why.",
+ "world_is": "Items 1 and 4 of the order necessarily move the three r44 arms named; the check cannot be edited by this worker, so the drain's r44 run reads 2 of 5 until the issuer re-anchors it to the point-keyed open state and the grouped rows.",
+ "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S22",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-07T02:45Z",
+ "one_line": "A conflicted drain finished with safe-merge.sh --continue committed ONLY the resolved surprise channel: merge f953449753 left the branch's other 3 files (proof instance, render, the order's status flip) out of the commit, intact but unstaged in the shared working tree.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-merge.sh --verify-merge f953449753: 'branch needed 4 file(s), dropped 3, foreign 0' and a WARN naming the 3 paths; the --continue run itself exited 0 and printed MERGED.",
+   "git status after the merge: the order file ' M' and deliverables/0.9.0_WK_DSGN_AMGTV1~107/ '??'; both byte-identical to branch wk-DSGN_AMGTV1-107 @b413c05522 (cmp per file).",
+   "Sequence: the first safe-merge call refused rc=2 on another seat's staged RESAPP order; a retry loop re-ran it when the index read clear (rc=4, conflict); the channel was resolved, git add of that one file, then --continue.",
+   "Landed unchanged by aa7dee9340 under the worker's authorship (the lane gate refuses a COO author on deliverables/<worker>/)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "safe-merge.sh --continue re-enters the same grade and the same authored commit as the one-shot path, so a drained branch lands whole.",
+ "world_is": "The continue path landed 1 of 4 files and exited 0; only the read-only --verify-merge line showed the loss. Cause not established: either the merge's staged entries were unstaged between the conflict and the continue (another seat's commit ran in that window on the shared index), or --continue commits only what the resolver staged. The drain was repaired; the tool behaviour is unexamined.",
+ "notes": "Tool owner is 2.0.0_SA_COO (.tools/safe-merge.sh). After any --continue, run --verify-merge and read the 'dropped' count."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W107-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~107",
+ "surfaced_at": "2026-10-07T03:25Z",
+ "one_line": "AV-zw-2 Amendment 1 turns r77_ba5.py AC2 clause C3 red: C3 expects every served row label and figure INSIDE the table element, and Amendment 1 draws BA's two mismatched rows OUTSIDE it as unaligned lines; r77_ba5_harness.cjs is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node/python r77_ba5.py --crit AC2 on portal 49a9bf37: 'FAIL C3 every served row label and figure is in the table rows missing [\"Cumulative deliveries\",\"Deliveries\"] figures missing 12'; C1, C2, C4-C10 PASS; 'R77 BA5 AC2 SERVED: NO'; exit=1. AC1 and AC3 stay exit=0; r45b.cjs reads 4 of 4 arms.",
+   "r77_ba5_harness.cjs lines 247-251 (round77/checks): tableText = textOf(tables[0]); missingRows = table.rows labels not in tableText; missingValues = every served figure not in tableText; clause C3 requires tables.length === 1 and both lists empty. BA serves 5 + 8 = 13 figures; the 13th, '73', is found only because it is a substring of the column label '737' (clause C3 matches by substring on the table's text).",
+   "The Amendment text (WORKER_FACE.md, section AMENDMENT 1) anticipates this: 'if AC2's clauses on BA's table no longer hold because a clause expects the figures inside the grid, report the exact clause line and do not edit that check'."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Amendment 1 of the order: AC1, AC2 and AC3 must stay green; AC5 (r45b.cjs) grades that a mismatched row is drawn outside the table.",
+ "world_is": "The two clauses contradict each other for BA: r45b arm 1 demands both BA rows outside the table, r77_ba5 AC2 C3 demands both inside it. The worker built to the Amendment (AC5 4 of 4); AC2 reads 9 of 10 clauses with C3 red until the issuer re-anchors C3 to read the rows' label and figures inside the table wrap (the element holding data-driver-chart-passage-table plus the unaligned lines).",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
