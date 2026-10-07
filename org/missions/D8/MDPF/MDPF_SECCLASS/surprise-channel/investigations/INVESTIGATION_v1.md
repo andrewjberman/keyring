@@ -2817,3 +2817,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Tool availability only; no criterion affected."
 }
 ```
+
+
+## MDPF_SECCLASS-W23-S4 -- TO-SC-e33 cannot be met as written: the served Holdings builds sit in firm buckets that deny the order's principal
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:42:07Z",
+  "one_line": "TO-SC-e33 cannot be met as written: the served Holdings builds live in the three firms' primary private buckets (opal-data-49financial/-cottonwood/-inflection, irpt/<firm>/platinum/holdings/), and the order's principal (cloudops-dell1-agent-user) gets an explicit resource-policy Deny on every read there, so the held set cannot be read; the order's named buckets (opal-data-bd/cot/inf) hold no served Holdings object.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HoldingsPublication(s3, firm).capture() (infra/aws/lambda/investor-reporting/holdings/publication.py, the producer's own reader; address from lib/opal_naming.py address('irpt', firm, 'platinum', 'holdings', 'current', 'manifest.json')) returned AccessDenied 'explicit deny in a resource-based policy' on s3:GetObject for s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json, and the same for opal-data-cottonwood and opal-data-inflection, at 2026-10-07T08:42Z; aws s3 ls on each bucket is also denied (s3:ListBucket)",
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:93-147 DenyForeignFirmPrincipals: every principal is denied except the firm-scoped role patterns, registry exemptions and irpt-performance-adapter-role; the caller is a user ARN outside the list",
+      "firm_bucket_map() (holdings_snapshot.py:180) maps to opal-data-bd/cot/inf, which this principal can list, but aws s3 ls s3://<bucket>/irpt/ is empty on all three and investor-reporting/ holds only directory/ and qa/; holdings_snapshot.py:12-14 says legacy routed aliases remain input reads only and no mutable latest is written",
+      "run of the order's own AC2 check at base 37251ef9a0: MISSING-LIST ok=False firms=0 of 3 listed=0 false_entries=0 control=present problems=3 (control AAETX present, so the table read works; only the held read is blocked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the served address is found from the producer's code and builder output and read from the firm's own bucket (opal-data-bd/cot/inf per firm_bucket_map), read-only, from this box.",
+  "world_is": "The producer lands the served build in the canonical primary firm home, whose bucket policy admits only firm-scoped principals; the box's agent user is not one. No script or list file was written and nothing was committed apart from this row. I did not assume another role or rebuild the held set from silver sources, because either would widen the order.",
+  "notes": "Needed from the issuer: either run the pull under a principal the three firm buckets admit (and say which, as the producer does with IRPT_HOLDINGS_PUBLISH_ROLE_ARN), or rule that the held set may come from a different named object. Not the first reading of the order, but the shape of the fix is the script reading HoldingsPublication.capture() per firm, taking SECURITY nodes (display.symbol, amount.value), excluding the producer's cash line (symbol CASH with description CASH, holdings_snapshot.py:951-956), and testing symbol then CUSIP: against etf-classifications with consistent reads; the producer's canonical lookup at :882-887 keys on the upper-cased symbol only, so the CUSIP: key is the order's addition. I have not built it because it could not be run."
+}
+```
