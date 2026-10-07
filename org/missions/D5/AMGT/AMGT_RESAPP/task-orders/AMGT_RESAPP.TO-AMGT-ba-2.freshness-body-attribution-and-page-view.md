@@ -108,3 +108,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @e3861fc456; proof VALID (worktree checker); the /freshness body attribution (2,889,557 B; reads 95.5%, of which one last_modified map is 2,139,028 B) and page_body.page_view (22,855 B, 95 rows, kept fields equal 95 of 95); default body unchanged</status>
