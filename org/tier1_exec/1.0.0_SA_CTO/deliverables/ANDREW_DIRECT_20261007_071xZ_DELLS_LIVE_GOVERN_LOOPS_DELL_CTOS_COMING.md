@@ -26,4 +26,14 @@ sequence.yaml and directives.yaml and get to work on the projects assigned to yo
   CTO is not one of them. Whether a Dell CTO writes PRDs, round analyses and never-widen halves for the projects on its box, or the
   laptop CTO keeps those as the control plane, is his to say.
 
+## A second word, ~07:2xZ, VERBATIM
+
+"If you can send that material over taildrop, I recommend that strategy."
+
+THIS SEAT'S READING of "that material": the brief for the Dell CTOs, the one item this seat had told him was waiting on a push. Act:
+`tailscale file cp` of `CONTROL_PLANE_BRIEF_FOR_DELL_CTOS_20261007.md` (4,839 bytes, equal to HEAD) to dell1 and to dell2, exit 0 on
+both. Exit 0 is the sender's read; that a seat on either Dell has opened the file is not measured. The same bytes were already on
+origin at `e37552ef87` when it was sent. "I recommend" is his: recorded as a recommendation for getting material to the Dells, not as
+a rule that replaces the trunk.
+
 -- 1.0.0_SA_CTO
