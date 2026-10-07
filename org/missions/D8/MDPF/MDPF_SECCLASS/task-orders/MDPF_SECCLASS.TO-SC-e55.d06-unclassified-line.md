@@ -55,13 +55,13 @@ top-level mix sums to 1.0. That matches FWD-13's rule that a security the list d
 <criterion id="SC9-e55-AC1" cell_refs="SC-e-55"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py</invocation><expect>PYTEST-OK</expect></criterion>
 `SC9-e55-AC1` -- the four-key mix sums to 1.0 on a fixture.
 
-<criterion id="SC9-e55-AC2" cell_refs="SC-e-55"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/d06_mix_sum_check.py</invocation><expect>D06-MIX-SUM ok=True</expect></criterion>
+`SC9-e55-AC2` -- WITHDRAWN by AMENDMENT 1 (its live dry-run moves into the half request as the release seat's precondition).
 `SC9-e55-AC2` -- the local run against live inputs: four keys, pct sum 1.0, market values equal total_aua, the new line equal to composition.unclassified.
 
 <criterion id="SC9-e55-AC3" cell_refs="SC-e-55"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R20_CHECKS/r20_half_ready.py org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_D06_UNCLASSIFIED_20261007.md</invocation><expect>HALF-READY</expect></criterion>
 `SC9-e55-AC3` -- the half request carries the act, blast radius, both branches, rollback and two UNSIGNED halves.
 
-<expected_criteria>SC9-e55-AC1,SC9-e55-AC2,SC9-e55-AC3</expected_criteria>
+<expected_criteria>SC9-e55-AC1,SC9-e55-AC3</expected_criteria>
 
 Dry-run at the base (5d70aab6c9, 2026-10-07): SC9-e55-AC1 FAIL as expected (PYTEST-BAD rc=4, no test file); SC9-e55-AC2 FAIL as expected (no D06_MIX_DRY_RUN file); SC9-e55-AC3 FAIL as expected (NOT-READY: half absent).
 
@@ -81,6 +81,7 @@ data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/D06_MIX_DRY_RUN_20261007.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_D06_UNCLASSIFIED_20261007.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
+data/assets/scripts/gold/runners_49f/d00_census_out.json
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit.
@@ -92,7 +93,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 
 <proof_of_spec>
 Criterion ids: SC9-e55-AC1, SC9-e55-AC2, SC9-e55-AC3. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~38/MDPF_SECCLASS.TO-SC-e55.d06-unclassified-line.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> SC9-e55-AC1,SC9-e55-AC2,SC9-e55-AC3` BEFORE the flip. A judgment criterion is recorded
+validated with `python .tools/proof-of-spec-check.py <instance> SC9-e55-AC1,SC9-e55-AC3` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>
 
@@ -110,3 +111,18 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: round-8 analysis `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_8_20261007.md` @1ca9e97fc9; PRD v0.13 @90f99888cd (ADMITTED); DECOMP_R9 @5d70aab6c9.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~12:0xZ) -- rulings on BLOCKING rows W38-S1 and W38-S2
+
+- **W38-S2, granted.** 1.0.0_SA_CTO~DELL1's round-8 analysis section 3 (C-S13) rules the residual served as its own "Unclassified"
+  line; adding that one key to the frozen `mix` node is the ruling's own shape change. `data/assets/scripts/gold/runners_49f/d00_census_out.json`
+  joins `<paths>`: add exactly the one key (`unclassified`) to family `platinum/firm/mix_summary`'s `mix` node, nothing else; prove the
+  emitter's shape check passes with it and refuses any other new key (a control in AC1's test file).
+- **W38-S1, ruled.** The emitter's live inputs (`s3://opal-data-49financial/gold/advi/`) are denied to this box's principal, and the
+  read-only fence join being cut covers only `irpt/<firm>/platinum/holdings/`. AC2 is WITHDRAWN from this order: a live dry-run cannot
+  run here. It moves into the half request as the release seat's FIRST step (a laptop seat the bucket admits runs `d06_mix_sum_check.py`
+  against a live dry-run and STOPS on `ok=False`). Add that precondition to the half request.
+- **W38-S3** (the measured legacy key is D_04's, not d06's) is carried to 1.0.0_SA_CTO~DELL1 by the issuer; this order stays on d06.
+- Then re-run AC1 and AC3, update the proof instance (AC2 recorded withdrawn with this pointer), flip. Gate limb: none graded this
+  modification (no new order; no `<placeholders>`).
+
