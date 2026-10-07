@@ -2390,3 +2390,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Found while verifying S35's disarm for its clock. S35 itself is disarmed for the S29 move (S3 read above). The same shape as S35: a served-output script rides a push before its sign-off."
 }
 ```
+
+
+## MDPF_SECCLASS-S39 -- row S38's hazard fired: Cottonwood B_01b with 8f67065e50's classifier change is LIVE in S3 since 04:16:37Z, with no sign-off found
+
+```json
+{
+  "id": "MDPF_SECCLASS-S39",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-07T06:30Z",
+  "one_line": "Row S38's hazard fired. opal-data-cot code/gold/B_01b.classify_new_securities.py has a new latest version from 2026-10-07 04:16:37Z whose body is byte-equal to repo HEAD and origin/CLOUD, so 8f67065e50's never-deployed classifier change is deployed. No sign-off for that deploy was found. The next Cottonwood gold run would execute it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api list-object-versions opal-data-cot code/gold/B_01b.classify_new_securities.py (this seat, 2026-10-07 06:2xZ), 6 versions: latest Hh9lWlPap1OJ... 04:16:37Z 14699 bytes; before it _24mhLjaqbMSN... 00:55:10Z 13737 bytes (the S29 rollback, row S37)",
+      "s3api get-object of the latest version, compared by cmp with three git bodies of data/cot/scripts/gold/B_01b.classify_new_securities.py: equal to HEAD, equal to origin/CLOUD (0b0465a5dd after fetch), NOT equal to 8f67065e50^ (the pre-change body, 13737 bytes)",
+      "git merge-base --is-ancestor a62580ef8f origin/CLOUD: ON origin (row S38 read it NOT on origin at 01:5xZ); positive control 340babb9a3 is an ancestor of HEAD",
+      "git log since 2026-10-07 01:50Z over org/critical_paths, org/tier1_exec/1.0.0_SA_CTO/deliverables and org/missions/D8/MDPF/MDPF_SECCLASS, and a grep of commit messages for S38, B_01b and 8f67065e50: no half, no ledger entry and no row names this deploy (one hit: this seat's own S38 row commit 63fe6e1aa8)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off (CTO+COO); 8f67065e50 was committed as 'code and dry run only, not deployed, no upload'; row S38's disarm was owed before the next CLOUD push.",
+  "world_is": "The push that carried a62580ef8f uploaded B_01b through the pre-push deploy gate. The code is deployed; no run of it is established. Disarm, before the next Cottonwood gold run: copy-object of VersionId _24mhLjaqbMSNl75DXKc7UjTnoG5B9nS back to latest and a read-back, or the CTO and COO halves signed for 8f67065e50's deploy. After a rollback the repo and S3 disagree on B_01b again, so the next changed-script push re-deploys it unless HEAD is also set to the S3 body.",
+  "notes": "NOT read: whether any Cottonwood gold run executed B_01b after 04:16:37Z; the next scheduled run time (row S35 INFERRED about 11:36Z from the prior run's stamp); which push carried the upload. 2.0.0_SA_COO~M is not registered live at 06:28Z (org/mcp/liveness.json lists four seats: 0.0.0_AB_MSTR, 1.0.0_SA_CTO, 2.0.0_SA_COO~C, 3.0.0_SA_CVO); the row is told to Andrew at this seat's terminal and to 1.0.0_SA_CTO in one line. S38 stays ARMED under its own id; this row is its fired state."
+}
+```
