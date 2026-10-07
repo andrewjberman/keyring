@@ -332,3 +332,31 @@ round.** Never edit an existing row.
   "notes": "The cache is a local accelerator, not a store: it is never committed and nothing reads it but this script."
 }
 ```
+
+## ADVI_COTBKF-W9-S1 -- the real archives list every PDF, hold no orphan listing row, and place PDFs flat in the type folder
+
+```json
+{
+  "id": "ADVI_COTBKF-W9-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~9",
+  "surfaced_at": "2026-10-07T01:00Z",
+  "one_line": "TO CB-c-2 expects unlisted PDFs and listing rows with no PDF; the real run found none of either (listed=11119 unlisted=0 listing_rows_without_pdf=0), PDFs sit flat at TYPE/<name>.pdf (not in rep folders), and listings name them as .PDF or with a bare trailing dot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_document_index.py --source $HOME/Downloads/Files.zip --outer HKE.zip HJH.zip 4XF.zip --data-date 2026-06-23 --out .scratch/advi_cotbkf/document_index, rc 0, 45 s: DOCUMENT-INDEX archives=3 listings=51 pdfs=24489 accounted=24489 unique_documents=11119 listed=11119 unlisted=0 listing_rows_without_pdf=0",
+      "listing rows read: HKE 11054 (11033 PDFs), HJH 11021 (11000), 4XF 2456 (2456); every row matched a PDF of its own archive by (type, extension-less lower-cased name)",
+      "overlap: 8464 documents in 2 archives (HKE+HJH), 2453 in 3, 116 HKE only, 83 HJH only, 3 4XF only (the brief's 10,917 HKE/HJH and 2,453 4XF-in-both)",
+      "7 listing layouts read from the files: ADVS DocName/FolderName/Keyword; CLNT DocumentType/Account/ClientName; NCSD DocumentName/Folder/HouseholdName; QSMT StmtDate/HHName/NumberOfPages (0 rows); REPR DocType/DocName/NumberOfPages; STMT Acct/DisplayName/StmtDate; TXRP AccountNumber/ReportName/Year/DisplayName/NumberOfPages"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-2 says a listing may not cover every PDF (a first STMT listing held 5 rows against 7,724 STMT PDFs) and asks that unlisted PDFs and absent-file listing rows be kept.",
+  "world_is": "The 5-row listing was one of nine STMT listings; across all 51 the listings cover every PDF and every row finds its file. The unlisted and present=False branches are built and unit-tested on fixtures but are exercised by no real row. The vendor ReadMe's no-extension rule is needed: listings say .PDF (NCSD: a trailing dot), the zips say .pdf. TXRP and QSMT carry no per-document date (TXRP has a tax Year, kept in listing_fields), so doc_date for ADVS, CLNT, NCSD, REPR and TXRP is the file-name timestamp (date_source=file_name), and REPR NumberOfPages is a literal W (page_count null, raw kept). Where two archives' listing rows for one document disagree, the first non-empty value in archive order is kept; that conflict count was not measured.",
+  "notes": "Whether TXRP should carry the tax year as its doc_date is for the issuer; the builder keeps it in listing_fields."
+}
+```
