@@ -587,3 +587,55 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The repository holds one more census name in a contested folder (52), so every total is one higher. The three assertions that typed 51 were rewritten in lib/tests/test_opal_naming_scope.py to hold on relations (folders listed equal the contested rows, items equal the sum of the CONTESTED lines, assigned plus unassigned equals items, assigned with the map greater than without, assigned equal to the held folder's items)."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S7 -- TO BF-r-2 expects the role rule to change what the three W2-S4 policies print; it changes nothing on the real root, because the grader already places 
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T17:50:00Z",
+  "one_line": "TO BF-r-2 expects the role rule to change what the three W2-S4 policies print; it changes nothing on the real root, because the grader already places those names",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py keys infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json: 36 policies; the six policies whose exception now names its role (bd-silver-merge-policy, bd-allocation-checker-permissions, monolith-bd49f-xref-silver-read, describe-tags-self, cross-firm-bucket-deny, historical-prices-policy) print the exception's system with system_slot_filled_here=no; the four policies whose {system} slot the run fills (pipeline-chain x2, runner-shared-read, gold-layer-trigger) fill it from the role",
+      "python lib/opal_naming.py grade: describe-tags-self -> cloudops-describe-tags-self-policy, cross-firm-bucket-deny -> firmsep-cross-firm-bucket-deny-policy, monolith-bd49f-xref-silver-read -> schwab-monolith-bd49f-xref-silver-read-policy: the system is in the grader's own canonical form (resources.json rows), so the map exception is not read for it",
+      "ROOTCHECK line of infra/aws/terraform/bd-pipeline before (HEAD d6291f1bac modules) and after this order: identical, diff empty; items=140 right=9 fix=111 not_asked=9 pattern=3 carded=0 refused=2 hole=6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-2 cell: an exception keyed (name, type) with no role never overrides a role's answer; round 2 built the opposite for three policies (W2-S4), so the build should change what those lines print or fix them.",
+  "world_is": "No line of the real root changes: the three W2-S4 policies print firmsep-/cloudops-/schwab- before and after, because grade() already returns a canonical form with the system filled, and decide() reads the root map's system only where the canonical keeps a {system} blank. The role rule is built and proved by the difference control in the three tests and by the keys command (exception_with_role=6, exception_without_role_overriding=0), but on this root it has nothing to override. The six exceptions' only live effect today is as the root map's record."
+}
+```
+
+## LGIC_BLANKFIX-W1-S8 -- TO BF-r-2 AMENDMENT 1 item 3 limits what `fills` stops the entry from filling; it does not say whether the entry's home scope may still judge a key's 
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T17:50:00Z",
+  "one_line": "TO BF-r-2 AMENDMENT 1 item 3 limits what `fills` stops the entry from filling; it does not say whether the entry's home scope may still judge a key's firm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_keyfill.py _classify: REFUSED-CROSS-FIRM compares the key's bucket firm with the entry's scope, and _conflict compares path tokens with the entry's scope and source",
+      "infra/logic/registry/root_map.json _about.fills: 'a reader must then print the item's partial form and the reason ... rather than a finished name built from the home value'",
+      "run of every root whose entry carries fills (opal-assets and the ten investor-reporting roots): the root check's lines are identical before and after the build, so no real line moves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 3: with fills, a {scope} or {source} blank is not filled from the entry and the line prints HOLE with the reason; nothing is said about the refusal tests that read the entry's scope.",
+  "world_is": "Judged inside the cell: when an entry's fills leaves out scope, the bucket-firm refusal does not compare against the home scope; when it leaves out scope or source, the path-token conflict is not run. The home value is not the key's firm, so a refusal built on it would state a finding about the code that was not measured (the defect of row LGIC_BLANKFIX-S4). Entries without fills behave as before. If the issuer wanted the refusals kept against the home scope, it is one condition in _classify."
+}
+```
