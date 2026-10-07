@@ -20418,3 +20418,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The checker cannot be satisfied by any entry.py whose ROUTES keys carry a path parameter brace. The entry.py edit is correct and tested; AC2 is left FAIL by its own invocation. Owed to the issuer (the checker is outside this grant): slice to the matching closing brace of the dict (e.g. the first '\n}' after 'ROUTES = {'), then re-grade IB72-1-AC2."
 }
 ```
+
+## IRPT_BCKEND-W165-S1 -- IB-pr-356: the custody-report-read operation is read in LiveClient outside parseIrEnvelope, because contracts/
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-356: the custody-report-read operation is read in LiveClient outside parseIrEnvelope, because contracts/envelope.ts (outside this grant) lists no data adapter for it; the success shape is read as the contract's bare body OR the response envelope's data.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/contracts/envelope.ts parseIrEnvelope: a non-refused envelope for an operation with no IR_DATA_ADAPTER entry throws EnvelopeMismatch('operation'); IR_DATA_ADAPTER has no custody-report-read key (b64805f7)",
+      "infra/aws/lambda/investor-reporting/_authz/served.py response_envelope wraps every served body as {contract_version, operation, firm_id, data, unprojected_grant}; the TO states the 200 body as {report_kind, report_id, revision, report} without saying whether that is the envelope's data",
+      "portal b3fedfea api/endpoints/investor-reporting.ts readCustodyReportAnswer accepts both and checks report_kind, report_id and revision against the request; ir-72 custody-print.test.tsx proves both shapes and a refusal envelope"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 1: add the custody-report-read operation 'shaped like the analysis read already there' (the analysis read goes through send() and parseIrEnvelope).",
+  "world_is": "The analysis shape cannot be reused unchanged: the one parser refuses an operation it has no adapter for. The operation is a route-table row plus a LiveClient method with its own reader. If IB-pr-355 serves a shape that is neither the bare body nor the envelope's data, the print page shows its refusal (EnvelopeMismatch -> MissingPayloadError) rather than a document. Owed to the issuer or CTO: whether envelope.ts gains an IR_DATA_ADAPTER entry once IB-pr-355 serves the route."
+}
+```
+
+## IRPT_BCKEND-W165-S2 -- Running the portal bun suite over src/pages/InvestorReporting regenerates tracked portal/src/pages/InvestorRep
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Running the portal bun suite over src/pages/InvestorReporting regenerates tracked portal/src/pages/InvestorReporting/contracts/wire/*.ts (27 files) in the worktree, dropping the AnalysisReport v2 types, so tsc -b --noEmit (IB72-2-AC2) fails until they are restored.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "after `bun --no-install test src/pages/InvestorReporting src/api` (baseline run, before any edit) `git status` in the portal worktree listed 27 modified contracts/wire/*.ts; `git diff` of wire/AnalysisReport.ts showed 56 deletions (provider?: 'YCHARTS', AnalysisReportOpalWire, AnalysisSectionNotAvailableReason, AnalysisReportAnyWire)",
+      "tsc -b --noEmit then reported 22 errors (contracts/index.ts TS2724/TS2305 on AnalysisReportAnyWire, AnalysisReportOpalWire; adapt.ts TS2339) none in the files this cell edits; after restoring the files from HEAD (git show HEAD:<file>) tsc -b --noEmit rc 0",
+      "the generator is the fe-s-13 gen-wire.ts regeneration test (IVE26-AC3 'gen-wire.ts regeneration is idempotent' fails at base in this tree)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 6: run bun --no-install test on both folders and tsc -b --noEmit from portal/; IB72-2-AC2 base PASS (a control).",
+  "world_is": "The full-suite run is not read-only: it rewrites tracked generated files, and a worker that runs the full suite and then the AC2 tsc gets a false FAIL (or commits the regenerated files). This worker ran the two named folders for AC1 and the full folder once for a base-vs-after diff, restored the 27 files from HEAD, committed only its six paths, and did not stage any wire file. The worktree still lists the 27 as modified (line-ending/stat only, git diff --numstat empty). Disarm owner: the issuer, to keep the full suite out of a worker's criteria or have the generator test write elsewhere.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W165-S3 -- The custody-report-read route row in IR_ROUTE_TABLE is not in docs/contracts/investor-reporting/v1/routes.json
+
+```json
+{
+  "id": "IRPT_BCKEND-W165-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~165",
+  "surfaced_at": "2026-10-07T20:42:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The custody-report-read route row in IR_ROUTE_TABLE is not in docs/contracts/investor-reporting/v1/routes.json until IB-pr-355 lands, so fe-s-13 routes.test.ts reports it as 'IN THE TABLE, NOT IN THE FILE' (that test already fails at base on a different route).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test over src/pages/InvestorReporting + src/api: base prints 'MISSING FROM THE TABLE: GET .../analysis/requests/{requestId}/pdf' and 'ROUTES MATCHED: 18 of 19'; after b3fedfea it adds 'IN THE TABLE, NOT IN THE FILE: GET /api/scoped/investor-reporting/custody-report/{reportId}'",
+      "failing-test diff base vs after: 43 vs 40 failures, no test newly failing (three fewer, none attributable to this cell)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-356 item 1 adds the operation per the shared contract; IB-pr-355 adds the routes.json row (IB72-1-AC2).",
+  "world_is": "The two cells land the two halves of the route's declaration. In a tree carrying both, the extra-in-table reason disappears; the pdf-route reason remains and is not this cell's. Merge order between ~164 and ~165 is not constrained by this."
+}
+```

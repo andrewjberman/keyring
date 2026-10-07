@@ -98,6 +98,23 @@ validated with `python .tools/proof-of-spec-check.py <instance> BQ2-AC1,BQ2-AC2`
 
 **REPORT:** both last lines whole; the two lines before and now, whole; what in each source file shows the run-time bucket; commits.
 
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the landed shape (the order stays staged until its queue reaches it)
+
+`4.0.0_SA_CRO` landed the shape in `infra/logic/registry/key_rulings.json` @cab8510cc3 (msg 106571). Read the file's
+`_about.per_firm` for the exact wording; as that seat states it:
+- A per-firm row carries `bucket_per` (the value `firm`) and `bucket_from` (the name of the variable the code reads the bucket
+  from) IN PLACE OF `bucket`. Its `canonical` carries `{scope}`: the firm is not one value, so the correct address is a form
+  with the firm's place marked.
+- **The match:** the row's `key` equals the item's key, AND the file that declares the key names the `bucket_from` variable.
+- Two rows exist, both for `IRPT_DIRECTORY_BUCKET_MAP`: canonical `irpt/{scope}/platinum/directory/` and
+  `irpt/{scope}/state/directory_refresh/`.
+
+What the line prints for a matched per-firm row: `FIX`, the detail the canonical FORM with `{scope}` kept and a plain sentence
+that the firm's place is filled per firm from the variable (name it). This is the ONE case where a `FIX` line carries a brace:
+the check's own no-brace rule and the `lines` command must admit exactly `{scope}` on a line whose row is per-firm and refuse
+every other brace as today. Add that as a DIFFERENCE CONTROL in the root-check test: a per-firm row's `{scope}` is admitted, and
+the same brace on a line with no per-firm row is still refused.
+
 ---
 
 ## RECORD FACE

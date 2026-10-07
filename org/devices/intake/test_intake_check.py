@@ -1,8 +1,9 @@
 """test_intake_check.py -- cases for intake_check.py on SYNTHETIC wheels and hand-written fetch records in a temporary root.
 
-No network, no package install, no import or execution of anything from a wheel. Check 7 uses a stub scanner except for
-the ONE case that runs the real platform scanner on a tiny harmless synthetic wheel this file builds (skipped, and counted
-as skipped, if the scanner is absent or refuses to run). LAST line:
+No network, no package install, no import or execution of anything from a wheel. Check 7 reads a stand-in for the Security
+Center answer (a JSON file named by OPAL_INTAKE_AV_JSON, wait 0) except for the ONE case that reads the REAL Security Center and
+runs the real on-access read on a tiny harmless synthetic wheel this file builds, with the default wait (skipped, and counted
+as skipped, only if the query itself cannot run). No test-virus file is used anywhere. LAST line:
   INTAKE-CHECK-TEST cases=<k>/<n> skipped=<s> ok=<True|False>
 """
 from __future__ import annotations
@@ -18,6 +19,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import time
 import traceback
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -26,6 +28,9 @@ import intake_check as ic  # noqa: E402
 
 BRIEF = ic.REPO_ROOT / "docs" / "briefs" / "nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md"
 BATCH = "tb1"
+GOOD_STATE = 266240      # 0x041000: real-time on, definitions current (the CTO's measured value)
+OFF_STATE = 393472       # 0x060100: real-time off
+AV_NAME = "Synthetic Antivirus (stand-in)"
 SIGNER_TEXT = "I have read checks 1 to 7 for batch %s and sign file %s\n"
 
 
@@ -34,9 +39,10 @@ class Skip(Exception):
 
 
 class Env:
-    """A fresh temporary world: holding root, records, stub scanner, 'installed' site dir, approved list, signer dir."""
+    """A fresh temporary world: holding root, records, Security Center stand-in, 'installed' site dir, approved list, signer
+    dir."""
 
-    def __init__(self, scanner_rc=0, installed=True, **wheel_kw):
+    def __init__(self, av_state=GOOD_STATE, installed=True, **wheel_kw):
         self.tmp = pathlib.Path(tempfile.mkdtemp(prefix="intake_test_"))
         self.site = self.tmp / "site"
         self.site.mkdir()
@@ -44,11 +50,16 @@ class Env:
         self.signer_dir.mkdir()
         if installed:
             ic.build_installed_fixture(self.site)
-        self.cfg = ic.Cfg(root=self.tmp / "root", records=self.tmp / "records",
-                          scanner=ic.write_stub_scanner(self.tmp, scanner_rc), sites=[self.site], signer_dir=self.signer_dir)
+        self.av = self.tmp / "av.json"
+        self.set_av([{"displayName": AV_NAME, "productState": av_state}])
+        self.cfg = ic.Cfg(root=self.tmp / "root", records=self.tmp / "records", av_json=str(self.av), sites=[self.site],
+                          signer_dir=self.signer_dir)
         self.approved = self.tmp / "approved.txt"
         self.approved.write_text("# approved\n%s==%s\n" % (ic.SYN_NAME, ic.SYN_VERSION), encoding="ascii")
         self.batch = BATCH
+
+    def set_av(self, obj):
+        self.av.write_text(obj if isinstance(obj, str) else json.dumps(obj), encoding="utf-8")
 
     def add_wheel(self, name=ic.SYN_NAME, version=ic.SYN_VERSION, tags=ic.SYN_TAGS, fetch_kw=None, **wheel_kw):
         hold = self.cfg.holding(self.batch)
@@ -65,6 +76,8 @@ class Env:
 
     def check(self, file_name, signed=True, approved=True, **kw):
         sink = io.StringIO()
+        kw.setdefault("scan_wait", 0)
+        self.last_out = sink
         record, line = ic.run_check(self.cfg, self.batch, file_name,
                                     approved_by=str(self.approved) if approved else None,
                                     signed_by=self.sign(file_name) if signed is True else (signed or None), out=sink, **kw)
@@ -119,6 +132,8 @@ def case_clean_signed_checked_and_releases(env):
     for c in record["checks"]:
         assert c["leaves"] in deliv
     assert "not applicable: the project publishes none" in deliv
+    assert ic.LIMIT_SENTENCE in deliv, "the limit of check 7 travels in the delivery text"
+    assert not (env.cfg.release(BATCH) / (w.name + ic.SCAN_COPY_SUFFIX)).exists()
 
 
 @with_env
@@ -298,19 +313,288 @@ def case_other_installed_version_only():
         env.close()
 
 
+PASS_SENTENCE = ("on-access scan by %s, state enabled and current; file present and unchanged after %d s; "
+                 "no on-demand verdict available")
+
+
+def scan_copy_of(env, w):
+    return w.with_name(w.name + ic.SCAN_COPY_SUFFIX)
+
+
 @with_env
-def case_check_7_stub_scanner_exit_codes(env):
+def case_check_7_on_and_current_passes_with_the_exact_sentence(env):
     w = env.add_wheel()
-    for rc, want in ((0, "passed"), (2, "failed"), (5, "failed")):
-        env.cfg.scanner = ic.write_stub_scanner(env.tmp, rc)
+    record, line = env.check(w.name)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "passed", c7
+    assert c7["evidence"]["summary"] == PASS_SENTENCE % (AV_NAME, 0), c7["evidence"]["summary"]
+    assert c7["evidence"]["summary"] == ("on-access scan by Synthetic Antivirus (stand-in), state enabled and current; "
+                                         "file present and unchanged after 0 s; no on-demand verdict available")
+    ev = c7["evidence"]
+    assert ev["scan_wait_seconds"] == 0 and ev["active"] == [AV_NAME] and ev["copy_cleanup"] == "removed"
+    assert ev["products"][0]["hex"] == "0x041000" and ev["products"][0]["state"] == GOOD_STATE
+    assert ev["products"][0]["realtime"] == "on" and ev["products"][0]["definitions"] == "current"
+    assert "0x060100" in ev["decoding"] and "393472" in ev["decoding"] and "266240" in ev["decoding"]
+    assert ev["limit"] == ic.LIMIT_SENTENCE and c7["leaves"] == "anything new or targeted", "brief's Leaves text unchanged"
+    assert ev["held_after"] == "unchanged" and ev["copy_after"] == "unchanged"
+    out = env.last_out.getvalue()
+    assert "hex=0x041000" in out and ic.LIMIT_SENTENCE in out and "0x060100 -> off" in out
+    assert not scan_copy_of(env, w).exists(), "the copy is gone after the check"
+    # the record on disk carries the limit beside check 7
+    saved = json.loads((env.cfg.records_dir(BATCH) / (w.name + ".check.json")).read_text(encoding="ascii"))
+    assert saved["checks"][6]["evidence"]["limit"] == ic.LIMIT_SENTENCE
+
+
+@with_env
+def case_check_7_sentence_names_the_wait_in_whole_seconds(env):
+    w = env.add_wheel()
+    record, _ = env.check(w.name, scan_wait=1)
+    assert record["checks"][6]["evidence"]["summary"] == PASS_SENTENCE % (AV_NAME, 1)
+    assert record["checks"][6]["evidence"]["scan_wait_seconds"] == 1
+
+
+@with_env
+def case_check_7_product_off_fails(env):
+    w = env.add_wheel()
+    env.set_av([{"displayName": "Windows Defender", "productState": OFF_STATE}])
+    record, _ = env.check(w.name)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and record["verdict"] == "not_checked", c7
+    assert "no antivirus product is registered as on" in c7["evidence"]["summary"] and "0x060100" in c7["evidence"]["summary"]
+    assert not scan_copy_of(env, w).exists() and "copy_name" not in c7["evidence"], "no copy is made when no product is on"
+
+
+@with_env
+def case_check_7_definitions_out_of_date_fails(env):
+    w = env.add_wheel()
+    env.set_av([{"displayName": AV_NAME, "productState": 0x041010}])
+    record, _ = env.check(w.name)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "definitions are not current" in c7["evidence"]["summary"], c7
+    assert "out_of_date" in c7["evidence"]["summary"]
+
+
+@with_env
+def case_check_7_unknown_bytes_are_never_on_or_current(env):
+    w = env.add_wheel()
+    env.set_av([{"displayName": AV_NAME, "productState": 0x042000}])       # middle byte 0x20: unknown real-time
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "failed"
+    assert record["checks"][6]["evidence"]["products"][0]["realtime"] == "unknown"
+    env.set_av([{"displayName": AV_NAME, "productState": 0x041005}])       # last byte 0x05: unknown definitions
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "failed"
+    assert record["checks"][6]["evidence"]["products"][0]["definitions"] == "unknown"
+
+
+@with_env
+def case_check_7_no_product_fails(env):
+    w = env.add_wheel()
+    for answer in ("[]", "", "   \n"):
+        env.set_av(answer)
         record, _ = env.check(w.name)
         c7 = record["checks"][6]
-        assert c7["verdict"] == want and c7["evidence"]["exit_code"] == rc, (rc, c7)
-        assert c7["evidence"]["last_lines"], "last lines recorded"
-        assert (record["verdict"] == "checked") == (want == "passed")
-    env.cfg.scanner = str(env.tmp / "no_such_scanner.exe")
+        assert c7["verdict"] == "failed" and "no antivirus product" in c7["evidence"]["summary"], (answer, c7)
+        assert c7["evidence"]["products_count"] == 0 and record["verdict"] == "not_checked"
+
+
+@with_env
+def case_check_7_unreadable_stand_in_fails(env):
+    w = env.add_wheel()
+    env.set_av("{this is not json")
     record, _ = env.check(w.name)
-    assert verdicts(record)[7] == "failed" and record["verdict"] == "not_checked"
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "could not be read" in c7["evidence"]["summary"] and c7["evidence"]["query_failed"]
+    env.set_av([{"displayName": AV_NAME}])                                   # an entry without productState
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "failed" and record["checks"][6]["evidence"]["query_failed"]
+    env.av.unlink()                                                          # the stand-in file is gone
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "failed" and record["verdict"] == "not_checked"
+    assert not scan_copy_of(env, w).exists()
+
+
+@with_env
+def case_check_7_held_file_changed_during_the_wait_fails(env):
+    w = env.add_wheel()
+
+    def change(held, copy):
+        held.write_bytes(held.read_bytes() + b"\0")
+    record, _ = env.check(w.name, wait_hook=change)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "held file is changed" in c7["evidence"]["summary"], c7
+    assert c7["evidence"]["held_after"] == "changed" and c7["evidence"]["copy_after"] == "unchanged"
+    assert record["verdict"] == "not_checked" and not scan_copy_of(env, w).exists()
+
+
+@with_env
+def case_check_7_held_file_removed_during_the_wait_fails(env):
+    w = env.add_wheel()
+    record, _ = env.check(w.name, wait_hook=lambda held, copy: held.unlink())
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "held file is missing" in c7["evidence"]["summary"], c7
+    assert not scan_copy_of(env, w).exists()
+
+
+@with_env
+def case_check_7_copy_removed_during_the_wait_fails(env):
+    w = env.add_wheel()
+    record, _ = env.check(w.name, wait_hook=lambda held, copy: copy.unlink())     # a quarantine, simulated
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "scan copy is missing" in c7["evidence"]["summary"], c7
+    assert "has given a verdict" in c7["evidence"]["summary"] and c7["evidence"]["copy_cleanup"] == "already gone before cleanup"
+    assert c7["evidence"]["held_after"] == "unchanged" and record["verdict"] == "not_checked"
+
+
+@with_env
+def case_check_7_copy_changed_during_the_wait_fails(env):
+    w = env.add_wheel()
+
+    def change(held, copy):
+        copy.write_bytes(b"cleaned by a product")
+    record, _ = env.check(w.name, wait_hook=change)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "scan copy is changed" in c7["evidence"]["summary"], c7
+    assert not scan_copy_of(env, w).exists()
+
+
+@with_env
+def case_check_7_copy_is_always_cleaned_up(env):
+    w = env.add_wheel()
+    copy = scan_copy_of(env, w)
+    seen = []
+
+    def watch(held, cp):
+        seen.append(cp.is_file() and cp.read_bytes() == held.read_bytes())
+    record, _ = env.check(w.name, wait_hook=watch)
+    assert record["checks"][6]["verdict"] == "passed" and seen == [True], "the copy existed, byte-identical, during the wait"
+    assert not copy.exists() and sorted(p.name for p in env.cfg.holding(BATCH).iterdir()) == [w.name]
+    # a hook that raises: the check fails, the copy is still removed
+    def boom(held, cp):
+        raise RuntimeError("simulated failure during the wait")
+    record, _ = env.check(w.name, wait_hook=boom)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "simulated failure" in c7["evidence"]["summary"]
+    assert not copy.exists() and sorted(p.name for p in env.cfg.holding(BATCH).iterdir()) == [w.name]
+    # a removal that is refused is reported, as a failure
+    real_unlink = pathlib.Path.unlink
+
+    def refuse(self, *a, **k):
+        if self.name.endswith(ic.SCAN_COPY_SUFFIX):
+            raise PermissionError("simulated refusal")
+        return real_unlink(self, *a, **k)
+    pathlib.Path.unlink = refuse
+    try:
+        record, _ = env.check(w.name)
+    finally:
+        pathlib.Path.unlink = real_unlink
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "failed" and "could not be removed" in c7["evidence"]["summary"], c7
+    assert copy.exists(), "the refused removal left the copy: that is what the report says"
+    real_unlink(copy)
+
+
+@with_env
+def case_check_7_stale_copy_from_an_earlier_run_is_removed_and_recorded(env):
+    w = env.add_wheel()
+    copy = scan_copy_of(env, w)
+    copy.write_bytes(b"left behind by a crashed run")
+    record, _ = env.check(w.name)
+    ev = record["checks"][6]["evidence"]
+    assert record["checks"][6]["verdict"] == "passed" and ev["stale_copy_removed"] is True and not copy.exists()
+
+
+def case_check_7_worked_examples_decode_as_the_cto_measured():
+    off = ic.decode_state(393472)
+    assert off["hex"] == "0x060100" and off["realtime"] == "off" and off["definitions"] == "current", off
+    on = ic.decode_state(266240)
+    assert on["hex"] == "0x041000" and on["realtime"] == "on" and on["definitions"] == "current", on
+    assert ic.decode_state(0x041100)["realtime"] == "on" and ic.decode_state(0x040000)["realtime"] == "off"
+    assert ic.decode_state(0x041010)["definitions"] == "out_of_date"
+    for odd in (0x042000, 0x04FF00, 0x041005, 0x0410FF):
+        d = ic.decode_state(odd)
+        assert "unknown" in (d["realtime"], d["definitions"]), (odd, d)
+        assert not (d["realtime"] == "on" and d["definitions"] == "current"), "unknown is never on and current"
+    assert ic.decode_state(-1)["realtime"] == "unknown" and ic.decode_state(0x1000000)["definitions"] == "unknown"
+    assert ic.decode_state("266240")["realtime"] == "on", "a numeric string decodes the same"
+
+
+@with_env
+def case_check_7_one_object_a_list_and_several_active_products(env):
+    w = env.add_wheel()
+    env.set_av({"displayName": AV_NAME, "productState": GOOD_STATE})                      # one product: a bare object
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "passed" and record["checks"][6]["evidence"]["products_count"] == 1
+    env.set_av([{"displayName": "Windows Defender", "productState": OFF_STATE},
+                {"displayName": AV_NAME, "productState": GOOD_STATE}])                    # the measured shape of this laptop
+    record, _ = env.check(w.name)
+    ev = record["checks"][6]["evidence"]
+    assert record["checks"][6]["verdict"] == "passed" and ev["products_count"] == 2 and ev["active"] == [AV_NAME]
+    env.set_av([{"displayName": "Product One", "productState": 0x041000}, {"displayName": "Product Two", "productState": 0x041100}])
+    record, _ = env.check(w.name)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "passed" and c7["evidence"]["active"] == ["Product One", "Product Two"]
+    assert c7["evidence"]["summary"] == PASS_SENTENCE % ("Product One; Product Two", 0), "all active products are named"
+    env.set_av([{"displayName": "Product One", "productState": 0x041000}, {"displayName": "Product Two", "productState": 0x041010}])
+    record, _ = env.check(w.name)
+    assert record["checks"][6]["verdict"] == "failed", "an active product with out-of-date definitions fails the check"
+
+
+@with_env
+def case_check_7_non_ascii_product_name_is_replaced_with_a_question_mark(env):
+    w = env.add_wheel()
+    env.set_av([{"displayName": "Anti" + chr(233) + "virus " + chr(252), "productState": GOOD_STATE}])
+    record, _ = env.check(w.name)
+    c7 = record["checks"][6]
+    assert c7["verdict"] == "passed" and c7["evidence"]["summary"] == PASS_SENTENCE % ("Anti?virus ?", 0), c7
+    assert c7["evidence"]["products"][0]["name_non_ascii_replaced"] is True
+    (env.cfg.records_dir(BATCH) / (w.name + ".check.json")).read_bytes().decode("ascii")
+
+
+@with_env
+def case_leftover_scan_copy_can_never_be_released_or_packed(env):
+    w = env.add_wheel()
+    copy = scan_copy_of(env, w)
+    record, _ = env.check(w.name)
+    assert record["verdict"] == "checked"
+    # a leftover copy (a crash after the copy was written) sits in holding beside the held file
+    copy.write_bytes(w.read_bytes())
+    sink = io.StringIO()
+    assert ic.run_release(env.cfg, BATCH, copy.name, out=sink) == 1 and "scan copy" in sink.getvalue(), sink.getvalue()
+    assert copy.exists() and not (env.cfg.release(BATCH) / copy.name).exists()
+    # the genuine file releases; the leftover is still in holding, so pack refuses the batch and names the copy
+    assert release(env, w.name)[0] == 0
+    rc, msg = pack(env, env.tmp / "packout")
+    assert rc == 1 and "files remain in holding" in msg and "leftover check-7 scan copy" in msg and copy.name in msg, msg
+    assert not (env.tmp / "packout").exists()
+    # even placed by hand in release/, it is refused and never copied
+    shutil.move(str(copy), str(env.cfg.release(BATCH) / copy.name))
+    rc, msg = pack(env, env.tmp / "packout")
+    assert rc == 1 and "scan copy is never a released file" in msg, msg
+    assert not (env.tmp / "packout").exists()
+    # the check verb refuses a copy's name as a file to check
+    r = subprocess.run([sys.executable, str(HERE / "intake_check.py"), "check", "--batch", BATCH, "--file", copy.name],
+                       capture_output=True, text=True, timeout=60, stdin=subprocess.DEVNULL,
+                       env=dict(os.environ, OPAL_INTAKE_ROOT=str(env.cfg.root), OPAL_INTAKE_RECORDS=str(env.cfg.records_base)))
+    assert r.returncode == 1 and "REFUSED" in r.stdout and "scan copy" in r.stdout, r.stdout + r.stderr
+
+
+def case_selftest_av_line_reads_the_stand_in():
+    env = Env()
+    try:
+        sink = io.StringIO()
+        rc = ic.selftest_av(env.cfg, out=sink)
+        assert rc == 0 and sink.getvalue() == ("INTAKE-AV products=1 active=%s realtime=on definitions=current ok=True\n" % AV_NAME), sink.getvalue()
+        env.set_av([{"displayName": "Windows Defender", "productState": OFF_STATE}, {"displayName": "Other", "productState": 0x041010}])
+        sink = io.StringIO()
+        rc = ic.selftest_av(env.cfg, out=sink)
+        assert rc == 1 and sink.getvalue() == ("INTAKE-AV products=2 active=Other realtime=on definitions=out_of_date ok=False\n"), sink.getvalue()
+        env.set_av([])
+        sink = io.StringIO()
+        rc = ic.selftest_av(env.cfg, out=sink)
+        assert rc == 1 and sink.getvalue() == "INTAKE-AV products=0 active=NONE realtime=off definitions=unknown ok=False\n"
+    finally:
+        env.close()
 
 
 @with_env
@@ -497,15 +781,16 @@ def case_cli_honours_the_environment_names():
         w = env.add_wheel()
         sig = env.sign(w.name)
         e = dict(os.environ, OPAL_INTAKE_ROOT=str(env.cfg.root), OPAL_INTAKE_RECORDS=str(env.cfg.records_base),
-                 OPAL_INTAKE_SCANNER=env.cfg.scanner, OPAL_INTAKE_SITE=str(env.site), OPAL_INTAKE_SIGNER_DIR=str(env.signer_dir))
+                 OPAL_INTAKE_AV_JSON=str(env.av), OPAL_INTAKE_SITE=str(env.site), OPAL_INTAKE_SIGNER_DIR=str(env.signer_dir))
         tool = str(HERE / "intake_check.py")
 
         def run(*args):
             return subprocess.run([sys.executable, tool] + list(args), capture_output=True, text=True, env=e, timeout=100,
                                   stdin=subprocess.DEVNULL)
-        r = run("check", "--batch", BATCH, "--file", w.name, "--approved-by", str(env.approved))
+        r = run("check", "--batch", BATCH, "--file", w.name, "--approved-by", str(env.approved), "--scan-wait-seconds", "0")
         assert r.stdout.strip().splitlines()[-1].endswith("c8=unsigned verdict=not_checked"), r.stdout + r.stderr
-        r = run("check", "--batch", BATCH, "--file", w.name, "--approved-by", str(env.approved), "--signed-by", sig)
+        r = run("check", "--batch", BATCH, "--file", w.name, "--approved-by", str(env.approved), "--signed-by", sig,
+                "--scan-wait-seconds", "0")
         assert r.stdout.strip().splitlines()[-1].endswith("c8=passed verdict=checked"), r.stdout + r.stderr
         r = run("release", "--batch", BATCH, "--file", w.name)
         assert r.returncode == 0, r.stdout + r.stderr
@@ -528,26 +813,36 @@ def case_selftest_unsigned_leaves_nothing_behind():
     assert sorted(p.name for p in pathlib.Path(tempfile.gettempdir()).glob("intake_selftest_*")) == tmp_before
 
 
-REAL_SCANNER_NOTE = []
+REAL_AV_NOTE = []
 
 
-def case_real_scanner_on_tiny_synthetic_wheel():
-    sc = ic.find_scanner(ic.Cfg(scanner=""))
-    if not sc:
-        REAL_SCANNER_NOTE.append("scanner absent")
-        raise Skip("the platform scanner was not found")
+def case_real_security_center_and_on_access_read_on_tiny_synthetic_wheel():
+    """Reads the REAL Security Center and runs the real on-access read with the DEFAULT wait (20 s). Skipped only if the query
+    itself cannot run. If the query runs but shows no product that is on and current, this case FAILS (it is not adjusted)."""
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="intake_real_"))
     try:
-        w = ic.build_synthetic_wheel(tmp / ic.syn_file_name())
-        cfg = ic.Cfg(root=tmp / "root", records=tmp / "rec", scanner="", sites=[])
-        cfg.scanner = None
-        ctx = {"cfg": cfg, "path": w}
-        verdict, ev = ic.check_7(ctx)
-        REAL_SCANNER_NOTE.append("verdict=%s exit_code=%s last_lines=%s" % (verdict, ev.get("exit_code"), ev.get("last_lines")))
-        if ev.get("exit_code") is None or (verdict == "failed" and (ev.get("exit_code") not in (0, 2)
-                                                                    or ev.get("scanner_output_shows_an_error"))):
-            raise Skip("the real scanner refused or could not run: exit_code=%s %s" % (ev.get("exit_code"), ev.get("summary")))
-        assert verdict == "passed" and ev["exit_code"] == 0, (verdict, ev)
+        cfg = ic.Cfg(root=tmp / "root", records=tmp / "rec", av_json="", sites=[])
+        cfg.av_json = None                      # the real query, whatever the environment says
+        hold = cfg.holding("real")
+        hold.mkdir(parents=True)
+        w = ic.build_synthetic_wheel(hold / ic.syn_file_name())
+        before = ic.sha256_file(w)
+        t0 = time.time()
+        verdict, ev = ic.check_7({"cfg": cfg, "path": w})
+        took = time.time() - t0
+        if ev.get("query_failed"):
+            REAL_AV_NOTE.append("query could not run: %s" % ev.get("summary"))
+            raise Skip("the Security Center query could not run: %s" % ev.get("summary"))
+        REAL_AV_NOTE.append("products=%s" % "; ".join("%s state=%d hex=%s realtime=%s definitions=%s" % (
+            p["display_name"], p["state"], p["hex"], p["realtime"], p["definitions"]) for p in ev.get("products", [])))
+        REAL_AV_NOTE.append("verdict=%s waited=%ss took=%.1fs copy_cleanup=%s" % (
+            verdict, ev.get("scan_wait_seconds"), took, ev.get("copy_cleanup")))
+        REAL_AV_NOTE.append("summary=%s" % ev.get("summary"))
+        assert ev["scan_wait_seconds"] == 20 and took >= 19, "the default wait of 20 s was taken"
+        assert w.is_file() and ic.sha256_file(w) == before and sorted(p.name for p in hold.iterdir()) == [w.name], \
+            "the held file is unchanged and the copy is gone"
+        assert verdict == "passed", (verdict, ev.get("summary"))
+        assert ev["summary"].endswith("file present and unchanged after 20 s; no on-demand verdict available"), ev["summary"]
     finally:
         shutil.rmtree(str(tmp), ignore_errors=True)
 
@@ -560,13 +855,23 @@ CASES = [
     case_attestation_absent_not_applicable_unread_failed_present_passed,
     case_file_changed_after_check_record_refused_by_release, case_pack_refuses_batch_with_one_unchecked_file,
     case_pack_succeeds_when_every_file_checked, case_released_file_altered_before_pack_is_refused,
-    case_no_installed_copy, case_other_installed_version_only, case_check_7_stub_scanner_exit_codes,
+    case_no_installed_copy, case_other_installed_version_only,
+    case_check_7_on_and_current_passes_with_the_exact_sentence, case_check_7_sentence_names_the_wait_in_whole_seconds,
+    case_check_7_product_off_fails, case_check_7_definitions_out_of_date_fails,
+    case_check_7_unknown_bytes_are_never_on_or_current, case_check_7_no_product_fails,
+    case_check_7_unreadable_stand_in_fails, case_check_7_held_file_changed_during_the_wait_fails,
+    case_check_7_held_file_removed_during_the_wait_fails, case_check_7_copy_removed_during_the_wait_fails,
+    case_check_7_copy_changed_during_the_wait_fails, case_check_7_copy_is_always_cleaned_up,
+    case_check_7_stale_copy_from_an_earlier_run_is_removed_and_recorded,
+    case_check_7_worked_examples_decode_as_the_cto_measured, case_check_7_one_object_a_list_and_several_active_products,
+    case_check_7_non_ascii_product_name_is_replaced_with_a_question_mark,
+    case_leftover_scan_copy_can_never_be_released_or_packed, case_selftest_av_line_reads_the_stand_in,
     case_check_2_wrong_requests_fail, case_parse_wheel_name, case_check_8_signature_rules,
     case_default_signer_dir_is_the_ctos_deliverables, case_no_path_to_checked_without_the_signature,
     case_hand_edited_record_cannot_release, case_missing_fetch_record_and_held_file_fail,
     case_failed_fetch_outcome_fails_check_1, case_constants_appear_verbatim_in_the_brief, case_records_are_ascii_only,
     case_cli_honours_the_environment_names, case_selftest_unsigned_leaves_nothing_behind,
-    case_real_scanner_on_tiny_synthetic_wheel,
+    case_real_security_center_and_on_access_read_on_tiny_synthetic_wheel,
 ]
 
 
@@ -583,8 +888,8 @@ def main():
         except Exception:
             print("FAIL %s" % fn.__name__)
             traceback.print_exc(file=sys.stdout)
-    if REAL_SCANNER_NOTE:
-        print("REAL-SCANNER: " + "; ".join(REAL_SCANNER_NOTE))
+    if REAL_AV_NOTE:
+        print("REAL-SECURITY-CENTER: " + " | ".join(REAL_AV_NOTE))
     total = len(CASES)
     ok = passed + skipped == total
     print("INTAKE-CHECK-TEST cases=%d/%d skipped=%d ok=%s" % (passed, total, skipped, ok))
