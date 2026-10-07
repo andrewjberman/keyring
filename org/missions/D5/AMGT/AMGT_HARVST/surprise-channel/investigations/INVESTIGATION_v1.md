@@ -7215,6 +7215,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "DISARMED same turn by the issuer: `.runtime/harvest-backfill/R46_STOP_BBG` written 01:53Z, so the bbg leg ends after its current job and marks no further name done on the merged rule; sa does not use the sitemap matcher; wsj is stopped and loses nothing under the merged rule. Not measured: how many of bbg's remaining names are multi-word. Carried to the CTO: resume bbg on the merged rule (about 1% of accepted URLs at stake, re-runnable with --names), or change the rule first; and whether the query for a multi-word company should be a brand word, which no slug rule decides on its own."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S93",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T02:44:57Z",
+      "one_line": "Four bbg articles were ACCEPTED and stored under a company whose name the URL slug carried only inside a longer word (substring discovery): bbg:TECB4IKGZAJP00 (Monster), bbg:TKDRIWKIJH9600 (Nokia), bbg:T8WSYMT96OSH00 (SAP), bbg:TB9RP0KIJH8I00 (UBS). Their attribution is to be re-checked; nothing is deleted.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "CTO msg 30522 (round-49 analysis ADDENDUM 3 note @24e57a8ef8): the 4 URLs the whole-token matcher no longer admits were accepted under the old matcher, so 4 articles may sit in the store attributed to SAP, UBS, Nokia and Monster; one row names the keys, the acceptance stage re-checks them, and a wrong attribution is marked, never deleted.",
+      "world_is": "From the bbg run records and the stored publication files (read only). (1) bbg:TECB4IKGZAJP00, security-e2ce94312c10d29a (Monster), job 20261001T211200Z-bbg-d4dfcdf997, title 'How Many Godzillas Is Too Many Godzillas?', slug token `monsterverse`; the body carries `monster` as a whole word 6 times of 12 occurrences. (2) bbg:TKDRIWKIJH9600, security-8dcf604f2bad81d2 (Nokia), job 20261001T224621Z-bbg-b112d53de3, title 'Nokian Renkaat CEO Says Rebuild Gathers Pace as Tire Sales Boom', slug token `nokian`; `Nokia` whole-word 1 of 10. (3) bbg:T8WSYMT96OSH00, security-a25abbc791077a07 (SAP), job 20261002T080621Z-bbg-dfb10aa2a3, title 'Venezuelan Oil Industry Is Running on WhatsApp After Cyberattack', slug token `whatsapp`; `SAP` whole-word 1 of 3. (4) bbg:TB9RP0KIJH8I00, security-e42479b2b86da0c7 (UBS), job 20261002T144234Z-bbg-0a5d095cd6, title 'Iran War Prompts Rethink of Middle East Finance Hubs Stability Premium', slug token `hubs`; `UBS` whole-word 1 of 5. Each body does carry the name at least once as a whole word, so the body check passed on a word and the discovery was the accident; whether that one mention is the company (a common noun `monster`; a passing reference) is a reading, not a count.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~102/ay-1.replay.out (the 4 `LOST substring_accident` lines)",
+          ".runtime/opal-data-harvest-bbg/runs/*.json accepted[] entries for the 4 article keys and their stored publication files (title, body_blocks)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not measured: whether the served gold carries these four as mentions of the four companies, and whether the acceptance check tests the name as a whole word or as a substring (the substring counts above exceed the whole-word counts in all four). Carried to the acceptance stage's re-check per CTO 30522."
     }
   ]
 ```
