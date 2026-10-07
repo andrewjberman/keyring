@@ -20,11 +20,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v91. Fabric: site-z. Recorded: 2026-10-06T22:2xZ.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v91",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v91"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-W266-S2",
