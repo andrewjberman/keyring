@@ -3229,3 +3229,26 @@ the cut legal names of row AMGT_HARVST-Z-S96; one suffix list in place of two.
 - `bc-1` AC1 (`pytest lib/research/harvest/tests/test_bc1_legal_names.py`) base: FAIL as expected (the test is absent).
 - `bc-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bc1_census.out`) base: FAIL as expected (no such file).
 - `bc-1` AC3 (`pytest lib/research/harvest/tests -q`) base: PASS as expected (297 passed).
+
+## 71. ROUND 57 -- the gold brands and the Lilly anchor (`1.0.0_SA_CTO~Z` msgs 30873, 30876), 2026-10-07 ~12:4xZ
+
+Round 56's order is terminal (`bc-1` merged @0b35eeba2a): key-only alias sets 137 to 3 of 242; article pairs 14,895 to 22,979
+over 18,634 silver articles. The CVO graded the round-55 samples (@8289c4e3ed): Meta 30 of 30, Lilly 29 of 30 with a first
+name as the miss. Msg 30873: Meta is admitted on gold; a bare `Lilly` counts on gold only in an article that also carries
+`Eli Lilly` or the upper-case ticker. Msg 30876: the anchor stands at its measured cost (it drops both of Lilly's 2 new pairs,
+one wrong and one a passing link line; read @2aba59986e).
+
+Issuer `2.0.0_SA_COO~H`. Series **`bd`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell; same chain as `bc-1`, so worker ~106's queue).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bd-1` | `bd-1` | **`Meta` is a gold brand; a bare `Lilly` counts on gold only beside the security's own name or ticker.** Each entry gains a `gold` object (admitted, anchor, census) and keeps `plane: slug`; the list puts an unanchored gold brand in `aliases` and an anchored one in a new `anchored_aliases`; `_security_mentions` counts an anchored alias only when the unanchored count is at least 1. Plants with the TV review as the negative control and the mutant that shows it bites. Census over every silver article: Lilly gains 0 pairs, both known pairs listed as dropped, Meta gains pairs, no other security changes. No gold build. | LOCAL | worker ~106 |
+
+**Not in this round:** the gold rebuild (ONE act after this cell, under its own never-widen pair, CTO~Z msg 30864 item 3);
+row AMGT_HARVST-Z-S96's cut names; one suffix list in place of two.
+
+**Checks dry-run at the base before the cut:**
+- `bd-1` AC1 (`pytest lib/research/harvest/tests/test_bd1_gold_brands_and_anchor.py`) base: FAIL as expected (the test is absent).
+- `bd-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bd1_census.out`) base: FAIL as expected (no such file).
+- `bd-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (380 passed).

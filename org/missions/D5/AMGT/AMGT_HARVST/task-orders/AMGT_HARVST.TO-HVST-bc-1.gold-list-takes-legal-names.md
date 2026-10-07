@@ -145,9 +145,32 @@ Change an existing test assertion only where this cell's rule is the reason, and
 - The close run is the census itself (AC2's output, read by the issuer). The rebuild's never-widen pair is asked of
   `1.0.0_SA_CTO~Z` in the drain-end message, with the census as its expected-outcome read.
 
+**COMPLETE 2026-10-07 ~12:3xZ (issuer):**
+- **Built:** worker ~106 @028c66aa4e + @8f17e7e578 + @e6b7be150d; merged @0b35eeba2a (6 paths, index check 0 of 6 differ; the
+  first merge attempt was refused on another seat's staged files and retried on a clear index).
+- **AC1 PASS:** 11 of 11. **AC2 PASS:** CENSUS OK. **AC3 PASS:** 308 of 308 on the branch.
+- **Census** (242 securities, 18,634 silver articles, 234 identity records): key-only alias sets 137 before, 3 after
+  (`6861_JP_Equity`, `CAT_US_Equity`, `CSL_AU_Equity`: no pool name, no identity record); names changed 138; article pairs
+  14,895 before, 22,979 after, gained 8,084; no name's pairs went down. Largest gains: NVIDIA 796, Apple 706, Amazon 609,
+  Alphabet 557, Goldman Sachs 539, Microsoft 535, Bank of America 520, Meta Platforms 501. Citigroup 0 to 288.
+- **Name source counts:** pool 101, identity 138, absent 3; slash tail stripped 9 (GS 539, KO 41, BNY 20, SCHW 19, HSY 7, EL 3,
+  MAR 2, TJX 0, TRV 0 pairs gained); exactly 30 characters 8 among the changed names (BIPC 18, AEP 1; AIG, BBSEY, ICT, JBHT,
+  KCDMY, OMAB 0 each).
+- **Text-plane brands:** unchanged before and after (6 admitted, Spotify already an alias, 0 refused).
+- **The round-55 brand lines against the list with legal names:** Meta adds 3,626 spans in 642 articles, 171 NEW pairs (was
+  4,398 / 935 / 672 against the key-only baseline); Lilly unchanged at 294 / 94 / 2.
+- **Agreement control:** 100 of 100 (12 nonzero).
+- **Existing assertions changed:** none. **Other callers:** none live; none passes `legal_names`.
+- **Rows:** AMGT_HARVST-Z-W106-S1 (`build()` has no off switch for the join; the census built BEFORE from
+  `securities_from_universe` without the map) and Z-W106-S2 (137 key-only before, not row Z-S98's 138: 4 identity-joined
+  securities carry the key plus a text brand, and this seat's Z-S98 predicate also counted `..._Equity` aliases).
+- **Issuer drain check on merged CLOUD:** `pytest lib/research/harvest` plus `test_az1_alias_set.py`: 380 passed.
+- **No gold was built.** The rebuild is one act after round 57, under its own never-widen pair (CTO~Z msg 30864 item 3).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>56</round>
 <slot>~106</slot>
 <fabric>site-z</fabric>
