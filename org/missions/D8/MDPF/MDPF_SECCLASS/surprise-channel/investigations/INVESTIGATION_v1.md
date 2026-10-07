@@ -3787,3 +3787,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Read-only AWS: one scan of etf-classifications and 33 in-memory reads of bbg characteristics.parquet; nothing written, no package or download."
 }
 ```
+
+## MDPF_SECCLASS-W36-S3 -- FWD-15 not at zero after the AI run: 99 unplaced-key missing keys; 150 AI keys overlap SC-e-32's set
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:06:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S3",
+  "one_line": "FWD-15 is not at zero after the AI run: 99 of the 1,565 missing held keys fit no declared key form (UNPLACED-KEY, cottonwood 87 holding USD 76.84M, internal ids like 4175_VOYA), and 150 of the 1,165 AI entries are also in SC-e-32's old-list AI set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/fwd15_ai_plan.py: entries=1565 direct=301 ai=1165 unplaced_key=99 present=0 model_calls=0 (bd-securities 10,965 rows, etf-classifications 3,507 rows, contract 0.6.0)",
+      "FWD15_AI_PLAN_cottonwood_20261007.json route_amount_usd UNPLACED-KEY 76843740.63; plan field ai_entries_also_in_old_list 46/45/59 for 49financial/cottonwood/inflection",
+      "claim inferred: held sets are local producer builds as-of 2026-10-05 (W25-S1)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e49 cell SC-e-49 and ruling 2.3: the FWD-11 runner over FWD-15's missing list places what it can; the contract's key forms (identifier_namespace TICKER, CUSIP, BLOOMBERG, NAME) are the only keys a row may carry.",
+  "world_is": "The planner routes a key fitting no declared form to UNPLACED-KEY and the runner is never given it; those 99 stay missing and the cell cannot reach FWD-15 at zero by this run. The two act sets (SC-e-32 old list, SC-e-49 missing list) overlap by up to 150 AI keys: a conditional put lets one win and the other's model call is spent for nothing (at most 300 calls with retry). Both are stated in the half request; neither is fixed here.",
+  "notes": "Read-only AWS scans of bd-securities and etf-classifications; no table write, no model call, no package or download."
+}
+```
