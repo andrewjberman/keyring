@@ -2302,3 +2302,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a defect of the push gate: deploying changed scripts is its job; the gap is that a served-output script rides a push before its pair is signed. Rollback decision rule in the pair: no CTO half by 04:45Z -> roll Black Diamond back; by 11:00Z -> roll Cottonwood back."
 }
 ```
+
+
+## MDPF_SECCLASS-S36 -- a Black Diamond gold run at 00:26Z rewrote the composition WITHOUT multi_asset (old code), ahead of the scheduled run
+
+```json
+{
+  "id": "MDPF_SECCLASS-S36",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:42Z",
+  "one_line": "A Black Diamond gold run at 2026-10-07 00:26Z (not the scheduled 05:25Z) rewrote firm_composition.json and firm_mix_views.json WITHOUT multi_asset: the composition gap reads $5,445,416.28, so whatever ran used the OLD gold code, not the S3 objects deployed at 23:47Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 read 2026-10-07 00:3xZ: opal-data-bd gold/views/firm_composition.json LastModified 00:26:22Z, generated_at 00:26:21Z, data_as_of 2026-10-02: total $1,994,163,246.13, class sum $1,988,717,829.85 over seven classes (no multi_asset), gap $5,445,416.28; gold/artifacts/firm_mix_views.json 00:28:44Z with no multi_asset in the latest quarter; mix_daily_summary.json and client_timeseries_watermark.json still 10-04 05:27Z",
+      "SSM list_commands since 10-06 23:00Z: no BD gold document and no command naming BD near 00:26Z (the unlabeled RunShellScript commands at 00:05-00:15Z target the gateway host i-07dccb1615503ac99); so the run did not come through opal-bd-gold-run",
+      "the S3 code at 23:47Z carries multi_asset in D_03, C_06 and lib/mix_views (ledger secclass-s29-class-lists-m-20261006 leg B); the same code, run in process, closed the gap to $0.00 (bd_mix_multi_asset_check.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Pair acceptance 2: after Black Diamond's next gold run, firm_composition total equals the class sum within $0.01 with multi_asset about $5.44 M (CTO half @6cf5f02f14).",
+  "world_is": "The served BD composition today is a fresh old-code render: the same shortfall, a new $5.45 M gap. Not a widening (it is the old behaviour) and not the pair's move. Who or what ran is not established (not SSM; a local or other-device ad hoc run from older code is possible, INFERRED). Leg RB stays open for the next run with the live code.",
+  "notes": "Not read: the run's executor and its code revision; whether the scheduled 05:25Z run still happens; the EC2 runner's baked code. Read after the next BD change."
+}
+```
