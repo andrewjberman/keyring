@@ -26,3 +26,10 @@ Calls 3 and 4 both approved." Recorded by G1 at
 
 What it does not cover: any new resource name (the target and permission resources take builder names where they have them), any third
 occurrence, and any other file.
+
+## Narrowed (2026-10-07 ~14:2xZ): one occurrence, not two
+
+The naming gate reads the Lambda permission's `source_arn` (`arn:...:rule/cot-bronze-complete`) as a separate carrier. The file now takes
+the rule from the event target's own Terraform reference, leaving ONE literal: the target's `rule =`. The entry's occurrences move
+2 -> 1. This is narrower than what Andrew acknowledged ("written in two places"), so no new word is needed. Register row X16 is
+asked to read x1.
