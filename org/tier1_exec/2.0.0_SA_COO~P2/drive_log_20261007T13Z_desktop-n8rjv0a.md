@@ -1,4 +1,9 @@
 # drive log 2.0.0_SA_COO~P2 -- 2026-10-07 13Z (desktop-n8rjv0a)
 
-- 2026-10-07T12:59:03Z | IRPT_BCKEND | L7->L8 | r67 | 347 drained @1b4348496c (AC1+G PASS, VALID); 348 open | thread n/a | DRIVE FORWARD: non_opal_reach=7 -> CTO msg 525 answered, emergency release of IB-pr-343 asked; W148-S1 BLOCKING ARMED (disarm on release)
 - 2026-10-07T13:18:03Z | IRPT_BCKEND | L6 r68 + L8 r65-67 | 349 issued @e35e3a46dc (laptop applier 0.7.0_AE_CloudOps~I) | DRIVE FORWARD: COO half REFUSED at 34f71024a1 (census: entry.py staged at 0642c9d004, fix absent) @477f0faa28; re-pin b921635dad (census 9 = CTO amendment 1); COO half SIGNED; MSTR asked to publish; L8 packet r65-67 to CVO @477f0faa28; S371 disposes W148-S2 @4f9638a160
+- 2026-10-07T13:20:17Z | IRPT_BCKEND | L7 r68 (laptop applier) + L8 r65-67 | 349 published on origin q/dell2/EMERGENCY-.../r4 @d1abea06f8, applier 0.7.0_AE_CloudOps~I working | NUDGE: CVO msg 593 OFFER-EXHAUSTED -> resent packet; watcher re-armed bv4pcylgu
+- 2026-10-07T13:37:07Z | IRPT_BCKEND | L7 r68 applier running; L6 r69 | 349 live CodeSha unchanged (exDoi..., applier ~15 min in); CVO READ L8 r65-67 (msg 608) | PARALLELIZE: IB-pr-350 back-fill cut @3e85fbf2b0 (queued after 349, pass 1 read-only), MSTR asked to publish
+- 2026-10-07T13:42:55Z | IRPT_BCKEND | portal | Andrew approved DEV landing of 147 @3715f732 + 143 @5c726cf4 (MSTR relay); laptop MSTR pushes | NO-OP: S365 disarms when the DEV hash is forwarded
+- 2026-10-07T13:53:27Z | IRPT_BCKEND | L7 r68 (laptop) | 349: live unchanged 39 min after publish; no applier commit on origin | NUDGE: MSTR asked to relay applier state for IB-pr-349 (screen not visible from dell2)
+- 2026-10-07T14:00:35Z | IRPT_BCKEND | portal + rules | portal DEV @ba391aff8f carries 147/143 -> S372 resolves S365; Andrew no-downloads rule (msgs 636/643) in generator; 349 applier live with GO since 13:30Z, 0 commits (MSTR msg 630, laptop CTO asked) | DRIVE FORWARD: S365 disarmed
+- 2026-10-07T14:13:34Z | IRPT_BCKEND | L7 r68 (laptop) | 349: live unchanged at 14:13Z, applier silent 2nd tick since GO 13:30Z | STUCK: [STUCK] to MSTR asking a laptop reseat of the applier lane
