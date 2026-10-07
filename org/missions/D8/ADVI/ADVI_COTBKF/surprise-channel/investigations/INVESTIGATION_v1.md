@@ -749,3 +749,109 @@ round.** Never edit an existing row.
   "notes": "No action needed; recorded because the premise's mechanism differs from the code's."
 }
 ```
+
+## ADVI_COTBKF-W12-S1 -- This device (dell2) has no pandas_market_calendars, so lib/trading_calendar falls back to a holiday list that covers only 2024-2027: every earlier year counts holidays as trading days, and the census security_days_needed (9,630,847) is not comparable to round 2's (9,388,961)
+
+```json
+{
+  "id": "ADVI_COTBKF-W12-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~12",
+  "surfaced_at": "2026-10-07T07:50Z",
+  "one_line": "This device (dell2) has no pandas_market_calendars, so lib/trading_calendar falls back to a holiday list that covers only 2024-2027: every earlier year counts holidays as trading days, and the census security_days_needed (9,630,847) is not comparable to round 2's (9,388,961)",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError",
+      "lib/trading_calendar.py calendar_source() -> NYSE/hardcoded-fallback-2024-2027 in PRICE_CENSUS_20261007.json; trading_days_between(2015-01-01, 2015-12-31) -> 261 days, 2019 -> 261, 2022 -> 260, 2025 -> 250",
+      "round 2 PRICE_COVERAGE_20261006.json universe.needed_days_definition: NYSE/pandas_market_calendars"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-1: keep round 2's universe and matching; the report compares priced counts against round 2's.",
+  "world_is": "The universe (4,634 CUSIPs) and every priced count (priced_any, priced_fixed_income) do not depend on the calendar and compare directly. security_days_needed, security_days_covered and priced_in_window do: the needed denominator is inflated by the pre-2024 holidays the fallback does not remove (9,630,847 vs 9,388,961, about 2.6 percent), and a covered day on a pre-2024 holiday is dropped from the window. The criterion line passes on its stated prefix; the day totals are labelled with this calendar in the JSON.",
+  "notes": "Rerun on a device with pandas_market_calendars installed (the laptop) for day totals comparable to round 2. Armed because a reader comparing 1,318,560 of 9,630,847 with round 2's 2,090,953 of 9,388,961 would read the gap as price coverage when part of it is the calendar."
+}
+```
+
+## ADVI_COTBKF-W12-S2 -- Two USABLE buckets could not be listed under this identity (cloudops-dell2-agent-user): opal-data-cottonwood, Cottonwood's own scope bucket, and opalinvest-portal; both rows say LIST FAILED: AccessDenied, so what they hold is unknown, not empty
+
+```json
+{
+  "id": "ADVI_COTBKF-W12-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~12",
+  "surfaced_at": "2026-10-07T07:50Z",
+  "one_line": "Two USABLE buckets could not be listed under this identity (cloudops-dell2-agent-user): opal-data-cottonwood, Cottonwood's own scope bucket, and opalinvest-portal; both rows say LIST FAILED: AccessDenied, so what they hold is unknown, not empty",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PRICE_CENSUS_20261007.json buckets[] rows opal-data-cottonwood and opalinvest-portal: holds = LIST FAILED: AccessDenied, list_status list_failed",
+      "caller identity arn:aws:iam::313476888478:user/cloudops-dell2-agent-user (sts get-caller-identity)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-1: a USABLE bucket with no price store gets one line saying what it holds (listing its top-level prefixes is enough).",
+  "world_is": "35 of 35 USABLE buckets are graded; 33 were listed and 2 refused the list. opal-data-cottonwood is the firm's registry scope bucket (opal-data-cot is its legacy alias and holds the two cottonwood stores read), so a per-security daily price store there, if any, is not named by this census. A failed list is a recorded result, never a silent empty.",
+  "notes": "Judged at L9 under CB4d1-AC3 (completeness). A listing under the laptop profile would settle it."
+}
+```
+
+## ADVI_COTBKF-W12-S3 -- The gold canonical holdings store carries two shapes: 47 of its 130 files (the earliest dates) have a ticker column and no cusip column, so the order's CUSIP-keyed read raised on the first run; the census reads each file's available key columns (cusip where present, ticker always)
+
+```json
+{
+  "id": "ADVI_COTBKF-W12-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~12",
+  "surfaced_at": "2026-10-07T07:50Z",
+  "one_line": "The gold canonical holdings store carries two shapes: 47 of its 130 files (the earliest dates) have a ticker column and no cusip column, so the order's CUSIP-keyed read raised on the first run; the census reads each file's available key columns (cusip where present, ticker always)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pyarrow schema read of all 130 objects under the legacy_address('cottonwood-gold-canonical-holdings') prefix: 47 files without cusip (10 columns, 2026-04-22 on), 51 with cusip and cash_equivalent (12 columns, from 2026-06-08), 32 with the supervised columns (14, from 2026-08-20)",
+      "first census run: ArrowInvalid: No match for FieldRef.Name(cusip)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-1: a custodian mark on a held position is a close for that security on that day (the read named by CUSIP).",
+  "world_is": "Holdings priced 1,028 universe securities (1,020 by CUSIP, 8 by ticker; 53 reused symbols reported, not credited). Ticker matches on the 47 early files follow round 2's rule (a reused symbol is not credited).",
+  "notes": "No action needed; recorded because the premise's schema is not uniform across the store."
+}
+```
+
+## ADVI_COTBKF-W12-S4 -- ruff is not installed on this device (dell2), so .tools/commit-gate.sh blocks any .py commit with 'No module named ruff'; the census script and test were blocked the first commit attempt (fail-closed, not bypassed by --force); the worker installed ruff==0.15.11 with pip --user to clear it
+
+```json
+{
+  "id": "ADVI_COTBKF-W12-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~12",
+  "surfaced_at": "2026-10-07T07:50Z",
+  "one_line": "ruff is not installed on this device (dell2), so .tools/commit-gate.sh blocks any .py commit with 'No module named ruff'; the census script and test were blocked the first commit attempt (fail-closed, not bypassed by --force); the worker installed ruff==0.15.11 with pip --user to clear it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/commit-gate.sh on the two new files: 'python.exe: No module named ruff' / 'BLOCKED: ruff check failed'",
+      "python -m pyflakes on both files: no output; python .tools/ds-precommit-check.py on both files: rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 14: every .py edit passes .tools/commit-gate.sh (py_compile + ds-precommit + ruff py39).",
+  "world_is": "The gate is fail-closed on a missing ruff and --force does not bypass it, so the first commit attempt aborted. This worker installed the pinned linter with python -m pip install --user ruff==0.15.11 (the version the gate's contract names, from the package index; no Opal or vendor API) and re-ran the gate; py_compile, pyflakes and ds-precommit had already been clean.",
+  "notes": "Candidate for lint on a device with ruff at the drain."
+}
+```
