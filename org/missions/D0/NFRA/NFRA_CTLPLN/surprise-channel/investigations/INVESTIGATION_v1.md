@@ -445,3 +445,61 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "W5-S1 DISARM (issuer): the surprise-row gate (lines 2042-2051) and the PRD header schema (line 20) still know two fabrics; both are outside CT-c-6's grant. No row is flipped to a Dell fabric until both are repaired: the repair is one cell of the next issuance, and 1.0.0_SA_CTO (whose register the rows are) is told in one line naming this row. W4-S1 and W4-S2 (the second owned by 1.0.0_SA_CTO): sqs:SetQueueAttributes, sns:SetTopicAttributes and the create calls for a key, queue, topic and bucket can carry an access policy that no action name separates. They arm only at the apply of the create policy. The issuer does not route that apply until the never-widen pair for it names these four create calls and two attribute calls and the CTO half rules them in or out; that ruling and the next issuance's Deny cell (msg 106014) are one decision."
 }
 ```
+
+## NFRA_CTLPLN-Z-S1 -- halt-gate's principal resolver refuses a multi-letter lane, and its banner prescribes the one remedy that would turn the refusal into a false PASS
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-07T05:05Z",
+  "one_line": "halt-gate-check.sh's principal resolver admits a SINGLE-uppercase-letter lane only, so every multi-letter-lane seat is refused fail-closed on safe-apply / safe-ec2-deploy -- and the banner it prints misdiagnoses the refusal as a CORRUPTED session serial file and tells the operator to overwrite it, which is the one act that would convert this loud refusal into a silent false PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/halt-gate-check.sh:172-174 -- '(1) the BASE serial must match an agent home folder under the tier dirs; (2) a ~lane suffix must be a single uppercase letter (every fabric lane is: ~A..~E, ~Z; \"Zn\" is exactly the corruption shape that got through)'",
+      "Measured 2026-10-07 ~04:58Z: safe-apply of infra/aws/terraform/nfra-ctlpln-identity as 0.7.0_AE_CloudOps~RV printed 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)' and terraform was never invoked",
+      "The serial is NOT corrupt: it is the <issued_to> of org/tier2_senior/0.7.0_AE_CloudOps~RV/task_orders/NFRA_CTLPLN.TO-DELL-1.dell-identity-apply-site-z.md, the executor named by BOTH never-widen halves, and the addressee of GO msg 30579 (acked). org/mcp/sessions/471a9973-0b57-41d2-a496-adc2fa5545b8.serial reads it exactly",
+      "SCOPE: 4 of the 14 serial rows in org/mcp/liveness.json carry a multi-letter lane -- 0.7.0_AE_CloudOps~RV, 2.0.0_SA_COO~AI, 2.0.0_SA_COO~RV, 3.0.0_SA_CVO~RV. That 14 bounds the SAMPLE only; the regex at :174 bounds the INFERENCE, and it refuses ANY multi-letter lane, seated or not, now or later",
+      "A second, independent cause was ruled out by exercise, not by reading: the first refusal came from a sparse worktree whose cone lacked org/tier2_senior/, so check (1) could also have fired. org/tier2_senior/0.7.0_AE_CloudOps/ was added to the cone and the refusal REPRODUCED, which localises it to check (2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DELL-1 step 5 and the CTO half's section 2: ONE safe-apply of the root. CLAUDE.md NEVER-9 and Deployment Rule 18: safe-apply is the only admitted apply path, and its HALTGT checkpoint is expected to evaluate the acting seat's own inbox.",
+  "world_is": "The apply path is closed to a multi-letter-lane seat. It was cleared here by safe-apply's own audited escape, HALT_OVERRIDE, with the reason naming this defect; the apply then ran once and landed 10 added / 0 changed / 0 destroyed. NO halt-gate PASS is claimed or cited anywhere in the evidence: the condition the checkpoint exists to enforce was measured by the sound instrument instead -- broker check_inbox empty, 20 of 20 delivery rows READ and acked by this serial, 0 STOP/HALT-class across all 20 -- which is also what CLAUDE.md Rule 22a's DELIVERY line and ADHC_HALTGT already prescribe ('NOBODY CITES A HALTGT PASS'; a ~lane agent is unhaltable regardless). THE HAZARD IS THE BANNER, NOT THE REFUSAL: the refusal is loud and correct-ish, but the banner's prescribed remedy is to rewrite the session serial file, and a seat that complies by writing a single-letter lane would make the gate scan ANOTHER agent's inbox and exit 0 -- the false-negative shape the gate's own comments at :143-152 condemn ('A SAFETY GATE THAT CANNOT NAME ITS OWN PRINCIPAL MUST NOT GUESS'). The remedy would manufacture the fault it cures.",
+  "notes": "Disarm is a one-line widening of the lane pattern at halt-gate-check.sh:174 to one-or-more uppercase letters, plus a banner branch that names a VALID-BUT-UNADMITTED lane separately from a CORRUPT serial so the prescribed remedy is never 'overwrite your serial file'. .tools/ is outside this order's <paths>, so this seat names it and does not touch it. The same resolver contract is cited as shared with inbox-watch.sh:82-89 and agent-poller.py _find_agent_folder, so the fix is checked against those two before it lands -- my inbox watcher DOES deliver to ~RV, so at least inbox-watch.sh does not carry the same restriction, and that asymmetry is itself the tell that :174 is the outlier."
+}
+```
+
+## NFRA_CTLPLN-Z-S2 -- disarm of NFRA_CTLPLN-Z-S1: the refusal was unknown-base from a sparse cone, reproduced; the letter count never refused ~RV
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T06:08:11Z",
+  "one_line": "Disarm of NFRA_CTLPLN-Z-S1 by its disarm_owner, on a reproduction and not on the fix: the 04:58Z halt-gate refusal of 0.7.0_AE_CloudOps~RV was check (1), unknown-base, from a sparse worktree whose cone lacked the seat's home folder; the letter count never refused ~RV. The misleading banner, the row's real hazard, is gone @1f1bacdf66.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduction by this seat 2026-10-07 ~06:1xZ, a fresh detached sparse worktree at EXACTLY 0ef817adb0 (the commit the seat applied from), HALT_GATE_REPO_ROOT set to it, serial 0.7.0_AE_CloudOps~RV. Cone WITHOUT org/tier2_senior: the new gate file (@1f1bacdf66) reads rc=1 reason unknown-base; the gate file AT 0ef817adb0 reads rc=1. Cone WITH org/tier2_senior/0.7.0_AE_CloudOps: the new file reads rc=0; the file AT 0ef817adb0 reads rc=0. Control: ~QQ on the new file reads rc=1 reason lane-no-inbox.",
+      "The gate file at 0ef817adb0, line 223, admits one, two or three uppercase letters; 64a3ef4b4e (the 1-to-3 rule) is an ancestor of 0ef817adb0 (merge-base --is-ancestor, with a positive control on the same instrument). So no copy of the gate the seat could have run refused ~RV on its lane.",
+      "2.0.0_SA_COO~O msg 30636 measured the same on the shared tree (rc=0 for ~RV, rc=1 for ~Zn). 1.0.0_SA_CTO~Z ruling ADDENDUM 1 @24ef9e0791 asked for this read before the disarm.",
+      "The fix, 0.0.0_AB_MSTR~Z @1f1bacdf66: the lane check is uppercase letters plus the existence of the lane's inbox; the refusal names which check failed and says a sparse worktree can give unknown-base for a real seat; the line that overwrote the session serial file is out of the banner. Falsifier .tools/halt-gate-lane-test.sh re-run by this seat: 10 of 10.",
+      "NOT reproduced: Z-S1's fifth evidence line (the refusal persisting after org/tier2_senior/0.7.0_AE_CloudOps/ joined the cone). By this seat's run the old gate admits the seat once that folder is present. What differed in the seat's second attempt is unread; the seat's worktree now carries all of org/tier2_senior (76 folders)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-Z-S1: the halt gate's principal resolver refuses a multi-letter lane. CTO ruling CTO_RULING_HALT_GATE_MULTI_LETTER_LANE_20261007.md and its ADDENDUM 1: close the row on a read of the named check from a sparse worktree, not on the fix.",
+  "world_is": "DISARM (disarm_owner). The refusal was unknown-base: a sparse cone without the acting seat's home folder under org/tier2_senior. The remedy for an apply from a sparse worktree is the cone (add the seat's base home folder), and the gate now says so in its banner. Both Dell applies ran under the audited HALT_OVERRIDE and cite no halt-gate pass; nothing in the world depends on this row. Z-S1's diagnosis (letter count) is superseded by this row; its hazard (a banner prescribing a serial-file overwrite) is closed in code in the shared tree, and a worktree gets it at its next cut."
+}
+```
