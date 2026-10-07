@@ -2898,3 +2898,102 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: every later worker spawn of this round states 'no package install and no download of any kind'; the scratch venv is left in place, uncommitted, for 0.0.0_AB_MSTR~DELL1 to inspect or remove."
 }
 ```
+## MDPF_SECCLASS-W28-S1 -- PRD S13 writes four short paths; none of the four exists at the depth written
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T08:40Z",
+  "one_line": "PRD manifest S13 lists yang-generate-etf-returns/etf_classification.py, yang-generate-holdings-attribution/etf_classifications_dynamodb.py, yang-generate-positioning/lambda_function.py and market-overview-tiered-generator/lambda_function.py 'all under infra/aws/lambda/v2_portal/'; none exists at that depth.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git ls-files at b07521c5dd; org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FWD4_CENSUS_20261007.json field s13_resolution"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S13's four files sit directly under infra/aws/lambda/v2_portal/ (PRD manifest row S13).",
+  "world_is": "The four files are at yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py, yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py, yang_pipeline/positioning/yang-generate-positioning/lambda_function.py and 01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py (all under infra/aws/lambda/v2_portal/). The census resolves S13 by git ls-files suffix and records the resolution in the JSON field s13_resolution. The PRD text is the CTO's to correct.",
+  "notes": "Same class of error as S47's S26 path. This worker corrected nothing in the PRD."
+}
+```
+
+## MDPF_SECCLASS-W28-S2 -- The census reads files over 3 MB only to byte 3,000,000, and the plant re-scan covers the plant's own lambda tree, not all 21,512 files
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T08:40Z",
+  "one_line": "Two bounds were put on the instrument to fit the order's 120 s: 14 data JSON files over 3 MB are read to their first 3 MB, and --plant re-scans the v2_portal tree (285 files) plus the plant instead of the full corpus.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FWD4_CENSUS_20261007.json fields read_truncated_over_bytes, plant.rescan, census_seconds"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'Scan every tracked code file'; '--plant ... Re-run the scan, assert that the planted path is reported'; 'It finishes within 120 s.'",
+  "world_is": "A full scan takes 40 to 47 s; raising the read cap to 64 MB took it past 120 s (killed by timeout), and a second full pass for the plant would put --plant at about 90 s. The 14 truncated files are listed in the JSON field read_truncated_over_bytes (13 under org/ deliverables and one integrations/bloomberg/research/field_map.json: data, not code). The plant's rescan scope and file count are in plant.rescan.",
+  "notes": "A ticker mapping hiding past byte 3,000,000 of a JSON data file would be missed; none of the 14 is a code path."
+}
+```
+
+## MDPF_SECCLASS-W28-S3 -- The census adds a 'tooling' band beside 'test', and a client-copy needs a _shared namesake
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T08:40Z",
+  "one_line": "The order names one band, test; this instrument also bands code under org/ and docs/ as tooling (verification and deliverable scripts), and calls a file a client-copy only when a same-named _shared file exists and differs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/fwd4_copy_census.py band_of() and scan(); org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FWD4_CENSUS_20261007.json copies_by_band"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'Tests and fixtures are counted in their own band (band: test)'; 'kind=client-copy: a file named etf_classification*.py ... outside _shared/ that is not byte-equal to its _shared source'.",
+  "world_is": "201 of 305 copies sit under org/ (worker deliverable scripts, checkers): putting them in prod would bury the 60 production hits. They are listed with band tooling and printed as tooling=<n>. org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/etf_classifications_coverage_census.py matches the name glob but has no _shared namesake, so it has no source to be byte-equal to and is not reported as a client-copy (it carries no class literal either).",
+  "notes": "The order's 'at the end it lists none' reads on the prod band; whether tooling and test bands must also reach zero is the issuer's and CTO's call."
+}
+```
+
+## MDPF_SECCLASS-W28-S4 -- S15 and S26 hold no ticker-to-class assignment: one assigns an identifier kind, the other a region
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T08:40Z",
+  "one_line": "S15 (positioning_chain.py:163) classify_identifier returns cusip/figi/sedol/unclassified for an identifier's shape, and S26's ETF_GEOGRAPHY_MAPPING maps ticker to a region (US, ...); neither assigns a security class.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/positioning_chain.py:160-175 and infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:94-110 read at b07521c5dd"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD manifest S15 and addendum S26 list them as FWD-4 surfaces that hold a class copy.",
+  "world_is": "Both are scanned and report copies 0 with a note in the JSON surfaces entry; S26's geography list is outside the order's four kinds, so it is reported and not counted.",
+  "notes": "S26 is FWD-16's geography (no home decided), which the PRD already says; S15's held claim names a different 'classification'."
+}
+```
