@@ -278,9 +278,9 @@
       "class": "THIRD-PARTY",
       "distribution": "jsonschema",
       "hard_importers": 3,
-      "importers": 26,
+      "importers": 27,
       "module": "jsonschema",
-      "optional_importers": 23,
+      "optional_importers": 24,
       "other_distributions": [],
       "status_here": "INSTALLED",
       "usage": "HARD",
@@ -455,7 +455,7 @@
     "python_version": "3.12.10"
   },
   "scan": {
-    "files": 748,
+    "files": 749,
     "pathspecs": [
       ".tools/*.py",
       "lib/*.py"
