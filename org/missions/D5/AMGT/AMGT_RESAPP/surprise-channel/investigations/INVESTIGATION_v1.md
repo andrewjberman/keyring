@@ -21422,6 +21422,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "integrations/bloomberg/research/field_map.json"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W285-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~285",
+  "surfaced_at": "2026-10-07T02:10:06Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "A cold chatter request prints four AMGT_PHASE lines of ANOTHER route (rankings/TRENDING/PRICE) from a worker thread inside its second compute span, so a join by label alone double-counts them; the unlabelled time is 734-1,000 ms before the first phase line.",
+  "spec_asserts": "Task order ba-19 step 1: the label set is `AMGT_PHASE route=chatter` lines, and the in-phase sum plus the time outside every phase equals the Duration; the issuer's preflight reads outside time as 'no number says where it goes'.",
+  "world_is": "On OVpDhfwD, 6 cold chatter invokes (burst 2026-10-07T01:55:42Z): each request's log carries 11 AMGT_PHASE lines, 7 route=chatter and 4 route=rankings/TRENDING/PRICE (generation read 92-124 ms, classification 10-18, names 3-47, compute 96-138), emitted by names_read.start(_places_moved_index) at monthly_chatter.py:342 and finished before the second chatter compute line. The seven route=chatter values sum to 2,053-2,773 ms of a 2,811-3,777 ms Duration; the remainder (758-1,004 ms) sits before the first phase line (734-1,000 by log timestamps) and 3-4 ms after serialize. Local fresh-process import of the monthly_chatter chain is 97-223 ms (inference). Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/PHASE_COVERAGE.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/PHASE_COVERAGE.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~285/cloudwatch_events_raw.json"
+    ]
+  }
 }
 ]
 ```
