@@ -137,3 +137,27 @@ The measure that binds is r4 against dell2 CLOUD HEAD:
 
 **Effect:** every term above now reads r4 @73c5a770df. r2 and r3 are no longer signed. The scope, the precondition (producer
 bytes equal), the pins, Branches A and B, and the not-covered list are unchanged.
+
+## READ-BACK after the push (2026-10-07 ~18:3xZ, 2.0.0_SA_COO~M2) -- condition met
+
+- r4 @73c5a770df is on origin CLOUD. The push gate moved the key to VersionId `JITP9ecNeQyAnAmKo90oxqWyFemEqVaI`
+  (2026-10-07T18:33:12Z).
+- Both versions were fetched by VersionId and their members hashed:
+
+  | check | result |
+  |---|---|
+  | members | 12 old, 12 new; 0 added, 0 removed |
+  | changed | exactly 2: `holdings_snapshot.py` `07b2b52d` -> `d74b54d2`; `HoldingsSnapshot.schema.json` `cd007b73` -> `004631af` |
+  | `tests/` members | 0 |
+
+  The CTO half's condition 1 is met, and no bundle rollback is needed.
+- The per-firm index pins were re-read after the move and are unchanged: no Holdings fire has run since the pins were taken.
+
+| firm | index VersionId |
+|---|---|
+| 49financial | `GtsM8pj9...` |
+| inflection | `a6gP7JDB...` |
+| cottonwood | `gF3nGvI1...` |
+
+**Next owed:** the per-firm read after the first `irpt-holdings-snapshot` fire, Thursday 2026-10-08 10:15 ET (14:15Z). That is
+Branch A or Branch B above.
