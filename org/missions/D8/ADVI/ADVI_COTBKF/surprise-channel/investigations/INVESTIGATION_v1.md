@@ -1940,3 +1940,28 @@ round.** Never edit an existing row.
   "notes": "Enrichment candidate: grade the flow months under start-of-day vs end-of-day flow and with tax withholding internal, and keep the convention that MATCHes more; a DIFF still carries its reason."
 }
 ```
+
+## ADVI_COTBKF-D2-W36-S1 -- The order reads the empty page_count as 10,072 listings with no NumberOfPages and 1,034 with "0"; 13 more (all 13 REPR documents) carry a value that is not a number
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W36-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~36",
+  "surfaced_at": "2026-10-07T22:17Z",
+  "one_line": "The order's 10,072 + 1,034 leaves 13 documents of the 11,119 unaccounted: every REPR listing carries NumberOfPages as a non-number (5 'W', 5 'Barnett', 3 empty), a shifted column in the REPR listing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_page_counts.py run on the served index: ADVS 165 / CLNT 932 / NCSD 1239 / STMT 7736 absent key, TXRP 1034 '0', REPR 13 other; sums 10,072 + 1,034 + 13 = 11,119",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~36/page_counts.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-3: 10,072 listings carry no NumberOfPages and 1,034 carry it as '0'.",
+  "world_is": "Those two counts hold, and 13 more listings (REPR) carry the field with a non-numeric value, which the index's _int() turns into null. The script folds them into listing_none on the PAGE-COUNTS line (10,085) and shows them apart in page_counts.md. No listing in any doc type carries a positive value, so the cause (absent: no positive NumberOfPages in any listing) is unchanged; all 13 REPR PDFs are counted from their bytes."
+}
+```
