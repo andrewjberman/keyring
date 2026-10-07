@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>respol_ok=11/11 ssm_ok=</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -113,7 +113,7 @@ shell document, the export render document, another instance, a rewrite of a gra
 <criterion id="CTa1-AC3" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect></criterion>
 `CTa1-AC3` -- the control: the root validates, nine names are the builder's, every document fits the limit.
 
-<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4</expected_criteria>
+<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4,CTa1-AC5</expected_criteria>
 
 ## BOUNDS
 
@@ -143,6 +143,8 @@ infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py
+infra/aws/terraform/transcripts/main.tf
+infra/aws/terraform/transcripts/tests/
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -356,3 +358,71 @@ No firm, function, document, host or prefix name in any committed file outside `
 except the two resident document names and the instance id in `dell2_ssm_policy.json`. If the commit gate refuses anything, do NOT
 override: record the refusal lines, file a BLOCKING row, keep what is committed, and stop. Write a NEW proof instance covering the
 four ids, validate it, and flip `<status>` to `complete` only when all four pass.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-07 ~16:4xZ) -- REOPENED: the transcripts key admits the Dell agent users to DECRYPT (a widening; build and measure only)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state, merged and APPLIED. Authority: `1.0.0_SA_CTO` msg 106391, verbatim: "New cell, on Andrew's word at
+4.0.0_SA_CRO's terminal ~16:1xZ, 'Yes Dell boxes can read all of that' (record
+org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_161xZ_SIX_OPEN_CALLS_ANSWERED_TICKET_CENTER_AND_TRNSPT_ON_DELL2.md
+@a3e5396e1e): the transcripts key policy admits the Dell agent users to decrypt. A widening: measure the plan, send one half
+request." The record's item 5: the question was whether the dell2 agent user may read the transcripts store; his answer covers
+the Dell boxes and the whole store, the raw tier included. Gate limb: none graded this modification. THE WORK below is the whole
+of this amendment. YOU APPLY NOTHING: this pass builds the change and measures it; the apply is a separate act behind two halves.
+
+THE WORD IS "READ". The key policy in `infra/aws/terraform/transcripts/main.tf` has one use statement, `NamedReadersUseTheKey`,
+whose principals come from `var.reader_principal_arns` and whose actions include `kms:Encrypt`, `kms:ReEncrypt*` and
+`kms:GenerateDataKey*`: adding a Dell user to that list would also let it WRITE under the key. Do NOT add them there.
+
+1. THE FIRST READ, in `infra/aws/terraform/transcripts/tests/read_transcripts_access.py` (create the `tests/` folder), saved as
+   `tests/transcripts_access.json`: (a) every statement of the key policy and of the bucket policy as the Terraform declares
+   them, and which of them a READ by a Dell user meets (the bucket policy carries a TLS Deny and a write-key Deny and no reader
+   list: confirm it); (b) what the two Dell users' OWN policies allow on this bucket and key, by the simulator against their
+   LIVE attached policies (`s3:GetObject`, `s3:ListBucket`, `s3:PutObject`, `s3:DeleteObject` on the transcripts bucket, whose
+   name you read from the registry scope row the root uses, never type; `kms:Decrypt`, `kms:Encrypt`, `kms:GenerateDataKey` on
+   the key): a same-account key policy that names a user grants that user without an identity-policy statement, so the key policy
+   is the control for decrypt, and the Dell users' existing S3 allows on the estate's bucket pattern decide whether the object
+   read itself is already allowed; say which holds; (c) every other reader of the key today (the variable's default, any
+   `.tfvars`, any other root or role that names the key: search `infra/aws/terraform/` for the key's alias and resource address).
+   LAST line `TRANSCRIPTS-ACCESS key_statements=<k> bucket_statements=<b> dell_s3_get=<allowed|denied> dell_s3_put=<allowed|denied> dell_kms_decrypt_before=<allowed|denied> other_key_users=<n> ok=<True|False>`.
+2. THE CHANGE, one statement added to the key policy and nothing else in the root: Sid `DellAgentUsersDecryptOnly`, Effect Allow,
+   Principal the two Dell agent users' ARNs, Action exactly `kms:Decrypt` and `kms:DescribeKey`, Resource `*`. The two ARNs are
+   NOT typed as strings: derive them the way this repository already names those users (read
+   `infra/aws/terraform/nfra-ctlpln-identity/iam.tf` for how the names are built, and `lib/opal_naming.py name()`; in this root,
+   build each ARN from the account id data source and the builder's name passed in as a variable with the builder's output as its
+   default, or read the names from a file the identity root already owns; say which you chose and why, and if the commit gate's
+   naming limb refuses the form you chose, do NOT override: file a BLOCKING row and stop). Do not touch
+   `var.reader_principal_arns`, the bucket policy, or any other file of the root (`chat_assist.tf`, `mail_pull.tf`, `pull.tf`).
+3. THE PROOF WITHOUT AN APPLY, in `tests/check_transcripts_dell_decrypt.py`: render the key policy document from the Terraform
+   (a provider-less scratch evaluation of the same `jsonencode` expression with the data sources stubbed, as the fence cell did;
+   `CHECKPOINT_DISABLE=1`; no backend, no AWS call from Terraform), then by `iam simulate-custom-policy` /
+   `simulate-principal-policy` with that document as the resource policy: each Dell user `kms:Decrypt` on the key -> allowed;
+   each Dell user `kms:Encrypt`, `kms:GenerateDataKey`, `kms:ReEncryptFrom`, `kms:ScheduleKeyDeletion`, `kms:PutKeyPolicy` ->
+   NOT allowed; the existing reader unchanged (decrypt and encrypt allowed); an unlisted user `kms:Decrypt` -> not allowed; and
+   the rendered document differs from today's by exactly the one added statement (parsed comparison). LAST line
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=<a>/2 dell_write_refused=<r>/<n> reader_unchanged=<True|False> unlisted_refused=<True|False> statements_added=<k> ok=<True|False>`.
+   Say plainly what the simulator cannot show (a real decrypt of a real object needs the apply and is another route's).
+4. A plan note in your deliverables, `PLAN_NOTE_TRANSCRIPTS_DELL_DECRYPT.md`: what the apply would show by reading (one KMS key
+   policy updated in place), exactly what the two Dell users gain (decrypt of every object in the transcripts store, the raw tier
+   included, on Andrew's word) and do not gain (encrypt, write, key administration), whether the object read itself is already
+   allowed by their own policies (from step 1), and the rollback. Do NOT run `terraform plan` against the backend: the issuer
+   measures the plan.
+
+**ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
+
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2</expect></criterion>
+`CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
+
+**BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
+`kms get-key-policy`, `sts get-caller-identity`. NO object read, NO listing of the transcripts bucket, NO decrypt call, no apply,
+no plan against the backend, no download. Never print or save the content of a transcript.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~17:4xZ) -- one issuer repair: CTa1-AC2's expectation no longer names another cell's count
+
+`CTa1-AC2` expected `respol_ok=11/11 ssm_ok=`. The resource-policy block belongs to cell CT-d-5, whose amendment (merged
+@aa6b587487, applied) moved it to 13 arms, so this cell's criterion failed on a number it does not own. The expectation is now
+`ssm_ok=9/9 routes_ok=5/5 all_ok=True`: this cell's two blocks and the whole line's verdict. Nothing is weakened: `all_ok=True`
+requires every block, the resource-policy one included. Gate limb: none graded this modification.
+The worker re-runs the five criteria, rewrites the proof instance's `CTa1-AC2` row from that run (its `expect` field equal to the
+new expectation, `status` from the match), validates the instance, and flips the order to `complete` when all five pass.
+

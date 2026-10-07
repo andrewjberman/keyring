@@ -152,6 +152,19 @@ def _rebuild_on_word(base, carried, word):
     return base[:len(base) - len(carried)] + word
 
 
+def policy_system(ans):
+    """(system or None, which, basis) for an inline policy whose declaration policy_roles() knows (ans["policy"]).
+    The role's system wins; the root map's answer wins only when the exception names this policy's role (resolve()
+    basis "exception-with-role"). An exception without a role never overrides the role. which is "exception-with-role",
+    "role" or "unresolved"."""
+    pol, res = ans.get("policy"), ans.get("resolved")
+    if res is not None and res.get("basis") == "exception-with-role":
+        return res["system"], "exception-with-role", "the exception names role %s" % (pol.get("role_name"),)
+    if pol.get("role_system"):
+        return pol["role_system"], "role", pol.get("basis")
+    return None, "unresolved", pol.get("basis")
+
+
 def decide(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
@@ -199,15 +212,19 @@ def decide(item, ans, fourth=None):
     if "{system}" in form:
         res = ans.get("resolved")
         pol = ans.get("policy") if typ == "IAM_POLICY" else None
-        if pol is not None and (res is None or res.get("basis") == "root-default"):
-            if pol.get("role_system"):
-                form = form.replace("{system}", pol["role_system"])
+        fills = ans.get("fills")
+        if pol is not None:
+            psys, _which, pbasis = policy_system(ans)
+            if psys:
+                form = form.replace("{system}", psys)
             else:
-                why.append("{system}: the role's system is not resolved: %s" % (pol.get("basis"),))
+                why.append("{system}: the role's system is not resolved: %s" % (pbasis,))
         elif res is None:
             why.append("{system}: no map entry for this root")
         elif typ == "IAM_POLICY" and res.get("basis") == "root-default":
             why.append("{system}: " + _INLINE_POLICY)
+        elif res.get("basis") == "root-default" and fills is not None and "system" not in fills:
+            why.append("{system}: this root serves more than one firm; its map entry does not give the system")
         else:
             form = form.replace("{system}", res["system"])
     if "{cadence}" in form:
@@ -255,7 +272,11 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
                "cadence": None if crow is None else dict(crow, **opal_naming_cadence.verdict_for(crow)),
                "policy": (opal_naming_policyrole.system_for(root, it["current"], it["where"])
                           if it["type"] == "IAM_POLICY" else None),
-               "resolved": opal_naming_rootmap.resolve(doc, name, it["current"], it["type"])}
+               "fills": None if entry is None else entry.get("fills"),
+               "resolved": None}
+        pol = ans["policy"]
+        ans["resolved"] = opal_naming_rootmap.resolve(doc, name, it["current"], it["type"],
+                                                      role=None if pol is None else pol.get("role_name"))
         try:
             ans["graded"] = opal_naming.grade(it["current"], it["type"])
         except opal_naming.RaiseDefect as exc:
@@ -362,8 +383,74 @@ def lines_check(root, map_path, out=print):
     return 0 if not bad else 1
 
 
+def keys_check(root, map_path, out=print):
+    """One line per inline policy of the root: the system printed, the role's system, the exception if any and which won.
+    The last line is ROOTCHECK-KEYS. Returns the exit code."""
+    root = root.replace("\\", "/").rstrip("/")
+    lines, sink = [], []
+    check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
+    by_where = {}
+    for (it, ans, kind, detail) in sink[1:]:
+        if it["type"] == "IAM_POLICY":
+            by_where[(it["current"], it["where"])] = (ans, kind, detail)
+    prows = opal_naming_policyrole.policy_roles(root)
+    n = role_n = with_role = overriding = missing = 0
+    for pr in prows:
+        n += 1
+        hit = by_where.get((pr["name"], pr["where"]))
+        if hit is None:
+            missing += 1
+            out("MISSING %s [%s]: the root's run has no line for this policy" % (pr["name"], pr["where"]))
+            continue
+        ans, kind, detail = hit
+        res = ans.get("resolved") or {}
+        basis = res.get("basis")
+        printed = None
+        if kind == "FIX":
+            printed = detail.split("-", 1)[0]
+        elif kind == "RIGHT":
+            printed = pr["name"].split("-", 1)[0]
+        try:
+            slot = "{system}" in (opal_naming.grade(pr["name"], "IAM_POLICY")[1] or "")
+        except opal_naming.RaiseDefect:
+            slot = False
+        exc = "none"
+        if basis in ("exception", "exception-with-role"):
+            exc = "%s(%s)" % (res.get("system"), basis)
+        if printed is None:
+            won = "nothing-printed"
+        elif basis == "exception-with-role" and printed == res.get("system"):
+            won = "exception-with-role"
+        elif slot and basis == "exception" and printed == res.get("system") and printed != pr.get("role_system"):
+            won = "EXCEPTION-WITHOUT-ROLE-OVERRIDES"
+        elif printed == pr.get("role_system"):
+            won = "role"
+        else:
+            won = "neither"
+        if won == "exception-with-role":
+            with_role += 1
+        elif won == "role":
+            role_n += 1
+        elif won == "EXCEPTION-WITHOUT-ROLE-OVERRIDES":
+            overriding += 1
+        out("%s %s role=%s printed=%s role_system=%s exception=%s won=%s system_slot_filled_here=%s  [%s]" % (
+            kind, pr["name"], pr["role_name"], printed or "-", pr["role_system"] or "-", exc, won,
+            "yes" if slot else "no", pr["where"]))
+    ok = missing == 0 and overriding == 0 and n == opal_naming_policyrole.text_count(root)
+    out("ROOTCHECK-KEYS ok=%s root=%s policies=%d role=%d exception_with_role=%d exception_without_role_overriding=%d"
+        % (ok, root, n, role_n, with_role, overriding))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "keys":
+        kp = argparse.ArgumentParser(description="the inline policies of a root and which system won")
+        kp.add_argument("cmd")
+        kp.add_argument("root")
+        kp.add_argument("--map", required=True)
+        ka = kp.parse_args(argv)
+        return keys_check(ka.root, ka.map)
     if argv and argv[0] == "lines":
         lp = argparse.ArgumentParser(description="run a root and check its own lines")
         lp.add_argument("cmd")
