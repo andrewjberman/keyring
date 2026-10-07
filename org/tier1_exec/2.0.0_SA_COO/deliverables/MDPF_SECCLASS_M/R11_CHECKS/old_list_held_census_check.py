@@ -8,9 +8,11 @@ Modes (one verdict token each; run from the repo root):
             denominator, a held_definition naming "non-zero market value", and claim `inferred` (ruling 2.9).
             Prints OLD-LIST-HELD-CENSUS ok=True|False.
   set    -- the newest M/OLD_LIST_RECLASSIFY_SET_V2_*.tsv (header old_key shared_key held route asset_class sub_asset_class
-            clean_name) carries every live old key once, and every row with route DIRECT or AI carries a sub_asset_class that is a
-            member of the contract's closed list for its asset_class (fields.sub_asset_class.values_by_class, SC-e-54), cash
-            included; at least one cash row is planned. Prints OLD-LIST-SET-V2 ok=True|False.
+            clean_name) carries every live old key once; every DIRECT row carries a sub_asset_class that is a member of the
+            contract's closed list for its asset_class (fields.sub_asset_class.values_by_class, SC-e-54), cash included; every AI
+            row is BLANK in asset_class and sub_asset_class (no verdict exists before the model runs; the bound is graded on the
+            AI path's output, after its half) -- AMENDMENT 1 (2.0.0_SA_COO~M1, row W36-S4); at least one cash row is planned.
+            Prints OLD-LIST-SET-V2 ok=True|False with the per-route counts.
 """
 import csv
 import glob
@@ -77,16 +79,21 @@ def rset():
     probs = []
     if len(keys) != n or len(set(keys)) != len(keys):
         probs.append(f"rows {len(keys)} vs live {n}")
-    cash = 0
+    cash = direct = ai = 0
     for r in rows:
-        if r["route"] in ("DIRECT", "AI"):
+        if r["route"] == "DIRECT":
+            direct += 1
             if r["sub_asset_class"] not in bound.get(r["asset_class"], []):
                 probs.append(f"bound:{r['old_key']}")
             cash += r["asset_class"] == "cash"
+        elif r["route"] == "AI":
+            ai += 1
+            if (r["asset_class"] or "").strip() or (r["sub_asset_class"] or "").strip():
+                probs.append(f"ai_prefilled:{r['old_key']}")
     if cash == 0:
         probs.append("no cash row planned")
     ok = not probs
-    print(f"OLD-LIST-SET-V2 ok={ok} rows={len(rows)} live={n} cash_planned={cash} problems={probs[:3]}")
+    print(f"OLD-LIST-SET-V2 ok={ok} rows={len(rows)} live={n} direct={direct} ai={ai} cash_planned={cash} problems={probs[:3]}")
     return 0 if ok else 1
 
 
