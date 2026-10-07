@@ -2049,3 +2049,20 @@ rendered 10 px nodes; the short-name line; the ledger wording); PLANTED passes. 
 **Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. **Gate:** `.tools/to-pipeline-gate.py` LIMB 6 refuses a new order while
 `prd-signoff status` reads WITHHELD (CTO msg 30802); the order is added the tick it reads ADMITTED.
 **Then:** battery29 on the candidate, the render instrument's Model state, CTO review from the render, and ONE DEV push on Andrew's word.
+
+**v47 ADDENDUM (issuer, 2026-10-07 ~11:0xZ) -- item 5 added before the issuance; TWO cells go out in ONE issuance.** The CTO's CORRECTION
+(`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` @50e71b5b8d, msg 30810): MSFT US is not a covered name, FWD-4 returns to REALIZED
+(board 21 / 4 / 1 / 1), and round 47 gains item 5.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zy-2` (item 5) | FWD-4, FWD-27 (an uncovered name says so once) | `components/HeaderCards.tsx`, the `__harness__/` files that assert seven tiles for an all-absent row | ~109 (worker-light) |
+
+**Item 5, read first:** MSFT US draws 7 tiles, each reading "We hold no stored company data for this name yet."; the served payload carries
+no coverage marker, so the page rule is keyed on the served shape (no figure with a value, one reason shared by all). The marker is a
+producer item, named in the close. **Check:** `round47/checks/r47b/r47b.cjs`: 2 of 3 at base 8ddfe409, 3 of 3 on a scratch reference
+edit, with `round42/checks/r42/r42.cjs` still 5 of 5.
+**Chains:** 2, with no shared product file (`AV-zy-1`: `tabs/ModelTab.tsx`, `modelSheet.ts`; `AV-zy-2`: `components/HeaderCards.tsx`), so
+both run at once. **Fan-out:** 2 of 2 (`fanout: 2`). PRD v0.17 @8730d6c042 reads ADMITTED. `AV-zy-I` stays NOT CUT: its clause text is
+the CTO's to send (msg 30797: "I send its hash"). **The round-47 grading walk** reads FWD-4, 7 and 8 on covered names and one uncovered
+name only for its designed state.
