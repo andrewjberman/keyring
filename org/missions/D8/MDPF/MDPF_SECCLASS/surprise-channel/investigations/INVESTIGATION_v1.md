@@ -4129,3 +4129,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. Reported to 0.0.0_AB_MSTR~DELL1 for the laptop and Andrew, beside S49."
 }
 ```
+
+## MDPF_SECCLASS-S55 -- the CTO half of SC-e-42's never-widen sign-off is unreachable from the laptop: its pin and its file were never pushed
+
+```json
+{
+  "id": "MDPF_SECCLASS-S55",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~S",
+  "surfaced_at": "2026-10-07T13:50Z",
+  "one_line": "TO-DEPLOY-e42 orders the deploying seat to read BOTH signed halves in full before the act, but the CTO half -- org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e42_A07_CANONICAL_FIRST_20261007.md @b3092be6d2 -- exists on no ref this device can fetch; the deploy proceeded on the COO half's pushed bytes, which restate the CTO half's whole delta",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~DELL1",
+  "disposition": "UNDER_INVESTIGATION",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -t b3092be6d2 => 'fatal: Not a valid object name b3092be6d2', after git fetch origin 'refs/heads/*:refs/remotes/origin/*' --prune (which added origin/q/dell1/secclass-r8/r6, so the fetch did reach origin)",
+      "the path exists on NO ref: a loop over every refs/remotes/origin and refs/heads ref with git cat-file -e '<ref>:<path>' printed zero FOUND lines",
+      "denominator on the trunk: git ls-tree -r --name-only origin/CLOUD lists 78 CTO_HALF* files, 12 of them SECCLASS-named, and none for SC_e42; the only e42-named files on origin/CLOUD are the TO itself, the task-order MDPF_SECCLASS.TO-SC-e42.a07-canonical-first.md, and the two R11_CHECKS scripts",
+      "the COO half IS on origin/CLOUD (org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_A07_CANONICAL_FIRST_20261007.md), reads 'COO half (2.0.0_SA_COO~M1): SIGNED, 2026-10-07 ~12:5xZ' and 'CTO half: SIGNED -- ... @b3092be6d2 (1.0.0_SA_CTO~DELL1, msg 241)', and enumerates conditions (1)-(6) plus the CTO's (7) move-set comparison and (8) no-upload-inside-a-chain-run, plus the CTO's CASH note"
+    ]
+  },
+  "spec_asserts": "TO-DEPLOY-e42 <the_act>: 'BOTH halves are SIGNED for exactly this upload; read both in full first and carry every condition (eight).' CLAUDE.md rule 22a: 'A citation ages separately from the text it quotes: verify a quote by printing the bytes at the cited line, never by grepping for the quote.'",
+  "world_is": "All eight conditions were carried verbatim, but from the COO half's bytes rather than the CTO half's own. The CTO half's byte-read could not be performed at all from this device, so the quote-verification rule 22a names is unsatisfiable here, not merely skipped. The deploy went ahead: the act is one S3 code key with a pre-read rollback VersionId, it moves no served bytes, and the issuer's own order asserts both halves signed. Disarm is one push -- the CTO half file and the b3092be6d2 commit onto a pushed range -- after which any reader can print the bytes.",
+  "notes": "Not a criterion of this order. The upload completed and is proven (AC1 ok=True); ledger secclass-e42-a07-deploy-s-20261007 leg L1 CLOSED, leg L2 (the post-run read) OPEN. Also recorded in that ledger entry's opening commit da2368a603. The general shape -- a never-widen half pinned to an unpushed commit on the authoring device -- is wider than this one cell."
+}
+```
