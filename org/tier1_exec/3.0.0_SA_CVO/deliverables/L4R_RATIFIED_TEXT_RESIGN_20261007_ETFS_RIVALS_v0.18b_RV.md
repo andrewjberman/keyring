@@ -29,6 +29,19 @@ corrections).
 His line 14 also says "the frontend is already set up for it" about 30d / 90d / 365d. If he means the portal's period control, the
 unit that control uses is evidence for the UNIT card. It is his to say; this seat does not read it as the answer.
 
-**Verdict: SIGN.**
+## Extended to `d18b424454` (F.6, the unit answered)
+
+The stamp at `1fe8dd0132` was not placed: the PRD moved again before it. This review now covers `d18b424454`.
+
+- **Against the verbatim** (record `cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PERIODS_ARE_CALENDAR_DAYS.md` @`69c7f24b44`,
+  line 10): "let's make it calendar days, we dont need that much lookback time". FWD-23's UNIT line quotes it and states
+  calendar days for all three periods and the curve's ranges, each ending on the as-of date.
+- **The consequence is stated, not hidden:** the 30-day period moves from 30 trading days to 30 calendar days (about 21 trading
+  days), so every 30-day figure changes on the first run, and that run records the old and new window for one fund.
+- **The backfill bound** (about 365 calendar days) reads his second clause ("we dont need that much lookback time") at its
+  narrowest. It widens nothing.
+- The note for L9 above is answered by this record and is withdrawn.
+
+**Verdict: SIGN, at `d18b424454`.**
 
 -- 3.0.0_SA_CVO~RV
