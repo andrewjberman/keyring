@@ -18660,3 +18660,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The dell2 identity is denied on the Inflection bucket. The ledger stays OPEN, parked. It un-parks when either (a) a principal permitted on opal-data-inflection reads the three gap days and their upstream positions, or (b) 1.0.0_SA_CTO~DELL2 or the bucket policy's owner admits the dell2 identity read-only. This row does not widen any policy (CLAUDE.md cross-firm guard; never-widen)."
 }
 ```
+
+## IRPT_BCKEND-S348 --the 10-06 directory refresh manifests misstate the fire that moved the directory
+
+```json
+{
+  "id": "IRPT_BCKEND-S348",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-07T08:20:00Z",
+  "one_line": "The 2026-10-06 directory refresh manifests misstate the fire that moved every firm's directory: 49F and INF stop at RUNNING / REFRESH_DISPATCHED / revision pending, and COT has no _refresh/2026-10-06/ manifest because its 13:40Z fire wrote its result under _refresh/2026-09-22/ as a READY 2026-09-22 build of 248 entries, while COT's latest.json points to the 2026-10-05 directory of 270.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 get-object opal-data-bd investor-reporting/directory/_refresh/2026-10-06/manifest.json (versions 13:30:37Z, 13:40:39Z current): state RUNNING, reason_code REFRESH_DISPATCHED, directory_revision pending, ssm_command_id 928a49c8-..; notes 'last command 4237a59f-.. was dispatched for 2026-09-25 ... re-dispatching' (3.0.0_SA_CVO, dell2, 2026-10-07 ~08:0xZ)",
+      "s3 get-object opal-data-inf .../_refresh/2026-10-06/manifest.json: state RUNNING, REFRESH_DISPATCHED, revision pending (same read)",
+      "s3 list opal-data-cot .../_refresh/2026-10-06/: no object; .../_refresh/2026-09-22/manifest.json current version LastModified 2026-10-06T13:40:41Z (earlier versions 10-06 13:30:41Z, 10-01, 09-30, 09-29, 09-28, 09-22): correlation_id irpt-refresh-2026-10-06-cottonwood, as_of_business_date 2026-09-22, dispatched_for 2026-10-06, state READY, REFRESH_COMPLETED_WITH_ADDITIONS, added 248, previous_entry_count 0 (same read)",
+      "s3 get-object latest.json: 49F as-of 2026-10-05, 4,696 entries, generated 13:40:46Z; INF as-of 2026-10-06, 294, 13:40:51Z; COT as-of 2026-10-05, 270, key investor-reporting/directory/2026-10-05/directory.json, 13:40:46Z (same read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S335's disarm reads 'a refresh after the fix lands READY at all three firms'; a refresh manifest is the day's record of what the refresh did (the dispatcher writes it first and rewrites it at the end).",
+  "world_is": "The served pointers moved at all three firms at 13:40Z, so nothing served is wrong. The record is: no firm's 10-06 manifest reads READY; two never got their end rewrite; COT's fire filed its result under an old business date, and the COT key history shows the 09-22 manifest rewritten on five other fire days. Whether the dispatcher keys the COT manifest by the artifact's date or by a stale command's date is not read.",
+  "notes": "INERT (pointers correct). Owner 2.0.0_SA_COO~P2, S335's disarm owner: read why the end rewrite did not land at 49F and INF and why COT's manifest key is 2026-09-22; S335's disarm row says which reading it uses. Filed by the sweep-9 compile, not compiled in it."
+}
+```

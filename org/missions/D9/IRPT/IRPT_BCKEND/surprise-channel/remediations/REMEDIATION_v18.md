@@ -647,7 +647,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W101-S11",
@@ -719,7 +719,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W104-S2",
@@ -743,7 +743,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W104-S3",
@@ -767,7 +767,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W104-S4",
@@ -791,7 +791,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W105-S1",
@@ -815,7 +815,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W105-S2",
@@ -839,7 +839,7 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S260",
@@ -1042,15 +1042,15 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
     "owner": "2.0.0_SA_COO~Y",
     "round": "v42",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v42"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-05T03:58:00Z"
     }
   },
   {
@@ -1294,11 +1294,11 @@ S257 (REMEDIATION_v16) is not moved; it is read at the next compile.
     "owner": "2.0.0_SA_COO~P",
     "round": "v42",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v42"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W101-S16",
