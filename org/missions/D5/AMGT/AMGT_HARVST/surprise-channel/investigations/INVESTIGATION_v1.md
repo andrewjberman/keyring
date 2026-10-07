@@ -7443,6 +7443,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S99",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T12:57:01Z",
+      "one_line": "CORRECTS AMGT_HARVST-Z-S98: the SERVED gold was not built from the key-only list. Its last rebuild (#5, 2026-10-02) took a securities FILE of 212 names with 0 key-only alias sets (Apple Inc, Meta Platforms Inc, Eli Lilly & Co all present); the 138-of-242 defect was in universe_securities.build() read off the pool, which no rebuild record names as its input.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Row AMGT_HARVST-Z-S98 left unmeasured whether the served gold was built from the list build() returns; 1.0.0_SA_CTO~Z msg 30864 then read it as gold under-attributing AAPL, AMZN, JPM, META, MSFT and NVDA today, and rounds 56 and 57 measured their gains against build() with the join off.",
+      "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round37/gold_rebuild5_act_20261002T162933Z.json names universe_file = .../round33/securities.universe.r33.json; that file holds 212 securities, 0 with a key-only alias set (AAPL aliases ['Apple Inc','Apple'], META ['Meta Platforms Inc','Meta Platforms'], LLY ['Eli Lilly & Co','Eli Lilly']). It is the only securities.universe*.json under deliverables/2.0.0_SA_COO_H and the newest of 5 rebuild act records. So: (1) the served mention rows already attribute those names by company name; (2) bc-1's 'pairs 14,895 to 22,979, gained 8,084' and bd-1's 'Meta pairs 775 to 946' are deltas against build()-off-the-pool, NOT against what is served; (3) what bc-1 does change for a rebuild is the list's population (242 against 212) and its source (the identity record instead of a hand-carried file). NOT measured: the delta of the new list against the r33 file on mention and daily rows -- that is the rebuild's signing dry run; which 30 securities are new and whether any of the 212 is absent from the 242; whether any rebuild after #5 used another file (no later act record exists in the tree).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read 2026-10-07 ~13:0xZ: round33/securities.universe.r33.json securities 212, key-only alias sets 0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round37/gold_rebuild5_act_20261002T162933Z.json (universe_file)",
+          ".runtime/harvest-backfill/gold5_signing_dryrun2.out (UNIVERSE FILE line, 212 securities; MENTION served 14375 -> built 22510)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
