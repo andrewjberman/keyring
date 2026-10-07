@@ -770,3 +770,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Closing either HOLE is a registry decision (4.0.0_SA_CRO owns key_rulings.json and the card): a ruling that the key is a prefix under each firm's own bucket and either names the canonical form or says none is owed. A (bucket, key) row cannot be written once because the bucket is per firm and not in the repository; nothing the run or the map entry (fills: [system], no firm) can supply closes it. The run honoured fills: no line fills a firm or a source from the map entry."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S10 -- the wider function-name rule adds two names to bd-pipeline, not one
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T21:24:00Z",
+  "one_line": "TO BF-q-4 says bd-pipeline will read 141 names where it read 140; with the wider rule it reads 142, because a second function-name literal in the same root (bd-price-update) is also typed LAMBDA.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only, last line: 'ROOTCHECK ok=True root=infra/aws/terraform/bd-pipeline items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0' (base: items=140 fix=116).",
+      "Census diff of that root, wide switch off vs on: two added lines, 'FIX LAMBDA opal-assets-bd49f-reporting-pull -> opal-assets-bd49f-reporting-pull-lambda [infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:54]' and 'FIX LAMBDA bd-price-update -> advi-49f-price-update-lambda [infra/aws/lambda/bd-pipeline/bd-allocation-processor/lambda_function.py:117]'.",
+      "infra/aws/lambda/bd-pipeline/bd-allocation-processor/lambda_function.py:117 is FunctionName='bd-price-update' in a client call: a function-name context the order's own rule covers; the order named only the line-54 literal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-4 CELL: bd-pipeline will read 141 names where it read 140.",
+  "world_is": "bd-pipeline reads 142 (fix 118): the rule adds every function-name literal with no kind token under the root, and the root holds two. No criterion depends on the count (BQ4-AC2 is the line checks, which pass); the rule was not narrowed to reach 141. Both added names grade without raising."
+}
+```
