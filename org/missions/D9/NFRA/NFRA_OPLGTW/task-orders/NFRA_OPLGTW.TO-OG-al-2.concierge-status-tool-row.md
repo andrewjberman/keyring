@@ -45,7 +45,12 @@ Do:
      does not fully match ONE conservative pattern of letters, digits, `-`, `_` and `:`, 1 to 200 characters.
    - Read `infra/aws/lambda/data_refresh/lambda_function.py` (`handle_trigger`, `handle_status`) for the ids the portal
      really mints, and make sure every one of those shapes passes. Say in your report which shapes you found.
-   - Apply the same check inside `_read_status_once`, so the send path cannot format an unchecked id either.
+   - **AMENDMENT 2 (corrects A1's wording).** Inside `_read_status_once`, the send path, an id that fails the check
+     makes NO request and the function returns `"UNKNOWN"`. It must NOT raise: by then `/trigger` has landed, and an
+     error returned after a landed trigger is the lost-response failure of row Z-S63. Only the status TOOL raises.
+     `test_ogal2_ac05` also asserts this: a send whose `/trigger` answer carries an empty or malformed `executionId`
+     returns normally with pipeline status `UNKNOWN`, makes no status GET, and still records the send for the
+     idempotent re-send.
    - Change nothing else in that file.
    - Add `tests/test_opal_portal_status_id_shape.py`, offline, with two named tests:
      - `test_ogal2_ac05`: ids containing `/`, `..`, `?`, `#`, `%2F`, a space or a newline are each refused, and NO HTTP
@@ -100,12 +105,15 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Round 25 (addendum R3-T.19, item 1), cut on `1.0.0_SA_CTO~O` msg 30555. Chain: `OG-al-2` -> `OG-rl-12`.
 - Verbatim scope: the row is NOT client-qualified, because the ruling names the identity and the tool only. The
   existing upload row keeps its qualifier.
+- AMENDMENT 2 (05:0xZ, issuer; GATE (viii) grades the modify): A1 told the send path to raise on a bad id. The
+  worker's report showed that would raise AFTER a landed trigger. The send path now returns UNKNOWN instead; only the
+  status tool raises. No criterion text changed; `test_ogal2_ac05` carries the new assertion.
 - AMENDMENT 1 (04:4xZ, issuer, before the hand-off; GATE (viii) grades the modify): item 4 and `AC3` add the
   execution-id shape check of row Z-S65, which the CTO ruled into this same release (msg 30563). Pre-cut `al2.AC3` FAIL
   (the test file is absent).
 - Pre-cut 04:3xZ: `al2.AC1` FAIL (the test file is absent). `al2.AC2` FAIL (0 rows added; guard files 2 of 2).
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~29</slot>
 <fabric>site-z</fabric>
