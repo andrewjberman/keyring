@@ -1,0 +1,50 @@
+{
+  "project_code": "LGIC_BLANKFIX",
+  "macro_code": "LGIC",
+  "directive": "D14",
+  "fabric": "laptop",
+  "pipeline": "naming-check-blank-fixes",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-07",
+  "registered_under_tree": "2026-10-07",
+  "placement": "LAPTOP",
+  "pods": [],
+  "related": [
+    "LGIC_ENFORCE",
+    "LGIC_NAMING",
+    "LGIC_CANON",
+    "LGIC_LGCTFM",
+    "NFRA_CTLPLN"
+  ],
+  "name": "Every broken name gets a complete fix: closing the blanks in the naming check's list",
+  "description": "The project LGIC_ENFORCE's register has asked for since 2026-09-20: its FWD-5 (the estate-wide naming check pairs every broken name with its fix) is the one outcome of seven not realized, because some fixes are printed with a blank. Commissioned by 1.0.0_SA_CTO msg 106101 under Andrew-direct 2026-10-07 ~08:0xZ, VERBATIM 'Yes any new project concept has to go through full /canonical-flow.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_080xZ_ANY_NEW_PROJECT_CONCEPT_GOES_THROUGH_FULL_CANONICAL_FLOW.md). The endpoint is NOT confirmed by Andrew; the seat proceeds under its armed self-drive and an amendment of his is re-cut in place.",
+  "brief_ref": "docs/briefs/d14-naming-check-blank-fixes-brief-20261007.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_D14_NAMING_CHECK_BLANK_FIXES_20261007.md",
+  "prds": [
+    {
+      "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md",
+      "version": "v0.2",
+      "status": "RATIFIED"
+    }
+  ],
+  "prd_lineage": [
+    {
+      "version": "v0.1",
+      "date": "2026-10-07",
+      "author": "1.0.0_SA_CTO"
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-10-07",
+      "author": "1.0.0_SA_CTO"
+    }
+  ],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO",
+    "coo": "UNSEATED at registration; a COO lane is asked of 0.0.0_AB_MSTR when the PRD reads ADMITTED"
+  },
+  "placement_ruling": "LAPTOP: directive D14 is placed on the laptop (Andrew 2026-09-12, DIRECTIVES.yaml D14 placement); the registry it edits is written by the laptop's 4.0.0_SA_CRO alone."
+}

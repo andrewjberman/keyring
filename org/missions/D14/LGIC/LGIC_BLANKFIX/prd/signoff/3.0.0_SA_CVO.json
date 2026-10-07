@@ -1,0 +1,12 @@
+{
+  "prd": "LGIC_BLANKFIX_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "11b74e6468f5c81ca4b7a3b2f2b2c66d160215c3",
+  "half": "ratified-text",
+  "half_hash": "31aa8a09023a4ad11085a5471195fd51fd27b444e74fa585d72939161020bb55",
+  "endpoint_hash": "4c0d123d44e1250dff2cd5bcf463b445cfd25024fb4cf2711263d13fcdc64b40",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_BLANKFIX_PRD_V01_RATIFIED_TEXT_REVIEW_20261007.md@1ecb9537fc",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-07T10:54:48Z"
+}

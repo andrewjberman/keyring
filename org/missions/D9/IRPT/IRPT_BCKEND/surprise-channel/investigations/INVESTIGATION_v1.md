@@ -19162,3 +19162,138 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the adapter builds past the parity gate at CLOUD after 52d6068f97. Nothing is deployed by this."
 }
 ```
+
+## IRPT_BCKEND-S360 -- CLOSE of S358: no runtime caller of intake/parse.py leaves the mapping path unset
+
+```json
+{
+  "id": "IRPT_BCKEND-S360",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T10:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S358 by caller read (1.0.0_SA_CTO~DELL2 msg 298, a LOCAL cell owned by 2.0.0_SA_COO~G2): the one bare load_mapping() is parse.py:787 inside parse_holdings(mapping=None), and the one runtime caller of parse_holdings, intake/uploads.py:283, always passes mapping=self.parse_mapping() after :280-281 refuses an empty or non-dict mapping (PARSER_MAPPING_REQUIRED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n 'load_mapping(' -- '*.py' at dell2 CLOUD 62026ca511: 9 hits; the only argument-less call into intake/parse.py is parse.py:787 ('mapping = mapping or load_mapping()'); the hits in cot_account_mapping.py, orion_account_mapping.py, performance/retained.py and D11_MANIFEST/l0_declare_identity.py are other functions of the same name; the IB-rt-11 deliverables pass an explicit path",
+      "git grep -n 'parse_holdings(' -- '*.py', excluding tests and deliverables: 1 caller, intake/uploads.py:283 'parsed = parse_holdings(saved[\"data\"], filename, upload_id, mapping=mapping)'",
+      "intake/uploads.py:279-281: 'mapping = self.parse_mapping()' then 'if not isinstance(mapping, dict) or not mapping: raise UploadRefused(\"PARSER_MAPPING_REQUIRED\")'; parse_mapping is a required constructor callable (uploads.py:147-155)"
+    ]
+  },
+  "dismissal_reason": "S358's own close condition (CTO msg 298: 'It closes on the caller read if no caller is bare') is met: no runtime path reaches the packaged default. A missing default file would return an empty mapping marked absent (parse.py:424-425), not raise, but no runtime path reaches it.",
+  "spec_asserts": "IRPT_BCKEND-S358: every path a packaged module opens at runtime is packaged with it; parse.py's default mapping path is not packaged in irpt-ycharts-generate.",
+  "world_is": "MEASURED by reading the code at dell2 CLOUD 62026ca511: the default is unreachable from the Lambda's runtime path. Not exercised; nothing deployed."
+}
+```
+
+## IRPT_BCKEND-S361 -- the directory functions stage the pre-fix trading calendar (0cbb0ad174); the r61 release keeps it, a re-pin is its own cell
+
+```json
+{
+  "id": "IRPT_BCKEND-S361",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T10:14:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-directory-search and irpt-directory-refresh stage lib/trading_calendar.py from the PRE-FIX pin 0cbb0ad174, not the fail-closed calendar now on CLOUD (fix 83ab7192ee via merge 0a73ed06a0, laptop decision 106145). The r61 directory release keeps the old pin, because its CTO half binds the refresh census to exactly one changed member (refresh.py). Moving both functions to the fixed calendar is its own release-scoped cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at dell2 CLOUD (after 0a73ed06a0): irpt-directory-search and irpt-directory-refresh staged_from trading_calendar.py pin 0cbb0ad174",
+      "git log -1 -- lib/trading_calendar.py: 4b766e4e2d 2026-10-07; 0.0.0_AB_MSTR~DELL2 msg 311 (HOLD LIFTED for 2010-2027)",
+      "CTO half @74e91285b4 item (1): the refresh census must print exactly 1 changed member"
+    ]
+  },
+  "spec_asserts": "A served function that grades trading-day age stages the estate's current trading calendar.",
+  "world_is": "Both directory functions stage the pre-fix calendar; the directory works only on 2026 dates, which the fallback covers, so nothing served is wrong today. The re-pin is for the next round's enrichment list, with its own census and halves."
+}
+```
+
+## IRPT_BCKEND-W140-S1 -- all four portal readers of the directory-search response refuse the over-age answer (internal_correlation_id on the success-path status)
+
+```json
+{
+  "id": "IRPT_BCKEND-W140-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~140",
+  "surfaced_at": "2026-10-07T10:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-338: all four PORTAL readers of the directory-search response (parseIrEnvelope, LiveClient.searchDirectory, DirectorySearchRunner.flush, fetchComposerAccountEntries) throw EnvelopeMismatch('status') on the over-age answer, because the real boundary's success-path status carries the server-only internal_correlation_id and requirePublicStatus is a closed shape.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07: bun test src/pages/InvestorReporting/__tests__/ir-62-overage/search-readers.test.ts (portal wk-IRPT_BCKEND-140-portal on DEV 8ddfe409): with the four over-age arms un-marked, 4 fail, 6 pass; each failure is EnvelopeMismatch field 'status' at contracts/envelope.ts:318 (requirePublicStatus). The plain arms pass (4 of 4).",
+      "The over-age wire is the REAL guarded irpt-directory-search handler's answer (recorded storage, entry._today=2026-10-07, directory as_of 2026-10-02): status = {operation, state STALE, source_dates, actions, public_reason_code DIRECTORY_OVER_AGE, internal_correlation_id}. infra/aws/lambda/investor-reporting/_authz/served.py:1111 response_envelope(..., status, ...) passes `status` whole; only refuse() (served.py:422-423) drops internal_correlation_id.",
+      "ISOLATED: the same over-age wire with internal_correlation_id deleted parses (refused=false, state STALE, publicReasonCode DIRECTORY_OVER_AGE, 2 hits); the same status shape under OBJECT_NOT_COVERED/PARTIAL (the existing withheld path, entry.py:238-248) is refused identically. So the cause is the success-path status projection, not DIRECTORY_OVER_AGE's absence from BOUNDARY_REASONS (W136-S1: the portal check is a regex, not an enum).",
+      "portal/src/pages/InvestorReporting/contracts/public-status.ts:20 closed(value, ['operation','state','source_dates','actions','public_reason_code'], ['contract_version']) @8ddfe409",
+      "NOT MEASURED: whether an edge layer between the Lambda and the browser strips internal_correlation_id (no AWS read was made; this order forbids a deploy and the served bytes were not read). The census is of the code paths, not the served route."
+    ]
+  },
+  "spec_asserts": "IB-pr-338 worker face: each reader of the directory-search response passes a test on BOTH the plain and the over-age fixture; a reader that breaks on the envelope is a FAIL, recorded, and not fixed.",
+  "world_is": "Four of four portal readers break on the over-age answer as the boundary emits it; their tests are written test.failing (green while broken, red when fixed) and the census records FAIL. If the over-age answer is released as it stands and nothing downstream strips internal_correlation_id, an advisor's directory search over an over-age directory renders an ENVELOPE_STATUS refusal instead of the stale hits. No reader was edited. The fix is either the boundary (project status public on the success path, served.py) or the portal parser; both are the next round's, and the release holds on this row (CTO condition: any failure holds the release). The B1 backend reader (served.py Entry.handle) passes its own test because it unwraps correctly; the defect is what it emits."
+}
+```
+
+## IRPT_BCKEND-W140-S2 -- IRPT_CUSTDY hop-1 reader load_directory raises KeyError on the over-age envelope
+
+```json
+{
+  "id": "IRPT_BCKEND-W140-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~140",
+  "surfaced_at": "2026-10-07T10:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-338: IRPT_CUSTDY's hop-1 reader advisor_client_list.load_directory raises KeyError 'entries' on the over-age envelope {_data,_status}; it handles the plain list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07: python -m pytest data/assets/scripts/gold/irpt_custody/tests/test_directory_search_overage_reader.py: with the over-age test un-marked, 1 failed (KeyError: 'entries' at advisor_client_list.py:159), 2 passed (control, plain). Committed as xfail(strict=True, raises=KeyError): 8 passed, 1 xfailed over this file plus the backend file.",
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py:157-160: a dict payload is read as payload['entries'] (or followed through payload['key']); a list is taken as the entries.",
+      "STATED PREMISE, not decided: this reader's declared input is directory_runner's directory.json ({'entries': [...]}) and the PRD v0.3 names the ownership map as hop 1's advisor source, so it does not call the search route today. It is in the census because the CTO condition names 'IRPT_CUSTDY's hop-1 reader' and its --directory flag takes any JSON file, including a saved search answer. The issuer decides whether this is a release hold or a note."
+    ]
+  },
+  "spec_asserts": "IB-pr-338 worker face: IRPT_CUSTDY's hop-1 reader is a reader of the search response and passes on both fixtures.",
+  "world_is": "The reader handles the plain list and breaks on the envelope; it does not consume the live route, only a file handed to --directory. Recorded FAIL, not fixed. INERT: nothing feeds it a search envelope today."
+}
+```
+
+## IRPT_BCKEND-S362 -- S352 and S356 disarmed: E-M1 graded on the second laptop read, every arm exercised
+
+```json
+{
+  "id": "IRPT_BCKEND-S362",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T10:24:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S352 (BLOCKING, ARMED) is disarmed by its own route (a): a principal permitted on the firm buckets ran the read and delivered it as a FILE; TO-IB-m30-301 graded that FILE (C1-TIES, C2-TIES 29 of 29, C3-RECONCILES 3 of 3 firms x 3 arms) and drained @1758606f46. S356 (the first read not gradable) is superseded by the same second read. The dell2 identity remains refused on the firm buckets until the NFRA_CTLPLN fence apply (TO-APPLY-4); that residual is not this row's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_M/R30M_FWD5_REPLAY_READ_2.json @8b83fd1d6f, sha256 afa19a65eb338c6adc72be8684e81c51f9f4c2347fea7d5584e78b3cbe884c52 (reader d6a3e7b04b; identity arn:aws:iam::313476888478:user/Andrew_Berman; publications 2026-10-05)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/IRPT_BCKEND.TO-IB-m30-301.fwd5-replay-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 1758606f46 (safe-merge: 3 files needed, 0 dropped, 0 foreign; index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S352 disarm condition (a): a principal permitted on the three firm buckets runs the read (a laptop seat delivers a FILE; 2.0.0_SA_COO~M2 files the row).",
+  "world_is": "Condition (a) met and graded. S352 DISARMED, S356 superseded. E-M1 (cell IB-mr-301) complete for round 30 ~M."
+}
+```
