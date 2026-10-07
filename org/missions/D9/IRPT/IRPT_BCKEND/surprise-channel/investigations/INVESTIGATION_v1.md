@@ -19373,3 +19373,107 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-W138-S1 -- IB62-1-AC2 cannot pass on this box: the export suite has 6 tests that import pypdf, which no Python on this la
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "IB62-1-AC2 cannot pass on this box: the export suite has 6 tests that import pypdf, which no Python on this laptop carries (and installing it is a fetch off Opal infrastructure, barred by the order). The 6 fail identically with and without this order's edits; the new test_submit_client_report.py passes 11 of 11 and the rest of the suite passes 214 of 220.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 in C:/dev/wk-irpt-bckend-138/infra/aws/lambda/investor-reporting/export: python -m pytest -q tests/ -> 6 failed, 214 passed; every failure is ModuleNotFoundError/ValidationUnavailable 'pypdf' (test_export x3, test_export_path_b::test_the_receipt_names_the_frozen_as_of, test_submit_async::test_the_marked_event_builds_and_the_handle_reaches_the_receipt, test_submit_service::test_submit_then_first_read_after_the_render_finalizes_the_receipt)",
+      "MEASURED: the same six pypdf failures reproduce on a git-archive of HEAD (base bc794d2770 tree) in .scratch/base; python -c 'import pypdf' fails on C:/Users/Test/AppData/Local/Programs/Python/Python314/python.exe and on the two other python shims",
+      "the order bounds: no call off Opal infrastructure; a test failing for a reason the worker did not cause is a row and a stop on that criterion, never an edit to another test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB62-1-AC2 (p62_cells.py): the export suite passes on the worker's workspace.",
+  "world_is": "The suite needs pypdf (render.validate_pdf reads real PDFs); this box has none. AC2's last line is FAIL for that reason alone. A box that carries pypdf (the issuer's drain run, or any seat with it) should re-run IB62-1-AC2 unchanged."
+}
+```
+
+## IRPT_BCKEND-W138-S2 -- E-P9 a1 is complete inside the order's grant but a client report cannot be frozen against the PUBLISHED contra
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "E-P9 a1 is complete inside the order's grant but a client report cannot be frozen against the PUBLISHED contracts: ExportBundle.schema.json (additionalProperties false, oneOf narrative_packet_ref | analysis_report_ref | PATH B) has no client_report_ref, reports/repository.py KINDS is ('PERFORMANCE','ANALYSIS'), and submit_installed._validate refuses any other kind -- all outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json (top-level oneOf lists exactly narrative_packet_ref, analysis_report_ref and the PATH B branch; additionalProperties false); infra/aws/lambda/investor-reporting/reports/repository.py line 21 KINDS = ('PERFORMANCE', 'ANALYSIS') and _report_identity refuses 'unsupported report kind'; export/submit_installed.py _validate raises 'only a Performance or an Analysis report exports' for any other kind",
+      "BUILT inside the grant: retained_export.resolve/render_grant/print_query admit CLIENT_REPORT; bundle.freeze/rebrand carry client_report_ref; handler.submit_export takes client_report_ref and names client-report-portrait-letter; submit_service.serve_submit takes the branch and dates the answer from the document's as_of_date; tests/test_submit_client_report.py 11 passed, which proves the freeze end to end against a tmp copy of the published schema plus exactly the client_report_ref property and oneOf branch (shaped like analysis_report_ref)",
+      "the unamended published schema refuses the client-report bundle at bundle.validate (loud, a jsonschema ValidationError), so nothing served changes until the contract moves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order E-P9 item 1: a client-report reference is resolved, granted and frozen into the bundle as IB-pr-281 did for ANALYSIS.",
+  "world_is": "IB-pr-281 needed no contract change because ANALYSIS already had analysis_report_ref and a repository kind; the client-report kind has neither. A real submit needs, outside this grant: the ExportBundle schema (published copy under docs, the packaged copy under _contracts, and the PRD CONTRACTS table row), a ClientReport contract for the document and for submit_installed._validate, and the repository KINDS entry. The document's address is also still unbuilt (CRO research a2: no LGIC builder address, PRD S06). Open question for the issuer: route the contract edit to the CTO's contract lane. The client report's as-of is read from document field as_of_date, an assumption IRPT_CUSTDY's template contract must confirm or replace."
+}
+```
+
+## IRPT_BCKEND-W138-S3 -- The render host's PRINT_QUERY_KEYS allow-list has no 'report' key, so a client-report print query's report id 
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "The render host's PRINT_QUERY_KEYS allow-list has no 'report' key, so a client-report print query's report id is dropped before the page opens (as the Analysis print's already is); and the lambda manifest.ts copy was already 20 lines behind portal DEV 8ddfe409 when edited, with its lambda-source-map pin (outside the grant) now stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/investor-reporting-export/render_export.cjs PRINT_QUERY_KEYS = bundle, tenant, revision, kind, selection, start, end, account, version, request (no 'report'); tests/test_print_query.cjs asserts that line's text byte for byte, so the list was left unchanged; the client-report print is identified by bundle + kind + selection, which are listed",
+      "MEASURED: diff of export/render_manifest/manifest.ts (HEAD) against portal/src/pages/InvestorReporting/render/manifest.ts at 8ddfe409 differs (382 vs 402 lines; the portal adds StatusEnvelope); this order's edit is additive to the lambda copy only; render_manifest/PROVENANCE.json sha256 is updated to the edited file a8073df43a4a3167acdcdfba42c3f02e30470e7b7355bc83fa767dd466cee4eb; infra/aws/lambda/ci/lambda-source-map.json (line ~4924) still pins the old sha and is outside the grant",
+      "portal/src/pages/InvestorReporting/render/manifest.ts was NOT edited: __tests__/fe-s-4/manifest.test.ts asserts templates.length 2 and supportedContracts keys equal RENDERED_CONTRACTS, and the portal toolchain is not on this box; PrintEntry.tsx names the kind and refuses it by name instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order E-P9 item 3: the package lists the client-report kind with a schemaVersion and the portal render package names it.",
+  "world_is": "The lambda copy lists the kind, template and ClientReport investor-reporting/1; the portal package names the kind in PrintEntry.tsx (a refusal until IRPT_CUSTDY's page lands). The portal manifest.ts adds the kind when the page lands and its test is updated with it. The issuer re-pins the source-map row at the release."
+}
+```
+
+## IRPT_BCKEND-W138-S4 -- No CustodyReport document schema is published, so submit_installed._validate admits CUSTODY_REPORT on its own 
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:40:00Z",
+  "one_line": "No CustodyReport document schema is published, so submit_installed._validate admits CUSTODY_REPORT on its own as_of_date alone; and row W138-S3's manifest.ts sha256 pin is superseded by the custody rename.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: ls infra/aws/lambda/investor-reporting/_contracts lists AnalysisReport, PerformanceReport, ExportBundle and others but no CustodyReport.schema.json; bundle.validate(report, <schema>) therefore has nothing to grade a custody report against; submit_installed._validate('CUSTODY_REPORT', r) requires r.as_of_date (narrative_submit.custody_report_as_of) and returns True",
+      "MEASURED: after the amendment-2 rename render_manifest/manifest.ts sha256 is e728053fa8d75ee10556db6b19475d1d61c915196a289cec029eec634dc9cd4f (PROVENANCE.json updated); row W138-S3 cites the pre-rename a8073df4...; lambda-source-map.json still pins the byte-copy sha and is the issuer's release act",
+      "MEASURED: reports/tests 101 passed; _contracts 190 passed; export suite 216 passed, 6 failed (the six pypdf-only tests admitted by amendment 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: CUSTODY_REPORT is admitted in submit_installed._validate beside PERFORMANCE and ANALYSIS, each validated against its own contract.",
+  "world_is": "PERFORMANCE and ANALYSIS validate against a published schema; CUSTODY_REPORT has none (IRPT_CUSTDY owns the document and has not published one), so only the as_of_date is checked. When the CustodyReport contract is published, _validate adds its schema line; the manifest's CustodyReport supportedContracts entry names investor-reporting/1 ahead of it."
+}
+```
