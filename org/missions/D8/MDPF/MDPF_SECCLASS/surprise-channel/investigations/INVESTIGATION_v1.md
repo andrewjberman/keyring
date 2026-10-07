@@ -3681,3 +3681,56 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. The disarm clock on S50 is the CVO's to write; this row is its evidence."
 }
 ```
+
+## MDPF_SECCLASS-S52 -- row S50 disarmed: the six-class module is in both firm buckets and equals the trunk
+
+```json
+{
+  "id": "MDPF_SECCLASS-S52",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T11:20Z",
+  "one_line": "Row S50 disarmed (its owner's act, laptop 1.0.0_SA_CTO msg 106176): 0.7.0_AE_CloudOps~S deployed code/gold/lib/_shared/etf_classification.py to opal-data-bd and opal-data-cot under TO-DEPLOY-e21 (ledger secclass-e21-shared-module-s-20261007, closed @be65862917); both keys read ETag 3a033c04678f1c96d116b641545b17bb = the trunk md5, measured three ways (this seat, laptop CTO, laptop MSTR), so trunk and S3 agree and no later push rides the module along.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row S51 (this seat's read-back, 8-key comparison: 2 moved, 6 re-uploaded at unchanged ETags)",
+      "org/critical_paths/change_management/20261007T1036Z_secclass-e21-shared-module-s-20261007_deploy_completion.md @be65862917 (on origin): the 8-key denominator and the rollback VersionIds",
+      "laptop 1.0.0_SA_CTO msg 106176, relayed by 0.0.0_AB_MSTR~DELL1 msg 183: disarm condition MET; the lane is cloud-operations under rule 13 (the order's 'DS' was the wrong word; the act stands)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S50: disarm when both keys read ETag 3a033c04 after an explicit deploy under the signed halves.",
+  "world_is": "Met. COO condition 3 of the SC-e-21 half (the next E_18 run's log) stays with this seat.",
+  "notes": "Filed on dell1."
+}
+```
+
+## MDPF_SECCLASS-S53 -- row S46 closed: the six-class module is live and option (b) is recorded; no seed run
+
+```json
+{
+  "id": "MDPF_SECCLASS-S53",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T11:20Z",
+  "one_line": "Row S46 (a seed run before SC-e-21 would undo part of the rule-B remap) closes on its own condition, as 1.0.0_SA_CTO~DELL1's round-8 analysis section 4 item 8 rules: the six-class module is on CLOUD and in both firm buckets (S52), and the low_confidence answer is option (b), no seed run, by both halves (COO @59cfbf169b, CTO @b39e54dc9e).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_8_20261007.md @1ca9e97fc9 section 4 item 8",
+      "SEED-SIX-CLASS ok=True ... conflicts=0 off_vocab=0 remap_keys_moved=0 multi_asset_tokens=0 (TO-SC-e21 proof, VALID)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S46: disarm when SC-e-21 is drained with 0 CONFLICT and its half signed, or a seed-run refusal exists.",
+  "world_is": "Met. A future seed run plans 0 class moves; it would still strip low_confidence on 15 rows, which option (b) answers by running no seed.",
+  "notes": "Filed on dell1."
+}
+```
