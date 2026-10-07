@@ -4433,3 +4433,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "S57 is the laptop's row (on origin); this row disarms it by citation, never by editing it. Filed on dell1."
 }
 ```
+
+## MDPF_SECCLASS-S60 -- a COT producer still serves SGIIX as multi_asset after the six-class switch (2 client concentration files, 11:40Z)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S60",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T16:56Z",
+  "one_line": "A COT producer still emits asset_class 'multi_asset' after the six-class switch: opal-data-cot platinum/clients/z09305621/concentration.json and .../z09305679/concentration.json (LastModified 2026-10-07T11:40Z, data_as_of 2026-10-06) each serve SGIIX as multi_asset (market value 25,862.98 and 109,319.81), though SGIIX is a rule-B remap key the canonical table holds as equity. The writer of that key is data/cot/scripts/gold/D_04.client_portal_summary.py; its class input reads a pre-switch source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R12_CHECKS/served_multi_asset_split.py (read-only, 2026-10-07 ~16:5xZ): opal-data-cot listed=1153 hit_keys=2 post_switch=2; opal-data-bd listed=25259 hit_keys=204 post_switch=0 (all 204 last written before the 07:10Z cut)",
+      "get-object opal-data-cot platinum/clients/z09305621/concentration.json: concentration[95].holdings[2] = {ticker SGIIX, asset_class multi_asset, sub_asset_class null, class_source null}",
+      "git grep concentration.json data/cot/scripts/gold/: D_04.client_portal_summary.py (writer) and validate_platinum_consistency.py",
+      "SGIIX is one of the 20 rule-B remap seed keys (NEVER_WIDEN_HALF_REQUEST_SECCLASS_SEED_SIX_CLASS_20261007.md; class equity)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "After the six-class switch (Andrew-direct 2026-10-07, six classes only; the table holds 0 multi_asset rows), no served class reads multi_asset.",
+  "world_is": "COT's D_04 run at 11:40Z still served multi_asset for SGIIX on 2 client files, so a COT class input upstream of D_04 still carries the old value. Per 1.0.0_SA_CTO~DELL1 msg 437, this row is the condition for dropping multi_asset from portal composition.ts later: e53 keeps it until a post-switch census reads 0. BD's 204 hit keys are all pre-switch history (stale artifacts).",
+  "notes": "The 49financial and cottonwood buckets are UNREAD on dell1 (W25-S1), so they are not in the denominator. Filed on dell1."
+}
+```
