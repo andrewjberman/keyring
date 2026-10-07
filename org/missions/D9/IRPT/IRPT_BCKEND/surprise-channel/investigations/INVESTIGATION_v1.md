@@ -19823,3 +19823,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Every bun run in this workstream used a linked node_modules (the admitted mode), so no fetch is expected; not measured. From round 66 every face and check runs `bun --no-install`."
 }
 ```
+
+## IRPT_BCKEND-W146-S1 -- TO-IB-pr-345: the irpt-export-render logs cannot show whether the fail-open _covered branch ever admitted a cr
+
+```json
+{
+  "id": "IRPT_BCKEND-W146-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~146",
+  "surfaced_at": "2026-10-07T12:11:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-345: the irpt-export-render logs cannot show whether the fail-open _covered branch ever admitted a cross-scope read -- a successful receipt/download read writes no line, and no line records caller scope or the receipt's named accounts; 100 of 141 retained invocations are silent, 0 identified, ~13 days of the window predate the 14-day retention.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~146/IB65-3_exposure_census.json: 531 events / 141 invocations scanned in /aws/lambda/irpt-export-render (13 paginated pages, first 2026-09-24T23:38:48Z, last 2026-10-06T01:36:40Z); 15 export-receipt refusals logged, 100 silent invocations, count 0 identified",
+      "infra/aws/lambda/investor-reporting/export/entry.py:142-154 @31b26bff2d: _covered returns (True, 0, 0) when no account list is named; export_receipt (line 239) logs nothing on that path; the only prints are irpt_export_accepted / irpt_export_async (lines 340, 385-392)",
+      "infra/aws/terraform/investor-reporting/CHANGELOG.json: irpt-export-render deploys d165f160 (2026-10-04T21:55:07Z), 4635d40c (2026-10-05T20:32:32Z), 8ae7ad4a (2026-10-06T01:45:54Z), each carrying the branch (git show <commit>:entry.py); live get-function-configuration LastModified 2026-10-06T01:35:28Z; log group retentionInDays 14",
+      "API Gateway 7k3ed8px20 $default stage: AccessLogSettings null; routes GET/POST /api/scoped/investor-reporting/export... -> integration 61aupci AWS_PROXY -> irpt-export-render (read-only describe calls)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-345 asserts the logs over the window let the worker identify every export read admitted with an empty covered set for a caller whose scope did not include the export's accounts.",
+  "world_is": "The function logs refusals only; an admitted read leaves no line and no record of covered set or caller scope, so the count is 0 identified but exposure is NOT excluded. The fail-open branch is still served live (fix IB-pr-343 not landed), so any read admitted from now is equally unrecoverable until a decision line is logged or the branch is closed."
+}
+```
