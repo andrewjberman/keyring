@@ -134,3 +134,29 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "W1-S1 RULED (issuer, inside its decomposition): the advisor-to-accounts source is the firm ownership map (d08_firm_ownership_map.py), joined to the directory; CU-a-1's --ownership input is accepted. The PRD's S01 text and a naming-registry row for the map's address are the CTO's (carried in the drain-end message). W2-S1 RULED: the five figure rules stated in client_report_figures.py are accepted for round 1 as written; any change is an enrichment item. W4-S1 ROUTED: the render path takes a frozen export bundle plus a portal print route and the template only by name (render_export.cjs:228), so no client-report document can be rendered through it as it stands; the request goes to IRPT_BCKEND's export lane (2.0.0_SA_COO~P2). Hop 5's real render waits on that; the layout to local HTML is built and tested."
 }
 ```
+
+## IRPT_CUSTDY-S3 -- the real advisor pick crashes: 482 of 7022 granted accounts refused by the custodian-key projection
+
+```json
+{
+  "id": "IRPT_CUSTDY-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T08:52:00Z",
+  "one_line": "The issuer's real run of CU-a-1 --pick crashes on live data: 482 of 7022 distinct granted accounts in the live ownership map are refused by the custodian-key projection, and the tool raises instead of counting them as uncovered.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 2026-10-07 ~08:4xZ: python data/assets/scripts/gold/irpt_custody/advisor_client_list.py --pick --as-of 2026-09-30 --ownership s3://opal-data-bd/platinum/49financial/ownership_map.json -> SILVER master=08242234 date=2026-09-30 partition=present rows=103863; SILVER master=08335338 ... rows=107469; then ids.IdRefused: a raw key must be a non-empty value; got str(len=4, opaque-text) at book_of (advisor_client_list.py:226) via ids.project (infra/aws/lambda/investor-reporting/_ids/ids.py:389)",
+      "census over the same map (schema_version 1, LastModified 2026-10-07T05:27:37Z, 472562 bytes): 190 advisors, 24082 grant entries, every raw value str len 11; distinct accounts 7022, projected 6540, refused 482 (all the same IdRefused), advisors with >=1 refused account 31 of 190",
+      "the freshest ownership map is the opal-data-bd copy; the opal-data-portal-v2 advi copy is LastModified 2026-08-21T15:03:25Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decomposition round 1, issuer act 1: CU-a-1 --pick on real data prints the census and the pick; an account that cannot be shown covered excludes its advisor (CTO ruling msg 103).",
+  "world_is": "Hop 1 does not run on real data: the crosswalk maps 482 raw accounts to a value the id minter refuses, and CU-a-1 lets the refusal escape. Under the CTO's rule such an advisor is ineligible anyway, so the repair is to count a refused account as uncovered and print the count in the census. The round is frozen: this is round 2's first item. Why 482 accounts do not resolve through the custodian-key seam is not measured."
+}
+```
