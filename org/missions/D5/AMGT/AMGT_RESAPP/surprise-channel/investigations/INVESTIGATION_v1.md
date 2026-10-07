@@ -21718,6 +21718,31 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd16/BA_top.json"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-S363",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:40:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "BLOCKING",
+  "one_line": "ba-23 cannot be bounded to one company: ANY pool crosswalk mint today is a rebuild that differs from the served object before a single name is added. An in-memory build with NO new row reads 242 records against the served 237, with provenance changed on 231 of 237 records, source_row on 191 and raw_identifier on 158.",
+  "spec_asserts": "Issuer act AMGT-ba-23 (decomposition s.85b) is the first pull of ONE never-covered company: one reference_data call, one identity bronze object, one registrations.json row, and ONE pool crosswalk put whose difference from the served object is that company's record (add_security.py: 'ONE POOL PUT PER RUN').",
+  "world_is": "The pool put is a full rebuild from today's inputs (add_security._build_document: coverage list + registrations.json + the retained universe/v1 input). Read at 09:4xZ with no Bloomberg call and no write, against the served s3://opal-data-harvest/crosswalk/v1/2026-09-29.json (the newest of 6 keys): (1) the identity universe input moved from universe/v1/2026-09-16.json to universe/v1/2026-10-06.json (universe_names 250 -> 302, universe_existing 33 -> 79), adding 5 records the served object lacks: BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity; (2) coverage_source moved from the worker folder deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json to lib/research/identity/data/universe.json, which is consistent with cell ba-13's move drained today @14a683c310 (not traced to its commit here); replacing only that path makes 73 of the 231 changed records identical, so 158 change for another reason; (3) raw_identifier changes on 158 records, e.g. 2602335D_US_Equity '2602335D US Equity' -> '2602335D US'; (4) registrations.json holds 71 rows today against 'registered 49' in the served denominators. No served key is removed (0 keys only in served). So the first seat to mint the pool, for ABNB or for anything else, ships all of that in the one put, and a dated pool key cannot be withdrawn the same UTC day without an S3 delete (the reader serves sorted(keys)[-1]).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The rebuild: add_security._identity_universe() and add_security._build_document(<today UTC>, <the 71 rows of lib/research/identity/registrations.json at HEAD>, ...) run in-process by this seat; denominators and a per-record JSON comparison against crosswalk._read_pool_latest(). Nothing was written and no Bloomberg call was made.",
+      "Fields changed across the 237 served records: provenance 231, source_row 191, raw_identifier 158. Records whose whole body is equal after replacing only the moved coverage path: 73 of 231.",
+      "Denominators served -> rebuilt: records 237 -> 242, MEASURED 237 -> 242, universe_names 250 -> 302, universe_registered 158 -> 163, universe_existing 33 -> 79, universe_refused 59 -> 60, research_folders_live 96 -> 97.",
+      "NOT measured: whether any reader keys on raw_identifier, source_row or provenance; which rule changed raw_identifier on 158 records; whether the 5 added names are wanted in the pool. The page and the Lambda packages were not read for this row.",
+      "The name for ba-23 under CTO ruling msg 30758 (first of PLTR, SHOP, ABNB absent from the crosswalk, registrations.json and the identity bronze; positive control AMD present on all three: 1 pool record, 5 registration mentions, 1 identity bronze object): PLTR is PRESENT in the pool (PLTR_US_Equity, MEASURED, from universe/v1); 'SHOP US' is absent by key but the COMPANY is covered as SHOP_CN_Equity (registration folder 'Shopify SHOP CA'), so it is not a never-covered company; ABNB is ABSENT on all three and by company name (0 pool records, 0 mentions of Airbnb or ABNB, 0 registrations, 0 identity bronze objects). The name is ABNB US Equity."
+    ]
+  },
+  "notes": "Surfaced, not chased; nothing minted. ba-23 is BLOCKED on a ruling, not on a build: either (a) the CTO signs a half whose blast radius is the whole rebuild (the 5 names, the 158 raw_identifier changes, the moved sources), or (b) the pool is first re-minted as its own act under its own pair so that ba-23's put differs by one record, or (c) ba-23 lands the identity bronze and the registration row without --write-pool and the pool waits. This seat recommends (b): it keeps the never-covered company a one-record change. The same rider rides the next mint by ANY seat (AMGT_CORPUS registers through the same step), which is why the row is filed before the half. No COO half for ba-23 is signed."
 }
 ]
 ```
