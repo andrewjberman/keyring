@@ -20313,3 +20313,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-W163-S1 -- IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg,
+
+```json
+{
+  "id": "IRPT_BCKEND-W163-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~163",
+  "surfaced_at": "2026-10-07T18:42:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg, CanonicalProfileReaders.get_user shape), but no production constructor passes one, so the on-behalf admit stays inert in production until those call sites are wired (outside this grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py: __init__ profile_reader=None; current() adds allowedFirmIds only for a verified internal subject when the reader returns the subject's own row with a named firm list; None reader, a raising reader, an absent/unreadable/empty value or ALL yields no field",
+      "comp-find 'InteractiveAccess(' over infra/aws/lambda/investor-reporting: production constructors _authz/served.py:856,873,903; export/submit_installed.py:116; performance/entry.py:171; reports/generate_installed.py:312; ycharts/generate/prospect_submission.py:55 -- none passes profile_reader; served.py:955 already builds CanonicalProfileReaders(boto3.client('dynamodb')).get_user(email)",
+      "prospect_owner() copied every actor key into the retained owner; it now drops allowedFirmIds so the entitlement is never stored in an owner record (same file)",
+      "pytest from infra/aws/lambda/investor-reporting: _scope/tests/test_interactive_access_on_behalf.py + test_interactive_access.py + intake/tests/test_uploads_on_behalf.py -> 28 passed, 7 subtests passed; _scope/tests -> 223 passed"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-354 AC1: current() carries allowedFirmIds from the existing profile reader, injected or the one canonical_profile_reads/current_authority use; edits only interactive_access.py and the new test.",
+  "world_is": "The carry is built and proven against the real InteractiveAccess with a fake reader (inject path allowed by the order). Reaching the live admit needs the Entry/consumer call sites to pass CanonicalProfileReaders(...).get_user as profile_reader, in files outside this grant (e.g. _authz/served.py); not edited. Owed to the issuer: a wiring cell before the TCKT_VNEXT live run. Each current() call with a reader costs an email-index query plus a consistent get_item on opal-users-v2 for an internal subject; the order did not specify caching."
+}
+```
