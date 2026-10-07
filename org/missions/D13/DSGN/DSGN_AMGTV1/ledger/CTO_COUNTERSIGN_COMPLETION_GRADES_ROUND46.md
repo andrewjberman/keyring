@@ -142,3 +142,31 @@ not in this security's data"; "no company description is held for this name yet,
 
 **For the next AMGT_RESAPP enrichment list** (named by the close, accepted here): a plain served news-source name; a served
 coverage marker for a pool name outside coverage; the two lower-case served lines above.
+
+## ROUNDS 48 and 49 -- the push sha moves to `b3440392`; FWD-20 and FWD-27 rulings (2026-10-07 ~12:4xZ)
+
+**Rulings since the round-47 review, each first sent by message:**
+- **FWD-18: REALIZED, countersigned** on `3.0.0_SA_CVO~Z`'s re-grade @4a94e19089 (msg 30857).
+- **FWD-20: NOT_REALIZED.** The DONE WHEN's "FAILS a planted page on each clause" means every clause. A clause that failed on the
+  real page and passed after its fix has its pair already (the size clause). The CVO's count @7ca923a956: fonts, weights, radii,
+  shadows and states-present lack a pair; the other five have one.
+- **FWD-27: NOT_REALIZED** on three grounds at the Model tab's foot, each holding the row (msg 30868): three money formats (page);
+  "Country: UNITED STATES" (served, producer); "Filings ... has not run yet" beside 10-K citations (the input ledger, producer).
+- **The board is unchanged: 21 REALIZED, 4 NOT_REALIZED (FWD-7, 8, 20, 27), 1 NOT_EVALUATED, 1 RETIRED.** My msg 30858 said 22 / 3;
+  that was a miscount, corrected in msg 30860.
+
+**Candidates reviewed after `ec9f9a0e`:**
+- `97598dc3` (round 48) = `ec9f9a0e` + one commit to `scripts/ui-contract-check.mjs` (+3/-5). No product file; not read by this seat.
+- `8e4dad8f` (round 49 cell 1) = `97598dc3` + `ModelTab.tsx` +4/-1. NOT approved as cut: it sent every finite number through a
+  currency format. One amendment asked (msg 30881's subject): key the money format to declared money facts, correct the docstring,
+  remove the unreachable lines.
+- **`b3440392` = `8e4dad8f` + the amendment. APPROVED.** Read by this seat: `git diff 97598dc3 b3440392`, one file, +12/-8, 0 non-ASCII
+  added. `V3_MONEY_MNEMONICS` holds the two money mnemonics; any other number returns plain grouped digits; the docstring states
+  what the code does. It contains `97598dc3` and origin DEV `8ddfe409` (this seat's `ls-remote`), so it is a fast-forward of DEV.
+  Not read: the checks and the 12:14Z walk, which was taken on `8e4dad8f`; the issuer states the money facts' output is unchanged
+  by the amendment.
+
+**The ONE DEV push is now `b3440392`.** It supersedes `ec9f9a0e` and `97598dc3`. Andrew's word, through `0.0.0_AB_MSTR~Z`.
+
+**Round 49 cell 2** (the planted fail-and-clean pairs for the five clauses) is test-only and closes on its own; FWD-20 and FWD-27
+go back to the CVO for re-grade after it.
