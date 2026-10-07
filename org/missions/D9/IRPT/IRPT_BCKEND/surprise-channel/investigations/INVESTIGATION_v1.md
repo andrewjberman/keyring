@@ -18827,3 +18827,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
 }
 ```
+
+## IRPT_BCKEND-W132-S1 -- IB-pr-329 needed one extra line in the builder's field list
+
+```json
+{
+  "id": "IRPT_BCKEND-W132-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~132",
+  "surfaced_at": "2026-10-07T09:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-329 said touch only S3_KEY and the BUILD_ONLY line in build-and-upload.sh; the field list script (TMPJS_LIST) did not emit artifact_s3_key, so one more line was needed there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@da72ce8b3c: TMPJS_LIST console.log object carries name/source_dir/files/staged_from only at the base; added `artifact_s3_key: cfg.artifact_s3_key || ''` (1 line). Without it the per-function JSON has no key to read and the test failed (key= absent)."
+    ]
+  },
+  "spec_asserts": "The worker face says S3_KEY is read with the script's existing JSON tool the way name/source_dir/files are read, implying the per-function JSON already carries the field.",
+  "world_is": "The per-function JSON built by TMPJS_LIST omitted artifact_s3_key; the one-line addition is inside the same file's grant. Line 152 (writeback of the builder key into the map) is untouched and now writes the map's own key back for the three reporting functions."
+}
+```
