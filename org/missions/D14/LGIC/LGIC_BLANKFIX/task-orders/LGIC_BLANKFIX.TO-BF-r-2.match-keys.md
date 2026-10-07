@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -106,6 +106,30 @@ validated with `python .tools/proof-of-spec-check.py <instance> BR2-AC1,BR2-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the three policies of row W2-S4 with what each printed before and prints now; the root run's last line; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the landed shapes; the order is handed
+
+`BF-r-1` is merged (@c1c88e4c49) and the registry's lane landed the shapes (`4.0.0_SA_CRO`, msg 106433). Read each file's `_about`
+before you build.
+
+1. **The role on an exception:** `infra/logic/registry/root_map.json` @039d834c90. An exception may carry `roles`, a LIST of role
+   names (the role's current `name` literal, for example `bd-exporter-ec2-role`). Six `IAM_POLICY` exceptions of `bd-pipeline`
+   carry theirs. An exception with `roles` matches only a declaration whose parent role's name is in the list; `basis` is then
+   `exception-with-role`. An exception without `roles` keeps `basis` `exception` and, for an inline policy the root's Terraform
+   attaches to a role, never overrides the role's system.
+2. **The legacy match:** `infra/logic/registry/legacy_addresses.json` @9a566daa67, `_about.match`: a row matches on
+   (bucket, template) only. No row changed. Confirm `fill_keys` already requires it; the 49 Financial copy of
+   `silver/prices/canonical_prices.parquet` has no row and must print as an ordinary `FIX`.
+3. **A field this face did not know, `fills`** (@914bb833ca): a root's entry may carry `fills`, a list of slot names (today
+   `["system"]` on eleven entries of roots that serve more than one firm). When an entry carries `fills`, the root check and
+   `fill_keys` may fill ONLY the listed slots from that entry: a `{scope}` or `{source}` blank is NOT filled from it and the line
+   prints `HOLE` with the reason "this root serves more than one firm; its map entry does not give the firm". An entry without
+   `fills` behaves as today. `load_map` accepts the field and refuses a value outside `system`, `scope`, `source`. Add the
+   DIFFERENCE CONTROL to the rootmap or keyfill test: the same key under an entry with `fills: ["system"]` is not filled with
+   the entry's scope, and under the same entry without `fills` it is.
+4. `ROOTCHECK-KEYS`' last line is unchanged. The state you start from on the trunk:
+   `ROOTCHECK ok=True root=infra/aws/terraform/bd-pipeline items=140 right=9 fix=111 not_asked=9 pattern=3 carded=0 refused=2
+   hole=6`. The six holes (four carded keys with no name, two EC2 names sharing one target) are NOT yours to close.
 
 ---
 
