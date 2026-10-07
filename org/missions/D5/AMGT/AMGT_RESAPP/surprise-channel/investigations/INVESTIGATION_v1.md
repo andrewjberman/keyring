@@ -21590,6 +21590,50 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/capture_print.py"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W286-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~286",
+  "surfaced_at": "2026-10-07T06:16:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The SecurityAnalysis page carries no Refresh control; the only 'refresh' on it is the sidebar link 'Data Refresh' (/data-refresh). My first pass pressed that link by mistake and left the page, so the walk was re-run twice.",
+  "spec_asserts": "AMENDMENT 1 REFRESH: 'the page may still draw the Refresh control ... press it ONCE on BA and record exactly what the page shows ... If the control is not on the page, say so.'",
+  "world_is": "Measured 2026-10-07 on portal 8ddfe409, role admin userType Dev. On BA (and AMD, ASML_NA), buttons/links whose text, aria-label or title match /refresh/i: 1 per page, tag A, text 'Data Refresh', href /data-refresh, inside the sidebar nav (in_nav true); 0 outside the nav. Run 1 (stamp 20261007T060222Z) matched it with no nav exclusion and pressed it: the walker navigated to /data-refresh (a GET, 0 guard aborts, 0 POST), which ended the BA flow, so the model tab on BA was skipped. Runs 2 and 3 excluded the nav; 3 walker arms in all, each disarmed (REFUSED login after each). Final record is run 3 (stamp 20261007T061041Z). The retired Refresh button is not drawn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/misc/refresh_control.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/captures/021-refresh-ba-no-control-on-page.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/captures/041-refresh-ba-nav-link-pressed-run1.png"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W286-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~286",
+  "surfaced_at": "2026-10-07T06:16:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The Model tab's 'Where each input came from' ledger (6 classes) was read on AMD and ASML_NA but on BA 0 of 3 runs, and it lists 6 input classes where the top-of-page provenance lists 4.",
+  "spec_asserts": "FWD-12 DONE WHEN (PRD v0.41, line 611): 'on a real name, each input's source, last-run time and run result are read on the page and agree with /freshness.'",
+  "world_is": "Measured 2026-10-07 on portal 8ddfe409, 3.5 s after pressing the Model tab: BA [data-ledger-class] count 0 in runs 1 (not reached), 2 and 3; AMD 0 in run 2 and 6 in run 3; ASML_NA 6 in runs 2 and 3. Top-of-page [data-input-provenance] is present with 4 rows on all three names and agrees with /freshness on BA (Bloomberg 2026-10-06, Seeking Alpha 2026-09-11, pack 2026-10-06; web search not collected) and on AMD/ASML_NA (Seeking Alpha not read = 'Not collected'). The Model ledger reads six classes (market data, filings, news, social, web, Seeking Alpha) and 'News ... last ran October 1st' has no counterpart on /freshness.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd12/BA_model_ledger.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd12/AMD_model_ledger.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd16/BA_top.json"
+    ]
+  }
 }
 ]
 ```
