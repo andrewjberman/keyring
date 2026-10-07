@@ -170,8 +170,9 @@ halt_gate_resolve_serial() {
 # Two checks, same resolver contract as inbox-watch.sh:82-89 / agent-poller.py
 # _find_agent_folder:
 #   (1) the BASE serial must match an agent home folder under the tier dirs;
-#   (2) a ~lane suffix must be a single uppercase letter (every fabric lane is:
-#       ~A..~E, ~Z; "Zn" is exactly the corruption shape that got through).
+#   (2) a ~lane suffix must be uppercase letters only AND that lane's nested inbox
+#       org/mcp/inbox/<base>/~<lane>/ must exist ("Zn" is refused twice over: a
+#       lowercase letter, and no inbox). The letter count is no longer a rule.
 # Unknown -> caller renders the loud exit-3 fail-closed banner. NEVER silent.
 # --- SPINE v3 WORKER (2026-09-04; 2.0.0_SA_COO~A 94157, gate 1 of v3's first worker drain) ---------
 # 0.9.0_WK_<CODE>~<n> has no home folder and a DIGIT lane, so the two checks below refused every
@@ -216,22 +217,25 @@ halt_gate_worker_issuer() {
 }
 
 halt_gate_validate_serial() {
+  # Sets HALT_GATE_VALIDATE_REASON on refusal so the banner names WHICH check failed (CTO ruling
+  # CTO_RULING_HALT_GATE_MULTI_LETTER_LANE_20261007.md, row NFRA_CTLPLN-Z-S1): empty-serial | worker-no-order |
+  # malformed-lane | unknown-base | lane-no-inbox. Empty on admission.
   local serial="$1" base lane tier d found=0
+  HALT_GATE_VALIDATE_REASON=""
   base="${serial%%~*}"
-  [ -n "$base" ] || return 1
+  [ -n "$base" ] || { HALT_GATE_VALIDATE_REASON="empty-serial"; return 1; }
   case "$serial" in
     0.9.0_WK_*~[0-9]*)
-      HALT_GATE_WORKER_ISSUER="$(halt_gate_worker_issuer "$serial")" || return 1
+      HALT_GATE_WORKER_ISSUER="$(halt_gate_worker_issuer "$serial")" || { HALT_GATE_VALIDATE_REASON="worker-no-order"; return 1; }
       export HALT_GATE_WORKER_ISSUER
       return 0 ;;
   esac
   if [ "$serial" != "$base" ]; then
     lane="${serial#*~}"
-    # A lane is 1-3 UPPERCASE letters: ~O, and also the placed multi-letter lanes ~MI/~MP/~AI (placement
-    # @094c84f299) and ~ZI/~ZZ/~ZZZ. A single-letter class refused them all with exit 3 (row NFRA_MCPORTAL-Z-S15).
+    # A lane is one or more UPPERCASE letters (~O, ~RV, ~MI, ~AI ...). The letter COUNT was a stand-in for existence
+    # and went wrong twice (single letter, then 1-3); existence is tested directly below, against the lane's inbox.
     case "$lane" in
-      [A-Z]|[A-Z][A-Z]|[A-Z][A-Z][A-Z]) : ;;
-      *) return 1 ;;
+      ""|*[!A-Z]*) HALT_GATE_VALIDATE_REASON="malformed-lane"; return 1 ;;
     esac
   fi
   for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do
@@ -242,7 +246,14 @@ halt_gate_validate_serial() {
       esac
     done
   done
-  [ "$found" -eq 1 ]
+  [ "$found" -eq 1 ] || { HALT_GATE_VALIDATE_REASON="unknown-base"; return 1; }
+  # EXISTENCE of the lane (Andrew-direct 2026-07-30: a nonexistent serial fails loudly). A seated lane has its nested
+  # inbox org/mcp/inbox/<base>/~<lane>/; an uppercase lane nobody seated ("~QQ") has none and is refused here. The
+  # inbox root is the SHARED root's (gitignored, absent from a linked worktree), the same root the scan itself reads.
+  if [ "$serial" != "$base" ] && [ ! -d "${HALT_GATE_INBOX_ROOT}/${base}/~${lane}" ]; then
+    HALT_GATE_VALIDATE_REASON="lane-no-inbox"; return 1
+  fi
+  return 0
 }
 
 # --- STOP-class classifier (ADHC_HALTGT.000 canonical rule) ---------------------
@@ -354,16 +365,27 @@ halt_gate_check() {
     printf 'HALT-GATE: SERIAL RESOLVES TO NO KNOWN AGENT -- BLOCKED (fail-closed)\n' >&2
     printf '======================================================================\n' >&2
     printf '  Resolved serial: %s\n' "$serial" >&2
-    printf '  No agent home folder under org/tier*_*/ matches its base, or its\n' >&2
-    printf '  ~lane suffix is not a single uppercase letter; a spine-v3 worker\n' >&2
-    printf '  (0.9.0_WK_<CODE>~<n>) is admitted only while a NON-TERMINAL task\n' >&2
-    printf '  order under <CODE> at HEAD is issued_to it. This is usually a\n' >&2
-    printf '  CORRUPTED session serial file (escaping slip / stray character):\n' >&2
-    printf '    org/mcp/sessions/%s.serial\n' "${CLAUDE_CODE_SESSION_ID:-<unset>}" >&2
-    printf '  Scanning a nonexistent inbox would PASS while a real [STOP] to the\n' >&2
-    printf '  real you sits unread. Fix the serial file and re-run:\n' >&2
-    printf '    printf %%s\\\\n "<your-real-serial>" > "org/mcp/sessions/%s.serial"\n' \
-      "${CLAUDE_CODE_SESSION_ID:-<CLAUDE_CODE_SESSION_ID-IS-UNSET>}" >&2
+    printf '  Check that failed: %s\n' "${HALT_GATE_VALIDATE_REASON:-unknown}" >&2
+    case "${HALT_GATE_VALIDATE_REASON:-}" in
+      unknown-base)
+        printf '  No agent home folder under %s/org/tier*_*/ matches the base.\n' "$HALT_GATE_REPO_ROOT" >&2
+        printf '  In a SPARSE worktree this also fires for a real seat whose home folder is outside the cone:\n' >&2
+        printf '  add org/<tier>/<base>*/ to the cone, or run from the shared tree.\n' >&2 ;;
+      malformed-lane)
+        printf '  The ~lane suffix is not uppercase letters only. A stray character in the session serial file\n' >&2
+        printf '  (org/mcp/sessions/%s.serial) gives this shape.\n' "${CLAUDE_CODE_SESSION_ID:-<unset>}" >&2 ;;
+      lane-no-inbox)
+        printf '  The lane is well formed but has no inbox at %s/<base>/~<lane>/,\n' "$HALT_GATE_INBOX_ROOT" >&2
+        printf '  so no such lane is seated here. A valid lane that was never seated is NOT a corrupt file.\n' >&2 ;;
+      worker-no-order)
+        printf '  A spine-v3 worker (0.9.0_WK_<CODE>~<n>) is admitted only while a NON-TERMINAL task order under\n' >&2
+        printf '  <CODE> at HEAD is issued_to it. None was found.\n' >&2 ;;
+      *)
+        printf '  The serial is empty or could not be classified.\n' >&2 ;;
+    esac
+    printf '  Scanning a nonexistent inbox would PASS while a real [STOP] to the real you sits unread.\n' >&2
+    printf '  Resolve your serial from SESSION EVIDENCE (org/XXX.md Step 1). NEVER write a different serial\n' >&2
+    printf '  to make this gate pass: the gate would then scan another agent'"'"'s inbox and exit 0.\n' >&2
     printf '======================================================================\n' >&2
     return 3
   fi
