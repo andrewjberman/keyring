@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -113,7 +113,7 @@ shell document, the export render document, another instance, a rewrite of a gra
 <criterion id="CTa1-AC3" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect></criterion>
 `CTa1-AC3` -- the control: the root validates, nine names are the builder's, every document fits the limit.
 
-<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3</expected_criteria>
+<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -133,6 +133,12 @@ shell document, the export render document, another instance, a rewrite of a gra
 infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/iam.tf
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_reached_roles.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_routes_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -169,3 +175,105 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: CTO msg 106138; `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_FOR_THE_DELLS_20261007_1000Z.md` section 1 (read in
 the working tree at the cut; its commit was pending); decomposition ACCESS round 1. Base dry-run at the cut: CTa1-AC1 base FAIL as
 expected (no script); CTa1-AC2 base FAIL as expected (no `ssm_ok`); CTa1-AC3 base FAIL as expected (8/8 at the base).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~10:4xZ) -- REOPENED: the boundary is the ROLE reached; a role census, then targeted Deny statements
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits 8b260a787e and 3357889f21 are
+inherited state. Authority: `1.0.0_SA_CTO` msg 106158 and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_NFRA_CTLPLN_W14_S2_THE_BOUNDARY_IS_THE_ROLE_REACHED_20261007.md` @ce594ed1c9.
+READ THAT FILE IN FULL FIRST: it is short and it is the specification. Its points, verbatim where it matters:
+- "A. The 10:0xZ limit is WITHDRAWN. It was aimed at the wrong object ... To deploy a thing IS to act as its role."
+- "B. ... the question that decides every route is one question about the ROLE at the end of it: can that role write IAM, write or
+  stop the audit trail, or delete production data?"
+- "C. The census, read-only ... first act: every role a Dell can execute as through an action its two policies allow -- the execution
+  role of each function it may update, the task role of each task it may register or run, the instance role of each host that runs a
+  command document it may write or downloads an artifact prefix it may put to. For each role: does any attached or inline policy
+  allow an IAM write, a CloudTrail write, or a delete on `opal-data-*`. Print N of N. Where the answer is YES: a Deny for the Dell
+  group on the route to that role (that function, that document, that prefix), added to the pending resource-policy apply. That set
+  REPLACES the name-based list of ten protected functions ... wherever the two differ; the access-deciding functions stay protected
+  in any case. Where the answer is NO: the route is the deploy ability, accepted ... No blanket Deny on document writes or on the
+  `ec2/` prefix."
+- "D. The dell2 command grant STANDS, on the census. `ssm:SendCommand` for the dell2 user on instance `i-0167fd745ad906a66` with the
+  two resident documents as they are, free-text parameters included, PROVIDED the census reads NO for that host's instance role. If
+  it reads YES, the grant waits and the role is narrowed first, in the project that owns it."
+Gate limb: none graded this modification. WHERE THIS AMENDMENT AND THE FACE DIFFER, THIS AMENDMENT GOVERNS. The classification of
+documents by free-text parameters built above STAYS as a record (it is true); it no longer decides the grant.
+
+**THE WORK, in this order. Step 1 is the urgent deliverable: commit it as soon as it is done, before steps 2 to 4.**
+
+1. `tests/derive_reached_roles.py` -- THE CENSUS, read-only against the account. `--live` (default) and `--from-file <json>`.
+   - **Routes.** (a) FUNCTIONS: every Lambda function in every region the account uses (re-use the listing method of
+     `tests/derive_protected_functions.py`; import it) -> its execution role (`Role`). Mark each function `UPDATABLE` or
+     `DENIED-TODAY` by the Dell group's current Deny (`protected_functions.json`). (b) TASKS: every ACTIVE ECS task definition (latest
+     revision per family; `ecs list-task-definition-families --status ACTIVE`, `describe-task-definition`) -> `taskRoleArn` and
+     `executionRoleArn` (a Dell may `ecs:RunTask` an existing definition with a command override, and `ecs:RegisterTaskDefinition`;
+     note per route that `iam:PassRole` is denied to a Dell today, so registering a NEW definition with a role is refused and
+     running an EXISTING one is not). (c) HOSTS: every EC2 instance (`ec2 describe-instances`, all states but terminated) -> its
+     instance profile -> the role(s) in it (`iam get-instance-profile`). For each host also record WHICH route reaches it, by
+     reading the repository: the command documents that target it (from `tests/derive_ssm_documents.py`'s reading and the Terraform
+     that names the instance) and the S3 artifact prefixes its documents or bootstrap download and run. A host no document or prefix
+     reaches is listed as `NO-ROUTE-FOUND` and still censused (the route search is the weaker read; the role read is the control).
+     Print the count per route kind and the count of DISTINCT roles: that count is N.
+   - **Per role, the three questions, answered by the cloud's own evaluator:** `iam simulate-principal-policy` with
+     `--policy-source-arn <role ARN>` for: IAM WRITE -- `iam:CreateUser`, `iam:CreateAccessKey`, `iam:AttachRolePolicy`,
+     `iam:PutRolePolicy`, `iam:CreateRole`, `iam:UpdateAssumeRolePolicy`, `iam:PassRole` (resource `*`); TRAIL WRITE --
+     `cloudtrail:StopLogging`, `cloudtrail:DeleteTrail`, `cloudtrail:UpdateTrail`, `cloudtrail:PutEventSelectors` (resource `*`);
+     DATA DELETE -- `s3:DeleteObject` on `arn:aws:s3:::opal-data-assets/x`, on one object ARN in EACH other `opal-data-*` bucket the
+     account has (list them: `s3api list-buckets`; this is 24 buckets at the last census), `s3:DeleteBucket` on one, and
+     `dynamodb:DeleteTable`, `rds:DeleteDBInstance` (resource `*`). A role is `YES-IAM` / `YES-TRAIL` / `YES-DELETE` when ANY action of
+     that class returns `allowed`; print the allowed actions (and for deletes, which buckets). A simulator call that errors is
+     `UNREAD`, counted, never `NO`. Batch the action names per call; bound the whole run (it may be several hundred calls: print
+     progress, and if a full `--live` run cannot finish inside 120 s, run it once outside the bound, save the result, and run the
+     criteria on the saved file under the bound -- say so).
+   - **Say what the evaluator cannot see:** `simulate-principal-policy` evaluates the role's identity policies (and a permissions
+     boundary if you pass it); it does not apply resource policies on the target (a bucket fence may still refuse) or organisation
+     service control policies. So a `YES` is "the role's own policies allow it" and a `NO` is firm for identity policy. Print that
+     caveat once in the output and put it in your report.
+   - Save everything to `tests/reached_roles_census.json` (under `tests/`: it names functions, hosts and buckets). LAST line
+     `ROLE-CENSUS functions=<f> tasks=<t> hosts=<h> roles=<n> read=<r> unread=<u> yes_iam=<a> yes_trail=<b> yes_delete=<c> yes_any=<y> no=<z> resident_host_role=<YES-..|NO|UNREAD|NOT-FOUND> ok=<True|False>`,
+     `ok=True` only when `r == n` and `u == 0`. `resident_host_role` is the verdict for the instance role of `i-0167fd745ad906a66`.
+   COMMIT STEP 1 (the script, the saved census, a short table `REACHED_ROLES_CENSUS.md` in your deliverables folder: per YES role, the
+   routes that reach it and what it may do) BEFORE going on. Then continue.
+2. THE TARGETED DENY, rendered from the census (`--write` / `--check`), never typed: one statement set `DenyRoutesToPrivilegedRoles`
+   for the Dell GROUP naming, for each `YES` role, the routes to it: the functions whose execution role it is (the Lambda write
+   actions of the existing `DenyProtectedFunctions`), the task definition families whose task role it is (`ecs:RunTask`,
+   `ecs:RegisterTaskDefinition`, `ecs:UpdateService` on that family's ARNs), the command documents that target a host whose role it
+   is (`ssm:UpdateDocument`, `ssm:UpdateDocumentDefaultVersion`, `ssm:CreateDocument`, `ssm:DeleteDocument`, `ssm:SendCommand` on
+   those document ARNs), and the artifact prefixes such a host downloads and runs (`s3:PutObject` on those prefix ARNs only -- never
+   a whole bucket and never the whole `ec2/` prefix unless every host under it reads YES; say which).
+   - It goes in a NEW group policy `dell_routes_policy.json`, name `cloudops-dell-agent-routes-policy`
+     (`lib/opal_naming.name('cloudops', None, 'dell-agent-routes', 'policy')`), tagged `DisplayName = "DellBoxes"`, attached to the
+     group. Each policy document must stay within 6,144 characters without whitespace and the group may carry at most 10 managed
+     policies: if the set needs MORE THAN TWO such policies, do NOT render it -- stop after step 1, file a BLOCKING row with the
+     counts, and report: the form is then the CTO's to rule (for example a Deny by role-owning project prefix).
+   - The ten name-based protected functions: the four access-deciding ones ruled in by name and the authorizer target and the five
+     edge functions STAY protected "in any case" (the existing `DenyProtectedFunctions` statement is not removed and not edited by
+     you); the census set is added beside it. Report the overlap: which of the ten read YES, which read NO.
+3. THE dell2 GRANT, by ruling D: IF `resident_host_role` reads `NO`, `dell2_ssm_policy.json` gains
+   `SendResidentDocumentsToResidentHost`: Allow `ssm:SendCommand` on exactly the instance ARN and the two resident document ARNs
+   (`irpt-ycharts-deploy`, `irpt-ycharts-run`), and those two names leave `DenyShellDocuments` (the AWS shell documents and the
+   export render document stay denied). IF it reads `YES-*` or `UNREAD` or `NOT-FOUND`, change nothing in that file and say so:
+   the grant waits.
+4. `tests/simulate_policy.py`: the sixth block is updated to the outcome of step 3 (if granted: dell2 send of each resident document
+   to the instance -> allowed, 2 arms; to another instance -> denied; `AWS-RunShellScript` -> explicitDeny; the export render
+   document -> explicitDeny; dell1 -> denied), and a seventh block is added for step 2: for up to three `YES` roles, the Dell's
+   route to each is `explicitDeny` (function update; document write; prefix put, as each exists), and for two `NO` roles the route
+   stays `allowed`. LAST line adds `routes_ok=<k>/<n>` after `ssm_ok=<k>/<n>`; with no YES role the block reads `routes_ok=0/0` and you
+   say so. `tests/check_identity.py`: the name comparison covers the new policy if it exists (10 names) and sizes.
+
+**ACCEPTANCE.** CTa1-AC1 is unchanged. CTa1-AC2's expectation becomes `respol_ok=11/11 ssm_ok=` (unchanged text) and the same line
+must read `all_ok=True` with `routes_ok` present. CTa1-AC3's expectation becomes `policy_size_ok=True ok=True`. One criterion is ADDED:
+
+<criterion id="CTa1-AC4" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_reached_roles.py --from-file infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json</invocation><expect>unread=0</expect></criterion>
+`CTa1-AC4` -- every role a Dell can execute as was read by the cloud's evaluator, N of N. The same line must read `ok=True`, stated in
+the proof row, with the three YES counts and the resident host's verdict reported.
+
+**BOUNDS for this amendment.** Read-only AWS calls only: `iam simulate-principal-policy`, `iam simulate-custom-policy`,
+`iam get-instance-profile`, `iam list-attached-role-policies` / `list-role-policies` / `get-role` (to explain a YES), `lambda
+list-functions`, `ecs list-task-definition-families`, `ecs describe-task-definition`, `ec2 describe-instances`, `ec2
+describe-regions`, `s3api list-buckets`, `sts get-caller-identity`. No write, no send, no run, no apply, no plan against the backend.
+Function, host, role and bucket names go only in files under `tests/`, in the rendered policy files (where they must), in
+`REACHED_ROLES_CENSUS.md` in your deliverables folder, and in your report. If the commit gate refuses a firm-name string in a policy
+file, do NOT override: file a BLOCKING row, keep step 1 committed, and stop. Write a NEW proof instance over the old one covering all
+four ids, validate it with `python .tools/proof-of-spec-check.py <instance> CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4`, and flip `<status>`
+back to `complete` only when all four pass.
