@@ -1,87 +1,92 @@
 # IRPT_BCKEND~M -- Holdings with the snapshot model overlay -- status
 
-Seat `2.0.0_SA_COO~M` (CLAUDE). Contract
-`org/tier1_exec/1.0.0_SA_CTO/deliverables/IRPT_MVP_COMPLETION_20260922/CONTRACT.md`. Reviewer `3.0.0_SA_CVO`.
-As of 2026-10-02T18:1xZ. Brought current on CTO batch 178 item (1) (msg 104327); the 10-01 pins below are replaced.
+Seat `2.0.0_SA_COO~M2` (CLAUDE, dell2), successor of laptop `2.0.0_SA_COO~M`, which is FINAL on this project (handoff
+@1640a0e86e; laptop `1.0.0_SA_CTO` msg 106037). One issuer for M: `~M2` (`1.0.0_SA_CTO~DELL2` msg 160).
+- CTO: `1.0.0_SA_CTO~DELL2` writes the M round analyses.
+- Reviewer: `3.0.0_SA_CVO` (dell2).
+- As of 2026-10-07 ~14:2xZ. This replaces the 10-02 file of the laptop ~M.
 
-Mode: FULL (no live lease for this seat; `.tools/drive-mode.py status`). The BD r3 re-land stays first (batch 178).
+Mode: FULL (`.tools/drive-mode.py read IRPT_BCKEND`). Loop: `/canonical-drive` 30m. Authority: the `org/ref/LIVE_ARMS.md`
+DELL2 block, class CHOSEN, @3e5ce43ebb.
 
-Claim words: `measured` = read this session; `held` = cited from a record, not re-read.
+Claim words: `measured` = read this session on dell2; `held` = cited from a record and not re-read.
 
-## Pins
+## FWD-5 -- this project's share (join correctness, the reconcile control, the denominators)
 
-| What | Value | Claim |
-|---|---|---|
-| Deployed `irpt-holdings` | CodeSha256 `tS/APci3Mz/YRDP7pJboAVqKabShek9jYUqvQDIYwwE=`, LastModified 2026-10-01T20:13:14Z (ledger `irpt-inf-split-positions-m-20261001` leg R: split accounts list their positions, a two-view account counts once) | measured (get-function-configuration 2026-10-02 17:5xZ) |
-| Producer `holdings_snapshot.py` at CLOUD | daaef69b9d: `ASSET_CLASS_VALUES` admits `multi_asset` (CTO batch 164, readers first); NOT deployed; no row carries the class | measured |
-| Published contract at CLOUD | `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` admits `multi_asset` at nodes[], security_aggregates[], class_totals[] (daaef69b9d); `holdings/contracts` copy the same; `_contracts` copy by 2.0.0_SA_COO~P @16a3fcfd6a. The `irpt-holdings` package re-stages from committed blobs at its next move (STAGE_MANIFEST pins) | measured |
-| Served publication read | 2026-10-01 business date, built 14:16-14:17Z: 49financial rev 3413e2b5a3bd (153,345 nodes), inflection 100a0dc22f12 (36,048), cottonwood a3751a6acff2 (17,872) | measured (gold parquet per manifest, sha256 checked) |
-| CLOUD (local) / origin/CLOUD | 7421b39e62 / 92a12727600d (ls-remote read 18:1xZ); this seat's commits are LOCAL and travel on the integrator's push | measured |
+All cases below were read on the served 2026-10-05 publication.
+
+| PROOF item | round | result | claim |
+|---|---|---|---|
+| before/after reconcile at 3 of 3 firms, every arm | 30 (E-M1) | account sum = served custody total to the cent (49F 1,825,384,091.11; INF 208,044,040.13; COT 545,819,721.23); served reconcile blocks read reconciled | measured (`R30_CHECKS`, compile @471e285eb1) |
+| unassigned account | 31 (E-M2) | 1,876 of 1,876 pass: served as an ACCOUNT, the subtree ties, no model node beneath (49F 1,645, INF 231; COT lists 0) | measured (dell2 re-check @6458a5a9d3) |
+| unmatched join | 31 | reconciles, with the residual visible: 49F 168,525,497.37 USD across 1,645 of 7,597 accounts | measured (compile @1ec3aa4eef) |
+| blended model | 31 | COT, 366 instances; the named one ties | measured |
+| multi-relationship membership | 32 (E-M3) | COT acc_0f1e215e521798954f80f291 is in 2 relationships (3 of 860 accounts); 58 rows collapse to 29 unique; rebuilt = served 462,857.7422 | measured (compile @d1abea06f8) |
+| coverage denominated | 31 | 49F 5,952 of 7,597; INF 627 of 858; COT 475 of 860 | measured |
+
+**Grade:** the CTO's round-31 analysis said that E-M3 met makes this project's FWD-5 share REALIZED, and E-M3 is met. The
+grade itself is the CTO's, after the CVO's round-32 sweep, and is not yet written. FWD-5 as a whole then waits only on
+IRPT_FNTEND's view.
 
 ## Live thread
 
-LIVE END TO END for the Holdings tab at three firms (held from the 09-27 walks). Read this session on the served
-2026-10-01 publication (`MDPF_SECCLASS_M/R8_CHECKS/HOLDINGS_PUBLICATION_ROW_READ_20261002.json`): every written
-classification row a firm holds is served with that row's class and sub class (cot seed 19 of 19, name-pattern 3 of 3,
-BD first act 10 of 10 held, BD mapped 25 of 25 held); three row ledgers closed on it (7421b39e62).
+The Holdings tab is LIVE END TO END at three firms. This is held from the 09-27 walks and was not walked this session.
+Rounds 30-32 read the served publications and walked no page.
 
-Inflection split accounts (row S259) on the served publication: 857 accounts, 0 whose securities fail to sum; 71 split
-accounts list 3,963 positions as part NOT_STATED (35,466,629.25 USD); 786 single-view accounts. The walked split account
-is owed (below).
+## Rounds this seat issued
 
-## Acceptance IDs (goal record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260923_224xZ_COO_M_GOAL_HOLDINGS_SNAPSHOT_MODEL_OVERLAY_LOOP_20M.md`)
+| round | cell | order | slot | drain | rows |
+|---|---|---|---|---|---|
+| 30 | IB-mr-301 (E-M1) | TO-IB-m30-301 | ~152 | @1758606f46 | S352 (disarmed by S362), S356 |
+| 31 | IB-mr-311 (E-M2) | TO-IB-m31-311 | ~153 | @5eea584574 | S363 (disarmed by S367), S366 |
+| 32 | IB-mr-321 (E-M3) | TO-IB-m32-321 | ~154 | @3daee801f3 | S368 (disarmed by S370) |
 
-| ID | State | Evidence |
-|---|---|---|
-| (1) signed-in journey 49F / INF / COT | MET | held: ~D HARs w8 + w9 (09-27) |
-| (2) every active 49F/INF account resolvable or refused explicitly | MET on the then-current directories | held: census @f247a922a5 |
-| (3) COT soundness, window disclosed | built and served; page re-read owed with the walks below | held (10-01 build read) |
-| W2-11, W2-15, W2-19 served | SERVED since 2026-10-01 06:31:21Z; CVO grade owed | held |
-| S259 split accounts list positions | SERVED (route 20:13:14Z; publication above, 71 / 786 branch count) | measured; walk owed |
+Each order was cut on a delivered FILE, pinned by commit and sha256, because dell2 could not make the read itself.
 
-## Write claims
+## Constraints this lane works under
 
-None open on IRPT_BCKEND paths. (MDPF_SECCLASS act ledgers are tracked in that project's records.)
-
-## Next proof
-
-The two walks the open ledgers still owe on the served 2026-10-01 publication: one Inflection split account
-(`acc_015d15b45d7a8ac71f951a67`, ****3282, 771,891.63 USD) ties on the page (ledger `irpt-inf-split-positions-m-20261001`
-leg S), and one Cottonwood selection holding SPYI / PSLV ties (ledger `secclass-cot-seed-rows-m-20261001` leg S).
+- **Firm buckets from dell2:** 49financial and inflection READ since the fence join (~10:44Z). Cottonwood is still refused
+  (head-object 403, last probed 14:02Z), so a Cottonwood read goes to the laptop as a FILE under the standing rule
+  (`1.0.0_SA_CTO~DELL2` msgs 217 and 361). Measured.
+- **`holdings_snapshot.py`** has one writer: dell1's SC-e-56 (`2.0.0_SA_COO~M1`), decision 106191. No dell2 seat edits it.
+  Its RELEASE runs through IRPT_BCKEND: `~M2` gives the COO never-widen half and `1.0.0_SA_CTO~DELL2` the CTO half.
+- **Row ids:** only dell2 mints IRPT_BCKEND ids (08:5xZ ruling). S370 exists twice, here and on origin (laptop ~C's).
+  `~M2` keeps S370, and the laptop row comes back as a FILE (`0.0.0_AB_MSTR~DELL2` msg 614).
+- **No bun install, no downloads.** Research browsing is allowed only when necessary (Andrew-direct ~14:0xZ; rules
+  106215 and 106221). No `~M2` order runs bun or reaches the internet.
 
 ## Next-list, in order
 
-1. **BD r3 re-land first** (batch 178): legs S of `secclass-bd-thread-r4-reland-m-20261002` at tonight's 22:10Z silver
-   and 23:00Z gold fires; Cottonwood re-point leg R (QA run fired 17:59:30Z) and leg S (the 10-02 scheduled run).
-2. **The two walks above**, then close both ledgers' legs S.
-3. **Batch 178 item (2):** once 2.0.0_SA_COO~D's H-1 (dropping the "Smaller holdings" tile) lands, read the distinct-
-   security count for the proof snapshots (49 Financial's largest client and one Cottonwood client), and bring brief 3
-   item 1.4(d), the TARGET fold, back as its own ask with that measurement.
-4. **multi_asset readers packet** (batch 164): producer + contract on CLOUD; Advisor Intelligence readers on portal DEV
-   90a31d7d; ~D's half on DEV 7bcedf1b. CTO batch 183: no producer re-mint now; when a portal PROD promote carries the
-   readers, ONE packet ships the producer re-mint (every changed member attributed to its owner) WITH the rows, and this
-   seat's holds 103971 and 103981 are released by their own conditions.
-5. The -0.0 fix @38b72bf469 is LIVE: the deployed `irpt-holdings` (tS/APci3...) carries it (ledger `irpt-inf-split-positions-m-20261001` leg R, 2026-10-01 20:13Z; measured from that leg's proof). The route reads its staged contract only for block presence (`snapshot.py:228`), never to validate a served enum, so the contract pin rides the rows packet (asked of the CTO, 20:1xZ).
+1. **Wait for the CTO's answer to round 32.** Then issue its M items in one issuance the same tick, or record FWD-5's
+   share REALIZED if it has none.
+2. **dell1's release ask for `holdings_snapshot.py` (SC-e-56):** sign or refuse the COO half against its stated blast
+   radius (the three firms' Holdings publications, rollback per key).
+3. **The unclassified Cottonwood tickers** (BDCASHIN, FCASH, CQP plus 5, from the 10-05 build log). Andrew's word is
+   recorded @fa8d7d1cf7: a "Cash" token is the cash class, and the others can be web-searched. The tickers are dell1
+   `~M1`'s, relayed through `0.0.0_AB_MSTR~DELL2` (msg 667). This seat does not classify them.
 
 ## Dependencies
 
-| Needs | From (owner) | Interface / pin | State |
-|---|---|---|---|
-| H-1 (the treemap's "Smaller holdings" tile dropped) | `2.0.0_SA_COO~D` | brief 3 H-1..H-3 | AWAITED (batch 178 routed it there) |
-| CTO review of the portal candidate | `1.0.0_SA_CTO` | portal 6245e92d | ASKED 18:07Z |
-| multi_asset colour and IR readers | `2.0.0_SA_COO~D` | portal 262be0a4 | CONSUMED: on DEV 7bcedf1b |
-
-## Parked
-
-| Question (off-thread) | Owner | Un-parks when |
+| Needs | From (owner) | State |
 |---|---|---|
-| Cottonwood serves JABAX (Janus Henderson Balanced, a balanced fund) as alternatives / Structured Notes by name alias on the fallback -- a multi_asset member by batch 164's boundary | `2.0.0_SA_COO~M` (MDPF_SECCLASS) | the multi_asset rows act (after PROD readers) |
-| 49 Financial: most custody has only a TARGET drill (the remainder block); brief 3 item 1.4(d) | `1.0.0_SA_CTO` | item 3 above brings it back with its measurement |
-| The declared fallback still classes an unknown 1-5 letter ticker `equity` by its shape | `2.0.0_SA_COO~M` | MDPF_SECCLASS E8 and E9 land (the fallback's sunset) |
-| PRD v0.22 ruling 22 (NOT_FOUND vs `OBJECT_NOT_COVERED` in `_authz` / `holdings/entry.py`) | `2.0.0_SA_COO~P` | ~P or the CTO says whether ruling 22 moves that code |
+| round-32 sweep and slug | `3.0.0_SA_CVO` | packet READ 13:15Z (id 605) |
+| FWD-5 share grade, round-33 items | `1.0.0_SA_CTO~DELL2` | after the slug |
+| release ask for `holdings_snapshot.py` | dell1 `2.0.0_SA_COO~M1` | not yet sent |
+| Cottonwood read access for dell2 | NFRA_CTLPLN fence apply (TO-APPLY-4) | 403 at 14:02Z |
+
+## Retired from the 10-02 list
+
+| item | why it is retired |
+|---|---|
+| BD r3 re-land | MDPF_SECCLASS, now on dell1 |
+| `multi_asset` readers packet | retired by Andrew's six-class word |
+| the two walks | the INF split-account ledger closed 10-02; the COT seed-rows ledger closed 10-02 |
+
+The `secclass-*`, `bd-securities-cot-new-p1-m-*` and `cot-cash-admission-m-*` ledgers in `.open_deploys/` are
+MDPF_SECCLASS's and went to `~M1` with the laptop ~M's final handoff.
 
 ## Limits
 
-The publication reads use each manifest's gold parquet (the same revision's nodes, sha256 checked), not the platinum
-partitions, because the network read the 188 partitions too slowly to finish; the page has not been walked this session.
-No product ID is PASS until the CVO grades a pinned candidate.
+- No page was walked this session.
+- Every read was of the 2026-10-05 publication.
+- The multi-relationship case rests on one of the three accounts; the criterion asks for one.
