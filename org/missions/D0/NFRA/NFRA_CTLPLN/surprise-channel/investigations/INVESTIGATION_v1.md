@@ -2456,3 +2456,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
 }
 ```
+
+## NFRA_CTLPLN-W13-S18 -- TO-CT-e-1 build step 4: install-check already labels a missing dependency import_missing_dep and an own-module miss failed; both new cases pass on the unchanged code, so the dell2 failed=3 is not reproduced
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T19:23:53Z",
+  "one_line": "The label repair the order describes is already in kit_python_repack.py at HEAD (the own-module remap and the import_missing_dep branch, case 6 of its test): a synthetic missing dependency reads import_missing_dep and a synthetic own-module miss reads failed, with the code unchanged. Why dell2 printed failed=3 for pandas_market_calendars, yfinance and s3fs is NOT reproduced here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/devices/kit_python_repack.py @054ff1bf4b lines 815 and 874-875: ModuleNotFoundError naming a module outside the package's top-level names returns 'missing' and is counted import_missing_dep; a name inside them is remapped to failed. git diff f0d4d48d4e HEAD on the file is empty, so dell2 ran this code",
+      "python org/devices/test_kit_python_repack.py before any edit: PY-REPACK-TEST cases=10/10 ok=True; case 6 asserts import_missing_dep=1 failed=0",
+      "a meta-path blocker raising ModuleNotFoundError for exchange_calendars, frozendict and aiobotocore, run against the installed pandas_market_calendars, yfinance and s3fs on Python 3.12, ends each traceback in the plain 'ModuleNotFoundError: No module named' line the regex reads, and their top_level.txt names are the packages' own names only",
+      "Hypothesis, UNREAD on dell2: the interpreter on dell2 (3.14.7) coloured the traceback (FORCE_COLOR set in an agent shell), which puts escape codes inside the last line so the anchored regex does not match and the line falls to failed. Not measured. Change made on that hypothesis, in import_one only: strip escape sequences from stderr and run the child with NO_COLOR=1, PYTHON_COLORS=0 and FORCE_COLOR removed; two test cases added (11: missing dependency, plain and coloured; 12: own module missing stays failed). The coloured arm is tested through a stubbed subprocess; whether the unpatched code fails it was reasoned, not run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-e-1 build step 4 / row NFRA_CTLPLN-S21: in install-check an import that fails with ModuleNotFoundError naming a module that is not the package's own is reported failed today and must read import_missing_dep.",
+  "world_is": "The classification the order asks for exists and passes on synthetic input; the order's two cases passed before the edit. The cause of dell2's mislabel is not established; the edit hardens one plausible cause. The dell2 result file (its first_error_line for the three) would settle it and is unread by this worker."
+}
+```
+
+## NFRA_CTLPLN-W13-S19 -- TO-CT-e-1: the closure of the 67 lines is 162 members, 95 added (73 first-level + 22 deeper); 7 compiled members are not among the 30 the CRO assessed
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T19:23:53Z",
+  "one_line": "The approved list of 26 is not closed: the dependency closure holds 7 compiled packages the assessment never listed (frozenlist, MarkupSafe, multidict, propcache, pydantic_core, wrapt, yarl), all reached below the first level, and botocore 1.43.0 breaks the specifiers of boto3 and awscli.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/intake/intake_closure.py closure --from-file org/devices/intake/closure_cp314_win_amd64.json: INTAKE-CLOSURE target=cp314-win_amd64 lines=67 closure=162 dependencies_added=95 pure=114 fits=11 needs_fetch=37 unknown_not_installed=0 specifier_conflicts=2 fixed_point=True ok=True",
+      "set difference against org/devices/kit_python_wheels_cp314.json undeclared_deps: all 73 earlier names are first-level members of this closure (depth 1); the other 22 are depth 2 or 3 (the earlier tool did not follow dependencies). The two measurements agree on the 73",
+      "python org/devices/intake/intake_closure.py fetchlist: compiled=36 approved=25 not_yet_approved=4 new_requests=7 other_needs_copy=1 (click, editable install, among the 26); assessment read from org/tier1_exec/4.0.0_SA_CRO/deliverables/PACKAGE_INTAKE_ASSESSMENT_BATCH_1_30_PACKAGES_20261007.md; whether any cp314 file exists on the index is UNREAD",
+      "the 2 specifier conflicts: botocore 1.43.0 installed against awscli's ==1.42.54 and boto3's <1.43.0,>=1.42.54 (the requirements.txt header already states this)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CRO assessment 5.4 and CTO msg 106445: 12 compiled dependencies make the 30; close the list before round 5 fetches.",
+  "world_is": "37 closure members need a copy for Python 3.14 (36 compiled for another Python, plus click as an editable install): 26 are the approved names (25 compiled plus click), 4 are assessed and not approved (pyarrow, pyiceberg, hdbscan, kuzu), and 7 are new; those 7 need a CRO assessment and a CTO decision before any fetch. Dependencies of any package not installed here are UNREAD; there are none (unknown_not_installed=0)."
+}
+```
