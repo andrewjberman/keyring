@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -97,6 +97,32 @@ validated with `python .tools/proof-of-spec-check.py <instance> BQ1-AC1,BQ1-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the two lines before and now, whole; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the ruling is landed and the reader already honours it; the cell is a test repair and a control
+
+`4.0.0_SA_CRO` landed the row: `infra/logic/registry/key_rulings.json` @cab8510cc3, (`opal-data-bd`,
+`code/bronze/cot_bronze_ingest.py`) -> `blackdiamond/49financial/code/bronze/bronze_ingest.py` (msg 106571). Measured by the issuer
+on the trunk with that row: the two lines ALREADY print `FIX ... -> blackdiamond/49financial/code/bronze/bronze_ingest.py`, and
+the run reads `items=140 right=9 fix=116 not_asked=12 pattern=3 carded=0 refused=0 hole=0`. Round 3's reader matches a key ruling
+before it considers the refusal, so step 1 of the cell is already true: check it by reading the code, and change the reader only
+if the reading shows a path where the refusal is considered first.
+
+So `BQ1-AC2` is a CONTROL here (it passes before you build and must still pass after). What you BUILD is in the test:
+1. **Repair two assertions that are red on the trunk.** `python lib/tests/test_opal_naming_rootcheck.py` prints two `FAIL` lines
+   ("loads four rows", "one canonical row and three none_owed rows") and `ok=False`: they compare against an exact count of the
+   registry's rows, which is now seven. Make them hold on a registry that grows: assert the SHAPE (every row has a key; each
+   carries exactly one of `canonical` or `none_owed`; a row has `bucket`, or `bucket_per` and `bucket_from`; the rows this test
+   needs by name are present) and no typed total. Do not delete them. Say in your report what each became.
+2. **Add the DIFFERENCE CONTROL of step 3 of the cell**, on a small registry the test writes to a temporary folder, never the
+   real file: the same Cottonwood-named key in the 49 Financial bucket prints `FIX` with a ruling row and `REFUSED` without
+   one; a key whose BUCKET is another firm's prints `REFUSED` when no row matches.
+3. Leave the per-firm rows (`bucket_per`, `bucket_from`) unread by the reader: another order of this round builds that.
+`BQ1-AC1` is the build criterion: it FAILS at the base (`ROOTCHECK-TEST ok=False`) and must pass.
+
+**A correction to this order's record face:** its base dry-run line says `BQ1-AC1` passed at the base with 113 cases and `BQ1-AC2`
+failed with `refused=2`. Neither was re-run at the cut; both were carried from an earlier run, and both were already wrong at
+the cut because the registry row sat uncommitted in the shared tree. Measured after the cut: `BQ1-AC1` FAIL (`ok=False`),
+`BQ1-AC2` PASS (`refused=0 hole=0`).
 
 ---
 
