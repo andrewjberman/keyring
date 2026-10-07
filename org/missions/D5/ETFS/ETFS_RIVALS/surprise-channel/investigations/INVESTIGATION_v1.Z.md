@@ -4451,6 +4451,28 @@
     "spec_asserts": "Cell RIV-pc-1: a key with no stored currency gets market closes only and the gap reason 'no market close on file (the funds' holding reports are in US dollars and this listing is not quoted in US dollars)'.",
     "world_is": "Applied literally to a key that no fund reported either, the non-dollar reason says the funds' reports were set aside when there were none. Built: a non-dollar or unknown key gets the non-dollar reason only when a fund's report implies a price for it on at least one day of the window; a key with no report in the window keeps the plain reason. pc-1.AC1 (every non-dollar fixture key has reports) and ps-1.AC1 (e) both pass.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. If the issuer wants the literal rule, ps-1.AC1 (e) must change to the non-dollar reason; that file is outside this order's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S56",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:20:30Z",
+    "one_line": "Round 17 real run: a dialog's static trade list says \"No trades in the last 365 days\" for a fund-security whose chart object holds trade markers inside those 365 days",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The issuer's real run of day 2026-10-06 at CLOUD 07ff6ebe34 (C:/tmp/rv-r17-realrun/layer on site Z; record org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round17/real_run_2026-10-06.after_nc1.json): of 702 chart frames parsed from index.html by a regular expression (the run's own count of frames is 695, so the parse over-counts by 7), 618 carry the static words \"No trades in the last 365 days\"; 542 of those belong to a fund-security whose chart object holds one or more markers; 77 more list fewer trades than the object holds markers",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round17/r17_realrun_modal_no_currency.png: BASG, Kla Corp -- the buying section reads \"-$10.2m net sold across 3 trades\" over the last 365 days and the line under it reads \"No trades in the last 365 days\"",
+        "data/etfs/scripts/rivalfunds/render.py _trade_list (cell RIV-md-1): the static list is built from the trades in the page context (the page's recent trade window), while publish_page._build_charts builds the markers from the fund's trades over 365 days"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-22 (PRD v0.18 F.7; cell RIV-md-1): the dialog lists the fund's trades in the security, one line per trade, and a fund with no trade in the security says \"No trades in the last 365 days\"",
+    "world_is": "The static list holds only the trades the page context carries, so its \"none in the last 365 days\" is said about a shorter window than it names; the chart's markers and the buying section above it show the year's trades. Where the chart draws (a stored currency), the markers correct the reader; where it does not (no stored currency, or the script fails), the false sentence stands alone",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 17 is deployed): 2.0.0_SA_COO~RV. BLOCKING because the sentence is false on most dialogs; the Lambda deploy does not go out with it open. Not caught by a check: md-1's fixture has one trade inside the page window. Repair shape is small (say the window the list really covers, or build the list from the same 365-day trades): for the round analysis, with the J1 grades."
   }
 ]
 ```
