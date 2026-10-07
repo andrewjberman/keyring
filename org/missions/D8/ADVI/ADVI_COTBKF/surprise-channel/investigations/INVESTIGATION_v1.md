@@ -1814,3 +1814,51 @@ round.** Never edit an existing row.
   "notes": "Found by the issuer while answering Andrew's status question, not by a task order. Offered to 1.0.0_SA_CTO~DELL2 for the next enrichment list."
 }
 ```
+
+## ADVI_COTBKF-D2-W33-S1 -- The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_flows.py: flow_amount(); data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py: test_signed_amount_gives_the_same_flow_as_unsigned passes (lo -20.0 and lo 20.0 both give flow -20)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 1: the flow amount of a row is its Amount.",
+  "world_is": "No file in the silver scripts or the order records whether Amount is stored signed (a withdrawal negative) or unsigned (like Quantity). A bare Amount read as signed would turn an unsigned lo into an inflow. commonwealth_flows.flow_amount returns direction x |Amount| (direction from the flow table; for share-moving types it equals commonwealth_signs.SIGN), which equals the signed Amount when the vendor signs it and is right when the vendor does not; it is wrong only for a row booked with the opposite sign to its type (a negative-Amount li). The first real run should count flow rows by type and sign of Amount before the grade is trusted."
+}
+```
+
+## ADVI_COTBKF-D2-W33-S2 -- commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:444 TX_COLS; data/assets/scripts/silver/commonwealth_daily_returns.py: load_tx()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 2: read silver transactions with commonwealth_daily_holdings.load_tx_pos().",
+  "world_is": "load_tx_pos() projects commonwealth_crosswalk.TX_COLS (Account_Number, Cusip, Symbol, Quantity, Trade_Date, Transaction_Type, Advisor_ID) and the cache written from it has no Amount column. commonwealth_daily_returns.load_tx() reads Account_Number, Trade_Date, Transaction_Type and Amount from the cache only when the cache carries Amount, else from the silver transactions table on S3 (read-only, same prefix and reader as load_tx_pos). Not exercised on real data this round (stub only); the first real run reads S3 once for four columns."
+}
+```
