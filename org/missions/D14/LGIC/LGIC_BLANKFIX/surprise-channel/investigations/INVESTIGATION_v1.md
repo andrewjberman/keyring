@@ -487,3 +487,53 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The ruled row holds two real names (bd-49f-session-complete and its ruled canonical). The commit limb is in ENFORCE and refuses both strings in a new file outside the registry, with no override a worker may use. The file is written and the library reads it; it is NOT committed. The branch tip commit carries the code, tests and rows, and lib/opal_naming_cadence.py fails loud (FileNotFoundError) on a checkout without that file. The issuer or the CTO decides the carrier: an R20 declared exception for the file, or the rows in a path the context rule admits (infra/logic/registry/, outside this grant). The order is NOT flipped to complete."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S4 -- TO BF-e-8 rule 1 says an inline policy's {system} is filled from its role
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T15:07:22Z",
+  "one_line": "TO BF-e-8 rule 1 says an inline policy's {system} is filled from its role; the root map also holds ruled exceptions for inline-policy names (cross-firm-bucket-deny -> firmsep, describe-tags-self -> cloudops, monolith-bd49f-xref-silver-read -> schwab) whose role's system is advi, and the order does not say which wins.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_policyrole.py root infra/aws/terraform/bd-pipeline: cross-firm-bucket-deny (iam.tf:658), describe-tags-self (iam.tf:636) and monolith-bd49f-xref-silver-read (iam.tf:470) all sit on bd-exporter-ec2-role, role_system=advi",
+      "infra/logic/registry/root_map.json roots.bd-pipeline.exceptions: those three names carry ruled systems firmsep, cloudops, schwab (Andrew-direct 2026-09-21 CALL 2 a5 families F02, F05, F14); the base run printed them as FIX firmsep-/cloudops-/schwab- names and the round-2 run prints them unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-8 rule 1: for an IAM_POLICY whose canonical carries {system} and whose declaration policy_roles knows, fill {system} from its role's system.",
+  "world_is": "lib/opal_naming_rootcheck.py decide() applies the role's system only when the root map gives the name no ruled exception (basis root-default) or no entry; a ruled exception keeps winning, so the run's lines for those three names did not change and no ruling is overridden. If the order meant the role to win over an exception, those three lines would print advi- instead and contradict three ruled families; the issuer decides."
+}
+```
+
+## LGIC_BLANKFIX-W2-S5 -- TO BF-e-8 rule 4 says a CARDED line prints 'the whole correct name where the card gives one', but no card row of NOT_JUDGED_R13.json carries a correct
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T15:07:22Z",
+  "one_line": "TO BF-e-8 rule 4 says a CARDED line prints 'the whole correct name where the card gives one', but no card row of NOT_JUDGED_R13.json carries a correct-name field, so no CARDED line of the run can print one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NOT_JUDGED_R13.json: 462 rows, the union of keys over every row is {name, plane, type, where, card, card_ref}; the six cards of bd-pipeline carry K1/K3/K4a reasons and no name",
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only: six CARDED lines, each the card's first sentence"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-8 rule 4: a CARDED line prints the card's text up to its first sentence end, and the whole correct name where the card gives one.",
+  "world_is": "decide() prints the first sentence and, if a card row ever gains a correct_name, canonical or canonical_name key, appends it as 'Correct name: ...' (tested with a hand-made card). On the real file no card gives one, so the clause is reachable in the test only."
+}
+```
