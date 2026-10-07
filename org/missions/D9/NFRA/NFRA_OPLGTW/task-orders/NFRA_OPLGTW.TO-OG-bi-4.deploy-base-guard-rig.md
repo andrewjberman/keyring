@@ -85,7 +85,7 @@ Rows: id `NFRA_OPLGTW-Z-W33-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   (`OG-rl-14` amendment A1).
 - Pre-cut 20:3xZ: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <workstream>GUARD-RIG-S27</workstream>
 <slot>~33</slot>
