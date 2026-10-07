@@ -85,14 +85,14 @@ importers that LACK the package: those are the ones whose behaviour changes at t
 <criterion id="CTk1-AC1" cell_refs="CT-k-1"><invocation>python lib/tests/test_nyse_fallback_equals_package.py</invocation><expect>NYSE-FALLBACK years=18 equal=18/18 first=2010 last=2027</expect></criterion>
 `CTk1-AC1` -- the committed fallback equals the package's answer for every year it covers. The same line must read `ok=True`.
 
-<criterion id="CTk1-AC2" cell_refs="CT-k-1"><invocation>python lib/tests/test_trading_calendar_fail_closed.py</invocation><expect>CALENDAR-FAIL-CLOSED cases=8/8 ok=True</expect></criterion>
+<criterion id="CTk1-AC2" cell_refs="CT-k-1"><invocation>python lib/tests/test_trading_calendar_fail_closed.py</invocation><expect>CALENDAR-FAIL-CLOSED cases=8/8 skipped=0 ok=True</expect></criterion>
 `CTk1-AC2` -- without the package, a pre-2024 holiday is no longer a trading day and an uncovered year raises instead of answering.
 
 <criterion id="CTk1-AC3" cell_refs="CT-k-1"><invocation>python -m pytest lib/tests/test_trading_calendar.py -q -p no:cacheprovider --color=no</invocation><expect>22 passed</expect></criterion>
 `CTk1-AC3` -- the control on the real neighbour: the module's own 22 tests still pass. If a test asserts the old provenance string,
 that test is in your grant: update that one assertion and say so; the count stays 22.
 
-<expected_criteria>CTk1-AC1,CTk1-AC2,CTk1-AC3</expected_criteria>
+<expected_criteria>CTk1-AC1,CTk1-AC2,CTk1-AC3,CTk1-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -147,3 +147,39 @@ Source: CTO RULING B (file above, msg 106080); CLAUDE.md hard stop "NEVER call a
 CALENDAR" (one frontier: `lib/trading_calendar.py`); decomposition KIT round 1. Base dry-run at the cut: CTk1-AC1 and
 CTk1-AC2 base FAIL as expected (neither file exists; the defect itself reproduced: package off, 2015-01-01 reads a trading day);
 CTk1-AC3 base PASS as expected (ran: 22 passed).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~10:2xZ) -- REOPENED: the package-ON case is skipped, and printed as skipped, where the package is absent
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and commits 4b766e4e2d,
+48075812c4 and db7f78d132 are inherited state (merged to the trunk @83ab7192ee and already pulled by both Dells). Authority:
+`1.0.0_SA_CTO` msg 106146, verbatim: "the eighth case sets on = False whenever the package is absent, so it cannot pass on a box
+without pandas_market_calendars ... The seven fallback cases are the ones that test the fix, and both Dells report 7 of 7 of them
+passing at 83ab7192ee ... amend the test so the package-ON case is skipped, and printed as skipped, where the package is absent; the
+count then reads 7 of 7 with 1 skipped." Gate limb: none graded this modification.
+
+**THE WORK (this is the whole of it; `lib/trading_calendar.py` is NOT edited):**
+
+1. `lib/tests/test_trading_calendar_fail_closed.py`: the eighth case (with the package ON, a 2009 date answers without raising) runs
+   only when `pandas_market_calendars` imports. Where it does not, the case is not counted in the denominator and is printed as one
+   line `SKIPPED package-on case: pandas_market_calendars is not installed on this box`. LAST line gains a `skipped` field:
+   `CALENDAR-FAIL-CLOSED cases=<k>/<n> skipped=<s> ok=<True|False>` -- `8/8 skipped=0` where the package is present, `7/7 skipped=1`
+   where it is absent. `ok` is true only when `k == n`; a skip never hides a failure of the seven fallback cases.
+2. The same file gains a flag `--simulate-package-absent`, which makes the test behave as on a box without the package for its
+   WHOLE run (block the import before the module under test is loaded, for example by placing `None` in `sys.modules` for the
+   package and loading a fresh copy of `lib/trading_calendar.py`; do not edit the module to help the test). This is how the laptop
+   proves the skip path, since the laptop has the package.
+3. Check `lib/tests/test_nyse_fallback_equals_package.py` for the same class of defect: it compares the committed set to the
+   package, so on a box without the package it cannot run at all. Make it say so: where the package is absent it prints
+   `NYSE-FALLBACK SKIPPED: pandas_market_calendars is not installed on this box; the equality is proved on a box that has it` and exits
+   0 with a last line `NYSE-FALLBACK years=18 equal=SKIPPED first=2010 last=2027 closures=<n> ok=SKIPPED`. Where the package is
+   present its output is unchanged. Give it the same `--simulate-package-absent` flag and show both forms in your report.
+
+**ACCEPTANCE:** CTk1-AC2's expectation becomes `CALENDAR-FAIL-CLOSED cases=8/8 skipped=0 ok=True` (this box has the package).
+CTk1-AC1 and CTk1-AC3 are unchanged. One criterion is ADDED:
+
+<criterion id="CTk1-AC4" cell_refs="CT-k-1"><invocation>python lib/tests/test_trading_calendar_fail_closed.py --simulate-package-absent</invocation><expect>CALENDAR-FAIL-CLOSED cases=7/7 skipped=1 ok=True</expect></criterion>
+`CTk1-AC4` -- a box without the package reads seven of seven with the package-on case skipped and printed as skipped.
+
+Write a NEW proof instance over the old one covering all four ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk1-AC1,CTk1-AC2,CTk1-AC3,CTk1-AC4`, and flip `<status>` back to `complete` only when
+all four pass.
