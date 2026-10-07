@@ -44,16 +44,16 @@ Author: 3.0.0_SA_CVO~Z. Round: v44. Fabric: site-z. Recorded: 2026-10-06T18:2xZ.
   "owner": "2.0.0_SA_COO~X",
   "round": "v44",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~X",
-   "at": null
+   "at": "2026-10-07T13:13Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~X",
    "round": "v44"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

@@ -4296,6 +4296,364 @@
     "spec_asserts": "render_audit_page returns a document of at most AUDIT_SOFT_CAP bytes when a cut can achieve it, dropping trade trace panels oldest first (face section 1); publish_page adds audit_trades_left_out and the FAIL line (face section 2).",
     "world_is": "The cut is exact (the fewest trades that fit) and costs repeated renders only on a day that is over the cap; a day under it renders once, as before. On a real day the cut would run inside the 07:00 ET publish Lambda, whose per-render time at the served size (1,381,244 B on 2026-10-07) was not measured by this cell. Within one window end, rows are dropped last-fund-first, so a partial cut of one window end is possible; the count and the oldest window end shown are still stated.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The first real over-cap day is the measure of the render time; until then the page is 34.1% under the cap and the path does not run."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S16",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-07T09:13:30Z",
+    "one_line": "RIV-co-1: chart objects are written only when the page's bytes change, and a refused or failed object leaves the day's earlier object at its address",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py handler_entry (this branch): _build_charts and _write_charts run only after the `prior_html == html_b and prior_audit == audit_b` early return, so a rerun over an unchanged page writes no chart object and rewrites no manifest (face: write once per revision, like audit.html)",
+        "publish_page._write_charts: a fund whose new object is over the cap gets the manifest entry {uri: null, bytes, refused: true}, but no delete is issued, so an object written by an earlier revision of the same day stays at homes.page(day, charts/<FUND>.json) and the gateway route would still serve it; the prior object is copied to revisions/<ts>/charts/ only when the new one is written",
+        "tests: test_r15co1_chart_objects.py (5 passed); co-1.AC1 and co-1.AC2 PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The publisher writes one chart object per fund beside the page, once per revision like audit.html; a fund whose object is refused has the manifest entry {uri: null, bytes, refused: true} (face section 1, rulings at the cut).",
+    "world_is": "Both hold as built. On the first deploy day, a day whose page bytes do not change on the rerun gets no chart objects until its page changes (the issuer's backfill, being ad hoc, is the route for past days). A refused object leaves an older same-day object in place; the sink interface used here is put/get/list/exists, and a delete is outside this cell's paths. Neither path is reached by the fixtures.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The real-day run at L9 (J1) shows whether a day republishes with an unchanged page and an absent chart object. Also: price_series.load and the fund-value read each read the 365-day G1 range once per publish (two reads of the same objects, the second column-narrow); not measured on a real day."
+  }
+  ,{
+    "id": "ETFS_RIVALS-Z-W4-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-07T09:19:00Z",
+    "one_line": "RIV-rt-1: the face asks for the gateway suites at 0 failed, but the suites carry 29 failures at base (schwab, asker, portal-grant, data-entitlement); the cell's change adds 3 passing tests and no failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest app/tests tests -q from infra/aws/ec2/opal-gateway at base HEAD 14a683c310 (the four cell files read back from git show HEAD): 29 failed, 601 passed",
+        "the same run with the cell's four files: 29 failed, 604 passed; the sorted FAILED lists are identical (diff empty)",
+        "failing files: tests/acceptance/test_local_acceptance.py, test_asker_binding.py, test_asker_scope.py, test_data_entitlement_guard.py, test_portal_grant.py, test_schwab_*.py; none touches rivalfunds or the route census; test_asker_binding::test_resolve_asker_class passes alone and fails only in the full ordering"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face section 3: run the gateway suites before reporting: 0 failed.",
+    "world_is": "The suites have 29 failures with and without this cell; rivalfunds_view.py, test_rivalfunds_view.py and the route-census tests (test_principal_cutover.py) pass 28 of 28.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A different owner fixes the 29; this cell leaves them untouched."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S51",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T08:57:23Z",
+    "one_line": "RIV-pd-1: gold_buying_trend now reads G1 back to the R365 start (a year before the page day), but publish_page._a1_window still states its input window as 1 January of the page year, so the stale-table rebuild test ignores a G1 report dated in the previous year's tail of that window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py:257-268 _a1_window (this branch): 'buying_trend' returns ((<page year>-01-01, day), None); its docstring says buying_trend reads G1 from 1 January",
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py handler_entry (this branch): lo = min(_starts(day).values()), which is the R365 start (as-of minus 365 calendar days) after this cell",
+        "publish_page.py is outside this cell's paths (read-only), so the window is unchanged here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pd-1 face section 1 gives the organic trigger as the 07:00 ET publish's stale-table rebuild (publish_page.produce_a1); the rebuilt table reads G1 over its whole period reach.",
+    "world_is": "The producer's read now reaches about a year back; the stale test compares the table's capture time with G1 objects from 1 January of the page year only. A G1 object dated in the prior year inside the R365 reach (late-arriving or revised) would not mark the table stale. In January the two windows differ the most; later in the year the gap is the Jan 1 to R365 start span.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The fix is one line in publish_page._a1_window (the buying_trend G1 lo becomes the producer's own earliest start); it sits in another cell's surface (RIV-pd-2 or the issuer), not in pd-1's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S52",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T09:43:54Z",
+    "one_line": "RIV-md-1: the dialog's trade list is to read from trade_markers.words, but the page context carries no fund market value, so each line would read 'basis points of the fund not known' while the chart object's marker carries the real bps.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 80885c8626:data/etfs/scripts/rivalfunds/trade_markers.py: words(m) prints 'basis points of the fund not known' when m['bps'] is None; markers() takes fund_mv_by_date, which the renderer's ctx does not hold (publish_page._fund_view returns holdings for the latest date only)",
+        "data/etfs/scripts/rivalfunds/render.py _trade_words (this branch): builds one marker per trade with bps None and calls trade_markers.words when `from . import trade_markers` succeeds; on this branch the module is absent, so the page's own words ('Bought on <end>: $<usd>, 1 trade.') print",
+        "data/etfs/scripts/rivalfunds/tests/test_r15md1_chart_frame_and_script.py::test_trade_markers_words_are_used_when_that_module_is_importable pins the call path with a stand-in module"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-md-1 face section 1: the trade list is one line per trade from trade_markers.words when that module is importable, else the page's own trade words.",
+    "world_is": "Both branches are built and tested. Once RIV-tm-1 merges, the module becomes importable and every static trade line prints the 'not known' wording for its basis points, while the hover text the script draws from the chart object's marker prints the figure. Nothing is wrong until the merge; the two texts then disagree on one marker.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Options for the issuer: publish_page puts the fund's market value by window end into the fund view so render can pass real bps; or the list drops the bps clause. Both sit outside md-1's paths (publish_page.py is another chain's)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S53",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T09:43:54Z",
+    "one_line": "RIV-md-1: 'data-history=none and HISTORY_NONE leave the dialog' does not say whether the AUDIT page's dialogs keep the note; they keep it (no chart frame there), so the audit page still reads 'History not yet backfilled'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/render.py _sec_dialogs(ctx, charts=False): the audit call (render._render_audit_body) keeps data-history=none and the HISTORY_NONE paragraph; the main page's call passes charts=True",
+        "face ruling at the cut: 'The AUDIT page gets no chart frame and no script'; md-1.AC1 (d) reads the main page only",
+        "data/etfs/scripts/rivalfunds/tests/test_r15md1_chart_frame_and_script.py::test_the_audit_pages_dialogs_have_no_frame_and_keep_their_note"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-md-1 face section 1: data-history=none and HISTORY_NONE leave the dialog; the audit page gets no chart frame and no script.",
+    "world_is": "The note now reads on the audit page's dialogs while the main page draws the history, so the audit page's note is no longer a true statement about the day. The words are the only thing left; no figure depends on them.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Removing the note from the audit dialogs is a one-line change in render._sec_dialogs; it was left because the face's ruling names the main page's dialog and a broader removal would also drop the audit page's only history wording."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S55",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T10:12:14Z",
+    "one_line": "Round 15 real run: a non-US security's price curve mixes Bloomberg closes in the listing currency with holding-implied prices in US dollars, so the line jumps by the exchange rate",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/real_run_2026-10-06.json: the issuer's real run of day 2026-10-06 at CLOUD 370ae7a279 (live inputs read, local writes only) wrote 13 chart objects holding 695 fund-securities; 598 carry both source codes m and i, 97 carry i only, 0 carry m only",
+        "Measured on those 13 objects: the ratio of the first market close to the last holding-implied price before it is above 3 or below 1/3 for 152 of 598; by exchange code JP 43/43, LN 54/54, HK 11/11, KS 9/9, TT 5/5, IN 5/5, BZ 4/4, SS 4/4 and US 0/238. The ratios are exchange rates: 000660_KS 1413, 2914_JP 154, 2454_TT 32. Euro listings (FP 0/50, GR 0/33) sit under the 3x threshold and were not measured for a smaller mismatch",
+        "CGIC 2454_TT_Equity: 2 points coded m at 4920 to 4950 and 248 points coded i between 36.5 and 167.2; the rendered 365d chart is flat and then spikes on the last two days, with a y axis from -209.14 to 5195.67 (screenshot r15_realrun_modal_365d_markers.png beside the record)",
+        "data/etfs/scripts/rivalfunds/price_series.py (cell RIV-ps-1): the implied price is market_value over quantity from the funds' holding reports, which are in US dollars; the market close is the Bloomberg PX_LAST in the listing currency"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-22 (PRD v0.18, ADDENDUM F): the security dialog draws one price curve per security, market close where Bloomberg has one and the holding-implied price on other days, as one series a reader can read as the price",
+    "world_is": "For a security not quoted in US dollars the two sources are in different currencies, so the one series is not one price. Today only the last 2 or 3 days are market closes, so the curve spikes at its end; after the 365-day Bloomberg backfill the curve would be market closes with implied dollars on every gap day. The static dialog, the periods, the trade markers and the script itself work in a browser (30d screenshot beside the record)",
+    "notes": "disarm_owner (n/a, INERT: nothing of round 15 is deployed or served): 2.0.0_SA_COO~RV. The round-15 Lambda deploy does not go out with this open. Not caught by any round-15 check: every fixture prices both sources in one currency. A repair needs a ruling on the shape (implied only for US-dollar listings; or convert with a rate; or never join the two sources in one line), which is an ENDPOINT matter for 1.0.0_SA_CTO~Z. Also seen on the same run, lesser: the chart's y axis pads below zero, and the drawing uses about two thirds of the frame width."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-07T10:37:57Z",
+    "one_line": "RIV-pc-1: a key with no stored currency gets the non-dollar gap reason in pc-1.AC1 but a key in neither frame must keep the plain reason in ps-1.AC1 (e); the cell's rule alone cannot satisfy both checks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pc-1.AC1.py: NNN_US_Equity (no G4 row, G1 reports on all 4 days) expects REASON_NON_USD on its one gap",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/ps-1.AC1.py (e): BBB_US_Equity (in neither frame) expects ONE gap 09-01..09-15 with the plain reason 'no market close on file and no fund reported the holding'; pc-1.AC2 (c) requires ps-1.AC1 to end PASS and ps-1.AC1 is not in this order's paths",
+        "data/etfs/scripts/rivalfunds/price_series.py series(): with the literal cell rule BBB read the non-dollar reason and ps-1.AC1 (e) FAILED (run before the refinement); after it both end PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-pc-1: a key with no stored currency gets market closes only and the gap reason 'no market close on file (the funds' holding reports are in US dollars and this listing is not quoted in US dollars)'.",
+    "world_is": "Applied literally to a key that no fund reported either, the non-dollar reason says the funds' reports were set aside when there were none. Built: a non-dollar or unknown key gets the non-dollar reason only when a fund's report implies a price for it on at least one day of the window; a key with no report in the window keeps the plain reason. pc-1.AC1 (every non-dollar fixture key has reports) and ps-1.AC1 (e) both pass.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. If the issuer wants the literal rule, ps-1.AC1 (e) must change to the non-dollar reason; that file is outside this order's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S56",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:20:30Z",
+    "one_line": "Round 17 real run: a dialog's static trade list says \"No trades in the last 365 days\" for a fund-security whose chart object holds trade markers inside those 365 days",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The issuer's real run of day 2026-10-06 at CLOUD 07ff6ebe34 (C:/tmp/rv-r17-realrun/layer on site Z; record org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round17/real_run_2026-10-06.after_nc1.json): of 702 chart frames parsed from index.html by a regular expression (the run's own count of frames is 695, so the parse over-counts by 7), 618 carry the static words \"No trades in the last 365 days\"; 542 of those belong to a fund-security whose chart object holds one or more markers; 77 more list fewer trades than the object holds markers",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round17/r17_realrun_modal_no_currency.png: BASG, Kla Corp -- the buying section reads \"-$10.2m net sold across 3 trades\" over the last 365 days and the line under it reads \"No trades in the last 365 days\"",
+        "data/etfs/scripts/rivalfunds/render.py _trade_list (cell RIV-md-1): the static list is built from the trades in the page context (the page's recent trade window), while publish_page._build_charts builds the markers from the fund's trades over 365 days"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-22 (PRD v0.18 F.7; cell RIV-md-1): the dialog lists the fund's trades in the security, one line per trade, and a fund with no trade in the security says \"No trades in the last 365 days\"",
+    "world_is": "The static list holds only the trades the page context carries, so its \"none in the last 365 days\" is said about a shorter window than it names; the chart's markers and the buying section above it show the year's trades. Where the chart draws (a stored currency), the markers correct the reader; where it does not (no stored currency, or the script fails), the false sentence stands alone",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 17 is deployed): 2.0.0_SA_COO~RV. BLOCKING because the sentence is false on most dialogs; the Lambda deploy does not go out with it open. Not caught by a check: md-1's fixture has one trade inside the page window. Repair shape is small (say the window the list really covers, or build the list from the same 365-day trades): for the round analysis, with the J1 grades."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S57",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:25:31Z",
+    "one_line": "Morning pass 2026-10-07: the parsekey join merges holding_contribution (13 pairs, Nebius included) but buying_trend still carries 7 securities under two keys",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round14/morning_pass_2026-10-06.after_vehicle_20261007.json (morning_pass.py, read-only, page day 2026-10-06, G4 date 2026-10-06): G4 object market-20261007T110920Z holds 26 rows with a parsekey; holding_contribution MERGED 13, SPLIT 0, IDENTIFIER_ONLY 13 (each held by one fund under its CUSIP key with no fund on the Bloomberg key); buying_trend MERGED 2, SPLIT 7, IDENTIFIER_ONLY 9, NEITHER 8",
+        "The 7 SPLIT pairs in buying_trend, each with GQGU on the identifier key and other funds on the Bloomberg key: AMD (007903107), AAPL (037833100), META (30303M102), LRCX (512807306), MU (595112103), PM (718172109), ASML (N07059210). All 7 are MERGED in holding_contribution on the same run",
+        "Nebius control: holding_contribution MERGED (GQGU and WCMG both on NBIS_US_Equity; names 'Nebius Group NV' and 'Nebius Group Nv', a case-only difference); buying_trend NEITHER (no trend row for it)",
+        "The tables read are the 2026-10-06 revisions written 11:12:53Z and 11:13:37Z on 2026-10-07, after the G4 write at 11:09:20Z; the 2026-10-07 page-day tables were written 11:04Z, before it, and read SPLIT 13 (morning_pass_2026-10-07.early_page.json)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey, so one security under two listings is one key on the whole page",
+    "world_is": "One reader does and one does not on the same build: holding_contribution carries one key for every pair two funds hold; buying_trend carries GQGU's rows under the CUSIP key beside the other funds' rows under the Bloomberg key for 7 securities. No merged pair has disagreeing names, so there is no wrong merge and nothing to roll back",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Served today, and it was split before the deploy as well, so the act made nothing worse. Unread: whether the trend's GQGU rows come from trade history keyed before the parsekey existed (then they merge as that history is rebuilt) or from the reader not applying the join. For the round analysis. The 13 IDENTIFIER_ONLY pairs keep a CUSIP as the page key, with the name from G4."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S58",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:49:51Z",
+    "one_line": "Round 18 real run: the month-by-month buying strip labels its cells January to December by position, but the 365-day trend's months start at the window's first month, so a trade is shown under the wrong month",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The issuer's real run of day 2026-10-06 at CLOUD 5be2c73b12 (record org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round18/real_run_2026-10-06.after_tl1.json; local layer C:/tmp/rv-r18-realrun/layer on site Z): gold buying_trend for the day holds 349 R365 rows with a trend_mark; the mark carries 13 month tokens on 248 rows, 11 on 28, 10 on 55 and 7 on 18 (the 354 YTD rows carry 10 each, January to October)",
+        "The rendered index.html holds 393 month strips; cells per strip: {12: 180, 2: 87, 4: 54, 7: 12, 11: 20, 10: 40}",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round18/r18_realrun_modal_trade_list.png: BASG, Kla Corp -- the dialog lists three sales on 2025-10-08, 2025-10-10 and 2025-11-03, and the strip above them shows 'sold' under Jan and Feb and 'no trade' under Oct and Nov",
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py _months(day, start): the mark's months run from the window start's month, oldest first; data/etfs/scripts/rivalfunds/render.py _month_chart and MONTH_CSS: the labels are Jan..Dec by cell position and only the first 12 tokens are drawn (toks[:12]), so a 13-token mark also loses its newest month",
+        "Cells RIV-pd-1 and RIV-pd-2 (round 15) moved the panel's trend from the calendar year to the last 365 days; the strip's labels were not in either cell"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The month strip is 'the year's buying, month by month and LABELLED' (Andrew-direct 2026-10-02, quoted in render._month_chart), and FWD-23 (PRD v0.18) puts the trend on the last 365 calendar days",
+    "world_is": "On the round-15 build every month strip is mislabelled unless the 365-day window happens to start in January, and the newest month is dropped where the window spans 13 calendar months. The served page (round 14, calendar-year trend) is correct today; the defect ships with the round-15 Lambda deploy",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 18 is deployed): 2.0.0_SA_COO~RV. BLOCKING: the Lambda deploy does not go out with it open. Not caught by a check: pd-2's fixture trend starts in January. Repair inside cells RIV-pd-2 / render.py: each cell carries its own month label from the row's window start, and the strip shows the window's last 12 months."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S59",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:15:23Z",
+    "one_line": "Round 19 real run: 11 of 393 dialog month strips disagree with the months of the same fund-security's trade markers, and a 365-day window's oldest partial month is not on the strip",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round19/month_strips_2026-10-06.json (measure_month_strips.py on the issuer's real run of day 2026-10-06 at CLOUD 2aba59986e): 393 of 393 strips carry a label on every cell and count back from October 2026; 382 of 393 show bought or sold in exactly the year-months in which the fund's chart-object markers for the security end; 11 do not",
+        "Examples from that record: GQGU 857477103 -- the strip shows a trade in 2026-10 and no marker ends in it; TXUE BTRW_LN_Equity -- markers end in 2026-02 and 2026-03 and the strip calls both 'no trade'; BASG GOOG_US_Equity -- the strip shows 2026-05 and no marker ends in it",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round19/r19_realrun_modal_month_strip.png: BASG, Kla Corp -- 'net sold across 3 trades'; the list shows sales on 2025-10-08, 2025-10-10 and 2025-11-03; the strip runs Nov to Oct and shows one month sold, because the two October 2025 sales fall in the 13th, oldest month, which cell RIV-ml-1 drops by the issuer's ruling (at most 12 cells)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-ml-1 (round 19): a strip's bought and sold months are the months of the trades listed beside it",
+    "world_is": "True on 382 of 393 strips for the months the strip shows. The strip is drawn from gold buying_trend's month mark and the list from the trade markers; the two are built by different stages and the 11 differences are unread (candidates: a window ending in one month and counted in another, a refused window, a trade under the marker threshold). Separately, where the 365-day window spans 13 calendar months the oldest month's trades are in the net figure and the list but not on the strip",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 19 is deployed): 2.0.0_SA_COO~RV. For the CVO's J1 on RIV-ml-1 and the round analysis: whether the strip should show 13 cells (with the year on the two Octobers) and what the 11 are."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S60",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:26:04Z",
+    "one_line": "Backfill preparation (read-only, no vendor call): as built, the Bloomberg range backfill would move the served rankings, would not give a formerly-held key its currency, and does not fit one day's budget",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/backfill_prep/ (build_list.py, securities_365d.txt, securities_365d.json), run 2026-10-07 ~12:3xZ read-only: 252 G1 day partitions 2025-10-06..2026-10-06; 863 distinct Bloomberg request securities over the year, 581 in the newest day, 282 formerly held, 102 identifier-keyed. The market-range DRY RUN (no request, nothing written) answers REFUSED: 217,476 points (863 securities x 252 trading days) against 119,245 left of the 120,000-point backfill budget (ceiling 150,000, reserve 30,000, 755 spent on 2026-10-07)",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py handler_entry (734-740) reads every G4 partition from as_of - 375 days to the page day, and _daily (402-410, read by the issuer) prices a holding-day g4_tri first, then g4_close when that day and the previous trading day both carry a close, then holding_implied. A backfill row carries px_close and no total_return_index, so every backfilled day moves from holding_implied to g4_close: contribution, price_source, the coverage counts and the ranks change for every period reaching back past the few days on file today. For a listing not quoted in dollars that is a local-currency price return in place of a dollar holding return",
+        "data/etfs/scripts/rivalfunds/publish_page.py _a1_newer_input: a G4 object newer than the day's holding_contribution marks it stale, so the next publish of any page day whose window covers a backfilled date rebuilds the table. The change reaches the served page without a deploy",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py _market_range (811) writes rows with px_close only: currency, total_return_index, gics, name and parsekey are NULL, marked only by as_of_source 'backfill'. No reader filters on that column (code read by a read-only helper under the issuer's brief; the three lines quoted here were re-read by the issuer). So a formerly-held key whose only G4 rows are backfill rows still has no stored currency and still reads 'No price history is stored for this holding yet.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct @96d0ab2f4b: a Bloomberg price backfill for the rivalfunds funds only, for the modal's price curve; the three periods are the rivalfunds page only. CTO ruling msg 30817 term 1: the backfill's list includes formerly-held keys 'so each gains a stored currency and its closes; no new field', inside the budget ledger, split by day if over a day's allowance",
+    "world_is": "The backfill as built is not confined to the price curve: it changes the served rankings' numbers for every fund, on the deployed round-14 build as well as the new one, and it leaves the 96 no-currency holdings without a curve. It needs two days of budget at least. Nothing has been requested from Bloomberg and nothing written",
+    "notes": "disarm_owner (n/a, INERT: no backfill has run): 2.0.0_SA_COO~RV. BLOCKING for the backfill run only, not for the Lambda deploy (ruling 30817). Shapes for 1.0.0_SA_CTO~Z: (a) holding_contribution ignores rows marked as_of_source 'backfill', so the served rankings stay as they are and only the price curve reads them; (b) the backfill stamps each row with the security's CRNCY from one current-value reference request (a field the daily mode already asks for); (c) the range is split over two or more days inside the 120,000-point allowance."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S61",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:26:04Z",
+    "one_line": "Cause of row ETFS_RIVALS-Z-S57 read: buying_trend's G4 read does not load security_parsekey, so its parsekey join is always empty",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py handler_entry line 313 at CLOUD 2aba59986e: g4 = _read(s, g4u, (\"security_id\", \"date\", \"security_name\")); line 210: pk = parsekey_map(g4) with the comment 'RIV-al-1: the same parsekey the rankings join on'",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py parsekey_map line 178: returns {} when the frame has no security_parsekey column",
+        "Row ETFS_RIVALS-Z-S57: on the 2026-10-07 morning pass holding_contribution read MERGED 13 and buying_trend SPLIT 7 on the same build and the same G4 object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey",
+    "world_is": "The trend stage calls the join and hands it a frame without the column, so the join returns nothing on the deployed build. Adding the column name to the read is the whole repair. The 2 MERGED pairs the morning pass counted in buying_trend are unexplained by this (both funds may simply report under the Bloomberg key)",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Not caught by al-1's check: its fixture hands build() a frame that carries the column. Rides the next cut as a repair, with a check that goes through handler_entry's own read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W10-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~10",
+    "surfaced_at": "2026-10-07T12:57:00Z",
+    "one_line": "RIV-bk-1: the cell says ONE CRNCY reference request for all securities with no stored currency; every other reference request in this module is batched at 50, and a live run with a few hundred lookups would send one very large request.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py (this branch) _market_range: one _blp_call(_blp_reference_data, lookups, [\"CRNCY\"]) for every security without a stored currency",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py DEFAULT_BATCH = 50 and _market_pull/_daily_dividends: every other reference request is built from build_market_plan batches of 50",
+        "integrations/bloomberg/mcp/blp_client.py reference_data (read only): appends every security to one ReferenceDataRequest with no batching of its own; a vendor per-request security limit was NOT measured in this repo"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-bk-1 interface 3: for a security with no stored currency the mode makes ONE reference request for the single field CRNCY for exactly those securities.",
+    "world_is": "Built as written: ONE request, however many securities (3 in bk-1.AC2, 60 in bf-1.AC2). Whether the vendor accepts a request of several hundred securities is unmeasured here. A refused request leaves the run FAILED, nothing landed, and the lookup points spent (a sent request is spent).",
+    "notes": "disarm_owner (n/a, INERT: no backfill has run): 2.0.0_SA_COO~RV. If the issuer wants batches of 50, the change is one loop in _market_range and the checks bk-1.AC2 (b) and bf-1.AC2 (a) count requests."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W10-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~10",
+    "surfaced_at": "2026-10-07T12:57:01Z",
+    "one_line": "RIV-bk-1: four points the cell is silent on were decided in the build: a null-currency stored row is passed over, the lookup is ledgered as mode market-range, the lookups count against max_points, an unreadable G4 object stops the run before any request.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py (this branch) _stored_currencies: a non-backfill row whose currency is blank is skipped for the security's next older non-backfill row; an exception from reading a G4 object is caught in _market_range and returned FAILED before any request",
+        "same file _market_range: need = points + len(lookups) is compared with max_points and given to bbg_budget.check_points once, before any request; bbg_budget.record(\"market-range\", len(lookups), batch_id) after the reference request",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/bk-1.AC2.py docstring open details (i)(ii)(iv): accepts all of these"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-bk-1 interface 3: stored currency is 'the currency of its newest non-backfill G4 row'; check_points before and record after the lookup; the plan's points and the budget check count only un-held dates.",
+    "world_is": "The cell does not say what a newest non-backfill row with no currency means, which ledger mode the lookup carries, whether max_points includes the lookups, or what an unreadable G4 object does. Built: skip to the next older row with a currency; mode market-range; max_points and the budget cover historical points plus lookups (the plan's points stay historical only); FAILED before any request.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. All four are one-line changes in _market_range / _stored_currencies if the issuer rules otherwise."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S62",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T13:35:06Z",
+    "one_line": "A drain merge that touches rivalfunds/enrichment_bloomberg.py or bbg_budget.py is a deploy of the daily vehicle's enrichment step on site Z, and rounds 15 and 20 merged both with no deploy ledger entry",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 431 and 477: the scheduled vehicle runs `python -m rivalfunds.collector_bloomberg --mode daily` and `python -m rivalfunds.enrichment_bloomberg --mode daily` from REPO = the site-Z working tree; integrations/bloomberg/READ_HERE.md section 3: 'SITE-Z SCHEDULED TASKS RUN THE WORKING TREE. An edit to these files IS a deploy the moment it touches disk'",
+        "git diff --stat 8bd783d51f HEAD over the vehicle-run rivalfunds files: enrichment_bloomberg.py +212/-3 and bbg_budget.py +31 (rounds 15 RIV-bf-1 and 20 RIV-bk-1); collector_bloomberg.py and security_names.py unchanged",
+        "Round 15's merge (8b9455602b, ~08:55Z) was on disk before today's 11:00Z vehicle run, whose log (opal_bbg_logs/bbg_tplus1_20261007_070002.log) reads the enrichment step OK: 581 market securities, 0 security errors, exit 94 landed. So that change is exercised on the daily path",
+        "Round 20's merge (42462181c1, ~13:0xZ): the hunks in enrichment_bloomberg.py are the module docstring, one new helper after _held_dates and _market_range (git diff of the merge, hunk headers read by the issuer). The daily, market and names modes are not in the diff. Its first vehicle run is 2026-10-08 11:00Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-2: a deploy opens a ledger entry in org/critical_paths/change_management/ at its start; an order whose cell can deploy names that surface",
+    "world_is": "Two worker cells changed a file the scheduled vehicle executes from the working tree, and the issuer's merges put them live without an entry. Both changes sit in the ad hoc market-range mode, which the vehicle never calls, and the first is proven harmless by a real run. The exposure is the class: the next cell that edits a daily-path function of these files deploys at its merge",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The issuer reads the 2026-10-08 11:00Z enrichment line as round 20's proof on the daily path. For the next cut touching collector_bloomberg.py, enrichment_bloomberg.py, bbg_budget.py or security_names.py: the order names change_management and its sentinel, and the merge is timed after a day's vehicle run."
   }
 ]
 ```
