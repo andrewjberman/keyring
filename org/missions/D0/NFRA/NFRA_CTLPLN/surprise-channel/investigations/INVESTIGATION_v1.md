@@ -1066,3 +1066,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "apigateway cannot be settled from derived sources, so no apigateway action is in the Deny and a Dell holding the allowed PATCH/PUT/POST can still set a REST API resource policy. The same mixed-call shape is printed (not counted) for ec2 CreateVpcEndpoint/ModifyVpcEndpoint and kms ReplicateKey, which are not allowed to a Dell today."
 }
 ```
+
+## NFRA_CTLPLN-W7-S3 -- TO-CT-d-4 last-line extension and enum edge
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T09:19:58Z",
+  "one_line": "TO-CT-d-4's LAST-line format has no field that names the failed field and its ledger enum has no value for 'closed, names no commit'; the script appends failed=<fields> after ok= and files that case as other-commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/deploy_readback_check.py last line: DEPLOY-READBACK ... ledger=<v> ok=<b> failed=<comma list|none>; org/devices/test_deploy_readback.py asserts the exact line for all six arms and prints cases=6/6",
+      "the order's ledger enum is closed-named|open|missing|other-commit; a closed entry carrying no named_commit line (a deploy made on-trunk, or never recorded) fits none, so it reports other-commit and the step-4 line prints the named_commit values found (or none)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-4 build 1: the LAST line is `DEPLOY-READBACK commit= device= admitted= on_trunk= objects_equal= ledger= ok=`; the worker brief adds that the last line must say which field failed. Ledger values: closed-named|open|missing|other-commit.",
+  "world_is": "Two things the order did not say: (1) a trailing failed= field was added after ok= so a consumer matching the order's prefix still matches; (2) other-commit also stands for a closed entry that names no commit, and on_trunk may print Unknown when the fetch or ancestry read fails, and admitted=False skips steps 2-4 (printed as SKIPPED) so on_trunk=Unknown, objects_equal=0/n, ledger=missing then mean not-read."
+}
+```
