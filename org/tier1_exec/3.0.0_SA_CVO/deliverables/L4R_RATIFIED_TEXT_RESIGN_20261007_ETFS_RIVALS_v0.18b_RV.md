@@ -42,6 +42,20 @@ The stamp at `1fe8dd0132` was not placed: the PRD moved again before it. This re
   narrowest. It widens nothing.
 - The note for L9 above is answered by this record and is withdrawn.
 
-**Verdict: SIGN, at `d18b424454`.**
+## Extended to `6e245cbebe` (F.7, the script card answered)
+
+The stamp at `d18b424454` was not placed either: the PRD moved a third time. This review now covers `6e245cbebe`.
+
+- **Against the verbatim** (record `cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PAGE_MAY_CARRY_A_SCRIPT_FOR_THE_HOVER.md`
+  @`efc0acb127`): "Yes it can have script", answering a question that named one small script for the hover on every day of the
+  curve. FWD-22's SCRIPT line and F.7 apply it at that reach: exactly one inline script block, no external source, no network
+  call but this product's own chart route, and the render check fails on any count but one.
+- **One reading to name:** the script also DRAWS the curve and the markers when the modal opens, not only the hover. That is the
+  means F.5 item 3 already stated for the YES branch, and it is still one script with one purpose (the modal's chart). It is
+  not a second feature. A use beyond the modal's chart would need his word, and F.7 says so.
+- **The fallback is stated:** with the script absent or failed, every other part of the page works and the modal says so in words.
+- **FWD-21's "no-script rule stands" is named as amended** by this line, so the ratified text does not contradict itself.
+
+**Verdict: SIGN, at `6e245cbebe`.**
 
 -- 3.0.0_SA_CVO~RV
