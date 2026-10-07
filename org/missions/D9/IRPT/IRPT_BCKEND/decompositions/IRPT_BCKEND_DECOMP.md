@@ -2009,3 +2009,23 @@ dry-run at base 6115baf2e7.
 | `IB-pr-354` | current() carries allowedFirmIds for an OPAL_GLOBAL subject; on-behalf admitted only on an explicit firm; ALL, an unlisted firm, a non-internal principal and a missing value refused | TCKT_VNEXT FWD-1 via intake | WORLD (floor: infra/; no deploy until the shared pair) | IB-yr-631 (drained) | P71-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one file. Slot 0.9.0_WK_IRPT_BCKEND~163 (census: max used 162).
+
+## 65. ROUND 72, WORKSTREAM ~P (2026-10-07 ~19:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO rulings msg 973 (row W162-S1, option (a)) and msg 998 (row IRPT_YCDGEN-S16), and the issuer's ruling on row W163-S1)
+
+IB-pr-353 stopped: the bundle carries only custody_report_ref and no route reads a retained CUSTODY_REPORT. The CTO ruled a scoped GET
+reusing retained_export.resolve. IB-pr-355 serves it and IB-pr-356 consumes it, both built to one contract stated in their faces.
+IB-pr-356 supersedes IB-pr-353.
+
+IB-pr-357 is the F1 stop: response_envelope leaks internal_correlation_id. IB-pr-358 wires IB-pr-354's profile reader into the
+analysis-input-upload constructor (row W163-S1). Both may write _authz/served.py, so they are one chain on one slot.
+
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py`, dry-run at base 0d2aff87b3.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-355` | GET custody-report/{reportId} (custody-report-read, irpt-export-render), authorized by retained_export.resolve; routes.json row | FWD-8 / CUSTDY hop 5 | WORLD (a route; release under a pair naming the route and every principal class) | IB-pr-351 (drained) | P72-a |
+| `IB-pr-356` | client op + manifest + resolveBundle + PrintEntry mount ClientReportDocument; supersedes IB-pr-353 | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word) | the contract (none at build) | P72-b |
+| `IB-pr-357` | response_envelope drops internal_correlation_id from every status | IRPT_YCDGEN F1 | WORLD (every success route using response_envelope) | none | P72-c |
+| `IB-pr-358` | the analysis-input-upload constructor passes the existing profile reader | TCKT_VNEXT X-1 | WORLD (floor: infra/; ships with Y's X-1 pair) | IB-pr-354 (drained), IB-pr-357 (same file) | P72-c |
+
+fanout: 3 of 3 chains, cap 8, reason: 355 and 356 are joined only by the stated contract, so they build in parallel; 357 then 358 share _authz/served.py on one queue. Slots ~164, ~165, ~166 (P block 160-199); portal_ref: portal origin DEV at the cut.

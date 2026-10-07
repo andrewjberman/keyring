@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~162</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>superseded -- by IB-pr-356 (CTO ruling msg 973, option (a)): its worker stopped on row W162-S1 (the bundle carries only custody_report_ref and no route read the document); IB-pr-356 carries the page half with the resolve path, IB-pr-355 the read route</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
