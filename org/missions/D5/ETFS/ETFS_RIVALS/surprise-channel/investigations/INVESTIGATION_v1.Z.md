@@ -4631,6 +4631,26 @@
     "spec_asserts": "Cell RIV-bk-1 interface 3: stored currency is 'the currency of its newest non-backfill G4 row'; check_points before and record after the lookup; the plan's points and the budget check count only un-held dates.",
     "world_is": "The cell does not say what a newest non-backfill row with no currency means, which ledger mode the lookup carries, whether max_points includes the lookups, or what an unreadable G4 object does. Built: skip to the next older row with a currency; mode market-range; max_points and the budget cover historical points plus lookups (the plan's points stay historical only); FAILED before any request.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. All four are one-line changes in _market_range / _stored_currencies if the issuer rules otherwise."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W11-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~11",
+    "surfaced_at": "2026-10-07T13:36:00Z",
+    "one_line": "RIV-pl-1: ml-1.AC1.py's cell parser reads only three letters of data-m, so its arm (a) cannot see the year on 'Oct 25' / 'Oct 26'; arm (a) now expects bare Oct at both ends.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/ml-1.AC1.py line 41: the regex data-m=\"?([A-Za-z]{3})\"? reads 'Oct' from data-m=\"Oct 25\"; the year is pinned by pl-1.AC1.py (a) and tests/test_r19ml1_month_labels.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-pl-1: ml-1.AC1 arms (a) and (e) may change to the 13-cell rule and nothing else in that file.",
+    "world_is": "The parser line is outside those two arms, so it was left alone; arm (a) expects the parsed labels Oct, Nov .. Sep, Oct for 13 cells; arm (e) expects the named months unique except the one repeated Oct.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Widen the regex to carry the year if the issuer wants arm (a) to."
   }
 ]
 ```
