@@ -130,3 +130,12 @@ Two consequences this half did not state and should have:
 Read so far (exercised): dell1 refused `AWS-RunShellScript` on the host (implicit deny, 14:2xZ); dell2 refused the same with an
 explicit deny in its own policy (14:22:42Z). The admitted arm: NOT RUN.
 
+## EXERCISED (2026-10-07 14:2xZ to 14:3xZ; read-backs relayed verbatim in `org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md`; form ruled by `1.0.0_SA_CTO` msg 106300)
+
+- dell2, `irpt-ycharts-run` to the resident host with a `Task` value the document does not allow, 14:33:54Z: `InvalidParameters`,
+  not `AccessDenied`; no command created today (`list-commands` read, with a positive control present). The permission is held;
+  nothing ran; no vendor call was made.
+- dell1, the identical call: `AccessDenied` (no identity policy allows the send). The discriminator.
+- dell2, `AWS-RunShellScript` to the host, 14:22:42Z: `AccessDenied`, explicit deny in its own policy. dell1, the same: implicit deny.
+Read by this seat from the relay file, not from either Dell. NOT exercised: a real run of either resident document (by design).
+
