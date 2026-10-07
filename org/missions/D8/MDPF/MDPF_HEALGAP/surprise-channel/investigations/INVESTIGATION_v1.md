@@ -191,6 +191,28 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The order's grant (the .tf file, the investigation file, the deliverables folder, the order file) is enough to land HG-t-2, and the file copies the runner file's style.",
     "world_is": "A NEW .tf literal carrying the token cot is refused at commit unless NAMING_LEGACY_READS.json carries an r20_exception entry (needs a conformance-ledger register row) or a tf_local entry for it; both are outside the write grant and not the worker's to add. The file, proof instance and deliverables sit uncommitted in worktree C:/tmp/wk-healgap-2; the order stays pending. No gate was bypassed, no check weakened. Issuer decision needed: obtain the waiver entry, or reshape the order."
+  },
+  {
+    "id": "MDPF_HEALGAP-W2-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~2",
+    "surfaced_at": "2026-10-07T14:13:10Z",
+    "one_line": "HG-t-2 still cannot commit after the R20 merge: entry MDPF-HEALGAP-R20-01 admits the bare literal on the rule line (:23) but the gate grades the source_arn string (:34) as a separate NEW carrier and refuses it.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "After merge b780cda36a (CLOUD incl. dee4061bf9) bash .tools/safe-commit.sh ... -- infra/aws/terraform/opal-assets/cot_rebalancer_reattempt.tf: rc=1. Lines: 'NAMING DECLARED-EXCEPTION cot_rebalancer_reattempt.tf:23 cot-bronze-complete -> R20 X16 (waiver MDPF-HEALGAP-R20-01 ... 2 occurrence(s) as declared)' then 'NAMING REFUSE cot_rebalancer_reattempt.tf:34 arn:aws:events:{x}:{x}:rule/cot-bronze-complete -> lookup('cottonwood'); why: NEW hand-kept carrier (context rule)'; 'NAMING-GATE: REFUSE 2 graded'. Commit aborted.",
+        "First attempt also showed 'literal occurs 3 time(s) in the file text, declared 2'; the third occurrence was a header comment, reworded to drop the literal (the file now holds exactly 2 textual occurrences: :23 and :34). The count refusal cleared; the :34 refusal did not.",
+        "hg_t2_tf_check.py:46 requires source_arn to match 'rule/cot-bronze-complete' on one line of the permission block, and :37 requires rule = \"cot-bronze-complete\" in the target block, so both occurrences are forced by AC1 and cannot be restructured without failing it.",
+        "org/standards/NAMING_LEGACY_READS.json entry MDPF-HEALGAP-R20-01 @dee4061bf9: literal 'cot-bronze-complete', occurrences 2; the gate matches the entry to the whole-string literal at :23 only, so the :34 string 'arn:aws:events:{x}:{x}:rule/cot-bronze-complete' is graded as a different literal."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Issuer ruling on W2-S1: with entry MDPF-HEALGAP-R20-01 on CLOUD, the naming gate admits the .tf file and the commit lands.",
+    "world_is": "The entry covers the rule line but not the source_arn line; a second entry (or a literal/occurrence form the gate matches to the ARN string, e.g. the ARN-shaped literal as its own R20 row) is owed by 1.0.0_SA_CTO~DELL1 outside this order's write grant. The .tf file passes AC1 and AC2 uncommitted; the order stays open; no bypass or override was used."
   }
 ]
 ```
