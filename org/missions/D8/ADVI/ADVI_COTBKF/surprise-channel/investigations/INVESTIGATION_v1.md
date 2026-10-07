@@ -1940,3 +1940,28 @@ round.** Never edit an existing row.
   "notes": "Enrichment candidate: grade the flow months under start-of-day vs end-of-day flow and with tax withholding internal, and keep the convention that MATCHes more; a DIFF still carries its reason."
 }
 ```
+
+## ADVI_COTBKF-D2-W35-S1 -- on the real run the zero-Amount valuation newly grades 6 months, all DIFF, all lo/li; no trf* row sits in a newly graded month
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T22:24Z",
+  "one_line": "Zero-Amount flow rows 20,403, valued 5,017, blank for no price 15,386; only 6 account-months move from UNGRADABLE to graded (all DIFF, 2,284 -> 2,290; MATCH unchanged at 1,947), each carries an lo or li row, none a trf* row, so the order's 'transfer' example month is an lo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DAILY-RETURNS account_days=1691729 computed=127396 blank=1564333 flow_types=61 of 61 zero_amount=20403 valued=5017 blank_no_price=15386 (computed 127,300 -> 127,396)",
+      "monthly grade over the same performance rows before/after: UNGRADABLE 78,362 -> 78,356, DIFF 2,284 -> 2,290, MATCH 1,947 -> 1,947; valued rows by type li 458, lo 4,474, trco 27, trfi 15, trfo 43, si/so 0; no valued row has Quantity 0 or a cash CUSIP"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-1 item 4: one account-month containing a valued zero-Amount transfer, fully priced, blank before and computed and graded after.",
+  "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is B3S703388 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
+}
+```
