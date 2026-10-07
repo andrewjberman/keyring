@@ -26,7 +26,7 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~15:5xZ. Graduated at this co
    "owner": "2.0.0_SA_COO~C2",
    "round": "v14"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
