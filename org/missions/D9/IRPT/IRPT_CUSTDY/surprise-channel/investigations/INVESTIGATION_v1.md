@@ -812,3 +812,31 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The listing is already narrowed per day and costs 0.05 s; the time is 309 sequential day reads (list + get + pandas decode) of silver positions, and no manifest holds that data. The probe now reads the union of the [open, first funded) days once with 16 workers and cuts each day to its accounts in arrow, which is the 'narrowed read' the ruling asks for in effect. Two costs outside this order's paths remain in the 62 s: unkeyed_lookup.build_context (~25-30 s, hop3_real_run's not-covered lookup) and the returns load (~14-22 s). Run-to-run time moves with the network (the unchanged code measured 148, 133 and 194 s on dell2; the final code 62.2 and 68.2 s)."
 }
 ```
+
+## IRPT_CUSTDY-S12 -- round 6 drained: hop 3 inside 120 s with SI labels unchanged; not-covered accounts validated and rendered, each in its own household; suite 0 failed
+
+```json
+{
+  "id": "IRPT_CUSTDY-S12",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T14:58:00Z",
+  "one_line": "Round 6 drained and graded on the real run: hop 3 for the chosen advisor runs inside 120 s with SI labels unchanged; not-covered accounts validate with their reason, each in its own household; the tracer test is retired and the suite reads 0 failed on CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: 0143c19ac1 (chain B, CU-f-2), 65511fc814 (chain A, CU-f-1 + CU-f-3; tree check 10 needed, 0 dropped, 0 foreign); portal e355d193 on wk-IRPT_CUSTDY-14-portal (not on DEV)",
+      "proofs VALID: CU-f-1 (CU16-AC1, CU16-AC2), CU-f-3 (CU17-AC1, CU17-AC2), CU-f-2 (CU18-AC1)",
+      "issuer real run dell2 ~14:35Z: HOP3-TIMED advisor=matthew_gooch seconds=85.9 within_120=True households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2 (worker before 148.2 s; after 62.2 s, 68.2 s)",
+      "issuer real run dell2 ~14:37Z: HOP3-REAL-RUN ... households=10 accounts=14 not_in_directory=4 of=18 not_covered=4 error=none; from its file (scratchpad, not committed): 14 household documents, 14 distinct household ids, 4 not-covered accounts each alone in its document with a non-empty reason, validate_document admits 14 of 14",
+      "CLOUD @65511fc814: SUITE passed=147 failed=0 errors=0 skipped=0 xfailed=1; py_compile OK; hop3_real_run --self-test all ok"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-5 analysis @f6160117ce E1 (not-covered end to end: validate admits with reason, template renders it, never under another household), E2 (tracer retired, suite 0 failed), E3 (hop 3 within 120 s, SI labels unchanged).",
+  "world_is": "E1, E2 and E3 hold on real data and on CLOUD. Issuer rulings on the worker rows: W14-S1 ACCEPTED (the not-covered portal test builds its synthetic document inline because the existing test is coupled to the shared fixture; the criterion is met). W14-S2 RESOLVED by CU-f-2's retirement at 0143c19ac1 (CLOUD suite 0 failed). W14-S3 ACCEPTED (the premise -- a listing, a manifest as the fix -- did not hold; the bound is met by a one-pass concurrent arrow-filtered read; labels unchanged). FWD-1 thread still NOT LIVE: hop 5's served render waits on IRPT_BCKEND and the template's DEV landing (Andrew)."
+}
+```
