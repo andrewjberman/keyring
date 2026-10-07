@@ -3160,3 +3160,95 @@ the issuer reads the `PAIRS` lines and checks the 37 against `stop_status_pairs.
 **Checks dry-run at the base before the cut:**
 - `ba-1` AC1 (`pytest lib/opal_data_harvest/test_ba1_stopped_pair_is_retried.py`) base: FAIL as expected (the test is absent).
 - `ba-1` AC2 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (706 passed, 1 skipped on merged CLOUD at the round-52 drain).
+
+## 68. ROUND 54 -- the alias set per name, as ruled by the round-49 analysis ADDENDUM 6 (`ledger/ROUND_ANALYSIS.round49.md` @c1f0c8a429), 2026-10-07 ~09:2xZ
+
+Round 53's order is terminal (`ba-1` merged @296601ed65). Section 66's input was read at the relaunch: the crosswalk carries a
+research-folder name on 96 of 237 records and on none of Meta, Bank of America, AT&T or Amazon (row AMGT_HARVST-Z-S95). ADDENDUM 5
+left the cell uncut; ADDENDUM 6 names the alias source as the hand-written list `lib/research/harvest/whole_brand_aliases.json`,
+extended per security, each entry citing its census and its plane. Section 66's "plus the research-folder name" is superseded by
+that ruling; the rest of section 66 stands.
+
+Issuer `2.0.0_SA_COO~H`. Series **`az`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-az-1` | `az-1` | **A name's slug query is an alias set; a brand word enters only from the hand-written list.** The collector appends each `plane: slug` brand to the security's `aliases`; discovery admits a slug that matches any one alias, with one sitemap request per month; the 7 existing entries are marked `plane: text` and stay out of the slug plane; first slug entries Meta and Lilly. Proof on the offline replay: Meta up, the 2 Lilly slugs recovered (bbg kept >= 3,278 of 3,282), wsj 566 of 566, Bank of America and AT&T unchanged, exactly 2 of 234 names changed. | LOCAL | worker ~104 |
+
+**Not in this round (ADDENDUM 6):** one suffix list in place of two (next enrichment list); the cut or decorated legal names (row
+AMGT_HARVST-Z-S96: up to 20 of 234; the cell follows from the count); any further brand entry.
+
+**The close run (issuer, after `az-1` merges):** the META and LLY pairs re-run on wsj and bbg with `--names`.
+
+**Checks dry-run at the base before the cut:**
+- `az-1` AC1 (`pytest lib/opal_data_harvest/test_az1_alias_set.py`) base: FAIL as expected (the test is absent).
+- `az-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~104/az-1.replay.out`) base: FAIL as expected (no such file).
+- `az-1` AC3 (`pytest lib/research/harvest/tests/test_alias_rule_round18.py lib/research/harvest/tests/test_universe_securities.py`) base: PASS as expected (40 passed).
+
+## 69. ROUND 55 -- the gold-plane census for the two slug brands (`1.0.0_SA_CTO~Z` msg 30842), 2026-10-07 ~11:3xZ
+
+Round 54's order is terminal (`az-1` merged @05638ecfd9; close run @0849993cba). The CVO graded the collector's text check at 29
+of 30 for each brand (@cc31b43fbc) and the CTO admitted both there (msg 30836; recorded @bb02e46a3b). Msg 30842: the gold text
+matcher is a third plane with its own census -- there a brand attributes a mention inside ANY stored article -- and no gold
+rebuild happens before that grade.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bb`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bb-1` | `bb-1` | **What the gold text matcher would ADD with `Meta` and `Lilly` as brands: a dry-run census, no rebuild.** Over every latest silver article, with the served matcher's own pattern builder: added spans, NEW pairs, title and lead flips per brand, split by publisher; a control (an existing alias adds 0) and the served-matcher agreement control; a seeded sample of 30 added rows per brand for the CVO's grade (bar 29 of 30). No product file changes. | LOCAL | worker ~105 |
+
+**Not in this round:** flipping either entry's `plane`, a gold rebuild, any further brand; row AMGT_HARVST-Z-S96's cell (cut or
+decorated legal names) and the one-suffix-list item wait for the analysis that names them.
+
+**Checks dry-run at the base before the cut:**
+- `bb-1` AC1 (`cat .../0.9.0_WK_AMGT_HARVST~105/bb1_census.out`) base: FAIL as expected (no such file).
+- `bb-1` AC2 (`pytest .../0.9.0_WK_AMGT_HARVST~105/test_bb1_added_spans.py`) base: FAIL as expected (the test is absent).
+- `bb-1` AC3: judgment, graded by `3.0.0_SA_CVO~Z`.
+
+## 70. ROUND 56 -- gold's securities list takes legal names from the collector's identity record (`1.0.0_SA_CTO~Z` msg 30864), 2026-10-07 ~12:0xZ
+
+Round 55's order is terminal on its mechanical criteria (`bb-1` merged @1b87f2b0e1, closed @0dd1c04910; its judgment criterion
+is at `3.0.0_SA_CVO~Z`, both samples graded as cut). Row AMGT_HARVST-Z-S98: for 138 of 242 securities gold's alias set is the
+security key alone. Msg 30864: that outranks both brands and is the next issuance's first cell; ONE gold rebuild follows it,
+under its own never-widen pair, and none before.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bc`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bc-1` | `bc-1` | **Gold's list takes each security's legal name from the collector's identity record when the pool carries none; the census prints what each name gains.** The pool's own name wins; nothing is derived from a key or ticker; a slash tail on an identity name is removed and counted; cut names are listed, not altered. Census over every latest silver article with the served matcher: key-only alias sets before and after, pairs gained per name, the name-quality class, the round-55 brand lines re-run against the new list, agreement control. No gold build. | LOCAL | worker ~106 |
+
+**Not in this round:** the gold rebuild (its own never-widen pair, after this cell); flipping either brand's `plane`; repairing
+the cut legal names of row AMGT_HARVST-Z-S96; one suffix list in place of two.
+
+**Checks dry-run at the base before the cut:**
+- `bc-1` AC1 (`pytest lib/research/harvest/tests/test_bc1_legal_names.py`) base: FAIL as expected (the test is absent).
+- `bc-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bc1_census.out`) base: FAIL as expected (no such file).
+- `bc-1` AC3 (`pytest lib/research/harvest/tests -q`) base: PASS as expected (297 passed).
+
+## 71. ROUND 57 -- the gold brands and the Lilly anchor (`1.0.0_SA_CTO~Z` msgs 30873, 30876), 2026-10-07 ~12:4xZ
+
+Round 56's order is terminal (`bc-1` merged @0b35eeba2a): key-only alias sets 137 to 3 of 242; article pairs 14,895 to 22,979
+over 18,634 silver articles. The CVO graded the round-55 samples (@8289c4e3ed): Meta 30 of 30, Lilly 29 of 30 with a first
+name as the miss. Msg 30873: Meta is admitted on gold; a bare `Lilly` counts on gold only in an article that also carries
+`Eli Lilly` or the upper-case ticker. Msg 30876: the anchor stands at its measured cost (it drops both of Lilly's 2 new pairs,
+one wrong and one a passing link line; read @2aba59986e).
+
+Issuer `2.0.0_SA_COO~H`. Series **`bd`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell; same chain as `bc-1`, so worker ~106's queue).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bd-1` | `bd-1` | **`Meta` is a gold brand; a bare `Lilly` counts on gold only beside the security's own name or ticker.** Each entry gains a `gold` object (admitted, anchor, census) and keeps `plane: slug`; the list puts an unanchored gold brand in `aliases` and an anchored one in a new `anchored_aliases`; `_security_mentions` counts an anchored alias only when the unanchored count is at least 1. Plants with the TV review as the negative control and the mutant that shows it bites. Census over every silver article: Lilly gains 0 pairs, both known pairs listed as dropped, Meta gains pairs, no other security changes. No gold build. | LOCAL | worker ~106 |
+
+**Not in this round:** the gold rebuild (ONE act after this cell, under its own never-widen pair, CTO~Z msg 30864 item 3);
+row AMGT_HARVST-Z-S96's cut names; one suffix list in place of two.
+
+**Checks dry-run at the base before the cut:**
+- `bd-1` AC1 (`pytest lib/research/harvest/tests/test_bd1_gold_brands_and_anchor.py`) base: FAIL as expected (the test is absent).
+- `bd-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bd1_census.out`) base: FAIL as expected (no such file).
+- `bd-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (380 passed).
