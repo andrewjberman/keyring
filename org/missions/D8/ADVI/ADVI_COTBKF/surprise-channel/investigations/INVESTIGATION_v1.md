@@ -387,3 +387,138 @@ round.** Never edit an existing row.
   "notes": "Whether TXRP should carry the tax year as its doc_date is for the issuer; the builder keeps it in listing_fields."
 }
 ```
+
+## ADVI_COTBKF-W10-S1 -- The current holdings files carry no CUSIP before June and no ticker on the May lines, and the earliest dated lines of a new account carry no units; th
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~10",
+  "surfaced_at": "2026-10-07T01:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-W10-S1",
+  "one_line": "The current holdings files carry no CUSIP before June and no ticker on the May lines, and the earliest dated lines of a new account carry no units; the join falls back to the asset name's CUSIP and 'first holdings' reads the earliest date with a quantity.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/gold/canonical/holdings/ (130 files, 2026-04-22 to 2026-10-05), columns read per file: cusip is null on 100% of the 2026-04 and 2026-05 lines, 16.7% of 2026-06, about 2.7% after; the first populated date of account z0926757531 is 2026-05-26 and its 18 lines there carry units with ticker and cusip both null (asset_name only)",
+      "first-dated lines of accounts opened on 2026-06-08 (z0927183571) list the securities with units null until a later date; 968 of 994 accounts have a quantity-bearing line, 97 of them on a date after their earliest listing",
+      "commonwealth_crosswalk.py name_cusip_map + current_first_holdings; the first cut that dropped the name-only lines matched 34 of 1,533, the cut that resolves them through the asset_name's single CUSIP matches 439"
+    ]
+  },
+  "spec_asserts": "CB-c-3 worker face: R2 matches the Commonwealth holdings to 'a current account's FIRST holdings (its earliest holdings date) on the same CUSIPs'.",
+  "world_is": "The holdings table has a cusip column only in later files, and the earliest dated lines carry no quantity, so a literal CUSIP join on the literal earliest date returns almost nothing. Applied: a current line takes its cusip, else the CUSIP its asset_name carries on every other line that has one (names with two CUSIPs excluded), else its ticker; first holdings = the earliest date on which the account has units populated and non-zero. Both are printed in the script docstring and the RULE lines.",
+  "notes": "Whether the holdings producer should backfill cusip on the April-June files is for its owner; the crosswalk reads what is served."
+}
+```
+
+## ADVI_COTBKF-W10-S2 -- For an account that left in kind, its literal holdings at its last activity are flat; 'holdings as it left' is read as the holdings immediately before
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~10",
+  "surfaced_at": "2026-10-07T01:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-W10-S2",
+  "one_line": "For an account that left in kind, its literal holdings at its last activity are flat; 'holdings as it left' is read as the holdings immediately before its last in-kind withdrawal day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "639 of 1,533 accounts rebuild to no security position with last activity on or after 2026-04-22; their last lines are Transaction_Type lo ('Withdrawal from Asset', Amount 0.00) on non-cash CUSIPs, e.g. B3S782653 on 2026-05-20",
+      "validation of the signed rebuild on the real 2026-06-23 positions: 381 of 381 security (account, CUSIP) pairs equal within 0.001 (REBUILD-CHECK line of the run)",
+      "an account matched this way: B3S717438 -> z0927158721, 17 of 17 positions equal within 0.001 (evidence column of crosswalk.csv)"
+    ]
+  },
+  "spec_asserts": "CB-c-3 worker face R2: 'its holdings at its last activity rebuilt from its transactions' (for an account without 2026-06-23 positions).",
+  "world_is": "Read literally, the net at last activity is zero for exactly the accounts that transferred out in kind, so none could match. Applied: for an account whose full rebuild leaves no security position and which has lo/trfo lines on non-cash CUSIPs, the holdings as it left = the rebuild without the lines dated its last such day (basis REBUILT_BEFORE_IN_KIND_OUT_<date> in every row); every other account uses the plain rebuild.",
+  "notes": "The Transaction_Type signs (+ by li trfi dvr lica ci TRFIR licar 12b1 CAF QA CAE; - sl lo trfo loca DVRX) were fitted to the 2026-06-23 positions; CAF, QA, CAE, DVRX have few lines, so the 381 of 381 is partly in-sample."
+}
+```
+
+## ADVI_COTBKF-W10-S3 -- The first read of the current-side inputs and the transactions takes about 8 minutes; CB3c3-AC2 meets its 120-second bound (5.6 s) only against the co
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~10",
+  "surfaced_at": "2026-10-07T01:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-W10-S3",
+  "one_line": "The first read of the current-side inputs and the transactions takes about 8 minutes; CB3c3-AC2 meets its 120-second bound (5.6 s) only against the column-projected cache under .scratch/advi_cotbkf/cache.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cache files mtime 2026-10-06 20:52 (holdings, accounts, positions) and 20:55 (transactions) after a 20:47 start: about 8 minutes cold, 130 holdings files plus 14 transactions parts; a holdings re-read took about 5 minutes",
+      "time timeout 120 python data/assets/scripts/silver/commonwealth_crosswalk.py --out .scratch/advi_cotbkf/crosswalk: real 0m5.5s, rc 0, CROSSWALK commonwealth_accounts=1533 every_account_listed=True matched=439 not_matched=1094 ambiguous=36 by_rule=R2-in-kind-transfer:439; a second run's csv is byte-identical"
+    ]
+  },
+  "spec_asserts": "CB-c-3 BOUNDS: 'Within 120 seconds for CB3c3-AC2 (cache reads under .scratch/ and let the script read the cache when present).'",
+  "world_is": "The cache (.scratch/, uncommitted, about 19 MB) sits in worker ~10's worktree; AC2 re-run in any other tree or after this worktree is removed ends rc 124 on a cold run. The script writes the cache on a cold run and reads it when present (--cache overrides the location).",
+  "notes": "Disarm as the issuer did for W6-S4: copy C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-10/.scratch/advi_cotbkf/cache to the shared tree's .scratch/advi_cotbkf/ before the worktree's removal, or run once without the timeout (about 8 minutes)."
+}
+```
+
+## ADVI_COTBKF-W10-S4 -- Of 1,533 Commonwealth accounts 439 are matched by R2, 36 are AMBIGUOUS (18 one-position accounts, and cv-prefixed twins of the same number), 263 hold 
+
+```json
+{
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~10",
+  "surfaced_at": "2026-10-07T01:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "ADVI_COTBKF-W10-S4",
+  "one_line": "Of 1,533 Commonwealth accounts 439 are matched by R2, 36 are AMBIGUOUS (18 one-position accounts, and cv-prefixed twins of the same number), 263 hold positions no current account's first holdings reproduce, 758 closed before 2026-04-22, 37 were flat.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "run output of CB3c3-AC2: not_matched reasons AMBIGUOUS 36, CLOSED_BEFORE_CURRENT_HISTORY 758, NO_CURRENT_ACCOUNT_HOLDS_POSITIONS 263, NO_SECURITY_POSITIONS 37; R1 matched 0 (no Commonwealth number equals a current z09... id)",
+      "of the 263, 214 have no current account equal on any position by quantity and 49 have a best candidate scoring 0.05 to 0.786 (e.g. B3S606724 -> z0927980101 11 of 14 = 0.786, reason column of crosswalk.csv)",
+      "ambiguous examples: 0QF878978 and RGY006839 both reach z0926741471 (19 of 21 = 0.905); cv0QF879181 and cv47440283 and 0QF879181 reach z0926724981"
+    ]
+  },
+  "spec_asserts": "CB-c-3: every Commonwealth account is matched with its rule or listed not matched with the reason; no match is guessed.",
+  "world_is": "The 80% bar at a 0.001 tolerance leaves near-matches (a mutual-fund line moved by a dividend between departure and arrival) listed NOT_MATCHED with the best candidate and score in the reason; none is applied. Single-position accounts match only when exactly one current account holds that quantity of that security and no second Commonwealth account claims it (46 matched, 18 ambiguous).",
+  "notes": "Whether a looser, still exact rule (fund lines allowed a stated dividend drift) is wanted is the issuer's and the CTO's; this cell applies the rule as written."
+}
+```
+
+## ADVI_COTBKF-W10-S5 -- The commit naming gate refused the three current-side locations the order names (bucket, accounts key, holdings prefix) as typed literals, so the scri
+
+```json
+{
+  "id": "ADVI_COTBKF-W10-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~10",
+  "surfaced_at": "2026-10-07T01:55Z",
+  "one_line": "The commit naming gate refused the three current-side locations the order names (bucket, accounts key, holdings prefix) as typed literals, so the script reads them from a location record in the deliverables folder; a commit gate also refused a build_ function that returns a tuple.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit naming limb (ENFORCE) on the first commit: commonwealth_crosswalk.py:64 opal-data-cot -> opal-data-cottonwood (ALIAS as S3_BUCKET: REFUSE); :65 gold/dimensions/accounts_dimension_latest.parquet and :66 gold/canonical/holdings/ OUT-OF-PATTERN as S3Key: REFUSE; NAMING-GATE: REFUSE 3 graded",
+      "safe-commit ds-precommit: commonwealth_crosswalk.py:232 build function 'build_crosswalk' returns DataFrame but missing coerce_silver_ids() (it returns a tuple of rows and info); renamed crosswalk_rows, the same remedy as row W7-S1",
+      "lookup('cottonwood')['aliases'] grades opal-data-cot as an ALIAS of opal-data-cottonwood with routed true; the data sits in the alias bucket today"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 30: every S3 address is address() output; a builder refusal is a missing registry row. TO CB-c-3 names the current-side bucket and keys as literals.",
+  "world_is": "The current-side locations are pre-LGIC layouts the builders do not produce. The script reads bucket, accounts key and holdings prefix from org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~10/CURRENT_SIDE_LOCATIONS.json (org/ is not graded), the same carrier as row W6-S5; the Commonwealth silver addresses come from address(). No registry row was added and no override was used.",
+  "notes": "Whether a registry row per legacy store or this record is the right carrier is for the CTO; the migration project (rule 30, R19) removes the legacy locations."
+}
+```
