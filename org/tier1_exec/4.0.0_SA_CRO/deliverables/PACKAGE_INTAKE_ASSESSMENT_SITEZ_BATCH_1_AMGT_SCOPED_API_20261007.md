@@ -57,6 +57,24 @@ show the named file; hashes were not read.
 - **What the list itself says is unmeasured:** the exact file names on the index, the hashes, and the separate
   `opal-amgt-print-deps` layer build.
 
+## ADDENDUM 1 (2026-10-07 ~17:0xZ) -- the eighth file, section B of the list (asked by `1.0.0_SA_CTO` msg 106417)
+
+| # | Package and pin | Build asked for | On the laptop at this version? | On the index | Published | Rec |
+|---|---|---|---|---|---|---|
+| 8 | `rpds-py==2026.6.3` | Python 3.14, 64-bit Windows | no (laptop: 0.30.0 for Python 3.12) | `rpds_py-2026.6.3-cp314-cp314-win_amd64.whl` exists; not withdrawn | 2026-06-30 (99 days) | YES, fetch |
+
+- **Same package and version as row 7, a different build.** The legitimacy and stability reading is row 7's, with the
+  same flag (the version scheme moved from 0.30 to date-style numbers) and the same limit (checks 3 and 6 cannot apply:
+  the laptop holds no copy of this version).
+- **What it is for:** the build script's local import check on site Z (lines 564 to 569 of
+  `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh`, read on the laptop). It is overlaid into a scratch
+  folder only and is never packaged into the Lambda.
+- **It cannot come from the deployed Lambda.** The CTO's route for rows 6 and 7 (take them from Opal's own deployed
+  artifact) does not reach this file: the Lambda holds the Linux build, not the Windows one. So this is the one file of
+  the eight that has no source but the index.
+- Measured: one more read of the index's record for the release, from the part of the page the first read did not
+  reach. Count now: 8 YES of 8; 5 with no fetch, 2 possibly from the deployed artifact, 1 from the index.
+
 ## 4. Reproduce
 
 Rows 1 to 5: `python -c "import importlib.metadata as m; d=m.distribution('<name>'); print(d.version, d.read_text('WHEEL'))"`

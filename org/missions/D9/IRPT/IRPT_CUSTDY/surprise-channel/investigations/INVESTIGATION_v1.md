@@ -731,3 +731,137 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E1 holds on real data. E2 holds for its mechanical criteria (C-SHAPE is the CVO's judgment). Carried to the next round, not rows: the template's not_covered rendering (CTO note), the tracer test retirement (S10), and the 30 'not described' holdings in the real render (class and sector null until the issuer's describe() join)."
 }
 ```
+
+## IRPT_CUSTDY-W14-S1 -- the order asks for a not-covered account added to render/fixtures/clientreport.firm-a.json, but the existing client-report-document test is coupled to that fixture and cannot pass with it; the not-covered document is built inline in the new test instead
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T13:39:52Z",
+  "one_line": "the order asks for a not-covered account added to render/fixtures/clientreport.firm-a.json, but the existing client-report-document test is coupled to that fixture and cannot pass with it; the not-covered document is built inline in the new test instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured in worktree: appending {account: ****9999, not_covered: {reason}} to the fixture's accounts and running `bun --no-install test .../client-report-document.test.tsx` gave 10 of 10 tests failing (a mixed household with one not-covered account crashes the covered render path); the fixture was restored byte-for-byte from a backup before any commit",
+      "client-report-document.test.tsx asserts `1 + FIXTURE.accounts.length` returns tables (a), the exact three SI-row list (b) and the literal `5 / 5` page counter (i); a third account that prints no returns table and its own page cannot satisfy those even if the mixed render were supported (reasoned from the assertions, not run)",
+      "the producer never emits a mixed household: validate_document admits a not-covered account only in a household whose accounts are ALL not-covered, so a mixed fixture is also not a shape the contract produces",
+      "portal e355d193 on wk-IRPT_CUSTDY-14-portal: ClientReportDocument branches on isNotCoveredReport; not-covered.test.tsx holds the synthetic not-covered household inline (6 pass); the existing test file is unchanged (16 pass over the clientreport directory)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-f-1 build step 4: add one not-covered account to render/fixtures/clientreport.firm-a.json (synthetic); the existing test must still pass.",
+  "world_is": "The two clauses cannot both hold: the fixture is one covered household that the existing test counts account by account, and the order's paths do not include that test. The fixture file is unchanged. If the CTO wants the not-covered account in a fixture FILE, it is a second fixture (a separate not-covered household document) read by the new test, which needs that path in a later order's grant."
+}
+```
+
+## IRPT_CUSTDY-W14-S2 -- data/assets/scripts/gold/irpt_custody/tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line fails on the CLOUD checkout independent of this order
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T13:39:52Z",
+  "one_line": "data/assets/scripts/gold/irpt_custody/tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line fails on the CLOUD checkout independent of this order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python -m pytest -q data/assets/scripts/gold/irpt_custody/tests` in the worktree at fed55f91cc plus CU-f-1: 138 passed, 1 failed, 1 xfailed; the one failure is test_advisor_projection_refused.py:117 (assert False)",
+      "the same single test run from C:/dev/ajb_workspace (the CLOUD checkout without my changes): `-k none_source_names` -> 1 failed, 5 deselected, same line 117, so the failure predates CU-f-1; the file is outside this order's paths and was not touched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Repo-wide hygiene runs at the drain (round 6 order CU-f-1): the irpt_custody suite is expected green.",
+  "world_is": "One test in a neighbouring file is red on base; it is not caused by validate_document or hop3_real_run. Whoever owns advisor_client_list / its seam message should read it."
+}
+```
+
+## IRPT_CUSTDY-W14-S3 -- CU-f-3: the SI probe cost was a sequential per-day read of silver positions, not a listing a manifest can replace; no manifest holds silver holdings, so the probe now reads the needed days once, concurrently, row-filtered in arrow
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T14:29:19Z",
+  "one_line": "CU-f-3: the SI probe cost was a sequential per-day read of silver positions, not a listing a manifest can replace; no manifest holds silver holdings, so the probe now reads the needed days once, concurrently, row-filtered in arrow",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline on dell2 (hop3_timed_check, before any change): HOP3-TIMED advisor=matthew_gooch seconds=148.2 within_120=False households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2",
+      "per-call timing of S3Store reads in that run: 851 reads, of which 309 are silver dim_position day reads (84 s, sequential, 0.27 s each = day-prefix list 0.05 + get 0.15 + pandas decode 0.13) from _holdings_before_first, 434 are account_return_daily reads (threaded, ~10 s wall), 65 fact_trn reads; the day-prefix list inside S3Store.read (the faulthandler site, ~line 308) is one narrowed list per day, 0.05 s, not the cost",
+      "the returns gold manifest at 2026-09-30 carries table, asof, rows, day_quality_census, return_basis_census, carried_days, first_data_date (6863 accounts), method, thresholds, address, landed -- no field about silver holdings, so the zero-holdings read cannot come from it",
+      "more workers alone did not help (60 days: 4 workers 11.6 s, 16 workers 13.9 s, 32 workers 13.1 s) because the pandas conversion of ~83k rows per day dominates; the fix cuts each day to the probe accounts in pyarrow (is_in over the distinct ids) before to_pandas",
+      "after: HOP3-TIMED advisor=matthew_gooch seconds=62.2 within_120=True households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2; the prefetch phase measured 6.9 s in an instrumented run (total 68.2 s, of which unkeyed_lookup.build_context 29.6 s and the returns load 14.1 s are outside this order's paths)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py: _prefetch_probe_days, _account_filter, _probe_span; S3Store/LocalStore.read take an optional `keep`; tests/test_si_anchor_bounded.py 9 passed; full irpt_custody tests 147 passed, 1 xfailed, 1 failed (the inherited test_none_source_names_the_seam_line, W14-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-f-3 / ruling W12-S1: the time is in the SI anchor probe's S3 listing; the probe should read a manifest or a narrowed prefix instead of listing S3.",
+  "world_is": "The listing is already narrowed per day and costs 0.05 s; the time is 309 sequential day reads (list + get + pandas decode) of silver positions, and no manifest holds that data. The probe now reads the union of the [open, first funded) days once with 16 workers and cuts each day to its accounts in arrow, which is the 'narrowed read' the ruling asks for in effect. Two costs outside this order's paths remain in the 62 s: unkeyed_lookup.build_context (~25-30 s, hop3_real_run's not-covered lookup) and the returns load (~14-22 s). Run-to-run time moves with the network (the unchanged code measured 148, 133 and 194 s on dell2; the final code 62.2 and 68.2 s)."
+}
+```
+
+## IRPT_CUSTDY-S12 -- round 6 drained: hop 3 inside 120 s with SI labels unchanged; not-covered accounts validated and rendered, each in its own household; suite 0 failed
+
+```json
+{
+  "id": "IRPT_CUSTDY-S12",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T14:58:00Z",
+  "one_line": "Round 6 drained and graded on the real run: hop 3 for the chosen advisor runs inside 120 s with SI labels unchanged; not-covered accounts validate with their reason, each in its own household; the tracer test is retired and the suite reads 0 failed on CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: 0143c19ac1 (chain B, CU-f-2), 65511fc814 (chain A, CU-f-1 + CU-f-3; tree check 10 needed, 0 dropped, 0 foreign); portal e355d193 on wk-IRPT_CUSTDY-14-portal (not on DEV)",
+      "proofs VALID: CU-f-1 (CU16-AC1, CU16-AC2), CU-f-3 (CU17-AC1, CU17-AC2), CU-f-2 (CU18-AC1)",
+      "issuer real run dell2 ~14:35Z: HOP3-TIMED advisor=matthew_gooch seconds=85.9 within_120=True households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2 (worker before 148.2 s; after 62.2 s, 68.2 s)",
+      "issuer real run dell2 ~14:37Z: HOP3-REAL-RUN ... households=10 accounts=14 not_in_directory=4 of=18 not_covered=4 error=none; from its file (scratchpad, not committed): 14 household documents, 14 distinct household ids, 4 not-covered accounts each alone in its document with a non-empty reason, validate_document admits 14 of 14",
+      "CLOUD @65511fc814: SUITE passed=147 failed=0 errors=0 skipped=0 xfailed=1; py_compile OK; hop3_real_run --self-test all ok"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-5 analysis @f6160117ce E1 (not-covered end to end: validate admits with reason, template renders it, never under another household), E2 (tracer retired, suite 0 failed), E3 (hop 3 within 120 s, SI labels unchanged).",
+  "world_is": "E1, E2 and E3 hold on real data and on CLOUD. Issuer rulings on the worker rows: W14-S1 ACCEPTED (the not-covered portal test builds its synthetic document inline because the existing test is coupled to the shared fixture; the criterion is met). W14-S2 RESOLVED by CU-f-2's retirement at 0143c19ac1 (CLOUD suite 0 failed). W14-S3 ACCEPTED (the premise -- a listing, a manifest as the fix -- did not hold; the bound is met by a one-pass concurrent arrow-filtered read; labels unchanged). FWD-1 thread still NOT LIVE: hop 5's served render waits on IRPT_BCKEND and the template's DEV landing (Andrew)."
+}
+```
+
+## IRPT_CUSTDY-S13 -- an empty accounts array reads as covered and renders a 3-page shell (CTO note on 4c10b488, non-blocking)
+
+```json
+{
+  "id": "IRPT_CUSTDY-S13",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T15:26:00Z",
+  "one_line": "An empty accounts array reads as covered in the client-report template and renders a 3-page shell; the producer never writes one today (CTO review note on portal 4c10b488, non-blocking).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 759: PASS on 4c10b488 (with e355d193); note: 'an empty accounts array reads as covered and renders a 3-page shell. The producer never writes one today.'",
+      "hop3_real_run real output 2026-10-07 ~14:37Z: 14 household documents, none with an empty accounts array"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The template renders a household's accounts: covered ones with figures, not-covered ones with their reason; a mixed document is refused by name (round 7 E1).",
+  "world_is": "A household document with zero accounts is neither refused nor marked: it takes the covered path and renders an empty 3-page shell. Inert today because hop3_real_run never emits one; carried to the round-7 analysis as a candidate refusal alongside the mixed-document error."
+}
+```

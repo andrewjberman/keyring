@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_CUSTDY~14</issued_to>
 <issued_by>2.0.0_SA_COO~K2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,11 @@
 <workstream>~K2</workstream>
 
 **Directive:** D9 | **Fabric:** laptop (placement dell2) | **Decomp cell:** `CU-f-1` (`decompositions/IRPT_CUSTDY_DECOMP.round6.md`) |
-**outcome_ref:** FWD-1 | **depends_on:** none (your queue's next order is CU-f-3)
+**outcome_ref:** FWD-1 | **depends_on:** none
+
+**AMENDMENT 1 (2026-10-07 ~15:1xZ, issuer ruling on `1.0.0_SA_CTO~DELL2` review msg 743 of portal e355d193):** the order is re-opened
+for one change, Build step 5 and criterion `CU16-AC3`. Steps 1-4 are DONE and merged on CLOUD @65511fc814 (workspace side) and on portal
+branch `wk-IRPT_CUSTDY-14-portal` @e355d193 (portal side): that is your inherited state, do not redo it.
 
 ---
 
@@ -47,6 +51,15 @@ existing test `portal/src/pages/InvestorReporting/__tests__/clientreport/client-
    masked account and no figure tables; add one not-covered account to `render/fixtures/clientreport.firm-a.json` (synthetic); a NEW test
    `portal/src/pages/InvestorReporting/__tests__/clientreport/not-covered.test.tsx` (`bun:test`) asserting the text renders, no `0`/blank
    figure appears for it, and the masked account prints. The existing test must still pass.
+5. (AMENDMENT 1) The CTO's review, verbatim in short: "`isNotCoveredReport` requires EVERY account to be not-covered, so a household
+   mixing covered and not-covered accounts falls to the figures path. There a not-covered account has no `returns` and fails as an unnamed
+   TypeError, or renders blanks. Make the figures path refuse a document in which any account carries `not_covered`. Throw a named error
+   that states the mixed shape, and add one test for it, including a control that the all-covered fixture still renders."
+   So: in `ClientReportDocument.tsx` (+ `types.ts` if the error class lives there) the figures path throws a named error (an `Error`
+   subclass with its own `name`, message naming the mixed shape and the not-covered account count, masked ids only) when any account
+   carries `not_covered`; the all-not-covered path is unchanged. A NEW test `__tests__/clientreport/mixed-document-refused.test.tsx`
+   (`bun:test`): a synthetic household with one covered and one not-covered account is refused with that named error; control: the
+   all-covered fixture `render/fixtures/clientreport.firm-a.json` still renders. Commit on your portal branch (it is already at e355d193).
 
 **THE BUN RULE -- verbatim (`1.0.0_SA_CTO~DELL2` msgs 500 and 563, `0.0.0_AB_MSTR~DELL2` msg 508):** "run bun ONLY from inside
 C:\dev\ajb_workspace\portal (or a worktree with node_modules LINKED), always as `bun --no-install`; never run bun on a scratch file
@@ -64,7 +77,11 @@ worktree's `portal/`; (3) an import of a package NOT already in node_modules is 
 <criterion id="CU16-AC2" cell_refs="CU-f-1"><invocation>cd portal && bun --no-install test ./src/pages/InvestorReporting/__tests__/clientreport/not-covered.test.tsx</invocation><expect>0 fail</expect></criterion>
 `CU16-AC2` -- the CTO's criterion (2): the template renders `not covered: <reason>`.
 
-<expected_criteria>CU16-AC1,CU16-AC2</expected_criteria>
+<criterion id="CU16-AC3" cell_refs="CU-f-1"><invocation>cd portal && bun --no-install test ./src/pages/InvestorReporting/__tests__/clientreport/mixed-document-refused.test.tsx</invocation><expect>0 fail</expect></criterion>
+`CU16-AC3` -- the CTO's review change (msg 743): a mixed document is refused by name; the all-covered control renders. Re-run AC1 and AC2
+too: both must still pass after the change.
+
+<expected_criteria>CU16-AC1,CU16-AC2,CU16-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -84,6 +101,7 @@ portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx
 portal/src/pages/InvestorReporting/render/clientreport/types.ts
 portal/src/pages/InvestorReporting/render/fixtures/clientreport.firm-a.json
 portal/src/pages/InvestorReporting/__tests__/clientreport/not-covered.test.tsx
+portal/src/pages/InvestorReporting/__tests__/clientreport/mixed-document-refused.test.tsx
 org/missions/D9/IRPT/IRPT_CUSTDY/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -95,9 +113,12 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CU16-AC1, CU16-AC2. Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~14/IRPT_CUSTDY.TO-CU-f-1.not-covered-end-to-end.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> CU16-AC1,CU16-AC2` BEFORE the flip.
+Criterion ids: CU16-AC1, CU16-AC2, CU16-AC3 (AMENDMENT 1: re-write the instance with all three). Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~14/IRPT_CUSTDY.TO-CU-f-1.not-covered-end-to-end.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> CU16-AC1,CU16-AC2,CU16-AC3` BEFORE the flip.
 </proof_of_spec>
+
+**WEB (Andrew-direct via 1.0.0_SA_CTO~DELL2 msg 642, verbatim):** "I do not mind webbrowsing if necessary for research purposes, however we
+do not do downloads." No packages, no installs, no file fetched onto the box.
 
 **REPORT:** the link proof, the pytest and bun summaries, the portal commit hash, rows, commits.
 

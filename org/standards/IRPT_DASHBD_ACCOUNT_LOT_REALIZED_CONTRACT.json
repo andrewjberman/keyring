@@ -1,0 +1,170 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~20",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json.",
+  "table": "account_lot_realized",
+  "grain": "realized lot (closing event x opening event)",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the registry-derived firm scope this row belongs to; never a typed token"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded)"
+    },
+    {
+      "name": "business_date",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the lot's closing date, the custodian's own"
+    },
+    {
+      "name": "lot_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the closing event id and the opening event id joined by '/': unique on every partition measured; a repeat refuses"
+    },
+    {
+      "name": "ticker_symbol",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian's ticker, blank where it carries none"
+    },
+    {
+      "name": "cusip",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the security's CUSIP, blank where it carries none"
+    },
+    {
+      "name": "quantity",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the quantity of this lot that closed"
+    },
+    {
+      "name": "acquired_date",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the lot's acquired date as the custodian states it; null on ACQUIRED_DATE_ABSENT. A date before 2010 is kept, never estimated or altered"
+    },
+    {
+      "name": "holding_term",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian's holding-term flag read through the producer's declared map"
+    },
+    {
+      "name": "holding_trading_days",
+      "type": "int64",
+      "nullable": true,
+      "meaning": "trading days in [acquired_date, business_date] by lib/trading_calendar.py; null on PRE_2010_OPENED (the calendar raises before 2010) and on ACQUIRED_DATE_ABSENT"
+    },
+    {
+      "name": "proceeds",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the lot's closing proceeds, net of the trade's fees, as the custodian states them"
+    },
+    {
+      "name": "cost_basis",
+      "type": "double",
+      "nullable": false,
+      "meaning": "cost_basis_unamortized -- the column satisfying proceeds - cost_basis == realized_gain, chosen by measurement"
+    },
+    {
+      "name": "realized_gain",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the custodian's own gain_loss_dollars for the lot"
+    },
+    {
+      "name": "closing_tie",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the lot's relation to its closing transaction in the custodian's transactions; the reason where it does not tie"
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the method this figure was produced under (1)"
+    },
+    {
+      "name": "coverage",
+      "type": "string",
+      "nullable": false,
+      "meaning": "why a calendar-derived column is null; MEASURED where none is"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the shape of this emission"
+    }
+  ],
+  "enums": {
+    "coverage": [
+      "MEASURED",
+      "PRE_2010_OPENED",
+      "ACQUIRED_DATE_ABSENT"
+    ],
+    "closing_tie": [
+      "TIED",
+      "NO_ORDER_NUMBER",
+      "NO_TRADE_FOR_ORDER",
+      "TRADE_DATE_DIFFERS",
+      "QUANTITY_DIFFERS",
+      "PROCEEDS_DIFFER"
+    ],
+    "holding_term": [
+      "LONG_TERM",
+      "SHORT_TERM"
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": {
+      "coverage": "domain: 'why is a calendar-derived column of this lot null'. MEASURED (none is) | PRE_2010_OPENED (the lot was opened before lib/trading_calendar.py's floor of 2010-01-01, which raises there: holding_trading_days is null and the custodian's dates are kept) | ACQUIRED_DATE_ABSENT (the custodian row has no acquired date). COVERED BY SUBTRACTION: a lot either carries an acquired date or not; one that does is either on or after the floor or before it.",
+      "closing_tie": "domain: 'does this realized lot tie to its closing transaction in the custodian's transactions'. TIED | NO_ORDER_NUMBER (the lot carries no order number to look one up by) | NO_TRADE_FOR_ORDER (no trade row for this account, order and security in the searched partitions) | TRADE_DATE_DIFFERS (the trade is not on the lot's closing date) | QUANTITY_DIFFERS (the order's lots do not sum to the trade's quantity) | PROCEEDS_DIFFER (they do not sum to its net amount). COVERED BY SUBTRACTION in the producer's order: an order number exists or not; a trade exists or not; it is on the date or not; the quantities agree or not; the proceeds agree or not. A lot is tied or untied WITH the other lots of its order, because one trade closes against several lots and only their sum is the trade.",
+      "holding_term": "domain: the custodian's holding-term flag. LONG_TERM | SHORT_TERM. A flag outside the declared map REFUSES: it is a defect, not a third member."
+    },
+    "ii_same_grain": "Every member of coverage and closing_tie is a LOT property; holding_term is a lot property; none is an account property.",
+    "iii_intent_coherence": "closing_tie answers ONE question -- the lot's relation to its closing transaction. coverage answers a different one -- why a calendar-derived column is null -- and neither says whether the gain is right.",
+    "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. A transaction partition landing late moves NO_TRADE_FOR_ORDER only. The calendar gaining pre-2010 coverage moves PRE_2010_OPENED only. Neither moves the other axis.",
+    "token_census": {
+      "method": "comp-find word-boundary regex over the worktree corpus (corpus=all), one scan per proposed member, denominators printed per scan.",
+      "members": {
+        "PRE_2010_OPENED": "denominator: 186 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record (which lists the lots, one line each, hence the count). the remaining hits are comp-tool's OWN footprint (.comp-graph/.comp_dedup, org/mcp/comp-tool-runs.jsonl, org/mcp/comp-which-rail.log), identified by path and not assumed away. Zero elsewhere.",
+        "ACQUIRED_DATE_ABSENT": "denominator: 3 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer. the remaining hits are comp-tool's OWN footprint (.comp-graph/.comp_dedup, org/mcp/comp-tool-runs.jsonl, org/mcp/comp-which-rail.log), identified by path and not assumed away. Zero elsewhere.",
+        "NO_ORDER_NUMBER": "denominator: 2 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record. Zero elsewhere.",
+        "NO_TRADE_FOR_ORDER": "denominator: 3 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record. Zero elsewhere.",
+        "TRADE_DATE_DIFFERS": "denominator: 2 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record. Zero elsewhere.",
+        "QUANTITY_DIFFERS": "denominator: 2 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record. Zero elsewhere.",
+        "PROCEEDS_DIFFER": "denominator: 2 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record. Zero elsewhere.",
+        "TIED": "denominator: 97 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. 76 files, in prose and log strings; no schema carries it as a column value. One runner returns a census line beginning 'TIED:' for a row-count tie (data/assets/scripts/gold/runners_49f/c03_runner.py:70), a log string of a different grain and intent with no shared consumer. Not a Rule 24 (iii) collision.",
+        "LONG_TERM": "denominator: 8 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer, its test and the contract generator. Zero elsewhere.",
+        "SHORT_TERM": "denominator: 6 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and the contract generator. Zero elsewhere."
+      },
+      "finding": "NO COLLISION. Every member is absent from first-party source outside this cell except TIED (a log string of another grain) and the generic words LONG_TERM / SHORT_TERM, which this producer is the only schema to carry as values. Stated as a measurement, with the scans' denominators printed."
+    },
+    "member_evidence": {
+      "basis": "measured",
+      "live_run": "726 realized lots over 2026-09-01..2026-10-05 for the sampled accounts: TIED 726, untied 0; coverage MEASURED 640, PRE_2010_OPENED 86.",
+      "unexercised_members_proved": "Every untied reason is 0 on live data. NEGATIVE CONTROL on the live lots: the same 726 lots tied against NO transactions all come back untied, {\"NO_TRADE_FOR_ORDER\": 726}. Each reason is produced by test_every_untied_reason_is_reachable_and_named."
+    }
+  },
+  "schema_hash": "d870f98337a850e9c5d5bb8afc2388b26ad95a9cf8e62fb8d29ff60d14f5abc8",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_* schema carries -- the method that reproduces account_return_daily's published hash 1b25d37b... exactly. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
+  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names live only in the producer's LOT_SOURCE adapter block, which row IRPT_DASHBD-W20-S1 asks to move into sources.json.",
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_REALIZED schema this hash is taken from. The producer and this contract land together.",
+  "limits_of_method_version_1": "method_version 1: one row per custodian realized-lot row; the tie is a lookup by account, order number and security against the TRADE rows of the searched transaction partitions; a lot closed by an event with no order number (an expiry, an assignment) ties NOTHING and says so."
+}

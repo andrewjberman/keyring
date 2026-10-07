@@ -1,0 +1,155 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~20",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json.",
+  "table": "account_lot_unrealized_daily",
+  "grain": "open lot x valuation day",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the registry-derived firm scope this row belongs to; never a typed token"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded)"
+    },
+    {
+      "name": "business_date",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the valuation day, the custodian's own"
+    },
+    {
+      "name": "lot_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the lot event id, security, acquired date and original purchase date joined by '|': the event id alone repeats within an account"
+    },
+    {
+      "name": "ticker_symbol",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian's ticker, blank where it carries none"
+    },
+    {
+      "name": "cusip",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the security's CUSIP, blank where it carries none"
+    },
+    {
+      "name": "quantity",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the open quantity of the lot"
+    },
+    {
+      "name": "acquired_date",
+      "type": "string",
+      "nullable": true,
+      "meaning": "the lot's acquired date as the custodian states it; null on ACQUIRED_DATE_ABSENT; a date before 2010 is kept"
+    },
+    {
+      "name": "holding_term",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian's holding-term flag read through the producer's declared map"
+    },
+    {
+      "name": "holding_trading_days",
+      "type": "int64",
+      "nullable": true,
+      "meaning": "trading days in [acquired_date, business_date]; null on PRE_2010_OPENED and ACQUIRED_DATE_ABSENT"
+    },
+    {
+      "name": "market_value",
+      "type": "double",
+      "nullable": false,
+      "meaning": "current_market_value"
+    },
+    {
+      "name": "cost_basis",
+      "type": "double",
+      "nullable": false,
+      "meaning": "cost_basis_unamortized -- the column satisfying market_value - cost_basis == unrealized_gain, chosen by measurement (the prior art's choice in perfrp_emit_core.py)"
+    },
+    {
+      "name": "unrealized_gain",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the custodian's own unrealized_gain_loss for the lot"
+    },
+    {
+      "name": "source_rows",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "how many custodian rows made this lot's figures: rows sharing the lot id are one lot to this table and are summed"
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the method this figure was produced under (1)"
+    },
+    {
+      "name": "coverage",
+      "type": "string",
+      "nullable": false,
+      "meaning": "why a calendar-derived column is null; MEASURED where none is"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the shape of this emission"
+    }
+  ],
+  "enums": {
+    "coverage": [
+      "MEASURED",
+      "PRE_2010_OPENED",
+      "ACQUIRED_DATE_ABSENT"
+    ],
+    "holding_term": [
+      "LONG_TERM",
+      "SHORT_TERM"
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": {
+      "coverage": "domain: 'why is a calendar-derived column of this lot null'. MEASURED (none is) | PRE_2010_OPENED (the lot was opened before lib/trading_calendar.py's floor of 2010-01-01, which raises there: holding_trading_days is null and the custodian's dates are kept) | ACQUIRED_DATE_ABSENT (the custodian row has no acquired date). COVERED BY SUBTRACTION: a lot either carries an acquired date or not; one that does is either on or after the floor or before it.",
+      "holding_term": "domain: the custodian's holding-term flag. LONG_TERM | SHORT_TERM. A flag outside the declared map REFUSES."
+    },
+    "ii_same_grain": "Every member is a LOT property on a valuation day.",
+    "iii_intent_coherence": "coverage answers ONE question -- why a calendar-derived column of this lot is null -- and says nothing about the lot's gain.",
+    "iv_state_coherence": "The calendar gaining pre-2010 coverage moves PRE_2010_OPENED only; a custodian row gaining an acquired date moves ACQUIRED_DATE_ABSENT only.",
+    "token_census": {
+      "method": "comp-find word-boundary regex over the worktree corpus (corpus=all); the members are the realized table's (one vocabulary, two tables), so the scans are the ones recorded in account_lot_realized's contract.",
+      "members": {
+        "PRE_2010_OPENED": "denominator: 186 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and this run's record (which lists the lots, one line each, hence the count). the remaining hits are comp-tool's OWN footprint (.comp-graph/.comp_dedup, org/mcp/comp-tool-runs.jsonl, org/mcp/comp-which-rail.log), identified by path and not assumed away. Zero elsewhere.",
+        "ACQUIRED_DATE_ABSENT": "denominator: 3 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer. the remaining hits are comp-tool's OWN footprint (.comp-graph/.comp_dedup, org/mcp/comp-tool-runs.jsonl, org/mcp/comp-which-rail.log), identified by path and not assumed away. Zero elsewhere.",
+        "LONG_TERM": "denominator: 8 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer, its test and the contract generator. Zero elsewhere.",
+        "SHORT_TERM": "denominator: 6 hit(s) across 59,654-59,657 files scanned (corpus=all, this worker's worktree), 21 ephemeral-floor files not searched, 1 unreadable, 3,522 binary. First-party: this producer and the contract generator. Zero elsewhere."
+      },
+      "finding": "NO COLLISION. Every member is absent from first-party source outside this cell except TIED (a log string of another grain) and the generic words LONG_TERM / SHORT_TERM, which this producer is the only schema to carry as values. Stated as a measurement, with the scans' denominators printed."
+    },
+    "member_evidence": {
+      "basis": "measured",
+      "live_run": "160549 lot-day rows over 24 trading days for the sampled accounts: MEASURED 159669, PRE_2010_OPENED 880. On the end day, 1282 open lots before 2010 across ALL accounts.",
+      "unexercised_members_proved_by_test": "ACQUIRED_DATE_ABSENT is 0 on live data; test_an_absent_acquired_date_is_a_named_coverage_not_a_guess produces it."
+    }
+  },
+  "schema_hash": "cf582383e8f0f2b1f1c6191ec9fa0d93b18eeb064e29145bb95420eb4025b2f2",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_* schema carries -- the method that reproduces account_return_daily's published hash 1b25d37b... exactly. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
+  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names live only in the producer's LOT_SOURCE adapter block, which row IRPT_DASHBD-W20-S1 asks to move into sources.json.",
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_UNREALIZED schema this hash is taken from. The producer and this contract land together.",
+  "limits_of_method_version_1": "method_version 1: the custodian's tax-status slices are read as one source (they are disjoint by account on the end day measured) and no slice column is carried; rows sharing a lot id are summed."
+}

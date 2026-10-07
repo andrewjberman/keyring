@@ -26,6 +26,7 @@ import opal_naming  # noqa: E402
 
 _ROOT_FIELDS = ("system", "scope", "source", "evidence")
 _EXC_FIELDS = ("name", "type", "system", "evidence")
+_FILL_SLOTS = ("system", "scope", "source")
 
 
 def _bad(root, field, why):
@@ -77,6 +78,13 @@ def load_map(path):
         _check_system(root, "system", ent["system"])
         _check_source(root, "source", ent["source"])
         _check_scope(root, "scope", ent["scope"], ent["source"])
+        if "fills" in ent:
+            fl = ent["fills"]
+            if not isinstance(fl, list) or any(not isinstance(x, str) for x in fl):
+                raise _bad(root, "fills", "must be a list of slot names")
+            for x in fl:
+                if x not in _FILL_SLOTS:
+                    raise _bad(root, "fills", "%r is not one of %s" % (x, ", ".join(_FILL_SLOTS)))
         excs = ent.get("exceptions", [])
         if not isinstance(excs, list):
             raise _bad(root, "exceptions", "must be a list")
@@ -89,6 +97,11 @@ def load_map(path):
                 if not isinstance(ex.get(f), str) or not ex[f].strip():
                     raise _bad(root, where + "." + f, "missing or not a non-empty string")
             _check_system(root, where + ".system", ex["system"])
+            if "roles" in ex:
+                rl = ex["roles"]
+                if (not isinstance(rl, list) or not rl
+                        or any(not isinstance(x, str) or not x.strip() for x in rl)):
+                    raise _bad(root, where + ".roles", "must be a non-empty list of role names")
             k = (ex["name"], ex["type"])
             if k in seen:
                 raise _bad(root, where, "duplicate exception for %r" % (k,))
@@ -96,14 +109,22 @@ def load_map(path):
     return doc
 
 
-def resolve(map, root, name, type):
-    """None when `root` has no entry; else {system, scope, source, basis}."""
+def resolve(map, root, name, type, role=None):
+    """None when `root` has no entry; else {system, scope, source, basis}.
+
+    An exception that names `roles` matches only when `role` is in that list (basis "exception-with-role"); an exception
+    without `roles` matches on (name, type) alone (basis "exception"). A role-less call never matches a roled exception."""
     ent = (map.get("roots") or {}).get(root)
     if ent is None:
         return None
     system, basis = ent["system"], "root-default"
     for ex in ent.get("exceptions", []):
         if ex["name"] == name and ex["type"] == type:
+            if "roles" in ex:
+                if role is not None and role in ex["roles"]:
+                    system, basis = ex["system"], "exception-with-role"
+                    break
+                continue
             system, basis = ex["system"], "exception"
             break
     return {"system": system, "scope": ent["scope"], "source": ent["source"], "basis": basis}

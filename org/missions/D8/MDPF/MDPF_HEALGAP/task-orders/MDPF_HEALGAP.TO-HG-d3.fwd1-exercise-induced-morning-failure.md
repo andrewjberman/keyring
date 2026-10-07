@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~F</issued_to>
 <issued_by>2.0.0_SA_COO~G1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
@@ -17,9 +17,12 @@
 (`decompositions/MDPF_HEALGAP_DECOMP.md`, the issuer's drain act 4: "The one real run of FWD-1") | **outcome_ref:** FWD-1 |
 **depends_on:** `MDPF_HEALGAP.TO-HG-d2` (complete)
 
-**GO condition (all, read on the trunk):** `MDPF_HEALGAP.TO-HG-d2` reads `complete` with its act-0 SKIP probe passed and HG1-d2-AC1 `WIRED-OK` (CTO half condition 1); both never-widen halves SIGNED in
-`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_FWD1_EXERCISE_20261008.md`. The issuer flips
-`<status>` to `pending`. Exercise date D = 2026-10-08; if the GO lands after 05:50Z that day, the GO commit amends D to the next date.
+**GO condition -- MET, GO given by the issuer (status `pending`):** the CTO half's condition 1 is HG-d2's act-0 SKIP probe passed
+and HG1-d2-AC1 `WIRED-OK`. Both are measured: the probe at 16:15:36Z returned `SKIP-IDEMPOTENT` for 2026-10-07 with 97 bronze keys
+before and after (runner log; the issuer's own read: 0 keys after 07:00Z); the apply ran 16:47:12-16:47:53Z, plan 2/0/0, re-plan no
+change; the issuer's reads at ~16:56Z: `WIRED-OK target=cot-rebalancer-runner-reattempt input=pull other_targets=CotSilverOnBronzeComplete
+policy_sid=AllowEventBridgeInvokeReattempt` and `UNCHANGED-OK`. HG-d2's own record (proof instance + `complete` flip) closes
+separately. Both halves SIGNED (COO @8118554234/@84fe1d79db, CTO @b05cdf04c1). Exercise date D = 2026-10-08.
 
 ---
 

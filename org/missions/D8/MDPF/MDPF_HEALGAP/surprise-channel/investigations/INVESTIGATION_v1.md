@@ -213,6 +213,46 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Issuer ruling on W2-S1: with entry MDPF-HEALGAP-R20-01 on CLOUD, the naming gate admits the .tf file and the commit lands.",
     "world_is": "The entry covers the rule line but not the source_arn line; a second entry (or a literal/occurrence form the gate matches to the ARN string, e.g. the ARN-shaped literal as its own R20 row) is owed by 1.0.0_SA_CTO~DELL1 outside this order's write grant. The .tf file passes AC1 and AC2 uncommitted; the order stays open; no bypass or override was used."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-07T17:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-S9",
+    "one_line": "TO-HG-d2 act 4 ('record-terraform-deploy.sh as for HG-d1') does not fit a wiring-only apply: the recorder resolved an empty deployment set and refused (rc=2, nothing written), and its HG-d1 form would have mis-stamped the runner's last code deploy as HG-d2's.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/SURPRISE_ROWS_OWED_FROM_TO_HG_D2_20261007.md (on origin @905aa9c271) Row 1",
+        "recorder output: 'stamped 0 of 15 rows under opal-assets' / 'resolved deployment set is EMPTY ... REFUSING'; git status empty on the source map and CHANGELOG after the run"
+      ]
+    },
+    "spec_asserts": "TO-HG-d2 act 4: run record-terraform-deploy.sh as for HG-d1.",
+    "world_is": "The apply created an event target and a Lambda permission and moved no Lambda code, so record-deploy-scope.py admits no address and the recorder correctly refuses. The issuer's cut copied a CODE-deploy step into a WIRING deploy (2.0.0_SA_COO~G1's defect): a wiring-only order omits act 4 or names the empty-set refusal as its expected outcome. The seat refused the --function form that would have overwritten the HG-d1 stamp."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-07T17:30:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-S10",
+    "one_line": "A 0-diff targeted plan still lists module.cot_rebalancer_runner.aws_lambda_function.this in resource_changes (actions no-op); only record-deploy-scope.py's actions filter keeps it out, and a --plan path given from the repo root fails with the same 'scope resolution refused' wording as a legitimate refusal.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/SURPRISE_ROWS_OWED_FROM_TO_HG_D2_20261007.md (on origin @905aa9c271) Row 2",
+        "terraform show -json: the function address present with change.actions == ['no-op']; --plan infra/aws/terraform/opal-assets/hgd2.tfplan doubles the prefix ('Failed to read the given file as a state or plan file')"
+      ]
+    },
+    "spec_asserts": "Feeding a saved plan to the recorder scopes it to what that plan applies, and its refusal names its cause.",
+    "world_is": "A reader who counts aws_lambda_function entries in resource_changes without reading change.actions concludes the apply deployed the runner (the seat did, then corrected it from the resolver source). And --plan resolves against the terraform root, so a path fault and an empty-set refusal print the same verdict line -- the same diagnostic-ambiguity shape as MDPF_HEALGAP-S7. Tool owner unread; outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
   }
 ]
 ```
