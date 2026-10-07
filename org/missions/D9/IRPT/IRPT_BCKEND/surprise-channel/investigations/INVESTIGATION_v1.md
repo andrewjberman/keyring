@@ -19743,3 +19743,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "IB-mr-311 AMENDMENT 1 (issuer, inside its own unissued decomposition): e2's unassigned case is graded on r31m_unassigned_recheck.py over every instance; the other three cases stay on the laptop FILE. E-M2 is issued on both files."
 }
 ```
+
+## IRPT_BCKEND-W145-S1 -- the fix necessarily breaks three existing export tests outside the grant, so IB65-1-AC1 cannot pass as ordered
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-343 requires facts.covered_account_ids non-empty in the receipt contract, but three existing tests mint a receipt from an account-less RETAINED bundle through receipt.build and expect success (two validate or read it); a retained revision row carries no account and the ExportBundle contract (additionalProperties false) forbids one, so no honest receipt.build can pass them. They are outside <paths>, so IB65-1-AC1 (no failure beyond the six pypdf-only tests) is not reachable without an out-of-grant edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_export.py::test_the_receipt_names_the_object_and_is_derived_from_the_two_hashes (builds from _bundle_inputs(): one retained row {report_id, revision, authorization_ref, immutable}, then bundle_mod.validate(built, \"ExportReceipt.schema.json\"))",
+      "infra/aws/lambda/investor-reporting/export/tests/test_download_signed_answer.py::test_the_receipt_names_the_live_route_and_no_other (bundle {\"performance_revisions\": []})",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b_route.py::test_a_path_a_export_is_unchanged_and_never_calls_the_route_or_the_mint (a PATH A retained bundle, then validate)",
+      "worktree wk-IRPT_BCKEND-145 export suite after the change: 9 failed, 213 passed; 6 are the pypdf-only set, the other 3 fail with receipt.ReceiptRefused \"the frozen bundle names no covered account and none was supplied\"; base was 6 failed, 216 passed; the new test_covered_account_ids.py passes 11 of 11"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343: \"The export suite must show no failure beyond the six pypdf-only tests\"; derive covered_account_ids \"at freeze ... never empty for a READY receipt\"; paths exclude every existing test file.",
+  "world_is": "A retained report row has no account (ExportBundle contract forbids one; retained_export.resolve builds a 4-key row), so the covered set of a retained export is known only from the retained owner scope (stamped[\"account_ids\"], pending.json account_ids), never from the bundle. Three tests assert an account-less retained receipt is valid, which is the defect itself. Each needs a covered_account_ids argument (or a platinum bundle) in a test file the grant does not name."
+}
+```
+
+## IRPT_BCKEND-W145-S2 -- retained exports cannot finalize after release: handler.finalize_export and finalize_on_read do not pass the covered accounts to receipt.build
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "receipt.build now REFUSES a receipt with no covered account (PATH B derives its one account from the bundle). A retained export (PATH A / analysis / custody) can only name its accounts from the retained owner scope, which submit stores as pending.json account_ids; finalize_on_read.finalize builds the submission without them and handler.finalize_export calls receipt_mod.build without covered_account_ids, so after release every retained export would raise ReceiptRefused at finalize and never produce a receipt. Both files are outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/finalize_on_read.py:86-90 (submission = {identity, report_kind, bundle, bundle_sha256, artifact_key, contract_version}; pending[\"account_ids\"] is read at entry.py but never passed on)",
+      "infra/aws/lambda/investor-reporting/export/handler.py:321-326 receipt_mod.build(...) with no covered_account_ids",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:111-112 write_pending(account_ids=stamped[\"account_ids\"]) -- the accounts ARE held at submit",
+      "tests/test_submit_service.py::test_submit_then_first_read_after_the_render_finalizes_the_receipt is one of the six pypdf-only tests, so it would be the first to show this once pypdf is present"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343 item 2: the receipt writer (receipt.py) writes facts.covered_account_ids \"at freeze time, never empty for a READY receipt\"; paths name receipt.py, bundle.py and entry.py only.",
+  "world_is": "receipt.build(covered_account_ids=...) is implemented and tested, but its two production callers (handler.finalize_export, finalize_on_read.finalize via submission) sit outside the grant. The wiring is: finalize_on_read adds \"covered_account_ids\": pending[\"account_ids\"] to the submission; handler.finalize_export passes submission.get(\"covered_account_ids\") through. Release must not precede it."
+}
+```
+
+## IRPT_BCKEND-W145-S3 -- _covered still honors the legacy facts.account_ids / accountIds keys, so a receipt missing covered_account_ids but carrying one of them is admitted
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "entry._covered keeps collecting from account_ids, accountIds and covered_account_ids (the order says keep the other branches) and refuses only when all three name nothing. PRD v0.30 item 34 reads \"admits only when the list [covered_account_ids] is present and non-empty\". The writer never emits the legacy keys (the schema is additionalProperties false and the receipt is validated before it is written), but a test fixture in test_export_receipt_live_route.py depends on account_ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered (three-key loop kept)",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_receipt_live_route.py:_stored() uses facts.account_ids"
+    ]
+  },
+  "spec_asserts": "PRD v0.30 item 34: _covered() admits only when covered_account_ids is present and non-empty and every id is inside permitted_account_set. TO IB-pr-343: \"Keep the other branches.\"",
+  "world_is": "The legacy keys still count as naming accounts. Narrowing to covered_account_ids alone would fail test_export_receipt_live_route.py fixtures that are outside the grant."
+}
+```
