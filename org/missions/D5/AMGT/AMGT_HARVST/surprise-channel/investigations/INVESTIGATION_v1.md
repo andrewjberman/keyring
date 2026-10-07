@@ -7567,6 +7567,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S101",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-07T17:04:41Z",
+      "one_line": "The new exact-case ticker form CSL for CSL_AU_Equity also matches Carlisle Companies, which trades as CSL in New York; the form sample's 5 CSL rows all read CSL Limited, so the sample did not show it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Gold rebuild #8 signing read 2: form CSL, 42 pairs, 'the company's name is CSL'; the form sample's other-forms group is graded on bar 29 of 30.",
+      "world_is": "GOLD_REBUILD8_FORM_SAMPLE.md row 80 (drawn for MSCI) carries the text 'newly promoted Carlisle Companies ( CSL )'. An article with that text and no MSCI mention would pair with CSL_AU_Equity on the form. How many of the 42 CSL pairs are Carlisle is not measured; the 5 sampled CSL rows are CSL Limited.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round58/GOLD_REBUILD8_FORM_SAMPLE.md row 80",
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND58_GOLD_REBUILD8_GAIN_AND_FORM_GRADE_20261007.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
