@@ -8112,7 +8112,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Order IB-rti-3 (e) and the issuer's amendment: a principal exists that is not on the live exemption list and whose IAM already grants ListBucket/HeadObject reaching the target bucket, e.g. a role of a different firm.",
     "world_is": "No such assumable identity exists. Roles that would hold the grant (e.g. opal-news-lambda-role, AmazonS3ReadOnlyAccess) have trust the seat cannot meet; roles the seat can assume hold no s3 List grant on either bucket. Both live policies are the single DenyForeignFirmPrincipals statement (no Allow), so an identity with no grant of its own would be denied by IAM, not by the fence: an un-attributable control. Non-verdict; L4 left OPEN.",
     "notes": "Owner 1.0.0_SA_CTO: a discriminating L4 needs a grant the CTO chooses to create; this cell created and widened nothing."
-  }
+  },
+{
+  "id": "IRPT_BCKEND-W141-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~141",
+  "surfaced_at": "2026-10-07T09:59:42Z",
+  "one_line": "The script that wrote custodian_key_seam.json (_written_by 0.9.0_WK_IRPT_BCKEND~1 / IB-rte-6, @47f21dab95) is not in the repo; the only IB-rte-6 script, rte6_package_deploy.py, merely packages the file (EXTRA_MEMBERS).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 47f21dab95: seam json added as data, with rte6_package_deploy.py which only zips it (line 70 EXTRA_MEMBERS, line 118 zf.writestr)",
+      "git grep custodian_key_seam HEAD -- '*.py': no script writing the file (no json.dump to it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-339 item 4: the seam's writer script may be in the repo.",
+  "world_is": "MEASURED: not in repo; a regeneration would need a new writer that omits null schwab_account_id rows instead of stringifying them."
+}
 ]
 ```
 
