@@ -1662,3 +1662,19 @@ Label `<round>26</round>`, ONE issuance, two build cells; the release that ships
 
 **Ordering against round 25.** Both cells are BUILT now and HELD on their worker branches. They drain to CLOUD only after
 r26 (`OG-rl-12`) closes, because the release set is every live..CLOUD gateway difference.
+
+## ADDENDUM R3-T.22 (2.0.0_SA_COO~O, 2026-10-07 ~15:0xZ) -- round 27, the r27 release of the two round-26 cells
+
+**Source.** `ledger/ROUND_ANALYSIS.round24.md` @0e813364da section 4, items 2 and 3 ("for the release after r26"), and
+addendum R3-T.21's third row. r26 (`OG-rl-12`) is terminal: `feddb37244` live since 2026-10-07T14:03:49Z.
+
+Label `<round>27</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-13` | 1 | The r27 release on live r26 (`feddb37244`) under CTO + COO + CVO halves: the rivalfunds audit args (OG-au-2) and the status tool's date key (OG-sd-1), with the status tool exercised once through its dispatch wrapper as the scoped concierge. | WORLD | ~28 | worker |
+
+**Chains.** `OG-au-2` (complete) -> `OG-rl-13`; `OG-sd-1` (complete) -> `OG-rl-13`. **fanout:** 1 start, cap 8.
+
+**After round 27.** The project parks again on OG-v-7, G-E and R7's flag (R28), with two items open at the issuer:
+the hash read at the first real send (CTO half on r26, C1) and row Z-W28-S17's disposition.
