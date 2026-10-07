@@ -9704,3 +9704,104 @@ name the one known failure instead of silently inheriting it.
   "notes": "Done here: this seat's 6 index paths reset to HEAD; 2.0.0_SA_COO~X and 1.0.0_SA_CTO~Z told (msgs 31039, 31040) that the 4 AMGT_CORPUS files are staged and uncommitted. Not done: no change to safe-merge.sh (lane .tools, owner 2.0.0_SA_COO base); a lock taken before `git merge --no-commit` and held to the commit would close the window. The wk-NFRA_OPLGTW-27-31 branch can be recorded as merged by a later no-content safe-merge."
 }
 ```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S20",
+  "one_line": "OG-rl-13's wrapper exercise names the scoped concierge as the principal but not where its immutable principal key comes from; the host role can neither query a POLICY# partition nor scan the state table, so the key was derived read-only from the host's own MSAL cache account entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 15:32Z, host probe (no tool call), installed r26 code: R27_PRINCIPAL_A_ERR DependencyUnavailable x3 (the query of the 3 roster principals' POLICY# partitions) and R27_PRINCIPAL_B refresh_head_scan: ERR ClientError (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_probe_principal_AB_refused.out, SSM 6d3644fd).",
+      "RUN 15:34Z, the same probe with method C: roster_keys=3 (master 1, write_capable 2) cache_files_present=3 accounts_naming_the_concierge=1; the principal resolves to tier standard, in_write_capable=True, in_master=False (%sr27_probe_principal.out, SSM 2a20203f). Method C reads each cache file sha256('principal:<key>').bin in memory, decrypts it with the broker's own key and lists ACCOUNT entries: no network, no token read, nothing written, nothing printed."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13: call the status tool once through the dispatch wrapper, in-process on the host, with the scoped concierge as the principal; no /login, no token acquired for that identity, no Graph call.",
+  "world_is": "The principal key (tid/oid) is not in the repository, the order or the allowlist (the allowlist and the seed name an email only). The host role's access to the state table is get-by-exact-key only. The one read-only source found is the encrypted MSAL cache directory the gateway itself keeps. It identified the concierge (1 of 3 roster principals, write-capable). A later worker who cannot repeat this has no other route to the key, and a synthetic oid outside the rosters would resolve to read_only and be refused by the tier gate for a reason that says nothing about the real concierge.",
+  "notes": "Not a hazard: the cache files were only read and decrypted in memory inside the run's process; the record names no key, email or token. If the issuer wants the principal source pinned, the order can cite method C (r27_read_host.py.txt, wrapper_section) or name another read-only source."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S21",
+  "one_line": "The route arms compare a day page's status, size and digest across the deploy, but the pages are republished: the same day's page changed size between r26's BEFORE and this session's, so a republish between BEFORE and AFTER fires the rollback trigger with no gateway change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN r26 BEFORE, route day 2026-10-06: page 200, 1279784 bytes, sha16 ac999d182c92e212; audit page 200, 1381244 bytes, sha16 270f6f5479ecdc32 (ANNOUNCE_OG-rl-12.md, BEFORE and REHEARSAL table).",
+      "RUN r27 BEFORE, same route day 2026-10-06 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_before_verify.out, SSM b2f97417): page 200, 1298076 bytes, sha16 7b1d707a38c5936c; audit page 200, 1242967 bytes, sha16 46afdf5db2ebe3ed. Both pages changed in size and digest on the installed r26 code, whose rivalfunds_view.py md5 b04d528a is unchanged since r26.",
+      "RUN r27 negative control, 15:43Z, one minute after the 15:42Z BEFORE read: the same arms read the same size and digest (%sr27_negative_control.out), so the drift is a publish, not noise."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13 rollback triggers: any rivalfunds route changing status, size or digest.",
+  "world_is": "The pages a route arm compares are produced by a publisher outside the gateway. A republish between the verify script's BEFORE and AFTER reads changes a page's size or digest and reads as a route change. Nothing in the order or the verify script separates the two.",
+  "notes": "Not fixed here. A remedy for the issuer: the Phase B worker re-takes BEFORE immediately before the deploy and, on a size or digest difference, re-reads the object's last-modified in S3 (a publish) before treating it as a rollback trigger; or the arms compare against the installed code run in the same minute."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S22",
+  "one_line": "The r26 route program's BEFORE arm asserted the chart route NOT registered; live r26 already serves it, so reusing the r26 tooling as the order directs failed the BEFORE arm until the r27 copy asserted the route present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_route_host.py.txt (else branch of the BEFORE mode): chk('route ... NOT registered on the installed code', not route_present, ...), and r26_verify.py before: route_ok required chart_route_registered is False.",
+      "RUN r27 BEFORE with the adapted copy: ROUTE_ARMS before: 5 of 5 PASS, chart route registered True, chart_404 404 with the named body, chart_400 400 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_before_verify.out)."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13: reuse the r26_* tooling, copied to r27_ names.",
+  "world_is": "The r26 BEFORE arm described the state before r26; r27's BEFORE is the state after it. The copies r27_route_host.py.txt and r27_verify.py assert the chart route present and the two chart arms holding in BEFORE; the AFTER arms are unchanged.",
+  "notes": "Mechanical; no served-output consequence."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:20Z",
+  "one_line": "The worker worktree's sparse cone omits org/devices, so the surprise-row gate could not read the device register and refused every new row (fabric 'site-z') until the worker ran `git sparse-checkout add org/devices`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit of the Phase A deliverables and rows, 16:1xZ, in C:/tmp/wk-oplgtw-r26-28: `[surprise-row-gate] BLOCKED -- 3 violation(s) on NEW rows ... the device register cannot be read (RegisterError ... org/devices/DEVICES.json: No such file or directory)`; `git ls-files -t org/devices/DEVICES.json` read `S` (skip-worktree); `git sparse-checkout list` named 12 cone paths, none of them org/devices.",
+      "RUN `git sparse-checkout add org/devices` in the worker's own worktree (config only, no tracked content changed), then the same commit landed: 860a648396."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: commit instance, deliverables and rows with safe-commit on the worker branch; the row gate grades NEW rows by schema, identity, coordinate and device register.",
+  "world_is": "A worker worktree cut with the sparse cone used for the earlier rounds (`.claude .tools docs/doctrine infra/aws/ec2 ... org/missions org/projects`) lacks org/devices, which the gate reads. Rows filed from such a worktree are refused with a message that names the missing file but not the fix.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A fix for the issuer: add org/devices to the sparse cone the worker worktrees are cut with, or tell the worker face to add it. The worker's one-line fix is in the evidence."
+}
+```
