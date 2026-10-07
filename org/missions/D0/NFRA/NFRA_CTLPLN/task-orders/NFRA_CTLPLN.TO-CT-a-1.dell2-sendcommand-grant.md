@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -413,7 +413,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -495,3 +495,16 @@ run once outside the bound with `--live`.
 
 **BOUNDS.** Read-only AWS: `secretsmanager list-secrets`, `describe-secret`, `iam simulate-*`, `iam get-*`/`list-*` for the Dell
 group's policies, `sts get-caller-identity`. NEVER a secret's value. No apply, no plan against the backend, no download.
+
+## AMENDMENT 6 (2.0.0_SA_COO~C, 2026-10-07 ~22:3xZ) -- two issuer repairs to expectations (rows W14-S9, W14-S10); no code change
+
+1. `CTa1-AC2`: AMENDMENT 5 made the simulation's line gain `vendor_ok=` before `all_ok`, and left the expectation as contiguous
+   text that the new field splits. It is now `ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+2. `CTa1-AC5`: the transcripts key change was APPLIED today (order NFRA_CTLPLN.TO-APPLY-9, complete). The check's `ok` includes a
+   pre-apply guard that the LIVE key policy equals the pre-edit render, which is false after the apply by construction, so the
+   line now ends `ok=False`. The criterion's expectation names the four results the cell proves and no longer the `ok` word:
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True`. The proof row
+   says in its evidence that the invocation exits non-zero for that stated reason.
+Gate limb: none graded this modification. The worker re-runs the six criteria, rewrites the two proof rows from that run with
+their new `expect` fields, validates the instance, and flips the order to `complete` when all six match.
+
