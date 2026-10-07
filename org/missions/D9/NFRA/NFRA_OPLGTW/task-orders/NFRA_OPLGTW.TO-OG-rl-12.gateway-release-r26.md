@@ -86,6 +86,10 @@ Also re-read the standing floor into `W/RL12_FLOOR.json`: the portal login OK, a
 - **Rollback triggers:** the scoped identity not admitted for the status tool; an unnamed tool admitted; the consent
   count moved; a floor read off its bar.
 
+**AMENDED A4 (CTO half, condition C2, @78d524e001).** The post-deploy read shows TWO refused ids through the installed
+code, one containing `/` and one containing `.`, each making 0 HTTP requests. Record them in `W/RL12_FLOOR.json` as
+`status_id_refused` (the `/` id, as before) and `status_id_refused_dot`. A request made on either is a rollback trigger.
+
 **ONE STOP for the halves.** Run Phase A, write `W/ANNOUNCE_OG-rl-12.md`, commit and report. Phase B starts on the
 issuer's GO, with CTO + COO + CVO halves SIGNED on the release sha.
 
@@ -141,6 +145,11 @@ once per phase.
   (the chart route) on 1.0.0_SA_CTO~Z's release ask, msgs 30765 and 30774; form step 7a now applies; the release
   commit is re-cut. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads
   `<placeholders>NONE</placeholders>`.
+- AMENDMENT 4 (11:2xZ, issuer, before any GO): the CTO half's C2 adds a second refused-id arm (an id containing `.`).
+  No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
+- OWED BY THE ISSUER after the deploy (CTO half C1): at the first real send, one read of whether each of the two drive
+  items carried a readable hash. Unreadable on either: one fallback cell in the next issuance (the r25 name-and-size
+  key), and the callers are told a repeat fires. If the send's return does not show it, a cell puts it there.
 - Pre-cut 04:3xZ: `rl12.AC1` FAIL (r25 is not live yet; no ledger). `rl12.AC2` FAIL (the record is absent).
 
 <status>pending</status>
