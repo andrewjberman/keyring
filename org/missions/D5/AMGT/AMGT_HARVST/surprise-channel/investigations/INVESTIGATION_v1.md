@@ -7260,6 +7260,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "DISARMING by re-run, issuer act: barrons' 12 pairs relaunched 03:3xZ on their own checkpoint (`r52_barrons_retry_checkpoint.json`, `--names`); the wsj 8, bbg 8 and sa 9 are re-run the same way when each leg's profile is free (a second driver on a live profile would collide). Not measured: how many of the 37 would have collected anything. The per-leg report (at-3) counts concluded pairs, so FWD-7's coverage figure includes these 37 until they are re-run. Carried to the CTO: the driver should not record a stop-status pair done."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W103-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~103",
+      "surfaced_at": "2026-10-07T03:58:28Z",
+      "one_line": "transport.request_kind labels a Bloomberg article URL (/news/articles/...) `listing`, so the order's 'article request answering 400' could not be keyed on request_kind alone; the 400 conversion keys on request_kind OR an article path part.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-ba-1 item 5: an ARTICLE request answering 400 is skipped, a LISTING or account request answering 400 keeps today's behaviour; the transport already distinguishes the two (request_kind).",
+      "world_is": "lib/opal_data_harvest/transport.py request_kind() labels any URL whose path+query contains '/news', 'search', 'page=' or '/symbol' `listing`. A bloomberg sitemap article URL (https://www.bloomberg.com/news/articles/<date>/<slug>) contains '/news', so request_kind says `listing`; a plant of a 400 on such an article was NOT converted when keyed on request_kind == 'article' (RuntimeError(400) from raise_for_status instead). Added transport.is_article_request(): request_kind == 'article' OR the path names an article route ('/news/articles/', '/article/api/', '/articles/'), never a sitemap or an auth check. request_kind itself (the run record's attempt-row label) is unchanged. Not measured: whether any live wsj or barrons slug path carries '/news' and so reads `listing` (such an article's 400 would keep today's behaviour, i.e. a safe degradation, not a regression).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/transport.py request_kind and is_article_request on branch wk-AMGT_HARVST-103",
+          "lib/opal_data_harvest/test_ba1_stopped_pair_is_retried.py::test_vi_a_bbg_sitemap_article_answering_400_is_skipped (failed under the request_kind-only key, passes under is_article_request)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
