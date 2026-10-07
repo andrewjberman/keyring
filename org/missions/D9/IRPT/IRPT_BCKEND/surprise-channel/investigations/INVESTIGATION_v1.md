@@ -20258,3 +20258,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The live export read refuses it. Existing exports stay refused until the IB-pr-350 back-fill; new-export READY is OPEN-BY-DESIGN (S382)."
 }
 ```
+
+## IRPT_BCKEND-W152-S1 -- IB-yr-631 admit is inert in production until InteractiveAccess.current() carries allowedFirmIds
+
+```json
+{
+  "id": "IRPT_BCKEND-W152-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~152",
+  "surfaced_at": "2026-10-07T21:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-yr-631: uploads.py now admits an internal principal whose allowedFirmIds names the owner firm, but InteractiveAccess.current() (the production principal source) does not carry allowedFirmIds, and its authorize_current compares principal != current, so the admit is unreachable in production until _scope/interactive_access.py (outside this cell's paths) states the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:61-68 current() builds the OPAL_GLOBAL row as {firm_id, principal_id, home_firm_id, principal_class, advisor_id} -- no allowedFirmIds",
+      "same file :81 authorize_current returns False when principal != current(), so a principal enriched with allowedFirmIds outside current() is refused by the real callback",
+      "allowedFirmIds lives on the opal-users-v2 profile row: ycharts/generate/current_authority.py allowed_firm_ids() :67; _scope/canonical_profile_reads.py _USER_FIELDS :27",
+      "intake/uploads.py _internal_for_allowed_firm reads principal['allowedFirmIds']; intake/tests/test_uploads_on_behalf.py exercises it against a callback that models current()'s rule"
+    ]
+  },
+  "spec_asserts": "TO-IB-yr-631 cell: admit an INTERNAL principal whose allowedFirmIds contains the owner's firm_id, using the existing field; authorize_current stays the gate.",
+  "world_is": "The admit is implemented in uploads.py and proven offline (AC1-AC3). The production principal does not yet carry allowedFirmIds, so with the real InteractiveAccess the admit is inert (fails closed to the existing refusal). Carrying the field needs a one-line change to InteractiveAccess.current() (read from the profile row) in _scope/interactive_access.py, which is not in this order's paths and was not edited. Owed to the issuer: a cell for that file before the TCKT_VNEXT live run."
+}
+```

@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-353</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~152</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~162</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>pending</status>
@@ -24,7 +24,7 @@
 `:102-104`; IB-pr-346), because the custody page did not exist. It does now: IRPT_CUSTDY's `ClientReportDocument`
 (`portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx`, with `types.ts`, landed by @4c10b488) is on portal DEV.
 
-**What you build** (your worktree is `C:/dev/wk-irpt-bckend-152`, with a nested portal worktree at `C:/dev/wk-irpt-bckend-152/portal` on
+**What you build** (your worktree is `C:/dev/wk-irpt-bckend-162`, with a nested portal worktree at `C:/dev/wk-irpt-bckend-162/portal` on
 portal DEV 339851c7; `portal/node_modules` is LINKED):
 
 1. **In `portal/src/pages/InvestorReporting/render/PrintEntry.tsx` only.**
@@ -58,10 +58,10 @@ Provision a worktree only with `wk-provision.sh --node-modules link` ... or `non
 <criterion id="IB70-3-AC2" cell_refs="IB-pr-353"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-3-AC2</invocation><expect>IB70-3-AC2 PASS</expect></criterion>
 `IB70-3-AC2` -- tsc -b --noEmit and eslint on PrintEntry.tsx exit 0 on your portal branch. Base: PASS (a control; it must stay so).
 
-<criterion id="IB70-G-152" cell_refs="IB-pr-353"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-152</invocation><expect>IB70-G-152 PASS</expect></criterion>
-`IB70-G-152` -- a GUARD: your workspace commits touch only your grant, never the portal gitlink. Base: PASS.
+<criterion id="IB70-G-162" cell_refs="IB-pr-353"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-162</invocation><expect>IB70-G-162 PASS</expect></criterion>
+`IB70-G-162` -- a GUARD: your workspace commits touch only your grant, never the portal gitlink. Base: PASS.
 
-<expected_criteria>IB70-3-AC1,IB70-3-AC2,IB70-G-152</expected_criteria>
+<expected_criteria>IB70-3-AC1,IB70-3-AC2,IB70-G-162</expected_criteria>
 
 ## BOUNDS
 
@@ -83,7 +83,7 @@ Provision a worktree only with `wk-provision.sh --node-modules link` ... or `non
 portal/src/pages/InvestorReporting/render/PrintEntry.tsx
 portal/src/pages/InvestorReporting/__tests__/ir-70-custody-print/
 portal/src/pages/InvestorReporting/__tests__/ir-66-print-kind/print-kind.test.ts
-org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~162/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-353.print-page-mounts-the-custody-template.md
 </paths>
@@ -94,9 +94,9 @@ org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-353.print-page
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IB70-3-AC1, IB70-3-AC2, IB70-G-152. The instance goes at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/IRPT_BCKEND.TO-IB-pr-353.print-page-mounts-the-custody-template.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-3-AC1,IB70-3-AC2,IB70-G-152` BEFORE the flip.
+Criterion ids: IB70-3-AC1, IB70-3-AC2, IB70-G-162. The instance goes at
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~162/IRPT_BCKEND.TO-IB-pr-353.print-page-mounts-the-custody-template.proof_of_spec.json`.
+Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-3-AC1,IB70-3-AC2,IB70-G-162` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message gives the commit hashes, each criterion's last line, any suite's last line, and any row ids.

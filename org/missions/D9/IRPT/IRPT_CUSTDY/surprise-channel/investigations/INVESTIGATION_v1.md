@@ -894,3 +894,30 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The Lambda is deployed, but the journey breaks at five points before READY: (1) no writer puts a custody document into the retained store; (2) accept KeyErrors on report.dates.actual_end; (3) as_of vs as_of_date; (4) PrintEntry refuses custody-report and does not mount ClientReportDocument; (5) the render host prints from the PROD portal, so DEV is not enough. (1), (2), (4) and the principal are IRPT_BCKEND's surface; (3) is IRPT_CUSTDY's (a one-key adapter). E2 is not cut; routed to 1.0.0_SA_CTO~DELL2 for a ruling."
 }
 ```
+
+## IRPT_CUSTDY-S15 -- break 3 closed: the custody document carries as_of_date; the export's own reader accepts 14 of 14 real documents
+
+```json
+{
+  "id": "IRPT_CUSTDY-S15",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T18:10:00Z",
+  "one_line": "Break 3 of S14 closed: the custody household document carries as_of_date, the export's own custody_report_as_of accepts every real document, and the old key is refused by both consumers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain d488869311 (CU-g-4, 9 paths, 0 dropped); proof VALID (CU19-AC1 6 passed, CU19-AC2 4 pass 0 fail); portal 6d84304d on wk-IRPT_CUSTDY-16-portal (on 4c10b488, not on DEV)",
+      "issuer re-run in the worktree: clientreport bun directory 24 pass 0 fail across 4 files; tsc -b --noEmit rc 0",
+      "CLOUD @d488869311: SUITE passed=153 failed=0 errors=0 xfailed=1; hop3_real_run --self-test all ok",
+      "issuer real run dell2 ~18:0xZ: HOP3-REAL-RUN advisor=matthew_gooch as_of=2026-09-30 households=10 accounts=14 not_covered=4 error=none; from its file (scratchpad, not committed): 14 documents, export narrative_submit.custody_report_as_of returns 2026-09-30 for 14 of 14, old key present on 0, validate_document admits 14 of 14"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "CTO round-6 ADDENDUM 1 @c3addc6f25 Ruling 1: the custody document carries as_of_date as the export contract names it; no consumer reads two names.",
+  "world_is": "Holds on real data and against the export's own function. The template refuses an as_of-only document by name (MissingAsOfDateError), the validator likewise. Breaks 1, 2, 4 (IRPT_BCKEND P-c1..c3) and 5 (PROD promote) remain; P-c3 should mount ClientReportDocument from 6d84304d's tree, since 4c10b488 (on DEV) still reads as_of."
+}
+```

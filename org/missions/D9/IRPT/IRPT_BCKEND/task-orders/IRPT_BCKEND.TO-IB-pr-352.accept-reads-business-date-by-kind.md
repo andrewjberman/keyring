@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-352</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~151</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~161</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>pending</status>
@@ -25,7 +25,7 @@ on its non-platinum branch (about `:137`), reads `business_date = resolved["repo
 `dates`; it carries `as_of_date` (`export/narrative_submit.py` `custody_report_as_of`). So `accept` raises `KeyError` on every custody
 export. The existing `export/tests/test_submit_custody_report.py` calls `serve_submit` directly and never reached `accept`.
 
-**What you build** (your worktree is `C:/dev/wk-irpt-bckend-151`; run everything from its root):
+**What you build** (your worktree is `C:/dev/wk-irpt-bckend-161`; run everything from its root):
 
 1. **In `infra/aws/lambda/investor-reporting/export/submit_async.py` only.** On the non-platinum branch, read the business date by `resolved["kind"]`:
    - `CUSTODY_REPORT` uses the document's `as_of_date`, through the same reader `narrative_submit.custody_report_as_of` uses (import
@@ -46,10 +46,10 @@ export. The existing `export/tests/test_submit_custody_report.py` calls `serve_s
 <criterion id="IB70-2-AC1" cell_refs="IB-pr-352"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-2-AC1</invocation><expect>IB70-2-AC1 PASS</expect></criterion>
 `IB70-2-AC1` -- a test drives accept( over a custody as_of_date and a performance actual_end and both pass, with test_submit_custody_report. Base: FAIL (no test).
 
-<criterion id="IB70-G-151" cell_refs="IB-pr-352"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-151</invocation><expect>IB70-G-151 PASS</expect></criterion>
-`IB70-G-151` -- a GUARD: your commits touch only your grant. Base: PASS.
+<criterion id="IB70-G-161" cell_refs="IB-pr-352"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-161</invocation><expect>IB70-G-161 PASS</expect></criterion>
+`IB70-G-161` -- a GUARD: your commits touch only your grant. Base: PASS.
 
-<expected_criteria>IB70-2-AC1,IB70-G-151</expected_criteria>
+<expected_criteria>IB70-2-AC1,IB70-G-161</expected_criteria>
 
 ## BOUNDS
 
@@ -70,7 +70,7 @@ export. The existing `export/tests/test_submit_custody_report.py` calls `serve_s
 <paths>
 infra/aws/lambda/investor-reporting/export/submit_async.py
 infra/aws/lambda/investor-reporting/export/tests/test_accept_business_date.py
-org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~151/
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~161/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-352.accept-reads-business-date-by-kind.md
 </paths>
@@ -81,9 +81,9 @@ org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-352.accept-rea
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IB70-2-AC1, IB70-G-151. The instance goes at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~151/IRPT_BCKEND.TO-IB-pr-352.accept-reads-business-date-by-kind.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-2-AC1,IB70-G-151` BEFORE the flip.
+Criterion ids: IB70-2-AC1, IB70-G-161. The instance goes at
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~161/IRPT_BCKEND.TO-IB-pr-352.accept-reads-business-date-by-kind.proof_of_spec.json`.
+Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-2-AC1,IB70-G-161` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message gives the commit hashes, each criterion's last line, any suite's last line, and any row ids.

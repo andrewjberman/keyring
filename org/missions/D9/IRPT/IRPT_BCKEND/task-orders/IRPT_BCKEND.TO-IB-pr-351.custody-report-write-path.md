@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-pr-351</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~150</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~160</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>pending</status>
@@ -31,7 +31,7 @@
 So a write must produce exactly what `resolve` admits. The CTO's ruling reads: **reuse `ReportRepository.persist`; no second
 repository.**
 
-**What you build** (your worktree is `C:/dev/wk-irpt-bckend-150`; run everything from its root):
+**What you build** (your worktree is `C:/dev/wk-irpt-bckend-160`; run everything from its root):
 
 1. **`infra/aws/lambda/investor-reporting/reports/custody_write.py` (new).** One function, `persist_custody_report(reports, principal, owner, request_ref, document,
    provenance)`. It refuses, by name, three cases:
@@ -54,10 +54,10 @@ repository.**
 <criterion id="IB70-1-AC1" cell_refs="IB-pr-351"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-1-AC1</invocation><expect>IB70-1-AC1 PASS</expect></criterion>
 `IB70-1-AC1` -- the custody write test (round trip through retained_export.resolve, the refusals) passes; the reports suite and test_submit_custody_report pass. Base: FAIL (no test).
 
-<criterion id="IB70-G-150" cell_refs="IB-pr-351"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-150</invocation><expect>IB70-G-150 PASS</expect></criterion>
-`IB70-G-150` -- a GUARD: your commits touch only your grant. Base: PASS.
+<criterion id="IB70-G-160" cell_refs="IB-pr-351"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py" . IB70-G-160</invocation><expect>IB70-G-160 PASS</expect></criterion>
+`IB70-G-160` -- a GUARD: your commits touch only your grant. Base: PASS.
 
-<expected_criteria>IB70-1-AC1,IB70-G-150</expected_criteria>
+<expected_criteria>IB70-1-AC1,IB70-G-160</expected_criteria>
 
 ## BOUNDS
 
@@ -78,7 +78,7 @@ repository.**
 <paths>
 infra/aws/lambda/investor-reporting/reports/custody_write.py
 infra/aws/lambda/investor-reporting/reports/tests/test_custody_write.py
-org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~150/
+org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~160/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-351.custody-report-write-path.md
 </paths>
@@ -89,9 +89,9 @@ org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-351.custody-re
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IB70-1-AC1, IB70-G-150. The instance goes at
-`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~150/IRPT_BCKEND.TO-IB-pr-351.custody-report-write-path.proof_of_spec.json`.
-Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-1-AC1,IB70-G-150` BEFORE the flip.
+Criterion ids: IB70-1-AC1, IB70-G-160. The instance goes at
+`org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~160/IRPT_BCKEND.TO-IB-pr-351.custody-report-write-path.proof_of_spec.json`.
+Validate it with `python .tools/proof-of-spec-check.py <instance> IB70-1-AC1,IB70-G-160` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** your final message gives the commit hashes, each criterion's last line, any suite's last line, and any row ids.
