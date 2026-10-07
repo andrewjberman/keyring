@@ -91,7 +91,7 @@ Rows: id `NFRA_OPLGTW-Z-W33-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   to `1.0.0_SA_CTO~Z` before its never-widen pair.
 - Pre-cut 18:0xZ: `bi2.AC1` FAIL (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <workstream>HOST-PIP-R40</workstream>
 <slot>~33</slot>
