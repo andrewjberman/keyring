@@ -98,3 +98,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @bccb90c1d1; proof VALID (worktree checker); name_search.resolve_query over 237 keyed records; AC1 4 of 4, AC2 8 plant tests; api suite 740 passed in the worktree; row Z-W275-S1 (138 records carry no stored name)</status>
