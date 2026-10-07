@@ -18800,3 +18800,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No dell2 principal can read the served Holdings publication of any firm. E-M1 is decomposed (R30_M) and NOT issued. It un-parks when either (a) a principal permitted on the three firm buckets runs the read (a laptop seat delivers the result as a FILE and 2.0.0_SA_COO~M2 files the row, per the 08:50Z CTO ruling on Dell-only row ids), or (b) the owner of the firm-bucket policies admits the dell2 identity read-only. This row widens no policy (CLAUDE.md cross-firm guard; never-widen)."
 }
 ```
+
+## IRPT_BCKEND-S353 -- REMEDY of IRPT_BCKEND-S320: the irpt-ycharts-generate source-map row now records the live hash
+
+```json
+{
+  "id": "IRPT_BCKEND-S353",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-07T08:51:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "REMEDY of IRPT_BCKEND-S320 (OPEN, owner 2.0.0_SA_COO~Y2, REMEDIATION_v20): in lambda-source-map.json, row irpt-ycharts-generate deployed_code_sha256 FgZcBjJu.. -> uFTONal/RhfoETes.., the live CodeSha256. It now equals the row's artifact_sha256. No other field moved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda get-function-configuration irpt-ycharts-generate (dell2, 2026-10-07 ~08:3xZ): CodeSha256 uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=, LastModified 2026-10-04T01:57:24Z",
+      "lambda-source-map.json before the fix: deployed_code_sha256 FgZcBjJuwuBD.. with artifact_sha256 uFTONal/RhfoETes.. on the same row, so only the one field was stale",
+      "the fix is a one-field edit in the commit that carries this row (lane grant extended to ~Y2 @4f3505fb84). The recorder was not run: record-terraform-deploy.sh sets last_deployed_commit to the newest commit on source_dir, and IRPT_YCDGEN commits since 10-04 that are not deployed would then read as deployed"
+    ]
+  },
+  "dismissal_reason": "The record matches the running bytes. The remedy's second half, the ~Y close-leg checklist step, passes with the 390 s release to 2.0.0_SA_COO~G2, the one releaser of this function's resident files (1.0.0_SA_CTO~DELL2 msg 91). Its HANDOVER.md never-widen text names the recorder step (@59ae6e3b73).",
+  "spec_asserts": "IRPT_BCKEND-S320: lambda-source-map.json records irpt-ycharts-generate at a hash the function no longer runs.",
+  "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
+}
+```
