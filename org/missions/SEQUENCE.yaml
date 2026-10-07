@@ -132,21 +132,16 @@ projects:
     waits_on:
     - manual: 'Andrew has sat with the operations lead: his day, his workbook''s layout, the custodians he calls (Q-3 brief PART V)'
     why: 'BOX: dell2, after ADVI_BILLING. Trade submission led by the operations lead''s Excel workflow. New; it cannot be specified before that sitting.'
-  MDPF_TAXSMA:
-    fabric: laptop
-    stage: 4
-    waits_on: []
-    why: 'TARGET BOX: dell1 (after dell1''s three lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Quiet; no lane is asked for it now.'
   IRPT_BCKEND:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell2 (after dell2''s first two lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting back end; its deploys go through site Z or a Dell''s trunk-only deploy.'
+    why: 'TARGET BOX: dell1, on Andrew''s 2026-10-07 ~06:1xZ word (''IRPT_BCKEND, IRPT_YCDGEN should both be on dell1''), replacing dell2. It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting back end; its deploys go through site Z or a Dell''s trunk-only deploy.'
   IRPT_YCDGEN:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell2 (once Andrew''s report retry on the laptop''s dev build has passed). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It stays on the laptop until then because that retry needs his own sign-in at this screen.'
+    why: 'TARGET BOX: dell1, on Andrew''s 2026-10-07 ~06:1xZ word (''IRPT_BCKEND, IRPT_YCDGEN should both be on dell1''), replacing dell2. It moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The v5 reason it stayed on the laptop (his report retry needs his own sign-in at this screen) is not answered by that word.'
   NFRA_TRNSPT:
     fabric: laptop
     stage: 4
@@ -322,28 +317,29 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'v5 -- REWRITTEN as the four-box scale-in. Stages are now the ramp: 0 bring-up (NFRA_CTLPLN), 1 each Dell''s first lane (MDPF_SECHIST on dell1, IRPT_CUSTDY on dell2), 2 the first moves (MDPF_SECCLASS to dell1, IRPT_DASHBD to dell2), 3 the third lanes (ADVI_COTBKF to dell1; ADVI_BILLING and NFRA_OPSWKF on dell2), 4 later moves off the laptop (MDPF_TAXSMA, IRPT_BCKEND, IRPT_YCDGEN, NFRA_TRNSPT), 5 the site-Z set, 6 the six v4 Platform Logic and D8 rows with their gates unchanged. A row''s fabric stays one of the register''s two values until NFRA_CTLPLN extends the enum; each project''s box is in its why and in its tree row''s placement field. Capacity gains dell1: 1 and dell2: 1. v4''s stage-0 seat order (MDPF_CANON, IRPT_BCKEND, MDPF_TAXSMA, NFRA_MCPINDEX, NFRA_OPLGTW) is superseded by this ramp. ADVI_PERFRP moves to dell2 with IRPT_DASHBD but has no tree row to place.'
   word: '''I like this plan for the scale in. I want to persist it somewhere, i think the best place for this is to actually rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' (Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v5 placement -- IRPT_BCKEND and IRPT_YCDGEN target dell1, not dell2 (each row''s why and its tree row''s placement field). MDPF_TAXSMA leaves the sequence: Andrew closed it, and a closed project that gates nothing has no order to keep. Stages and every other row are unchanged; dell2''s set is now IRPT_CUSTDY, IRPT_DASHBD, ADVI_BILLING, NFRA_OPSWKF.'
+  word: '''MDPF_TAXSMA is done at this point, should be closed. IRPT_BCKEND, IRPT_YCDGEN should both be on dell1'' (Andrew-direct 2026-10-07 ~06:1xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-10-07T04:49:32Z",
-    "head": "0ef817adb0",
-    "sequence_file_last_commit": "2bed2ad08b 2026-09-28T18:21:42-04:00 1.0.0_SA_CTO~Z",
+    "compiled_at": "2026-10-07T06:14:19Z",
+    "head": "74a8f66e75",
+    "sequence_file_last_commit": "cb14894875 2026-10-07T00:50:09-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
       "cap": 3,
-      "live_coo_lanes": [
-        "2.0.0_SA_COO~C"
-      ],
-      "free": 2,
+      "live_coo_lanes": [],
+      "free": 3,
       "next_slot_order": [
         "NFRA_CTLPLN",
         "MDPF_SECCLASS",
         "IRPT_DASHBD",
         "ADVI_COTBKF",
-        "MDPF_TAXSMA",
         "IRPT_BCKEND",
         "IRPT_YCDGEN",
         "NFRA_TRNSPT",
@@ -359,12 +355,12 @@ compiled:
       ]
     },
     "flags": {
-      "denominator": 27,
+      "denominator": 26,
       "counts": {
         "NEEDS-SLOT": 8,
         "UNMEASURED": 4,
         "WAITING": 4,
-        "LANE-DARK": 9,
+        "LANE-DARK": 8,
         "READY-IDLE": 2
       }
     },
@@ -480,7 +476,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "97463796de 2026-10-06T23:33:46-04:00",
+            "last_activity": "b699efa196 2026-10-07T00:49:21-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -537,21 +533,6 @@ compiled:
         "id": 4,
         "name": "Later moves off the laptop, leaving it the control plane",
         "projects": {
-          "MDPF_TAXSMA": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
-            "flags": [
-              "LANE-DARK"
-            ],
-            "notes": [
-              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
-            ],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~T",
-            "phase": null
-          },
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
             "status": "active",
@@ -606,8 +587,8 @@ compiled:
           "ETFS_RIVALS": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.17 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "prd": "v0.18 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "e0e0c3cf78 2026-10-07T01:06:34-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -618,7 +599,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.41 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -633,7 +614,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.18 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -648,7 +629,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -663,7 +644,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.15 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -674,7 +655,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -685,7 +666,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -696,7 +677,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],

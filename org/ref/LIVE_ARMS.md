@@ -19,12 +19,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` DIRECTED (Andrew-direct ~20:1xZ 2026-10-06 at the `2.0.0_SA_COO~C` terminal, VERBATIM:
-  "I think you should run these task orders /canonical-drive ADVI_COTBKF style. There is too much work on your plate with fielding
-  CTLPLN and COTBKF at the same time to be solo driving."). Record
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md` @45b266dcdb. He named no cadence
-  and no stop: event-driven, no cron; stop when every ADVI_COTBKF FWD grades REALIZED (read from the register), at HELD-AT-STOP, or on
-  his stand-down. NFRA_CTLPLN stays with ~C outside this drive. Landed by 1.0.0_SA_CTO.
+- `2.0.0_SA_COO~C` on NFRA_CTLPLN ONLY (Andrew-direct ~06:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "bring COO~C on for
+  this purpose. COO~C should only be focused on this work, not cottonwood backfill project."). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md`. He named no
+  loop and no cadence: event-driven, NO cron. Landed by 1.0.0_SA_CTO.
 
 - RELAUNCH 2026-09-28 (Andrew-direct ~17:3xZ, record
   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
@@ -110,6 +108,11 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md`
+  @45b266dcdb): struck 2026-10-07 by 1.0.0_SA_CTO. Chooser Andrew: "COO~C should only be focused on this work, not cottonwood backfill
+  project." (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md`).
+  He named no successor seat for ADVI_COTBKF; nothing here decides one. A successor does not re-arm this row.
 
 - `2.0.0_SA_COO~C` `/closer-drive` over NFRA_CTLPLN (record `ANDREW_DIRECT_20261006_144xZ_SEAT_COO_C_NFRA_CTLPLN_CLOSER_DRIVE.md`):
   struck 2026-10-06 by 1.0.0_SA_CTO on its own stop condition, "round 1 graded by the CVO": FWD-5, FWD-2, FWD-8 and FWD-7 all PASS
