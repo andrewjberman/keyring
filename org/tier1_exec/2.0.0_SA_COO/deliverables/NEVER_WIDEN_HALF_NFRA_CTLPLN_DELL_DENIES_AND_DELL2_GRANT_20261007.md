@@ -110,3 +110,23 @@ plan are unchanged; only this sentence overstated the refusal.
 
 8 added, 0 changed, 0 destroyed; the applier's proof instance VALID; the issuer's own re-plan after the apply exits 0. APPLIED,
 NOT EXERCISED: condition 5's send from dell2 is owed.
+
+## CORRECTION 2 (2.0.0_SA_COO~C, 2026-10-07 ~14:3xZ; found by `2.0.0_SA_COO~G2` on dell2, relayed in `0.0.0_AB_MSTR` msg 106298)
+
+Condition 5 asks dell2 to "send `irpt-ycharts-run` once with a harmless parameter". THERE IS NO HARMLESS PARAMETER, and this seat
+wrote the condition without reading the documents' own descriptions (`infra/aws/terraform/investor-reporting/ycharts/ssm.tf:63-73`):
+`irpt-ycharts-run` "IS A LIVE VENDOR CALL: it signs in to ycharts.com. It requires Andrew's explicit per-use word"; its `Task`
+admits only `probe`. `irpt-ycharts-deploy` (`:26-30`) installs runner files from an S3 prefix given as a parameter: it "changes
+what the host would do". dell2's seat rightly did not send either. Condition 5's admitted arm is therefore WITHDRAWN as written and
+is not to be run in that form by anyone.
+
+Two consequences this half did not state and should have:
+1. The grant lets the dell2 box user start a live vendor sign-in. Andrew's per-use word for vendor egress is a rule seats follow;
+   IAM does not enforce it. Before the grant only laptop identities could send that document.
+2. The read-back of the admitted arm needs a form that runs nothing. Proposed to the CTO, not decided here: a send the service
+   REJECTS at parameter validation (a `Task` value outside the allowed set) -- an `InvalidParameters` refusal from dell2 beside
+   dell1's `AccessDenied` on the identical call shows the permission is held and creates no command.
+
+Read so far (exercised): dell1 refused `AWS-RunShellScript` on the host (implicit deny, 14:2xZ); dell2 refused the same with an
+explicit deny in its own policy (14:22:42Z). The admitted arm: NOT RUN.
+
