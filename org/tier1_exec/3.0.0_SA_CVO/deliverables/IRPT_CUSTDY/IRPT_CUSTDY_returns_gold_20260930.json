@@ -1,0 +1,42 @@
+{
+  "uri": "s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-30",
+  "read_at": "2026-10-07T09:30:48.481935+00:00",
+  "objects": [
+    {
+      "key": "irpt/49financial/gold/account_return_daily/date=2026-09-30/data.parquet",
+      "bytes": 342718,
+      "last_modified": "2026-10-03T17:33:31+00:00",
+      "rows": 6854,
+      "columns": [
+        "firm",
+        "account_id",
+        "business_date",
+        "market_value_eod",
+        "external_flow",
+        "income_received",
+        "income_return",
+        "total_return_daily",
+        "return_basis",
+        "holdings_price_return",
+        "holdings_price_return_reason",
+        "fee_amount",
+        "fee_amount_reason",
+        "day_quality",
+        "guard_state",
+        "history_scope",
+        "carried_days",
+        "method_version",
+        "schema_version"
+      ],
+      "account_column": "account_id"
+    },
+    {
+      "key": "irpt/49financial/gold/account_return_daily/date=2026-09-30/manifest.json",
+      "bytes": 226547,
+      "last_modified": "2026-10-03T17:33:31+00:00"
+    }
+  ],
+  "error": null,
+  "object_count": 2,
+  "distinct_accounts": 6854
+}
