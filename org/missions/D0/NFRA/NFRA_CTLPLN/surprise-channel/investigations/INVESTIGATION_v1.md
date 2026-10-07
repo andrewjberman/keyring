@@ -1700,3 +1700,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No reader refuses an unknown key and the one reader that renders admission ignores it, so a new field is silent for every reader that was not changed in the same landing. INERT now because no such row exists and this pass lands none; it arms if the rows land before the module and the two fence files render the statements. The proposal states the landing order and an alternative shape (a sibling key) that fails closed."
 }
 ```
+
+## NFRA_CTLPLN-W13-S7 -- CT-k-2 AMENDMENT 4: a Terraform root holding only locals and an output does not plan to exit 0 on a fresh local backend; it reads 2
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T12:04:45Z",
+  "one_line": "The order's premise that `plan -detailed-exitcode` reads 0 on a temporary local-backend root with only locals and outputs is false for a FRESH root: a new output is a change and the plan exits 2; the test seeds a hand-written state holding the output to reach 0, and keeps the fresh root as the exit-2 control.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform 1.15.8 on this box, readback on a fresh root (backend local, locals a, output o): 'Changes to Outputs: + o = \"x\"' then TF-READBACK version=1.15.8 init=ok plan_exit=2 ok=True",
+      "the same root with a terraform.tfstate (version 4, serial 1, outputs.o = x, no resources): 'no differences' then TF-READBACK version=1.15.8 init=ok plan_exit=0 ok=True; test_kit_terraform_providers.py case 10 asserts both lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 4 item 2: readback on a temporary root with a local backend and only locals and outputs reads init=ok plan_exit=0.",
+  "world_is": "A fresh root reads plan_exit=2 (output additions count as changes under -detailed-exitcode). Case 10 therefore writes the state file by hand (no apply, no network) and reads 0, and also asserts the fresh root reads 2 loudly, which doubles as the control for the 0/2 distinction. Nothing was weakened: the expected line init=ok plan_exit=0 is asserted verbatim."
+}
+```
+
+## NFRA_CTLPLN-W13-S8 -- CT-k-2 AMENDMENT 4: `terraform version` makes a version-check network call unless CHECKPOINT_DISABLE=1, so every terraform run in the kit sets it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T12:04:45Z",
+  "one_line": "A bare `terraform version` and `terraform init` consult Hashicorp's checkpoint service by default (a network call) unless CHECKPOINT_DISABLE is set, which the order's no-network rule does not mention; the kit sets CHECKPOINT_DISABLE=1 in the environment of every terraform it runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_terraform_providers.py terraform_run_env() sets CHECKPOINT_DISABLE=1 and TF_IN_AUTOMATION=1 and drops TF_CLI_ARGS*, TF_LOG and TF_DATA_DIR; run_version, readback and the binary verb all run through it",
+      "the checkpoint behaviour is Terraform's documented default (the CHECKPOINT_DISABLE environment variable switches it off); not exercised against a network here, by the rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 4: THE NO-NETWORK RULE STANDS; nothing is downloaded.",
+  "world_is": "The order did not name the checkpoint call. The kit closes it in the environment it builds. The earlier seam probe (test case 5) built its own environment without the variable; it now sets CHECKPOINT_DISABLE=1 too (one added line in terraform_env, the case's expectations unchanged)."
+}
+```
