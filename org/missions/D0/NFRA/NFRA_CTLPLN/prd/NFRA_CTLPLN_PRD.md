@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.7",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -164,7 +164,7 @@
 | C-PLACEMENT: one project, one box (FWD-7) | the laptop; `org/missions/DIRECTIVES.yaml`, `org/missions/SEQUENCE.yaml` | A project's row names its box (`fabric`: `laptop`, `site-z`, `dell1`, `dell2`). A project is never split. Two projects go to different boxes only if their write surfaces do not overlap, checked as `.tools/owned-paths-validate.py` checks a worker, one level up. Andrew's first allocation (card 6) is the starting point; each move is his when it happens, and nothing moves until a Dell is standing. |
 | C-ONE-WRITER: files (FWD-8) | this project | Registers (`DIRECTIVES.yaml`, `SEQUENCE.yaml`, `LIVE_ARMS.md`, project rows, missions-tree carriers, the law files): the laptop only. A project's own tree: its box only. Append-only files (surprise channels, audit logs, session logs): one file per box, `<name>.<device>.md`, the pattern `org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md` already uses. The surprise-row gate and the readers that compile a channel learn to read every per-box file of a channel. |
 | C-LEASE: scarce accounts (FWD-9) | this project; the laptop holds the register | One lease register on the laptop: resource, holder box, expiry. Covered: the walker account, the YCharts session, the portal `DEV` push, the Bloomberg daily quota. A lease expires by itself; a dead box's leases lapse. The Dells take no vendor lease (vendor pulls stay scheduled on their existing homes). |
-| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys only commits already on origin CLOUD, never a round branch (C-TRUNK-DEPLOY's trunk-only rule holds); DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
+| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys only commits already on origin CLOUD, never a round branch (C-TRUNK-DEPLOY's trunk-only rule holds); DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. **v0.7 (Andrew-direct ~06:3xZ 2026-10-07, 'they should be allowed to create resources though'):** the policy GRANTS create, update and tag on the non-IAM resource kinds the Dell-placed projects' Terraform declares, so `safe-apply` of a non-IAM resource succeeds from a Dell and waits on no other box; the IAM deny is unchanged. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
 | C-RESTART: rounds survive a box restart (FWD-11) | this project | A lane on any box publishes its work-in-progress branch at each cell close, so a disk loss loses at most one cell. The round's state is read from the published branches and the ledger, never from one box's memory. Proposal 5.9 lists the cases (a Dell, site Z or the laptop down; a box whose bus consumer is not running). |
 | C-ATTENTION: one decision list (FWD-12) | this project | A box records each decision it needs from Andrew as a file on its own tree plus one bus line to the laptop; the laptop shows one list of every box's open decisions; his answer is recorded on the laptop and reaches the asking box as a file and one bus line. No lane on an unattended box blocks on a prompt at that box. |
 | C-SERIALS: one fabric manager per box | Andrew, "agreed on all points go ahead" | `0.0.0_AB_MSTR` (laptop), `0.0.0_AB_MSTR~SITEZ`, `0.0.0_AB_MSTR~DELL1`, `0.0.0_AB_MSTR~DELL2`, each with its own tier-0 folder. Site Z's `~Z` stays as an ALIAS in the device register so every past record still resolves; the rename lands at a site-Z restart. Only these seats talk across boxes (FWD-3). |
@@ -320,3 +320,24 @@ Andrew-direct ~00:5xZ at the `0.0.0_AB_MSTR` terminal: "I am cool with this but 
 anything into production" is reversed by his word and amended in place (id unchanged): a Dell deploys trunk code through the deploy tools and
 never changes access. C-IDENTITY carries the scope ruled here. Section 5's "Dells execute, site Z deploys" now reads "site Z integrates and
 holds every IAM-creating apply; any box deploys trunk code". The ratified-text half re-opens for `3.0.0_SA_CVO`.
+
+## ADDENDUM v0.7 (1.0.0_SA_CTO, 2026-10-07) -- Dells create non-IAM resources; no Dell deploy waits on site Z. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:3xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "Regarding DELLs, they shouldnt need to create or touch IAMs, they should be
+allowed to create resources though. I do not like the idea of gating deploys on sitez, because sitez will bottleneck as it has a lot of work
+via opalgateway projects and all of asset management workstreams." Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_063xZ_DELLS_CREATE_RESOURCES_NO_IAM_DEPLOYS_NOT_GATED_ON_SITEZ.md`.
+
+- **Measured gap.** `infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json` grants update of existing Lambda code, ECS task
+  registration, EventBridge rules and S3 and DynamoDB data writes, and NO create action for a function, table, bucket, queue, schedule,
+  secret or route. C-IDENTITY v0.6 already allowed `safe-apply` for non-IAM resources; the applied policy did not deliver it.
+- **C-IDENTITY amended in place** (the v0.7 sentence). FWD-10's text is unchanged: a Dell deploys, and never changes access.
+- **Round 3, first cell:** the policy grants create, update and tag for the non-IAM resource kinds declared under the Terraform roots of
+  the projects placed on a Dell (derive the list from those roots, never from memory), with the four Deny statements kept. Done when one
+  `safe-apply` from a Dell creates a non-IAM resource and one IAM write from the same Dell is refused. The Lambda narrowing follows it.
+- **Section 7, S06:** "applied by site Z" binds the IAM-creating apply of this policy only; it is not a rule for Dell deploys.
+- **Open at Andrew, not ruled here:** (1) who creates the role a new function or task needs, and whether a Dell may pass an existing
+  named role (row NFRA_CTLPLN-W1-S1); (2) C-TRUNK-DEPLOY's wait on site Z as the one box that merges Dell rounds and pushes the trunk;
+  (3) whether a bucket policy, a key policy and a Lambda permission count as resources or as access.
+
+A contract change under the ENDPOINT hash: no half re-opens (CLAUDE.md rule 27, proportionate sign-off).
