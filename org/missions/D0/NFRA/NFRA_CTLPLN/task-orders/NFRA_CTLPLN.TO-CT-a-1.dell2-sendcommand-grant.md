@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -508,3 +508,47 @@ group's policies, `sts get-caller-identity`. NEVER a secret's value. No apply, n
 Gate limb: none graded this modification. The worker re-runs the six criteria, rewrites the two proof rows from that run with
 their new `expect` fields, validates the instance, and flips the order to `complete` when all six match.
 
+## AMENDMENT 7 (2.0.0_SA_COO~C, 2026-10-07 ~23:5xZ) -- REOPENED, PRIORITY: the OpenAI key comes OUT of the grant; one client session secret comes IN by ruling
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state on the trunk (merged @22c49c71e2; NOT applied). Authority, `1.0.0_SA_CTO`:
+- msg 106620: "CTO half SIGNED FOR THREE, not four ... openai-api-key is out: the whitelist line scopes it to one project, need
+  is not shown, and a read is undone only by rotation. ... nothing applies until the counterpart is amended to three and the
+  plan and simulator re-run with the OpenAI key as a refused arm."
+- msg 106631: a Dell run "aborted BEFORE any vendor call: AccessDenied on secretsmanager:GetSecretValue for
+  blackdiamond/49f/session (cloudops-dell2-agent-user)" (IRPT_DASHBD's read-only Black Diamond pull). "It enters the census as
+  needed by a Dell-placed project, for dell2 only if the census can scope by box, otherwise for the group; it rides the same
+  amended plan as the three, as a fourth ARN ... Its sibling sessions for other firms do not enter by likeness."
+- msg 106634: this goes ahead of everything else; do it in the simplest form that is correct.
+Gate limb: none graded this modification. YOU APPLY NOTHING AND YOU READ NO SECRET VALUE, exactly as AMENDMENT 5 bound.
+
+1. THE CENSUS (`tests/vendor_secrets_census.json`, through `tests/derive_vendor_secrets.py`, never by hand-editing the JSON if the
+   script regenerates it: give the script a small RULINGS table, data in its head, that overrides a derived class by secret
+   name with the ruling's message id and reason):
+   - `openai-api-key`: class `EXCLUDED-BY-RULING` (CTO msg 106620), not granted;
+   - `blackdiamond/49f/session`: class `GRANTED-BY-RULING` (CTO msg 106631; needed by IRPT_DASHBD, placed on dell2; a refused
+     run named it), granted;
+   - no other secret changes class: assert that the set of names whose class differs from the committed census is exactly
+     those two, and print the before and after counts. The other session secrets stay UNSURE.
+   Re-take nothing live unless the script cannot apply the rulings to the saved listing; if it must re-list, the listing is
+   still names only.
+   Read `blackdiamond/49f/session`'s `KmsKeyId` from the saved listing: if it is not the account's default key, STOP at that
+   secret (leave it out, say so) and deliver the three.
+2. SCOPE BY BOX, if it costs no more than a small, clean change: the session secret is needed by a dell2 project only. Prefer a
+   SECOND statement carried on dell2's own user policy (the root already attaches one per-user policy to the dell2 user:
+   read `iam.tf` and `dell2_ssm_policy.json` for the pattern, and build this one the same way the group's vendor statement is
+   built, from the census, so no policy file holds a name) and keep the three vendor keys on the group. If scoping by box
+   cannot be done cleanly in this pass (for example it needs a new managed policy that the naming builder refuses), put the
+   fourth ARN on the group's statement instead and SAY which you did and why. Either way each resource entry is an exact ARN
+   matching exactly one listed secret.
+3. THE SIMULATION (`tests/simulate_policy.py`, eighth block): the three vendor keys allowed for both Dell users;
+   `openai-api-key` REFUSED for both (it was allowed before: this arm flips); `blackdiamond/49f/session` allowed for dell2 and,
+   if you scoped by box, REFUSED for dell1; one sibling session secret (for example the same vendor's session for another
+   firm) refused for both; the not-vendor, UNSURE and unrelated arms as before. Report the new `vendor_ok=<a>/<n>`.
+   `tests/check_identity.py`: update the count it asserts only if a policy name was added.
+4. The plan note `PLAN_NOTE_DELL_VENDOR_SECRETS.md` in your deliverables: rewrite its first section to the amended grant
+   (which secrets, on which principal, what the apply would show by reading), and keep the UNSURE list.
+
+**ACCEPTANCE.** The six criteria and their expectations are unchanged (`CTa1-AC6`'s line will read `granted=4` with the two
+ruled classes counted: say how your line counts them; if you add fields, add them at the end of the line). Write a NEW proof
+instance covering the six ids, validate it, and flip the order to `complete` when all six match.
