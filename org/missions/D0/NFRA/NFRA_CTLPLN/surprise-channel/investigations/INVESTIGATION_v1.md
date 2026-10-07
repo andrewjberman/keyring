@@ -987,3 +987,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The read resolves the identity names as literals (7 of 7) and the agentbus names through the module with a builder cross-check (2 of 2, name() equal); for the seven literals the builder cross-check is the root's own tests/check_identity.py, not re-run here. No criterion depends on the difference."
 }
 ```
+
+## NFRA_CTLPLN-W12-S1 -- CT-k-1: three Lambda-vendored copies of the trading calendar already differ from lib/ and keep the old silent fallback
+
+```json
+{
+  "id": "NFRA_CTLPLN-W12-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~12",
+  "surfaced_at": "2026-10-07T09:23:05Z",
+  "one_line": "The three Lambda-vendored byte-copies of lib/trading_calendar.py (inf-etf-ownership-daily, bd-served-vintage-alarm, opal-assets-absence-check) are already not copies of lib/ and keep the old silent 2024-2027 fallback, so TO-CT-k-1's fail-closed fix does not reach those three functions until someone re-vendors them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diff of `git show a68599cde3:lib/trading_calendar.py` against each of infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/trading_calendar.py, infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py, infra/aws/lambda/opal-assets-absence-check/trading_calendar.py: all three DIFFER (each is 163 lines; the first hunk is the missing weekly_production_day, lines 122-154), so they were not byte-copies before this order either",
+      ".github/workflows/lib-vendored-copies-parity.yml PAIRS lists those three plus infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py; `ls infra/aws/lambda/schwab-bronze-freshness` -> No such file or directory, so that parity job reports MISSING_VENDORED and DRIFT today",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~12/TRADING_CALENDAR_IMPORTERS.md section 1 and 3: all three vendored lambdas run without pandas_market_calendars (stdlib-only packages), so they answer from the old 2024-2027 set, silently outside it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-1 cell text: lib/trading_calendar.py is the estate's ONE trading-day definition and Lambdas vendor this ONE file; the fail-closed raise changes what deployed importers do the next time they are rebuilt.",
+  "world_is": "Three deployed Lambdas carry their own older 163-line copy of the module, outside the order's grant (it edits no importer and deploys nothing). The new fallback and CalendarCoverageError reach them only if the copies are replaced from lib/. Until then they answer a pre-2024 holiday as a trading day, and from 2028-01-01 every weekday, with no error; their current call sites pass current dates (bd-served-vintage-alarm, opal-assets-absence-check) or an event day (inf-etf-ownership-daily, UNKNOWN). Disarm owner is the issuer who decides whether a re-vendor cell is cut; this worker did not copy the file."
+}
+```
