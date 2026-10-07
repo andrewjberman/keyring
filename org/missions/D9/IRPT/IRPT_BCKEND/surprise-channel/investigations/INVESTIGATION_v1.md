@@ -19612,3 +19612,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "Same limit applies, by the fixture's declared expectation, to nothing else: every other gated route's allowed arm is SERVED."
 }
 ```
+
+## IRPT_BCKEND-W142-S6 -- two bare PermissionErrors remain in intake/uploads.py after AMENDMENT 1: load_input_owner (INPUT_UNAVAILABLE) and the NORMALIZATION_UNAVAILABLE raise
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:59:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 named the two refusals at the old :177 and :185 (now InputAccessDenied NOT_AUTHORIZED and InputUnavailable NOT_FOUND; row W142-S1's UNEXPECTED is gone: the denied arm answers NOT_AUTHORIZED, battery_overall_pass true). Two bare PermissionError raises in the same file are untouched, being outside the amendment: load_input_owner's INPUT_UNAVAILABLE (now :160, the OWNED_INPUT guard's owner lookup, same text and meaning as the fixed :185 site) and NORMALIZATION_UNAVAILABLE (now :409). Each would answer UNEXPECTED through reason_for if it reached the classifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py @ worktree HEAD+edit: raise PermissionError at :160 and :409 (Grep, 2 matches); the amended sites are :177/:185 before the edit, now InputAccessDenied/InputUnavailable",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_uploads_refusal_class.py: 6 passed, covering the two amended sites only"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: both refusals (:177 and :185) raise a declared class; the grant is uploads.py only.",
+  "world_is": "The two named refusals are fixed and the battery reads 17 of 17 gated routes green. Whether the :160 owner lookup (it could reuse InputUnavailable, preserving the not-found-equals-not-yours answer) and the :409 raise get the same treatment is a later cell's call; this worker did not widen the order.",
+  "notes": "No fixture reaches :160 or :409 in the battery, so neither is graded by AC1."
+}
+```
