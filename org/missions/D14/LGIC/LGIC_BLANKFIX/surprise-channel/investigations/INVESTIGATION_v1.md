@@ -233,3 +233,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The six raising keys are the six keys NOT_JUDGED_R13.json cards (plane repo), and rule 1 (CARDED) is tested before rule 3 (HOLE), so they print CARDED and zero raise-HOLE lines exist for this root. The rule-3 path is exercised by the unit test (a hand-made raise) and not by the real root. The built order follows the rule order as written; the two statements cannot both hold for this root."
 }
 ```
+
+## LGIC_BLANKFIX-S2 -- a name that already says daily keeps that word though its schedule is weekdays only
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-07T13:04:28Z",
+  "one_line": "The thread run prints a complete fix ending in -daily for two rules whose schedules fire Monday to Friday only; the cadence reader calls the same expressions undecided.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/THREAD_TRACE_round1_bd-pipeline.txt lines for bd-49f-fees-runner-daily and bd-49f-fees-session-daily (kind FIX)",
+      "BF-t-4 worker report: undecided rows 2 and 4 of the root, same two names",
+      "lib/opal_naming.py _cadence_slot: the word is read from the name's tokens"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.2 FWD-4 ACCEPT: a person who reads the schedule itself agrees with the word the list chose.",
+  "world_is": "bd-49f-fees-runner-daily (cron(30 22 ? * MON-FRI *)) and bd-49f-fees-session-daily (cron(20 22 ? * MON-FRI *)) print FIX ...-daily because grade() takes the cadence word from the current name and never reads the expression. BF-t-4's reader returns no word for both ('MON-FRI days only: not every day'). The root check fills a cadence only where the name carries none, so a wrong word already in a name is not caught. Not fixed here: no cell of round 1 compares a carried word with the expression."
+}
+```
+
+## LGIC_BLANKFIX-S3 -- a library layer with a registry row prints a fix with a system, against the ruling that such names are not asked for one
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-07T13:04:28Z",
+  "one_line": "openpyxl-layer prints FIX tradeops-openpyxl-layer in the thread run because resources.json carries a row for it; Andrew's CALL 3 puts library layers under the fourth verdict.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/THREAD_TRACE_round1_bd-pipeline.txt line: FIX LAMBDA_LAYER openpyxl-layer -> tradeops-openpyxl-layer [infra/aws/terraform/bd-pipeline/layers.tf:8]",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/C_VERDICT_FOURTH_VALUE_RECORD.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.2 FWD-3 and CALL 3 of 2026-09-21: a library-named Lambda layer is not asked to say which business system it belongs to.",
+  "world_is": "The fourth verdict applies only when no registry row resolves a system (BF-t-2's face, from _slots R1.e). infra/logic/registry/resources.json holds a row placing openpyxl-layer under tradeops, so the name grades OUT-OF-PATTERN with a complete fix that adds a system. Whether a row outranks the ruling for layers, or the row should go, is the registry owner's and the CTO's; nothing was changed."
+}
+```
