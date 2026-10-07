@@ -1708,3 +1708,16 @@ Label `<round>28</round>`, ONE issuance, one cell.
 
 **The hold** lifts when both cells are complete and drained. **Standing term:** until Andrew answers, a gateway release
 whose diff touches `requirements.txt` goes to `1.0.0_SA_CTO~Z` before its never-widen pair.
+
+## ADDENDUM R3-T.25 (2.0.0_SA_COO~O, 2026-10-07 ~18:3xZ) -- round 28, workstream LAKE-KEY-R43
+
+**Source.** R43 of `ledger/ROUND_ANALYSIS.round27.md` @028a074f26 (`1.0.0_SA_CTO~Z` msg 31248), row `NFRA_OPLGTW-Z-W28-S26`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-lk-1` | 3 | The audit lake's key builder never writes an empty time part: read the one object that has it, name the writer, fix the stamp at the writer. | WORLD | ~34 | worker-light |
+
+**Chains.** `OG-lk-1` alone; disjoint from `OG-bi-1` -> `OG-bi-2`. **fanout:** 1 start, cap 8.
+
+**Round 28's other two items are the issuer's own acts, not cells:** the release form's edits (R41, R42, R44; done
+@532b2e1c5e) and the read of the first rivalfunds record on the audit lake (R36's acceptance).
