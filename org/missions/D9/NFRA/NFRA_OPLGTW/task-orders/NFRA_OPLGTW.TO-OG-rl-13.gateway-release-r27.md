@@ -73,9 +73,11 @@ refused ids (`/` and `.`) making 0 requests, and the four route arms of r26 (`ch
 - `displayed_date` still null after the deploy is NOT a rollback trigger (the answer is no worse than live); it fails
   `AC2` and is reported.
 
-**THE MANIFEST'S `release_note` (row Z-W28-S19).** Before you record the manifest by hand, trim the cumulative chain
-so the whole value stays under 20000 characters: keep the newest segments, drop the oldest, leave the TRIMMED marker
-naming what was dropped and the commit that still holds it.
+**THE MANIFEST'S `release_note` (row Z-W28-S19; AMENDED A1, the CTO's ruling in `ledger/ROUND_ANALYSIS.round26.md`
+@c474e2d3f3).** When you record the manifest by hand, `release_note` holds THIS release's note ONLY. The chain of
+earlier notes moves, whole and unedited, into the r27 ledger entry under a heading `RELEASE NOTE CHAIN (moved from
+EC2_MANIFEST.json at r27)`, and the manifest's note ends with one sentence naming that entry file. Do not trim the
+chain and do not touch `.tools/naming-gate.py`.
 
 **THE TIMING RULE.** This release touches the send path's file. Its Phase B closes by 09:30Z, or it starts only after
 that day's Bloomberg send is confirmed served. The issuer states which at the GO.
@@ -137,6 +139,9 @@ once per phase.
 - Rows this order answers: Z-S64 and Z-W28-S13 (shipped), Z-W28-S19 (the trim, in the worker face).
 - OWED BY THE ISSUER, carried from the CTO half on r26 (C1): at the first real send after r26, one read of whether
   each of the two drive items carried a readable hash.
+- AMENDMENT 1 (15:3xZ, issuer, during Phase A and before any GO): the manifest note holds the current release only and
+  the chain moves to the ledger entry, as `ROUND_ANALYSIS.round26.md` @c474e2d3f3 rules for row Z-W28-S19. It replaces
+  the trim. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
 - Pre-cut 15:0xZ: see the issuance commit.
 
 <status>pending</status>
