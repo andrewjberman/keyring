@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECHIST~1</issued_to>
 <issued_by>2.0.0_SA_COO~H1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -133,3 +133,45 @@ budget: at most 50 securities x about 260 rows = about 13,000 rows on the first 
 </preflight>
 
 Source: PRD v0.1 @b4b995dc14 section 2 (THREAD) and S01; brief PART IV.5; decomposition round 1.
+
+## AMENDMENT 1 (2.0.0_SA_COO~H1, 2026-10-07 ~08:0xZ) -- the backfill draws on the one Bloomberg budget ledger (C-BUDGET; CTO half REFUSED @451db20b50)
+
+The order re-opens (`<status>` pending). The first pass drained @099e082db2 (worker commit 5433813cf6; AC1 4 passed, AC2 `SEAM-OK planned=15`).
+Read the first pass's code at HEAD: `history_backfill_plan`, `earliest_held_dates`, `plan_only`, and the backfill block in `main()` (it starts after the
+fund-daily request and ends at `WARN: history backfill skipped`). Keep all of it; this amendment adds the ledger.
+
+**Why.** `1.0.0_SA_CTO~DELL1` refused the CTO never-widen half for the site Z deploy
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECHIST_SH_T1_SITEZ_DEPLOY_20261007.md`): the PRD's ratified contract C-BUDGET says
+"History pulls and backfills draw on the same ledger, under the production reserve; a backfill is paid once per security and yields to production."
+`data/etfs/scripts/rivalfunds/bbg_budget.py` is that ledger, on the same site Z terminal. Its lines 3-4: on 2026-10-05 about 175k rows of local backfill
+"exhausted the Terminal's daily capacity and blocked the 07:00 ET production pulls." A backfill leg that spends without recording makes `spent(today)` read low
+for every other backfill on the box.
+
+**The ledger (read only; never edit it or `bbg_budget.json`).** `bbg_budget.py` exposes `config()` (`bbg_budget.json`: `daily_ceiling_rows` 150000,
+`production_reserve_rows` 30000), `spent(day=None)` (rows recorded for the UTC day; absent ledger = 0), `record(mode, rows, batch_id)` (appends one line, never
+raises) and `ledger_dir()` (honours the env var `RIVALFUNDS_BBG_BUDGET_DIR`; under pytest a temp dir). Its `check_backfill(plan, today)` takes a
+`{date: [funds]}` plan priced per fund-date, which does not fit a per-security plan, so apply THE SAME RULE directly.
+
+**Change (in this order's existing write set; `bbg_budget.py` is read, imported, never edited):**
+1. Import the module from `<REPO>/data/etfs/scripts/rivalfunds` (put that directory on `sys.path` inside the backfill block, the way the file already puts
+   `integrations/bloomberg/mcp` on it for `blp_client`; `REPO` is the existing constant). An import failure is a failure of the block: branch B.
+2. A pure function `history_backfill_rows_estimate(plan)`: the sum over planned tickers of the weekdays (Mon-Fri) from `start` to `end` inclusive.
+3. In the backfill block, BEFORE any Bloomberg request: `limit = daily_ceiling_rows - production_reserve_rows` from `bbg_budget.config()`,
+   `used = bbg_budget.spent()`; if `used + estimate > limit`, raise into the block's existing `except`, so it logs `WARN: history backfill skipped: budget ...`
+   (name the estimate, the rows left and the limit), sets `history_backfill_error`, fetches nothing, records nothing, and the exit code is what production earned.
+   An unreadable `bbg_budget.json` refuses the backfill (the opposite of `check_backfill`'s choice for its own collector: here an unbudgeted backfill is the
+   hazard, and refusing it costs one day of depth, never a production pull).
+4. AFTER the requests: `bbg_budget.record("backfill", <rows returned across all groups>, "etf_history_backfill_<asof>")`, also when some groups failed
+   (record what was returned before the failure, then let the block's `except` run). Add `history_backfill_budget` to the manifest:
+   `{"estimate", "limit", "spent_before", "recorded"}` (null when the block never reached the check).
+5. NEW test, exact name `test_backfill_budget_refusal_and_record`, in `integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py`, with
+   `RIVALFUNDS_BBG_BUDGET_DIR` pointed at a pytest `tmp_path`, `main()` against the existing fakes:
+   - arm 1, ledger pre-filled to the limit (one `record("backfill", 120000, "prefill")` line): no backfill request reaches the fake Bloomberg, the exit code is 0,
+     `history_topup` and the manifest are written, `history_backfill_error` names the budget, and the ledger holds only the prefill line;
+   - arm 2, empty ledger: the backfill runs, and the ledger gains exactly one `"mode": "backfill"` line whose `rows` equals the rows the fake returned.
+   Negative control: remove the check (keep the record), show arm 1 fails, restore. Say so in your report.
+6. Nothing else moves: not the plan rule, the cap, the production window, the exit contract or the existing manifest fields.
+
+**Criteria.** AC1's check now also requires `test_backfill_budget_refusal_and_record` PASSED (`R1_CHECKS/sh_t1_plan_tests.py`; dry-run at HEAD @a984cc37d2:
+`PLAN-TESTS-BAD not-passed=test_backfill_budget_refusal_and_record`, FAIL as expected). AC2 is unchanged and must still read `SEAM-OK`.
+Gate limb: none graded this modification (LIMB 6 fires on new orders only; the order declares no `<placeholders>`).

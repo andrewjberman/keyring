@@ -15,6 +15,7 @@ REQUIRED = [
     "test_plan_covered_security_not_requested",
     "test_plan_cap_bounds_count",
     "test_backfill_failure_keeps_production_rc",
+    "test_backfill_budget_refusal_and_record",
 ]
 
 
