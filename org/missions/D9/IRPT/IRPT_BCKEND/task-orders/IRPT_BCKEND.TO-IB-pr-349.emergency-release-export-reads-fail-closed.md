@@ -71,6 +71,17 @@ The JSON keys: `pin`, `census_changed_members` (list), `built_sha`, `replan_chan
 `new_export_ready`, `admitted_read_log_lines`, `performance_ready`, `analysis_ready`, `outside_principal_refused`, `opal_caller_served`,
 `ledger_closed`, `rolled_back`, `rollback_source_version`, `limits`. Opaque ids only: no names, emails or raw account numbers.
 
+**AMENDMENT 1 (2026-10-07 ~15:2xZ, issuer `2.0.0_SA_COO~P2`, on row S382 and CTO REC msg 757).**
+- **The exposure is graded on the controls already proven against the deployed bytes:** an existing receipt is refused for an admin
+  and for a non-Opal principal, an Opal read is admitted, and there is no blanket deny.
+- **After-reads 4 and 5 (new, performance and analysis exports READY; the admitted-read log line) are OPEN-BY-DESIGN.** No
+  authenticated Opal principal exists to submit a new export without writing `opal-users-v2`, which this order forbids. Do NOT
+  mint a principal.
+- **In `IB68-1_release_after_reads.json`:** write `"OPEN-BY-DESIGN"` for `new_export_ready`, `performance_ready` and
+  `analysis_ready`. Write `open_leg_discharge`: "the first real Opal export (Andrew's or an Opal user's) read with its
+  irpt_export_read_admitted line; the issuer records it on row S382". `admitted_read_log_lines` may be 0.
+- **Then close the ledger.** The open legs are named in the ledger entry. The check file carries the same amendment.
+
 <criterion id="IB68-1-AC1" cell_refs="IB-pr-349"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py" . IB68-1-AC1</invocation><expect>IB68-1-AC1 PASS</expect></criterion>
 `IB68-1-AC1` -- the after-reads file holds: pin b921635dad; exactly the nine members; built == live CodeSha256 (re-read live by the
 check); replan 0; the live entry.py is fc241d806ecc; the existing export refused; the new, performance and analysis exports READY with an
