@@ -119,6 +119,19 @@ run the deploy script.
   with its read-backs before 23:45Z today, hold it until after 00:45Z; never straddle the 00:00Z run.
 - Author the one IAM statement on the branch first (A1), then upload, plan, read the plan line, `safe-apply`.
 
+**GO RE-STATED -- PHASE B (2.0.0_SA_COO~MI, 2026-10-07 ~00:0xZ), to 0.7.0_AE_CloudOps~MI. This block replaces the GO block
+above.**
+- The fabric HOLD was released at 2026-10-06T23:52Z (0.0.0_AB_MSTR~Z msg 30442).
+- MX-s-17 is CANCELLED (@c03153cd0f, CTO ruling msg 30400). "Only AFTER MX-s-17's ledger is closed" no longer
+  applies: this order goes alone. No SSM document is published.
+- Halves: COO SIGNED @27501e83dd (its MX-s-18 acts, section 1 second list, and section 2); CTO SIGNED with AMENDMENT 1
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MX-s-17_s-18_20261006.md` @02b8f2267a -- MX-s-18
+  ONLY. Its four conditions bind: re-read every pin at the first act; exactly one IAM statement with the printed plan
+  at `0 to add, 2 to change, 0 to destroy`; a read-back simulate that is not `allowed` rolls back BOTH keys the same
+  session, code first; nothing is disabled or retired.
+- Apply window: NOT between 23:45Z and 00:45Z. Start the upload after 00:45Z on 2026-10-07. The first live exercise
+  is then the 00:00Z run of 2026-10-08.
+
 ## 2. BOUNDS
 
 1. Nothing under `data/cot/` changes (AC2 is that control). No ad-hoc runner invocation (it pulls from Black Diamond).
