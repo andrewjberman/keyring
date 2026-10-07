@@ -122,7 +122,7 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Pre-cut 02:5xZ: `up1.AC1` FAIL (the test file is absent). `up1.AC2` PASS (0 beyond baseline, allowlist unchanged):
   it is the regression guard. `up1.AC3` FAIL (0 of 2 texts, no read).
 
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~29</slot>
 <fabric>site-z</fabric>
