@@ -58,10 +58,44 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 **PARKED 2026-10-07 ~07:3xZ by `2.0.0_SA_COO~Y2` (dell2 successor of `~Y`)**, on Andrew-direct ~07:2xZ (record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_072xZ_Y2_CHECK_IN_WITH_YCDGEN_NO_DUPLICATION.md`
 @d9fd724744: the YCharts port is "tenuous on their connection/auth"; build in house). Every item below tunes the YCharts
-vendor path, and IRPT_YCDGEN (PRD v0.8, FWD-11) is the in-house build. The 390 s release and the Y-5 packet 2 are not
-deployed. The served vendor path stays as it is until FWD-11 retires it. `2.0.0_SA_COO~G2` confirmed the split (msg 32):
-`y-release-390` belongs to this workstream, and no IRPT_YCDGEN leg uses it. Owner: this seat. Un-parks only on the word
-of `1.0.0_SA_CTO` or Andrew.
+vendor path, and IRPT_YCDGEN (PRD v0.8, FWD-11) is the in-house build. The served vendor path stays as it is until
+FWD-11 retires it.
+
+**RULED 2026-10-07 ~07:5xZ by `1.0.0_SA_CTO~DELL2` (msgs 91 and 93):**
+1. Two lanes stay, with ONE WRITER. `2.0.0_SA_COO~G2` alone writes and releases `ycharts/generate/resident_worker.py`,
+   `upload_suggestions.py`, `security_resolution.py` and the resident host. This seat asks for a change to any of them
+   as a named cell. The rest of `ycharts/**` that is Y's stays with this seat.
+2. The 390 s release is UN-PARKED. It rides `~G2`'s next resident build, after M1. This seat supplied it:
+   `deliverables/2.0.0_SA_COO~Y2/release390/` (the patch onto `aaea945582`, the test run still owed on a host with
+   PyMuPDF, and the never-widen pair text).
+3. STOPPED: Y-6 runs 8-10. No new work on the YCharts session, lease or firewall; only breaks that users see are
+   repaired. CORRECTED by msg 104 (08:03Z): Y-5 packet 2 (the K3 swap call in `intake/resolution_kimi.py`) is chassis,
+   not the YCharts producer, so it is NOT stopped. It is back to HELD under CTO batch 218, and the CTO re-rules it when
+   4.0.0_SA_CRO's research on the check and swap operations lands (Andrew-direct ~08:0xZ, @1ea0796be2). Any live Kimi
+   call still needs Andrew's per-use vendor word.
+   **SUPERSEDED by msg 120 (08:15Z, `1.0.0_SA_CTO~DELL2`, on the brief
+   `docs/briefs/irpt-check-swap-ai-autosuggest-ux-brief-20261007.md` @3d0ecacb0b section 4.1):** Y-5 packet 2 is
+   superseded by IRPT_YCDGEN S32 (FWD-16). There, the candidates come from etf-classifications, and the model ranks or
+   words them but never invents one. The check and swap UI changes R1-R9 go to IRPT_YCDGEN as a PRD addendum, not to
+   this workstream.
+4. Y stays open until IRPT_YCDGEN FWD-11, then closes with the removal of the YCharts path.
+
+**Round 61 (~Y) CLOSED 2026-10-07 ~09:0xZ:** E-Y1 @ad59d08617 (row S353), E-Y2 drained @1ade2e9989 (owner table: 14 fixtures/har
+REMOVE, templates.json KEEP, lane IRPT_COMPLETION_Y), E-Y3 = the release390 hand-over. S339 disarmed (row S351).
+
+**Round 62 (~Y), 2026-10-07 ~10:0xZ:** IB-yr-624 drained @d96da06035 (`files[]` 114 -> 100). L8 packet @390730c49b. L10
+(CTO~DELL2 msg 297): no new Y cell. E-Y4 is served only when the next `irpt-ycharts-generate` release passes its three legs,
+which are written into `release390/HANDOVER.md` for `~G2`: 0 `fixtures/har` in the deployed zip, the fixture tests green at
+the pin, and the trace control re-run on the deployed zip. S358 is `~G2`'s.
+
+**Superseded by round 62 (cut and drained); kept for the record:** the cell ruled by `1.0.0_SA_CTO~DELL2` msg 233, PARKED: drop the 14 `fixtures/har/*` from `irpt-ycharts-generate`'s
+`files[]`. Its criteria:
+(1) an import/open trace over the package at the pin shows no runtime reader;
+(2) the built package has no fixtures/har member, and the tests that read them still pass from the repo;
+(3) a planted runtime open is caught by the trace.
+It rides the function's next release (if that is `~G2`'s resident build, it rides `~G2`'s).
+Owner: this seat. It un-parks when that next release is scheduled AND a host with PyMuPDF (`fitz`) can run criterion (2)'s tests.
+dell2 has no `fitz`, so an order cut now would carry a criterion no dell2 worker can meet.
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
 - **Submit-to-READY is mostly a fixed wait.**

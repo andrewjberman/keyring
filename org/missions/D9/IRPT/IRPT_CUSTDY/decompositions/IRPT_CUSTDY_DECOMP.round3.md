@@ -1,0 +1,89 @@
+# IRPT_CUSTDY decomposition -- ROUND 3, gated items (issuer 2.0.0_SA_COO~K2; drafted 2026-10-07 ~09:5xZ, dell2)
+
+**Status: DRAFT -> ISSUED per gate.** The round-2 analysis `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_IRPT_CUSTDY_ROUND_2_20261007.md`
+@10e64fe9df (msg 280) pre-cuts three items, each issued the tick its gate opens, with no new analysis. This file is the cut of whichever
+items have opened; each later opening appends its cell here in its own issuance commit.
+
+| gate | item | state at 09:5xZ |
+|---|---|---|
+| IRPT_BCKEND E-P8 drained (`~P2`) | E1: the 482 re-read | CLOSED: E-P8 is an item of IRPT_BCKEND's round-61 analysis @aae1ed7781; no order cut |
+| S4 FILE lands | E2: hop 3 on the real returns | **OPEN**: `org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_CUSTDY/IRPT_CUSTDY_returns_gold_20260930.json` @ef5ea44568 (msg 286) |
+| the portal kit lands on dell2 | E3: the 49 Financial template | CLOSED: `portal/node_modules` absent |
+
+## E2 -- measured constraints
+
+1. **The FILE carries presence, not figures** (row S6): the 2026-09-30 `account_return_daily` partition exists (data.parquet, 6854 rows,
+   19 columns, 6854 distinct `account_id`; error null). The figures must be computed where the firm bucket is readable. **Issuer
+   ruling:** E2 is cut as a read-only wrapper that the laptop runs under the standing fenced-read rule (msg 213), writing the chosen
+   advisor's client-report documents to a FILE; that FILE is what grades E2's criteria. On dell2 the wrapper records the fence in its own
+   output file (the same shape as `read_returns_gold_partition.py`).
+2. **The ownership map is read through `opal_naming.legacy_address('blackdiamond-platinum-49financial-ownership-map')`** (registry row
+   @58532d19fd, in HEAD) -> `s3://opal-data-bd/platinum/49financial/ownership_map.json`; no key is typed. This also discharges the
+   round-3 carry noted in the round-2 packet.
+3. **The advisor** is round 2's recorded pick (`DECOMP.round2.md`, "Recorded at the drain"): slug `matthew_gooch`, 10 households,
+   as-of 2026-09-30. An account the projection refuses is reported as uncovered, never computed.
+4. **HOLD A** binds the wrapper exactly as `client_report_figures.py` already enforces it (SI `HELD_CALENDAR_FIX` before 2024; the calendar
+   never called for a pre-2024 date). No `--apply`: nothing is written to S3 by the wrapper or by the laptop run.
+
+## The cells
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `CU-c-1` (E2) | the hop-3 real-run wrapper: for one advisor and as-of, resolve the advisor's accounts from the ownership map (legacy_address), build the client-report documents through `client_report_figures.py` (no `--apply`), and write them, with every account masked to the last 4, to one JSON FILE plus a summary line; read-only; the fence is recorded, never worked around | FWD-1 | NOT-EVALUATED | dell2 (built), laptop (run) | LOCAL | A, `0.9.0_WK_IRPT_CUSTDY~7` |
+
+## Write sets
+
+- **CU-c-1:** `data/assets/scripts/gold/irpt_custody/hop3_real_run.py` (new), `data/assets/scripts/gold/irpt_custody/tests/test_hop3_real_run.py` (new).
+
+**Ordering and fan-out:** `fanout: 1 of 1 open chain (E1, E3 gated closed), cap 8`.
+
+## The issuer's acts after the drain
+
+1. Commit nothing new to the laptop path: send `0.0.0_AB_MSTR~DELL2`, for bus relay to laptop `3.0.0_SA_CVO` (copy `1.0.0_SA_CTO~DELL2`),
+   the drain commit, the exact command and the recipient lane (msg-213 rule).
+2. When the FILE returns: grade E2's three criteria from it (QTD/YTD/1Y at 2026-09-30 present per account and household; SI held where
+   inception is before 2024; every figure's `source` names its rows) and file the result as a row closing S4/S6.
+
+## E1 -- gate opened 2026-10-07 ~10:08Z (cut in its own issuance commit)
+
+**Gate evidence:** IRPT_BCKEND E-P8 = `IRPT_BCKEND.TO-IB-pr-339`, drained on dell2 CLOUD @b43f82c155 (`2.0.0_SA_COO~P2` msg 299; in HEAD):
+`custodian_key_seam.json` drops its 826 `'None'` values (5376 remain); `ids.py:388` now returns the raw account for an empty, `'None'` or
+`'nan'` mapping instead of minting the string. Nothing deployed; the code path read here is the repo's.
+
+**Measured constraints.**
+1. The BEFORE count is round 2's recorded census: `deliverables/0.9.0_WK_IRPT_CUSTDY~5/ADVISOR_CENSUS_20260930.md` (pick line
+   `projection_refused=482 of=7022`, map LastModified 2026-10-07T05:27:37Z). The AFTER count is a fresh pick on HEAD's seam.
+2. The ownership map is read through `legacy_address('blackdiamond-platinum-49financial-ownership-map')`, as in E2.
+3. 'Unmapped returns the raw account' is a behaviour change: a raw account that is not a directory id may now project to an id no
+   directory entry carries. The re-read therefore reports, per remaining or newly-unresolved account, a REASON from a closed set
+   (`PROJECTION_REFUSED`, `NOT_IN_DIRECTORY`, `NO_SILVER_AT_AS_OF`), never a bare count.
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `CU-c-2` (E1) | the 482 re-read: re-run the pick on HEAD's seam; print refused counts BEFORE (from the round-2 census) and AFTER; every account still not covered carries one reason from the closed set; the round-2 pick is re-checked as still eligible | FWD-1 | NOT-EVALUATED | dell2 | LOCAL | B, `0.9.0_WK_IRPT_CUSTDY~8` |
+
+**Write set:** `data/assets/scripts/gold/irpt_custody/pick_reread.py` (new), `data/assets/scripts/gold/irpt_custody/tests/test_pick_reread.py`
+(new). Disjoint from CU-c-1's. `fanout: 1 of 1 newly opened chain (CU-c-1 already in flight on slot ~7; E3 gated closed), cap 8`.
+
+## E3 -- gate opened 2026-10-07 ~12:07Z (cut in its own issuance commit, workstream ~K2-E3)
+
+**Gate evidence:** dell2 `portal/node_modules` placed from the laptop pack, `bun run typecheck` rc 0 at portal DEV 8ddfe40994
+(`0.0.0_AB_MSTR~DELL2` msg 467; `1.0.0_SA_CTO~DELL2` msg 471 un-parks IRPT_CUSTDY E3). Bun egress hazard (msgs 492/500): a linked portal
+worktree with node_modules LINKED, bun only as `bun --no-install`, is ADMITTED on three conditions (msg 508), carried verbatim on the face.
+
+**Measured constraints.**
+1. The render package: `portal/src/pages/InvestorReporting/render/` -- a template is a React document chosen by `reportKind`
+   (`manifest.ts` `templateFor`, `PrintEntry.tsx`; `performance/PerformanceDocument.tsx` is the pattern). Adding the client-report KIND to
+   `manifest.ts` / the print route / the host is IRPT_BCKEND's a1-a4 (`~P2`, CTO ruling (a)); E3 builds the template only (a5) and exports it.
+2. Tests are `bun:test` (`import ... from 'bun:test'`), e.g. `__tests__/dsgn-irptv1/*.test.tsx`.
+3. The input is this project's client-report contract (round 1) with round 4's `si_anchor` and per-figure `source`; the fixture carries
+   that SHAPE with SYNTHETIC values -- never a real client's figures in the portal repo.
+4. A new component is a portal PRODUCT file: it lands on DEV only after `1.0.0_SA_CTO~DELL2` reviews the candidate (CLAUDE.md, Portal).
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `CU-c-3` (E3) | the 49 Financial `ClientReportDocument`: a React print document laying out one client-report document (cover, household returns over the document's periods, per account returns / market value / holdings with class and sector or 'not described' / activity / fees with their source label / SI with its anchor label, a data-status note for any non-OK figure), branding as slots, from a synthetic fixture of the real shape | FWD-1, FWD-3 | NOT-EVALUATED | dell2 | LOCAL | C, `0.9.0_WK_IRPT_CUSTDY~12` |
+
+**Write set (portal repo):** `portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx`,
+`.../render/clientreport/types.ts`, `.../render/fixtures/clientreport.firm-a.json`,
+`portal/src/pages/InvestorReporting/__tests__/clientreport/client-report-document.test.tsx`. `fanout: 1 of 1 newly opened chain, cap 8`.

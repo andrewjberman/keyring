@@ -23,11 +23,11 @@ disarm evidence.
     "owner": "2.0.0_SA_COO~C",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_COTBKF-W6-S4",
@@ -141,11 +141,11 @@ disarm evidence.
     "owner": "2.0.0_SA_COO~C",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_COTBKF-W11-S2",
@@ -161,11 +161,11 @@ disarm evidence.
     "owner": "2.0.0_SA_COO~C",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~C",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ADVI_COTBKF-W2-S1",

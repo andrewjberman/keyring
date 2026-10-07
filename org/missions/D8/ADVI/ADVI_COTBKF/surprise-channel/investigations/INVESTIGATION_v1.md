@@ -908,3 +908,645 @@ round.** Never edit an existing row.
   "notes": "Candidate for lint on a device with ruff at the drain."
 }
 ```
+
+## ADVI_COTBKF-S9 -- the account links differ between the laptop and dell2
+
+```json
+{
+ "id": "ADVI_COTBKF-S9",
+ "project": "ADVI_COTBKF",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-07T08:45Z",
+ "one_line": "The account-links script gives different answers on the laptop and on dell2 over the same silver table: 3 of 1,450 rows differ (laptop 212 LINKED, dell2 211). Two links whose evidence holds on the transactions (0QF879348 -> B3S606523, B3S780328 -> B3S782287) read NOT_LINKED 'closed to cash' on dell2, and cv0QF879185 is AMBIGUOUS on the laptop and LINKED on dell2.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (the laptop worker's run, committed): LINKED 212, NOT_LINKED 1,238 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   ".scratch/advi_cotbkf/account_links_r4/account_links.csv (the issuer's dell2 real run, untracked): LINKED 211, NOT_LINKED 1,239; row-by-row against the laptop file, 3 rows differ (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "transactions (.scratch/advi_cotbkf/tx_cache, 1,416,497 rows): 0QF879348's and B3S780328's printed in-kind receipts are present at the printed quantities and dates (part of the 123 of 123 items in the round-4 L9 grade) (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError (row W12-S1: lib/trading_calendar falls back to a 2024-2027 holiday list); the exits that differ are dated 2023-02-14 and 2023-12-22 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-d-2: 'Never guess a link' and the same rule over the same table gives one answer; the issuer's --apply writes the silver account_links table the analyst reads.",
+ "world_is": "The result depends on the box that runs it. The dell2 run is the wrong one on the two links checked, and an --apply run on dell2 would write it. The cause is not measured; the calendar fallback is the leading candidate, since both differing exits fall before 2024, where the fallback counts holidays as trading days.",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "notes": "ARMED for the apply. Disarms when the cause is named and the run that is applied reproduces the committed laptop deliverable row for row (or the deliverable is shown wrong on those 3 rows). Do not --apply from dell2 before then. Filed by the round-4 compile, not compiled in it."
+}
+```
+
+## ADVI_COTBKF-S10 -- Cause of S9 and W12-S1 MEASURED: lib/trading_calendar's fallback holiday list (2024-2027 only). With NYSE holidays 2010-2023 added to the fallback, dell2's account-links run reproduces the laptop deliverable 1,450 of 1,450 rows (0 differ; the unpatched dell2 run differs on 11)
+
+```json
+{
+  "id": "ADVI_COTBKF-S10",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T08:45Z",
+  "one_line": "Cause of S9 and W12-S1 MEASURED: lib/trading_calendar's fallback holiday list (2024-2027 only). With NYSE holidays 2010-2023 added to the fallback, dell2's account-links run reproduces the laptop deliverable 1,450 of 1,450 rows (0 differ; the unpatched dell2 run differs on 11)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python <scratchpad>/s9_calendar_probe.py (extends tc.NYSE_HOLIDAYS_FALLBACK in-process with 127 rule-derived NYSE holidays 2010-2023, then runs data/assets/scripts/silver/commonwealth_account_links.py --out .scratch/advi_cotbkf/s9_probe) on dell2 at 08:4xZ: ACCOUNT-LINKS ended_accounts=1450 linked=212 not_linked=1238 ambiguous=14",
+      "csv compare keyed on old_account: probe vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (laptop, pmc present): 0 of 1,450 rows differ; unpatched dell2 r4 run vs the same file: 11 rows differ (0QF879185, 0QF879348, B3S605712, B3S606523, B3S780328, ...)",
+      "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError; holidays and exchange_calendars also absent",
+      "consumers: 91 .py files under lib/, data/, infra/ import trading_calendar (token census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9 disarm condition: the cause is named and the run that is applied reproduces the committed laptop deliverable row for row.",
+  "world_is": "The cause is named and the reproduction holds under a pre-2024-complete calendar. S9 stays ARMED: an unpatched --apply on dell2 (or any box or Lambda without pandas_market_calendars) still writes the wrong 11 rows. Two remedies, either disarms S9 and W12-S1: (a) run the apply only where pandas_market_calendars is installed; (b) extend NYSE_HOLIDAYS_FALLBACK in lib/trading_calendar.py back to the earliest year its consumers read. (b) touches 91 consumers, Lambdas included, so it is not this project's write surface: routed to 1.0.0_SA_CTO.",
+  "notes": "The probe's holiday list is derived from the published rules plus the 2018-12-05 closure; it omits 2012-10-29/30 (Sandy), which the account-links comparison did not need. A fallback edit should take pmc's own output as its source, not this list."
+}
+```
+
+## ADVI_COTBKF-S11 -- RULING C list (laptop 1.0.0_SA_CTO 08:5xZ): the pre-2024-dated artifacts this lane made on dell2 through lib/trading_calendar.py -- one committed (the round-4 census's day figures), the rest scratch; none served, landed or graded REALIZED; each re-run after ruling B's fix
+
+```json
+{
+  "id": "ADVI_COTBKF-S11",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:05Z",
+  "one_line": "RULING C list (laptop 1.0.0_SA_CTO 08:5xZ): the pre-2024-dated artifacts this lane made on dell2 through lib/trading_calendar.py -- one committed (the round-4 census's day figures), the rest scratch; none served, landed or graded REALIZED; each re-run after ruling B's fix",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COMMITTED: deliverables/0.9.0_WK_ADVI_COTBKF~12/PRICE_CENSUS_20261007.{json,md} @642222e85f (made on dell2 by ~12): security_days_needed=9630847, security_days_covered=1318560 span pre-2024 dates under calendar NYSE/hardcoded-fallback-2024-2027 (row W12-S1). The priced counts (priced_any=1720, priced_fixed_income=184) do not read the calendar. Quoted in the drain-end packet @29479eeb61",
+      "SCRATCH (untracked, dell2 .scratch/advi_cotbkf/): account_links_r4/ (07:3xZ, unpatched calendar; differs from the laptop on 11 of 1,450 rows), r4_realrun/d1.log and d2.log (the census and links real runs), s9_probe/ (patched calendar, diagnostic only)",
+      "NOT calendar-dependent (0 imports of trading_calendar), so outside ruling A: crosswalk_r4/, documents_plan/, documents_plan_e3base/",
+      "NOT produced: no --apply from dell2 in this lane; nothing landed in S3 by this lane"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling C: each Dell COO lists, as rows, the artifacts its lane produced on a Dell since seating whose dates precede 2024; each is re-run after the fix; none is served, landed to gold or graded REALIZED meanwhile.",
+  "world_is": "Two calendar-dependent artifacts exist in this lane on dell2: the committed census day figures and the scratch links run. The links' applied run is E2, uncut until the fix. The census re-run is E2 criterion (3). The CVO's round-4 grade of CB4d1-AC3 was NOT MET and graded nothing REALIZED from them.",
+  "notes": "Re-run owner: 2.0.0_SA_COO~C2 in E2. The scratch links output is not deleted (it is the S9 evidence); it is never applied."
+}
+```
+
+## ADVI_COTBKF-W19-S1 -- the role-request writer cannot state a user as the assuming principal (CB-e-4)
+
+```json
+{
+  "id": "ADVI_COTBKF-W19-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~19",
+  "surfaced_at": "2026-10-07T08:58Z",
+  "one_line": "role_request.py cannot express the break-glass role's trust (a console USER); the request carries assuming_service signin.amazonaws.com as the nearest admitted shape",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ROLE_REQUEST.schema.json assuming_service pattern ^[a-z0-9-]+(\\.[a-z0-9-]+)+$ admits only a dotted service name; org/devices/role_request.py write has no principal field",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:248-257 trust = Principal AWS Andrew_Berman_Console user, sts:AssumeRole",
+      "request org/devices/role_requests/dell2/dell2-20261007T085711Z-7b15.json written with assuming_service signin.amazonaws.com; the merged .tf, not the request, is the authority for trust"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-e-4: the writer admits the break-glass role request, with the assuming principal a user rather than a service as the named possible refusal.",
+  "world_is": "The writer admits the request only with a service-shaped assuming_service; the user principal cannot be stated. The value signin.amazonaws.com is a placeholder, not the trust. The laptop applies the merged file's trust (console user only). Writer and schema are NFRA_CTLPLN's, not edited.",
+  "notes": "Gap also carried in C_RESTRICTED_WRITE_IN.md."
+}
+```
+
+## ADVI_COTBKF-S12 -- The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S12",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:15Z",
+  "one_line": "The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls --recursive s3://opal-data-cottonwood/commonwealth/cottonwood/silver/crosswalk/ on dell2, 09:0xZ: AccessDenied, ListObjectsV2, user/cloudops-dell2-agent-user, 'with an explicit deny in a resource-based policy'",
+      "aws s3api get-bucket-policy --bucket opal-data-cottonwood on dell2, 09:1xZ: AccessDenied, explicit deny in a resource-based policy",
+      "GetObject is admitted: commonwealth_documents.py --plan on dell2 read the bronze archives (sources_verified=11119), 09:1xZ",
+      "commonwealth_crosswalk.py apply_to_s3 and commonwealth_documents.py --apply write at opal_naming.address('commonwealth', cottonwood, ...) = opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decomposition round 5, issuer's acts 1-2: E5 and the E3 apply run from this seat after the drain; standing rule (1.0.0_SA_CTO~DELL2 msg 214): never widen a fence from dell2.",
+  "world_is": "The dell2 identity is fenced on the Cottonwood bucket (NFRA_CTLPLN's Dell bucket fences). No apply is attempted from dell2: a Put that succeeded would write served output from a fenced box, and one that failed would half-land a ledger. ARMED: no --apply of E3 or E5 from dell2.",
+  "notes": "Disarms when 1.0.0_SA_CTO~DELL2 rules where the applies run (the laptop by relay, or dell2 after NFRA_CTLPLN round 4 grants the write) and the apply runs there under a never-widen pair."
+}
+```
+
+## ADVI_COTBKF-S13 -- CORRECTS S12: E5 and E3 do NOT write to opal-data-cottonwood. opal_naming.address('commonwealth', 'cottonwood', 'silver', ...) resolves to opal-data-assets, which the dell2 identity lists without refusal; S12's fence evidence was measured on the wrong bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S13",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "CORRECTS S12: E5 and E3 do NOT write to opal-data-cottonwood. opal_naming.address('commonwealth', 'cottonwood', 'silver', ...) resolves to opal-data-assets, which the dell2 identity lists without refusal; S12's fence evidence was measured on the wrong bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: opal_naming.address('commonwealth','cottonwood','silver','crosswalk','date=2026-06-23') = s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23 (also documents, bronze/imaging, bronze/crm: all opal-data-assets)",
+      "listing of s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/ on dell2, 09:3xZ: crosswalk.csv 570,490 B and crosswalk.parquet 128,256 B (2026-10-06 22:25, round 3's apply); silver/documents/ empty; silver/account_links/ holds date=2026-06-23/",
+      "get-bucket-versioning --bucket opal-data-assets on dell2: Enabled",
+      "infra/logic/06_CONFORMANCE_LEDGER.md:149 (X15): only the CRM zip departs to opal-data-cottonwood; address() returns opal-data-assets for every other Commonwealth table (R4: one bronze/silver home)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12: the round-5 applies write to opal-data-cottonwood, whose policy denies the dell2 identity List and GetBucketPolicy.",
+  "world_is": "The applies write to opal-data-assets. S12's deny is real but on a bucket neither apply touches. PutObject from dell2 on opal-data-assets is unmeasured (no refusal seen on any read). The rulings resting on S12 (1.0.0_SA_CTO~DELL2 msg 239; laptop 09:3xZ item 6) rest on a wrong premise and go back to their authors with this row.",
+  "notes": "S12 is not disarmed by this row: its hazard (an apply from dell2) stands until 1.0.0_SA_CTO~DELL2 re-rules on the corrected premise. The never-widen draft is corrected to opal-data-assets in the same commit."
+}
+```
+
+## ADVI_COTBKF-S14 -- CB-e-3's hold-back guards s3://opal-data-assets/commonwealth/cottonwood/bronze/crm/, but the C-RESTRICTED prefix (register X15) is in opal-data-cottonwood; the guard compares the full URI, so it watches a prefix in the wrong bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S14",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "CB-e-3's hold-back guards s3://opal-data-assets/commonwealth/cottonwood/bronze/crm/, but the C-RESTRICTED prefix (register X15) is in opal-data-cottonwood; the guard compares the full URI, so it watches a prefix in the wrong bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~18 report: restricted_prefix() = opal_naming.address(SOURCE, SCOPE, 'bronze', 'crm', 'date=<d>') less the partition; a key is held when its full URI starts with it",
+      "address('commonwealth','cottonwood','bronze','crm','date=2026-06-23') = s3://opal-data-assets/... (measured 09:3xZ)",
+      "X15 (06_CONFORMANCE_LEDGER.md:149): THE RESTRICTED PREFIX is commonwealth/cottonwood/bronze/crm/ in opal-data-cottonwood; address() has no route to the firm bucket for bronze"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-e-3: the prefix is the key prefix lib/opal_naming builds for (commonwealth, cottonwood, bronze, crm), resolved the way the script resolves its own addresses.",
+  "world_is": "The order's own instruction aimed the guard at address(), which X15 says does not reach the restricted bucket. Inert today: documents write only to opal-data-assets silver, so no planned key can land in either prefix (held_restricted=0 both ways). The fix is key()-based matching (bucket-agnostic) or X15's bucket; a one-function repair for the next cut on this script.",
+  "notes": "An issuer's cut defect (2.0.0_SA_COO~C2), not the worker's: the worker built what the face said."
+}
+```
+
+## ADVI_COTBKF-S15 -- W12-S2 answered by the laptop's listing: opal-data-cottonwood holds only irpt/cottonwood/ and mdpf/cottonwood/ at two levels; opalinvest-portal holds assets/, fonts/, logos/ with no sub-prefix. Neither names a per-security daily price store
+
+```json
+{
+  "id": "ADVI_COTBKF-S15",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "W12-S2 answered by the laptop's listing: opal-data-cottonwood holds only irpt/cottonwood/ and mdpf/cottonwood/ at two levels; opalinvest-portal holds assets/, fonts/, logos/ with no sub-prefix. Neither names a per-security daily price store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran deliverables/2.0.0_SA_COO~C2/list_unlisted_usable_buckets.py (@27b47e8ef1) at 2026-10-07T09:25Z; result org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO/UNLISTED_USABLE_BUCKETS_20261007.json (not yet on origin; Taildrop copy C:/Users/Test/Downloads/UNLISTED_USABLE_BUCKETS_20261007.json, 682 B, read by this seat 09:3xZ)",
+      "opal-data-cottonwood: top=['irpt/','mdpf/'], second: irpt/ -> ['irpt/cottonwood/'], mdpf/ -> ['mdpf/cottonwood/']",
+      "opalinvest-portal: top=['assets/','fonts/','logos/'], second: 0 sub-prefixes each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3 (NOT MET at L9 @2114a2a7a2): the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket; two USABLE buckets were never listed.",
+  "world_is": "Both buckets are now listed two levels deep. Prefix names alone do not name a price store; irpt/cottonwood/ and mdpf/cottonwood/ are reporting and model-portfolio trees, read at prefix depth only. Bears on the CVO's re-grade of CB4d1-AC3; the grade is the CVO's.",
+  "notes": "Row filed by the dell2 seat per laptop ruling (row ids minted only on the project's box)."
+}
+```
+
+## ADVI_COTBKF-S16 -- DISARMS S9: the account links APPLIED from dell2 on the 2010-2027 calendar reproduce the committed laptop deliverable row for row (1,450 of 1,450, every column; 212 LINKED)
+
+```json
+{
+  "id": "ADVI_COTBKF-S16",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:25Z",
+  "one_line": "DISARMS S9: the account links APPLIED from dell2 on the 2010-2027 calendar reproduce the committed laptop deliverable row for row (1,450 of 1,450, every column; 212 LINKED)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "calendar_source() on dell2 = NYSE/hardcoded-fallback-2010-2027 (lib/trading_calendar.py @83ab7192ee via dell2 merge 0a73ed06a0)",
+      "ledger advi-cotbkf-e2-account-links-apply-20261007 CLOSED 1/1: applied 10:19:07Z, VersionIds ogf8Q2zk... -> OQ9YHJ3h..., JqEXeGJY... -> JY3f29AV...",
+      "independent read-back of s3://opal-data-assets/commonwealth/cottonwood/silver/account_links/date=2026-06-23/account_links.csv vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv: 1,450 rows each, differ on (status,new_account) 0, differ on any column 0; 0QF879348->B3S606523 LINKED, B3S780328->B3S782287 LINKED, cv0QF879185 NOT_LINKED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9 (ARMED): disarms when the run that is applied reproduces the committed laptop deliverable row for row.",
+  "world_is": "It does. S9's hazard (a dell2 apply writing the wrong 3 rows) cannot recur on this box: the calendar covers the table's dates, and CB-e-1's guard refuses any calendar that does not.",
+  "notes": "Never-widen pair: COO @163c0dd8a1, CTO @792b16742d. Branch A."
+}
+```
+
+## ADVI_COTBKF-S17 -- DISARMS W12-S1: the census re-run on the 2010-2027 calendar needs 9,388,961 security-days, equal to round 2, so the day totals compare again: covered 1,297,651 (round 2: 2,090,953)
+
+```json
+{
+  "id": "ADVI_COTBKF-S17",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:25Z",
+  "one_line": "DISARMS W12-S1: the census re-run on the 2010-2027 calendar needs 9,388,961 security-days, equal to round 2, so the day totals compare again: covered 1,297,651 (round 2: 2,090,953)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C2/census_e2/PRICE_CENSUS_20261007.json @163c0dd8a1: PRICE-CENSUS buckets=40 every_bucket_graded=True barred_read=0 usable=35 barred=5 universe=4634 priced_any=1720 priced_fixed_income=184 security_days_covered=1297651 security_days_needed=9388961",
+      "round 2 (PRICE_COVERAGE_20261006): security_days_covered=2090953 of 9388961"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W12-S1 (ARMED): disarms when the census's security_days_* are re-run under a calendar that covers 2013 onward and are reported against round 2.",
+  "world_is": "Re-run and reported. The needed denominator now equals round 2's exactly. The covered drop (2,090,953 -> 1,297,651) is real and is ruling 1's: the bd and inf price files are BARRED, not a calendar effect. Ruling C's re-run of this lane's pre-2024 artifacts (row S11) is complete: the census here, the links in S16; the round-4 census deliverable under ~12 stays as the record of the fallback run.",
+  "notes": "The E3 documents apply also closed this hour (ledger advi-cotbkf-r6-documents-apply-20261007, 11,119 written, read back); it is calendar-free."
+}
+```
+
+## ADVI_COTBKF-S18 -- DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood
+
+```json
+{
+  "id": "ADVI_COTBKF-S18",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:30Z",
+  "one_line": "DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S13 @b9411881a0: the applies resolve to opal-data-assets; 1.0.0_SA_CTO~DELL2 re-ruling msg 264 struck the CT-d-2 wait",
+      "ledgers CLOSED 1/1: advi-cotbkf-r5-crosswalk-apply-20261007 @98652475d8; advi-cotbkf-r6-documents-apply-20261007 and advi-cotbkf-e2-account-links-apply-20261007 @3c39c9f4ae",
+      "every Put from dell2 on opal-data-assets admitted (crosswalk 2, documents 11,120, account_links 2); no call made under opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12 (BLOCKING, ARMED): no --apply of E3 or E5 from dell2 until a ruling names where they run.",
+  "world_is": "Ruled (msg 264) and run; branch A on all three applies.",
+  "notes": "Closes this seat's last ARMED row on ADVI_COTBKF."
+}
+```
+
+## ADVI_COTBKF-W22-S1 -- the order's "today's positions on 2026-06-23" is the Cottonwood account's first holdings dated 2026-06-30; the current side holds nothing dated 2026-06-23 for it
+
+```json
+{
+  "id": "ADVI_COTBKF-W22-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~22",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "CB-g-2 compares old positions to the current account's first holdings (2026-06-30), the crosswalk's own basis, not to 2026-06-23 positions",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crosswalk.parquet evidence for 04003450617: current account z0927272491's first holdings (2026-06-30)",
+      "silver positions (2026-06-23) holds no current-side account id (z0927272491: 0 rows); FWD8_READ.md cites the holdings date it used"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell step 2: the new account's positions are 'today's positions on 2026-06-23'.",
+  "world_is": "Current-side holdings for z0927272491 begin 2026-06-30; the read uses them (the matching rule's basis) and states the date."
+}
+```
+
+## ADVI_COTBKF-W23-S1 -- The applied silver transactions table reads 1,416,497 rows, not the 1,415,137 that W2-S1 says the silver table keeps after dropping 1,360 duplicates
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The applied silver transactions table reads 1,416,497 rows, not the 1,415,137 that W2-S1 says the silver table keeps after dropping 1,360 duplicates",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "count_rows over the transactions prefix on 2026-10-07: 1,416,497",
+      "coverage.parquet transactions rows=1416497"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-S1: the silver table keeps 1,415,137 rows after dropping 1,360 exact duplicates.",
+  "world_is": "The applied transactions prefix counts 1,416,497 rows (dataset count_rows, 14 files) and the applied coverage table reports transactions rows=1,416,497; the 1,360-row drop is not visible in what was applied. The coverage statement reports the applied count.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S2 -- The silver positions table is one snapshot (2026-06-23): 469 positions for 83 of the 1,533 accounts that traded
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The silver positions table is one snapshot (2026-06-23): 469 positions for 83 of the 1,533 accounts that traded",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coverage.parquet positions earliest=latest=2026-06-23 rows=469 distinct_accounts=83"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: a reader learns what the backfill holds; positions is read as a history alongside transactions.",
+  "world_is": "The positions table holds one AsOfDate (2026-06-23), 469 rows, 83 accounts; the delivery's positions file is a single snapshot, so earlier holdings are rebuilt from transactions (crosswalk, account_links). Stated on the coverage page.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S3 -- 1,544 of the 11,119 indexed documents carry no account: all NCSD (1,239), ADVS (165), REPR (13) and 127 of 932 CLNT
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "1,544 of the 11,119 indexed documents carry no account: all NCSD (1,239), ADVS (165), REPR (13) and 127 of 932 CLNT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Counter of doc_type where account is null on document_index.parquet: NCSD 1239, ADVS 165, CLNT 127, REPR 13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: the document index ties each document to an account.",
+  "world_is": "document_index account is null for NCSD, ADVS, REPR and 127 CLNT; STMT and TXRP carry one. Stated on the coverage page as a gap; the cause is read from the types, not from the vendor's listing text.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S4 -- The silver coverage table grades only transactions, performance and positions (5 record kinds); nothing in it covers the crosswalk, account_links, documents or bronze
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The silver coverage table grades only transactions, performance and positions (5 record kinds); nothing in it covers the crosswalk, account_links, documents or bronze",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coverage.parquet record_kind values: transactions, performance_month, performance_year, performance_inception, positions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: coverage is the one account of what the backfill holds.",
+  "world_is": "coverage.parquet has 5 rows (transactions, performance_month/year/inception, positions). The one-page statement is the only account of the other tables.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S5 -- 14 of the 1,533 accounts in transactions have no performance record (1,519 accounts in performance, none outside transactions)
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "14 of the 1,533 accounts in transactions have no performance record (1,519 accounts in performance, none outside transactions)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "distinct Account_Number over the silver transactions and performance prefixes on 2026-10-07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: the delivery's performance file covers every transacting account.",
+  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, B3S728493, RGY006662, VUL1019560 and ten cv-prefixed accounts).",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W24-S1 -- The order names "statements" and "tax forms" but no doc_type for either; the page maps STMT to statements and TXRP to tax forms, and TXRP's dates are file-name dates (2025-02-09 to 2026-06-06), not tax years
+
+```json
+{
+  "id": "ADVI_COTBKF-W24-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~24",
+  "surfaced_at": "2026-10-07T12:30Z",
+  "one_line": "Statements and tax forms were mapped to STMT and TXRP by reading TO CB-c-2; TXRP carries file-name dates spanning 16 months, not 2 tax years",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver documents.parquet and document_index.parquet on 2026-10-07: STMT 7,736 dated 2025-06-30 to 2026-05-31 (date_source listing:StmtDate); TXRP 1,034 dated 2025-02-09 to 2026-06-06 (date_source file_name)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-c-2.document-index.md line 34: STMT (monthly statements), TXRP (tax documents)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-h-1: statements run 12 months and tax forms 2 tax years; spans come from the documents table's doc_type and doc_date.",
+  "world_is": "The documents table has no kind column; the order does not say which doc_type is a tax form. The page uses STMT and TXRP. TXRP's doc_date is read from the file name (all 1,034), so its span is a file-date span of 16 months, which may not be the 2 tax years the order states; the tax year sits in the listing fields (row W9-S1). The page prints the span as measured and says the dates come from the file name.",
+  "notes": "Surfaced building TO CB-h-1 (the FWD-6 per-kind page)."
+}
+```
+
+## ADVI_COTBKF-S19 -- MEASURED ABSENCE: opal-data-cottonwood/irpt/cottonwood/ listed to its leaves (725 objects, 205 prefixes, 468,525,549 B) holds 0 per-security daily price stores; FWD-3's price gap is therefore sized from Opal's usable stores alone: 2,914 of 4,634 securities unpriced, 8,091,310 of 9,388,961 security-days uncovered
+
+```json
+{
+  "id": "ADVI_COTBKF-S19",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T11:15Z",
+  "one_line": "MEASURED ABSENCE: opal-data-cottonwood/irpt/cottonwood/ listed to its leaves (725 objects, 205 prefixes, 468,525,549 B) holds 0 per-security daily price stores; FWD-3's price gap is therefore sized from Opal's usable stores alone: 2,914 of 4,634 securities unpriced, 8,091,310 of 9,388,961 security-days uncovered",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran data/assets/scripts/analysis/commonwealth_price_store_scan.py (@d97b008a7c) ~11:12Z; result JSON 222 B (Taildrop C:/Users/Test/Downloads/price_store_scan, sha256 229d8993...; origin copy to follow at deliverables/1.0.0_SA_CTO/price_store_scan): status=LISTED objects=725 prefixes=205 bytes=468525549 candidates=[] security_days_possible=0 need=9388961",
+      "dell2 run of the same script: status=DENIED (rc 3) -- the denied branch never read as empty",
+      "census on the 2010-2027 calendar (deliverables/2.0.0_SA_COO~C2/census_e2/, row S17): universe=4634 priced_any=1720 security_days_covered=1297651 security_days_needed=9388961",
+      "PRD v0.4 ADDENDUM 2 (prd/ADVI_COTBKF_PRD.md:214-222): C-DAILY's source is Yahoo Finance for equity/ETF/fund and Bloomberg at site Z for fixed income and other, on Andrew's word ('i like the yahoo finance vs bloomberg rec'); prices land in MDPF_SECHIST's securities history"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3: the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket.",
+  "world_is": "The last unlisted USABLE prefix is listed and holds no price store, so the census is complete on a measured absence. The gap: 4,634 - 1,720 = 2,914 securities and 9,388,961 - 1,297,651 = 8,091,310 security-days. CANDIDATE ACT, NOT A CUT: the PRD's C-DAILY sources fill it; any Yahoo or Bloomberg pull is a vendor call that needs Andrew's per-use word (CLAUDE.md Agent Autonomy), and the pull lands in MDPF_SECHIST's store, which is another project's (dell1).",
+  "notes": "Two need figures exist and are not the same quantity: 9,388,961 (the census, every security-day in the window) and 3,421,735 (PRICE_NEED @c907766ef4, held security-days by asset type, the figure ADDENDUM 2 cites). The gap above is on the census's basis; a pull would be sized on the held basis."
+}
+```
+
+## ADVI_COTBKF-S20 -- MEASURED ABSENCE ACROSS BOTH PREFIXES: mdpf/cottonwood/ listed to its leaves (7 objects, 7 prefixes, 57,860 B) holds 0 price stores; with irpt/cottonwood/ (S19, 0 of 725) the Cottonwood bucket holds no per-security daily price store
+
+```json
+{
+  "id": "ADVI_COTBKF-S20",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T12:05Z",
+  "one_line": "MEASURED ABSENCE ACROSS BOTH PREFIXES: mdpf/cottonwood/ listed to its leaves (7 objects, 7 prefixes, 57,860 B) holds 0 price stores; with irpt/cottonwood/ (S19, 0 of 725) the Cottonwood bucket holds no per-security daily price store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran commonwealth_price_store_scan.py --prefix mdpf/cottonwood/ (@d97b008a7c) ~12:02Z; result JSON 214 B (Taildrop C:/Users/Test/Downloads/price_store_scan_mdpf, sha256 cc698e0a...): status=LISTED objects=7 prefixes=7 bytes=57860 candidates=[] security_days_possible=0 need=9388961",
+      "dell2 probe of the same prefix at 11:49Z: status=DENIED (rc 3)",
+      "S19: irpt/cottonwood/ status=LISTED objects=725 candidates=[]; S15: the bucket's top level holds only irpt/ and mdpf/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3: the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket.",
+  "world_is": "Both Cottonwood prefixes are listed to their leaves and hold no price store. CB4d1-AC3 can grade on a measured absence across the whole firm bucket. FWD-3's gap stays as S19 sized it (2,914 securities; 8,091,310 security-days), pending any internal non-firm store not yet in the census.",
+  "notes": "The registry's marketdata system lists historical-prices-daily / historical-prices-yfinance resources not among the census's six legacy stores; whether their output sits in a USABLE (non-firm) bucket is unmeasured. Other firms' stores (49F, INF) stay BARRED: CTO ruling 1 and the CLAUDE.md NEVER on another firm's data."
+}
+```
+
+## ADVI_COTBKF-D2-W26-S1 -- The registry's marketdata LAMBDA historical-prices-yfinance does not exist live; the one live function is historical-prices-scheduler, which launches an EC2 that runs fetch_historical_prices_yfinance.py
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W26-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~26",
+  "surfaced_at": "2026-10-07T12:25Z",
+  "one_line": "The registry's marketdata LAMBDA historical-prices-yfinance does not exist live; the one live function is historical-prices-scheduler, which launches an EC2 that runs fetch_historical_prices_yfinance.py",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 default identity, us-east-1, 2026-10-07: lambda get-function-configuration historical-prices-yfinance -> ResourceNotFoundException; lambda list-functions filtered on 'istorical' or 'yfinance' in us-east-1, us-east-2, us-west-2, eu-west-1 -> 1 function, historical-prices-scheduler (no environment variables)",
+      "infra/logic/registry/resources.json: the yfinance row's evidence is a census row '/aws/lambda/historical-prices-yfinance' (a log group name), not a function",
+      "infra/aws/lambda/historical-prices-scheduler/lambda_function.py:33,58-60: the user-data downloads fetch_historical_prices_yfinance.py from the launcher's bucket and runs it on an ephemeral EC2 tagged historical-prices-fetcher; EventBridge rule historical-prices-daily cron(0 14 * * ? *) ENABLED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-j-1: a Lambda historical-prices-yfinance exists, and its configuration names where it writes.",
+  "world_is": "No such function is live. The script located the writer through the scheduler's repo source (infra/aws/lambda/historical-prices-scheduler) and the script it hands over to (data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py: S3_BUCKET = os.environ.get('BD_S3_BUCKET', <default>) at line 43, HISTORICAL_PRICES_KEY at line 47, uploaded at lines 431, 549, 783). The MARKETDATA-PRICES line names writer=historical-prices-scheduler; the real writer is the EC2 the scheduler launches. BLIND: the EC2 instance's own environment (it could set BD_S3_BUCKET; the scheduler's user-data does not).",
+  "notes": "Surfaced building TO CB-j-1."
+}
+```
+
+## ADVI_COTBKF-D2-W26-S2 -- MEASURED: marketdata's historical-prices output (silver/historical_prices.parquet) is in opal-data-bd, a bucket alias of the 49financial FIRM scope -- BARRED; it adds 0 securities and 0 security-days to the FWD-3 need, with 0 calls under it
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W26-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~26",
+  "surfaced_at": "2026-10-07T12:26Z",
+  "one_line": "MEASURED: marketdata's historical-prices output (silver/historical_prices.parquet) is in opal-data-bd, a bucket alias of the 49financial FIRM scope -- BARRED; it adds 0 securities and 0 security-days to the FWD-3 need, with 0 calls under it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_marketdata_prices.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~26 -> MARKETDATA-PRICES writer=historical-prices-scheduler bucket=opal-data-bd prefix=silver/historical_prices.parquet grade=BARRED barred_read=0 securities=0 security_days=0 gain_securities=0 gain_security_days=0 need=9388961 (rc 0; S3 calls by bucket: none)",
+      "infra/logic/registry/scopes.json: scope 49financial (class FIRM) lists alias opal-data-bd with planes [bucket]; grade_buckets (commonwealth_price_census.py:128) grades it BARRED, firm 49financial, plane alias",
+      "data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py:43,47 (bucket default and key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-j-1 / FWD-3: marketdata's output may sit in a USABLE non-firm bucket and add to the six stores.",
+  "world_is": "It sits in a BARRED firm bucket (CTO ruling 1 and the CLAUDE.md NEVER on another firm's data), so it was not listed, headed or read and the gain is 0 by the grade, not by a measured empty store. FWD-3's gap is unchanged from S19: 2,914 of 4,634 securities and 8,091,310 of 9,388,961 security-days unpriced from Opal's usable stores. The registry names the same price tables as 49F's (round 4's PRICE_TABLES_NAMED) -- whether Commonwealth may use a 49financial-held price table (prices are not client positions) is a ruling, not a measurement.",
+  "notes": "Surfaced running TO CB-j-1 AC2. The number of securities in that table is not known: it was never read."
+}
+```
+
+## ADVI_COTBKF-D2-W27-S1 -- MEASURED: 2,914 securities and 8,091,310 security-days are two different sets; the cell's rows number 4,545 and sums_ok is False
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W27-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~27",
+  "surfaced_at": "2026-10-07T12:50Z",
+  "one_line": "MEASURED: 2,914 securities and 8,091,310 security-days do not describe the same set -- 2,914 is the never-priced securities (6,259,410 days); 8,091,310 also holds the gap days of 1,631 priced-but-not-fully-covered securities (1,831,900 days); the rows the cell describes number 4,545",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_price_need_file.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27 -> PRICE-NEED-FILE securities=4545 security_days=8091310 yahoo_securities=3226 yahoo_days=5773776 bloomberg_securities=1319 bloomberg_days=2317534 sums_ok=False fetched=0 (rc 1); census line it reconciles to: universe=4634 priced_any=1720 security_days_covered=1297651 security_days_needed=9388961 (cache-served, 0 barred calls)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.json row_split: never_priced_securities=2914 never_priced_days=6259410; gap_only_securities=1631 gap_only_days=1831900; 2914+1631=4545 and 6259410+1831900=8091310",
+      "data/assets/scripts/analysis/commonwealth_price_census.py:235-276 coverage(): priced_any counts a security once ANY store prices it on any day; security_days_covered counts only the days inside its needed window, so a partly priced security is in priced_any and still owes uncovered days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-k-1 cell text and CB11k1-AC2: for every security with any uncovered day one row is written, the totals are securities=2914 security_days=8091310, and sums_ok is True when the totals equal universe - priced_any and security_days_needed - security_days_covered. AC1's stub (2 fully priced, 1 equity partly covered, 1 bond uncovered) writes 2 rows with sums_ok=True.",
+  "world_is": "Days reconcile to the census exactly (8,091,310 = 9,388,961 - 1,297,651). Securities do not: a row for every security with any uncovered day is 4,545, not universe - priced_any = 2,914, because 1,631 of the 1,720 priced securities are priced on only some of their needed days. sums_ok=False is therefore the correct reading of the order's own definition, and AC2's expected prefix securities=2914 cannot be printed without writing rows only for the never-priced securities (then security_days=6259410, not 8091310) or without changing the sums_ok definition. The same contradiction hits AC1's stub: with C partly covered the stub writes 2 rows but universe - priced_any is 1, so sums_ok=False; the tests assert that (test_partly_priced_security_...) and also assert sums_ok=True on a stub whose rows are all never-priced. The refusal clause applied: nothing weakened, the file is written as the cell describes (4,545 rows, source YAHOO 3,226 / BLOOMBERG_SITE_Z 1,319), AC2 is FAIL. Which set MDPF_SECHIST should pull (the 4,545 including gaps, or the 2,914 never-priced alone) is the COO/CTO's ruling; the file carries both splits. Round 10's S19 and D2-W26-S2 state '2,914 securities and 8,091,310 security-days unpriced' as one set; it is two.",
+  "notes": "Surfaced building TO CB-k-1. BLIND: whether a vendor prices the gap days of a partly priced security (MDPF_SECHIST's to measure)."
+}
+```
+
+## ADVI_COTBKF-D2-S21 -- CORRECTS S19's wording: 2,914 securities and 8,091,310 security-days are two different sets. 2,914 are never priced (6,259,410 days); the 8,091,310 uncovered days span 4,545 securities (2,914 + 1,631 partly priced with 1,831,900 gap days)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S21",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T12:55Z",
+  "one_line": "CORRECTS S19's wording: 2,914 securities and 8,091,310 security-days are two different sets. 2,914 are never priced (6,259,410 days); the 8,091,310 uncovered days span 4,545 securities (2,914 + 1,631 partly priced with 1,831,900 gap days)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~27 (branch wk-ADVI_COTBKF-27 @8d3c0fe34f), commonwealth_price_need_file.py on the census basis: PRICE-NEED-FILE securities=4545 security_days=8091310 yahoo_securities=3226 yahoo_days=5773776 bloomberg_securities=1319 bloomberg_days=2317534 fetched=0; row_split 2,914 never-priced / 6,259,410 days + 1,631 gapped / 1,831,900 days",
+      "row D2-W27-S1 (BLOCKING, INERT): AC2 as first cut could not be met"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S19 world_is: 'The gap: 4,634 - 1,720 = 2,914 securities and 9,388,961 - 1,297,651 = 8,091,310 security-days', read as one set; TO CB-k-1 as cut expected securities=2914 security_days=8091310.",
+  "world_is": "The day total is right; the security count beside it described a different, smaller set. An issuer's error, carried into S19, the round-10 packet, the round-10 analysis's E1 and CB-k-1. Ruled by the issuer (amendment 1 to CB-k-1): MDPF_SECHIST pulls every uncovered day, so the FILE has 4,545 rows and carries both splits.",
+  "notes": "Resolves D2-W27-S1 once CB-k-1's AC2 passes under the amendment."
+}
+```

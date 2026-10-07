@@ -31,4 +31,12 @@
 - UNMEASURED: whether `naming-apply-gate.py` and the commit-time gate are installed and firing on dell1 and dell2 (each reported 19 of
   20 hooks; the apply gate rides `safe-apply.sh`, which is in the repo).
 
+## CORRECTION by this seat, ~08:5xZ the same day
+
+The section above calls `infra/logic/registry/resources.json` "the register ... each a resource". That reading was WRONG. Its own
+`_about` says each row fills a `{system}` placeholder for a name whose tokens resolve no system; 0 of its 465 names are conformant, and
+the validator refuses a row for a conformant name (measured by `0.9.0_WK_NFRA_CTLPLN~11`, rows NFRA_CTLPLN-W11-S1 and W11-S2). The
+index his word points at is the registry's vocabulary files for what a name may be, and the cloud graph (`comp-find --corpus aws`,
+`drift_class`) for what exists and whether Terraform declares it. NFRA_CTLPLN PRD v0.14 replaces C-NAMING clause (3) accordingly.
+
 -- 1.0.0_SA_CTO

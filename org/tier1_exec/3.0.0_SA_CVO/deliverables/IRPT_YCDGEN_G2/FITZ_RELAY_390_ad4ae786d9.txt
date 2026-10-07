@@ -1,0 +1,580 @@
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                                                    [100%][0m
+[32m[32m[1m5 passed[0m, [33m57 deselected[0m[32m in 10.93s[0m[0m
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m [ 15%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[33ms[0m[33ms[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m [ 30%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m [ 45%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m [ 61%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[33ms[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m [ 77%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m           [100%][0m
+[32m[32m[1m432 passed[0m, [33m30 skipped[0m, [32m[1m32 subtests passed[0m[32m in 100.67s (0:01:40)[0m[0m
+RESULT-BEGIN
+{
+  "arms": {
+    "a_seven_steps": {
+      "create_multipart_fields": [
+        "portfolio",
+        "items"
+      ],
+      "declared_steps": [
+        "identity",
+        "template",
+        "upload",
+        "create",
+        "validate",
+        "generate",
+        "download"
+      ],
+      "denominator": 8,
+      "empty_sections_accepted": true,
+      "identity_checks": {
+        "authenticated": true,
+        "captured_user_id_int_positive": true,
+        "email_present": true,
+        "enrolled_user_id_match": true,
+        "no_impersonation": true
+      },
+      "job_ok": true,
+      "pass": true,
+      "per_step": {
+        "create": {
+          "ok": true,
+          "status": 201
+        },
+        "download": {
+          "ok": true,
+          "status": 200
+        },
+        "generate": {
+          "ok": true,
+          "status": 201
+        },
+        "identity": {
+          "ok": true,
+          "status": null
+        },
+        "read_back": {
+          "ok": true,
+          "status": 200
+        },
+        "template": {
+          "ok": true,
+          "status": 200
+        },
+        "upload": {
+          "ok": true,
+          "status": 200
+        },
+        "validate": {
+          "ok": true,
+          "status": 200
+        }
+      },
+      "ran": 8,
+      "steps_run": [
+        "duplicate_check",
+        "identity",
+        "template",
+        "upload",
+        "create",
+        "read_back",
+        "validate",
+        "generate",
+        "download"
+      ],
+      "upload_multipart_field": "holdings",
+      "wrong_user_id_control_rejected": true
+    },
+    "amend_guarded_bound_silent": {
+      "census_is_vacuous": true,
+      "census_over_this_cells_routes": {
+        "routes": 0,
+        "unguarded": 0,
+        "verdict": "OK: every route is guarded"
+      },
+      "control_guarded": {
+        "routes": 1,
+        "unguarded": 0
+      },
+      "control_unguarded": {
+        "routes": 1,
+        "unguarded": 1
+      },
+      "firm_binding": {
+        "envelope": {
+          "census": {
+            "opaque_id_echoed": false,
+            "reconciles": false
+          },
+          "code": "FIRM_BINDING",
+          "ok": false,
+          "reason": "the supplied binding does not reconcile with this directory artifact's declared opaque firm id; refusing rather than returning an empty result, which a caller cannot tell apart from a revocation"
+        },
+        "non_reconciling_result": false,
+        "opaque_id_echoed": false,
+        "refusal_code": "FIRM_BINDING"
+      },
+      "keys_silence": {
+        "audit_entries": 1,
+        "envelope_bytes": 848,
+        "occurrences_of_refused_value": 0,
+        "reason": "1 of 2 key parameter(s) were refused by the key grammar: ['client']. A key component is admitted by SHAPE -- a client name, an e-mail address or a firm token has no admissible shape -- and the offending VALUE is withheld from this response because it is the very thing that must not be carried.",
+        "refusal_code": "KEY_REFUSED"
+      },
+      "pass": true,
+      "public_callables": 17,
+      "public_callables_route_reachable": 0,
+      "routes_json_status": "IB-s-15's deliverable at infra/aws/terraform/investor-reporting/api/routes.json -- does not exist before that cell lands (channel row S13, from this worker's W3-S5)",
+      "this_cell_ships_no_route_handler": true,
+      "why": "the generation job is a QUEUE CONSUMER woken by irpt-generation, not a handler the edge reaches"
+    },
+    "b_submitting_before_side_effect": {
+      "broken_build": {
+        "arm_predicate_on_this_build": "FAIL, as it must",
+        "create_posts_on_restart": 1,
+        "resubmitted": true
+      },
+      "correct_build": {
+        "adopted_by": "OWNED_BY_NAME",
+        "create_posts_on_restart": 0,
+        "model_portfolio_id": 2332060,
+        "resubmitted": false,
+        "resumed": true,
+        "states": [
+          "SUBMITTED"
+        ]
+      },
+      "intent_claimed_before_the_post": true,
+      "killed_at": "kill injected AFTER submitting_before_create",
+      "pass": true,
+      "state_after_kill": "SUBMITTING"
+    },
+    "c_never_the_newest": {
+      "adopted": 2332060,
+      "adopted_reason": "OWNED_BY_NAME",
+      "candidates": 2,
+      "newest_row": {
+        "created_at": "2026-09-11T04:00:30Z",
+        "id": 2332999,
+        "name": "Advisor B working copy"
+      },
+      "newest_row_adopted": false,
+      "owned_name_is_deterministic": true,
+      "pass": true
+    },
+    "d_settings_read_back": {
+      "denominator": 7,
+      "drift_control": {
+        "denominator": 7,
+        "drifted": [
+          "management_fee"
+        ],
+        "job_outcome": "SETTINGS_DRIFTED",
+        "job_state": "ATTENTION",
+        "matched": 6
+      },
+      "matched": 7,
+      "pass": true,
+      "rows": [
+        {
+          "actual": "^SPXTR",
+          "expected": "^SPXTR",
+          "matches": true,
+          "setting": "benchmark",
+          "vendor_field": "benchmark_symbol"
+        },
+        {
+          "actual": "prior_close",
+          "expected": "prior_close",
+          "matches": true,
+          "setting": "level_as_of_type",
+          "vendor_field": "level_as_of_type"
+        },
+        {
+          "actual": 0.003,
+          "expected": 0.003,
+          "matches": true,
+          "setting": "management_fee",
+          "vendor_field": "management_fee"
+        },
+        {
+          "actual": "quarterly",
+          "expected": "quarterly",
+          "matches": true,
+          "setting": "rebalance_frequency",
+          "vendor_field": "rebalance_frequency"
+        },
+        {
+          "actual": false,
+          "expected": false,
+          "matches": true,
+          "setting": "reinvest_dividends",
+          "vendor_field": "reinvest_dividends"
+        },
+        {
+          "actual": "oldest",
+          "expected": "oldest",
+          "matches": true,
+          "setting": "start_of_series",
+          "vendor_field": "start_of_series"
+        },
+        {
+          "actual": "non_qualified",
+          "expected": "non_qualified",
+          "matches": true,
+          "setting": "tax_status",
+          "vendor_field": "tax_status"
+        }
+      ]
+    },
+    "e_bodies_per_s8": {
+      "asymmetric_empty_types": {
+        "custom_security_labels": "list",
+        "custom_texts": "dict",
+        "dollar_conversion_levels": "list",
+        "reportState": "NoneType",
+        "risk_profile": "NoneType",
+        "saved_hypothetical_id": "NoneType",
+        "sections": "list",
+        "serialized_transition_analyses": "dict",
+        "talking_points": "dict"
+      },
+      "august_key_count": 34,
+      "august_modal_field_count": 34,
+      "august_only_modal_fields": [
+        "brandingClientGroupId",
+        "requestedSectionOrder"
+      ],
+      "august_only_root_key": [
+        "branding_client_group_id"
+      ],
+      "cardinality_refused": "template 14141847 (MULTI) takes 2..5 comparison securities and 1 were supplied",
+      "comparison_array_len": {
+        "COMPARISON": 0,
+        "MULTI": 2,
+        "OVERVIEW": 0
+      },
+      "duplicate_cover_fields_agree": true,
+      "duplicate_cover_pairs": 7,
+      "global_preference_puts": {
+        "global_preference_writes": 0,
+        "offending_routes": [],
+        "requests_recorded": 7
+      },
+      "july_key_count": 33,
+      "july_modal_field_count": 32,
+      "pass": true,
+      "secondary_security": {
+        "COMPARISON": "S:SPY",
+        "MULTI": null,
+        "OVERVIEW": null
+      },
+      "templates_from_config": [
+        "14141822",
+        "14141824",
+        "14141847"
+      ],
+      "templates_source": "templates.json (captured configuration, not constants)"
+    },
+    "f_the_201_is_wrapped": {
+      "artifact_key": "firms/49financial/generations/2332060/attempts/0/vendor/report.pdf",
+      "artifact_under_bound_firm_generations_prefix": true,
+      "measured_vendor_response_keys": [
+        "report_url",
+        "zip_url"
+      ],
+      "opal_attempt_id": "ATT-9fef11e014433c6027050eac",
+      "pass": true,
+      "pdf": {
+        "bytes": 193,
+        "credential_headers_sent": [],
+        "header_names_sent": [],
+        "sha256": "cef3b030a93763cb836367821d6d398a276b6844b783f9e1b8f8bfca4d22e637"
+      },
+      "separate_unauthenticated_client_headers": [
+        []
+      ],
+      "signed_param_census": {
+        "log_lines": 18,
+        "occurrences": 0,
+        "params_found": [],
+        "signed_params_looked_for": 4
+      },
+      "states": [
+        "CLAIMED",
+        "SUBMITTING",
+        "SUBMITTING",
+        "SUBMITTED",
+        "SUBMITTING",
+        "DOWNLOADING",
+        "READY"
+      ],
+      "vendor_job_id_census": {
+        "by_shape": [],
+        "by_token": [],
+        "fields_walked": 41,
+        "vendor_job_id_fields": []
+      }
+    },
+    "g_schema_valid": {
+      "pass": true,
+      "pass_": true,
+      "required_present": [
+        "request_ref",
+        "vendor_artifact",
+        "effective_inputs",
+        "sections",
+        "disclosures",
+        "extraction_validation",
+        "release"
+      ],
+      "schema": "AnalysisReport.schema.json",
+      "validated": true
+    },
+    "h_offline": {
+      "netguard": {
+        "attempts_observed": 0,
+        "denominator_note": "attempts_observed is the denominator. It is 0 when the suite opens no socket at all -- which is the STRONGER statement, and is also why a 0-of-0 refusal count is vacuous on its own and the positive control below carries the arm.",
+        "external_destinations": [],
+        "external_refused": 0,
+        "guard": "ycharts/generate/tests/netguard.py",
+        "installed": true,
+        "loopback_allowed": 0
+      },
+      "pass": true,
+      "positive_control": {
+        "attempted": "ycharts.com:443",
+        "guard_external_after": 1,
+        "guard_external_before": 0,
+        "guard_fired": true,
+        "message": "NETGUARD: refused external connection to ycharts.com:443 -- the IB-s-9 suite is offline by construction and NO LIVE YCHARTS CALL is authorized",
+        "refused": true
+      },
+      "replay_requests": 7,
+      "replay_routes": [
+        "GET /custom_pdf_reports/generate/14141822",
+        "GET /model_portfolios/2332060/status",
+        "GET /model_portfolios/fixed/2332060",
+        "POST /custom_pdf_reports/14141822",
+        "POST /custom_pdf_reports/validate_report_securities/14141822",
+        "POST /model_portfolios/fixed/",
+        "POST /model_portfolios/fixed/holdings_upload/client"
+      ]
+    },
+    "v010_three_recipes_one_handler": {
+      "comparison_catalog": {
+        "entries": 4,
+        "ids": [
+          "P:1728413",
+          "P:1728415",
+          "P:1728315",
+          "P:1728420"
+        ],
+        "live_proven": 3,
+        "typed_model_portfolio": 4
+      },
+      "declared_variant_mismatch_refused": "VARIANT_CARDINALITY_MISMATCH: the caller asked for 'MULTI' and 1 comparison(s) derives 'COMPARISON'",
+      "duplicate_redelivery": {
+        "blob_head_calls": 2,
+        "duplicate_outcome": "EXISTING_ARTIFACT_REUSED",
+        "duplicate_vendor_requests": 0,
+        "first_outcome": "READY",
+        "first_vendor_requests": 7,
+        "receipt_key": "firms/49financial/generations/REQ-abababababababababababab/attempts/0/receipt.json"
+      },
+      "measured_variant_outputs": {
+        "14141822": {
+          "bytes": 573677,
+          "orientation": "portrait",
+          "pages": 23,
+          "portfolio": "2332257",
+          "run": "2026-09-11 03:48-03:51Z by 4.0.0_SA_CRO on Andrew's word",
+          "sha256": "abab2ffe8411a29bd0dbb1ac913214edab4ae7dc786f07760a42bf0bc3981f90"
+        },
+        "14141824": {
+          "bytes": 820984,
+          "orientation": "portrait",
+          "pages": 31,
+          "portfolio": "2332257",
+          "run": "2026-09-11 03:48-03:51Z by 4.0.0_SA_CRO on Andrew's word",
+          "sha256": "f01cbd48a5771cb55ecdb12ee52703abf6e1aa9482bbab5e79388b95573a5747"
+        },
+        "14141847": {
+          "bytes": 854115,
+          "orientation": "landscape",
+          "pages": 35,
+          "portfolio": "2332257",
+          "run": "2026-09-11 03:48-03:51Z by 4.0.0_SA_CRO on Andrew's word",
+          "sha256": "0a67ecf76732832ed3b82f551cc77a026e9c59c79ffbce92745526e8a7c189bd"
+        }
+      },
+      "over_cardinality_refused": "6 comparison securities selects no recipe; the declared cardinalities are [(0, 0, 'OVERVIEW'), (1, 1, 'COMPARISON'), (2,",
+      "packet": "docs/research/investor_reporting_ycharts_variants_20260911/ @72acd16e66 -- NOT in this branch's ancestry; read by object reference, row W3-S7",
+      "pass": true,
+      "pre_access_refusals": {
+        "account_scope_mismatch": {
+          "code": "CLIENT_ACCOUNT_SCOPE_MISMATCH",
+          "vendor_requests_at_refusal": 0
+        },
+        "changed_inputs_same_request_id": {
+          "code": "CHANGED_INPUTS_SAME_REQUEST_ID",
+          "vendor_requests_at_refusal": 0
+        },
+        "outside_catalog": {
+          "code": "COMPARISON_OUTSIDE_AUTHORIZED_CATALOG",
+          "vendor_requests_at_refusal": 0
+        },
+        "server_controlled_field": {
+          "code": "SERVER_CONTROLLED_FIELD",
+          "vendor_requests_at_refusal": 0
+        }
+      },
+      "selection_correct": 3,
+      "selection_denominator": 3,
+      "upload_reconciliation": {
+        "reconciled": true,
+        "rows_echoed": 2,
+        "rows_sent": 2,
+        "weight_unit_echoed": "Dollars"
+      },
+      "valid_envelope_plan": {
+        "fingerprint_12": "6839c7a3944e",
+        "recipe_version": "alyssa-20260821-v1",
+        "variant": "OVERVIEW",
+        "vendor_name": "IRPT-6839c7a3944eff7724d3cc3e"
+      },
+      "variant_selection_by_comparison_count": [
+        {
+          "comparisons": 0,
+          "correct": true,
+          "template_id": "14141822",
+          "variant": "OVERVIEW"
+        },
+        {
+          "comparisons": 1,
+          "correct": true,
+          "template_id": "14141824",
+          "variant": "COMPARISON"
+        },
+        {
+          "comparisons": 2,
+          "correct": true,
+          "template_id": "14141847",
+          "variant": "MULTI"
+        }
+      ],
+      "vendor_requests_during_all_refusals": 0,
+      "waf_header_classification": {
+        "measured_case": "202 during calculation polling whose only signal was x-amzn-waf-action",
+        "with_header": "WAF_REFRESH_REQUIRED",
+        "without_header": "INVALID_RESPONSE"
+      }
+    },
+    "v08_measured_contracts_and_decision_table": {
+      "branches_denominator": 10,
+      "branches_matched": 10,
+      "decision_branches": [
+        {
+          "branch": "ARTIFACT_FETCH_PENDING",
+          "decision": "ARTIFACT_FETCH_PENDING",
+          "status": 201
+        },
+        {
+          "branch": "BACKOFF_429",
+          "decision": "BACKOFF",
+          "status": 429
+        },
+        {
+          "branch": "BROWSER_CHALLENGE",
+          "decision": "BROWSER_CHALLENGE",
+          "status": 405
+        },
+        {
+          "branch": "DENIED",
+          "decision": "DENIED",
+          "status": 403
+        },
+        {
+          "branch": "HEALTHY",
+          "decision": "HEALTHY",
+          "status": 200
+        },
+        {
+          "branch": "INVALID_RESPONSE_HTML",
+          "decision": "INVALID_RESPONSE",
+          "status": 200
+        },
+        {
+          "branch": "RECONCILE_UNCERTAIN",
+          "decision": "RECONCILE",
+          "status": null
+        },
+        {
+          "branch": "REFRESH_401",
+          "decision": "REFRESH",
+          "status": 401
+        },
+        {
+          "branch": "REFRESH_EVICTION",
+          "decision": "REFRESH",
+          "status": 403
+        },
+        {
+          "branch": "WAF_REFRESH_REQUIRED",
+          "decision": "WAF_REFRESH_REQUIRED",
+          "status": 202
+        }
+      ],
+      "empty_sections_legitimate": true,
+      "field_names_source": "PRD v0.8 SUPP VI.5 @d67e9813b5 -- MEASURED LIVE, not invented",
+      "full_payload_201": {
+        "keys": 34,
+        "status": 201
+      },
+      "job_budget": {
+        "headroom_x": 33.6,
+        "lambda_budget_seconds": 900,
+        "measured_overview_seconds": 26.76,
+        "rule": "a timeout NEVER licenses regeneration -- it marks the outcome UNCERTAIN and reconciles the owned object"
+      },
+      "minimal_payload": {
+        "classified": "CONTRACT_FAILURE, never session expiry",
+        "decision": "INVALID_RESPONSE",
+        "status": 404
+      },
+      "one_refresh_allowed": true,
+      "pass": true,
+      "pdf_client": {
+        "separate_unauthenticated": true,
+        "session_cookie_headers_on_that_request": 0
+      },
+      "repeat_eviction_refused": true,
+      "save_fields": [
+        "portfolio",
+        "items"
+      ],
+      "upload_field": "holdings",
+      "zero_fee": {
+        "error": "invalid_management_fee",
+        "recorded_fee_that_succeeds": 0.003,
+        "status": 422
+      }
+    }
+  },
+  "suite": "IB-s-9 offline proof of the YCharts generation chain",
+  "summary": {
+    "a_seven_steps": true,
+    "all_pass": true,
+    "amend_guarded_bound_silent": true,
+    "b_submitting_before_side_effect": true,
+    "c_never_the_newest": true,
+    "d_settings_read_back": true,
+    "e_bodies_per_s8": true,
+    "f_the_201_is_wrapped": true,
+    "g_schema_valid": true,
+    "h_offline": true,
+    "v010_three_recipes_one_handler": true,
+    "v08_measured_contracts_and_decision_table": true
+  }
+}
+RESULT-END
+offline_rc=0
