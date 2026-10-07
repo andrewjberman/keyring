@@ -2846,3 +2846,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Needed from the issuer: either run the pull under a principal the three firm buckets admit (and say which, as the producer does with IRPT_HOLDINGS_PUBLISH_ROLE_ARN), or rule that the held set may come from a different named object. Not the first reading of the order, but the shape of the fix is the script reading HoldingsPublication.capture() per firm, taking SECURITY nodes (display.symbol, amount.value), excluding the producer's cash line (symbol CASH with description CASH, holdings_snapshot.py:951-956), and testing symbol then CUSIP: against etf-classifications with consistent reads; the producer's canonical lookup at :882-887 keys on the upper-cased symbol only, so the CUSIP: key is the order's addition. I have not built it because it could not be run."
 }
 ```
+
+
+## MDPF_SECCLASS-W23-S5 -- The producer's own lookup reads the symbol key only, so the order's "symbol or CUSIP:" test and the producer disagree on 238 held securities
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:56:00Z",
+  "one_line": "TO-SC-e33's definition of 'no entry' (neither symbol nor CUSIP:<cusip> in etf-classifications) is wider than the producer's lookup, which reads only get_item(ticker=<SYMBOL>): 51 of 1843 held 49financial securities and 187 of 1264 cottonwood securities are present by CUSIP: only, so the producer serves them through its fallback while the missing list does not name them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_snapshot.py _NarrowedClassifier.canonical_lookup (~line 880) passes only display.symbol to etf_classifications_dynamodb.ETFClassifier.get_classification (line 72: table.get_item(Key={'ticker': ticker})); no CUSIP: key is read",
+      "run at 2026-10-07T08:5xZ over the local producer builds (as-of 2026-10-05, @4b258de305): securities whose symbol key is absent but CUSIP:<cusip> is present, consistent BatchGetItem: 49financial 51 of 1843, cottonwood 187 of 1264, inflection 0 of 1601; 49financial also has 57 held securities with no symbol at all (identity CUSIP: or NAME::)",
+      "missing_list_check.py MISSING-LIST ok=True firms=3 of 3 listed=1565 false_entries=0 control=present problems=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'No entry: the producer's own lookup finds nothing ... apply the same keys in the same order' and, in the same sentence, 'neither its symbol key nor CUSIP:<cusip> exists'.",
+  "world_is": "The two readings differ. I followed the written rule (both keys), which is what the AC2 check tests; the 238 securities are not in the lists, so the lists understate what the producer serves unclassified-by-table. The lists total 1565 (451 / 341 / 773).",
+  "notes": "Whether SC-e-32 or the Holdings reader should adopt the CUSIP: key is the CTO's; this cell only records the gap."
+}
+```
