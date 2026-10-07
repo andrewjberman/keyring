@@ -208,3 +208,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The row is classed LEGACY with the key's own bytes as canonical and the cottonwood row (and its bucket) named in basis, as the face orders; the same key under the 49 Financial bucket would otherwise be the ADDRESS blackdiamond/49financial/silver/prices/canonical_prices.parquet. Not resolved in the classifier (an item has no bucket field and the face fixes the rule); whether bd-price-update's store is the cottonwood legacy store, a same-path store of 49 Financial, or a row that should be bucket-scoped is for the registry's owner."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S3 -- the six keys the amendment calls raise-HOLEs are the six carded keys
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T12:53:00Z",
+  "one_line": "TO BF-t-6 AMENDMENT 1 says six keys of the root's source folder are grade() raises and print as HOLE; all six are carded, so rule 1 prints them CARDED and no key of the root is a raise-HOLE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only (HEAD of wk-LGIC_BLANKFIX-1): items=140 right=10 fix=101 not_asked=6 pattern=1 carded=6 hole=16; the 16 HOLE lines are 8 EVENT_RULE {cadence}, 6 IAM_POLICY {system} and 2 S3Key cot-path conflicts; none carries a grade() raise text",
+      "stdlib walk of opal_naming_scope.root_items(root)[0] calling opal_naming.grade on each: 6 RaiseDefect, on S3Key '%s' (bd-49f-etf-ownership-daily-canonical/lambda_function.py:102), 'daily/49financial' (backfill_49f_daily_from_monolith_rps.py:65), 'config/etf_universe.json' (:66), 'platinum/reports/%s/etf_ownership.pdf' (etf-ownership-daily/lambda_function.py:72), 'blackdiamond/49f/session-trigger-mode.json' (bd-49f-session-trigger/lambda_function.py:78), 'config/ticker_lookup.json' (bd-price-update/lambda_function.py:155); the same six are the six CARDED lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-t-6 AMENDMENT 1: a name grade() raises on is a HOLE (rule 3); six such keys exist in this root's source folder.",
+  "world_is": "The six raising keys are the six keys NOT_JUDGED_R13.json cards (plane repo), and rule 1 (CARDED) is tested before rule 3 (HOLE), so they print CARDED and zero raise-HOLE lines exist for this root. The rule-3 path is exercised by the unit test (a hand-made raise) and not by the real root. The built order follows the rule order as written; the two statements cannot both hold for this root."
+}
+```
