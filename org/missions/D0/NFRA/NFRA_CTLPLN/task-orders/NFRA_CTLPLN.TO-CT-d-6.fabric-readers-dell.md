@@ -53,7 +53,7 @@ what the gate does with a bare id filed from a Dell-fabric project. Build exactl
 
 ### ACCEPTANCE
 
-<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 readers_ok=6/6 old_grammar_left=0 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
+<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 readers_ok=9/9 old_grammar_left=0 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
 `CT4d6-AC1` -- both readers handle the four fabrics, refuse a fifth, and agree with the gate's enum; the mismatch and `dell3` arms are
 the controls.
 
@@ -84,6 +84,8 @@ org/surprise_channel/schemas/investigation_item.schema.json
 org/surprise_channel/schemas/remediation_row.schema.json
 .tools/proof-of-spec-check.py
 org/surprise_channel/surprise-watch.sh
+infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py
+infra/aws/lambda/investor-reporting/ycharts/research/tests/test_file_stop_row.py
 .tools/tests/test_fabric_readers_dell.py
 .tools/tests/fabric_value_census.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -260,3 +262,32 @@ CT4d6-AC2 unchanged (`unclassified=0 ok=True`; classify any new census hit your 
 `.tools/proof-of-spec-check.py` grades every order's completion on four boxes: after your edit run the proof check on THREE existing
 instances of this project (for example the ones under `deliverables/0.9.0_WK_NFRA_CTLPLN~5/`, `~6/` and `~7/`) and report that each
 still reads VALID. Write a NEW proof instance over the old one, validate it, flip `<status>` back to `complete` only when both pass.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~11:0xZ) -- the sweep's one remaining live reader (row NFRA_CTLPLN-W9-S4, ARMED)
+
+The order is `in_progress` (AMENDMENT 4's criterion read `old_grammar_left=1`, honestly); the slot is re-seated and commits 74686ff1e5
+and 1dd968d740 are inherited state. Gate limb: none graded this modification.
+
+**What the sweep found:** `infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py:13` holds the old id grammar in
+`ID_PATTERN` and raises `ROW_ID_NOT_ADMITTED` on a mismatch. It is IRPT_YCDGEN's stop-row printer: a local helper that reads one file
+and prints a channel section (its own docstring: "It reads one local file and writes nothing"); the issuer measured that nothing
+under `infra/` imports it but its own test. IRPT_YCDGEN is placed on a Dell, so with the gate landed and this reader left as it is,
+that project could print no stop row a Dell may file. The issuer adds the file and its test to this order's grant: it is a one-line
+alignment of the same grammar, not a change to that project's behaviour, and `1.0.0_SA_CTO` is told at the drain.
+
+**THE WORK (this is the whole of it):**
+1. `file_stop_row.py`: `ID_PATTERN` takes the gate's id grammar (the same Python pattern `SURPRISE_ID_RE`'s id part now has, anchored
+   `^...$` as today). Its trailing comment still names the schema property. Nothing else in the file changes. ASCII only.
+2. `tests/test_file_stop_row.py` (read it first; keep its style): add cases that a `D1-` id, a `D2-W3-` id and a `Z-` id are admitted
+   and a lower-case coordinate is refused with `ROW_ID_NOT_ADMITTED`. Run that test file the way it is meant to be run (read its
+   header: plain python or pytest) before and after, and report both results.
+3. In `.tools/tests/test_fabric_readers_dell.py`: the readers arm gains this third reader (its compiled `ID_PATTERN`, imported from
+   the file by path) for three of the six ids, so the arm reads `readers_ok=9/9`; the sweep's path table classes the file
+   `FIXED-HERE`. The sweep's last line must read `live_outside_grant=0 ok=True`.
+4. Re-run: the gate's `--self-test` and `py_compile`, `proof-of-spec-check.py --self-test`, the census, `python
+   org/devices/test_readers.py`, and the proof check on three existing instances (slots 5, 6, 7).
+
+**ACCEPTANCE, replacing CT4d6-AC1's expectation (same id, same invocation):**
+`FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 readers_ok=9/9 old_grammar_left=0 enum_equal=True gate_selftest=ok ok=True`.
+CT4d6-AC2 unchanged. Write a NEW proof instance over the old one, validate it, and flip `<status>` to `complete` only when both pass.
+Regenerate a file you wrote by overwriting it; never use `git checkout --`, `reset` or `restore` on anything.
