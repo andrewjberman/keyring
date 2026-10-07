@@ -10,6 +10,7 @@ import pathlib
 import shutil
 import stat
 import subprocess
+import sys
 
 import pytest
 
@@ -54,6 +55,7 @@ def run(stub, args, device, extra_env=None):
         "FAKE_AWS_LOG": str(stub["log"]),
         "FAKE_RECV_JSON": str(stub["recv"]),
         "AGENTBUS_DEVICE": device,
+        "AGENTBUS_REFUSED_DIR": str(stub["tmp"] / "refused"),
     })
     env.pop("OPAL_DEVICE_REGISTER", None)
     env.update(extra_env or {})
@@ -143,21 +145,48 @@ def message(mid, handle, sender_tailnet, text="body"):
     return {"MessageId": mid, "ReceiptHandle": handle, "Body": text, "MessageAttributes": attrs}
 
 
-def test_receive_refuses_a_sender_tailnet_name_the_register_does_not_hold(stub):
+def refused_records(stub):
+    d = stub["tmp"] / "refused"
+    return sorted(d.glob("*.json")) if d.is_dir() else []
+
+
+def test_receive_refuses_records_and_deletes_an_unheld_sender_and_delivers_the_rest(stub):
     good = message("id-good", "handle-good", TAILNET["sitez"], "from a held box")
     rogue = message("id-rogue", "handle-rogue", "rogue-box.example", "from a stranger")
     bare = message("id-bare", "handle-bare", None, "no stamp at all")
     stub["recv"].write_text(json.dumps({"Messages": [good, rogue, bare]}), encoding="utf-8")
     r = run(stub, ["recv"], "laptop")
     assert r.returncode == 4, r.stdout + r.stderr
-    # the held sender's message is delivered, with its id, and the other two are refused loudly with the reason
+    # held sender and the UNSTAMPED message are delivered (the latter with a WARN naming the serial)
     assert "id-good" in r.stdout and "from a held box" in r.stdout
-    assert "from a stranger" not in r.stdout and "no stamp at all" not in r.stdout
-    assert "REFUSED [id id-rogue]" in r.stdout and "rogue-box.example" in r.stdout
-    assert "REFUSED [id id-bare]" in r.stdout and "ABSENT" in r.stdout
-    # only the delivered message is deleted; the refused two stay on the queue (no silent drop)
-    deleted = [arg_after(c, "--receipt-handle") for c in calls(stub, "delete-message")]
-    assert deleted == ["handle-good"]
+    assert "id-bare" in r.stdout and "no stamp at all" in r.stdout
+    assert "WARN agentbus unstamped sender=0.9.0_WK_TEST~1" in r.stdout
+    # the unheld sender is NOT delivered; it is REFUSED with the reason and a record path
+    assert "from a stranger" not in r.stdout
+    line = [ln for ln in r.stdout.splitlines() if ln.startswith("REFUSED agentbus")]
+    assert len(line) == 1
+    assert "sender_tailnet=rogue-box.example" in line[0] and "reason=" in line[0] and "record=" in line[0]
+    # the whole message (body and attributes) is recorded at <stamp>_<message id>.json ...
+    recs = refused_records(stub)
+    assert len(recs) == 1 and recs[0].name.endswith("_id-rogue.json")
+    assert recs[0].name in line[0]
+    saved = json.loads(recs[0].read_text(encoding="utf-8"))["message"]
+    assert saved["Body"] == "from a stranger"
+    assert saved["MessageAttributes"]["from_tailnet"]["StringValue"] == "rogue-box.example"
+    # ... and every message is deleted: the refused one (never blocks the FIFO group) and the two delivered
+    deleted = sorted(arg_after(c, "--receipt-handle") for c in calls(stub, "delete-message"))
+    assert deleted == ["handle-bare", "handle-good", "handle-rogue"]
+
+
+def test_receive_delivers_unstamped_mail_with_a_warn_and_refuses_nothing(stub):
+    stub["recv"].write_text(json.dumps({"Messages": [message("id-old", "handle-old", None, "from an old box")]}),
+                            encoding="utf-8")
+    r = run(stub, ["recv"], "laptop")
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "WARN agentbus unstamped sender=0.9.0_WK_TEST~1" in r.stdout
+    assert "from an old box" in r.stdout and "REFUSED" not in r.stdout
+    assert refused_records(stub) == []
+    assert [arg_after(c, "--receipt-handle") for c in calls(stub, "delete-message")] == ["handle-old"]
 
 
 def test_receive_delivers_and_deletes_when_every_sender_is_held(stub):
@@ -176,9 +205,77 @@ def test_receive_judges_by_the_register_it_reads(stub):
     fixture = fifth_box_register(stub["tmp"])
     ok = run(stub, ["recv"], "laptop", {"OPAL_DEVICE_REGISTER": str(fixture)})
     assert ok.returncode == 0, ok.stdout + ok.stderr
-    assert "fifth" in ok.stdout
+    assert "fifth" in ok.stdout and refused_records(stub) == []
     stub["log"].write_text("", encoding="utf-8")
     refused = run(stub, ["recv"], "laptop")
     assert refused.returncode == 4
-    assert "REFUSED [id id-5]" in refused.stdout
-    assert calls(stub, "delete-message") == []
+    assert "REFUSED agentbus sender_tailnet=dell3-tailnet-fixture" in refused.stdout
+    assert len(refused_records(stub)) == 1
+    assert [arg_after(c, "--receipt-handle") for c in calls(stub, "delete-message")] == ["handle-5"]
+
+
+# --- the consumer (`watch` primary path): the same check, through a fake boto3 --------------------------------
+CONSUMER = ROOT / ".tools" / "agentbus-consumer.py"
+
+FAKE_BOTO3 = r"""
+import json, os, time
+class _Client:
+    def __init__(self):
+        self.sent = False
+    def receive_message(self, **kw):
+        if not self.sent:
+            self.sent = True
+            return json.load(open(os.environ["FAKE_RECV_JSON"]))
+        time.sleep(0.2)
+        return {}
+    def delete_message(self, **kw):
+        with open(os.environ["FAKE_DELETE_LOG"], "a") as fh:
+            fh.write(kw["ReceiptHandle"] + "\n")
+def client(*a, **k):
+    return _Client()
+"""
+
+
+def run_consumer(stub, messages, extra_env=None):
+    fakedir = stub["tmp"] / "fakeboto"
+    fakedir.mkdir(exist_ok=True)
+    (fakedir / "boto3.py").write_text(FAKE_BOTO3, encoding="utf-8")
+    stub["recv"].write_text(json.dumps({"Messages": messages}), encoding="utf-8")
+    dlog = stub["tmp"] / "deleted.log"
+    dlog.write_text("", encoding="utf-8")
+    env = dict(os.environ)
+    env.update({"PYTHONPATH": str(fakedir), "FAKE_RECV_JSON": str(stub["recv"]), "FAKE_DELETE_LOG": str(dlog),
+                "AGENTBUS_MAX_SECONDS": "2", "AGENTBUS_REFUSED_DIR": str(stub["tmp"] / "refused")})
+    env.pop("OPAL_DEVICE_REGISTER", None)
+    env.update(extra_env or {})
+    r = subprocess.run([sys.executable, str(CONSUMER), "--queue-url", "http://stub", "--device", "laptop"],
+                       env=env, capture_output=True, text=True, encoding="utf-8", cwd=str(ROOT), timeout=60)
+    return r, dlog.read_text(encoding="utf-8").split()
+
+
+def test_consumer_refuses_records_and_deletes_an_unheld_sender_and_delivers_held_and_unstamped(stub):
+    msgs = [message("id-good", "handle-good", TAILNET["dell1"], "from a held box"),
+            message("id-rogue", "handle-rogue", "rogue-box.example", "from a stranger"),
+            message("id-bare", "handle-bare", None, "no stamp at all")]
+    r, deleted = run_consumer(stub, msgs)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "[AGENTBUS -> laptop] [id id-good] from a held box" in r.stdout
+    assert "[AGENTBUS -> laptop] [id id-bare] no stamp at all" in r.stdout
+    assert "WARN agentbus unstamped sender=0.9.0_WK_TEST~1" in r.stdout
+    assert "from a stranger" not in r.stdout
+    line = [ln for ln in r.stdout.splitlines() if ln.startswith("REFUSED agentbus")]
+    assert len(line) == 1 and "sender_tailnet=rogue-box.example" in line[0] and "record=" in line[0]
+    recs = refused_records(stub)
+    assert len(recs) == 1 and recs[0].name.endswith("_id-rogue.json")
+    assert json.loads(recs[0].read_text(encoding="utf-8"))["message"]["Body"] == "from a stranger"
+    assert sorted(deleted) == ["handle-bare", "handle-good", "handle-rogue"]
+
+
+def test_consumer_reads_the_same_register(stub):
+    fixture = fifth_box_register(stub["tmp"])
+    msgs = [message("id-5", "handle-5", "dell3-tailnet-fixture", "fifth")]
+    r, deleted = run_consumer(stub, msgs, {"OPAL_DEVICE_REGISTER": str(fixture)})
+    assert "[id id-5] fifth" in r.stdout and refused_records(stub) == [] and deleted == ["handle-5"]
+    r, deleted = run_consumer(stub, msgs)
+    assert "REFUSED agentbus sender_tailnet=dell3-tailnet-fixture" in r.stdout and "[id id-5]" not in r.stdout
+    assert len(refused_records(stub)) == 1 and deleted == ["handle-5"]
