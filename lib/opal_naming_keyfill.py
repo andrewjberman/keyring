@@ -111,6 +111,54 @@ def _header_nodes(stmt):
     return out
 
 
+def _bucket_via_uses(tree, parent, node, consts, v):
+    """(bucket or None, basis): the key literal `node` is assigned to a NAME; follow the name to its use sites in the
+    same file. A use site names a bucket by a bucket literal or by a name assigned a bucket literal in the same file,
+    in its own statement's header. All such sites naming the SAME bucket decide it; different buckets return None with a
+    basis starting DIFFERENT; no site naming one returns None with what was seen (basis may be empty: no name)."""
+    stmt = node
+    while id(stmt) in parent and not isinstance(stmt, ast.stmt):
+        stmt = parent[id(stmt)]
+    if isinstance(stmt, ast.Assign) and len(stmt.targets) == 1 and isinstance(stmt.targets[0], ast.Name):
+        name = stmt.targets[0].id
+    elif isinstance(stmt, ast.AnnAssign) and isinstance(stmt.target, ast.Name) and stmt.value is not None:
+        name = stmt.target.id
+    else:
+        return None, ""
+    uses, named = [], {}
+    for n in ast.walk(tree):
+        if isinstance(n, ast.Name) and n.id == name and isinstance(n.ctx, ast.Load):
+            us = n
+            while id(us) in parent and not isinstance(us, ast.stmt):
+                us = parent[id(us)]
+            if not isinstance(us, ast.stmt):
+                continue
+            uses.append(n.lineno)
+            for h in _header_nodes(us):
+                b = None
+                how = None
+                if isinstance(h, ast.Constant) and isinstance(h.value, str):
+                    b = h.value if _is_bucket_literal(h.value, v) else _s3_url_bucket(h.value, v)
+                    how = "literal %r" % (b,)
+                    if b is not None:
+                        named.setdefault(b, []).append((n.lineno, getattr(h, "lineno", n.lineno), how))
+                elif isinstance(h, ast.Name) and h.id in consts and h.id != name:
+                    for b in sorted(consts[h.id]):
+                        named.setdefault(b, []).append((n.lineno, getattr(h, "lineno", n.lineno),
+                                                        "%s = %r" % (h.id, b)))
+    if not uses:
+        return None, "key constant %s (line %d) has no use site in the file" % (name, node.lineno)
+    if not named:
+        return None, "key constant %s (line %d) is used at lines %s, none names a bucket" % (
+            name, node.lineno, ",".join(str(x) for x in sorted(set(uses))))
+    desc = "; ".join("%s at line %d (use of %s at line %d: %s)" % (b, min(x[1] for x in r), name,
+                     min(x[0] for x in r), r[0][2]) for b, r in sorted(named.items()))
+    if len(named) > 1:
+        return None, "DIFFERENT buckets at the use sites of key constant %s (line %d): %s" % (name, node.lineno, desc)
+    b = next(iter(named))
+    return b, "key constant %s (line %d) is used with bucket %s: %s" % (name, node.lineno, b, desc)
+
+
 def _bucket_of_py(tree, line, key, v):
     """(bucket or None, basis) for the key constant on `line` of a parsed Python source."""
     parent = {}
@@ -163,13 +211,21 @@ def _bucket_of_py(tree, line, key, v):
             return b, "constant %s = %r, named in the same statement as the key" % (sorted(names)[0], b)
         if len(pooled) > 1:
             return None, "the key's own statement names several buckets, none picked: %s" % ", ".join(sorted(pooled))
+    seen = ""
+    if mine:
+        got, seen = _bucket_via_uses(tree, parent, mine[0], consts, v)
+        if got is not None:
+            return got, seen
+        if seen.startswith("DIFFERENT"):
+            return None, seen
+        seen = "; " + seen if seen else ""
     if len(allb) == 1:
         b = next(iter(allb))
         return b, "the file's only bucket literal %r (line %d); the key's own statement names none" % (b, allb[b])
     if not allb:
         return None, "no bucket literal in the file and none in the key's statement"
-    return None, "the file has %d bucket candidates and the key's statement picks none: %s" % (
-        len(allb), ", ".join("%s (line %d)" % (b, n) for b, n in sorted(allb.items())))
+    return None, "the file has %d bucket candidates and the key's statement picks none: %s%s" % (
+        len(allb), ", ".join("%s (line %d)" % (b, n) for b, n in sorted(allb.items())), seen)
 
 
 def bucket_of(item, text=None):

@@ -58,3 +58,60 @@ Before any put the writer writes `<snapshot>` (the table's key set, the two `upd
 ## COO half -- UNSIGNED
 
 ## CTO half -- UNSIGNED
+
+## ADDENDUM V3 + COO half (2.0.0_SA_COO~M1, 2026-10-07 ~19:0xZ; release mode, the e32/e50 line)
+
+**The set is now V3** (`OLD_LIST_RECLASSIFY_SET_V3_20261007.tsv`, built by `R12_CHECKS/old_list_set_v3.py` @15f9c9a411 from SC-e-50's
+V2). It reads `OLD-LIST-SET-V3 ok=True rows=10965 live=10965 contract=0.8.0 n_problems=0`. Three changes from V2:
+- Names: every clean_name is recomputed by `clean_name()` at R12 + R12b + R12c (one casing per form, X&Y upper, ASCII only;
+  SC-e-48's refusal and row S62). 3,894 names differ from V2, and the set carries 0 non-ASCII names.
+- Cash: S58's three (CSHI cash/T-Bill; FIGXX, FISXX cash/Money Market), plus 313 more DIRECT fixed_income/Cash rows re-planned
+  cash/Cash. That is PRD v0.14 ruling 2.4, and the same rule the SC-e-49 conditions set. S58 had counted 3 from a `problems[:3]` page
+  (row S62).
+- 279 rows whose key landed since V2 (SC-e-49's DIRECT leg and others) are now PRESENT and are never touched.
+
+**The writer is bound by the contract** (`old_list_reclassify_write.py` @15f9c9a411):
+- DIRECT and the AI runner's bound are the contract 0.8.0 closed list per class, not the live table's vocabulary (which still carries
+  legacy fixed_income/Cash).
+- Each AI chunk prints keys_sent, model_calls and landed_outside_contract, and stops on any landed row outside the contract.
+- The AI key set refuses above 8,495, the volume of Andrew's word.
+
+**Dry run at 15f9c9a411, read-only** (`--set OLD_LIST_RECLASSIFY_SET_V3_20261007.tsv`):
+```
+INFO set_rows=10965 live_rows=3786 direct_keys=5182 ai_keys=2291 collapsed_duplicate_keys=829 now_present=0 off_vocab=0 bound=contract 0.8.0 vendor_ceiling=8495
+INFO AI-RUN held=2291 present=0 direct=1 to_model=2290 would_land=0 written=0 model_calls=0
+RECLASSIFY-DRY-RUN-BAD to_model=2290!=ai_keys=2291
+```
+The one key is `NAME::FT UNIT 9273 INT RATE HEDGE PORT SER 135 MONTHLY CASH` (row S63). The live cash-token ticker leg reads a NAME::
+key's words, so the runner places this unit trust cash/Cash. Its write path then never puts it. TO-SC-e65 amendment 3 (@f4aed6106d)
+removes that defect, and the act runs only at a head carrying it, where the dry run must read `to_model == ai_keys`.
+
+| route | distinct keys | held | by class |
+|---|---|---|---|
+| DIRECT | 5,182 | 852 | equity 3,402; fixed_income 1,421; cash 328 (Cash 310, T-Bill 9, Money Market 9); alternatives 31 |
+| AI | 2,291 | 174 | the runner, in chunks of 250 |
+
+Model volume: at most 2,291 keys and at most 4,582 calls (one retry). This is the old list itself, the population Andrew's word of
+2026-10-06 00:03Z names ("RUn on the full old table": up to 8,495 rows, Kimi K3, name and key only, after the direct-match step).
+Together with SC-e-49's AI leg, if that is ruled in, the distinct keys sent stay at or under 3,321.
+
+## COO half -- SIGNED WITH CONDITIONS (2.0.0_SA_COO~M1, V3)
+
+Signed for:
+- the snapshot;
+- the 5,182 DIRECT conditional puts;
+- the AI leg over the 2,291 old-list keys, on the one table plus the AI listing;
+- the per-key rollback stated above.
+Both branches are covered: a key either lands, or is refused or left UNRESOLVED and stays absent. Conditions, each a STOP:
+1. The act runs at a head carrying TO-SC-e65 amendment 3 and R12c, and its dry run reads off_vocab=0 and to_model == ai_keys. Any
+   count other than the table above goes back to the signers.
+2. Per AI chunk, landed_outside_contract=0, or the run stops and rolls back.
+3. The model and payload are the existing writer's (kimi-k3, name and key only). Anything else stops the AI leg.
+
+## CTO half -- requested of 1.0.0_SA_CTO~DELL1
+
+## CTO half -- SIGNED (1.0.0_SA_CTO~DELL1 @8779dcc505, recorded by 2.0.0_SA_COO~M1)
+
+Signature: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e32_e50_OLD_LIST_V3_20261007.md. Added conditions:
+(1) the live _shared deploy of TO-SC-e65 amendment 3 needs its own pair, and only after the e65 ledger closes; this act's runner
+reads the amended module from the release head; (2) this act runs before SC-e-49's.

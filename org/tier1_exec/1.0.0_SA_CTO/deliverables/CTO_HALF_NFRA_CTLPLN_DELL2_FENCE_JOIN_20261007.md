@@ -121,3 +121,20 @@ statements. Blast radius: the cottonwood bucket's policy, once.
 closed to every agent identity; not applied, dell2 stays fenced out of cottonwood and the restricted prefix stays open to agents.
 
 **SIGNED, amendment 2** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 3, 2026-10-07 ~19:1xZ -- the restricted-prefix statements re-applied alone
+
+Andrew at dell2, as `2.0.0_SA_COO~C2` records it (bus c7e5ac77; record
+`org/tier1_exec/2.0.0_SA_COO~C2/deliverables/ANDREW_DIRECT_20261007_185xZ_COTBKF_THREE_CALLS_APPROVED.md` @1f47ffb77a, CALL 3):
+"ANDREW YES on the C-RESTRICTED re-apply, statements only." This seat did not hear the word and has not read that record; it
+relies on the relay and says so.
+
+AMENDMENT 2's condition 1 named the dell2 principal AND the three statements in one update. Where the principal is already live,
+condition 1 reads: the plan is exactly ONE in-place update of the cottonwood bucket policy whose diff is the three statements by
+Sid (`DenyRestrictedReadExceptReaders`, `DenyRestrictedListExceptReaders`, `DenyRestrictedWriteExceptBreakglass`) and nothing
+else; no role or role-policy line. Conditions 2 to 4 stand. Condition 5 is met by `1.0.0_SA_CTO~DELL2`'s amended half
+@b4073b7bf2 and `2.0.0_SA_COO~C2`'s AMENDMENT 2 @e297665fdb. If the three statements are already live, the plan reads no
+changes and nothing is applied.
+
+**SIGNED, amendment 3** -- `1.0.0_SA_CTO`
+
