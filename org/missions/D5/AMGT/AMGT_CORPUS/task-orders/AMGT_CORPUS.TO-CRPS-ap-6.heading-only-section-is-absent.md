@@ -64,6 +64,9 @@ lib/research/corpus/dossier.py
 lib/research/corpus/tests/test_dossier_heading_only_round40.py
 lib/research/corpus/tests/test_dossier.py
 lib/research/corpus/tests/test_dossier_method_bump.py
+lib/research/corpus/tests/test_dossier_case_body.py
+lib/research/corpus/tests/test_dossier_case_unit.py
+lib/research/corpus/tests/test_dossier_case_positional.py
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~2/AMGT_CORPUS.TO-CRPS-ap-6.heading-only-section-is-absent.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-ap-6.heading-only-section-is-absent.md
@@ -91,6 +94,21 @@ Read-only: the whole repository, in particular `lib/research/corpus/extract.py`,
 3. Only if every mechanical criterion passes, append a new status tag reading complete at the END of this file, in the SAME commit
    as your instance.
 4. Report ONCE: what you changed and where, every criterion's output line, the pytest summary line, your commit hashes and any row.
+
+## 6. AMENDMENT 1 (2026-10-07, the issuer's own; row `AMGT_CORPUS-Z-W2-S21`)
+
+The order asked for a `METHOD_VERSION` bump and left out of `<paths>` three test files that pin the old literal. They are added
+to `<paths>` above. The build (commit `763e1e9885`) stands as it is.
+
+**Do, and only this:**
+1. In each of `lib/research/corpus/tests/test_dossier_case_body.py` (about line 159), `test_dossier_case_unit.py` (about 110) and
+   `test_dossier_case_positional.py` (about 189), change the pinned literal `amgt-corpus-dossier/5` to `amgt-corpus-dossier/6`,
+   each with an `AMENDMENT (CRPS-ap-6, round 40):` comment. Change nothing else in those files.
+2. Re-run AC1 and AC2. Then run `python -m pytest lib/research/corpus/tests/test_dossier_case_unit.py
+   lib/research/corpus/tests/test_dossier_case_positional.py -q -p no:cacheprovider --color=no` and report its last line.
+3. Update the proof instance (AC2 now by its real output), run the checker after your final commit, and only if AC1 and AC2
+   pass append the status tag reading complete at the END of this file in the same commit as the instance.
+4. Your row `AMGT_CORPUS-Z-W2-S21` stays as filed; the issuer disarms it at the drain.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
