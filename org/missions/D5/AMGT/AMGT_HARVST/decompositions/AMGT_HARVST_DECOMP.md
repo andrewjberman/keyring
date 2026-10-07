@@ -3138,3 +3138,25 @@ lives. Cut in its own issuance once that input is read.
 - `ay-1` AC1 (`pytest lib/opal_data_harvest/test_ay1_name_tokens.py`) base: FAIL as expected (the test is absent).
 - `ay-1` AC2 (`cat .../ay-1.replay.out`) base: FAIL as expected (no such file).
 - `ay-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (695 passed, 1 skipped on merged CLOUD at the round-51 drain).
+
+## 67. ROUND 53 -- the round-49 analysis ADDENDUM 4 (`ledger/ROUND_ANALYSIS.round49.md` @22b49f7b04), 2026-10-07 ~03:5xZ
+
+Round 52's order is terminal (`ay-1` merged @ba9ad361fd). wsj and bbg resumed 03:21Z and 03:29Z (both profiles read signed in, no
+challenge); the OMAB pair re-ran on the round-52 rule (`no_new_articles`, as before). Row AMGT_HARVST-Z-S94: the driver records
+every job done whatever its status (`lib/opal_data_harvest/backfill_driver.py:314`) and a resume skips done pairs (`:120`), so 37
+pairs that ended on a stop status were never retried (wsj 8, bbg 8, barrons 12, sa 9;
+`deliverables/2.0.0_SA_COO_H/round52/stop_status_pairs.json`). One barrons article answering HTTP 400 ended two whole jobs.
+
+Issuer `2.0.0_SA_COO~H`. Series **`ba`**. The alias cell of section 66 (`HVST-az-1`) moves to round 54.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-ba-1` | `ba-1` | **A stopped pair is retried, not done; one dead article does not end a job.** `done` is recorded only on a declared set of concluded statuses; any other status goes to a retry record with its attempt count, and to `gave_up` with its reason after 3 attempts. An existing checkpoint's stop-status `done` rows move to `retry` on load, so the 37 legacy pairs are planned at each leg's next invocation. The summary prints collected / retry / gave_up / never_started, summing to the pair count. An article request answering 400, 404 or 410 is skipped and recorded and the job continues; 401/403 still stop it. | LOCAL | worker `~103` |
+
+**The close run (issuer, after `ba-1` merges):** each leg's next invocation migrates its checkpoint and plans its stopped pairs;
+the issuer reads the `PAIRS` lines and checks the 37 against `stop_status_pairs.json`.
+
+**Checks dry-run at the base before the cut:**
+- `ba-1` AC1 (`pytest lib/opal_data_harvest/test_ba1_stopped_pair_is_retried.py`) base: FAIL as expected (the test is absent).
+- `ba-1` AC2 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (706 passed, 1 skipped on merged CLOUD at the round-52 drain).
