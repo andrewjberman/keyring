@@ -100,9 +100,22 @@ You READ, and never write: `lib/research/harvest/universe_securities.py`, the gr
 - **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (the test is absent); AC2 base PASS as expected
   (414 passed on merged CLOUD at the round-58 drain).
 
+**COMPLETE 2026-10-07 ~17:3xZ (issuer):**
+- **Built:** worker ~109 @ca2316368e + @df0ecbd592; merged @a280f06450 (4 paths, index check 0 of 4 differ).
+- **AC1 PASS:** 5 of 5 (plant (ii) is the control: with the seven entries removed each form comes back). **AC2 PASS:** 419 of
+  419; the same count on merged CLOUD.
+- **Existing assertion changed:** `test_alias_rule_round18.py` pins the refusal set to the ten (was three).
+- **Rows:** none.
+- **CSL is NOT refused:** `3.0.0_SA_CVO~Z` graded all 42 pairs 39 of 42 against a bar of 38
+  (`org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND58_GOLD_REBUILD8_CSL_FORM_GRADE_20261007.md` @f6e370e6cc); the
+  three that fail are Carlisle Companies, the same three the mechanical word flag found.
+- **Close run:** signing dry run 3 on the list with the seven refused (`deliverables/2.0.0_SA_COO_H/round60/`), launched after
+  this close; then the rebuild's never-widen pair.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>60</round>
 <slot>~109</slot>
 <fabric>site-z</fabric>
