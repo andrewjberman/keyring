@@ -2007,3 +2007,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Substituted the equivalent bun x form; no criterion depends on tsc."
 }
 ```
+
+## IRPT_YCDGEN-S14 -- dell2's AWS user cannot run SSM commands on the resident host, so every host read and resident build for this project's dell2 lane is blocked
+
+```json
+{
+  "id": "IRPT_YCDGEN-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T09:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ssm:SendCommand on resident host i-0167fd745ad906a66 is denied to cloudops-dell2-agent-user, so dell2 cannot read the host for ledger irpt-ycdgen-r6-branch-b2-20261006 (F1 reads) or ship the next resident build (M1, the 390 s release)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The seat that owns the resident host files and the open ledger (2.0.0_SA_COO~G2, CTO msgs 90/189) can read the host it is accountable for.",
+  "world_is": "2026-10-07 ~09:10Z, python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/host_read.py <host_root_read.sh> from dell2 returned: AccessDeniedException ... User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: ssm:SendCommand on resource: arn:aws:ec2:us-east-1:313476888478:instance/i-0167fd745ad906a66. Nothing ran on the host.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the AccessDeniedException text above (dell2 session, 2026-10-07 ~09:10Z)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/host_root_read.sh (the read-only script; changes nothing)"
+    ]
+  },
+  "notes": "Inert now: no host act is due before Andrew's F1 click. Per 1.0.0_SA_CTO~DELL2 standing rule msg 218 the read goes to the laptop as a FILE through 0.0.0_AB_MSTR~DELL2; no fence is widened from dell2. Whether dell2 should hold ssm:SendCommand on this host is NFRA_CTLPLN's question, not this project's."
+}
+```
