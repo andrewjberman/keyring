@@ -19900,3 +19900,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "pending.json is written by submit_service.write_pending (not submit_async/dispatch) and already carries account_ids; the missing half was only the finalizers passing them to receipt.build."
 }
 ```
+
+## IRPT_BCKEND-W145-S5 -- the dry-run census could LIST the one receipt but not READ it: this box's identity is refused kms:Decrypt on the evidence key
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:27:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-344 dry run over opal-data-ycharts (firms 49financial, cottonwood): 1 receipt listed (firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json, 870 bytes, SSE aws:kms), 0 readable -- GetObject on the receipt, its pending.json and a bundle is AccessDenied because cloudops-dell2-agent-user has no kms:Decrypt on key 7f4d3042-10d8-49a7-b55e-3c963cea8111; HEAD and LIST work. Census is read 0 = filled 0 + unfillable 0, wrote 0, 1 DENIED object recorded; nothing widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~145/IB65-2_backfill_census.json (per_firm, denied_objects)",
+      "MEASURED 2026-10-07T12:27:24Z: boto3 get_object and head_object on the receipt, pending.json and bundle.json keys: get = AccessDenied (kms:Decrypt on the key above, no identity-based policy allows it), head = OK"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-344 item 3: run the dry run READ-ONLY against the real evidence buckets this box can read; read = filled + unfillable; a denied bucket is recorded and filed as a row, never widened.",
+  "world_is": "The bucket is readable for LIST and HEAD but its objects are KMS-encrypted under a key this identity cannot decrypt, so the census reconciles only vacuously (0 = 0 + 0). Whether the one receipt is FILLED or UNFILLABLE is unmeasured. Before the issuer applies, the dry run must be re-run under an identity with kms:Decrypt on that key (the tool is --dry-run by default: python infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py --census-out <file>). The tool runs unchanged; nothing is widened here."
+}
+```
