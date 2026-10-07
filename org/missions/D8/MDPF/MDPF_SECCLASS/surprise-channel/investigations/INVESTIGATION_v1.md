@@ -4155,11 +4155,11 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
 }
 ```
 
-## MDPF_SECCLASS-S55 -- contract 0.7.0 puts three fixed_income/Cash rows of SC-e-50's held reclassification set outside the bound
+## MDPF_SECCLASS-S58 -- contract 0.7.0 puts three fixed_income/Cash rows of SC-e-50's held reclassification set outside the bound
 
 ```json
 {
-  "id": "MDPF_SECCLASS-S55",
+  "id": "MDPF_SECCLASS-S58",
   "project": "MDPF_SECCLASS",
   "fabric": "laptop",
   "surfaced_by": "2.0.0_SA_COO~M1",
@@ -4179,7 +4179,7 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "SC-e-50's set is graded against the contract bound (values_by_class); TO-SC-e50 was VALID at its drain under contract 0.6.0.",
   "world_is": "The set predates the v0.14 cash ruling. Nothing is served: the reclassification write is an issuer act behind the e32/e50 pair, and neither half is signed. Ruling (issuer, inside DECOMP_R10): before that half goes to signature, the set is re-planned under contract 0.7.0. CSHI becomes cash/T-Bill, and FIGXX and FISXX become cash/Money Market. The check must then read ok=True.",
-  "notes": "A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
+  "notes": "Re-minted from S55 to S58 per 1.0.0_SA_CTO~DELL1 ruling msg 405 (the laptop minted its own S55 on the trunk). A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
 }
 ```
 ## MDPF_SECCLASS-W41-S1 -- the worker face says dell1's principal is denied the firm S3 buckets; it reads opal-data-bd
