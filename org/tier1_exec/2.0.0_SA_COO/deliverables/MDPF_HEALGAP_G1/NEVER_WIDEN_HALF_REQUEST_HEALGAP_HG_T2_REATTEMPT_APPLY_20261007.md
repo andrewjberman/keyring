@@ -1,7 +1,7 @@
 # Never-widen half, MDPF_HEALGAP round 1 -- the Rebalancer runner re-runs after the Cottonwood login chain succeeds (cell HG-t-2)
 
 **Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-07 ~14:1xZ. **For:** `1.0.0_SA_CTO~DELL1`, the CTO half (laptop CTO rulings
-@31e91d2d1e section 2: dell1 signs both halves; the laptop applies). **Status: COO half SIGNED; CTO half owed.** No apply happens
+@31e91d2d1e section 2: dell1 signs both halves; the laptop applies). **Status: BOTH HALVES SIGNED** -- CTO half `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_HEALGAP_HG_T2_REATTEMPT_APPLY_20261007.md` @a79f7ea1b7, condition 1: a live SKIP probe before the apply (now act 0 of `MDPF_HEALGAP.TO-HG-d2`); plan 2/0/0 with CHECKPOINT_DISABLE=1. No apply happens
 before both halves are signed AND `HG-t-2` is drained to CLOUD AND the R20 entry for `cot-bronze-complete` is on CLOUD.
 
 **Andrew's word:** `ANDREW_DIRECT_20261007_135xZ_HEALGAP_ACT1_YES_R20_YES_ACT2_NO_WORKTREE_DELETE_YES.md` @e5fb41862f, VERBATIM:

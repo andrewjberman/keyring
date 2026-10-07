@@ -42,6 +42,12 @@ permission for that rule. Andrew gave the standing vendor word for this re-run a
 3. Live `cot-rebalancer-runner` CodeSha256 is `QxLvPLTMO5YSkS+vaRXEkhaA78ZAr1arTyS0ADOOMvk=` (the guard is live first, C-IDEMPOTENT).
 
 **Act:**
+0. **The SKIP probe, before anything else (CTO half condition 1, @a79f7ea1b7).** With today's UTC stamp
+   `blackdiamond/cottonwood/meta/<today>-complete.json` listed in `opal-data-assets`, invoke `cot-rebalancer-runner` once with
+   `{"mode":"pull"}` (RequestResponse). It must return `{"verdict": "SKIP-IDEMPOTENT", ...}` and no new key may appear under
+   `blackdiamond/cottonwood/bronze/rebalancer_*/<today>/` (list before and after; print both counts). If it pulls instead, stop:
+   there is no apply. Record the response and both counts in the ledger entry. (This is the guard's first live run; any vendor
+   call it made would fall under Andrew's ACT 1 word, @e5fb41862f.)
 1. Open a change-management ledger entry (`.tools/deploy_ledger.py`) naming this order, the laptop as the box, and the two resources.
 2. With `CHECKPOINT_DISABLE=1` and WITHOUT `MSYS_NO_PATHCONV`: `terraform plan -target=<event_target address> -target=<permission
    address>` in `infra/aws/terraform/opal-assets`. The plan must read 2 to add, 0 to change, 0 to destroy, both on those two
@@ -65,8 +71,8 @@ At the base (2026-10-07 ~14:1xZ, dell1): AC1 FAILS (`WIRED-BAD runner targets on
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file.
-- No change to the runner's code, IAM role, invoke-config, any schedule or rule definition, or any other function. No Lambda invoke,
-  no Black Diamond call, no S3 data write. Every terraform call with `CHECKPOINT_DISABLE=1`.
+- No change to the runner's code, IAM role, invoke-config, any schedule or rule definition, or any other function. One Lambda invoke
+  only (the act 0 probe); no S3 data write. Every terraform call with `CHECKPOINT_DISABLE=1`.
 - **Rollback** (if AC1 or AC2 fails after the apply): the half file's Rollback section.
 - **Refusal clause.** If a precondition or criterion cannot be met as written, stop, write the reason and the row's `spec_asserts` /
   `world_is` in your report, and do not widen the act. Row ids for this project are minted on dell1; `0.0.0_AB_MSTR` carries
