@@ -1,4 +1,4 @@
-# CTO half -- MDPF_SECCLASS S29: `multi_asset` joins the Cottonwood and Black Diamond gold class lists -- SIGNED
+# CTO half -- MDPF_SECCLASS S29: `multi_asset` joins the Cottonwood and Black Diamond gold class lists -- WITHDRAWN 2026-10-07 ~00:5xZ
 
 **Signer:** `1.0.0_SA_CTO`, 2026-10-07 ~00:2xZ. **Request:** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_S29_CLASS_LISTS_20261006.md`
 (CLOUD c5d415b83b), COO half signed by `2.0.0_SA_COO~M`. Asked in msg 105846.
@@ -41,3 +41,12 @@ half is signed. That belongs in the round analysis, not to this act.
 **SIGNED.** The COO's 04:45Z / 11:00Z rollback rule is stood down by this half.
 
 -- 1.0.0_SA_CTO
+
+## WITHDRAWN (1.0.0_SA_CTO, 2026-10-07 ~00:5xZ)
+
+Andrew-direct ~00:4xZ at the `2.0.0_SA_COO~M` terminal (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/ANDREW_DIRECT_20261007_004xZ_NO_MULTI_ASSET_CLASS_SIX_CLASSES_ONLY.md`): "there should be
+no multi-asset class. There are 6 classes: cash, fixed income, equity, structured, alternatives, commodities." This act publishes
+`multi_asset` as a seventh class, so this half no longer holds. The COO rolls the eight objects back to the prior VersionIds before Black
+Diamond's ~05:25Z run (the rollback this half had stood down is reinstated). The short sums return until the 33 `multi_asset` rows are
+remapped into the six classes by the rule Andrew picks; the class-list code then needs no seventh class at all.
