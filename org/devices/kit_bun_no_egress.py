@@ -463,7 +463,7 @@ def discover_env_names(bun):
     return sorted(names), related
 
 
-def run_order_of_proof(h, discover=True):
+def run_order_of_proof(h, discover=True, loopback_registry_only=False):
     """The ordered proof. Returns the result dict; sets result['stopped'] and stops at the first failure."""
     result = {"bun_path_resolved": True, "arms": h.arms, "steps": [], "stopped": None, "tmp_base": str(h.base),
               "rejected_tmp_bases": [r[0] for r in h.rejected_bases], "package": h.package}
@@ -491,11 +491,18 @@ def run_order_of_proof(h, discover=True):
     step("0b proxy-honour fetch of a loopback URL", rb,
          "URL is the loopback registry listener; honoured=%s (a request on the proxy listener) " % proxy_honored)
     # (1) the proxy proof: Redirect B alone, registry at its default, the strongest disarm
-    r1 = h.arm("proxy-proof", "proxy-proof", ["--no-install", "run", "probe.js"], proxy=True)
-    step("1 proxy proof, --no-install, registry default", r1, "expect zero; this arm cannot prove the proxy works")
-    if r1["requests_registry"] or r1["requests_proxy"]:
-        result["stopped"] = "STEP-1: the disarmed probe made %d request(s)" % (r1["requests_registry"] + r1["requests_proxy"])
-        return result
+    # --loopback-registry-only (CTO msg 106253): every arm whose registry address is NOT itself loopback is skipped, because on a
+    # bun version where the proxy is unproven such an arm relies on the proxy alone to keep the request on the machine.
+    result["loopback_registry_only"] = bool(loopback_registry_only)
+    result["skipped_arms"] = []
+    if loopback_registry_only:
+        result["skipped_arms"].append("1 proxy proof (registry at its default)")
+    else:
+        r1 = h.arm("proxy-proof", "proxy-proof", ["--no-install", "run", "probe.js"], proxy=True)
+        step("1 proxy proof, --no-install, registry default", r1, "expect zero; this arm cannot prove the proxy works")
+        if r1["requests_registry"] or r1["requests_proxy"]:
+            result["stopped"] = "STEP-1: the disarmed probe made %d request(s)" % (r1["requests_registry"] + r1["requests_proxy"])
+            return result
     # (2) the positive arm, Redirect A and B, no disarm. All forms of A at once first (the safest first trial: any one of them
     # landing on loopback keeps the request on this machine), then each form alone only when the proxy net is proven.
     forms_all = ["env:BUN_CONFIG_REGISTRY", "env:NPM_CONFIG_REGISTRY", "project-bunfig"]
@@ -508,7 +515,12 @@ def run_order_of_proof(h, discover=True):
         return result
     effective = []
     if landed_loopback(r2):
-        if proxy_honored:
+        if loopback_registry_only:
+            # a single form that this bun ignores would leave the registry at its public default: not run under this switch
+            result["skipped_arms"].append("2 each form of Redirect A alone")
+            result["forms_not_isolated"] = "--loopback-registry-only: every arm carries all three forms of Redirect A at once"
+            effective = list(forms_all)
+        elif proxy_honored:
             # the proxy is a proven second net: each form alone is now a safe trial
             for form in forms_all:
                 rf = h.arm("positive-alone:" + form, "positive-form", ["run", "probe.js"], registry_forms=[form], proxy=True)
@@ -570,7 +582,7 @@ def run_order_of_proof(h, discover=True):
     return result
 
 
-def measure(out=None, tmp_base=None, out_stream=None):
+def measure(out=None, tmp_base=None, out_stream=None, loopback_registry_only=False):
     out_stream = out_stream or sys.stdout
     bun = shutil.which("bun")
     if not bun:
@@ -580,7 +592,7 @@ def measure(out=None, tmp_base=None, out_stream=None):
     h = Harness(bun, tmp_base)
     try:
         try:
-            result = run_order_of_proof(h)
+            result = run_order_of_proof(h, loopback_registry_only=loopback_registry_only)
         except Exception as exc:  # a harness error stops the proof, it is never swallowed: the arms so far are still printed
             result = {"arms": h.arms, "steps": [], "stopped": "HARNESS-EXCEPTION: %s: %s" % (type(exc).__name__, asc(exc)),
                       "bun_version": "unknown"}
@@ -588,6 +600,8 @@ def measure(out=None, tmp_base=None, out_stream=None):
     finally:
         h.close()
     result["summary"] = summary
+    for name in result.get("skipped_arms") or []:
+        print("SKIPPED %s -- --loopback-registry-only: its registry address is not itself loopback" % name, file=out_stream)
     for s in result.get("steps", []):
         print("STEP %-72s registry=%d proxy=%d rc=%s %s" % (s["step"][:72], s["registry"], s["proxy"], s["rc"], asc(s["note"])),
               file=out_stream)
@@ -709,6 +723,8 @@ def main(argv=None):
     pm = sub.add_parser("measure")
     pm.add_argument("--out")
     pm.add_argument("--tmp-base")
+    pm.add_argument("--loopback-registry-only", action="store_true", dest="loopback_only",
+                    help="skip every arm whose registry address is not itself loopback, and say so (for a bun version on which the proxy is unproven)")
     sub.add_parser("selfcheck")
     sub.add_parser("wrap")
     ns = ap.parse_args(argv)
@@ -717,7 +733,7 @@ def main(argv=None):
         print(json.dumps({k: v for k, v in sc.items()}, indent=1))
         print("BUN-LISTENER-SELFCHECK ok=%s" % sc["ok"])
         return 0 if sc["ok"] else 1
-    rc, _ = measure(ns.out, ns.tmp_base)
+    rc, _ = measure(ns.out, ns.tmp_base, loopback_registry_only=ns.loopback_only)
     return rc
 
 
