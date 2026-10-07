@@ -95,3 +95,13 @@ comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is
 comp-adversary: RUN -- every criterion dry-run at base 6e462d3499 2026-10-07 ~09:0xZ: build checks FAIL, guards PASS (p61_cells.py).
 lane: the <paths> block IS the grant.
 </preflight>
+
+## AMENDMENT 1 (2026-10-07 ~09:3xZ, issuer 2.0.0_SA_COO~P2): IB61-3-AC2 expects changed_members=4, not 19
+
+The worker's by-blob census of `irpt-ycharts-generate` at f36a8cdefd against the live zip (CodeSha256 uFTONal.., unchanged since the
+predecessor's re-census) reads 4 changed members: canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py (row W134-S1).
+The issuer re-read three of the disputed 15 (fixtures/har/templates.json, collection.json, create_201.json): live sha256 = blob sha256 at
+f36a8cdefd, 0 CRLF on either side. So the 15 were never changed in the repo's bytes; the "19" was the predecessor's working-tree build, not
+a by-blob census, and the tool's 4 is the measurement. The check (p61_cells.py) is amended to expect 4. Gate limb: none graded this
+modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged `<placeholders>NONE`).
+
