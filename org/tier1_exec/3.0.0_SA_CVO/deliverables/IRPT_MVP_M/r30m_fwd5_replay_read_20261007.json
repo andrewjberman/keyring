@@ -1,0 +1,97 @@
+{
+ "cell": "IB-mr-301",
+ "criteria": {
+  "c1": {
+   "verdict": "PASS",
+   "account_node_id": "acc_015d15b45d7a8ac71f951a67",
+   "account_value": 779002.51,
+   "subtree_nodes": 54,
+   "securities": 52,
+   "partitions": 2,
+   "partitions_unbalanced": [],
+   "faults": [],
+   "ties": true
+  },
+  "c2": {
+   "verdict": "FAIL",
+   "ties": false,
+   "reason": "no Cottonwood account holds both SPYI/PSLV",
+   "accounts_holding_either": 29
+  },
+  "c3": {
+   "verdict": "PASS",
+   "firms_denominator": 3,
+   "firms": {
+    "49financial": {
+     "nodes": 154076,
+     "accounts": 7597,
+     "securities": 122173,
+     "partitions": 15187,
+     "partitions_unbalanced": [],
+     "partitions_unbalanced_count": 0,
+     "faults": [],
+     "account_sum": 1825384091.11,
+     "custody_total_served": null,
+     "served_reconcile_block": null,
+     "reconciled": true
+    },
+    "inflection": {
+     "nodes": 36115,
+     "accounts": 858,
+     "securities": 33695,
+     "partitions": 2343,
+     "partitions_unbalanced": [],
+     "partitions_unbalanced_count": 0,
+     "faults": [],
+     "account_sum": 208044040.13,
+     "custody_total_served": null,
+     "served_reconcile_block": null,
+     "reconciled": true
+    },
+    "cottonwood": {
+     "nodes": 17944,
+     "accounts": 860,
+     "securities": 15555,
+     "partitions": 2389,
+     "partitions_unbalanced": [],
+     "partitions_unbalanced_count": 0,
+     "faults": [],
+     "account_sum": 545819721.23,
+     "custody_total_served": null,
+     "served_reconcile_block": null,
+     "reconciled": true
+    }
+   }
+  }
+ },
+ "publications": {
+  "49financial": {
+   "business_date": "2026-10-05",
+   "revision": "94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd",
+   "manifest_key": "irpt/49financial/platinum/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.manifest.json",
+   "manifest_version": "f.bUxIIWnCDdw5BuJZEu8slD4eOu13fU",
+   "gold_key": "irpt/49financial/gold/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.parquet",
+   "gold_version": "VTQBCqWVzZs39BTV6FBhIQ02idQotn1x",
+   "gold_sha256": "5257424d5baab677e550cbf16ec636b40db1fad5e4ccc4f650c595f6eb4c82b6"
+  },
+  "inflection": {
+   "business_date": "2026-10-05",
+   "revision": "74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177",
+   "manifest_key": "irpt/inflection/platinum/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.manifest.json",
+   "manifest_version": "b491FhwZUmugLMrItLS0G1i0_ZyLLO84",
+   "gold_key": "irpt/inflection/gold/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.parquet",
+   "gold_version": "NEVQSzLmdbN0Vc9teRPZV_X9YpKh48of",
+   "gold_sha256": "ddcdb8fee2f10c93a42c2c45707f1fb025b0300fc790dec5e619bf02ff84d381"
+  },
+  "cottonwood": {
+   "business_date": "2026-10-05",
+   "revision": "bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e",
+   "manifest_key": "irpt/cottonwood/platinum/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.manifest.json",
+   "manifest_version": "CmX27kWdouqIZqj6.mArQYvCrLZcKmfn",
+   "gold_key": "irpt/cottonwood/gold/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.parquet",
+   "gold_version": "ocUU9fz9k91sHP4jblz71LlCTDjOdt0n",
+   "gold_sha256": "4eebe391648106d2a6f755fff666235c5dabc4656e027071f516f87ec3f25f2f"
+  }
+ },
+ "reader_identity": "arn:aws:iam::313476888478:user/Andrew_Berman"
+}
