@@ -13,7 +13,7 @@ return -> trace) on DEV, internal users only. FWD-4 (self-claim) is hop 3 of the
 | `TV-l-1` | Ticket service: request types as definitions (C-TYPE), the `analysis_request` type with its questions and the upload handle (C-ANALYSIS-REQUEST, hop 1-2), the requester clause of `_sod_block` removed (C-SELF-CLAIM, hop 3), a report-reference write on the ticket (C-HANDOFF, hop 5) | FWD-1, FWD-4 | NOT-EVALUATED | dell2 worker | WORLD (path floor: a Lambda handler; nothing applied by the worker) | worker | -- |
 | `TV-p-1` | Portal Ticket Center: choose Analysis Request, answer its questions, attach the file through the Analysis upload door, file only on NORMALIZED and show the findings otherwise (hop 1); from a held ticket, request the report through `POST .../analysis` with the ticket's `input_id` and write the reference back (hop 4-5); open the report from the ticket (hop 5) | FWD-1 | NOT-EVALUATED | dell2 worker (portal worktree) | LOCAL (DEV only; product file, lands by the portal review route) | worker | -- (builds against the API contract below, not against TV-l-1's output) |
 | `TV-d-1` | Deploy: TV-l-1's code and the one new route line, through `safe-apply`, ledger entry opened and closed | FWD-1, FWD-4 | NOT-EVALUATED | ISSUER (a served apply; no worker holds an apply) | WORLD | -- | TV-l-1 drained and merged |
-| `TV-r-1` | The one real run (hop 6): an Opal sign-in in Alyssa's role files one request (one household, one account, Overview, default fee) with a real holdings file on DEV, claims it, generates, opens the report from the ticket; the trace record shows ticket id, upload handle, report reference, timestamps | FWD-1, FWD-4 | NOT-EVALUATED | ISSUER | WORLD (a claim to Andrew) | -- | TV-d-1 applied; TV-p-1 on portal DEV; X-1 and X-2 below answered |
+| `TV-r-1` | The one real run (hop 6): an Opal sign-in in Alyssa's role files one request (one household, one account, Overview, default fee) with a real holdings file on DEV, claims it, generates, opens the report from the ticket; the trace record shows ticket id, upload handle, report reference, timestamps | FWD-1, FWD-4 | NOT-EVALUATED | ISSUER | WORLD (a claim to Andrew) | -- | TV-d-1 applied; TV-p-1 on portal DEV; X-1 landed (X-2 answered) |
 
 Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED.
 
@@ -30,9 +30,11 @@ Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED.
   `{upload_id, input_id}` with `input_id` matching `^portfolio_[0-9a-f]{64}$` (400 otherwise; 400 if absent for this type). Stored on
   the item as `answers` and `attachment`; never bytes. `requester_firm` is the answers' `firm`, server-checked by the existing
   `_firm_allowed`.
-- **Report reference.** `POST /api/scoped/tickets/{ticketId}/report` body `{report_id, request_id?}`: INTERNAL only; only the
-  ticket's current assignee; ticket must be `in_progress` and carry an `attachment`; writes `report_ref {report_id, request_id,
-  recorded_by, recorded_at}` and one `report_recorded` event. Any other body field -> 400.
+- **Report reference.** `POST /api/scoped/tickets/{ticketId}/report` body `{request_id, revision?}`: INTERNAL only; only the
+  ticket's current assignee; ticket must be `in_progress` and carry an `attachment`; writes `report_ref {request_id, revision,
+  recorded_by, recorded_at}` and one `report_recorded` event. Any other body field -> 400. **Per X-2 (msg 929, IRPT_YCDGEN):**
+  `POST .../analysis` returns no `report_id`; it returns `NOT_READY`/`QUEUED` with `data.identity.request_id` (+ `revision`), sent
+  with `selected_tenant` = the owner firm. The report is read at `GET .../analysis/requests/{requestId}` (and `/pdf`) once `READY`.
 - **Self-claim.** `_sod_block` drops the requester clause for every type; the complete-by-non-holder clause stays.
 
 ## Write sets (disjoint across slots)
@@ -55,6 +57,9 @@ Status vocabulary: NOT-EVALUATED / BUILT / SERVED / REALIZED.
   now. Requested, never written from this project.
 - **X-2 -> IRPT_YCDGEN's COO.** C-HANDOFF: confirm `POST .../analysis` with an `input_id` it did not upload from its own page, by an
   internal principal on behalf of the owner firm, is supported, and name the field the report reference returns in.
+  **ANSWERED 17:40Z (msg 929, 2.0.0_SA_COO~G2, from code):** supported as-is for an OPAL_GLOBAL principal with `selected_tenant` = the
+  owner firm, provided the input was uploaded for that firm (so it rests on X-1); reference `data.identity.request_id`. Not yet
+  exercised live (IRPT_YCDGEN F1 is pending Andrew's run). Folded into the contract above before issuance.
 
 **Chains.** A = TV-l-1 (slot ~1) -> TV-d-1 (issuer). B = TV-p-1 (slot ~2). TV-r-1 joins A and B with X-1, X-2. Fan-out 2 of 2 worker
 chains, cap 8.
