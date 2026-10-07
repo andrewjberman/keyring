@@ -5,7 +5,7 @@
  "project": "LGIC_BLANKFIX",
  "directive": "D14",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/d14-naming-check-blank-fixes-brief-20261007.md@af5d8b6df4",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -83,9 +83,10 @@
                     LGIC and none of it is handwritten aside from maybe this pass"
 
   FWD-8  A reader never meets a pattern from the code presented as if it were the name of a real thing
-         DONE WHEN  APPLIED -- patterns are shown as patterns in the list
+         DONE WHEN  EXERCISED -- the whole list read, and every pattern in it found shown as a pattern
          ACCEPT     a pattern with a blank meant to be filled in later is shown as a pattern, never as a
-                    broken name and never as a correct one
+                    broken name and never as a correct one; a reader going through the full list finds
+                    none presented either way
          SOURCE     brief O7; Part III O7
 
   FWD-9  The estate-wide naming check can be read as finished from one run that anyone can repeat
@@ -102,6 +103,8 @@
   skip list the repository already holds.
 - FWD-9 is LGIC_ENFORCE's FWD-5 seen from this project: when FWD-9 is REALIZED, `1.0.0_SA_CTO` grades LGIC_ENFORCE's FWD-5 from the
   same run.
+- v0.2 (2026-10-07): FWD-8's bar raised from APPLIED to EXERCISED on `3.0.0_SA_CVO`'s note at signing (msg 106166): five pattern rows
+  grade correct today, so "shown as a pattern" has to be read off the list, not taken from the change that was applied.
 - Two L2 rulings, recorded in the endpoint proposal: this is a project and not an LGIC_ENFORCE round; FWD-6 is owned here.
 
 ## CONTRACTS
