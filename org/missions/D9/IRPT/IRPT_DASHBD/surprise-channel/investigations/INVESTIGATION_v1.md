@@ -2057,3 +2057,38 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Disarms IRPT_DASHBD-W19-S4 (disarm owner 2.0.0_SA_COO~D2 named a backfill; the code now does it on the next fire) and uses the class-prefix read grant named unused in IRPT_DASHBD-W19-S3."
 }
 ```
+
+## IRPT_DASHBD-S29 -- round 22's rows resolved at the drain
+
+```json
+{
+  "id": "IRPT_DASHBD-S29",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T12:57:04Z",
+  "one_line": "Round 22's rows resolved at its drain @d48052d79b: W19-S2 ruled a release precondition, W19-S3 and W19-S4 closed by the class catch-up (amendment 1 @e765698322), W18-S1 closed by the trade-leg tokens moving into sources.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W19-S2",
+    "IRPT_DASHBD-W19-S3",
+    "IRPT_DASHBD-W19-S4",
+    "IRPT_DASHBD-W18-S1"
+  ],
+  "spec_asserts": "W19-S2: the bundle pins sit outside the grant; W19-S3: the class-prefix read grant is unused; W19-S4 (ARMED, disarm owner this seat): a class day skipped on a fire is never retried; W18-S1: the trade-leg tokens sit in the producer, not the declaration.",
+  "world_is": "W19-S2: the source map's staged_from pins are written at deploy time against the commit that carries the files; the never-widen packet now names them as an apply precondition (three entries, pinned to the drain commit with sha256), and the map is unedited (0-line diff). W19-S3 and W19-S4: handler.py's catch_up_classes() lists the class prefix and emits every trading day after the newest class day through the newest returns day (at most 10 per fire); tests test_a_skipped_day_is_retried_on_the_next_fire and test_the_catch_up_never_writes_a_day_beyond_the_newest_returns_day pass (96 passed across both test folders at the drain). Nothing is deployed, so the hazard was never live. W18-S1: sources.json carries the trade-leg tokens and the producer reads them there; returns DELTA=0 against the base handler AND base sources.json (sha256 11453fc7... both sides).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e765698322 (amendment 1)",
+      "bae1e8bd8b, 1a9f68b833 (worker)",
+      "d48052d79b (drain)",
+      "issuer re-run: DB22-1-AC1..AC3 PASS, proof VALID; pytest 96 passed"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Each named row's condition is resolved at HEAD by the drained code and packet; W19-S4 disarms by the catch-up before any deploy."
+}
+```
