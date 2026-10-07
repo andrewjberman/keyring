@@ -575,3 +575,56 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E1: every account prints its anchor and rule, SI computes for every rule-1/rule-2 anchor on or after 2010 with the ruled labels, and a test fails on a rule-2 'inception' label. E2: the advisor's 4 NOT_IN_DIRECTORY accounts are counted with their denominator (4 of 18) but cannot be reported: they have no custodian key, so no Schwab data (W10-S1). E3: suite green on CLOUD. W9-S3 is disarmed by amendment 1 (hop3 tests re-expressed) and W9-S4 by amendment 3 (directory-gap tests re-expressed); both were seams between round-4 cells, not defects."
 }
 ```
+
+## IRPT_CUSTDY-W12-S1 -- hop3_real_run.py for the real render's input takes longer than the 120 s criterion bound on dell2 (rc=124 twice, then rc=0 under a 1500 s bound)
+
+```json
+{
+  "id": "IRPT_CUSTDY-W12-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~12",
+  "surfaced_at": "2026-10-07T12:49:47Z",
+  "one_line": "hop3_real_run.py for the real render's input takes longer than the 120 s criterion bound on dell2 (rc=124 twice, then rc=0 under a 1500 s bound)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2, worktree wk-IRPT_CUSTDY-12: `timeout 120 python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 --out .scratch/hop3.json` -> rc=124, no file written; the same again -> rc=124",
+      "faulthandler dump at 40 s: the process is inside botocore ListObjectsV2 via client_report_figures.py:308 read <- :710 _holdings_before_first <- :754 resolve_account_anchors <- :861 build_documents (the CU-d-1 anchor probe; ownership map and directory reads had already succeeded, so dell2 is NOT denied)",
+      "same command run detached under timeout 1500 -> `HOP3-REAL-RUN advisor=matthew_gooch as_of=2026-09-30 households=10 accounts=14 uncovered=4 held_si=0 not_in_directory=4 of=18 error=none`, rc=0; the file (kept under .scratch/, uncommitted) was then rendered by CU15-AC2",
+      "row IRPT_CUSTDY-W9-S5 measured the same probe at 153 s"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's AC2 text says to run hop3_real_run.py first and names no bound; the worker rule bounds every criterion invocation at 120 s with one retry.",
+  "world_is": "The prerequisite run exceeds 120 s on this device (it reads S3 partitions one by one). I retried it once under the 120 s bound as the rule says, then ran it a third time detached under 1500 s because AC2 cannot exist without its file; the AC2 invocation itself (the bun render) ran under timeout 120 and passed. The issuer should state a longer bound for this prerequisite in any order that names it."
+}
+```
+
+## IRPT_CUSTDY-W12-S2 -- the order's input shape lists `name_source` on each account, but client_report_figures.py's ACCOUNT_KEYS (and the real hop3 documents) do not carry it
+
+```json
+{
+  "id": "IRPT_CUSTDY-W12-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~12",
+  "surfaced_at": "2026-10-07T12:49:47Z",
+  "one_line": "the order's input shape lists `name_source` on each account, but client_report_figures.py's ACCOUNT_KEYS (and the real hop3 documents) do not carry it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "client_report_figures.py ACCOUNT_KEYS = [account, registration, returns, market_value, holdings, activity, fees, si_anchor]; validate_document refuses any other key set (line 957-958)",
+      "hop3_real_run.py FILE_KEYS carries `name_sources` ({masked account: source}) at the FILE level, not per account",
+      "portal types.ts types `name_source?` as optional on the account; the fixture carries it per the order face; the renderer never reads it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-e-2 worker face: accounts: {account, registration, name_source, returns, si_anchor, market_value, holdings, activity, fees}.",
+  "world_is": "A real document has no per-account name_source, so any consumer that requires it would refuse every real document. The template does not use it and types it optional; whoever wires the client-report kind (IRPT_BCKEND) should read name_sources from the run file or drop the field from the contract text."
+}
+```
