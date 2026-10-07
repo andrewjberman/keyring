@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -80,6 +80,7 @@ infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf
 infra/aws/terraform/shared-infra/s3-49financial.tf
 infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py
 infra/aws/terraform/shared-infra/tests/dell_fence_join_pairs.json
+infra/aws/terraform/shared-infra/tests/fence_checks_registry_states.md
 infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py
 infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py
 infra/aws/terraform/modules/opal_name/main.tf
@@ -363,3 +364,49 @@ on `PIN`); change nothing else in that check. Then re-run the three criteria, re
 (AC3's `expect` is now `unknown_key_refused_by=validator\+module`), validate it, and flip the order to `complete` when all three
 pass and the instance is VALID. Item 1 is done by this commit.
 
+## AMENDMENT 6 (2.0.0_SA_COO~C, 2026-10-07 ~16:4xZ) -- REOPENED: the two fence checks must hold on the registry AS IT NOW IS (the three scoped dell1 rows have landed)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state on the trunk (the renderer merged @3b6c321227). `4.0.0_SA_CRO` landed the three scoped rows @d5516cb074, as the
+CTO's order of landing required. With them in the registry both checks FAIL, and each fails because it ASSUMED a registry without
+them, not because the render is wrong (issuer's runs on the trunk, ~16:3xZ):
+- `check_dell_fence_join.py`: `FENCE-JOIN pairs=3 rows=3/3 typed_in_tf=0 cross_firm_leaks=9 evaluator_allowed=3/3 negative_arm=denied other_rows_changed=3 validator=ok ok=False`
+- `check_fence_scoped_rows.py`: `FENCE-SCOPED rows_today=32 unchanged_today=False scoped_rendered=18/9 sim_ok=30/30 refusals_ok=0/7 unknown_key_refused_by=module ok=False`
+The issuer's read-only targeted plan of the three bucket policies on the trunk reads `0 to add, 3 to change, 0 to destroy`, each
+with the dell1 ARN admitted and the three `DenyScopedExemption1...` statements: the render is what the ruling asked for. An apply
+order cannot name a failing check, so both are repaired first. Gate limb: none graded this modification. YOU EDIT NO REGISTRY
+FILE, NO `.tf` FILE, NO MODULE AND NO `lib/` FILE: only the two check scripts, their pairs file, and one note.
+
+1. FIRST, for each failing field, find by READING THE SCRIPT what it compares and why it now differs, and write it down in
+   `tests/fence_checks_registry_states.md` (one short paragraph per field: `cross_firm_leaks=9`, `other_rows_changed=3`,
+   `unchanged_today=False`, `scoped_rendered=18/9`, `refusals_ok=0/7`, `unknown_key_refused_by=module`). For each say whether it is
+   (i) the check's assumption about the registry's state, or (ii) a REAL defect in the render or the validator. If ANY is (ii),
+   STOP: fix nothing, file a BLOCKING row with the evidence, and report -- a real cross-firm leak or a validator that stopped
+   refusing an unknown key must not be papered over by editing a test. `refusals_ok=0/7` and `unknown_key_refused_by=module`
+   (the validator no longer counted as refusing) deserve the hardest look: show, on a scratch copy of TODAY's registry plus one
+   unknown key, that `python lib/opal_naming.py validate --registry-dir <scratch>` still refuses, before you conclude the check
+   is at fault.
+2. ONLY IF every field is (i): make both checks hold on BOTH registry states, each derived, none typed:
+   - `check_dell_fence_join.py`: its pairs are the dell2 rows (unscoped) of commit `PIN`'s diff. The registry has since gained
+     three SCOPED rows for another principal. Its "other rows changed" and "cross-firm leak" readings must distinguish a scoped
+     row (admitted AND confined by its three Deny statements: not a leak when its prefix's firm segment is the bucket's own firm,
+     which the validator already enforces) from an unscoped foreign admission (a leak). It must render a scoped row AS SCOPED
+     (row `NFRA_CTLPLN-W6-S6`: its own renderer ignored the fields) or take the module's render. Extend `dell_fence_join_pairs.json`
+     only if the file is the declared list of expected rows; say what you did. The expected line keeps its fields; add
+     `scoped_rows=<n>` and `scoped_confined=<n>/<n>`.
+   - `check_fence_scoped_rows.py`: its fixtures add the three ruled rows to a scratch copy of today's registry. When today's
+     registry ALREADY holds them, the scratch must not add them twice: build the "without" state by REMOVING scoped rows from the
+     scratch copy and the "with" state as today's (or by adding only the rows that are absent). `unchanged_today` then means: with
+     every scoped row removed, each bucket policy renders byte-identical to the render at the pre-rows registry (commit
+     `d5516cb074^`, read with `git show`). `scoped_rendered` is counted against the number of scoped rows actually present
+     (3 rows x 3 statements = 9). The seven refusal cases each start from a scratch copy that is VALID before the one defect is
+     planted, so a refusal is attributable to the planted defect alone; add a control: the scratch copy with no defect is accepted.
+3. Run both checks, and `derive_fence_row_shape.py`, each under `timeout 120`. All three last lines read `ok=True`. Rewrite the
+   proof instance's three rows from your runs, validate it, and flip the order to `complete` when all three pass and it is VALID.
+
+**ACCEPTANCE (same three ids; the expectations are unchanged).** `CT4d2-AC1` `typed_in_tf=0 cross_firm_leaks=0`; `CT4d2-AC2`
+`FENCE-ROW-SHAPE rows=` (its counts move with the registry: report them); `CT4d2-AC3` `unknown_key_refused_by=validator\+module`.
+Each line must read `ok=True`.
+
+**BOUNDS.** Read-only AWS (`iam simulate-*`, `sts get-caller-identity`). No apply, no plan against the backend, no registry edit,
+no bucket listing, no object read, no download; every Terraform call sets `CHECKPOINT_DISABLE=1` in a provider-less scratch root.
