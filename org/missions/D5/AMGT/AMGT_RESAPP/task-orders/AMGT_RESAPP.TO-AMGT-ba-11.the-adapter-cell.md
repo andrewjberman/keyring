@@ -179,3 +179,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @8a8a846eaf; proof VALID (worktree checker); the adapter cell: /refresh removed and /resolve mounted (route count 18), absent-axis reasons, the print text step skipped (EQUAL 3 of 3), all eight hookups; AC1 5 of 5 over 95 names and 210 sentences (57 bands with items, 38 with the 30-day reason), AC3 6 passed; api suite 756 passed in the worktree; rows Z-W277-S1..S4</status>
