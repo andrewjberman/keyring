@@ -253,6 +253,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     },
     "spec_asserts": "Feeding a saved plan to the recorder scopes it to what that plan applies, and its refusal names its cause.",
     "world_is": "A reader who counts aws_lambda_function entries in resource_changes without reading change.actions concludes the apply deployed the runner (the seat did, then corrected it from the resolver source). And --plan resolves against the terraform root, so a path fault and an empty-set refusal print the same verdict line -- the same diagnostic-ambiguity shape as MDPF_HEALGAP-S7. Tool owner unread; outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-07T20:20:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-D1-S1",
+    "one_line": "The induced auth-lapse input on the cot rebalancer's daily event target stands about 12.5 hours (17:40Z to 06:20Z 2026-10-08), not the half's 'about 25 minutes'; any untargeted apply of opal-assets in that span restores the input and silently voids the 06:00Z FWD-1 test.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 106554, relayed as dell1 msg 627: CROSS-BOX DEPLOY NOTICE, no untargeted apply of infra/aws/terraform/opal-assets until 06:20Z 2026-10-08",
+        "~F's plan at 20:10Z: aws_cloudwatch_event_target.cot_rebalancer_runner_daily '1 to change'; live input {\"mode\":\"pull\",\"induce\":\"auth-lapse\"}"
+      ]
+    },
+    "spec_asserts": "The FWD-1 exercise half (CTO_HALF_MDPF_HEALGAP_FWD1_EXERCISE_20261008) sizes the induced state at about 25 minutes.",
+    "world_is": "The input was set at 17:40Z for a 06:00Z fire and is restored at 06:20Z, so the window is about 12.5 hours, across a whole evening of other applies on a shared root. The only guard is the laptop's time-boxed notice. Disarm: G1 restores the input at 06:20Z and reads the target back; the notice expires then."
   }
 ]
 ```
