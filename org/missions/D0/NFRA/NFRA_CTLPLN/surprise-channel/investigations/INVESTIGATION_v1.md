@@ -2375,3 +2375,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Copying the installed script byte for byte would carry the laptop's interpreter path into the Dell's Scripts folder, where it names a python.exe that does not exist. Restoring the line makes the packed bytes differ from the installed bytes (and from the installed RECORD hash) for these four files, while matching what the package's own wheel carries; the worker chose restoration, said so here, and the order did not say it."
 }
 ```
+
+## NFRA_CTLPLN-W14-S6 -- TO-CT-a-1 amendment 3: the policy simulator reads the key policy's account-root principal as a direct grant, so two admin arms read allowed in the raw run
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T17:07:15Z",
+  "one_line": "iam simulate-custom-policy reads the account-root principal of a KMS key policy as a direct grant to every account user, so kms:ScheduleKeyDeletion and kms:PutKeyPolicy read allowed for a Dell user on the transcripts key policy before AND after this change; KMS itself treats the root statement as delegation to IAM, and the Dell users' own live policies refuse both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py, ARM lines: for both cloudops-dell1-agent-user and cloudops-dell2-agent-user, kms:ScheduleKeyDeletion and kms:PutKeyPolicy read raw_doc=allowed AND raw_pre_edit_doc=allowed (identical on the document without this change); with the root statement removed (named_statements_only) both read implicitDeny; the rule the script counts is the KMS rule (a statement naming the user, or a root statement naming the action AND the user's own policy allowing it): own_policies kms:ScheduleKeyDeletion implicitDeny, kms:PutKeyPolicy explicitDeny (cloudops-dell-agent-respol-policy), so the counted result is dell_write_refused=10/10 while the raw simulator reads 6/10",
+      "the simulator also refuses a bare Resource \"*\" in a resource policy (ResourceNames are not in a valid ARN format), so the script passes the document with each \"*\" replaced by the key ARN for the simulator call only; the rendered and committed document keeps \"*\"",
+      "the same two raw 'allowed' arms exist today for any account user the root statement of RootAdministersTheKeyAndCannotUseIt names by principal; the amendment's expectation (each write arm implicitDeny or explicitDeny) is therefore met under the KMS rule and not under the raw simulator, and the proof row says which"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 3 step 3: each Dell user kms:Encrypt, kms:GenerateDataKey, kms:ReEncryptFrom, kms:ScheduleKeyDeletion, kms:PutKeyPolicy -> NOT allowed, by iam simulate-custom-policy with the rendered document as the resource policy.",
+  "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
+}
+```
