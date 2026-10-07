@@ -4433,3 +4433,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "S57 is the laptop's row (on origin); this row disarms it by citation, never by editing it. Filed on dell1."
 }
 ```
+
+## MDPF_SECCLASS-W53-S1 -- the staged e55 port is the pre-amendment build, and the census file is missing
+
+```json
+{
+  "id": "MDPF_SECCLASS-W53-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~53",
+  "surfaced_at": "2026-10-07T16:42:20Z",
+  "one_line": "The three files the issuer staged for the e55 release port are the PRE-amendment blobs (46bda757e1), not 4e73b996d0's; the amendment-1 build also carries d00_census_out.json, which the staged set and this order's <paths> omit. Refusal clause fired; nothing committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse :<path> vs 4e73b996d0:<path> at ad636c9c03 index: d06_firm_mix_summary.py 2a8f45a3 vs 355b2b98; tests/test_d06_unclassified_line.py 2ddaaac8 vs 7141c932; half request b0a86387 vs a99fba4a -- all three DIFFER",
+      "the staged blobs equal 46bda757e1's (2a8f45a3, 2ddaaac8, b0a86387): the original ~38 build before AMENDMENT 1",
+      "the diff is substantive: staged test keeps test_only_shape_delta_against_the_frozen_census_is_the_new_key (expects the census to REFUSE the fourth key); staged half still says the census edit is outside the grant and has no RELEASE PRECONDITION section; 4e73b996d0 carries the census-passes control and the precondition",
+      "git diff 46bda757e1 4e73b996d0 -- data/assets/scripts/gold/runners_49f/d00_census_out.json = 4 insertions: the amendment-1 build also changed the census, which is neither staged nor in this order's <paths>; without it the shipped emitter refuses every publish (Branch B of the half, row W38-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the three staged files are the issuer's cherry-pick of 4e73b996d0 and each blob equals 4e73b996d0's.",
+  "world_is": "None of the three equals 4e73b996d0's; they equal 46bda757e1's. The correct port needs the 4e73b996d0 blobs of the three files PLUS d00_census_out.json, and that census path is not in <paths>. The worker committed nothing and did not weaken or rebuild anything; AC1/AC3 not run on the wrong blobs.",
+  "notes": "Fix for the issuer: re-stage the three paths from 4e73b996d0 (git restore --source=4e73b996d0 --staged --worktree) and add d00_census_out.json to this order's <paths> and the staged set, then re-issue slot ~53."
+}
+```
