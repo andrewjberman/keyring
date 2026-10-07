@@ -654,12 +654,11 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
-
-## NFRA_CTLPLN-S7 -- dell1 came up with one of the repo's git hooks; every seat's commit there ran ungated until 07:3xZ
+## NFRA_CTLPLN-S8 -- dell1 came up with one of the repo's git hooks; every seat's commit there ran ungated until 07:3xZ
 
 ```json
 {
-  "id": "NFRA_CTLPLN-S7",
+  "id": "NFRA_CTLPLN-S8",
   "project": "NFRA_CTLPLN",
   "fabric": "laptop",
   "surfaced_by": "0.0.0_AB_MSTR~DELL1",
