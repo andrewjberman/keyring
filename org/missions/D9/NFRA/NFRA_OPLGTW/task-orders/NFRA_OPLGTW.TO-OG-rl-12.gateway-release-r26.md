@@ -20,7 +20,7 @@ EGRESS CLASS, declared: NONE beyond Opal's own AWS (S3 upload, SSM) and the publ
 
 Handed only after BOTH hold: release r25 (`OG-rl-11`) is live and closed, and `OG-al-2` is drained to CLOUD. FOLLOW
 `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/RELEASE_ORDER_FORM.md` IN FULL: Phase A steps 1-8 with 7
-(7a does not apply: no tool and no route is added), Phase B 9-12, and Phase D 13. Step 10 names the deploy line, the
+AND 7a (AMENDED A3: a route is added), Phase B 9-12, and Phase D 13. Step 10 names the deploy line, the
 deploy identity and the manifest commit. Reuse the `r25_*` tooling in
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/`; copy to `r26_` names.
 
@@ -39,6 +39,24 @@ deploy identity and the manifest commit. Reuse the `r25_*` tooling in
     any send-split or id-shape test fake that cell changed. Handed only after `OG-up-2` is drained too.
   - The dedupe cannot be exercised live without a real send, which this project never runs. The ANNOUNCE says so: it
     rests on the offline tests, and the first corrected same-date re-send is its first live exercise.
+  - **AMENDED A3 (release request: 1.0.0_SA_CTO~Z msgs 30765, 30774):** the set also carries ETFS_RIVALS `RIV-rt-1`,
+    the chart route. Take its hunks from `git diff f7f2cb7c2e^1 f7f2cb7c2e -- infra/aws/ec2/opal-gateway`: 4 files,
+    `app/rivalfunds_view.py`, `app/server.py` (ONE Route line), `app/tests/test_rivalfunds_view.py`, and the
+    source-only `tests/test_principal_cutover.py`. The release commit `f1a6582ee1` predates this: RE-CUT it. Reset
+    branch `rel-nfra-oplgtw-r26` in `/c/tmp/og-rel21` to ONE new commit on live `240ac2fe5a` carrying all three cells,
+    and prove `git diff --name-only <new sha> e3beea0b5c -- infra/aws/ec2/opal-gateway` lists the runbook only.
+    - Re-run Phase A steps 1-7 and 7a on the NEW sha. A step whose earlier output does not depend on the release
+      bytes (step 1, step 4) is re-read, not rebuilt.
+    - The route is ADDITIVE. The verify script's AFTER arms gain, in-process on the host with a synthetic viewer:
+      `/rivalfunds/2000-01-01/chart/ABC` answers 404 with `no chart for this fund and day`;
+      `/rivalfunds/2026-10-06/chart/abc` answers 400; `/rivalfunds/2026-10-06` and `/rivalfunds/2026-10-06/audit`
+      answer as they do on the installed code. Record them in `W/RL12_FLOOR.json` as `chart_404`, `chart_400`,
+      `day_page_unchanged`, `audit_page_unchanged`. Any of the four off its value is a rollback trigger.
+    - No chart object exists under the page prefix yet (0 of 115 keys), so the 200 arm rests on
+      `app/tests/test_rivalfunds_view.py`. The ANNOUNCE says so. Write no object to S3.
+    - The ANNOUNCE's blast radius covers all three cells. The route's text is in
+      `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/RELEASE_NEEDS_RIV-rt-1_CHART_ROUTE_20261007.md`
+      sections 2 and 3 (on CLOUD @ec89bbe212; read it with `git show ec89bbe212:<path>`).
   - If CLOUD carries any OTHER gateway difference, STOP before the release commit and report its files and commits.
     Another seat's change needs its own release request and halves; do not carry it silently.
 - **Served output WIDENS, by Andrew's word.** The ANNOUNCE names it:
@@ -119,6 +137,10 @@ once per phase.
   Should r25 roll back or re-cut, the issuer amends the pin before the hand-off.
 - AMENDMENT 1 (04:4xZ, issuer, before any hand-off): the release set gains OG-al-2's item 4 (row Z-S65, CTO msg 30563).
 - AMENDMENT 2 (05:2xZ, issuer, before any hand-off): the release set gains OG-up-2 (CTO R36, msg 30594).
+- AMENDMENT 3 (10:2xZ, issuer, after the Phase A partial and before any GO): the release set gains ETFS_RIVALS RIV-rt-1
+  (the chart route) on 1.0.0_SA_CTO~Z's release ask, msgs 30765 and 30774; form step 7a now applies; the release
+  commit is re-cut. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads
+  `<placeholders>NONE</placeholders>`.
 - Pre-cut 04:3xZ: `rl12.AC1` FAIL (r25 is not live yet; no ledger). `rl12.AC2` FAIL (the record is absent).
 
 <status>pending</status>
