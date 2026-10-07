@@ -21766,6 +21766,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased. Nothing is broken in the served contract: an uncovered pool name reads as built. Whether the page should OFFER an uncovered ETF-held name as if it were a covered pack, or mark it as outside coverage before the tiles, is a page call for DSGN_AMGTV1 and an FWD-2 question for this project (the first pull of a never-covered company, issuer act ba-23, is the act that would give such a name a stored record). No order is cut on this row."
+},
+{
+  "id": "AMGT_RESAPP-Z-S365",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T11:41:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The stored Bloomberg officer list is written under a slash-safe partition and read under a raw-slash one, so a name whose key carries a slash is stored and never served: after the ba-22 pull BP/ LN Equity and NG/ LN Equity each hold a good object and the page still says no list is stored. 2 of 86.",
+  "spec_asserts": "Issuer act ba-22 (pair COO @8536310333, CTO @4f79c10223): after an object lands for a name, exec_roster_chain's Bloomberg leg serves that list on the next request, and the name leaves the plan's population.",
+  "world_is": "Writer: hbloom.bronze_write partitions by store.entity_partition, which encodes the slash: s3://opal-data-harvest/bloomberg/harvest/bronze/exec_officers/security_key=BP-SLASH-_LN_Equity/20261007T113610Z.json (811 B, NAME BP PLC, 10 officer entries, no field errors) and .../security_key=NG-SLASH-_LN_Equity/20261007T113644Z.json (701 B, NATIONAL GRID PLC, 9 entries). Reader: bloomberg_fallback.StoredBloombergInput.newest_key lists the prefix security_key=<bloomberg_fallback.security_key(security)>/ and that function is security.replace(' ', '_'), giving BP/_LN_Equity with the raw slash. newest_key('BP/ LN Equity') and newest_key('NG/ LN Equity') return None; the control newest_key('AMD US Equity') returns today's object. Of 91 partitions under exec_officers/, 2 carry -SLASH-, these two, so the reader's rule had never met a slash name. The plan still names both as needing a pull (names 2 calls 2 after the run), so every later officers run would spend two calls and land two more objects the reader cannot see.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/BA22_OFFICERS_ACT_RECORD_20261007.md: the partition of the committed 86 names through run_chain reads A 84, landed-not-read 2, B 0, D 0; 86 of 86 names have a stored object.",
+      "Read by this seat at 11:4xZ: both objects' bodies, the reader's key function source (one line), newest_key on the two names and on the control, and the prefix listing (91 partitions, 2 with -SLASH-).",
+      "NOT measured: whether another reader of exec_officers (the freshness view, fwd7_plan) applies the same raw-slash rule; whether other bronze channels have a reader with it. The officers pull was not re-run."
+    ]
+  },
+  "notes": "Surfaced, not chased. No code edited, no second pull. The remedy is a repair of the reader's key function in lib/research/management/bloomberg_fallback.py (use the store's slash-safe partition), with a test on a slash name, and it reaches the page only with the next Lambda redeploy. Until then the two names read as before the pull. This seat cuts it as a cell at the next recut or as an amendment once the CTO has the round's read."
+},
+{
+  "id": "AMGT_RESAPP-Z-S366",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T11:41:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "research_pulls.py reports TERMINAL_DOWN (exit 5, 0 calls) when the interpreter it runs under has no blpapi: a missing library and a signed-out Terminal read identically, and the driver names no interpreter.",
+  "spec_asserts": "Cell AMGT-ba-25: health() false stops TERMINAL_DOWN with no call and no sign-in attempt, meaning the Terminal is not answering.",
+  "world_is": "At 11:31:05Z this seat ran `python integrations/bloomberg/research/research_pulls.py run segments --probe \"AMD US Equity\"` under the shell's default interpreter, Python 3.14.7, where `import blpapi` raises ModuleNotFoundError. terminal_healthy() catches every exception and returns False, so the run printed `pulled 0 failed 0 calls 0 stopped TERMINAL_DOWN`, exit 5, two seconds after the scheduled vehicle had completed against a live Terminal (LastTaskResult 0; PRECONDITION PASS). The same command under the vehicle's interpreter (Python 3.11.9, blpapi 3.26.4.2, boto3 1.43.46) made the call at 11:32:01Z. No call was spent by the first run. The plan subcommand needs boto3 only and runs under either interpreter, so `plan` succeeding says nothing about whether `run` can reach Bloomberg.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The two runs' output lines and exit codes, and `import blpapi` exercised under both interpreters by this seat; integrations/bloomberg/research/research_pulls.py terminal_healthy(): `except Exception: return False`.",
+      "NOT measured: whether any other caller of this driver runs it under the default interpreter. The driver was not edited."
+    ]
+  },
+  "notes": "Surfaced, not chased. A seat reading TERMINAL_DOWN from this driver may wait for a sign-in that is not needed, or report the Terminal down. Two repairs an owner may pick, neither taken: the driver distinguishes an import failure (its own exit word) from a failed health call; or the act's invocation names the interpreter the way scheduled_daily_pull.cmd does (PY_AWS). Until then: run the driver under ...\\Programs\\Python\\Python311\\python.exe."
 }
 ]
 ```
