@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.18",
+ "prd_version": "v0.19",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26"],
  "status": "RATIFIED"
 }
 ```
@@ -278,6 +278,16 @@
          SOURCE     brief O10; Andrew-direct 2026-10-07 ~16:3xZ, "whether it takes place in launcher
                     updates, skill updates/creation, gates, etc., I want to make sure we cover both
                     GitOps, AWS DevOps, and Agent Workflow Ops"
+
+  FWD-26 Anything an agent writes in Andrew's name is written from one file of how he writes
+         DONE WHEN  EXERCISED -- one draft written for him from the file and read by him
+         ACCEPT     there is one file that shows how Andrew writes, built from real messages of his
+                    for each kind of thing an agent would write for him; an agent drafting a reply or
+                    a post in his name uses it, and Andrew reading the draft says it sounds like him;
+                    nothing is sent in his name that he has not approved
+         SOURCE     Andrew-direct 2026-10-07 ~21:4xZ, "i need an andrew_voice.md used for anything
+                    that an agent would speak for, that uses representative emails or teams messages
+                    or whatever as a reference for the given action"
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -759,3 +769,26 @@ An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to
    an act only he can do still reaches him.
 
 An ENDPOINT change (FWD-22's ACCEPT): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.
+
+## ADDENDUM v0.19 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: the voice file. FWD-26
+
+Andrew-direct ~21:4xZ at the `2.0.0_SA_COO~R` terminal, recorded verbatim by that seat at
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_214xZ_COO_R_INBOUND_FOR_BOTH_TEAMS_AND_OUTLOOK_AND_AN_ANDREW_VOICE_MD.md`
+(@4f53112d76): "Yeah i need it for both teams and outlook, i believe i offered a spec/concept for how it would work for outlook.
+Also i need an andrew_voice.md used for anything that an agent would speak for, that uses representative emails or teams
+messages or whatever as a reference for the given action."
+
+1. **FWD-26 is new**, at the next unused id. It belongs to workstream INBOUND (`2.0.0_SA_COO~R`).
+2. **C-SEATS clause 10, the voice file.** One file, `andrew_voice.md`, organised by the kind of act (a reply to a client's
+   mail, a Teams reply, a Teams post, an End of Day post, and others as they arise), each with representative messages Andrew
+   himself wrote. The messages come from his own mailbox and his own Teams, through the gateway, read only. Names are not
+   wiped (his word of ~18:3xZ). `daily_reports/eod/VOICE.md`, which the End of Day post reads today, is not replaced by a
+   cell's choice: the cell reads it, carries what it holds into the new file's End of Day section, and the reader of the old
+   file moves to the new one in the same cell or stays where it is. Where the file lives is the cell's, said at the cut.
+3. **What does not change.** Nothing goes out in his name without his approval: no mail is sent by an agent (a draft only),
+   and nothing posts to Teams without his 1.
+4. **FWD-20 and clause 9: Teams and mail in the same round.** His word is "both". Clause 9 already carries what he gave for
+   mail at ~18:3xZ (his mailbox only; a sender from one of the five firms; his name in the body). Whether he meant more than
+   that by "a spec/concept" is not known; the round is cut on clause 9 and a wider reading arrives as his word.
+
+An ENDPOINT change (one outcome added): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.

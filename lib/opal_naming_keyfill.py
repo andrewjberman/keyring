@@ -263,15 +263,64 @@ def bucket_of(item, text=None):
     return None, "the file has %d bucket candidates and the key's line picks none: %s" % (len(allb), ", ".join(sorted(allb)))
 
 
-def _conflict(name, v, root_entry):
-    """A token of the key's own path that names a firm or source other than the root's, else None."""
-    own_scope = v.scope.get(root_entry.get("scope"), root_entry.get("scope"))
-    own_names = {root_entry.get("source"), root_entry.get("system")}
+def _firms(v):
+    """The scope words that are a firm (a firm has a bucket); global and the numbered scopes are not."""
+    return set(v.bucket_firm.values())
+
+
+def _firm_check(name, v, bucket, bbasis, root_entry):
+    """The cross-firm check of one stored file. {"home", "home_kind", "clash", "unchecked"}.
+    What the key's firm is compared WITH is the firm of its own bucket (the registry's bucket-to-firm table), whatever
+    the root entry fills; where the bucket was not read (or names no firm) the root entry's scope stands in, when the
+    entry may give one (no `fills`, or `fills` lists scope); otherwise nothing is compared and `unchecked` says why.
+    A path word naming a source other than the entry's is judged only where the entry gives a source."""
+    fills = None if root_entry is None else root_entry.get("fills")
+    can_scope = root_entry is not None and (fills is None or "scope" in fills)
+    can_source = root_entry is not None and (fills is None or "source" in fills)
+    bfirm = v.bucket_firm.get(bucket) if bucket else None
+    own_scope = v.scope.get(root_entry.get("scope"), root_entry.get("scope")) if can_scope else None
+    if bfirm is not None:
+        home, kind = bfirm, "bucket"
+    elif can_scope:
+        home, kind = own_scope, "root"
+    else:
+        home, kind = None, None
+    unchecked = None
+    if home is None:
+        if bucket is None:
+            why = "the key's bucket was not read (%s)" % (bbasis,)
+        else:
+            why = "bucket %s names no firm" % (bucket,)
+        if root_entry is None:
+            unchecked = "the firm could not be checked: %s and there is no root map entry" % why
+        elif can_scope:
+            unchecked = "the firm could not be checked: %s and the root entry gives no scope" % why
+        else:
+            unchecked = ("the firm could not be checked: %s and the root entry's fills (%s) leave out scope, so it gives "
+                         "no firm to compare with" % (why, ", ".join(fills)))
+    own_names = set() if root_entry is None else {root_entry.get("source"), root_entry.get("system")}
+    firms = _firms(v)
+    clash = None
     for tok in _TOKEN_RE.findall(name.lower()):
-        if tok in v.scope and v.scope[tok] != own_scope:
-            return "path token %r names firm %r, the root entry's scope is %r" % (tok, v.scope[tok], own_scope)
-        if tok in v.v1 and tok not in own_names:
-            return "path token %r names source %r, the root entry's source is %r" % (tok, tok, root_entry.get("source"))
+        if home is not None and tok in v.scope and v.scope[tok] != home and (kind == "root" or v.scope[tok] in firms):
+            if kind == "root" or own_scope == home:
+                # the root's scope and the bucket's firm are the same firm: the wording the root check already reads
+                clash = "path token %r names firm %r, the root entry's scope is %r" % (tok, v.scope[tok], home)
+            else:
+                clash = "path token %r names firm %r, the firm of bucket %s is %r" % (tok, v.scope[tok], bucket, home)
+            break
+        if can_source and tok in v.v1 and tok not in own_names:
+            clash = "path token %r names source %r, the root entry's source is %r" % (tok, tok, root_entry.get("source"))
+            break
+    return {"home": home, "home_kind": kind, "clash": clash, "unchecked": unchecked}
+
+
+def _address_firm(canonical):
+    """The firm a filled address writes: its second segment (source/scope/...) when that segment is a scope word."""
+    segs = (canonical or "").split("/")
+    v = opal_naming._vocab()
+    if len(segs) > 1 and segs[1] in v.scope:
+        return v.scope[segs[1]]
     return None
 
 
@@ -292,10 +341,10 @@ def _classify(items, root_entry, text_of=None):
     rows, raising = [], 0
     own_scope = None if root_entry is None else v.scope.get(root_entry.get("scope"), root_entry.get("scope"))
     # `fills` (root map): the slots the entry may fill; absent means all of them. A slot it leaves out is the key's own,
-    # so the entry's HOME scope/source is neither written into a name nor used to judge the key's firm.
+    # so the entry's HOME scope/source is not written into a name. The cross-firm checks do not depend on it: a key's
+    # firm is compared with the firm of its own bucket (_firm_check).
     fills = None if root_entry is None else root_entry.get("fills")
     can_scope = fills is None or "scope" in fills
-    can_source = fills is None or "source" in fills
     for it in items:
         name, typ = it["current"], it["type"]
         try:
@@ -312,7 +361,9 @@ def _classify(items, root_entry, text_of=None):
         matches = [] if var else _legacy_matches(name, v, entries)
         leg = [m for m in matches if bucket is not None and m[1] == bucket]
         bfirm = v.bucket_firm.get(bucket) if bucket else None
-        clash = None if (var or root_entry is None or not (can_scope and can_source)) else _conflict(name, v, root_entry)
+        fc = None if var else _firm_check(name, v, bucket, bbasis, root_entry)
+        clash = None if fc is None else fc["clash"]
+        no_check = "" if fc is None or fc["unchecked"] is None else "; " + fc["unchecked"]
         not_legacy = ""
         if matches and not leg:
             not_legacy = "; not LEGACY: the path matches legacy row %s of bucket %s, this key's bucket is %s" % (
@@ -344,14 +395,21 @@ def _classify(items, root_entry, text_of=None):
             if left:
                 row["class"] = "UNDECIDED"
                 row["basis"] = "this root serves more than one firm; its map entry does not give the %s%s" % (
-                    "firm" if "{scope}" in left else "source", not_legacy)
+                    "firm" if "{scope}" in left else "source", not_legacy + no_check)
             elif "{" in filled:
                 row["class"] = "UNDECIDED"
                 row["basis"] = "a blank remains after the root entry fills source and scope: %s%s" % (filled, not_legacy)
             else:
-                row["class"] = "ADDRESS"
-                row["canonical"] = filled
-                row["basis"] = "root entry source=%s scope=%s%s" % (root_entry["source"], root_entry["scope"], not_legacy)
+                wfirm = _address_firm(filled)
+                if bfirm is not None and wfirm is not None and wfirm != bfirm:
+                    row["class"] = "REFUSED-CROSS-FIRM"
+                    row["basis"] = "the filled address %s writes firm %r, bucket %s belongs to firm %r%s" % (
+                        filled, wfirm, bucket, bfirm, not_legacy)
+                else:
+                    row["class"] = "ADDRESS"
+                    row["canonical"] = filled
+                    row["basis"] = "root entry source=%s scope=%s%s%s" % (root_entry["source"], root_entry["scope"],
+                                                                        not_legacy, no_check)
         rows.append(row)
     graded = len(rows)
     return rows, raising, graded
@@ -402,6 +460,75 @@ def cmd_dir(source_dir, root, map_path, out=print):
     return 0 if ok else 1
 
 
+def _word_firm(name, v):
+    """The first firm a path word of the key names, else None."""
+    firms = _firms(v)
+    for tok in _TOKEN_RE.findall(name.lower()):
+        if tok in v.scope and v.scope[tok] in firms:
+            return v.scope[tok]
+    return None
+
+
+def crossfirm_rows(root, root_entry, map_path=None):
+    """One dict per stored file (type S3Key) of a mapped root: root, current, where, bucket, bucket_firm, word_firm
+    (the firm the path word, or the filled address, names), verdict (OK, REFUSED, UNCHECKED), reason."""
+    import opal_naming_scope
+    v = opal_naming._vocab()
+    items, _stats = opal_naming_scope.root_items("infra/aws/terraform/" + root, map_path)
+    items = [i for i in items if i["type"] == "S3Key"]
+    filled = {}
+    for r in _classify(items, root_entry)[0]:
+        filled[(r["type"], r["current"], r["where"])] = r
+    out = []
+    for it in items:
+        name = it["current"]
+        bucket, bbasis = _item_bucket(it, name, v)
+        fc = _firm_check(name, v, bucket, bbasis, root_entry)
+        row = filled.get((it["type"], name, it["where"]))
+        wfirm = _word_firm(name, v)
+        if row is not None and row["class"] == "ADDRESS":
+            wfirm = _address_firm(row["canonical"]) or wfirm
+        rec = {"root": root, "current": name, "where": it["where"], "bucket": bucket,
+               "bucket_firm": v.bucket_firm.get(bucket) if bucket else None, "word_firm": wfirm,
+               "verdict": None, "reason": None}
+        if row is not None and row["class"] == "REFUSED-CROSS-FIRM":
+            rec["verdict"], rec["reason"] = "REFUSED", row["basis"]
+        elif fc["clash"]:
+            rec["verdict"], rec["reason"] = "REFUSED", fc["clash"]
+        elif fc["unchecked"]:
+            rec["verdict"], rec["reason"] = "UNCHECKED", fc["unchecked"]
+        else:
+            rec["verdict"] = "OK"
+            rec["reason"] = "path words name no firm other than the %s's %r" % (
+                "bucket" if fc["home_kind"] == "bucket" else "root entry scope", fc["home"])
+        out.append(rec)
+    return out
+
+
+def cmd_crossfirm(map_path, out=print):
+    doc = opal_naming_rootmap.load_map(map_path)
+    roots = doc.get("roots") or {}
+    keys = checked = unchecked = refused = 0
+    reasons_ok = True
+    for root in sorted(roots):
+        for r in crossfirm_rows(root, roots[root], map_path):
+            keys += 1
+            if r["verdict"] == "UNCHECKED":
+                unchecked += 1
+                reasons_ok = reasons_ok and bool(r["reason"])
+            else:
+                checked += 1
+                if r["verdict"] == "REFUSED":
+                    refused += 1
+            out("%s root=%s key=%r where=%s bucket=%s bucket_firm=%s word_firm=%s reason=%s"
+                % (r["verdict"], r["root"], r["current"], r["where"], r["bucket"], r["bucket_firm"], r["word_firm"],
+                   r["reason"]))
+    ok = bool(roots) and checked + unchecked == keys and reasons_ok
+    out("KEYFILL-CROSSFIRM ok=%s roots=%d keys=%d checked=%d unchecked=%d refused=%d"
+        % (ok, len(roots), keys, checked, unchecked, refused))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -409,7 +536,11 @@ def main(argv=None):
     d.add_argument("source_dir")
     d.add_argument("--root", required=True)
     d.add_argument("--map", required=True)
+    c = sub.add_parser("crossfirm")
+    c.add_argument("--map", required=True)
     a = ap.parse_args(argv)
+    if a.cmd == "crossfirm":
+        return cmd_crossfirm(a.map)
     return cmd_dir(a.source_dir, a.root, a.map)
 
 
