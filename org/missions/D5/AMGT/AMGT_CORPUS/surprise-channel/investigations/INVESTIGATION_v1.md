@@ -3860,6 +3860,29 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "Bumping to /6 makes AC2 read '1 failed, 34 passed' (test_dossier_case_body.py line 159). Making AC2 pass needs a one-line edit in each of test_dossier_case_body.py, test_dossier_case_unit.py and test_dossier_case_positional.py (assert /6), which the worker may not do. The worker kept the bump, updated test_dossier_method_bump.py (in paths) and left the other three untouched; AC2 is therefore a FAIL and the order stays open. ap6_check.py reads 'ap6 build 2/2 control 2/2'.",
   "notes": "Hazard is ARMED because the dossier module and the tests disagree at the branch HEAD until the three literals are moved. Disarm: the issuer either amends this order's <paths> to add the three test files and has the edit made (the same one-line change in each, /5 to /6), or makes that edit itself at the drain. Nothing else in the cell is open.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W5-S8",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+  "surfaced_at": "2026-10-07T15:31:00Z",
+  "one_line": "BLOCKING on CRPS-ap-4 amendment 1 AC2 and AC4: page_check.cjs stubs every non-react import, so the mandated shared locator helper renders as the report key and the check reads ap3 0/1 and rev r2 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs lines 66-73 and 83-87: stubFn returns its first non-null argument as text and the require shim stubs every module but react and '/constants'; amendment item 2 orders the helper imported by relative path from the new dossierLocator.ts in ThesisTab.tsx and SecurityOverlay.tsx",
+      "as run on the portal commit 5a526eba88ee69f747cee3b4c62da8d2523c00df (nested portal repository): ap3 reads 'ap3 build 0/1 control 2/2' with 'no s3 key in text false'; rev reads 'r2 one locator wording 0 ... rev build 4/5 control 3/3'; ap4 1/1, ap2 1/1, ap5 3/3 pass",
+      "a scratch copy of the check (worktree .scratch/chk, only the require shim changed so '../dossierLocator' resolves to the transpiled real file) reads 'ap3 build 1/1 control 2/2' and 'rev build 5/5 control 3/3'; the helper's output is therefore right and the instrument cannot see it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expects 'ap3 build 1/1 control 2/2' and AC4 expects 'rev build 5/5 control 3/3' from page_check.cjs on a candidate in which both files import one shared locator helper by relative path.",
+  "world_is": "Against the issuer's unmodified check, AC2 reads 'ap3 build 0/1 control 2/2' and AC4 reads 'rev build 4/5 control 3/3', so both FAIL and the order stays open. The shared helper renders as the s3 report key under the stub. No way to satisfy the check and item 2 together exists without moving the wording back into the two callers, which item 2 forbids; the worker built item 2 as ordered.",
+  "notes": "Disarm: the issuer lets the check's require shim resolve a name ending '/dossierLocator' to the real transpiled file (the scratch copy shows the one-line shape), then re-runs AC2 and AC4 on the portal commit. The worker did not edit the check (order bound 4).",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```

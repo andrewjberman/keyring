@@ -140,3 +140,4 @@ this file only if AC1, AC2, AC4 and AC5 pass. Report once, with the portal branc
 <fabric>site-z</fabric>
 <status>complete</status>
 <status>in_progress</status>
+<status>complete</status>
