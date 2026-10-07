@@ -749,3 +749,56 @@ round.** Never edit an existing row.
   "notes": "No action needed; recorded because the premise's mechanism differs from the code's."
 }
 ```
+
+## ADVI_COTBKF-S7 -- CB4d4-AC1 (check_restricted_prefix.py) cannot be re-run on dell2: terraform is not installed, so the drain re-grade of the merged C-RESTRICTED policy rests on the laptop worker's run alone
+
+```json
+{
+  "id": "ADVI_COTBKF-S7",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T07:36Z",
+  "one_line": "CB4d4-AC1 (check_restricted_prefix.py) cannot be re-run on dell2: terraform is not installed, so the drain re-grade of the merged C-RESTRICTED policy rests on the laptop worker's run alone",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "command -v terraform on dell2 at 07:30Z: ABSENT",
+      "python infra/aws/terraform/shared-infra/tests/check_restricted_prefix.py at HEAD 2040c2db3f on dell2: FileNotFoundError [WinError 2] at line 35 (terraform init)",
+      "proof instance deliverables/0.9.0_WK_ADVI_COTBKF~15/...restricted-prefix-policy.proof_of_spec.json: VALID rc=0 at HEAD (the laptop run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Drain (dispatch Step 5): after each merge, run the hygiene the touched surface needs once, at the drain.",
+  "world_is": "The merged .tf change and its check landed (85d8b5f20f); nothing is applied. The check needs a terraform binary and the real backend; dell2 has neither binary nor a recorded apply lane for this round.",
+  "notes": "Any terraform plan/apply of CB-d-4 is a separate act (safe-apply) on a box with terraform; the laptop tfplan from -15 is archived only on the laptop (MSTR msg 6)."
+}
+```
+
+## ADVI_COTBKF-S8 -- Disarm act for ADVI_COTBKF-W14-S1 (ARMED, disarm_owner 2.0.0_SA_COO~C, now off this project; taken by its successor 2.0.0_SA_COO~C2): CB4d3-AC2 runs in 34 s on dell2's shared tree, inside its 120 s bound
+
+```json
+{
+  "id": "ADVI_COTBKF-S8",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T07:40Z",
+  "one_line": "Disarm act for ADVI_COTBKF-W14-S1 (ARMED, disarm_owner 2.0.0_SA_COO~C, now off this project; taken by its successor 2.0.0_SA_COO~C2): CB4d3-AC2 runs in 34 s on dell2's shared tree, inside its 120 s bound",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_crosswalk.py --out .scratch/advi_cotbkf/crosswalk_r4 on dell2 at HEAD 2040c2db3f, 07:3xZ: rc 0, 34 s, last line CROSSWALK commonwealth_accounts=1533 every_account_listed=True matched=439 not_matched=1094 ambiguous=36 by_rule=R2-in-kind-transfer:439 in_kind_unscored=0 near_matches_applied=0 near_matches=21",
+      "same pass: CB4d2-AC2 rc 0 in 7 s (ACCOUNT-LINKS ended_accounts=1450 every_ended_account_listed=True); CB4d5-AC2 rc 0 in 6 s (DOCUMENTS-PLAN unique=11119 every_document_once=True)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-3 BOUNDS: CB4d3-AC2 within 120 seconds (cache under .scratch/, warmed once untimed). Row W14-S1: the bound holds only against a primed cache, and the primed cache was in the laptop worktree.",
+  "world_is": "The laptop worktree and its cache are gone (archived on the laptop only). The grader's tree is now dell2's, and the criterion runs inside its bound there, so the hazard is disarmed.",
+  "notes": "Disarm owner reassigned by succession: 2.0.0_SA_COO~C is on NFRA_CTLPLN only (Andrew-direct ~06:1xZ). Same disarm shape as S4, S5 and S6."
+}
+```
