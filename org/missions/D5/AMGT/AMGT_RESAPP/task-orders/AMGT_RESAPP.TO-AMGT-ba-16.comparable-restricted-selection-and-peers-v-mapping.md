@@ -128,3 +128,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @de063a4209; proof VALID (worktree checker); comparable as a stated restricted selection with one company counted once; Peers V through SCANNER_FACTOR_MAP (measures 1, 2, 3, 6; 4 and 5 ABSENT with a reason); AC1 4 of 4, AC2 5 of 5, AC3 4 of 4; api suite 748 passed in the worktree; row Z-W282-S1 (no company-level FIGI is stored; LEI on 65 of 71 registrations)</status>
