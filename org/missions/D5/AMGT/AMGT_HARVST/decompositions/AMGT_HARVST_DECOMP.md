@@ -3185,3 +3185,25 @@ AMGT_HARVST-Z-S96: up to 20 of 234; the cell follows from the count); any furthe
 - `az-1` AC1 (`pytest lib/opal_data_harvest/test_az1_alias_set.py`) base: FAIL as expected (the test is absent).
 - `az-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~104/az-1.replay.out`) base: FAIL as expected (no such file).
 - `az-1` AC3 (`pytest lib/research/harvest/tests/test_alias_rule_round18.py lib/research/harvest/tests/test_universe_securities.py`) base: PASS as expected (40 passed).
+
+## 69. ROUND 55 -- the gold-plane census for the two slug brands (`1.0.0_SA_CTO~Z` msg 30842), 2026-10-07 ~11:3xZ
+
+Round 54's order is terminal (`az-1` merged @05638ecfd9; close run @0849993cba). The CVO graded the collector's text check at 29
+of 30 for each brand (@cc31b43fbc) and the CTO admitted both there (msg 30836; recorded @bb02e46a3b). Msg 30842: the gold text
+matcher is a third plane with its own census -- there a brand attributes a mention inside ANY stored article -- and no gold
+rebuild happens before that grade.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bb`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bb-1` | `bb-1` | **What the gold text matcher would ADD with `Meta` and `Lilly` as brands: a dry-run census, no rebuild.** Over every latest silver article, with the served matcher's own pattern builder: added spans, NEW pairs, title and lead flips per brand, split by publisher; a control (an existing alias adds 0) and the served-matcher agreement control; a seeded sample of 30 added rows per brand for the CVO's grade (bar 29 of 30). No product file changes. | LOCAL | worker ~105 |
+
+**Not in this round:** flipping either entry's `plane`, a gold rebuild, any further brand; row AMGT_HARVST-Z-S96's cell (cut or
+decorated legal names) and the one-suffix-list item wait for the analysis that names them.
+
+**Checks dry-run at the base before the cut:**
+- `bb-1` AC1 (`cat .../0.9.0_WK_AMGT_HARVST~105/bb1_census.out`) base: FAIL as expected (no such file).
+- `bb-1` AC2 (`pytest .../0.9.0_WK_AMGT_HARVST~105/test_bb1_added_spans.py`) base: FAIL as expected (the test is absent).
+- `bb-1` AC3: judgment, graded by `3.0.0_SA_CVO~Z`.
