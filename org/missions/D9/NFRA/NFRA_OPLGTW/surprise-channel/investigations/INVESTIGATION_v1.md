@@ -9805,3 +9805,78 @@ name the one known failure instead of silently inheriting it.
   "notes": "A fix for the issuer: add org/devices to the sparse cone the worker worktrees are cut with, or tell the worker face to add it. The worker's one-line fix is in the evidence."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S24",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "The deploy wrapper's own build step ran `bun install` (77 packages) and `tsc -b && vite build` during the r27 deploy, while the order's bounds say no bun and no package fetched from the internet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_phaseB_deploy.out lines 265-290: 'INFO: building mcportal @ a3bff71f...', 'bun install v1.3.14', '77 packages installed [11.65s]', 'tsc -b && vite build', 'built artifact opal-gateway-510c8cfed2.tar.gz (500K), dashboard bundle mcportal@a3bff71f at dashboard/'.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_phaseB_deploy.out line 266 and r25_phaseB_deploy.out lines 247 and 260: the same bun install in the r26 and r25 deploys."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-13 BOUNDS (issuer's GO): NO package, script or program fetched from the internet; no bun. Form step 10: deploy through safe-ec2-deploy.sh with deploy-to-ec2.sh exactly as stated.",
+  "world_is": "deploy-to-ec2.sh builds the dashboard bundle (mcportal @ a3bff71ffa3f) with bun on the deploying machine, and bun install fetches 77 packages from the package registry, on every gateway deploy. The worker ran no bun itself; the wrapper did, as the step the form directs.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. The two instructions cannot both hold for a gateway deploy as the form states it. A decision for the issuer: word the bound as 'the worker runs no bun or fetch outside the deploy wrapper', or direct the dashboard bundle to be prebuilt (the CTO ruling on bun via the control plane, ANDREW_DIRECT_20261007_153xZ, is the nearby record). The 77-package fetch had already happened on r25 and r26."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S25",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "Through bash on this host, `aws s3api list-objects-v2 --delimiter /` has its '/' rewritten by MSYS path conversion (the call answers Contents, not CommonPrefixes), and the same call with `--query CommonPrefixes[].Prefix` returned rc 3221225477 (0xC0000005) with empty stderr.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python r27_pagetime.py (first two attempts, 16:49-16:51Z): 'LIST FAIL rc=3221225477'; the same list without --query returned objects under 'Contents' keyed date=2026-09-29/index.html and an empty day list ('IndexError: list index out of range' on days[-1]).",
+      "RUN after setting MSYS_NO_PATHCONV=1 in the subprocess environment and dropping --query: published_days=7 newest=2026-10-07 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_pagetime_before_1.out). The cause of the 0xC0000005 was not isolated between the --query and the path conversion."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Bounds: AWS only through .tools/aws; the r27 reads use the same bash -c 'aws \"$@\"' pattern as the SSM runners.",
+  "world_is": "A bare '/' argument is mangled by MSYS under bash -c on this device, and one --query form crashes the shim with an access violation and no message; the SSM runners never pass either.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed beyond the worker's own script (r27_pagetime.py, r27_lake_read.py set MSYS_NO_PATHCONV=1 and take the whole JSON). A rc of 3221225477 with empty stderr reads as a list failure, not as a crash."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "One object in the gateway's raw audit lake has an EMPTY timestamp part in its key (audit/dt=2026-10-07/-321b3117.jsonl), unlike the runbook's <ts>-<id>.jsonl shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN list-objects-v2 on bucket opal-mcp-audit prefix audit/dt=2026-10-07/ --max-items 2, 16:4xZ: first key 'audit/dt=2026-10-07/-321b3117.jsonl' LastModified 2026-10-07T13:31:24Z, second 'audit/dt=2026-10-07/2026-10-07T00:00:18.920121+00:00-e41a214c.jsonl'. Read-only; the object was not opened.",
+      "FILE infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md (CLOUD, the raw-lake paragraph): key audit/dt=<day>/<ts>-<id>.jsonl, written by _emit in app/audit.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Runbook section 5 (CLOUD): each lake object's key is audit/dt=<day>/<ts>-<id>.jsonl.",
+  "world_is": "At least one object written 13:31:24Z today carries no ts in its key, so a reader that splits the key on the first '-' or sorts by ts places it differently from the rest. Cause not read (a record with an empty ts, or a writer variant).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not investigated; the object was not opened. It sorts first in a key-ordered listing."
+}
+```
