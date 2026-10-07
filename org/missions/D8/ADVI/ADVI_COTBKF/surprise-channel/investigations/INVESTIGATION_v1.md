@@ -993,3 +993,30 @@ round.** Never edit an existing row.
   "notes": "Re-run owner: 2.0.0_SA_COO~C2 in E2. The scratch links output is not deleted (it is the S9 evidence); it is never applied."
 }
 ```
+
+## ADVI_COTBKF-W19-S1 -- the role-request writer cannot state a user as the assuming principal (CB-e-4)
+
+```json
+{
+  "id": "ADVI_COTBKF-W19-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~19",
+  "surfaced_at": "2026-10-07T08:58Z",
+  "one_line": "role_request.py cannot express the break-glass role's trust (a console USER); the request carries assuming_service signin.amazonaws.com as the nearest admitted shape",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ROLE_REQUEST.schema.json assuming_service pattern ^[a-z0-9-]+(\\.[a-z0-9-]+)+$ admits only a dotted service name; org/devices/role_request.py write has no principal field",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:248-257 trust = Principal AWS Andrew_Berman_Console user, sts:AssumeRole",
+      "request org/devices/role_requests/dell2/dell2-20261007T085711Z-7b15.json written with assuming_service signin.amazonaws.com; the merged .tf, not the request, is the authority for trust"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-e-4: the writer admits the break-glass role request, with the assuming principal a user rather than a service as the named possible refusal.",
+  "world_is": "The writer admits the request only with a service-shaped assuming_service; the user principal cannot be stated. The value signin.amazonaws.com is a placeholder, not the trust. The laptop applies the merged file's trust (console user only). Writer and schema are NFRA_CTLPLN's, not edited.",
+  "notes": "Gap also carried in C_RESTRICTED_WRITE_IN.md."
+}
+```
