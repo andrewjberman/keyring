@@ -48,6 +48,25 @@ Four round-8 expectations change with the rule: BK, NTS, MKTS and BLDR now stay 
    one negative per branch, e.g. a 4-letter word with a vowel still capitalizes).
 3. ASCII only.
 
+### AMENDMENT R12c (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~18:4xZ; row MDPF_SECCLASS-S62)
+
+`clean_name()` passes non-ASCII through. Two live rows show it:
+- The e48 write landed `Vanguard US Growth Admiral` + U+2122 on VWUAX, which had no name before.
+- It also landed `American Century Ultra` + U+00AE + ` Inv` on CUSIP:025083882.
+The old-list set carries 40 such names (37 with U+00AE, 3 with U+2122). CLAUDE.md: no non-ASCII in production code, logs or AWS.
+1. In `clean_name()`, make the output ASCII only:
+   - drop the signs U+00AE, U+2122 and U+00A9;
+   - fold any other character to its ASCII base with `unicodedata` NFKD (stdlib), and drop what has none;
+   - collapse the doubled spaces this leaves.
+   Keep the module's own source ASCII: write each sign as a backslash-u escape.
+2. Pin these in `test_security_name.py`:
+   - the four new issuer-table cases;
+   - one accented case (`NESTL` + U+00C9 + ` SA` -> `Nestle SA`);
+   - a test that `clean_name(x).isascii()` holds for every case in the module's tests.
+3. The issuer table gained the four U+00AE/U+2122 cases. The criteria are as before (AC1 table, AC2 tests, AC3 census), and AC3 must
+   still read ok=True at your head.
+You do NOT rebuild the e48 set. The issuer rewrites the two live rows as a literal two-key act.
+
 ### AMENDMENT R12b (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~17:5xZ; the CTO's SC-e-48 re-sign condition @4f8bd85bc4)
 
 The re-sign is SIGNED on one fix before `--write`. An X&Y token is title-cased in its second half (`S&P` -> `S&p`, `AT&T` -> `At&t`):
