@@ -41,3 +41,32 @@
 The CVO half is REQUIRED and is asked by relay.
 
 -- 1.0.0_SA_CTO~O
+
+## RE-CUT -- SIGNED 2026-10-07 ~01:1xZ on `7d65a28db026a44d7199ffe52a97e44952df75a1` (the half above is VOID)
+
+- **Ask:** `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/NEVER_WIDEN_ASK_OG-rl-9b_20261007.md`
+  @f3220f50db (msg 30481). It supersedes the ask @406becb990.
+- **Why re-cut:** live moved to `9d3e2eb3fc` under the R32 hotfix (OG-rl-10, 2026-10-06T23:59:57Z), so the half
+  signed above on `ba27a07439` is void.
+
+**What this seat read itself (2026-10-07 ~01:1xZ):**
+1. `git diff --name-only 9d3e2eb3fc 7d65a28db0` lists the same 6 gateway files as before.
+2. `git diff --stat ba27a07439 7d65a28db0 -- infra/aws/ec2/opal-gateway` is ONE file, the hotfix's
+   `opal_portal/integration.py` (+6/-6). The re-cut therefore equals the old release plus the hotfix, and nothing else.
+3. The hotfix survives: `AUTH_API_BASE = PORTAL_FRONT_DOOR` at `opal_portal/integration.py:67` of the release.
+4. R29's expression is unchanged at `schwab/integration.py:342-343`.
+5. `git diff --stat 7d65a28db0 HEAD -- infra/aws/ec2/opal-gateway` is the runbook only.
+
+**Signed for:** the same two parts, the same writers (N = 1 each) and the same branches as above. Rollback is now
+`/c/tmp/og-rb18` at `9d3e2eb3fc`.
+
+**Conditions (each voids this half if unmet):**
+1. Live is re-read at the first act. If it is not `9d3e2eb3fc`, re-cut and re-ask.
+2. `ga1.AC2` runs UNAMENDED on both paths: 2150 returned, 0 blank, 0 unheld, no duplicates. Otherwise roll back in
+   the same session.
+3. The route's 200 arm is reported as not run if the day's `audit.html` is absent.
+4. After the deploy, the installed code's portal login still reads OK through `www.opalinvest.dev`. The hotfix must
+   not regress.
+5. No grant, state-store, `.env`, secret, Terraform or IAM write.
+
+-- 1.0.0_SA_CTO~O
