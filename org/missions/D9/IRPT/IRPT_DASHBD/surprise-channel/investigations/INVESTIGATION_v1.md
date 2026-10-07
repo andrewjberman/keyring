@@ -2357,3 +2357,135 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "If the served producer is ever hardened (a pd.isna test in classify_and_sum, named in S30), this wrapper becomes redundant and its refusal can go with it."
 }
 ```
+
+## IRPT_DASHBD-W22-S1 -- the lag order measures all trades but the bound governs in-kind legs; reinvested-dividend lots carry the trade date in orgpurch_date
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T17:47:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S1",
+  "one_line": "The order measures the lag of every trade, but LEG_LAG_DAYS governs only in-kind legs; and a reinvested-dividend buy has no lot acquired on its trade date, its same-day lot carries the trade date in orgpurch_date instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-38 item 1: for every trade that should produce or relieve a lot (buys, sells, in-kind), find its lot row and the lag in trading days; the measured distribution sets LEG_LAG_DAYS.",
+  "world_is": "LEG_LAG_DAYS is read only by _one_security, for in-kind legs; the buy and sell lags (873 of 887 trades) are measured beside it and do not feed any producer rule. Matching a buy to its lot by acquired_date left 7 of 765 buys unmatched, all sb_cd RD (reinvested dividend): the custodian posts their lot the same day with acquired_date earlier and orgpurch_date equal to the trade date. They match on orgpurch_date at lag 0. Result: 887 of 887 matched, 886 at lag 0 and 1 at lag 1 (an in-kind departure), so LEG_LAG_DAYS is 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/LOT_LAG_E2.json lags, by_kind, buys_matched_by",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/lot_lag_e2.py buy matching",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py LEG_LAG_DAYS, _one_security"
+    ]
+  },
+  "notes": "The sample holds 14 in-kind legs; the bound is measured on a window with 1 lagged leg. A longer history would tighten it. The producer lists a leg past the bound and never bends it."
+}
+```
+
+## IRPT_DASHBD-W22-S2 -- A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sal
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S2",
+  "one_line": "A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sale linked to no single lot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2: change the activity or lot rule so every account with the same pattern is handled. The producer links a realized row to the prior day's open lot by close_open_event_id and security alone.",
+  "world_is": "In the 91-account window one sale of 0.94 shares was listed SALE_NOT_LINKED_TO_ONE_LOT: its opening event id is shared by a second, smaller lot (acquired a different day), so two open lots matched. The realized row carries its acquired_date; adding it to break a tie links the sale to exactly one lot (0 unlinked sales in the re-run, from 1). This is a linking rule, not a figure: no sale is linked that was not already unique on event id, and a tie still unresolved stays unlinked and listed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py _sold_lot",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/WINDOWS_E1.json rule_audit.unmatched (empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json inkind.unmatched (round 24: 1 listing)"
+    ]
+  },
+  "notes": "Round 24 left that sale unlinked and its basis at the custodian's figure; with the wash-sale rule it had to be linked or it would have opened a new cent-sized gap."
+}
+```
+
+## IRPT_DASHBD-W22-S3 -- The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under 
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S3",
+  "one_line": "The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under org/standards do not list basis_source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2 names a rule change in the activity or lot rule; it does not name a schema member.",
+  "world_is": "Measuring a lot from the cash paid needs the custodian's figure and the identity's figure to differ with a stated reason, which basis_source already carries for in-kind lots. The axis stays one-intent (which cost the lot is measured from) with three members in a stated precedence (IN_KIND over WASH_SALE over CUSTODIAN). org/standards/IRPT_DASHBD_ACCOUNT_LOT_*_CONTRACT.json do not mention basis_source (round 24 added it without a contract line), and are outside this order's paths, so they were not edited. METHOD_VERSION 2 to 3 and SCHEMA_VERSION 1.1 to 1.2 mark the change; no table is written to S3, so no served consumer reads either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py BASIS_SOURCES, METHOD_VERSION, SCHEMA_VERSION",
+      "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json (no basis_source column)"
+    ]
+  },
+  "notes": "For the CTO's next analysis: the two lot contracts need a basis_source and custodian_cost_basis line before any table is served."
+}
+```
+
+## IRPT_DASHBD-W22-S4 -- Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S4",
+  "one_line": "Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 1: set the option once at the producer's entry and remove the per-call context.",
+  "world_is": "deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py calls aal.served_runtime() in its control block (two uses); with the function removed that file raises AttributeError if run again. It is a round-24 deliverable outside this order's paths, so it was not edited; the round-24 record it wrote (IDENTITY_REGRADE_E2.json) is unchanged and this worker's windows_e1.py does not use the removed name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py run_flow_served and main controls",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py set_served_runtime, classify_flow_days"
+    ]
+  },
+  "notes": "Regenerating round 24's record needs either aal.set_served_runtime() in that helper or the pre-b-40 producer; neither is a data change."
+}
+```
+
+## IRPT_DASHBD-W22-S5 -- The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S5",
+  "one_line": "The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 2: make classify_and_sum resolve the conditional class without depending on None surviving a column; change nothing else.",
+  "world_is": "While testing that the hardened column does not depend on the frame's index, a frame with a repeated index label (as pd.concat of several partitions without ignore_index would give) made the unchanged stage 1 (t.at[idx, detail_col] or '') raise ValueError (the truth value of a Series is ambiguous). The same happens on the unhardened source, so it predates this order. The served read path builds one partition's frame per call, so the repeated-label case is not reached today; the new test uses a unique, shuffled index. Not changed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py classify_and_sum stage 1 (t.at[idx, detail_col])",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py test_classify_and_sum_does_not_depend_on_the_frame_index_when_it_holds_the_final_column"
+    ]
+  },
+  "notes": "A reset_index(drop=True) on the copy at the top of classify_and_sum would remove it; out of scope for an order that changes nothing else in the file."
+}
+```

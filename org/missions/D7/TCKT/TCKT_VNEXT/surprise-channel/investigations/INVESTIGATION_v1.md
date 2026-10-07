@@ -165,6 +165,72 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "A test run sends no mail, and the service states no fee value nobody ruled.",
     "world_is": "The pre-existing tests still construct a real SES client; only the run procedure keeps them from sending. The fee default is None until someone names the default.",
     "notes": "Which value 'the default fee' is stays open (Alyssa or Andrew); FWD-1's run leaves the fee blank."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-07T19:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S3",
+    "one_line": "The Analysis Request form's firm answer is free text and is sent to the upload door as selectedTenant; it should be a choice from the caller's allowed firms (the door refuses any other firm anyway).",
+    "disarm_owner": "2.0.0_SA_COO~V2 (enrichment round: carried to the CTO in the round-1 slug as a TV-p cell)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~DELL2 msg 1013 (review of portal f7fa7fb1 against DEV 3b8c292f): PASS for DEV, with this item to file as a row",
+        "portal f7fa7fb1 src/pages/TicketCenter/analysisRequest.ts: firm is a text answer"
+      ]
+    },
+    "spec_asserts": "The person filing picks a firm they may file for.",
+    "world_is": "They type a firm id; a wrong one is refused only at the door.",
+    "notes": "Not blocking FWD-1."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-07T19:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S4",
+    "one_line": "The report opens through IRPT's OWNED read (getOwnedAnalysisRequest), so only the person who requested the report can open it from the ticket; a different person opening the ticket is refused.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (names it in TV-r-1 and in FWD-1's organic arm: Alyssa both requests and opens; a second-reader path is IRPT_YCDGEN's)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~DELL2 msg 1013 (review of portal f7fa7fb1 against DEV 3b8c292f): PASS for DEV, with this item to file as a row",
+        "X-2 answer msg 929: a firm advisor or ops user is admitted only for inputs they uploaded themselves (prospect.py:51-59); OPAL_GLOBAL admitted for any creator's input"
+      ]
+    },
+    "spec_asserts": "Anyone opening the ticket later can open its report (FWD-1 hop 5, read with FWD-6's 'anyone opening the ticket later').",
+    "world_is": "Only the requester of the report can open it; fine for FWD-1 where one person files, works and opens.",
+    "notes": "Carried to the slug; not a round-1 blocker."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-07T19:45:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S5",
+    "one_line": "The one-account-per-file check (C-ANALYSIS-REQUEST) is in neither round-1 cell; it belongs to the enrichment round (PRD section 3 item 2, FWD-3), and round 1's real run uses a one-account file.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (carried to the CTO in the round-1 slug as the FWD-3 cell)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "1.0.0_SA_CTO~DELL2 msg 1013 (review of portal f7fa7fb1 against DEV 3b8c292f): PASS for DEV, with this item to file as a row",
+        "org/missions/D7/TCKT/TCKT_VNEXT/decompositions/TCKT_VNEXT_DECOMP.md: round 1 is the FWD-1 thread; the enrichment backlog including the one-account check is not in this round"
+      ]
+    },
+    "spec_asserts": "A multi-account file is turned back before anyone at Opal sees it (FWD-3).",
+    "world_is": "Round 1 does not check it; the door does not either (PRD R8).",
+    "notes": "By design for round 1."
   }
 ]
 ```
