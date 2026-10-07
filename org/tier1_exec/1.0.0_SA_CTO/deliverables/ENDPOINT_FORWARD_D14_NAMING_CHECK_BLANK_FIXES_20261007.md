@@ -51,12 +51,12 @@ seat proceeds to L3 and L4 on these lines; if he amends one, it is re-cut in pla
                     reads the schedule itself agrees with the word the list chose
          SOURCE     brief O3; Part III O3
 
-  FWD-5  Anyone can run the check from start to finish without preparing anything first
+  FWD-5  Anyone can run the check from start to finish without writing anything for it first
          DONE WHEN  EXERCISED -- someone who has never run it runs it from the written instructions and
                     reaches the totals
          ACCEPT     a person who has never run the check follows the written instructions on a fresh
-                    copy of the work and it finishes -- where today it stops partway, over and over,
-                    until they write it a list of names to skip
+                    copy of the work, using only what that copy already holds, and it finishes -- where
+                    today it stops partway, over and over, until they write it a list of names to skip
          SOURCE     brief O4; Part III O4; finding F5
 
   FWD-6  Whoever creates a name the check cannot place hears about it when they create it
@@ -90,6 +90,9 @@ seat proceeds to L3 and L4 on these lines; if he amends one, it is re-cut in pla
                     report
          SOURCE     brief O8; Part III O8; LGIC_ENFORCE FWD-5, the one outcome of its seven not realized
 ```
+
+FWD-5 was tightened the same hour on `4.0.0_SA_CRO`'s read (msg 106131): the runner writes no skip list, and the run may use the
+skip list the repository already holds; the 462 inherited skip-cards stay outside this project, as the list below says.
 
 ## Rulings made at L2 on the brief's two questions
 
