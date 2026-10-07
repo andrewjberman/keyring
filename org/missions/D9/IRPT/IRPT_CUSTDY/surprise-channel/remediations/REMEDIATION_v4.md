@@ -22,11 +22,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~12:2xZ. Graduated at this co
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v5"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-W9-S5",
