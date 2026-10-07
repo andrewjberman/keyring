@@ -19370,3 +19370,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The lambda copy lists the kind, template and ClientReport investor-reporting/1; the portal package names the kind in PrintEntry.tsx (a refusal until IRPT_CUSTDY's page lands). The portal manifest.ts adds the kind when the page lands and its test is updated with it. The issuer re-pins the source-map row at the release."
 }
 ```
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:40:00Z",
+  "one_line": "No CustodyReport document schema is published, so submit_installed._validate admits CUSTODY_REPORT on its own as_of_date alone; and row W138-S3's manifest.ts sha256 pin is superseded by the custody rename.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: ls infra/aws/lambda/investor-reporting/_contracts lists AnalysisReport, PerformanceReport, ExportBundle and others but no CustodyReport.schema.json; bundle.validate(report, <schema>) therefore has nothing to grade a custody report against; submit_installed._validate('CUSTODY_REPORT', r) requires r.as_of_date (narrative_submit.custody_report_as_of) and returns True",
+      "MEASURED: after the amendment-2 rename render_manifest/manifest.ts sha256 is e728053fa8d75ee10556db6b19475d1d61c915196a289cec029eec634dc9cd4f (PROVENANCE.json updated); row W138-S3 cites the pre-rename a8073df4...; lambda-source-map.json still pins the byte-copy sha and is the issuer's release act",
+      "MEASURED: reports/tests 101 passed; _contracts 190 passed; export suite 216 passed, 6 failed (the six pypdf-only tests admitted by amendment 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: CUSTODY_REPORT is admitted in submit_installed._validate beside PERFORMANCE and ANALYSIS, each validated against its own contract.",
+  "world_is": "PERFORMANCE and ANALYSIS validate against a published schema; CUSTODY_REPORT has none (IRPT_CUSTDY owns the document and has not published one), so only the as_of_date is checked. When the CustodyReport contract is published, _validate adds its schema line; the manifest's CustodyReport supportedContracts entry names investor-reporting/1 ahead of it."
+}
+```
