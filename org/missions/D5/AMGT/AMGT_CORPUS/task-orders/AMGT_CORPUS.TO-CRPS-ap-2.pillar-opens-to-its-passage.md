@@ -95,3 +95,5 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md`, `portal/DESIG
 <round>40</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
