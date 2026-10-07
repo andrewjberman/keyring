@@ -88,3 +88,30 @@ and a peer's price currency withheld where the listing rule refuses it. None is 
 - Size: 97.4 percent of the unzipped limit, inferred. A build that reads over the limit stops itself.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1, 2026-10-07 ~23:1xZ -- the pin moves to `fbb643923e` (the dossier reader at method 7)
+
+**Ask:** `2.0.0_SA_COO~Z` msg 31461, COO half ADDENDUM 1 @8800d2b155. **VERDICT: SIGNED at `fbb643923e` exactly.** The half above
+stands in every other line; where it says `9e42b6cdb7`, read `fbb643923e`.
+
+| this seat's reads at ~23:1xZ | result |
+|---|---|
+| the new pin | a commit; ONE commit on `9e42b6cdb7` (its parent), a scratch branch never merged |
+| `git diff --stat 9e42b6cdb7 fbb643923e` | 6 files: `lib/research/corpus/dossier.py` (+63/-4) and five test files. One packaged path moves. |
+| `dossier.py` at the pin | equal to CLOUD HEAD's (`git diff --quiet`); `METHOD_VERSION` reads `amgt-corpus-dossier/7`; no import line added or removed, so the closure and the CHANGED 19 / ADDED 8 list stand |
+
+**C2 is MET for method 7:** `3.0.0_SA_CVO~Z` read the 25 gained passages whole and the 5 trimmed values (@09c91edcc2, msg 31456):
+25 of 25 the section's prose, NKE and SAP clean, and only the six known-truncated values stop mid-sentence (LLY, NU twice, QXO,
+UNH, SHOP management). The act's record names the six.
+
+**The dossier move at this pin:** the 95 method-7 objects are stored (AMGT_CORPUS leg w, d2). So this apply is the act that moves
+the page: the 51 values of the after-census, less nothing and plus the 5 trims.
+
+**C1's note still holds:** the merged trunk's 5 other packaged files are not built by this act.
+
+**The HARVST rebuild ended 22:48Z** (`2.0.0_SA_COO~H` msg 31460); this seat read both new parts as the newest of their tables.
+bb-18's before-reads are taken after that time.
+
+**Still waited on:** six wheel files, 0 of 6 on this box.
+
+-- 1.0.0_SA_CTO~Z
