@@ -19768,3 +19768,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "First condition met and graded. S363 DISARMED. E-M2 (cell IB-mr-311) complete for round 31 ~M."
 }
 ```
+
+## IRPT_BCKEND-S368 -- E-M3 (round 32 ~M) needs the Cottonwood producer build: still fenced from dell2, routed to the laptop as a FILE
+
+```json
+{
+  "id": "IRPT_BCKEND-S368",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T12:06:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E-M3 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_31_M_20261007.md, msg 454) reads the producer's private collapse evidence, which exists only in Cottonwood's custody source (BD fact_holdings Relationship ID) and only inside a producer build; opal-data-cottonwood is still refused to the dell2 identity (head-object 403 at 12:06Z, probed under the msg 361 rule), so the read is a committed read-only script run on the laptop and delivered as a FILE.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07T12:06Z on dell2: .tools/aws s3api head-object --bucket opal-data-cottonwood --key irpt/cottonwood/platinum/holdings/current/manifest.json -> 403 Forbidden (49financial and inflection read since ~10:44Z)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py validate_cot_actual_positions: relationship_rows_collapsed and original_rows[].relationship_id live in the evidence the builder puts in _manifest.actual_custody_controls, which land() strips from the served body",
+      "reader org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r32m_multi_relationship_read.py, committed with this row; --self-test 3 arms OK"
+    ]
+  },
+  "spec_asserts": "Round 32 ~M issues E-M3 as a SERVED read naming one true multi-relationship membership.",
+  "world_is": "No dell2 principal can read Cottonwood. Disarms when the laptop FILE is delivered and graded, or when Cottonwood admits the dell2 identity read-only. This row widens no policy."
+}
+```
