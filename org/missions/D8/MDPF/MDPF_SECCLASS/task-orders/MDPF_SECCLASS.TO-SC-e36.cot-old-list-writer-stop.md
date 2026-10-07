@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~27</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -142,3 +142,8 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: DECOMP_R8 @495efa3c32 cell SC-e-36; PRD v0.12 @87ad6d2e4c contract notes; CTO ruling 106036.
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 9 (2.0.0_SA_COO~M1, 2026-10-07 ~10:3xZ, on 1.0.0_SA_CTO~DELL1 msg 160)
+
+`<status>` superseded: carried to round 9: served on branch wk-MDPF_SECCLASS-27 (code b8b17cbbdd, half 35ff7dd9cf, proof 4eb31ae6fc VALID there), held off every pushed range (shipped Cottonwood gold scripts); its upload waits on the same reader switches as SC-e-35 (TO-SC-e38's trace). Row W27-S3: the live Cottonwood chain skips B_01b, so the stop is a no-op for scheduled runs.
+The round-8 drain-end read is `deliverables/2.0.0_SA_COO~M1/DRAIN_END_R8_20261007.md` @572829ce3b. Gate limb: none graded this modification.

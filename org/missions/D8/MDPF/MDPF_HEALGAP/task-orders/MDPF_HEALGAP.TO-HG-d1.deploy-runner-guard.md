@@ -19,7 +19,7 @@
 
 **GO condition:** both never-widen halves SIGNED in
 `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_HG_T1_RUNNER_DEPLOY_20261007.md`
-(COO half signed; CTO half `1.0.0_SA_CTO~DELL1`). Until then this order is `staged`; flip it to `pending` when you start.
+(COO half signed; CTO half `1.0.0_SA_CTO~DELL1` SIGNED @dd0b78fde7). **GO given by the issuer: status `pending` @this commit.**
 
 ---
 

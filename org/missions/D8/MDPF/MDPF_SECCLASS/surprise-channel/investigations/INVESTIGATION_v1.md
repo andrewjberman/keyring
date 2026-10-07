@@ -3547,3 +3547,110 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Becomes load-bearing when SC-e-35 executes; INERT today because the old list still receives writes. No remedy proposed here."
 }
 ```
+
+## MDPF_SECCLASS-S50 -- the SC-e-21 merge reached the trunk but not S3: the push gate deploys no lib/_shared member on its own
+
+```json
+{
+  "id": "MDPF_SECCLASS-S50",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T10:15Z",
+  "one_line": "q/dell1/secclass-e21/r1 merged and pushed (origin CLOUD a96edec2d7) and the pre-push gate printed 'no deploy-scope script files detected, nothing to do': shipped_artifacts_for() returns the lib/_shared members only beside a gold script of the tree, so both code/gold/lib/_shared/etf_classification.py keys still hold the pre-state (ETag 05c924d5) while the trunk holds the six-class module (md5 3a033c04); the next CLOUD push that deploys any bd or cot gold script uploads it at a time nobody chose.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object 10:0xZ by this seat: opal-data-bd and opal-data-cot code/gold/lib/_shared/etf_classification.py both ETag 05c924d53ed51a09911198a6a384a74f, VersionIds 9abtPgnVDEDVovysMOqLo_cIw3fSZ6hQ and HCv30DsdLF9wgJGrAu4H78zeGKGcgNd6 (the halves' rollback versions)",
+      "git show origin/CLOUD:infra/aws/lambda/v2_portal/_shared/etf_classification.py | md5sum = 3a033c04678f1c96d116b641545b17bb",
+      "safe_deploy_core.shipped_artifacts_for(['infra/aws/lambda/v2_portal/_shared/etf_classification.py']) -> []; with a cot gold script -> the three members",
+      "0.0.0_AB_MSTR~DELL1 msg 136 relaying laptop 0.0.0_AB_MSTR bus 39a3db3c (the gate's one line, the pushed range)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The SC-e-21 halves (COO @59cfbf169b, CTO @b39e54dc9e) say the CLOUD push deploy gate uploads the changed shipped copies at the push.",
+  "world_is": "The push uploaded nothing; the halves' trigger was wrong, their blast radius and rollback stand (1.0.0_SA_CTO~DELL1 msg 140). Ruled by this seat: an explicit deploy under the signed halves, not a revert; order DEPLOY_ORDER_SECCLASS_E21_SHARED_MODULE_20261007.md (two byte-equal carrier scripts, exactly one key per bucket moves).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: both keys read ETag 3a033c04... after the explicit deploy (COO condition 2). The deploying seat is a DS-lane seat routed by 1.0.0_SA_CTO~DELL1; this box seats none."
+}
+```
+## MDPF_SECCLASS-W21-S1 -- after the module edit the seed run only strips low_confidence and re-attributes 15 rows; it moves no class
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:15:07Z",
+  "one_line": "With the module edited, the seed script's own --dry-run plans 15 of 197 writes, all inside the remap set's 15 low_confidence keys, and each differs from the live row ONLY in low_confidence (True -> absent) and updated_by (mdpf-secclass-remap-b -> seed-script): the seed run no longer moves any class or sub-class, it only strips the flag and re-attributes the row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py --dry-run: rows to write 15 of 197, rows already correct 182, PRESERVED 1 (VNQ management_style)",
+      "scratch plan reusing the seed script's merge_item and item_differs over a consistent scan of etf-classifications (3,507 rows) at 2026-10-07T08:1xZ: per-key diffs = low_confidence and updated_by only, 15 of 15; ABALX AOR VTHRX VWELX VWENX not written"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e21 step 6 and the CTO's condition 1: a seed run follows the module edit, and the half request names what it writes beyond the 20 keys.",
+  "world_is": "The seed run writes 0 keys beyond the 20 and 15 of the 20; it changes no class or sub-class. Its only effects are dropping low_confidence on the 15 keys and rewriting updated_by to seed-script. The half request states this and leaves to the CTO whether the run is needed at all (the module edit alone makes any future seed plan read 0 CONFLICT).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). The seed script and the check were not edited."
+}
+```
+
+## MDPF_SECCLASS-W21-S2 -- the commit gate refuses the two .py files on this box (ruff 0.16.10 vs the 0.15.11 pin); the edits are uncommitted
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:20:52Z",
+  "one_line": "The commit gate refuses the two .py files this order edits on this box because ruff here is 0.16.10 and the gate pins 0.15.11; the same 22 (etf_classification.py) and 4 (test_seed_fields.py) errors read on the BASE b07521c5dd copies, none on a line this order touched, so the module and test edits cannot be committed and stay in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -> 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/_shared/etf_classification.py' (Found 22 errors, UP045/UP006 annotation rules, e.g. line 1452 Optional[str])",
+      "python -m ruff --version -> ruff 0.16.10; .tools/commit-gate.sh header and CLAUDE.md pin 0.15.11; the gate runs `ruff check --target-version py39 --extend-select FA` (.tools/commit_gate_runner.py:146)",
+      "git show b07521c5dd:<file> through the same ruff command -> 22 errors on the module, 4 on test_seed_fields.py at base: pre-existing, not introduced by this order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker commits its edits to its branch with safe-commit.sh and the universal commit-gate (CLAUDE.md rule 14); the gate is pinned ruff==0.15.11.",
+  "world_is": "This box has ruff 0.16.10, which flags the module's typing.Dict/Optional annotations and the test's lines 32, 66, 83, 86. AC1 and AC2 pass on the working tree; the .py edits are uncommitted. The worker did not bypass the gate, did not install another ruff (egress), and did not fix the 26 annotation errors (outside the order's paths intent: 'no other dict'). The half request and this row are committed (non-.py).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Unblock: run the commit from a box with ruff 0.15.11, or the issuer's ruling to commit with the pinned ruff in a scratch environment."
+}
+```
+
+## MDPF_SECCLASS-W21-S3 -- the 4 test-file gate errors under W21-S2 are RUF100/UP031, not annotation rules; fixed as comment and string-format equivalents
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:35:28Z",
+  "one_line": "AMENDMENT 1 (ruling on W21-S2) reads the 4 test_seed_fields.py gate errors as annotation rules; the gate's own command prints them as RUF100 (unused noqa E402 comment) and three UP031 (percent-format strings), none an annotation, so the annotations-only fix covered etf_classification.py (22) and the test file's 4 took the comment and string-format equivalents.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m ruff check --target-version py39 --extend-select FA <both files> at base state of the edits -> 26 errors: 22 on etf_classification.py (I001, UP035 x2, UP006 x17, UP045 x4) and on test_seed_fields.py 32:34 RUF100, 66:21 / 83:17 / 86:57 UP031",
+      "same command after the fix -> 'All checks passed!' rc=0; pytest test_seed_fields.py 22 passed; AC1 '3 passed, 19 deselected'; AC2 'SEED-SIX-CLASS ok=True ... conflicts=0 off_vocab=0 remap_keys_moved=0 multi_asset_tokens=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: the 26 gate errors in the two owned .py files are annotation rules, fixable annotations-only with no runtime change.",
+  "world_is": "22 are annotation/import rules (typing.Dict/Set/Optional -> dict/set/X | None, unused typing import removed, import block sorted). The 4 on the test file are not: one noqa comment removed, three assertion messages moved from %-format to f-strings (identical message text, no assertion or value changed). Nothing outside the two owned files was touched.",
+  "notes": "Filed on dell1. The worker took the minimal equivalent so the gate passes without a bypass; the issuer may re-grade this if the ruling meant to exclude the 4."
+}
+```

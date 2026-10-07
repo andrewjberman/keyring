@@ -263,3 +263,104 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "482 of 7022 distinct granted accounts (31 of 190 advisors) are refused by the projection because the bundled seam file maps their custodian key to the string 'None' (the cross-reference has no Schwab id for them: 826 null rows of 6202). CU-b-1 counts them as UNCOVERED / PROJECTION_REFUSED and no longer raises; those advisors stay ineligible. The durable fix is in IRPT_BCKEND's files (omit null-mapped keys from the seam artifact, and guard the string in projection_with_seam so the account is returned raw and graded UNPROJECTED-ID rather than refused); CU-b-1 edits neither."
 }
 ```
+
+## IRPT_CUSTDY-S6 -- S4's FILE landed: returns gold present for 2026-09-30 (6854 accounts); figures need a second laptop FILE
+
+```json
+{
+  "id": "IRPT_CUSTDY-S6",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T09:56:00Z",
+  "one_line": "S4's laptop FILE landed: the 2026-09-30 returns-gold partition is present with 6854 rows and 6854 distinct accounts, but the FILE carries presence only, not figures, so round-3 E2 is graded from a second laptop-run FILE that holds the figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_CUSTDY/IRPT_CUSTDY_returns_gold_20260930.json @ef5ea44568 (laptop 3.0.0_SA_CVO; relayed by 0.0.0_AB_MSTR~DELL2 msg 286): uri s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-30, read_at 2026-10-07T09:30:48Z, objects 2 (data.parquet rows 6854, 19 columns, account_column account_id; manifest.json), distinct_accounts 6854, error null",
+      "the probe (read_returns_gold_partition.py @b97c663aa9) reads counts and column names only, by design"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 analysis @10e64fe9df gate 'S4 FILE lands' -> E2: hop 3 on the real returns, graded from the FILE (QTD, YTD, 1Y at 2026-09-30; SI held; each figure names its rows).",
+  "world_is": "The gate opened, and the returns data hop 3 needs exists for the as-of. The figures themselves must be computed where the firm bucket is readable: E2 is cut as a read-only wrapper the laptop runs (the standing rule, msg 213), writing the chosen advisor's client-report documents to a FILE that is then graded. S4 stays open until that FILE lands."
+}
+```
+
+## IRPT_CUSTDY-W7-S1 -- the order's masking test ('no run of 8 or more digits in the file') cannot hold on a client-report document
+
+```json
+{
+  "id": "IRPT_CUSTDY-W7-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~7",
+  "surfaced_at": "2026-10-07T10:06:54Z",
+  "one_line": "the order's masking test ('no run of 8 or more digits in the file') cannot hold on a client-report document; the worker tests for an unmasked ACCOUNT number instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "whole-file 8-digit-run search on the fixture output: float fractions, master 08335338, _20260811 match (0 account numbers)",
+      "data/assets/scripts/gold/irpt_custody/hop3_real_run.py unmasked_runs (branch wk-IRPT_CUSTDY-7)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py lineage and classification_vintage fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-c-1 item 6: 'no unmasked account (no run of 8 or more digits in the file)'.",
+  "world_is": "The order's file-level test (no run of 8+ digits) fires on three things the documents must carry: every float figure (a fraction such as 0.0660583070761045), the Schwab master number in lineage.schwab_partitions (08335338, 8 digits), and the dated classification_vintage filename (..._20260811.json). So CU8-AC1's masking test is written on the account number it is for: unmasked_runs() walks the strings and integers, skips a float's fraction, a registry master and a _<digits> filename token, and fails on any other 8+ digit run; the tests also assert no fixture raw account string appears. This narrows the literal wording and the worker records it rather than weakening silently."
+}
+```
+
+## IRPT_CUSTDY-W7-S2 -- on dell2 the wrapper reads the ownership map and the directory, and is denied only at the firm bucket's silver
+
+```json
+{
+  "id": "IRPT_CUSTDY-W7-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~7",
+  "surfaced_at": "2026-10-07T10:06:54Z",
+  "one_line": "on dell2 the wrapper reads the ownership map and the directory, and is denied only at the firm bucket's silver/returns read; the largest advisor's book shows 308 NOT_IN_DIRECTORY and 114 PROJECTION_REFUSED accounts before any figure is built",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 run 2026-10-07T10:0xZ, wrapper at branch wk-IRPT_CUSTDY-7, summary line HOP3-REAL-RUN ... uncovered=422 error=AccessDenied",
+      "error text: explicit deny in a resource-based policy on s3:ListBucket opal-data-49financial for the dell2 agent user"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-c-1: on dell2 the wrapper records the AccessDenied in the file and exits nonzero.",
+  "world_is": "The order says the wrapper records AccessDenied on dell2. Measured: the real CLI run on dell2 for the advisor with the most granted accounts completed the ownership-map read (opal-data-bd) and the directory read, resolved the book, and was denied (explicit deny in a resource-based policy, s3:ListBucket on opal-data-49financial) at the coverage read, so the file carries error=AccessDenied and 422 uncovered accounts (308 NOT_IN_DIRECTORY, 114 PROJECTION_REFUSED), 0 households."
+}
+```
+
+## IRPT_CUSTDY-S7 -- drain red: the none_source test fails after IRPT_BCKEND's seam fix changed ids.py
+
+```json
+{
+  "id": "IRPT_CUSTDY-S7",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T10:24:00Z",
+  "one_line": "Drain red at 1312dbea80: test_none_source_names_the_seam_line (round 2, CU-b-1) fails at HEAD because IRPT_BCKEND's seam fix @b43f82c155 made ids.py return the raw account for a 'None' mapping, so none_source.py's fixture no longer produces a refusal to trace.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~10:2xZ, HEAD 1312dbea80: python -m pytest -q data/assets/scripts/gold/irpt_custody/tests -> 1 failed, 64 passed, 1 xfailed; FAILED tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line at line 114 (assert last.endswith(':%d owner=FOO_BAR refused=1 distinct=4 via_none=1'))",
+      "IRPT_BCKEND drain @b43f82c155 (2.0.0_SA_COO~P2 msg 299): ids.py ~388 returns the raw account for an empty, 'None' or 'nan' mapping; the test passed at its own drain 1c925383a4, before that change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 2 CU-b-1: none_source.py names where the 'None' value is made; its fixture test prints NONE-SOURCE file=... via_none=1.",
+  "world_is": "The 'None' source is fixed upstream, so the tracer's fixture premise no longer holds against HEAD's ids.py. The tool did its job (W5-S1 -> E-P8). Next round's repair batch: retire none_source.py or re-point its test at a fixture projection that still refuses; this round does not re-cut it."
+}
+```
