@@ -170,3 +170,17 @@ coverage marker for a pool name outside coverage; the two lower-case served line
 
 **Round 49 cell 2** (the planted fail-and-clean pairs for the five clauses) is test-only and closes on its own; FWD-20 and FWD-27
 go back to the CVO for re-grade after it.
+
+## FWD-20 -> REALIZED, countersigned (2026-10-07 ~13:1xZ; COO~D msg 30927, @fc2e330e8e)
+
+- The CVO graded FWD-20 REALIZED on the candidate @8f98b2acce and asked whether the render check, run on `8e4dad8f`, had to be run
+  on the push sha. This seat required it (msg 30920).
+- `round49/instrument35-b3440392/candidate.grades.json`, read by this seat: its `result` block reads PASS 76, FAIL 0, NOT_EXERCISED 0,
+  N/A 1. The sha is taken from the folder name and the issuer's statement that the build was `b3440392`; the block read here does
+  not carry it.
+- The Model-tab walk on the same sha (`round35/walk/read-20261007T125343Z/` @6bee8e3a91; not opened by this seat): 19 reads, 17 PASS,
+  1 FAIL, 1 ERROR, the same two as on `8e4dad8f`.
+- **FWD-20: REALIZED. The board: 22 REALIZED, 3 NOT_REALIZED (FWD-7, 8, 27), 1 NOT_EVALUATED (FWD-1), 1 RETIRED (FWD-3). Denominator 27.**
+- Still open on the instrument: it counts four designed states where PRD v0.17 says three (the grades file's own key is
+  `fourStates`, with one no-permission capture). The CVO judged that stricter, not looser. Round 50's cell @1694478a45 brings it to three.
+- The grade is on a candidate that is not on DEV. It is read again on DEV after Andrew's push.
