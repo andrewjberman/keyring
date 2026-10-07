@@ -2330,3 +2330,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not read: the run's executor and its code revision; whether the scheduled 05:25Z run still happens; the EC2 runner's baked code. Read after the next BD change."
 }
 ```
+
+
+## MDPF_SECCLASS-S37 -- S35 disarmed: the eight S29 gold objects rolled back and read back; no run read the new code
+
+```json
+{
+  "id": "MDPF_SECCLASS-S37",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "Row S35 disarmed: the eight S29 gold objects (Cottonwood 5, Black Diamond 3) are rolled back by copy-object to their prior versions and read back equal, before any scheduled run read the new code; the CTO half is withdrawn on Andrew's six-class word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew-direct ~00:4xZ 2026-10-07 (record ANDREW_DIRECT_20261007_004xZ_NO_MULTI_ASSET_CLASS_SIX_CLASSES_ONLY.md): no multi-asset class, six classes only",
+      "CTO msg 105871: his half is withdrawn in CTO_HALF_MDPF_SECCLASS_S29_CLASS_LISTS_20261007.md; roll the eight objects back now, read each back, close RC/RB as ROLLED BACK, disarm S35",
+      "00:55:09-00:55:11Z: eight copy-object calls of the prior VersionIds, each prior body pre-checked free of the string multi_asset; read back: 8 of 8 equal to the prior body, none carrying multi_asset (ledger secclass-s29-class-lists-m-20261006, legs RC and RB closed as ROLLED BACK, ledger CLOSED)",
+      "no Cottonwood or Black Diamond scheduled run read the new code: Cottonwood's last run 10-06 11:34Z, Black Diamond's 00:26Z run (row S36) used the old code"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S35's disarm: the served move rides a signed pair or the code goes back.",
+  "world_is": "S3 holds the pre-S29 gold code again at all eight keys. The REPO still carries the S29 edits (the multi_asset list entries and labels, and C_06's guard over the emitted mix, merged in CLOUD): a later changed-script push could re-upload them, so the repo edits are reverted next (the guard stays), as an amendment of the cell. The four Cottonwood clients' mixes and Black Diamond's composition keep their old short sums until the six-class remap of the 33 multi_asset rows lands.",
+  "notes": "S35's disarm clock is the CVO's to write (R-15); this row is the evidence the owner files. Remap: Andrew chose rule B (record ANDREW_DIRECT_20261007_00xxZ_RULE_B_CATEGORY_RULE_FOR_MULTI_ASSET_FUNDS.md)."
+}
+```
