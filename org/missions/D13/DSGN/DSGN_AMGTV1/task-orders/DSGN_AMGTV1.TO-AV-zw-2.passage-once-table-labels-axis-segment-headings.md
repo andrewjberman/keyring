@@ -92,7 +92,7 @@ org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba5.py" --crit AC1 --where local; echo "exit=$?"</invocation><expect>one press opens ONE passage where three points share an id, a press on another point moves it, a second press closes it, and the three-id control opens one; C1-C5 PASS; R77 BA5 AC1 SERVED: YES; and exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba5.py" --crit AC2 --where local; echo "exit=$?"</invocation><expect>BA's served table is drawn with its six column labels, both row labels and every figure; the no-table control draws none; the y axis formats a nine-digit figure in 7 characters or fewer and keeps 528 exact; an ABSENT chart shows its served plain reason; C1-C10 PASS; R77 BA5 AC2 SERVED: YES; and exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round45/checks/ba5/r45_ba5.py" --crit AC2 --where local; echo "exit=$?"</invocation><expect>BA's served table keeps its six column labels, and both row labels and every figure are in the opened passage with no mismatched row inside the table; the no-table control draws none; the y axis formats a nine-digit figure in 7 characters or fewer and keeps 528 exact; an ABSENT chart shows its served plain reason; C1-C10 PASS; R77 BA5 AC2 SERVED: YES; and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba5.py" --crit AC3 --where local; echo "exit=$?"</invocation><expect>BA's 11 rows sit under 3 headings in first-served order, each name alone once; the one-label and no-row controls hold; C1-C6 PASS; R77 BA5 AC3 SERVED: YES; and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="AV-zw-2" judgment="true"/>
   <criterion id="AC5" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round45/checks/r45b/r45b.cjs"; echo "exit=$?"</invocation><expect>NO FIGURE SITS UNDER THE WRONG COLUMN HEADER: 4 of 4 arms -- and exit=0</expect></criterion>
@@ -131,6 +131,17 @@ must stay green; if AC2's clauses on BA's table no longer hold because a clause 
 exact clause line and do not edit that check (it is outside your paths). Update `RENDER_ZW2.md` for BA's opened passage. Re-write
 your proof instance on the new commits with AC5 in it, and flip `<status>` to `complete` again in that commit.
 
+## AMENDMENT 2 (2026-10-07, issuer) -- AC2 RUNS THE RE-ANCHORED COPY OF ITS CHECK
+
+Your row DSGN_AMGTV1-Z-W107-S2 is right: AC2's clause C3 required every figure to be inside the table, which is exactly what
+AMENDMENT 1 rules out. The issuer re-anchored that one clause in a copy of the check
+(`org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round45/checks/ba5/r45_ba5.py`, with its harness beside it). C3 now
+reads: every served row label and figure is in the opened passage, a row matching the headers is in the table, and no mismatched
+row is inside the table. AC2's invocation above now names that copy. AC1, AC3 and AC5 are unchanged.
+
+No product change is asked. Run AC2's new invocation on your committed portal branch, re-write the proof instance with its output
+(all of AC1, AC2, AC3, AC5 as run on that same commit), and flip the order's last `<status>` to `complete` in that commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
@@ -153,3 +164,6 @@ your proof instance on the new commits with AC5 in it, and flip `<status>` to `c
 
 **AMENDMENT 1 (issuer, 2026-10-07):** CTO render review `ledger/CTO_RENDER_REVIEW_ROUND45_0aa353a6.md` @e3d1e62b06 (msg 30533), re-opened for one change. No gate limb graded this modification.
 <status>pending</status>
+
+**AMENDMENT 2 (issuer, 2026-10-07):** row DSGN_AMGTV1-Z-W107-S2 disarmed -- AC2 re-pointed to the DSGN copy `round45/checks/ba5/r45_ba5.py` (clause C3 re-anchored; YES on portal 49a9bf37, NO on 0aa353a6). No gate limb graded this modification.
+<status>complete</status>
