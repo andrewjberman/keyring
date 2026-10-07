@@ -82,7 +82,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **Base:** the worker's portal is at 97598dc3, so the candidate becomes 97598dc3 + 1 product commit; the CTO re-reviews that commit.
 - **The round's second cell,** `AV-zza-2` (planted fail-and-clean pairs for the render check), is an issuer act with no order file.
 
-<status>pending</status>
+<status>complete</status>
 <round>49</round>
 <slot>~111</slot>
 <fabric>site-z</fabric>
