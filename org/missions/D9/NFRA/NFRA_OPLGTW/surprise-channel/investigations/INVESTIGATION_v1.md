@@ -9780,3 +9780,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Mechanical; no served-output consequence."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:20Z",
+  "one_line": "The worker worktree's sparse cone omits org/devices, so the surprise-row gate could not read the device register and refused every new row (fabric 'site-z') until the worker ran `git sparse-checkout add org/devices`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit of the Phase A deliverables and rows, 16:1xZ, in C:/tmp/wk-oplgtw-r26-28: `[surprise-row-gate] BLOCKED -- 3 violation(s) on NEW rows ... the device register cannot be read (RegisterError ... org/devices/DEVICES.json: No such file or directory)`; `git ls-files -t org/devices/DEVICES.json` read `S` (skip-worktree); `git sparse-checkout list` named 12 cone paths, none of them org/devices.",
+      "RUN `git sparse-checkout add org/devices` in the worker's own worktree (config only, no tracked content changed), then the same commit landed: 860a648396."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: commit instance, deliverables and rows with safe-commit on the worker branch; the row gate grades NEW rows by schema, identity, coordinate and device register.",
+  "world_is": "A worker worktree cut with the sparse cone used for the earlier rounds (`.claude .tools docs/doctrine infra/aws/ec2 ... org/missions org/projects`) lacks org/devices, which the gate reads. Rows filed from such a worktree are refused with a message that names the missing file but not the fix.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A fix for the issuer: add org/devices to the sparse cone the worker worktrees are cut with, or tell the worker face to add it. The worker's one-line fix is in the evidence."
+}
+```
