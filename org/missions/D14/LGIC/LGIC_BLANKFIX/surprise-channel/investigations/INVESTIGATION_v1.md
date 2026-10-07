@@ -639,3 +639,56 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Judged inside the cell: when an entry's fills leaves out scope, the bucket-firm refusal does not compare against the home scope; when it leaves out scope or source, the path-token conflict is not run. The home value is not the key's firm, so a refusal built on it would state a finding about the code that was not measured (the defect of row LGIC_BLANKFIX-S4). Entries without fills behave as before. If the issuer wanted the refusals kept against the home scope, it is one condition in _classify."
 }
 ```
+
+
+## LGIC_BLANKFIX-W1-S9 -- TO BF-r-5 AMENDMENT 2: two of the four key rulings (etf_universe.json, daily/49financial) are not matched, because opal_naming_keyfill.bucket_of canno
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T18:26:00Z",
+  "one_line": "TO BF-r-5 AMENDMENT 2: two of the four key rulings (etf_universe.json, daily/49financial) are not matched, because opal_naming_keyfill.bucket_of cannot read their bucket; hole=2 remains",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only: ROOTCHECK ok=True items=140 right=9 fix=114 not_asked=10 pattern=3 carded=0 refused=2 hole=2; the two HOLE lines are S3Key daily/49financial [infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/backfill_49f_daily_from_monolith_rps.py:65] and S3Key config/etf_universe.json [same file:66]",
+      "opal_naming_keyfill.bucket_of on both returns (None, 'the file has 2 bucket candidates and the key's statement picks none: opal-data-assets (line 61), opal-data-etfs (line 64)'): the key is a module-level constant (DAILY_PREFIX, UNIVERSE_KEY) whose own statement names no bucket; the bucket ETFS_BUCKET = 'opal-data-etfs' is a separate constant at line 64",
+      "infra/logic/registry/key_rulings.json rows ('opal-data-etfs', 'daily/49financial') and ('opal-data-etfs', 'config/etf_universe.json') exist; per AMENDMENT 2 item 3 an item whose bucket cannot be read matches no row and keeps its card line, which is what prints (card line plus 'the bucket was not read (...)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the four stored-file HOLE lines are answered by key_rulings.json; the bucket is the one opal_naming_keyfill.bucket_of(item) reads.",
+  "world_is": "Two of the four are answered (session-trigger-mode.json prints FIX to blackdiamond/49financial/state/session-trigger-mode.json; ticker_lookup.json prints NOT-ASKED). The two ETF keys stay HOLE because bucket_of picks no bucket for them. lib/opal_naming_keyfill.py is outside this order's grant. A reader that follows a key's constant to the bucket the code pairs it with (ETFS_BUCKET at the call sites) would match both; or the rows could name the file. BR5-AC1 fails as written on hole=2 and is reported, not forced."
+}
+```
+
+## LGIC_BLANKFIX-W1-S10 -- TO BF-r-5 AMENDMENT 1 step 0 is built as a RETYPE only: 40 more literals under a function-name context carry no kind token and stay untyped, one of th
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T18:26:00Z",
+  "one_line": "TO BF-r-5 AMENDMENT 1 step 0 is built as a RETYPE only: 40 more literals under a function-name context carry no kind token and stay untyped, one of them in the bd-pipeline root",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first build typed every kebab literal under a function-name context LAMBDA: census_repo() items went 1966 -> 2006, 40 items absent -> LAMBDA, among them infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:54 opal-assets-bd49f-reporting-pull (a 141st item of the bd-pipeline root, against the order's 140 of 140)",
+      "shipped build: the rule applies only where the last-token rule would have typed the literal; python lib/tests/test_opal_naming_function_literal.py -> FNLITERAL-TEST ok=True fees_runner=LAMBDA runner=LAMBDA retyped=2 other_changes=0 items=1966",
+      "the other 39 are in inf-pipeline, investor-reporting, news and seeking-alpha Lambdas (e.g. inf-api-txn at inf-pipeline/inf-api-txn/lambda_function.py:161)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 0 item 1: a literal held under a function-name context is typed LAMBDA, before the last-token rule; item 2: nothing else changes. The test measures 'every item whose type changed', every one to LAMBDA.",
+  "world_is": "Read literally, item 1 also adds items the last-token rule never typed, which grows the census and the bd-pipeline root by one line; the measurement spec compares items that exist on both sides. Judged inside the cell: the minimal reading, a retype of what is already typed. If the issuer wants the 40 typed as Lambdas, it is one line in _census_classify (hoist the function-context test above the kind lookup and drop the `if t` guard); the grader would then judge 40 more names."
+}
+```

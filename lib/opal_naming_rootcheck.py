@@ -6,6 +6,8 @@
     python lib/opal_naming_rootcheck.py lines ROOT --map PATH     (the run checks its own lines)
 
 Kinds, decided by the first test that applies: PATTERN (before CARDED: a variable segment is a pattern, not a name),
+a stored-file key the registry's key_rulings.json answers by (bucket, key) (tested before the card: FIX or RIGHT on its
+canonical address, NOT-ASKED when none is owed),
 CARDED (a card that names a correct name, or says none is owed; a card that does neither prints HOLE), REFUSED (a key
 a path word or a bucket ties to another firm: says what was measured and what the reader does; counted, never a blank,
 never makes the run exit 1), HOLE (grade() raised), RIGHT, NOT-ASKED (says why, and whether a rename is owed), then a wrong name (ALIAS or OUT-OF-PATTERN) is completed from the root map, the schedule's word, the
@@ -62,6 +64,51 @@ def load_card_rows(path=None):
     for r in rows:
         out.setdefault((r.get("plane"), r.get("name")), []).append(r)
     return out
+
+
+KEY_RULINGS_FILE = "key_rulings.json"
+
+
+def load_key_rulings(path=None):
+    """{(bucket, key): row} from the registry's key rulings file (opal_naming.REGISTRY_DIR). Each row carries exactly one
+    of `canonical` and `none_owed`; a row with both or neither, or a second row for one (bucket, key), is an error."""
+    path = path or os.path.join(opal_naming.REGISTRY_DIR, KEY_RULINGS_FILE)
+    with open(path, "rb") as fh:
+        doc = json.loads(fh.read().decode("utf-8"))
+    out = {}
+    for r in doc.get("key_rulings") or []:
+        if bool(r.get("canonical")) == bool(r.get("none_owed")):
+            raise ValueError("key ruling %r/%r carries not exactly one of canonical and none_owed" % (
+                r.get("bucket"), r.get("key")))
+        k = (r.get("bucket"), r.get("key"))
+        if k in out:
+            raise ValueError("two key rulings for %r" % (k,))
+        out[k] = r
+    return out
+
+
+def _ruling_of(item, rulings, bucket_reader=None):
+    """(row or None, unread reason or None) for a stored-file item: the row matching (bucket, key) where the bucket is
+    the one opal_naming_keyfill.bucket_of(item) reads. An item whose bucket is not read matches no row; the reason says so,
+    but only when some row carries the item's key under a bucket (otherwise there is nothing the bucket would have decided)."""
+    if item["type"] != "S3Key" or not rulings:
+        return None, None
+    bucket, why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
+    if bucket is None:
+        if any(k == item["current"] for (_b, k) in rulings):
+            return None, "the bucket was not read (%s), so no key ruling is matched" % (why,)
+        return None, None
+    return rulings.get((bucket, item["current"])), None
+
+
+def _ruling_line(item, row):
+    """(kind, detail) of a stored-file item the key rulings answer: the whole canonical address, or none owed."""
+    if row.get("canonical"):
+        if row["canonical"] == item["current"]:
+            return "RIGHT", row["canonical"]
+        return "FIX", row["canonical"]
+    return "NOT-ASKED", "no name is owed for this stored file: %s; no rename is owed" % (
+        str(row["none_owed"]).strip().rstrip("."),)
 
 
 def _card_for(card_rows, item):
@@ -169,7 +216,8 @@ def decide(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
     resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
-    agrees and canonical, or None), policy (policyrole's row of this declaration or None), card (the card row or None)."""
+    agrees and canonical, or None), policy (policyrole's row of this declaration or None), card (the card row or None),
+    key_ruling (the key_rulings.json row matched on (bucket, key) or None), ruling_unread (why no row was matched: the bucket was not read)."""
     fourth = fourth or _schema_fourth()
     cur, typ = item["current"], item["type"]
     key = ans.get("key")
@@ -177,8 +225,13 @@ def decide(item, ans, fourth=None):
     if var or (key and key.get("class") == "PATTERN"):
         what = var.group(0) if var else key.get("basis")
         return "PATTERN", "a code pattern, not a name; variable %r" % (what,)
+    if ans.get("key_ruling"):
+        return _ruling_line(item, ans["key_ruling"])
     if ans.get("carded"):
-        return _card_line(item, ans.get("card"))
+        kind, detail = _card_line(item, ans.get("card"))
+        if ans.get("ruling_unread"):
+            detail += "; " + ans["ruling_unread"]
+        return kind, detail
     if key is not None and key.get("class") == "REFUSED-CROSS-FIRM":
         return "REFUSED", _refused_line(key)
     if ans.get("raised") is not None:
@@ -244,8 +297,9 @@ def decide(item, ans, fourth=None):
     return "HOLE", "partial form %s; could not fill " % (form,) + "; ".join(why)
 
 
-def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None):
+def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None):
     root = root.replace("\\", "/").rstrip("/")
+    rulings = load_key_rulings() if key_rulings is None else key_rulings
     items, _stats = opal_naming_scope.root_items(root)
     if not_judged is None:
         card_rows = load_card_rows()
@@ -274,6 +328,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
                           if it["type"] == "IAM_POLICY" else None),
                "fills": None if entry is None else entry.get("fills"),
                "resolved": None}
+        ans["key_ruling"], ans["ruling_unread"] = _ruling_of(it, rulings)
         pol = ans["policy"]
         ans["resolved"] = opal_naming_rootmap.resolve(doc, name, it["current"], it["type"],
                                                       role=None if pol is None else pol.get("role_name"))
