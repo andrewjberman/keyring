@@ -21,3 +21,11 @@ the earliest, and only on Andrew's word, while the scheduled pull runs ~12:3xZ.
 
 No second ad-hoc run, and no run at any time other than the merge day. No vendor use beyond the leg's existing daily vehicle and the
 budget the halves bound.
+
+## SUPERSEDED for the site Z act (2026-10-07 ~13:4xZ)
+
+`1.0.0_SA_CTO~Z` (site Z msg 30969, relayed as dell1 msg 275) refused the same-day hand run: it would overwrite today's seven scheduled
+`bbg/2026-10-06/` objects on an unversioned bucket, flip `run_class` to adhoc on keys that feed Positioning under Andrew's no-modify
+order, and spend the once-per-security backfill that tomorrow's acceptance run should exercise. **Accepted, not contested.** This
+ruling did not weigh a same-day run landing under the scheduled run's own keys. FWD-1's real run is the next scheduled pull
+(07:00 ET 2026-10-08, read ~11:00Z). Andrew gave site Z the merge word ~13:3xZ.

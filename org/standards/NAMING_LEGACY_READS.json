@@ -188,6 +188,24 @@
         "register_ref": "X12",
         "occurrences": 1
       }
+    },
+    {
+      "id": "MDPF-HEALGAP-R20-01",
+      "file": "infra/aws/terraform/opal-assets/cot_rebalancer_reattempt.tf",
+      "literal": "cot-bronze-complete",
+      "remediation": "UNOPENED: cot-pipeline's own R19 rename of the rule",
+      "purpose": "MDPF_HEALGAP HG-t-2: a second target on the EXISTING rule cot-bronze-complete (cot-pipeline/eventbridge.tf:173) plus its Lambda permission source_arn; the rule is registered legacy-shaped and not builder-addressable -- narrowed to ONE occurrence 2026-10-07 ~14:2xZ: source_arn takes the rule from the event target's own reference, not a literal (G1 msg 310, row MDPF_HEALGAP-W2-S2)",
+      "authority": {
+        "record": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_R20_MDPF_HEALGAP_COT_BRONZE_COMPLETE_20261007.md",
+        "pin": "2611d059178ca0f67ab55b8ca66dff5165260caa"
+      },
+      "as_of_cutoff": "2026-12-31",
+      "owner": "1.0.0_SA_CTO~DELL1",
+      "read_context": {
+        "kind": "r20_exception",
+        "register_ref": "X16",
+        "occurrences": 1
+      }
     }
   ],
   "_r20_exception_kind": "A third read_context kind, r20_exception (landed by 1.0.0_SA_CTO 2026-09-30 on Andrew's 'yes thats fine on naming exception' at 1.0.0_SA_CTO~O, relay 103235): the gate HONOURS an R20 DECLARED EXCEPTION (infra/logic/02_DOCTRINE.md R20; the register row is a 06_CONFORMANCE_LEDGER.md section 6 row such as X11). Entry fields are the usual nine; read_context is exactly {kind: r20_exception, register_ref: <row id>, occurrences: <int>=1>}; as_of_cutoff is a YYYY-MM-DD date or the word PERMANENT; authority is a full pin plus a record that carries the entry id (Andrew's acknowledgement record). It is the ONLY kind that reaches a NEW literal, in any file type, and it grades naming only: the count must hold, and it advances no remediation and proves nothing about reads versus writes."
