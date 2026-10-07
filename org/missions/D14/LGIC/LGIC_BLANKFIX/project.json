@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "naming-check-blank-fixes",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-10-07",
   "registered_under_tree": "2026-10-07",
   "placement": "LAPTOP",
@@ -40,11 +40,22 @@
       "author": "1.0.0_SA_CTO"
     }
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    {
+      "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.md",
+      "round": 1
+    }
+  ],
+  "decomposition_lineage": [
+    {
+      "round": 1,
+      "date": "2026-10-07",
+      "author": "2.0.0_SA_COO~G"
+    }
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO",
-    "coo": "UNSEATED at registration; a COO lane is asked of 0.0.0_AB_MSTR when the PRD reads ADMITTED"
+    "coo": "2.0.0_SA_COO~G (seated on 1.0.0_SA_CTO msg 106179)"
   },
   "placement_ruling": "LAPTOP: directive D14 is placed on the laptop (Andrew 2026-09-12, DIRECTIVES.yaml D14 placement); the registry it edits is written by the laptop's 4.0.0_SA_CRO alone."
 }

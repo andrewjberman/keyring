@@ -89,6 +89,66 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "W1-S1: ARMED, disarm owner 2.0.0_SA_COO~G1; any worker .py commit on dell1 is refused and HG-t-2 meets the same block.",
     "world_is": "Disarmed for this project: no remaining round-1 order writes Python, and the issuer cuts no further .py order on dell1 that relies on a worker-fetched shim. The device repair (installed ruff matching the gate's 0.15.11 pin) is the box integrator's and is routed to 0.0.0_AB_MSTR~DELL1. If the wheel was fetched from PyPI it was package egress after 1.0.0_SA_CTO~DELL1 msg 71 noted that a PyPI install needs Andrew's egress word; that read is the CVO's to adjudicate."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-07T11:12:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-S5",
+    "one_line": "TO-HG-d1's <paths> write grant omits files the order's own step 5 (record-terraform-deploy.sh) writes and commits: infra/aws/terraform/opal-assets/CHANGELOG.json and the .open_deploys sentinel; the granted project ledger/ folder went unused.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/SURPRISE_ROWS_OWED_FROM_TO_HG_D1_20261007.md (on origin @ebd245f91d) Row 1",
+        "commit b84c07b204 (2 files: the source map and opal-assets CHANGELOG.json)"
+      ]
+    },
+    "spec_asserts": "TO-HG-d1 <paths>: the WRITE grant is org/critical_paths/change_management/, infra/aws/lambda/ci/lambda-source-map.json and org/missions/D8/MDPF/MDPF_HEALGAP/ledger/; everything else is read-only.",
+    "world_is": "The directed tool writes infra/aws/terraform/opal-assets/CHANGELOG.json and org/critical_paths/.open_deploys/<slug>.json, neither granted; the deploy-completion ledger writes under change_management/, not the project ledger/. The issuer's own cut defect (2.0.0_SA_COO~G1): a deploy order's grant must enumerate the deploy tool's write set; carried into the next deploy order this issuer cuts."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-07T11:12:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-S6",
+    "one_line": "deploy_ledger.py close for one slug rewrote ten other seats' sentinels under org/critical_paths/.open_deploys/ in the same invocation; the deploying seat left them uncommitted and out of its commits.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/SURPRISE_ROWS_OWED_FROM_TO_HG_D1_20261007.md (on origin @ebd245f91d) Row 2 (the ten slugs are listed there)",
+        "the seat's ledger commits touched 2 and 3 files (pathspec held)"
+      ]
+    },
+    "spec_asserts": "Closing one change-management ledger entry touches that entry only.",
+    "world_is": "python .tools/deploy_ledger.py close --slug mdpf-healgap-hg-t1-runner-deploy-20261007 modified ten unrelated sentinels in the laptop tree. A seat committing with a loose pathspec after a close, or closing inside a worktree it then drains, would carry ten other deploys' state. The ten files sit modified and uncommitted on the laptop. Tool owner unread; outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
+  },
+  {
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-07T11:12:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "MDPF_HEALGAP-S7",
+    "one_line": "safe-apply.sh reports a mangled gate path (MSYS_NO_PATHCONV=1 exported) as 'BLOCKED by the naming plan limb (LGIC_ENFORCE ...)', a naming verdict, although no name was graded.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.7.0_AE_CloudOps~F/SURPRISE_ROWS_OWED_FROM_TO_HG_D1_20261007.md (on origin @ebd245f91d) Row 3",
+        "rc=7 with the variable set; rc=0 and the naming limb graded normally with it unset"
+      ]
+    },
+    "spec_asserts": "An LGIC_ENFORCE naming BLOCK from safe-apply means a resource name is out of pattern.",
+    "world_is": "The gate's script path was rewritten to C:/c/Users/.../.tools/naming-apply-gate.py and Python could not open it; the verdict line still read as a naming block, and rc=2 from that limb does not separate 'a name is wrong' from 'the gate could not run'. It failed closed (nothing planned or applied). The variable is banned for safe-apply by CLAUDE.md, so the act was operator error; the defect is the diagnostic. Outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
   }
 ]
 ```
