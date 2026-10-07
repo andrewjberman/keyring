@@ -18983,3 +18983,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-W137-S1 -- Of the 21 live investor-reporting routes, only 6 serve the authorized request in-process over recorded storage, so 15 advisor_principal arms, 15 revoked_grant_warm_cache 
+
+```json
+{
+  "id": "IRPT_BCKEND-W137-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~137",
+  "surfaced_at": "2026-10-07T09:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Of the 21 live investor-reporting routes, only 6 serve the authorized request in-process over recorded storage, so 15 advisor_principal arms, 15 revoked_grant_warm_cache arms and 17 negative_no_protected_field arms are recorded GATED (no operation-shaped fixture), not DRIVEN-PASS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~137/IB61-7_replay_output.json: state_counts advisor_principal DRIVEN-PASS 6 / GATED 15; revoked_grant_warm_cache 6 / 15; negative_no_protected_field 4 / 17; service_principal 17 / 4 (run on base 1ade2e9989, in-process with the network hard-blocked)",
+      "per-route reason strings in that file name the refusing exception: PerformanceInputRefused 'explicit server-issued selection required' (performance), AccountNotCovered 'browser-supplied scope or snapshot is not an input' (holdings, reporting x2), ExportRefused 'the receipt names no artifact' (export download), _ExportNotWiredHere (export submit), RequestRefused OBJECT_BODY_REQUIRED (analysis), SeriesRefused (narrative); NOT_FOUND on the three irpt-status operations over ops/entry.py",
+      "4 routes (analysis/requests, analysis/requests/{requestId}, .../pdf, analysis/inputs) have no module-level Entry: they are served by installed entries built at first call from the function role's AWS clients (infra/aws/lambda/investor-reporting/reports/status_installed.py build_boundary(compose_ports()) @1ade2e9989), which test_guarded_entries.py also records as 'INSTALLED, battery is the installer's'",
+      "the live authenticated arm is GATED on every route for the reason in the rtb-1 result (the-replay-authenticated-across-every-deployed-route.result.md, RT2_test_principal_human_gated.md): a minted principal is a production auth-plane write and an advisor test principal is Andrew's to name; no non-PROD principal exists"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-335 worker face: per route drive four arms (service_principal, advisor_principal, revoked_grant_warm_cache, negative_no_protected_field); an arm that cannot be driven read-only is recorded GATED with its reason.",
+  "world_is": "MEASURED: every route's four arms are recorded, none faked. The GATED arms are gated on a MISSING PER-OPERATION FIXTURE (or an installed entry), not on the auth plane; the Enforcer.serve() warm-cache reauthorization on each route's own operation key HOLDS on 21 of the 17 in-process routes' operation keys driven, so the property is measured at the enforcer level on every Entry-backed route and through the route itself on 6. Closing the 15 needs an operation-shaped fixture per route (a server-issued selection for performance/holdings, a receipt with an artifact for export download, a jobs-store port for irpt-status) or a principal Andrew names for the live plane."
+}
+```
+
+## IRPT_BCKEND-W137-S2 -- 'Diffed against the authorized response's field set' cannot be read literally: the first cut flagged the refusal envelope's own metadata (revision, source_completion_date
+
+```json
+{
+  "id": "IRPT_BCKEND-W137-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~137",
+  "surfaced_at": "2026-10-07T09:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "'Diffed against the authorized response's field set' cannot be read literally: the first cut flagged the refusal envelope's own metadata (revision, source_completion_date, the business date, the enum word FIRM) as leaks, so a protected field is defined as a string value that differs between two authorized principals' served answers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~137/battery_ib_pr_335.py --worker directory: directory/browse and directory/resolve DRIVEN-FAIL with leaks {revision, source_completion_date, '2026-09-10'} and {'FIRM'}; every one is a value both advisor A's and advisor B's served answers carry and a post-read refusal discloses by design (served.refuse(..., business_date=artifact_business_date(ctx)), infra/aws/lambda/investor-reporting/_authz/served.py @1ade2e9989)",
+      "the rule now used: protected = a string leaf of advisor A's served answer absent from advisor B's served answer; the arm is GATED when B's answer is not served, and an injected-leak control (one protected value put into a synthetic refusal) is detected by the same test (control_injected_value_detected true on every DRIVEN-PASS row)"
+    ]
+  },
+  "spec_asserts": "Worker face item 1: negative_no_protected_field -- every refused response is diffed against the authorized response's field set and reveals none of its protected fields.",
+  "world_is": "The face does not define 'protected field'; a whole-answer diff over-reports on shared metadata. The principal-specific definition is this worker's choice, recorded here for the L9 grader; it is stricter on ids and names, silent on schema constants."
+}
+```
