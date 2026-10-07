@@ -116,3 +116,4 @@ and AC3 base FAIL as expected (no driver). Write-set note for the merge: `lib/re
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @bd772a3e6a; proof VALID (worktree checker); the research-pull driver on fakes: plan and call count, vehicle/terminal/capacity stops; AC1, AC2, AC3 YES; live-store plans officers 86 calls, segments 83 calls; segment fields UNPROBED; rows Z-W287-S1, S2</status>
