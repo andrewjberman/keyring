@@ -3029,3 +3029,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The tool, the skill and the test carry the new fields (reviewer, unavailable_reason, brief_sha256, coo, grade); the protocol file does not, so the two halves' shared contract text still shows the old payloads until a seat with that path adds them."
 }
 ```
+
+## NFRA_CTLPLN-S22 -- the kit verifier answers differently on two boxes over the same tar bytes (the requirements-kit.txt limb)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T23:41:47Z",
+  "one_line": "The Python 3.12 kit's verifier reads ok=False on dell2 and ok on dell1 over the same tar bytes: one limb, the requirements-kit.txt comparison, answers differently on the two boxes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106627, from dell2 (bus 587743ea, relayed in 0.0.0_AB_MSTR msg 106626): tar sha256 equal on both boxes; 'PY-KIT-VERIFY wheels=161 verified=161 stray=0' with ok=False on 'FAIL: requirements-kit.txt absent or differs from the manifest's wheel list'; dell2's own compare of the name==version sets reads 161 = 161, none only in either; the file is 163 lines; dell1 verified the same tar clean",
+      "Issuer's run on the laptop before the merge: PY-KIT-VERIFY wheels=161 verified=161 stray=0 ok=True (org/devices/kit_python_repack.py, merged @666132025e)",
+      "The CTO's ruling at 23:2xZ: the kit is ACCEPTED on dell2; an equal tar hash means the file inside is byte-identical, so the limb's two answers come from the verifier as checked out on each box; line endings or the tool's version are the candidates, NOT measured",
+      "Not read by this seat: dell2's checkout of the tool, its commit, or the bytes it compared"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 8: verify checks every wheel against the manifest and that requirements-kit.txt is the closure's exact name==version lines; the same tool on the same bytes gives the same answer on any box.",
+  "world_is": "A verifier whose answer depends on the checkout it runs from. The file has 163 lines for 161 wheels (two comment lines mark its two groups), so a comparison that counts lines, or that reads one side with different line endings than the other, can differ by box. The kit itself is not in doubt. Repair, at the next cut of the kit cell: compare the parsed name==version SETS, ignoring comment lines and line endings, and print the tool's own commit beside its verdict so two boxes can see whether they ran the same verifier."
+}
+```
