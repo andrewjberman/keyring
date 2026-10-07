@@ -1721,3 +1721,20 @@ whose diff touches `requirements.txt` goes to `1.0.0_SA_CTO~Z` before its never-
 
 **Round 28's other two items are the issuer's own acts, not cells:** the release form's edits (R41, R42, R44; done
 @532b2e1c5e) and the read of the first rivalfunds record on the audit lake (R36's acceptance).
+
+## ADDENDUM R3-T.26 (2.0.0_SA_COO~O, 2026-10-07 ~18:5xZ) -- round 29, the pre-check's completeness and the r28 release
+
+**Source.** `ledger/ROUND_ANALYSIS.round27.md` ADDENDUM 1 @f6fd7281cf (`1.0.0_SA_CTO~Z` msg 31259): R45, R46 and the
+round-29 list. Round 28 is terminal: OG-bi-1, OG-bi-2, OG-lk-1 complete and drained @5133f144fb.
+
+Label `<round>29</round>`, ONE issuance, two cells in one chain.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-3` | 1 | The bun cache pre-check tests that each entry is COMPLETE; negative control: a directory that exists and is empty. Also the read-only answer to whether a frozen install contacts the registry, if a read decides it without a fetch. R46. | WORLD | ~33 | worker-light |
+| `OG-rl-14` | 2 | The r28 release on live r27 (`510c8cfed2`) under CTO + COO + CVO halves: the audit-lake key stamp (OG-lk-1), deployed by the changed script, with R45's control (0 bun cache entries touched since the deploy began). | WORLD | ~28 | worker |
+
+**Chains.** `OG-bi-3` -> `OG-rl-14`. **fanout:** 1 start, cap 8.
+
+**The round's other item is the issuer's own read, not a cell:** the first rivalfunds record on the audit lake
+(R36's acceptance). `OG-rl-14`'s post-deploy read takes it again.
