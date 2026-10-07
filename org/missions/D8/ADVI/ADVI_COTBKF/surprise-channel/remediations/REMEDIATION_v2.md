@@ -60,15 +60,15 @@ Not moved: W6-S5 (its ruling is not recorded).
   "owner": "2.0.0_SA_COO~C2",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v5"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~C2",
-   "at": null
+   "at": "2026-10-07T10:25Z"
   }
  },
  {

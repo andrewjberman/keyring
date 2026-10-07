@@ -1619,3 +1619,142 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Disarms IRPT_DASHBD-W9-S1, W9-S2 and W9-S3: each hazard's condition is absent at HEAD, measured by the tests and the source line each row named."
 }
 ```
+
+## IRPT_DASHBD-W13-S1 -- dell2 identity is denied on the 49financial gold bucket
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T08:50:00Z",
+  "one_line": "The dell2 agent identity is explicitly denied on s3://opal-data-49financial (the served 49F daily-return gold), so the GROSS tie-out record cannot be produced here; the BD bronze read in opal-data-assets succeeded.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-27 worker face: run tieout_e2_gross.py once; it reads the served 49F series (round-17 read_gold, s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=*/data.parquet) and writes TIEOUT_49F_BD_POPULATION_E2_GROSS.json.",
+  "world_is": "ListObjectsV2 on opal-data-49financial as arn:aws:iam::313476888478:user/cloudops-dell2-agent-user returns AccessDenied 'explicit deny in a resource-based policy'; HeadObject on date=2025-01-09, 2025-01-08 and 2026-10-02 partitions returns 403. Only the default AWS profile exists on the box. The bronze read (5,252 objects, 50 s) in opal-data-assets succeeded. No record, so DB18-1-AC1..AC3 cannot pass; script and 4 offline tests (4 passed) are committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python tieout_e2_gross.py . --cache .scratch/c.pkl on dell2 2026-10-07: botocore AccessDenied ListObjectsV2 opal-data-49financial",
+      "boto3 head_object x3 on gold partitions: 403 Forbidden"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Unblock: run the committed script from a seat whose identity can read the 49financial bucket (round 17 evidently did), or grant read."
+}
+```
+
+## IRPT_DASHBD-W13-S2 -- W13-S1 resolved: 3.0.0_SA_CVO ran tieout_e2_gross.py unchanged on the 
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:46:55Z",
+  "one_line": "W13-S1 resolved: 3.0.0_SA_CVO ran tieout_e2_gross.py unchanged on the laptop @e6ed5380e6 and the record is copied byte-exact (4,196,573 bytes, sha256 febe370fbed76497).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W13-S1: the GROSS record cannot be produced on dell2 because its identity is denied on s3://opal-data-49financial.",
+  "world_is": "The record exists: git show e6ed5380e6:org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_W13/TIEOUT_49F_BD_POPULATION_E2_GROSS.json redirected into the worker folder; 4196573 bytes, sha256 febe370fbed7649795ed75b80198f09250a88f5ca061a650c0ee514b8752d83c. This worker made no AWS call and did not re-run the script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sha256sum and wc -c on the copied file, dell2 2026-10-07: febe370fbed76497..., 4196573",
+      "issuer ruling from 2.0.0_SA_COO~D2 under 1.0.0_SA_CTO~DELL2's standing rule (fenced firm-bucket read runs on the laptop, returns as a file)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The fence is real but the record was produced by the laptop run @e6ed5380e6 by 3.0.0_SA_CVO and delivered as a file, so the tie-out no longer needs a dell2 read.",
+  "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2."
+}
+```
+
+## IRPT_DASHBD-W13-S3 -- DB18-1-AC2 FAILs on the laptop record: 1 of 9,078 graded rows has bd_f
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:46:55Z",
+  "one_line": "DB18-1-AC2 FAILs on the laptop record: 1 of 9,078 graded rows has bd_fees_reported -52.99 (non-zero) but a null bd_fee_addback.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "p18_gross.py DB18-1-AC2: bd_fee_addback is null exactly when bd_fees_reported is null or zero; the order allows a null add-back also when the average value is not positive.",
+  "world_is": "Record at e6ed5380e6: one segment 2026-06-17..2026-07-21, verdict OUTSIDE, reason UNEXPLAINED, bd_fees_reported -52.99, bd_fee_addback null, bd_gross_return equal to bd_return. The checker's nullness rule does not admit the order's own non-positive-average (or negative-fee) null, so either the checker or the record's one row is the defect; the script's counts are unaffected by either reading (that row is OUTSIDE and stays UNEXPLAINED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p18_gross.py . DB18-1-AC2 -> 'FAIL: 1 rows where bd_fee_addback's nullness disagrees with bd_fees_reported' then 'DB18-1-AC2 FAIL'",
+      "python read of the record's segments: exactly 1 row with (fees in None/0) != (addback is None)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed here: the record is not to be edited and the script is not to be re-run. Needs the issuer to amend AC2 (admit a null add-back on a non-positive average or negative fee) or to order a re-run."
+}
+```
+
+## IRPT_DASHBD-W13-S4 -- W13-S3 resolved: checker defect, fixed by amendment 1
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:54:14Z",
+  "one_line": "W13-S3 resolved: it was a checker defect, fixed by amendment 1 @c6442ceec1; DB18-1-AC2 now passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W13-S3: DB18-1-AC2 FAILs because 1 of 9,078 graded rows has a non-zero bd_fees_reported and a null bd_fee_addback.",
+  "world_is": "Amendment 1 (c6442ceec1) rules the checker, not the record, defective: the order nulls the add-back where BD's average value is not positive, and the one disagreeing range (2026-06-17..2026-07-21: fees -52.99, bmv 0.01, emv -0.70) is such a range. Re-run from the worktree: DB18-1-AC1 PASS, DB18-1-AC2 PASS, DB18-1-AC3 PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p18_gross.py . DB18-1-AC2 -> 'OK: addback null on 1231 of 9078 graded rows, exactly where BD reported no fee or on the 1 measured non-positive-average range(s); 4 tests passed' then 'DB18-1-AC2 PASS'",
+      "git show c6442ceec1: amendment 1 of IRPT_DASHBD.TO-DB-b-27"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W13-S3 was a checker defect, fixed by amendment 1 @c6442ceec1, and DB18-1-AC2 now passes.",
+  "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2."
+}
+```
+
+## IRPT_DASHBD-S27 -- W13-S1 and W13-S3 resolved at the round-18 drain
+
+```json
+{
+  "id": "IRPT_DASHBD-S27",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T10:03:55Z",
+  "one_line": "W13-S1 and W13-S3 are resolved: the fenced 49F gold read ran on the laptop (3.0.0_SA_CVO @e6ed5380e6), and the AC2 failure was a checker defect fixed by amendment 1 (@c6442ceec1); DB-b-27 and DB-b-28 merged @0f304c6405.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W13-S1",
+    "IRPT_DASHBD-W13-S3"
+  ],
+  "spec_asserts": "W13-S1: the GROSS record cannot be produced because the dell2 identity is denied on opal-data-49financial. W13-S3: DB18-1-AC2 fails on one row with fees -52.99 and a null add-back.",
+  "world_is": "W13-S1: under 1.0.0_SA_CTO~DELL2's standing rule the laptop's 3.0.0_SA_CVO ran the order's script at fb966b0a72 unchanged (@e6ed5380e6); the worker copied the record byte-exact (sha256 febe370fbed76497..., 4,196,573 bytes). The fence itself stands; no fence was widened from dell2. W13-S3: the issuer read the landed bronze object for 2026-06-17..2026-07-21 (fees -52.99, beginningMarketValue 0.01, endingMarketValue -0.70): a non-positive average value, which the order nulls; amendment 1 makes the checker admit that literal range, and a negative control without it still fails. Issuer re-run at the drain: DB18-1-AC1..3 and DB18-2-AC1..3 PASS, both instances VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e6ed5380e6 (laptop run)",
+      "c6442ceec1 (amendment 1)",
+      "0f304c6405 (drain)",
+      "s3://opal-data-assets/blackdiamond/49financial/bronze/reporting_performance/pull=20261004/ (the one bronze object read, by the dell2 identity)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves W13-S1 (the read was made where the fence allows it) and W13-S3 (a checker defect, fixed in the issuer's own check); DB-b-27 is complete with a VALID instance."
+}
+```
