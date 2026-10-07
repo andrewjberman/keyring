@@ -58,6 +58,19 @@ TABLE = [
     ("iShares Ultra Short Duration Bond Active ETF", "iShares Ultra Short Duration Bond Active ETF"),
     ("JPMorgan Chase & Co.", "JPMorgan Chase & Co."),
     ("TrueShares Quarterly Bear Hedge ETF", "TrueShares Quarterly Bear Hedge ETF"),
+    # SC-e-48 re-request (CTO half REFUSED @cadf21e1f1 items 1-3): depositary/fund forms upper; LTD/PLC and the foreign forms upper in
+    # ONE casing whatever the input's; Inc/Corp/Co title-case; short all-caps non-word tokens (ABB, AAA, CLO, PGIM) upper.
+    ("ABB LTD SPONSORED ADR", "ABB LTD Sponsored ADR"),
+    ("PGIM AAA CLO ETF", "PGIM AAA CLO ETF"),
+    ("ZURICH INSURANCE GROUP LTD", "Zurich Insurance Group LTD"),
+    ("Ferguson Plc Ord", "Ferguson PLC Ord"),
+    ("Smith & Nephew Ltd", "Smith & Nephew LTD"),
+    ("SIEMENS AG SPONSORED ADS", "Siemens AG Sponsored ADS"),
+    ("Novartis Ag Adr", "Novartis AG ADR"),
+    # SC-e-48 re-sign condition (CTO @4f8bd85bc4): an X&Y token stays upper in both halves.
+    ("ISHARES S&P 500 GROWTH ETF", "iShares S&P 500 Growth ETF"),
+    ("AT&T INC", "AT&T Inc"),
+    ("P&G CO", "P&G Co"),
     # empty
     (None, None),
     ("   ", None),

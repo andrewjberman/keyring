@@ -5,10 +5,10 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25"],
  "status": "RATIFIED"
 }
 ```
@@ -145,6 +145,138 @@
          SOURCE     Andrew-direct 2026-10-06 ~18:5xZ, "we need RDP on all devices accessible
                     via tailnet" and "that RDP ability from any device in the tailnet, namely the macbook";
                     the directions, Andrew-direct ~20:1xZ
+
+  FWD-15 A lane on a Dell that needs a package the box does not have gets it from the laptop, checked,
+         without the Dell ever asking the internet for it
+         DONE WHEN  EXERCISED -- one real package taken the whole way for one Dell lane, and the lane's
+                    work then runs
+         ACCEPT     a lane on a Dell needs a package its box cannot use as delivered; the laptop gets the
+                    one exact file, checks it, and sends it over Opal's private network; the Dell installs
+                    it from that file alone and the lane's work runs; during all of it the Dell asks no
+                    outside site for anything; a file taken from a saved example instead of the real route
+                    fails the outcome
+         SOURCE     brief I.0, the candidate thread; Andrew-direct 2026-10-07 ~13:39Z, "it is preferable
+                    for the laptop device to check it out first, and if clean and clear, it can be
+                    taildropped"
+
+  FWD-16 Anyone can tell whether a package is approved, ask for one that is not, and later read who
+         said yes or no and why
+         DONE WHEN  EXERCISED -- one request made, one approved and one refused, and both decisions read
+                    back by someone who was not part of them
+         ACCEPT     two people on two boxes asked "may I install this?" give the same answer without
+                    asking anyone; a person who needs something not approved files one request that says
+                    what, which exact version, what needs it and why nothing approved will do; a reviewer
+                    answers yes or no; afterwards Andrew can read who approved which package, on what
+                    evidence, and when; a refusal reads as clearly as an approval
+         SOURCE     brief O1, O2, O3; Andrew-direct 2026-10-07 ~14:0xZ, "some kind of request pipeline
+                    for additions to requirements.txt and a review process"; who reviews, Andrew-direct
+                    ~15:1xZ, "deliver their recommendation to the CTO and CTO runs the requirements
+                    addition"
+
+  FWD-17 For anything that reached a box, a person can say what was checked before it was sent and
+         what those checks cannot rule out
+         DONE WHEN  EXERCISED -- one delivered package's record read aloud to Andrew, including what
+                    was not checked
+         ACCEPT     for a package on a Dell, someone states the checks the laptop ran before sending it
+                    and names the risks those checks leave; asked "would this have caught a package whose
+                    own maker's account was taken over?", the answer given is the true one, even when it
+                    is no; nothing is called clean beyond what was looked at
+         SOURCE     brief O4 and Part V.1
+
+  FWD-18 A box that tries to get a package, a script or a program from the internet is stopped on
+         the box and told the route that works; the laptop alone fetches a package, by the checked
+         route
+         DONE WHEN  EXERCISED -- a download tried on purpose and stopped on a Dell and on site Z, and
+                    the delivered file then installed on each
+         ACCEPT     on a Dell, and on site Z, someone tries, on purpose, to install a package from the
+                    public internet and is stopped, and what they are told names the route that works; on
+                    the laptop the only way a package arrives is the checked route; a script or a
+                    program off the raw internet has no route at all and comes only from another Opal box;
+                    building the website on any box downloads nothing, including what a tool would fetch
+                    on its own without being asked; what is counted is requests leaving the box, not the
+                    absence of an error
+         SOURCE     brief O5, O6, O7; Andrew-direct 2026-10-07 ~13:39Z, scripts and executables off the
+                    raw internet "never, ever"; every box, Andrew-direct ~15:1xZ, "Rec approved."
+
+  FWD-19 Andrew can ask what a box downloaded and get an answer from a record, and a lane waiting on
+         a package is seen, not stuck
+         DONE WHEN  EXERCISED -- the question asked about one box for one day and answered from what was
+                    written at the time
+         ACCEPT     Andrew asks "what did this box download today?" and someone answers from a record
+                    made at the time, not from memory; a lane that needs a package not yet delivered
+                    loses that one piece of work, keeps going elsewhere, and its wait shows in the same
+                    place he sees every box's open decisions; nothing here watches or sends him anything
+                    on its own
+         SOURCE     brief O8, O10; the standing rule that no monitor is built unless he asks
+
+  FWD-20 Someone at Opal asks for a piece of work in a message, Andrew hears of it from one text with
+         a recommendation, a fresh seat on the box with the most room does it, a reviewer grades it,
+         and the person who asked is told it is done
+         DONE WHEN  EXERCISED -- one real request taken the whole way, and the person who asked told the
+                    outcome
+         ACCEPT     a person asks for a small piece of work in Teams; Andrew gets one text saying what
+                    was asked and what is recommended, and can answer it without opening Teams; the
+                    job goes to the box with the most room by a measurement taken when it is offered; a
+                    seat started fresh for that job, handed a written brief, does it; a seat that did
+                    none of the work grades it; the person who asked is told, where they asked, that it
+                    is done; a request replayed from a saved example fails the outcome
+         SOURCE     brief I.0, O1, O2, O3; Andrew-direct 2026-10-07 ~16:3xZ, "The agents that get those
+                    jobs should be spawned fresh, briefed, and run /remote-drive"
+
+  FWD-21 The fabric manager on every box keeps its fabric running without being asked, and decides
+         nothing about any project
+         DONE WHEN  EXERCISED -- one seat left hanging on a box nobody is watching is moving again
+                    without anyone asking, and the manager's record for a day is read for project rulings
+         ACCEPT     on a box nobody is watching, a seat that hangs is moving again, a dead one is
+                    replaced and finished work is brought together, by that box's manager, without
+                    Andrew or another seat asking; someone reading what the manager wrote that day finds
+                    no opinion on how any project should be done
+         SOURCE     brief O4; Andrew-direct 2026-10-07 ~16:3xZ, "MSTR whole purpose is not business
+                    logic/project reasoning, they are infrastructure managers"
+
+  FWD-22 Every open decision on a box is held by that box's technology lead, who settles the ones
+         that are the box's own; one that touches another box is settled between the two, on the record
+         DONE WHEN  EXERCISED -- one decision that touched one box settled there and never shown to
+                    Andrew, and one that touched two boxes read afterwards from both sides
+         ACCEPT     a decision that touches only one box is settled by that box's technology lead and
+                    never reaches Andrew as a question; a decision that touches another box goes from
+                    one manager to the other, and afterwards someone on either box can read what was
+                    agreed and by whom; neither box learns of the other's decision by finding its effect
+         SOURCE     brief O5, O6; Andrew-direct 2026-10-07 ~16:3xZ, "they must have their MSTR reach out
+                    to the MSTR of the relevant fabric and coordinate as needed"
+
+  FWD-23 Anyone can tell what each operations seat on a box is doing, and no piece of driven work
+         finishes without a reviewer on that box grading it
+         DONE WHEN  EXERCISED -- one box's seat list read by someone who then names each seat's work
+                    without opening a log, and one finished piece of work shown with its grade
+         ACCEPT     a person reading a box's list of seats can say what each operations seat is doing,
+                    and can see one that is doing nothing; every box that does driven work has a
+                    reviewer, and a piece of work is not counted finished until a seat that did none of
+                    it has graded it, on the box where it was done
+         SOURCE     brief O7, O8; Andrew-direct 2026-10-07 ~16:3xZ, "CVO is dedicated reviewer in those
+                    drive processes so mandatory spawn on any fabric"
+
+  FWD-24 A technology lead gets research on a risky operation when it is above a stated line, and
+         does not ask for it below
+         DONE WHEN  EXERCISED -- the same operation put to two technology leads on two boxes, and both
+                    give the same answer to whether research is owed
+         ACCEPT     looking at an operation, a technology lead can tell from how it is already classed
+                    whether research is owed before it runs, and the research seat can tell whether an
+                    ask was owed; two leads asked about the same operation answer alike
+         SOURCE     brief O9; Andrew-direct 2026-10-07 ~16:3xZ, "if the project does not meet a meaningful
+                    quantified risk layer ... there is no need to bring them out"
+
+  FWD-25 A seat that starts on any box is told what it is by what starts it, and a tool stops or
+         flags the act its role forbids
+         DONE WHEN  EXERCISED -- one seat of each kind started on a box and asked what it is, and one
+                    forbidden act per kind tried and stopped or flagged by a tool
+         ACCEPT     a seat started on any box can say what its role is and is not, from what it was
+                    given at start; when a seat tries the thing its role forbids, a tool refuses or
+                    flags it, and it is not left to another seat to notice; this holds for how code
+                    moves, how cloud changes are made, and how seats work
+         SOURCE     brief O10; Andrew-direct 2026-10-07 ~16:3xZ, "whether it takes place in launcher
+                    updates, skill updates/creation, gates, etc., I want to make sure we cover both
+                    GitOps, AWS DevOps, and Agent Workflow Ops"
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -484,3 +616,121 @@ own boxes; nothing is fetched from PyPI by a Dell. Cell for round 4: the list of
 each Dell's installed set, N of N printed, and the transfer of what is missing.
 
 A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.15 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: package intake and download tiers. FWD-15 to FWD-19; contract C-INTAKE
+
+**Words (verbatim in their own records):** dell2 terminal ~13:39Z (record @50df0c2e97, branch `q/dell2/record-download-tiers/r1`);
+dell1 terminal ~14:0xZ (record @9e5f28e155, branch `q/dell1/record-package-intake/r1`), "all work that should be researched,
+designed, and folded in to NFRA_CTLPLN". **Brief:** `docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md`
+@adc8997f1b (`4.0.0_SA_CRO`), read in Parts I, II, III and V. Its ten outcomes are carried as five: O1+O2+O3 -> FWD-16; O4 ->
+FWD-17; O5+O6+O7 -> FWD-18; O8+O10 -> FWD-19; the thread -> FWD-15. **O9** (every box runs the same version of each tool the
+gates call) is already contract C-KIT-PYTHON's and takes no new outcome.
+
+**The thread of this addition (round 5 builds it; every later round enriches):** FWD-15 on `PyYAML==6.0.3` for one dell2 lane,
+then the other 29 packages of the first batch by the same route
+(`org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md` @bd489b912b).
+
+### Contract C-INTAKE
+
+1. **What "checked" is.** The eight checks of the brief's Part V.1, in that order, each recorded as passed, failed or not
+   applicable, with the brief's own "leaves" column written beside every delivery. Running the package on the laptop is NOT a
+   check: the laptop holds Andrew's administrator sign-in. Check 8 (a person signs the batch) is `1.0.0_SA_CTO`'s.
+2. **One file by exact name.** The laptop fetches one named file for one approved line; no dependency resolution. So the approved
+   list is closed under dependencies BEFORE a batch is fetched (the brief's F12: 73 dependencies are not lines today).
+3. **A holding place.** A fetched file waits in one folder on the laptop between fetched and checked; only a file whose record
+   reads checked is ever sent.
+4. **The approved list.** `requirements.txt` is generated with a do-not-hand-edit header (F2). Round 5's first cell decides, by
+   measurement, how a reviewed addition and a regeneration stop overwriting each other; until it lands, no line is added by hand.
+5. **The Dell's proof.** The laptop has no Python 3.14 (F13), so a delivered file is proven on the Dell: an install with no
+   index, then an import, read back.
+6. **No monitor.** FWD-19 is an answer on demand from a record written at the time of each fetch. Nothing is built that watches
+   or notifies.
+
+### The brief's six calls, ruled (each on the brief's own recommendation unless said)
+
+- **A, which boxes the tiers bind:** the two Dells as receivers, and the laptop as the one box that fetches a package, through
+  the checked route only. That is the scope of his words, which were spoken at the Dells about the Dells. Site Z, and the
+  laptop's own seats as receivers, are NOT bound by this addendum; binding them is his word to give and is not inferred here.
+- **B, programs the kit already carries:** red. They reach a Dell only from the laptop over the private network, as the kit does
+  today. The automation browser download moves to that route or is dropped from the Dells.
+- **C, what a Lambda bundles:** not this scope.
+- **D, who approves:** `1.0.0_SA_CTO` approves a version change to a package already on the list; a NEW package name is
+  approved by Andrew, once per name.
+- **E, the website's packages:** as today's kit: the laptop packs the existing tree and sends it; a new one takes the same
+  request and review.
+- **F, running a package before a Dell does:** not for the first batch (all 30 are versions the laptop already runs). For a new
+  name, yes, and only in a place that holds no sign-in; building that place is its own outcome when the first new name is asked.
+
+An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to FWD-14 are unchanged.
+
+## ADDENDUM v0.16 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: the tiers bind every box; a package is approved by the control plane, not by Andrew
+
+**Word (verbatim):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_151xZ_TIERS_BIND_EVERY_BOX_DELL1_PUSHES_DEV_PACKAGE_APPROVAL_BY_CRO_THEN_CTO.md`.
+
+1. **Call A of v0.15 is RE-RULED: every box.** "Rec approved." on the card "Yes, every box, with the laptop as the one box that
+   may fetch a package and only through the checked route." FWD-18's text reads "a box" where it read "a Dell", and its ACCEPT
+   names site Z and the laptop. v0.15 held the tiers to the Dells because his words were spoken there; that limit is lifted by
+   his word, not by inference.
+2. **Call D of v0.15 is RE-RULED: Andrew approves no package name.** "The package approval needs to be handled automatically by
+   an agent on the laptop/control plane fabric". C-INTAKE gains clause 7:
+   **7. Review.** For every request, a new name or a version change alike, `4.0.0_SA_CRO` assesses legitimacy and stability
+   (the eight checks' inputs that need no fetch, the project's history, its maintainers, how near its name sits to a popular
+   one, what it pulls in) and delivers one recommendation, yes or no, with its evidence, as a file. `1.0.0_SA_CTO` decides,
+   and on a yes runs the addition to the approved list by clause 4's route. Check 8 of clause 1 (a person signs the batch)
+   is that same decision. The record FWD-16 promises names both seats and both files.
+3. **Call F stands:** a new name is run before a Dell runs it only in a place that holds no sign-in; until that place exists,
+   the CRO's recommendation on a new name says so and the CTO weighs it.
+
+FWD-1 to FWD-15, FWD-17 and FWD-19 are unchanged. The ratified-text half is owed by `3.0.0_SA_CVO` against this version.
+
+## ADDENDUM v0.17 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: how each seat operates, and the inbound-work pipeline. FWD-20 to FWD-25; contract C-SEATS
+
+**Word (verbatim and entire):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_163xZ_FABRIC_ROLES_MSTR_CTO_COO_CVO_CRO_AND_THE_INBOUND_WORK_PIPELINE_INTO_NFRA_CTLPLN.md`
+@df6d1ad20b. **Brief:** `docs/briefs/nfra-ctlpln-seat-roles-and-inbound-work-pipeline-brief-20261007.md` @779f5428bc
+(`4.0.0_SA_CRO`), read in Parts I, II, III and V. Its ten outcomes are carried as six: the thread with O1, O2, O3 -> FWD-20;
+O4 -> FWD-21; O5+O6 -> FWD-22; O7+O8 -> FWD-23; O9 -> FWD-24; O10 -> FWD-25.
+
+**The thread of this addition:** FWD-20, one real Teams request taken the whole way on the default path. Most hops exist (brief
+F2: the Teams agent already texts Andrew and routes his reply; `.tools/remote-job.py` and `/remote-drive` do the bid and the job).
+The round that builds it runs them as one for the first time, with a recommendation in the text and a reviewer in the job.
+
+### Contract C-SEATS
+
+1. **One statement of each seat.** MSTR, CTO, COO, CVO, CRO: what each is and does, in Andrew's terms as tabled in his record,
+   lives in one file that the launcher hands a seat at start. Skills and gates cite it; none restates it.
+2. **Where each rule is held** (his three: launcher, skill, gate). A rule a tool can check is checked by a tool; the rest is told
+   at start. The cell that writes clause 1 lists every rule with its holder across the three areas: how code moves, how cloud
+   changes are made, how seats work.
+3. **A fabric manager's record carries no project ruling.** Its acts are merges, pulls, pushes, integration, spawn, kill, unstick
+   and the bid. A question of substance it receives is passed to its CTO, by a file.
+4. **Open calls.** The CTO of a fabric holds one list of every open call on it. "Touches only its fabric" is measured, not judged:
+   by the paths and risk class of the orders involved, the project's placement, and the cloud resources its Terraform root names;
+   a shared bucket or a shared trunk touches every fabric.
+5. **A cross-fabric call** goes CTO to its MSTR to the other fabric's MSTR to that CTO, as a file with an acknowledgement from
+   the other side (sent is not read). It is closed on both boxes or on neither.
+6. **A laptop seat's order from another box.** Its GO reaches the seat through the laptop's CTO (measured today: an order from
+   dell2 reached no one, because a Dell cannot message a laptop seat and the manager is barred from that tier). The cell that
+   builds clause 5 closes this route too, so it does not depend on one seat relaying.
+7. **A reviewer per box** exists before any drive on that box is counted finished.
+8. **An inbound job** is done by a seat spawned fresh for it and briefed from a file; the requester is told the outcome in the
+   channel they asked in.
+
+### The brief's six calls, ruled
+
+- **A, the CRO's line:** as recommended. Research is owed for an operation of stakes class S3 or above
+  (`org/tier0/STAKES_MATRIX.md`) or a task order classed WORLD. Below that, none. Both classes are already assigned to work.
+- **B, the locked law text:** yes. One short edit to `CLAUDE.md` after clause 1's file exists, rules only, by this seat, with its
+  three surfaces. It points at the file; it does not restate it.
+- **C, when an inbound job starts:** as it does today, on Andrew's reply to the text. That is the existing behaviour and no gate
+  is added. "At once" per kind of request is an enrichment, on his word.
+- **D, where the dedicated inbound COO sits:** on a Dell. Which Dell is the bid's answer per job, not a rule.
+- **E, reviewers:** one per box now; a macro reviewer is the box's CTO's call where one reviewer is the bottleneck.
+- **F, reading mail for requests:** NOT built in this addendum. Reading Outlook content with a model is a new use of a vendor
+  that no word of his names yet; the Teams path stays as it is. It enters when he words it.
+
+### Two corrections taken from `3.0.0_SA_CVO`'s review of v0.16 (@c9ef12c19e)
+
+FWD-18's DONE WHEN now names a Dell and site Z, as its headline and ACCEPT already did. FWD-16's SOURCE now quotes his words
+on who decides instead of restating them.
+
+An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to FWD-15, FWD-17 and FWD-19 are unchanged.

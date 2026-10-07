@@ -1,16 +1,24 @@
 #!/usr/bin/env python3
-"""opal_naming_rootcheck -- one line per name of a Terraform root, every line one of six kinds (LGIC_BLANKFIX BF-t-6).
+"""opal_naming_rootcheck -- one line per name of a Terraform root, every line one of seven kinds (LGIC_BLANKFIX BF-t-6, BF-e-8).
 
     python lib/opal_naming_rootcheck.py ROOT --map PATH [--report-only]
 
-Kinds, decided by the first test that applies: CARDED, PATTERN, HOLE (grade() raised), RIGHT, NOT-ASKED, then a wrong
-name (ALIAS or OUT-OF-PATTERN) is completed from the root map, the cadence reader and the key classifier and prints as
-FIX when nothing is left blank, as HOLE when a blank cannot be filled. A hole is printed, never hidden or invented.
-The five modules (scope, rootmap, cadence, keyfill, the grader) are read, never edited. Python 3.9; ASCII only.
+    python lib/opal_naming_rootcheck.py lines ROOT --map PATH     (the run checks its own lines)
+
+Kinds, decided by the first test that applies: PATTERN (before CARDED: a variable segment is a pattern, not a name),
+CARDED (a card that names a correct name, or says none is owed; a card that does neither prints HOLE), REFUSED (a key
+a path word or a bucket ties to another firm: says what was measured and what the reader does; counted, never a blank,
+never makes the run exit 1), HOLE (grade() raised), RIGHT, NOT-ASKED (says why, and whether a rename is owed), then a wrong name (ALIAS or OUT-OF-PATTERN) is completed from the root map, the schedule's word, the
+inline policy's role and the key classifier and prints as FIX when nothing is left blank, as HOLE when a blank cannot be
+filled. A name that carries a cadence word its schedule contradicts is rebuilt on the schedule's word. A hole is printed,
+never hidden or invented. After every line is decided, two different current names of one type whose FIX target is one
+string both become HOLE. The modules (scope, rootmap, cadence, policyrole, keyfill, the grader) are read, never edited.
+Python 3.9; ASCII only.
 """
 import argparse
 import json
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -20,11 +28,13 @@ if HERE not in sys.path:
 import opal_naming  # noqa: E402
 import opal_naming_cadence  # noqa: E402
 import opal_naming_keyfill  # noqa: E402
+import opal_naming_policyrole  # noqa: E402
 import opal_naming_rootmap  # noqa: E402
 import opal_naming_scope  # noqa: E402
 
 NOT_JUDGED = opal_naming_scope.NOT_JUDGED
-KINDS = ("RIGHT", "FIX", "NOT-ASKED", "PATTERN", "CARDED", "HOLE")
+KINDS = ("RIGHT", "FIX", "NOT-ASKED", "PATTERN", "CARDED", "REFUSED", "HOLE")
+_CADENCE_TYPES = ("EVENT_RULE", "SCHEDULE")
 _INLINE_POLICY = "an inline policy takes its role's system; the root map does not decide it"
 
 
@@ -43,26 +53,154 @@ def load_cards(path=None):
     return set((r.get("plane"), r.get("name")) for r in rows)
 
 
+def load_card_rows(path=None):
+    """{(plane, name): [card rows]} from the repository's own card file."""
+    path = path or os.path.join(opal_naming.REPO, *NOT_JUDGED.split("/"))
+    with open(path, "rb") as fh:
+        rows = json.loads(fh.read().decode("utf-8"))
+    out = {}
+    for r in rows:
+        out.setdefault((r.get("plane"), r.get("name")), []).append(r)
+    return out
+
+
+def _card_for(card_rows, item):
+    """The card row of this item: the one on the same where when there is one, else the first of the name."""
+    rows = card_rows.get(("repo", item["current"])) or card_rows.get((item.get("plane"), item["current"])) or []
+    for r in rows:
+        if r.get("where") == item["where"]:
+            return r
+    return rows[0] if rows else None
+
+
+def _kind_of_thing(typ):
+    """Plain words for what a name is, for a line a reader who did not build the check must act on."""
+    if typ == "S3Key":
+        return "a stored-file path the check cannot read"
+    return "a %s name the check cannot read" % (str(typ).lower().replace("_", " "),)
+
+
+def _card_line(item, card):
+    """(kind, detail) of a carded name that is not a pattern: CARDED when the card names a correct name or says none
+    is owed (fields `canonical`, `no_name_owed`), else HOLE in plain words, no rule code."""
+    if isinstance(card, dict):
+        if card.get("canonical"):
+            return "CARDED", "skipped by a card that names the correct name: %s" % (card["canonical"],)
+        if card.get("no_name_owed"):
+            return "CARDED", "skipped by a card; no name is owed: %s" % (str(card["no_name_owed"]).strip(),)
+    return "HOLE", ("%s; it was skipped by a card; the card gives no correct name and does not say none is owed"
+                    % (_kind_of_thing(item["type"]),))
+
+
+_RULE_CODES = ("K1", "K3", "K4", "K4a", "V7")
+_REFUSE_PATH_RE = re.compile(r"path token '([^']+)' names (firm|source) '([^']+)'")
+_REFUSE_SCOPE_RE = re.compile(r"scope is (?:firm )?'([^']+)'")
+
+
+def _bucket_firm(bucket):
+    return opal_naming._vocab().bucket_firm.get(bucket) if bucket else None
+
+
+def _refused_line(key):
+    """The REFUSED detail: what was measured and what the reader does. Two cases, read from the fill_keys row
+    (`bucket`, `basis`) and the registry's bucket-to-firm table: the key's bucket is another firm's, or the key's
+    bucket is this root's firm's and only a path word names another firm."""
+    bucket, basis = key.get("bucket"), key.get("basis") or ""
+    bfirm = _bucket_firm(bucket)
+    sc = _REFUSE_SCOPE_RE.search(basis)
+    scope = sc.group(1) if sc else None
+    path = _REFUSE_PATH_RE.search(basis)
+    ask = "ask the owner of the code at the place shown"
+    if bfirm is not None and scope is not None and bfirm != scope:
+        return ("the key is used with bucket %s, which belongs to another firm's store (firm %s; this root's firm is %s); "
+                "no rename is given: %s why this root uses it" % (bucket, bfirm, scope, ask))
+    if bfirm is not None and scope is not None and bfirm == scope and path:
+        other = path.group(3) if path.group(2) == "firm" else "source " + path.group(3)
+        return ("a file named for %s (%s) is kept in this firm's bucket %s; no rename is given: %s whether it should "
+                "run another firm's file" % (other, path.group(1), bucket, ask))
+    return ("this key is tied to another firm by %s; its bucket is %s; no rename is given: %s"
+            % (basis or "no reason read", bucket or "unread", ask))
+
+
+def _not_asked_line(item, canon):
+    """The NOT-ASKED detail: why the name is not asked for a system (the grader's own tests), then whether a rename is owed."""
+    cur, typ = item["current"], item["type"]
+    v = opal_naming._vocab()
+    try:
+        first = opal_naming._res_tokens(cur, v, "a resource name")[0]
+    except (opal_naming.RaiseDefect, IndexError):
+        first = None
+    if first is not None and first in v.purpose:
+        why = "its first word is an AWS service or action word (%s)" % (first,)
+    elif typ == "IAM_POLICY" and opal_naming._PASCAL_POLICY.match(cur):
+        why = "it is an inline policy name written as one capitalised word"
+    elif typ == "LAMBDA_LAYER":
+        why = "it is a library layer"
+    else:
+        why = "the grader says no system is asked and no test names the kind"
+    if canon is None or canon == cur:
+        owed = "no rename is owed"
+    else:
+        owed = "a rename is owed for the form only, not for a system: %s" % (canon,)
+    return "this name is not asked to carry a system: %s; %s" % (why, owed)
+
+
+def _rebuild_on_word(base, carried, word):
+    """`base` with its trailing carried cadence word replaced by the schedule's word, or None when it does not end so."""
+    if not base.endswith("-" + carried):
+        return None
+    return base[:len(base) - len(carried)] + word
+
+
+def policy_system(ans):
+    """(system or None, which, basis) for an inline policy whose declaration policy_roles() knows (ans["policy"]).
+    The role's system wins; the root map's answer wins only when the exception names this policy's role (resolve()
+    basis "exception-with-role"). An exception without a role never overrides the role. which is "exception-with-role",
+    "role" or "unresolved"."""
+    pol, res = ans.get("policy"), ans.get("resolved")
+    if res is not None and res.get("basis") == "exception-with-role":
+        return res["system"], "exception-with-role", "the exception names role %s" % (pol.get("role_name"),)
+    if pol.get("role_system"):
+        return pol["role_system"], "role", pol.get("basis")
+    return None, "unresolved", pol.get("basis")
+
+
 def decide(item, ans, fourth=None):
     """(kind, detail) for one item. `ans` is plain data from the five modules:
     carded (bool), key (a fill_keys row or None), graded ((verdict, canonical)) or raised (text),
-    resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, or None)."""
+    resolved (resolve()'s dict or None), cadence (the cadences() row with the same where, plus verdict_for()'s carried,
+    agrees and canonical, or None), policy (policyrole's row of this declaration or None), card (the card row or None)."""
     fourth = fourth or _schema_fourth()
     cur, typ = item["current"], item["type"]
-    if ans.get("carded"):
-        return "CARDED", "skipped by a card the repository holds"
     key = ans.get("key")
     var = opal_naming._VAR_RE.search(cur)
     if var or (key and key.get("class") == "PATTERN"):
         what = var.group(0) if var else key.get("basis")
         return "PATTERN", "a code pattern, not a name; variable %r" % (what,)
+    if ans.get("carded"):
+        return _card_line(item, ans.get("card"))
+    if key is not None and key.get("class") == "REFUSED-CROSS-FIRM":
+        return "REFUSED", _refused_line(key)
     if ans.get("raised") is not None:
         return "HOLE", str(ans["raised"])
     verdict, canon = ans["graded"]
-    if verdict == "CONFORMANT":
+    cad = ans.get("cadence") if typ in _CADENCE_TYPES else None
+    rebuilt = False
+    if cad is not None:
+        ruled = cad.get("canonical")
+        if ruled and "{" not in ruled:
+            return ("RIGHT", cur) if cur == ruled else ("FIX", ruled)
+        if cad.get("agrees") is False and cad.get("word"):
+            base = canon or cur
+            canon = _rebuild_on_word(base, cad["carried"], cad["word"])
+            if canon is None:
+                return "HOLE", "the name carries %r, the schedule says %r, and %s has no such ending to rebuild" % (
+                    cad["carried"], cad["word"], base)
+            rebuilt = True
+    if verdict == "CONFORMANT" and not rebuilt:
         return "RIGHT", cur
     if verdict == fourth:
-        return "NOT-ASKED", "this kind of name is not asked to carry a system; %s" % (canon,)
+        return "NOT-ASKED", _not_asked_line(item, canon)
     if canon is None:
         return "HOLE", "the grader gave verdict %s and no canonical form" % (verdict,)
     if key is not None:
@@ -73,10 +211,20 @@ def decide(item, ans, fourth=None):
     form, why = canon, []
     if "{system}" in form:
         res = ans.get("resolved")
-        if res is None:
+        pol = ans.get("policy") if typ == "IAM_POLICY" else None
+        fills = ans.get("fills")
+        if pol is not None:
+            psys, _which, pbasis = policy_system(ans)
+            if psys:
+                form = form.replace("{system}", psys)
+            else:
+                why.append("{system}: the role's system is not resolved: %s" % (pbasis,))
+        elif res is None:
             why.append("{system}: no map entry for this root")
         elif typ == "IAM_POLICY" and res.get("basis") == "root-default":
             why.append("{system}: " + _INLINE_POLICY)
+        elif res.get("basis") == "root-default" and fills is not None and "system" not in fills:
+            why.append("{system}: this root serves more than one firm; its map entry does not give the system")
         else:
             form = form.replace("{system}", res["system"])
     if "{cadence}" in form:
@@ -96,11 +244,16 @@ def decide(item, ans, fourth=None):
     return "HOLE", "partial form %s; could not fill " % (form,) + "; ".join(why)
 
 
-def check_root(root, map_path, not_judged=None, out=print, report_only=False):
+def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None):
     root = root.replace("\\", "/").rstrip("/")
     items, _stats = opal_naming_scope.root_items(root)
-    cards = load_cards() if not_judged is None else set(
-        (c.get("plane"), c.get("name")) if isinstance(c, dict) else tuple(c) for c in not_judged)
+    if not_judged is None:
+        card_rows = load_card_rows()
+    else:
+        card_rows = {}
+        for c in not_judged:
+            c = c if isinstance(c, dict) else {"plane": c[0], "name": c[1]}
+            card_rows.setdefault((c.get("plane"), c.get("name")), []).append(c)
     doc = opal_naming_rootmap.load_map(map_path)
     name = os.path.basename(opal_naming_scope._norm_root(root))
     entry = (doc.get("roots") or {}).get(name)
@@ -112,39 +265,200 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False):
         cads.setdefault(r["where"], r)
 
     def answer_of(it):
-        ans = {"carded": ("repo", it["current"]) in cards,
+        crow = cads.get(it["where"])
+        ans = {"carded": ("repo", it["current"]) in card_rows,
+               "card": _card_for(card_rows, it),
                "key": krows.get((it["type"], it["current"], it["where"])),
-               "cadence": cads.get(it["where"]),
-               "resolved": opal_naming_rootmap.resolve(doc, name, it["current"], it["type"])}
+               "cadence": None if crow is None else dict(crow, **opal_naming_cadence.verdict_for(crow)),
+               "policy": (opal_naming_policyrole.system_for(root, it["current"], it["where"])
+                          if it["type"] == "IAM_POLICY" else None),
+               "fills": None if entry is None else entry.get("fills"),
+               "resolved": None}
+        pol = ans["policy"]
+        ans["resolved"] = opal_naming_rootmap.resolve(doc, name, it["current"], it["type"],
+                                                      role=None if pol is None else pol.get("role_name"))
         try:
             ans["graded"] = opal_naming.grade(it["current"], it["type"])
         except opal_naming.RaiseDefect as exc:
             ans["raised"] = exc
         return ans
 
-    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root)[0]), out, report_only)
+    if sink is not None:
+        sink.append(entry)
+    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root)[0]), out, report_only, sink)
 
 
-def run_items(root, items, answer_of, expected_n, out=print, report_only=False):
-    """One line per item, then the ROOTCHECK line; the return value is the exit code."""
+def _collisions(decided):
+    """{index: detail} for every FIX line whose target is also the FIX target of a DIFFERENT current name of the same
+    type. One resource named in two files (the same current name) is not a collision."""
+    groups = {}
+    for i, (it, kind, detail) in enumerate(decided):
+        if kind == "FIX":
+            groups.setdefault((it["type"], detail), []).append(i)
+    out = {}
+    for (_typ, target), idx in groups.items():
+        if len(set(decided[i][0]["current"] for i in idx)) < 2:
+            continue
+        for i in idx:
+            mine = decided[i][0]["current"]
+            others, seen = [], set()
+            for j in idx:
+                o = decided[j][0]
+                if o["current"] != mine and (o["current"], o["where"]) not in seen:
+                    seen.add((o["current"], o["where"]))
+                    others.append("%s at %s" % (o["current"], o["where"]))
+            out[i] = ("this target is also given to %s; two resources cannot take one name, and nothing here says "
+                      "which keeps it; the target: %s" % (" and to ".join(others), target))
+    return out
+
+
+def run_items(root, items, answer_of, expected_n, out=print, report_only=False, sink=None):
+    """One line per item, then the ROOTCHECK line; the return value is the exit code.
+    sink, when a list, receives (item, answers, kind, detail) per line, in order (the `lines` command reads it)."""
     fourth = _schema_fourth()
     count = dict((k, 0) for k in KINDS)
+    decided, anss = [], []
     for it in items:
-        kind, detail = decide(it, answer_of(it), fourth)
+        ans = answer_of(it)
+        kind, detail = decide(it, ans, fourth)
+        decided.append((it, kind, detail))
+        anss.append(ans)
+    for i, detail in _collisions(decided).items():
+        decided[i] = (decided[i][0], "HOLE", detail)
+    for (it, kind, detail), ans in zip(decided, anss):
         count[kind] += 1
         out("%s %s %s -> %s  [%s]" % (kind, it["type"], it["current"], detail, it["where"]))
+        if sink is not None:
+            sink.append((it, ans, kind, detail))
     n = len(items)
     ok = sum(count.values()) == n and n == expected_n
-    out("ROOTCHECK ok=%s root=%s items=%d right=%d fix=%d not_asked=%d pattern=%d carded=%d hole=%d"
+    out("ROOTCHECK ok=%s root=%s items=%d right=%d fix=%d not_asked=%d pattern=%d carded=%d refused=%d hole=%d"
         % (ok, root, n, count["RIGHT"], count["FIX"], count["NOT-ASKED"], count["PATTERN"], count["CARDED"],
-           count["HOLE"]))
+           count["REFUSED"], count["HOLE"]))
     if count["HOLE"] > 0 and not report_only:
         return 1
     return 0 if ok else 1
 
 
+def lines_check(root, map_path, out=print):
+    """Run the root and check its own output; the last printed line is ROOTCHECK-LINES. Returns the exit code."""
+    root = root.replace("\\", "/").rstrip("/")
+    lines, sink = [], []
+    check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
+    entry = sink[0] if sink else None
+    rows = sink[1:]
+    v = opal_naming._vocab()
+    scope = None if not isinstance(entry, dict) else v.scope.get(entry.get("scope"), entry.get("scope"))
+    bad = []
+    code_re = re.compile(r"(?:%s)" % "|".join(_RULE_CODES))
+    targets = {}
+    for (it, _ans, kind, detail), line in zip(rows, lines):
+        if code_re.search(line):
+            bad.append("a rule code in: " + line)
+        if kind == "NOT-ASKED" and "rename" not in line:
+            bad.append("a NOT-ASKED line without 'rename': " + line)
+        if kind == "FIX":
+            targets.setdefault((it["type"], detail), set()).add(it["current"])
+        if kind == "REFUSED" and "belongs to another firm's store" in line:
+            key = _ans.get("key") or {}
+            bfirm = _bucket_firm(key.get("bucket"))
+            if bfirm is None or scope is None or bfirm == scope:
+                bad.append("a REFUSED line says another firm's store though its bucket is not another firm's: " + line)
+    coll = sum(1 for names in targets.values() if len(names) > 1)
+    if coll:
+        bad.append("%d FIX target(s) shared by different names of one type" % coll)
+    count = dict((k, 0) for k in KINDS)
+    for (_it, _a, kind, _d) in rows:
+        count[kind] += 1
+    if not lines or not lines[-1].startswith("ROOTCHECK ok=True "):
+        bad.append("the run's own count line is not ok=True")
+    if len(rows) != len(lines) - 1:
+        bad.append("%d lines for %d items" % (len(lines) - 1, len(rows)))
+    for line in lines:
+        out(line)
+    for b in bad:
+        out("FAIL: " + b)
+    out("ROOTCHECK-LINES ok=%s root=%s not_asked=%d carded=%d refused=%d hole=%d collisions=%d"
+        % (not bad, root, count["NOT-ASKED"], count["CARDED"], count["REFUSED"], count["HOLE"], coll))
+    return 0 if not bad else 1
+
+
+def keys_check(root, map_path, out=print):
+    """One line per inline policy of the root: the system printed, the role's system, the exception if any and which won.
+    The last line is ROOTCHECK-KEYS. Returns the exit code."""
+    root = root.replace("\\", "/").rstrip("/")
+    lines, sink = [], []
+    check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
+    by_where = {}
+    for (it, ans, kind, detail) in sink[1:]:
+        if it["type"] == "IAM_POLICY":
+            by_where[(it["current"], it["where"])] = (ans, kind, detail)
+    prows = opal_naming_policyrole.policy_roles(root)
+    n = role_n = with_role = overriding = missing = 0
+    for pr in prows:
+        n += 1
+        hit = by_where.get((pr["name"], pr["where"]))
+        if hit is None:
+            missing += 1
+            out("MISSING %s [%s]: the root's run has no line for this policy" % (pr["name"], pr["where"]))
+            continue
+        ans, kind, detail = hit
+        res = ans.get("resolved") or {}
+        basis = res.get("basis")
+        printed = None
+        if kind == "FIX":
+            printed = detail.split("-", 1)[0]
+        elif kind == "RIGHT":
+            printed = pr["name"].split("-", 1)[0]
+        try:
+            slot = "{system}" in (opal_naming.grade(pr["name"], "IAM_POLICY")[1] or "")
+        except opal_naming.RaiseDefect:
+            slot = False
+        exc = "none"
+        if basis in ("exception", "exception-with-role"):
+            exc = "%s(%s)" % (res.get("system"), basis)
+        if printed is None:
+            won = "nothing-printed"
+        elif basis == "exception-with-role" and printed == res.get("system"):
+            won = "exception-with-role"
+        elif slot and basis == "exception" and printed == res.get("system") and printed != pr.get("role_system"):
+            won = "EXCEPTION-WITHOUT-ROLE-OVERRIDES"
+        elif printed == pr.get("role_system"):
+            won = "role"
+        else:
+            won = "neither"
+        if won == "exception-with-role":
+            with_role += 1
+        elif won == "role":
+            role_n += 1
+        elif won == "EXCEPTION-WITHOUT-ROLE-OVERRIDES":
+            overriding += 1
+        out("%s %s role=%s printed=%s role_system=%s exception=%s won=%s system_slot_filled_here=%s  [%s]" % (
+            kind, pr["name"], pr["role_name"], printed or "-", pr["role_system"] or "-", exc, won,
+            "yes" if slot else "no", pr["where"]))
+    ok = missing == 0 and overriding == 0 and n == opal_naming_policyrole.text_count(root)
+    out("ROOTCHECK-KEYS ok=%s root=%s policies=%d role=%d exception_with_role=%d exception_without_role_overriding=%d"
+        % (ok, root, n, role_n, with_role, overriding))
+    return 0 if ok else 1
+
+
 def main(argv=None):
-    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "keys":
+        kp = argparse.ArgumentParser(description="the inline policies of a root and which system won")
+        kp.add_argument("cmd")
+        kp.add_argument("root")
+        kp.add_argument("--map", required=True)
+        ka = kp.parse_args(argv)
+        return keys_check(ka.root, ka.map)
+    if argv and argv[0] == "lines":
+        lp = argparse.ArgumentParser(description="run a root and check its own lines")
+        lp.add_argument("cmd")
+        lp.add_argument("root")
+        lp.add_argument("--map", required=True)
+        la = lp.parse_args(argv)
+        return lines_check(la.root, la.map)
+    ap =argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("root")
     ap.add_argument("--map", required=True)
     ap.add_argument("--report-only", action="store_true")

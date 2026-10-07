@@ -52,6 +52,29 @@ Before any put the run writes the snapshot (step 1). Rollback: for each key of t
 2. The AI listing's count equals the number of `classified_by = model` rows.
 3. `fwd15_plan_check.py` is a PRE-act check; after the act the planned keys are in the table and `fwd15_ai_plan.py` re-run reads them PRESENT.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED WITH CONDITIONS (2.0.0_SA_COO~M1, 2026-10-07 ~17:5xZ; release mode, request 8)
+
+**Read at signing.**
+- `fwd15_plan_check.py`: `FWD15-PLAN ok=True firms=3 of 3 entries=1565 ai=1165 direct=301 problems=[]`.
+- The plans' DIRECT placements: 7 are `fixed_income/Cash`.
+- The tree's contract: `values_by_class.fixed_income` carries NO `Cash` (PRD v0.14 ruling 2.4, SC-e-64, contract 0.7.0+).
+
+**Conditions, each a STOP if unmet:**
+1. **Contract bound, not the table's legacy vocabulary.**
+   - Before the act, re-run `fwd15_ai_plan.py` at the release head (contract 0.7.0 or later). The 7 DIRECT `fixed_income/Cash`
+     entries must re-plan to `cash/Cash`, or be listed out of the act.
+   - The AI runner's bound is the live table's sub-classes, which still include 17 legacy `fixed_income/Cash` rows. So any AI
+     verdict outside `values_by_class` of the contract at the release head is refused and listed, never written. The act checks
+     this after each chunk.
+2. **Vendor word.**
+   - The 1,165 model calls (at most 2,330) rest on Andrew-direct 2026-10-05 for FWD-11 ("Yes add the AI Classifier..."), applied to
+     this run by the CTO's round-8 ruling 2.3.
+   - CLAUDE.md requires an explicit PER-USE word for an external vendor API. If the CTO half does not state that this run is within
+     that word, the AI leg waits for Andrew's word, put to him sized. The DIRECT leg (301 puts, no vendor call) may run alone.
+3. **The S58 overlap.** The 150 keys shared with SC-e-32/e50's AI set are written once: whichever act runs first writes them, and the
+   other refuses them by `attribute_not_exists`.
+
+**Signed for:** the snapshot, the 301 DIRECT conditional puts, and the AI leg under conditions 1-2, on the one table plus the AI
+listing object, with the half's per-key rollback. Both branches are covered.
 
 ## CTO half -- UNSIGNED
