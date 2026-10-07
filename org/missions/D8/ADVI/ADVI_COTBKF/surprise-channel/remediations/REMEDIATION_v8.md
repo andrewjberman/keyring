@@ -21,11 +21,13 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~16:2xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~C2",
   "round": "v15",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v15"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
+
+Clock advanced in place at the round-15 compile (3.0.0_SA_CVO, 2026-10-07 ~16:4xZ; state fields only): D2-S25 REMEDIATED and closed. CB-o-1 (@cb6c7d6cd5) regenerated the near-match page from the served crosswalk (VersionId wv5z6zeR..): 22 entries, all 21 of round 4's kept, 1 entered (0QF879245, 0.75, unscored under the old rules). This seat read the served crosswalk: 22 AWAITING_PERSON rows, the page's 22 accounts the same set; 0QF879245 NOT_MATCHED, 0.75, AWAITING_PERSON. Round 15 filed no rows, so no adjudication file is written for it.
