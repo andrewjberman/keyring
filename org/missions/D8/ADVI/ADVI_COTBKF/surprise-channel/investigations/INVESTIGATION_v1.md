@@ -1131,3 +1131,83 @@ round.** Never edit an existing row.
   "notes": "Row filed by the dell2 seat per laptop ruling (row ids minted only on the project's box)."
 }
 ```
+
+## ADVI_COTBKF-S16 -- DISARMS S9: the account links APPLIED from dell2 on the 2010-2027 calendar reproduce the committed laptop deliverable row for row (1,450 of 1,450, every column; 212 LINKED)
+
+```json
+{
+  "id": "ADVI_COTBKF-S16",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:25Z",
+  "one_line": "DISARMS S9: the account links APPLIED from dell2 on the 2010-2027 calendar reproduce the committed laptop deliverable row for row (1,450 of 1,450, every column; 212 LINKED)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "calendar_source() on dell2 = NYSE/hardcoded-fallback-2010-2027 (lib/trading_calendar.py @83ab7192ee via dell2 merge 0a73ed06a0)",
+      "ledger advi-cotbkf-e2-account-links-apply-20261007 CLOSED 1/1: applied 10:19:07Z, VersionIds ogf8Q2zk... -> OQ9YHJ3h..., JqEXeGJY... -> JY3f29AV...",
+      "independent read-back of s3://opal-data-assets/commonwealth/cottonwood/silver/account_links/date=2026-06-23/account_links.csv vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv: 1,450 rows each, differ on (status,new_account) 0, differ on any column 0; 0QF879348->B3S606523 LINKED, B3S780328->B3S782287 LINKED, cv0QF879185 NOT_LINKED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9 (ARMED): disarms when the run that is applied reproduces the committed laptop deliverable row for row.",
+  "world_is": "It does. S9's hazard (a dell2 apply writing the wrong 3 rows) cannot recur on this box: the calendar covers the table's dates, and CB-e-1's guard refuses any calendar that does not.",
+  "notes": "Never-widen pair: COO @163c0dd8a1, CTO @792b16742d. Branch A."
+}
+```
+
+## ADVI_COTBKF-S17 -- DISARMS W12-S1: the census re-run on the 2010-2027 calendar needs 9,388,961 security-days, equal to round 2, so the day totals compare again: covered 1,297,651 (round 2: 2,090,953)
+
+```json
+{
+  "id": "ADVI_COTBKF-S17",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:25Z",
+  "one_line": "DISARMS W12-S1: the census re-run on the 2010-2027 calendar needs 9,388,961 security-days, equal to round 2, so the day totals compare again: covered 1,297,651 (round 2: 2,090,953)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/2.0.0_SA_COO~C2/census_e2/PRICE_CENSUS_20261007.json @163c0dd8a1: PRICE-CENSUS buckets=40 every_bucket_graded=True barred_read=0 usable=35 barred=5 universe=4634 priced_any=1720 priced_fixed_income=184 security_days_covered=1297651 security_days_needed=9388961",
+      "round 2 (PRICE_COVERAGE_20261006): security_days_covered=2090953 of 9388961"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W12-S1 (ARMED): disarms when the census's security_days_* are re-run under a calendar that covers 2013 onward and are reported against round 2.",
+  "world_is": "Re-run and reported. The needed denominator now equals round 2's exactly. The covered drop (2,090,953 -> 1,297,651) is real and is ruling 1's: the bd and inf price files are BARRED, not a calendar effect. Ruling C's re-run of this lane's pre-2024 artifacts (row S11) is complete: the census here, the links in S16; the round-4 census deliverable under ~12 stays as the record of the fallback run.",
+  "notes": "The E3 documents apply also closed this hour (ledger advi-cotbkf-r6-documents-apply-20261007, 11,119 written, read back); it is calendar-free."
+}
+```
+
+## ADVI_COTBKF-S18 -- DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood
+
+```json
+{
+  "id": "ADVI_COTBKF-S18",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:30Z",
+  "one_line": "DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S13 @b9411881a0: the applies resolve to opal-data-assets; 1.0.0_SA_CTO~DELL2 re-ruling msg 264 struck the CT-d-2 wait",
+      "ledgers CLOSED 1/1: advi-cotbkf-r5-crosswalk-apply-20261007 @98652475d8; advi-cotbkf-r6-documents-apply-20261007 and advi-cotbkf-e2-account-links-apply-20261007 @3c39c9f4ae",
+      "every Put from dell2 on opal-data-assets admitted (crosswalk 2, documents 11,120, account_links 2); no call made under opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12 (BLOCKING, ARMED): no --apply of E3 or E5 from dell2 until a ruling names where they run.",
+  "world_is": "Ruled (msg 264) and run; branch A on all three applies.",
+  "notes": "Closes this seat's last ARMED row on ADVI_COTBKF."
+}
+```

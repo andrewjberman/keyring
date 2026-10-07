@@ -43,3 +43,24 @@ items have opened; each later opening appends its cell here in its own issuance 
    the drain commit, the exact command and the recipient lane (msg-213 rule).
 2. When the FILE returns: grade E2's three criteria from it (QTD/YTD/1Y at 2026-09-30 present per account and household; SI held where
    inception is before 2024; every figure's `source` names its rows) and file the result as a row closing S4/S6.
+
+## E1 -- gate opened 2026-10-07 ~10:08Z (cut in its own issuance commit)
+
+**Gate evidence:** IRPT_BCKEND E-P8 = `IRPT_BCKEND.TO-IB-pr-339`, drained on dell2 CLOUD @b43f82c155 (`2.0.0_SA_COO~P2` msg 299; in HEAD):
+`custodian_key_seam.json` drops its 826 `'None'` values (5376 remain); `ids.py:388` now returns the raw account for an empty, `'None'` or
+`'nan'` mapping instead of minting the string. Nothing deployed; the code path read here is the repo's.
+
+**Measured constraints.**
+1. The BEFORE count is round 2's recorded census: `deliverables/0.9.0_WK_IRPT_CUSTDY~5/ADVISOR_CENSUS_20260930.md` (pick line
+   `projection_refused=482 of=7022`, map LastModified 2026-10-07T05:27:37Z). The AFTER count is a fresh pick on HEAD's seam.
+2. The ownership map is read through `legacy_address('blackdiamond-platinum-49financial-ownership-map')`, as in E2.
+3. 'Unmapped returns the raw account' is a behaviour change: a raw account that is not a directory id may now project to an id no
+   directory entry carries. The re-read therefore reports, per remaining or newly-unresolved account, a REASON from a closed set
+   (`PROJECTION_REFUSED`, `NOT_IN_DIRECTORY`, `NO_SILVER_AT_AS_OF`), never a bare count.
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `CU-c-2` (E1) | the 482 re-read: re-run the pick on HEAD's seam; print refused counts BEFORE (from the round-2 census) and AFTER; every account still not covered carries one reason from the closed set; the round-2 pick is re-checked as still eligible | FWD-1 | NOT-EVALUATED | dell2 | LOCAL | B, `0.9.0_WK_IRPT_CUSTDY~8` |
+
+**Write set:** `data/assets/scripts/gold/irpt_custody/pick_reread.py` (new), `data/assets/scripts/gold/irpt_custody/tests/test_pick_reread.py`
+(new). Disjoint from CU-c-1's. `fanout: 1 of 1 newly opened chain (CU-c-1 already in flight on slot ~7; E3 gated closed), cap 8`.
