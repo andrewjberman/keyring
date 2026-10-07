@@ -90,7 +90,10 @@ COVERAGE_WORD_RE = re.compile(
 # more key on a read that already happens. PROSPECTIVE ONLY per Andrew-direct "don't get caught up
 # on historical TOs" -- it binds a project the moment someone cuts a NEW TO against it, never
 # retroactively.
-FABRIC_ENUM = ("laptop", "site-z")
+FABRIC_ENUM = ("laptop", "site-z", "dell1", "dell2")
+# NFRA_CTLPLN.TO-CT-c-6 (round 3, PRD C-PLACEMENT, FWD-7; CTO msg 105973): dell1 and dell2 joined the enum as
+# boxes of their own. Rule-24 record: org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~5/FABRIC_ENUM_RULE24_RECORD.md
+# .tools/missions-tree-index.py reads this tuple by AST (no second literal).
 
 # GATE (i) -- Andrew-direct 2026-09-03 (state of record @716a9bc7ce call 3, LD-0521; his conditional
 # "If there's any chance of doing this out of order, we need more gates" became his ask): L7 WORKERS ARE
