@@ -4654,6 +4654,26 @@
     "spec_asserts": "CLAUDE.md NEVER-2: a deploy opens a ledger entry in org/critical_paths/change_management/ at its start; an order whose cell can deploy names that surface",
     "world_is": "Two worker cells changed a file the scheduled vehicle executes from the working tree, and the issuer's merges put them live without an entry. Both changes sit in the ad hoc market-range mode, which the vehicle never calls, and the first is proven harmless by a real run. The exposure is the class: the next cell that edits a daily-path function of these files deploys at its merge",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The issuer reads the 2026-10-08 11:00Z enrichment line as round 20's proof on the daily path. For the next cut touching collector_bloomberg.py, enrichment_bloomberg.py, bbg_budget.py or security_names.py: the order names change_management and its sentinel, and the merge is timed after a day's vehicle run."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W11-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~11",
+    "surfaced_at": "2026-10-07T13:36:00Z",
+    "one_line": "RIV-pl-1: ml-1.AC1.py's cell parser reads only three letters of data-m, so its arm (a) cannot see the year on 'Oct 25' / 'Oct 26'; arm (a) now expects bare Oct at both ends.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/ml-1.AC1.py line 41: the regex data-m=\"?([A-Za-z]{3})\"? reads 'Oct' from data-m=\"Oct 25\"; the year is pinned by pl-1.AC1.py (a) and tests/test_r19ml1_month_labels.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-pl-1: ml-1.AC1 arms (a) and (e) may change to the 13-cell rule and nothing else in that file.",
+    "world_is": "The parser line is outside those two arms, so it was left alone; arm (a) expects the parsed labels Oct, Nov .. Sep, Oct for 13 cells; arm (e) expects the named months unique except the one repeated Oct.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Widen the regex to carry the year if the issuer wants arm (a) to."
   }
 ]
 ```
