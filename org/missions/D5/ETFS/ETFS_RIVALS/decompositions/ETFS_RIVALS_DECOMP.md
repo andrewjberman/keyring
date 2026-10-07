@@ -676,3 +676,81 @@ render.py and page_theme.py, risk SERVED.
   one tooltip per chart after every range switch; CSS lengths are in px and the frame's padding is at least 10px on
   every side; the static page carries no `rf-ch-frame` or `rf-ch-tip` markup.
 - **Organic trigger:** any security dialog on the live page, pointer over the curve and over a buy or sell marker.
+
+## ROUND 25 (main workstream) -- APPENDED 2026-10-07, revision 1.15 of this file
+
+Two cells, by CTO ruling msg 31428 on row ETFS_RIVALS-Z-S69 (BLOCKING) and the round-24 analysis msg 31413: the readers'
+grain of gold security_market (the disarm of Z-S69; PRD v0.19 C-OWED-GRAIN, rulings msgs 31416 and 31432) and the
+marker read-out repair (CVO ADJUDICATION_v28). FWD-24's history-owed step and top-up writer are round 26. Author
+2.0.0_SA_COO~RV. No earlier cell is replaced. Two chains with disjoint files: `~15` RIV-rg-1 (the readers), `~16`
+RIV-mr-1 (render.py). Risk SERVED.
+
+### `RIV-rg-1` -- a date's rows of gold security_market are the union of ALL its objects, one row per security and date by a stated rule (row ETFS_RIVALS-Z-S69, BLOCKING; PRD v0.19 C-OWED-GRAIN, G.4; CTO rulings msgs 31416, 31428)
+- Measured (census `deliverables/2.0.0_SA_COO~RV/round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md` @33e8bbe318, and
+  the live table): every reader of G4 rows takes ONE object per date, `revision.newest` of the date's uris. For
+  2026-09-29 the partition holds a live pull `market-20260929-53bc393958bd.parquet` (434 securities, 430 with `px_close`,
+  `source` `blp_client.reference_data`) and an import `market-20260929-afcd903ad844.parquet` (172 securities, 0 with
+  `px_close`, 164 with a GICS sector, `source` `import:bbg/2026-09-29/characteristics.parquet`). Neither name carries a
+  capture time and the readers hand `revision.newest` bare uris, so its "an import never outranks a live object" rule
+  cannot apply and the NAME decides: the import wins and all 430 market closes of that day reach no stage (355
+  fund-security chart entries of the served page then draw that day from the fund's own valuation). On 2026-10-02 three
+  objects of 601 rows hold the same securities: the control.
+- Interface (in `data/etfs/scripts/rivalfunds/`; no new module is required, one shared function is):
+  1. ONE function, used by every reader below, returns a date's G4 rows as the union of ALL `.parquet` objects of that
+     date's partition, ONE row per (`security_id`, `date`). Where several objects hold the same (`security_id`, `date`),
+     the rows are ordered: (a) a row whose `as_of_source` is not `"backfill"` before a backfill row; (b) a row whose
+     `source` does not start `import:` before an import row; (c) the later capture time in the object's name
+     (`revision.capture_time`; a name with no time is oldest); (d) the later `as_of` of the row; (e) the object name,
+     descending -- a last tie-break that decides only when (a) to (d) tie. From that order the merged row is built in
+     TWO parts (CTO term, msg 31432). THE PRICE GROUP -- `px_close`, `total_return_index`, `currency`, `as_of`, `source`,
+     `as_of_source` -- travels WHOLE from ONE row: the first row in the order whose `px_close` is not null (if none has
+     a close, the first row in the order). A close is never combined with a currency, a price date or a price source
+     from another object, even when its own currency is null. THE DESCRIPTIVE FIELDS -- every other column (the GICS
+     columns, `security_bloomberg`, `security_parsekey`, a name) -- each take the first non-null value in the order. A
+     column an older object lacks reads as null for its rows.
+  2. Readers moved to it: `gold_holding_contribution._newest_by_date` + `_read` as used for G4 by
+     `gold_holding_contribution.handler_entry`, `gold_buying_trend.handler_entry`, `gold_input_census.build`,
+     `price_series.load` and `publish_page._chart_reads`; `gold_canonical_shape._g4_for` (still ONE date per report date,
+     the greatest at or before it that holds a non-backfill row, but that date's rows are the union); and
+     `gold_trade_schedule.load_parsekeys`. `_newest_by_date` keeps its one-object rule for every OTHER table (G1, G5 and
+     the A1 tables are written whole per revision).
+  3. For 2026-09-29 this keeps the live pull's close for every security it prices (430), the live pull's GICS where it
+     has one and the import's where only the import has one. `drop_backfill` and every other row rule run AFTER the union.
+  4. What a stage RECORDS as the date's G4 revision or location (for example the G4 revision inside a G1 revision in
+     `gold_canonical_shape`, `location` in `gold_input_census`) stays the `revision.newest` object of the date, as today.
+- Rulings at the cut (issuer): nothing is written to or deleted from `gold/security_market`; the writer
+  (`enrichment_bloomberg.py`) is not in this cell. No change to `revision.py`'s ordering contract. The cost of opening
+  every object of a date is accepted (8 objects over 5 dates today). `publish_page._a1_window` returning no window for
+  buying_trend is NOT in this cell.
+- Rulings on the check drafter's questions (issuer; the check files accept exactly these): the ONE shared function is
+  `gold_holding_contribution.g4_rows(s, day)` -- `s` the sink, `day` a `YYYY-MM-DD` string -- returning a pandas
+  DataFrame of that date's merged rows with every column any object of the date carries. It reads `source`, `as_of` and
+  `as_of_source` to order the rows even when a caller's column filter leaves them out; a caller filters columns AFTER.
+  A `px_close` of 0.0 is a close (not null). Backfill-marked rows are handled after the union exactly as today: the
+  price series keeps a backfill-only row, `drop_backfill` drops it for the rankings, `_g4_for` leaves it out.
+  `_newest_by_date(s, prefix, lo, hi)` keeps its signature and its one-object rule for G1, G5 and the A1 tables.
+  Interface item 4 is narrowed: `_g4_for`'s recorded uri and revision stay the `revision.newest` object by its own
+  provenance rule; what the input census records as a price's `location` and what the rankings manifest lists under
+  `g4` may name the newest object or every object read -- say which in the report; neither is graded.
+- **Organic trigger:** the next daily run and any republish; the issuer's real run prints, per fund, the rankings and
+  the 30d / 90d / 365d tables before and after, each moved figure named, and the control on 2026-10-02 reads no change.
+
+### `RIV-mr-1` -- while a marker is pointed at, the read-out names THAT marker's day and price, and the tooltip never covers the read-out (CVO ADJUDICATION_v28; CTO round-24 analysis msg 31413)
+- Measured on the served page (round 24): pointing at a buy or sell marker shows the tooltip for the marker while the
+  read-out above the chart keeps the price and date of the last curve position the pointer crossed, so the two can name
+  different days; and a marker near the top of the plot flips its tooltip to a position that can cover the read-out.
+- Interface (`render.py` `CHART_SCRIPT` / `CHART_CSS` only; one inline script as today):
+  1. On `mouseover` or `focus` of a marker the read-out (`.rf-ch-read`) shows the marker's END date in its
+     `data-read="date"` child and, in its `data-read="price"` child, the price of the priced point the marker is drawn
+     on (the nearest priced point, as the marker's `cy` is computed today) with the stored currency code; a marker
+     with no priced point in the range shows the date and no price. On `mouseout` or `blur` the read-out returns to its
+     idle prompt until the pointer next moves over the curve. A `mousemove` whose target is a marker does not overwrite
+     it (as today: the handler returns for `data-m`).
+  2. The tooltip (`.rf-ch-tip`) is positioned only over the svg's own box: its top edge is never above the svg's top
+     edge inside the frame, so it cannot overlap the read-out, which sits before the svg. It still flips below a marker
+     when there is no room above, and stays inside the frame horizontally.
+  3. Everything round 24 built stays: `cu-1.AC1.py`, `cu-1.AC2.py` and `cu-1.AC3.py` still end `PASS 0 failures`; the
+     script grows by at most 600 bytes (today 9,348).
+- Rulings at the cut (issuer): nodes by `createElement` / `createElementNS`, never `innerHTML`; no key is added to the
+  chart object; no data change.
+- **Organic trigger:** any dialog chart on the live page, pointer on a marker.
