@@ -26,9 +26,14 @@ from __future__ import annotations
 
 import argparse
 import atexit
+import datetime
+import json
 import os
+import pathlib
 import sys
 import time
+
+_ROOT = pathlib.Path(__file__).resolve().parent.parent
 
 # ---------------------------------------------------------------------------
 # STDOUT/STDERR MUST NOT BE ABLE TO KILL THIS PROCESS. (measured 2026-08-13)
@@ -61,6 +66,82 @@ for _stream in ("stdout", "stderr"):
         getattr(sys, _stream).reconfigure(encoding="utf-8", errors="backslashreplace")
     except Exception:  # pragma: no cover - older/odd interpreters keep prior behavior
         pass
+
+
+# ---------------------------------------------------------------------------
+# THE SENDER CHECK (NFRA_CTLPLN TO-CT-b-3, AMENDMENT 2; same rule as `recv` in agentbus-sqs.sh).
+# The sender's TAILNET NAME is the message attribute `from_tailnet`; the register (org/devices/DEVICES.json,
+# read through lib/devices.py -- the one reader agentbus-sqs.sh's _tailnet also uses) says which names are held.
+#   held name      -> deliver
+#   no stamp       -> deliver with one line  WARN agentbus unstamped sender=<serial>  (old-script boxes; strict later)
+#   unheld name    -> REFUSED: the whole message is written to <refused dir>/<UTC stamp>_<message id>.json, one line
+#                     REFUSED agentbus sender_tailnet=<name> reason=<why> record=<path>  is printed, and the message
+#                     is DELETED so it cannot block the one-group FIFO queue. A record that cannot be written leaves
+#                     the message on the queue (recorded, never silently dropped).
+# ---------------------------------------------------------------------------
+REFUSED_REASON = "not-held-by-the-device-register"
+
+
+def held_tailnet_names() -> set:
+    """Every tailnet name the register holds; raises devices.RegisterError when it cannot be read (fail closed)."""
+    sys.path.insert(0, str(_ROOT / "lib"))
+    import devices  # noqa: PLC0415 -- deferred, the register path is read per call (OPAL_DEVICE_REGISTER honoured)
+
+    return {d["tailnet_name"] for d in devices.devices(devices.load()) if d.get("tailnet_name")}
+
+
+def refused_dir() -> pathlib.Path:
+    return pathlib.Path(os.environ.get("AGENTBUS_REFUSED_DIR") or (_ROOT / "org" / "mcp" / "inbox" / "_agentbus_refused"))
+
+
+def classify(msg: dict, held: set) -> str:
+    stamp = ((msg.get("MessageAttributes") or {}).get("from_tailnet") or {}).get("StringValue") or ""
+    if not stamp:
+        return "unstamped"
+    return "deliver" if stamp in held else "refused"
+
+
+def refuse(sqs, queue_url: str, msg: dict) -> None:
+    """Record the whole message, print the REFUSED line, then delete it from the queue."""
+    mid = msg.get("MessageId", "?")
+    tn = msg["MessageAttributes"]["from_tailnet"]["StringValue"]
+    now = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    rec = refused_dir() / f"{now}_{mid}.json"
+    try:
+        rec.parent.mkdir(parents=True, exist_ok=True)
+        rec.write_text(json.dumps({"refused_at": now, "sender_tailnet": tn, "reason": REFUSED_REASON, "message": msg},
+                                  indent=2), encoding="utf-8")
+    except OSError as exc:
+        print(f"[agentbus] REFUSED [id {mid}] sender tailnet name [{tn}] but the record could not be written "
+              f"({type(exc).__name__}) -- NOT deleted; it remains on the queue.", flush=True)
+        return
+    print(f"REFUSED agentbus sender_tailnet={tn} reason={REFUSED_REASON} record={rec}", flush=True)
+    try:
+        sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=msg["ReceiptHandle"])
+    except Exception as exc:  # noqa: BLE001
+        print(f"[agentbus] WARN: the refused message {mid} was recorded but its delete FAILED "
+              f"({type(exc).__name__}); it will redeliver and be refused again.", flush=True)
+
+
+def deliverable(sqs, queue_url: str, messages: list) -> list:
+    """Apply the sender check to one received batch; return the messages to emit (refused ones are handled here)."""
+    try:
+        held = held_tailnet_names()
+    except Exception as exc:  # noqa: BLE001 -- register unreadable: cannot judge, so withhold EVERYTHING, delete nothing
+        print(f"[agentbus] WITHHELD {len(messages)} message(s): the device register's tailnet names could not be read "
+              f"({type(exc).__name__}) -- NOT delivered, NOT deleted; they remain on the queue.", flush=True)
+        return []
+    out = []
+    for msg in messages:
+        kind = classify(msg, held)
+        if kind == "refused":
+            refuse(sqs, queue_url, msg)
+            continue
+        if kind == "unstamped":
+            serial = ((msg.get("MessageAttributes") or {}).get("from") or {}).get("StringValue") or "unknown"
+            print(f"WARN agentbus unstamped sender={serial}", flush=True)
+        out.append(msg)
+    return out
 
 
 def main() -> int:
@@ -128,7 +209,7 @@ def main() -> int:
             time.sleep(min(60, max(1, max_s - (time.monotonic() - t0))) if max_s else 60)
             continue
 
-        for msg in resp.get("Messages", []):
+        for msg in deliverable(sqs, args.queue_url, resp.get("Messages", [])):
             mid = msg.get("MessageId", "?")
             body = msg.get("Body", "")
             emitted = False
