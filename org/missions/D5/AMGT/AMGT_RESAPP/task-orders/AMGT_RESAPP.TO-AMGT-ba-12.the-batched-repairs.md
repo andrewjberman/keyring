@@ -114,3 +114,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @751aef6acb; proof VALID (worktree checker); watchlist tests socket-blocked 5 of 5; one pytest collection 153 passed 0 errors; multi-page serp refused; Z-W19-S16 read: 10 chatter rows duplicated in the generation partition and read by no route (inert; the row closes on this evidence)</status>
