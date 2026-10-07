@@ -2141,3 +2141,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
 }
 ```
+
+## NFRA_CTLPLN-S18 -- requirements.txt omits 73 dependencies of the 67 packages it lists; 12 are compiled for Python 3.12 only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T15:28:38Z",
+  "one_line": "The regenerated root requirements.txt lists 67 packages and omits 73 that those packages themselves require; 12 of the 73 are compiled for Python 3.12 only, so an install from the file alone would not be complete on any box and cannot be on a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's re-run on the merged tool: PY-REQ lines=67 parsed=67 unparsed=0 in_both=20 only_requirements=47 only_census=0 ok=True; PY-WHEELS target=cp314-win_amd64 requirements=67 wheel_on_disk=0 pure_installed=41 abi3_installed=8 needs_fetch=18 not_applicable=0 unparsed=0 undeclared_deps=73 ok=True",
+      "Decision file org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md (merged @bd489b912b): the 73 names with the requirement that needs each; in a secondary read of the installed copies 59 are pure, 12 compiled for cp312 only (aiohttp, cffi, charset-normalizer, click, contourpy, coverage, fonttools, greenlet, jiter, kiwisolver, mmh3, regex), 2 fit",
+      "requirements.txt @bc10584676 (3.0.0_SA_CVO, on Andrew's word); the file's own caveat: a clean-start resolve is not verified",
+      "1.0.0_SA_CTO msg 106317 item 3: 'The 73 omitted dependencies are a defect in requirements.txt; file it for 3.0.0_SA_CVO, who wrote the file.'",
+      "How the 73 were counted: the Requires-Dist of each found installed copy, markers evaluated for Python 3.14 on 64-bit Windows; a dependency needed only under another marker is not counted; a package with no installed copy here contributes none"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The record for the regenerated file: requirements.txt holds all actual dependencies.",
+  "world_is": "The file holds the packages the firm's code imports directly. Their own dependencies are not listed, so the list is complete for an index-backed install (pip resolves the rest) and incomplete for an offline one, which is the only kind a Dell may make. The Python kit therefore installs with no dependency resolution and reports an import that fails for a missing dependency as its own class. Owner of the file: 3.0.0_SA_CVO. Whether the file should pin the full closure, or a second generated file should, is for that owner and the package-intake design (PRD v0.16, C-INTAKE)."
+}
+```
