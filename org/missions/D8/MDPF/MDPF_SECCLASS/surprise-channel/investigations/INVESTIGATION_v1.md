@@ -3837,3 +3837,109 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 by the worker of TO-SC-e48."
 }
 ```
+## MDPF_SECCLASS-W31-S1 -- the Black Diamond E_18 cannot resolve any security through the old list by construction, so its 0 canonical rows are not explained by a denied scan
+
+```json
+{
+  "id": "MDPF_SECCLASS-W31-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~31",
+  "surfaced_at": "2026-10-07T12:15Z",
+  "one_line": "On the Black Diamond host (which holds the bd-securities grant) E_18 hands plan_rows only tickers that are NOT in the old list (E_18.detect_new_securities.py:247 skips every key found by the scan at :215), and the only wired lookup is a GetItem on that same table (:291), so the lookup returns no row for every candidate and 'e18-scheduled' stays at 0 rows; the old list stopping or being removed changes nothing the script produces.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/E_18.detect_new_securities.py:215 (known = load_known_tickers), :247 (if not pk or pk in known: continue), :274 (canonical_candidates.append), :289-291 (plan_rows with bd_securities_lookup=default_bd_securities_lookup(BD_SECURITIES_TABLE))",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py:358-388 (classify_asset_class: GICS and Schwab lookups default to None) and :526-541 (the GetItem lookup)",
+      "etf-classifications scan 2026-10-07: 3,507 rows, updated_by 'e18-scheduled' 0; bd-gold-layer-runner (BD host, role bd-exporter-ec2-role with the table grant) last launched 2026-10-07T09:47Z"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W25-S6 and the round-8 trace: the canonical producer's only wired input is the old list, 'so when the old-list writers stop it cannot resolve a first-held security', with the Cottonwood host's denied scan given as the reason E_18 wrote 0 rows.",
+  "world_is": "The same 0 holds on the host that CAN read the table, and it holds before any writer stops: a candidate is by construction a ticker with no old row. The producer's path for a first-held security is dead today, not only after the writers stop; the old-list lookup in E_18 is removable without loss (the trace section for E_18 grades it REPOINTABLE).",
+  "notes": "Inferred, not run: the script was not executed (read-only). A race (a row written between the scan and the lookup) is the only path to a hit. The deployed E_18 bytes are in a firm bucket this principal cannot read (row W25-S1); the claim rests on the repo copy."
+}
+```
+
+## MDPF_SECCLASS-W31-S2 -- a recurring producer does write canonical rows (8 on 2026-10-06T14Z), but only for stocks entering ETF holdings, and the AI runner that would cover a client-first-held security has no schedule
+
+```json
+{
+  "id": "MDPF_SECCLASS-W31-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~31",
+  "surfaced_at": "2026-10-07T12:15Z",
+  "one_line": "etf-classifications carries 640 rows stamped 'rivalfunds-backfill' (626 at 2026-10-05T12Z, 6 at 2026-10-05T21Z, 8 at 2026-10-06T14Z), written by the enabled Mon-Fri 10:00 ET schedule mdpf-secclass-new-security-daily (Lambda mdpf-secclass-new-security-lambda); the AI classifier classify-residual-model.py (13 'mdpf-secclass-model' rows, last 2026-10-01T11:05Z) has no schedule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf-classifications scan 2026-10-07 (R11_CHECKS/old_list_reader_census_bd.py part 4, plus a last_updated-by-hour split of the 640 rivalfunds-backfill rows)",
+      "aws scheduler list-schedules: mdpf-secclass-new-security-daily ENABLED; lambda list-functions: mdpf-secclass-new-security-lambda (modified 2026-10-05, role mdpf-secclass-new-security-role)",
+      "infra/aws/lambda/v2_portal/_shared/rivalfunds_classification.py:52 (UPDATED_BY = 'rivalfunds-backfill') and infra/aws/lambda/mdpf-secclass/new-security-classifier/lambda_function.py:55-63 (the Lambda's write path); infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:38 ('No scheduling')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row W25-S6 and the round-8 trace: 'No row is stamped by a recurring producer for a ticker first held after 2026-09-30'; every real reader's CANONICAL-PRODUCER is NONE.",
+  "world_is": "A recurring producer exists and wrote on 2026-10-06, so the sentence is true only of client-held securities that no Opal or rival ETF holds: it reaches a US bare-ticker stock newly entering an ETF's holdings, not a client holding as such. For a client-first-held security outside every ETF, NONE stands; the model runner is the nearest other route and nothing fires it.",
+  "notes": "That the 8 rows of 2026-10-06T14Z came from the scheduled fire is inferred from the stamp, the timestamp (10:00 ET) and the Lambda's write path; the Lambda's own log was not read."
+}
+```
+
+## MDPF_SECCLASS-W31-S3 -- the old list takes GetItem bursts (1,151 on 09-25, 5,337 on 09-29, 7,034 on 10-06) that no scheduled reader in either census explains
+
+```json
+{
+  "id": "MDPF_SECCLASS-W31-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~31",
+  "surfaced_at": "2026-10-07T12:15Z",
+  "one_line": "CloudWatch AWS/DynamoDB request counts for bd-securities show GetItem near zero on most days and 5,337 on 2026-09-29 and 7,034 on 2026-10-06; the Black Diamond E_18 asks per candidate (a few), and no other scheduled reader in the census calls GetItem on the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R11_CHECKS/old_list_reader_census_bd.py part 5 (CloudWatch SuccessfulRequestLatency SampleCount by Operation, 2026-09-23..2026-10-06): GetItem 1151 (09-25), 5337 (09-29), 307 (10-01), 7034 (10-06); Scan 91 to 415 per day; PutItem 1145 (09-25), 52 (09-26), 36 (10-03)",
+      "git grep for default_bd_securities_lookup( and --legacy-fork-table: only the two E_18 scripts and the two CLIs, none passing the flag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The trace's premise (task order MDPF_SECCLASS.TO-SC-e41): the census of files, run-time names and role grants names every reader of the old list.",
+  "world_is": "The reads are real and daily (Scan 91 to 415 pages a day, weekends included) and the GetItem bursts are unattributed: a manual run (an operator or a round worker's script with --legacy-fork-table, or a notebook) or a reader outside the repo census (an SSM document or instance cron, the BLIND the preflight names). The instrument cannot name the caller; CloudTrail data events for the table are not read here.",
+  "notes": "Attribution is the open act: a reader that is NEEDS-OLD-LIST but invisible to a text census would break at the table's removal. A read-only CloudTrail lookup over the burst days would name the principal; not run here (not in the order)."
+}
+```
+
+## MDPF_SECCLASS-W31-S4 -- the nightly Black Diamond chain stops at B_01b if the old list is removed before B_01b leaves the chain: B_01b is fatal and its scan has no handler
+
+```json
+{
+  "id": "MDPF_SECCLASS-W31-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~31",
+  "surfaced_at": "2026-10-07T12:15Z",
+  "one_line": "B_01b scans bd-securities (B_01b.classify_new_securities.py:256) with no handler and is not in NONFATAL_IDS (gold_dispatch.sh:165 lists only E_18), so with the table gone every night that has a new holdings_lots partition fails the chain at B_01b; the writer stop (SC-e-35) must land before the table is removed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py:155-167 (scan_existing_keys, no try), :256 (called), :234-236 (returns before the scan when no new partition)",
+      "data/black_diamond/scripts/gold/gold_dispatch.sh:162 (CHAIN_CANONICAL), :165 (NONFATAL_IDS=E_18), :446-453 (the non-fatal handling)",
+      "bd-gold-layer-runner (role bd-exporter-ec2-role) last launched 2026-10-07T09:47Z; PutItem requests on the table 2026-09-25, 09-26, 10-03"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5 / round-8 analysis section 2.10: the old list can be removed once every real reader resolves canonical-first; the writers are retired by SC-e-35.",
+  "world_is": "Today the B_01b scan is inside the writer's own idempotence check, graded NOT-A-READER in the trace, but it is a table-existence dependency of the live nightly chain, ordered by the writer stop and not by any reader switch. E_18 in the same chain degrades (NON-FATAL, aborts at :215).",
+  "notes": "INERT today (the table exists); it becomes load-bearing at the table-removal act. The deployed gold_dispatch.sh on the runner is UNREAD (firm bucket denied, row W25-S1)."
+}
+```
