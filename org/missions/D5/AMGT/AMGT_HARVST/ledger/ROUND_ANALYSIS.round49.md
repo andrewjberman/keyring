@@ -79,3 +79,13 @@ and no KYC is asked of Andrew.
 - **Why:** a 3-hour job that accepts nothing spends the signed-in session the other names need (the 401 followed it), and it
   spends 500 requests on a publisher that already challenges this collector.
 - **Not this cell:** the wsj sign-in itself is Andrew's act. The leg resumes from `r46_wsj_checkpoint.json` after it.
+
+### ADDENDUM 2, note (2026-10-07 ~00:5xZ) -- the departure from item (1) is ACCEPTED (COO~H msg 30474, ax-1 merged @a02b56aaa5)
+
+Item (1) assumed the wsj query was the bare ticker. Measured by the cell: the query was already the company name, and the defect
+was the substring test in `discovery._matches`. ax-1 fixed the matcher (whole slug tokens) and added the bound at K=100.
+- Offline replay over 26,907 stored URLs: T 8,758 -> 11; SSE 501 -> 0; the controls keep 65/65, 25/25 and 23/23.
+- The measured cause replaces the assumed one, and the ruling's purpose is met.
+
+**One read is added to the live close run.** bbg shares the matcher. So its first job after the change is read against the same
+name's accepted count before it, and a drop is a row, not a silent narrowing.
