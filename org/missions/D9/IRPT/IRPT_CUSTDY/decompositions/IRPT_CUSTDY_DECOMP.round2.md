@@ -64,3 +64,14 @@ CU-b-2 reads CU-b-1's code) and B (CU-b-3) are independent.
 2. Route any E1 source fix that sits in another project's paths to its owner, with the row.
 3. Receive the laptop's file for the fenced returns-gold read (constraint 3) and run CU-b-3 on it locally if it carries the rows.
 4. The served render (hop 5) and the advisor's read (hop 6) are not this round's: IRPT_BCKEND a1-a4, then Andrew.
+
+## Recorded at the drain (2026-10-07 ~09:3xZ, the issuer's act 1)
+
+- **The pick (E2):** `ADVISOR-PICK scanned=190 eligible=16 pick=matthew_gooch households=10 classes=4 projection_refused=482 of=7022`, on
+  `s3://opal-data-bd/platinum/49financial/ownership_map.json` LastModified 2026-10-07T05:27:37Z, as-of 2026-09-30. Census, one row per
+  advisor: `deliverables/0.9.0_WK_IRPT_CUSTDY~5/ADVISOR_CENSUS_20260930.md` (drain 1c925383a4). The same pick came out of CU-b-1's run.
+- **The `'None'` source (E1):** `infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json:48` (IRPT_BCKEND's bundled
+  artifact; 826 of its 6202 values are the string `'None'`, from null `schwab_account_id` in `dim_account_xref` 2026-09-16), passed by
+  the guard at `ids.py:387-388` (`mapped is not None`). Not this project's path: routed (act 2), row W5-S1.
+- **Drains:** 19ff3664fc (chain B, CU-b-3), 1c925383a4 (chain A, CU-b-1 + CU-b-2). Drain checks: py_compile 6/6, ruff clean, pytest 53
+  passed, four self-tests all True.
