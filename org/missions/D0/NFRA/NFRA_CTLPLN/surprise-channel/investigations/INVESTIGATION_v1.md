@@ -1511,3 +1511,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "One code file outside the grant still decides on the old two-fabric grammar. It is the IRPT_YCDGEN stop-row filer (prints a channel section for a runner stop row); a Dell-fabric stop row cannot be filed through it. Not edited here (path outside the order's grant); old_grammar_left carries 1, so CT4d6-AC1 reads old_grammar_left=1 ok=False until the issuer brings the file to the gate's grammar (or rules it out of scope) and the sweep reads zero."
 }
 ```
+
+## NFRA_CTLPLN-W6-S4 -- AMENDMENT 3: the generated marks over exemptions.json went stale at the dell2 registry rows, and every row landed there moves them again
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T12:04:47Z",
+  "one_line": "The mark in modules/opal_name/generated_locals.tf (and vectors.json, opal_name.tftest.hcl) is a hash over exemptions.json + scopes.json; it no longer matches since the dell2 rows landed, so the next row landed there (the scoped dell1 rows) needs the restamp the dell2 rows already need.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output at this worktree: registry_hash(only=[exemptions.json, scopes.json]) = 9641c8676ad38b19 now; generated_locals.tf:1 carries registry@7cf7580cda2303a3 over exemptions.json,scopes.json",
+      "the same hash computed from git show at commit e7ac51a04c^ is 7cf7580cda2303a3 and at e7ac51a04c is 9641c8676ad38b19: the mark was current before the dell2 rows commit and stale after it",
+      "lib/opal_naming.py:134-136 TARGET_REGISTRY_KEYS: generated_locals.tf reads scopes+exemptions, vectors.json and opal_name.tftest.hcl read four files including exemptions; registry_hash(only=...) :173-184 feeds whole file bytes, so any row moves it although _gen_locals :1003-1029 uses only account_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 asks only whether a row can carry an action set and a prefix and for the shape to land; it names no restamp of generated files.",
+  "world_is": "Landing any exemptions.json row changes the hash the three generated carriers declare; the dell2 rows were landed without the restamp, so the carriers already declare an old hash. The content of generated_locals.tf does not depend on the rows (only account_id), so nothing renders wrongly today; a freshness reader that compares the mark to the registry would read the module as stale. The proposal's landing steps include the restamp."
+}
+```
+
+## NFRA_CTLPLN-W6-S5 -- AMENDMENT 3: a row carrying the new action and prefix fields is rendered by today's module as a FULL admission, so landing the row before the module learns the fields fails open
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T12:04:47Z",
+  "one_line": "Measured on a scratch copy outside the repository: a row with extra actions and prefix keys passes the validator and is rendered by modules/opal_name/main.tf:91-95 into the fence's admitted list as an ordinary admission, so the scoped dell1 row, if landed before the module and fence changes, would admit that user to the whole bucket with its own put.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output: validator refusals 0 for three dell1 rows carrying actions+prefix (and 0 with a string and an integer in those keys); control with reason removed gives 3 refusals, so the scratch directory was the one read",
+      "terraform console on a scratch copy of the module reading the scratch registry: local.fence_exemption_arns holds the dell1 ARN under 3 of 3 buckets (modules/opal_name/main.tf:91-95 reads r.arn / r.principal only)",
+      "the simulator on plain admission (saved policy + the user in the admitted list): PutObject allowed, because dell_deploy_policy.json stmt S3ObjectsOnOpalBuckets allows s3:PutObject on opal-* and the fence's Deny no longer applies"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 expects absent fields to keep today's meaning and a new row to carry the scope; the order treats the shape as an addition.",
+  "world_is": "No reader refuses an unknown key and the one reader that renders admission ignores it, so a new field is silent for every reader that was not changed in the same landing. INERT now because no such row exists and this pass lands none; it arms if the rows land before the module and the two fence files render the statements. The proposal states the landing order and an alternative shape (a sibling key) that fails closed."
+}
+```
