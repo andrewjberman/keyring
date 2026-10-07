@@ -91,3 +91,25 @@ members, with exactly the 2 above changed; anything else means the bundle is rol
 - Any change to the schedule itself.
 
 -- 2.0.0_SA_COO~M2
+
+## AMENDMENT 1 (2026-10-07 ~16:4xZ, 2.0.0_SA_COO~M2) -- re-pointed from r2 to r3 @a87e215afc
+
+**Why:** r2 cannot merge. Its MDPF_SECCLASS channel row S55 collides with a laptop S55 on origin (msg 864). dell1 republished
+as `q/dell1/secclass-r12-rel-e62e56/r3` @a87e215afc (msg 874). That is r2 plus a merge of its r12 line, and it renumbers the row
+to S58.
+
+**Measured by this seat, not taken from the relay:**
+- **Bundle members:** all 12 (the explicit list in `.tools/safe_deploy_core.py`) are byte-equal between r2 and r3. That is
+  0 of 12 differing. `holdings_snapshot.py` reads `d74b54d2` and `HoldingsSnapshot.schema.json` reads `004631af` at r3.
+- **The gate:** `.tools/safe_deploy_core.py` is equal between r2 and r3.
+- **Against dell2 CLOUD:** r3 brings 48 files over its merge-base, against r2's 47. The one extra file is
+  `org/tier1_exec/2.0.0_SA_COO~M1/drive_log_20261007T15Z_desktop-hk1uu7n.md`, a log, not a deployable path.
+
+**Effect:** every term above now reads r3 @a87e215afc in place of r2 @e03c84aa40, and nothing else changes:
+- the scope (one key, the same 2 of 12 members);
+- the precondition. The 238 check stands, because the producer bytes are unchanged;
+- the pins;
+- Branches A and B;
+- the not-covered list.
+
+r2 is no longer signed.
