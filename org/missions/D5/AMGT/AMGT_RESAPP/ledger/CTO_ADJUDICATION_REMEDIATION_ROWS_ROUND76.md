@@ -99,3 +99,16 @@ RULED-CELL 11 rows in 6 cells (A 5, B 1, C 2, E 3); RULED-CLOSED 11 rows (D 2, E
 | Z-S220 (SERP bronze partitions by `date=` with no security key) | **The key design, ruled now and built only when a web-search source is admitted.** The partition is `security_key=<key>/date=<d>/`, with the address from `lib/opal_naming.py address()` (rule 30). An unkeyed query is refused, not stored under date alone. The row stays PARKED with this design as its disposition. | RULED-CLOSED (design given; the build is gated on the source) |
 
 These do not wait for the round-76 analysis. That analysis follows the CVO's slug and will list them as placed.
+
+## ADDENDUM 2 (2026-10-07 ~05:5xZ) -- section G's three cards are ANSWERED (Andrew-direct "all recs approved")
+
+Record: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md`.
+
+| card | rows | Andrew's ruling | what follows |
+|---|---|---|---|
+| 1 | Z-W22-S2, Z-W22-S3, Z-W22-S6, Z-W22-S7, Z-W22-S8 | **No social source now.** | FWD-11's social half reads "no source admitted yet", with that reason, on the page and in `/overlay` (the top band already prints "no social source is admitted yet"). No billable social call runs. The five rows close as CLOSED_UNREMEDIATED / CARRIED_BY Andrew's later word. The budget ledger (W22-S2), the billing reader (W22-S7) and the collection contract (W22-S6, S8) are NOT built. |
+| 2 | Z-S162 part 3 | **(a): "not available", with its reason, below 3 peers.** | It goes into cell ba-16 (the Peers V mapping), or its successor if ba-16 is terminal. With fewer than 3 eligible peers, every Peers V measure reads ABSENT with `absent_reason` naming the count ("2 peers; 3 are needed"). It is never a value computed on 1 or 2. Proof: a plant at 2 peers and one at 3. |
+| 3 | Z-S230 | **No rotation.** | The row closes NOT_A_DEFECT on his word. The username stays in the 4 tracked files (his 2026-10-06 "LEAVE IT"). Nothing is rotated. |
+
+**Count:** the 7 rows at Andrew are now ruled. The 32 rows re-owned to this seat read: RULED-CELL 12 (the 11, plus Z-S162's
+part 3 into its cell), RULED-CLOSED 17 (the 11, plus the five social rows and Z-S230), and RE-OWNED 3. 12 + 17 + 3 = 32.
