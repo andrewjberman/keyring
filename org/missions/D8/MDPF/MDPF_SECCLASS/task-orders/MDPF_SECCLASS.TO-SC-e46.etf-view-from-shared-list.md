@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~36</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -141,3 +141,13 @@ lane: the <paths> block IS the grant. data/etfs/scripts/gold is outside the pre-
 </preflight>
 
 Source: PRD v0.13 FWD-12, FWD-6 @90f99888cd; analysis ruling 2.1 @1ca9e97fc9; DECOMP_R9 @5d70aab6c9; TO-SC-e29 (round 8, superseded).
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 10 (2.0.0_SA_COO~M1, 2026-10-07 ~12:3xZ)
+
+`<status>` superseded; no worker started it. Its two issuer-act inputs did not happen this round: the sector writer
+(`infra/aws/terraform/mdpf-secclass/sector-writer/`, built and proven in TO-SC-e28, decode table in TO-SC-e54) is not applied -- dell1
+holds no Terraform provider and may download none, so the apply needs a laptop cloud-operations seat under safe-apply and the sector-rows
+half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_SECTOR_ROWS_20261007.md, both halves UNSIGNED) -- and the sector-row write has not run. Round 10
+carries: the sector writer's apply (laptop seat) and the sector write under their pair, then this cell (build dell1, release site Z).
+Gate limb: none graded this modification.
+
