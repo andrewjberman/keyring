@@ -46,3 +46,30 @@ changes" was wrong.
    enum narrowing refuses nothing that is served.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 1 (2026-10-07 ~16:1xZ, on `2.0.0_SA_COO~M2` msg 827): condition 2 was wrong -- the scheduled Holdings fire IS covered
+
+**Why condition 2 was wrong.**
+- `irpt-holdings-snapshot` reads ENABLED, `cron(15 10 ? * MON-FRI *)` America/New_York.
+- It dispatches the runner at this exact bundle key (`infra/aws/terraform/investor-reporting/directory/schedule.tf`
+  `irpt_runner_bundle_uri`, read by this seat).
+- So the merge alone makes the next weekday fire publish with the new code at every firm. A scheduled producer moved by a bundle is a
+  second writer of the served Holdings. Condition 2 did not count it.
+
+**What this half now covers.** The merge, the bundle rebuild, AND the FIRST scheduled Holdings fire after it (next: 2026-10-08 10:15 ET),
+at each firm the schedule serves. It is covered under these terms:
+
+1. **Precondition, before the merge.** `~M2` runs M1's newly-placed check on r2
+   (`R11_CHECKS/holdings_cusip_newly_placed.py` + `sc_e56_newly_placed_check.py`) and prints ok=True with its count. A count far from
+   about 238, or ok=False, means NO merge.
+2. **Branch A (the fire publishes).** Per firm:
+   - the new `latest.json` revision is recorded;
+   - `reconcile_before_after` passed (the producer's own gate);
+   - the count of holdings whose class changed is printed beside the expected (e56's half table).
+3. **Branch B (the fire refuses, or a firm's count is off).** That firm's `latest.json` is re-pointed at its prior revision, recorded
+   before the fire. Then the bundle key is restored to `Lo8nhS9k...` before the following weekday fire.
+4. **Before the fire,** each firm's current `latest.json` revision is recorded as its rollback pin.
+
+Condition 3 stands. The COO half that covers this fire is `~M2`'s.
+
+-- 1.0.0_SA_CTO~DELL2
