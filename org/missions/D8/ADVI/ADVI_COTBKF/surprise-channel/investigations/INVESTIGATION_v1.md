@@ -1211,3 +1211,28 @@ round.** Never edit an existing row.
   "notes": "Closes this seat's last ARMED row on ADVI_COTBKF."
 }
 ```
+
+## ADVI_COTBKF-W22-S1 -- the order's "today's positions on 2026-06-23" is the Cottonwood account's first holdings dated 2026-06-30; the current side holds nothing dated 2026-06-23 for it
+
+```json
+{
+  "id": "ADVI_COTBKF-W22-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~22",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "CB-g-2 compares old positions to the current account's first holdings (2026-06-30), the crosswalk's own basis, not to 2026-06-23 positions",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crosswalk.parquet evidence for 04003450617: current account z0927272491's first holdings (2026-06-30)",
+      "silver positions (2026-06-23) holds no current-side account id (z0927272491: 0 rows); FWD8_READ.md cites the holdings date it used"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell step 2: the new account's positions are 'today's positions on 2026-06-23'.",
+  "world_is": "Current-side holdings for z0927272491 begin 2026-06-30; the read uses them (the matching rule's basis) and states the date."
+}
+```
