@@ -2359,3 +2359,34 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "S35's disarm clock is the CVO's to write (R-15); this row is the evidence the owner files. Remap: Andrew chose rule B (record ANDREW_DIRECT_20261007_00xxZ_RULE_B_CATEGORY_RULE_FOR_MULTI_ASSET_FUNDS.md)."
 }
 ```
+
+
+## MDPF_SECCLASS-S38 -- the next CLOUD push would deploy B_01b's never-deployed classifier change (8f67065e50); the S29 rollback and the repo restore disagree on that one file
+
+```json
+{
+  "id": "MDPF_SECCLASS-S38",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-07T01:58Z",
+  "one_line": "The next CLOUD push would deploy Cottonwood B_01b with 8f67065e50's classifier change, which has never been deployed. a62580ef8f (LOCAL) touches B_01b, and repo HEAD carries 8f67065e50's bytes, while S3 holds the pre-8f67065e50 body. The pre-push deploy gate uploads every changed gold script in the pushed range.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object opal-data-cot code/gold/B_01b.classify_new_securities.py (this seat, 2026-10-07 01:5xZ): VersionId _24mhLjaqb..., 00:55:10Z, no multi_asset; the body is byte-equal to git show 8f67065e50^ and differs from git show HEAD (HEAD adds the class other, Andrew's personal and held-away rules, and reads gold/canonical/holdings/ instead of holdings_lots)",
+      "the other seven S29 keys (Cottonwood C_06, lib/mix_views, D_04, D_03; Black Diamond D_03, C_06, lib/mix_views) read at the ledger's rollback VersionIds, no multi_asset, each byte-equal to HEAD: 7 of 8",
+      "8f67065e50 subject: 'code and dry run only, not deployed, no upload'; list-object-versions B_01b: 2026-09-26 02:39:19Z PbDCWhVV, 02:44:33Z nSr3.NM7H, 2026-10-06 16:20:49Z agc2ZP7e (S29 push), 2026-10-07 00:55:10Z _24mhLjaq (rollback)",
+      "git merge-base --is-ancestor a62580ef8f origin/CLOUD: NOT on origin (ls after fetch, origin CLOUD ba32125d62); a62580ef8f restores B_01b among the eight files",
+      ".tools/git-hooks/pre-push-safe-deploy.sh:78 runs safe-deploy.sh --commit-range over the pushed range"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off (CTO+COO); 8f67065e50 was committed as not deployed.",
+  "world_is": "The S29 rollback restored S3 to its pre-16:20Z objects, and for B_01b that object predates 8f67065e50. The repo restore (a62580ef8f) went back to the pre-S29 REPO bytes, which include 8f67065e50. The two disagree on B_01b only, so the next push that carries a62580ef8f deploys a classifier change with no sign-off: a new class (other), new rules, and a new input prefix, writing bd-securities classifications that feed served classes. Disarm, before the next CLOUD push: either B_01b at HEAD set to the live S3 body (8f67065e50^), or 8f67065e50's deploy signed as its own act; the post-act read is HEAD == S3 for B_01b.",
+  "notes": "Found while verifying S35's disarm for its clock. S35 itself is disarmed for the S29 move (S3 read above). The same shape as S35: a served-output script rides a push before its sign-off."
+}
+```
