@@ -704,3 +704,30 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "A real document has no per-account name_source, so any consumer that requires it would refuse every real document. The template does not use it and types it optional; whoever wires the client-report kind (IRPT_BCKEND) should read name_sources from the run file or drop the field from the contract text."
 }
 ```
+
+## IRPT_CUSTDY-S11 -- round 5 drained: 18 of 18 accounts in the report data (14 SI OK, 4 not covered); template rendered a real household
+
+```json
+{
+  "id": "IRPT_CUSTDY-S11",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T13:10:00Z",
+  "one_line": "Round 5 drained and graded on the real run: all 18 granted accounts of the chosen advisor are in the report data -- 14 covered with SI OK, 4 not covered with the reason NOT_HELD; the 49F template rendered a real household; the portal candidate passed CTO review with one note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: 5b85219599 (CU-e-1), 8029bc6635 (CU-e-2 workspace side); portal 99addd80 on wk-IRPT_CUSTDY-12-portal",
+      "dell2 ~13:0xZ on HEAD f16e89faa9+: hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 -> HOP3-REAL-RUN ... households=10 accounts=14 uncovered=0 held_si=0 not_in_directory=4 of=18 not_covered=4 error=none; from its file (not committed): 18 account documents, 14 with SI OK, 4 with not_covered reason 'NOT_HELD: no Schwab record under any identifier of this account'",
+      "CU-e-1 real: UNKEYED-LOOKUP advisor=matthew_gooch accounts=4 found=0 not_held=4 classified=4 (39 silver tables, 8 identifiers, positive control fired); CU-e-2 real: REAL-RENDER households=1 accounts=2 periods=4 si_labels=2 not_ok_noted=30 bd_field_names=0",
+      "1.0.0_SA_CTO~DELL2 msg 581: review of 99addd80 PASS; note -- the template renders no not_covered account yet; DEV landing waits on Andrew (106221)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-4 analysis @16d9b128c0 E1 (each unkeyed account measured, classed, not-covered rendered in the data) and E2 (the 49F template on a real client; C-SHAPE; typecheck, eslint and test).",
+  "world_is": "E1 holds on real data. E2 holds for its mechanical criteria (C-SHAPE is the CVO's judgment). Carried to the next round, not rows: the template's not_covered rendering (CTO note), the tracer test retirement (S10), and the 30 'not described' holdings in the real render (class and sector null until the issuer's describe() join)."
+}
+```
