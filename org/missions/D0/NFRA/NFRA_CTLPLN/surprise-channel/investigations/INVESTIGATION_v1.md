@@ -1986,3 +1986,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
 }
 ```
+
+## NFRA_CTLPLN-S17 -- disarm record for NFRA_CTLPLN-S13: --no-install measured on bun 1.3.9 and 1.4.2; dell2 covered by Andrew's word; a bare run still fetches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T14:23:01Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-S13: the flag --no-install stops bun's registry fetch on bun 1.3.9 (laptop) and bun 1.4.2 (dell1), measured by request count; dell2 is not measured, on Andrew's word that dell1's read stands for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Laptop, issuer's own run at 3b95b7c3aa: BUN-NO-EGRESS bun=1.3.9 positive_requests=6 candidates=9 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell1, bus c1d80ce3 (file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md), behind an outbound firewall block on bun.exe that Andrew added in an elevated shell: BUN-LISTENER-SELFCHECK ok=True; BUN-NO-EGRESS bun=1.4.2 positive_requests=6 candidates=12 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell2: NOT measured. Andrew-direct at the dell2 terminal ~14:0xZ as relayed by 0.0.0_AB_MSTR msg 106292, verbatim: 'we dont need to test the bun firewall process here because we've already proved it on dell1.' dell2 runs bun 1.4.2 by its own earlier report (msg 106209)",
+      "Merged @e131723efb: org/devices/kit_bun_no_egress.py wrap carries the flag and refuses install-class commands; .tools/wk-provision.sh refuses its install mode without a non-public registry redirect (CTk2-AC8 7/7, CTk2-AC9 ok)",
+      "Not read at this filing: dell1's confirmation that the firewall rule was removed; dell1's full result file (kept on dell1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-S13 (ARMED): bun fetches from the public registry on a run outside a node_modules tree; disarm when the measured form is in the kit and each box has read it back.",
+  "world_is": "The measured form is in the kit and two of three boxes read it back; the third is covered by Andrew's word, not by a measurement. What the disarm is: a wrapper and a flag a seat must USE. A bare `bun run` of a file outside a node_modules tree still fetches on every box; nothing mechanical stops a seat from typing it. The CTO's interim rule (msgs 106214, 106220: bun only inside a portal tree that holds node_modules; no bun install) therefore remains the standing control, and S13 is disarmed only for a seat that follows it or uses the wrapper. Whether a mechanical stop is wanted (a PATH shim, a standing firewall rule) is an open question for the CTO and Andrew, not built here."
+}
+```
