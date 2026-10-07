@@ -703,3 +703,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell2 the graph query is refused at the secret read, so every dell2 seat's rule-20 check is a coverage limitation, not a result. Not exercised on dell1. The grant (or a different bearer path for the Dells) is this project's to decide; 2.0.0_SA_COO~K2 recorded the gap in its IRPT_CUSTDY decomposition and kept working."
 }
 ```
+
+## NFRA_CTLPLN-W7-S1 -- deploy_ledger.py has no verb that adds a field or note to an open entry; the named-commit line is carried by named_commit_check.py writing the sentinel log and the entry's Log section directly
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T08:34:25Z",
+  "one_line": "deploy_ledger.py has no verb that adds a field or note to an open entry; the named-commit line is carried by named_commit_check.py writing the sentinel log and the entry's Log section directly",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/deploy_ledger.py@208c5d85ee:_render_entry prints state['log']; no note verb in the argparse table (cmd_open, cmd_close_leg, cmd_close, cmd_hold, cmd_check, cmd_list)",
+      "worktree test: python .tools/tests/test_named_commit_deploy.py case 8 -> carried=True survives_rerender=True for both wrappers"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-3 build item 2: the wrappers pass or append named_commit=<hash> trunk=OFF-TRUNK branch=<b> device=<d> to the entry the actor opened, reading deploy_ledger.py for how a field or note is added; if the ledger tool cannot carry the field without an edit, that is a surprise row and the wrapper prints the line instead.",
+  "world_is": "deploy_ledger.py@208c5d85ee has open, close-leg, close, hold, check, list and no note or field verb. The entry is a re-rendering of the sentinel (_render_entry prints the sentinel's `log` array under `## Log`), so a line added to the sentinel's `log` survives every later close-leg re-render. named_commit_check.py --record therefore appends one line to the sentinel JSON `log` (plus a `named_commit` key) and the same line to the entry's Log section, without editing deploy_ledger.py. Proven by test case 8 including a close-leg re-render. This is a second writer of the sentinel format; a future change to the sentinel schema must read named_commit_check.py _record."
+}
+```
+
+## NFRA_CTLPLN-W7-S2 -- The named-commit check runs only when DEPLOY_COMMIT is set; with it unset the wrappers do not read HEAD's relation to the trunk at all
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T08:34:25Z",
+  "one_line": "The named-commit check runs only when DEPLOY_COMMIT is set; with it unset the wrappers do not read HEAD's relation to the trunk at all",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-d-3.named-commit-deploy.md:build item 2 and BOUNDS@208c5d85ee",
+      "git diff of .tools/safe-deploy.sh and .tools/safe-apply.sh: the block is guarded by [ -n \"${DEPLOY_COMMIT:-}\" ]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-3 build item 2: DEPLOY_COMMIT=<full hash>; when unset the wrapper uses git rev-parse HEAD and behaves as today; bounds: every existing path works unchanged when DEPLOY_COMMIT is unset.",
+  "world_is": "Read as: unset means no check and no change, because grading HEAD for a Dell on every unset deploy would newly refuse an unpublished HEAD (and a Dell with AGENTBUS_DEVICE unset) on paths that never refused before. So a Dell that deploys without naming its commit is not graded by this check, and the pre-push hook path (which does not set DEPLOY_COMMIT) is unchanged. Also: when DEPLOY_COMMIT IS set the device must resolve in the register, so an ON-TRUNK deploy from a box with AGENTBUS_DEVICE unset is refused (case 6 as written). If the issuer meant unset to grade HEAD, that is one line in each wrapper."
+}
+```

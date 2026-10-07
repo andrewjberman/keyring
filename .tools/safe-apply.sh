@@ -65,6 +65,15 @@ if [ "$has_apply" -ne 1 ]; then
   exit 2
 fi
 
+# NFRA_CTLPLN CT-d-3 -- a named commit off the trunk (apply path only; opt-in: DEPLOY_COMMIT unset = no change at all).
+if [ -n "${DEPLOY_COMMIT:-}" ]; then
+  NC_RC=0
+  NC_OUT="$(python "$SCRIPT_DIR/named_commit_check.py" check --commit "$DEPLOY_COMMIT" --record 2>&1)" || NC_RC=$?
+  printf '%s\n' "$NC_OUT" >&2
+  [ "$NC_RC" -eq 0 ] || { echo "safe-apply: BLOCKED by the named-commit check (rc=$NC_RC). Nothing was applied." >&2; exit 8; }
+  [ "${SAFE_NAMED_COMMIT_CHECK_ONLY:-}" = "1" ] && exit 0
+fi
+
 # HALTGT checkpoint -- fired immediately before the irreversible apply.
 if [ -f "$HALT_GATE" ]; then
   # shellcheck source=/dev/null
