@@ -98,7 +98,7 @@ No non-ASCII in any file you write. Standard library only unless the order names
 `CT5e4-AC2` -- the difference control: a synthetic wheel whose record reads "not_checked" is refused and nothing is installed; the same line must read `installed=0`.
 </proof_of_spec>
 
-<expected_criteria>CT5e4-AC1,CT5e4-AC2</expected_criteria>
+<expected_criteria>CT5e4-AC1,CT5e4-AC2,CT5e4-AC3</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~8/NFRA_CTLPLN.TO-CT-e-4.receive-and-prove.proof_of_spec.json`, validate it
@@ -113,6 +113,7 @@ passes and the instance is VALID.
 <paths>
 org/devices/intake/intake_receive.py
 org/devices/intake/test_intake_receive.py
+org/devices/intake/test_intake_seam.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -130,3 +131,41 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: PRD `prd/NFRA_CTLPLN_PRD.md` v0.17 @301f06300d (ADMITTED), ADDENDUM v0.15 and v0.16, contract C-INTAKE; brief
 `docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md` @adc8997f1b Part V.1; CTO msgs 106327, 106363, 106372,
 106424, 106436, 106445.
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~22:1xZ) -- REOPENED: the receiving tool reads the pack the check tool actually writes; the seam run becomes a committed test
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state on the trunk. THE SEAM RUN (the issuer's act 1 after the drain, on the merged trunk @b78e8bef7c): one synthetic
+wheel went through fetch, check, release and pack against a loopback index, all four reading as expected, and then
+`intake_receive.py verify` REFUSED the pack the check tool had just written:
+`INTAKE-VERIFY pack=pack wheels=1 verified=0 checked=0 stray=3 ok=False` with
+`PACK-DEFECT: MANIFEST.json entry lacks name/sha256/bytes` and the wheel, its check record and its delivery text each read as
+STRAY. Cause, by the two workers' own reports: the check tool's `pack` writes `MANIFEST.json` as an object with `files[]`, ONE
+entry per wheel, carrying `name`, `sha256`, `size`, `check_record`, `check_record_sha256`, `delivery`, `delivery_sha256`; this
+tool expects one entry per FILE with `name`, `sha256`, `bytes`. The seam text left the manifest's shape open, so the defect is
+the issuer's; the seam run is what found it. Gate limb: none graded this modification.
+
+1. `org/devices/intake/intake_receive.py` reads the manifest `org/devices/intake/intake_check.py` `pack` writes, as its PRIMARY
+   shape: read `intake_check.py`'s pack code first and match it field for field. For each `files[]` entry: the wheel by `name`
+   with `sha256` and `size`; its check record by `check_record` with `check_record_sha256`; its delivery text by `delivery` with
+   `delivery_sha256`. Every one of the three is verified by hash, and all three count as listed (none is a stray). `bytes` is
+   accepted as a synonym of `size`. The two shapes the tool accepted before stay accepted. A manifest entry naming a companion
+   file that is absent, or whose hash differs, refuses that wheel. Nothing else in `verify`, `prove` or `install` changes, and
+   every refusal the tool made before it still makes. You do NOT edit `intake_check.py`.
+2. `org/devices/intake/test_intake_seam.py`: the issuer's seam-run script is in your worktree at that path, UNCOMMITTED, as a
+   starting point (it takes the repository root as its one argument and ends `SEAM-RUN stages=6 ok=<True|False>`). Make it a
+   test that needs no argument (derive the root from its own location), removes its temporary directory, keeps every request on
+   127.0.0.1, uses stand-ins for the installed copy, the antivirus answer and the signer through the tools' own environment
+   variables, and adds three negative arms on the SAME pack: one byte of the packed wheel flipped -> `verify` refuses; the
+   check record's `verdict` hand-edited to "not_checked" -> refused; the delivery text removed -> refused. LAST line
+   `INTAKE-SEAM-TEST stages=6 negative_arms=<k>/3 index_requests=4 ok=<True|False>`.
+3. In `test_intake_receive.py` add one case that builds a pack by CALLING the check tool's own pack function (import
+   `intake_check`) so the two tools cannot drift apart again unnoticed.
+
+**ACCEPTANCE.** `CT5e4-AC1` and `CT5e4-AC2` are unchanged (the case count grows). One criterion is ADDED:
+
+<criterion id="CT5e4-AC3" cell_refs="CT-e-4"><invocation>python org/devices/intake/test_intake_seam.py</invocation><expect>INTAKE-SEAM-TEST stages=6 negative_arms=3/3 index_requests=4 ok=True</expect></criterion>
+`CT5e4-AC3` -- the four tools run as one on a synthetic wheel, and the three tampered packs are refused.
+
+**BOUNDS.** No request leaves this machine. The only `pip install` is the tool's own, `--no-index --no-deps --target <temporary dir>`,
+on synthetic wheels. No test-virus string. Standard library only.
