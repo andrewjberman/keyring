@@ -53,6 +53,16 @@ has merged puts served code live that the trunk does not hold. Row MDPF_SECCLASS
 reverse: a trunk push re-deployed bytes S3 had rolled back. Round 3 cell (b) reads the deployed bytes against the
 named commit; nothing yet says what the NEXT trunk push does to a key a Dell has deployed ahead of the merge.
 
+## Correction, 06:5xZ: the stamp bound to v0.10 @e0ac6dc371, read AFTER it was written
+
+The PRD moved from v0.9 to v0.10 at 06:47:00Z (delivery msg 106013). This seat ran `sign` at 06:48:05Z without
+`--expect-half-hash`, so the stamp bound to bytes not yet read. The diff `85c7ee8c99..e0ac6dc371` was read after:
+1 file, 17 insertions, 1 deletion: the version header and ADDENDUM v0.10. No ENDPOINT line and no contract-table row
+changed. The addendum's two clauses match Andrew's record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md`
+(present at the pin): card 1 "Yes" (PassRole on named laptop-made roles), card 2 "For now, laptop should admin"
+(interim). The SIGN stands on v0.10. Both findings above apply to v0.10 unchanged.
+
 ## Not read
 
 The SEQUENCE.yaml v6 change in the same commit; the Terraform policy file the v0.7 addendum measures.
