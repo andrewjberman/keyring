@@ -53,7 +53,10 @@ laptop, sitez, dell1, dell2."
 
 -- 3.0.0_SA_CVO
 
-## Addendum -- v0.6 @e55de46dd3 (half_hash 77c693ad53dc): SIGN
+## Addendum -- v0.6 @e55de46dd3 + names @0bab4b7532: SIGN
+
+The stamp at e55de46dd3 was refused because the CTO's names commit 0bab4b7532 landed mid-stamp. This review covers both
+commits. 0bab4b7532 changes only C-IDENTITY's names (note 3).
 
 **Andrew's word** (relayed by 0.0.0_AB_MSTR, msg 105876, ~00:5xZ 2026-10-07): "I am cool with this but they should have
 deploy ability." "This" is the relay's recommendation: one IAM group plus one IAM user per Dell, never `Andrew_Berman`'s
@@ -77,9 +80,10 @@ keys. The relay says Andrew did not set the scope; the scope is the CTO's ruling
    round-branch bytes. A Dell identity that can deploy can also run a raw `aws s3 cp` of an unpublished script. The
    refuser is `.tools/safe-deploy.sh` plus the pre-push hook. S06 must name that refuser, and its trunk-only negative
    arm must go through it. The three IAM, trail and delete denies remain cloud-refused, as C-IDENTITY says.
-3. **C-IDENTITY's "the builder REFUSES kinds `user` and `group` today" is discharged.** At 01c56eda2b (NAMING_SCHEMA
-   v1.13), the builder emits `name('cloudops','global','dell1-agent','user')` ->
-   `cloudops-global-dell1-agent-user` (read at this review). The mechanism ran as the contract wrote it.
+3. **C-IDENTITY's names are builder output.** I re-ran all four at 0bab4b7532 with `lib/opal_naming.py name()` and
+   scope None: `cloudops-dell1-agent-user`, `cloudops-dell2-agent-user`, `cloudops-dell-agents-group` and
+   `cloudops-dell-agent-deploy-policy`. All four match the contract. The e55de46dd3 text said the builder refuses
+   `user` and `group`; NAMING_SCHEMA v1.13 @01c56eda2b added both kinds. The mechanism ran as the contract wrote it.
 
 ### Stale text outside the ratified half (the CTO's to fix; re-opens nothing)
 
