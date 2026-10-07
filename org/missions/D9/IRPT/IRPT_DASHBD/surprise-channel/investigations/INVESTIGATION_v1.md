@@ -1897,3 +1897,134 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Not a defect of this cell. For the served release and the frontend (C-HONESTY): whether single stocks need a source that names them is MDPF_SECCLASS's question, not this producer's."
 }
 ```
+
+## IRPT_DASHBD-W19-S1 -- `ETFClassifier.get_classification` returns None on a DynamoDB error, which a reader cannot tell from a ticker the table does not hold
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34: the shared client swallows ClientError/BotoCoreError and returns None, so an AccessDenied on etf-classifications reads as 'ticker not held' and every holding would land in `unclassified`; the class producer reads the client's table handle directly instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 0: read each holding's class through ETFClassifier, one GetItem per ticker, 'A ticker the table does not hold is unclassified'.",
+  "world_is": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py get_classification() catches (BotoCoreError, ClientError), logs, and returns None; the same None is returned for a ticker with no item. Through that method a role that lacks dynamodb:GetItem would make the whole day `unclassified` and the day would still be written and served as if measured. account_class_daily.ClassTable therefore calls `ETFClassifier(...).table.get_item(Key={'ticker': t})` itself (same client, same table, same single-item read) and raises ClassTableUnreadable on an error, so the day is refused by name. Other callers of get_classification/get_asset_class were not examined by this cell, so the hazard for them is unassessed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py lines 71-84 @a96e00c279: except (BotoCoreError, ClientError) -> return None",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py ClassTable.get and tests/test_account_class_daily.py::test_a_table_read_failure_is_not_an_absence"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The client file is outside this cell's grant and is not edited. Whether the shared client should distinguish an error from an absence is the toolchain owner's question."
+}
+```
+
+## IRPT_DASHBD-W19-S2 -- the reporting-gold bundle is pinned in lambda-source-map.json, not in lambda.tf; the source map is outside this cell's grant, so the packaging half of item 2 is not done
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34 item 2 says lambda.tf pins the bundle; the pins (`staged_from`: repo_path, commit pin, sha256, packaged_as) live in infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda, which this order's paths do not include, so account_class_daily.py and etf_classifications_dynamodb.py are NOT yet bundle members.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 2: 'infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf: the bundle gains account_class_daily.py and _shared/etf_classifications_dynamodb.py (read how the current bundle pins account_return_daily.py, and pin the same way)'.",
+  "world_is": "lambda.tf declares only the function, its artifact_key and the layer; its header says the bundle is built through infra/aws/lambda/ci/lambda-source-map.json + build-and-upload.sh. In that file the entry irpt-reporting-gold-lambda (line ~6048) lists the members and a `staged_from` array of pinned blobs, each with a commit `pin` and a `sha256`. A pin is a commit, so the two new members can only be pinned AFTER the commit that carries their final bytes. lambda.tf gained a comment naming the two members; nothing else in the packaging could be done inside the grant. Consequence if the apply ran on today's artifact: the handler's guarded import of account_class_daily fails, the class stage logs `CLASS_SKIPPED <day> account_class_daily not importable`, and the returns table is written unchanged. The class table would never be written until the pins land.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda (artifact_s3_key investor-reporting/irpt-reporting-gold-lambda.zip, last_deployed_commit 829e46ed7f) @4c34d86104",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf header comment and the module block: no staged_from"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the missing step: the issuer, who adds the two pins to the source map (commit-pinned, sha256-verified) and rebuilds the artifact before the apply. The never-widen packet lists this as a precondition, not as part of the signed act."
+}
+```
+
+## IRPT_DASHBD-W19-S3 -- the order says the handler lists the class prefix for the newest landed day; the handler does not, so the class-prefix read grant is wider than any use
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34 item 3 grants read on the class prefix 'the handler lists it for the newest landed day'; the handler lists only the returns prefix (day selection is the returns table's), so the class-prefix List/Get is granted and unused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 3: 'Read access to the class prefix (the handler lists it for the newest landed day)'.",
+  "world_is": "handler.run() and run_backfill() call newest_landed_day() on the returns prefix only, and emit_classes() emits the same days the returns path emitted; nothing lists or reads account_class_daily. The grant was made as ordered (the same prefix the role writes, ListBucket by prefix pattern and GetObject, no other bucket); it is a read of one more prefix of the same firm bucket that the code does not exercise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run(), run_backfill(), emit_classes() @ this cell's commit",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf irpt_rg_gold_read_prefixes (three prefixes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If a later cell makes the class table's own newest day matter (a class-only catch-up), the grant is already there; if not, dropping it is a one-line change to irpt_rg_gold_read_prefixes."
+}
+```
+
+## IRPT_DASHBD-W19-S4 -- a class day skipped on a scheduled fire is not retried by the next fire
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34: the scheduled path selects days AFTER the newest landed returns day, and the returns day is written first, so a class day that was skipped (named in the log) stays a gap in account_class_daily until a backfill event rewrites it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-34 item 1: 'A day the class producer cannot emit is logged by name and does not stop the returns table.'",
+  "world_is": "select_days(newest_landed, today) takes the returns table's newest landed date= partition as its floor, so after a fire that wrote the returns day and skipped the class day the next fire starts from the day after. Nothing in the scheduled path compares the two tables. The gap is visible in the fire's log (`CLASS_SKIPPED <day> <reason>`) and in the returned `class_failed`, and it is closable by the existing backfill event (a backfill object with start and end, accounts set to population), which now rewrites both tables for landed days; no mechanism makes either happen on its own. The never-widen packet names this under Branch B.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py select_days() and run() @ this cell's commit",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_table_emission.py::test_a_class_failure_leaves_the_returns_table_written_and_is_logged_by_name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed only once the apply lands and only on a day the class stage fails. Disarm: the issuer reads the first fire's log in the after-read and runs the backfill event for any skipped day; a standing class-gap check is not built here (monitor moratorium)."
+}
+```
+
+## IRPT_DASHBD-W19-S5 -- the recorded "about 16 percent unclassified" is an all-account figure; on the 61-account sample the module gives 1.8 percent and the table 0.15 percent, so the sample cannot confirm the all-account share
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:33:44Z",
+  "one_line": "TO-DB-b-34: the order asks for the table-based unclassified share against 'round 21's module-based share'; the 16 percent (W18-S2) is every account on dim_position 2026-10-01, while round 21's 61-account sample re-measures at 1.804 percent on 2026-10-05 under the module and 0.153 percent under the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 0: 'Re-run the round-21 sample's 61 accounts and print the unclassified share against round 21's module-based share'; row W18-S2: about 16 percent of value unclassified.",
+  "world_is": "Round 21's own record carries no market values, so its module-based share on the sample was not recorded; this cell re-measured it on identical positions by classifying the same rows from the module dictionary (that pass reproduces round 21's 992 class rows and 30 unclassified rows exactly). Sample, 2026-10-05: module 1.804 percent, table 0.153 percent; holdings not in the source 45 of 78 under the module, 9 of 78 under the table. The 16 percent is the all-account share under the module on 2026-10-01 and is not reproducible from a 61-account sample. The table-based all-account share is unmeasured: it is the apply's after-read A3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~19/RELEASE_LOCAL_RUN.md section B",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~19/class_share_61_driver.py (the driver that produced both columns)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect. The release figure the CTO's criterion 3 wants is the served partition's, read at the apply."
+}
+```
