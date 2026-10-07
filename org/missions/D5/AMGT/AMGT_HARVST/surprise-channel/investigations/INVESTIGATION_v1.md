@@ -7464,6 +7464,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W107-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~107",
+      "surfaced_at": "2026-10-07T14:11:49Z",
+      "one_line": "HVST-be-1 AC2 cannot print LIST OK: 7 securities with an identity record cannot carry the record's name among their aliases, because the module's existing _usable_alias drops a form shorter than 3 characters or equal to a ticker token (BP, KPN, RWE, SAP, GSK, Nokia).",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-be-1 section 0 R1 'the identity legal name is ALWAYS in a security's alias set and is never replaced', section 1 item 1 'the legal name's forms (through the module's existing _entry_aliases path)', and item 4 LIST OK 'every security that has an identity record carries that record's name among its aliases'. The two sentences cannot both hold: _entry_aliases drops a candidate through _usable_alias.",
+      "world_is": "be1_list_compare.out at the cell's commit prints IDENTITY NAME NOT AMONG ALIASES: 7 of 234 records: BP/_LN_Equity 'BP' (2 characters < MIN_ALIAS_CHARS 3), BP_US_Equity 'BP' (same; its served alias 'BP PLC' is the missing one), KPN_NA_Equity 'KPN', RWE_GR_Equity 'RWE', SAP_GY_Equity 'SAP', GSK_LN_Equity 'GSK' (each equal to a token of the security's own ticker), NOKIA_FH_Equity 'Nokia' (equal to the ticker token NOKIA). Each carries the upper-case form as a case-sensitive ticker_aliases entry (BP, KPN, RWE, SAP, GSK, NOKIA, read off securities.universe.r58.json); the mixed-case 'Nokia' is not carried by anything. Admitting the name as a case-insensitive alias would let 'sap' and 'bp' hit unrelated prose, which is the exact reason _usable_alias and the whole_brands list exist; the cell did not do it. Result: LIST FAIL on 7 lines; the other conditions hold. The pool names 'GSK LN', 'SAP GY', 'Nokia FH', 'RWE AG RWE GY' are refused as decorated, so GSK, NOKIA, RWE, SAP now have an EMPTY alias set (before: the decorated pool name). Not measured: how many gold pairs the served file's 'SAP GY'/'GSK LN' style aliases produced.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out (IDENTITY NAME NOT AMONG ALIASES line)",
+          "lib/research/harvest/universe_securities.py _usable_alias lines 248-256 @ the cell's commit"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W107-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~107",
+      "surfaced_at": "2026-10-07T14:11:49Z",
+      "one_line": "HVST-be-1 R1 makes ASML_NA_Equity's company name 'ASML', so limb (a) of brand_refusal now refuses the whole brand 'ASML' for ASML_US_Equity: a served alias is lost (served ['ASML Holding NV','ASML Holding','ASML'], after without 'ASML'); whole brands admitted 7 before, 6 after.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO HVST-be-1 names no effect on whole_brands; universe_securities.brand_refusal's docstring says two listings of one issuer that both carry the brand (ASML NA / ASML US) do not refuse each other because limb (a) compares to what the others carry BEFORE any whole-brand addition.",
+      "world_is": "With the legal name first, the identity record's 'ASML' is ASML_NA_Equity's company name, so forms_by_key['ASML_NA_Equity'] holds 'asml' and the limb (a) compare refuses ASML_US_Equity's brand 'ASML' (summary whole_brand_refused = [ASML_US_Equity ASML], 0 before). ASML_NA keeps its own brand (the owner is skipped). be1_list_compare.out prints it under SERVED ALIAS MISSING with reason 'whole brand refused by limb (a)' and WHOLE BRANDS: refused before 0 after 1. Left alone, a gold rebuild from build() drops the 'ASML' pairs of ASML_US (the census row says 2 pairs, 3 added mentions, 6 added mentions shared with ASML_NA). The cell did not change brand_refusal or add a brand: both are outside its order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out (STILL MISSING ASML_US_Equity and WHOLE BRANDS lines)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round57/securities.universe.r57.summary.json whole_brand_refused []"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
