@@ -395,3 +395,27 @@ them. Chain `~6`, one cell, files price_series.py, publish_page.py, render.py, r
   currency; the cell may plant G4 rows carrying `currency` `USD` (no `px_close`) for those fixtures' securities and add
   `"currency"` to an exact key set those checks compare, and may change nothing else in them.
 - **Organic trigger:** opening a non-US security's modal on the live page; the issuer's real run re-measures the 598.
+
+## ROUND 17 (main workstream) -- APPENDED 2026-10-07, revision 1.7 of this file
+
+One cell, on the ruling of 1.0.0_SA_CTO~Z msg 30817 term 2 (answering the round-16 measurement,
+`deliverables/2.0.0_SA_COO~RV/round16/currency_measure_2026-10-06.json`). Author 2.0.0_SA_COO~RV. No earlier cell is
+replaced. Chain `~7`, one cell, files price_series.py and render.py, risk SERVED. Term 1 of that ruling (the backfill's
+security list includes formerly-held keys, inside the existing Bloomberg budget ledger) is the issuer's act at the
+backfill run and is not a cell.
+
+### `RIV-nc-1` -- a holding with no stored currency draws no curve and says why (FWD-22; CTO ruling 30817 term 2)
+- Measured (round-16 real run, day 2026-10-06): 96 of 695 fund-securities carry `"currency": null` in their chart object
+  (no G4 row in the 365-day window); the script draws their frame as an empty chart with a shaded gap.
+- Interface: `price_series.NO_HISTORY = "No price history is stored for this holding yet."`. For a key with no stored
+  currency, `series` returns `source_words` equal to `NO_HISTORY` exactly (its points stay all `None`, its `currency`
+  `None`, its gaps as today). The page's one script, for a security whose `currency` is `null`: draws NO chart (no
+  `<svg>` in the frame, no axis, no shaded gap, no gap-reason list), sets the frame's status line to the object's
+  `source_words` (so the sentence comes from the object, and the same sentence is in the script as its fallback when
+  `source_words` is absent), and changes nothing else: the range buttons may stay, and the static trade list stays.
+  A security WITH a stored currency is drawn exactly as today, whatever its number of priced points.
+- Rulings at the cut (issuer): the test is `currency == null` in the object, never "no priced point" (a non-dollar listing
+  with 0 closes in a range but a stored currency still draws its frame and gap reason). No change to the chart object's
+  keys or to `publish_page.py`. The sentence is not shown on the audit page (it carries no script).
+- **Organic trigger:** opening the dialog of a holding that left the funds before the market table began; the issuer's
+  real run reads the 96 in a browser.
