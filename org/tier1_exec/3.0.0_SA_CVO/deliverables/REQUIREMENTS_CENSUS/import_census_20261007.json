@@ -1,0 +1,1631 @@
+{
+ "denominators": {
+  "distinct_import_names": 1043,
+  "excluded_vendored_py": 2781,
+  "first_party_names_shadowing_an_installed_distribution": 5,
+  "of_which_vendored_in_place_py": 1327,
+  "scanned_py": 6984,
+  "third_party_names": 82,
+  "third_party_not_installed": 15,
+  "tracked_files": 61025,
+  "tracked_py": 9765,
+  "unparsed": 0,
+  "vendor_roots": 3,
+  "vendor_roots_without_record": 0
+ },
+ "excluded_rule": {
+  "path_parts": [
+   "/layers/",
+   "/node_modules/",
+   "/site-packages/",
+   "/_vendor/",
+   "/vendor/",
+   "/.venv/",
+   "/venv/",
+   "/python/lib/",
+   "/dist-packages/"
+  ],
+  "prefixes": [
+   "portal/",
+   "archive/",
+   "node_modules/"
+  ]
+ },
+ "python": "3.12.10",
+ "shadowed": {
+  "authorization": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [
+    "pywin32"
+   ],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/performance/runtime.py"
+   ],
+   "files": 1,
+   "import": "authorization",
+   "installed": {
+    "pywin32": "311"
+   }
+  },
+  "coverage": {
+   "by_area": {
+    "data": 2,
+    "org": 3
+   },
+   "distributions": [
+    "coverage"
+   ],
+   "examples": [
+    "data/etfs/scripts/presentation/render_month_end.py",
+    "data/etfs/scripts/presentation/tests/test_coverage_gate.py",
+    "org/missions/D8/ETFS/ETFS_GUARDRAIL/deliverables/0.9.0_WK_ETFS_GUARDRAIL~4/test_egs27_skip_rides_the_forcing.py"
+   ],
+   "files": 5,
+   "import": "coverage",
+   "installed": {
+    "coverage": "7.13.5"
+   }
+  },
+  "mcp": {
+   "by_area": {
+    "deck_generation": 1,
+    "infra/other": 7,
+    "integrations": 1,
+    "org/mcp": 1
+   },
+   "distributions": [
+    "mcp"
+   ],
+   "examples": [
+    "deck_generation/mcp_server/server.py",
+    "infra/aws/ec2/opal-gateway/app/integrations/schwab/envelope.py",
+    "infra/aws/ec2/opal-gateway/app/integrations/schwab/integration.py"
+   ],
+   "files": 10,
+   "import": "mcp",
+   "installed": {
+    "mcp": "1.26.0"
+   }
+  },
+  "playwright": {
+   "by_area": {
+    ".tools": 3,
+    "daily_reports": 1,
+    "data": 11,
+    "docs": 1,
+    "lib": 3,
+    "org": 15
+   },
+   "distributions": [
+    "playwright"
+   ],
+   "examples": [
+    ".tools/ac6_strip_validation.py",
+    ".tools/frontend-dev.py",
+    ".tools/orion-inspector.py"
+   ],
+   "files": 34,
+   "import": "playwright",
+   "installed": {
+    "playwright": "1.58.0"
+   }
+  },
+  "run": {
+   "by_area": {
+    "tools": 1
+   },
+   "distributions": [
+    "win_unicode_console"
+   ],
+   "examples": [
+    "tools/astn_wsjft/scripts/test_run_orchestrator.py"
+   ],
+   "files": 1,
+   "import": "run",
+   "installed": {
+    "win_unicode_console": "0.5"
+   }
+  }
+ },
+ "third_party": {
+  "PIL": {
+   "by_area": {
+    "daily_reports": 1,
+    "org": 9
+   },
+   "distributions": [
+    "pillow"
+   ],
+   "examples": [
+    "daily_reports/scripts/capture_screens.py",
+    "org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~1/rb-s-14_pixels.py",
+    "org/missions/D13/DSGN/DSGN_REBRND/deliverables/0.9.0_WK_DSGN_REBRND~1/rb-s-6_contact-sheet.py"
+   ],
+   "files": 10,
+   "import": "PIL",
+   "installed": {
+    "pillow": "12.1.1"
+   }
+  },
+  "anthropic": {
+   "by_area": {
+    "infra/lambda": 2,
+    "lib": 2,
+    "org": 1,
+    "tools": 2
+   },
+   "distributions": [
+    "anthropic"
+   ],
+   "examples": [
+    "infra/aws/lambda/exec-summary-generator/lambda_function.py",
+    "infra/aws/lambda/infrastructure_monitor/lambda_function.py",
+    "lib/research/filings/analyze.py"
+   ],
+   "files": 7,
+   "import": "anthropic",
+   "installed": {
+    "anthropic": "0.84.0"
+   }
+  },
+  "anyio": {
+   "by_area": {
+    "infra/other": 1
+   },
+   "distributions": [
+    "anyio"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/tools.py"
+   ],
+   "files": 1,
+   "import": "anyio",
+   "installed": {
+    "anyio": "4.12.1"
+   }
+  },
+  "awswrangler": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [
+    "awswrangler"
+   ],
+   "examples": [
+    "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/lambda_function.py"
+   ],
+   "files": 1,
+   "import": "awswrangler",
+   "installed": {
+    "awswrangler": "3.11.0"
+   }
+  },
+  "bcrypt": {
+   "by_area": {
+    ".claude/skills": 1,
+    "org": 9,
+    "users": 2
+   },
+   "distributions": [
+    "bcrypt"
+   ],
+   "examples": [
+    ".claude/skills/ui-walk/ui_walker_account.py",
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/battery_ib_rtf_10.py",
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.7.0_AE_CloudOps~V/battery_ib_rtf_12.py"
+   ],
+   "files": 12,
+   "import": "bcrypt",
+   "installed": {
+    "bcrypt": "5.0.0"
+   }
+  },
+  "blpapi": {
+   "by_area": {
+    "integrations": 3,
+    "lib": 1,
+    "org": 10
+   },
+   "distributions": [],
+   "examples": [
+    "integrations/bloomberg/auth/dapi_check.py",
+    "integrations/bloomberg/mcp/blp_client.py",
+    "integrations/bloomberg/pipeline/etf_constituents_pull.py"
+   ],
+   "files": 14,
+   "import": "blpapi",
+   "installed": {}
+  },
+  "boto3": {
+   "by_area": {
+    ".claude/skills": 2,
+    ".tools": 16,
+    "daily_reports": 3,
+    "data": 516,
+    "deck_generation": 1,
+    "docs": 3,
+    "etf_netassets_watch": 1,
+    "infra/lambda": 336,
+    "infra/other": 129,
+    "integrations": 14,
+    "lib": 63,
+    "org": 734,
+    "tools": 28,
+    "users": 5,
+    "workflows": 2
+   },
+   "distributions": [
+    "boto3"
+   ],
+   "examples": [
+    ".claude/skills/mdpf-refresh/mdpf_refresh.py",
+    ".claude/skills/ui-walk/ui_walker_account.py",
+    ".tools/_trino_fed.py"
+   ],
+   "files": 1853,
+   "import": "boto3",
+   "installed": {
+    "boto3": "1.42.54"
+   }
+  },
+  "botocore": {
+   "by_area": {
+    ".claude/skills": 2,
+    ".tools": 1,
+    "data": 46,
+    "deck_generation": 1,
+    "docs": 2,
+    "infra/lambda": 67,
+    "infra/other": 24,
+    "integrations": 12,
+    "lib": 56,
+    "org": 92,
+    "tests": 5,
+    "tools": 1
+   },
+   "distributions": [
+    "botocore"
+   ],
+   "examples": [
+    ".claude/skills/mdpf-refresh/mdpf_refresh.py",
+    ".claude/skills/ui-walk/ui_walker_account.py",
+    ".tools/daily-sprint.py"
+   ],
+   "files": 309,
+   "import": "botocore",
+   "installed": {
+    "botocore": "1.43.0"
+   }
+  },
+  "bs4": {
+   "by_area": {
+    "data": 2,
+    "infra/lambda": 4,
+    "lib": 6,
+    "org": 9,
+    "tools": 1
+   },
+   "distributions": [
+    "beautifulsoup4"
+   ],
+   "examples": [
+    "data/find/imo/scripts/_meta/extract_source_list.py",
+    "data/find/imo/scripts/silver/parse_web_silver.py",
+    "infra/aws/lambda/news_ingestion_scheduler/text_cleaner.py"
+   ],
+   "files": 22,
+   "import": "bs4",
+   "installed": {
+    "beautifulsoup4": "4.14.3"
+   }
+  },
+  "canonical_factor_mapping": {
+   "by_area": {
+    "docs": 1
+   },
+   "distributions": [],
+   "examples": [
+    "docs/architecture/security-scanner-source/V0_quick_update_weights.py"
+   ],
+   "files": 1,
+   "import": "canonical_factor_mapping",
+   "installed": {}
+  },
+  "catboost": {
+   "by_area": {
+    "rcg": 1
+   },
+   "distributions": [
+    "catboost"
+   ],
+   "examples": [
+    "rcg/bin/model.py"
+   ],
+   "files": 1,
+   "import": "catboost",
+   "installed": {
+    "catboost": "1.2.10"
+   }
+  },
+  "cryptography": {
+   "by_area": {
+    "infra/lambda": 4,
+    "infra/other": 15,
+    "org": 3
+   },
+   "distributions": [
+    "cryptography"
+   ],
+   "examples": [
+    "infra/aws/ec2/canonical-schwab-si2/schwab_sdd_session_capture.py",
+    "infra/aws/ec2/canonical-schwab-si2/test_schwab_sdd_session_capture.py",
+    "infra/aws/ec2/opal-gateway/app/browser_oidc.py"
+   ],
+   "files": 22,
+   "import": "cryptography",
+   "installed": {
+    "cryptography": "48.0.1"
+   }
+  },
+  "curl_cffi": {
+   "by_area": {
+    "integrations": 1,
+    "lib": 4,
+    "org": 5
+   },
+   "distributions": [
+    "curl_cffi"
+   ],
+   "examples": [
+    "integrations/seekingalpha/rest_fetch.py",
+    "lib/opal_data_harvest/exercise_as_received.py",
+    "lib/opal_data_harvest/publishers.py"
+   ],
+   "files": 10,
+   "import": "curl_cffi",
+   "installed": {
+    "curl_cffi": "0.13.0"
+   }
+  },
+  "dateutil": {
+   "by_area": {
+    "infra/lambda": 3
+   },
+   "distributions": [
+    "python-dateutil"
+   ],
+   "examples": [
+    "infra/aws/lambda/keyword_intelligence_generator/lambda_function.py",
+    "infra/aws/lambda/news_ingestion_scheduler/lambda_function.py",
+    "infra/aws/lambda/news_trending_analysis/lambda_function.py"
+   ],
+   "files": 3,
+   "import": "dateutil",
+   "installed": {
+    "python-dateutil": "2.9.0.post0"
+   }
+  },
+  "docx": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "python-docx"
+   ],
+   "examples": [
+    "org/tier1_exec/3.0.0_SA_CVO/deliverables/build_content_eval_corpus.py"
+   ],
+   "files": 1,
+   "import": "docx",
+   "installed": {
+    "python-docx": "1.2.0"
+   }
+  },
+  "dotenv": {
+   "by_area": {
+    "infra/other": 1
+   },
+   "distributions": [
+    "python-dotenv"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/config.py"
+   ],
+   "files": 1,
+   "import": "dotenv",
+   "installed": {
+    "python-dotenv": "1.2.2"
+   }
+  },
+  "duckdb": {
+   "by_area": {
+    "infra/other": 2
+   },
+   "distributions": [
+    "duckdb"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/integrations/schwab/engine.py",
+    "infra/aws/ec2/opal-gateway/tests/test_schwab_engine.py"
+   ],
+   "files": 2,
+   "import": "duckdb",
+   "installed": {
+    "duckdb": "1.5.0"
+   }
+  },
+  "emit_manifest": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [],
+   "examples": [
+    "infra/aws/lambda/mdpf-pipeline/mdpf-daily-trigger/lambda_function.py"
+   ],
+   "files": 1,
+   "import": "emit_manifest",
+   "installed": {}
+  },
+  "feedparser": {
+   "by_area": {
+    "infra/lambda": 1,
+    "infra/other": 1
+   },
+   "distributions": [
+    "feedparser"
+   ],
+   "examples": [
+    "infra/aws/lambda/news_ingestion_scheduler/lambda_function.py",
+    "infra/aws/scripts/ingest_rss_everything.py"
+   ],
+   "files": 2,
+   "import": "feedparser",
+   "installed": {
+    "feedparser": "6.0.12"
+   }
+  },
+  "fitz": {
+   "by_area": {
+    "docs": 1,
+    "infra/lambda": 6,
+    "lib": 7,
+    "org": 5
+   },
+   "distributions": [
+    "PyMuPDF"
+   ],
+   "examples": [
+    "docs/research/investor_reporting_export_20260910/profile_export_capture.py",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fixtures/synthetic_pdf/generate.py",
+    "infra/aws/lambda/investor-reporting/ycharts/extract/tests/test_calculation_settings.py"
+   ],
+   "files": 19,
+   "import": "fitz",
+   "installed": {
+    "PyMuPDF": "1.27.1"
+   }
+  },
+  "graph_tool": {
+   "by_area": {
+    "infra/other": 1
+   },
+   "distributions": [],
+   "examples": [
+    "infra/aws/c3materialize-b4/run_sbm.py"
+   ],
+   "files": 1,
+   "import": "graph_tool",
+   "installed": {}
+  },
+  "hdbscan": {
+   "by_area": {
+    "infra/lambda": 2,
+    "tools": 1
+   },
+   "distributions": [
+    "hdbscan"
+   ],
+   "examples": [
+    "infra/aws/lambda/news_semantic_clustering/lambda_function.py",
+    "infra/aws/lambda/news_trending_analysis/lambda_function.py",
+    "tools/news_scanner/scripts/prototype_semantic_clustering.py"
+   ],
+   "files": 3,
+   "import": "hdbscan",
+   "installed": {
+    "hdbscan": "0.8.41"
+   }
+  },
+  "httpx": {
+   "by_area": {
+    "infra/other": 8,
+    "org": 1
+   },
+   "distributions": [
+    "httpx"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/graph.py",
+    "infra/aws/ec2/opal-gateway/app/identity.py",
+    "infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py"
+   ],
+   "files": 9,
+   "import": "httpx",
+   "installed": {
+    "httpx": "0.28.1"
+   }
+  },
+  "jose": {
+   "by_area": {
+    "infra/lambda": 2,
+    "org": 2
+   },
+   "distributions": [
+    "python-jose"
+   ],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/_render_identity/mint.py",
+    "infra/aws/lambda/shared/opal_auth/__init__.py",
+    "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~14/test_render_mint.py"
+   ],
+   "files": 4,
+   "import": "jose",
+   "installed": {
+    "python-jose": "3.3.0"
+   }
+  },
+  "jsonschema": {
+   "by_area": {
+    ".tools": 13,
+    "data": 3,
+    "infra/lambda": 45,
+    "infra/other": 2,
+    "lib": 14,
+    "org": 59,
+    "projects": 1
+   },
+   "distributions": [
+    "jsonschema"
+   ],
+   "examples": [
+    ".tools/lgctfm-contract-check.py",
+    ".tools/missions-tree-index.py",
+    ".tools/prd-header-notify.py"
+   ],
+   "files": 137,
+   "import": "jsonschema",
+   "installed": {
+    "jsonschema": "4.26.0"
+   }
+  },
+  "jwt": {
+   "by_area": {
+    "infra/lambda": 4,
+    "infra/other": 10,
+    "org": 1
+   },
+   "distributions": [
+    "PyJWT"
+   ],
+   "examples": [
+    "infra/aws/auth/validator.py",
+    "infra/aws/ec2/opal-gateway/app/identity.py",
+    "infra/aws/ec2/opal-gateway/app/oauth_as.py"
+   ],
+   "files": 15,
+   "import": "jwt",
+   "installed": {
+    "PyJWT": "2.11.0"
+   }
+  },
+  "kuzu": {
+   "by_area": {
+    "infra/other": 8,
+    "org": 17
+   },
+   "distributions": [
+    "kuzu"
+   ],
+   "examples": [
+    "infra/aws/globgrph/_provenance.py",
+    "infra/aws/globgrph/derive_runner.py",
+    "infra/aws/globgrph/kuzu_incremental_refresh.py"
+   ],
+   "files": 25,
+   "import": "kuzu",
+   "installed": {
+    "kuzu": "0.11.3"
+   }
+  },
+  "lxml": {
+   "by_area": {
+    "deck_generation": 2,
+    "lib": 1,
+    "tools": 1
+   },
+   "distributions": [
+    "lxml"
+   ],
+   "examples": [
+    "deck_generation/engine/skeleton.py",
+    "deck_generation/scripts/01_index_slides.py",
+    "lib/research/corpus/extract.py"
+   ],
+   "files": 4,
+   "import": "lxml",
+   "installed": {
+    "lxml": "6.0.2"
+   }
+  },
+  "matplotlib": {
+   "by_area": {
+    "infra/other": 1,
+    "lib": 1
+   },
+   "distributions": [
+    "matplotlib"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/make_diagram.py",
+    "lib/research/print/render_pack.py"
+   ],
+   "files": 2,
+   "import": "matplotlib",
+   "installed": {
+    "matplotlib": "3.11.1"
+   }
+  },
+  "model2vec": {
+   "by_area": {
+    "org": 2
+   },
+   "distributions": [
+    "model2vec"
+   ],
+   "examples": [
+    "org/tier1_exec/4.0.0_SA_CRO/deliverables/NFRA_AKPIPE_LAMBDA_PACKAGE/lambda_function.py",
+    "org/tier1_exec/4.0.0_SA_CRO/scripts/akpipe_scorer.py"
+   ],
+   "files": 2,
+   "import": "model2vec",
+   "installed": {
+    "model2vec": "0.8.2"
+   }
+  },
+  "moto": {
+   "by_area": {
+    "infra/other": 12,
+    "org": 1
+   },
+   "distributions": [],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/tests/acceptance/conftest.py",
+    "infra/aws/ec2/opal-gateway/tests/test_access_state.py",
+    "infra/aws/ec2/opal-gateway/tests/test_account_ref.py"
+   ],
+   "files": 13,
+   "import": "moto",
+   "installed": {}
+  },
+  "msal": {
+   "by_area": {
+    "infra/other": 4
+   },
+   "distributions": [
+    "msal"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/browser_oidc.py",
+    "infra/aws/ec2/opal-gateway/app/token_broker.py",
+    "infra/aws/ec2/opal-gateway/tests/test_inspect_email_attachment.py"
+   ],
+   "files": 4,
+   "import": "msal",
+   "installed": {
+    "msal": "1.39.0"
+   }
+  },
+  "mss": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [],
+   "examples": [
+    "org/tier1_exec/4.0.0_SA_CRO/scripts/captcha_sentinel.py"
+   ],
+   "files": 1,
+   "import": "mss",
+   "installed": {}
+  },
+  "narrative_build": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/export/submit_installed.py"
+   ],
+   "files": 1,
+   "import": "narrative_build",
+   "installed": {}
+  },
+  "nbclient": {
+   "by_area": {
+    "integrations": 2
+   },
+   "distributions": [],
+   "examples": [
+    "integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py",
+    "integrations/bloomberg/pipeline/tzero/tools/run_daily_pull.py"
+   ],
+   "files": 2,
+   "import": "nbclient",
+   "installed": {}
+  },
+  "nbformat": {
+   "by_area": {
+    "integrations": 2
+   },
+   "distributions": [],
+   "examples": [
+    "integrations/bloomberg/pipeline/tplus1/tools/run_daily_pull.py",
+    "integrations/bloomberg/pipeline/tzero/tools/run_daily_pull.py"
+   ],
+   "files": 2,
+   "import": "nbformat",
+   "installed": {}
+  },
+  "nopecha": {
+   "by_area": {
+    "org": 3
+   },
+   "distributions": [],
+   "examples": [
+    "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~92/aj4_signin.py",
+    "org/tier1_exec/4.0.0_SA_CRO/scripts/ft_harvest_session.py",
+    "org/tier1_exec/4.0.0_SA_CRO/scripts/nopecha_hcaptcha_lib.py"
+   ],
+   "files": 3,
+   "import": "nopecha",
+   "installed": {}
+  },
+  "numpy": {
+   "by_area": {
+    "data": 84,
+    "docs": 1,
+    "infra/lambda": 21,
+    "infra/other": 10,
+    "org": 16,
+    "tools": 6
+   },
+   "distributions": [
+    "numpy"
+   ],
+   "examples": [
+    "data/analysis/t1_cap_audit_dump.py",
+    "data/analysis/t1_cap_audit_investigate.py",
+    "data/assets/scripts/analysis/commonwealth_marketdata_prices.py"
+   ],
+   "files": 138,
+   "import": "numpy",
+   "installed": {
+    "numpy": "2.4.2"
+   }
+  },
+  "openai": {
+   "by_area": {
+    "data": 6,
+    "infra/lambda": 7,
+    "infra/other": 2,
+    "org": 3,
+    "tools": 8
+   },
+   "distributions": [
+    "openai"
+   ],
+   "examples": [
+    "data/black_diamond/scripts/classification/classify_bd_securities.py",
+    "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py",
+    "data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py"
+   ],
+   "files": 26,
+   "import": "openai",
+   "installed": {
+    "openai": "2.24.0"
+   }
+  },
+  "openpyxl": {
+   "by_area": {
+    "data": 8,
+    "docs": 1,
+    "infra/lambda": 7,
+    "lib": 4,
+    "models": 1,
+    "org": 11
+   },
+   "distributions": [
+    "openpyxl"
+   ],
+   "examples": [
+    "data/assets/scripts/gold/runners_49f/oracle_book_tieout_qt6.py",
+    "data/assets/scripts/silver/mirror_conversion.py",
+    "data/assets/scripts/silver/tests/test_mirror_conversion.py"
+   ],
+   "files": 32,
+   "import": "openpyxl",
+   "installed": {
+    "openpyxl": "3.1.5"
+   }
+  },
+  "opensearchpy": {
+   "by_area": {
+    "tools": 1
+   },
+   "distributions": [],
+   "examples": [
+    "tools/news_scanner/scripts/utilities/query_keyword_clouds.py"
+   ],
+   "files": 1,
+   "import": "opensearchpy",
+   "installed": {}
+  },
+  "p2base_odh": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [],
+   "examples": [
+    "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~67/scripts/p2_ac1_causes.py"
+   ],
+   "files": 1,
+   "import": "p2base_odh",
+   "installed": {}
+  },
+  "packaging": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "packaging"
+   ],
+   "examples": [
+    "org/devices/kit_python_pack.py"
+   ],
+   "files": 1,
+   "import": "packaging",
+   "installed": {
+    "packaging": "24.2"
+   }
+  },
+  "pandas": {
+   "by_area": {
+    ".tools": 9,
+    "data": 577,
+    "docs": 2,
+    "etf_netassets_watch": 1,
+    "infra/lambda": 100,
+    "infra/other": 25,
+    "integrations": 8,
+    "lib": 1,
+    "org": 215,
+    "research_transcripts": 1,
+    "tools": 14
+   },
+   "distributions": [
+    "pandas"
+   ],
+   "examples": [
+    ".tools/etfs-parity-check.py",
+    ".tools/silver-dtype-migrate.py",
+    ".tools/test_fixtures/ds-precommit-check/astdedup_fire_completion_order.py"
+   ],
+   "files": 953,
+   "import": "pandas",
+   "installed": {
+    "pandas": "2.3.3"
+   }
+  },
+  "pandas_market_calendars": {
+   "by_area": {
+    "infra/lambda": 3,
+    "lib": 3
+   },
+   "distributions": [
+    "pandas_market_calendars"
+   ],
+   "examples": [
+    "infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py",
+    "infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/trading_calendar.py",
+    "infra/aws/lambda/opal-assets-absence-check/trading_calendar.py"
+   ],
+   "files": 6,
+   "import": "pandas_market_calendars",
+   "installed": {
+    "pandas_market_calendars": "5.4.0"
+   }
+  },
+  "pdfminer": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [
+    "pdfminer.six"
+   ],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/ycharts/extract/fonts.py"
+   ],
+   "files": 1,
+   "import": "pdfminer",
+   "installed": {
+    "pdfminer.six": "20251230"
+   }
+  },
+  "pdfplumber": {
+   "by_area": {
+    "infra/lambda": 3,
+    "org": 1
+   },
+   "distributions": [
+    "pdfplumber"
+   ],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/ycharts/extract/extract.py",
+    "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py",
+    "infra/aws/lambda/investor-reporting/ycharts/research/map_pdf.py"
+   ],
+   "files": 4,
+   "import": "pdfplumber",
+   "installed": {
+    "pdfplumber": "0.11.9"
+   }
+  },
+  "pip": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "pip"
+   ],
+   "examples": [
+    "org/devices/kit_python_pack.py"
+   ],
+   "files": 1,
+   "import": "pip",
+   "installed": {
+    "pip": "26.0.1"
+   }
+  },
+  "polars": {
+   "by_area": {
+    "data": 1
+   },
+   "distributions": [],
+   "examples": [
+    "data/black_diamond/scripts/gold/C_00.canonical_performance.py"
+   ],
+   "files": 1,
+   "import": "polars",
+   "installed": {}
+  },
+  "pptx": {
+   "by_area": {
+    "deck_generation": 43,
+    "org": 1,
+    "tools": 2
+   },
+   "distributions": [
+    "python-pptx"
+   ],
+   "examples": [
+    "deck_generation/dev/scripts/build_layered_registries.py",
+    "deck_generation/dev/scripts/claude_true_cost_patch_andrews_deck.py",
+    "deck_generation/dev/scripts/showcase_list.py"
+   ],
+   "files": 46,
+   "import": "pptx",
+   "installed": {
+    "python-pptx": "1.0.2"
+   }
+  },
+  "psutil": {
+   "by_area": {
+    ".tools": 2,
+    "data": 5,
+    "infra/other": 1,
+    "org": 3
+   },
+   "distributions": [
+    "psutil"
+   ],
+   "examples": [
+    ".tools/remote-job.py",
+    ".tools/runner-telemetry.py",
+    "data/assets/scripts/silver/tests/measure_delta6.py"
+   ],
+   "files": 11,
+   "import": "psutil",
+   "installed": {
+    "psutil": "7.2.2"
+   }
+  },
+  "pyarrow": {
+   "by_area": {
+    "data": 138,
+    "etf_netassets_watch": 1,
+    "infra/lambda": 53,
+    "infra/other": 32,
+    "lib": 39,
+    "org": 209,
+    "tools": 2
+   },
+   "distributions": [
+    "pyarrow"
+   ],
+   "examples": [
+    "data/assets/scripts/analysis/commonwealth_account_history.py",
+    "data/assets/scripts/analysis/commonwealth_coverage_statement.py",
+    "data/assets/scripts/analysis/commonwealth_fwd8_read.py"
+   ],
+   "files": 474,
+   "import": "pyarrow",
+   "installed": {
+    "pyarrow": "18.1.0"
+   }
+  },
+  "pyiceberg": {
+   "by_area": {
+    "infra/lambda": 1,
+    "infra/other": 8,
+    "org": 6
+   },
+   "distributions": [
+    "pyiceberg"
+   ],
+   "examples": [
+    "infra/aws/globgrph/cse_store.py",
+    "infra/aws/globgrph/derive_runner.py",
+    "infra/aws/globgrph/kuzu_incremental_refresh.py"
+   ],
+   "files": 15,
+   "import": "pyiceberg",
+   "installed": {
+    "pyiceberg": "0.9.1"
+   }
+  },
+  "pymupdf": {
+   "by_area": {
+    "lib": 1,
+    "org": 3
+   },
+   "distributions": [
+    "PyMuPDF"
+   ],
+   "examples": [
+    "lib/research/corpus/dossier.py",
+    "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round73/checks/r73_served.py",
+    "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round74/checks/r74_served.py"
+   ],
+   "files": 4,
+   "import": "pymupdf",
+   "installed": {
+    "PyMuPDF": "1.27.1"
+   }
+  },
+  "pypdf": {
+   "by_area": {
+    "data": 1,
+    "docs": 2,
+    "infra/lambda": 5,
+    "infra/other": 2,
+    "lib": 3,
+    "org": 6
+   },
+   "distributions": [
+    "pypdf"
+   ],
+   "examples": [
+    "data/find/imo/scripts/_util/secadv_client.py",
+    "docs/research/investor_reporting_ycharts_variants_20260911/package_lambda.py",
+    "docs/research/investor_reporting_ycharts_variants_20260911/variant_worker.py"
+   ],
+   "files": 19,
+   "import": "pypdf",
+   "installed": {
+    "pypdf": "6.12.2"
+   }
+  },
+  "pytest": {
+   "by_area": {
+    ".tools": 8,
+    "data": 146,
+    "deck_generation": 8,
+    "infra/lambda": 208,
+    "infra/other": 64,
+    "integrations": 10,
+    "lib": 147,
+    "org": 83,
+    "org/mcp": 1,
+    "tests": 9
+   },
+   "distributions": [
+    "pytest"
+   ],
+   "examples": [
+    ".tools/tests/test_agentbus_tailnet_stamp.py",
+    ".tools/tests/test_comp_freshness_weekly.py",
+    ".tools/tests/test_comp_secrets.py"
+   ],
+   "files": 684,
+   "import": "pytest",
+   "installed": {
+    "pytest": "9.0.2"
+   }
+  },
+  "pythoncom": {
+   "by_area": {
+    "data": 1,
+    "org": 3
+   },
+   "distributions": [
+    "pywin32"
+   ],
+   "examples": [
+    "data/etfs/scripts/rivalfunds/collector_bloomberg.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census_multi.py"
+   ],
+   "files": 4,
+   "import": "pythoncom",
+   "installed": {
+    "pywin32": "311"
+   }
+  },
+  "pytz": {
+   "by_area": {
+    "infra/lambda": 1
+   },
+   "distributions": [
+    "pytz"
+   ],
+   "examples": [
+    "infra/aws/lambda/mdpf-pipeline/_shared/mdpf_roster.py"
+   ],
+   "files": 1,
+   "import": "pytz",
+   "installed": {
+    "pytz": "2025.2"
+   }
+  },
+  "pywintypes": {
+   "by_area": {
+    "data": 1,
+    "org": 2
+   },
+   "distributions": [
+    "pywin32"
+   ],
+   "examples": [
+    "data/etfs/scripts/rivalfunds/collector_bloomberg.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census_multi.py"
+   ],
+   "files": 3,
+   "import": "pywintypes",
+   "installed": {
+    "pywin32": "311"
+   }
+  },
+  "referencing": {
+   "by_area": {
+    "infra/lambda": 15,
+    "org": 1
+   },
+   "distributions": [
+    "referencing"
+   ],
+   "examples": [
+    "infra/aws/lambda/investor-reporting/_contracts/test_owned_outer_contracts.py",
+    "infra/aws/lambda/investor-reporting/_contracts/test_owned_request_contracts.py",
+    "infra/aws/lambda/investor-reporting/_contracts/test_request_composition.py"
+   ],
+   "files": 16,
+   "import": "referencing",
+   "installed": {
+    "referencing": "0.37.0"
+   }
+  },
+  "requests": {
+   "by_area": {
+    "data": 58,
+    "docs": 1,
+    "infra/lambda": 26,
+    "infra/other": 3,
+    "lib": 1,
+    "org": 22,
+    "tests": 1,
+    "tools": 3,
+    "workflows": 1
+   },
+   "distributions": [
+    "requests"
+   ],
+   "examples": [
+    "data/etfs/scripts/rivalfunds/ai_client.py",
+    "data/etfs/scripts/rivalfunds/tests/test_r6ap1_ai_stage.py",
+    "data/etfs/scripts/rivalfunds/tests/test_r8dt1_deadline_timeout.py"
+   ],
+   "files": 116,
+   "import": "requests",
+   "installed": {
+    "requests": "2.32.5"
+   }
+  },
+  "requests_aws4auth": {
+   "by_area": {
+    "tools": 1
+   },
+   "distributions": [
+    "requests-aws4auth"
+   ],
+   "examples": [
+    "tools/news_scanner/scripts/utilities/query_keyword_clouds.py"
+   ],
+   "files": 1,
+   "import": "requests_aws4auth",
+   "installed": {
+    "requests-aws4auth": "1.3.2"
+   }
+  },
+  "rpds": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "rpds-py"
+   ],
+   "examples": [
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/verify_opal_linux_runtime.py"
+   ],
+   "files": 1,
+   "import": "rpds",
+   "installed": {
+    "rpds-py": "0.30.0"
+   }
+  },
+  "s3fs": {
+   "by_area": {
+    "org": 6
+   },
+   "distributions": [
+    "s3fs"
+   ],
+   "examples": [
+    "org/modules/graph/atomcheck_cli.py",
+    "org/tier1_exec/4.0.0_SA_CRO/scripts/bdparity_mechanism_magnitudes_20260830.py",
+    "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/ADVI_BDPARITY_BP1-2_probe_table_20260830.py"
+   ],
+   "files": 6,
+   "import": "s3fs",
+   "installed": {
+    "s3fs": "2026.6.0"
+   }
+  },
+  "safetensors": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "safetensors"
+   ],
+   "examples": [
+    "org/modules/graph/potion/potion_embed.py"
+   ],
+   "files": 1,
+   "import": "safetensors",
+   "installed": {
+    "safetensors": "0.7.0"
+   }
+  },
+  "scipy": {
+   "by_area": {
+    "org": 3
+   },
+   "distributions": [
+    "scipy"
+   ],
+   "examples": [
+    "org/tier1_exec/1.0.0_SA_CTO~Y/deliverables/D11_L3W2_INDEPENDENT_REDERIVATION/rederive_l3w2.py",
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/clause1_entry_oracle.py",
+    "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_L3W3_KSWEEP/snf_ksweep.py"
+   ],
+   "files": 3,
+   "import": "scipy",
+   "installed": {
+    "scipy": "1.17.1"
+   }
+  },
+  "security_ticker_mapping_complete": {
+   "by_area": {
+    "data": 1
+   },
+   "distributions": [],
+   "examples": [
+    "data/black_diamond/scripts/silver/security_ticker_mapping_final.py"
+   ],
+   "files": 1,
+   "import": "security_ticker_mapping_complete",
+   "installed": {}
+  },
+  "sentence_transformers": {
+   "by_area": {
+    "infra/lambda": 1,
+    "tools": 1
+   },
+   "distributions": [
+    "sentence-transformers"
+   ],
+   "examples": [
+    "infra/aws/lambda/news_semantic_clustering/lambda_function.py",
+    "tools/news_scanner/scripts/prototype_semantic_clustering.py"
+   ],
+   "files": 2,
+   "import": "sentence_transformers",
+   "installed": {
+    "sentence-transformers": "5.2.3"
+   }
+  },
+  "sklearn": {
+   "by_area": {
+    "infra/lambda": 1,
+    "org": 1,
+    "tools": 1
+   },
+   "distributions": [
+    "scikit-learn"
+   ],
+   "examples": [
+    "infra/aws/lambda/news_semantic_clustering/scoring_utils.py",
+    "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~43/scripts/_common.py",
+    "tools/news_scanner/scripts/prototype_semantic_clustering.py"
+   ],
+   "files": 3,
+   "import": "sklearn",
+   "installed": {
+    "scikit-learn": "1.8.0"
+   }
+  },
+  "starlette": {
+   "by_area": {
+    "daily_reports": 1,
+    "infra/other": 42,
+    "org": 8
+   },
+   "distributions": [
+    "starlette"
+   ],
+   "examples": [
+    "daily_reports/scripts/check_responsive_report.py",
+    "infra/aws/ec2/opal-gateway/app/admin_api.py",
+    "infra/aws/ec2/opal-gateway/app/admin_grants.py"
+   ],
+   "files": 51,
+   "import": "starlette",
+   "installed": {
+    "starlette": "0.52.1"
+   }
+  },
+  "surgical_repair": {
+   "by_area": {
+    "docs": 1
+   },
+   "distributions": [],
+   "examples": [
+    "docs/architecture/security-scanner-source/V0_quick_update_weights.py"
+   ],
+   "files": 1,
+   "import": "surgical_repair",
+   "installed": {}
+  },
+  "tokenizers": {
+   "by_area": {
+    "org": 1
+   },
+   "distributions": [
+    "tokenizers"
+   ],
+   "examples": [
+    "org/modules/graph/potion/potion_embed.py"
+   ],
+   "files": 1,
+   "import": "tokenizers",
+   "installed": {
+    "tokenizers": "0.22.2"
+   }
+  },
+  "torch": {
+   "by_area": {
+    "tools": 1
+   },
+   "distributions": [
+    "torch"
+   ],
+   "examples": [
+    "tools/news_scanner/lambda/layer2_finbert_scoring/lambda_function.py"
+   ],
+   "files": 1,
+   "import": "torch",
+   "installed": {
+    "torch": "2.10.0"
+   }
+  },
+  "transformers": {
+   "by_area": {
+    "tools": 1
+   },
+   "distributions": [
+    "transformers"
+   ],
+   "examples": [
+    "tools/news_scanner/lambda/layer2_finbert_scoring/lambda_function.py"
+   ],
+   "files": 1,
+   "import": "transformers",
+   "installed": {
+    "transformers": "5.3.0"
+   }
+  },
+  "urllib3": {
+   "by_area": {
+    "infra/lambda": 2
+   },
+   "distributions": [
+    "urllib3"
+   ],
+   "examples": [
+    "infra/aws/lambda/etfs-pipeline/etfs-netassets-daily/lambda_function.py",
+    "infra/aws/lambda/smartx_assets_pull/smartx_client.py"
+   ],
+   "files": 2,
+   "import": "urllib3",
+   "installed": {
+    "urllib3": "2.6.3"
+   }
+  },
+  "uvicorn": {
+   "by_area": {
+    "infra/other": 1
+   },
+   "distributions": [
+    "uvicorn"
+   ],
+   "examples": [
+    "infra/aws/ec2/opal-gateway/app/server.py"
+   ],
+   "files": 1,
+   "import": "uvicorn",
+   "installed": {
+    "uvicorn": "0.42.0"
+   }
+  },
+  "websockets": {
+   "by_area": {
+    "org/mcp": 1
+   },
+   "distributions": [
+    "websockets"
+   ],
+   "examples": [
+    "org/mcp/codex-inbox-turn-bridge.py"
+   ],
+   "files": 1,
+   "import": "websockets",
+   "installed": {
+    "websockets": "16.0"
+   }
+  },
+  "whois": {
+   "by_area": {
+    "data": 1
+   },
+   "distributions": [
+    "python-whois"
+   ],
+   "examples": [
+    "data/find/dualbiz/scripts/_util.py"
+   ],
+   "files": 1,
+   "import": "whois",
+   "installed": {
+    "python-whois": "0.9.6"
+   }
+  },
+  "win32com": {
+   "by_area": {
+    "data": 1,
+    "org": 3
+   },
+   "distributions": [
+    "pywin32"
+   ],
+   "examples": [
+    "data/etfs/scripts/rivalfunds/collector_bloomberg.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census_multi.py"
+   ],
+   "files": 4,
+   "import": "win32com",
+   "installed": {
+    "pywin32": "311"
+   }
+  },
+  "win32process": {
+   "by_area": {
+    "org": 3
+   },
+   "distributions": [
+    "pywin32"
+   ],
+   "examples": [
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_daily_coverage_census_multi.py",
+    "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/AMGT_RECONN_SOURCES_20260929/scripts/bbg_excel_holdings_probe.py"
+   ],
+   "files": 3,
+   "import": "win32process",
+   "installed": {
+    "pywin32": "311"
+   }
+  },
+  "yaml": {
+   "by_area": {
+    ".tools": 15,
+    "daily_reports": 2,
+    "data": 5,
+    "deck_generation": 4,
+    "infra/lambda": 1,
+    "infra/other": 20,
+    "org": 66,
+    "org/mcp": 1,
+    "rcg": 4,
+    "workflows": 6
+   },
+   "distributions": [
+    "PyYAML"
+   ],
+   "examples": [
+    ".tools/comp-which-routing-test.py",
+    ".tools/comp_missions.py",
+    ".tools/contract_declare_lint.py"
+   ],
+   "files": 124,
+   "import": "yaml",
+   "installed": {
+    "PyYAML": "6.0.3"
+   }
+  },
+  "yfinance": {
+   "by_area": {
+    "data": 5,
+    "infra/lambda": 2,
+    "infra/other": 2,
+    "tools": 1
+   },
+   "distributions": [
+    "yfinance"
+   ],
+   "examples": [
+    "data/analysis/t1_cap_audit_investigate.py",
+    "data/black_diamond/scripts/classification/resolve_tickers.py",
+    "data/black_diamond/scripts/silver/backfill_yahoo_prices_safe.py"
+   ],
+   "files": 10,
+   "import": "yfinance",
+   "installed": {
+    "yfinance": "1.2.0"
+   }
+  }
+ },
+ "unparsed": []
+}

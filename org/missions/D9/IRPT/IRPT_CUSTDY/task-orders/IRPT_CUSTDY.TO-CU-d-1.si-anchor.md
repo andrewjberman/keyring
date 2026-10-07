@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_CUSTDY~9</issued_to>
 <issued_by>2.0.0_SA_COO~K2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -86,6 +86,27 @@ runner `tests/run_suite_check.py` landed @e05799d167). Resolve a conflict in the
 this order file by taking CLOUD's version. Then re-express the two tests and the self-test flag under the new rule (a 2019 anchor now
 computes or reports by rules 1-3; nothing is `HELD_CALENDAR_FIX`), keep their intent, and do not skip or xfail. Then AC3.
 
+### AMENDMENT 2 (issuer, 2026-10-07 ~11:3xZ) -- the CTO's ruling on row W9-S2 (msg 423), verbatim branches
+
+Rule 1 now splits by whether Opal holds the opening date; print, per account, which branch it took (`branch=a|b|c|rule2|rule3|none`):
+- **(a)** Opal's data covers the open date, and the days from opening to first funding show ZERO holdings (measure it: read the holdings
+  between the open date and the first funded day): SI runs from first funding and IS since inception; label it
+  `since inception (first funded <date>)`.
+- **(b)** the open date precedes Opal's first partition: rule 1 yields to rule 2, label `since <date>, the first date Opal holds`, never
+  "inception".
+- **(c)** holdings exist before Opal's first partition: rule 2, as (b).
+Real data (round-4 probe): 12 of the chosen advisor's 14 accounts are expected under (a), 2 (opened 2022) under (b) -- reported, not graded.
+Tests (in `tests/test_si_anchor.py`): one per branch; the (a) label only when the zero-holdings read is confirmed; a (b)/(c) account is
+never labelled "inception". The probe's per-account line adds `branch=`; its `labels_ok` also checks (b)/(c) carry no "inception".
+
+### AMENDMENT 3 (issuer, 2026-10-07 ~11:5xZ) -- disarms row IRPT_CUSTDY-W9-S4
+
+CU10-AC3 reads failed=2 at your e42bb49ae9: `tests/test_hop3_directory_gap.py` (CU-d-2's file, merged @7361085932) asserts
+`si_anchor=ABSENT` in `test_account_line_prints_name_source_and_absent_anchor_without_failing` and
+`test_a_present_si_anchor_prints_its_date_and_rule`, which is false now that every document carries `si_anchor`. That file is added to your
+grant. Re-express the two assertions to their intent: `ABSENT` prints only when a document truly lacks the field (build that document
+in the test), and a present anchor prints its date, rule and branch. Keep both tests; no skip or xfail. Then AC3, then the flip.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -104,6 +125,7 @@ data/assets/scripts/gold/irpt_custody/tests/test_client_report_figures.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_held_si.py
 data/assets/scripts/gold/irpt_custody/hop3_real_run.py
 data/assets/scripts/gold/irpt_custody/tests/test_hop3_real_run.py
+data/assets/scripts/gold/irpt_custody/tests/test_hop3_directory_gap.py
 org/missions/D9/IRPT/IRPT_CUSTDY/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

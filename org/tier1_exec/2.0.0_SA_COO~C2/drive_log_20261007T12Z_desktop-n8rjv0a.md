@@ -1,0 +1,15 @@
+# /canonical-drive log -- 2.0.0_SA_COO~C2 on ADVI_COTBKF, dell2, 2026-10-07 11:0xZ-12:3xZ
+
+Copied from the runtime tick file (gitignored), from tick 13 on. Push state at write: LOCAL.
+
+## tick 13 2026-10-07T11:00Z (cron) | ADVI_COTBKF | L7 r8 (IN-PROGRESS) | 8 | 0/1 | 1/1 | live r1 | NO-OP: worker ~24 MOVING (coverage_statement.py edited 10:58Z); CTO struck E3 on this seat's REC (msg 393, correction @20b2b40d99) |
+## event 2026-10-07T11:1xZ | ADVI_COTBKF | L7 done -> L8 | 8 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: drained ~24 @57029c1bbc (VALID); real runs TX-REPEATS 1360/1416497, COVERAGE kinds=6 own spans True; r8 packet @3d0eb94919 to CVO |
+## event 2026-10-07T11:1xZ (msgs 405, 407) | ADVI_COTBKF | L8 r8 at CVO | 8 | 1/1 | 1/1 | live r1 | row S19 @bcdf4cc50f: laptop scan LISTED 725 objects, 0 price stores (measured absence for CB4d1-AC3); FWD-3 gap 2,914 securities / 8,091,310 security-days; vendor pull = candidate act for Andrew |
+## tick 14 2026-10-07T11:27Z (cron) | ADVI_COTBKF | L8 r8 at CVO | 8 | 1/1 | 1/1 | live r1 | DRIVE FORWARD (rule): r8 packet READ 11:16Z; matched the CTO's C-RESTRICTED AMENDMENT 1 with COO AMENDMENT 1 @f9150f248a, sent for relay |
+## event 2026-10-07T11:5xZ (CTO r8 L10 msg 440 @31b26bff2d) | ADVI_COTBKF | L6 r9 -> L7 | 9 | 0/1 | 1/1 | live r1 | DRIVE FORWARD: E2 probed (mdpf/cottonwood/ DENIED on dell2) and relayed msgs 441-442; round 9 CB-i-1 (RETURNS lead line) issued @f75759b88c, worker ~25 spawned |
+## tick 15 2026-10-07T11:56Z (cron) | ADVI_COTBKF | L7 r9 (IN-PROGRESS) | 9 | 0/1 | 1/1 | live r1 | NO-OP: worker ~25 MOVING (2 files modified, script edited 11:55Z); mdpf scan relay outstanding (only the irpt result in Downloads) |
+## event 2026-10-07T12:0xZ | ADVI_COTBKF | L7 done -> L8 | 9 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: drained ~25 @c4845fb8ec (VALID; real run kinds=7); r9 packet @7bf5c1aa88 to CVO; mdpf scan relay outstanding |
+## event 2026-10-07T12:0xZ (msgs 452, 456, 461, 464) | ADVI_COTBKF | L8 r9 at CVO | 9 | 1/1 | 1/1 | live r1 | row S20 @896407c5e5 (mdpf 0 of 7 -> both prefixes measured absent); C-RESTRICTED COO AMENDMENT 2 statements-only @e297665fdb relayed (TO-APPLY-5 stopped at step 0); flagged msg 456's 49F/INF census as BARRED (ruling 1 + NEVER) with REC: marketdata non-firm store only |
+## event 2026-10-07T12:1xZ (CTO msg 485, correction @283b15713f) | ADVI_COTBKF | L6 r10 -> L7 | 10 | 0/1 | 1/1 | live r1 | DRIVE FORWARD: 49F/INF census struck on this seat's flag; round 10 CB-j-1 (marketdata price output, non-firm only, no invoke) issued @770175bc0e, worker ~26 spawned |
+## event 2026-10-07T12:3xZ | ADVI_COTBKF | L7 done -> L8 | 10 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: drained ~26 @7757a9529a (VALID; marketdata output = opal-data-bd, BARRED, 0 reads); r10 packet @9e7ba4c0fb to CVO; FWD-3 internal sources exhausted -> residual is a vendor act for Andrew via the CTO |
+## tick 16 2026-10-07T12:30Z (cron) | ADVI_COTBKF | L8 r10 at CVO | 10 | 1/1 | 1/1 | live r1 | NO-OP: r10 packet READ 12:29:35Z; FWD-6 REALIZED in r9 (CVO @06df00ba81, CTO @9b8dcec304) -> 5 of 9; 0 ARMED |

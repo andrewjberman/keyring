@@ -1780,6 +1780,368 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S14 -- the dell2 command grant's read actions are on every command in the account; whether any command output holds a secret is unmeasured
+
+```json
+{
+  "id": "NFRA_CTLPLN-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Once the dell2 command grant is applied, dell2 can read the result of any command sent in the account, not only its own; nobody has measured whether an existing command prints a secret to its output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json statement ReadCommandResults: ssm:GetCommandInvocation, ListCommandInvocations, ListCommands, DescribeInstanceInformation on Resource *",
+      "CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL_DENIES_AND_DELL2_GRANT_20261007.md @eb74cfb2d2, 'Two things this half adds': accepted and named; not measured by that seat; asks this row",
+      "The grant is NOT applied at this row's filing (order NFRA_CTLPLN.TO-APPLY-6 pending)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO's ruling for CT-a-1: dell2 gets the read actions that return a command's result.",
+  "world_is": "The service offers no narrower resource for those four actions, so the grant reads every command's result. A command whose output prints a secret would be a defect in that command, and dell2 could read it. No read of existing command outputs for secrets has been made by any seat. Open: a bounded read of recent command invocations' output for secret-shaped strings, by a laptop seat, or an explicit acceptance."
+}
+```
+
+## NFRA_CTLPLN-S15 -- the portal tree pack was unpacked on both Dells outside the kit's own verify step: bun 1.4.2 against the manifest's 1.3.9, and dell2 at a different portal commit
+
+```json
+{
+  "id": "NFRA_CTLPLN-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Both Dells unpacked the portal dependency pack and passed the typecheck, but two of the conditions written for the unpack were not the ones met: their bun is 1.4.2 where the manifest names 1.3.9, and dell2 ran at portal commit 8ddfe40994 where the carrier named 481b3bcc5f.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 106209, relaying each Dell's read-back: 41,860 files each, typecheck rc=0 and 0 error lines each; both note bun 1.4.2 against the manifest's 1.3.9; dell2 typecheck at portal DEV 8ddfe40994; lockfile sha256 equal on both",
+      "1.0.0_SA_CTO msg 106199, the unpack condition: lockfile sha256 equal AND portal HEAD 481b3bcc5f on DEV; a mismatch is a row, never an unpack",
+      "org/devices/kit_portal_tree.py verify refuses a bun version difference by design (CT-k-2 AMENDMENT 3); the Dells' reports do not say that step was run",
+      "Not read by this seat: either Dell's tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 3: the pack installs only where lockfile, bun version and platform equal the manifest's; the carrier's relay added the portal commit.",
+  "world_is": "The lockfile matched on both boxes and the typecheck passed, which is the evidence the tree works there. The bun version rule was not enforced at the unpack, and dell2's portal commit differs from the one named while its lockfile hash is equal. Open for the CTO: whether the kit's bun check is exact or tolerates a minor version, and whether the commit condition is the lockfile hash alone."
+}
+```
+
+## NFRA_CTLPLN-S16 -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they answer for the laptop only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "The sequence check counts the laptop broker's lanes only, so its capacity and next-slot lines flag a project seated on a Dell as needing a slot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106077, verbatim: 'sequence-check reads MDPF_SECHIST NEEDS-SLOT because it counts the laptop broker's lanes only and the tree row's coo_lane is empty ... a row for NFRA_CTLPLN's backlog -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they must read each box's lanes or say which box they read.'",
+      "Not re-run by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN: four devices, each with its own broker; a fabric reader either reads every box or says which box it read.",
+  "world_is": "A backlog item for a later round's enrichment list: the check reads each box's lanes, or prints the box it read beside the number. Until then a NEEDS-SLOT flag on a Dell-seated project is not a finding against that Dell."
+}
+```
+
+## NFRA_CTLPLN-W13-S9 -- the provisioning script's default mode was already link (none only where the main tree holds no node_modules)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the provisioning script's default mode was already link (none only where the main tree holds no node_modules); the order's 'default becomes link' therefore changes no behaviour, and the install mode was the only live registry path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-k-2.dell-python-kit.md AMENDMENT 5 item 3 and CTO msg 106220: 'the default becomes link'",
+      ".tools/wk-provision.sh at 69288c8ca0, cmd_portal: with no --node-modules the mode was link when <main>/portal/node_modules exists, else none; install was reachable only by naming it",
+      ".tools/tests/test_wk_provision_no_registry.py check D-default: a default provision on a scratch repository prints NODE_MODULES: link; check G: the pre-change script and the new script print identical lines for default, none and link"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 3: the DEFAULT mode becomes link; link and none behave exactly as before.",
+  "world_is": "The default was already link wherever a main-tree node_modules exists, and none where it does not (a link to a missing target would fail after the nested worktree is created, a half-landed state). The script now states the default in a comment and its usage text and keeps the none fallback; the only behavioural change is the install-mode refusal, raised before any worktree is created."
+}
+```
+
+## NFRA_CTLPLN-W13-S10 -- the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of two runs; the loopback proxy listener caught every one (CONNECT registry.npmjs.org:443, answered 502) and the arm was replaced by one that needs no network",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_bun_no_egress.py first full run printed 'BUN-NO-EGRESS ... positive_requests=6 ... leaked_public=6 ... ok=False' with arm 'control:user-bunfig-registry-is-read' at registry=0 proxy=6; a second measure run with the file written to both HOME and XDG_CONFIG_HOME printed the same, proxy lines 'CONNECT registry.npmjs.org:443 HTTP/1.1' x6 (kept in the worktree scratch measure2.json, uncommitted)",
+      "cause: the control gave a user-level bunfig a registry= line expecting bun run to read it from the temporary HOME; bun 1.3.9 does not read the user-level file for bun run (see row W13-S11), so bun used its default registry, and the second redirect (the proxy) kept the request on this machine: cache_files=0 in both arms, rc=1 with bun's resolution error",
+      "fix: org/devices/kit_bun_no_egress.py arm control:user-bunfig-is-read-by-run now uses a MALFORMED user-level file and the --no-install flag, so it makes no request by construction; the final measure reads leaked_public=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with two independent redirects; a candidate is judged by counting requests on the two listeners.",
+  "world_is": "A control arm of the worker's own design could reach the public host if the redirect it relied on was not read. The proxy listener is what held it: both runs show the request on the proxy listener, none on any other path that this seat can see. What stays unproven is a request that bypassed BOTH listeners; bounded by cache_files=0 and bun's own resolution error text in those arms."
+}
+```
+
+## NFRA_CTLPLN-W13-S11 -- bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary HOME and in XDG_CONFIG_HOME is ignored), so `[install] auto = \"disable\"` there cannot stop the runtime auto-install; this is the measured reason the other machine's user-level setting failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py measure, arm control:user-bunfig-is-read-by-run: user-level file '[install]' + 'auto = ' (a TOML syntax error) in %HOME% and %XDG_CONFIG_HOME%, run as 'bun --no-install run probe.js': registry=0 proxy=0 rc=1 and bun reported the probe's resolution error, not a config error, so the file was never read",
+      "arm user-bunfig (the valid file with auto = \"disable\"): registry=0 proxy=6 rc=1, verdict FAIL, the same count as the positive arm",
+      "NOT measured: whether bun install / bunx read the user-level file (no install is run by this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 1(c): the same setting in a user-level bunfig inside the temporary home, to reproduce the other machine's reading on this version.",
+  "world_is": "The reading reproduces (6 requests), and the control shows why: for `bun run` the user-level bunfig is not consulted at all, so the setting is inert rather than ignored-in-part. A project bunfig and the --no-install flag do pass."
+}
+```
+
+## NFRA_CTLPLN-W13-S12 -- an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, to establish that this bun's HTTP client honours the proxy before any arm that could fetch from the registry",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py run_order_of_proof: arm proxy-honor-check, 'bun run fetchcheck.js' whose only URL is the loopback registry listener: registry=0 proxy=1 (the request line GET http://127.0.0.1:<port>/proxy-honor-check arrived on the proxy listener, answered 502, bun printed fetch-status 502)",
+      "the order of proof in the task order names steps 0, 1 and 2 only; step 0b runs after step 0 and before step 1, makes no request that can leave the machine by construction (the URL is loopback), and gates the single-form trials of Redirect A on its result"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 ORDER OF PROOF: (0) bun --version, (1) proxy proof with --no-install, (2) the positive arm; step 1 'cannot prove the proxy works'.",
+  "world_is": "The proxy was proven honoured by this bun before the positive arm, so the single-form trials of Redirect A ran with a proven second net. Step 1 stays as ordered and still reads zero requests."
+}
+```
+
+## NFRA_CTLPLN-W13-S13 -- the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:03:41Z",
+  "one_line": "the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no-install typecheck` once in a synthetic portal under the system temporary directory, outside the loopback harness; the script is `echo typecheck-ok`, so nothing is resolved or fetched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_portal_tree.py line 91 builds the synthetic package.json with scripts.typecheck = 'echo typecheck-ok'; case 7 calls kit_portal_tree.typecheck, which builds argv ['bun','run','--silent','--no-install','typecheck'] (org/devices/kit_portal_tree.py line 782) and runs it in the synthetic portal; the case printed PORTAL-TYPECHECK ... exit=0 last_line=typecheck-ok",
+      "this order told the worker that kit_portal_tree.py describe runs bun for its version only (true); it also required running the AC5 test, whose case 7 is a further bun process. It was run once, by this seat, in the earlier-criteria pass, and its zero-request status was not counted by a listener",
+      "the form it carries, --no-install, is the form this cell measured as passing on this bun (flag:--no-install: registry=0 proxy=0 against a positive arm of 6)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with loopback redirects; the only unharnessed bun is a bare bun --version.",
+  "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
+}
+```
+
+## NFRA_CTLPLN-S17 -- disarm record for NFRA_CTLPLN-S13: --no-install measured on bun 1.3.9 and 1.4.2; dell2 covered by Andrew's word; a bare run still fetches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T14:23:01Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-S13: the flag --no-install stops bun's registry fetch on bun 1.3.9 (laptop) and bun 1.4.2 (dell1), measured by request count; dell2 is not measured, on Andrew's word that dell1's read stands for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Laptop, issuer's own run at 3b95b7c3aa: BUN-NO-EGRESS bun=1.3.9 positive_requests=6 candidates=9 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell1, bus c1d80ce3 (file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md), behind an outbound firewall block on bun.exe that Andrew added in an elevated shell: BUN-LISTENER-SELFCHECK ok=True; BUN-NO-EGRESS bun=1.4.2 positive_requests=6 candidates=12 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell2: NOT measured. Andrew-direct at the dell2 terminal ~14:0xZ as relayed by 0.0.0_AB_MSTR msg 106292, verbatim: 'we dont need to test the bun firewall process here because we've already proved it on dell1.' dell2 runs bun 1.4.2 by its own earlier report (msg 106209)",
+      "Merged @e131723efb: org/devices/kit_bun_no_egress.py wrap carries the flag and refuses install-class commands; .tools/wk-provision.sh refuses its install mode without a non-public registry redirect (CTk2-AC8 7/7, CTk2-AC9 ok)",
+      "Not read at this filing: dell1's confirmation that the firewall rule was removed; dell1's full result file (kept on dell1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-S13 (ARMED): bun fetches from the public registry on a run outside a node_modules tree; disarm when the measured form is in the kit and each box has read it back.",
+  "world_is": "The measured form is in the kit and two of three boxes read it back; the third is covered by Andrew's word, not by a measurement. What the disarm is: a wrapper and a flag a seat must USE. A bare `bun run` of a file outside a node_modules tree still fetches on every box; nothing mechanical stops a seat from typing it. The CTO's interim rule (msgs 106214, 106220: bun only inside a portal tree that holds node_modules; no bun install) therefore remains the standing control, and S13 is disarmed only for a seat that follows it or uses the wrapper. Whether a mechanical stop is wanted (a PATH shim, a standing firewall rule) is an open question for the CTO and Andrew, not built here."
+}
+```
+
+## NFRA_CTLPLN-W8-S3 -- TO-CT-d-5 amendment: dell_respol_policy.json has no generator and the script has no --check
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The amendment says dell_respol_policy.json is produced by tests/derive_respol_actions.py and names a --check and a regenerate command; the script is a read-only checker that takes no argument and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py main(): reads the four policy documents and the Deny statement, prints, returns; no write call and no argparse",
+      "git log --follow dell_respol_policy.json: one commit, ce05f0e838, the file created by hand with the build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: add sqs:SetQueueAttributes by the file's own generator (tests/derive_respol_actions.py), regenerate with the generator's own command, run its --check.",
+  "world_is": "The JSON (hand-wrapped, one Deny statement, sorted actions) was edited by inserting one sorted entry in place; derive_respol_actions.py was changed to carry the action as RULED-IN (removed from RULED_ALLOWED) and its single run is the check: RESPOL-DERIVED ... actions=75 covered=75/75 ruled_allowed_caught=0 ok=True. No --check flag exists and none was added."
+}
+```
+
+## NFRA_CTLPLN-W8-S4 -- TO-CT-d-5 amendment: the simulation block count 13 needs one arm the amendment did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The existing respol block already held sqs:SetQueueAttributes -> allowed, so adding the two named arms to a block of 11 cannot read 13: that arm has to flip, giving 12; a neighbouring-action control (sqs:TagQueue -> allowed) was added to reach the ordered respol_ok=13/13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py RESPOL list before this pass: 11 arms including (sqs:SetQueueAttributes, allowed)",
+      "last line of the simulation after the edit: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: extend the block by two arms (SetQueueAttributes -> explicitDeny; CreateQueue -> allowed); the block then reads 13 of 13.",
+  "world_is": "Block is now 9 explicitDeny arms + sqs:SetQueueAttributes explicitDeny + sqs:CreateQueue allowed + sqs:TagQueue allowed + sns:SetTopicAttributes allowed = 13; the old SetQueueAttributes-allowed arm was changed, not kept. TagQueue is the unnamed addition: it shows the Deny does not catch the neighbouring queue action the create policy allows."
+}
+```
+
+## NFRA_CTLPLN-W8-S5 -- TO-CT-d-5 amendment: the Deny leaves a dead Allow, and a read-only derivation still lists SetQueueAttributes as a queue update need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "dell_create_policy.json still Allows sqs:SetQueueAttributes and tests/derive_resource_kinds.py still lists it as an update action of aws_sqs_queue; the explicit Deny now overrides both, so a Dell can no longer update a queue, and six roots that declare a separate queue policy cannot be applied from a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/queue_attribute_writers.json declared.by_root and the native Grep over infra/aws/terraform for the four resource kinds: 23 aws_sqs_queue, 9 aws_sqs_queue_policy, 0 redrive_policy, 0 redrive_allow_policy",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json line 36 and tests/derive_resource_kinds.py line 80 at b062620452"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT: deny sqs:SetQueueAttributes for the Dell group; a later change goes by write-in; say which roots declare a separate policy resource and whether any is Dell-placed.",
+  "world_is": "Read-only files are unchanged (dell_create_policy.json line 36, derive_resource_kinds.py line 80); check_identity.py still reads ok=True. Roots declaring a separate aws_sqs_queue_policy: globgrph, inf-pipeline, nfra-agentbus, nfra-agentbus-alyssa01, opal-gateway, partner-etl-ops-alerts (9 resources). No project row in org/projects carries a Dell fabric (392 rows: 38 laptop, 16 site-z, 338 unset), and the root-to-project mapping was not read, so no root is shown Dell-placed or not."
+}
+```
+
+## NFRA_CTLPLN-W13-S14 -- ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 bu
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 but is neither pure Python nor stable-ABI; the order's classes do not name it, so it is classed ABI3-INSTALLED with fit_kind no-abi-platform",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json requirements[name=ruff]: class ABI3-INSTALLED, tags [py3-none-win_amd64], fit_kind no-abi-platform, evidence <site-packages:3.12>/ruff-0.15.11.dist-info",
+      "packaging.tags.compatible_tags(python_version=(3,14), interpreter='cp314', platforms=['win_amd64']) yields py3-none-win_amd64, so the target installs it; the order defines PURE-INSTALLED as Root-Is-Purelib true with py*-none-any and ABI3-INSTALLED as cp3X-abi3-win_amd64 only",
+      "the other ABI3-INSTALLED rows are true stable-ABI builds (bcrypt cp39, curl_cffi cp39, psutil cp37, PyMuPDF cp310, cryptography cp311, safetensors cp38, tokenizers cp39); the tool also reserves fit_kind native-target for an installed cp314 build, which no copy on this machine is"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: an installed distribution is PURE-INSTALLED (py3-none-any, Root-Is-Purelib true), ABI3-INSTALLED (cp3X-abi3-win_amd64, X <= 14), or does not fit (cp312-cp312-win_amd64); no class for a platform-specific, ABI-free build.",
+  "world_is": "ruff 0.15.11 is a py3-none-win_amd64 wheel: it fits 3.14 on win_amd64 and has no Python-version binding, but its files include a platform binary and a Scripts entry, so a re-pack from RECORD must keep the platform tag. The tool classed it ABI3-INSTALLED and says why in fit_kind; the issuer may rename or split the class."
+}
+```
+
+## NFRA_CTLPLN-W13-S15 -- this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL-ON-DISK: every non-compiled-for-3.12 package depends on an offline re-pack from installed files, and the 3.14 stand-in folder is empty",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json sources: pip cache present, entries 0, bytes 0; kit pack output (3 directories under the temporary root), Downloads (45597 directories walked), this worktree and the base checkout: 0 wheels identified (the only .whl file under the repository is a 0-byte numpy-1.26.4-cp312 file under infra/aws/lambda/layers/pyiceberg-nessie-deps/python, counted not_a_wheel)",
+      "interpreters: py -0p lists one (3.12.10 under the user's Programs\\Python\\Python312); a Program Files Python314 folder has Doc, Lib/site-packages (empty) and Scripts but no python.exe; HKLM PythonCore 3.14 has no InstallPath; HKCU PythonCore 3.12 names an anaconda3 folder that does not exist",
+      "pip cache list prints 'No locally built wheels cached.'; the kit's own pack tool (a) 'wheel already in pip's local cache' therefore finds nothing on this machine"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: sources to read include the pip HTTP and wheel caches, kit pack output, Downloads and the repository for wheel files, and the installed distributions of every interpreter py -0p lists.",
+  "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
+}
+```
+
 ## NFRA_CTLPLN-W6-S6 -- AMENDMENT 4: check_dell_fence_join.py is still a reader that ignores an unknown row key, and it is outside the grant and pinned
 
 ```json

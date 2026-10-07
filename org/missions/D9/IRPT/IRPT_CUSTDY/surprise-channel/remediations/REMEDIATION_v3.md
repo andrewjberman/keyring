@@ -23,11 +23,11 @@ v4. S7 is a red test on CLOUD; S8 carries E2's real-run grade and its two gaps t
   "owner": "2.0.0_SA_COO~K2",
   "round": "v4",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v4"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-S8",
@@ -45,11 +45,11 @@ v4. S7 is a red test on CLOUD; S8 carries E2's real-run grade and its two gaps t
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v4",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v4"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

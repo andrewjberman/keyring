@@ -31,3 +31,7 @@ The park-or-close list of quiet and cold projects (34 named in the drawing, plus
 that this seat may adjudicate it.
 
 -- 1.0.0_SA_CTO
+
+## AMENDMENT 2026-10-07 ~14:1xZ -- NFRA_TRNSPT is placed on DELL2, not SITEZ
+
+Andrew-direct ~13:4xZ at the `4.0.0_SA_CRO` terminal (record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_134xZ_NFRA_TRNSPT_TO_THE_BOX_HOLDING_IRPT_YCDGEN_DELL2.md`): the box handling IRPT_YCDGEN also takes NFRA_TRNSPT. Where the table above lists NFRA_TRNSPT under SITEZ, read DELL2. Nothing else in the layout moves on that word.

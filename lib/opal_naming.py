@@ -1243,6 +1243,7 @@ class _Vocab:
         self.bd_vendor = _BD_VENDOR
         refused = reg["systems"].get("refused_keys", {})
         self.cadences = set(schema["cadence"]["values"])
+        self.cadence_token = re.compile(schema["cadence"]["interval_form"]["token_regex"])  # P2: {N}min / {N}h
         self.v3 = {m for ms in refused.values() if isinstance(ms, list) for m in ms}
         self.v3 |= self.cadences | set(self.scope) | {"bd"}
         pw = refused.get("purpose_word", [])
@@ -1450,10 +1451,10 @@ def _cadence_slot(func, v):
         k = func.index("on")
         if k < len(func) - 1:
             return func[:k], "-".join(func[k:]), False
-    if func and func[-1] in v.cadences:
+    if func and (func[-1] in v.cadences or v.cadence_token.match(func[-1])):
         return func[:-1], func[-1], False
     for k in range(len(func) - 1, -1, -1):
-        if func[k] in v.cadences:
+        if func[k] in v.cadences or v.cadence_token.match(func[k]):
             return func[:k] + func[k + 1:], func[k], False
     return func, "{cadence}", True
 
@@ -2963,6 +2964,8 @@ def main(argv=None):
     c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
     c.add_argument("--not-judged", help="JSON file: a list of {name, plane, card} names CARDED rather than "
                                          "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
+    c.add_argument("--root", help="one Terraform root folder: one line per name of that root (LGIC_BLANKFIX FWD-1)")
+    c.add_argument("--map", help="with --root: the root map file (default: the registry's root_map.json)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -3003,6 +3006,9 @@ def main(argv=None):
     if a.cmd == "targets":
         return cmd_targets(a.extra_target)
     if a.cmd == "census":
+        if a.root:
+            import opal_naming_rootcheck  # the root check composes this module; imported only on this path
+            return opal_naming_rootcheck.check_root(a.root, a.map or os.path.join(REGISTRY_DIR, "root_map.json"))
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
             live = repo = True
