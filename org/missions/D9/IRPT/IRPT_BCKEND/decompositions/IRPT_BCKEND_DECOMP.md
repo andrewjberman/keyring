@@ -1970,3 +1970,15 @@ is @b921635dad, whose census is exactly nine members; both halves are signed aga
 | `IB-pr-349` | EMERGENCY release of irpt-export-render at pin b921635dad (fail-closed export read + admitted-read log), laptop applier, with after-reads | FWD-2 (W142-S4 / W146-S1 / W148-S1) | WORLD (a deploy) | IB-pr-343 (drained), IB-pr-347 (drained) | P68-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one function, one release. Applier 0.7.0_AE_CloudOps~I (laptop seat, MSTR ruling 106243), not a worker slot.
+
+## 62. ROUND 69, WORKSTREAM ~P (2026-10-07 ~13:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of IB-pr-343's emergency release, msg 576)
+
+IB-pr-349 makes every receipt that names no account unreadable. The back-fill (PRD v0.30 item 35) fills the receipts written before
+IB-pr-343. IB-pr-344's dry run listed 1 receipt, which dell2 could not decrypt (W145-S5), so the census and the apply run on the laptop
+applier under their own pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r69/p69_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-350` | back-fill covered_account_ids into pre-343 receipts: pass 1 census + packet (stop at halves), pass 2 apply + after-reads | FWD-2 | WORLD (an S3 write) | IB-pr-349, IB-pr-344 (drained) | P68-a (queued after IB-pr-349) |
+
+fanout: 1 of 1 chains, cap 8, reason: one write set, queued behind IB-pr-349 on the same applier.
