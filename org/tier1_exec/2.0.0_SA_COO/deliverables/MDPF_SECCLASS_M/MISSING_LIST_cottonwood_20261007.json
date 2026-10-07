@@ -1,0 +1,1981 @@
+{
+ "firm": "cottonwood",
+ "as_of": "2026-10-05",
+ "source": "local producer build as-of 2026-10-05 @4b258de305, inferred (not the served bytes)",
+ "claim": "inferred",
+ "source_detail": "holdings_snapshot.py run without --upload for this firm only; parquet .scratch\\hb_cottonwood\\opal-data-cottonwood\\irpt\\cottonwood\\gold\\holdings\\date=2026-10-05\\3b3912932d745dc34d1729d2d5d1b783dd0a4c22171173162946d3113506938f.parquet; served opal-data-<firm> bucket not readable by this device's principal",
+ "excluded": "906 cash-line SECURITY node(s) (ticker CASH, description CASH) and all non-SECURITY nodes",
+ "held_count": 1264,
+ "missing_amount_usd": 104698377.38,
+ "missing": [
+  {
+   "key": "02147XAJ6",
+   "name": "CWALT INC 2006-32CB 20361125 6.00000",
+   "cusip": "02147XAJ6",
+   "amount": 5098.29
+  },
+  {
+   "key": "05Q99R459",
+   "name": "MONEY MARKET",
+   "cusip": "05Q99R459",
+   "amount": 0.0
+  },
+  {
+   "key": "07399D34",
+   "name": "BEACON PARTNERS FUNDII LP",
+   "cusip": "07399D34",
+   "amount": 25167.66
+  },
+  {
+   "key": "4175_CCA_EIGER_III_OPP",
+   "name": "CCA Eiger III Opportunity LP Capital Values",
+   "amount": 6150000.0
+  },
+  {
+   "key": "4175_CCA_EIGER_OPP",
+   "name": "CCA Eiger Opportunity LP Capital Values",
+   "amount": 4500000.0
+  },
+  {
+   "key": "4175_CCA_FC_HOUSTON_OPP",
+   "name": "CCA FC Houston Opportunity LP Capital Values",
+   "amount": 4750000.0
+  },
+  {
+   "key": "4175_CCA_PEREGRINE1_LP",
+   "name": "Peregrine Land Investments I, LP",
+   "amount": 973018.6
+  },
+  {
+   "key": "4175_CCA_SAXUM_OPP",
+   "name": "CCA Saxum Opportunity LP Capital Values",
+   "amount": 4778309.87
+  },
+  {
+   "key": "4175_GGHC",
+   "name": "Gilder Gagnon Howe & Co",
+   "amount": 2350519.32
+  },
+  {
+   "key": "4175_VOYA",
+   "name": "Voya",
+   "amount": 25973104.32
+  },
+  {
+   "key": "76114BAG3",
+   "name": "RESIDENTIAL ASSET 2006-A14CB 20361225 6.00000",
+   "cusip": "76114BAG3",
+   "amount": 10987.51
+  },
+  {
+   "key": "9102024190",
+   "name": "Maranello-Plano LP",
+   "amount": 650000.0
+  },
+  {
+   "key": "9102026128",
+   "name": "CCA STNL Income Opportunity LP",
+   "amount": 1287750.0
+  },
+  {
+   "key": "920494MR9",
+   "name": "VAN ALSTYNE TEX 5% 02/15/2028",
+   "cusip": "920494MR9",
+   "amount": 30738.13
+  },
+  {
+   "key": "920494MX6",
+   "name": "VAN ALSTYNE TEX 5% 02/15/2028",
+   "cusip": "920494MX6",
+   "amount": 20520.09
+  },
+  {
+   "key": "931CVR013",
+   "name": "CONTRA WALGREENS BOOTS",
+   "cusip": "931CVR013",
+   "amount": 0.0
+  },
+  {
+   "key": "AAOI",
+   "name": "APPLIED OPTOELECTRONICS INC COM",
+   "cusip": "03823U102",
+   "amount": 6807.92
+  },
+  {
+   "key": "ACTSX",
+   "name": "INVESCO HIGH YIELD MUNICIPAL R6",
+   "cusip": "001419423",
+   "amount": 33051.24
+  },
+  {
+   "key": "AFTEX",
+   "name": "AMERICAN FUNDS TAX-EXEMPT BOND A",
+   "cusip": "876902107",
+   "amount": 31987.2
+  },
+  {
+   "key": "AIBAX",
+   "name": "AMERICAN FDS ITMT BD FD OF AMER A",
+   "cusip": "458809100",
+   "amount": 15242.55
+  },
+  {
+   "key": "AIT",
+   "name": "APPLIED INDL TECHNOLOGIES INC COM",
+   "cusip": "03820C105",
+   "amount": 60859.04
+  },
+  {
+   "key": "AM",
+   "name": "ANTERO MIDSTREAM CORP COM",
+   "cusip": "03676B102",
+   "amount": -57609.12
+  },
+  {
+   "key": "AMLP",
+   "name": "ALERIAN MLP ETF",
+   "cusip": "00162Q452",
+   "amount": 272159.86
+  },
+  {
+   "key": "AMZE",
+   "name": "AMAZE HOLDINGS INC COM",
+   "cusip": "35804X309",
+   "amount": 1.16
+  },
+  {
+   "key": "ANGIX",
+   "name": "ANGEL OAK MULTI-STRATEGY INCOME INSTL",
+   "cusip": "03463K406",
+   "amount": 14170.1
+  },
+  {
+   "key": "APLD",
+   "name": "APPLIED DIGITAL CORP COM NEW",
+   "cusip": "038169207",
+   "amount": -11263.2
+  },
+  {
+   "key": "ARKB",
+   "name": "ARK 21SHARES BITCOIN ETF",
+   "cusip": "040919102",
+   "amount": 6344.02
+  },
+  {
+   "key": "ATI",
+   "name": "ATI INC COM",
+   "cusip": "01741R102",
+   "amount": 25680.97
+  },
+  {
+   "key": "AU",
+   "name": "ANGLOGOLD ASHANTI PLC COM SHS",
+   "cusip": "G0378L100",
+   "amount": 89850.48
+  },
+  {
+   "key": "AVY",
+   "name": "AVERY DENNISON CORP COM",
+   "cusip": "053611109",
+   "amount": 21930.0
+  },
+  {
+   "key": "BA- FIDELITY.3715",
+   "name": "FID LOW PR STK POOL",
+   "amount": 135879.5
+  },
+  {
+   "key": "BA- FIDELITY.4005",
+   "name": "FID GR CO POOL CL 3",
+   "amount": 399464.9
+  },
+  {
+   "key": "BA- FIDELITY.6671",
+   "name": "FID FRDM 2040 CP H",
+   "amount": 144690.3
+  },
+  {
+   "key": "BA- FIDELITY.O89H",
+   "name": "RETIREMENT DATE 2030",
+   "amount": 112661.61
+  },
+  {
+   "key": "BA- FIDELITY.O89I",
+   "name": "RETIREMENT DATE 2035",
+   "amount": 38036.54
+  },
+  {
+   "key": "BA- FIDELITY.PHXA",
+   "name": "VG INST 500 IDX TR A",
+   "amount": 46733.07
+  },
+  {
+   "key": "BA- FIDELITY.PIC3",
+   "name": "VG IS TL INTL STK MK",
+   "amount": 23008.76
+  },
+  {
+   "key": "BA- FIDELITY.TD9P",
+   "name": "US SMALL & MID CAP",
+   "amount": 22373.8
+  },
+  {
+   "key": "BA- FIDELITY.TD9Q",
+   "name": "DIVERSIFIED BOND",
+   "amount": 15310.09
+  },
+  {
+   "key": "BA- FIDELITY.TPDQ",
+   "name": "STABLE VALUE FUND",
+   "amount": 5369.67
+  },
+  {
+   "key": "BA- FIDELITY.TRGM",
+   "name": "TOYOTA ADR FUND",
+   "amount": 44058.66
+  },
+  {
+   "key": "BA- INSDBNK09000",
+   "name": "Insured Bank Deposit",
+   "amount": 138960.97
+  },
+  {
+   "key": "BA- MONEY MARKET BALANCE",
+   "name": "MONEY MARKET",
+   "amount": 24.9
+  },
+  {
+   "key": "BABP18",
+   "name": "FT BUILD AMERICA BONDS SER 18",
+   "amount": 6579.75
+  },
+  {
+   "key": "BANC",
+   "name": "BANC OF CALIFORNIA INC COM",
+   "cusip": "05990K106",
+   "amount": 44068.05
+  },
+  {
+   "key": "BCE",
+   "name": "BCE INC COM NEW",
+   "cusip": "05534B760",
+   "amount": 56732.76
+  },
+  {
+   "key": "BCTK",
+   "name": "BARON TECHNOLOGY ETF",
+   "cusip": "06829D503",
+   "amount": 6459.74
+  },
+  {
+   "key": "BD0AT2C0",
+   "name": "C801 TRwPr Diversified Mid-Cap Grw Fd I",
+   "cusip": "BD0AT2C0",
+   "amount": 90198.54
+  },
+  {
+   "key": "BD0ID5S8",
+   "name": "3791 Vict Pionr Bond Fund R6",
+   "cusip": "BD0ID5S8",
+   "amount": 26849.57
+  },
+  {
+   "key": "BD0S9JMF",
+   "name": "3497 ClrBrg Sm Cp Growth Fnd IS",
+   "cusip": "BD0S9JMF",
+   "amount": 15682.92
+  },
+  {
+   "key": "BD17J53Y",
+   "name": "2462 Franklin Stable Value15",
+   "cusip": "BD17J53Y",
+   "amount": 23277.14
+  },
+  {
+   "key": "BD2DU999",
+   "name": "SOL",
+   "cusip": "BD2DU999",
+   "amount": 528.95
+  },
+  {
+   "key": "BD2EC999",
+   "name": "SUI",
+   "cusip": "BD2EC999",
+   "amount": 105.39
+  },
+  {
+   "key": "BD36N1LX",
+   "name": "7836 Columbia Sm Cp Val Discovery Inst",
+   "cusip": "BD36N1LX",
+   "amount": 75903.62
+  },
+  {
+   "key": "BD3QUUT3",
+   "name": "EQUITY UNITS",
+   "cusip": "BD3QUUT3",
+   "amount": 306815.91
+  },
+  {
+   "key": "BD4C2OJQ",
+   "name": "VANGUARD EXPLORER FUND ADM",
+   "cusip": "BD4C2OJQ",
+   "amount": 54403.75
+  },
+  {
+   "key": "BD4HOKI9",
+   "name": "3208 Voya Index Solution 2050 Portfolio Z",
+   "cusip": "BD4HOKI9",
+   "amount": 652327.56
+  },
+  {
+   "key": "BD58B999",
+   "name": "BTC",
+   "cusip": "BD58B999",
+   "amount": 908.83
+  },
+  {
+   "key": "BD6YH0IC",
+   "name": "SK13 Direct Supply Company Stock",
+   "cusip": "BD6YH0IC",
+   "amount": 120232.95
+  },
+  {
+   "key": "BD7DD4FD",
+   "name": "6434 Voya Short Duration Bnd Fund - Cl R6",
+   "cusip": "BD7DD4FD",
+   "amount": 28078.67
+  },
+  {
+   "key": "BD8SY4UI",
+   "name": "2676 Amer Bcn Small Cap Value Fund R5",
+   "cusip": "BD8SY4UI",
+   "amount": 24793.8
+  },
+  {
+   "key": "BDBFBYIB",
+   "name": "D159 Allspg Core Plus Bond Fnd A",
+   "cusip": "BDBFBYIB",
+   "amount": 56241.5
+  },
+  {
+   "key": "BDCASHIN",
+   "name": "CASH AND MARGIN INTEREST",
+   "cusip": "BDCASHIN",
+   "amount": 0.0
+  },
+  {
+   "key": "BDCDGX1I",
+   "name": "8691 BlackRock Equity Dividend Fund K",
+   "cusip": "BDCDGX1I",
+   "amount": 206708.11
+  },
+  {
+   "key": "BDCH8KWV",
+   "name": "1231 DFA U.S. LARGE CAP VALUE PORT INST",
+   "cusip": "BDCH8KWV",
+   "amount": 94555.99
+  },
+  {
+   "key": "BDCNSF17",
+   "name": "0898 Vanguard Total Bnd Mrkt Ind F Adm",
+   "cusip": "BDCNSF17",
+   "amount": 136658.09
+  },
+  {
+   "key": "BDE2HB99",
+   "name": "USDC",
+   "cusip": "BDE2HB99",
+   "amount": 893.43
+  },
+  {
+   "key": "BDF83XE7",
+   "name": "INTERNATIONAL EQUITY UNITS",
+   "cusip": "BDF83XE7",
+   "amount": 185174.98
+  },
+  {
+   "key": "BDF8JVUQ",
+   "name": "bdf8jvuq",
+   "cusip": "BDF8JVUQ",
+   "amount": 83552.46
+  },
+  {
+   "key": "BDGG24WF",
+   "name": "EXTENDED MARKET UNITS",
+   "cusip": "BDGG24WF",
+   "amount": 542463.65
+  },
+  {
+   "key": "BDGO7QY2",
+   "name": "6344 AB Global Bond Fund Z",
+   "cusip": "BDGO7QY2",
+   "amount": 6599.41
+  },
+  {
+   "key": "BDGYMTVS",
+   "name": "COMMON ASSETS",
+   "cusip": "BDGYMTVS",
+   "amount": 107.22
+  },
+  {
+   "key": "BDHJE8KK",
+   "name": "1723 American Funds EUPAC Fund R6",
+   "cusip": "BDHJE8KK",
+   "amount": 222598.82
+  },
+  {
+   "key": "BDI2LDEN",
+   "name": "2695 PIMCO Real Return Fund Inst",
+   "cusip": "BDI2LDEN",
+   "amount": 28470.82
+  },
+  {
+   "key": "BDIKYYS2",
+   "name": "6726 Eaton Vance Income Fund of Boston R6",
+   "cusip": "BDIKYYS2",
+   "amount": 32329.3
+  },
+  {
+   "key": "BDJ3UB0R",
+   "name": "2875 DFA Intl Core Eq 2 Portfolio - Inst",
+   "cusip": "BDJ3UB0R",
+   "amount": 92541.1
+  },
+  {
+   "key": "BDJPA5WM",
+   "name": "6351 PGIM Quant Sol MidCap Val F R6",
+   "cusip": "BDJPA5WM",
+   "amount": 26420.35
+  },
+  {
+   "key": "BDK4IV0N",
+   "name": "7926 Vanguard Equity Income Fund Adm",
+   "cusip": "BDK4IV0N",
+   "amount": 155690.58
+  },
+  {
+   "key": "BDKGM2DS",
+   "name": "7873 iShares Russell Mid-Cap Idx Fund K",
+   "cusip": "BDKGM2DS",
+   "amount": 72056.38
+  },
+  {
+   "key": "BDM3DJG6",
+   "name": "6552 Vanguard Tot Intl Bnd Ind Fd Adm",
+   "cusip": "BDM3DJG6",
+   "amount": 20732.0
+  },
+  {
+   "key": "BDN6L2T7",
+   "name": "BALANCED FUND UNITS",
+   "cusip": "BDN6L2T7",
+   "amount": 418775.91
+  },
+  {
+   "key": "BDN86999",
+   "name": "ETH",
+   "cusip": "BDN86999",
+   "amount": 840.52
+  },
+  {
+   "key": "BDNLK5N6",
+   "name": "C608 Fidelity Adv Focused Emrg Mkts Fd Z",
+   "cusip": "BDNLK5N6",
+   "amount": 86839.4
+  },
+  {
+   "key": "BDOXKY5M",
+   "name": "9862 Voya MidCap Opportunities Port R6",
+   "cusip": "BDOXKY5M",
+   "amount": 17299.58
+  },
+  {
+   "key": "BDPBNSE1",
+   "name": "3622 Victory Trvlnt Intl Small-Cap Fd R6",
+   "cusip": "BDPBNSE1",
+   "amount": 20070.13
+  },
+  {
+   "key": "BDTUV999",
+   "name": "FLR",
+   "cusip": "BDTUV999",
+   "amount": 38.42
+  },
+  {
+   "key": "BDVROD1V",
+   "name": "3665 MFS Growth Fund R6",
+   "cusip": "BDVROD1V",
+   "amount": 296161.55
+  },
+  {
+   "key": "BDWY6P28",
+   "name": "G207 FedHermes MDT Lg Cp Grwth Fd Inst",
+   "cusip": "BDWY6P28",
+   "amount": 183431.48
+  },
+  {
+   "key": "BDYP30W8",
+   "name": "3491 American Funds New World Fund R6",
+   "cusip": "BDYP30W8",
+   "amount": 19578.34
+  },
+  {
+   "key": "BDYU6NUK",
+   "name": "Principal MidCap Separate Account",
+   "cusip": "BDYU6NUK",
+   "amount": 24594.04
+  },
+  {
+   "key": "BF.B",
+   "name": "BROWN FORMAN CORP CL B",
+   "cusip": "115637209",
+   "amount": -40981.2
+  },
+  {
+   "key": "BFAM",
+   "name": "BRIGHT HORIZONS FAM SOL IN DEL COM",
+   "cusip": "109194100",
+   "amount": 37306.01
+  },
+  {
+   "key": "BIO",
+   "name": "BIO RAD LABS INC CL A",
+   "cusip": "090572207",
+   "amount": 11774.42
+  },
+  {
+   "key": "BISOX",
+   "name": "BLACKROCK SHORT OBLIGATIONS INSTL",
+   "cusip": "091936419",
+   "amount": 119435.78
+  },
+  {
+   "key": "BITW",
+   "name": "BITWISE 10 CRYPTO INDEX ETF",
+   "cusip": "091749101",
+   "amount": 121033.26
+  },
+  {
+   "key": "BLW",
+   "name": "BLACKROCK LTD DURATION INCOME COM SHS",
+   "cusip": "09249W101",
+   "amount": 9460.8
+  },
+  {
+   "key": "BRLMX",
+   "name": "BRAMSHILL MULTI-STRATEGY INCOME INSTL",
+   "cusip": "46141Q584",
+   "amount": 7798.08
+  },
+  {
+   "key": "BRW",
+   "name": "SABA CAPITAL INCOME & OPRNT FD SHS NEW",
+   "cusip": "78518H202",
+   "amount": 7610.92
+  },
+  {
+   "key": "BTT",
+   "name": "BLACKROCK MUN TARGET TERM TR COM SHS BEN IN",
+   "cusip": "09257P105",
+   "amount": 254700.8
+  },
+  {
+   "key": "BXP",
+   "name": "BXP INC COM",
+   "cusip": "101121101",
+   "amount": 45180.57
+  },
+  {
+   "key": "CART",
+   "name": "MAPLEBEAR INC COM",
+   "cusip": "565394103",
+   "amount": 30187.87
+  },
+  {
+   "key": "CARY",
+   "name": "ANGEL OAK INCOME ETF",
+   "cusip": "03463K760",
+   "amount": 4841.69
+  },
+  {
+   "key": "CDDYX",
+   "name": "COLUMBIA DIVIDEND INCOME INST3",
+   "cusip": "19766M840",
+   "amount": 78462.36
+  },
+  {
+   "key": "CDE",
+   "name": "COEUR MNG INC COM NEW",
+   "cusip": "192108504",
+   "amount": -19385.85
+  },
+  {
+   "key": "CGF-40H99E885",
+   "name": "CONSERVATIVE INCOME",
+   "amount": 91099.14
+  },
+  {
+   "key": "CGF-40H99E950",
+   "name": "GROWTH",
+   "amount": 290790.44
+  },
+  {
+   "key": "CHYM",
+   "name": "CHIME FINL INC COM SHS CL A",
+   "cusip": "16935C109",
+   "amount": 12391.02
+  },
+  {
+   "key": "CNH",
+   "name": "CNH INDL N V SHS",
+   "cusip": "N20944109",
+   "amount": 11930.1
+  },
+  {
+   "key": "COLM",
+   "name": "COLUMBIA SPORTSWEAR CO COM",
+   "cusip": "198516106",
+   "amount": 48219.71
+  },
+  {
+   "key": "CPAY",
+   "name": "CORPAY INC COM SHS",
+   "cusip": "219948106",
+   "amount": 11649.88
+  },
+  {
+   "key": "CQP",
+   "name": "CHENIERE ENERGY PARTNERS L P COM UNIT",
+   "cusip": "16411Q101",
+   "amount": 74559.41
+  },
+  {
+   "key": "CRWV",
+   "name": "COREWEAVE INC COM CL A",
+   "cusip": "21873S108",
+   "amount": -11710.26
+  },
+  {
+   "key": "CSHI",
+   "name": "NEOS ENHANCED INCOME 1-3 MONTH T-BILL ETF",
+   "cusip": "78433H501",
+   "amount": 149964.5
+  },
+  {
+   "key": "CSQ",
+   "name": "CALAMOS STRATEGIC TOTAL RETURN COM SH BEN INT",
+   "cusip": "128125101",
+   "amount": 219765.84
+  },
+  {
+   "key": "CWEN",
+   "name": "CLEARWAY ENERGY INC CL C",
+   "cusip": "18539C204",
+   "amount": -58183.92
+  },
+  {
+   "key": "CWVIX",
+   "name": "CALVERT INTERNATIONAL EQUITY I",
+   "cusip": "131649808",
+   "amount": 33233.8
+  },
+  {
+   "key": "CXMANUAL_401K",
+   "name": "Investor Manual Asset - 401K",
+   "amount": 279900.55
+  },
+  {
+   "key": "CXMANUAL_529PLAN",
+   "name": "Investor Manual Asset - 529 Plan",
+   "amount": 73860.0
+  },
+  {
+   "key": "CXMANUAL_ALTERNATIVES",
+   "name": "Investor Manual Asset - Alternatives",
+   "amount": 191564.0
+  },
+  {
+   "key": "CXMANUAL_ANNUITY",
+   "name": "Investor Manual Asset - Annuity",
+   "amount": 317000.0
+  },
+  {
+   "key": "CXMANUAL_BANKACCOUNT",
+   "name": "Investor Manual Asset - Bank Account",
+   "amount": 309069.26
+  },
+  {
+   "key": "CXMANUAL_CAR",
+   "name": "Investor Manual Asset - Car",
+   "amount": 382979.0
+  },
+  {
+   "key": "CXMANUAL_CREDITCARD",
+   "name": "Investor Manual Asset - Credit Card",
+   "amount": 815.22
+  },
+  {
+   "key": "CXMANUAL_DEFINEDBENEFITPLAN(PENSION)",
+   "name": "Investor Manual Asset - Defined Benefit Plan (Pension)",
+   "amount": 28915.07
+  },
+  {
+   "key": "CXMANUAL_HEALTHSAVINGSACCOUNT",
+   "name": "Investor Manual Asset - Health Savings Account",
+   "amount": 2041.0
+  },
+  {
+   "key": "CXMANUAL_HOME",
+   "name": "Investor Manual Asset - Home",
+   "amount": 8378664.0
+  },
+  {
+   "key": "CXMANUAL_INSURANCE",
+   "name": "Investor Manual Asset - Insurance",
+   "amount": 568016.86
+  },
+  {
+   "key": "CXMANUAL_INVESTMENTPROPERTY",
+   "name": "Investor Manual Asset - Investment Property",
+   "amount": 386872.0
+  },
+  {
+   "key": "CXMANUAL_IRA",
+   "name": "Investor Manual Asset - IRA",
+   "amount": 294054.19
+  },
+  {
+   "key": "CXMANUAL_JEWELRY",
+   "name": "Investor Manual Asset - Jewelry",
+   "amount": 26040.0
+  },
+  {
+   "key": "CXMANUAL_LIMITEDLIABILITYCOMPANY",
+   "name": "Investor Manual Asset - Limited Liability Company",
+   "amount": 4125000.0
+  },
+  {
+   "key": "CXMANUAL_MORTGAGE",
+   "name": "Investor Manual Asset - Mortgage",
+   "amount": -213597.89
+  },
+  {
+   "key": "CXMANUAL_OTHERASSET",
+   "name": "Investor Manual Asset - Other Asset",
+   "amount": 221000.0
+  },
+  {
+   "key": "CXMANUAL_PRIMARYRESIDENCE",
+   "name": "Investor Manual Asset - Primary Residence",
+   "amount": 900000.0
+  },
+  {
+   "key": "CXMANUAL_TRUSTACCOUNTS",
+   "name": "Investor Manual Asset - Trust Accounts",
+   "amount": 3173684.09
+  },
+  {
+   "key": "DEM",
+   "name": "WISDOMTREE EMERGING MARKETS HIGH DIVIDEND FUND",
+   "cusip": "97717W315",
+   "amount": 25514.31
+  },
+  {
+   "key": "DLB",
+   "name": "DOLBY LABORATORIES INC COM CL A",
+   "cusip": "25659T107",
+   "amount": 83104.0
+  },
+  {
+   "key": "DMLP",
+   "name": "DORCHESTER MINERALS L P COM UNIT",
+   "cusip": "25820R105",
+   "amount": 436937.28
+  },
+  {
+   "key": "DNVYX",
+   "name": "DAVIS NY VENTURE Y",
+   "cusip": "239080401",
+   "amount": 168290.96
+  },
+  {
+   "key": "DOXIX",
+   "name": "DODGE & COX INCOME X",
+   "cusip": "256206889",
+   "amount": 41049.42
+  },
+  {
+   "key": "DTF",
+   "name": "DTF TAX-FREE INCOME 2028 TERM COM",
+   "cusip": "23334J107",
+   "amount": 236932.74
+  },
+  {
+   "key": "DTM",
+   "name": "DT MIDSTREAM INC COMMON STOCK",
+   "cusip": "23345M107",
+   "amount": -58617.6
+  },
+  {
+   "key": "DY144",
+   "name": "Metropolitan Life Insurance Co MetLife Stable Value Fund Series 25053 Class",
+   "amount": 3562.07
+  },
+  {
+   "key": "EG",
+   "name": "EVEREST GROUP LTD COM",
+   "cusip": "G3223R108",
+   "amount": 10270.68
+  },
+  {
+   "key": "EIHMX",
+   "name": "EATON VANCE NATIONAL MUNICIPAL INCOME I",
+   "cusip": "27826L249",
+   "amount": 258152.87
+  },
+  {
+   "key": "EQH",
+   "name": "EQUITABLE HLDGS INC COM",
+   "cusip": "29452E101",
+   "amount": 44226.0
+  },
+  {
+   "key": "EQPT",
+   "name": "EQUIPMENTSHARE COM INC COM CL A",
+   "cusip": "29445S100",
+   "amount": 56700.0
+  },
+  {
+   "key": "EROK",
+   "name": "EAGLEROCK LD LLC CL A SHS REP LTD",
+   "cusip": "27005A105",
+   "amount": 209207.1
+  },
+  {
+   "key": "ESAB",
+   "name": "ESAB CORPORATION COM",
+   "cusip": "29605J106",
+   "amount": -32514.3
+  },
+  {
+   "key": "ESI",
+   "name": "ELEMENT SOLUTIONS INC COM",
+   "cusip": "28618M106",
+   "amount": -14640.6
+  },
+  {
+   "key": "ETH",
+   "name": "GRAYSCALE ETHEREUM STAKING MINI ETF",
+   "cusip": "38964R203",
+   "amount": 76.38
+  },
+  {
+   "key": "ETHE",
+   "name": "GRAYSCALE ETHEREUM STAKING ETF",
+   "cusip": "389638107",
+   "amount": 771.48
+  },
+  {
+   "key": "EVMO",
+   "name": "EATON VANCE MORTGAGE OPPORTUNITIES ETF",
+   "cusip": "61774R767",
+   "amount": 1924.4
+  },
+  {
+   "key": "EVV",
+   "name": "EATON VANCE LIMITED DURATION I COM",
+   "cusip": "27828H105",
+   "amount": 8131.5
+  },
+  {
+   "key": "EXLS",
+   "name": "EXLSERVICE HLDGS INC COM",
+   "cusip": "302081104",
+   "amount": 25668.5
+  },
+  {
+   "key": "EXP",
+   "name": "EAGLE MATLS INC COM",
+   "cusip": "26969P108",
+   "amount": -34133.82
+  },
+  {
+   "key": "FAX",
+   "name": "ABRDN ASIA PACIFIC INCOME FUND COM NEW",
+   "cusip": "003009867",
+   "amount": 8514.24
+  },
+  {
+   "key": "FBKWX",
+   "name": "FIDELITY ADVISOR TOTAL BOND Z",
+   "cusip": "31617L798",
+   "amount": 29956.95
+  },
+  {
+   "key": "FCASH",
+   "name": "FCASH",
+   "amount": 9728202.52
+  },
+  {
+   "key": "FCNCA",
+   "name": "FIRST CTZNS BANCSHARES INC DEL CL A",
+   "cusip": "31946M103",
+   "amount": 71096.38
+  },
+  {
+   "key": "FCSTX",
+   "name": "FCSTX - FIDELITY CALIFORNIA LTD TRM TAX-FREE BD",
+   "amount": 84049.85
+  },
+  {
+   "key": "FDIQ",
+   "name": "INVESCO BLOOMBERG FINANCIAL DATA PROVIDERS ETF",
+   "cusip": "46138E578",
+   "amount": 13860.8
+  },
+  {
+   "key": "FEGIX",
+   "name": "FIRST EAGLE GOLD I",
+   "cusip": "32008F770",
+   "amount": 6999.77
+  },
+  {
+   "key": "FEHIX",
+   "name": "FIRST EAGLE HIGH YIELD MUNICIPAL I",
+   "cusip": "32008F713",
+   "amount": 9069.27
+  },
+  {
+   "key": "FESGX",
+   "name": "FIRST EAGLE GLOBAL C",
+   "cusip": "32008F705",
+   "amount": 40736.82
+  },
+  {
+   "key": "FFC",
+   "name": "FLAHERTY & CRUMRIN PFD & INM S COM",
+   "cusip": "338478100",
+   "amount": 169751.04
+  },
+  {
+   "key": "FIGXX",
+   "name": "FIDELITY COLCHESTER STR TR MNY MRKT FDS I",
+   "cusip": "316175108",
+   "amount": 1956931.88
+  },
+  {
+   "key": "FIQZX",
+   "name": "FIDELITY ADVISOR INTERM MUNI INC Z",
+   "cusip": "31638R683",
+   "amount": 144429.89
+  },
+  {
+   "key": "FISXX",
+   "name": "FIDELITY COLCHESTER STR TR MNY MRKT FDS I",
+   "cusip": "316175504",
+   "amount": 13649.98
+  },
+  {
+   "key": "FKGRX",
+   "name": "FRANKLIN GROWTH A",
+   "cusip": "353496508",
+   "amount": 34594.14
+  },
+  {
+   "key": "FLR",
+   "name": "FLUOR CORP COM",
+   "cusip": "343412102",
+   "amount": 67817.4
+  },
+  {
+   "key": "FLUT",
+   "name": "FLUTTER ENTMT PLC SHS",
+   "cusip": "G3643J108",
+   "amount": -10677.93
+  },
+  {
+   "key": "FMPXX",
+   "name": "FIDELITY COLCHESTER STR TR MONEY MKT CL I",
+   "cusip": "316175207",
+   "amount": 27380.17
+  },
+  {
+   "key": "FOTJX",
+   "name": "FIDELITY ADVISOR OTC Z",
+   "cusip": "31638A508",
+   "amount": 58661.61
+  },
+  {
+   "key": "FR",
+   "name": "FIRST INDL RLTY TR INC COM",
+   "cusip": "32054K103",
+   "amount": 33281.64
+  },
+  {
+   "key": "FRCZX",
+   "name": "FRCZX - Franklin CA Interm-Term Tx-Fr Inc Adv",
+   "amount": 243744.55
+  },
+  {
+   "key": "FRIAX",
+   "name": "FRANKLIN INCOME ADV",
+   "cusip": "353496847",
+   "amount": 46301.57
+  },
+  {
+   "key": "FWONA",
+   "name": "LIBERTY MEDIA CORP DEL COM SER A",
+   "cusip": "531229771",
+   "amount": -59318.22
+  },
+  {
+   "key": "FWONK",
+   "name": "LIBERTY MEDIA CORP DEL COM SER C",
+   "cusip": "531229755",
+   "amount": -29830.0
+  },
+  {
+   "key": "FXH",
+   "name": "FIRST TRUST HEALTH CARE ALPHADEX FUND",
+   "cusip": "33734X143",
+   "amount": 3797.55
+  },
+  {
+   "key": "GDX",
+   "name": "VANECK GOLD MINERS ETF",
+   "cusip": "92189F106",
+   "amount": 334556.34
+  },
+  {
+   "key": "GENIX",
+   "name": "GOTHAM ENHANCED RETURN INSTITUTIONAL",
+   "cusip": "360873129",
+   "amount": 14014.6
+  },
+  {
+   "key": "GLVAX",
+   "name": "INVESCO GLOBAL FOCUS A",
+   "cusip": "00900W704",
+   "amount": 39372.18
+  },
+  {
+   "key": "GPPIX",
+   "name": "GOLDMAN SACHS SHORT-TERM CNSRV INC INSTL",
+   "cusip": "38147X705",
+   "amount": 100474.26
+  },
+  {
+   "key": "GTES",
+   "name": "GATES INDL CORP LTD COM SHS",
+   "cusip": "G39104107",
+   "amount": -19800.72
+  },
+  {
+   "key": "HAS",
+   "name": "HASBRO INC COM",
+   "cusip": "418056107",
+   "amount": 72887.82
+  },
+  {
+   "key": "HIO",
+   "name": "WESTERN ASSET HIGH INCOME OPPO COM",
+   "cusip": "95766K109",
+   "amount": 6583.68
+  },
+  {
+   "key": "HLIEX",
+   "name": "JPMORGAN EQUITY INCOME I",
+   "cusip": "4812C0498",
+   "amount": 105028.06
+  },
+  {
+   "key": "HSIC",
+   "name": "SCHEIN HENRY INC COM",
+   "cusip": "806407102",
+   "amount": 16846.0
+  },
+  {
+   "key": "HWHZX",
+   "name": "HOTCHKIS & WILEY HIGH YIELD FUND",
+   "amount": 1008.78
+  },
+  {
+   "key": "HWMZX",
+   "name": "HOTCHKIS & WILEY MID-CAP VALUE FUND CLASS Z",
+   "amount": 8911.99
+  },
+  {
+   "key": "HYMAX",
+   "name": "LORD ABBETT HIGH INCOME MUNI BOND A",
+   "cusip": "543912877",
+   "amount": 24932.07
+  },
+  {
+   "key": "HYMIX",
+   "name": "LORD ABBETT HIGH INCOME MUNI BOND I",
+   "cusip": "543912836",
+   "amount": 173232.5
+  },
+  {
+   "key": "IBIT",
+   "name": "ISHARES BITCOIN TRUST ETF",
+   "cusip": "46438F101",
+   "amount": 89933.12
+  },
+  {
+   "key": "INGM",
+   "name": "INGRAM MICRO HLDG CORP COM",
+   "cusip": "457152106",
+   "amount": 21457.24
+  },
+  {
+   "key": "INIYX",
+   "name": "VANECK INTERNATIONAL INVESTORS GOLD Y",
+   "cusip": "921075388",
+   "amount": 170257.27
+  },
+  {
+   "key": "IPI",
+   "name": "INTREPID POTASH INC COM",
+   "cusip": "46121Y201",
+   "amount": 84217.74
+  },
+  {
+   "key": "IREN",
+   "name": "IREN LIMITED ORDINARY SHARES",
+   "cusip": "Q4982L109",
+   "amount": -10767.68
+  },
+  {
+   "key": "ISVDT",
+   "name": "INVESCO STABLE VALUE RET CL 2",
+   "amount": 21779.3
+  },
+  {
+   "key": "ITYAX",
+   "name": "INVESCO TECHNOLOGY A",
+   "cusip": "00142F642",
+   "amount": 72867.03
+  },
+  {
+   "key": "IVOV",
+   "name": "VANGUARD S&P MID-CAP 400 VALUE ETF",
+   "cusip": "921932844",
+   "amount": 27863.85
+  },
+  {
+   "key": "IVZ",
+   "name": "INVESCO LTD SHS",
+   "cusip": "G491BT108",
+   "amount": 56760.5
+  },
+  {
+   "key": "J",
+   "name": "JACOBS SOLUTIONS INC COM",
+   "cusip": "46982L108",
+   "amount": 13800.0
+  },
+  {
+   "key": "JABAX",
+   "name": "JANUS HENDERSON BALANCED T",
+   "cusip": "471023879",
+   "amount": 76032.69
+  },
+  {
+   "key": "JAENX",
+   "name": "JANUS HENDERSON ENTERPRISE T",
+   "cusip": "471023804",
+   "amount": 30119.98
+  },
+  {
+   "key": "JAN",
+   "name": "JANUS LIVING INC CL A-1",
+   "cusip": "471024109",
+   "amount": -17192.5
+  },
+  {
+   "key": "JATTX",
+   "name": "JANUS HENDERSON TRITON T",
+   "cusip": "471023549",
+   "amount": 23779.76
+  },
+  {
+   "key": "JAWWX",
+   "name": "JANUS HENDERSON GLOBAL RESEARCH T",
+   "cusip": "471023309",
+   "amount": 23118.62
+  },
+  {
+   "key": "JBALX",
+   "name": "JANUS HENDERSON BALANCED I",
+   "cusip": "47103C704",
+   "amount": 837647.13
+  },
+  {
+   "key": "JBS",
+   "name": "JBS N.V. CL A SHS",
+   "cusip": "N4732M103",
+   "amount": -60282.3
+  },
+  {
+   "key": "JDMNX",
+   "name": "JANUS HENDERSON ENTERPRISE N",
+   "cusip": "47103D405",
+   "amount": 6647.11
+  },
+  {
+   "key": "JGSMX",
+   "name": "JPMORGAN SMALL CAP GROWTH R6",
+   "cusip": "48121L825",
+   "amount": 25784.87
+  },
+  {
+   "key": "JMGRX",
+   "name": "JANUS HENDERSON ENTERPRISE I",
+   "cusip": "47103C795",
+   "amount": 14066.1
+  },
+  {
+   "key": "JPC",
+   "name": "NUVEEN PFD & INCOME OPPORTUNIT COM",
+   "cusip": "67073B106",
+   "amount": 14095.38
+  },
+  {
+   "key": "KIM",
+   "name": "KIMCO REALTY CORP COM",
+   "cusip": "49446R109",
+   "amount": 308.42
+  },
+  {
+   "key": "KRMN",
+   "name": "KARMAN HLDGS INC COMMON STOCK",
+   "cusip": "485924104",
+   "amount": -10863.58
+  },
+  {
+   "key": "LLYVA",
+   "name": "LIBERTY LIVE HOLDINGS INC COM SER A",
+   "cusip": "530909100",
+   "amount": -58567.53
+  },
+  {
+   "key": "LLYVK",
+   "name": "LIBERTY LIVE HOLDINGS INC COM SHS SER C",
+   "cusip": "530909308",
+   "amount": -58432.17
+  },
+  {
+   "key": "LMCMBI",
+   "name": "LMCMBI",
+   "amount": 472394.21
+  },
+  {
+   "key": "LMCMEI",
+   "name": "LMCMEI",
+   "amount": 341613.93
+  },
+  {
+   "key": "LMCSME",
+   "name": "LMCSME",
+   "amount": 186505.48
+  },
+  {
+   "key": "LMCSP5",
+   "name": "LMCSP5",
+   "amount": 638334.04
+  },
+  {
+   "key": "LMCSTK",
+   "name": "LMCSTK",
+   "amount": 153931.7
+  },
+  {
+   "key": "LMCSVF",
+   "name": "LMCSVF",
+   "amount": 12773.08
+  },
+  {
+   "key": "LNGX",
+   "name": "GLOBAL X U.S. NATURAL GAS ETF",
+   "cusip": "37960A172",
+   "amount": 48530.6
+  },
+  {
+   "key": "LOAR",
+   "name": "LOAR HOLDINGS INC COM SHS",
+   "cusip": "53947R105",
+   "amount": -46700.15
+  },
+  {
+   "key": "MBGL",
+   "name": "MOBILITY GLOBAL INC COM SHS",
+   "cusip": "60744M106",
+   "amount": -33227.51
+  },
+  {
+   "key": "MHF",
+   "name": "WESTERN ASSET MUN HIGH INCOME COM",
+   "cusip": "95766N103",
+   "amount": 222917.45
+  },
+  {
+   "key": "MIAGX",
+   "name": "MFS AGGRESSIVE GROWTH ALLOCATION I",
+   "cusip": "55273G652",
+   "amount": 20176.88
+  },
+  {
+   "key": "MLPA",
+   "name": "GLOBAL X MLP ETF",
+   "cusip": "37954Y343",
+   "amount": 180354.46
+  },
+  {
+   "key": "MMT",
+   "name": "ABERDEEN MULTI-MARKET INCOME SH BEN INT",
+   "cusip": "552737108",
+   "amount": 18317.71
+  },
+  {
+   "key": "MPT",
+   "name": "MEDICAL PROPERTIES TRUST INC COM",
+   "cusip": "58463J304",
+   "amount": 10876.66
+  },
+  {
+   "key": "MRP",
+   "name": "MILLROSE PPTYS INC COM CL A",
+   "cusip": "601137102",
+   "amount": -19583.7
+  },
+  {
+   "key": "MSD",
+   "name": "MORGAN STANLEY EMKT DBT FD INC COM",
+   "cusip": "61744H105",
+   "amount": 22763.88
+  },
+  {
+   "key": "MSEQX",
+   "name": "MORGAN STANLEY INST GROWTH I",
+   "amount": 87262.45
+  },
+  {
+   "key": "MSIQX",
+   "name": "MORGAN STANLEY INST INTERNATIONAL EQ I",
+   "amount": 25855.54
+  },
+  {
+   "key": "NCHRX",
+   "name": "NCHRX - NUVEEN CA HIGH YIELD MUNICIPAL BOND I",
+   "amount": 84049.85
+  },
+  {
+   "key": "NLY",
+   "name": "ANNALY CAPITAL MANAGEMENT INC COM NEW",
+   "cusip": "035710839",
+   "amount": 22782.69
+  },
+  {
+   "key": "NOG",
+   "name": "NORTHERN OIL & GAS INC COM",
+   "cusip": "665531307",
+   "amount": 24030.0
+  },
+  {
+   "key": "NPSRX",
+   "name": "NUVEEN PREFERRED SECS & INC I",
+   "cusip": "670700400",
+   "amount": 9680.0
+  },
+  {
+   "key": "NSIOX",
+   "name": "NUVEEN STRATEGIC MUNICIPAL OPPS I",
+   "cusip": "67065Q574",
+   "amount": 258993.85
+  },
+  {
+   "key": "NUW",
+   "name": "NUVEEN AMT-FREE MUN VALUE FD COM",
+   "cusip": "670695105",
+   "amount": 322494.91
+  },
+  {
+   "key": "NVG",
+   "name": "NUVEEN AMT FREE MUN CR INC FD COM",
+   "cusip": "67071L106",
+   "amount": 3900.82
+  },
+  {
+   "key": "O",
+   "name": "REALTY INCOME CORP COM",
+   "cusip": "756109104",
+   "amount": -56781.12
+  },
+  {
+   "key": "OARDX",
+   "name": "INVESCO RISING DIVIDENDS A",
+   "cusip": "00141B584",
+   "amount": 159987.0
+  },
+  {
+   "key": "OGMIX",
+   "name": "INVESCO GOLD & SPECIAL MINERALS R6",
+   "cusip": "00143N693",
+   "amount": 271254.37
+  },
+  {
+   "key": "OLCYX",
+   "name": "OLCYX - INVESCO LIMITED TERM CA MUNICIPAL Y",
+   "amount": 84049.85
+  },
+  {
+   "key": "OLLI",
+   "name": "OLLIES BARGAIN OUTLET HLDGS COM",
+   "cusip": "681116109",
+   "amount": -12072.15
+  },
+  {
+   "key": "OPBIX",
+   "name": "INVESCO CORE BOND R6",
+   "amount": 142205.48
+  },
+  {
+   "key": "OPMSX",
+   "name": "INVESCO MAIN STREET MID CAP A",
+   "cusip": "00900R572",
+   "amount": 49069.07
+  },
+  {
+   "key": "PAAS",
+   "name": "PAN AMERN SILVER CORP COM",
+   "cusip": "697900108",
+   "amount": 303100.16
+  },
+  {
+   "key": "PBT",
+   "name": "PERMIAN BASIN RTY TR UNIT BEN INT",
+   "cusip": "714236106",
+   "amount": 42074.34
+  },
+  {
+   "key": "PFF",
+   "name": "ISHARES PREFERRED & INCOME SECURITIES ETF",
+   "cusip": "464288687",
+   "amount": 27691.11
+  },
+  {
+   "key": "PFG",
+   "name": "PRINCIPAL FINANCIAL GROUP INC COM",
+   "cusip": "74251V102",
+   "amount": 46632.6
+  },
+  {
+   "key": "PFL",
+   "name": "PIMCO INCOME STRATEGY FD COM",
+   "cusip": "72201H108",
+   "amount": 39045.0
+  },
+  {
+   "key": "PHK",
+   "name": "PIMCO HIGH INCOME FD COM SHS",
+   "cusip": "722014107",
+   "amount": 40600.0
+  },
+  {
+   "key": "PHO",
+   "name": "INVESCO WATER RESOURCES ETF",
+   "cusip": "46137V142",
+   "amount": 48560.4
+  },
+  {
+   "key": "PICYX",
+   "name": "VICTORY PIONEER BOND Y",
+   "amount": 22623.6
+  },
+  {
+   "key": "PIUIX",
+   "name": "FEDERATED HERMES INTERNATIONAL EQUITY IS",
+   "cusip": "31423A689",
+   "amount": 51452.34
+  },
+  {
+   "key": "PML",
+   "name": "PIMCO MUN INCOME FD II COM",
+   "cusip": "72200W106",
+   "amount": 52316.42
+  },
+  {
+   "key": "POVYX",
+   "name": "PUTNAM INTERNATIONAL EQUITY Y",
+   "amount": 38783.31
+  },
+  {
+   "key": "PPG",
+   "name": "PPG INDS INC COM",
+   "cusip": "693506107",
+   "amount": 315.81
+  },
+  {
+   "key": "PRUZX",
+   "name": "PGIM JENNISON UTILITY Z",
+   "cusip": "74441P817",
+   "amount": 4309.29
+  },
+  {
+   "key": "PSA",
+   "name": "PUBLIC STORAGE COM",
+   "cusip": "74460D109",
+   "amount": -56895.32
+  },
+  {
+   "key": "PTY",
+   "name": "PIMCO CORPORATE & INCOME OPPOR COM",
+   "cusip": "72201B101",
+   "amount": 100764.0
+  },
+  {
+   "key": "PVAL",
+   "name": "PUTNAM FOCUSED LARGE CAP VALUE ETF",
+   "cusip": "746729300",
+   "amount": 4093.32
+  },
+  {
+   "key": "PYLD",
+   "name": "PIMCO MULTISECTOR BOND ACTIVE EXCHANGE-TRADED FUND",
+   "cusip": "72201R585",
+   "amount": 2396.85
+  },
+  {
+   "key": "QACDS",
+   "name": "CHASE DEPOSIT SWEEP JPMORGAN CHASE BANK NA",
+   "cusip": "QACDS",
+   "amount": 0.36
+  },
+  {
+   "key": "QQQE",
+   "name": "DIREXION NASDAQ-100 EQUAL WEIGHTED INDEX ETF",
+   "cusip": "25459Y207",
+   "amount": 19933.27
+  },
+  {
+   "key": "R0RA",
+   "name": "BlackRock Equity Dividend Ret Opt",
+   "amount": 31799.8
+  },
+  {
+   "key": "R2NF",
+   "name": "TransamericaRetOnTrk 2035 with Amer Fds RetOpt",
+   "amount": 37479.4
+  },
+  {
+   "key": "R2NG",
+   "name": "TransamericaRetOnTrk 2040 with Amer Fds RetOpt",
+   "amount": 26525.22
+  },
+  {
+   "key": "RBA",
+   "name": "RB GLOBAL INC COM",
+   "cusip": "74935Q107",
+   "amount": -58515.3
+  },
+  {
+   "key": "RBRK",
+   "name": "RUBRIK INC. CL A",
+   "cusip": "781154109",
+   "amount": -17297.88
+  },
+  {
+   "key": "REMX",
+   "name": "VANECK RARE EARTH AND STRATEGIC METALS ETF",
+   "cusip": "92189H805",
+   "amount": 40665.6
+  },
+  {
+   "key": "RING",
+   "name": "ISHARES MSCI GLOBAL GOLD MINERS ETF",
+   "cusip": "46434G855",
+   "amount": 45463.95
+  },
+  {
+   "key": "RLBFX",
+   "name": "AMERICAN FUNDS AMERICAN BALANCED R-5",
+   "cusip": "024071839",
+   "amount": 18695.48
+  },
+  {
+   "key": "RRBI",
+   "name": "RED RIVER BANCSHARES INC COM",
+   "cusip": "75686R202",
+   "amount": 25852.5
+  },
+  {
+   "key": "RRC",
+   "name": "RANGE RES CORP COM",
+   "cusip": "75281A109",
+   "amount": -52745.88
+  },
+  {
+   "key": "RVMD",
+   "name": "REVOLUTION MEDICINES INC COM",
+   "cusip": "76155X100",
+   "amount": 11837.76
+  },
+  {
+   "key": "RYAN",
+   "name": "RYAN SPECIALTY HOLDINGS INC CL A",
+   "cusip": "78351F107",
+   "amount": -13330.98
+  },
+  {
+   "key": "SBI",
+   "name": "WESTERN ASSET INTER MUNI COM",
+   "cusip": "958435109",
+   "amount": 57179.43
+  },
+  {
+   "key": "SBR",
+   "name": "SABINE RTY TR UNIT BEN INT",
+   "cusip": "785688102",
+   "amount": 1121593.94
+  },
+  {
+   "key": "SEB",
+   "name": "SEABOARD CORP DEL COM",
+   "cusip": "811543107",
+   "amount": 47744.88
+  },
+  {
+   "key": "SEIC",
+   "name": "SEI INVTS CO COM",
+   "cusip": "784117103",
+   "amount": 12804.24
+  },
+  {
+   "key": "SHYM",
+   "name": "ISHARES SHORT DURATION HIGH YIELD MUNI ACTIVE ETF",
+   "amount": 558497.25
+  },
+  {
+   "key": "SIVLX",
+   "name": "SEAFARER OVERSEAS VALUE INSTITUTIONAL",
+   "cusip": "31761R591",
+   "amount": 8605.24
+  },
+  {
+   "key": "SLGN",
+   "name": "SILGAN HLDGS INC COM",
+   "cusip": "827048109",
+   "amount": -22358.61
+  },
+  {
+   "key": "SLRC",
+   "name": "SLR INVESTMENT CORP COM",
+   "cusip": "83413U100",
+   "amount": 39628.16
+  },
+  {
+   "key": "SPG",
+   "name": "SIMON PPTY GROUP INC NEW COM",
+   "cusip": "828806109",
+   "amount": 402.8
+  },
+  {
+   "key": "SPLB",
+   "name": "STATE STREET SPDR PORTFOLIO LONG TERM CORPORATE BOND ETF",
+   "cusip": "78464A367",
+   "amount": 135565.76
+  },
+  {
+   "key": "STAG",
+   "name": "STAG INDUSTRIAL INC COM",
+   "cusip": "85254J102",
+   "amount": -14672.35
+  },
+  {
+   "key": "SUI",
+   "name": "SUN CMNTYS INC COM",
+   "cusip": "866674104",
+   "amount": -26841.6
+  },
+  {
+   "key": "TACK",
+   "name": "FAIRLEAD TACTICAL SECTOR ETF",
+   "cusip": "14064D550",
+   "amount": 11586.19
+  },
+  {
+   "key": "TEM",
+   "name": "TEMPUS AI INC CL A",
+   "cusip": "88023B103",
+   "amount": -14119.95
+  },
+  {
+   "key": "TER",
+   "name": "TERADYNE INC COM",
+   "cusip": "880770102",
+   "amount": 444.53
+  },
+  {
+   "key": "TFIN",
+   "name": "TRIUMPH FINANCIAL INC COM",
+   "cusip": "89679E300",
+   "amount": 152275.2
+  },
+  {
+   "key": "TGVIX",
+   "name": "THORNBURG INTERNATIONAL EQUITY I",
+   "cusip": "885215566",
+   "amount": 100141.9
+  },
+  {
+   "key": "THG",
+   "name": "HANOVER INS GROUP INC COM",
+   "cusip": "410867105",
+   "amount": 35704.8
+  },
+  {
+   "key": "TIVRX",
+   "name": "THORNBURG INTERNATIONAL EQUITY R5",
+   "cusip": "885215368",
+   "amount": 10414.58
+  },
+  {
+   "key": "TKO",
+   "name": "TKO GROUP HOLDINGS INC CL A",
+   "cusip": "87256C101",
+   "amount": -18589.2
+  },
+  {
+   "key": "TMNIX",
+   "name": "COUNTERPOINT TACTICAL MUNICIPAL I",
+   "cusip": "66538R300",
+   "amount": 9541.91
+  },
+  {
+   "key": "TOIXX",
+   "name": "MONEY MKT OBLIGS TR FH TREAS INS OBL",
+   "cusip": "60934N500",
+   "amount": 0.0
+  },
+  {
+   "key": "TORIX",
+   "name": "TORTOISE ENERGY INFRASTRUCTURE TR INS",
+   "cusip": "890930506",
+   "amount": 52622.15
+  },
+  {
+   "key": "TPL",
+   "name": "TEXAS PACIFIC LAND CORPORATION COM",
+   "cusip": "88262P102",
+   "amount": 77550.75
+  },
+  {
+   "key": "TQAIX",
+   "name": "T. ROWE PRICE INTEGRATED US SM GR EQ I",
+   "cusip": "87283A102",
+   "amount": 51955.6
+  },
+  {
+   "key": "TREX",
+   "name": "TREX INC COM",
+   "cusip": "89531P105",
+   "amount": -27100.73
+  },
+  {
+   "key": "TROW",
+   "name": "PRICE T ROWE GROUP INC COM",
+   "cusip": "74144T108",
+   "amount": 39285.54
+  },
+  {
+   "key": "TSIIX",
+   "name": "THORNBURG STRATEGIC INCOME I",
+   "amount": 137349.52
+  },
+  {
+   "key": "TW",
+   "name": "TRADEWEB MKTS INC CL A",
+   "cusip": "892672106",
+   "amount": 25492.18
+  },
+  {
+   "key": "UBVSX",
+   "name": "UNDISCOVERED MANAGERS BEHAVIORAL VAL I",
+   "cusip": "904504495",
+   "amount": 48229.2
+  },
+  {
+   "key": "UFO",
+   "name": "PROCURE SPACE ETF",
+   "cusip": "74280R205",
+   "amount": 5445.0
+  },
+  {
+   "key": "URA",
+   "name": "GLOBAL X URANIUM ETF",
+   "cusip": "37954Y871",
+   "amount": 58717.59
+  },
+  {
+   "key": "UTG",
+   "name": "REAVES UTIL INCOME FD COM SH BEN INT",
+   "cusip": "756158101",
+   "amount": 193953.84
+  },
+  {
+   "key": "VADAX",
+   "name": "INVESCO EQUALLY-WTD S&P 500 A",
+   "cusip": "00142J818",
+   "amount": 21795.53
+  },
+  {
+   "key": "VADDX",
+   "name": "INVESCO EQUALLY-WTD S&P 500 Y",
+   "cusip": "00142J776",
+   "amount": 26135.51
+  },
+  {
+   "key": "VADFX",
+   "name": "INVESCO EQUALLY-WTD S&P 500 R6",
+   "cusip": "00142J131",
+   "amount": 149698.93
+  },
+  {
+   "key": "VBITX",
+   "name": "VANGUARD SHORT-TERM BOND IDX I",
+   "cusip": "921937777",
+   "amount": 222753.71
+  },
+  {
+   "key": "VCADX",
+   "name": "VCADX - VANGUARD CA INTERM-TERM TAX-EXEMPT ADM",
+   "amount": 235339.57
+  },
+  {
+   "key": "VG",
+   "name": "VENTURE GLOBAL INC COM CL A",
+   "cusip": "92333F101",
+   "amount": 1035.65
+  },
+  {
+   "key": "VGSLX",
+   "name": "VANGUARD REAL ESTATE INDEX ADMIRAL",
+   "cusip": "921908877",
+   "amount": 2074.98
+  },
+  {
+   "key": "VITSX",
+   "name": "VANGUARD MORN TOTAL STK MKT IDX INSTL",
+   "cusip": "922908801",
+   "amount": 60003.5
+  },
+  {
+   "key": "VMRK",
+   "name": "VIVMARK RESIDENTIAL SH BEN INT",
+   "cusip": "29476L107",
+   "amount": -42183.18
+  },
+  {
+   "key": "VNM",
+   "name": "VANECK VIETNAM ETF",
+   "cusip": "92189F817",
+   "amount": 18837.93
+  },
+  {
+   "key": "VTIFX",
+   "name": "VANGUARD TOTAL INTL BD IDX INSTITUTIONAL",
+   "cusip": "92203J209",
+   "amount": 110134.14
+  },
+  {
+   "key": "VYLR",
+   "name": "VYLOR INC COM SHS",
+   "cusip": "92892R108",
+   "amount": 366.65
+  },
+  {
+   "key": "WFSPX",
+   "name": "ISHARES S&P 500 INDEX K",
+   "cusip": "066922204",
+   "amount": 45517.03
+  },
+  {
+   "key": "WH",
+   "name": "WYNDHAM HOTELS & RESORTS INC COM",
+   "cusip": "98311A105",
+   "amount": -48073.5
+  },
+  {
+   "key": "WITIX",
+   "name": "ALLSPRING INTERMEDIATE TAX/AMT-FR INST",
+   "cusip": "949921662",
+   "amount": 446961.35
+  },
+  {
+   "key": "WPM",
+   "name": "WHEATON PRECIOUS METALS CORP COM",
+   "cusip": "962879102",
+   "amount": 206857.86
+  },
+  {
+   "key": "WRB",
+   "name": "BERKLEY W R CORP COM",
+   "cusip": "084423102",
+   "amount": 348.85
+  },
+  {
+   "key": "XAIX",
+   "name": "XTRACKERS ARTIFICIAL INTELLIGENCE AND BIG DATA ETF",
+   "cusip": "23306X829",
+   "amount": 17229.2
+  },
+  {
+   "key": "XME",
+   "name": "STATE STREET SPDR S&P METALS & MINING ETF",
+   "cusip": "78464A755",
+   "amount": 12931.2
+  },
+  {
+   "key": "Y65L",
+   "name": "State Street S&P State Street S&P",
+   "amount": 119843.87
+  },
+  {
+   "key": "Y65M",
+   "name": "State Street Russell Small/Mid Cap Index II",
+   "amount": 32228.95
+  },
+  {
+   "key": "Y65P",
+   "name": "State Street U.S. State Street U.S.",
+   "amount": 92997.84
+  },
+  {
+   "key": "Y665",
+   "name": "State Street Global All Cap Ex US Index Class II",
+   "amount": 60089.24
+  },
+  {
+   "key": "Y67H",
+   "name": "Prudential Core Plus Bond",
+   "amount": 27600.06
+  },
+  {
+   "key": "Y742",
+   "name": "WTC II International Opportunities S4 Port",
+   "amount": 32225.75
+  },
+  {
+   "key": "Y833",
+   "name": "WTC-CIF II SMID Cap Research Equity Series 4",
+   "amount": 20413.58
+  },
+  {
+   "key": "Y8BN",
+   "name": "JPMCB U.S. Active Core Equity Fund CF-X2",
+   "amount": 235719.67
+  }
+ ],
+ "total": 341
+}

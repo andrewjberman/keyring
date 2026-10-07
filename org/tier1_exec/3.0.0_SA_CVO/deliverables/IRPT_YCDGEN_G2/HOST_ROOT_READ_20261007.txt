@@ -1,0 +1,32 @@
+ssm 4119ed28-aecf-461c-b7e8-5eb4d6039413 Success rc 0
+== roots
+09139ee34d-st23
+136ee09e9f-st20
+34088050e0-st16
+36dfa80058-st6
+3d705e700f-st22
+3f29017cfc-st21
+409e3066d1-st24
+481166a8f2-st9
+4f68a17d3a-st11
+828c37c6f7-st17
+9ac9b56d3c-st8
+9bbb38f7a0-st15
+RESIDENT_CUTOVER_EVIDENCE_20260924.json
+a163441fb0-st19
+a3b35fd376-st7
+a6f6e7165e-st18
+ab2e088b5b
+b1db201025-st10
+c657a5966d-st13
+cf3ae52aee-st12
+== links
+== services
+  irpt-analysis-resident.service                        loaded    active     running       IRPT resident Analysis worker
+-- irpt-analysis-resident.service
+MainPID=622977
+NRestarts=0
+ExecMainStartTimestamp=Tue 2026-10-06 03:40:38 UTC
+WorkingDirectory=/opt/irpt-resident/409e3066d1-st24
+ActiveState=active
+

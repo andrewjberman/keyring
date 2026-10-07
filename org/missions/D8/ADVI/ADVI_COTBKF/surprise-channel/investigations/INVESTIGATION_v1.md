@@ -1049,3 +1049,85 @@ round.** Never edit an existing row.
   "notes": "Disarms when 1.0.0_SA_CTO~DELL2 rules where the applies run (the laptop by relay, or dell2 after NFRA_CTLPLN round 4 grants the write) and the apply runs there under a never-widen pair."
 }
 ```
+
+## ADVI_COTBKF-S13 -- CORRECTS S12: E5 and E3 do NOT write to opal-data-cottonwood. opal_naming.address('commonwealth', 'cottonwood', 'silver', ...) resolves to opal-data-assets, which the dell2 identity lists without refusal; S12's fence evidence was measured on the wrong bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S13",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "CORRECTS S12: E5 and E3 do NOT write to opal-data-cottonwood. opal_naming.address('commonwealth', 'cottonwood', 'silver', ...) resolves to opal-data-assets, which the dell2 identity lists without refusal; S12's fence evidence was measured on the wrong bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python: opal_naming.address('commonwealth','cottonwood','silver','crosswalk','date=2026-06-23') = s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23 (also documents, bronze/imaging, bronze/crm: all opal-data-assets)",
+      "listing of s3://opal-data-assets/commonwealth/cottonwood/silver/crosswalk/date=2026-06-23/ on dell2, 09:3xZ: crosswalk.csv 570,490 B and crosswalk.parquet 128,256 B (2026-10-06 22:25, round 3's apply); silver/documents/ empty; silver/account_links/ holds date=2026-06-23/",
+      "get-bucket-versioning --bucket opal-data-assets on dell2: Enabled",
+      "infra/logic/06_CONFORMANCE_LEDGER.md:149 (X15): only the CRM zip departs to opal-data-cottonwood; address() returns opal-data-assets for every other Commonwealth table (R4: one bronze/silver home)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12: the round-5 applies write to opal-data-cottonwood, whose policy denies the dell2 identity List and GetBucketPolicy.",
+  "world_is": "The applies write to opal-data-assets. S12's deny is real but on a bucket neither apply touches. PutObject from dell2 on opal-data-assets is unmeasured (no refusal seen on any read). The rulings resting on S12 (1.0.0_SA_CTO~DELL2 msg 239; laptop 09:3xZ item 6) rest on a wrong premise and go back to their authors with this row.",
+  "notes": "S12 is not disarmed by this row: its hazard (an apply from dell2) stands until 1.0.0_SA_CTO~DELL2 re-rules on the corrected premise. The never-widen draft is corrected to opal-data-assets in the same commit."
+}
+```
+
+## ADVI_COTBKF-S14 -- CB-e-3's hold-back guards s3://opal-data-assets/commonwealth/cottonwood/bronze/crm/, but the C-RESTRICTED prefix (register X15) is in opal-data-cottonwood; the guard compares the full URI, so it watches a prefix in the wrong bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S14",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "CB-e-3's hold-back guards s3://opal-data-assets/commonwealth/cottonwood/bronze/crm/, but the C-RESTRICTED prefix (register X15) is in opal-data-cottonwood; the guard compares the full URI, so it watches a prefix in the wrong bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~18 report: restricted_prefix() = opal_naming.address(SOURCE, SCOPE, 'bronze', 'crm', 'date=<d>') less the partition; a key is held when its full URI starts with it",
+      "address('commonwealth','cottonwood','bronze','crm','date=2026-06-23') = s3://opal-data-assets/... (measured 09:3xZ)",
+      "X15 (06_CONFORMANCE_LEDGER.md:149): THE RESTRICTED PREFIX is commonwealth/cottonwood/bronze/crm/ in opal-data-cottonwood; address() has no route to the firm bucket for bronze"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-e-3: the prefix is the key prefix lib/opal_naming builds for (commonwealth, cottonwood, bronze, crm), resolved the way the script resolves its own addresses.",
+  "world_is": "The order's own instruction aimed the guard at address(), which X15 says does not reach the restricted bucket. Inert today: documents write only to opal-data-assets silver, so no planned key can land in either prefix (held_restricted=0 both ways). The fix is key()-based matching (bucket-agnostic) or X15's bucket; a one-function repair for the next cut on this script.",
+  "notes": "An issuer's cut defect (2.0.0_SA_COO~C2), not the worker's: the worker built what the face said."
+}
+```
+
+## ADVI_COTBKF-S15 -- W12-S2 answered by the laptop's listing: opal-data-cottonwood holds only irpt/cottonwood/ and mdpf/cottonwood/ at two levels; opalinvest-portal holds assets/, fonts/, logos/ with no sub-prefix. Neither names a per-security daily price store
+
+```json
+{
+  "id": "ADVI_COTBKF-S15",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:35Z",
+  "one_line": "W12-S2 answered by the laptop's listing: opal-data-cottonwood holds only irpt/cottonwood/ and mdpf/cottonwood/ at two levels; opalinvest-portal holds assets/, fonts/, logos/ with no sub-prefix. Neither names a per-security daily price store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran deliverables/2.0.0_SA_COO~C2/list_unlisted_usable_buckets.py (@27b47e8ef1) at 2026-10-07T09:25Z; result org/missions/D8/ADVI/ADVI_COTBKF/deliverables/1.0.0_SA_CTO/UNLISTED_USABLE_BUCKETS_20261007.json (not yet on origin; Taildrop copy C:/Users/Test/Downloads/UNLISTED_USABLE_BUCKETS_20261007.json, 682 B, read by this seat 09:3xZ)",
+      "opal-data-cottonwood: top=['irpt/','mdpf/'], second: irpt/ -> ['irpt/cottonwood/'], mdpf/ -> ['mdpf/cottonwood/']",
+      "opalinvest-portal: top=['assets/','fonts/','logos/'], second: 0 sub-prefixes each"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3 (NOT MET at L9 @2114a2a7a2): the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket; two USABLE buckets were never listed.",
+  "world_is": "Both buckets are now listed two levels deep. Prefix names alone do not name a price store; irpt/cottonwood/ and mdpf/cottonwood/ are reporting and model-portfolio trees, read at prefix depth only. Bears on the CVO's re-grade of CB4d1-AC3; the grade is the CVO's.",
+  "notes": "Row filed by the dell2 seat per laptop ruling (row ids minted only on the project's box)."
+}
+```
