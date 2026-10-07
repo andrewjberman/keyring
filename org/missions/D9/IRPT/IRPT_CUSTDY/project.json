@@ -53,6 +53,11 @@
       "path": "org/missions/D9/IRPT/IRPT_CUSTDY/decompositions/IRPT_CUSTDY_DECOMP.round3.md",
       "round": 3,
       "status": "ISSUED-PER-GATE"
+    },
+    {
+      "path": "org/missions/D9/IRPT/IRPT_CUSTDY/decompositions/IRPT_CUSTDY_DECOMP.round4.md",
+      "round": 4,
+      "status": "ISSUED"
     }
   ],
   "decomposition_lineage": [
@@ -68,6 +73,11 @@
     },
     {
       "round": 3,
+      "date": "2026-10-07",
+      "author": "2.0.0_SA_COO~K2"
+    },
+    {
+      "round": 4,
       "date": "2026-10-07",
       "author": "2.0.0_SA_COO~K2"
     }

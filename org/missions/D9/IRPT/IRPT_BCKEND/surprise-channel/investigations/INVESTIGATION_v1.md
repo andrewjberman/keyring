@@ -19504,3 +19504,217 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "dell2 lacks terraform; the release waits for a ruling: a laptop seat applies it, or terraform reaches dell2 by an Opal-internal route."
 }
 ```
+
+## IRPT_BCKEND-W142-S1 -- The installed upload boundary (reports/generate_installed.build_boundary) refuses a verified partner advisor t
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The installed upload boundary (reports/generate_installed.build_boundary) refuses a verified partner advisor that the ordinary authorizer does not admit with public_reason_code UNEXPECTED: intake/uploads.py:177 raises a bare PermissionError('INPUT_ACCESS_DENIED'), _authz/errors.reason_for has no by_type entry for PermissionError, and the Entry declares no reasons class for it. Nothing is written or sent; the refusal is fail-closed but not actionable. The IB-pr-340 denied arm for this route is FAIL, so battery_overall_pass is false.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/analysis/inputs'].denied: case partner_without_ordinary_authorizer answered UNEXPECTED, expected NOT_AUTHORIZED or OBJECT_NOT_COVERED (battery run 2026-10-07 on CLOUD c6442ceec1)",
+      "internal record of that call: exception_type PermissionError, exception_text INPUT_ACCESS_DENIED, classifier_code UNEXPECTED, operation analysis-input-upload (printed by p340_owned_world.py under P340_WORLD=upload)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:177 raise PermissionError('INPUT_ACCESS_DENIED'); python -c 'errors.reason_for(PermissionError(\"x\"))' -> UNEXPECTED at CLOUD c6442ceec1",
+      "the same call writes nothing: table rows 0, queue messages 0 (the arm's nothing_written check passed)"
+    ]
+  },
+  "spec_asserts": "A refusal at the guarded boundary carries a code a caller can act on: _authz/tests/test_guarded_entries.py asserts every refusal is in BOUNDARY_REASONS and 'code != UNEXPECTED' ('an unclassified refusal is not a refusal a caller can act on'); served.py _handle_prospect maps ProspectOwnershipRefused to NOT_AUTHORIZED.",
+  "world_is": "MEASURED in-process on the repository's own deferred-upload world: the non-admitted partner upload answers UNEXPECTED, while the same boundary answers NOT_AUTHORIZED when the edge marker is absent. UNMEASURED live (no authenticated call was made).",
+  "notes": "Found by the IB-pr-340 fixture battery, denied class of POST /analysis/inputs. The fix is outside this order's paths (intake/uploads.py or the Entry's reasons map, a PermissionError -> NOT_AUTHORIZED declaration); the issuer disposes."
+}
+```
+
+## IRPT_BCKEND-W142-S2 -- The analysis-requests success answer's status (state QUEUED) includes internal_correlation_id, which PublicSta
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The analysis-requests success answer's status (state QUEUED) includes internal_correlation_id, which PublicStatusEnvelope.schema.json (additionalProperties false, no such key) rejects; performance/entry.py records that the portal's requirePublicStatus closes the same key set and refuses a whole success response that carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/analysis'].allowed.detail.public_status_envelope_valid = 'INVALID: Additional properties are not allowed (internal_correlation_id was unexpected)'",
+      "jsonschema Draft202012 over docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json: the status object INVALID with the key, VALID without it (run in worktree wk-IRPT_BCKEND-142 on CLOUD c6442ceec1)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py submit_analysis returns _entry.status_envelope(...) as _status; performance/entry.py comment 'NO internal_correlation_id on a SUCCESS status'"
+    ]
+  },
+  "spec_asserts": "A SUCCESS status on a scoped route is the PublicStatusEnvelope: no internal_correlation_id (performance/entry.py, CTO amended ruling IRPT-HOLDINGS-SUCCESS-STATUS-20260924).",
+  "world_is": "MEASURED in-process with a recorded SubmissionService: the QUEUED success status of POST /analysis carries internal_correlation_id (holdings, performance and submit-export successes validate). UNMEASURED whether the deployed composition reaches the success path (the custody factory may be absent there).",
+  "notes": "Not an arm of this battery; recorded as an observation on the allowed answer."
+}
+```
+
+## IRPT_BCKEND-W142-S3 -- ops/status_loader.status_loader names its job from request.object_id, request.params[job|job_id|jobId] or requ
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ops/status_loader.status_loader names its job from request.object_id, request.params[job|job_id|jobId] or request.job_id; Entry.handle fills those only from event['object_id'] / event['params'], keys API Gateway never sets. With pathParameters {jobId} and queryStringParameters {job} the module Entry answers NOT_FOUND for a job whose lease row exists; the fixture had to set event['object_id'] to get SERVED. GET /status has no job parameter at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "in-process run 2026-10-07 on CLOUD c6442ceec1: get_status fixture with event pathParameters {jobId: JOB-0001} + queryStringParameters {job: JOB-0001} -> NOT_FOUND KeyError 'status_loader needs a tenant ... and a job (request.object_id / params[job|job_id|jobId]...)'; with event object_id JOB-0001 -> SERVED state RUNNING",
+      "infra/aws/lambda/investor-reporting/ops/status_loader.py docstring: translating the {jobId} path parameter into object_id 'is a later cell's wiring, not fabricated here'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/fixtures/get_status.allowed.json notes"
+    ]
+  },
+  "spec_asserts": "The TO says to shape each fixture from the route's own request contract (routes.json, the contracts, the entry's validators): GET /status and GET /status/{jobId} are scoped authenticated reads.",
+  "world_is": "The module Entry's authenticated GET /status can only answer NOT_FOUND on an API-shaped event; the fixture uses object_id, the field the compute reads. The deployed GET /status/{jobId} is served by the owned reader (build_owned_entry, driven separately and SERVED); the deployed GET /status still uses this loader (UNMEASURED live).",
+  "notes": "route routes.json note: 'the prefix probe the unauthenticated difference control uses'."
+}
+```
+
+## IRPT_BCKEND-W142-S4 -- export/entry.py _covered returns (True, 0, 0) when facts names no account; ExportReceipt.schema.json facts is 
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "export/entry.py _covered returns (True, 0, 0) when facts names no account; ExportReceipt.schema.json facts is additionalProperties false and has no account_ids member. For a contract-valid stored receipt the CURRENT-scope coverage check therefore never refuses; the route's object scoping is the guard (any grant) plus the bound firm's key prefix. The foreign_object cases of the export fixtures use the entry's own offline receipt_fixture seam with a non-contract facts.account_ids to exercise that branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered(): 'if not named: return True, 0, 0' at CLOUD c6442ceec1",
+      "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json properties.facts: additionalProperties false, members page_count, validation_status, validation_failures only",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/fixtures/get_export_exportId.allowed.json notes. No stored receipt was read (firm buckets deny this box)."
+    ]
+  },
+  "spec_asserts": "export_receipt docstring: 'The ExportReceipt for an export the caller's CURRENT scope covers'; export_download: 'the CURRENT scope must cover every account on the receipt'.",
+  "world_is": "By the code and the schema a contract-valid receipt names no account, so the coverage test passes for any grant-holding advisor of the firm who holds the export id. UNMEASURED against a real stored receipt.",
+  "notes": "An observation for the issuer; this order changes nothing."
+}
+```
+
+## IRPT_BCKEND-W142-S5 -- export.submit_export composes its ports from env (IRPT_REQUESTS_TABLE, IRPT_EVIDENCE_BUCKET, IRPT_PORTAL_CHECK
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "export.submit_export composes its ports from env (IRPT_REQUESTS_TABLE, IRPT_EVIDENCE_BUCKET, IRPT_PORTAL_CHECKOUT) and the real report index; none exists offline here, so the allowed principal's operation-shaped POST gets past the boundary and answers its own named NOT_READY (_ExportNotWiredHere). The composed QUEUED payload is exercised only by export/tests/test_submit_entry.py's pytest world.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/export'].allowed: answer NOT_READY, cause _ExportNotWiredHere",
+      "routes.json POST /export note: 'graded on that absence REPORT, never on a render'"
+    ]
+  },
+  "spec_asserts": "The TO asks one operation-shaped ALLOWED fixture per gated route and the battery run on them.",
+  "world_is": "For POST /export the allowed fixture's defined outcome is PAST_BOUNDARY with the declared cause, because a SERVED answer needs a composed report-index world; the denied class is fully driven (refused before the operation).",
+  "notes": "Same limit applies, by the fixture's declared expectation, to nothing else: every other gated route's allowed arm is SERVED."
+}
+```
+
+## IRPT_BCKEND-W142-S6 -- AMENDMENT 1 named the two refusals at the old :177 and :185 (now InputAccessDenied NOT_AUTHORIZED and InputUna
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:59:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 named the two refusals at the old :177 and :185 (now InputAccessDenied NOT_AUTHORIZED and InputUnavailable NOT_FOUND; row W142-S1's UNEXPECTED is gone: the denied arm answers NOT_AUTHORIZED, battery_overall_pass true). Two bare PermissionError raises in the same file are untouched, being outside the amendment: load_input_owner's INPUT_UNAVAILABLE (now :160, the OWNED_INPUT guard's owner lookup, same text and meaning as the fixed :185 site) and NORMALIZATION_UNAVAILABLE (now :409). Each would answer UNEXPECTED through reason_for if it reached the classifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py @ worktree HEAD+edit: raise PermissionError at :160 and :409 (Grep, 2 matches); the amended sites are :177/:185 before the edit, now InputAccessDenied/InputUnavailable",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_uploads_refusal_class.py: 6 passed, covering the two amended sites only"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: both refusals (:177 and :185) raise a declared class; the grant is uploads.py only.",
+  "world_is": "The two named refusals are fixed and the battery reads 17 of 17 gated routes green. Whether the :160 owner lookup (it could reuse InputUnavailable, preserving the not-found-equals-not-yours answer) and the :409 raise get the same treatment is a later cell's call; this worker did not widen the order.",
+  "notes": "No fixture reaches :160 or :409 in the battery, so neither is graded by AC1."
+}
+```
+
+## IRPT_BCKEND-S365 -- PrintEntry custody-report candidate waits on a portal toolchain; readReportKind still falls back to performance
+
+```json
+{
+  "id": "IRPT_BCKEND-S365",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T11:10:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Portal PrintEntry.tsx @cdda4378 (IB-pr-336's portal half, the custody-report kind refused by name) is reviewed LAND-WITH-NOTE by 1.0.0_SA_CTO~DELL2 (msg 403) but cannot land on DEV yet: its conditions are a typecheck + eslint pass and one test (?kind=custody-report yields the refusal with 0 requests), and dell2 has no portal toolchain (tsc absent). NOTE for the next round: readReportKind (PrintEntry.tsx:109) still maps any unknown kind to 'performance' on the page side; it must refuse an unknown kind as the render host now does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 403: @cdda4378 vs origin/DEV, 1 file +15/-1; conditions (1) typecheck + eslint + one test, (2) readReportKind :109 refuses an unknown kind next round",
+      "wk-provision on dell2: 'TSC: ABSENT' at every portal worktree provision this session"
+    ]
+  },
+  "spec_asserts": "A reviewed portal candidate lands on DEV once its named checks run.",
+  "world_is": "The checks need a portal toolchain dell2 lacks (bring-up kit). The page-side unknown-kind fallback is next round's enrichment item."
+}
+```
+
+## IRPT_BCKEND-W144-S1 -- TO-IB-pr-342 names the firm buckets opal-data-49financial / opal-data-inflection / opal-data-cottonwood; the d
+
+```json
+{
+  "id": "IRPT_BCKEND-W144-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~144",
+  "surfaced_at": "2026-10-07T11:11:41Z",
+  "one_line": "TO-IB-pr-342 names the firm buckets opal-data-49financial / opal-data-inflection / opal-data-cottonwood; the directory's own registry maps the three firms to opal-data-bd / opal-data-inf / opal-data-cot, and the ownership map and served directory live there. opal-data-cottonwood answers 403 (the named fence, not widened); opal-data-cot answers 200, so the cottonwood ownership map (advisors=0) was read there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED head/get on 2026-10-07: s3://opal-data-bd/platinum/49financial/ownership_map.json 200 (472562 bytes), s3://opal-data-bd/investor-reporting/directory/latest.json 200; s3://opal-data-inf/investor-reporting/directory/latest.json 200; s3://opal-data-inf/platinum/inflection/ownership_map.json 404; s3://opal-data-cot/platinum/cottonwood/ownership_map.json 200 (107 bytes, advisors=0); s3://opal-data-cottonwood/... 403 on both keys",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:177-185 @94e67927f5 firm_bucket_map(): 49financial -> opal-data-bd, inflection -> opal-data-inf, cottonwood -> opal-data-cot; data/assets/scripts/gold/runners_49f/runner_common.py:34 GOLD_BUCKET = opal-data-49financial (the gold dimension plane the directory builds from, read-only here)",
+      "no fence was widened: the denied bucket opal-data-cottonwood was probed once and never read; the cot directory.json itself was not read (zero granted accounts there)",
+      "census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~144/IB64-1_directory_coverage.json per_firm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "opal-data-cottonwood is the denied cottonwood bucket and opal-data-49financial / opal-data-inflection are the readable firm buckets; cottonwood accounts are to be recorded under a fence reason.",
+  "world_is": "All 7,022 granted accounts are 49financial (ownership map in opal-data-bd). Inflection has no ownership_map object; cottonwood's map (opal-data-cot) holds 0 advisors, so zero cottonwood accounts needed the fence reason; FENCE_COTTONWOOD_BUCKET_DENIED is declared with count 0."
+}
+```
