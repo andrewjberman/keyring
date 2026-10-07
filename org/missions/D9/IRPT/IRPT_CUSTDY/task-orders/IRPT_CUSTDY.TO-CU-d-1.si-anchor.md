@@ -90,7 +90,8 @@ computes or reports by rules 1-3; nothing is `HELD_CALENDAR_FIX`), keep their in
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
 - **AWS: read only** (Schwab silver, the returns gold, the ownership map via `legacy_address`). No write; never `--apply`.
-- **Never print a full account number.** Never edit `hop3_real_run.py` or another cell's or project's file.
+- **Never print a full account number.** Edit `hop3_real_run.py` and `tests/test_hop3_real_run.py` only as AMENDMENT 1 says; never edit
+  another cell's or project's file.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
   `IRPT_CUSTDY-W9-S<k>`; `disposition` one of UNDER_INVESTIGATION | GRADUATED | DISMISSED_WITH_REASON | DECOMP_INVALIDATING), and do
   not weaken the test.
@@ -114,8 +115,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CU10-AC1, CU10-AC2. Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~9/IRPT_CUSTDY.TO-CU-d-1.si-anchor.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> CU10-AC1,CU10-AC2` BEFORE the flip.
+Criterion ids: CU10-AC1, CU10-AC2, CU10-AC3. Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~9/IRPT_CUSTDY.TO-CU-d-1.si-anchor.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> CU10-AC1,CU10-AC2,CU10-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the real `SI-ANCHOR` line with the per-rule counts, where rule 1's date comes from (file, column), the test list, rows, commits.
