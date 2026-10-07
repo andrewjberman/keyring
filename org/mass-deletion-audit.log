@@ -19,5 +19,8 @@
 2026-08-06T15:52:07Z  ATTRIBUTED  agent=Andrew Berman  deletions=86  threshold=25  mode=block  attribution=ledger-file rcg/ledger/BATCHES.jsonl
 2026-08-06T19:45:44Z  ATTRIBUTED  agent=Andrew Berman  deletions=67  threshold=25  mode=block  attribution=ledger-file rcg/ledger/BATCHES.jsonl
 2026-09-03T09:13:06Z  ATTRIBUTED  agent=Andrew Berman  deletions=198  threshold=25  mode=block  attribution=ledger-file org/critical_paths/.open_findings/RESOLVED_R4A_CLASS_20260903.md
+2026-09-27T06:19:39Z  BLOCKED    agent=Andrew Berman  deletions=34  threshold=25  mode=block  attribution=<none>
+2026-09-27T06:31:33Z  BLOCKED    agent=Andrew Berman  deletions=34  threshold=25  mode=block  attribution=<none>
+2026-09-27T06:34:04Z  ATTRIBUTED  agent=Andrew Berman  deletions=34  threshold=25  mode=block  attribution=ledger-file org/tier1_exec/4.0.0_SA_CRO/deliverables/NEVER_WIDEN_SIGNOFF_CRO_HALF_IRPT_UI_WALK_W10_K8_EXPORT_20260927.md
 2026-10-04T17:48:53Z  BLOCKED    agent=Andrew Berman  deletions=38  threshold=25  mode=block  attribution=<none>
 2026-10-04T18:07:01Z  ATTRIBUTED  agent=Andrew Berman  deletions=38  threshold=25  mode=block  attribution=ledger-file org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_18xxZ_DELETE_AGENT_TOS_CONTEXT_AND_UNAUTHORIZED_GATES.md

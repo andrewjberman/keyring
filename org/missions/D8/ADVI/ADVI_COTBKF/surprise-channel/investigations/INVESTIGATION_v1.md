@@ -1814,3 +1814,77 @@ round.** Never edit an existing row.
   "notes": "Found by the issuer while answering Andrew's status question, not by a task order. Offered to 1.0.0_SA_CTO~DELL2 for the next enrichment list."
 }
 ```
+
+## ADVI_COTBKF-D2-W33-S1 -- The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "The order says a flow's amount is its Amount; the module uses direction x |Amount| because the Amount sign convention on the silver transactions is not documented anywhere the worker may read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_flows.py: flow_amount(); data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py: test_signed_amount_gives_the_same_flow_as_unsigned passes (lo -20.0 and lo 20.0 both give flow -20)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 1: the flow amount of a row is its Amount.",
+  "world_is": "No file in the silver scripts or the order records whether Amount is stored signed (a withdrawal negative) or unsigned (like Quantity). A bare Amount read as signed would turn an unsigned lo into an inflow. commonwealth_flows.flow_amount returns direction x |Amount| (direction from the flow table; for share-moving types it equals commonwealth_signs.SIGN), which equals the signed Amount when the vendor signs it and is right when the vendor does not; it is wrong only for a row booked with the opposite sign to its type (a negative-Amount li). The first real run should count flow rows by type and sign of Amount before the grade is trusted."
+}
+```
+
+## ADVI_COTBKF-D2-W33-S2 -- commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W33-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~33",
+  "surfaced_at": "2026-10-07T19:54Z",
+  "one_line": "commonwealth_daily_holdings.load_tx_pos() cannot supply the flows: cw.TX_COLS has no Amount, so the returns script has its own four-column loader",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:444 TX_COLS; data/assets/scripts/silver/commonwealth_daily_returns.py: load_tx()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-p-2 step 2: read silver transactions with commonwealth_daily_holdings.load_tx_pos().",
+  "world_is": "load_tx_pos() projects commonwealth_crosswalk.TX_COLS (Account_Number, Cusip, Symbol, Quantity, Trade_Date, Transaction_Type, Advisor_ID) and the cache written from it has no Amount column. commonwealth_daily_returns.load_tx() reads Account_Number, Trade_Date, Transaction_Type and Amount from the cache only when the cache carries Amount, else from the silver transactions table on S3 (read-only, same prefix and reader as load_tx_pos). Not exercised on real data this round (stub only); the first real run reads S3 once for four columns."
+}
+```
+
+## ADVI_COTBKF-D2-W32-S1 -- the census reader keeps no price column; the valuation re-reads the stores with a price-keeping cleaner
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W32-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~32",
+  "surfaced_at": "2026-10-07T20:04Z",
+  "one_line": "the census read_store keeps no price (its cleaner drops the column) and the cached store frames are priceless, so the valuation re-reads the six stores from S3 with the cleaner swapped in memory",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py _clean returns only kind,key,day,source; .scratch/price_census_cache/*.parquet columns = ['kind','key','day','source'] (6 files read with pandas)",
+      "first run of data/assets/scripts/silver/commonwealth_daily_valuation.py read the six stores read-only from S3 (cold 1m45s, over the 120 s bound once; cached reruns 74 s); inside one store 2204 gold-holdings and 3753 silver-canonical-prices security-days carry disagreeing rows (silver (max-min)/min median 4.6, i.e. the highest row is typically 5.6 times the lowest) and are left unpriced; gold had a further ~31,000 float32-noise disagreements (relative < 1e-6) that PRICE_TOL now treats as one price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-p-1: prices come from the six census stores via STORES, read_store (or load_store_cached), symbol_claims, match_security -- the cache at .scratch/price_census_cache is usable.",
+  "world_is": "read_store/load_store_cached return day keys without prices, so no valuation can come from them or their cache. The script imports the census module, swaps pc._clean for a price-keeping variant for the duration of the read, and caches the priced frames under <data-dir>/price_cache. Nothing in the census file is edited. Same-key-day disagreement inside a store (silver 3753, gold 2204) is a data question for whoever owns the price load: the script blanks those days rather than choose.",
+  "notes": "The 3753 silver conflicts differ by a median factor of 5.6 (highest row over lowest), which looks like two different securities or units under one key and day, not rounding."
+}
+```
