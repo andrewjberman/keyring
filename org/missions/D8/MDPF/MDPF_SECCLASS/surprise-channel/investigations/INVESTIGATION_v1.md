@@ -3023,3 +3023,58 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Other stated choices: contract 0.5.0; the key form is declared as identifier_namespace value NAME (definition carries the PROPOSED KEY FORM line verbatim, rule24 record under key_form_rule24_record_NAME), which also changes the identifier_namespace values and the stale 'remainder is empty' text in its existing rule24_record is left as it was. test_model_classifier.py:245-248 (pins 0.3.0, SC-e-31's file) is red at the cut and  Ruff 0.16.10 on this box refused pre-existing UP031 at test_classified_by_v2.py:81 (a percent-format assert message); changed to the equivalent f-string, same message, no runtime change."
 }
 ```
+## MDPF_SECCLASS-W23-S4 -- TO-SC-e33 cannot be met as written: the served Holdings builds sit in firm buckets that deny the order's principal
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:42:07Z",
+  "one_line": "TO-SC-e33 cannot be met as written: the served Holdings builds live in the three firms' primary private buckets (opal-data-49financial/-cottonwood/-inflection, irpt/<firm>/platinum/holdings/), and the order's principal (cloudops-dell1-agent-user) gets an explicit resource-policy Deny on every read there, so the held set cannot be read; the order's named buckets (opal-data-bd/cot/inf) hold no served Holdings object.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "HoldingsPublication(s3, firm).capture() (infra/aws/lambda/investor-reporting/holdings/publication.py, the producer's own reader; address from lib/opal_naming.py address('irpt', firm, 'platinum', 'holdings', 'current', 'manifest.json')) returned AccessDenied 'explicit deny in a resource-based policy' on s3:GetObject for s3://opal-data-49financial/irpt/49financial/platinum/holdings/current/manifest.json, and the same for opal-data-cottonwood and opal-data-inflection, at 2026-10-07T08:42Z; aws s3 ls on each bucket is also denied (s3:ListBucket)",
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:93-147 DenyForeignFirmPrincipals: every principal is denied except the firm-scoped role patterns, registry exemptions and irpt-performance-adapter-role; the caller is a user ARN outside the list",
+      "firm_bucket_map() (holdings_snapshot.py:180) maps to opal-data-bd/cot/inf, which this principal can list, but aws s3 ls s3://<bucket>/irpt/ is empty on all three and investor-reporting/ holds only directory/ and qa/; holdings_snapshot.py:12-14 says legacy routed aliases remain input reads only and no mutable latest is written",
+      "run of the order's own AC2 check at base 37251ef9a0: MISSING-LIST ok=False firms=0 of 3 listed=0 false_entries=0 control=present problems=3 (control AAETX present, so the table read works; only the held read is blocked)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says the served address is found from the producer's code and builder output and read from the firm's own bucket (opal-data-bd/cot/inf per firm_bucket_map), read-only, from this box.",
+  "world_is": "The producer lands the served build in the canonical primary firm home, whose bucket policy admits only firm-scoped principals; the box's agent user is not one. No script or list file was written and nothing was committed apart from this row. I did not assume another role or rebuild the held set from silver sources, because either would widen the order.",
+  "notes": "Needed from the issuer: either run the pull under a principal the three firm buckets admit (and say which, as the producer does with IRPT_HOLDINGS_PUBLISH_ROLE_ARN), or rule that the held set may come from a different named object. Not the first reading of the order, but the shape of the fix is the script reading HoldingsPublication.capture() per firm, taking SECURITY nodes (display.symbol, amount.value), excluding the producer's cash line (symbol CASH with description CASH, holdings_snapshot.py:951-956), and testing symbol then CUSIP: against etf-classifications with consistent reads; the producer's canonical lookup at :882-887 keys on the upper-cased symbol only, so the CUSIP: key is the order's addition. I have not built it because it could not be run."
+}
+```
+
+
+## MDPF_SECCLASS-W23-S5 -- The producer's own lookup reads the symbol key only, so the order's "symbol or CUSIP:" test and the producer disagree on 238 held securities
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:56:00Z",
+  "one_line": "TO-SC-e33's definition of 'no entry' (neither symbol nor CUSIP:<cusip> in etf-classifications) is wider than the producer's lookup, which reads only get_item(ticker=<SYMBOL>): 51 of 1843 held 49financial securities and 187 of 1264 cottonwood securities are present by CUSIP: only, so the producer serves them through its fallback while the missing list does not name them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "holdings_snapshot.py _NarrowedClassifier.canonical_lookup (~line 880) passes only display.symbol to etf_classifications_dynamodb.ETFClassifier.get_classification (line 72: table.get_item(Key={'ticker': ticker})); no CUSIP: key is read",
+      "run at 2026-10-07T08:5xZ over the local producer builds (as-of 2026-10-05, @4b258de305): securities whose symbol key is absent but CUSIP:<cusip> is present, consistent BatchGetItem: 49financial 51 of 1843, cottonwood 187 of 1264, inflection 0 of 1601; 49financial also has 57 held securities with no symbol at all (identity CUSIP: or NAME::)",
+      "missing_list_check.py MISSING-LIST ok=True firms=3 of 3 listed=1565 false_entries=0 control=present problems=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: 'No entry: the producer's own lookup finds nothing ... apply the same keys in the same order' and, in the same sentence, 'neither its symbol key nor CUSIP:<cusip> exists'.",
+  "world_is": "The two readings differ. I followed the written rule (both keys), which is what the AC2 check tests; the 238 securities are not in the lists, so the lists understate what the producer serves unclassified-by-table. The lists total 1565 (451 / 341 / 773).",
+  "notes": "Whether SC-e-32 or the Holdings reader should adopt the CUSIP: key is the CTO's; this cell only records the gap."
+}
+```
