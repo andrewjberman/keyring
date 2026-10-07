@@ -516,3 +516,31 @@ changes a Bloomberg-calling mode; no worker makes a call).
   change, and nothing else.
 - **Organic trigger:** the issuer's backfill run (never a worker's), split over the days the ledger's room allows, each
   after that day's 07:00 America/New_York vehicle run; the issuer's DELTA 0 proof on the served rankings (ruling term 1).
+
+## ROUND 21 (main workstream) -- APPENDED 2026-10-07, revision 1.11 of this file
+
+One cell, on the L9 grades of 3.0.0_SA_CVO~RV for rounds 15 to 19 (`surprise-channel/adjudications/ADJUDICATION_v20.Z.md`
+row ETFS_RIVALS-Z-C-S60 @0c69a8829e). Author 2.0.0_SA_COO~RV; the issuer rules these inside cells RIV-ml-1, RIV-tl-1 and
+RIV-md-1's surfaces. No earlier cell is replaced. Chain `~11`, one cell, file render.py, risk SERVED.
+
+### `RIV-pl-1` -- the month strip shows every month of its window, the trade list is headed by its window, and the chart's currency label clears the axis (FWD-22, FWD-23; CVO row Z-C-S60)
+- Measured by the CVO on the round-19 real run: 56 of the 252 year strips have one or more markers in October 2025,
+  inside the 365-day trade list and outside the 12-cell strip, whose first cell is November 2025; in 141 dialogs a
+  30-day or 90-day buying section sits above the 365-day trade list, and the list carries no heading of its own; the
+  "Price in <currency>" label is printed over the axis's top figure when that figure is long (TWD); the drawing uses
+  about two thirds of the frame's width.
+- Interface:
+  1. `render._month_chart(mark, end)` draws EVERY token of the mark, at most 13. When the first and the last cell are
+     the same calendar month (a 13-token mark), those two cells carry the month and a two-digit year (`data-m="Oct 25"`,
+     `data-m="Oct 26"`); every other cell carries the bare month. A mark of 12 tokens or fewer is drawn as round 19
+     drew it. `render._month_words(mark, end)` names the same months the same way.
+  2. `render._trade_list(trades)` puts, immediately before the `[data-chart-trades]` element, the caption element
+     `<p data-chart-trades-head>` holding exactly `Trades in the last 365 days`, with or without a context trade. The
+     script leaves the caption alone when it rewrites the list.
+  3. In the page's one script the "Price in <currency>" label is drawn where it cannot overlap an axis figure (right
+     aligned at the plot's top right edge), and the chart is as wide as its frame.
+- Rulings at the cut (issuer): the stylesheet's month cells must stay readable at 13 cells (the two year-carrying
+  labels are five characters). `round15/checks/ml-1.AC1.py` pins round 19's rule that a 13-token mark draws 12 cells
+  (its arm (a), and arm (e)'s "12 months at most"); the cell may change those two arms to this cell's rule and nothing
+  else in that file. Items 1 and 2 are checked mechanically; item 3 is the CVO's to grade in a browser.
+- **Organic trigger:** any security dialog on the live page; the issuer's real run.
