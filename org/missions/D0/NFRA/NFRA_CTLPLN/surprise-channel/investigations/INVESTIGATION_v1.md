@@ -495,3 +495,27 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "dell_deploy_policy.json AgentbusSendToInboundQueues allows sqs:GetQueueUrl and sqs:GetQueueAttributes on four agentbus ARNs only, and ReadOnlyForTerraformPlan holds sqs:List* only; the READ table for aws_sqs_queue (sqs:GetQueueAttributes, sqs:GetQueueUrl, sqs:ListQueueTags) is therefore not satisfied for a queue the Dell creates. The worker also added s3:GetAccelerateConfiguration, GetReplicationConfiguration, GetObjectLockConfiguration and GetObjectTagging for the aws_s3_bucket and aws_s3_object refresh, all Get-verb. sqs:GetQueueAttributes can return a queue's Policy attribute (a read of access, not a write); the CTO may strike the two sqs actions, in which case the sqs kind joins READ_HELD. Not exercised against a real refresh."
 }
 ```
+
+## NFRA_CTLPLN-W4-S8 -- one PassedToService list for all named roles
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:15:57Z",
+  "one_line": "The rendered AllowPassNamedRoles carries one iam:PassedToService list for ALL named roles, so with two applied roles for different services each role may be passed to either service; the order specifies this shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/render_passrole.py render(): one Allow statement, Resource = sorted ARNs, Condition StringEquals iam:PassedToService = sorted distinct services; scratch run with two applied records (alpha for ec2.amazonaws.com, zeta for lambda.amazonaws.com) rendered Resource [alpha, zeta] with services [ec2.amazonaws.com, lambda.amazonaws.com]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-3 build step 1: AllowPassNamedRoles has Resource = the same sorted ARNs and Condition StringEquals iam:PassedToService = the sorted distinct services of those records.",
+  "world_is": "The pairing of role to service is lost in the single statement: with N applied roles over M services, every role may be passed to every one of the M services. It is inert today (zero applied records, no Allow statement is written) and the one-fixture simulation cannot show it. A per-role statement (one Allow per applied record, its own Resource and its own service) would hold the pairing and costs one statement per role against the 6,144 limit. Not changed: the order specifies the single statement. Exercised only by the scratch run named in the evidence, not against the cloud's evaluator."
+}
+```
