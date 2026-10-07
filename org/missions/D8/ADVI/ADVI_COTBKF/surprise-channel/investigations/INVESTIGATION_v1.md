@@ -1362,3 +1362,29 @@ round.** Never edit an existing row.
   "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
 }
 ```
+
+## ADVI_COTBKF-W24-S1 -- The order names "statements" and "tax forms" but no doc_type for either; the page maps STMT to statements and TXRP to tax forms, and TXRP's dates are file-name dates (2025-02-09 to 2026-06-06), not tax years
+
+```json
+{
+  "id": "ADVI_COTBKF-W24-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~24",
+  "surfaced_at": "2026-10-07T12:30Z",
+  "one_line": "Statements and tax forms were mapped to STMT and TXRP by reading TO CB-c-2; TXRP carries file-name dates spanning 16 months, not 2 tax years",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "silver documents.parquet and document_index.parquet on 2026-10-07: STMT 7,736 dated 2025-06-30 to 2026-05-31 (date_source listing:StmtDate); TXRP 1,034 dated 2025-02-09 to 2026-06-06 (date_source file_name)",
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-c-2.document-index.md line 34: STMT (monthly statements), TXRP (tax documents)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-h-1: statements run 12 months and tax forms 2 tax years; spans come from the documents table's doc_type and doc_date.",
+  "world_is": "The documents table has no kind column; the order does not say which doc_type is a tax form. The page uses STMT and TXRP. TXRP's doc_date is read from the file name (all 1,034), so its span is a file-date span of 16 months, which may not be the 2 tax years the order states; the tax year sits in the listing fields (row W9-S1). The page prints the span as measured and says the dates come from the file name.",
+  "notes": "Surfaced building TO CB-h-1 (the FWD-6 per-kind page)."
+}
+```
