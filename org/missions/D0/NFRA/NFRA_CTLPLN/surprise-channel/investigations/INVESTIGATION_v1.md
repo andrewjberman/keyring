@@ -936,3 +936,54 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Counted as: a bucket with a live policy whose declaring aws_s3_bucket_policy resource is not found by the resolver (literal bucket, a local holding the literal, a for_each over the registry, or the two registry idioms). NO-POLICY buckets read 'n/a'. UNDECLARED fences = 0; each bucket's declaring file and line are in the saved JSON under its declared field."
 }
 ```
+
+## NFRA_CTLPLN-W10-S1 -- CT-d-7: lib/opal_naming.py validate REFUSES every resources.json row for this project's nine named resources, so step 3 (add the missing rows) cannot land
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T08:37:30Z",
+  "one_line": "TO-CT-d-7 step 3 asks for resources.json rows for the nine named resources of nfra-ctlpln-identity and nfra-ctlpln-agentbus, but the registry's own validator refuses each such row as redundant, because every one of the nine names already resolves its system (cloudops or agentbus) from its own tokens; no row was added.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "nine rows (system cloudops x7 for the group, two users and four policies; agentbus x2 for the two .fifo queues; systems.json carries both keys) appended to infra/logic/registry/resources.json in the worktree: `python lib/opal_naming.py validate` -> 'REFUSED resources.json[465].name: cloudops-dell-agents-group already resolves cloudops from its own tokens (type IAM_GROUP); a row naming the same system is redundant' and the same line for [466]..[473]; 'VALIDATE: REFUSED 9 refusal(s)'. Before the rows: 'VALIDATE: OK ... 465 rows'. The file was restored to its committed bytes (git diff empty).",
+      "lib/opal_naming.py lines 605-612 and 654-669 (validate): a resources.json row fills a {system} placeholder ONLY where a name's own tokens resolve none; a row naming the SAME system as the tokens is refused",
+      "lib/opal_naming.py grade() on each of the nine names returns CONFORMANT (the IAM user is NOT-GRADED by type) with no row; the opal_name module's name() gives agentbus-global-dell1-queue.fifo, equal to the module-formatted string"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 step 3 and PRD v0.13 C-NAMING clause (3): a new resource's row lands in infra/logic/registry/resources.json in the same commit as its Terraform; the read lists a name as MISSING when no row carries it.",
+  "world_is": "(no AWS call was made; Terraform was read from commits only.) resources.json is the registry's carrier for names whose own tokens cannot resolve a system (NAMING_SCHEMA grade.placeholder), not a list of every resource. The nine names of the two roots are builder-conformant, so a row for any of them cannot be admitted (validate refuses it; the commit's naming limb and the registry readers sit on that validate). The read therefore prints MISSING for nine conformant names and its ok=False cannot be cleared by a row. No row was added; no vocabulary row was missing (cloudops and agentbus are systems.json keys). What 'everything should be registered' means for a conformant name is the registry owner's call: a different carrier or flag, a validator exemption for rows that restate a conformant name, or a read that grades a name CONFORMANT-BY-TOKENS instead of MISSING. CT4d7-AC2 expects only unresolved=0, which holds (0 of 9); the last line records missing=9."
+}
+```
+
+## NFRA_CTLPLN-W10-S2 -- CT-d-7: the identity root names its resources with string literals, not through the opal_name module
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T08:37:45Z",
+  "one_line": "The order says the identity root names its resources through the opal_name module; at 208c5d85ee infra/aws/terraform/nfra-ctlpln-identity/iam.tf names all seven named resources with string literals and only the agentbus root calls modules/opal_name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf @208c5d85ee: name = \"cloudops-dell-agents-group\" (line 16), \"cloudops-dell1-agent-user\" (20), \"cloudops-dell2-agent-user\" (25), \"cloudops-dell-agent-deploy-policy\" (36), \"cloudops-dell-agent-create-policy\" (51), \"cloudops-dell1-agent-bus-policy\" (65), \"cloudops-dell2-agent-bus-policy\" (72); the file has no module block; main.tf's header says tests/check_identity.py compares each name to the builder",
+      "infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf:19-27 @208c5d85ee: module \"queue_name\" for_each over local.inbound_boxes, source ../modules/opal_name, resolved to agentbus-global-dell1-queue.fifo and agentbus-global-dell2-queue.fifo and equal to lib/opal_naming.py name()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 build 1: the identity root names its resources through the opal_name module.",
+  "world_is": "The read resolves the identity names as literals (7 of 7) and the agentbus names through the module with a builder cross-check (2 of 2, name() equal); for the seven literals the builder cross-check is the root's own tests/check_identity.py, not re-run here. No criterion depends on the difference."
+}
+```
