@@ -213,10 +213,43 @@ Measured 2026-10-07 08:12Z at workspace `30f94c3ab1` and portal `origin/DEV` `8d
   `upload-accept-suggestion.test.tsx` failed at import ("Cannot find package 'react'"), and no 5174 build or `/ui-walk`
   was run. The section 4.2 walk is read from source and fixtures. Exact pixels, layout and focus order are unverified.
 - No external products were researched (section 4.3, egress).
-- Whether `InputReview.tsx` is mounted anywhere a user reaches was not checked.
-- Whether the provider row carries a security name (R1) was not checked.
+- (Answered in Part VIII: `InputReview.tsx` is mounted, and the provider row carries a name.)
 - The delisted/successor behaviour (5c, R9) is inferred from the prompt text and was not exercised.
 - No costs are estimated beyond small/medium. No numbers are proposed for a confidence threshold.
+
+---
+
+## PART VIII -- FOLLOW-UPS (CTO~DELL2 msg 122, 08:15Z)
+
+### 8.1 Does YCharts' `securities_info` row carry a display name? YES
+
+- **Code:** the resolver refuses any row that lacks a string `security_name` (`security_resolution.py:44-49`,
+  `_row_fields_complete`: `securitylist_security_id`, `security_name`, `detailed_security_type`, `features_needed`).
+  Every FOUND candidate therefore carries a name and a type.
+- **Recorded fixture:** `intake/tests/fixtures/lookup_capture/02_securities_info.json` (the CRO capture of 2026-09-23;
+  no live call was made now). Rows: AAPL "Apple, Inc." (stock), VNQ "Vanguard Real Estate ETF" (etf), $:CASH "Cash" (cash).
+- **Consequence for R1:** R1 needs no new data and is TODAY. The verified check in `upload_suggestions.py` already holds
+  `check["candidates"][0]`, so it can keep `security_name` and `detailed_security_type` beside the symbol. The page then
+  shows "Did you mean AAPL (Apple, Inc., stock)?". Part V's first bullet is answered: the dependency does not exist for a
+  suggestion verified on YCharts. Under FWD-16 (S31), the name must come from Opal's data instead.
+
+### 8.2 Is `InputReview.tsx` mounted on a reachable route? YES, a second correction surface
+
+- **Mount chain at `origin/DEV` `8ddfe409`:** `tabs/TabShell.tsx:13,164` renders `AnalysisTab`, and
+  `tabs/analysis/AnalysisTab.tsx:418` renders `<InputReview request={selectedRequest} ...>` whenever a request is
+  selected (`:404`, `selectedRequest ? ...`).
+- **What it shows:** every holding row with a free-text "Correct account grouping" box. Each `AnalysisRequest` finding
+  gets its own free-text box, for example "Propose a substitution" for `UNRESOLVED_SECURITY` (`InputReview.tsx:32-43`).
+  There are no suggestions, no verification and no catalogue.
+- **Bearing on this brief:** an opened request offers a second, unassisted substitution path that is separate from the
+  upload card's checked one. Two surfaces with two finding vocabularies (`reasonCode` versus the upload's `code`) can be
+  expected to confuse a user.
+- **Added recommendation R12 (TODAY, page only):** decide which surface owns substitution. Either route
+  `UNRESOLVED_SECURITY` on an opened request back into the upload card's assisted path, or retire InputReview's
+  substitution box. This is a product call for the PRD; this brief does not make it.
+- **Not checked:** whether served requests reach that panel carrying `UNRESOLVED_SECURITY` findings. The panel's
+  "Review required" line appears only when `request.findings` is non-empty. Reachability is measured from code, and the
+  page was not rendered.
 
 ---
 
