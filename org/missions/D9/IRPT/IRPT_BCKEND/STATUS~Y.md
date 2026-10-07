@@ -68,8 +68,11 @@ FWD-11 retires it.
 2. The 390 s release is UN-PARKED. It rides `~G2`'s next resident build, after M1. This seat supplied it:
    `deliverables/2.0.0_SA_COO~Y2/release390/` (the patch onto `aaea945582`, the test run still owed on a host with
    PyMuPDF, and the never-widen pair text).
-3. STOPPED: Y-5 packet 2 (the Kimi swap) and Y-6 runs 8-10. No new work on the YCharts session, lease or firewall;
-   only breaks that users see are repaired.
+3. STOPPED: Y-6 runs 8-10. No new work on the YCharts session, lease or firewall; only breaks that users see are
+   repaired. CORRECTED by msg 104 (08:03Z): Y-5 packet 2 (the K3 swap call in `intake/resolution_kimi.py`) is chassis,
+   not the YCharts producer, so it is NOT stopped. It is back to HELD under CTO batch 218, and the CTO re-rules it when
+   4.0.0_SA_CRO's research on the check and swap operations lands (Andrew-direct ~08:0xZ, @1ea0796be2). Any live Kimi
+   call still needs Andrew's per-use vendor word.
 4. Y stays open until IRPT_YCDGEN FWD-11, then closes with the removal of the YCharts path.
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
