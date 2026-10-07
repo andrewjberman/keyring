@@ -111,3 +111,11 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.13 FWD-17 @90f99888cd; analysis rulings 2.4, 2.5, 2.9 @1ca9e97fc9; DECOMP_R9 @5d70aab6c9; TO-SC-e26, e32 (round 8).
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~12:4xZ) -- ruling on BLOCKING row W36-S4: the set check grades what exists before the model runs
+
+AC2 graded AI-routed rows against the contract bound, but an AI row has no verdict until the model runs, which this order bars. The
+issuer's check is amended (the defect was the check's): DIRECT rows are graded against the bound as before; AI rows must be BLANK in
+asset_class and sub_asset_class; the bound on the AI path is graded on its output, after its own half. Issuer controls: the worker's set at
+8be44af815 reads `ok=True rows=10965 direct=5811 ai=2770 cash_planned=15`; one AI row prefilled reads `ok=False ai_prefilled:ADC`.
+AC2's invocation and expectation are unchanged. Re-run AC2, update the proof instance, flip. Gate limb: none graded this modification.
