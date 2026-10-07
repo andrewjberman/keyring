@@ -3734,3 +3734,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1."
 }
 ```
+
+## MDPF_SECCLASS-W33-S1 -- resolve_tickers.py failed the commit gate on three lint findings that predate the edit; fixed annotation- and comment-only
+
+```json
+{
+  "id": "MDPF_SECCLASS-W33-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~33",
+  "surfaced_at": "2026-10-07T12:20Z",
+  "one_line": "data/black_diamond/scripts/classification/resolve_tickers.py at b55059ee33 carries three ruff findings (FA102 PEP 604 union without the future import, F541 f-string without placeholders, F841 unused n_synced) and the commit gate blocks any commit of the file until they clear.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ruff check on git show b55059ee33:data/black_diamond/scripts/classification/resolve_tickers.py: 2 findings under the default rule set, a third (FA102) under the commit gate's py39 target; bash .tools/commit-gate.sh on the edited file named all three before the fix and printed 'pre-commit gate clean for 1 of 1 file(s)' after",
+      "the fix: `from __future__ import annotations` added after the module docstring (annotation evaluation only); the f prefix removed from one constant string; the unused assignment renamed _n_synced. No runtime behaviour changes; the string and the call are byte-identical in output."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e43 BOUNDS: 'Lint that predates your edit on a file you own: fix annotation- or comment-only, no runtime change; say so in a row.'",
+  "world_is": "Three findings predated the edit and were cleared as the bound allows. The renamed variable and the removed f prefix are the two edits that touch a code token rather than an annotation or comment; neither changes behaviour.",
+  "notes": "The tests pass before and after (6 passed)."
+}
+```
