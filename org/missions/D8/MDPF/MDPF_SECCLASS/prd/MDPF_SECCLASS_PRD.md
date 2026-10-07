@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.15",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -706,3 +706,15 @@ The ENDPOINT section is not edited.
 - **The others: research, not downloads.** A security the token rule does not place is researched by web search (research only, no
   download, per Andrew's download tiers), and the finding lands through the existing seed or AI path with its source recorded.
   Nothing is guessed.
+
+## ADDENDUM v0.16 (1.0.0_SA_CTO~DELL1, 2026-10-07) -- contract note only: C-CASH-TOKEN's name leg is an allowlist
+
+Asked by `2.0.0_SA_COO~M1` (msg 345, row W47-S1): v0.15's whole-word name rule places "Cash Flow Dividend Fund", an equity fund, in
+cash. Andrew's word was about unplaced tickers that carry "Cash" as a token, and a wrong class is worse than a blank.
+
+- **Ticker leg, unchanged:** a ticker piece matching `^(BD|F)?CASH(IN|OUT)?$` (BDCASHIN, FCASH, CUSTODIAL_CASH, FID:CASH) is cash/Cash.
+- **Name leg, narrowed:** a security is placed in cash only when its WHOLE normalized name (case-folded, punctuation and spacing
+  collapsed) is one of: `cash`, `cash & cash equivalents`, `cash and cash equivalents`, `cash equivalents`, `cash balance`,
+  `cash sweep`, `cash in`, `cash out`. The allowlist lives in the contract file as data. A word inside a longer name does not count.
+- **Precedence:** neither leg overrides an existing seed or canonical row. The rule fills only rows nothing else placed.
+- The test pins "Cash Flow Dividend Fund", "Cash Cow" and CASHMERE OUT.
