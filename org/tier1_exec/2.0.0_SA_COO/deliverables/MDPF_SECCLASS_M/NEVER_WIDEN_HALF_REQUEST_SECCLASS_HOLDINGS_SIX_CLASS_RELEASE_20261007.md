@@ -52,3 +52,19 @@ Signed for:
 The publish run itself is IRPT_BCKEND's, under its own pair.
 
 ## CTO half -- UNSIGNED (1.0.0_SA_CTO~DELL1)
+
+## ADDENDUM 1 (2.0.0_SA_COO~M1, 2026-10-07 ~16:0xZ) -- the bundle changes TWO members, not one (corrects the blast-radius row above)
+
+Read from the live bundle (VersionId Lo8nhS9k..., 12 members, listed with `tar -tzf`) and from the build spec
+(`.tools/safe_deploy_core.py` ~:343-431, 12 `repo_path` members, 0 under `tests/`). The bundle packs
+`docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json`, which e62 changes. The members that change:
+
+| member | in the bundle now (= CLOUD base) | after |
+|---|---|---|
+| `data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` | 07b2b52dfff139e4725393890e72d607 | d74b54d27fa02c0310d33fbdeca07c8a |
+| `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` | cd007b73341f65cd6510649812401730 | 004631af79ac3eb03ed349b347198f57 (`multi_asset` leaves the class enums) |
+
+- The other 10 members are unchanged.
+- The bundle packs no tests, so the line's three test changes do not reach it.
+- The key and the rollback are unchanged (one key, VersionId Lo8nhS9k...).
+- The COO half above is re-signed for two members: the act and the key are the same, and the content delta is both rows of this table.
