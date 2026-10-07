@@ -2169,3 +2169,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   }
 }
 ```
+
+## IRPT_DASHBD-W21-S1 -- the served flow rule drops every CONDITIONAL-BY-COUNTERPARTY row on pandas 3: `_final is None` never matches a NaN
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S1",
+  "one_line": "On pandas 3.0.6 account_return_daily.classify_and_sum assigns _final = None into a frame column, the column becomes str dtype and the None becomes NaN, so `_final is None` matches nothing and every CONDITIONAL-BY-COUNTERPARTY row is dropped from the flow and is not counted as UNRESOLVED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "classify_and_sum (account_return_daily.py lines 508-611) resolves a CONDITIONAL-BY-COUNTERPARTY row by same-account-type-transfer, then the pair matcher, then the text counterpart, and defaults an unmatched row to EXTERNAL; FINAL_BY_PARTITION maps that class to None and the code reads 'unresolved so far' as `_final is None`. The round-23 identity record treats the flow term as complete.",
+  "world_is": "pandas 3.0.6 on this machine: `t['_final'] = [list holding str and None]` yields a str-dtype column in which the None is NaN (a 3-line probe returns [False, False, False] for `v is None`). So _pending() is empty on every day, no stage runs, nothing defaults to EXTERNAL, and the census shows the rows only as `ft_excluded_class-nan_rows` (71, 38, 32, 74 on four of the days). 6 cash journal rows and 5 in-kind rows of the largest-gap account are dropped this way; the same producer with `pd.options.future.infer_string = False` resolves them (flow -351,775.00 on 2026-09-02 against 0.00 as run, -3,000,165.12 on 2026-09-14, 12 days printed in the record). The 91 graded accounts carry 24 CONDITIONAL rows over 7 types. WHETHER THE LAMBDA RUNTIME THAT SERVES account_return_daily CARRIES pandas 3 IS UNMEASURED: comp-find found no pandas pin under infra/aws/lambda/investor-reporting (0 requirements files over 578 files scanned).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json conditional_class_evidence (12 days, as-run and counterfactual flow per account) and largest_gap_window.evidence_rows (11 rows)",
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py lines 510-535 (_final assigned from a list holding None) and 528-529 (_pending)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/gap_diagnosis_e1.py flow proof, run on pandas 3.0.6"
+    ]
+  },
+  "notes": "ARMED because a pandas 3 host silently under-reads every journal and transfer of assets, in the served-producer file and in every table built on it. The producer was not edited (read-only grant). The remedy is a one-line comparison (pd.isna) in a served file, which is not this order's grant; E2's order must either grant it or state a different disarm."
+}
+```
+
+## IRPT_DASHBD-W21-S2 -- fixing the named cause does not tie the in-kind windows: 7 of 39 gaps stay above 0.05 with the CONDITIONAL rows resolved
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S2",
+  "one_line": "With the CONDITIONAL rows resolved (the counterfactual run) 7 of the 39 windows still miss by more than 0.05, two of them by about 1.6 million and 92 thousand, because the identity has no term for in-kind lots, for a basis posted after receipt, or for a basis adjustment.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The round-24 cut reads E2 as 'fix the named cause and re-grade': one cause for the 39 gaps, found by E1.",
+  "world_is": "E1 names five causes over the 9 MISSING-TERM windows (CONDITIONAL_FLOW_NOT_READ 4, LOT_BASIS_MOVED_WITHOUT_FLOW 2, LOT_BASIS_ABOVE_ORIGINAL_COST 3, FEE_ADMIN_HAS_NO_TERM 1, WITHHELD_TAX_HAS_NO_TERM 1; two windows carry two). Resolving the first only closes 2 windows (the cash-only ones); the two in-kind windows turn into other gaps because an in-kind arrival brings a lot whose whole value is gain (cost basis 0 until posted) and the flow also counts the arrival (window gap -1,607,156.91 and +92,255.50), and the lot table lags the balance by one trading day on an in-kind journal out. FEE-ADMIN, a withheld-tax debit and the ADJ in-kind removal move value and map to no term, and a basis wedge on new lots (cost_basis_unamortized above the cash paid, 99.94 on one lot) shifts the gain. Each is a term or a definition the identity lacks, not a rounding.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json gap_classes.counterfactual and gap_classes.rows (each MISSING-TERM row carries its components, residual and evidence rows)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json unmapped_value_movers (10 types)"
+    ]
+  },
+  "notes": "For the round-24 analysis: the enrichment list for E2 should state which of the five the re-grade must close and which it carries forward as a stated unmapped term; an identity that ties on the cash-only windows and not on the in-kind ones is a partial FWD-4."
+}
+```
+
+## IRPT_DASHBD-W21-S3 -- the census grain: a type is key plus side, because a key can carry opposite signs
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T15:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S3",
+  "one_line": "The order asks for a sign per type, but one tran_srcde/tr_cd/sb_cd key carries both a credit and a debit (BKSWP, BRSWP, $JNL, TOA), so the census is keyed on the key plus its debit_credit side: 35 types over 30 keys.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The task order lists 'every type, its row count, its sign as the activity rule reads it (+, - or UNSIGNED)', one sign per type.",
+  "world_is": "The rule signs a cash row from debit_credit (C +, D -) and an in-kind row from L/S, so the sign belongs to the row's side, not the key. The census in GAP_DIAGNOSIS_E1.json is keyed on tran_srcde/tr_cd/sb_cd/debit_credit (35 rows over 2,662 fact_trn rows of the 91 graded accounts; 30 distinct keys), and `unmapped_value_movers` names types in the same form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/GAP_DIAGNOSIS_E1.json type_census and type_census_scope.type_grain"
+    ]
+  }
+}
+```
