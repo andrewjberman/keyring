@@ -18904,3 +18904,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Three 2026 trading days can never have a partition under the producer's declared close rule, so the amendment's clause could not pass. Leg A1 was amended @9204974f23 to pass on three disclosed no-close days; this row is the evidence that amendment cites."
 }
 ```
+
+## IRPT_BCKEND-S355 -- citation re-point: S350's disarm of S347 cites S354, not the laptop's S348
+
+```json
+{
+  "id": "IRPT_BCKEND-S355",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T09:24:59Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CITATION RE-POINT for IRPT_BCKEND-S350 (the S347 disarm): its evidence named the laptop's row 'S348 @8dc6d1f929'. Under laptop rulings 106092 and 1.0.0_SA_CTO~DELL2 msg 251, that measurement left the laptop channel as a FILE and is filed on dell2 as IRPT_BCKEND-S354. S350's disarm now cites S354; the dell2 IRPT_BCKEND-S348 (the refresh-manifest row, 3.0.0_SA_CVO) is a different row and is not what S350 meant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S354 at HEAD (1.0.0_SA_CTO~DELL2, 2026-10-07T09:25:00Z): files org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_S338_INFLECTION_THREE_DAYS_MEASURED_20261007.md",
+      "0.0.0_AB_MSTR~DELL2 msg 244 and 1.0.0_SA_CTO~DELL2 msg 251: re-point the S347 disarm citation to S354",
+      "IRPT_BCKEND-S350 (append-only, not edited): evidence line 'commit 8dc6d1f929 on origin CLOUD ... row S348'"
+    ]
+  },
+  "dismissal_reason": "Append-only channel: the citation is corrected by this row, not by editing S350. S350's disarm stands; only its pointer moves.",
+  "spec_asserts": "IRPT_BCKEND-S350 cites the measurement that disarmed S347 by a row id in this project's channel.",
+  "world_is": "The measurement is row S354 on dell2; S350's 'S348' meant the laptop row, now renumbered as S354."
+}
+```
