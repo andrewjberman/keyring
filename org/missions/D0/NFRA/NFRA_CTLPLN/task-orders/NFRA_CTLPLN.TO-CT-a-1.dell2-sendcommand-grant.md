@@ -136,7 +136,9 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_reached_roles.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json
-infra/aws/terraform/nfra-ctlpln-identity/dell_routes_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/routes.tf
+infra/aws/terraform/nfra-ctlpln-identity/modules/routes_policy/
+infra/aws/terraform/nfra-ctlpln-identity/tests/render_routes_policy.py
 infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_protected_functions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
@@ -277,3 +279,80 @@ Function, host, role and bucket names go only in files under `tests/`, in the re
 file, do NOT override: file a BLOCKING row, keep step 1 committed, and stop. Write a NEW proof instance over the old one covering all
 four ids, validate it with `python .tools/proof-of-spec-check.py <instance> CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4`, and flip `<status>`
 back to `complete` only when all four pass.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~11:4xZ) -- steps 2 to 4 in the RULED FORM: Terraform builds the Deny from the census file
+
+The order is `in_progress`; the slot is re-seated and commits d6aed4ab85 (STEP 1, the census) and 6704cbeb93 are inherited state.
+Authority: `1.0.0_SA_CTO` msg 106190, verbatim: "Form: (b). Terraform builds the statements from the census JSON, so no policy file
+holds a name. Not (a): an R20 entry is for a departure in a name we mint; these 29 lines refer to resources that already exist. Two
+conditions: the JSON carries its header (command, read time, 175 of 175), and a plan against a census older than the last change to
+those roles is refused by the cell's own check ... the dell2 SendCommand grant on i-0167fd745ad906a66 with the two resident documents
+stands ... One half request for the apply: the rendered Deny (31 functions, 12 documents, 5 prefixes) and the dell2 grant together."
+Gate limb: none graded this modification. WHERE THIS AMENDMENT AND AMENDMENT 1'S STEPS 2 TO 4 DIFFER, THIS AMENDMENT GOVERNS.
+Step 1 is done and stays. NO policy `.json` file names a function, document, prefix or host: `dell_routes_policy.json` is NOT
+written (it is removed from the grant).
+
+1. **The census file carries its header.** `tests/reached_roles_census.json` gains, at its top level, a `header` object: the exact
+   command that produced it, the UTC read time, `roles_read` and `roles_total` (175 of 175), the account id and the caller identity
+   ARN. If the saved file from STEP 1 lacks any of these, add them from STEP 1's own run record (do NOT re-run the 508-second census
+   just for the header unless a value cannot be recovered; say which you did).
+2. **A pure Terraform module builds the statements:** `modules/routes_policy/` (no provider, no resource: `variables.tf`, `main.tf`
+   with locals, `outputs.tf`). Input: the decoded census. Outputs: `functions_policy_json` and `hosts_policy_json` (two policy
+   documents, as the earlier render needed two to stay inside 6,144 characters each: one Deny statement set for the function routes,
+   one for the document and prefix routes), plus counts (`function_count`, `document_count`, `prefix_count`) and `header`. The route
+   set is exactly AMENDMENT 1's step 2: for each role whose verdict is YES, the functions whose execution role it is (the Lambda
+   write actions of the existing `DenyProtectedFunctions`), the command documents that target a host whose role it is (the five SSM
+   write and send actions), the artifact prefixes such a host downloads and runs (`s3:PutObject` on those prefix ARNs only). No task
+   entry is expected (no task role reads YES); the module still handles a non-empty set. Sorted, de-duplicated. A function already
+   in `protected_functions.json` may appear in both Deny sets; that is harmless and you say how many overlap.
+3. **`routes.tf`** in the root: `module "routes_policy"` fed by `jsondecode(file("${path.module}/tests/reached_roles_census.json"))`;
+   two `aws_iam_policy` resources from its two outputs, names from the builder
+   (`lib/opal_naming.name('cloudops', None, 'dell-agent-routes-fn', 'policy')` and `... 'dell-agent-routes-host' ...`; if the builder
+   refuses a function token, use the nearest it admits and say so), tagged `DisplayName = "DellBoxes"`, each attached to the group.
+   The group then carries 5 managed policies (deploy, create, respol, routes-fn, routes-host); the limit is 10.
+   A `precondition` (or a `check` block) in the Terraform refuses a plan when the census `header.roles_read != header.roles_total`.
+4. **The exact bytes, without the backend:** `tests/render_routes_policy.py` evaluates the SAME module standalone -- a temporary root
+   outside the repo with a LOCAL backend and no provider, calling `modules/routes_policy` by absolute path with the census file, then
+   `terraform init -backend=false`, and `terraform console` or a plan-free `terraform output` path (find one that needs no provider
+   and no AWS call; `terraform console` on a root with only locals and outputs evaluates expressions; say which you used) -- and prints
+   the two JSON documents and their character counts. `tests/simulate_policy.py` and `tests/check_identity.py` take the documents
+   from this renderer, so what is simulated is what Terraform builds. LAST line of the renderer
+   `ROUTES-RENDER functions=<f> documents=<d> prefixes=<p> policies=2 chars=<a>,<b> header_ok=<True|False> ok=<True|False>`.
+   Expected counts from the earlier render: 31 functions, 12 documents, 5 prefixes; report what you get and explain any difference.
+5. **The freshness check (the CTO's second condition):** `tests/derive_reached_roles.py --check-fresh`: re-reads, live, the SAME
+   three questions for every role in the saved census and the role set itself (the function, task and host listings), and compares
+   to the saved file. It prints each difference (a role whose verdict changed, a new role, a role gone, a function whose role
+   changed) and LAST `CENSUS-FRESH saved=<read time> roles_saved=<n> roles_live=<m> verdict_changes=<v> new_roles=<a> gone_roles=<g> route_changes=<r> fresh=<True|False>`,
+   exit non-zero when anything differs. It is slow (about 8 minutes live); it is the APPLIER's pre-plan read, not a 120-second
+   criterion. Run it ONCE yourself, outside the bound, and report its last line; if it reads `fresh=False`, regenerate the census
+   (`--live`), commit the new file, and say what changed.
+6. **The dell2 grant (ruling D, the resident host's role reads NO):** `dell2_ssm_policy.json` gains
+   `SendResidentDocumentsToResidentHost`: Allow `ssm:SendCommand` on exactly the instance ARN
+   `arn:aws:ec2:us-east-1:313476888478:instance/i-0167fd745ad906a66` and the two resident document ARNs (`irpt-ycharts-deploy`,
+   `irpt-ycharts-run`); those two names leave `DenyShellDocuments`; the AWS shell and session documents and the export render
+   document stay denied. (These two names were already in this file and passed the naming gate in STEP 0's commit; if the gate
+   refuses them now, do not override: file a BLOCKING row.)
+7. **The simulation** (`tests/simulate_policy.py`): the sixth block becomes: dell2 send of each resident document to the instance ->
+   allowed, 2 arms; dell2 send of a resident document to ANOTHER instance -> denied; `AWS-RunShellScript` to the instance ->
+   explicitDeny; the export render document -> explicitDeny; dell2 `ssm:GetCommandInvocation` -> allowed; dell1 send -> denied.
+   A seventh block, on the rendered routes documents added to the Dell group's set: for three YES roles chosen to cover the three
+   route kinds that exist (a function update on a function of `lambda-execution-role`; an `ssm:UpdateDocument` on a document that
+   feeds a YES host; an `s3:PutObject` on a YES host's downloaded prefix) -> explicitDeny each; for two NO roles (a function update on
+   a function of a NO role; an `s3:PutObject` on the resident host's own artifact prefix) -> allowed each. LAST line:
+   `POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=11/11 ssm_ok=<k>/<n> routes_ok=5/5 all_ok=<True|False>`.
+8. `tests/check_identity.py`: the name comparison covers the two new policies (11 names) and the sizes of the two rendered documents.
+9. **One surprise row** (the CTO's ask: "File the gate's blindness (a reference read as a minted name) as a row for LGIC_BLANKFIX"):
+   class OBSERVATION, INERT: the commit gate's naming limb refused 29 lines that REFER to resources that already exist (functions,
+   command documents, S3 prefixes) as if they were newly minted names; owner named in the row as the LGIC_BLANKFIX project's COO.
+   Give counts, not the names.
+
+**ACCEPTANCE (same four ids; expectations as follows):**
+- `CTa1-AC1` unchanged (`unresolved=0`, `ok=True`).
+- `CTa1-AC2`: `respol_ok=11/11 ssm_ok=` and, on the same line, `routes_ok=5/5 all_ok=True`.
+- `CTa1-AC3`: `policy_size_ok=True ok=True` (11 names).
+- `CTa1-AC4` unchanged (`unread=0`, `ok=True`, from the saved file).
+
+No firm, function, document, host or prefix name in any committed file outside `tests/` (the census) and your deliverables table,
+except the two resident document names and the instance id in `dell2_ssm_policy.json`. If the commit gate refuses anything, do NOT
+override: record the refusal lines, file a BLOCKING row, keep what is committed, and stop. Write a NEW proof instance covering the
+four ids, validate it, and flip `<status>` to `complete` only when all four pass.
