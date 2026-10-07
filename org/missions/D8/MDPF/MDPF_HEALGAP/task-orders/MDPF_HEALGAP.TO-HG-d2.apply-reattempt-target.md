@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~F</issued_to>
 <issued_by>2.0.0_SA_COO~G1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
@@ -21,7 +21,9 @@
 are on CLOUD; (2) the R20 entry for `cot-bronze-complete` is on CLOUD (`org/standards/NAMING_LEGACY_READS.json`, kind
 `r20_exception`, landed by `1.0.0_SA_CTO~DELL1`); (3) both never-widen halves SIGNED in
 `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_HG_T2_REATTEMPT_APPLY_20261007.md`.
-The issuer flips this order's `<status>` to `pending` when all three hold; until then it is `staged`.
+All three hold; **GO given by the issuer: status `pending`.** (1) HG-t-2 drained @c266bbbd11 (order complete, proof VALID);
+(2) R20 entry MDPF-HEALGAP-R20-01 @dee4061bf9, narrowed to 1 occurrence @a79b6838e4 -- the file names the rule once and its
+permission's source_arn reads it from the target's `rule` attribute; (3) both halves SIGNED (COO @cc9f7d81d1/@2c5ae4488d, CTO @a79f7ea1b7).
 
 ---
 
