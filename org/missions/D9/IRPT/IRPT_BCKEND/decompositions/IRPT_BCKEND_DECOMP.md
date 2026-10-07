@@ -1995,4 +1995,4 @@ with a tool and changes no code. Check: `deliverables/2.0.0_SA_COO~P2/checks/r70
 | `IB-pr-352` | P-c2: `submit_async.accept` reads the business date by kind | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; no deploy until its release pair) | none | P70-b |
 | `IB-pr-353` | P-c3: `PrintEntry` admits custody-report and mounts `ClientReportDocument` | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word, break 5) | none | P70-c |
 
-fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets. Slots 0.9.0_WK_IRPT_BCKEND~150, ~151, ~152; portal_ref: 339851c7 (portal origin DEV).
+fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets. Slots 0.9.0_WK_IRPT_BCKEND~160, ~161, ~162 (AMENDMENT 1: re-slotted from ~150/~151/~152, which ~Y and ~M orders already hold); portal_ref: 339851c7 (portal origin DEV).
