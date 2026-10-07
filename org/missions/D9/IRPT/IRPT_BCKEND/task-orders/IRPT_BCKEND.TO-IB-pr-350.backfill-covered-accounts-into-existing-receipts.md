@@ -51,8 +51,10 @@ census is in `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND
 2. Re-run the dry run. Its counts must equal the packet's, or STOP.
 3. Run `--apply` with the same arguments.
 4. Re-read every written receipt: each names a non-empty `facts.covered_account_ids`.
-5. Read one back-filled export as an Opal principal whose scope covers it. It is admitted, and one `irpt_export_read_admitted` line
-   appears.
+5. Read one back-filled export through the DEPLOYED bytes of `irpt-export-render`, the way IB-pr-349 proved its controls:
+   reconstructed headers for an Opal principal whose scope covers it (it is ADMITTED, and the function's own
+   `irpt_export_read_admitted` line is emitted) and for an out-of-scope principal (it is REFUSED). Mint no token and write
+   nothing to the auth plane (AMENDMENT 1, row S382).
 6. Close the ledger and commit it.
 7. Write `<your deliverables>/IB69-1_backfill_after_reads.json` with the keys `mode` ("apply"), `receipts_listed`, `filled`,
    `unfillable`, `already_named`, `would_write`, `wrote`, `denied`, `rewritten_reread_ok`, `backfilled_read_admitted`,

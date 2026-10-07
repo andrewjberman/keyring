@@ -511,3 +511,16 @@ the apply (ruling msg 600). FWD-8 stays held on Andrew's split-pull word. The an
 | (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell. Worker 0.9.0_WK_IRPT_DASHBD~20 in its own worktree.
+
+## 24. ROUND 24, WORKSTREAM B (2026-10-07 ~15:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-23 analysis @9f285400cf, msg 745)
+
+Round 23 is closed: DB-b-35 @a8df9a5880 (the activity and lot tables built locally; REMEDIATION_v9 @8a5b7c61e6). FWD-4 is NOT shown: the
+activity identity ties on 52 of 91 account-windows; 39 fail, most by cents, one (0018321241) by ~1.1M; the passing window exercised no
+realized gain and no flow. W20-S1 and W20-S3 ride the release packet. The release of these tables waits on E2 and has its own halves.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-36` | E1: diagnose W20-S2 -- the ~1.1M window term by term, a transaction-type census (unsigned types), the 39 gaps classed ROUNDING (<= 0.05, stated before the run) or MISSING-TERM | LOCAL | DB-b-35 (merged) | B24 |
+| `DB-b-37` | E2: fix the named cause; re-grade the same 91 accounts; one window with realized gain and a flow ties to the cent | LOCAL | DB-b-36 | B24 |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 fixes what E1 names, so one worker queue. Worker 0.9.0_WK_IRPT_DASHBD~21 in its own worktree.

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -97,6 +97,19 @@ validated with `python .tools/proof-of-spec-check.py <instance> BR3-AC1,BR3-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; `SCOPE-TABLE` without and with the map; `SCOPE-CONTESTED` with the map; the unassigned groups with reasons; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the map is landed; the order is handed
+
+The registry's lane landed the entries: `infra/logic/registry/root_map.json` @914bb833ca (`4.0.0_SA_CRO`, msg 106433). As that seat
+measured it: 13 roots; every contested folder has one owner (`contested`: 51 of 51 assigned); `table` reads 68 unassigned, down
+from 119. Re-measure all three yourself; they are that seat's numbers, not yours.
+
+Two things the landed file adds that this face did not know:
+- Entries carry a field `fills` (for a root that serves more than one firm, only `system` may fill a blank). It concerns the
+  root check, not the scope: you do not read or act on it. If `load_map` or the scope's reading of the map REFUSES the file
+  because of a field it does not know (`fills`, or `roles` on an exception), that is a finding: report it and file one row; do not
+  edit `lib/opal_naming_rootmap.py`.
+- The 68 still unassigned are what your `unassigned` command explains. The bar stands: each one named with its reason.
 
 ---
 
