@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~3</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -47,7 +47,11 @@ it returns. If the builder still returns no name ending in `.fifo`, stop (refusa
 <criterion id="CT2b3-AC1" cell_refs="CT-b-3"><invocation>python infra/aws/terraform/nfra-ctlpln-agentbus/tests/check_queues.py</invocation><expect>names_from_builder=2/2 attributes_match=True plan_add=2 plan_change=0 plan_destroy=0</expect></criterion>
 `CT2b3-AC1` -- the root plans exactly two new queues, named by the builder, with the live bus queues' attributes, and touches nothing else.
 
-<expected_criteria>CT2b3-AC1</expected_criteria>
+<criterion id="CT2b3-AC2" cell_refs="CT-b-3"><invocation>python -m pytest -q .tools/tests/test_agentbus_tailnet_stamp.py</invocation><expect>passed</expect></criterion>
+`CT2b3-AC2` -- (AMENDMENT 1) a message sent from each of the four boxes carries its own and the recipient's tailnet names from the register;
+a received message whose sender tailnet name the register does not hold is refused.
+
+<expected_criteria>CT2b3-AC1,CT2b3-AC2</expected_criteria>
 
 ## BOUNDS
 
@@ -61,6 +65,8 @@ infra/aws/terraform/nfra-ctlpln-agentbus/main.tf
 infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf
 infra/aws/terraform/nfra-ctlpln-agentbus/.terraform.lock.hcl
 infra/aws/terraform/nfra-ctlpln-agentbus/tests/check_queues.py
+.tools/agentbus-sqs.sh
+.tools/tests/test_agentbus_tailnet_stamp.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -72,8 +78,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CT2b3-AC1. Instance at `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~3/NFRA_CTLPLN.TO-CT-b-3.dell-inbound-queues.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> CT2b3-AC1` BEFORE the flip.
+Criterion ids: CT2b3-AC1, CT2b3-AC2. Instance at `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~3/NFRA_CTLPLN.TO-CT-b-3.dell-inbound-queues.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> CT2b3-AC1,CT2b3-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the check line, the plan summary, the two names, commits.
@@ -90,3 +96,21 @@ lane: the <paths> block IS the grant (worker RULING 1).
 </preflight>
 
 Source: PRD v0.6 C-BUS, FWD-3; CTO msgs 105920, 105928, 105929; decomposition round 2 (measured constraints 1, 2).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~03:1xZ) -- unblocked; the names; the tailnet stamp on every bus message
+
+The order flips `staged` -> `pending`: the FIFO form landed (NAMING_SCHEMA v1.14 @1ea925a095; the Terraform module patch applied @a8a55c73b3).
+The issuer amends its own order; gate limb: none graded this modification (LIMB 6 grades new orders only; no `<placeholders>`).
+1. **Names (CTO ruling, msg 105938):** the signed C-BUS form, `name('agentbus','global','dell1','queue', fifo=True)` ->
+   `agentbus-global-dell1-queue.fifo`, likewise dell2. In Terraform, compute them with the naming module
+   `infra/aws/terraform/modules/opal_name` (its new FIFO input; read its `variables.tf` and `tests/fifo.tftest.hcl`), never a typed name;
+   `check_queues.py` compares the planned names to the Python builder's output.
+2. **The tailnet stamp (CTO msg 105932, on Andrew's word "the tailnet name is the real identifier"):** `.tools/agentbus-sqs.sh` stamps the
+   sender's and the recipient's tailnet names -- read from `org/devices/DEVICES.json` field `tailnet_name` (the MagicDNS name: laptop
+   `cloud-local`, sitez `sitez`, dell1 `dell1`, dell2 `dell2`; ruled one grain, msg 105936), never typed -- as SQS message attributes AND in
+   the message envelope, beside the serial. Its receive path REFUSES (does not deliver, says why, leaves no silent drop) a message whose sender
+   tailnet name the register does not hold. Read the script's send and receive paths first; keep every existing behaviour.
+3. **The test** `.tools/tests/test_agentbus_tailnet_stamp.py` (pytest; no real SQS call -- stub the AWS CLI or boto3 call the script makes, or
+   exercise the envelope builder directly): for each of the four register boxes as sender, the stamped attributes and envelope carry that
+   box's and the recipient's tailnet names; a message with an unknown sender name is refused; the register is read, not typed (point
+   `OPAL_DEVICE_REGISTER` at a fixture with a fifth box and show it stamps without a script edit).
