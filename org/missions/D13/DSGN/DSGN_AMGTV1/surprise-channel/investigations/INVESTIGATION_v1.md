@@ -1497,6 +1497,30 @@
  "spec_asserts": "The worker's order text: the existing round-44 check must stay green after the change; if a required change moves an arm, report which and why.",
  "world_is": "Items 1 and 4 of the order necessarily move the three r44 arms named; the check cannot be edited by this worker, so the drain's r44 run reads 2 of 5 until the issuer re-anchors it to the point-keyed open state and the grouped rows.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S22",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-07T02:45Z",
+ "one_line": "A conflicted drain finished with safe-merge.sh --continue committed ONLY the resolved surprise channel: merge f953449753 left the branch's other 3 files (proof instance, render, the order's status flip) out of the commit, intact but unstaged in the shared working tree.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "safe-merge.sh --verify-merge f953449753: 'branch needed 4 file(s), dropped 3, foreign 0' and a WARN naming the 3 paths; the --continue run itself exited 0 and printed MERGED.",
+   "git status after the merge: the order file ' M' and deliverables/0.9.0_WK_DSGN_AMGTV1~107/ '??'; both byte-identical to branch wk-DSGN_AMGTV1-107 @b413c05522 (cmp per file).",
+   "Sequence: the first safe-merge call refused rc=2 on another seat's staged RESAPP order; a retry loop re-ran it when the index read clear (rc=4, conflict); the channel was resolved, git add of that one file, then --continue.",
+   "Landed unchanged by aa7dee9340 under the worker's authorship (the lane gate refuses a COO author on deliverables/<worker>/)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "safe-merge.sh --continue re-enters the same grade and the same authored commit as the one-shot path, so a drained branch lands whole.",
+ "world_is": "The continue path landed 1 of 4 files and exited 0; only the read-only --verify-merge line showed the loss. Cause not established: either the merge's staged entries were unstaged between the conflict and the continue (another seat's commit ran in that window on the shared index), or --continue commits only what the resolver staged. The drain was repaired; the tool behaviour is unexamined.",
+ "notes": "Tool owner is 2.0.0_SA_COO (.tools/safe-merge.sh). After any --continue, run --verify-merge and read the 'dropped' count."
 }
 ]
 ```
