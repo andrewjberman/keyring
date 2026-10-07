@@ -341,10 +341,25 @@ ruled shape, the three rendered statements, the lines that change) and row `NFRA
 
 **ACCEPTANCE.** One criterion is ADDED:
 
-<criterion id="CT4d2-AC3" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py</invocation><expect>unknown_key_refused_by=validator+module</expect></criterion>
+<criterion id="CT4d2-AC3" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py</invocation><expect>unknown_key_refused_by=validator\+module</expect></criterion>
 `CT4d2-AC3` -- the same line must read `ok=True` with `unchanged_today=True`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-custom-policy` / `simulate-principal-policy`, `sts get-caller-identity`. No object or bucket
 listing in any firm bucket, no apply, no plan against the backend, no registry edit, no network download (every Terraform call
 sets `CHECKPOINT_DISABLE=1` and uses a root with no provider). Firm bucket names only in files under `tests/`, in your deliverables
 and in your report; none typed into a `.tf` file, the module or `lib/opal_naming.py`.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~15:0xZ) -- two issuer repairs at the merge; no new work
+
+1. `CT4d2-AC3`'s expectation is read as a regular expression by the proof checker, so the `+` in `validator+module` was a quantifier
+   and could not match the line it described (row `NFRA_CTLPLN-W6-S10`). The expectation now escapes it. The criterion is unchanged.
+2. `tests/check_dell_fence_join.py` compared the two fence files with commit `3ec42c56bf`; AMENDMENT 4 changed both files by
+   design, and the apply that depended on that pin is closed (order `NFRA_CTLPLN.TO-APPLY-5`, complete). The issuer adds a separate
+   `TF_PIN` at the build commit `cc0c2b4b5c`; the registry baseline stays at the old pin.
+Gate limb: none graded this modification. CORRECTED THE SAME HOUR: the lane gate refuses the issuer on the check file and on the
+worker's proof instance, so item 2 and the proof are the WORKER's: add `TF_PIN = "cc0c2b4b5c"` beside `PIN` in
+`tests/check_dell_fence_join.py` and use it ONLY for the two fence files' byte comparison (the registry baseline and its diff stay
+on `PIN`); change nothing else in that check. Then re-run the three criteria, rewrite the proof instance's rows from those runs
+(AC3's `expect` is now `unknown_key_refused_by=validator\+module`), validate it, and flip the order to `complete` when all three
+pass and the instance is VALID. Item 1 is done by this commit.
+
