@@ -51,7 +51,8 @@ def main() -> int:
     if not tf:
         print("TF-BAD terraform not on PATH")
         return 1
-    r = subprocess.run([tf, "fmt", "-check", "-diff", TF], capture_output=True, text=True, timeout=60, check=False)
+    env = dict(os.environ, CHECKPOINT_DISABLE="1")  # no vendor checkpoint call (laptop 1.0.0_SA_CTO msg 106231)
+    r = subprocess.run([tf, "fmt", "-check", "-diff", TF], capture_output=True, text=True, timeout=60, check=False, env=env)
     if r.returncode != 0:
         print(r.stdout[-1500:] + r.stderr[-500:])
         print("TF-BAD fmt rc=" + str(r.returncode))

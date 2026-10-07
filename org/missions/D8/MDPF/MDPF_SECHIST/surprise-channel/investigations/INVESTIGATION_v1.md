@@ -84,6 +84,26 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "READ_HERE.md section 3: the as-of of a site Z leg is lib/trading_calendar prev_trading_day (T-1), never BDay.",
     "world_is": "The leg's as-of and its tripwire both use BDay(-1). The next NYSE weekday closure is 2026-11-26 (Thanksgiving), so the 2026-11-27 run would land under bbg/2026-11-26/ and gold would read a holiday partition. INERT until then. The owner of the leg is site Z (0.0.3_BG_BBGTerminal's vehicle); the SECHIST issuer reads it at the round-1 analysis."
+  },
+  {
+    "id": "MDPF_SECHIST-S2",
+    "project": "MDPF_SECHIST",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~H1",
+    "surfaced_at": "2026-10-07T12:40:00Z",
+    "one_line": "FWD-1's acceptance needs class, sector and clean name on the Positioning page, but the served rows for CSCO, BX and LNVGY carry sub_asset_class None and industry_group None today; round 1 fills only the return windows, so the thread can read returns-complete and still fail on sector.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "issuer read 2026-10-07 ~12:4xZ of s3://opal-data-portal-v2/platinum/etfs/positioning_data.json (LastModified 2026-10-06T13:01:32Z) via R1_CHECKS/sh_fwd1_served_read.py: DIVZ CSCO 'Equity / None / None' windows 2/8; DIVZ BX 'Equity / None / None' 2/8; IDVZ LNVGY 'Equity / None / None' 2/8; control PFOE GEV 'Equity / Industrials / Capital Goods' 4/8",
+        "PRD v0.1 C-TABLE: the row (class, sector, clean name) is MDPF_SECCLASS's (FWD-10 detector, FWD-12 sector and industry group served to the ETF view, FWD-14 clean names); this project never writes classification"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD section 2 THREAD: the row exists (MDPF_SECCLASS FWD-10) and the analyst reads the security's class, sector and clean name with its returns.",
+    "world_is": "Three of the round's live negative cases have no sector on the served page. Not this project's to fix (C-TABLE); routed to the round-N analysis so the CTO can sequence it against MDPF_SECCLASS FWD-12. The FWD-1 real run will grade returns and classification separately."
   }
 ]
 ```
