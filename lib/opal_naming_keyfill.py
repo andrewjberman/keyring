@@ -235,6 +235,11 @@ def _classify(items, root_entry, text_of=None):
     entries = _legacy_entries()
     rows, raising = [], 0
     own_scope = None if root_entry is None else v.scope.get(root_entry.get("scope"), root_entry.get("scope"))
+    # `fills` (root map): the slots the entry may fill; absent means all of them. A slot it leaves out is the key's own,
+    # so the entry's HOME scope/source is neither written into a name nor used to judge the key's firm.
+    fills = None if root_entry is None else root_entry.get("fills")
+    can_scope = fills is None or "scope" in fills
+    can_source = fills is None or "source" in fills
     for it in items:
         name, typ = it["current"], it["type"]
         try:
@@ -251,7 +256,7 @@ def _classify(items, root_entry, text_of=None):
         matches = [] if var else _legacy_matches(name, v, entries)
         leg = [m for m in matches if bucket is not None and m[1] == bucket]
         bfirm = v.bucket_firm.get(bucket) if bucket else None
-        clash = None if (var or root_entry is None) else _conflict(name, v, root_entry)
+        clash = None if (var or root_entry is None or not (can_scope and can_source)) else _conflict(name, v, root_entry)
         not_legacy = ""
         if matches and not leg:
             not_legacy = "; not LEGACY: the path matches legacy row %s of bucket %s, this key's bucket is %s" % (
@@ -263,7 +268,7 @@ def _classify(items, root_entry, text_of=None):
             row["class"] = "LEGACY"
             row["canonical"] = name
             row["basis"] = "legacy_addresses.json row %s (bucket %s), the key's bucket is the same" % leg[0]
-        elif root_entry is not None and bfirm is not None and bfirm != own_scope:
+        elif root_entry is not None and can_scope and bfirm is not None and bfirm != own_scope:
             row["class"] = "REFUSED-CROSS-FIRM"
             row["basis"] = "bucket %s belongs to firm %r, the root entry's scope is firm %r%s" % (
                 bucket, bfirm, own_scope, not_legacy)
@@ -276,9 +281,15 @@ def _classify(items, root_entry, text_of=None):
         else:
             filled = canon
             for blank, field in (("{source}", "source"), ("{scope}", "scope")):
-                if isinstance(root_entry.get(field), str) and root_entry[field]:
+                if (fills is None or field in fills) and isinstance(root_entry.get(field), str) and root_entry[field]:
                     filled = filled.replace(blank, root_entry[field])
-            if "{" in filled:
+            left = [b for b, f in (("{scope}", "scope"), ("{source}", "source"))
+                    if b in filled and fills is not None and f not in fills]
+            if left:
+                row["class"] = "UNDECIDED"
+                row["basis"] = "this root serves more than one firm; its map entry does not give the %s%s" % (
+                    "firm" if "{scope}" in left else "source", not_legacy)
+            elif "{" in filled:
                 row["class"] = "UNDECIDED"
                 row["basis"] = "a blank remains after the root entry fills source and scope: %s%s" % (filled, not_legacy)
             else:
