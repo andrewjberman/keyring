@@ -1,0 +1,209 @@
+{
+  "token": "multi_asset",
+  "buckets": [
+    {
+      "bucket": "opal-data-49financial",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": [],
+      "unread": "AccessDenied"
+    },
+    {
+      "bucket": "opal-data-assets",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-astn",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-bd",
+      "listed": 25259,
+      "read": 25259,
+      "keys_with_hit": 204,
+      "hits": 594,
+      "examples": [
+        "platinum/accounts/z0812883321/summary.json",
+        "platinum/accounts/z0812883331/summary.json",
+        "platinum/accounts/z0812883341/summary.json",
+        "platinum/accounts/z0812884191/summary.json",
+        "platinum/accounts/z0812884401/summary.json"
+      ]
+    },
+    {
+      "bucket": "opal-data-cot",
+      "listed": 1153,
+      "read": 1153,
+      "keys_with_hit": 2,
+      "hits": 2,
+      "examples": [
+        "platinum/clients/z09305621/concentration.json",
+        "platinum/clients/z09305679/concentration.json"
+      ]
+    },
+    {
+      "bucket": "opal-data-cottonwood",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": [],
+      "unread": "AccessDenied"
+    },
+    {
+      "bucket": "opal-data-demo",
+      "listed": 22414,
+      "read": 22414,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-etfs",
+      "listed": 6,
+      "read": 6,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-harvest",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-imo",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-inf",
+      "listed": 8721,
+      "read": 8721,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-inflection",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": [],
+      "unread": "AccessDenied"
+    },
+    {
+      "bucket": "opal-data-irpt",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-mdpf",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-news-av",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-news-v2",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-pm",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-portal-v2",
+      "listed": 629,
+      "read": 629,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-portfolio",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-security",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-security-access-logs",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-trade-submissions",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-transcripts",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    },
+    {
+      "bucket": "opal-data-ycharts",
+      "listed": 0,
+      "read": 0,
+      "keys_with_hit": 0,
+      "hits": 0,
+      "examples": []
+    }
+  ]
+}
