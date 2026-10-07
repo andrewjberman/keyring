@@ -117,11 +117,11 @@ Round label v18 = the round after the last one compiled here (rounds 15-17), per
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v18",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v18"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
