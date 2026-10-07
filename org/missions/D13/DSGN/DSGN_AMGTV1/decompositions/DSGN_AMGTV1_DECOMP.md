@@ -2025,3 +2025,27 @@ through MSTR~Z.
 **Output:** `round46/COMPLETION_GRADES.round46.json` carrying the issuer's READINGS per FWD (what each instrument printed); the
 verdict column is the CVO's to grade.
 **Fan-out:** 0 worker chains (no product change). **Risk:** SERVED read (no write).
+
+## v47 -- ROUND 47 (issuer, 2026-10-07 ~10:5xZ) -- ONE BATCHED REPAIR CELL ON THE MODEL TAB; ONE ISSUER READ; ONE CELL HELD
+
+**Rectangle:** `ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` @43d2e5eb3c, ROUND 47 items 1-4 (msg 30797). **Base:** portal DEV
+8ddfe409 (= PROD b06863fe content).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zy-1` BATCHED REPAIR (items 1 and 2) | FWD-20 (10 px text), FWD-27 (the Model tab's foot) | `tabs/ModelTab.tsx`, `modelSheet.ts`, the `__harness__/` files that assert the changed words | ~108 (worker-light) |
+| `AV-zy-R` READ (item 4, no build) | FWD-21 | `deliverables/2.0.0_SA_COO~D/round47/FWD21_READ.md` | 2.0.0_SA_COO~D |
+| `AV-zy-I` INSTRUMENT CLAUSE (item 3) | FWD-18, FWD-20 | `portal/scripts/ui-contract-check.mjs` and its fixtures | NOT CUT -- waits on PRD v0.16's ratified-text half |
+
+**Item 2, read first as the list orders:** all three foot lines are PAGE text. "Company short name" is `modelSheet.ts`
+`V3_HEADER_LABELS.SHORT_NAME`; "N of M inputs have run." is `ModelTab.tsx` (`data-input-ledger-count`); "a source this page has no
+name for yet" is `ModelTab.tsx` `ledgerSourceWords`' fallback. The news class's source is SERVED as "harvested news (the overlay feed,
+gold article_security_mention)" (`lib/research/api/scoped_amgt.py`); the page has no word for it. Named for AMGT_RESAPP in the close:
+that served string carries storage words.
+**Check:** `round47/checks/r47/r47.cjs`, the REAL `ModelTab.tsx` rendered on round-11 fixtures. At base 8ddfe409 it reads 1 of 4 (34
+rendered 10 px nodes; the short-name line; the ledger wording); PLANTED passes. Green 4 of 4 on scratch reference edits of the two files.
+`round11/checks/ledger.cjs` reads 2 of 3 at the base and after (its re-run sentence arm, stale since round 45); it is not in battery29.
+**Item 4:** read from the round-46 walk, 10 of 10 (`round47/FWD21_READ.md`); hover only, focus not read.
+**Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. **Gate:** `.tools/to-pipeline-gate.py` LIMB 6 refuses a new order while
+`prd-signoff status` reads WITHHELD (CTO msg 30802); the order is added the tick it reads ADMITTED.
+**Then:** battery29 on the candidate, the render instrument's Model state, CTO review from the render, and ONE DEV push on Andrew's word.
