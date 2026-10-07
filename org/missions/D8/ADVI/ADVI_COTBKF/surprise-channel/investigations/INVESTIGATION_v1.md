@@ -648,3 +648,79 @@ round.** Never edit an existing row.
   "notes": "Same disarm shape as rows S4 and S5."
 }
 ```
+
+## ADVI_COTBKF-W14-S1 -- CB4d3-AC2 meets its 120-second bound only against a primed cache: the cache now needs advisor and relationship column, so round 3's cache is stale and a cold read took 2m23s here
+
+```json
+{
+  "id": "ADVI_COTBKF-W14-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~14",
+  "surfaced_at": "2026-10-07T03:40Z",
+  "one_line": "CB4d3-AC2 meets its 120-second bound only against a primed cache: the cache now needs advisor and relationship column, so round 3's cache is stale and a cold read took 2m23s here",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "time timeout 590 python data/assets/scripts/silver/commonwealth_crosswalk.py --out .scratch/advi_cotbkf/crosswalk_warm (cache dir copied from round 3, columns missing): real 2m23.6s, S3 pass rewrote the cache; then time timeout 120 python data/assets/scripts/silver/commonwealth_crosswalk.py --out .scratch/advi_cotbkf/crosswalk_r4: real 6.4 s rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-3 BOUNDS: 'Within 120 seconds for CB4d3-AC2 (cache under .scratch/, warmed once untimed, and say so).'",
+  "world_is": "The cache at <worktree>/.scratch/advi_cotbkf/cache (untracked, about 20 MB) was warmed once untimed in the worker's worktree. load_inputs treats a cache missing Advisor_ID or relationship_id as stale and re-reads S3 (about 2.4 min here, over the bound), so a grader's tree still holding round 3's cache will exceed 120 s on its first run.",
+  "notes": "Disarm: copy C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-14/.scratch/advi_cotbkf/cache over the shared tree's .scratch/advi_cotbkf/cache before the worktree is removed, or run the script once without the timeout. Same disarm shape as rows S4 to S6."
+}
+```
+
+## ADVI_COTBKF-W14-S2 -- The order names 'the advisor ids' for each near-match entry, but only the Commonwealth side carries an Advisor_ID; the Cottonwood accounts dimension has none, so each entry gives the Commonwealth Advisor_ID(s) plus the candidate's relationship_id
+
+```json
+{
+  "id": "ADVI_COTBKF-W14-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~14",
+  "surfaced_at": "2026-10-07T03:40Z",
+  "one_line": "The order names 'the advisor ids' for each near-match entry, but only the Commonwealth side carries an Advisor_ID; the Cottonwood accounts dimension has none, so each entry gives the Commonwealth Advisor_ID(s) plus the candidate's relationship_id",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 read of the Cottonwood accounts dimension (accounts_key in CURRENT_SIDE_LOCATIONS.json): columns account_id, relationship_id, architect, ... and no advisor column; Commonwealth transactions and positions silver both carry Advisor_ID"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-3 change 2: each near-match entry carries 'the advisor ids'.",
+  "world_is": "near_matches.csv/.md print commonwealth_advisor_ids (distinct Advisor_ID over the account's transactions and positions rows, blank when none) and, labelled as such and not as an advisor id, the candidate's current_relationship_id. The accounts dimension also has a column named for the portfolio group, which holds a person name on the rows read; this worker left it out because the commit naming gate (LGIC_ENFORCE) refuses that column name as an IAM_GROUP at commonwealth_crosswalk.py (3 refusals), so whether it is the Cottonwood advisor is neither used nor established.",
+  "notes": "Judged at L9 under CB4d3-AC3."
+}
+```
+
+## ADVI_COTBKF-W14-S3 -- Round 3's code already scored every account regardless of date; the cutoff only chose the printed reason, so the in-kind change moves reason and score columns, not any match: matched stays 439 and no status or current account changed
+
+```json
+{
+  "id": "ADVI_COTBKF-W14-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~14",
+  "surfaced_at": "2026-10-07T03:40Z",
+  "one_line": "Round 3's code already scored every account regardless of date; the cutoff only chose the printed reason, so the in-kind change moves reason and score columns, not any match: matched stays 439 and no status or current account changed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round 3 base run (same cache) vs r4 run, merged on commonwealth_account: status/current_account changes 0 of 1533; reason CLOSED_BEFORE_CURRENT_HISTORY 758 -> 212 (all 212 now REBUILT_FROM_TRANSACTIONS, none in kind); NO_CURRENT_ACCOUNT_HOLDS_POSITIONS 263 -> 788; AWAITING_PERSON 21 (17 round 3 near matches + 4 in-kind exits before 2026-04-22)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-3 THE CELL: round 3 'scores an account only if its last activity is on or after 2026-04-22', so 758 rows were not scored.",
+  "world_is": "In crosswalk_rows every account is scored (the `scored` list) before the reason branch; the CLOSED_BEFORE_CURRENT_HISTORY branch just left `score` blank and printed no candidate. R2 passing was never date-limited, so no account newly matches. The change makes the reason branch skip the cutoff for an in-kind exit and print the score and best candidate.",
+  "notes": "No action needed; recorded because the premise's mechanism differs from the code's."
+}
+```
