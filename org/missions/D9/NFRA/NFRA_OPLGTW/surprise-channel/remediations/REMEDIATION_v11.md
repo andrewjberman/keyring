@@ -77,11 +77,11 @@ v10:** Z-S61 (fabric-wide), Z-W28-S9. **Still OPEN from v9:** Z-W28-S2.
     "owner": "2.0.0_SA_COO~O",
     "round": "v11",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~O",
       "round": "v11"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W28-S13",
