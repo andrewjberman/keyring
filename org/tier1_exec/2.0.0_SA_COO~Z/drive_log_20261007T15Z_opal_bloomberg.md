@@ -1,0 +1,8 @@
+# Drive log -- 2.0.0_SA_COO~Z -- 2026-10-07 15Z-17Z (opal_bloomberg)
+
+Substantive ticks, from the runtime tick file.
+
+- 2026-10-07T15:48:11Z | AMGT_RESAPP | L6 ISSUED | round 78 | TOs 0/19 | cells 19/19 + 3 issuer acts | thread y | act fired: ONE issuance @3161dbc59a (s.86), drafts @ba3a279816; 4 workers spawned (bb-2 ~290, bb-3 ~291, bb-8 ~294, bb-9 ~295), 4 worktrees provisioning; CTO told (one call: bb-18 build's wheel download under the 15:1xZ word); COO~X answered re 31085 | outcome: DRIVE FORWARD + PARALLELIZE
+- 2026-10-07T15:51:15Z | AMGT_RESAPP | L7 EXECUTE | round 78 | TOs 0/19 | cells 19/19 | thread y | lease FULL | act fired: bb-10 ~296 spawned as its worktree landed (5 workers live: bb-2, bb-3, bb-8, bb-9, bb-10); 3 worktrees provisioning (297, 289, 293); bb-18 wheel read running per CTO msg 31118 | outcome: PARALLELIZE
+- 2026-10-07T16:36:41Z | AMGT_RESAPP | L7 EXECUTE | round 78 | TOs 11/19 | cells 19/19 | thread y | act fired: 11 cells drained and re-run on the shared tree (flips @27691f17ff, @7c658f8bf8); bb-1 AMENDMENT 1 ruled on row Z-W289-S1 and re-handed; bb-14, bb-15, bb-16, bb-20 workers live; C-INTAKE wheel list sent (0 of 8 on disk), eighth wheel answered to CTO | outcome: DRIVE FORWARD
+- 2026-10-07T17:03:11Z | AMGT_RESAPP | L7 EXECUTE | round 78 | TOs 16/19 | cells 19/19 | thread y | act fired: wave 0 closed (16 drained, each re-run on the shared tree; flips @9152a98bc5); two check amendments (bb-14 AC3, bb-20 AC3) and bb-1 AMENDMENT 1; bb-17 GO, worktree ~302 cut, worker live; deployed-package read @b5def36272 sent (both native wheels are in the deployed zip); one call to CTO (build-script cell before bb-18) | outcome: DRIVE FORWARD

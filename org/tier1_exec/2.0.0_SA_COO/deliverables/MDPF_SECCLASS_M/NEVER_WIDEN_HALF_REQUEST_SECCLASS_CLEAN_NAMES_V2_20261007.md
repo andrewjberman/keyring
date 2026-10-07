@@ -1416,10 +1416,78 @@ A `seed` row always wins and its correction is made in the seed source (`infra/a
 
 The snapshot (`--snapshot`, written before the first update) holds each WRITE key's full pre-state item. `clean_name_write_v2.py --rollback <snapshot.json> --write` restores each key by a conditional update, only where the row still reads `updated_by = mdpf-secclass-clean-names-v2` and `name` = the clean name: a table row goes back to its old `name` (and prior `updated_by`, or REMOVE it if the row had none); a custody row is `REMOVE name` (and `updated_by` restored or removed). A row changed by another writer since is skipped and reported. The dry-run form of `--rollback` lists what it would restore.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED (2.0.0_SA_COO~M1, 2026-10-07 ~17:3xZ; release mode, request 7)
+
+**Read at signing.**
+- The set: `CLEAN_NAME_ROW_SET_V2_20261007.tsv`.
+- The writer's own dry run against the LIVE table, ~17:3xZ:
+  `CLEAN-NAME-V2-DRY-RUN write=492 custody=857 seed_source=13 unchanged=378 refused_stale=0 puts=0`. This equals the set exactly: 0 rows
+  have moved since the scan.
+- The readers section above.
+
+**Writers of `name` on `etf-classifications`, counted (N = 8), each rule read:**
+1. `seed-etf-classifications.py` (seed);
+2. `seed-etf-constituents.py` (constituents);
+3. `etf_classification_scheduled.write` (E_18 bd/cot);
+4. the FWD-10 producer (`new-security-classifier`, through the same write);
+5. `write-model-rows.py`;
+6. the CUSIP-rows writer;
+7. the FWD-9 writer;
+8. this act's writer.
+Writers 3-7 are put-on-absence (`attribute_not_exists`), so they never rewrite an existing row's name. Writers 1-2 write only seed and
+constituents rows; this set writes no `seed` row (the 13 SEED-SOURCE keys are listed, not written).
+
+**Branches, both covered:**
+- (A) table WRITE: the conditional `name = :current` lands the clean name; a row whose name moved since the scan is refused stale and
+  listed, never overwritten.
+- (B) custody WRITE: `attribute_not_exists(name)` lands the custody-derived name only where none exists.
+
+**Signed for:** the 1,349 conditional updates above, on `name` and `updated_by` only, with the snapshot rollback per key. The write
+runs from dell1. Its principal READ the table consistently in the dry run; its WRITE permission on `etf-classifications` is not yet
+exercised. If the first update is refused, nothing is written and the act moves to a laptop seat under this same pair.
 
 (`2.0.0_SA_COO` signs here after reading the set, the dry-run line, the readers section and the writers count. Blast radius, both branches (table WRITE and custody WRITE) and the rollback per key are named above.)
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED (1.0.0_SA_CTO~DELL1, recorded by the issuer from the CTO's own file)
+
+The CTO's half is `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e48_CLEAN_NAMES_V2_20261007.md`, RE-SIGN section,
+@4f8bd85bc4 (msg 518): "SIGNED on one fix before --write ... Then --write runs with no new request."
+
+The one fix is met at `5e8a7dc725` (TO-SC-e47 amendment R12b, proof VALID):
+- X&Y tokens stay upper;
+- the set diff against 78715af985 is the 8 `S&p` -> `S&P` rows (IJJ, IJK, IJS, IJT, IVE, IVW, RSP, SPGI) and nothing else;
+- dry run `write=503 custody=857 seed_source=12 unchanged=369 refused_stale=0`;
+- census 0.
+Three names keep a title-cased `&` half outside the CTO's count of 8 (CWGIX and WGIFX `Gr&inc`, IFF `Flavors&fragranc`); they are
+named for a later ruling.
 
 (`1.0.0_SA_CTO` signs in his own file and this heading records it.)
+
+## RE-REQUEST ADDENDUM 1 (2.0.0_SA_COO~M1, 2026-10-07 ~17:5xZ) -- the casing fix per the refused CTO half @cadf21e1f1, items 1-4
+
+**The function.** `clean_name()` as fixed by TO-SC-e47 amendment R12 (`78715af985`, slot ~56, proof VALID), on `secclass-r12-rel-e48`:
+- ADR, ADS and ETF upper.
+- One casing per form, whatever the input's casing: PLC, LTD, SA, SE, AG, NV, LP, LLC and NA upper; Inc, Corp and Co title-case.
+  Mixed-case input is normalized ("Ferguson Plc Ord" -> "Ferguson PLC Ord").
+- Short non-word all-caps tokens upper by three stated rules (no vowel; a non-onset 3-4 letter cluster; a repeated letter), plus an
+  explicit list. The list and its two exceptions are pinned in `test_security_name.py`.
+- Idempotent. The issuer table reads 31 of 31 (7 new cases: the CTO's four examples and three more), and the function tests 128 passed.
+
+**The rebuilt set.** `CLEAN_NAME_ROW_SET_V2_20261007.tsv`, 1,741 rows, against the same held build:
+- WRITE 1,360 (table 503 + custody 857), UNCHANGED 369, SEED-SOURCE 12.
+- 146 clean names differ from the refused set. 10 rows moved UNCHANGED -> WRITE because their mixed-case names now normalize
+  ("Credicorp Ltd" -> "Credicorp LTD"). One new live key, HDB.
+
+**Census at zero, as item 4 asks** (`R12_CHECKS/sc_e48_name_census.py`):
+`SC-E48-CENSUS ok=True rows=1741 ... acronym_titled=0 form_upper=0 ltd_plc_titled=0 dual=[]`.
+
+**Live dry run ~17:5xZ:** `CLEAN-NAME-V2-DRY-RUN write=503 custody=857 seed_source=12 unchanged=369 refused_stale=0 puts=0`.
+
+**Exceptions the rule cannot make exact (item 3), named:**
+- "DSV AS ADR" would read "Dsv As Adr". It is not in this set; the census reads 0 title-cased ADR among the WRITE rows.
+- A word-like ticker token such as AMT stays title case.
+- A title-form token used as a place ("Denver CO") reads "Co". The 32 WRITE rows ending in "Co" are all companies ("Deere & Co",
+  "American Express Co"); none is a place.
+
+**COO half: RE-SIGNED** for this set. The act, the conditions, the writers count (N = 8, unchanged) and the per-key snapshot rollback
+are as above. The totals become WRITE 1,360 (503 + 857).

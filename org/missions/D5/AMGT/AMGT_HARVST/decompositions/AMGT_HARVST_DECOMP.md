@@ -3252,3 +3252,77 @@ row AMGT_HARVST-Z-S96's cut names; one suffix list in place of two.
 - `bd-1` AC1 (`pytest lib/research/harvest/tests/test_bd1_gold_brands_and_anchor.py`) base: FAIL as expected (the test is absent).
 - `bd-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bd1_census.out`) base: FAIL as expected (no such file).
 - `bd-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (380 passed).
+
+## 72. ROUND 58 -- the list repair the rebuild #8 dry run asked for (`1.0.0_SA_CTO~Z` msg 31008), 2026-10-07 ~14:0xZ
+
+Round 57's order is terminal (`bd-1` merged @088d226de5). Row AMGT_HARVST-Z-S99: the served gold was built from the 212-name
+file `round33/securities.universe.r33.json`, not from `build()`. Msg 30924: one rebuild is still wanted, after a signing dry
+run. The dry run (`deliverables/2.0.0_SA_COO_H/round57/GOLD_REBUILD8_SIGNING_READ.md` @b787ec1026, PUTS 0) STOPS the rebuild as
+the list stands: 140 served pairs lost over 5 securities (a decorated pool name wins over the legal name), Air Liquide +3,543
+pairs on the exact-case ticker form `AI`, 43 new ticker forms unread. Msg 31008 rules the repair.
+
+Issuer `2.0.0_SA_COO~H`. Series **`be`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-be-1` | `be-1` | **The identity legal name is always an alias and never replaced; a pool name with a ticker or exchange tail is not an alias; `AI` is refused as a ticker form.** One stated decorated-name rule with its mutant; a list comparison against the served file and the round-57 list (served aliases missing before and after, the six named securities, pool names refused and kept, new ticker forms). No silver read, no gold build. | LOCAL | worker ~107 |
+
+**The close run (issuer, after `be-1` merges):** the signing dry run re-run on the repaired list, extended as msg 31008 rules:
+pairs gained per NEW ticker form; 0 pairs lost; every gained pair assigned to one cause (a new security, a new alias, silver
+growth) summing to the total; then a sample of 30 pairs from the largest non-silver-growth gainers for `3.0.0_SA_CVO~Z` (bar
+29 of 30); then the rebuild's never-widen pair.
+
+**This round reverses a ruling of this seat:** `bc-1`'s "the pool's own name wins over the identity record" (section 70).
+
+**Checks dry-run at the base before the cut:**
+- `be-1` AC1 (`pytest lib/research/harvest/tests/test_be1_legal_name_always.py`) base: FAIL as expected (the test is absent).
+- `be-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out`) base: FAIL as expected (no such file).
+- `be-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (397 passed).
+
+## 73. ROUND 59 -- the Seeking Alpha job record (`1.0.0_SA_CTO~Z` rulings C2 @f97be3fd6f, msgs 31046, 31054), 2026-10-07 ~15:0xZ
+
+Row AMGT_HARVST-Z-S100: the collector read Alibaba, Boeing and Costco on 2026-10-06/07 while AMGT_RESAPP's freshness page
+showed them last read 2026-09-11; the page reads a store these runs do not write. Ruling C2 routes the collector half here on
+ONE contract, `lib/research/freshness/seeking_alpha_job_record.schema.json` @25ebedb3a3 (`2.0.0_SA_COO~Z` msg 31059): one
+writer (the collector), one reader (`AMGT-bb-16`). This round runs beside round 58's close run (the gold rebuild #8 signing dry
+run 2); the two write disjoint files.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bf`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell; no edge to the `be` chain: `lib/opal_data_harvest` against `lib/research/harvest`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bf-1` | `bf-1` | **One record per finished Seeking Alpha job, to the schema file, at the builder's address; a one-time emitter for jobs already finished; a switch that is off.** `job_record.py` (build, address, write-once), the call in `worker.run_job` behind `seeking_alpha_job_record.enabled`, `emit_job_records.py` with `--dry-run` and `--write`, the registry row, plants, and the real dry run over the two Seeking Alpha runtime roots. The worker sends no put. | WORLD (the gate's floor: `<paths>` names `infra/logic/registry/`) | worker ~108 |
+
+**The issuer's acts after the merge (each recorded; `1.0.0_SA_CTO~Z`'s exercised read and a change-management entry, as a WORLD cell requires):** read the dry
+run; `--write` the one-time emit; flip the switch in its own commit; confirm one live job writes its record.
+
+**Checks dry-run at the base before the cut:**
+- `bf-1` AC1 (`pytest lib/opal_data_harvest/test_bf1_job_record.py`) base: FAIL as expected (the test is absent).
+- `bf-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out`) base: FAIL as expected (no such file).
+- `bf-1` AC3 (`pytest test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (32 passed).
+
+## 74. ROUND 60 -- seven ticker forms refused on their graded census (`1.0.0_SA_CTO~Z` msgs 31173, 31209), 2026-10-07 ~17:2xZ
+
+Rounds 58 and 59 are terminal (`be-1` merged @01e8088aee; `bf-1` merged @23d65887ca, its records written and its ledger
+closed @8240461f26). Signing dry run 2 (@6b49d49e10) met the bar: 0 pairs lost, 14,337 gained, each with one cause. The CVO
+graded the gain sample 29 of 30 and the ticker-form sample (@399fcf7d0a): BATS 0 of 10, JD 2, ICT 0, ML 0, BE 1, SAN 0, CAT 10
+of 10, the other forms 30 of 30 with MSCI's rows being index and fund names. Msg 31209: the stricter line holds, so `MSCI`'s
+bare form is refused with the six.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bg`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell, DIRECT ACT).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bg-1` | `bg-1` | **Seven exact-case ticker forms join `ticker_refusals`, each on its graded census: BATS, JD, ICT, ML, BE, SAN, MSCI.** Data in `whole_brand_aliases.json`; plants that each form is removed, that removing the entry brings it back, that name aliases do not move, and that CAT, CSL, TTE and SLB keep theirs. No network, no build. | LOCAL | worker ~109 |
+
+**The close run (issuer):** signing dry run 2 re-run on the list with the seven refused; then the rebuild's never-widen pair.
+Before that re-run, msg 31209's three terms: CAT's name read from the registry (`CATERPILLAR INC`,
+`lib/research/identity/registrations.json`); 10 CSL pairs sampled and graded (row AMGT_HARVST-Z-S101); the 9 forms no sampled
+row reached stated with their pair counts.
+
+**Checks dry-run at the base before the cut:**
+- `bg-1` AC1 (`pytest lib/research/harvest/tests/test_bg1_ticker_refusals.py`) base: FAIL as expected (the test is absent).
+- `bg-1` AC2 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).

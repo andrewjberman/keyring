@@ -544,3 +544,84 @@ RIV-md-1's surfaces. No earlier cell is replaced. Chain `~11`, one cell, file re
   (its arm (a), and arm (e)'s "12 months at most"); the cell may change those two arms to this cell's rule and nothing
   else in that file. Items 1 and 2 are checked mechanically; item 3 is the CVO's to grade in a browser.
 - **Organic trigger:** any security dialog on the live page; the issuer's real run.
+
+## ROUND 22 (main workstream) -- APPENDED 2026-10-07, revision 1.12 of this file
+
+One cell, the second display cell of ROUND_ANALYSIS.round20 @c9a9e27770 (rulings R2 items 2 and 4, R3) and of the R3 read
+(`deliverables/2.0.0_SA_COO~RV/round21/READ_R3_S59_CAUSE.md` @ad9f13a0bb, causes A and C). Author 2.0.0_SA_COO~RV. No
+earlier cell is replaced. Chain `~12`, one cell, files render.py, trade_markers.py, publish_page.py, risk SERVED.
+
+### `RIV-pm-1` -- the oldest strip cell is marked as a part month; no curve is drawn where there is none; the markers run through the page day and a zero-dollar trade is not one (FWD-22, FWD-23; analysis R2, R3; row Z-S59)
+- Measured: the 365-day window begins inside October 2025, so the 180 thirteen-cell strips' first cell is a part month,
+  and a 90-day strip's first cell is July from the 8th (cause B: 3 strips read as disagreeing with their markers). One
+  fund-security has a stored currency, 4 markers and 0 prices and draws nothing (BIDD 6475395Z GR); CGIC 2454 TT has 2
+  prices and 126 markers riding the top edge. Two strips show an October trade whose window ends on the page day and has
+  no marker (cause A); two securities carry trims at -0.0 dollars drawn as markers (cause C).
+- Interface:
+  1. `render._month_chart(mark, end=None, start=None)` and `render._month_words(mark, end=None, start=None)` take the
+     trend row's `window_start`. When `start` is given, its day of month is after the 1st, and the strip's first cell is
+     `start`'s own calendar month (same year and month), the FIRST cell carries the attribute `data-part` and no other
+     cell does; `render.MONTH_CSS` gains a rule on `[data-part]` that shows the reader the month is partial;
+     `_month_words` appends " (part month)" to that month. Otherwise no cell carries it. Both call sites pass the row's
+     `window_start`. Everything round 21 built stays.
+  2. In the page's one script: `nohist(s)` returns the no-history sentence also for a security with a stored currency and
+     not one priced point (the plain sentence; the object's `source_words` only when the currency is null); a new pure
+     function `window.rfChart.curve(pl)` answers true only when the range's plan holds two or more priced points, and for
+     a range where it is false the script draws no svg and prints "Fewer than two prices on file in this range." when the
+     range holds exactly one priced point (a range with none keeps "No price on file in this range."). Each sentence
+     appears once in the script.
+  3. `trade_markers.markers` skips a trade whose `est_notional` is zero (0.0 or -0.0) as it skips a null one. The chart
+     object's markers run through the PAGE day: the trades handed to `trade_markers.markers` include one whose
+     `window_end` is the page day. Prices (`points`, `ranges`, `asof`) still end at the as-of day.
+  4. (Amendment 1, row ETFS_RIVALS-Z-C-S64; CTO ruling msg 31031.) The chart object's markers are keyed by the SAME
+     one-key rule the trend and the rankings use: a fund's trade recorded in G5 under a CUSIP or ISIN key whose G4
+     `security_parsekey` gives a Bloomberg key is gathered under that Bloomberg key, so a security the page shows
+     under one key carries every trade the fund made in it. Measured on the round-21 real run: 7 GQGU securities
+     folded into their Bloomberg keys by round 20 lost their 86 markers, because the publisher groups G5 rows by the
+     recorded key. Reuse the join the trend stage applies to G5 rows (`gold_buying_trend.build`: `parsekey_map(g4)`
+     and `identity_maps`); do not derive a second rule.
+- Rulings at the cut (issuer): the fund market value read for the markers' basis points is widened through the page day
+  too, so a page-day marker states its basis points. In the script a marker whose end is after the object's `asof` is
+  kept by `plan` and drawn at the chart's right edge; it is in the trade list either way. The script builds its nodes
+  with `createElement` / `createElementNS` as today, never `innerHTML`. No key is added to the chart object. The audit
+  page is untouched. Cause D of the R3 read (a trade under another key) is item 4 where the other key is a CUSIP or
+  ISIN with a parsekey; any other shape of cause D is not in this cell. Item 4 has no check file of its own: the cell
+  adds a package test for it (a fund's trade under a CUSIP key with a G4 parsekey row appears as a marker under the
+  Bloomberg key), and the proof is the issuer's real run: total markers per fund equal the run before the fold for
+  all 13 funds, GQGU's 7 Bloomberg keys hold the 86, and 0 dialogs show a buying section above "No trades".
+- **Organic trigger:** any security dialog on the live page; the issuer's real run re-reads the 11 strips of row Z-S59.
+
+## ROUND 23 (main workstream) -- APPENDED 2026-10-07, revision 1.13 of this file
+
+One cell, item 1 of the ENRICHMENT LIST of ROUND_ANALYSIS.round22 @f8a61834fd (rulings R1, R2). Items 2 to 4 of that list
+are the issuer's reads and acts on 2026-10-08 (the two runs' REPORT lines, row Z-S62, the AI period-word count, the
+deployed-stage read before the backfill, leg L3) and Andrew's look; they are not cells. Author 2.0.0_SA_COO~RV. No
+earlier cell is replaced. Chain `~13`, one cell, file render.py, risk SERVED.
+
+### `RIV-ks-1` -- a security named in an account's text never opens a dialog without the panel fund's section (rows Z-S65, Z-S66; analysis round 22 R1, R2)
+- Measured: the served page of 2026-10-07 (rounds 15 to 22) reads `fund_sections` 2247 buttons, 4 missing: in GQGU's
+  panel "META PLATFORMS INC" and "ASML HOLDING NV-NY REG SHS" target the dialogs `30303M102` and `N07059210`, which hold
+  a name and no section; the full dialogs are `META_US_Equity` and `ASML_US_Equity`. Reproduced by `ks-1.AC1.py` with the
+  served markup: the fund traded the security under a raw key (so `render._fund_keys` counts it), the raw key's page
+  name differs from the tabled key's only in case, the account cites the raw key, and `_panel_page` / `_name_link` let
+  the citation decide; `_sec_dialogs` builds sections from contribution and trend rows only. The count read 0 through
+  round 16, 3 from round 17, 6 from round 21 on day 2026-10-06; the publisher prints a FAIL line and publishes.
+- Interface:
+  1. On the rendered page every `data-sec` button inside a fund panel targets a dialog that carries a section for that
+     fund, or the mention is plain text. A name whose deciding key has no section for the panel's fund links to the key
+     of the same security that has one (the page's one key), else reads as plain text with the written form kept in
+     the text or a title. No dialog on the page has zero sections.
+  2. Round 13's rule stays: inside fund F's panel a name several listings carry links to the listing F holds; the cited
+     key breaks a tie between keys that each HAVE a section for F.
+  3. `publish_page` already prints `FAIL: fund sections missing` and publishes. It keeps publishing (a day's page is
+     not withheld for a link); the manifest's `fund_sections` stays the count. No change to the audit page's bytes
+     beyond what item 1 causes.
+- Rulings at the cut (issuer): the repair is in how a mention picks its key, not in adding sections for raw keys and
+  not in rewriting stored account text. Reuse the page's existing name tables (`_NAME_ALL`, `_NAME_KEYS`) and the set of
+  keys that will carry a section; do not read G4 or add a second key map to the renderer. Row Z-S57 (Meta in GQGU under
+  two keys in buying_trend) is NOT this cause as far as the issuer has read: Z-S57 is a table bucket, this is a link;
+  the worker says in its report whether its read agrees. Why the FAIL line reached no row for two rounds is the
+  issuer's answer, not the cell's: the real-run record carried the count and the issuer's packets did not read it;
+  from this round the issuer's real-run read prints `fund_sections.missing` in the packet.
+- **Organic trigger:** GQGU's panel on the live page; the issuer's real run of the served day reads `fund_sections`
+  missing 0 and 0 dialogs with no section.

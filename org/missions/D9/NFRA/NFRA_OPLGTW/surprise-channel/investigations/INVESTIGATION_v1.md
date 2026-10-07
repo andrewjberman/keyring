@@ -9624,3 +9624,259 @@ name the one known failure instead of silently inheriting it.
   "notes": "NOT done here and outside the order's paths: the older files and the earlier folders. Whether a master id counts as the bound's 'account id' is the issuer's call; a single regex pass over those files would redact them. The host body (r26_real_host.py.txt) still prints it; only the saved copy is redacted. A second carrier: the per-file pytest output (r26_tests_release.out) held the id 5 times, printed by an acceptance test, and one synthetic gateway.test download URL with a token fragment; both redacted in this session's copy. The test output of earlier releases still holds them."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T14:15Z",
+  "one_line": "safe-ec2-deploy.sh and deploy-to-ec2.sh print the artifact bucket name, which carries the 12-digit AWS account id, into the deploy output, so a worker that saves the output commits the account id the order bounds forbid.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 14:01-14:04Z the r26 deploy printed the S3 upload and download lines with the bucket name `opal-<12 digits>-lambda-artifacts` (4 occurrences in the saved r26_phaseB_deploy.out, lines 292-300).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_phaseB_deploy.out: the 4 occurrences were rewritten to `<acct>` before the commit (a byte replace; the rest of the file is the wrapper's own output).",
+      "RUN `grep -c <the 12 digits> r25_phaseB_deploy.out` in the same folder -> 4: the r25 deploy output, committed at f22aefba02, carries the same string; the ledger entries of r25 name the bucket by `<artifact bucket>` only in some legs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's bounds: never print or commit an account id; the deploy line is `safe-ec2-deploy.sh ... deploy-to-ec2.sh`, whose output the worker records.",
+  "world_is": "The deploy script echoes the bucket name, and the bucket name embeds the account id. The saved r26 output is redacted from here on; r25 and earlier deploy outputs are not touched (outside the order's paths and the history is already committed). Whether an account id inside a bucket name counts as the bound's 'account id' is the issuer's call; the wrapper cannot be edited by a worker (release tree writes are not in the order's paths).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Also seen: a fresh Bash call in this worker's session carried OPAL_AGENT_SERIAL=2.0.0_SA_COO~O inherited from the launching shell; every command here exported the worker serial first, and the deploy shell ran `unset OPAL_AGENT_SERIAL` as form step 10 states, so the halt gate resolved the issuer's session file (resolve rc=0, validate rc=0 in the dry run)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T14:25Z",
+  "one_line": "The hand-recorded manifest's release_note grows one note per release; at r26 the string passed 32000 characters and the commit-time naming gate refused the commit with a WinError 206 (it runs `git cat-file -e HEAD:<the whole string>` on any slash-bearing string value).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit of EC2_MANIFEST.json at 14:2xZ -> `ERROR: BLOCKED -- the naming limb refused ... NAMING ERROR FileNotFoundError: [WinError 206] The filename or extension is too long`; the same error on `python .tools/naming-gate.py --diff <the staged diff> --post-from-index`.",
+      "RUN a traced subprocess.run showed argv `git cat-file -e HEAD:<the release_note string>`, total length 34518 (the Windows command-line bound is 32767).",
+      "FILE .tools/naming-gate.py:811-819 `_resolves_to_tracked`: any value containing `/` is tried as a tracked path with no length guard. The r25 note (28 KB with the chain) passed; the r26 note with the chain was 34500 characters.",
+      "RUN after trimming the three oldest chain segments (OG-t-2, MX-r-6, MX-r-7; all still in git at f22aefba02 and earlier) the note is 30808 characters and the naming gate reads `NAMING-GATE: PASS 0 graded`."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The release form step 10: the worker records the manifest by hand in its own worktree and commits it with the deploy output.",
+  "world_is": "The release_note value is a cumulative chain of every release's note (19 segments before this edit). It exceeds the naming gate's usable argument length at r26, so the next release (r27) re-hits the refusal unless the chain is trimmed again or the gate guards the length. ARMED because the next manifest hand-record refuses with no change of the worker's own. Done here: the three oldest segments were dropped from the string and a TRIMMED marker names them; nothing else in the manifest changed beyond the five lines of this release.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A fix is either a length guard in .tools/naming-gate.py `_resolves_to_tracked` (a value over a few hundred characters is not a path) or the form's step 12 telling the worker to trim the chain. Neither is in this order's paths."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S66",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T14:47Z",
+  "one_line": "Two safe-merge runs raced in the shared tree: commit 9f146f853a carries 2.0.0_SA_COO~X's subject and branch parent, 2.0.0_SA_COO~O as author, and the tree of OG-au-2; the AMGT_CORPUS branch reads merged with none of its 4 files at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash .tools/safe-merge.sh wk-NFRA_OPLGTW-27-31 at ~14:43Z, started on an index with 0 staged paths and no MERGE_HEAD -> exit 5: `tree check 9f146f853a: branch needed 4 file(s), dropped 4, foreign 6`; the 4 needed files it names are lib/research/corpus/ and AMGT_CORPUS paths, the 6 foreign files are OG-au-2's.",
+      "RUN git log -1 --format='%p %an' 9f146f853a -> parents 8386c5e72e 9dd2220f79, author 2.0.0_SA_COO~O; subject `drain(AMGT_CORPUS.TO-CRPS-ap-1, 2.0.0_SA_COO~X): ...`. `git diff --name-only 9f146f853a^1 9f146f853a` lists the 6 OG-au-2 files and no AMGT_CORPUS file.",
+      "RUN at 14:45Z, per file: the 6 OG-au-2 files read HEAD blob = branch tip 3153a1c764 blob = working tree, index different (3 staged as deletions). lib/research/corpus/backlog.py and its test read HEAD != 9dd2220f79 and index = 9dd2220f79. `git merge-base --is-ancestor 3153a1c764 HEAD` false; `--is-ancestor 9dd2220f79 HEAD` true.",
+      "RUN at 14:47Z `git reset -q HEAD -- <the 6 OG-au-2 paths>` (index only, this seat's own paths): those 6 read clean; 4 AMGT_CORPUS paths remain staged at the branch's blobs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-merge.sh: the merge is committed `from the index snapshot taken right after the merge; a peer's later staging cannot enter it`, and exit 0 means the named branch's content and parent landed.",
+  "world_is": "With two drains inside one window, one commit took one seat's message and branch parent and the other seat's tree. The script detected it after the commit (exit 5) and printed the repair to the seat whose content DID land, not to the seat whose content did not. OG-au-2's content is at HEAD byte-equal to its branch, but its branch is not an ancestor. ARMED: any two COOs draining in the shared tree at once can repeat it, and a whole-index commit while the stale entries stood would have deleted three OG-au-2 files.",
+  "disarm_owner": "2.0.0_SA_COO",
+  "notes": "Done here: this seat's 6 index paths reset to HEAD; 2.0.0_SA_COO~X and 1.0.0_SA_CTO~Z told (msgs 31039, 31040) that the 4 AMGT_CORPUS files are staged and uncommitted. Not done: no change to safe-merge.sh (lane .tools, owner 2.0.0_SA_COO base); a lock taken before `git merge --no-commit` and held to the commit would close the window. The wk-NFRA_OPLGTW-27-31 branch can be recorded as merged by a later no-content safe-merge."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S20",
+  "one_line": "OG-rl-13's wrapper exercise names the scoped concierge as the principal but not where its immutable principal key comes from; the host role can neither query a POLICY# partition nor scan the state table, so the key was derived read-only from the host's own MSAL cache account entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 15:32Z, host probe (no tool call), installed r26 code: R27_PRINCIPAL_A_ERR DependencyUnavailable x3 (the query of the 3 roster principals' POLICY# partitions) and R27_PRINCIPAL_B refresh_head_scan: ERR ClientError (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_probe_principal_AB_refused.out, SSM 6d3644fd).",
+      "RUN 15:34Z, the same probe with method C: roster_keys=3 (master 1, write_capable 2) cache_files_present=3 accounts_naming_the_concierge=1; the principal resolves to tier standard, in_write_capable=True, in_master=False (%sr27_probe_principal.out, SSM 2a20203f). Method C reads each cache file sha256('principal:<key>').bin in memory, decrypts it with the broker's own key and lists ACCOUNT entries: no network, no token read, nothing written, nothing printed."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13: call the status tool once through the dispatch wrapper, in-process on the host, with the scoped concierge as the principal; no /login, no token acquired for that identity, no Graph call.",
+  "world_is": "The principal key (tid/oid) is not in the repository, the order or the allowlist (the allowlist and the seed name an email only). The host role's access to the state table is get-by-exact-key only. The one read-only source found is the encrypted MSAL cache directory the gateway itself keeps. It identified the concierge (1 of 3 roster principals, write-capable). A later worker who cannot repeat this has no other route to the key, and a synthetic oid outside the rosters would resolve to read_only and be refused by the tier gate for a reason that says nothing about the real concierge.",
+  "notes": "Not a hazard: the cache files were only read and decrypted in memory inside the run's process; the record names no key, email or token. If the issuer wants the principal source pinned, the order can cite method C (r27_read_host.py.txt, wrapper_section) or name another read-only source."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S21",
+  "one_line": "The route arms compare a day page's status, size and digest across the deploy, but the pages are republished: the same day's page changed size between r26's BEFORE and this session's, so a republish between BEFORE and AFTER fires the rollback trigger with no gateway change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN r26 BEFORE, route day 2026-10-06: page 200, 1279784 bytes, sha16 ac999d182c92e212; audit page 200, 1381244 bytes, sha16 270f6f5479ecdc32 (ANNOUNCE_OG-rl-12.md, BEFORE and REHEARSAL table).",
+      "RUN r27 BEFORE, same route day 2026-10-06 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_before_verify.out, SSM b2f97417): page 200, 1298076 bytes, sha16 7b1d707a38c5936c; audit page 200, 1242967 bytes, sha16 46afdf5db2ebe3ed. Both pages changed in size and digest on the installed r26 code, whose rivalfunds_view.py md5 b04d528a is unchanged since r26.",
+      "RUN r27 negative control, 15:43Z, one minute after the 15:42Z BEFORE read: the same arms read the same size and digest (%sr27_negative_control.out), so the drift is a publish, not noise."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13 rollback triggers: any rivalfunds route changing status, size or digest.",
+  "world_is": "The pages a route arm compares are produced by a publisher outside the gateway. A republish between the verify script's BEFORE and AFTER reads changes a page's size or digest and reads as a route change. Nothing in the order or the verify script separates the two.",
+  "notes": "Not fixed here. A remedy for the issuer: the Phase B worker re-takes BEFORE immediately before the deploy and, on a size or digest difference, re-reads the object's last-modified in S3 (a publish) before treating it as a rollback trigger; or the arms compare against the installed code run in the same minute."
+}
+```
+
+```json
+{
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:05Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "id": "NFRA_OPLGTW-Z-W28-S22",
+  "one_line": "The r26 route program's BEFORE arm asserted the chart route NOT registered; live r26 already serves it, so reusing the r26 tooling as the order directs failed the BEFORE arm until the r27 copy asserted the route present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_route_host.py.txt (else branch of the BEFORE mode): chk('route ... NOT registered on the installed code', not route_present, ...), and r26_verify.py before: route_ok required chart_route_registered is False.",
+      "RUN r27 BEFORE with the adapted copy: ROUTE_ARMS before: 5 of 5 PASS, chart route registered True, chart_404 404 with the named body, chart_400 400 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_before_verify.out)."
+    ]
+  },
+  "spec_asserts": "Order OG-rl-13: reuse the r26_* tooling, copied to r27_ names.",
+  "world_is": "The r26 BEFORE arm described the state before r26; r27's BEFORE is the state after it. The copies r27_route_host.py.txt and r27_verify.py assert the chart route present and the two chart arms holding in BEFORE; the AFTER arms are unchanged.",
+  "notes": "Mechanical; no served-output consequence."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S23",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T16:20Z",
+  "one_line": "The worker worktree's sparse cone omits org/devices, so the surprise-row gate could not read the device register and refused every new row (fabric 'site-z') until the worker ran `git sparse-checkout add org/devices`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit of the Phase A deliverables and rows, 16:1xZ, in C:/tmp/wk-oplgtw-r26-28: `[surprise-row-gate] BLOCKED -- 3 violation(s) on NEW rows ... the device register cannot be read (RegisterError ... org/devices/DEVICES.json: No such file or directory)`; `git ls-files -t org/devices/DEVICES.json` read `S` (skip-worktree); `git sparse-checkout list` named 12 cone paths, none of them org/devices.",
+      "RUN `git sparse-checkout add org/devices` in the worker's own worktree (config only, no tracked content changed), then the same commit landed: 860a648396."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: commit instance, deliverables and rows with safe-commit on the worker branch; the row gate grades NEW rows by schema, identity, coordinate and device register.",
+  "world_is": "A worker worktree cut with the sparse cone used for the earlier rounds (`.claude .tools docs/doctrine infra/aws/ec2 ... org/missions org/projects`) lacks org/devices, which the gate reads. Rows filed from such a worktree are refused with a message that names the missing file but not the fix.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A fix for the issuer: add org/devices to the sparse cone the worker worktrees are cut with, or tell the worker face to add it. The worker's one-line fix is in the evidence."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S24",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "The deploy wrapper's own build step ran `bun install` (77 packages) and `tsc -b && vite build` during the r27 deploy, while the order's bounds say no bun and no package fetched from the internet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_phaseB_deploy.out lines 265-290: 'INFO: building mcportal @ a3bff71f...', 'bun install v1.3.14', '77 packages installed [11.65s]', 'tsc -b && vite build', 'built artifact opal-gateway-510c8cfed2.tar.gz (500K), dashboard bundle mcportal@a3bff71f at dashboard/'.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_phaseB_deploy.out line 266 and r25_phaseB_deploy.out lines 247 and 260: the same bun install in the r26 and r25 deploys."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-13 BOUNDS (issuer's GO): NO package, script or program fetched from the internet; no bun. Form step 10: deploy through safe-ec2-deploy.sh with deploy-to-ec2.sh exactly as stated.",
+  "world_is": "deploy-to-ec2.sh builds the dashboard bundle (mcportal @ a3bff71ffa3f) with bun on the deploying machine, and bun install fetches 77 packages from the package registry, on every gateway deploy. The worker ran no bun itself; the wrapper did, as the step the form directs.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. The two instructions cannot both hold for a gateway deploy as the form states it. A decision for the issuer: word the bound as 'the worker runs no bun or fetch outside the deploy wrapper', or direct the dashboard bundle to be prebuilt (the CTO ruling on bun via the control plane, ANDREW_DIRECT_20261007_153xZ, is the nearby record). The 77-package fetch had already happened on r25 and r26."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S25",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "Through bash on this host, `aws s3api list-objects-v2 --delimiter /` has its '/' rewritten by MSYS path conversion (the call answers Contents, not CommonPrefixes), and the same call with `--query CommonPrefixes[].Prefix` returned rc 3221225477 (0xC0000005) with empty stderr.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN python r27_pagetime.py (first two attempts, 16:49-16:51Z): 'LIST FAIL rc=3221225477'; the same list without --query returned objects under 'Contents' keyed date=2026-09-29/index.html and an empty day list ('IndexError: list index out of range' on days[-1]).",
+      "RUN after setting MSYS_NO_PATHCONV=1 in the subprocess environment and dropping --query: published_days=7 newest=2026-10-07 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r27_pagetime_before_1.out). The cause of the 0xC0000005 was not isolated between the --query and the path conversion."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Bounds: AWS only through .tools/aws; the r27 reads use the same bash -c 'aws \"$@\"' pattern as the SSM runners.",
+  "world_is": "A bare '/' argument is mangled by MSYS under bash -c on this device, and one --query form crashes the shim with an access violation and no message; the SSM runners never pass either.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed beyond the worker's own script (r27_pagetime.py, r27_lake_read.py set MSYS_NO_PATHCONV=1 and take the whole JSON). A rc of 3221225477 with empty stderr reads as a list failure, not as a crash."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S26",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T17:15Z",
+  "one_line": "One object in the gateway's raw audit lake has an EMPTY timestamp part in its key (audit/dt=2026-10-07/-321b3117.jsonl), unlike the runbook's <ts>-<id>.jsonl shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN list-objects-v2 on bucket opal-mcp-audit prefix audit/dt=2026-10-07/ --max-items 2, 16:4xZ: first key 'audit/dt=2026-10-07/-321b3117.jsonl' LastModified 2026-10-07T13:31:24Z, second 'audit/dt=2026-10-07/2026-10-07T00:00:18.920121+00:00-e41a214c.jsonl'. Read-only; the object was not opened.",
+      "FILE infra/aws/ec2/opal-gateway/runbooks/SCHWAB_PILOT_RUNBOOK.md (CLOUD, the raw-lake paragraph): key audit/dt=<day>/<ts>-<id>.jsonl, written by _emit in app/audit.py."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Runbook section 5 (CLOUD): each lake object's key is audit/dt=<day>/<ts>-<id>.jsonl.",
+  "world_is": "At least one object written 13:31:24Z today carries no ts in its key, so a reader that splits the key on the first '-' or sorts by ts places it differently from the rest. Cause not read (a record with an empty ts, or a writer variant).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not investigated; the object was not opened. It sorts first in a key-ordered listing."
+}
+```

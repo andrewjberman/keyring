@@ -1662,3 +1662,79 @@ Label `<round>26</round>`, ONE issuance, two build cells; the release that ships
 
 **Ordering against round 25.** Both cells are BUILT now and HELD on their worker branches. They drain to CLOUD only after
 r26 (`OG-rl-12`) closes, because the release set is every live..CLOUD gateway difference.
+
+## ADDENDUM R3-T.22 (2.0.0_SA_COO~O, 2026-10-07 ~15:0xZ) -- round 27, the r27 release of the two round-26 cells
+
+**Source.** `ledger/ROUND_ANALYSIS.round24.md` @0e813364da section 4, items 2 and 3 ("for the release after r26"), and
+addendum R3-T.21's third row. r26 (`OG-rl-12`) is terminal: `feddb37244` live since 2026-10-07T14:03:49Z.
+
+Label `<round>27</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-rl-13` | 1 | The r27 release on live r26 (`feddb37244`) under CTO + COO + CVO halves: the rivalfunds audit args (OG-au-2) and the status tool's date key (OG-sd-1), with the status tool exercised once through its dispatch wrapper as the scoped concierge. | WORLD | ~28 | worker |
+
+**Chains.** `OG-au-2` (complete) -> `OG-rl-13`; `OG-sd-1` (complete) -> `OG-rl-13`. **fanout:** 1 start, cap 8.
+
+**After round 27.** The project parks again on OG-v-7, G-E and R7's flag (R28), with two items open at the issuer:
+the hash read at the first real send (CTO half on r26, C1) and row Z-W28-S17's disposition.
+
+## ADDENDUM R3-T.23 (2.0.0_SA_COO~O, 2026-10-07 ~17:5xZ) -- round 28, the deploy's install step cannot fetch
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31231, the ruling on row `NFRA_OPLGTW-Z-W28-S24` after the issuer's read
+`deliverables/2.0.0_SA_COO~O/S24_BUN_INSTALL_SOURCE_READ_20261007.md` @8c05d986a1. r27 (`OG-rl-13`) is terminal:
+`510c8cfed2` live since 2026-10-07T16:57:30Z.
+
+Label `<round>28</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-1` | 1 | `deploy-to-ec2.sh`'s dashboard install fails on a bun cache miss and never fetches: a pre-check of every lockfile entry against the cache, one guarded sequence with the install, a negative control on a copy of the cache. Row Z-W28-S24. | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-1` alone. **fanout:** 1 start, cap 8.
+
+**The hold.** No gateway deploy runs from site Z until this cell is complete and drained (CTO msgs 31228 and 31231).
+
+## ADDENDUM R3-T.24 (2.0.0_SA_COO~O, 2026-10-07 ~18:0xZ) -- round 28 recut, the host step no longer upgrades pip
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31243, answering the issuer's msg 31240 on lines 302-303 of `deploy-to-ec2.sh` (found by
+`0.0.0_AB_MSTR~Z`'s install-line census @543bee5743).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-2` | 2 | Delete `pip install --upgrade pip` from the deploy script's host step; the `-r requirements.txt` line stays unchanged until Andrew answers whether the gateway host is a "box". | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-1` -> `OG-bi-2` (one file, one worktree, in turn). **fanout:** 1 start, cap 8.
+
+**The hold** lifts when both cells are complete and drained. **Standing term:** until Andrew answers, a gateway release
+whose diff touches `requirements.txt` goes to `1.0.0_SA_CTO~Z` before its never-widen pair.
+
+## ADDENDUM R3-T.25 (2.0.0_SA_COO~O, 2026-10-07 ~18:3xZ) -- round 28, workstream LAKE-KEY-R43
+
+**Source.** R43 of `ledger/ROUND_ANALYSIS.round27.md` @028a074f26 (`1.0.0_SA_CTO~Z` msg 31248), row `NFRA_OPLGTW-Z-W28-S26`.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-lk-1` | 3 | The audit lake's key builder never writes an empty time part: read the one object that has it, name the writer, fix the stamp at the writer. | WORLD | ~34 | worker-light |
+
+**Chains.** `OG-lk-1` alone; disjoint from `OG-bi-1` -> `OG-bi-2`. **fanout:** 1 start, cap 8.
+
+**Round 28's other two items are the issuer's own acts, not cells:** the release form's edits (R41, R42, R44; done
+@532b2e1c5e) and the read of the first rivalfunds record on the audit lake (R36's acceptance).
+
+## ADDENDUM R3-T.26 (2.0.0_SA_COO~O, 2026-10-07 ~18:5xZ) -- round 29, the pre-check's completeness and the r28 release
+
+**Source.** `ledger/ROUND_ANALYSIS.round27.md` ADDENDUM 1 @f6fd7281cf (`1.0.0_SA_CTO~Z` msg 31259): R45, R46 and the
+round-29 list. Round 28 is terminal: OG-bi-1, OG-bi-2, OG-lk-1 complete and drained @5133f144fb.
+
+Label `<round>29</round>`, ONE issuance, two cells in one chain.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-3` | 1 | The bun cache pre-check tests that each entry is COMPLETE; negative control: a directory that exists and is empty. Also the read-only answer to whether a frozen install contacts the registry, if a read decides it without a fetch. R46. | WORLD | ~33 | worker-light |
+| `OG-rl-14` | 2 | The r28 release on live r27 (`510c8cfed2`) under CTO + COO + CVO halves: the audit-lake key stamp (OG-lk-1), deployed by the changed script, with R45's control (0 bun cache entries touched since the deploy began). | WORLD | ~28 | worker |
+
+**Chains.** `OG-bi-3` -> `OG-rl-14`. **fanout:** 1 start, cap 8.
+
+**The round's other item is the issuer's own read, not a cell:** the first rivalfunds record on the audit lake
+(R36's acceptance). `OG-rl-14`'s post-deploy read takes it again.
