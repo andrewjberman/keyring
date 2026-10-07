@@ -390,3 +390,81 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "Criteria 1 and 3 hold on real data (household 1Y is NO_DATA in place for 3 of 10, the households carrying an uncovered account). Criterion 2 is vacuous: no SI is held because no SI anchor resolves (inception column absent from the accounts the wrapper builds; gold manifest first_data_date not used) -- with HOLD A lifted for 2010-2027 this is now the SI gap, a next-round item beside moving the hold floor to 2010. S4 and S6 close on this run: the fenced read is no longer fenced and the figures FILE exists on dell2."
 }
 ```
+
+## IRPT_CUSTDY-W9-S1 -- the Schwab silver has no dim_account; the custodian's account open date is fact_acc.date_opened
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:02Z",
+  "one_line": "the order names Schwab silver dim_account for rule 1's custodian date; the silver has no such table, the account record is fact_acc and its open date is the column date_opened",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 2026-10-07 ~10:5xZ: client_report_figures.py --coverage --master 08335338 --master 08242234 --as-of 2026-09-30 -> 20 and 19 silver tables, no dim_account; fact_acc present, 566 partitions to 2026-10-06",
+      "fact_acc at date=2026-10-06 (master 08335338): 7601 rows, columns include date_opened (0 nulls in the 7601), date_of_birth, account_status; date_opened sample values are ISO dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1 THE CELL: Schwab silver `dim_account` under opal-data-assets/schwab/<master>/silver/ (look for an open/inception date column -- that is rule 1's custodian date when present).",
+  "world_is": "No dim_account table. Rule 1's custodian date is read from fact_acc.date_opened at the --as-of partition (client_report_figures.custodian_open_dates), after the accounts file's 4th column. The same table is the one a01_runner.py and a06_dim_identity_crosswalk.py already read as the account universe."
+}
+```
+
+## IRPT_CUSTDY-W9-S2 -- on the real run the custodian's open date wins rule 1 for 14 of 14 accounts and SI is still NO_DATA on all 14 (the linker finds no return that early)
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:03Z",
+  "one_line": "matthew_gooch at 2026-09-30: all 14 accounts resolve a rule-1 anchor from fact_acc.date_opened, and all 14 SI figures are still NO_DATA, because the linker needs a return at or before the window's first day and the gold has none that early",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~11:1xZ: python data/assets/scripts/gold/irpt_custody/si_anchor_probe.py --accounts-from-advisor matthew_gooch --as-of 2026-09-30 -> SI-ANCHOR advisor=matthew_gooch accounts=14 rule1=14 rule2=0 rule3=0 no_anchor=0 labels_ok=True; every ACCOUNT line shows si_status=NO_DATA",
+      "linker outcome on each of the 14 SI cells (parity_period_returns.link_account_period, read with a spy on ppr.link, nothing committed): UNAVAILABLE-NO-COVERAGE 14 of 14. 2 anchors (2022-03-29, 2022-04-29) are before the returns gold's first partition 2024-07-08; for the other 12, with the linker's base value supplied as Opal's own prior-day value (0.0 on each), the account's first linkable return is 3,3,3,5,6,13,26,29,47,54,121,348 days after the window's first day (an account is opened, then funded later)",
+      "client_report_figures.py base_value() and the bd_bmvs it passes are this cell's own change: without them the linker took the anchor branch (base value unknown) and the window opened on the anchor itself; for a rule-2 anchor (first_data_dates() = the first positive-value day, whose own return is null) the first linkable return is the next day, so the base value must be supplied or a rule-2 SI could never compute (inferred, no rule-2 account in this advisor's book to measure)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1: SI is computed (status OK) for a rule-1 or rule-2 anchor on or after 2010-01-01; E1 of the round-3 analysis (SI NO_DATA on every account because no anchor resolved).",
+  "world_is": "The anchor now resolves for 14 of 14, so the first half of E1 is closed, but the SI figure is not: the CTO's order (custodian date first) puts every one of this advisor's accounts on a date earlier than the gold can link from, so SI stays NO_DATA, in place and labelled, never zero. Not weakened and not worked around here: moving the window to the first funded day would call a data-start date `since inception`, which the ruling forbids. The rule-2 path computes on fixtures (test_si_anchor.py) but no account of this advisor reaches it. The question for the issuer/CTO is whether rule 1 should yield to rule 2 when the custodian date is earlier than the gold's first linkable return."
+}
+```
+
+## IRPT_CUSTDY-W9-S3 -- retiring the 2024 floor turns two hop3 tests and the hop3 self-test red; hop3_real_run.py and test_hop3_real_run.py are outside this order's paths
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:04Z",
+  "one_line": "with HELD_CALENDAR_FIX retired, hop3_real_run's fixture (a 2019 first data date, expected held) now gives SI NO_DATA, so test_hop3_real_run.py::test_file_shape and ::test_si_held_for_a_pre_2024_inception fail and `hop3_real_run.py --self-test` prints held_ok=False",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-IRPT_CUSTDY-9, python -m pytest -q data/assets/scripts/gold/irpt_custody/tests -> 3 failed, 87 passed, 1 xfailed; the 3: test_advisor_projection_refused.py::test_none_source_names_the_seam_line (already row IRPT_CUSTDY-S7), test_hop3_real_run.py::test_file_shape (held_si=1 expected, held_si=0 got), test_hop3_real_run.py::test_si_held_for_a_pre_2024_inception (NO_DATA, expected the held status)",
+      "python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --self-test -> HOP3-REAL-RUN-SELFTEST file_ok=True masked_ok=True held_ok=False error_written_ok=True",
+      "hop3_real_run.py lines 226 (HELD_FIRST_DATA = 2019-03-15), 178 (_count_held reads crf.STATUS_HELD), 323-326 (held_ok); client_report_figures.py keeps STATUS_HELD as an alias of NOT_AVAILABLE only so these still import"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1: update round 2's tests (test_client_report_figures.py, test_client_report_held_si.py) only where the retired floor or the new field requires; they must pass.",
+  "world_is": "Those two files now pass (39 with test_si_anchor.py). Two more tests and one self-test, in files this order cannot write, assert the retired hold on a 2019 date, and 2019 is on the calendar now. They need HELD_FIRST_DATA moved before 2010 (rule 3 -> NOT_AVAILABLE) and the held_si count and status checks re-pointed at NOT_AVAILABLE. ARMED because the drain's test run goes red on them until a cell that owns hop3_real_run.py makes that edit."
+}
+```
