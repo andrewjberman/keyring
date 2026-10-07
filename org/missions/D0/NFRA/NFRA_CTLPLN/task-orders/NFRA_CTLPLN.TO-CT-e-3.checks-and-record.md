@@ -201,7 +201,7 @@ Gate limb: none graded this modification. THE WORK below is the whole of this am
 
 **ACCEPTANCE.** `CT5e3-AC1` and `CT5e3-AC2` are unchanged (their lines move only in the case count). One criterion is ADDED:
 
-<criterion id="CT5e3-AC3" cell_refs="CT-e-3"><invocation>python org/devices/intake/intake_check.py selftest-av</invocation><expect>INTAKE-AV active=</expect></criterion>
+<criterion id="CT5e3-AC3" cell_refs="CT-e-3"><invocation>python org/devices/intake/intake_check.py selftest-av</invocation><expect>INTAKE-AV products=[0-9]+ active=</expect></criterion>
 `CT5e3-AC3` -- a new verb that reads the REAL Security Center and prints one line
 `INTAKE-AV products=<n> active=<names or NONE> realtime=<on|off> definitions=<current|out_of_date|unknown> ok=<True|False>`
 (`ok=True` when at least one product is on and current). It must read `ok=True` on this laptop today, the CTO having measured
@@ -209,3 +209,12 @@ one such product; if it does not, report what it read: do not adjust the decodin
 
 **BOUNDS.** No test-virus file, no EICAR string, anywhere, for any reason. No change to any antivirus setting. Read-only queries
 of the Security Center. Nothing from a package file is installed, imported or executed. No request leaves this machine.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~21:2xZ) -- one issuer repair: CT5e3-AC3's expectation matches the line AMENDMENT 1 itself fixed
+
+AMENDMENT 1 fixed the verb's line as `INTAKE-AV products=<n> active=...` and wrote the expectation as `INTAKE-AV active=`, which is
+not a substring of that line (row `NFRA_CTLPLN-W6-S13`; the worker followed the line and recorded the criterion FAIL rather than
+bend the tool). The expectation is now `INTAKE-AV products=[0-9]+ active=`. Nothing in the tool or its tests changes. Gate limb:
+none graded this modification. The worker re-runs the three criteria, rewrites the `CT5e3-AC3` proof row from that run (its
+`expect` equal to the new expectation), validates the instance, and flips the order to `complete` when all three pass.
+
