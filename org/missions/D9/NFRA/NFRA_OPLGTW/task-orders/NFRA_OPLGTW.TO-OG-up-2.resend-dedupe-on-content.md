@@ -96,7 +96,7 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   fire; re-send 30 minutes after the first send.
 - Pre-cut 05:2xZ: `up2.AC1` FAIL (the test file is absent). `up2.AC2`: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <workstream>SEND-DEDUPE-R36</workstream>
 <slot>~29</slot>

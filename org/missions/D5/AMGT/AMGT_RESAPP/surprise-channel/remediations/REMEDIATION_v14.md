@@ -779,16 +779,20 @@ This seat validated all 147 rows against `remediation_row.schema.json` (0 errors
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v80",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 3: the password is not rotated; only the username is in the 4 tracked files"
+   }
   },
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-07T05:48:00Z"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S242",

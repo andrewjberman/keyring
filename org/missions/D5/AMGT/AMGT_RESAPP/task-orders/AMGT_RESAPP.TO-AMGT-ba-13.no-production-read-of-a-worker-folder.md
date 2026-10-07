@@ -147,3 +147,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>pending</status>

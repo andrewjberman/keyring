@@ -86,3 +86,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @78b0b0cbd2; proof VALID (worktree checker); the /freshness page carries the portal dev-only mark; portal candidate 8ddfe409 on branch resapp-r77-ba27-freshness-devonly (merge 3a29250a of 504ddb3d onto DEV 659104f4), nothing pushed</status>

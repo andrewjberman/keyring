@@ -418,11 +418,15 @@ approved it.
          SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
                     (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
                     SECURITY_MODAL_PRICE_SERIES_WITH_TRADE_MARKERS.md)
-         RESERVED   Two points are Andrew's, carded by the CTO (ADDENDUM F):
-                    whether pointing at ANY day of the curve reads that day's
-                    price (it needs a script on a page whose rule is no
-                    script), and whether a Bloomberg price backfill is
-                    authorized for the days the pipeline does not hold.
+         HOVER      Pointing at any part of the curve reads that day's price
+                    and date, as Market Overview does. Andrew asked for it;
+                    it is part of this outcome, and FWD-22 is NOT REALIZED
+                    without it.
+         SCRIPT     The page may carry ONE script, for this modal's chart
+                    and its any-day hover only (Andrew-direct 2026-10-07
+                    ~05:2xZ: "Yes it can have script"; ADDENDUM F.7). Every
+                    other part of the page still works with no script. The
+                    Bloomberg backfill is answered YES (F.5).
 
   FWD-23 (NEW, v0.18) Every period on the page is 30d, 90d or 365d rolling
          DONE WHEN  EXERCISED -- every ranking, trend, account and modal on
@@ -432,6 +436,16 @@ approved it.
          ACCEPT     90d sits where QTD sat and 365d where YTD sat. A period a
                     fund's history does not reach reads partial with its
                     reason. The AI accounts name the same three periods.
+         UNIT       CALENDAR DAYS, for all three periods and the curve's
+                    ranges (Andrew-direct 2026-10-07 ~05:2xZ: "let's make it
+                    calendar days, we dont need that much lookback time").
+                    30d, 90d and 365d each end on the page's as-of date and
+                    reach back that many calendar days. This REPLACES the
+                    2026-10-04 "last 30 trading days" for the 30-day period.
+         AMENDS     FWD-14 and FWD-19 where they name the displayed periods
+                    (30 trading days, quarter to date, year to date): the
+                    displayed set is this outcome's. Nothing else in either
+                    outcome changes.
          SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
                     (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
                     PERIODS_30D_90D_365D_EVERYWHERE.md)
@@ -1066,13 +1080,94 @@ the ENDPOINT section. This addendum holds the contracts and the reserved points.
 
 ### F.3 -- RESERVED to Andrew (two cards; the build of everything else does not wait)
 
-1. **Does pointing at ANY day of the curve read that day's price, as Market Overview does?** It needs one script on a page
-   whose rule is no script. Without it, v1 reads prices at the axis and at the trade markers only.
+1. **May the rivalfunds page carry ONE script?** Andrew already asked for the price and date on pointing at any part of the
+   curve ("just like in market overview"), and that hover is in FWD-22's fence. What is open is only the means: it needs one
+   script on a page whose rule is no script. Until he answers, the build delivers everything else, and FWD-22 is graded NOT
+   REALIZED (CVO~Z's condition, review @fe586ea2e2).
 2. **Is a Bloomberg price-history backfill authorized for the securities and days the pipeline does not hold?** Without it,
    the curve has gaps wherever no universe fund held the security.
 
 ### F.4 -- L4-R
 
 ENDPOINT lines and CONTRACTS are added, so the RATIFIED half re-opens to `3.0.0_SA_CVO~RV`. The brief half is Andrew's own
-words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-1`..`FWD-21` and every existing contract are
-unchanged.
+words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-14` and `FWD-19` are AMENDED where they name the displayed
+periods (FWD-23's AMENDS line; CVO~RV's finding @45abbdca53). Every other outcome of `FWD-1`..`FWD-21` and every existing contract
+is unchanged.
+
+### F.5 (2026-10-07 ~05:2xZ) -- Andrew's answers, and where the curves live (COO~RV msg 30612)
+
+**Andrew-direct ~05:1xZ** (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_051xZ_RIVALFUNDS_BBG_BACKFILL_YES_PAGE_ONLY_HIDE_MTD.md`
+@96d0ab2f4b):
+- **F.3 card 2 is ANSWERED YES:** "Yes for the rivalfunds funds only. Probably an ad hoc backfill for the selected funds that uses
+  the existing BBG route".
+  - Scope as he worded it: Bloomberg daily closes; the securities of the rivalfunds funds; about 365 days; ad hoc.
+  - It is not a schedule. No file of the Positioning pull is changed.
+  - `C-MODAL-PRICE-SOURCE` gains the backfilled market close as its first source. The holding-implied price stays as the
+    fallback, and a gap stays a gap.
+- **F.2 is CONFIRMED:** "rivalfunds page only"; "can hide MTD too, should be 30d, then | 90d and 365d".
+- **Still open at Andrew:** F.3 card 1 (the script), and the day unit (calendar or trading days).
+
+**The size finding** (scoping facts section 5 @8475c6b260): the served page holds 423 security dialogs with 671 fund sections.
+Under `C-PAGE-CAP`, 280,216 B remain, which is 417 B a fund section. One three-range curve is about 1,500 B. **Curves in every
+dialog do not fit the main page.**
+
+**Ruling: the curves do NOT live in the main page. `C-PAGE-CAP` is unchanged, and `C-MODAL-PRICE-SOURCE` gains a carrier.**
+1. **The chart data is its own daily platinum object family**: one object per fund, holding that fund's securities' price
+   series and that fund's trade markers. The address is `lib/opal_naming.py address()` output. It is written by the publish
+   stage beside `index.html` and `audit.html`.
+2. **ONE gateway route serves it**, behind the same identity wall. It is released by NFRA_OPLGTW, as the audit route was
+   (round-11 ADDENDUM 1's reasoning holds unchanged).
+3. **How the modal reaches it depends on F.3 card 1, and both branches use the same object and route:**
+   - **Card 1 YES (a script):** the modal draws its chart on open from that fund's object, with per-day hover, as Market
+     Overview does. The main page grows by the script only.
+   - **Card 1 NO:** the fund section of the modal carries ONE plain link, "Price and trades chart", to that fund's chart page.
+     The page is rendered by the publisher with no script, and its curves are inline SVG. The modal itself keeps the trade
+     list it has.
+4. **So round 15 builds everything that does not depend on card 1 or on the day unit:**
+   - the ad hoc Bloomberg backfill (under its own never-widen pair; bounded batches after the firm's 07:00 ET vehicle);
+   - the price-series table;
+   - the trade-marker computation (`C-TRADE-MARKER`);
+   - the per-fund chart object and its size line;
+   - the route's handler, for NFRA_OPLGTW's release.
+
+   The modal's last step, and the 90d / 365d window lengths, are cut when Andrew's two answers are recorded.
+
+### F.6 (2026-10-07 ~05:3xZ) -- the unit is CALENDAR DAYS (Andrew-direct)
+
+Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PERIODS_ARE_CALENDAR_DAYS.md`
+@69c7f24b44. Verbatim: "let's make it calendar days, we dont need that much lookback time".
+
+- **`FWD-23`'s UNIT line carries it.** 30d, 90d and 365d are calendar days ending on the page's as-of date
+  (`asof = prev_trading_day(page_day)`, the existing CALL 3 rule). A window's first day is `asof` minus N calendar days.
+  The first and last TRADING days inside it are printed on each table, as FWD-14's ACCEPT already asks.
+- **The existing 30-day period moves** from 30 NYSE trading days to 30 calendar days. That is about 21 trading days, so every
+  30-day figure on the page changes on the first run. It is the ruled change. The run's record states the old and the new
+  window for one fund.
+- **The Bloomberg backfill is bounded at about 365 calendar days** before the as-of date ("we dont need that much lookback
+  time").
+- **The 90d and 365d cells are no longer waiting.** F.5 item 4's hold on the window lengths ends. Only the modal's last step
+  still waits, on F.3 card 1 (the script).
+
+### F.7 (2026-10-07 ~05:3xZ) -- F.3 card 1 is ANSWERED YES: one script, for the modal's chart (Andrew-direct)
+
+Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PAGE_MAY_CARRY_A_SCRIPT_FOR_THE_HOVER.md`
+@efc0acb127. Verbatim: "Yes it can have script". The question as put to him: one small script, for the any-day hover on the
+price curve. It is applied at that reach, not as a general lift.
+
+**`C-NO-SCRIPT` is AMENDED, narrowly (it replaces F.1's "stands for v1" and the first branch of F.5 item 3 is the one built):**
+- **The page carries exactly ONE inline script block.** It has no external source, and it makes no network call except to
+  this product's own chart route on the same origin. `render.py`'s refusal (`_BAD_CONSTRUCTS`) admits that one block and
+  still refuses every other script, `src=`, `<link`, `@import` and `url(`. The render check counts the script blocks and
+  fails on any number but one.
+- **What the script does, and only this:** when a security modal opens from a fund's section, it reads that fund's chart
+  object (F.5 item 1) through the gateway route (F.5 item 2). It draws the price curve for the chosen range, places the
+  trade markers (`C-TRADE-MARKER`), and shows the price and date on pointing at any part of the curve and the trade's detail
+  on a marker.
+- **Everything else on the page still works with the script absent or failed:** the fund and period switches, the tables,
+  the modals' trade lists, the audit link. A modal whose chart cannot load says so in words and shows its trade list. It is
+  never an empty frame.
+- **`FWD-21`'s ACCEPT clause "the page's no-script rule stands" and the ENDPOINT's CTO ruling of the same words are AMENDED
+  by this line:** the rule stands for everything but this one script.
+
+**Nothing on FWD-22 or FWD-23 is waiting on Andrew now.** Round 15 cuts all of it. The chart route is released by NFRA_OPLGTW,
+and the page's script lands only after that route serves, as the audit link did.
