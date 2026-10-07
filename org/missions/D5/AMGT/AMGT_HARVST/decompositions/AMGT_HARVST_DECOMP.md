@@ -3302,3 +3302,27 @@ run; `--write` the one-time emit; flip the switch in its own commit; confirm one
 - `bf-1` AC1 (`pytest lib/opal_data_harvest/test_bf1_job_record.py`) base: FAIL as expected (the test is absent).
 - `bf-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out`) base: FAIL as expected (no such file).
 - `bf-1` AC3 (`pytest test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (32 passed).
+
+## 74. ROUND 60 -- seven ticker forms refused on their graded census (`1.0.0_SA_CTO~Z` msgs 31173, 31209), 2026-10-07 ~17:2xZ
+
+Rounds 58 and 59 are terminal (`be-1` merged @01e8088aee; `bf-1` merged @23d65887ca, its records written and its ledger
+closed @8240461f26). Signing dry run 2 (@6b49d49e10) met the bar: 0 pairs lost, 14,337 gained, each with one cause. The CVO
+graded the gain sample 29 of 30 and the ticker-form sample (@399fcf7d0a): BATS 0 of 10, JD 2, ICT 0, ML 0, BE 1, SAN 0, CAT 10
+of 10, the other forms 30 of 30 with MSCI's rows being index and fund names. Msg 31209: the stricter line holds, so `MSCI`'s
+bare form is refused with the six.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bg`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell, DIRECT ACT).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bg-1` | `bg-1` | **Seven exact-case ticker forms join `ticker_refusals`, each on its graded census: BATS, JD, ICT, ML, BE, SAN, MSCI.** Data in `whole_brand_aliases.json`; plants that each form is removed, that removing the entry brings it back, that name aliases do not move, and that CAT, CSL, TTE and SLB keep theirs. No network, no build. | LOCAL | worker ~109 |
+
+**The close run (issuer):** signing dry run 2 re-run on the list with the seven refused; then the rebuild's never-widen pair.
+Before that re-run, msg 31209's three terms: CAT's name read from the registry (`CATERPILLAR INC`,
+`lib/research/identity/registrations.json`); 10 CSL pairs sampled and graded (row AMGT_HARVST-Z-S101); the 9 forms no sampled
+row reached stated with their pair counts.
+
+**Checks dry-run at the base before the cut:**
+- `bg-1` AC1 (`pytest lib/research/harvest/tests/test_bg1_ticker_refusals.py`) base: FAIL as expected (the test is absent).
+- `bg-1` AC2 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
