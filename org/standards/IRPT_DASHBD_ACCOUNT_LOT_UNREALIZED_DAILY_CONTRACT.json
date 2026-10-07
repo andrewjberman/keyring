@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~20",
-  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json.",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~20; revised by 0.9.0_WK_IRPT_DASHBD~23",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json. REVISED under IRPT_DASHBD.TO-DB-b-41 (round 26, workstream B), 1.0.0_SA_CTO~DELL2's round-25 analysis @3543da2f4d item E1: the columns the producer's SCHEMAS carry and this file did not, the composite primary_key (row IRPT_DASHBD-W20-S3), the basis_source enum (row IRPT_DASHBD-W22-S3) and the 0.05 per-account-window tolerance.",
   "table": "account_lot_unrealized_daily",
   "grain": "open lot x valuation day",
   "partition": "date=YYYY-MM-DD",
@@ -79,13 +79,25 @@
       "name": "cost_basis",
       "type": "double",
       "nullable": false,
-      "meaning": "cost_basis_unamortized -- the column satisfying market_value - cost_basis == unrealized_gain, chosen by measurement (the prior art's choice in perfrp_emit_core.py)"
+      "meaning": "the lot's cost basis as basis_source says: the custodian's cost_basis_unamortized (the column satisfying market_value - cost_basis == unrealized_gain, chosen by measurement) where basis_source is CUSTODIAN, otherwise the re-measured basis (see basis_source)"
     },
     {
       "name": "unrealized_gain",
       "type": "double",
       "nullable": false,
-      "meaning": "the custodian's own unrealized_gain_loss for the lot"
+      "meaning": "market_value less cost_basis: the custodian's own unrealized_gain_loss where basis_source is CUSTODIAN, otherwise re-measured from the re-measured basis"
+    },
+    {
+      "name": "custodian_cost_basis",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the custodian's own cost_basis_unamortized for the lot (rows sharing the lot id summed), carried beside cost_basis and never used in the activity identity when basis_source is not CUSTODIAN"
+    },
+    {
+      "name": "basis_source",
+      "type": "string",
+      "nullable": false,
+      "meaning": "where cost_basis comes from: CUSTODIAN (the custodian's own basis), IN_KIND_TRANSFER_VALUE (the lot arrived in kind: measured from its market value on the transfer date) or WASH_SALE_EXCLUDED_BASIS (the custodian's basis carries a disallowed loss no cash paid for: measured from the cash paid, basis less the disallowed loss)"
     },
     {
       "name": "source_rows",
@@ -97,7 +109,7 @@
       "name": "method_version",
       "type": "int64",
       "nullable": false,
-      "meaning": "the method this figure was produced under (1)"
+      "meaning": "the method this figure was produced under (3)"
     },
     {
       "name": "coverage",
@@ -121,6 +133,11 @@
     "holding_term": [
       "LONG_TERM",
       "SHORT_TERM"
+    ],
+    "basis_source": [
+      "CUSTODIAN",
+      "IN_KIND_TRANSFER_VALUE",
+      "WASH_SALE_EXCLUDED_BASIS"
     ]
   },
   "rule24_record": {
@@ -145,11 +162,26 @@
       "basis": "measured",
       "live_run": "160549 lot-day rows over 24 trading days for the sampled accounts: MEASURED 159669, PRE_2010_OPENED 880. On the end day, 1282 open lots before 2010 across ALL accounts.",
       "unexercised_members_proved_by_test": "ACQUIRED_DATE_ABSENT is 0 on live data; test_an_absent_acquired_date_is_a_named_coverage_not_a_guess produces it."
+    },
+    "basis_source": {
+      "i_mece_over_a_declared_domain": "domain: 'where does this lot's cost_basis come from'. CUSTODIAN (the custodian's basis stands) | IN_KIND_TRANSFER_VALUE (the lot arrived in kind) | WASH_SALE_EXCLUDED_BASIS (the custodian's basis carries a disallowed loss). COVERED BY SUBTRACTION: a lot either arrived in kind or not; one that did not either carries a disallowed loss or not; the producer sets the in-kind source first and it takes precedence over the wash-sale one, so each lot is in exactly one member and the rest are CUSTODIAN.",
+      "ii_same_grain": "Every member is a LOT property; none speaks of an account or a day.",
+      "iii_intent_coherence": "basis_source answers ONE question, where the basis figure was measured from, and nothing else; coverage (why a calendar-derived column is null) and closing_tie (how a realized lot ties to its transaction) are separate columns.",
+      "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. basis_source is moved by exactly two producer rules (an in-kind reference, a wash-sale carry-over) and by no other; neither rule moves coverage, closing_tie or custodian_cost_basis, which keeps the custodian's own figure beside the measured one.",
+      "token_census": "comp-find word-boundary regex (WASH_SALE_EXCLUDED_BASIS|IN_KIND_TRANSFER_VALUE) over the worktree corpus (corpus=all): 26 hit(s) across 61,428 file(s) scanned, 24 ephemeral-floor, 1 unreadable and 3,695 binary files not searched; first-party definition in the producer only (DEF=2 bands), the rest are this project's records, task orders and the checker. CUSTODIAN is the custody vocabulary's own word and is adopted by the producer's constant BASIS_CUSTODIAN; no other schema in org/standards carries a basis_source column.",
+      "member_evidence": "basis: measured. Round 25's record (deliverables/0.9.0_WK_IRPT_DASHBD~22/WINDOWS_E1.json rule_audit) over the 100-account sample, 2026-09-01..2026-10-05: unrealized rows CUSTODIAN 153,901 / WASH_SALE_EXCLUDED_BASIS 2,478 / IN_KIND_TRANSFER_VALUE 4,170; realized rows CUSTODIAN 237 / WASH_SALE_EXCLUDED_BASIS 9 / IN_KIND_TRANSFER_VALUE 480."
     }
   },
-  "schema_hash": "cf582383e8f0f2b1f1c6191ec9fa0d93b18eeb064e29145bb95420eb4025b2f2",
+  "schema_hash": "d136fd6a52a9e3bbb40e30ca7be44996968092bb44b06a96c9baece9badf3a6e",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_* schema carries -- the method that reproduces account_return_daily's published hash 1b25d37b... exactly. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
-  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names live only in the producer's LOT_SOURCE adapter block, which row IRPT_DASHBD-W20-S1 asks to move into sources.json.",
-  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_UNREALIZED schema this hash is taken from. The producer and this contract land together.",
-  "limits_of_method_version_1": "method_version 1: the custodian's tax-status slices are read as one source (they are disjoint by account on the end day measured) and no slice column is carried; rows sharing a lot id are summed."
+  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names are declared in sources.json (the custody entry's lot_source), which the producer reads through lot_spec(); row IRPT_DASHBD-W20-S1 closed.",
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_UNREALIZED schema this hash is taken from (method_version 3, schema_version 1.2). The producer and this contract land together.",
+  "limits_of_method_version_1": "method_version 1: the custodian's tax-status slices are read as one source (they are disjoint by account on the end day measured) and no slice column is carried; rows sharing a lot id are summed. REVISED for method_version 3 (TO-DB-b-41): see the column meanings; in-kind legs are flows and departures at market value on the transfer date, fee-admin and withheld-tax cash rows are negative components of income, and a lot's basis is re-measured per basis_source.",
+  "primary_key": [
+    "firm",
+    "account_id",
+    "business_date",
+    "lot_id"
+  ],
+  "primary_key_meaning": "one row per open lot per valuation day: lot_id (event id | cusip | acquired date | original purchase date) is unique within a day and account"
 }

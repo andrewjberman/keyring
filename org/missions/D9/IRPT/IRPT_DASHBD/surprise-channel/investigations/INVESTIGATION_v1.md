@@ -2489,3 +2489,135 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "A reset_index(drop=True) on the copy at the top of classify_and_sum would remove it; out of scope for an order that changes nothing else in the file."
 }
 ```
+
+## IRPT_DASHBD-W23-S1 -- The role's silver read set holds only the three custody prefixes, but the activity and lot producer reads the custodian's lot tables, which sit beside them.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S1",
+  "one_line": "The role's silver read set holds only the three custody prefixes, but the activity and lot producer reads the custodian's lot tables, which sit beside them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 4: the write ARNs become the returns, class and three new prefixes; read on the three prefixes for the newest-landed-day listing. Nothing in the order grants the role a read of the custodian's lot tables.",
+  "world_is": "account_activity_lots.py reads fact_rld, fact_uln and fact_ult (and fact_trn) under the silver custody root, siblings of the transactions prefix. The role's silver read set (locals.tf irpt_rg_silver_prefixes) was dim_position, dim_balance and fact_trn only, so with the order's grants alone every activity and lot day would fail AccessDenied at the first lot read and land as LOTS_SKIPPED (Branch B on every fire). This cell adds the custodian's lot-table prefixes to the silver READ set, derived in locals.tf from the declaration's lot_source (the move W20-S1 asked for), never typed: GetObject and the ListBucket prefix pattern on three more prefixes. No write, no Delete, no other bucket. The packet names it for the CTO half to sign. Whether the silver bucket's own policy admits the role on those prefixes is not read by this cell.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf irpt_rg_silver_prefixes (this cell's commit)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py read_window / lot_prefix",
+      "data/assets/scripts/gold/irpt_reporting/sources.json lot_source"
+    ]
+  },
+  "notes": "The after-read A5 prints the role policy; the silver statements are the ones to read for the three added prefixes."
+}
+```
+
+## IRPT_DASHBD-W23-S2 -- The lots stage costs about twice the returns stage in time and four times in peak memory on 20 accounts for one day; at population scale it is unmeasured against a 900 s, 2048 MB function.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S2",
+  "one_line": "The lots stage costs about twice the returns stage in time and four times in peak memory on 20 accounts for one day; at population scale it is unmeasured against a 900 s, 2048 MB function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO-DB-b-41 item 4: the schedule does not change; item 6: record the run's wall time and peak memory.",
+  "world_is": "20 accounts, 2026-10-05, one local process: the unextended handler 34.6 s and 228 MB peak working set; the extended handler 69.5 s and 992 MB, with 1,330 unrealized-lot rows. The round-23 record (deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json) gives a population of 7,597 accounts, 380 times the sample, so the lots stage's rows, its pandas row loops and its memory at population scale are not measured and may exceed the function's 900 s timeout or 2048 MB. The lots stage runs AFTER the returns and class stages, so a timeout or out-of-memory kill there cannot lose a returns or class day; it would end the invocation in error each fire, the lots days would never land, and nothing in this root notifies anyone.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json wall_seconds, peak_working_set_mb",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json population"
+    ]
+  },
+  "notes": "The first fire's after-read (packet A1) shows whether the day landed; an ad-hoc dry_run invoke measures the duration before the organic fire. Memory and timeout are in lambda.tf and unchanged by this order; changing them is a later cell's act.",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
+
+## IRPT_DASHBD-W23-S3 -- The activity and lot producer had no emit function, so the handler could not emit through it; emit_day() is added to the producer.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S3",
+  "one_line": "The activity and lot producer had no emit function, so the handler could not emit through it; emit_day() is added to the producer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 3: the handler emits the same day of the three tables through account_activity_lots.py's own functions. The producer's header and a test said it has no upload path.",
+  "world_is": "account_activity_lots.py carried compute_local and write_parquet (local) and no function that writes S3; test_the_addresses_are_builder_output_and_the_producer_has_no_write_path asserted no put_object, upload_file or stream_to_parquet in the file. This cell adds ONE function, emit_day() (the account_class_daily.emit_class_day shape: the builder address, data.parquet then manifest.json, a refusal on an empty day, a row off the day and a repeated primary key), and changes that test to allow exactly that one function and nothing else in the file. The producer's CLI still has no upload path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py emit_day, PRIMARY_KEYS",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_activity_lots.py test_the_addresses_are_builder_output_and_the_only_write_path_is_emit_day"
+    ]
+  },
+  "notes": "Both files are in the order's paths."
+}
+```
+
+## IRPT_DASHBD-W23-S4 -- No file names 'the round-24 sample'; the first 20 accounts of the 100-account list the later rounds graded were used, and that day holds no realized lot for them.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S4",
+  "one_line": "No file names 'the round-24 sample'; the first 20 accounts of the 100-account list the later rounds graded were used, and that day holds no realized lot for them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 item 6: the extended handler's --local mode for 2026-10-05 over the round-24 sample's first 20 accounts. Item 1: prove uniqueness of the primary key on the local run's rows.",
+  "world_is": "Round 24's record (deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json exercise_selection) names its population as the 91 graded accounts of the round-23 sample; the list itself is the `accounts` array of deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json (100 accounts). The first 20 of that array were used and the source is written into RELEASE_LOCAL_RUN.json. On 2026-10-05 those 20 accounts close no realized lot (0 rows), so a one-day run cannot show the realized key unique; KEY_UNIQUENESS_WINDOW.json runs the same 20 accounts over 2026-09-01..2026-10-05 (24 trading days: 432 activity, 30 realized and 30,183 unrealized rows, 0 repeated keys) and exercises emit_day(upload=False) on every day.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json accounts_source, primary_key_uniqueness",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/KEY_UNIQUENESS_WINDOW.json"
+    ]
+  },
+  "notes": "If a different list was meant, release_local_run.py takes the list from one constant and reruns in about two minutes."
+}
+```
+
+## IRPT_DASHBD-W23-S5 -- terraform is not on this box, so the HCL edits in locals.tf, iam.tf and lambda.tf are unvalidated and the plan counts in the packet are read from the diff, not from a plan.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:21:51Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S5",
+  "one_line": "terraform is not on this box, so the HCL edits in locals.tf, iam.tf and lambda.tf are unvalidated and the plan counts in the packet are read from the diff, not from a plan.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-41 items 4 and 7: edit the three .tf files; the packet carries a targeted plan command and its expected counts. NO terraform init, plan or apply is permitted to this cell.",
+  "world_is": "No terraform or tofu binary resolves on PATH, so terraform fmt and validate were not run either. The new locals (the derived silver lot prefixes, the three gold table prefixes, the five write ARNs) were emulated in Python from sources.json and scopes.json and printed in the packet; the expressions used are split, trimsuffix, slice, join, concat, distinct and a for expression, all in the language since 0.12. The expected plan (0 to add, 3 to change, 0 to destroy) is derived from which resource arguments the diff touches, and the issuer reads the real plan before the halves are used.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf (this cell's commit)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~23/NEVER_WIDEN_PACKET_ACTIVITY_LOT_RELEASE.md Plan"
+    ]
+  },
+  "notes": "A plan that differs from the expected counts stops the apply; the packet says so."
+}
+```
