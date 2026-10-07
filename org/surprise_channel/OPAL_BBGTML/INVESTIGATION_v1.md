@@ -311,3 +311,34 @@ Filed by 2.0.0_SA_COO~Z as the carrier for a finding of 0.0.3_BG_BBGTerminal (it
   "notes": "Surfaced, not chased. No edit made to teams-watch.py, the skill or the prompt. Owner of the engine per the terminal seat: 0.5.0_AE_OpalETL~Z, not live at filing. Placement: 2.0.0_SA_COO~Z cuts an order to that seat when it is seated, or the CTO re-homes the row if the Teams concierge belongs to another project; this channel was chosen because 2.0.0_SA_COO~Z holds the Bloomberg terminal cells."
 }
 ```
+
+### OPAL_BBGTML-Z-S11 -- the 2026-10-06 07:00 ET vehicle reads LastTaskResult 267014: the task was ended at its 30-minute limit while a leg retried a dead DAPI connection
+
+Filed by 2.0.0_SA_COO~Z on the ask of 1.0.0_SA_CTO~Z (msg 30747, the read owed outside the ba-21 CTO half).
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S11",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:23:59Z",
+  "one_line": "Scheduled task OPAL_BBGTML_daily_pull: LastRunTime 2026-10-06 07:00:01 local, LastTaskResult 267014 (0x41306, the scheduler's code for a task that was terminated). Its log ends at 07:30:01 with ^C, and the task's ExecutionTimeLimit is PT30M: the run was ended by the limit, it did not exit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Get-ScheduledTaskInfo at 05:20 local 2026-10-07: OPAL_BBGTML_daily_pull LastRunTime 2026-10-06 07:00:01, LastTaskResult 267014 (0x41306), State Ready, NextRunTime 2026-10-07 07:00:00, MissedRuns 0. Settings: ExecutionTimeLimit PT30M, MultipleInstances IgnoreNew. Control on the same read: OPAL_BBGTML_freshness_check LastRunTime 2026-10-06 07:30:01, LastTaskResult 2.",
+      "The run's own log, bbg_tplus1_20261006_070001.log (last write 07:30:01 local): line 7 DAPI DOWN; line 63 DAPI FALLBACK EXIT 2; line 81 PRECONDITION FAILED, PULL NOT ATTEMPTED; line 88 RIVALFUNDS BLOOMBERG LEG EXIT CODE 93, nothing written; line 89 starts the RIVALFUNDS ENRICHMENT STEP; then 68 of the log's 71 'Failed to connect to 127.0.0.1:8194' lines follow that start, from 07:08:01 to 07:29:40 (the other 3 are in the precondition block); the last line is ^C. No enrichment exit code and no final exit line were written.",
+      "A second log, bbg_tplus1_20261006_082454.log (last write 08:33:57 local), ends RIVALFUNDS BLOOMBERG LEG EXIT CODE 90 landed and RIVALFUNDS ENRICHMENT EXIT CODE 94 landed. The task's LastRunTime still reads 07:00:01, so that recovery run was not started through the scheduler and left no result in it.",
+      "NOT measured: the Task Scheduler operational event log returned no events for this task (the read found none in the last 4000 events), so 'ended by the time limit' rests on the limit, the log's last-write time and the ^C, not on a scheduler event.",
+      "Today, for C1 of the ba-21 CTO half: at 09:22Z one process (bbcomm, started 04:26:40 local) listens on 127.0.0.1:8194. That is a port read only; no Bloomberg request was made, and a listener is not proof the Terminal is signed in (READ_HERE section 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The vehicle exits with its own code (0, or a named non-zero from its disjoint leg ranges), every leg is isolated, and a reader of the task's result or its log can tell which leg spoke.",
+  "world_is": "On 2026-10-06 the vehicle did not exit: with the DAPI down, the rival-funds enrichment step kept retrying the connection for about 22 minutes and the scheduler ended the whole task at 30 minutes. The result is the scheduler's 267014, not a code of the launcher, and no leg after the enrichment step ran. A gate that reads only the last run DATE and 'not Running' (research_pulls.vehicle_ran_today) passes on such a day.",
+  "notes": "Surfaced, not chased. No file, task or schedule was changed. Three things an owner may decide, none taken here: (1) the enrichment step has no bound of its own on a dead DAPI, unlike the collector leg, which exited 93 at once; (2) the 30-minute limit ends the task without a launcher exit line, so the day's log has no verdict; (3) the research-pull gate does not read the result. For the ba-21 act, (3) is covered by condition C1 of CTO_HALF_AMGT_RESAPP_BA21_SEGMENTS_PULL_20261007.md: this seat reads the result and the log before the probe. The enrichment step is ETFS_RIVALS code (2.0.0_SA_COO~RV's project); the launcher is under Andrew's no-modify order for integrations/bloomberg/."
+}
+```
