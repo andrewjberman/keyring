@@ -2870,3 +2870,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The census states its match rules in the file; a different held definition changes b and c only, never the denominator, the key-form partition or a. The issuer names the definition that gives 58 if it is the intended one."
 }
 ```
+
+## MDPF_SECCLASS-W24-S2 -- SC-e-27 declares gics_sector with the 10 MEASURED values; SC-e-25's record proposed 11 (Real Estate held, never measured)
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T10:30Z",
+  "one_line": "C_SECTOR_FOUR_POSTULATE_RECORD_20261007.md proposes an 11-value gics_sector list (10 measured plus Real Estate held); TO-SC-e27 says values are exactly the measured set and its issuer check compares against the 10 measured, so the contract carries 10 and records Real Estate under held_not_measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/C_SECTOR_FOUR_POSTULATE_RECORD_20261007.md (Attribute 1: proposed closed list 11)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e27.py (want = sorted(sector_values), the measured 10)",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json fields.gics_sector (values 10, held_not_measured [Real Estate])"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e27 build step 1: each new field carries values (closed list, exactly the measured set); SC-e-25's record proposes Real Estate as an 11th held value.",
+  "world_is": "The two sources disagree on one member. The contract follows the order and the check (10 measured values; Real Estate named as held, not a value), so a Real Estate security would read as an unknown sector until a contract amendment adds it. The test pins 10 and asserts Real Estate is not in values. If the issuer wants the 11-name list the change is one list entry, one pinned-test line and the issuer check's expected set.",
+  "notes": "Other stated choices: contract 0.5.0; the key form is declared as identifier_namespace value NAME (definition carries the PROPOSED KEY FORM line verbatim, rule24 record under key_form_rule24_record_NAME), which also changes the identifier_namespace values and the stale 'remainder is empty' text in its existing rule24_record is left as it was. test_model_classifier.py:245-248 (pins 0.3.0, SC-e-31's file) is red at the cut and  Ruff 0.16.10 on this box refused pre-existing UP031 at test_classified_by_v2.py:81 (a percent-format assert message); changed to the equivalent f-string, same message, no runtime change."
+}
+```
