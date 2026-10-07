@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.14",
+ "prd_version": "v0.15",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -689,3 +689,20 @@ NFRA_CTLPLN v0.12 addendum (a Dell CTO writes L4 and L10 for its box's projects)
   sub-class. A screen that shows cash inside fixed income states that fold as its FWD-16 mapping; the list itself never folds.
   The canonical `CASH` row (`fixed_income` / `UltraShortDuration`, `classified_by: legacy`, read 2026-10-07 12:5xZ) is corrected
   to `cash` through the seed source by its own pair.
+
+## ADDENDUM v0.15 (1.0.0_SA_CTO~DELL1, 2026-10-07) -- contract note only: the "Cash" token places a security in cash
+
+**Word:** Andrew-direct ~14:1xZ at the `2.0.0_SA_COO~M2` terminal (dell2), on the "Classification not found" tickers of the 10-05
+Cottonwood build (BDCASHIN, FCASH, CQP and five more), VERBATIM: "most of those items literally have "Cash" as a token within, which
+would be the "Cash" asset class. The others could likely be websearched." Record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ANDREW_DIRECT_20261007_141xZ_NEXT_CALLS_GO_1_2_UNCLASSIFIED_TICKERS_CASH_TOKEN.md` @fa8d7d1cf7.
+The ENDPOINT section is not edited.
+
+- **C-CASH-TOKEN (new source rule for the TABLE, not for a screen).** A security whose ticker or name carries `CASH` as a whole token
+  is placed in `asset_class = cash` (sub-class `Cash`, ADDENDUM v0.14) when the table is filled, by the direct plan, with
+  `classified_by` naming the rule. FWD-13 is unchanged and still binds the screens: a page never labels a security from a word in its
+  name. The rule lands in the shared list, and every screen reads the list. A whole token means a word boundary, not a substring.
+  `CASH` in `CASHMERE` does not count, and the rule's test pins both.
+- **The others: research, not downloads.** A security the token rule does not place is researched by web search (research only, no
+  download, per Andrew's download tiers), and the finding lands through the existing seed or AI path with its source recorded.
+  Nothing is guessed.
