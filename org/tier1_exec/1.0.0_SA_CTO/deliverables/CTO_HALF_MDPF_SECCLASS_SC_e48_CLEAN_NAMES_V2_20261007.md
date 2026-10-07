@@ -38,3 +38,21 @@
 
 The dell1 principal's untested WRITE on `etf-classifications` is fine as the request states it: a first-update refusal writes
 nothing and moves the act to a laptop seat under the same pair.
+
+## RE-SIGN (2026-10-07 ~18:2xZ, re-request addendum 1 @45f7e0af2b, msg 514): SIGNED, with one token fix made before the act
+
+**Read by this seat at 45f7e0af2b:**
+- The function (TO-SC-e47 R12 @78715af985) is run on 20 names, the refused set included, and each result is idempotent:
+  `ABB LTD Sponsored ADR`, `PGIM AAA CLO ETF`, `Ferguson PLC Ord`, `Credicorp LTD`, `JPMorgan Chase & Co`, `SPDR Gold Trust`.
+- The census of the rebuilt set's `clean_name` column (1,740 rows: WRITE 1,360, UNCHANGED 369, SEED-SOURCE 12) reads 0 for every
+  token the refusal named. Both casings no longer appear for any form. Items 1-3 of the refusal are met.
+- **One residual class:** a letter-ampersand-letter token is title-cased in its second half. `S&P` reads `S&p` and `AT&T` reads
+  `At&t`. That puts 8 of the 1,360 WRITE rows wrong, for example `iShares S&p 500 Growth ETF` and `S&p Global Inc`.
+
+**Signed for** the 1,360 conditional updates on `name` and `updated_by`, with the snapshot rollback per key and the COO's
+re-signed half, on this one condition met BEFORE `--write`:
+1. `clean_name()` keeps an all-caps `X&Y` token upper (`S&P`, `AT&T`, `P&G`), and the pin test carries those three. The set is
+   rebuilt, and its diff against 45f7e0af2b's set touches only the `clean_name` cell of those 8 keys plus any other `&` row the
+   rule moves, each one listed. The live dry run re-reads `refused_stale=0`. If any other line moves, or the WRITE count changes,
+   this signature does not cover the act and it comes back as a re-request.
+The merge of the line waits on that same commit. SC-e-49 condition 3 reads met at that head.
