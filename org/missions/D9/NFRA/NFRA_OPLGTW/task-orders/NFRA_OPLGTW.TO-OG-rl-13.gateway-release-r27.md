@@ -89,6 +89,22 @@ chain and do not touch `.tools/naming-gate.py`.
   says the CTO half allows it. If the GO says it does not, skip the wrapper arm and report; the issuer amends `AC2`
   before the GO in that case. Never read, print, save or use a token from that cache.
 
+**AMENDED A3 (the CTO half on r27, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_OPLGTW_OG-rl-13_GATEWAY_R27_20261007.md`
+@04fe936b66). It REPLACES A2's second bullet.**
+- **The gateway's encrypted sign-in cache is NEVER opened again.** Do not read, decrypt or list it, for any purpose.
+  Remove that method from the r27 host programs before any Phase B run.
+- **The principal for the wrapper exercise comes from an OFF-REPO file the issuer wrote:**
+  `%LOCALAPPDATA%/opal/og-salt/r27/concierge_principal.json`, two fields, `tid` and `oid`. Pass them only inside the
+  SSM parameters, as the runner already does for `ga1/holder_pks.json`. Never print, save or commit them; the
+  runner's redaction covers them. If the file is absent or the wrapper refuses that principal, STOP before the
+  deploy and report.
+- **One read added: the first audit-LAKE record after the deploy.** After the post-deploy read, list the gateway's raw
+  audit lake prefix (the one runbook section 5 names) for objects written after the deploy time and read the first
+  `rivalfunds_view` record, if one exists. Record in `W/RL13_FLOOR.json` as `lake_record`: its kept arg NAMES, whether
+  `bytes` is present, and its object's write time; or the string `none yet`. Write nothing to the lake and make no
+  request to produce one. `none yet` is not a rollback trigger; a lake record keeping an arg other than `day`, `route`,
+  `fund` IS.
+
 **THE TIMING RULE.** This release touches the send path's file. Its Phase B closes by 09:30Z, or it starts only after
 that day's Bloomberg send is confirmed served. The issuer states which at the GO.
 
@@ -156,6 +172,11 @@ once per phase.
   window with the object's `LastModified` as the discriminator (row Z-W28-S21, ARMED: disarmed by this for r27); the
   wrapper exercise's principal source is conditioned on the CTO half (row Z-W28-S20, never-widen ask section 4 (a)).
   No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
+- AMENDMENT 3 (16:4xZ, issuer, before any GO): the CTO half's ruling on never-widen ask section 4 (a). The sign-in
+  cache is not opened again; the concierge's tid and oid come from `gateway-access-state-table`, read by the issuer
+  with its own AWS identity (2 active refresh-family records name the identity, 1 distinct pair) and written to the
+  off-repo file. The CTO half's branch (a) holds, so `rl13.AC2` stands unamended. One read added: the first audit-lake
+  record. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
 - Pre-cut 15:0xZ: see the issuance commit.
 
 <status>pending</status>
