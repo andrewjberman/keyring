@@ -2082,3 +2082,27 @@ grammar. **Base:** portal ec9f9a0e, the round-47 candidate, APPROVED for DEV @07
 1 of 4 at base ec9f9a0e, 4 of 4 on a scratch reference edit. The order also runs the instrument once and reads 0 FAIL cells in its
 candidate grades (10 today, all this clause). The candidate becomes ec9f9a0e + 1 commit touching no product file.
 **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
+
+## v49 -- ROUND 49 (issuer, 2026-10-07 ~12:2xZ) -- TWO CELLS: THE MODEL FOOT'S MONEY FORMAT; A PLANTED PAIR FOR EVERY RENDER-CHECK CLAUSE
+
+**Rectangle:** the CTO's rulings msg 30859 (FWD-20: "each clause" means every clause) and msg 30869 (FWD-27: three grounds; the
+money format is a page cell), on `3.0.0_SA_CVO~Z`'s files `DSGN_AMGTV1_ROUND48_FWD18_FWD20_REGRADE_20261007.md` @4a94e19089 and
+`DSGN_AMGTV1_FWD20_CLAUSE_COUNT_AND_FWD27_REGRADE_20261007.md` @7ca923a956. Board 21 / 4 / 1 / 1 (FWD-7, 8, 20, 27 NOT_REALIZED).
+**Base:** portal 97598dc3 (the round-48 candidate; ONE DEV push on Andrew's word, CTO msg 30851).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zza-1` | FWD-27 (one money format on the Model foot) | `tabs/ModelTab.tsx` | ~111 (worker-light) |
+| `AV-zza-2` PLANTS (issuer act, test files only, no product file) | FWD-20 (the check FAILS a planted page on each clause, beside a clean control) | `deliverables/2.0.0_SA_COO~D/round49/checks/plants49/` | 2.0.0_SA_COO~D |
+
+**`AV-zza-1`, read first as the CVO asked:** both foot figures are PAGE-formatted (`ModelTab.tsx` `v3FactValue`); the header's short form
+is `components/StatTile.tsx` `formatStatValue`. **Check:** `round49/checks/r49/r49.cjs` computes its expected strings by calling that
+formatter, so it grades "the foot uses the header's formatter": 2 of 3 at base 97598dc3 ("USD 152,320 million" against "USD 152B"),
+3 of 3 on a scratch reference edit, `r47.cjs` still 4 of 4.
+**`AV-zza-2`:** `plants49.cjs` plants one violation per clause on the Thesis state beside one clean control, and runs the portal's own
+`scripts/ui-contract-check.mjs`. It covers the five the CVO counted as lacking a pair (fonts, weights, radii, shadows, the designed
+states) and four more it plants anyway so no clause rests on history (sizes, lowContrastChars, purpleFills, tabPanelsWhite). The
+designed-states pair is two FULL sweep runs: a page whose error-state marker is stripped, and an untouched control.
+**Chains:** 2, no shared file. **Fan-out:** 1 of 1 worker chain (`fanout: 1`); the second cell is the issuer's. **Risk:** LOCAL.
+**Not this round:** the country's capitals and the Filings ledger row (the producer's, routed to `2.0.0_SA_COO~Z` by msg 30869); the
+What-changed row labelled in the vendor's words (not read; named in the close); row Z-S21.
