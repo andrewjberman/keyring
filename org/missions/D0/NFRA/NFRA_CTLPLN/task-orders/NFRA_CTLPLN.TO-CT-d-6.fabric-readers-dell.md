@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~9</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -53,7 +53,7 @@ what the gate does with a bare id filed from a Dell-fabric project. Build exactl
 
 ### ACCEPTANCE
 
-<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=6/6 schema_ok=5/5 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
+<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
 `CT4d6-AC1` -- both readers handle the four fabrics, refuse a fifth, and agree with the gate's enum; the mismatch and `dell3` arms are
 the controls.
 
@@ -71,7 +71,7 @@ touched must still be classified.
 
 - **Grant.** The paths block below plus your deliverables folder and this order's file.
 - The surprise-row gate is a commit gate for every seat on four boxes: run `python -m py_compile` and its `--self-test` after your edit
-  and put both results in your report. No `project.json`, `SEQUENCE.yaml`, `DIRECTIVES.yaml` or `DEVICES.json` edit.
+  and put both results in your report. No `project.json`, `SEQUENCE.yaml` or `DIRECTIVES.yaml` edit; in `DEVICES.json` only the one new field of AMENDMENT 1.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
   `NFRA_CTLPLN-W9-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the test or the
   expected value.
@@ -79,12 +79,13 @@ touched must still be classified.
 <paths>
 .tools/surprise-row-gate.py
 org/standards/PRD_HEADER.schema.json
+org/devices/DEVICES.json
 .tools/tests/test_fabric_readers_dell.py
 .tools/tests/fabric_value_census.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-The block is your WRITE grant. You READ and never edit: `.tools/to-pipeline-gate.py`, `org/devices/DEVICES.json`,
+The block is your WRITE grant. You READ and never edit: `.tools/to-pipeline-gate.py`, `lib/devices.py`, `org/devices/test_readers.py`,
 `org/ref/SURPRISE_CHANNEL_PROTOCOL.md`.
 
 <decomp_ref>
@@ -113,3 +114,36 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: row NFRA_CTLPLN-S5 (the issuer's disarm of W5-S1); CTO msgs 105973, 106017; decomposition round 4 "Open at the CTO" item 1.
 Base dry-run at the cut: CT4d6-AC1 base FAIL as expected (no file); CT4d6-AC2 base FAIL as expected (ran at the cut:
 `FABRIC-CENSUS files_scanned=1700 hits=58 ... unclassified=5 ok=False`; the five are the census's own two committed files).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~08:3xZ) -- THE RULED COORDINATE; the order is handed (staged -> pending)
+
+Authority: `1.0.0_SA_CTO` msg 106069, verbatim: "a seat's row filed on dell1 is <CODE>-D1-S<n>; on dell2 <CODE>-D2-S<n>; a worker's row
+there is <CODE>-D1-W<n>-S<k> or <CODE>-D2-W<n>-S<k>. Same grain as site Z's <CODE>-Z-S<n>; the laptop stays bare. The coordinate is one
+new field per box in org/devices/DEVICES.json (laptop empty, sitez Z, dell1 D1, dell2 D2) and the gate reads it there, never from a
+literal." And: "IRPT_BCKEND-S347 stays as filed: an id is never renumbered ... From CT-d-6's landing a bare id from a Dell is refused."
+Gate limb: none graded this modification. WHERE THIS AMENDMENT AND THE FACE DIFFER, THIS AMENDMENT GOVERNS.
+
+1. **The register field.** `org/devices/DEVICES.json` gains ONE new field per box, `row_coordinate`: laptop `""`, sitez `"Z"`, dell1
+   `"D1"`, dell2 `"D2"`, each with its claim beside it in the file's own convention (`row_coordinate_claim: "held"`,
+   `row_coordinate_source` naming CTO msg 106069). No other field of the register changes. This path is added to your grant.
+2. **The gate reads the register.** The id-to-fabric derivation in `.tools/surprise-row-gate.py` builds its map from the register
+   (coordinate -> box name -> fabric value; the fabric value of `sitez` is `site-z`, read from the register's alias as the repo's
+   existing readers do -- see `lib/devices.py`), never from a literal `Z-` or `D1-`. An id whose infix is not a registered coordinate is
+   treated as today's bare case ONLY if it has no coordinate-shaped infix; an id with a coordinate-shaped infix that the register does
+   not hold (for example `-D3-`) is REFUSED, naming the registered coordinates. If the register cannot be read, the gate REFUSES loudly
+   (it never falls back to the old two-fabric literal).
+3. **A bare id from a Dell is refused.** A new row whose `fabric` field is `dell1` or `dell2` and whose id carries no coordinate is
+   refused, naming the id form it must take. A pre-existing row is never re-graded (the gate already grades new rows only): the one
+   bare Dell row filed before this lands stays as filed. Do not renumber or edit any existing row.
+4. **Worker ids on a Dell** (`<CODE>-D1-W<n>-S<k>`) are admitted; the laptop's worker form (`<CODE>-W<n>-S<k>`) is unchanged.
+5. **The test** (`.tools/tests/test_fabric_readers_dell.py`) now runs EIGHT id cases against a temporary copy of the register: bare ->
+   laptop; `Z-` -> site-z; `D1-` -> dell1; `D2-` -> dell2; `D1-W3-S2` -> dell1; `-D3-` -> refused (unknown coordinate); a `D1-` id whose
+   row says `fabric: dell2` -> refused; a bare id whose row says `fabric: dell1` -> refused. Plus one case with the register path
+   pointing nowhere -> refused loudly. The schema arm (5) and the enum arm are unchanged. LAST line
+   `FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>`.
+
+**ACCEPTANCE, replacing CT4d6-AC1's expectation (same id, same invocation):**
+`FABRIC-READERS ids_ok=9/9 schema_ok=5/5 enum_equal=True gate_selftest=ok ok=True`. CT4d6-AC2 is unchanged.
+
+Also run `python org/devices/test_readers.py` (the register readers' own test, 15 cases at round 1) after the register edit and put
+its last line in your report: a new field must not break a reader.
