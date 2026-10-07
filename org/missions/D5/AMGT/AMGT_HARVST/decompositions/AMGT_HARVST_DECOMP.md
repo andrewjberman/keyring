@@ -3279,3 +3279,26 @@ growth) summing to the total; then a sample of 30 pairs from the largest non-sil
 - `be-1` AC1 (`pytest lib/research/harvest/tests/test_be1_legal_name_always.py`) base: FAIL as expected (the test is absent).
 - `be-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out`) base: FAIL as expected (no such file).
 - `be-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (397 passed).
+
+## 73. ROUND 59 -- the Seeking Alpha job record (`1.0.0_SA_CTO~Z` rulings C2 @f97be3fd6f, msgs 31046, 31054), 2026-10-07 ~15:0xZ
+
+Row AMGT_HARVST-Z-S100: the collector read Alibaba, Boeing and Costco on 2026-10-06/07 while AMGT_RESAPP's freshness page
+showed them last read 2026-09-11; the page reads a store these runs do not write. Ruling C2 routes the collector half here on
+ONE contract, `lib/research/freshness/seeking_alpha_job_record.schema.json` @25ebedb3a3 (`2.0.0_SA_COO~Z` msg 31059): one
+writer (the collector), one reader (`AMGT-bb-16`). This round runs beside round 58's close run (the gold rebuild #8 signing dry
+run 2); the two write disjoint files.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bf`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell; no edge to the `be` chain: `lib/opal_data_harvest` against `lib/research/harvest`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bf-1` | `bf-1` | **One record per finished Seeking Alpha job, to the schema file, at the builder's address; a one-time emitter for jobs already finished; a switch that is off.** `job_record.py` (build, address, write-once), the call in `worker.run_job` behind `seeking_alpha_job_record.enabled`, `emit_job_records.py` with `--dry-run` and `--write`, the registry row, plants, and the real dry run over the two Seeking Alpha runtime roots. The worker sends no put. | WORLD (the gate's floor: `<paths>` names `infra/logic/registry/`) | worker ~108 |
+
+**The issuer's acts after the merge (each recorded; `1.0.0_SA_CTO~Z`'s exercised read and a change-management entry, as a WORLD cell requires):** read the dry
+run; `--write` the one-time emit; flip the switch in its own commit; confirm one live job writes its record.
+
+**Checks dry-run at the base before the cut:**
+- `bf-1` AC1 (`pytest lib/opal_data_harvest/test_bf1_job_record.py`) base: FAIL as expected (the test is absent).
+- `bf-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out`) base: FAIL as expected (no such file).
+- `bf-1` AC3 (`pytest test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (32 passed).
