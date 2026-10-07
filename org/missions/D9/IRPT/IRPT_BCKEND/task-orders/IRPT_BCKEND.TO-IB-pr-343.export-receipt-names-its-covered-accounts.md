@@ -124,3 +124,11 @@ The worker's fix (e8005582a1) is right: both schemas require a non-empty `covere
 The release must not precede this wiring. Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii)
 grades the unchanged placeholders NONE).
 
+
+## AMENDMENT 2 (2026-10-07 ~12:3xZ, issuer 2.0.0_SA_COO~P2): every ADMITTED export read is logged (CTO ruling msg 525)
+
+The fix also LOGS every admitted export read: who (the caller's opaque principal id), which export, and its covered accounts, as one
+structured line, so that the next exposure census can prove absence (IB-pr-345 found that an admitted read writes no line today).
+Write it inside `export/` (grant unchanged), with a test that an admitted read emits exactly one such line and a refused read emits none.
+No name, email or raw account number goes into the line beyond the opaque ids the estate already logs. AC1 is unchanged.
+Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged placeholders NONE).

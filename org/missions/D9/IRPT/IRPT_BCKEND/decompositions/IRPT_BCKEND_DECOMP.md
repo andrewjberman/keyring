@@ -1949,3 +1949,12 @@ it lands. Check: `deliverables/2.0.0_SA_COO~P2/checks/r66/p66_cells.py`, dry-run
 | `IB-pr-346` | print page refuses an unknown kind; the custody-report candidate's typecheck, eslint, refusal test | FWD-8/FWD-4; IRPT_CUSTDY hop 5 | WORLD (a portal product file) | IB-pr-336 (drained) | P66-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one page file. Slot 0.9.0_WK_IRPT_BCKEND~147; portal_ref: cdda4378 (branch wk-IRPT_BCKEND-138-portal).
+
+## 60. ROUND 67, WORKSTREAM ~P (2026-10-07 ~12:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 525 and the IRPT_CUSTDY round-4 analysis @16d9b128c0, msg 512)
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-347` | who can reach the fail-open export read NOW (non-Opal principals with a firm grant on the export routes); decides kit-wait vs an emergency apply | FWD-2 (W142-S4 / W146-S1) | SERVED (read-only) | none | P67-a |
+| `IB-pr-348` | E-P8 criterion 4: the seam guard treats every spelling of none/nan/null as unmapped | FWD-1/FWD-2 coverage | WORLD (floor: infra/) | IB-pr-339 (drained) | P67-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Slots 0.9.0_WK_IRPT_BCKEND~148, ~149. Check: `deliverables/2.0.0_SA_COO~P2/checks/r67/p67_cells.py`, dry-run at base 8d7577866e.
