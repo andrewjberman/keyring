@@ -13,7 +13,10 @@ as covered (the same call on the same runner).
    branch raises `BD GET /auth/token -> HTTP 401: INDUCED auth-lapse ...` before any secret read or vendor call. Lambda's async
    retries (2, within minutes) raise the same. `on_success` does not fire. Nothing is written.
 3. By 06:20Z: re-put the same target with input `{"mode":"pull"}`, read it back (`hg_fwd1_exercise.py --restored`). Terraform state
-   then matches the declared input again (the act changes the input only, and only for ~25 minutes).
+   then matches the declared input again (the act changes the input only. CORRECTED 2026-10-07 ~20:2xZ, row MDPF_HEALGAP-S11: since amendment @7a61248f77 lets step 1
+   run the evening before, the induced input is live from 17:40:36Z to the 06:05-06:20Z restore, ~12.5 hours, not ~25 minutes; during
+   that window an untargeted apply of opal-assets would restore it and void the test -- held off by laptop 1.0.0_SA_CTO msg 106554's
+   CROSS-BOX DEPLOY NOTICE until 06:20Z).
 4. ~11:32Z: the session chain's sentinel fires `cot-bronze-complete`; its new target invokes the runner with `{"mode":"pull"}`. No
    stamp exists, so the runner pulls (ONE Black Diamond pull, under ACT 1), lands the three feeds, writes the stamp, and `on_success`
    drives silver, then gold.
