@@ -1020,3 +1020,32 @@ round.** Never edit an existing row.
   "notes": "Gap also carried in C_RESTRICTED_WRITE_IN.md."
 }
 ```
+
+## ADVI_COTBKF-S12 -- The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S12",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:15Z",
+  "one_line": "The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls --recursive s3://opal-data-cottonwood/commonwealth/cottonwood/silver/crosswalk/ on dell2, 09:0xZ: AccessDenied, ListObjectsV2, user/cloudops-dell2-agent-user, 'with an explicit deny in a resource-based policy'",
+      "aws s3api get-bucket-policy --bucket opal-data-cottonwood on dell2, 09:1xZ: AccessDenied, explicit deny in a resource-based policy",
+      "GetObject is admitted: commonwealth_documents.py --plan on dell2 read the bronze archives (sources_verified=11119), 09:1xZ",
+      "commonwealth_crosswalk.py apply_to_s3 and commonwealth_documents.py --apply write at opal_naming.address('commonwealth', cottonwood, ...) = opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decomposition round 5, issuer's acts 1-2: E5 and the E3 apply run from this seat after the drain; standing rule (1.0.0_SA_CTO~DELL2 msg 214): never widen a fence from dell2.",
+  "world_is": "The dell2 identity is fenced on the Cottonwood bucket (NFRA_CTLPLN's Dell bucket fences). No apply is attempted from dell2: a Put that succeeded would write served output from a fenced box, and one that failed would half-land a ledger. ARMED: no --apply of E3 or E5 from dell2.",
+  "notes": "Disarms when 1.0.0_SA_CTO~DELL2 rules where the applies run (the laptop by relay, or dell2 after NFRA_CTLPLN round 4 grants the write) and the apply runs there under a never-widen pair."
+}
+```
