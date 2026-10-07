@@ -19882,6 +19882,37 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-S382 -- IB-pr-349's live positive-control arm is unexercisable under its own bounds; the release is LANDED and NOT rolled back
+
+```json
+{
+  "id": "IRPT_BCKEND-S382",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T14:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-349 is RELEASED and verified on every axis this cell may measure, but criterion IB68-1-AC1 reads FAIL on new_export_ready=None. After-reads 4 and 5 require submitting a NEW export as an authenticated Opal principal. There is no such principal this cell may obtain: minting one is a write to DynamoDB opal-users-v2, the production auth plane, which this order's BOUNDS forbid verbatim (\"No write to the auth plane\"), and deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md records the mint path as HUMAN-GATED with signing a token directly forbidden by the same record. Per the order's own refusal clause a needed-but-ungranted path is a BLOCKING row, never an override, so this is the row. NOT rolled back: Branch B fires on a FAILURE of after-read 1 or 4; after-read 1 PASSED and after-read 4 was never run, which is not a failure, and the COO half admits rollback only on a failure other than reads of un-back-filled exports because rollback REOPENS the hole for the 7 principals.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py . IB68-1-AC1 -> 'FAIL: new_export_ready is None' / 'IB68-1-AC1 FAIL'",
+      "the order's BOUNDS, verbatim: 'No IAM, route, authorizer, table, bucket or other function changes. No write to the auth plane. No token minted for a non-Opal principal.'",
+      "RT2_test_principal_human_gated.md: the mint path exists and is named, and a seat may not walk it -- out of paths, a write to the production auth plane, and signing with opal/auth/jwt-private-key is worse; the record's verdict is HUMAN-GATED",
+      "WHAT IS PROVEN INSTEAD, all measured: deployed CodeSha256 aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= equals the built sha; re-plan 'No changes'; the live zip's entry.py is sha256 fc241d806ecc (the fail-closed fix is in the RUNNING bytes) across 63 members; on those DEPLOYED bytes an existing un-back-filled receipt is REFUSED for an admin principal AND for a reconstructed non-Opal principal (opaque ids, no token minted), while the POSITIVE CONTROL -- an in-scope Opal read -- is ADMITTED, and a second control lands on the DISTINCT counts branch, so the refusal is the fail-closed branch and not a blanket deny",
+      "49 offline tests pass at the pin, including the fix's own tests/test_covered_account_ids.py and tests/test_admitted_read_logged.py and the analysis, custody and retained branches that after-read 5 concerns",
+      "apply blast radius: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' -- only module.irpt_export_render.aws_lambda_function.this, in place",
+      "ledger org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md CLOSED, all 4 legs proven, sentinel removed; rollback source objver MteawDsTqojjkhh4e8Xfp_u6T7F8NxX3 re-read after the release and still retrievable"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 after-reads 4 and 5: a NEW export, and a performance and an analysis export, submitted by an admitted Opal principal, reach READY with one irpt_export_read_admitted line; IB68-1-AC1 grades them.",
+  "world_is": "The decision layer this release changed is proven correct on the running bytes, both directions, with controls. The end-to-end submit-to-READY arm is not reachable by any act inside this order's grant. What is owed is the issuer's: either widen a successor order to a seat that may exercise the auth plane under its own never-widen pair, or grade IB68-1-AC1 on the decision-layer controls and the offline battery and say so on the record. This cell did NOT flip the order to complete.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
 ## IRPT_BCKEND-W145-S1 -- TO IB-pr-343 requires facts.covered_account_ids non-empty in the receipt contract, but three existing tests mi
 
 ```json
