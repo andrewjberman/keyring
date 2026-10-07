@@ -626,3 +626,28 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "A gap account's household is its own singleton (ownership-map or account-only name), so its household document holds that one account document {account, not_covered}. hop3_real_run.run() appends these documents after build_file() (so si_anchor_probe, which iterates build_file's documents, is unaffected) and the summary line gains not_covered=<n> only when n>0. A consumer that iterates every account of the file expecting returns (a portal render of the file) must skip an account carrying not_covered; none exists in this repo's irpt_custody tree."
 }
 ```
+
+## IRPT_CUSTDY-S10 -- drain red: the none_source tracer test fails again after IRPT_BCKEND made the seam guard case-insensitive
+
+```json
+{
+  "id": "IRPT_CUSTDY-S10",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T12:58:00Z",
+  "one_line": "Drain red on CLOUD after 5b85219599: test_none_source_names_the_seam_line fails again because IRPT_BCKEND IB-pr-348 (11ba48fdc7) made the seam guard case-insensitive, so the round-4 re-pointed fixture value 'none' no longer refuses; no refusing spelling remains to re-point onto.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~12:5xZ on HEAD 5b85219599: tests/run_suite_check.py -> SUITE ... passed=125 failed=1 errors=0; FAILED tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line (line 117)",
+      "git log infra/aws/lambda/investor-reporting/_ids/ids.py: 11ba48fdc7 0.9.0_WK_IRPT_BCKEND~149 fix(IRPT_BCKEND IB-pr-348): seam guard treats every spelling of none/nan/null as unmapped (after CU-d-3's re-point @e05799d167)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 4 E3 (CU-d-3): the irpt_custody suite reads 0 failed on CLOUD; the tracer fixture re-pointed to a value the fixed ids.py still refuses.",
+  "world_is": "The upstream guard now covers every null-like spelling, which is what the tracer was built to find; the tracer test has nothing left to provoke. Repair for the next round's batch: retire the refusal-tracing test (keep none_source.py as a historical tool) -- re-pointing again is not possible."
+}
+```
