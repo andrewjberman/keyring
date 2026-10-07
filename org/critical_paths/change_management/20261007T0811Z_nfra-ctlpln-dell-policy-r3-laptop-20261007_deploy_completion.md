@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-07T08:11:52.134554+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261007T082347Z
 **Deploy:** NFRA_CTLPLN round 3 Dell policy apply -- BOX: THE LAPTOP (CTO half ruling, Andrew-direct 2026-10-07 'For now, laptop should admin'). ONE safe-apply of infra/aws/terraform/nfra-ctlpln-identity from df38747760 (contains eda2919e6b). Three IAM objects: NEW managed policy cloudops-dell-agent-create-policy + its attachment to cloudops-dell-agents-group, and a new version of cloudops-dell-agent-deploy-policy. Both never-widen halves SIGNED: COO @d3ffdf3, CTO @2d27f79524. Plan measured 2 to add, 1 to change, 0 to destroy.
 **Authored by:** 0.7.0_AE_CloudOps~E
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,78 +12,18 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| A1 | activation | safe-apply of the nfra-ctlpln-identity root at the laptop | plan reads EXACTLY 2 to add / 1 to change / 0 to destroy on the three addresses aws_iam_group_policy_attachment.dell_agent_create (create), aws_iam_policy.dell_agent_create (create), aws_iam_policy.dell_agent_deploy (update in-place); safe-apply.sh completes with Apply complete 2 added 1 changed 0 destroyed |  | OPEN |
-| V1 | verify | AC1 group attachment set | iam list-attached-group-policies cloudops-dell-agents-group sorted == exactly [cloudops-dell-agent-create-policy, cloudops-dell-agent-deploy-policy] |  | OPEN |
-| V2 | verify | live-vs-repo document equality, both policies | parsed-JSON equality of each LIVE default-version document against dell_create_policy.json and dell_deploy_policy.json; AND the four round-2 Deny Sids DenyEveryIamWrite, DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes read from the LIVE deploy document (CTO half condition 2) |  | OPEN |
-| V3 | verify | live-principal simulation | iam simulate-principal-policy against the LIVE principal cloudops-dell1-agent-user repeating the arms of simulate_policy.py blocks 1 and 3, one --resource-arns per call, with an admin positive control run in isolation beside any deny acted on |  | OPEN |
-| V4 | verify | AC2 + AC3 + comp-iam gaps | simulate_policy.py reads POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 all_ok=True; re-plan -detailed-exitcode reads exit=0 (no changes); comp-iam gaps run and read |  | OPEN |
+| A1 | activation | safe-apply of the nfra-ctlpln-identity root at the laptop | plan reads EXACTLY 2 to add / 1 to change / 0 to destroy on the three addresses aws_iam_group_policy_attachment.dell_agent_create (create), aws_iam_policy.dell_agent_create (create), aws_iam_policy.dell_agent_deploy (update in-place); safe-apply.sh completes with Apply complete 2 added 1 changed 0 destroyed | APPLIED at the LAPTOP 2026-10-07 ~08:15:50Z by 0.7.0_AE_CloudOps~E via .tools/safe-apply.sh -chdir=infra/aws/terraform/nfra-ctlpln-identity apply -input=false -no-color -auto-approve (UNSCOPED: no -target, no planfile). The apply's OWN plan read 'Plan: 2 to add, 1 to change, 0 to destroy.' -- condition 1 of BOTH halves graded on the apply's plan, not only on the pre-read. Result: 'Apply complete! Resources: 2 added, 1 changed, 0 destroyed.' Addresses exactly the three named: aws_iam_policy.dell_agent_create Creation complete [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy]; aws_iam_group_policy_attachment.dell_agent_create Creation complete [id=cloudops-dell-agents-group-20261007081550288100000001]; aws_iam_policy.dell_agent_deploy Modifications complete [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy]. THE ACT'S ONE UNMEASURED READ, NOW MEASURED: the laptop's identity (arn:aws:iam::313476888478:user/Andrew_Berman) DOES hold IAM write on these three objects -- no refusal, no retry, no second identity sought. Pre-apply the root bytes at HEAD df38747760 equalled eda2919e6b (diff empty + status empty, with a positive control on eda2919e6b^ printing 5 files/1636 insertions). | CLOSED 20261007T082305Z |
+| V1 | verify | AC1 group attachment set | iam list-attached-group-policies cloudops-dell-agents-group sorted == exactly [cloudops-dell-agent-create-policy, cloudops-dell-agent-deploy-policy] | AC1 PASS. Invocation verbatim from the order: .tools/aws iam list-attached-group-policies --group-name cloudops-dell-agents-group --query "sort(AttachedPolicies[].PolicyName)" --output json -> ["cloudops-dell-agent-create-policy", "cloudops-dell-agent-deploy-policy"] -- EXACTLY the expected two names, nothing else attached. BEFORE the apply the same read returned ONE entry (the deploy policy alone), saved at deliverables/BEFORE_group_attached_policies_20261007.json, so the delta is the one new attachment and nothing more. | CLOSED 20261007T082305Z |
+| V2 | verify | live-vs-repo document equality, both policies | parsed-JSON equality of each LIVE default-version document against dell_create_policy.json and dell_deploy_policy.json; AND the four round-2 Deny Sids DenyEveryIamWrite, DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes read from the LIVE deploy document (CTO half condition 2) | PASS both limbs. (i) LIVE-vs-REPO parsed-JSON equality: cloudops-dell-agent-deploy-policy LIVE default version v2 (was v1) == dell_deploy_policy.json, 11 statements both sides; cloudops-dell-agent-create-policy LIVE default version v1 (newly minted) == dell_create_policy.json, 6 statements both sides. iam.tf sources both with a bare file() -- no template intervenes -- so file-equality is the right comparison. NEGATIVE CONTROL beside the equality: the same comparator against a copy with one Sid mutated reads EQUAL=False for both policies, so an always-true comparator is ruled out. (ii) CTO-half condition 2, read from the LIVE deploy document and NOT from the repo: DenyEveryIamWrite, DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes all PRESENT with Effect=Deny (all_present_and_Deny=True). SUBTRACTION CHECK: BEFORE v1 carried 8 statements, LIVE v2 carries 11 -- exactly +3, the three round-3 Denies (DenyPassRoleExceptNamed, DenyProtectedFunctions, DenyApiKeyReads, all read live with Effect=Deny) -- so nothing was removed to make room. Evidence: deliverables/AFTER_*_document_*.json and BEFORE_deploy_policy_document_v1_20261007.json. | CLOSED 20261007T082305Z |
+| V3 | verify | live-principal simulation | iam simulate-principal-policy against the LIVE principal cloudops-dell1-agent-user repeating the arms of simulate_policy.py blocks 1 and 3, one --resource-arns per call, with an admin positive control run in isolation beside any deny acted on | PASS. iam:SimulatePrincipalPolicy against the LIVE principal arn:aws:iam::313476888478:user/cloudops-dell1-agent-user, arm lists IMPORTED from tests/simulate_policy.py rather than retyped. V3-LIVE-PRINCIPAL block1_allowed_ok=22/22 block3_denied_ok=5/5 all_ok=True. Block 3 note recorded rather than smoothed over: arm 1 expects 'allowed' only under the RENDERED fixture copy; the LIVE policy's named-role list is EMPTY (PASSROLE-RENDER applied=0 named=0) so live EVERY PassRole arm must be denied, which is what both halves assert ('no role can be passed, before or after') -- all five read explicitDeny. WIDER THAN THE ORDER ASKED, to satisfy the COO half's condition 2 wording ('repeats the four blocks') rather than only the order's 'first and third': BLOCK4-LIVE ok=8/8 as a DISCRIMINATING PAIR -- six protected-function arms (one per rule class a/b/c) read explicitDeny while lambda:UpdateFunctionCode on the non-protected access-anomaly-scanner and lambda:CreateFunction on a new name read allowed, so a uniformly-denying instrument is ruled out; BLOCK2 apigateway:GET /apikeys/x explicitDeny, /apikeys implicitDeny (row W4-S11's collection-grain behaviour), /apis allowed. INSTRUMENT DISCIPLINE: ONE --resource-arns per call throughout (mode 1 flips held ARNs to implicitDeny); --context-entries iam:PassedToService supplied for every conditioned arm (mode 2 otherwise returns a byte-identical false deny); ADMIN positive control run as SEPARATE invocations (mode 1 would disarm it in-call) and it reads allowed for both protected-function denies and the api-key deny -- therefore those denies are the WORLD, not the instrument. The 'allowed' results prove the POLICY grants the action on an ARN of that shape; they do NOT prove the resource exists (several arms name deliberate placeholders), per the false-ALLOW mode measured on this project by 0.7.0_AE_CloudOps~RV. Evidence: deliverables/V3_live_principal_simulation_20261007.txt and V3b_live_principal_blocks2and4_20261007.txt. | CLOSED 20261007T082305Z |
+| V4 | verify | AC2 + AC3 + comp-iam gaps | simulate_policy.py reads POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 all_ok=True; re-plan -detailed-exitcode reads exit=0 (no changes); comp-iam gaps run and read | PASS all three. AC2: python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py -> 'POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 all_ok=True', matching the expectation verbatim (also run PRE-apply with the identical line, so this is a stability read as well as a pass). AC3: terraform -chdir=infra/aws/terraform/nfra-ctlpln-identity plan -input=false -no-color -lock=false -detailed-exitcode -> 'No changes. Your infrastructure matches the configuration.' exit=0, all 12 resources refreshed including the two new ones. The other three root checks also re-read clean: IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=7/7 policy_size_ok=True ok=True; PASSROLE-RENDER applied=0 named=0 wildcard=0 in_sync=True ok=True; PROTECTED-CENSUS functions=233 regions=17 refused_regions=0 protected=10 by_authorizer=1 by_edge=5 ruled_in=4 unruled=0 in_sync=True ok=True. comp-iam gaps: RUN AND READ -- Total 39 missing \| 295 deny-present \| 1 coverage-unknown \| 3 resource-mismatch across 34 services, 880 calls verdicted across 105 mapped roles over 3 trees / 541 .tf files. ZERO of its lines mention cloudops or dell (grep -ic = 0), so this act introduced no gap on its own objects; every finding it names is pre-existing estate debt on other roles (etfs-reports-reporter, opal-gateway, canonical-schwab-si2, opal-ipset-reconciler) and none is this cell's. Read with comp-iam's own banner in force: it parses Terraform, i.e. the DESIRED plane, and cannot tell landed from planned -- leg V3's live simulation is the APPLIED plane, and nothing here was EXERCISED (no Dell identity acted, no resource created, per the order's bounds). Evidence: deliverables/COMP_IAM_GAPS_20261007.txt. | CLOSED 20261007T082305Z |
 
 ## Log
 
 - 20261007T081152Z OPENED by 0.7.0_AE_CloudOps~E with 5 leg(s)
-
----
-
-## BOX
-
-**THE LAPTOP.** Ruled by the CTO half `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_ROUND3_DELL_POLICY_APPLY_AT_THE_LAPTOP_20261007.md` @2d27f79524,
-on Andrew-direct 2026-10-07 (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_063xZ_DELLS_CREATE_RESOURCES_NO_IAM_DEPLOYS_NOT_GATED_ON_SITEZ.md`):
-"For now, laptop should admin". Site Z applied this root's first version at ~05:0xZ; that does not make site Z the root's standing home.
-Executor: `0.7.0_AE_CloudOps~E`, seated by `2.0.0_SA_COO~C` under task order `NFRA_CTLPLN.TO-APPLY-3.dell-policy-apply-laptop` @df38747760.
-Applying identity, measured BEFORE the apply: `arn:aws:iam::313476888478:user/Andrew_Berman` (`sts get-caller-identity`).
-
-## BLAST RADIUS -- what this act may touch
-
-Three IAM objects and nothing else. No other principal, no role, no resource, no served output.
-
-| # | object | action |
-|---|---|---|
-| 1 | managed policy `cloudops-dell-agent-create-policy` | CREATED (absent before: NoSuchEntity, and absent from a census of 42 customer-managed policies with a positive control) |
-| 2 | group attachment `cloudops-dell-agents-group` -> the create policy | CREATED (group held 1 attachment before: the deploy policy alone) |
-| 3 | managed policy `cloudops-dell-agent-deploy-policy` | NEW DEFAULT VERSION (before: DefaultVersionId `v1`, the only version, 8 statements) |
-
-It changes what the two Dell users (`cloudops-dell1-agent-user`, `cloudops-dell2-agent-user`) may do.
-
-**Named so the act is not read as narrower or wider than it is -- the Dells become NEWLY REFUSED on:**
-code/config updates, deletes and URL changes on 10 of 233 Lambda functions, five of them edge functions
-(`auth-validator-edge`, `cache-control-injector`, `public-data-router`, `shared-advisor-router`, `shared-advisor-router-response`)
-plus `opal-portal-authorizer`, `opal-portal-rest-authorizer`, `opalinvest-auth-handler`, `trade-auth-handler`, `trade-authorizer`;
-`iam:PassRole` on every role (no applied role request exists, so no change in effect today); and `apigateway:GET` on `/apikeys` and `/apikeys/*`.
-A Dell-placed project that deploys one of the ten is refused and writes in to the laptop. **That refusal is the intended behaviour, not a regression.**
-
-## ROLLBACK PER KEY
-
-| key | rollback | notes |
-|---|---|---|
-| `aws_iam_policy.dell_agent_create` + `aws_iam_group_policy_attachment.dell_agent_create` | remove both resources from `iam.tf` and `safe-apply`; the Dells return to the deploy policy alone | same-window |
-| `cloudops-dell-agent-deploy-policy` | IAM keeps the prior version: **re-default `v1`** (`iam set-default-policy-version --version-id v1`), or `safe-apply` from the commit before `c21a185724` for this file | the version id is MEASURED pre-apply, not predicted: `v1` was the only version |
-
-**Not undone by any rollback:** anything a Dell created under the grant. That is listed, never reverted.
-
-## BOTH BRANCHES (the halves' own wording)
-
-- **Apply succeeds:** the Dells hold the create grant (52 of 52 derived non-IAM kinds, 31 read-only refresh actions) and the three refusals above.
-- **Apply fails, is refused for want of IAM write, or is not run:** the Dells hold the round-2 deploy policy -- they update any existing
-  function (the ten included), write data, and create nothing. A refused first call half-applies nothing; this entry then closes REFUSED.
-
-## PRE-APPLY EVIDENCE ALREADY IN HAND
-
-- Root bytes at HEAD `df38747760` equal their bytes at `eda2919e6b`: `git diff --stat` empty, `git status --porcelain` empty, with a
-  POSITIVE CONTROL (`eda2919e6b^..HEAD` on the same pathspec prints 5 files / 1636 insertions), so a clean-empty from a mangled pathspec is ruled out.
-  `eda2919e6b` is an ancestor of origin/CLOUD `2d27f79524` (`ls-remote` read).
-- Four root checks PASS: `IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=7/7 policy_size_ok=True ok=True`;
-  `POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 all_ok=True`;
-  `PASSROLE-RENDER applied=0 named=0 wildcard=0 in_sync=True ok=True`;
-  `PROTECTED-CENSUS functions=233 regions=17 refused_regions=0 protected=10 by_authorizer=1 by_edge=5 ruled_in=4 unruled=0 in_sync=True ok=True`.
-- Plan, untargeted, read at 2026-10-07 ~08:0xZ: `Plan: 2 to add, 1 to change, 0 to destroy.`; exactly 3 resource blocks (denominator
-  printed by `grep -c`); zero `must be replaced` / `will be destroyed` / `-/+` markers. Saved:
-  `org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/PLAN_nfra-ctlpln-identity_20261007.txt`.
-- BEFORE live state saved under `org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/BEFORE_*_20261007.json` (5 files) as the rollback reference.
-
-## INSTRUMENT NOTE carried into the verify legs
-
-`comp-iam` models `(action)`, never `(action, resource)`, and is a FLOOR, never a deletion warrant.
-`simulate-principal-policy` has four false-DENY modes (multi-ARN, unevaluated `Condition`, unvalidated action names, wrong-grain ARN)
-and one false-ALLOW mode measured on THIS project 2026-10-07 by `0.7.0_AE_CloudOps~RV`: it matches the ARN against the policy's
-`Resource` patterns and never asks whether the ARN names anything. Therefore leg V3 runs ONE `--resource-arns` per call, and the
-positive control runs as a SEPARATE invocation.
+- 20261007T082305Z LEG A1 closed: APPLIED at the LAPTOP 2026-10-07 ~08:15:50Z by 0.7.0_AE_CloudOps~E via .tools/safe-apply.sh -chdir=infra/aws/terraform/n
+- 20261007T082305Z LEG V1 closed: AC1 PASS. Invocation verbatim from the order: .tools/aws iam list-attached-group-policies --group-name cloudops-dell-age
+- 20261007T082305Z LEG V2 closed: PASS both limbs. (i) LIVE-vs-REPO parsed-JSON equality: cloudops-dell-agent-deploy-policy LIVE default version v2 (was v
+- 20261007T082305Z LEG V3 closed: PASS. iam:SimulatePrincipalPolicy against the LIVE principal arn:aws:iam::313476888478:user/cloudops-dell1-agent-user, a
+- 20261007T082305Z LEG V4 closed: PASS all three. AC2: python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py -> 'POLICY-SIM allowed_ok=
+- 20261007T082347Z CLOSED -- all 5 legs proven
