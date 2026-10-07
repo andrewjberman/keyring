@@ -445,3 +445,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "W5-S1 DISARM (issuer): the surprise-row gate (lines 2042-2051) and the PRD header schema (line 20) still know two fabrics; both are outside CT-c-6's grant. No row is flipped to a Dell fabric until both are repaired: the repair is one cell of the next issuance, and 1.0.0_SA_CTO (whose register the rows are) is told in one line naming this row. W4-S1 and W4-S2 (the second owned by 1.0.0_SA_CTO): sqs:SetQueueAttributes, sns:SetTopicAttributes and the create calls for a key, queue, topic and bucket can carry an access policy that no action name separates. They arm only at the apply of the create policy. The issuer does not route that apply until the never-widen pair for it names these four create calls and two attribute calls and the CTO half rules them in or out; that ruling and the next issuance's Deny cell (msg 106014) are one decision."
 }
 ```
+
+## NFRA_CTLPLN-W4-S6 -- A refresh of aws_ssm_parameter and aws_secretsmanager_secret_version needs a read that returns the value (ssm:
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:05:44Z",
+  "one_line": "A refresh of aws_ssm_parameter and aws_secretsmanager_secret_version needs a read that returns the value (ssm:GetParameter, secretsmanager:GetSecretValue); the amendment-1 read statement does not grant them, so a plan from a Dell cannot refresh those two kinds and their refresh is left to the laptop.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_create_policy.json statement ReadForDerivedKinds @this branch grants secretsmanager:DescribeSecret, GetResourcePolicy, List* and ssm:DescribeParameters, DescribeDocument*, GetDocument, ListTagsForResource only",
+      "derive_resource_kinds.py last line read_held=2 (aws_ssm_parameter, aws_secretsmanager_secret_version)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-1 AMENDMENT 1 step 1: grant read actions the derived kinds need, but never a read that returns secret material; file ONE row saying a refresh of an aws_ssm_parameter needs ssm:GetParameter and is therefore left to the laptop.",
+  "world_is": "tests/derive_resource_kinds.py READ_HELD names two GRANT kinds in the derived tree: aws_ssm_parameter (refresh reads ssm:GetParameter, which returns the value) and aws_secretsmanager_secret_version (refresh reads secretsmanager:GetSecretValue, which returns the value; the order names only the first, the second is the same shape and is held on the same rule, so this row names both). Neither read is allowed (tests/simulate_policy.py secretsmanager:GetSecretValue -> implicitDeny). A terraform plan or apply from a Dell on a root that holds either kind will fail at refresh until the CTO rules a different treatment; the derivation prints them as READ-HELD and does not count them unread. Carried from the provider's read behaviour, not exercised."
+}
+```
+
+## NFRA_CTLPLN-W4-S7 -- The existing read statement grants sqs:GetQueueAttributes and sqs:GetQueueUrl only on the four agentbus queues
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:05:44Z",
+  "one_line": "The existing read statement grants sqs:GetQueueAttributes and sqs:GetQueueUrl only on the four agentbus queues, so a refresh of aws_sqs_queue from a Dell fails for any other queue; the worker added those two read actions to ReadForDerivedKinds on Resource *, a read the amendment did not list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_deploy_policy.json lines 23-32 and 34-45 read at HEAD f51fb64cc4",
+      "derive_resource_kinds.py READ[aws_sqs_queue] and the policy statement ReadForDerivedKinds @this branch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-1 AMENDMENT 1 step 1 lists apigateway, cloudfront, codebuild, cur, route53, scheduler, secretsmanager, ses, ssm, wafv2 and two s3 reads as the gaps; sqs is not listed.",
+  "world_is": "dell_deploy_policy.json AgentbusSendToInboundQueues allows sqs:GetQueueUrl and sqs:GetQueueAttributes on four agentbus ARNs only, and ReadOnlyForTerraformPlan holds sqs:List* only; the READ table for aws_sqs_queue (sqs:GetQueueAttributes, sqs:GetQueueUrl, sqs:ListQueueTags) is therefore not satisfied for a queue the Dell creates. The worker also added s3:GetAccelerateConfiguration, GetReplicationConfiguration, GetObjectLockConfiguration and GetObjectTagging for the aws_s3_bucket and aws_s3_object refresh, all Get-verb. sqs:GetQueueAttributes can return a queue's Policy attribute (a read of access, not a write); the CTO may strike the two sqs actions, in which case the sqs kind joins READ_HELD. Not exercised against a real refresh."
+}
+```
