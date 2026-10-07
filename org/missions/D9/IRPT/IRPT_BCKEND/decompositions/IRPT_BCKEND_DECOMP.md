@@ -2029,3 +2029,16 @@ Check: `deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py`, dry-run at base 0
 | `IB-pr-358` | the analysis-input-upload constructor passes the existing profile reader | TCKT_VNEXT X-1 | WORLD (floor: infra/; ships with Y's X-1 pair) | IB-pr-354 (drained), IB-pr-357 (same file) | P72-c |
 
 fanout: 3 of 3 chains, cap 8, reason: 355 and 356 are joined only by the stated contract, so they build in parallel; 357 then 358 share _authz/served.py on one queue. Slots ~164, ~165, ~166 (P block 160-199); portal_ref: portal origin DEV at the cut.
+
+## 66. ROUND 73, WORKSTREAM ~P (2026-10-07 ~22:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO review msg 1113 of IB-pr-356 portal b3fedfea)
+
+The CTO passed IB-pr-356 for DEV on two conditions. W165-S2 (ARMED: the wire-generator tests rewrite 25 tracked contracts/wire files)
+must be disarmed before the DEV push. W165-S1 (the custody read sits outside parseIrEnvelope) must close before PROD. Both are portal
+test or validation edits on one branch stacked on b3fedfea, so they are one cell. Check: `deliverables/2.0.0_SA_COO~P2/checks/r73/p73_cells.py`,
+dry-run in worktree ~167 at portal b3fedfea.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-359` | generator tests write to temp, never tracked contracts/wire; the custody read passes a named envelope validation | FWD-8 / CUSTDY hop 5 | LOCAL (portal) | IB-pr-356 (portal b3fedfea) | P73-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one portal branch. Slot ~167; portal_ref: b3fedfea (IB-pr-356's commit).
