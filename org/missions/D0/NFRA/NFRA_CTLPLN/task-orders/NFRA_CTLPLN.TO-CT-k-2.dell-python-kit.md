@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~13</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -87,8 +87,6 @@ printed. The same line must read `ok=True`, stated in the proof row.
 `CTk2-AC2` -- the read, the comparison, the pack and the install's verification behave on this box and on stand-ins; the tampered
 artifact, the missing-two and the version-mismatch arms are the controls.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2</expected_criteria>
-
 ## BOUNDS
 
 - **Grant.** The paths block below plus your deliverables folder and this order's file.
@@ -107,6 +105,9 @@ org/devices/kit_python_pack.py
 org/devices/kit_python_install.py
 org/devices/test_kit_python.py
 org/devices/kit_python_required.json
+org/devices/kit_terraform_providers.py
+org/devices/test_kit_terraform_providers.py
+org/devices/kit_terraform_required.json
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -139,3 +140,62 @@ lane: the <paths> block IS the grant (worker RULING 1).
 
 Source: PRD v0.14 ADDENDUM v0.14 C-KIT-PYTHON; CTO msg 106086; CLAUDE.md "Agent Autonomy" (all egress off Opal infrastructure is
 excluded); decomposition KIT round 1. Base dry-run at the cut: CTk2-AC1 and CTk2-AC2 base FAIL as expected (neither file exists).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~09:4xZ) -- REOPENED: the Terraform provider cache joins the kit; ruff is already sent
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commit 5e1482a22a is inherited state (merged
+to the trunk @2479031e22). Authority: `1.0.0_SA_CTO` msg 106117, verbatim: "dell1 cannot terraform init a root because the providers
+are not on the box and fetching them is egress ... Provider cache: add it to the same cell -- the provider versions the Dell-placed
+projects' roots lock, carried from the laptop's plugin cache over the tailnet, so a Dell's terraform init needs no registry." And:
+"ruff: sent by this seat to both Dells by Taildrop ... take it off the kit cell's missing list once each Dell reports the version."
+Gate limb: none graded this modification. The Python kit above is done and stays; THE WORK below is the whole of this amendment.
+
+**THE HARD RULE STANDS: NO NETWORK.** No `terraform init` that reaches a registry, no `terraform providers mirror` (it downloads), no
+download of any kind. Everything comes from provider binaries ALREADY on the laptop's disk.
+
+1. `org/devices/kit_terraform_providers.py required`: the Terraform roots of the Dell-placed projects, derived exactly as
+   `infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py` derives them (import that function; do not write the
+   method twice), plus this project's own two roots (`nfra-ctlpln-identity`, `nfra-ctlpln-agentbus`). For each root, read its
+   `.terraform.lock.hcl` (a root with no lock file is `NO-LOCK`, counted) and list each provider's source address, locked version
+   and the lock's `h1:` / `zh:` hashes. Print the distinct (provider, version) set with the roots that lock each. Write
+   `org/devices/kit_terraform_required.json`. LAST line
+   `TF-REQUIRED roots=<r> locked=<k> no_lock=<n> providers=<p> distinct_versions=<v> ok=<True|False>` (`ok=True` when every root was read).
+2. `... located`: for each distinct (provider, version), where the laptop holds its binary for `windows_amd64`: the Terraform plugin
+   cache directory if one is configured (`TF_PLUGIN_CACHE_DIR`, the CLI config file's `plugin_cache_dir`), else any root's
+   `.terraform/providers/` tree. Print the path and size, or `NOT-ON-THIS-BOX` (counted). Verify each found binary against the lock
+   file's hashes where the hash scheme can be computed offline (`zh:` is the SHA-256 of the provider's release zip, which you do not
+   have; `h1:` is a directory hash of the unpacked provider and CAN be computed from the unpacked files: read how Terraform computes
+   `h1` -- the `dirhash` "h1" scheme over the sorted file list -- implement it, and say plainly if you could not match it and why).
+   LAST line `TF-LOCATED distinct_versions=<v> found=<f> not_on_this_box=<x> h1_verified=<h>/<f> bytes=<b> ok=<True|False>`.
+3. `... pack --out <dir>`: lay the found providers out as a Terraform FILESYSTEM MIRROR
+   (`<dir>/registry.terraform.io/<namespace>/<type>/<version>/windows_amd64/<binary>`), the unpacked layout Terraform reads with
+   `provider_installation { filesystem_mirror { path = ... } }`, and write a `MANIFEST.json` (path, SHA-256, size, provider,
+   version) plus the exact CLI-config snippet a Dell puts in its Terraform CLI config file so `terraform init` uses the mirror and
+   never the registry (`direct { exclude = ["registry.terraform.io/*/*"] }`). Hard links or copies, never symlinks.
+4. `... verify --from <dir>`: the Dell's half: every file against the manifest; a mismatch refuses.
+5. `org/devices/test_kit_terraform_providers.py`: (1) `required` on the real tree lists the `hashicorp/aws` provider and at least the
+   two versions this project's two roots lock (the identity root and the agentbus root lock different major versions); (2) `located`
+   on this box; (3) `pack` into a temporary directory for ONE small provider if one is present, else for a stand-in directory tree
+   the test builds, and `verify` passes; (4) one byte flipped -> `verify` refuses; (5) THE SEAM PROBE: with the mirror the test packed
+   and a CLI config pointing only at it (`TF_CLI_CONFIG_FILE` set for that one command), `terraform init -backend=false -input=false`
+   in a temporary copy of the smallest locked root succeeds WITHOUT network -- prove "without network" by the config's `direct`
+   exclusion and by the init output naming the filesystem mirror; if the needed provider is not on this box, the case records
+   `SKIPPED-NOT-ON-BOX` and the last line says so; (6) no command the tool constructs contains `providers mirror` or a URL. LAST line
+   `TF-KIT-TEST cases=<k>/6 skipped=<s> ok=<True|False>`.
+
+**ACCEPTANCE, two criteria ADDED to the two above (which are unchanged and must still pass):**
+
+<criterion id="CTk2-AC3" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py required</invocation><expect>TF-REQUIRED roots=</expect></criterion>
+`CTk2-AC3` -- every Dell-placed root's provider lock was read; the same line must read `ok=True`, stated in the proof row, with the
+`no_lock` count reported.
+
+<criterion id="CTk2-AC4" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_terraform_providers.py</invocation><expect>TF-KIT-TEST cases=6/6</expect></criterion>
+`CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
+line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
+
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4</expected_criteria>
+
+(The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
+validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
+`complete` only when all four pass. In your report: the distinct provider versions and which roots lock each, which are on this box
+and how large, whether `h1` verification matched, and the exact commands a Dell and the laptop run for one delivery.
