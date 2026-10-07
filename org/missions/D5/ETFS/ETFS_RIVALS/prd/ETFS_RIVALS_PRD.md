@@ -1076,3 +1076,41 @@ the ENDPOINT section. This addendum holds the contracts and the reserved points.
 ENDPOINT lines and CONTRACTS are added, so the RATIFIED half re-opens to `3.0.0_SA_CVO~RV`. The brief half is Andrew's own
 words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-1`..`FWD-21` and every existing contract are
 unchanged.
+
+### F.5 (2026-10-07 ~05:2xZ) -- Andrew's answers, and where the curves live (COO~RV msg 30612)
+
+**Andrew-direct ~05:1xZ** (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_051xZ_RIVALFUNDS_BBG_BACKFILL_YES_PAGE_ONLY_HIDE_MTD.md`
+@96d0ab2f4b):
+- **F.3 card 2 is ANSWERED YES:** "Yes for the rivalfunds funds only. Probably an ad hoc backfill for the selected funds that uses
+  the existing BBG route".
+  - Scope as he worded it: Bloomberg daily closes; the securities of the rivalfunds funds; about 365 days; ad hoc.
+  - It is not a schedule. No file of the Positioning pull is changed.
+  - `C-MODAL-PRICE-SOURCE` gains the backfilled market close as its first source. The holding-implied price stays as the
+    fallback, and a gap stays a gap.
+- **F.2 is CONFIRMED:** "rivalfunds page only"; "can hide MTD too, should be 30d, then | 90d and 365d".
+- **Still open at Andrew:** F.3 card 1 (the script), and the day unit (calendar or trading days).
+
+**The size finding** (scoping facts section 5 @8475c6b260): the served page holds 423 security dialogs with 671 fund sections.
+Under `C-PAGE-CAP`, 280,216 B remain, which is 417 B a fund section. One three-range curve is about 1,500 B. **Curves in every
+dialog do not fit the main page.**
+
+**Ruling: the curves do NOT live in the main page. `C-PAGE-CAP` is unchanged, and `C-MODAL-PRICE-SOURCE` gains a carrier.**
+1. **The chart data is its own daily platinum object family**: one object per fund, holding that fund's securities' price
+   series and that fund's trade markers. The address is `lib/opal_naming.py address()` output. It is written by the publish
+   stage beside `index.html` and `audit.html`.
+2. **ONE gateway route serves it**, behind the same identity wall. It is released by NFRA_OPLGTW, as the audit route was
+   (round-11 ADDENDUM 1's reasoning holds unchanged).
+3. **How the modal reaches it depends on F.3 card 1, and both branches use the same object and route:**
+   - **Card 1 YES (a script):** the modal draws its chart on open from that fund's object, with per-day hover, as Market
+     Overview does. The main page grows by the script only.
+   - **Card 1 NO:** the fund section of the modal carries ONE plain link, "Price and trades chart", to that fund's chart page.
+     The page is rendered by the publisher with no script, and its curves are inline SVG. The modal itself keeps the trade
+     list it has.
+4. **So round 15 builds everything that does not depend on card 1 or on the day unit:**
+   - the ad hoc Bloomberg backfill (under its own never-widen pair; bounded batches after the firm's 07:00 ET vehicle);
+   - the price-series table;
+   - the trade-marker computation (`C-TRADE-MARKER`);
+   - the per-fund chart object and its size line;
+   - the route's handler, for NFRA_OPLGTW's release.
+
+   The modal's last step, and the 90d / 365d window lengths, are cut when Andrew's two answers are recorded.
