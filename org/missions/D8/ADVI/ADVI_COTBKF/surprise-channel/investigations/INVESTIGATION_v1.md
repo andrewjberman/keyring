@@ -648,3 +648,28 @@ round.** Never edit an existing row.
   "notes": "Same disarm shape as rows S4 and S5."
 }
 ```
+
+## ADVI_COTBKF-W13-S1 -- LEFT_COMMONWEALTH is read as "an in-kind exit with no receiver matching any position"; the order left the boundary with "no in-kind receiver" unstated
+
+```json
+{
+  "id": "ADVI_COTBKF-W13-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~13",
+  "surfaced_at": "2026-10-07T03:10Z",
+  "one_line": "The new reason LEFT_COMMONWEALTH is applied where the ended account has final in-kind exit rows and no receiver matched any position; an ended account with no exit rows and no receiver keeps round 3's 'no in-kind receiver' (51 of 1,450).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_account_links.py --out .scratch/advi_cotbkf/account_links_r4 (worktree wk-advi-cotbkf-13): NOT_LINKED reasons: LEFT_COMMONWEALTH=587, ambiguous=14, below threshold=91, closed to cash=495, no in-kind receiver=51; the 459 round-3 old accounts keep every status and target (0 changed of 459); 97 of round 3's 'no in-kind receiver' old rows are now LEFT_COMMONWEALTH"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-d-2 THE CELL: NOT_LINKED reasons include LEFT_COMMONWEALTH (the in-kind exit has no receiver inside this delivery) plus round 3's 'no in-kind receiver', 'below threshold', 'ambiguous', 'closed to cash'; it does not say which of the two no-match reasons applies when.",
+  "world_is": "Both reasons describe a zero-candidate account. The worker split them on the evidence the table holds: exit rows present (lo/trfo/trco on a non-cash CUSIP within 10 trading days before the last trade) -> LEFT_COMMONWEALTH; none -> 'no in-kind receiver'. The round-3 entry point link_old_accounts keeps the round-3 label for its own tests. Also measured: of 202 client lines (two or more accounts), 12 reach an open account (in positions); the rest stop at an ended account whose own row carries its reason, because only 83 of 1,533 accounts are open.",
+  "notes": "If the issuer reads the split differently, the change is one line in _link (the row['reason'] assignment) and the tests named *ended*."
+}
+```
