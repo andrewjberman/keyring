@@ -1596,3 +1596,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The gate refuses 29 strings in the rendered files, so no Deny, no dell2 command grant and no sixth or seventh simulation block were committed; step 1 and its census are. The order stays in_progress."
 }
 ```
+
+## NFRA_CTLPLN-W14-S4 -- TO-CT-a-1: the naming limb reads a reference to an existing resource as a minted name (for the LGIC_BLANKFIX project)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T12:03:41Z",
+  "one_line": "The commit gate's naming limb read 29 lines that REFER to resources that already exist (functions, command documents, S3 prefixes) as if they were newly minted names and refused them; the form that passed holds no such name in any policy file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_CTLPLN-W14-S3 in this file (commit 6704cbeb93): safe-commit.sh refused the rendered Deny with '[naming-gate] NAMING-GATE: REFUSE 29 graded' (17 refused lines in the documents-and-prefixes policy file, 12 in the functions policy file); every one of the 29 strings named a function, a command document or an S3 object prefix that exists in the account and is owned by another pipeline, not a name this cell mints",
+      "the ruled form (CTO msg 106190, form b) keeps those names in one file under tests/ (the census) and lets Terraform build the statements from it at plan time; the commit that landed it (0c212eff57) passed the same gate with '[naming-gate] NAMING-GATE: PASS 2 graded' (the two policy names this cell does mint, both CONFORMANT)",
+      "counts only, by design: the census holds 233 functions, 33 hosts and 175 roles; the module's route set is 33 function routes (31 not already in the name-based protected list), 12 command documents and 5 artifact prefixes; no name appears in this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 2 step 9 (the CTO's ask): 'File the gate's blindness (a reference read as a minted name) as a row for LGIC_BLANKFIX'; class OBSERVATION, INERT.",
+  "world_is": "The naming limb grades a string in a declaration-tree file by its shape and cannot tell a reference to an existing resource from a declaration of a new one, so any policy that must name an existing function, document or prefix is refused unless the names live outside the graded domain. Owner: the COO of the LGIC_BLANKFIX project, which is the project that would give the limb a way to tell the two apart. Nothing is harmed by leaving it: the workaround holds, at the cost that a policy cannot state its own resources in the file that applies it."
+}
+```
+
+## NFRA_CTLPLN-W14-S5 -- TO-CT-a-1: CTa1-AC1's equality with RESIDENT-FIXED cannot hold under ruling D; the rule compares the policy with the granted set
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T12:03:41Z",
+  "one_line": "The face's CTa1-AC1 rule (the policy names exactly the RESIDENT-FIXED documents) cannot hold under ruling D, which grants the two resident documents that classify RESIDENT-FREE-TEXT (0 fixed, 2 free-text); derive_ssm_documents.py's ok rule now compares the policy with the granted set, and the face's rewrite Deny was not rendered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check, last line: SSM-DOCS declared=16 unresolved=0 resident_fixed=0 resident_free_text=2 export_render=1 other=13 unsure_params=2 in_policy=2 ok=True; with the face's rule (k == resident_fixed) the same read would be ok=False by construction (k=2, a=0)",
+      "the change is in derive_ssm_documents.py (commit 109a410fe7): granted_documents() returns the resident documents (RESIDENT-FIXED and RESIDENT-FREE-TEXT) only while the census reads NO for the resident host's role (read from tests/reached_roles_census.json, header taken_at 2026-10-07T11:05:41Z), and ok requires the policy's send statement to name exactly that set; the classification itself and its 16 of 16 resolved read are unchanged and still printed; unresolved=0 remains a condition",
+      "the face's DenyRewriteOfGrantedDocuments (a Deny on rewriting the RESIDENT-FIXED documents) was never emitted (0 fixed documents) and is not in the amendment's three statements; amendment 1 point C rules no blanket Deny on document writes where the role at the end reads NO. Row NFRA_CTLPLN-W14-S2 (INVESTIGATION_v1.md) already records that both Dells can rewrite a document through the group create policy; that stays open and is now relevant to two granted documents whose host role reads NO"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 face: CTa1-AC1 'ok=True only when ... the policy of step 2 names EXACTLY the RESIDENT-FIXED documents (k == a)'; amendment 2 step 6: the policy names the two resident documents, and 'the classification stays a record, it no longer decides the grant'.",
+  "world_is": "The two instructions cannot both be met: the two resident documents are free-text, so k == a was false the moment ruling D granted them. The ok rule was changed so that the recorded line stays a faithful check of the policy against what the ruling says the policy names; the expected value text in CTa1-AC1 (unresolved=0) is unchanged and the line still reports resident_fixed, resident_free_text and unsure_params so a reader can see the classification beside the grant."
+}
+```
