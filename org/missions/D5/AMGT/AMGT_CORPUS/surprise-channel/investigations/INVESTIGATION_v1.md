@@ -3836,6 +3836,30 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The census resolves 80 of 86 write-like calls clear and 6 unresolved (origins 'unknown'), all in the induction request/scheduled files and one induction test, and exits 1. Whether the six are legitimate opt-in writes the census cannot classify, or a regression of the bound, is not decided here.",
   "notes": "Filed by another project's issuer as an off-task observation; nothing was changed. NOT measured: whether the test failed before today (no base run was made), and whether the six sites need a census rule or a code change. Owner: the AMGT_CORPUS issuer.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W2-S21",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-07T14:32:30Z",
+  "one_line": "BLOCKING on CRPS-ap-6 AC2: the METHOD_VERSION bump the cell orders (/5 to /6) fails three literal-version tests that the cell's <paths> do not let the worker edit, and AC2 names one of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/tests/test_dossier_case_body.py:159 asserts dossier.METHOD_VERSION == 'amgt-corpus-dossier/5'; test_dossier_case_positional.py:189 and test_dossier_case_unit.py:110 assert the same literal; none of the three is in the order's <paths>, and the order says only the <paths> change",
+      "pytest lib/research/corpus/tests -q at worktree HEAD after the bump: 4 failed, 482 passed; the failures are those three tests plus test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry (the pre-existing row AMGT_CORPUS-Z-S90, not caused by this cell)",
+      "AC2 as run: test_dossier.py + test_dossier_case_body.py + test_dossier_method_bump.py + test_dossier_heading_only_round40.py -> '1 failed, 34 passed'; the one failure is test_dossier_case_body.py::test_method_version_is_bumped_to_2",
+      "precedent: commit 597f0647ea (CRPS-x-1, the /4 to /5 bump) edited exactly these three literal-version tests in the same commit; the same one-line edit each is what this bump needs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's section 1 point 4 says to bump METHOD_VERSION by one and satisfy test_dossier_method_bump.py; AC2 expects the four named test files to pass; section 3 lists the files that may change and omits the three tests that pin the literal /5.",
+  "world_is": "Bumping to /6 makes AC2 read '1 failed, 34 passed' (test_dossier_case_body.py line 159). Making AC2 pass needs a one-line edit in each of test_dossier_case_body.py, test_dossier_case_unit.py and test_dossier_case_positional.py (assert /6), which the worker may not do. The worker kept the bump, updated test_dossier_method_bump.py (in paths) and left the other three untouched; AC2 is therefore a FAIL and the order stays open. ap6_check.py reads 'ap6 build 2/2 control 2/2'.",
+  "notes": "Hazard is ARMED because the dossier module and the tests disagree at the branch HEAD until the three literals are moved. Disarm: the issuer either amends this order's <paths> to add the three test files and has the edit made (the same one-line change in each, /5 to /6), or makes that edit itself at the drain. Nothing else in the cell is open.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```
