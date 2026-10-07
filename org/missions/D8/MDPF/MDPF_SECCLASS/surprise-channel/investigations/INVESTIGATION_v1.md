@@ -3078,6 +3078,164 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Whether SC-e-32 or the Holdings reader should adopt the CUSIP: key is the CTO's; this cell only records the gap."
 }
 ```
+
+## MDPF_SECCLASS-W24-S3 -- TO-SC-e28: the Bloomberg characteristics home has no builder address, so the Lambda and the root take it as a supplied value
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "The characteristics home s3://opal-data-etfs/bbg/<day>/ is the legacy ETF producer's input and lib/opal_naming.py address() refuses it (source 'bbg' is not a systems.json key), so the writer's environment and the root's IAM scope take it as BBG_BUCKET / BBG_PREFIX (root variable var.bbg_prefix, no default) rather than from address().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/etfs/scripts/gold/etf_positioning_gold.py:91 BBG_ROOT = \"bbg\" and :667 (BBG_ROOT + \"/\" + as_of + \"/\" + leaf) @6a02099256",
+      "infra/aws/terraform/mdpf-secclass/sector-writer/main.tf variable bbg_prefix (this cell's commit)",
+      "R10_CHECKS/sector_writer_dry_run.py module docstring and builder_env() (this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 step 3 / amendment 1: every S3 address is address() output; the characteristics file is s3://opal-data-etfs/bbg/<date>/characteristics.parquet (BBG_ROOT = 'bbg').",
+  "world_is": "address('bbg','etfs','bronze','characteristics','date=2026-10-05','characteristics.parquet') returns REFUSED \"source 'bbg' is not a systems.json key\". The run list IS builder output (address('mdpf','etfs','gold','sector_writer_runs','date=..','sector_writer_run.json')). The bbg prefix is a deliberate departure of the same shape as MDPF_SECCLASS-W16-S1 (the Opal silver holdings): it needs the R20 register entry Andrew acknowledges, supplied with the issuer's plan as var.bbg_prefix. The bucket itself is the etfs scope's bucket read from scopes.json."
+}
+```
+
+## MDPF_SECCLASS-W24-S4 -- TO-SC-e28: the Lambda package must also ship the contract file, and the function is not yet in lambda-source-map.json
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "The handler reads its two closed value lists from MDPF_SECCLASS_CONTRACT.json at runtime, so the package carries that file flat beside the handler (the dry run's --packaged layout assembles it); the order's package definition (handler plus _shared modules) does not name it, and the function is not a row of infra/aws/lambda/ci/lambda-source-map.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/mdpf-secclass/sector-writer/lambda_function.py load_contract() (this cell's commit)",
+      "infra/aws/terraform/mdpf-secclass/sector-writer/lambda.tf header comment (this cell's commit)",
+      "infra/aws/terraform/mdpf-secclass/new-security-classifier/lambda.tf header, row MDPF_SECCLASS-W16-S2 @6a02099256"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 step 5: the packaged layout is the handler plus every _shared module it imports.",
+  "world_is": "A hand-typed copy of the 10 and 23 values in the handler would be a second hand-kept carrier of what SC-e-27 owns, so the handler reads the contract file (beside itself in the package, org/standards/ in the repo) and refuses to run (BLOCKED) when it is absent. The dry run copies the file into the package dir and prints it in its SECTOR-WRITER-PACKAGE line (files=lambda_function.py,MDPF_SECCLASS_CONTRACT.json,etf_classification.py,rivalfunds_classification.py). Adding the function to lambda-source-map.json (files[] across the lambda tree, _shared and org/standards) is outside this order's paths and is the issuer's step before the first build, as for the FWD-10 producer."
+}
+```
+
+## MDPF_SECCLASS-W24-S5 -- TO-SC-e28 SC8-e28-AC3 cannot be run on this box: no Terraform AWS provider is cached and the order forbids any download
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "SC8-e28-AC3 (issuer_check_sc_e28_tf.py: terraform init -backend=false then validate) needs the hashicorp/aws provider; this box has no plugin cache (~/.terraform.d/plugin-cache absent, TF_PLUGIN_CACHE_DIR unset), the checker passes -plugin-dir only when that cache exists, and without it init would fetch the provider from the registry, which the order's hard bounds forbid; so the criterion was not run and is not met here.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform version: Terraform v1.15.8 on windows_amd64; ls ~/.terraform.d/plugin-cache: No such file or directory (2026-10-07)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e28_tf.py lines 36-40 (plugin-dir only if the cache exists) @6a02099256"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 AC3: the declared root initialises without a backend (plugin cache under the home directory, no registry egress) and validates; hard bound: terraform init only with the local plugin cache and -backend=false, and if the provider is not cached stop on that criterion and file a row.",
+  "world_is": "~/.terraform.d/plugin-cache does not exist on this device (ls: No such file or directory); terraform 1.15.8 is on PATH. Not run: the checker itself (its init without a cache would download). Run instead and recorded as NOT a validate: `terraform fmt -check -diff` on the root (rc 0) and the checker's registry_check() alone, which printed 'SC-E28-TF ok=False ... registry rows 0 of 5 declared names' (see MDPF_SECCLASS-W24-S8) -- its text carries a hard-coded 'The configuration is valid' that is NOT evidence that validate ran. The root has therefore not been init-ed or validated by any tool in this cell. The issuer runs AC3 on a device with the provider cached.",
+  "notes": "The root declares registry-derived locals (jsondecode(file(...)) over scopes/systems/resources.json) and a check block that only a plan exercises, so a first validate may report an HCL fault this cell could not see."
+}
+```
+
+## MDPF_SECCLASS-W24-S6 -- TO-SC-e28: the seed-wins rule reads two seed-source dicts that do not exist yet, and a state NO-VALUE was added
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "C-WRITER's 'a correction made in the seed source wins' is implemented as: a ticker held in etf_classification.ETF_GICS_SECTOR / ETF_GICS_INDUSTRY_GROUP is never set by the writer (state SEED-WINS when nothing else is to set); those two dicts are absent from the seed source today (read as no corrections, so SEED-WINS is 0 on the live dry run), and the writer adds a state NO-VALUE (both labels null in the file: 7 of the 114 securities) beyond the order's list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py:36-37 SEED_FIELDS, :91-131 merge_item @6a02099256",
+      "infra/aws/lambda/mdpf-secclass/sector-writer/lambda_function.py seed_held(), plan_security() (this cell's commit)",
+      "SECTOR-WRITER-DRY-RUN partition=2026-10-05 securities=114 planned=107 present=0 no_row=0 out_of_list=0 seed_wins=0 no_value=7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 step 1: define and test how a seed correction is read; states PLANNED/WRITTEN/PRESENT/NO-ROW/OUT-OF-LIST/SEED-WINS.",
+  "world_is": "The seed source (etf_classification.py) carries no gics_sector or gics_industry_group today, and seed-etf-classifications.py SEED_FIELDS names neither; its merge_item() carries forward every attribute it does not derive (lines 121-127), so a seed run keeps this writer's two fields and does not replace them. The rule chosen reads the ticker keys of two module dicts (names chosen here, getattr default empty), which the cell that gives the seed script those fields (not in this order) must adopt or rename; tests monkeypatch both. The row-based alternative (a seed-classified row's differing value is frozen) was rejected because it would freeze a writer-written value on every seed row. NO-VALUE: a security with both labels null (FXFXX, GLD, VXX and the four funds DIVZ, IDVZ, PFDE, PFOE) has nothing to copy and the contract says the row omits the attribute; counting it under PRESENT or NO-ROW would misstate it. The dry-run line carries it as a trailing no_value=<n> so the leading fields keep the order's shape."
+}
+```
+
+## MDPF_SECCLASS-W24-S7 -- TO-SC-e28: the AC3 registry limb reads literal names only, so a root shaped like the FWD-10 template (names from modules) reads zero names
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "issuer_check_sc_e28_tf.py's registry limb reads literal function_name / name / role_name on aws_* resource blocks and prints ok=False when it finds none; the FWD-10 template takes every name from the opal_name modules (name = local.role_name), which that limb would read as zero names, so this root types each name as a literal on its resource and a check block asserts each literal equals the builder module's output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e28_tf.py NAME_ATTR / registry_check() @6a02099256",
+      "infra/aws/terraform/mdpf-secclass/new-security-classifier/iam.tf (name = local.role_name) @6a02099256",
+      "infra/aws/terraform/mdpf-secclass/sector-writer/main.tf check names_are_builder_output (this cell's commit)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 amendment 1 point 4: the check reads every literal name on an aws_* resource, ok=True only when each has a registry row and at least one name is found.",
+  "world_is": "A template-shaped root (name = local.role_name) yields names=[] and ok=False. The root keeps the builder as the source of truth (the opal_name modules, local.*_name) and adds the literals plus check \"names_are_builder_output\" (main.tf) so a literal that drifts from name() output fails the plan. The Lambda's name is passed to the yang-lambda module (a module block, not an aws_ resource, so the checker does not read it); it has a registry row and a literal assertion in the same check. No registry rows landed with it: see MDPF_SECCLASS-W24-S8."
+}
+```
+
+## MDPF_SECCLASS-W24-S8 -- TO-SC-e28 amendment 1 point 2 contradicts the registry rule: a row for a name that resolves its own system is refused
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T12:00Z",
+  "one_line": "TO-SC-e28 amendment 1 point 2 (a resources.json row for every declared name, in the same commit) cannot be met: the registry's own validate REFUSES a row whose name already resolves its system from its own tokens, and every builder-named resource of this root does, so the commit's naming gate aborted with 6 refusals and SC8-e28-AC3's registry limb prints ok=False missing=5 names whether or not a provider is cached.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh on this cell: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)... resources.json[465].name: mdpf-secclass-sector-writer-lambda already resolves mdpf from its own tokens (type LAMBDA); a row naming the same system is redundant'",
+      "python lib/opal_naming.py validate with the six rows present: 'VALIDATE: REFUSED 6 refusal(s)' (indexes 465-470: lambda, role, policy, scheduler-role, scheduler-policy, daily); with the rows removed: 'VALIDATE: OK 53 system row(s), 13 scope row(s), 41 warning(s)'",
+      "infra/logic/registry/resources.json _about (rows fill a {system} placeholder a name's own tokens cannot resolve) @6a02099256",
+      "issuer_check_sc_e28_tf.py registry_check() run alone on the committed registry: 'SC-E28-TF ok=False ... registry rows 0 of 5 declared names; missing=[...5 names]'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e28 amendment 1 point 2: every declared resource name gets a row in infra/logic/registry/resources.json, in the same commit as its Terraform; point 4: AC3 prints ok=True only when each literal name has a registry row.",
+  "world_is": "resources.json holds only rows that fill a {system} placeholder a name's own tokens cannot resolve; the six names this root declares are name() output (mdpf-secclass-sector-writer-<kind>), their first token resolves 'mdpf', and the registry's validate (run by the commit's naming gate, ENFORCE) refuses a row for each as redundant. So the amendment's registration step and the registry's rule contradict, and no edit inside this order's paths satisfies both. The rows were removed again (resources.json unchanged vs base); the names themselves are builder output and are checked by the root's own check block (main.tf, names_are_builder_output). Consequence for the issuer: SC8-e28-AC3 reads ok=False on its registry limb for these names regardless of the provider; either the checker's limb should read the builder (name() / the opal_name module) instead of resources.json, or the registry should admit a registration row for a resolvable name (a registry-rule change that is not this worker's). Recorded without weakening the test; this is a second, independent reason AC3 is not met.",
+  "notes": "The Lambda's name (a module block, not an aws_ resource) is not read by the checker in either case."
+}
+```
 ## MDPF_SECCLASS-W26-S2 -- test_model_classifier.py pinned `contract_version == "0.3.0"`; the contract is past it and moves again in SC-e-27
 
 ```json
