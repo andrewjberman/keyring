@@ -21590,6 +21590,90 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/capture_print.py"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "coverage_pass.py source (iii) listed a worker folder's coverage_items_*.json; it now lists a directory only when --coverage-items-dir is given, so a bare run reports none.",
+  "spec_asserts": "AMGT-ba-13 order s.1 rule 1/2: every moved read returns the same object; a line that cannot move without changing behaviour is a row.",
+  "world_is": "lib/research/identity/coverage_pass.py coverage_universe_source_check() os.listdir()-ed the AMGT_RESAPP deliverables folder of worker ~3 for coverage_items_<key>.json to fill source_iii.found_files_keyed_on. Those files are run_reader's OUTPUT (a record, not a data file), which the order forbids the code to name; the directory is now the optional command-line argument --coverage-items-dir (repeatable), and the identity pass writes found_files_keyed_on=[] when it is omitted. The universe.json it writes is unaffected (source (iii) adds 0 resolutions by its own assertion); only the stored coverage_pass.source_iii_coverage_universe.found_files_keyed_on list differs on a bare re-run. No test covers the module. Equality (equal_reads.py) is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/coverage_pass.py (coverage_universe_source_check, main)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "freshness/build_view.py still reads a worker folder by glob (deliverables/**/rot_signal.json); the census names no such line because the glob carries no worker serial.",
+  "spec_asserts": "AMGT-ba-13 order s.1: production code under lib/ no longer reads a worker's deliverables folder (the census lists 19 files naming a worker serial).",
+  "world_is": "lib/research/freshness/build_view.py ROT_SIGNAL_GLOB = 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/**/rot_signal.json' reads every worker folder's rot_signal.json at run time and carries no 0.9.0_WK_AMGT_RESAPP~ string, so r77_ba13.py C1 does not count it and this cell did not move it (it is outside the census, and a rot signal is a computed output whose home the list module owns). AC1 reads 0 files naming a worker folder while this one glob remains. Left in place; the order's census is the grant, and a move would change what the freshness view reports as the rot line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/freshness/build_view.py (ROT_SIGNAL_GLOB, build())"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Four moved lines change a stored or served provenance STRING (not an object): the posture pack's model-block source label, the crosswalk's coverage_source and two key_conventions measured_on texts, and the lists' added_by on regeneration.",
+  "spec_asserts": "AMGT-ba-13 order s.1 rule 3: a stored provenance VALUE that other code compares against is a READ; and AC2/bound 3: no served value changes.",
+  "world_is": "Compared-against check, printed: the only comparison of a coverage_source value is lib/research/identity/add_security.py:510, which compares two records of ONE in-memory build (both carry the new label), and no code compares key_conventions text, added_by or generated_by (the one schema entry is type string). So none is a READ and the objects are hash-equal (equal_reads.py EQUAL 17 of 17). What DOES change: posture/packs.py load_model_block() returns os.path.relpath(path, repo) as the pack's source label, now lib/research/posture/data/model_block/model_block_<key>.json; the next crosswalk MINT writes coverage_source 'lib/research/identity/data/universe.json' and the reworded measured_on prose into the served document; build_lists.py regenerated would write a new added_by (the committed publishers.json keeps the old string); social collect's generated_by is reworded, and social collect's security 'source' label now names the pool object (s3://opal-data-harvest/universe/v1/2026-09-15.json, read through peers.engine.load_union_universe; its sha256 equals the old worker-folder file's) where it named the worker-folder file. test_crosswalk_enrich_coverage's byte-identical-to-pinned arm needed the SAME explicit coverage_source label passed to both sides and the key_conventions prose set aside (convention names and forms still asserted equal); test_slash_safe_key_sites' run_drafting arm and test_collect's cap arm were updated to the new argument form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/posture/packs.py (load_model_block)",
+      "lib/research/identity/crosswalk.py (COVERAGE_PATH_DEFAULT, KEY_CONVENTIONS)",
+      "lib/research/identity/add_security.py (same_source, line 510)",
+      "lib/research/identity/tests/test_crosswalk_enrich_coverage.py (NoEnrichRowsByteIdentical)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Data files under lib/ still spell a worker folder as a string inside their own JSON (the three rules/data files); no code opens that string.",
+  "spec_asserts": "AMGT-ba-13 AC1 C1 counts production .py files only; the order says the copies are byte-equal to the originals.",
+  "world_is": "lib/research/rules/data/REPO_RELATIVE_CENSUS.json, peer_overlap.json (source_path) and figure_units.json (source_path) name worker folders ~1, ~2, ~4 (the census), ~8 and ~24 (the two distribution files) as record text. None is a .py file, so C1 does not count them; none is opened as a path by code (the REPO_RELATIVE_CENSUS entries are documentation of line numbers in files the cell has now changed, so that census is stale against the new lines). Left as shipped because byte-equality is the order's bound and the census file is a prior cell's record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/rules/data/REPO_RELATIVE_CENSUS.json",
+      "lib/research/rules/data/peer_overlap.json (source_path)"
+    ]
+  }
 }
 ]
 ```
