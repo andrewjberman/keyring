@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~13</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -110,6 +110,10 @@ org/devices/test_kit_terraform_providers.py
 org/devices/kit_terraform_required.json
 org/devices/kit_portal_tree.py
 org/devices/test_kit_portal_tree.py
+org/devices/kit_bun_no_egress.py
+org/devices/test_kit_bun_no_egress.py
+.tools/wk-provision.sh
+.tools/tests/test_wk_provision_no_registry.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -195,7 +199,7 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -368,3 +372,96 @@ criterion is ADDED; the other five are unchanged and must still pass:
 Write a NEW proof instance over the old one covering all seven ids, validate it with
 `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7`, and flip `<status>`
 back to `complete` only when all seven pass.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~12:3xZ) -- REOPENED: the bun egress disarm, measured against a loopback listener
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and every earlier commit is
+inherited state on the trunk. Row `NFRA_CTLPLN-S13` (ARMED, disarm owner the issuer). Authority: `1.0.0_SA_CTO` msg 106214, verbatim:
+"cut one cell. Its control: point bun's registry at a loopback listener that logs requests. Positive arm, no disarm: the listener
+logs a request. Each candidate (--no-install, a project bunfig, an environment variable): zero requests. Measure bun 1.3.9 on the
+laptop and 1.4.2 on a Dell. The kit carries the form that passes." And msg 106220, verbatim: "(1) The script: on a box with no
+registry redirect, the install mode refuses with a line naming link or none; the default becomes link. Its control: the same
+loopback listener, zero requests from a provision. (2) The interim rule now also forbids bun install on all three boxes."
+Gate limb: none graded this modification. The kits above are done and stay; THE WORK below is the whole of this amendment.
+
+**THE HAZARD.** bun, run on a file whose import does not resolve from a `node_modules` tree, fetches the package from the public
+registry without asking. Two such fetches happened on another machine; a user-level `bunfig.toml` with `[install] auto = "disable"`
+was measured NOT to stop it there (bun 1.4.2). A fetch failure and a disabled install print the same error, so only a listener
+that counts requests can tell them apart.
+
+**THE ONE RULE THAT GOVERNS EVERYTHING YOU RUN: NO REQUEST MAY LEAVE THIS MACHINE.** The test that proves the disarm must not itself
+be the egress. So EVERY bun process this amendment starts runs inside a harness with TWO independent redirects to loopback, and you
+prove both BEFORE any arm that could fetch:
+- **Redirect A, the registry:** bun's registry set to `http://127.0.0.1:<port>/` (a listener you start in Python's standard library
+  on an ephemeral port, which logs method and path of every request and answers 404).
+- **Redirect B, the proxy:** `HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy` all set to a SECOND loopback listener that logs
+  every request line (including `CONNECT host:443`) and answers 502, with `NO_PROXY`/`no_proxy` set to empty so even loopback goes
+  through it if bun chooses. Whatever host bun tries, the request lands on one of your two listeners.
+- **The package name** every probe imports is one that cannot exist: a scoped name with a random suffix generated per run
+  (for example `@opal-no-such-scope-<16 hex>/probe`), so that even a leak would retrieve nothing.
+- **Isolation:** each run uses a fresh temporary directory OUTSIDE every git tree and every `node_modules` ancestor, a temporary
+  `BUN_INSTALL_CACHE_DIR`, and a temporary `HOME`/`USERPROFILE`/`XDG_CONFIG_HOME` so no user-level bunfig is read or written. You
+  never write `~/.bunfig.toml`.
+- **ORDER OF PROOF, and you stop at the first failure with a BLOCKING row and no further bun run:**
+  (0) `bun --version` only (no script) -- with both listeners up; record any request (a version check that phones home is a finding).
+  (1) THE PROXY PROOF: with Redirect B alone set and the registry left at its default, run the probe WITH the strongest disarm you
+      have (`bun --no-install run probe.js`). Expect zero requests. This arm cannot prove the proxy works; it is only the safest
+      first run.
+  (2) THE REGISTRY-REDIRECT PROOF, the positive arm: Redirect A AND Redirect B both set, no disarm, the nonexistent package.
+      Expect one or more requests ON A LOOPBACK LISTENER. If ZERO requests arrive on both listeners and bun reports anything other
+      than a resolution error that names the loopback registry, you CANNOT tell where it went: STOP, file the BLOCKING row, run
+      nothing further. If requests arrive only on the proxy listener naming the public registry host, Redirect A is ineffective in
+      the form you set it: record that, and try the next form of Redirect A (an environment variable such as
+      `BUN_CONFIG_REGISTRY` or `NPM_CONFIG_REGISTRY`; a project `bunfig.toml` `[install] registry = ...` beside the probe) -- the
+      proxy is what kept it on the machine.
+  Only after (2) shows the positive arm landing on loopback do you run the candidates.
+
+1. `org/devices/kit_bun_no_egress.py`:
+   - `measure`: runs the harness above, then each CANDIDATE disarm as its own arm, each from a fresh directory, each reported with
+     the number of requests each listener logged and bun's exit code and first error line: (a) the command-line flag `--no-install`;
+     (b) a PROJECT `bunfig.toml` beside the probe with `[install] auto = "disable"`; (c) the same setting in a user-level bunfig
+     inside the temporary home (to reproduce the other machine's reading on this version); (d) each environment variable bun
+     documents or its binary names for this (search the binary's strings and `bun --help` output for `auto`, `install` and
+     `BUN_CONFIG_`; list what you found and tried); (e) the structural form: the probe file placed inside a directory that HAS a
+     `node_modules` folder (empty) and a `package.json`. A candidate PASSES only with zero requests on both listeners AND the
+     positive arm of the same run non-zero. Print one line per arm and LAST
+     `BUN-NO-EGRESS bun=<version> positive_requests=<n> candidates=<k> passing=<p> leaked_public=<0|n> form=<the passing form the kit carries, or NONE> ok=<True|False>`
+     (`ok=True` needs `positive_requests>0`, `leaked_public=0`, and at least one passing candidate). It writes its full result as
+     JSON to a path given by `--out` (default: none). It is the SAME script a Dell runs for bun 1.4.2; it bakes no path and no
+     version.
+   - `wrap -- <bun args>`: runs bun with the passing form applied (and refuses, naming the reason, a bare `bun install`, `bun add`,
+     `bun x`/`bunx`, `bun create` or `bun update` unless `--allow-registry <reason>` is given, which it prints loudly). This is the
+     form the kit carries.
+2. `org/devices/test_kit_bun_no_egress.py`: the listener logs a request made by Python itself (the listener works); `measure` on
+   this machine reads `ok=True`; `wrap` refuses `install` and passes `--version`; a planted regression (the harness told to treat a
+   candidate that DID make a request as passing) is caught. LAST line `BUN-KIT-TEST cases=<k>/<n> ok=<True|False>`.
+3. `.tools/wk-provision.sh`, the CTO's addition: read it whole first. Its `--node-modules install` mode runs
+   `bun install --frozen-lockfile` (near line 151), which is a registry path. Change: the DEFAULT mode becomes `link`; the `install`
+   mode REFUSES, before running bun, unless a registry redirect is present in the environment the script can verify (a registry
+   variable or project bunfig pointing at a non-public host), with one line naming `link` and `none` as the modes to use. Change
+   nothing else in the script. `.tools/tests/test_wk_provision_no_registry.py`: with both listeners up and the harness environment,
+   a provision in `install` mode on a scratch repository makes ZERO requests and exits non-zero with the refusal line; `link` and
+   `none` are unaffected (or, where a full provision cannot run in a scratch repository, the test exercises the mode-selection
+   function directly and says so). LAST line `WK-PROVISION-REGISTRY install_refused=<True|False> requests=<n> default=<mode> ok=<True|False>`.
+   You do NOT run a real provision with `install`.
+4. A record in your deliverables folder, `BUN_NO_EGRESS_RECORD.md`: every arm's line for this machine's bun version, the passing
+   form, the exact commands another machine runs to measure its own version, and what stays unproven. State also, for row
+   `NFRA_CTLPLN-S13`, what the earlier pass of this order fetched: the frozen-lockfile install run on this machine at about 10:55Z
+   (ruled at the time; the same registry path) -- read `KIT_PORTAL_PACK_RECORD.md` in this folder on the trunk for the package count
+   and say it. Do not re-run it.
+
+**YOU RUN NO `bun install`, `bun add`, `bunx` OR `bun create` AT ALL**, in any directory, redirected or not. The interim rule forbids
+it on this machine until this cell lands.
+
+**ACCEPTANCE.** Two criteria are ADDED; the other seven are unchanged and must still pass:
+
+<criterion id="CTk2-AC8" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_bun_no_egress.py</invocation><expect>BUN-KIT-TEST cases=</expect></criterion>
+<criterion id="CTk2-AC9" cell_refs="CT-k-2"><invocation>python .tools/tests/test_wk_provision_no_registry.py</invocation><expect>WK-PROVISION-REGISTRY install_refused=True requests=0</expect></criterion>
+`CTk2-AC8` -- the same line must read `ok=True` with every case passing. `CTk2-AC9` -- the same line must read `ok=True`.
+
+If `measure` finds NO passing candidate, that is a result, not a failure to hide: `wrap` then carries only the structural refusal,
+AC8's line reads `ok=False`, you file a BLOCKING row with the arms, leave the order `in_progress`, and report.
+
+Write a NEW proof instance over the old one covering all nine ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9`, and
+flip `<status>` back to `complete` only when all nine pass.
