@@ -1550,3 +1550,86 @@ round.** Never edit an existing row.
   "notes": "Resolves D2-W27-S1 once CB-k-1's AC2 passes under the amendment."
 }
 ```
+
+## ADVI_COTBKF-D2-S22 -- FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S22",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:17Z",
+  "one_line": "FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_account_history.py --account D49141617 --trace 1 (rc 0, 12 s): HISTORY rows=3537 first=2016-01-25 last=2026-06-22; TRACE row=1 line=159882 sha256_ok=True line_match=True",
+      "same, --account cv46440182 --trace 25 (rc 0, 6 s): HISTORY rows=56 first=2013-04-29 last=2013-09-10; TRACE row=25 line=410952 sha256_ok=True line_match=True",
+      "vs deliverables/2.0.0_SA_COO~C/FWD1_REAL_RUN_D49141617_20261006.txt (rows=3532, pre-C-SILVER silver): 3,532 of 3,532 old rows present and unchanged; 5 extra rows, source_lines 161765, 161767, 161773, 161780, 161784 (2022-12-15 SBR sales), each an exact repeat of an earlier row; cv46440182: 56 of 56 equal",
+      "the same two accounts through the applied tables: account_links cvD49141617 -> D49141617 LINKED, cv46440182 NOT_LINKED; crosswalk 2 + 1 rows NOT_MATCHED; documents D49141617 29 (CLNT 14, STMT 12, TXRP 3), cv46440182 0",
+      "outputs kept at deliverables/2.0.0_SA_COO~C2/fwd1_retrace_20261007/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spine v3.16 drain: re-run the live thread trace once per round and keep its artifact; FWD-1 REALIZED (round 4 analysis).",
+  "world_is": "The thread holds on today's applied data. The only movement since 2026-10-06 is the C-SILVER rebuild restoring exact repeats, which FWD-1's account history now shows as the delivery recorded them. Rounds 4-11 skipped this re-trace; this row discharges it.",
+  "notes": "FWD-1 stays REALIZED."
+}
+```
+
+## ADVI_COTBKF-D2-S23 -- CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S23",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:22Z",
+  "one_line": "CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W6-S5: the round-2 census kept its store addresses in a record file the script read, after the naming gate refused 41 typed literals",
+      "TO CB-d-1 (round 4): the new script reads stores only via legacy_address(<key>) over the six registry rows (@4991b8b11b); the --stores read of PRICE_COVERAGE_STORES_20261006.json is REMOVED; commonwealth_price_coverage.py deleted (drain @642222e85f)",
+      "the census has run on dell2 three times since (07:53Z, 10:1xZ census_e2, round 11's need FILE) with barred_read=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W6-S5 (OPEN since round 2): the store census is kept as a record file the script reads.",
+  "world_is": "No script reads that record file any more; the addresses come from the registry builder. Nothing in W6-S5 remains to act on.",
+  "notes": "Carried unchanged in the round-6 analysis; closed by its owner (this seat)."
+}
+```
+
+## ADVI_COTBKF-D2-W28-S1 -- The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W28-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~28",
+  "surfaced_at": "2026-10-07T13:10Z",
+  "one_line": "The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_daily_holdings.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~28 -> DAILY-HOLDINGS accounts=1533 account_days=1691729 holding_rows=23226716 snapshot_accounts=83 snapshot_pairs=394 snapshot_equal=381 snapshot_diffs=13 (rc 0)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~28/daily_holdings.md: REBUILD-CHECK basis pairs=381 equal=381; 13 differences over 3 accounts, all fractional quantities (0.09 to 1.014) the rebuild holds and the snapshot does not list",
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:209-219 rebuild_check iterates only the snapshot's own pairs, so it cannot see a rebuilt-open security absent from the snapshot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-l-1 cell text step 2: compare each snapshot account's rebuilt quantity with the snapshot, non-cash only, write EVERY difference; the final line carries snapshot_pairs, snapshot_equal, snapshot_diffs. The crosswalk's rebuild_check, which the cell says already does this comparison, counts only pairs the snapshot lists.",
+  "world_is": "Taking the snapshot's own pairs, the rebuild matches 381 of 381. Taking every non-cash (account, cusip) either side holds for the 83 snapshot accounts, there are 394 pairs and 13 differ: the 13 are securities the transactions leave open in small fractional quantities that the snapshot does not list. The script uses the second reading so that every difference is a row, and the md carries the first reading beside it. Two further rules were chosen where the order is silent: a transaction on a non-trading day takes effect on the next trading day (220 of 3,537 distinct trade dates are non-trading), and an account's span runs to that day when its last transaction is on a non-trading day; a running quantity within 1e-6 of zero is not stored. The last daily state of all 1,533 accounts equals the full rebuild.",
+  "notes": "Whether the 13 fractional residues are unrecorded corporate actions (the order's BLIND) or a snapshot that omits fractional lots is not measured here."
+}
+```

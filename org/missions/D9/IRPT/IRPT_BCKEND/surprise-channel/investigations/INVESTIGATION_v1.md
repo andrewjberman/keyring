@@ -20095,3 +20095,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
 }
 ```
+
+## IRPT_BCKEND-S370 -- S368 disarmed: E-M3 graded on the delivered laptop read and drained
+
+```json
+{
+  "id": "IRPT_BCKEND-S370",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T13:11:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S368 (BLOCKING, ARMED) is disarmed on its own condition: the laptop FILE (R32M_MULTI_RELATIONSHIP_READ.json @09e0d7c89c, sha256 e2606081349e...) was delivered and graded. TO-IB-m32-321: M1-MULTI-RELATIONSHIP-NAMED (acc_0f1e215e521798954f80f291 in relationships z09305591 and z09326136; 3 of 860 Cottonwood accounts), M2-RECONCILES (58 raw rows -> 29 unique positions; ties over 4 partitions; rebuilt 462,857.7422 = served 2026-10-05), M3-OVERLAP-MEASURED (both 1, multi-model only 180, multi-relationship only 2, neither 677); proof VALID; drained @3daee801f3. Cottonwood remains refused to the dell2 identity (13:02Z); that residual is the fence apply's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~154/IRPT_BCKEND.TO-IB-m32-321.multi-relationship-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 3daee801f3 (safe-merge index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S368 disarm condition: the laptop FILE is delivered and graded, or Cottonwood admits the dell2 identity read-only.",
+  "world_is": "First condition met and graded. S368 DISARMED. E-M3 (cell IB-mr-321) complete for round 32 ~M."
+}
+```
+
+## IRPT_BCKEND-S371 -- W148-S2 dispositioned: the fence is intact; this issuer's face bound ("firm buckets deny this box", S347) was wider than the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-S371",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:15:03Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruling 106244: the reads were inside dell2's grant (legacy unfenced buckets); no fence failed. The defect is the issuer's face wording, corrected from round 68.",
+  "one_line": "Disposition of IRPT_BCKEND-W148-S2 per laptop 1.0.0_SA_CTO ruling 106244 (relayed by 0.0.0_AB_MSTR~DELL2, msg 589 series): the objects worker ~148 read are in opal-data-bd / -cot / -inf, the legacy firm channels that were never fenced; the fence covers opal-data-49financial / -cottonwood / -inflection, and of those only opal-data-cottonwood denies dell2 today. No fence failed; the face bound was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-W148-S2 (worker ~148, IB-pr-347): bd and cot ownership maps and bd/cot/inf directories readable; inflection map 404",
+      "ruling 106244: bucket census @7cb0a2f3ab, 24 data buckets, 3 fenced; dell2 reaches 21 of 24 plus 2 of the 3 fenced since 10:1xZ",
+      "IB-pr-347 face BOUNDS line: 'Firm buckets deny this box's identity (row S347)'"
+    ]
+  },
+  "spec_asserts": "Every face of this issuer since S347 bounds a worker with: firm buckets deny this box's identity.",
+  "world_is": "Only opal-data-cottonwood denies dell2. From round 68 the issuer's faces read: only opal-data-cottonwood denies dell2; the legacy opal-data-bd/-cot/-inf are inside dell2's grant; a read is never a fence widening."
+}
+```
+
+## IRPT_BCKEND-S372 -- S365 resolved: the PrintEntry custody-report refusal and the unknown-kind refusal are on portal DEV @ba391aff8f
+
+```json
+{
+  "id": "IRPT_BCKEND-S372",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:57:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S365: IB-pr-346 met both CTO msg 403 conditions (drained @39b7d4dbce; CTO PASSED) and, on Andrew-direct ~13:4xZ ('Recs approved for 1 and 2', MSTR msg 626), landed on portal DEV with IB-pr-341.",
+  "one_line": "Portal origin DEV moved 4b167888 -> ba391aff8f (ls-remote read by laptop 0.0.0_AB_MSTR, relayed msg 630). The merges include wk-IRPT_BCKEND-147-portal @3715f732 (readReportKind refuses an unknown kind; custody-report refused with 0 requests) and -143-portal @5c726cf4. Combined tsc rc 0; PROD untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 630: portal DEV 4b167888 -> ba391aff8f, three no-ff merges, combined tsc rc=0",
+      "drain @39b7d4dbce (IB-pr-346): IB66-1-AC1 and AC2 PASS, proof VALID"
+    ]
+  },
+  "spec_asserts": "S365: the reviewed PrintEntry candidate lands on DEV once its checks run; readReportKind refuses an unknown kind.",
+  "world_is": "Both are on portal DEV @ba391aff8f. PROD is untouched."
+}
+```
