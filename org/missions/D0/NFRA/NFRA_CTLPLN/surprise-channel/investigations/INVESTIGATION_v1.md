@@ -1067,6 +1067,133 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W7-S3 -- TO-CT-d-4 last-line extension and enum edge
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T09:19:58Z",
+  "one_line": "TO-CT-d-4's LAST-line format has no field that names the failed field and its ledger enum has no value for 'closed, names no commit'; the script appends failed=<fields> after ok= and files that case as other-commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/deploy_readback_check.py last line: DEPLOY-READBACK ... ledger=<v> ok=<b> failed=<comma list|none>; org/devices/test_deploy_readback.py asserts the exact line for all six arms and prints cases=6/6",
+      "the order's ledger enum is closed-named|open|missing|other-commit; a closed entry carrying no named_commit line (a deploy made on-trunk, or never recorded) fits none, so it reports other-commit and the step-4 line prints the named_commit values found (or none)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-4 build 1: the LAST line is `DEPLOY-READBACK commit= device= admitted= on_trunk= objects_equal= ledger= ok=`; the worker brief adds that the last line must say which field failed. Ledger values: closed-named|open|missing|other-commit.",
+  "world_is": "Two things the order did not say: (1) a trailing failed= field was added after ok= so a consumer matching the order's prefix still matches; (2) other-commit also stands for a closed entry that names no commit, and on_trunk may print Unknown when the fetch or ancestry read fails, and admitted=False skips steps 2-4 (printed as SKIPPED) so on_trunk=Unknown, objects_equal=0/n, ledger=missing then mean not-read."
+}
+```
+
+## NFRA_CTLPLN-W12-S1 -- CT-k-1: three Lambda-vendored copies of the trading calendar already differ from lib/ and keep the old silent fallback
+
+```json
+{
+  "id": "NFRA_CTLPLN-W12-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~12",
+  "surfaced_at": "2026-10-07T09:23:05Z",
+  "one_line": "The three Lambda-vendored byte-copies of lib/trading_calendar.py (inf-etf-ownership-daily, bd-served-vintage-alarm, opal-assets-absence-check) are already not copies of lib/ and keep the old silent 2024-2027 fallback, so TO-CT-k-1's fail-closed fix does not reach those three functions until someone re-vendors them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diff of `git show a68599cde3:lib/trading_calendar.py` against each of infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/trading_calendar.py, infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py, infra/aws/lambda/opal-assets-absence-check/trading_calendar.py: all three DIFFER (each is 163 lines; the first hunk is the missing weekly_production_day, lines 122-154), so they were not byte-copies before this order either",
+      ".github/workflows/lib-vendored-copies-parity.yml PAIRS lists those three plus infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py; `ls infra/aws/lambda/schwab-bronze-freshness` -> No such file or directory, so that parity job reports MISSING_VENDORED and DRIFT today",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~12/TRADING_CALENDAR_IMPORTERS.md section 1 and 3: all three vendored lambdas run without pandas_market_calendars (stdlib-only packages), so they answer from the old 2024-2027 set, silently outside it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-1 cell text: lib/trading_calendar.py is the estate's ONE trading-day definition and Lambdas vendor this ONE file; the fail-closed raise changes what deployed importers do the next time they are rebuilt.",
+  "world_is": "Three deployed Lambdas carry their own older 163-line copy of the module, outside the order's grant (it edits no importer and deploys nothing). The new fallback and CalendarCoverageError reach them only if the copies are replaced from lib/. Until then they answer a pre-2024 holiday as a trading day, and from 2028-01-01 every weekday, with no error; their current call sites pass current dates (bd-served-vintage-alarm, opal-assets-absence-check) or an event day (inf-etf-ownership-daily, UNKNOWN). Disarm owner is the issuer who decides whether a re-vendor cell is cut; this worker did not copy the file."
+}
+```
+
+## NFRA_CTLPLN-W13-S1 -- CT-k-2: pip's local cache on the laptop is empty, so the pack's preference (a) is built but never exercised against a real cached wheel
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "The order's pack prefers a wheel already in pip's local cache or wheelhouse; on the laptop that cache holds 0 bytes and 0 wheels, so every packed artifact is rebuilt from installed files (preference b) and the cached-wheel arm has no real wheel to find.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pip cache info, run in worktree C:/tmp/wk-ctlpln-13 on 2026-10-07: wheels location under LOCALAPPDATA/pip/cache/wheels, size 0 bytes, 0 locally built wheels; http-v2 size 0 bytes",
+      "org/devices/kit_python_pack.py (branch wk-NFRA_CTLPLN-13): the pack run against a target with nothing installed wrote 69 wheels, every 'how' = rebuilt-from-installed-files; pip install --no-index --dry-run of all 69 rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 build 2: for each missing distribution, (a) a wheel already in pip's local cache or wheelhouse that matches the target is preferred, then (b) a wheel rebuilt from the installed files.",
+  "world_is": "python -m pip cache info on the laptop (pip 26.0.1): 'Package index page cache size: 0 bytes', 'Number of HTTP files: 0', 'Number of locally built wheels: 0'; no wheelhouse directory is named. All 69 artifacts of a full-closure pack for a target with nothing installed were 'rebuilt-from-installed-files'; the cache arm (fits_target and find_cached_wheel in org/devices/kit_python_pack.py) is code, not exercised against a real wheel. The pip --dry-run self-check validated every rebuilt wheel instead."
+}
+```
+
+## NFRA_CTLPLN-W13-S2 -- CT-k-2: blpapi, an import in .tools/ or lib/, is not installed on the laptop; it is the only NOT-INSTALLED-HERE module
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "The census finds 1 third-party module the laptop itself lacks (blpapi, OPTIONAL, 1 importing file), so compare reads missing=1 on the laptop and on any box, and the pack lists it UNPACKABLE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_required.json not_installed_modules = [{module: blpapi, usage: OPTIONAL, importers: 1}], from python org/devices/kit_python_census.py required on branch wk-NFRA_CTLPLN-13 (base a68599cde3)",
+      "KIT-COMPARE device=laptop python=3.12.10 required=21 present=20 missing=1 version_differs=0 hard_missing=0 ok=False (this worker's compare of the laptop's own installed read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 bounds: if required reports a third-party module NOT-INSTALLED-HERE, that is a finding for the report (the laptop itself lacks something its tools import), not something to install; compare ok=True only when m == 0.",
+  "world_is": "KIT-REQUIRED files=745 unparsed=0 modules=135 stdlib=67 local=47 third_party=21 distributions=20 not_installed_here=1: the one is blpapi (the Bloomberg API Python binding), imported in a try, 1 file. KIT-COMPARE on the laptop reads required=21 present=20 missing=1 ok=False, so the order's compare line cannot read ok=True on any box until blpapi is installed there or dropped from the list. The pack and install tools treat an OPTIONAL module with no distribution as UNPACKABLE and counted but not failing their own ok; compare keeps the order's rule (ok only when missing=0). Nothing was installed."
+}
+```
+
+## NFRA_CTLPLN-W13-S3 -- CT-k-2: 26 of the 47 modules classified LOCAL resolve to a repo name outside the path roots the order names
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "Read literally, the order's LOCAL rule (inside .tools/, lib/, or beside the importing file) leaves 26 more repo-internal module names classed as third-party; the census classifies them LOCAL by a repo-wide name match and records local_via per module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_python_census.py required, first run (path roots only): local=21 third_party=47 not_installed_here=27; second run (repo-wide names added): local=47 third_party=21 not_installed_here=1, on branch wk-NFRA_CTLPLN-13",
+      "org/devices/kit_python_required.json is a third_party-only list; the 26 repo-wide-name modules were printed from census_required() with local_via=repo-wide-name and shadows_installed_distribution=false"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 build 1: classify an import LOCAL only when it resolves to a module or package inside the repository (.tools/, lib/, or a package beside the importing file); everything else THIRD-PARTY.",
+  "world_is": "With only the order's roots the census read local=21 third_party=47 not_installed_here=27 (price_axis_pull, kuzu_cli, orchestrator, serp and 23 others, each the stem of a tracked .py elsewhere in the repo, reached by a sys.path insert the static read cannot follow). The census now classes a name LOCAL when no installed distribution provides it and a tracked .py stem or directory of that name exists anywhere in the repo (local_via=repo-wide-name, 26 modules), leaving third_party=21 and not_installed_here=1. No LOCAL name shadows an installed distribution (shadows_installed_distribution=false for all 47)."
+}
+```
+
 ## NFRA_CTLPLN-W9-S1 -- the row schemas still refuse a Dell id and a dell fabric value
 
 ```json
