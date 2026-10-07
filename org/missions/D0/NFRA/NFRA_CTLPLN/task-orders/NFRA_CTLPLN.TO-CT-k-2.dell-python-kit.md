@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~13</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -108,6 +108,8 @@ org/devices/kit_python_required.json
 org/devices/kit_terraform_providers.py
 org/devices/test_kit_terraform_providers.py
 org/devices/kit_terraform_required.json
+org/devices/kit_portal_tree.py
+org/devices/test_kit_portal_tree.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -193,9 +195,76 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
 `complete` only when all four pass. In your report: the distinct provider versions and which roots lock each, which are on this box
 and how large, whether `h1` verification matched, and the exact commands a Dell and the laptop run for one delivery.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~10:1xZ) -- REOPENED: the portal dependency tree joins the kit
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits 5e1482a22a, 8170113d42 and
+c46c682f7d are inherited state (merged to the trunk @16b9fd1ba8). Authority: `1.0.0_SA_CTO` msg 106138 and
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_FOR_THE_DELLS_20261007_1000Z.md` section 4, verbatim: "The bring-up kit carries
+the laptop's portal dependency tree at the DEV lockfile, over the tailnet, read back by one typecheck run on each Dell; nothing is
+fetched from the npm registry by a Dell. `2.0.0_SA_COO~C` adds it to the kit cell beside the Python packages and the Terraform
+providers. All four boxes run Windows, so one tree serves; the cell states the Node or bun version it was built under and refuses a
+box whose version differs." Gate limb: none graded this modification. The Python and Terraform kits above are done and stay; THE WORK
+below is the whole of this amendment.
+
+**THE HARD RULE STANDS: NO NETWORK.** No `bun install`, `bun add`, `npm install`, `npm ci`, `npx` of an uninstalled package, or any
+command that may contact a registry. You read a dependency tree that is ALREADY on the laptop's disk.
+
+**Where the portal is.** `portal/` is a nested git repository (a submodule of the workspace). Your own worktree's `portal/` directory
+may be empty. THE READ-ONLY EXCEPTION for this amendment: you may READ (never write, never run an install in) the base checkout's
+portal tree: its path is `<base>/portal`, where `<base>` is the first entry of `git worktree list --porcelain`. Derive it; do not
+hardcode it. Its `node_modules` is the tree to carry.
+
+1. `org/devices/kit_portal_tree.py describe [--portal <dir>]`: the portal repository's HEAD commit and branch; the lockfile it holds
+   (`bun.lock` or `bun.lockb`, and `package-lock.json` if present: name which exists) with its SHA-256; whether that lockfile equals
+   the one at the portal's `origin/DEV` (compare the blob of `git -C <portal> show origin/DEV:<lockfile>` with the working file; do
+   NOT fetch: if `origin/DEV` is not present locally, print `DEV-REF-ABSENT` and say so); the `bun --version` and `node --version` on
+   this box (`NOT-INSTALLED` is a value); the platform; and the tree's size: top-level package count, total files, total bytes.
+   Whether the tree on disk matches the lockfile: count the packages the lockfile names and the top-level and nested package
+   directories present, and report `lock_packages=<n> present=<p> absent=<a>` by reading each `node_modules/**/package.json` name and
+   version against the lockfile where the lockfile is text (`bun.lock`); for a binary `bun.lockb`, use `bun pm ls --all` ONLY if it
+   runs offline (it reads the lockfile and the tree; if it tries the network, do not use it) and say which method you used. LAST line
+   `PORTAL-TREE head=<commit> lockfile=<name> lock_sha256=<12 hex> equals_dev=<True|False|DEV-REF-ABSENT> bun=<v> node=<v> packages=<n> present=<p> absent=<a> files=<f> bytes=<b> ok=<True|False>`,
+   `ok=True` only when `absent == 0` and the lockfile was read.
+2. `... pack --out <dir>`: one archive of `node_modules` (a tar written by Python's `tarfile`, uncompressed or gzip level 1: state
+   which, and why; preserve relative symlinks and junctions as links where `tarfile` can, and LIST any it could not represent) plus
+   `MANIFEST.json`: the archive's SHA-256 and size, the lockfile name and SHA-256, the portal HEAD, the bun and node versions, the
+   platform, file count and byte count, and the list of binary or platform-specific packages found (a package with a `.node` file, a
+   `bin` shipping an `.exe`, or an `os` / `cpu` field in its `package.json`). The pack REFUSES when `describe` is not `ok`.
+3. `... verify --from <dir> --portal <dir> [--extract]`: the Dell's half. Refuses unless: the archive matches the manifest; the Dell's
+   portal lockfile SHA-256 equals the manifest's; the Dell's `bun --version` (and `node --version` when the manifest holds one) equals
+   the manifest's; the platform equals. With `--extract` it then extracts into `<portal>/node_modules` (refusing if that directory
+   already exists and is non-empty unless `--replace` is given) and prints the file count extracted. LAST line
+   `PORTAL-VERIFY archive=<ok|mismatch> lockfile=<ok|differs> bun=<ok|differs> node=<ok|differs|absent> platform=<ok|differs> extracted=<n|-> ok=<True|False>`.
+4. `... typecheck --portal <dir>`: the read-back: runs the portal's own typecheck script as its `package.json` names it (read the
+   `scripts` block; do not guess the command), bounded by a timeout argument, with no network, and prints its exit code and its last
+   line. This is what each Dell runs after the extract.
+5. `org/devices/test_kit_portal_tree.py`, on stand-ins and this box, no network: (1) `describe` on a small synthetic portal the test
+   builds (a `package.json`, a text lockfile naming three packages, a `node_modules` holding them) reads `absent=0 ok=True`;
+   (2) remove one package directory -> `absent=1 ok=False` and `pack` refuses; (3) `pack` then `verify` on the synthetic tree passes;
+   (4) one byte of the archive flipped -> `archive=mismatch`; (5) the lockfile changed on the target -> `lockfile=differs`; (6) a
+   manifest with another bun version -> `bun=differs`; (7) `--extract` into an empty target reproduces the file count; (8) THE REAL
+   READ: `describe` on the base checkout's real portal, read-only, bounded to 100 seconds -- the case passes when the command
+   completes and prints its last line, whatever `ok` reads, and the test prints that line; if it cannot finish inside the bound, the
+   case records `REAL-READ-TIMEOUT` and you say so. No test packs the real tree (it is large) and no command contains a registry URL
+   or the words `install`, `add` or `ci` as a package-manager verb (a test asserts it). LAST line
+   `PORTAL-KIT-TEST cases=<k>/8 ok=<True|False>`.
+
+**ACCEPTANCE, one criterion ADDED to the four above (which are unchanged and must still pass):**
+
+<criterion id="CTk2-AC5" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_portal_tree.py</invocation><expect>PORTAL-KIT-TEST cases=8/8 ok=True</expect></criterion>
+`CTk2-AC5` -- the tree's description, pack, verification and extract behave on stand-ins, each refusal arm fires, and the real tree
+was read. Report the real tree's `PORTAL-TREE` line in full: whether the laptop's tree matches the DEV lockfile is a FINDING, and if
+it does not (`absent > 0` or `equals_dev=False`), say so plainly -- then the laptop's tree is not yet the thing to carry.
+
+Write a NEW proof instance over the old one covering all five ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5`, and flip `<status>` back to `complete`
+only when all five pass. In your report: the real tree's line, the bun and node versions here, the lockfile kind, the count of
+platform-specific packages, the estimated archive size, the portal's typecheck command as its `package.json` names it, and the exact
+commands a Dell and the laptop run for one delivery.
