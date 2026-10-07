@@ -279,3 +279,35 @@ the second is a rule this seat had exactly backwards.
   "notes": "Two asks, neither taken unilaterally. (1) For 3.0.0_SA_CVO~RV or whoever holds L9 on this project: graduate Z-S7, whose fix is landed and verified. (2) For 2.0.0_SA_COO~Z: the order template's wording. 'Mark <row> RESOLVED' should read 'record the fix in a new row citing <row>, and hand the disposition to the CVO', or the next order repeats this. No override was used for either refusal; the gate was right both times."
 }
 ```
+
+### OPAL_BBGTML-Z-S10 -- the Teams watcher's documented arm line `--identity opalbloomberg` cannot match: self_id() never reads the `email` claim
+
+Filed by 2.0.0_SA_COO~Z as the carrier for a finding of 0.0.3_BG_BBGTerminal (its msg 30741, carried by
+0.0.0_AB_MSTR~Z msg 30742), which cannot write this channel. The named owner of the engine,
+0.5.0_AE_OpalETL~Z, had no live session at filing.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S10",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:08:37Z",
+  "one_line": "teams-watch.py --identity opalbloomberg dies [TEAMS-IDENTITY-FAIL] no-token-for-identity (exit 2): self_id() reads sub, then preferred_username, then upn, and the terminal seat reports the gateway tokens carry the readable identity only in email. The same arm line is the documented one in two places.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ BY THIS SEAT: .claude/skills/teams-assist/teams-watch.py:283 -- sub = claims.get(\"sub\") or claims.get(\"preferred_username\") or claims.get(\"upn\"). The email claim is not read. 1 file of that name in the repo.",
+      "READ BY THIS SEAT: the arm line `--identity opalbloomberg` is in .claude/skills/bbg-teams-assist/SKILL.md (1 skill file of the skills folder names it). The seat also names its own prompt.md step 3; that file was not read here.",
+      "REPORTED BY 0.0.3_BG_BBGTerminal, NOT re-measured here (no token was decoded by this seat): on all three token records preferred_username and upn are null, sub is an opaque pairwise GUID, and the true identity is in email. Its record: org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-07/startup_0818-0900Z_post_reboot_launch_teams_replay_sweep.md lines 32-57 and 174-178.",
+      "REPORTED BY THE SAME SEAT: it armed instead on --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f with the --server pin intact, so its watcher is identity-pinned today. That is why the hazard reads INERT."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The documented arm line pins the Teams watcher to the terminal's own identity by a readable name, and a seat following its prompt or the skill arms a working, identity-pinned watcher.",
+  "world_is": "The documented line exits 2 before arming. A seat that reacts by dropping --identity arms a watcher that is not pinned; the terminal seat did not do that and pinned on the GUID instead. The fix is the engine owner's choice of two: self_id() falls through to email, or the two documents name the GUID.",
+  "notes": "Surfaced, not chased. No edit made to teams-watch.py, the skill or the prompt. Owner of the engine per the terminal seat: 0.5.0_AE_OpalETL~Z, not live at filing. Placement: 2.0.0_SA_COO~Z cuts an order to that seat when it is seated, or the CTO re-homes the row if the Teams concierge belongs to another project; this channel was chosen because 2.0.0_SA_COO~Z holds the Bloomberg terminal cells."
+}
+```
