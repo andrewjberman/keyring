@@ -21834,6 +21834,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased; no code edited. The remedy is a producer cell that leads round 78: the freshness reader takes a name's Seeking Alpha last read from the plane the collector writes, and a pilot-era object older than the collector's own record for the name does not set the date. Until it lands and redeploys, the page's three stale rows and its 92 'not collected' cells for Seeking Alpha are both wrong, in opposite directions."
+},
+{
+  "id": "AMGT_RESAPP-Z-W299-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~299",
+  "surfaced_at": "2026-10-07T16:34:00Z",
+  "spec_asserts": "AC3 of AMGT-bb-14 expects 94 other tracked files under integrations/bloomberg/ at the cut with the stamp 002e8c2034aba7d6 equal.",
+  "world_is": "At this worktree (HEAD 74701def43, the issuance commit) git ls-files lists 97 files under integrations/bloomberg, so 95 besides the two edited files; the checker reads 95 files, stamp db0d1fa54fda434f, and AC3 C1 FAILS. The shared tree also lists 97. Only the two named files are modified and nothing is untracked (AC3 C2 PASS), so the difference is in the checker's cut figure, not in this cell's edits.",
+  "one_line": "AC3 C1 of AMGT-bb-14 reads 95 other files and a different stamp than the 94 and stamp the checker was cut with; the two edited files are the only change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ran r78_bb14.py --crit AC3 --where local at worktree C:/tmp/r78-299: 'FAIL C1 ... 95 files; stamp db0d1fa54fda434f', 'PASS C2 ... 0 other path(s)', exit=1.",
+      "git ls-files integrations/bloomberg | wc -l = 97 in the worktree and in the shared tree; git log -1 -- integrations/bloomberg = 1f9361dd25 (CRPS-ap-7 amendment 1). NOT measured: which file the checker's cut figure omitted, or whether the stamp was computed before 1f9361dd25 landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "notes": "Surfaced, not chased; the checker was not edited. The issuer re-cuts the AC3 constant or confirms the cut base."
 }
 ]
 ```
