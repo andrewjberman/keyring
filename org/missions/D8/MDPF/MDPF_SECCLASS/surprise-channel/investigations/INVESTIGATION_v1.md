@@ -3157,3 +3157,109 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Whether SC-e-32 or the Holdings reader should adopt the CUSIP: key is the CTO's; this cell only records the gap."
 }
 ```
+
+## MDPF_SECCLASS-W26-S5 -- the AI runner builds no identifier_namespace, so a NAME::-keyed model row would read as TICKER
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "classify-residual-model.py landing_row() builds no identifier_namespace and write() copies only keys a row carries, so a model row keyed NAME::<slug> (or CUSIP:<9>) lands with the field absent, which the contract reads as TICKER; 2,482 of the 2,785 AI-route old rows are NAME:: rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:151-164 landing_row returns ticker, asset_class, sub_asset_class, name, classified_by, updated_by, classification_confidence, low_confidence only",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json 0.5.0 fields.identifier_namespace.absent: 'a row without identifier_namespace reads as TICKER'; values TICKER, CUSIP, BLOOMBERG, NAME",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv at this commit: AI route NAME:: rows 2482 of 2785 (python csv count)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e32 step 2: AI rows go 'through SC-e-31's runner with its model enabled'; the contract says a name-keyed row's namespace is a stated attribute, never inferred from the key's shape.",
+  "world_is": "The runner (not mine to edit) states no namespace. In old_list_reclassify_write.py the table handed to the runner is wrapped by NamespaceTable, whose put_item adds identifier_namespace NAME or CUSIP by key prefix before the conditional put; tested against a fake table only (the NAME::-keyed AI row landed with identifier_namespace=NAME). The runner itself is unchanged.",
+  "notes": "Whether the runner should carry the field itself is the SC-e-31 owner's; the wrapper is the one place this cell's act adds it."
+}
+```
+
+## MDPF_SECCLASS-W26-S6 -- the 15 old cash rows cannot land: the table holds no cash row, so no cash sub-class, and the AI bound refuses a class with no live sub-class
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "The shared list holds 0 cash rows, so its vocabulary carries no cash class and no cash sub-class; the direct-match plan therefore does not admit cash, and apply_bound() in the AI runner returns 'no sub-class for cash' for any cash verdict, so the 15 old cash rows (T-Bill 8, Money Market 7) route AI and will end UNRESOLVED by name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf-classifications consistent scan 2026-10-07: 3,507 rows, asset_class cash 0 (TableVocabulary.from_live_table; seed ETF_CLASSIFICATIONS values: fixed_income 77, equity 71, multi_asset 20, structured 13, commodities 11, alternatives 5)",
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:143-147 apply_bound: 'if not sac: return None, no sub-class for <ac>'",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv: old (cash, T-Bill) 8 and (cash, Money Market) 7 rows, all route AI (python csv + bd-securities scan)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD addendum v0.10: six means six asset classes including cash; FWD-17: every old security has its entry placed again under the six; the AI path's value bound: a sub-class the live table already carries for that class.",
+  "world_is": "cash is one of the six, but with 0 table rows it has no live sub-class to land on, so the bound makes cash unreachable by DIRECT or AI. Nothing was changed to suit it. fixed_income already has a 'Cash' sub-class (335 old rows are fixed_income/Cash).",
+  "notes": "Needs a ruling on how a cash security lands (a cash seed row, a sub-class declared for cash, or the bound relaxed for a class with no rows); the half request names the 15 as UNRESOLVED-by-design until then."
+}
+```
+
+## MDPF_SECCLASS-W26-S7 -- the AI runner sends the NAME:: key string to the model as the security's ticker
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "run() passes (key, name) pairs and classify_many() sends the pair's first member as `ticker`; for the 2,482 NAME::-keyed AI rows the model's `ticker` field is the string 'NAME::<SLUG>', not a ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:206 entries = [{'name': n, 'ticker': t} for t, n in pairs]",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:100 data = {'name': name, 'ticker': ticker}; instruction says the strings are DATA IDENTIFIERS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "etf_classification_model.py: 'the ONLY input sent to the model is a security's NAME and TICKER'.",
+  "world_is": "For a name-keyed row the 'ticker' sent is a synthetic key. It leaks no client data and the prompt treats both as identifiers, so the cell proceeds; whether the classification quality depends on it is unmeasured (no model call was made).",
+  "notes": "Observation only; the writer sends the old row's cleaned name with the shared key, as the runner takes it."
+}
+```
+
+## MDPF_SECCLASS-W26-S8 -- the old list's set cannot take FWD-15 to zero: 1,046 of the 1,449 held securities with no shared entry have no old row
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "The reclassification set places the old list's rows, 1,500 held old rows not in the shared list; but the census counts 1,449 held security identities with no shared entry, of which 1,046 have no old row at all, so after this write those 1,046 still have no entry and the missing lists (SC-e-33) remain their path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OLD_LIST_CENSUS_20261007.json: held_securities_not_in_shared 1449, held_not_in_shared_with_no_old_row 1046, held_claim inferred (local producer builds, as-of 2026-10-05)",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv: held=true and route DIRECT or AI 1,500 old rows = 1,259 + 241 distinct keys (python csv)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e32 cell: 'FWD-15: the held securities with no entry, per firm, reach zero' as an outcome this cell serves, held securities first.",
+  "world_is": "The set is built per old key, so a held security that is absent from bd-securities is outside it by construction. This cell makes no claim that FWD-15 reaches zero; the figure after the act is the issuer's measurement.",
+  "notes": "Recorded so the half request does not read as closing FWD-15; the half names the 1,046."
+}
+```
