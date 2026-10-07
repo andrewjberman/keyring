@@ -1,0 +1,59 @@
+{
+ "cell": "IB-mr-311",
+ "amendment": 1,
+ "publications": {
+  "49financial": {
+   "business_date": "2026-10-05",
+   "revision": "94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/49financial/platinum/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.manifest.json",
+   "manifest_version": "f.bUxIIWnCDdw5BuJZEu8slD4eOu13fU",
+   "gold_key": "irpt/49financial/gold/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.parquet",
+   "gold_version": "VTQBCqWVzZs39BTV6FBhIQ02idQotn1x",
+   "gold_sha256": "5257424d5baab677e550cbf16ec636b40db1fad5e4ccc4f650c595f6eb4c82b6",
+   "header_key": "irpt/49financial/platinum/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.header.json",
+   "header_sha256_checked": true
+  },
+  "inflection": {
+   "business_date": "2026-10-05",
+   "revision": "74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/inflection/platinum/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.manifest.json",
+   "manifest_version": "b491FhwZUmugLMrItLS0G1i0_ZyLLO84",
+   "gold_key": "irpt/inflection/gold/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.parquet",
+   "gold_version": "NEVQSzLmdbN0Vc9teRPZV_X9YpKh48of",
+   "gold_sha256": "ddcdb8fee2f10c93a42c2c45707f1fb025b0300fc790dec5e619bf02ff84d381",
+   "header_key": "irpt/inflection/platinum/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.header.json",
+   "header_sha256_checked": true
+  }
+ },
+ "firms": {
+  "49financial": {
+   "listed": 1645,
+   "present": 1645,
+   "zero_value": 888,
+   "tie": 1645,
+   "no_model_node": 1645,
+   "pass": 1645,
+   "failing": [],
+   "verdict": "PASS"
+  },
+  "inflection": {
+   "listed": 231,
+   "present": 231,
+   "zero_value": 56,
+   "tie": 231,
+   "no_model_node": 231,
+   "pass": 231,
+   "failing": [],
+   "verdict": "PASS"
+  }
+ },
+ "e2_unassigned": {
+  "verdict": "PASS",
+  "accounts_passing": 1876,
+  "accounts_listed": 1876,
+  "nonzero_accounts": 932
+ },
+ "reader_identity": "arn:aws:iam::313476888478:user/cloudops-dell2-agent-user"
+}
