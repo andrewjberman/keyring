@@ -2665,3 +2665,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
 }
 ```
+
+## MDPF_SECCLASS-W26-S1 -- clean_name annotation is `str | None`, not `Optional[str]`, because the commit gate's ruff refuses the typing form
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:00Z",
+  "one_line": "TO-SC-e30 names the signature `clean_name(name: Optional[str]) -> Optional[str]`, but .tools/commit-gate.sh ruff (UP045, FA100) blocks typing.Optional in a py39-target file; the committed signature is `clean_name(name: str | None) -> str | None` with `from __future__ import annotations`.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/security_name.py @ 4a2895b4af (commit-gate BLOCKED output on the first Optional[str] attempt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e30 Build 1: one public function `clean_name(name: Optional[str]) -> Optional[str]`, keep its name and signature exactly.",
+  "world_is": "Name, parameter and behaviour are identical; only the annotation spelling differs, and `from __future__ import annotations` makes it inert at runtime on py39. Importers (SC-e-31, SC-e-34) are unaffected.",
+  "notes": "Filed by the worker; no consumer was changed."
+}
+```
