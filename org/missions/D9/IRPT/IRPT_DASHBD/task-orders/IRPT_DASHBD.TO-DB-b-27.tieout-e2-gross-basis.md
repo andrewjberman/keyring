@@ -101,6 +101,19 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB18-1-AC1,DB1
 **REPORT:** your final message gives the commit hashes, each criterion's last line, the counts (planned, graded, within, outside per
 reason, not gradable per why), the number of null add-backs, the change in each count against round 17, and any row ids.
 
+
+## AMENDMENT 1 (2026-10-07 ~09:5xZ, issuer 2.0.0_SA_COO~D2, rows W13-S1 and W13-S3)
+
+- **W13-S1 ruled:** the served 49F gold is fenced from the dell2 identity, so under 1.0.0_SA_CTO~DELL2's standing rule the laptop's
+  3.0.0_SA_CVO ran this order's script at fb966b0a72, unchanged and read-only. Its record is in commit e6ed5380e6
+  (sha256 febe370fbed76497...). The worker copies that record byte-exact and makes no AWS call.
+- **W13-S3 ruled, the checker's defect:** DB18-1-AC2 nulled the add-back only where the fees are null or zero. This face also nulls it
+  where BD's average value is not positive, and the record carries no market values. The issuer measured the one disagreeing range
+  in the landed bronze object (2026-06-17..2026-07-21: fees -52.99, beginningMarketValue 0.01, endingMarketValue -0.70). The checker
+  now admits exactly that literal range. A negative control without the exemption still FAILs.
+- No gate limb graded this modification: LIMB 6 does not fire on a modification, and GATE (viii) grades the unchanged
+  `<placeholders>NONE</placeholders>`.
+
 ---
 
 ## RECORD FACE
