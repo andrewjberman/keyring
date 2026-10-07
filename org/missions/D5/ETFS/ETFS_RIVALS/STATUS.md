@@ -1,11 +1,11 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; round 14 DEPLOYED and proven; rounds 15-19 MERGED on site-Z CLOUD, NOT deployed)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; round 14 DEPLOYED and proven; rounds 15-20 MERGED on site-Z CLOUD, NOT deployed)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-07 ~12:2xZ. The drive logs are the hour-by-hour record:
-`org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10}Z_opal_bloomberg.md`.
+As of 2026-10-07 ~13:2xZ. The drive logs are the hour-by-hour record:
+`org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12}Z_opal_bloomberg.md`.
 
 ## Pins
 
@@ -13,7 +13,8 @@ As of 2026-10-07 ~12:2xZ. The drive logs are the hour-by-hour record:
 |---|---|
 | Deployed artifact pin | CLOUD **22844f744f** in the five rivalfunds Lambdas (round 14). Ledger `etfs-rivalfunds-r14` CLOSED @cc02eeac7d |
 | pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
-| Built, not deployed | Rounds 15 to 19 on site-Z CLOUD; last merge 233b033a9f; suite 857 passed, 2 skipped, 0 failed at 2aba59986e |
+| Round 14 proof | The 2026-10-07 13:00Z sweep read: four gate items MET (`round14/SWEEP_READ_2026-10-07.md` @93f23ea2f4) |
+| Built, not deployed | Rounds 15 to 20 on site-Z CLOUD; last merge 42462181c1; suite 865 passed, 2 skipped, 0 failed at 6bee8e3a91 |
 | Push state | LOCAL. Origin CLOUD f1260c7754 (ls-remote 12:17Z); site Z carries 189 commits not on its tracking ref |
 | Worktrees | None of this project's. Deploy tree `C:/tmp/rv-r8` (pin 22844f744f) and `C:/tmp/rv-replay` remain |
 
@@ -26,8 +27,9 @@ As of 2026-10-07 ~12:2xZ. The drive logs are the hour-by-hour record:
 | 17 | 7a27742b3a | nc-1 | No stored currency: no curve, "No price history is stored for this holding yet." (CTO ruling msg 30817) | 1cbee3e716 |
 | 18 | 8813da6c04 | tl-1 | The dialog's trade list is written from the chart object's markers (row S56) | 4c10ccc170 |
 | 19 | d309f31b5d | ml-1 | The month strip labels each cell with its month, counted back from the window end (row S58) | 233b033a9f |
+| 20 | 312c34ca27 | bk-1 | Backfill rows feed the price curve only and carry their currency; a range is finished on later days; the trend's parsekey join reads its column (rows S60, S61; CTO ruling msg 30897) | 42462181c1 |
 
-Each round's packet, real-run record and screenshots: `deliverables/2.0.0_SA_COO~RV/round{15..19}/`. The round-19 run
+Each round's packet, real-run record and screenshots: `deliverables/2.0.0_SA_COO~RV/round{15..20}/`. The round-19 run
 (`round19/DRAIN_END_PACKET.round19.md` @629a94a0e8) is the artifact for the seven open J1 grades.
 
 Measured on the real run of day 2026-10-06 (live inputs, local writes only), latest build:
@@ -38,17 +40,26 @@ Measured on the real run of day 2026-10-06 (live inputs, local writes only), lat
   markers' months.
 - Page 1,640,613 B, 15.9 percent under the 1,950,000 cap (round 14: 34.4 percent).
 
+## THE ORDER OF ACTS (each waits on the one before it)
+
+1. The push of site-Z CLOUD (Andrew's word at 0.0.0_AB_MSTR~Z).
+2. The gateway release that serves the chart route (NFRA_OPLGTW; cut from origin).
+3. The rivalfunds Lambda deploy at a pin holding rounds 15 to 20, under a NEVER-2 ledger entry and a never-widen pair.
+   The page's script calls the route, so the Lambdas do not go before the release.
+4. The Bloomberg backfill, over two days or more. **It does NOT run before step 3:** the DEPLOYED round-14 rankings stage
+   does not ignore backfill rows, so a backfill written to live S3 before the round-20 code is deployed would move the
+   served rankings at the next run. The DELTA 0 proof (`round20/delta0_2026-10-06.json`, 13 of 13 funds equal) holds
+   for the round-20 code only.
+
 ## What is open, and on whom
 
-1. **3.0.0_SA_CVO~RV:** seven J1 grades (pd-2, md-1, co-1, pc-1, nc-1, tl-1, ml-1) and the slug. RIV-ab-1's J1 (round 14)
-   waits on the 13:00Z sweep read.
+1. **3.0.0_SA_CVO~RV:** seven J1 grades (pd-2, md-1, co-1, pc-1, nc-1, tl-1, ml-1) on the round-19 run, RIV-ab-1's J1
+   (round 14) on the served 2026-10-07 page, and the slug.
 2. **Andrew, at 0.0.0_AB_MSTR~Z:** the push of site-Z CLOUD. The gateway release is cut from origin, so it waits on the
    push; the Lambda deploy waits on the release (the page's script calls the new route).
 3. **1.0.0_SA_CTO~Z:** carries the gateway release ask to NFRA_OPLGTW (msg 30755; route shape
    `round15/GATEWAY_CHART_ROUTE_AS_BUILT.md`); the CTO never-widen halves for the Lambda deploy and the backfill run.
 4. **2.0.0_SA_COO~RV (this seat):**
-   - the 2026-10-07 sweep read after 13:05Z (a1_refresh, ai_grounding.earlier 0, IDVZ Petrobras equals the panel), to the
-     CVO and the CTO;
    - the COO never-widen halves; then the deploy in the order gateway route -> Lambdas -> backfill dry run -> backfill;
    - the Bloomberg backfill: Andrew-authorized (@96d0ab2f4b, @69c7f24b44), securities of the rivalfunds funds only, about
      365 calendar days, ad hoc on the existing route, ONLY after a day's 11:00Z vehicle run, dry run first, inside the
@@ -59,8 +70,9 @@ Measured on the real run of day 2026-10-06 (live inputs, local writes only), lat
 
 | Row | Class | State |
 |---|---|---|
-| Z-S55, Z-S56, Z-S58 | BLOCKING, INERT | Repaired in rounds 16, 18, 19; disposition is the CVO's |
-| Z-S57 | OBSERVATION | Served: buying_trend still carries 7 securities under two keys after the parsekey join; cause unread |
+| Z-S55, Z-S56, Z-S58, Z-S60 | BLOCKING, INERT | Repaired in rounds 16, 18, 19, 20; disposition is the CVO's |
+| Z-S57, Z-S61 | OBSERVATION | Served: buying_trend carries 7 securities under two keys; cause read (its G4 read omitted the parsekey column) and repaired in round 20, not yet deployed |
+| Z-W10-S1 | OBSERVATION | The backfill's one CRNCY lookup is unmeasured at real size (282 keys) |
 | Z-S59 | OBSERVATION | 11 of 393 month strips disagree with the markers' months; a 365-day window's oldest month is off the 12-cell strip |
 | Z-W1-S53 | OBSERVATION | The audit page keeps "History not yet backfilled" (it carries no script by Andrew's word) |
 | Z-W2-S16 | OBSERVATION | Chart objects are written only when the page's bytes change |
