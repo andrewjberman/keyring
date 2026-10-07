@@ -20496,3 +20496,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two cells land the two halves of the route's declaration. In a tree carrying both, the extra-in-table reason disappears; the pdf-route reason remains and is not this cell's. Merge order between ~164 and ~165 is not constrained by this."
 }
 ```
+
+## IRPT_BCKEND-W167-S1 -- gen-wire.ts generate() throws on the custody-report-read route (no response_schema key); IVE26-AC3 cannot compare
+
+```json
+{
+  "id": "IRPT_BCKEND-W167-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~167",
+  "surfaced_at": "2026-10-07T23:22:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "gen-wire.ts generate() throws on routes.json's custody-report-read row (no response_schema key), so iv-e-26 (IVE26-AC3) fails before it compares any file; with the tests writing to a temp dir the failure writes nothing tracked.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun --no-install test over the four generator tests at portal 63b9382a: 6 pass, 1 fail; IVE26-AC3 error: ENOENT open 'docs/contracts/investor-reporting/v1/undefined' at fe-s-13/gen-wire.ts:469 (renderResponses) via generate()",
+      "docs/contracts/investor-reporting/v1/routes.json (22 routes): the one route lacking a response_schema key is 'GET /api/scoped/investor-reporting/custody-report/{reportId}' (operation custody-report-read, cell IB-pr-355, commit cf6839fe38); renderResponses skips only response_schema === null, so undefined reaches readFileSync",
+      "git status --porcelain portal/src/pages/InvestorReporting/contracts/wire after the run is empty; IB73-1-AC1 PASS"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-359: after the generator is pointed at a temp dir, output that still differs from the committed wire files is named in a row as an observation; the base failure of IVE26-AC3 was read as drift in the content-pin arm.",
+  "world_is": "The generator cannot complete against the committed routes.json: no wire file (committed or temp) is compared, so the drift of the 4 AnalysisReport-related files measured at base is not observable until routes.json declares response_schema: null (or a schema) for custody-report-read, or renderResponses skips undefined. The failing test is dsgn-irptv1/iv-e-26.wire-regen.test.ts (IVE26-AC3). Not fixed here: the order forbids fixing the drift and editing contracts/wire or routes.json is outside the grant."
+}
+```
