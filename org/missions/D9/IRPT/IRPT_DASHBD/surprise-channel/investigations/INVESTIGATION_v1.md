@@ -1785,3 +1785,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Accrual choice for the closure day: mean income_return over the segment's linked days (judgment recorded in the script docstring)."
 }
 ```
+
+## IRPT_DASHBD-W14-S2 -- W14-S1 fence opened; script ran on dell2
+
+```json
+{
+  "id": "IRPT_DASHBD-W14-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~14",
+  "surfaced_at": "2026-10-07T10:47:30Z",
+  "one_line": "W14-S1's gold fence opened; closure_align_e1p.py ran on dell2, no laptop run needed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W14-S1: closure_align_e1p.py needs a laptop run because the gold bucket is fenced on this box.",
+  "world_is": "At 10:44Z the dell2 identity lists the gold account_return_daily prefix; the script ran here (564 partitions, 0 vendor calls, no S3 write): 2299 closure segments, 0 within, 2299 outside.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "NFRA_CTLPLN TO-APPLY-4 amendment 1 @aefcf32c11",
+      "253c4cbf38 (record and counts-only summary)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W14-S1's fence opened (TO-APPLY-4 @aefcf32c11) and the script ran on dell2."
+}
+```
