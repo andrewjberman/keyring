@@ -782,9 +782,13 @@ messages or whatever as a reference for the given action."
 2. **C-SEATS clause 10, the voice file.** One file, `andrew_voice.md`, organised by the kind of act (a reply to a client's
    mail, a Teams reply, a Teams post, an End of Day post, and others as they arise), each with representative messages Andrew
    himself wrote. The messages come from his own mailbox and his own Teams, through the gateway, read only. Names are not
-   wiped (his word of ~18:3xZ). `daily_reports/eod/VOICE.md`, which the End of Day post reads today, is not replaced by a
+   wiped: his word at the `4.0.0_SA_CRO` terminal ~18:4xZ, "Names don't need to be wiped, nor should they be wiped for the
+   Teams op", was given for the mail and Teams operation, and is read here as covering the file that operation drafts from
+   (`3.0.0_SA_CVO` msg 106609 corrected the citation). `daily_reports/eod/VOICE.md`, which the End of Day post reads today, is not replaced by a
    cell's choice: the cell reads it, carries what it holds into the new file's End of Day section, and the reader of the old
-   file moves to the new one in the same cell or stays where it is. Where the file lives is the cell's, said at the cut.
+   file moves to the new one in the same cell or stays where it is. The messages themselves are client mail, so they are NOT committed to
+   the repository, whose origin is an outside host: the file with its messages lives in an Opal-owned home outside git, and
+   the repository carries only its location and its section list. Which home is the cell's, said at the cut.
 3. **What does not change.** Nothing goes out in his name without his approval: no mail is sent by an agent (a draft only),
    and nothing posts to Teams without his 1.
 4. **FWD-20 and clause 9: Teams and mail in the same round.** His word is "both". Clause 9 already carries what he gave for
