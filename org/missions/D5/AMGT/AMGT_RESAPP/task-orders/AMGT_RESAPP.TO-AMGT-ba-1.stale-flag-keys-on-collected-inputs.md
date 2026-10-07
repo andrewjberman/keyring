@@ -103,3 +103,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @4ff402dfc0; proof VALID (worktree checker); the stale rule as one server module; AC1 6 of 6 plants, AC2 95 covered rows 3 stale 92 not stale, AC3 default body 302 of 302</status>
