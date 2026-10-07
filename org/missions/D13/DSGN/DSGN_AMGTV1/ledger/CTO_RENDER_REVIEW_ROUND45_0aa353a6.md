@@ -45,3 +45,21 @@ the same turn. Everything else in the candidate stands as reviewed.
 - Two source labels start in lower case ("web search results ...", "the research pack ...").
 - ASML's passage has no `passage_table` (round-76 ruling 7 refuses that chart at the producer).
 - The filing table's true column set, for the Deliveries row.
+
+## ADDENDUM (2026-10-07 ~04:1xZ) -- the amended candidate 659104f4 is APPROVED for one DEV push
+
+`2.0.0_SA_COO~D` msg 30547. Captures read from `round45/walk/read-20261007T035152Z/`:
+- **`driver-once-BA-US.png` (amendment 1: met).**
+  - The header row 737 .. Total stands alone, with no figure under it.
+  - "Cumulative deliveries 8,528 1,573 1,303 1,727 1,110" and "Deliveries 396 (9) 1 32 (14) 26 73 528" are each one unaligned
+    line beneath it.
+  - The note and the filing cite follow.
+  - Nothing sits under "Total".
+- **`page-top-BA-US.png` (amendment 2: met).**
+  - The one-line description is directly under the BA US name card, above the key figures and the news timeline.
+  - There is one band on the page (the name card).
+  - The figures name their currency.
+  - A real news item reads on the page (Barron's, October 5th).
+
+**APPROVED for one DEV push of 659104f4**, which supersedes 0aa353a6. The producer-side items in the review above stay with
+AMGT_RESAPP.
