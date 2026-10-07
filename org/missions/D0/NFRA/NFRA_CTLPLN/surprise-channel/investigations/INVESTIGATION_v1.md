@@ -885,3 +885,54 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Read as: unset means no check and no change, because grading HEAD for a Dell on every unset deploy would newly refuse an unpublished HEAD (and a Dell with AGENTBUS_DEVICE unset) on paths that never refused before. So a Dell that deploys without naming its commit is not graded by this check, and the pre-push hook path (which does not set DEPLOY_COMMIT) is unchanged. Also: when DEPLOY_COMMIT IS set the device must resolve in the register, so an ON-TRUNK deploy from a box with AGENTBUS_DEVICE unset is refused (case 6 as written). If the issuer meant unset to grade HEAD, that is one line in each wrapper."
 }
 ```
+
+## NFRA_CTLPLN-W6-S1 -- The census calls AWS through .tools/aws.cmd, the Windows twin of the .tools/aws shim, beca
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T08:39:30Z",
+  "one_line": "The census calls AWS through .tools/aws.cmd, the Windows twin of the .tools/aws shim, because a native Python subprocess cannot execute the extensionless bash shim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python subprocess.run(['.tools/aws', ...]) from the worktree: FileNotFoundError [WinError 2] (the shim is a bash script); .tools/aws.cmd resolves the same real AWS CLI with the same default credential chain (sts get-caller-identity: user/Andrew_Berman)",
+      "infra/aws/terraform/shared-infra/tests/dell_fence_census.py, AWS constant: aws.cmd on Windows, the bash shim elsewhere",
+      "iam simulate-principal-policy takes the bucket policy as --resource-policy file://<path relative to the worktree root>; 48 evaluator calls all returned a decision, none errored"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-1 step 1: s3api list-buckets through the repo's .tools/aws shim.",
+  "world_is": "The shim is a bash script a native Python process cannot exec; the script uses its Windows twin aws.cmd (same CLI, same credentials), and passes the large resource-policy document by file. No boto3 was used."
+}
+```
+
+## NFRA_CTLPLN-W6-S2 -- The order's undeclared=<x> is ambiguous between 'a fence' and 'any live bucket policy'; th
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T08:39:40Z",
+  "one_line": "The order's undeclared=<x> is ambiguous between 'a fence' and 'any live bucket policy'; the census counts every live policy with no declaring .tf found: 2, and none of the 3 fences is among them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FENCE-CENSUS line: fenced=3 undeclared=2; the 2 undeclared are NO-FENCE policies on legacy firm buckets (CloudFront read grants), which only a data aws_s3_bucket_policy source reads under infra/aws/terraform/portal-auth/firm-bucket-cross-ref.tf:29-39 (no resource declares them)",
+      "the 3 fences are declared at shared-infra/s3-49financial.tf:122 and shared-infra/s3-lgic-firm-buckets.tf:142 (for_each over the scopes.json registry, so no firm token appears in that file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-1 step 4 and the last-line field undeclared: the .tf file and line that declares each bucket's policy, or UNDECLARED; the report lists every UNDECLARED fence.",
+  "world_is": "Counted as: a bucket with a live policy whose declaring aws_s3_bucket_policy resource is not found by the resolver (literal bucket, a local holding the literal, a for_each over the registry, or the two registry idioms). NO-POLICY buckets read 'n/a'. UNDECLARED fences = 0; each bucket's declaring file and line are in the saved JSON under its declared field."
+}
+```
