@@ -4786,6 +4786,30 @@
     "spec_asserts": "Row ETFS_RIVALS-Z-S67 and 1.0.0_SA_CTO~Z ruling msg 31309: before backfill day 1 the disarm owner states which check the backfill's guard uses and that its unit matches what the ledger records",
     "world_is": "The guard is check_points. Its unit, points requested, is an upper bound on records returned, so against a ceiling kept in returned records it refuses early and never late: 3,750 points draw at most 3,750 records. The mixed unit in the ledger's rows field stands as row Z-S67 says: after a backfill day the day's spent() is returned records plus requested points, an over-count. Not exercised: no market-range request has been sent, so 'at most one record per point' is read from the request's shape, not measured; day 1's log gives the measured ratio and this seat reports it",
     "notes": "Cites ETFS_RIVALS-Z-S67 (surfaced by 0.0.3_BG_BBGTerminal, filed by this seat at its ask, msgs 31332 and 31333). The hazard cannot fire before a backfill runs, and none runs before the deployed-stage read and a never-widen pair. No file under integrations/bloomberg is touched."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S69",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T21:34:06Z",
+    "one_line": "Production closes are dropped today: for 2026-09-29 every reader of gold security_market takes the 172-security object and ignores the 434-security one, so 413 closes of that day never reach the rankings or the charts",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live objects under s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/date=2026-09-29/ read 2026-10-07 ~21:3xZ: market-20260929-afcd903ad844.parquet 172 rows, 172 securities; market-20260929-53bc393958bd.parquet 434 rows, 434 securities, source blp_client.reference_data. Of the 434, 417 (security, date) pairs are not in the 172-row object and 413 of those carry px_close",
+        "revision.newest (data/etfs/scripts/rivalfunds/revision.py lines 101 to 118) picks one object per date; neither name carries a capture time, so the last tie-break, the name, decides: afcd sorts above 53bc. gold_holding_contribution._newest_by_date (lines 696 to 702) returns that one object to the rankings, the trend, the input census, the chart price series and the parsekey map",
+        "Reader census org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md @33e8bbe318: six row-reading call sites, each one object per date",
+        "Control, same read: date=2026-10-02 holds three objects of 601 rows each; the two ignored ones hold 0 pairs the winner lacks. So the loss is on one date of the five"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "PRD C-OWED-GRAIN (v0.19 G.4) and FWD-22 / FWD-23: a security's stored close for a day is on its chart and prices its contribution",
+    "world_is": "For 2026-09-29, 413 stored closes are not read by any product stage. Seen on the served page as a break in a chart's curve around 29 Sep where the security is not among the 172; in the rankings a holding with no market price that day is priced from the fund's own valuation (holding_implied) or not at all. How many of the 413 are securities on the page today, and whether any served ranking figure would move, was not measured. The date stays inside the 30-day window until 2026-10-29 and inside the 365-day chart for a year",
+    "notes": "ARMED and live: it is served now and has been since the charts deployed today (the rankings since round 14 or earlier). Not caused by today's deploys. Disarm: the readers' grain cell of round 25 (CTO ruling msg 31416: a date's rows are the union of all its objects, with a stated winner where two objects hold the same security and date), deployed and graded; it needs no rewrite of S3. No write of closes happens before that. Why two objects of one day differ by 262 securities (an early partial pull beside the full one) was not traced."
   }
 ]
 ```
