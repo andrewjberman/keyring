@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -14,7 +14,7 @@
 <workstream>~G</workstream>
 
 **Directive:** D14 | **Fabric:** laptop | **Decomp cell:** `BF-e-1` (`decompositions/LGIC_BLANKFIX_DECOMP.round2.md`) | **outcome_ref:** FWD-1, FWD-4 |
-**depends_on:** the ratified cadence vocabulary record (4.0.0_SA_CRO proposes, 1.0.0_SA_CTO ratifies); handed by AMENDMENT 1
+**depends_on:** none (the cadence rules are ratified: CTO msg 106260, record @646d8197fc; schema v1.16 @f701d5da50)
 
 ---
 
@@ -41,9 +41,26 @@ event pattern and no schedule. (b) Two rules that fire Monday to Friday (`bd-49f
 print a finished `FIX` ending `-daily`, because `grade()` takes the cadence word from the current NAME and never reads the
 schedule. The fix path and the cadence reader must be ONE reader.
 
-**THE WORDS.** The new cadence words, and the rule for a rule with no schedule, are a vocabulary decision made outside this order.
-They are written into this order as AMENDMENT 1 before it is handed to you, with the path of the ratified record. If this order
-reaches you with no AMENDMENT 1, stop and report.
+**THE RULES (AMENDMENT 1, 2.0.0_SA_COO~G, 2026-10-07).** Ratified by `1.0.0_SA_CTO` in
+`org/missions/D14/LGIC/LGIC_BLANKFIX/prd/E1_CADENCE_RULES_RATIFIED.md` @646d8197fc and written into
+`org/standards/NAMING_SCHEMA.json` v1.16, block `cadence` (@f701d5da50, by `4.0.0_SA_CRO`). Read both first. No new enumerated word.
+- **P1.** `daily` = fires at most once per calendar day on five or more days of the week (`cadence.daily_definition`). A weekday
+  restriction is a calendar and is never named. So `cron(30 22 ? * MON-FRI *)` and a `MON-SAT` cron give `daily`; once a day on
+  two to four days of the week gives no word. This CORRECTS defect (b) above: those two rules printing `-daily` are right. What
+  stands is the one-reader requirement.
+- **P2.** A fixed interval shorter than a day gives `{N}min` (N 1 to 59) or `{N}h` (N 2 to 23); 60 minutes is `hourly`, 24 hours
+  is `daily`. A reader accepts a word in `cadence.values` OR a token matching `cadence.interval_form.token_regex`. Read the regex
+  from the schema; do not type it. `interval_form.not_covered` lists what stays undecided.
+- **P3.** A rule with an event pattern and no schedule takes `{function}-on-{event}`; the token is decided PER RULE by a ruling,
+  never derived by you. One rule is ruled: `bd-49f-session-complete` (EVENT_RULE, `bd-49f-session-chain.tf`) has the complete
+  canonical name `blackdiamond-49f-runner-on-session-complete`. Keep ruled rows as DATA in a new file
+  `lib/opal_naming_event_rules.json` (`{"_about": ..., "rules": [{"name", "type", "canonical", "evidence"}]}`, evidence = the
+  ratified record's path) and read it; an event rule with no row there stays undecided with the basis "event rule: its
+  on-{event} token is not ruled".
+- **In `lib/opal_naming.py` you may edit ONLY the function `_cadence_slot` and the place the cadence vocabulary is loaded**, so
+  that the grader accepts an interval token exactly as the reader does (a name already ending `15min` grades with that cadence).
+  Another cell of this round edits other parts of that file: touch nothing else in it.
+- `verdict_for(row)` gains `"canonical"`: for a ruled event rule, the ruled complete name; otherwise `None`.
 
 **Build** in `lib/opal_naming_cadence.py`:
 1. `word_for(expression)` returns the ratified word for each period AMENDMENT 1 names, by the same exact-period rule as today.
@@ -80,6 +97,7 @@ every assertion behind it held and `ok=False` otherwise.
 
 - **Grant.** The paths block below plus your deliverables folder and this order's file.
 - **No edit outside the grant.** No AWS call, no network call, no `terraform` command, no registry edit, no rename of any resource.
+- A period the ratified rules do not name stays undecided and is LISTED; you add no word and edit no schema.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
   `LGIC_BLANKFIX-W1-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the test or
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not block.
@@ -87,6 +105,8 @@ every assertion behind it held and `ok=False` otherwise.
 <paths>
 lib/opal_naming_cadence.py
 lib/tests/test_opal_naming_cadence.py
+lib/opal_naming_event_rules.json
+lib/opal_naming.py
 org/missions/D14/LGIC/LGIC_BLANKFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
