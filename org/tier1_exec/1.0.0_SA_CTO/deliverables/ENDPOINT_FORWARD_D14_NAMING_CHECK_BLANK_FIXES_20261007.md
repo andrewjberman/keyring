@@ -78,9 +78,10 @@ seat proceeds to L3 and L4 on these lines; if he amends one, it is re-cut in pla
                     LGIC and none of it is handwritten aside from maybe this pass"
 
   FWD-8  A reader never meets a pattern from the code presented as if it were the name of a real thing
-         DONE WHEN  APPLIED -- patterns are shown as patterns in the list
+         DONE WHEN  EXERCISED -- the whole list read, and every pattern in it found shown as a pattern
          ACCEPT     a pattern with a blank meant to be filled in later is shown as a pattern, never as a
-                    broken name and never as a correct one
+                    broken name and never as a correct one; a reader going through the full list finds
+                    none presented either way
          SOURCE     brief O7; Part III O7
 
   FWD-9  The estate-wide naming check can be read as finished from one run that anyone can repeat

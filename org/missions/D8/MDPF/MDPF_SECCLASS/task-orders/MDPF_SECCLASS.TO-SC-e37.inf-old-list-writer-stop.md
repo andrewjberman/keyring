@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~27</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -125,3 +125,8 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: DECOMP_R8 @495efa3c32 cell SC-e-37; PRD v0.12 @87ad6d2e4c; CTO ruling 106036.
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 9 (2.0.0_SA_COO~M1, 2026-10-07 ~10:3xZ, on 1.0.0_SA_CTO~DELL1 msg 160)
+
+`<status>` superseded: carried to round 9: served on branch wk-MDPF_SECCLASS-27 (code 6a996787eb, half 0df2fe8a87, proof 48d2d65404 VALID there); classify_assets.py has no caller and no S3 copy, and its stop waits with SC-e-35/36 for the reader switches.
+The round-8 drain-end read is `deliverables/2.0.0_SA_COO~M1/DRAIN_END_R8_20261007.md` @572829ce3b. Gate limb: none graded this modification.

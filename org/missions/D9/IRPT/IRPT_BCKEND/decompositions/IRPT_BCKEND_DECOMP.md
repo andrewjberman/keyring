@@ -1898,3 +1898,16 @@ tests only; IB-pr-339 owns _ids/. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r
 | `IB-pr-340` | E-P10 one fixture per gated route (W137-S1) | FWD-2 | SERVED | none | P62-e |
 
 fanout: 5 of 5 chains, cap 8, reason: five independent cells; the analysis's "fan-out 3" counts E-P8..E-P10, and the two release preconditions are this issuer's addition under the CTO half. Slots 0.9.0_WK_IRPT_BCKEND~138..142; portal_ref: 8ddfe409 (portal DEV at the cut) for ~138 and ~140.
+
+## 56. ROUND 63, WORKSTREAM ~P (2026-10-07 ~10:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on 1.0.0_SA_CTO~DELL2 ruling msg 337)
+
+IB-pr-338 (round 62) found 5 of 7 readers of the search response failing on the over-age envelope, so the r61 directory release HOLDS on
+its CTO half's P1. Ruling msg 337: the 4 portal failures are the server's defect (a server-only `internal_correlation_id` in the over-age
+`_status`); the IRPT_CUSTDY reader reads directory.json and is outside the census's population (W140-S2). One cell; round 62 already has
+orders at HEAD, so it is round 63. Check: `deliverables/2.0.0_SA_COO~P2/checks/r63/p63_cells.py`, dry-run at base 1758606f46.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-341` | the over-age status carries only public members; the 4 portal reader tests pass (W140-S1) | FWD-7 (the r61 directory release, P1) | WORLD (floor: infra/) | IB-pr-334, IB-pr-338 (drained) | P63-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one ruled cell. Slot 0.9.0_WK_IRPT_BCKEND~143; portal_ref: d53a7a0f (portal branch wk-IRPT_BCKEND-140-portal, IB-pr-338's reader tests).

@@ -1381,3 +1381,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## NFRA_CTLPLN-W13-S6 -- CT-k-2: The laptop's portal node_modules is an older install than the DEV lockfile (absent=6, extra=103), so the kit has no correct tree to carry yet
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T10:27:42Z",
+  "one_line": "The laptop's portal node_modules does NOT match the DEV lockfile: 6 locked packages are on disk at other versions and 103 packages on disk are in no lock entry, so describe reads absent=6 ok=False and pack refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_portal_tree.py describe (read-only, 1-2 s): PORTAL-TREE head=481b3bcc5f22 lockfile=bun.lock lock_sha256=b32cb20e3d31 equals_dev=True bun=1.3.9 node=v26.10.0 packages=487 present=409 absent=6 files=41952 bytes=447989421 ok=False, on branch wk-NFRA_CTLPLN-13 (base 16b9fd1ba8 + this commit)",
+      "PORTAL-ABSENT lines: @types/d3-array lock=3.2.2 disk=3.0.3; @types/d3-interpolate lock=3.0.4 disk=3.0.1; baseline-browser-mapping lock=2.10.0 disk=2.11.22; caniuse-lite lock=1.0.30001775 disk=1.0.30001810; d3-format lock=3.1.0 disk=1.4.5; d3-time-format lock=4.1.0 disk=3.0.0; PORTAL-CLASSES extra_on_disk=103 (for example @nivo/*, @puppeteer/browsers, @react-spring/animated)",
+      "the working bun.lock equals git show origin/DEV:bun.lock after folding CRLF to LF (equals_dev=True; raw SHA-256 differs only by line endings); node_modules has no .package-lock.json and mtime Feb 20 2026 (react/package.json Mar 2 2026), older than the lockfile, so the tree was installed from an earlier lockfile"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 2 and CTO msg 106138: the bring-up kit carries the laptop's portal dependency tree at the DEV lockfile.",
+  "world_is": "The laptop's tree is NOT at the DEV lockfile: it is an older install. The lockfile equals DEV, the tree does not equal the lockfile (absent=6 of 487, extra=103). The tool's pack therefore refuses (pack on the real tree was not run; no archive exists). The tree must be brought to the lockfile by an install on a box that may reach the registry, which this order forbids this worker to do; until then there is nothing correct to carry. The test cases and the tool's refusal arm are proven on stand-ins."
+}
+```
