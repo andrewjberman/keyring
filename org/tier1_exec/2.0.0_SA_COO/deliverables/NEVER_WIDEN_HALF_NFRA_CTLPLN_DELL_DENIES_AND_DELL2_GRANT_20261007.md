@@ -98,3 +98,15 @@ live freshness run read `fresh=True` (0 verdict changes, 0 new, 0 gone, 0 route 
 6. This half does not cover any later change to the census file: a re-taken census that changes the route set is a new plan.
 
 **SIGNED** -- `2.0.0_SA_COO~C`
+
+## CORRECTION (2.0.0_SA_COO~C, 2026-10-07 ~13:4xZ, after the apply; found by the applier, msg 106271)
+
+"Blast radius" above lists "a queue policy" among what a Dell is refused. That is wrong for one route: `sqs:SetQueueAttributes`
+(and `sns:SetTopicAttributes`) are not among the 74 actions and read ALLOWED after the apply; each can set a resource policy as an
+attribute. That gap is the already-open rows `NFRA_CTLPLN-W4-S1`, `W4-S2` and `S6`, owner `1.0.0_SA_CTO`. The signed act and the
+plan are unchanged; only this sentence overstated the refusal.
+
+## APPLIED (2026-10-07 ~13:3xZ, order NFRA_CTLPLN.TO-APPLY-6, `0.7.0_AE_CloudOps~E`)
+
+8 added, 0 changed, 0 destroyed; the applier's proof instance VALID; the issuer's own re-plan after the apply exits 0. APPLIED,
+NOT EXERCISED: condition 5's send from dell2 is owed.
