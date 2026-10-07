@@ -3252,3 +3252,30 @@ row AMGT_HARVST-Z-S96's cut names; one suffix list in place of two.
 - `bd-1` AC1 (`pytest lib/research/harvest/tests/test_bd1_gold_brands_and_anchor.py`) base: FAIL as expected (the test is absent).
 - `bd-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bd1_census.out`) base: FAIL as expected (no such file).
 - `bd-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (380 passed).
+
+## 72. ROUND 58 -- the list repair the rebuild #8 dry run asked for (`1.0.0_SA_CTO~Z` msg 31008), 2026-10-07 ~14:0xZ
+
+Round 57's order is terminal (`bd-1` merged @088d226de5). Row AMGT_HARVST-Z-S99: the served gold was built from the 212-name
+file `round33/securities.universe.r33.json`, not from `build()`. Msg 30924: one rebuild is still wanted, after a signing dry
+run. The dry run (`deliverables/2.0.0_SA_COO_H/round57/GOLD_REBUILD8_SIGNING_READ.md` @b787ec1026, PUTS 0) STOPS the rebuild as
+the list stands: 140 served pairs lost over 5 securities (a decorated pool name wins over the legal name), Air Liquide +3,543
+pairs on the exact-case ticker form `AI`, 43 new ticker forms unread. Msg 31008 rules the repair.
+
+Issuer `2.0.0_SA_COO~H`. Series **`be`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-be-1` | `be-1` | **The identity legal name is always an alias and never replaced; a pool name with a ticker or exchange tail is not an alias; `AI` is refused as a ticker form.** One stated decorated-name rule with its mutant; a list comparison against the served file and the round-57 list (served aliases missing before and after, the six named securities, pool names refused and kept, new ticker forms). No silver read, no gold build. | LOCAL | worker ~107 |
+
+**The close run (issuer, after `be-1` merges):** the signing dry run re-run on the repaired list, extended as msg 31008 rules:
+pairs gained per NEW ticker form; 0 pairs lost; every gained pair assigned to one cause (a new security, a new alias, silver
+growth) summing to the total; then a sample of 30 pairs from the largest non-silver-growth gainers for `3.0.0_SA_CVO~Z` (bar
+29 of 30); then the rebuild's never-widen pair.
+
+**This round reverses a ruling of this seat:** `bc-1`'s "the pool's own name wins over the identity record" (section 70).
+
+**Checks dry-run at the base before the cut:**
+- `be-1` AC1 (`pytest lib/research/harvest/tests/test_be1_legal_name_always.py`) base: FAIL as expected (the test is absent).
+- `be-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out`) base: FAIL as expected (no such file).
+- `be-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (397 passed).
