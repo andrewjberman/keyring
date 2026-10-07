@@ -8112,7 +8112,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
     "spec_asserts": "Order IB-rti-3 (e) and the issuer's amendment: a principal exists that is not on the live exemption list and whose IAM already grants ListBucket/HeadObject reaching the target bucket, e.g. a role of a different firm.",
     "world_is": "No such assumable identity exists. Roles that would hold the grant (e.g. opal-news-lambda-role, AmazonS3ReadOnlyAccess) have trust the seat cannot meet; roles the seat can assume hold no s3 List grant on either bucket. Both live policies are the single DenyForeignFirmPrincipals statement (no Allow), so an identity with no grant of its own would be denied by IAM, not by the fence: an un-attributable control. Non-verdict; L4 left OPEN.",
     "notes": "Owner 1.0.0_SA_CTO: a discriminating L4 needs a grant the CTO chooses to create; this cell created and widened nothing."
-  }
+  },
+{
+  "id": "IRPT_BCKEND-W141-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~141",
+  "surfaced_at": "2026-10-07T09:59:42Z",
+  "one_line": "The script that wrote custodian_key_seam.json (_written_by 0.9.0_WK_IRPT_BCKEND~1 / IB-rte-6, @47f21dab95) is not in the repo; the only IB-rte-6 script, rte6_package_deploy.py, merely packages the file (EXTRA_MEMBERS).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show --stat 47f21dab95: seam json added as data, with rte6_package_deploy.py which only zips it (line 70 EXTRA_MEMBERS, line 118 zf.writestr)",
+      "git grep custodian_key_seam HEAD -- '*.py': no script writing the file (no json.dump to it)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-IB-pr-339 item 4: the seam's writer script may be in the repo.",
+  "world_is": "MEASURED: not in repo; a regeneration would need a new writer that omits null schwab_account_id rows instead of stringifying them."
+}
 ]
 ```
 
@@ -19086,5 +19106,59 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "A function's source-map deploy record names the commit whose bytes are running.",
   "world_is": "The refresh function runs a handler.py older than its recorded deploy commit. The round-61 directory release packet names the UIR-07 riders for the CTO half and corrects the record at its close."
+}
+```
+
+## IRPT_BCKEND-S358 -- the staged intake/parse.py defaults to <package>/fixtures/holdings/security_mapping.json, which irpt-ycharts-generate does not package
+
+```json
+{
+  "id": "IRPT_BCKEND-S358",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-07T09:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-ycharts-generate packages infra/aws/lambda/investor-reporting/intake/parse.py as parse.py (a staged_from row). At :423 it defaults a missing path to os.path.join(_HERE, 'fixtures', 'holdings', 'security_mapping.json'). The function's files[] packages no fixtures/holdings member, so any call that leaves path unset raises at runtime inside the Lambda.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake/parse.py:423 at dell2 CLOUD fa9d12daa1: path = path or os.path.join(_HERE, 'fixtures', 'holdings', 'security_mapping.json')",
+      "lambda-source-map.json row irpt-ycharts-generate: 114 files[] (14 under fixtures/har, 0 under fixtures/holdings), 84 staged_from; parse.py is staged from intake/parse.py",
+      "found by the E-Y4 trace (deliverables/2.0.0_SA_COO~Y2/R62_checks/check_624_fixtures_dropped.py, first cut, token 'fixtures')"
+    ]
+  },
+  "spec_asserts": "Every path a packaged module opens at runtime is packaged with it.",
+  "world_is": "UNMEASURED whether any runtime caller in irpt-ycharts-generate leaves parse.py's path unset; the default names a file the package lacks. Not exercised; the mechanism only."
+}
+```
+
+## IRPT_BCKEND-S359 -- DISARM of W127-S1: the adapter builds past the parity gate (IB-pr-332)
+
+```json
+{
+  "id": "IRPT_BCKEND-S359",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T09:46:49Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-W127-S1 (OBSERVATION, ARMED; E-P11 of the round-61 analysis @aae1ed7781): irpt-performance-adapter builds -- IB-pr-332 moved its three build-only modules to performance/build_tools and BUILD_ONLY passes the ADHC_DRIFTD.002 parity gate (drained @52d6068f97; issuer re-ran IB61-4-AC1 PASS, zip sha256 EpkkyyOMDNostsu2L1d+goYZBdH/Pmr3RV1A6EucTks=).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain @52d6068f97 (IRPT_BCKEND.TO-IB-pr-332, worker 0.9.0_WK_IRPT_BCKEND~135), proof instance VALID",
+      "issuer re-run 2026-10-07 ~09:1xZ in the worktree: python p61_cells.py . IB61-4-AC1 -> 'OK: BUILD_ONLY: .../lambda-artifact-irpt-performance-adapter.zip sha256=EpkkyyOM..' then 'IB61-4-AC1 PASS'",
+      "drain hygiene on merged CLOUD: performance suite 252 passed; py_compile of performance/build_tools/*.py OK"
+    ]
+  },
+  "dismissal_reason": "W127-S1's disarm condition ('disarms when the parity gate passes a build of the adapter') is met by that build.",
+  "spec_asserts": "IRPT_BCKEND-W127-S1 (ARMED): irpt-performance-adapter cannot be built; the parity gate refuses three unregistered source_dir files.",
+  "world_is": "MEASURED: the adapter builds past the parity gate at CLOUD after 52d6068f97. Nothing is deployed by this."
 }
 ```

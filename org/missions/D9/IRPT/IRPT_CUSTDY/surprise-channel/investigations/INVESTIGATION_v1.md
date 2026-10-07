@@ -263,3 +263,28 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "482 of 7022 distinct granted accounts (31 of 190 advisors) are refused by the projection because the bundled seam file maps their custodian key to the string 'None' (the cross-reference has no Schwab id for them: 826 null rows of 6202). CU-b-1 counts them as UNCOVERED / PROJECTION_REFUSED and no longer raises; those advisors stay ineligible. The durable fix is in IRPT_BCKEND's files (omit null-mapped keys from the seam artifact, and guard the string in projection_with_seam so the account is returned raw and graded UNPROJECTED-ID rather than refused); CU-b-1 edits neither."
 }
 ```
+
+## IRPT_CUSTDY-S6 -- S4's FILE landed: returns gold present for 2026-09-30 (6854 accounts); figures need a second laptop FILE
+
+```json
+{
+  "id": "IRPT_CUSTDY-S6",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T09:56:00Z",
+  "one_line": "S4's laptop FILE landed: the 2026-09-30 returns-gold partition is present with 6854 rows and 6854 distinct accounts, but the FILE carries presence only, not figures, so round-3 E2 is graded from a second laptop-run FILE that holds the figures.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_CUSTDY/IRPT_CUSTDY_returns_gold_20260930.json @ef5ea44568 (laptop 3.0.0_SA_CVO; relayed by 0.0.0_AB_MSTR~DELL2 msg 286): uri s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-30, read_at 2026-10-07T09:30:48Z, objects 2 (data.parquet rows 6854, 19 columns, account_column account_id; manifest.json), distinct_accounts 6854, error null",
+      "the probe (read_returns_gold_partition.py @b97c663aa9) reads counts and column names only, by design"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 analysis @10e64fe9df gate 'S4 FILE lands' -> E2: hop 3 on the real returns, graded from the FILE (QTD, YTD, 1Y at 2026-09-30; SI held; each figure names its rows).",
+  "world_is": "The gate opened, and the returns data hop 3 needs exists for the as-of. The figures themselves must be computed where the firm bucket is readable: E2 is cut as a read-only wrapper the laptop runs (the standing rule, msg 213), writing the chosen advisor's client-report documents to a FILE that is then graded. S4 stays open until that FILE lands."
+}
+```

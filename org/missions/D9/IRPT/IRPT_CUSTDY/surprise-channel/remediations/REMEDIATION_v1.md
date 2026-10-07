@@ -25,11 +25,11 @@ leaves a PRD text and a registry row with the CTO. W4-S1 is a contract question 
   "owner": "2.0.0_SA_COO~K2",
   "round": "v2",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v2"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-W1-S1",

@@ -1347,3 +1347,37 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "no_lock=5 of 15. The order's pack covers locked providers only (1 version); the five NO-LOCK roots need aws 5.x, aws 6.x and archive 2.x. This worker added an off-order flag, pack --include-unlocked, which adds the highest on-box version satisfying each declared constraint; without it the Dell cannot init those roots from the mirror. The flag is opt-in and the test suite does not depend on it."
 }
 ```
+
+## NFRA_CTLPLN-S12 -- shared-infra's .terraform pointed at a deleted Desktop tree belonging to another root
+
+```json
+{
+  "id": "NFRA_CTLPLN-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-07T10:12Z",
+  "one_line": "The shared tree's shared-infra Terraform root carried a .terraform/plugin_path pointing at a DELETED directory on the Desktop belonging to a DIFFERENT root, which is why its .terraform/providers was empty and why a plan of it could not run without an init.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "Already corrected as a side effect of a required act, not left for anyone: the TO-APPLY-4 init (-plugin-dir=C:/Users/AndrewBerman/.terraform.d/plugin-cache) rewrote plugin_path to the local cache. No owner is owed an act for THIS root. Named here because the CAUSE -- a -plugin-dir init in one session persisting an absolute foreign path into a shared-tree root's untracked metadata -- is not specific to this root and has no owner.",
+  "spec_asserts": "The order's context says a read-only plan from the issuer's session 'stopped at \"Backend initialization required\"' and makes the executor's first read 'whether terraform init of this root needs a provider that is not already on this box', with a provider FETCH from the registry as a STOP. That framing treats the root's local state as merely un-initialised.",
+  "world_is": "It was not merely un-initialised; it was initialised AGAINST A FOREIGN TREE. infra/aws/terraform/shared-infra/.terraform/plugin_path (dated 2026-09-25) contained exactly [\"C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923/infra/aws/terraform/investor-reporting/performance/.terraform/providers\"] -- a path that (a) is outside this workspace, (b) belongs to the investor-reporting/performance root rather than shared-infra, and (c) NO LONGER EXISTS on disk. So .terraform/providers was empty and the provider had to come from somewhere. The STOP did NOT fire: the lock pins hashicorp/aws 5.100.0 and the local plugin cache holds exactly that version (terraform-provider-aws_v5.100.0_x5.exe), so init was run with registry installation DISABLED via -plugin-dir and reported 'Using hashicorp/aws v5.100.0 from the shared cache directory', rc=0, with no fetch. Separately, the 'Backend initialization required' message was a STRUCTURE mismatch, not a wrong backend: the on-disk record's bucket/key/region (opal-313476888478-terraform-state / shared-infra/tfstate / us-east-1) are identical to the declared block at main.tf:11-15, so -reconfigure re-pointed at the SAME state, and the control on that was `state list` returning 252 resources including all three fence policies. Census after the fix: 1 plugin_path file exists across infra/aws/terraform (denominator printed), and 0 now carry a foreign Desktop path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cat infra/aws/terraform/shared-infra/.terraform/plugin_path BEFORE the init, 2026-10-07 ~10:0xZ: the single foreign entry quoted in world_is; file mtime 2026-09-25 19:37",
+      "test -d on that path: ABSENT -- the Desktop tree irpt-smoke-p-backend-20260923 no longer exists, so the pointer was dangling",
+      "ls infra/aws/terraform/shared-infra/.terraform/ BEFORE: modules, plugin_path, terraform.tfstate -- NO providers directory; find .../.terraform/providers returned nothing",
+      "infra/aws/terraform/shared-infra/.terraform.lock.hcl: hashicorp/aws version 5.100.0, constraints ~> 5.0",
+      "ls C:/Users/AndrewBerman/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/aws/5.100.0/windows_amd64/: terraform-provider-aws_v5.100.0_x5.exe present (718820352 B); cache also holds 6.67.0",
+      "terraform -chdir=infra/aws/terraform/shared-infra init -input=false -no-color -reconfigure -plugin-dir=C:/Users/AndrewBerman/.terraform.d/plugin-cache -> 'Successfully configured the backend \"s3\"!', 'Reusing previous version of hashicorp/aws from the dependency lock file', 'Using hashicorp/aws v5.100.0 from the shared cache directory', rc=0",
+      "cat plugin_path AFTER the init: [\"C:/Users/AndrewBerman/.terraform.d/plugin-cache\"]; ls .terraform/ now also shows providers",
+      "terraform state list after the init: 252 resources, including aws_s3_bucket_policy.opal_data_49financial, aws_s3_bucket_policy.lgic_firm[\"cottonwood\"] and aws_s3_bucket_policy.lgic_firm[\"inflection\"] -- the control proving -reconfigure did not re-point the state",
+      "python -c over infra/aws/terraform: 1 plugin_path file scanned, 0 carrying a foreign Desktop path, after the fix"
+    ]
+  },
+  "notes": "Filed under CLAUDE.md section 2 (append a row and keep working, do not halt to investigate). It is NOT the reason TO-APPLY-4 stopped -- that was the cottonwood rider, reported to 2.0.0_SA_COO~C at ~10:0xZ and recorded at commit 54295756ad. Checked against the channel before filing: existing rows discuss the plugin CACHE and a provider kit for the Dells (around lines 128, 154, 1322, 1342), but none names a dangling foreign plugin_path in a shared-tree root, so this is not a re-file of an owned class. Disposition left UNDER_INVESTIGATION because terminating a row is the CVO's act, not this seat's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

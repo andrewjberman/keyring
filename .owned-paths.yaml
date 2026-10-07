@@ -1547,7 +1547,7 @@ paths:
     lane: IRPT_RESIDENT_ONE_WRITER_G2
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py":
-    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    lane: IRPT_RESIDENT_ONE_WRITER_G2
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/ycharts/generate/transport.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
@@ -1586,7 +1586,7 @@ paths:
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/tests/test_security_resolution.py":
-    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    lane: IRPT_RESIDENT_ONE_WRITER_G2
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/tests/test_template_reader.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
