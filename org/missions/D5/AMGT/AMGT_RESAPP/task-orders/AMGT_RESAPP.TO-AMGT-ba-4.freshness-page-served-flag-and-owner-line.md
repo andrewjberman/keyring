@@ -118,3 +118,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @fb793b7a71; proof VALID (worktree checker); the /freshness page draws the served stale flag and keyed date, drops a column no name has, the owner line and out-of-date sentence; portal candidate 504ddb3d on 13509c52 (branch resapp-r77-ba4-freshness, LOCAL); AC1 17 tests, AC2 5 of 5; AC3 is the CTO's render review</status>
