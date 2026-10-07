@@ -2665,3 +2665,56 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
 }
 ```
+
+## MDPF_SECCLASS-W21-S1 -- after the module edit the seed run only strips low_confidence and re-attributes 15 rows; it moves no class
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:15:07Z",
+  "one_line": "With the module edited, the seed script's own --dry-run plans 15 of 197 writes, all inside the remap set's 15 low_confidence keys, and each differs from the live row ONLY in low_confidence (True -> absent) and updated_by (mdpf-secclass-remap-b -> seed-script): the seed run no longer moves any class or sub-class, it only strips the flag and re-attributes the row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/v2_portal/yang_pipeline/seed-etf-classifications.py --dry-run: rows to write 15 of 197, rows already correct 182, PRESERVED 1 (VNQ management_style)",
+      "scratch plan reusing the seed script's merge_item and item_differs over a consistent scan of etf-classifications (3,507 rows) at 2026-10-07T08:1xZ: per-key diffs = low_confidence and updated_by only, 15 of 15; ABALX AOR VTHRX VWELX VWENX not written"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e21 step 6 and the CTO's condition 1: a seed run follows the module edit, and the half request names what it writes beyond the 20 keys.",
+  "world_is": "The seed run writes 0 keys beyond the 20 and 15 of the 20; it changes no class or sub-class. Its only effects are dropping low_confidence on the 15 keys and rewriting updated_by to seed-script. The half request states this and leaves to the CTO whether the run is needed at all (the module edit alone makes any future seed plan read 0 CONFLICT).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). The seed script and the check were not edited."
+}
+```
+
+## MDPF_SECCLASS-W21-S2 -- the commit gate refuses the two .py files on this box (ruff 0.16.10 vs the 0.15.11 pin); the edits are uncommitted
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:20:52Z",
+  "one_line": "The commit gate refuses the two .py files this order edits on this box because ruff here is 0.16.10 and the gate pins 0.15.11; the same 22 (etf_classification.py) and 4 (test_seed_fields.py) errors read on the BASE b07521c5dd copies, none on a line this order touched, so the module and test edits cannot be committed and stay in the worktree.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -> 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/_shared/etf_classification.py' (Found 22 errors, UP045/UP006 annotation rules, e.g. line 1452 Optional[str])",
+      "python -m ruff --version -> ruff 0.16.10; .tools/commit-gate.sh header and CLAUDE.md pin 0.15.11; the gate runs `ruff check --target-version py39 --extend-select FA` (.tools/commit_gate_runner.py:146)",
+      "git show b07521c5dd:<file> through the same ruff command -> 22 errors on the module, 4 on test_seed_fields.py at base: pre-existing, not introduced by this order"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A worker commits its edits to its branch with safe-commit.sh and the universal commit-gate (CLAUDE.md rule 14); the gate is pinned ruff==0.15.11.",
+  "world_is": "This box has ruff 0.16.10, which flags the module's typing.Dict/Optional annotations and the test's lines 32, 66, 83, 86. AC1 and AC2 pass on the working tree; the .py edits are uncommitted. The worker did not bypass the gate, did not install another ruff (egress), and did not fix the 26 annotation errors (outside the order's paths intent: 'no other dict'). The half request and this row are committed (non-.py).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Unblock: run the commit from a box with ruff 0.15.11, or the issuer's ruling to commit with the pinned ruff in a scratch environment."
+}
+```
