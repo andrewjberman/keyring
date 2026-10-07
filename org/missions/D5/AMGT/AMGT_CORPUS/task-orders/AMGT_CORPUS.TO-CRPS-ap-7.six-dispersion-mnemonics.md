@@ -143,19 +143,23 @@ file under the directory `RIVALFUNDS_BBG_BUDGET_DIR` names, returns False on a w
 Measured on the 2026-10-07 fire: 768 calls, 13,824 security-field requests, 66,879 returned figures.
 
 **Do, and only this, in `model_block_pull.py` (plus one new test file):**
-1. Add `record_fire_budget(calls, security_fields, figures, stamp)` (keyword arguments, whole numbers and the fire's stamp). It
+1. Add `record_fire_budget(calls, security_fields, figures, records, stamp)` (keyword arguments, whole numbers and the fire's
+   stamp). It
    loads `bbg_budget.py` BY PATH from the repository this file sits in (the way this module already loads `build_unit_map.py`:
    `_load_build_unit_map`), and appends ONE line: `mode` = `amgt-model-block`; `rows` = `figures` (the largest of the three, the
    CTO's ruling until the daily collector's unit is named); `batch_id` =
-   `amgt-model-block:<stamp>:calls=<c>:security_fields=<s>:figures=<f>:rows_unit=returned-figures`. It returns what `record`
+   `amgt-model-block:<stamp>:calls=<c>:security_fields=<s>:figures=<f>:records=<r>:rows_unit=returned-figures`. It returns what `record`
    returns. It never raises: a missing module, an unreadable path or a failed write returns False. A fire is never blocked or
    failed by bookkeeping, and the fire's rc does not change.
 2. Call it ONCE at the end of a real (non dry-run) `cmd_refresh` and ONCE at the end of a real `cmd_admit` that pulled at least
    one name, with: `calls` = the run's own Bloomberg call count (the number its summary line already prints);
    `security_fields` = names pulled x (`len(HEADER_FIELDS)` + `len(HIST_FIELDS)` + `len(FORECAST_FIELDS)` x
    `len(FORECAST_OVERRIDES)`); `figures` = the count of figures in the blocks the run derived (sum of each derived block's
-   figures; 0 when none derived). A dry run records nothing. Print one line after it: `budget_record amgt-model-block rows <n>
-   written <0|1>`.
+   figures; 0 when none derived); `records` = the RETURNED RECORDS, the ledger's own unit (ruled, msg 31310: the daily
+   collector records returned data rows): one per security row a reference request returns (the header call and each forecast
+   override call) plus one per dated row each history request returns, counted from the responses the run actually received,
+   never estimated. A dry run records nothing. Print one line after it: `budget_record amgt-model-block rows <n>
+   records <r> calls <c> security_fields <s> written <0|1>`.
 3. Add `integrations/bloomberg/research/tests/test_fire_budget_record_round40.py`: offline, with `RIVALFUNDS_BBG_BUDGET_DIR` set
    to a temp directory: the helper writes the one line; an unwritable directory returns False and raises nothing; a dry-run
    refresh over a stub writes no line; a real refresh over a stub client writes exactly one line whose three numbers equal the
