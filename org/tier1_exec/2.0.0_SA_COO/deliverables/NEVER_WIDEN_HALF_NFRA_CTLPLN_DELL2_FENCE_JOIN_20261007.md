@@ -117,3 +117,44 @@ policy is next applied, which the CTO ruled happens once, carrying both the ride
 rider's own project. Until then dell2 stays fenced out of the cottonwood bucket. **Rollback** is as stated above, for two buckets.
 
 **SIGNED (amended)** -- `2.0.0_SA_COO~C`
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~11:2xZ) -- the cottonwood fence: ONE apply carrying the dell2 principal and ADVI_COTBKF's three statements
+
+**Who cuts it, and on whose word.** `1.0.0_SA_CTO` ruled (msg 106172; its half's AMENDMENT 2 @2714b7df72) that this seat cuts the
+cottonwood apply as NFRA_CTLPLN's third fence. Andrew-direct ~06:1xZ keeps this seat "only ... focused on this work, not cottonwood
+backfill project"; this seat put that question to the CTO rather than decide it (msg 106171), and the CTO's answer is stated by the
+CTO as its own READING of his word. This seat acts on that ruling and on nothing wider: it writes no ADVI_COTBKF artifact, rules
+nothing of that project and cuts no ADVI_COTBKF order. If Andrew reads his word more narrowly, the alternative the CTO names stands
+(a dell2-issued order to a laptop cloud-operations lane) and this amendment is withdrawn.
+
+**What this half covers, and what it does not.** It covers ONE line of the cottonwood bucket policy's change: the dell2 principal
+added to `DenyForeignFirmPrincipals`' admitted list (the registry row landed @e7ac51a04c). The three Deny statements on the restricted
+prefix that ride the same in-place update are ADVI_COTBKF's, and are covered by that project's own pair -- `2.0.0_SA_COO~C2`
+@c65cf8604d and `1.0.0_SA_CTO~DELL2` @87d7642a72 -- NOT by this half. This seat has not read those three statements for correctness
+and does not sign for them.
+
+**The plan as already measured** (`0.7.0_AE_CloudOps~E` msg 106147, the three-target plan it stopped on): the cottonwood policy's
+diff is the dell2 principal plus three whole statements, `DenyRestrictedReadExceptReaders`, `DenyRestrictedListExceptReaders`,
+`DenyRestrictedWriteExceptBreakglass`. That read is the basis; the applier re-plans.
+
+**This half binds on:**
+1. The targeted plan (`aws_s3_bucket_policy.lgic_firm["cottonwood"]` alone) reads exactly ONE resource updated in place, 0 to add,
+   0 to destroy; its diff is the one dell2 principal and those three statements by Sid, and nothing else. A role, role-policy or any
+   other resource line: apply nothing.
+2. The apply does NOT run until all four halves that bear on it are in force on the trunk the applier reads: this half and the CTO
+   half's AMENDMENT 2 (the dell2 line); and ADVI_COTBKF's pair for the three statements, with `1.0.0_SA_CTO~DELL2`'s half AMENDED to
+   name the dell2 principal line (as written it is conditional on "plan changes no other row", which this plan does not meet).
+3. The prior cottonwood policy document saved and named in the ledger entry before the apply (S3 keeps no prior version). Rollback of
+   THIS half's line: the CRO removes the cottonwood row and the same targeted apply runs again. Rollback of the three statements is
+   ADVI_COTBKF's pair's to state.
+4. Read-back for THIS half's line, LIVE: the live policy equals the prior document plus the dell2 principal plus the three statements
+   (parsed comparison); by the simulator with the LIVE policy, dell2 is `allowed` on `s3:GetObject` for an object OUTSIDE the
+   restricted prefix; dell1 is not allowed on the bucket; one unlisted, previously refused principal is still refused. The arms ON
+   the restricted prefix are ADVI_COTBKF's pair's conditions and are run and reported under them.
+5. The census after the apply reads `gap_dell2=0`, `dell2_admitted=24/24`, `dell1_admitted` unchanged at 21/24.
+
+**A consequence named so it is not a surprise:** after this apply the laptop's own identity (`user/Andrew_Berman`, the identity every
+laptop seat applies and reads with) is refused read, list and put on the restricted prefix, by ADVI_COTBKF's statements. That is that
+project's stated intent (the CTO half's condition 3). A laptop seat that reads that prefix today will be refused afterwards.
+
+**SIGNED (amendment 2)** -- `2.0.0_SA_COO~C`
