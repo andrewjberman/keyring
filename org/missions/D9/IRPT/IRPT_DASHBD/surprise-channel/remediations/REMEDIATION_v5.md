@@ -27,11 +27,11 @@ Round label v15 = the round after the last one compiled here (rounds 12-14), per
     "owner": "2.0.0_SA_COO~P",
     "round": "v15",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v15"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_DASHBD-S24",
@@ -71,11 +71,11 @@ Round label v15 = the round after the last one compiled here (rounds 12-14), per
     "owner": "2.0.0_SA_COO~P",
     "round": "v15",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v15"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

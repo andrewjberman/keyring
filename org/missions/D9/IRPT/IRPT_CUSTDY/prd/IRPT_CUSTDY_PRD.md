@@ -5,7 +5,7 @@
  "project": "IRPT_CUSTDY",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.2",
+ "prd_version": "v0.3",
  "step": 4,
  "brief_ref": "docs/briefs/q1-custodial-investor-reporting-programme-brief-20261006.md@b714dd81b1",
  "endpoint_outcomes": [
@@ -124,10 +124,11 @@ dated comparisons written and the switch-off view read.
 
 FWD-1 is round 1's one journey: one named 49 Financial advisor's quarter-end reports for 2026-09-30, every hop real.
 
-1. **The advisor and the client list.** One 49 Financial advisor is named; that advisor's accounts and households are read
-   from the identity registry (`infra/logic/registry/scopes.json`, masters `08242234` and `08335338`) and the IRPT_BCKEND
-   directory (`data/assets/scripts/gold/investor_reporting/directory_runner.py`, served by `irpt-directory-search`). Output:
-   the account and household list the run covers, its count printed.
+1. **The advisor and the client list.** One 49 Financial advisor is named. That advisor's accounts and households are read
+   from the firm's advisor-ownership map (row W1-S1: a directory entry carries no advisor). The map's address is builder
+   output once its naming-registry row lands; until then the read is routed under laptop decision 106087. The IRPT_BCKEND
+   directory (`directory_runner.py`, `irpt-directory-search`) supplies only names and households for the accounts the map
+   assigns. Output: the account and household list the run covers, its count printed.
 2. **Schwab's records for those accounts.** Positions, balances, transactions and realized lots for the quarter are read
    from Schwab silver under `opal-data-assets/schwab/<master>/` (producer `data/assets/scripts/silver/schwab_conversion.py`),
    never from Black Diamond. Output: per account, the custodian rows for 2025-09-30 to 2026-09-30 (the longest standard period
@@ -180,7 +181,7 @@ Round 1 does not touch Cottonwood, Inflection, the comparison or the switch-off 
 
 | id | outcome_ref | surface | claim | verb | depends_on | bound |
 |---|---|---|---|---|---|---|
-| S01 | FWD-1 | the advisor's account and household list: `infra/logic/registry/scopes.json` + `directory_runner.py` / `irpt-directory-search` | held (brief F1) | consume | -- | one advisor, count printed |
+| S01 | FWD-1 | the advisor's accounts from the firm advisor-ownership map (address: builder output owed; registry row asked of the laptop, laptop decision 106087), names and households from `directory_runner.py` / `irpt-directory-search` | measured (row W1-S1; ~K2 round 1) | consume | -- | one advisor, count printed |
 | S02 | FWD-1 | Schwab silver for those accounts under `opal-data-assets/schwab/<master>/` (`schwab_conversion.py`) | held (brief F1) | consume | S01 | custodian rows only |
 | S03 | FWD-1 | holdings-based returns: IRPT_DASHBD gold `account_return_daily`; IRPT_BCKEND `holdings_49f.py` | unmeasured (served state per those projects) | consume | S02 | standard periods |
 | S04 | FWD-1 | fee rows from Schwab transactions, labelled; the billed-fee source (Q-2) | unmeasured | measure | S02 | every unmatched account named |
@@ -210,3 +211,8 @@ Round 1 does not touch Cottonwood, Inflection, the comparison or the switch-off 
 
 Added sections 1-7: the THREAD's six hops, the ENRICHMENT BACKLOG, owners, the L4 rulings, the SURFACE MANIFEST and BRIEF
 COVERAGE. The ENDPOINT and CONTRACTS are not edited, so the ratified-text half does not re-open.
+
+## v0.3 (1.0.0_SA_CTO~DELL2, 2026-10-07) -- hop 1's source corrected on row W1-S1
+
+Hop 1 and S01 now name the firm advisor-ownership map as the advisor's account source. The directory only names the
+accounts. Neither the ENDPOINT nor the CONTRACTS changed.

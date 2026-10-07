@@ -30,3 +30,11 @@ AUTHORITY-UNVERIFIED until MSTR~DELL1 cites the word.
 ## Stop log
 
 (appended on DONE / HELD-AT-STOP / stand-down)
+
+## Scope addendum (tick 2, 2026-10-07 ~08:2xZ, driver's ruling under his word)
+
+MDPF_HEALGAP joins the scope. His word arms this loop "on the underlying COOs projects". MDPF_HEALGAP is now one of them: it was
+placed on dell1 by laptop 1.0.0_SA_CTO msg 106053, its PRD v0.1 was ADMITTED @53596a3131, and `2.0.0_SA_COO~G1` is seated on it (live
+08:25Z). Paired: `/canonical-drive MDPF_HEALGAP` @ `2.0.0_SA_COO~G1`, at the 10m DIRECTED own-project default. The stop condition now
+reads all three project JSONs `status: complete`. The LIVE_ARMS row is the laptop CTO's to land (ruling 106047 (1)); it was asked
+for via 0.0.0_AB_MSTR~DELL1.

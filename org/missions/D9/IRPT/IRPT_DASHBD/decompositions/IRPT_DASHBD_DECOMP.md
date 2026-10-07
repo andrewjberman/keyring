@@ -416,3 +416,21 @@ act @98d439936a. E2 is now cut: the tie-out, which is ledger leg G1.
 | `DB-b-26` | FWD-8 / P-5: the 0.35 pp tie-out over 9,082 segments, reasons from C-TIEOUT's classes or UNEXPLAINED, counts only | LOCAL (no vendor call) | E1 (complete) | B17 |
 
 fanout: 1 of 1 chains, cap 8, reason: one grade over landed data. Worker 0.9.0_WK_IRPT_DASHBD~12 in its own worktree.
+
+## 18. ROUND 18, WORKSTREAM B (2026-10-07 ~08:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-15..17 analysis @e363a194ed, msg 157)
+
+Rounds 15-17 are closed: DB-b-23..26 terminal and VALID, ledger irpt-dashbd-e3-bd-population-pull-20261004 CLOSED, CVO compile
+@88435e28a1 (ARMED 0). W12-S1 is RULED: the E2 tie-out compares on ONE gross basis, BD's own reported fee added back per segment; no
+FEES reason; tolerance 0.35 pp and the closed set unchanged. The enrichment list is E1-E3:
+- **E1** and **E2** are one chain: E2 reads E1's record.
+- **E3** (`account_class_daily`, backlog B1, FWD-3) WAITS and is not cut: the CTO cuts it only once
+  `infra/aws/lambda/v2_portal/_shared/etf_classification.py` carries the six-class values. Measured at 3dd25927f2: it still carries
+  'fixed_income', 'equity', 'other' (last change 96f17cdbe9). Workstream F waits on E3's served table.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-27` | E1 / W12-S1: re-grade E2 on the gross basis; `bd_fee_addback` and `bd_gross_return` per segment; no net-of-fee Opal figure | LOCAL (no vendor call) | DB-b-26 (merged) | B18 |
+| `DB-b-28` | E2: the residue -- UNEXPLAINED after E1, the +1-day segments over 2025-01-09, their overlap, each against the closed set | LOCAL | DB-b-27 | B18 |
+| (E3) | `account_class_daily` and class contribution for 49F | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 consumes E1's record, so one worker queue; E3 waits on its named condition. Worker 0.9.0_WK_IRPT_DASHBD~13 in its own worktree.

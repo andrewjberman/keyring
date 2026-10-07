@@ -54,6 +54,7 @@ lanes:
   IRPT_TAX_MEMBERSHIP_M:
     permitted_agents:
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO bounded IRPT Tax dependency grant 2026-09-23 under Andrew Tax B and worker-fork delegation. Only exact membership and Silver module/test rows below; M is sole writer. Narrows former data/** ANY. Production store and actual gateway-to-Silver flat-row repair only; no full MDPF_TAXSMA round, schedule, gateway deployment or live activation."
 
 
@@ -70,6 +71,7 @@ lanes:
       - 4.0.0_SA_CRO~C
       - 4.0.0_SA_CRO~D
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor IRPT-M-REGISTRY-01 under Andrew session delegation: exact two registry files only, preserve CRO incumbents plus exact COO~M. IRPT unprovisioned product row and X10 twelve-family policy only; file-level gate, semantic boundaries independently reviewed; no default home or global rule change."
 
 
@@ -88,8 +90,11 @@ lanes:
       - 0.2.0_DT_PortfolioAnalytics
       - 0.2.0_DS_PortfolioAnalytics
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor IRPT-P-BUILD-01, 2026-09-22: exact shared source-map file only; preserve YANG_PIPELINE_DEPLOY incumbents plus exact COO~P. P may change IRPT build composition only under completion contract, with non-IRPT member equality proof and independent review; no upload/deploy grant. Path gate is file-granular, not JSON-member enforcement. CTO grantor IRPT RULINGS batch 62, 2026-10-01: exact COO~Y added for the rows of irpt-status and irpt-ycharts-generate only (the whole-bundle moves of batch 61 item 2b); every other row stays COO~P's. CTO grantor IRPT RULINGS batch 101, 2026-10-01: exact COO~M added for the irpt-holdings row only (the split-account route leg, packet signed @07e4769540); every other row stays as before."
 
   # Andrew-direct IRPT completion, CTO grantor 2026-09-22.
@@ -108,6 +113,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "IRPT P direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
   IRPT_LIVE_SCOPE_P:
     permitted_agents:
@@ -123,7 +129,9 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor under 09b9573688 LIVE_SCOPE_OWNERSHIP_TRANSFER_20260923.md and LOCAL_LIVE_PARTNER_SCOPE_20260923.md. Exact P source grant for directory/bootstrap/browse, scope, identity and common non-render authorization repair, plus holdings/entry.py request-local roster continuity for M-OPAL-01 only. Existing M and AE permissions preserved; shared source ownership remains with P until explicit CTO handback. No other holdings, naming, vendor, renderer or deployment expansion. Temporary; gate is path-level, semantic scope enforced by review."
 
   IRPT_COMPLETION_M:
@@ -140,6 +148,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "IRPT M direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
   IRPT_Y_ACCESS_INTEGRATION_P:
     permitted_agents:
@@ -155,7 +164,9 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "Temporary CTO grant IRPT-Y-ACCESS-INTEGRATION-20260923: preserve Y and AE incumbents, add exact COO~P on explicitly enumerated file rows for combined full-access and reviewed resident integration and compatibility only. No other Y paths or deployment grant. CTO removes P integration grant after accepted handoff."
 
   IRPT_COMPLETION_Y:
@@ -172,6 +183,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "IRPT Y direct implementation only. Grantor 1.0.0_SA_CTO; authority IRPT_MVP_COMPLETION_20260922/AUTHORITY.md and CONTRACT.md v1.2. Incumbent CLOUD_OPS_OR_ETL members retained; no base COO, other lane, reviewer, or deploy grant. Shared file/function claims and accepted B/F preservation remain mandatory."
 
   # =========================================================================
@@ -560,6 +572,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M1   # successor of ~M on dell1 (ruling 106036); 1.0.0_SA_CTO~DELL1 grant 2026-10-07, msg 86
     description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). Files: the single-home etf-classifications client under v2_portal/_shared and the BD gold dispatch script. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
 
   MDPF_SECCLASS_FAST_M_POD4:
@@ -597,6 +610,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 74, 2026-10-01 (msg 103652): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for one file inside the IRPT_BCKEND~Y FAST lease surface: the YCharts host's sign-in library (the reason tokens of batch 70 item 5). Code only: no deploy or apply grant; the host release keeps both never-widen halves. Struck when IRPT_BCKEND closes."
 
   NFRA_TRNSPT_FAST_D_MAIL:
@@ -629,6 +643,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 114, 2026-10-02 (msg 104065, row IRPT_BCKEND-S263): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~Y, for the five IRPT Terraform files whose one() over reporting_policies.json stopped planning when a second policy row landed. Code only: the selector change lands with a no-change plan per root; no apply grant. Struck when IRPT_BCKEND closes."
 
   IRPT_BCKEND_FAST_Y_LIVESCOPE:
@@ -645,8 +660,11 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 189, 2026-10-02 (msg 104437): the IRPT_LIVE_SCOPE_P members preserved verbatim plus exact COO~Y, for ONE file, _scope/maintained_sources.py -- Y-3's second admission path (a ticker the etf-classifications table names, batch 178 ruling 4). Code only; no deploy grant. Struck when IRPT_BCKEND closes."
 
   IRPT_BCKEND_FAST_Y_STATUSPORTS:
@@ -663,7 +681,9 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~Y
+      - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 125, 2026-10-02 (msg 104107): the IRPT_COMPLETION_P members preserved verbatim plus exact COO~Y, for ONE file, reports/status_installed.py: two lines that wrap the irpt-requests table port in the per-request read memo and open one memo scope per invocation (E6, batch 111). Code only; no deploy grant; the irpt-status bundle waits on E7 (batch 123). Struck when IRPT_BCKEND closes."
 
   MDPF_SECCLASS_FAST_M_BD_MIX:
@@ -718,6 +738,7 @@ lanes:
       - 0.4.2_RD_AdvisorIntelligence~D
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 79, 2026-10-01 (msg 103683): the POD4 members preserved verbatim plus exact COO~P, for one file: the Inflection net-new-assets coverage excusals (row W97-S3, Branch A). Code only: the put of the runner's copy keeps both never-widen halves. Struck when IRPT_BCKEND closes."
 
   IRPT_BCKEND_FAST_M_COT_IAM:
@@ -734,6 +755,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 87, 2026-10-01 (msg 103756): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for one file: the Cottonwood pipeline's IAM file, for ONE statement (dynamodb:GetItem and dynamodb:Scan on the etf-classifications table only; nothing on bd-securities) on the exporter role's policy (row IRPT_BCKEND-S173). Code only: the plan and safe-apply are a separate act under both never-widen halves. Struck when IRPT_BCKEND closes."
 
   IRPT_BCKEND_FAST_P_MIRROR:
@@ -750,6 +772,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~P
+      - 2.0.0_SA_COO~P2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
     description: "CTO grantor, IRPT RULINGS batch 88, 2026-10-01 (msg 103775): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~P, for three files of the OPAL_ASSETS ingest mirror (batch 63 item 6: an unknown key class is a counted SKIP line; a second scheduled Inflection fire). Code only: the mirror walks every firm's rows, so its release is its own packet with both never-widen halves. Struck when IRPT_BCKEND closes."
 
   DATA_REFRESH_DEPLOY:
@@ -1280,7 +1303,27 @@ lanes:
     permitted_agents: []
     description: 'Project tree, deliverables/<SERIAL>/** -- NOBODY by enumeration. The owner is in the PATH (s.6 option ii, RULED): owned-paths-validate.py clause 4 (ADHC_OWNPTH.004) permits exactly the serial named by the sub-folder (or a ~lane of it). A file directly under deliverables/ with no serial folder is refused -- the convention is the gate.'
 
+  IRPT_RESIDENT_ONE_WRITER_G2:
+    permitted_agents:
+      - 0.5.0_AE_OpalETL
+      - 0.5.0_AE_OpalETL~B
+      - 0.6.0_AE_PartnerETL
+      - 0.6.1_AE_PartnerETL
+      - 0.6.2_AE_PartnerETL
+      - 0.7.0_AE_CloudOps
+      - 0.7.0_AE_CloudOps~A
+      - 0.7.0_AE_CloudOps~B
+      - 0.7.0_AE_CloudOps~C
+      - 0.8.0_AE_CloudComp
+      - 4.0.0_SA_CRO~SWEEP
+      - 2.0.0_SA_COO~G2
+    description: "1.0.0_SA_CTO~DELL2 ruling (msgs 90/91, 2026-10-07, on CTO_ASSESSMENT_IRPT_BCKEND_Y_VS_IRPT_YCDGEN_OVERLAP_20261007.md): ONE writer for the resident host files. AE incumbents preserved; 2.0.0_SA_COO~G2 is the only COO lane. ~Y2 asks for a change here as a named cell."
+
 paths:
+  "infra/aws/lambda/investor-reporting/intake/upload_suggestions.py":
+    lane: IRPT_RESIDENT_ONE_WRITER_G2
+    note: "One writer: 2.0.0_SA_COO~G2 (1.0.0_SA_CTO~DELL2, msgs 90/91). Longest-match overrides intake/** (IRPT_COMPLETION_Y)."
+
   "data/mdpf/scripts/silver/taxsma_workbook.py":
     lane: IRPT_TAX_MEMBERSHIP_M
     note: "CTO IRPT-TAX-SILVER-SEAM-20260923: consume exact canonical flat rows with original Bronze intact and full census; no live activation."
@@ -1501,7 +1544,7 @@ paths:
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py":
-    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    lane: IRPT_RESIDENT_ONE_WRITER_G2
     note: "CTO IRPT-RESIDENT-INTEGRATION-20260923: exact reviewed file integration by P; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_resident_worker.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
@@ -1534,7 +1577,7 @@ paths:
     lane: IRPT_Y_ACCESS_INTEGRATION_P
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/security_resolution.py":
-    lane: IRPT_Y_ACCESS_INTEGRATION_P
+    lane: IRPT_RESIDENT_ONE_WRITER_G2
     note: "CTO IRPT-Y-INTEGRATION-GRANT-EXTENSION-20260923: exact reviewed file integration by P at Y pin c4564aad17; Y semantic writer retained; no deploy grant."
   "infra/aws/lambda/investor-reporting/intake/template_reader.py":
     lane: IRPT_Y_ACCESS_INTEGRATION_P
@@ -2706,6 +2749,10 @@ paths:
   "infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py":
     lane: MDPF_SECCLASS_FAST_M_AE
     note: "MDPF_SECCLASS FAST lease, exact test file (the contract-version pin, row W11-S1); CTO grantor batch 73 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS exact test file of the seed module (SC-e-21); 1.0.0_SA_CTO~DELL1 grant 2026-10-07 (msg 86), was CLOUD_OPS_OR_ETL by glob."
 
   "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py":
     lane: MDPF_SECCLASS_FAST_M_AE

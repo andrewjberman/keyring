@@ -988,6 +988,137 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S11 -- a Dell's Git for Windows sets core.autocrlf=true system-wide; every Dell commit rewrites the CRLF files it touches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "dell1 and dell2 run with core.autocrlf=true from C:/Program Files/Git/etc/gitconfig and no repo-local override; the laptop's effective value is false. A Dell's checkout writes CRLF working copies and its commits normalise CRLF and mixed files to LF, so a Dell's branch rewrites line endings the trunk keeps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 2026-10-07 ~08:05Z: git config --show-origin --get-all core.autocrlf -> file:C:/Program Files/Git/etc/gitconfig true; no repo-local value",
+      "dell1 git ls-files --eol: 60165 tracked; 2238 i/crlf, 466 i/mixed, 53429 i/lf",
+      "dell2 (0.0.0_AB_MSTR~DELL2, bus 13e46198): same system value, no override; 41,747 i/lf w/crlf working copies",
+      "q/dell1/CLOUD/r2 a9672da2a7 refused at the laptop merge: 206 CRLF endings in this file rewritten as LF (laptop 0.0.0_AB_MSTR, bus 81673b47)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The bring-up kit (Opal_New_Device_Kit_20261007 README_NEW_DEVICE.md) sets no git config; the git-pull skill's prerequisites name core.autocrlf=false for this repo.",
+  "world_is": "Neither Dell carries the repo's expected value. A bare flip to false is not a fix on a live box: the existing CRLF working copies of LF files would then commit as whole-file CRLF rewrites. The fix is the flip plus a full re-checkout of the shared tree and every worktree, with the box's seats quiet; that act is held for Andrew on both Dells. Interim on dell1: the fabric manager merges and commits shared CRLF files only from a fresh worktree checked out with core.autocrlf=false, resolving them from origin's bytes. The kit needs a git-config step (core.autocrlf=false, core.longpaths=true) before the first checkout."
+}
+```
+
+## NFRA_CTLPLN-W8-S1 -- TO-CT-d-5 four denied arms change required decision
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:30Z",
+  "one_line": "TO-CT-d-5 says the four existing denied arms 'keep passing', but they require implicitDeny and the new explicit Deny turns each into explicitDeny, so as written they fail 4 of 19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py DENIED list at 208c5d85ee: s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy, secretsmanager:PutResourcePolicy each carry required decision implicitDeny",
+      "after DenyResourcePolicyWrites, SimulateCustomPolicy returns explicitDeny for all four (RESPOL arms in the same run); the arms were changed to required explicitDeny in the worker branch, an edit inside the order's paths, so denied_ok=19/19 holds with the same four actions still denied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5 build step 3: 'the existing denied arms for s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy and secretsmanager:PutResourcePolicy keep passing' with denied_ok=19/19 unchanged.",
+  "world_is": "Those arms pass only if their required decision is changed from implicitDeny to explicitDeny, because the whole point of the cell is that the refusal is now explicit. The expected value 19/19 is met; the four required values moved, the actions did not. The issuer may want the order text to say so."
+}
+```
+
+## NFRA_CTLPLN-W8-S2 -- TO-CT-d-5 apigateway UNSURE, no policy-write Deny
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:40Z",
+  "one_line": "apigateway is the one UNSURE service of CT-d-5: a REST API resource policy is written through apigateway:PATCH/PUT/POST, which the create policy allows, and no deny names it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO: read the UNSURE list printed by tests/derive_respol_actions.py and rule on apigateway (a Deny on a documented dedicated action, a resource-path Deny, or accept the residual like the six ruled calls)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json at 208c5d85ee: CreateUpdateTagEdgeAndDns allows apigateway:POST, apigateway:PUT, apigateway:PATCH",
+      "installed botocore 1.43.0 apigateway and apigatewayv2 models list no IAM-only action name; SimulateCustomPolicy returned explicitDeny for apigateway:BogusZzz against a Deny naming it, so the simulator cannot confirm a name either; nothing was guessed into the Deny",
+      "tests/derive_respol_actions.py line 'UNSURE apigateway', counted unsure=1 in the RESPOL-DERIVED line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5: the Deny lists the resource-policy actions of every Dell-allowed service, derived; a service that cannot be settled is UNSURE, counted and listed for a senior read.",
+  "world_is": "apigateway cannot be settled from derived sources, so no apigateway action is in the Deny and a Dell holding the allowed PATCH/PUT/POST can still set a REST API resource policy. The same mixed-call shape is printed (not counted) for ec2 CreateVpcEndpoint/ModifyVpcEndpoint and kms ReplicateKey, which are not allowed to a Dell today."
+}
+```
+
+## NFRA_CTLPLN-W7-S3 -- TO-CT-d-4 last-line extension and enum edge
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T09:19:58Z",
+  "one_line": "TO-CT-d-4's LAST-line format has no field that names the failed field and its ledger enum has no value for 'closed, names no commit'; the script appends failed=<fields> after ok= and files that case as other-commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/deploy_readback_check.py last line: DEPLOY-READBACK ... ledger=<v> ok=<b> failed=<comma list|none>; org/devices/test_deploy_readback.py asserts the exact line for all six arms and prints cases=6/6",
+      "the order's ledger enum is closed-named|open|missing|other-commit; a closed entry carrying no named_commit line (a deploy made on-trunk, or never recorded) fits none, so it reports other-commit and the step-4 line prints the named_commit values found (or none)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-4 build 1: the LAST line is `DEPLOY-READBACK commit= device= admitted= on_trunk= objects_equal= ledger= ok=`; the worker brief adds that the last line must say which field failed. Ledger values: closed-named|open|missing|other-commit.",
+  "world_is": "Two things the order did not say: (1) a trailing failed= field was added after ok= so a consumer matching the order's prefix still matches; (2) other-commit also stands for a closed entry that names no commit, and on_trunk may print Unknown when the fetch or ancestry read fails, and admitted=False skips steps 2-4 (printed as SKIPPED) so on_trunk=Unknown, objects_equal=0/n, ledger=missing then mean not-read."
+}
+```
+
+## NFRA_CTLPLN-W12-S1 -- CT-k-1: three Lambda-vendored copies of the trading calendar already differ from lib/ and keep the old silent fallback
+
+```json
+{
+  "id": "NFRA_CTLPLN-W12-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~12",
+  "surfaced_at": "2026-10-07T09:23:05Z",
+  "one_line": "The three Lambda-vendored byte-copies of lib/trading_calendar.py (inf-etf-ownership-daily, bd-served-vintage-alarm, opal-assets-absence-check) are already not copies of lib/ and keep the old silent 2024-2027 fallback, so TO-CT-k-1's fail-closed fix does not reach those three functions until someone re-vendors them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "diff of `git show a68599cde3:lib/trading_calendar.py` against each of infra/aws/lambda/inf-pipeline/inf-etf-ownership-daily/trading_calendar.py, infra/aws/lambda/bd-pipeline/bd-served-vintage-alarm/trading_calendar.py, infra/aws/lambda/opal-assets-absence-check/trading_calendar.py: all three DIFFER (each is 163 lines; the first hunk is the missing weekly_production_day, lines 122-154), so they were not byte-copies before this order either",
+      ".github/workflows/lib-vendored-copies-parity.yml PAIRS lists those three plus infra/aws/lambda/schwab-bronze-freshness/trading_calendar.py; `ls infra/aws/lambda/schwab-bronze-freshness` -> No such file or directory, so that parity job reports MISSING_VENDORED and DRIFT today",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~12/TRADING_CALENDAR_IMPORTERS.md section 1 and 3: all three vendored lambdas run without pandas_market_calendars (stdlib-only packages), so they answer from the old 2024-2027 set, silently outside it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-1 cell text: lib/trading_calendar.py is the estate's ONE trading-day definition and Lambdas vendor this ONE file; the fail-closed raise changes what deployed importers do the next time they are rebuilt.",
+  "world_is": "Three deployed Lambdas carry their own older 163-line copy of the module, outside the order's grant (it edits no importer and deploys nothing). The new fallback and CalendarCoverageError reach them only if the copies are replaced from lib/. Until then they answer a pre-2024 holiday as a trading day, and from 2028-01-01 every weekday, with no error; their current call sites pass current dates (bd-served-vintage-alarm, opal-assets-absence-check) or an event day (inf-etf-ownership-daily, UNKNOWN). Disarm owner is the issuer who decides whether a re-vendor cell is cut; this worker did not copy the file."
+}
+```
+
 ## NFRA_CTLPLN-W13-S1 -- CT-k-2: pip's local cache on the laptop is empty, so the pack's preference (a) is built but never exercised against a real cached wheel
 
 ```json

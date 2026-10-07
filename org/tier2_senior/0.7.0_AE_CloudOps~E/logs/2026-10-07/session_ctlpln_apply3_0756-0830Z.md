@@ -184,3 +184,74 @@ the order's bounds forbid both, and that is a later act by another route.
    `public-data-router`, `shared-advisor-router`, `shared-advisor-router-response`) are ones the investor-reporting and
    portal work can touch. That refusal is the intended behaviour, now live and verified; the CTO half already names
    narrowing the edge five as a candidate cell on a row from whichever seat hits it.
+
+---
+
+## Addendum -- 0839-0906Z: the proof-of-spec instance the issuer's flip was waiting on
+
+**archetype:** VALIDATE
+
+`2.0.0_SA_COO~C` msg 106075 (acked): the report was received and verified on the issuer's own reads, but its
+flip to `complete` was refused by the pipeline gate -- "NO proof-of-spec instance was found beside it". The
+instance is the EXECUTOR's artifact, so it was this seat's to produce and the report alone was not the
+deliverable (CLAUDE.md rule 29).
+
+Delivered, committed `9c22bf51dd`:
+`org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/NFRA_CTLPLN.TO-APPLY-3.dell-policy-apply-laptop.proof_of_spec.json`
+
+```
+python .tools/proof-of-spec-check.py <instance> AC1,AC2,AC3 --governing-order <the order>
+  structural=jsonschema | acceptance rows=3 | violations=0            VALID (rc=0)
+  alignment-forward-1   3/3 criteria carry >=1 cell_ref
+  alignment-forward-2   3/3 cell_refs resolve in NFRA_CTLPLN_DECOMP.round3.md
+  alignment-backward    3/3 cells in <owned_cells> reachable from a criterion
+  artifact-resolution   8 of 8 rows resolved at pin; 1 CONTENT-resolved, 7 PRESENCE-ONLY
+  invocation-alignment  3/3 comparable rows match the order's own <invocation>
+```
+
+### Four judgments inside it worth recording, because each could have been quietly overclaimed
+
+1. **genre BUILD, not DEPLOY -- and the reason is a gap in the ORDER, not a reclassification of the act.**
+   This is a WORLD-class Terraform IAM apply; DEPLOY is substantively right. But the DEPLOY GENRE LIMB admits
+   that genre only when the GOVERNING ORDER carries a line-anchored `<proof_genre>DEPLOY</proof_genre>` beside
+   its `<risk>` tag, read at HEAD. The order carries `<risk>WORLD</risk>` at line 10 and no `<proof_genre>`.
+   That tag is the ISSUER's and the order is the issuer's artifact. **Editing it to admit this seat's own
+   grading path would be the graded party widening its own grading**, so it was left alone and surfaced to
+   `2.0.0_SA_COO~C` instead. BUILD's closed key set has no slot for `never_widen_pair`, `risk_class`,
+   `rollback`, `regression_reads` or `cold_reads`, so that content is preserved VERBATIM in
+   `declared_exclusions[0]` with the slot difference named -- nothing the halves require went ungathered.
+2. **BUILD's two controls are real, not manufactured to fit.** `mutant`: the live-vs-repo comparator was
+   re-run against a deepcopy with one Sid renamed and read `EQUAL=False` for both policies against
+   `EQUAL=True` unmutated -- FIRED-AS-EXPECTED. `determinism`: the two byte-identical `POLICY-SIM` lines
+   either side of the apply plus the 0-diff re-plan -- STABLE. The live-principal simulation is EXCLUDED from
+   the determinism claim by construction and the instance says so: it ran once, and a second identical run
+   re-reads the same live state.
+3. **`eda2919e6b` is a MERGE, which changes what `introduces` can honestly claim.** Its first parent
+   `82dd885e8d` already carries `ReadForDerivedKinds` and `DenyPassRoleExceptNamed` (measured: 1 at the pin,
+   1 at `~1`). A token present at the parent was not introduced at the pin, so neither is claimed; only
+   `DenyProtectedFunctions` and `DenyApiKeyReads` are, and both read 1 at the pin / 0 at the parent. Claiming
+   all three would have produced a false CONTENT-resolution that the checker would have accepted on the
+   deploy-policy row.
+4. **The `expect` fields are regexes, not the order's prose.** The schema states `expect` is a Python regex
+   searched with DOTALL and that the checker grades a mechanical criterion BY THAT MATCH rather than by the
+   worker. AC1's order-prose is `exactly ["cloudops-dell-agent-create-policy", ...]`; carried verbatim the
+   brackets read as a character class and would have FAILED the match on correct evidence -- converting a real
+   PASS into a checker FAIL. Each is now a faithful pattern over the deciding output, so AC1/AC2/AC3 are
+   graded mechanically instead of on this seat's self-report.
+
+### Also in this addendum
+
+- `artifacts_produced` initially named the three live IAM ARNs as `path_or_key` and drew four
+  `artifact-resolution` violations: the checker resolves `path_or_key` as a real `(commit, path)` git pair and
+  an ARN is not one. Corrected to the git-plane artifact -- the policy DOCUMENTS and `iam.tf` -- with the live
+  ARN, version id and read-back moved into `deploy_evidence`, which is where they belong. All eight pairs were
+  verified with `git cat-file -s` beside a NEGATIVE CONTROL (a non-existent path at the same pin, correctly
+  refuted) before the rewrite.
+- `surprises` is empty and the reason is an explicit exclusion rather than a blank: the startup
+  audit-archive findings are the already-owned device-axis class (see Next Step 3), and `org/XXX.md` A.2
+  forbids re-filing an owned class.
+
+**Push state, re-measured at send time:** `9c22bf51dd` LOCAL; `f381720cde`, `95b6e421cd` and `755d500bb6` are
+now ON ORIGIN (origin CLOUD `e5532fca84`, `ls-remote` read) -- `0.0.0_AB_MSTR` pushed them during the session.
+
+**Still owed by this seat: nothing.** The `<status>` flip remains `2.0.0_SA_COO~C`'s act.
