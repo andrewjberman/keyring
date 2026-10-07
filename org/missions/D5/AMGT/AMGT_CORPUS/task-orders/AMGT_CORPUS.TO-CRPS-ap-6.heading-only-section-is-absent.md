@@ -77,7 +77,7 @@ Read-only: the whole repository, in particular `lib/research/corpus/extract.py`,
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 2/2 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 4/4 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_heading_only_round40.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^[0-9]+ passed(, [0-9]+ warnings?)? in [0-9.]+s$</expect></criterion>
 </proof_of_spec>
 
@@ -110,6 +110,46 @@ to `<paths>` above. The build (commit `763e1e9885`) stands as it is.
    pass append the status tag reading complete at the END of this file in the same commit as the instance.
 4. Your row `AMGT_CORPUS-Z-W2-S21` stays as filed; the issuer disarms it at the drain.
 
+## 7. AMENDMENT 2 (2026-10-07, the issuer's own; the census on the served dossiers and the CTO's ruling)
+
+The build and AMENDMENT 1 are merged and are your INHERITED STATE (they are in your worktree's HEAD): a heading-only section
+reads absent, `METHOD_VERSION` is `amgt-corpus-dossier/6`, and `--short-passage-census <N>` exists. NO dossier has been written
+at `/6`, so do NOT bump the version again.
+
+The issuer ran the census on the served dossiers (`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/
+r40_ap10_short_passage_census_20261007.txt`: 95 dossiers, 950 fields, 49 served values are a bare heading) and read the source
+document behind five of them (`.../evidence/r40_ap10_heading_context_20261007.txt`, read both files). In two of the five the
+prose IS in the report and `_section_block_items` stops before it: TSM's "Positives" (the heading, a "-" line, then prose) and
+AstraZeneca's "MANAGEMENT:" (the heading, "Sir Pascal Soriot CEO", then prose). The block reader ends a block at an unnamed
+short or bold heading-like item (docx: a bold paragraph of at most `extract._HEADING_WORD_CAP` words; pdf:
+`continuation._pdf_is_standalone_heading` and not lead-only), and here that item is the FIRST item under the section's own lead.
+With the build as landed these two would read "heading carries no text under it", which the report contradicts.
+
+**Ruled by `1.0.0_SA_CTO~Z`: the item directly after a section's lead never ends the block.** Do, and only this:
+1. In `_section_block_items` (docx and pdf branches): an UNNAMED heading-like item at the position directly after the lead does
+   not end the block; the scan goes on from the item after it. A NAMED section lead (an index in `lead_indices`) still ends the
+   block wherever it is, including directly after the lead. Every later unnamed heading-like item ends the block as today.
+2. The absent reason tells two cases apart (the CTO's term 2). When the extraction shows a TABLE follows the heading and no
+   prose does, the reason says so in words (a table follows the heading and no prose does); it does not say the section is
+   empty. Use what the stored extraction actually carries to tell (read `lib/research/corpus/extract.py` for how tables and
+   empty paragraphs are represented; the Imperial Brands and Mitsubishi UFJ shapes are in the context evidence file). Where the
+   extraction cannot tell a table from nothing, the reason says no prose follows the heading in the report's extracted text.
+   Never "no text" where the document shows a table.
+3. Add a read-only CLI flag `--section-recompose-census`: for every registered name it re-composes the section fields IN MEMORY
+   from the stored extractions with the current code and compares each with the SERVED dossier's value. It prints one line per
+   (name, field) whose value differs: the name, the field, the first 70 characters of the served value and of the re-composed
+   value (or `ABSENT: <reason>`); then the denominators (names read, fields compared, fields changed, and of the served values
+   under 40 characters how many gain prose, how many read absent with the table reason, how many with the no-prose reason). It
+   writes NOTHING and makes no put. You do NOT run it (it reads S3); the issuer does.
+4. Tests in `lib/research/corpus/tests/test_dossier_heading_only_round40.py`: the docx bold-first-item case; the pdf case BUILT
+   FROM THE REAL PREDICATE (construct lines that `continuation._pdf_is_standalone_heading` really flags for the first item, and
+   assert the flag in the test, so the case cannot pass by not being flagged); a named lead directly after the lead still ends
+   the block; a second unnamed heading still ends it; the two reason wordings; the recompose census on stub documents.
+
+**Prove** AC1 (now `ap6 build 4/4 control 2/2`: arm b3 is the docx bold-first-item case, b4 a pdf dash case) and AC2 by their
+invocations in section 4. Then section 5 again: the proof instance updated, the checker after your final commit, and the status
+tag reading complete appended at the END of this file only if AC1 and AC2 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 9 + s.4 item 3; row Z-S89. Base: ap6 build 0/2 control 2/2; the three existing files 25 passed. The served census and the dossier re-write are the issuer's CRPS-ap-10.
@@ -119,3 +159,4 @@ to `<paths>` above. The build (commit `763e1e9885`) stands as it is.
 <slot>~2</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+<status>in_progress</status>
