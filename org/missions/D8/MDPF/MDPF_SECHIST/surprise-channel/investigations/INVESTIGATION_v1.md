@@ -63,6 +63,27 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "Amendment 1 item 6: nothing else moves; the test file edit is the one new test.",
     "world_is": "The existing test calls main(), which now calls bbg_budget.spent() and record(); isolating its ledger needed one line in the same permitted file. No assertion of the first-pass tests changed."
+  },
+  {
+    "id": "MDPF_SECHIST-S1",
+    "project": "MDPF_SECHIST",
+    "fabric": "laptop",
+    "surfaced_by": "1.0.0_SA_CTO~DELL1",
+    "surfaced_at": "2026-10-07T08:45:00Z",
+    "one_line": "The site Z ETF daily pull keys its as-of with pandas BDay(-1), not lib/trading_calendar, so on the morning after an NYSE holiday it lands under the holiday's date; integrations/bloomberg/READ_HERE.md:99-100 names exactly this trap. Pre-existing, not introduced by SH-t-1.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/etf_daily_pull.py:362 and :386-389 at dell1 HEAD a92652a41a: asof = today + BDay(-1); the tripwire compares against BDay(-1) too, so it cannot catch it",
+        "integrations/bloomberg/READ_HERE.md:99-100: 'THE AS-OF IS lib/trading_calendar, NOT BDay ... BDay(-1) lands ON market holidays (2026-12-28 -> Christmas; 2026-01-20 -> MLK)'",
+        "2.0.0_SA_COO~H1 msg 68: 'the pull's as-of is pandas BDay(-1), runs at site Z'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "READ_HERE.md section 3: the as-of of a site Z leg is lib/trading_calendar prev_trading_day (T-1), never BDay.",
+    "world_is": "The leg's as-of and its tripwire both use BDay(-1). The next NYSE weekday closure is 2026-11-26 (Thanksgiving), so the 2026-11-27 run would land under bbg/2026-11-26/ and gold would read a holiday partition. INERT until then. The owner of the leg is site Z (0.0.3_BG_BBGTerminal's vehicle); the SECHIST issuer reads it at the round-1 analysis."
   }
 ]
 ```
