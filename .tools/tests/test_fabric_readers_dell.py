@@ -13,17 +13,18 @@ admitted; then the REFERENCE positions (AMENDMENT 3): an investigation row whose
 lower-case one refused, a remediation row whose `disarms` names a D2-W3- id admitted and a malformed one refused. A verdict reads
 only the complaints the schema limb raises (schema violation / ratified enum), because the gate's other
 limbs (register agreement, owner, worker suffix) are graded by the id arm and by the gate's own --self-test.
-Readers arm (6, AMENDMENT 4): the two LAST id readers run through their OWN code -- `.tools/proof-of-spec-check.py` SURPRISE_ID_RE
+Readers arm (9, AMENDMENTS 4-5): the three LAST id readers run through their OWN code -- `.tools/proof-of-spec-check.py` SURPRISE_ID_RE
 (imported as compiled) and `org/surprise_channel/surprise-watch.sh` ID_RE (the line is read out of the script and run through
 `grep -E`, the tool the script evaluates it with): X_PRJ-D1-S1, -D2-W3-S2, -Z-S4, -W9-S1 accepted by both; -d1-S1 and -W-S1 refused
-by both. A BRUTE-FORCE equivalence table (every id built from two infix slots drawn from 20 tokens) compares the checker, the
-watcher and the gate's ID_RE, and must agree on every id. Sweep (AMENDMENT 4): `ID-GRAMMAR-SWEEP` over every tracked file for the old
+by both. AMENDMENT 5 adds the third reader, IRPT_YCDGEN's `file_stop_row.py` ID_PATTERN (the compiled pattern imported from the file
+by path), on three of the six ids (-D2-W3-S2, -Z-S4, -d1-S1): three more cases. A BRUTE-FORCE equivalence table (every id built from
+two infix slots drawn from 20 tokens) compares the checker, the watcher, file_stop_row and the gate's ID_RE, and must agree on every id. Sweep (AMENDMENT 4): `ID-GRAMMAR-SWEEP` over every tracked file for the old
 grammar's signature and for a hand-written row-id pattern; `old_grammar_left` is the count of live readers outside the grant.
 Schema arm (5): one PRD header instance per fabric value validated against org/standards/PRD_HEADER.schema.json
 (4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals FABRIC_ENUM read from the source of
 .tools/to-pipeline-gate.py. Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
 
-LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 readers_ok=<r>/6 old_grammar_left=<d> enum_equal=<True|False>
+LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 readers_ok=<r>/9 old_grammar_left=<d> enum_equal=<True|False>
            gate_selftest=<ok|fail> ok=<True|False>
 """
 import ast
@@ -44,6 +45,7 @@ SCHEMA = os.path.join(ROOT, "org", "standards", "PRD_HEADER.schema.json")
 ROW_SCHEMAS = os.path.join(ROOT, "org", "surprise_channel", "schemas")
 CHECKER = os.path.join(ROOT, ".tools", "proof-of-spec-check.py")
 WATCHER = os.path.join(ROOT, "org", "surprise_channel", "surprise-watch.sh")
+STOPROW = os.path.join(ROOT, "infra", "aws", "lambda", "investor-reporting", "ycharts", "research", "file_stop_row.py")
 
 
 def load_gate():
@@ -197,8 +199,13 @@ def watcher_accepts(ids):
 
 
 def readers_cases(gate):
-    """Six named cases through both readers' own code, then a brute-force equivalence of checker, watcher and the gate's ID_RE."""
+    """Six named cases through the two readers' own code, three through file_stop_row's, then a brute-force equivalence of the
+    three readers and the gate's ID_RE."""
     checker = load_module("proof_of_spec_check_under_test", CHECKER)
+    stoprow = load_module("file_stop_row_under_test", STOPROW)
+
+    def stoprow_accepts(rid):
+        return bool(stoprow.ID_PATTERN.match(rid))
 
     def checker_accepts(rid):
         m = checker.SURPRISE_ID_RE.match(rid + ": a surprise entry")
@@ -211,6 +218,9 @@ def readers_cases(gate):
     for rid, want in named:
         c, w = checker_accepts(rid), (None if got_w is None else rid in got_w)
         out.append(("%s checker=%s watcher=%s (want %s)" % (rid, c, w, want), c == want and w == want, ""))
+    for rid, want in [("X_PRJ-D2-W3-S2", True), ("X_PRJ-Z-S4", True), ("X_PRJ-d1-S1", False)]:
+        got = stoprow_accepts(rid)
+        out.append(("%s file_stop_row=%s (want %s)" % (rid, got, want), got == want, ""))
     # brute force: two infix slots over 20 tokens; the gate's ID_RE is the reference language
     toks = ["", "W-", "W1-", "W12-", "C-", "C1-", "D1-", "D2-", "D-", "D12-", "Z-", "Z9-", "X-", "d1-", "WW-", "1-", "W0-", "C0-",
             "B7-", "V-"]
@@ -219,11 +229,13 @@ def readers_cases(gate):
     ref = {i for i in ids if gate.ID_RE.match(i)}
     chk = {i for i in ids if checker_accepts(i)}
     wat = watcher_accepts(ids)
-    agree = wat is not None and ref == chk == wat
-    print("equivalence: %d ids, gate ID_RE accepts %d, checker accepts %d, watcher (grep -E) accepts %s -> %s"
-          % (len(ids), len(ref), len(chk), "UNREADABLE" if wat is None else len(wat), "AGREE" if agree else "DISAGREE"))
+    stp = {i for i in ids if stoprow_accepts(i)}
+    agree = wat is not None and ref == chk == wat == stp
+    print("equivalence: %d ids, gate ID_RE accepts %d, checker accepts %d, file_stop_row accepts %d, watcher (grep -E) accepts %s -> %s"
+          % (len(ids), len(ref), len(chk), len(stp), "UNREADABLE" if wat is None else len(wat), "AGREE" if agree else "DISAGREE"))
     if not agree and wat is not None:
-        print("  checker differs:", sorted(ref ^ chk)[:6], "watcher differs:", sorted(ref ^ wat)[:6])
+        print("  checker differs:", sorted(ref ^ chk)[:6], "watcher differs:", sorted(ref ^ wat)[:6],
+              "file_stop_row differs:", sorted(ref ^ stp)[:6])
     return out, agree
 
 
@@ -235,6 +247,7 @@ FIXED_HERE = {
     "org/surprise_channel/surprise-watch.sh": "ID_RE now the gate's grammar by alternation, and the comment above it (this amendment)",
     "org/surprise_channel/schemas/investigation_item.schema.json": "id and adjudicates patterns at the gate's grammar (amendments 2-3)",
     "org/surprise_channel/schemas/remediation_row.schema.json": "id and disarms patterns at the gate's grammar (amendments 2-3)",
+    "infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py": "ID_PATTERN now the gate's grammar (amendment 5)",
     ".tools/tests/test_fabric_readers_dell.py": "this test: its signatures are composed, so only data in it can hit",
 }
 GATE_DERIVED = {".tools/surprise-row-gate.py": "the reference grammar's own file: decides by ID_RE (line 108); a hit is prose in a "
@@ -323,8 +336,8 @@ def main():
     b = sum(1 for _l, ok, _d in sch if ok)
     c = sum(1 for _l, ok, _d in rows if ok)
     r = sum(1 for _l, ok, _d in rd if ok)
-    ok = a == 9 and b == 5 and c == 12 and r == 6 and rd_agree and left == 0 and enum_equal and selftest == "ok"
-    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/12 readers_ok=%d/6 old_grammar_left=%d enum_equal=%s "
+    ok = a == 9 and b == 5 and c == 12 and r == 9 and rd_agree and left == 0 and enum_equal and selftest == "ok"
+    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/12 readers_ok=%d/9 old_grammar_left=%d enum_equal=%s "
           "gate_selftest=%s ok=%s" % (a, b, c, r, left, enum_equal, selftest, ok))
     return 0 if ok else 1
 
