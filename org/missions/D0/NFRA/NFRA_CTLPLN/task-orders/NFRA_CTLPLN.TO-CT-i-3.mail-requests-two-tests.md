@@ -34,6 +34,18 @@ The gateway is the only sanctioned read of his mailbox. The existing mail code i
 purpose). The Teams agent is `data/transcripts/scripts/teams_chat/` (`tenant.py`, `assist.py`); after `CT-i-1` it has
 `assist.work_request(...)` and a text that says `WORK REQUESTED by ...` with a recommendation.
 
+### AMENDMENT 1 (issuer; do this FIRST, before the build below)
+
+Rows NFRA_CTLPLN-W31-S1 and S2 (ARMED, disarm owner the issuer) name three cases of
+`data/transcripts/scripts/tests/test_teams_chat_jobs.py` that pin the contract `CT-i-1` changed:
+`test_open_offers_to_every_device_and_sets_the_award_alarm`, `test_both_bids_award_at_once_to_the_lighter_box` and
+`test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat`. That file is now in your `<paths>`. Bring those
+three cases to the new contract: the offer goes to every box of `NAMES["bus_devices"]` (derive the count, type no box
+name the file does not already use), the early award needs a bid from every offered box, and a completion carries `coo`
+and a PASS `grade` by a `3.0.0_SA_CVO` serial. Remove no case and weaken no assertion that still holds; touch no other
+case. Commit that repair as its own commit. In your final report give the exact command you used to run the seven
+teams-chat and End of Day test files and its last line, which must show 0 failed; rows S1 and S2 are disarmed by it.
+
 ### BUILD, IN THIS ORDER
 
 1. **Measure first.** In your deliverables folder, `MAIL_ROUTE_MEASURED.md`, from READING the code and the documents it cites
@@ -108,6 +120,7 @@ every criterion passes and the instance is VALID.
 <paths>
 data/transcripts/scripts/teams_chat/mail_requests.py
 data/transcripts/scripts/tests/test_inbound_mail.py
+data/transcripts/scripts/tests/test_teams_chat_jobs.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
