@@ -20231,3 +20231,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-S385 -- W148-S1 and W146-S1 DISARMED: irpt-export-render fails closed in production (IB-pr-349)
+
+```json
+{
+  "id": "IRPT_BCKEND-S385",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T16:51:44Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-W148-S1 (BLOCKING, ARMED: 7 non-Opal principals reach a fail-open export read) and IRPT_BCKEND-W146-S1 (ARMED: live irpt-export-render fail-open). The disarm condition is met: the deployed _covered refuses an empty list.",
+  "one_line": "IB-pr-349 released irpt-export-render at pin b921635dad (laptop applier 0.7.0_AE_CloudOps~I, both never-widen halves). Live CodeSha256 is aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= (LastModified 2026-10-07T14:38:36Z). The issuer's release-census at the pin reads changed_members=0. On the deployed bytes an existing receipt is REFUSED for an admin and a non-Opal principal, and an Opal read is ADMITTED. Ledger CLOSED; IB68-1-AC1 PASS and proof VALID, re-run by the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer: python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> changed_members=0 (2026-10-07 ~14:4xZ)",
+      "issuer: p68_cells.py . IB68-1-AC1 -> PASS (live CodeSha256 == built, exposure arms true); proof-of-spec-check VALID rc=0 at HEAD 581ccf5454",
+      "org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md: Status CLOSED"
+    ]
+  },
+  "spec_asserts": "W148-S1 / W146-S1: the live export read admits a receipt that names no account.",
+  "world_is": "The live export read refuses it. Existing exports stay refused until the IB-pr-350 back-fill; new-export READY is OPEN-BY-DESIGN (S382)."
+}
+```
