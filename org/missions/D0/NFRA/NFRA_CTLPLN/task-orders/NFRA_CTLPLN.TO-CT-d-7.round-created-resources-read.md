@@ -71,7 +71,7 @@ round 3 through eda2919e6b) and `infra/aws/terraform/nfra-ctlpln-agentbus/` (rou
 `CT4d7-AC1` -- the read counts created, nameless, registered and missing resources correctly on stand-ins; the missing and unresolved
 arms are its controls.
 
-<criterion id="CT4d7-AC2" cell_refs="CT-d-7"><invocation>python org/devices/round_created_resources.py --since b119ace91b --until HEAD --root infra/aws/terraform/nfra-ctlpln-identity --root infra/aws/terraform/nfra-ctlpln-agentbus</invocation><expect>unresolved=0</expect></criterion>
+<criterion id="CT4d7-AC2" cell_refs="CT-d-7"><invocation>python org/devices/round_created_resources.py --since b119ace91b --until HEAD --root infra/aws/terraform/nfra-ctlpln-identity --root infra/aws/terraform/nfra-ctlpln-agentbus</invocation><expect>unresolved=0 graph_unread=0</expect></criterion>
 `CT4d7-AC2` -- the seam probe on the REAL roots and the REAL registry after your rows: every named resource of the two roots resolves.
 Record the whole last line; if `missing` is not 0 it is because step 3 left a row out for want of a system, and your report and row
 say which. (`b119ace91b` is the round-2 issuance commit, measured at the cut to predate both roots: neither directory exists in its tree.)
@@ -125,3 +125,42 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: PRD v0.13 @4cea56993a ADDENDUM v0.13 C-NAMING, cell (a); Andrew-direct record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`;
 CTO msg 106067; decomposition round 4. Base dry-run at the cut: CT4d7-AC1 and CT4d7-AC2 base FAIL as expected (neither file exists).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~09:1xZ) -- REOPENED: the round-close read is against the cloud graph, not the registry
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commit c8e976ee55 is inherited state.
+Authority: `1.0.0_SA_CTO` msg 106086 and PRD v0.14 (C-NAMING corrected): "resources.json is not a resource list ... CT-d-7: a
+resources.json row only where validate() accepts it; print the validator's count ... The round-close read: each created resource's
+cloud-graph node and drift_class, not a row." Your own row W10-S1 and worker ~11's W11-S2 are what corrected the contract.
+Gate limb: none graded this modification. WHERE THIS AMENDMENT AND THE FACE DIFFER, THIS AMENDMENT GOVERNS.
+
+1. **The registry arm stays, with its meaning corrected.** `resources.json` holds only names whose own tokens resolve no system. For
+   each created, named resource the script now prints one of: `SELF-RESOLVING` (the name resolves its system from its own tokens;
+   no row is expected and adding one is refused by the validator), `REGISTERED` (a row exists), or `ROW-NEEDED` (the name does not
+   resolve on its own and no row exists). Decide by calling the registry's own reader in `lib/opal_naming.py` (read how `validate`
+   and `name` resolve a system; call that, do not re-implement it). The script prints the validator's own count line
+   (`python lib/opal_naming.py validate`, last line) once. `missing` in the last line is replaced by `row_needed`.
+   You still add NO row unless a resource is `ROW-NEEDED` and `validate()` accepts the row.
+2. **The cloud-graph arm (new).** For each created, named resource, read its node from the estate's served cloud graph with the
+   repo's own tool: `comp-find --corpus aws '<exact name>'` (read `comp-find --help` and
+   `docs/architecture/NFRA_COMPRAIL_PRD.md` for the `--corpus aws` traps first: the denominator is nodes scanned and the vintage is
+   the database's `built:` line). Record per resource: `NODE` with its `node_type` and `drift_class`, or `NO-NODE`; and print the
+   graph's `built:` vintage once. A resource created AFTER the graph was built reads `NO-NODE` for that reason and not because it
+   is absent from the cloud: compare the vintage with the commit time of the resource's introducing commit and label such a miss
+   `NO-NODE-GRAPH-OLDER` -- it is not a defect of the resource. A call that fails or times out is `GRAPH-UNREAD`, counted, never
+   read as `NO-NODE`. Bound every call (`timeout 60`).
+3. New LAST line:
+   `ROUND-RESOURCES since=<c1> until=<c2> roots=<r> created=<n> nameless=<a> named=<m> self_resolving=<s> registered=<g> row_needed=<x> unresolved=<u> graph_nodes=<k> no_node=<z> no_node_graph_older=<o> graph_unread=<w> graph_built=<vintage> ok=<True|False>`,
+   `ok=True` only when `x == 0`, `u == 0` and `w == 0`.
+4. The five stand-in cases of `org/devices/test_round_created_resources.py` are updated to the new classes (the registry arm runs on
+   the temporary registry; the cloud-graph arm is replaced in the test by a recorder so no test calls the real tool), and one case is
+   added: a recorder that fails -> `graph_unread=1 ok=False`. LAST line `ROUND-RESOURCES-TEST cases=<k>/6 ok=<True|False>`.
+5. Re-run it over rounds 2 and 3 (`--since b119ace91b --until HEAD`, the two roots) and save the output over
+   `ROUND_2_3_CREATED_RESOURCES.txt` in your deliverables folder.
+
+**ACCEPTANCE, replacing both expectations (same ids, same invocations):**
+- `CT4d7-AC1` expects `ROUND-RESOURCES-TEST cases=6/6 ok=True`.
+- `CT4d7-AC2` expects `unresolved=0 graph_unread=0`. Record the whole last line; `no_node` and `no_node_graph_older` are findings,
+  whichever values they take.
+
+Write a NEW proof instance over the old one at the same path, validate it, and flip `<status>` back to `complete` only when both pass.

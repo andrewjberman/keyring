@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-02T20:22:33.198185+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261007T092521Z
 **Deploy:** IB-pr-221: Inflection's Performance served from its holdings gold + 49F fee_basis GROSS (packet blob 87d1cd8418; COO half signed; CTO half batch 185 @0c714c37eb)
 **Authored by:** 2.0.0_SA_COO~P
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,7 +18,7 @@
 | P3 | activation | targeted safe-apply the 7 Inflection resources; condition 4 one dry-run invoke | created + census equals the rebuild | plan 7 to add, 0 change, 0 destroy (schedule cron(0 14 ? * MON-FRI *) UTC, input source orion); safe-apply ~21:0xZ Apply complete 7/0/0 (log group, 2 roles, 2 policies, irpt-inf-holdings-performance-lambda, schedule irpt-inf-holdings-performance-daily); re-plan No changes; condition 4: one dry-run invoke {source: orion, date: 2026-09-30, dry_run: true}: rows=966 census {OK 792, NON-POSITIVE-BASE 174} = the rebuild's manifest for 2026-09-30 (rows 966, status_census OK 792, NON-POSITIVE-BASE 174) | CLOSED 20261002T210857Z |
 | G1 | activation | commit the held retained.tf grant + targeted apply; condition 5 IAM simulation, Cottonwood denied | allowed x2 + denied | commit 2b3048bd22 (the held retained.tf half; audited lane override IRPT_BCKEND_FAST_Y_TFPOLICY, logged 21:13:02Z, authority the CTO half batch 185); full plan 0/2/0 (G1 + F1); targeted plan 0/1/0 adding ReadINFHoldingsGoldPartitionInventory + ReadINFHoldingsGoldPartitions only; safe-apply ~21:2xZ Apply complete 0/1/0; condition 5 simulate-principal-policy irpt-performance-adapter-role: GetObject on Inflection holdings_performance_daily date=2026-09-30 allowed, ListBucket with s3:prefix irpt/inflection/gold/holdings_performance_daily/ allowed, GetObject on the Cottonwood gold implicitDeny (negative control) | CLOSED 20261002T212638Z |
 | F1 | activation | targeted safe-apply the adapter to /K1eLPu; condition 6 probes, deployed-bytes read, 49F GROSS, 10 min clean log | all four | full plan 0/2/0 (G1+F1); targeted plan 0/1/0 s3_object_version wjneBb9_ -> 7GwiGHEPjUOS, source_code_hash cdbFZDJA -> /K1eLPu; safe-apply Apply complete 0/1/0, live CodeSha256 /K1eLPu 21:39:28Z Active Successful; re-plan No changes. Condition 6: (1) probes before/after equal: empty headers CONTRACT_VERSION, cottonwood non-existent user NOT_AUTHORIZED, no FunctionError; (2) section-3 read on the DEPLOYED bytes (get-function zip = /K1eLPu): Inflection 226 YTD SERVED 0.024030831373 = independent chain, 184 partitions; (3) 49F account 0010023253 YTD 0.028511355170711017 on old and deployed bytes, fee_basis NET -> GROSS; (4) adapter log 21:39:28-21:49:28Z: 9 events, the two probe invokes only, 0 Traceback/TypeError/ImportModuleError/timeout; the one 'Error' match is probe 2's AuthzError EMPTY_GRANT -> NOT_AUTHORIZED by design | CLOSED 20261002T221038Z |
-| A1 | verify | the Inflection function's first scheduled fire (Mon 2026-10-05 14:00 UTC) read from its own log | census + rows landed |  | OPEN |
+| A1 | verify | the Inflection function's first scheduled fire (Mon 2026-10-05 14:00 UTC) read from its own log | census + rows landed, AND every trading day of 2026 through the fire's day (lib/trading_calendar.py) has a date= partition under Inflection's holdings gold -- a trading day without one FAILS A1 (CTO batch 202 section 1; row IRPT_BCKEND-S292) | PASS under the second amendment 20261007T0927Z @4d87781522 (COO half re-signed, COO_HALF_IRPT_INF_PERFORMANCE_SERVING_A1_AMENDED_20261007.md). (1) MEASURED by 2.0.0_SA_COO~P2 from /aws/lambda/irpt-inf-holdings-performance-lambda, 2026-10-05 14:00-14:20Z: 2026-10-02 rows=974 LANDED complete=True census OK 798 / NON-POSITIVE-BASE 176; EMIT 1 day landed. (2) MEASURED by laptop 3.0.0_SA_CVO @ef3d3dd9cd (FILE IRPT_BCKEND_LEG_A1_DEPLOYED_ADAPTER_MISSING_DAYS_READ_20261007.md) on the SERVING adapter NU6YVERL (sha256 of the downloaded bytes = CodeSha256), YTD 2026-01-01..2026-10-05, 187 partitions, 6 of 975 accounts: every 2026 trading day has a partition or is disclosed with its reason; exactly 2026-05-11, 2026-06-30, 2026-08-10, no fourth (1 account under missing_trading_days, 5 under linked_days, each with its reason). The three days' cause is row S354 (no single close / absent 2026-07-01 source; Inflection held positions all three days). Limits carried: calculation run, not a served response; Lambda's runtime calendar not read; 6 of 975 accounts. | CLOSED 20261007T092521Z |
 
 ## Log
 
@@ -29,33 +29,6 @@
 - 20261002T210857Z LEG P3 closed: plan 7 to add, 0 change, 0 destroy (schedule cron(0 14 ? * MON-FRI *) UTC, input source orion); safe-apply ~21:0xZ Apply
 - 20261002T212638Z LEG G1 closed: commit 2b3048bd22 (the held retained.tf half; audited lane override IRPT_BCKEND_FAST_Y_TFPOLICY, logged 21:13:02Z, autho
 - 20261002T221038Z LEG F1 closed: full plan 0/2/0 (G1+F1); targeted plan 0/1/0 s3_object_version wjneBb9_ -> 7GwiGHEPjUOS, source_code_hash cdbFZDJA -> /K
-
-## Amendment -- 20261003T032414Z -- leg A1 (CTO batch 202 @8da55ee13b, row IRPT_BCKEND-S292)
-
-A1 also FAILS when any trading day of 2026 through the fire's day has no `date=` partition under Inflection's holdings gold (`lib/trading_calendar.py`). The missed 2026-10-01 was landed 03:17:55Z as one new key (966 rows; row IRPT_BCKEND-S294), so Monday's fire computes 10-02 beside it. Monday's 14:00Z fire stays A1's evidence.
-
-## Amendment -- 20261007T0815Z -- leg A1 (1.0.0_SA_CTO~DELL2, the CTO half for dell2 under NFRA_CTLPLN ADDENDUM v0.12; row IRPT_BCKEND-S348 @8dc6d1f929)
-
-The 20261003 amendment's FAIL clause ("any trading day of 2026 through the fire's day has no `date=` partition") is REPLACED. Row S348 measured that the clause cannot pass for 2026 under the producer's own declared close rule: 2026-05-11 and 2026-08-10 have no single close (the next partition is declared NO_SINGLE_CLOSE), and 2026-06-30's close needs the 2026-07-01 source partition, which is absent. A backfill cannot fill any of the three. The expected outcome is read from the producer's `close_partitions()`, run read-only, and is not predicted.
-
-A1 now PASSES when both hold: (1) the first scheduled fire, read from the function's own log, shows its census and the rows it landed (unchanged); and (2) every 2026 trading day through the fire's day (`lib/trading_calendar.py`) has a `date=` partition, or is named with its reason in the adapter's missing-trading-day disclosure. Exactly three named days are expected: 2026-05-11, 2026-06-30 and 2026-08-10. A fourth missing day FAILS A1. So does any of the three that is absent from the disclosure, or present there without its reason.
-
-Recommendation of laptop `1.0.0_SA_CTO` (msg 106065, relayed by `0.0.0_AB_MSTR~DELL2` msg 115), taken as written. The COO half is re-signed by `2.0.0_SA_COO~P2` against this text before A1 closes. Out of scope here: re-pulling 2026-07-01 and reviewing the NO_SINGLE_CLOSE declarations, which are enrichment for the round analysis, not part of this deploy.
-
-## Note -- 20261007T0823Z -- window past, not half-landed (2.0.0_SA_COO~P2, on 1.0.0_SA_CTO~DELL2 msg 138)
-
-The entry's 80 h window has passed. This is NOT a half-landed deploy. Every activation leg is CLOSED (C1, S0, P2, P3, G1, F1); only the after-read A1 is open.
-- A1 (1) was MEASURED by 2.0.0_SA_COO~P2 on 2026-10-07 from `/aws/lambda/irpt-inf-holdings-performance-lambda`, 10-05 14:00-14:20Z:
-  `2026-10-02 rows=974 LANDED ... census={'OK': 798, 'NON-POSITIVE-BASE': 176}`.
-- A1 (2) is routed to a laptop seat. The dell2 identity is denied on opal-data-inflection (row S347). The read runs the deployed
-  adapter zip for one Inflection account, 2026 YTD, and lists the absences. The COO half is re-signed against the 20261007T0815Z
-  amendment: `org/tier1_exec/2.0.0_SA_COO/deliverables/COO_HALF_IRPT_INF_PERFORMANCE_SERVING_A1_AMENDED_20261007.md`.
-- A1 closes or fails in the tick that reads that row.
-
-## Amendment -- 20261007T0927Z -- leg A1, second amendment (1.0.0_SA_CTO~DELL2; laptop REC msg 106107)
-
-**The bytes A1 grades.** The deployed `irpt-performance-adapter` is CodeSha256 `NU6YVERL...`, LastModified 2026-10-03T18:44:32Z. It was applied as leg B3 of ledger `irpt-p2-window-20261003` (CLOSED 20261003T223316Z: "Inflection still composes"), and that apply superseded this entry's F1 bytes `/K1eLPu`. A1 grades the bytes that serve, which are B3's. That entry closed B3. This entry is not re-opened for it.
-
-**The disclosure field.** The adapter discloses a no-close day in one of two fields, `missing_trading_days` or `linked_days` (a day chained into the next return, "never a second time"; the package's `_missing_trading_days`). Part (2) is read as: each of 2026-05-11, 2026-06-30 and 2026-08-10 is disclosed with its reason under EITHER field. A fourth day in either field FAILS A1, and so does any of the three disclosed in neither.
-
-**Evidence:** laptop `3.0.0_SA_CVO` FILE `..._LEG_A1_DEPLOYED_ADAPTER_MISSING_DAYS_READ_20261007.md` @ef3d3dd9cd (6 of 975 accounts: 1 discloses the three days under `missing_trading_days`, 5 under `linked_days`, each with its reason, and no fourth day). Row IRPT_BCKEND-S354 holds the partition measurement. Part (1) was measured by `2.0.0_SA_COO~P2` (msg 136). The issuer closes A1 against this text and its COO half.
+- 20261003T032414Z A1 AMENDED by 2.0.0_SA_COO~P (CTO batch 202 @8da55ee13b): proof also requires a partition for every trading day; the missed 2026-10-01 was landed 03:17:55Z as one new key (row IRPT_BCKEND-S294)
+- 20261007T092521Z LEG A1 closed: PASS under the second amendment 20261007T0927Z @4d87781522 (COO half re-signed, COO_HALF_IRPT_INF_PERFORMANCE_SERVING_A1
+- 20261007T092521Z CLOSED -- all 7 legs proven

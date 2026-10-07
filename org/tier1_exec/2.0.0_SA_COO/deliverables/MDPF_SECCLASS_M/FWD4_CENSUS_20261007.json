@@ -1,0 +1,2723 @@
+{
+ "denominator_files": 21514,
+ "self_excluded": {
+  "paths": [
+   "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FWD4_CENSUS_20261007.json",
+   "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/fwd4_copy_census.py"
+  ],
+  "reason": "they name every pattern the census looks for; they stay in the denominator"
+ },
+ "scopes": {
+  "repo": {
+   "enumerator": "git ls-files",
+   "extensions": [
+    ".py",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".sh",
+    ".sql",
+    ".json"
+   ],
+   "tracked_entries": 60152,
+   "code_files": 20231
+  },
+  "portal": {
+   "enumerator": "git -C portal ls-files src",
+   "extensions": [
+    ".py",
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".sh",
+    ".sql",
+    ".json"
+   ],
+   "tracked_entries": 1373,
+   "code_files": 1283,
+   "head": "8ddfe409948cc79bb45e5ac27a8136264ce8c9d4"
+  },
+  "gitlinks_not_scanned": {
+   "paths": [
+    "mcportal",
+    "models/factor_scanner",
+    "opal_ai"
+   ],
+   "reason": "submodule pointers; their contents are not part of this repo's git ls-files"
+  }
+ },
+ "surfaces": {
+  "S06": {
+   "paths": [
+    "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py",
+    "data/black_diamond/scripts/gold/E_18.detect_new_securities.py"
+   ],
+   "scanned": true,
+   "copies": 3
+  },
+  "S07": {
+   "paths": [
+    "data/cot/scripts/gold/lib/etf_classifier.py",
+    "data/cot/scripts/gold/B_01b.classify_new_securities.py",
+    "data/cot/scripts/gold/E_18.detect_new_securities.py"
+   ],
+   "scanned": true,
+   "copies": 3
+  },
+  "S10": {
+   "paths": [
+    "data/inf/scripts/classification/classify_assets.py"
+   ],
+   "scanned": true,
+   "copies": 2
+  },
+  "S11": {
+   "paths": [
+    "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py"
+   ],
+   "scanned": true,
+   "copies": 1
+  },
+  "S12": {
+   "paths": [
+    "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+    "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classifier.py"
+   ],
+   "scanned": true,
+   "copies": 5
+  },
+  "S13": {
+   "paths": [
+    "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py",
+    "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+    "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py",
+    "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py"
+   ],
+   "scanned": true,
+   "copies": 4,
+   "note": "the PRD writes short paths; resolved against git ls-files under infra/aws/lambda/v2_portal (see s13_resolution). yang-generate-holdings-attribution and yang-generate-positioning carry etf_classifications_dynamodb.py (BYTE-EQUAL to _shared, see shipped_copies)"
+  },
+  "S14": {
+   "paths": [
+    "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/fwd4_copy_census.py"
+   ],
+   "scanned": true,
+   "copies": 0,
+   "note": "the instrument itself; it reads code only"
+  },
+  "S15": {
+   "paths": [
+    "lib/research/identity/positioning_chain.py"
+   ],
+   "scanned": true,
+   "copies": 0,
+   "note": "positioning_chain.py:163 classify_identifier assigns an IDENTIFIER kind (cusip/figi/sedol/unclassified), not a security class: no copy"
+  },
+  "S16": {
+   "paths": [
+    "portal/src/pages/Positioning/constants/etf-categories.ts",
+    "portal/src/components/holdings/HoldingsBreakdownTable.tsx"
+   ],
+   "scanned": true,
+   "copies": 1
+  },
+  "S22": {
+   "paths": [
+    "infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py"
+   ],
+   "scanned": true,
+   "copies": 2
+  },
+  "S23": {
+   "paths": [
+    "portal/src/pages/Attribution/constants/etf-categories.ts",
+    "portal/src/pages/Attribution/constants/holdings-shared.tsx"
+   ],
+   "scanned": true,
+   "copies": 1
+  },
+  "S24": {
+   "paths": [
+    "portal/src/lib/tickerRegistry.ts"
+   ],
+   "scanned": true,
+   "copies": 2
+  },
+  "S25": {
+   "paths": [
+    "data/black_diamond/scripts/classification/resolve_tickers.py"
+   ],
+   "scanned": true,
+   "copies": 1
+  },
+  "S26": {
+   "paths": [
+    "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py"
+   ],
+   "scanned": true,
+   "copies": 0,
+   "note": "the PRD writes yang-generate-positioning/lambda_function.py:95; the real path is under yang_pipeline/positioning/. ETF_GEOGRAPHY_MAPPING there maps ticker -> region (US, ...), not ticker -> class, so it is outside the four kinds; reported, not counted"
+  }
+ },
+ "copies": [
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+   "line": 1,
+   "surface": "S12",
+   "kind": "client-copy",
+   "band": "prod",
+   "detail": "differs from infra/aws/lambda/v2_portal/_shared/etf_classification.py"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py",
+   "line": 1,
+   "surface": "S13",
+   "kind": "client-copy",
+   "band": "prod",
+   "detail": "differs from infra/aws/lambda/v2_portal/_shared/etf_classification.py"
+  },
+  {
+   "path": "data/assets/scripts/analysis/tests/test_commonwealth_price_need.py",
+   "line": 21,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "17 entries, lines 21-85"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_classification.py",
+   "line": 62,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 62-65"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_narrowed.py",
+   "line": 45,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 45-58"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_narrowed.py",
+   "line": 89,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 89-106"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_unclassified.py",
+   "line": 39,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "5 entries, lines 39-46"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_unclassified.py",
+   "line": 108,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 108-109"
+  },
+  {
+   "path": "data/assets/scripts/gold/runners_49f/d00_census_out.json",
+   "line": 24558,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "13 entries, lines 24558-24558"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py",
+   "line": 50,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "57 entries, lines 50-188"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/E_25.aua_decomposition_audit.py",
+   "line": 61,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "5 entries, lines 61-61"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/test_composition_canonical.py",
+   "line": 56,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 56-58"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/test_composition_canonical.py",
+   "line": 165,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 165-167"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/test_etf_classifier_canonical.py",
+   "line": 47,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 47-49"
+  },
+  {
+   "path": "data/black_diamond/scripts/silver/tests/test_assets_dim_canonical.py",
+   "line": 62,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "6 entries, lines 62-80"
+  },
+  {
+   "path": "data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py",
+   "line": 52,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 52-73"
+  },
+  {
+   "path": "data/cot/scripts/gold/tests/test_cot_position_rule.py",
+   "line": 16,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "7 entries, lines 16-38"
+  },
+  {
+   "path": "data/cot/scripts/gold/tests/test_other_admission.py",
+   "line": 25,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 25-43"
+  },
+  {
+   "path": "data/transcripts/scripts/tests/test_slicer.py",
+   "line": 214,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 214-216"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/_scope/tests/test_canonical_profile_reads.py",
+   "line": 100,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 100-110"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_aggregates.py",
+   "line": 58,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "8 entries, lines 58-89"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_aggregates.py",
+   "line": 117,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "18 entries, lines 117-239"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/holdings/tests/test_target_fold.py",
+   "line": 36,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 36-39"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/research/tests/fixtures/held/held_fixture.json",
+   "line": 50,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 50-62"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/research/tests/fixtures/opal_overview/classifier_rows.json",
+   "line": 4,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 4-7"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/research/tests/fixtures/opal_producer/classifier_rows.json",
+   "line": 4,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 4-6"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/research/tests/fixtures/overview/held_rows.json",
+   "line": 8,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 8-10"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/ycharts/research/tests/test_layout_overview.py",
+   "line": 572,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 572-578"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py",
+   "line": 64,
+   "surface": "S13",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "6 entries, lines 64-74"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py",
+   "line": 110,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 110-161"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py",
+   "line": 197,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 197-228"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/tests/test_find_by_cusip_filter.py",
+   "line": 15,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 15-19"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+   "line": 52,
+   "surface": "S12",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "135 entries, lines 52-266"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+   "line": 552,
+   "surface": "S12",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "3 entries, lines 552-557"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+   "line": 650,
+   "surface": "S12",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "3 entries, lines 650-650"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py",
+   "line": 47,
+   "surface": "S13",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "112 entries, lines 47-234"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py",
+   "line": 400,
+   "surface": "S13",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "3 entries, lines 400-400"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/lambda_function.py",
+   "line": 31,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "5 entries, lines 31-35"
+  },
+  {
+   "path": "lib/research/api/tests/test_av6_cold_start.py",
+   "line": 50,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 50-53"
+  },
+  {
+   "path": "lib/research/api/tests/test_list_rows_classification.py",
+   "line": 163,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "3 entries, lines 163-197"
+  },
+  {
+   "path": "org/critical_paths/change_management/20260929T2355Z_mdpf-secclass-seed-fields-20260929_READBACK.json",
+   "line": 51,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "7 entries, lines 51-93"
+  },
+  {
+   "path": "org/critical_paths/change_management/20260930T0221Z_mdpf-secclass-backfill-20260930_READBACK.json",
+   "line": 12,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "4 entries, lines 12-30"
+  },
+  {
+   "path": "org/critical_paths/change_management/20260930T0728Z_mdpf-secclass-legacy-label-20260930_PREREAD.json",
+   "line": 88,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "225 entries, lines 88-2092"
+  },
+  {
+   "path": "org/critical_paths/change_management/20260930T0731Z_mdpf-secclass-instrument-kind-20260930_PREREAD.json",
+   "line": 17,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "155 entries, lines 17-1556"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~10/ac3_before_after_five_classes.py",
+   "line": 77,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 77-83"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_ac3_bar_v2.py",
+   "line": 32,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "7 entries, lines 32-54"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_ac3_served_read.py",
+   "line": 12,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "11 entries, lines 12-14"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_bar_table.py",
+   "line": 24,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "4 entries, lines 24-27"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/u4_ac3_member_table.py",
+   "line": 27,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "12 entries, lines 27-57"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/u4_ac4b_second_store.py",
+   "line": 104,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "12 entries, lines 104-107"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/build_fixtures_v8.js",
+   "line": 94,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 94-96"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/drive_yang_generators_recorded_events_v8.py",
+   "line": 91,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "16 entries, lines 91-99"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_after.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "290 entries, lines 5-3975"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "23 entries, lines 5-313"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 341,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "76 entries, lines 341-1377"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 1405,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "58 entries, lines 1405-2200"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 2228,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "38 entries, lines 2228-2746"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 2774,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "73 entries, lines 2774-3765"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_before.json",
+   "line": 3793,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "15 entries, lines 3793-3975"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_compare_stores.py",
+   "line": 29,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "13 entries, lines 29-41"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_retag.py",
+   "line": 63,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "6 entries, lines 63-69"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/r1_rollback.py",
+   "line": 63,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "6 entries, lines 63-69"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/v8_ac8_thirteen.py",
+   "line": 16,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "13 entries, lines 16-28"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~2/ac5_negative_control.py",
+   "line": 47,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 47-49"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~21/v3_ac6_live_read_after.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "5 entries, lines 5-44"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~21/v3_ac6_live_read_before.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "5 entries, lines 5-44"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_ac2_management_style_exercise.py",
+   "line": 125,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 125-138"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~6/ac6_served_grain_readings.py",
+   "line": 35,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 35-39"
+  },
+  {
+   "path": "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round48/checks/fixtures/etfc_held_before.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "36 entries, lines 5-320"
+  },
+  {
+   "path": "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round6/checks/e-2.AC4.py",
+   "line": 31,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "5 entries, lines 31-31"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 18,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "139 entries, lines 18-1724"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 1786,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "6 entries, lines 1786-1851"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 2423,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "10 entries, lines 2423-2540"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 2852,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 2852-2878"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 6063,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "23 entries, lines 6063-6349"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 7415,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "9 entries, lines 7415-7506"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 10808,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 10808-10834"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 11705,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 11705-11731"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_COT_NEW_RESULTS_20260926.json",
+   "line": 12030,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "91 entries, lines 12030-13161"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFY_ONCE_RESULTS_20260925.json",
+   "line": 3097,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 3097-3125"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/COT_NEW_WRITE_SET_20260926.json",
+   "line": 900,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 900-926"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/ETF_TAG_WRITE_SET_20260926.json",
+   "line": 16,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "45 entries, lines 16-270"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R25_CHECKS/r25_etf_class_census.py",
+   "line": 17,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 17-17"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R27_CHECKS/r27_unknown_census.py",
+   "line": 16,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 16-16"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R28_CHECKS/r28_release_census.py",
+   "line": 19,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 19-19"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R29_CHECKS/r29_narrowed_census.py",
+   "line": 21,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 21-21"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R29_NARROWED_CENSUS_20260930.json",
+   "line": 39033,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 39033-39043"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R29_NARROWED_CENSUS_20260930.json",
+   "line": 48874,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 48874-48884"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BACKFILL_CENSUS_20260929.json",
+   "line": 256,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "1760 entries, lines 256-15988"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BACKFILL_CENSUS_20260929.json",
+   "line": 16627,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "1436 entries, lines 16627-29497"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BACKFILL_CENSUS_20260929.json",
+   "line": 29600,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "139 entries, lines 29600-30824"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/r1_bd_resolution_census.py",
+   "line": 20,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 20-20"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_COT_CALLER_CENSUS_20260930.json",
+   "line": 152,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "198 entries, lines 152-1925"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_CUSIP_CENSUS_20260930.json",
+   "line": 133,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "349 entries, lines 133-3803"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_FWD3_PLAN_20260930.json",
+   "line": 13,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "4 entries, lines 13-37"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R4_MODEL_CLASSIFY_CENSUS_20260930.json",
+   "line": 3204,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "11 entries, lines 3204-3358"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R4_MODEL_CLASSIFY_CENSUS_20260930.json",
+   "line": 3578,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "8 entries, lines 3578-3677"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R4_MODEL_CLASSIFY_CENSUS_20260930.json",
+   "line": 3919,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 3919-3931"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R5_CUSIP_ACT/READ_BACK_20260930T164619Z.json",
+   "line": 28,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "348 entries, lines 28-3340"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py",
+   "line": 693,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 693-727"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_bbg_reader_census.py",
+   "line": 95,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 95-102"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/test_classify_holdings_all_classes.py",
+   "line": 24,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "5 entries, lines 24-24"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 275,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "26 entries, lines 275-650"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 680,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "44 entries, lines 680-1325"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 1355,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "5 entries, lines 1355-1415"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 1445,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 1445-1475"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 1505,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "14 entries, lines 1505-1700"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 1730,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "19 entries, lines 1730-2000"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2030,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "3 entries, lines 2030-2060"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2120,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "6 entries, lines 2120-2195"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2240,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "12 entries, lines 2240-2390"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2480,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "6 entries, lines 2480-2555"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2585,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "20 entries, lines 2585-2870"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 2915,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "26 entries, lines 2915-3290"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_BD_290_CENSUS_20261002T0953Z.json",
+   "line": 3320,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "19 entries, lines 3320-3590"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/r8_multi_asset_reader_census.py",
+   "line": 20,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "9 entries, lines 20-20"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/test_bd_identity_read.py",
+   "line": 25,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "5 entries, lines 25-29"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/test_bd_mix_keeps_every_class.py",
+   "line": 53,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "6 entries, lines 53-62"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/test_write_bd_mapped_rows.py",
+   "line": 29,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "8 entries, lines 29-45"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/MULTI_ASSET_REMAP_B_HELD_20261007.json",
+   "line": 16,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "10 entries, lines 16-86"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R9_CHECKS/MULTI_ASSET_REMAP_B_HELD_20261007.json",
+   "line": 112,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "7 entries, lines 112-148"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND2_CVO_SOURCE_CONTROLS_20260911_Z.json",
+   "line": 48,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "7 entries, lines 48-94"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_EVIDENCE_20260912_Z.json",
+   "line": 1115,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "7 entries, lines 1115-1161"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_INTAKE_20260912_Z.json",
+   "line": 704,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "5 entries, lines 704-705"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json",
+   "line": 379,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "40 entries, lines 379-464"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/posn_asttax_round2_cvo_controls.py",
+   "line": 18,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "4 entries, lines 18-21"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/deZ_ETFS_INGEST_T5_PINNED_platinum_positioning_data_20260824T123047Z.json",
+   "line": 125,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "88 entries, lines 125-2213"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/deZ_ETFS_INGEST_T5_PINNED_platinum_positioning_data_20260824T123047Z.json",
+   "line": 2328,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "23 entries, lines 2328-2856"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DE_ClientPlatform/deliverables/deZ_ETFS_INGEST_T5_SYNTHETIC_24value_fixture_20260824.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "tooling",
+   "detail": "111 entries, lines 1-1"
+  },
+  {
+   "path": "portal/src/lib/tickerRegistry.ts",
+   "line": 105,
+   "surface": "S24",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "31 entries, lines 105-143"
+  },
+  {
+   "path": "portal/src/lib/tickerRegistry.ts",
+   "line": 169,
+   "surface": "S24",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "22 entries, lines 169-220"
+  },
+  {
+   "path": "portal/src/pages/Attribution/constants/etf-categories.ts",
+   "line": 16,
+   "surface": "S23",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "55 entries, lines 16-98"
+  },
+  {
+   "path": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-103.canonical-sub-asset-and-stocks-last.test.ts",
+   "line": 58,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "8 entries, lines 58-86"
+  },
+  {
+   "path": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-113.securities-fold.test.ts",
+   "line": 72,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "11 entries, lines 72-93"
+  },
+  {
+   "path": "portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-94.positioning-order.test.ts",
+   "line": 44,
+   "surface": "UNMAPPED",
+   "kind": "literal",
+   "band": "test",
+   "detail": "4 entries, lines 44-48"
+  },
+  {
+   "path": "portal/src/pages/Positioning/constants/etf-categories.ts",
+   "line": 11,
+   "surface": "S16",
+   "kind": "literal",
+   "band": "prod",
+   "detail": "36 entries, lines 11-66"
+  },
+  {
+   "path": ".tools/hooks/post-tool-hooks.sh",
+   "line": 64,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": ".tools/hooks/post-tool-telemetry.sh",
+   "line": 59,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/classify_bd_securities.py",
+   "line": 9,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py",
+   "line": 177,
+   "surface": "S06",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "data/cot/scripts/gold/B_01b.classify_new_securities.py",
+   "line": 178,
+   "surface": "S07",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "data/inf/scripts/classification/classify_assets.py",
+   "line": 165,
+   "surface": "S10",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py",
+   "line": 278,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/ec2/opal-gateway/app/tools.py",
+   "line": 194,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/lambda/exec-summary-generator/config.py",
+   "line": 27,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/lambda/infrastructure_monitor/openai/types/moderation_create_params.py",
+   "line": 27,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/lambda/news_trending_analysis/lambda_function.py",
+   "line": 38,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py",
+   "line": 47,
+   "surface": "S22",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/tests/test_etf_classification_scheduled.py",
+   "line": 183,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "test",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "lib/research/filings/analyze.py",
+   "line": 60,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "lib/research/filings/tests/test_translation.py",
+   "line": 65,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "test",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "lib/research/management/ceo_search.py",
+   "line": 108,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "lib/research/posture/judge.py",
+   "line": 62,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "prod",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/mcp/hooks/post-tool-hooks.sh",
+   "line": 64,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/mcp/hooks/post-tool-telemetry.sh",
+   "line": 59,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/mcp/server.py",
+   "line": 2285,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~37/scripts/ac1_one_call_pair.py",
+   "line": 222,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~2/probes/og_r1.py",
+   "line": 290,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/bd_securities_write_batch_a.py",
+   "line": 60,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/bd_securities_write_cot_new.py",
+   "line": 65,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/classify_cot_new_once.py",
+   "line": 88,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/classify_named_rows_once.py",
+   "line": 37,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py",
+   "line": 1013,
+   "surface": "UNMAPPED",
+   "kind": "model",
+   "band": "tooling",
+   "detail": "model-API call and a class write in one code file"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+   "line": 913,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "data/assets/scripts/gold/investor_reporting/tests/test_holdings_narrowed.py",
+   "line": 64,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py",
+   "line": 58,
+   "surface": "S11",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/backfill_name_aliases.py",
+   "line": 38,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "4 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/classify_bd_securities.py",
+   "line": 20,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "3 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/resolve_tickers.py",
+   "line": 53,
+   "surface": "S25",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "4 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/seed_bd_securities.py",
+   "line": 22,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/classification/seed_canonical_securities.py",
+   "line": 29,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "5 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/B_01b.classify_new_securities.py",
+   "line": 42,
+   "surface": "S06",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "3 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/E_18.detect_new_securities.py",
+   "line": 44,
+   "surface": "S06",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "5 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/test_etf_classifier_canonical.py",
+   "line": 130,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/test_thread_trace.py",
+   "line": 58,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "6 code line(s) naming the old list"
+  },
+  {
+   "path": "data/black_diamond/scripts/gold/tests/thread_trace.py",
+   "line": 105,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "3 code line(s) naming the old list"
+  },
+  {
+   "path": "data/cot/scripts/gold/B_01b.classify_new_securities.py",
+   "line": 43,
+   "surface": "S07",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "3 code line(s) naming the old list"
+  },
+  {
+   "path": "data/cot/scripts/gold/E_18.detect_new_securities.py",
+   "line": 54,
+   "surface": "S07",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "4 code line(s) naming the old list"
+  },
+  {
+   "path": "data/cot/scripts/gold/tests/test_cot_etf_classifier_canonical.py",
+   "line": 85,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "data/inf/scripts/classification/classify_assets.py",
+   "line": 65,
+   "surface": "S10",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "6 code line(s) naming the old list"
+  },
+  {
+   "path": "docs/briefs/cmpaws-iam-axis-census-20260603.json",
+   "line": 1064,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "8 line(s) naming the old list"
+  },
+  {
+   "path": "docs/briefs/irpt-manual-walk-v2-findings-20260929.json",
+   "line": 519,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "docs/briefs/irpt-ui-review-findings-20260926.json",
+   "line": 930,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "docs/contracts/investor-reporting/v1/ComparisonCatalogue.schema.json",
+   "line": 6,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/ci/shared-infra-resource-map.json",
+   "line": 114,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/investor-reporting/_contracts/ComparisonCatalogue.schema.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py",
+   "line": 65,
+   "surface": "S22",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py",
+   "line": 538,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py",
+   "line": 243,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "test",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classifier.py",
+   "line": 36,
+   "surface": "S12",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/nfra_terraform_p1/desired_index.json",
+   "line": 8459,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/nfra_terraform_p1/slice_iam.json",
+   "line": 1855,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/nfra_terraform_p1/slice_storage.json",
+   "line": 338,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/terraform/investor-reporting/CHANGELOG.json",
+   "line": 1679,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/terraform/news-pipeline/CHANGELOG.json",
+   "line": 507,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "infra/aws/terraform/shared-infra/CHANGELOG.json",
+   "line": 523,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/logic/registry/resources.json",
+   "line": 1565,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "infra/system/ontology/worldmodel/10_census/instruments/ddb_configs_from_dr.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "infra/system/ontology/worldmodel/10_census/instruments/iam_policies_local.json",
+   "line": 79,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/system/ontology/worldmodel/10_census/instruments/re_us-east-1.json",
+   "line": 14978,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "infra/system/ontology/worldmodel/10_census/instruments/tagged_us-east-1.json",
+   "line": 236,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/critical_paths/.open_deploys/bd-securities-cot-new-p1-m-20260926.json",
+   "line": 2,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/critical_paths/.open_deploys/secclass-bd-thread-r2-and-irpt-narrowed-m-20260930.json",
+   "line": 62,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_COMPARISON_R9.json",
+   "line": 1910,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/HAND_REMEASURE_R19.json",
+   "line": 118,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_CAMPAIGN_R5.json",
+   "line": 551,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_CAMPAIGN_R6.json",
+   "line": 2804,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/PLACEHOLDER_RESOLUTION_R18.json",
+   "line": 232,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "12 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fence_plan.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "46 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/fwd2_plan.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "46 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/roots/infra__aws__terraform__news-pipeline.r2.json",
+   "line": 1235,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~3/roots/infra__aws__terraform__shared-infra.r2.json",
+   "line": 186,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/fwd2_plan_after.r2.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "46 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~4/fwd2_plan_before.r2.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "46 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/2.0.0_SA_COO~G/fixed_inputs/r2/RAISE_POPULATION.json",
+   "line": 966,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/e6_walk/live-iam-census.json",
+   "line": 2657,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/walk_r7/live-iam-census.json",
+   "line": 2657,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/LIVE_NAMES.json",
+   "line": 263,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D14/LGIC/LGIC_NAMING/deliverables/2.0.0_SA_COO~G/fixed_inputs/N6_SAMPLE.json",
+   "line": 87,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/POSN_ASTTAX.TO-T5-1.the-bar-step-2-measured-against-the-served-artifact.proof_of_spec.json",
+   "line": 111,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~14/t5_bar_table.py",
+   "line": 75,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 code line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.extend-preserve-dont-clobber-to-the-seed-script.proof_of_spec.json",
+   "line": 59,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~16/POSN_ASTTAX.TO-U3-1.proof_of_spec.json",
+   "line": 59,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.proof_of_spec.json",
+   "line": 99,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "10 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/POSN_ASTTAX.TO-U4-1.settle-the-retag-member-set-at-eleven.proof_of_spec.json",
+   "line": 99,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "10 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~17/u4_ac4b_second_store.py",
+   "line": 42,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 code line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~19/POSN_ASTTAX.TO-V8-1.the-retag-last-both-stores-both-levels.proof_of_spec.json",
+   "line": 342,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~21/POSN_ASTTAX.TO-V3-1.apply-the-seeder-guard.proof_of_spec.json",
+   "line": 121,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~21/v3_mutant_control_re.py",
+   "line": 238,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/POSN_ASTTAX.TO-X1-1.seeder-guard-reconciled-with-the-retag-write-surface.proof_of_spec.json",
+   "line": 71,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D4/POSN/POSN_ASTTAX/deliverables/0.9.0_WK_POSN_ASTTAX~27/x1_ac2_management_style_exercise.py",
+   "line": 242,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~1/MDPF_SECCLASS.TO-SC-k1.scheduled-classification.proof_of_spec.json",
+   "line": 45,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~2/MDPF_SECCLASS.TO-SC-k2.seed-kind-and-industry.proof_of_spec.json",
+   "line": 73,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~3/MDPF_SECCLASS.TO-SC-t1.bd-classifier-canonical.proof_of_spec.json",
+   "line": 51,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~3/MDPF_SECCLASS.TO-SC-t2.bd-assets-dim-canonical.proof_of_spec.json",
+   "line": 24,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~3/MDPF_SECCLASS.TO-SC-t3.bd-gold-surfaces-canonical.proof_of_spec.json",
+   "line": 91,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~3/MDPF_SECCLASS.TO-SC-t4.thread-trace.proof_of_spec.json",
+   "line": 23,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "5 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~4/MDPF_SECCLASS.TO-SC-e9.cusip-keyed-rows.proof_of_spec.json",
+   "line": 23,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~5/MDPF_SECCLASS.TO-SC-e2.instrument-kind-population.proof_of_spec.json",
+   "line": 23,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~6/MDPF_SECCLASS.TO-SC-e4.cottonwood-caller.proof_of_spec.json",
+   "line": 23,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "8 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~6/MDPF_SECCLASS.TO-SC-e7.e18-iam-and-schedule.proof_of_spec.json",
+   "line": 82,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "7 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~7/MDPF_SECCLASS.TO-SC-e6.fwd3-one-edit-prep.proof_of_spec.json",
+   "line": 33,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~9/MDPF_SECCLASS.TO-SC-e11.cusip-guard-seed-bd-securities.proof_of_spec.json",
+   "line": 14,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D8/MDPF/MDPF_SECCLASS/project.json",
+   "line": 13,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~41/IRPT_BCKEND.TO-IB-m19-1.r1-readbacks-on-the-0928-cot-run.proof_of_spec.json",
+   "line": 53,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "10 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~93/IRPT_BCKEND.TO-IB-m29-291.holdings-narrowed-canonical-release.proof_of_spec.json",
+   "line": 23,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.4.0_DS_ClientPlatform~D/NFRA_MCPINDEX.TO-MX-s-6.bd-assets-compaction.proof_of_spec.json",
+   "line": 69,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/projects/ADVI_CLSPT2.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/projects/ADVI_CLSUNI.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/projects/ADVI_COTSNP.json",
+   "line": 12,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/projects/ADVI_INFGRD.json",
+   "line": 11,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/projects/ADVI_TICKID.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/standards/MDPF_SECCLASS_CONTRACT.json",
+   "line": 60,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730/iam_policies_local.json",
+   "line": 79,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730/re_us-east-1.json",
+   "line": 14978,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/AWS_ESTATE_CENSUS_20260730/tagged_us-east-1.json",
+   "line": 236,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/BD_SECURITIES_BATCH_A_RECEIPT_20260925.json",
+   "line": 2,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/BD_SECURITIES_COT_NEW_P1_RECEIPT_20260926.json",
+   "line": 2,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/BD_SECURITIES_WRITE_SET_20260925.json",
+   "line": 3,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/CLASSIFIER_WIDENING_REQUEST_ROWS_AND_READERS_20260924.json",
+   "line": 3,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/HOLDINGS_CLASSIFICATION_CENSUS_20260924.json",
+   "line": 4,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/HOLDINGS_FIRM_PRINCIPAL_GRANTS_20260925.json",
+   "line": 20,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_CHECKS/r19_m1_r1_verdicts.py",
+   "line": 10,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R19_R1_READBACK_20260928.json",
+   "line": 29,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/bd_securities_write_batch_a.py",
+   "line": 28,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/bd_securities_write_cot_new.py",
+   "line": 31,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/classify_cot_new_once.py",
+   "line": 65,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/etf_classifications_coverage_census.py",
+   "line": 50,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/holdings_classification_census.py",
+   "line": 68,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e26.py",
+   "line": 35,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/sc_e32_reclassify_set_check.py",
+   "line": 52,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_BACKFILL_CENSUS_20260929.json",
+   "line": 261,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3317 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/r1_bd_resolution_census.py",
+   "line": 36,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R1_CHECKS/r1_thread_trace.py",
+   "line": 33,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_CUSIP_CENSUS_20260930.json",
+   "line": 103,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_E18_IAM_20260930.json",
+   "line": 5,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_FWD3_PLAN_20260930.json",
+   "line": 29,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_CHECKS/r6_model_reader_census.py",
+   "line": 736,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "7 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R6_MODEL_READER_CENSUS_20260930.json",
+   "line": 170,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_BBG_READER_CENSUS_20261005.json",
+   "line": 220,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "7 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_bbg_reader_census.py",
+   "line": 630,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "4 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_MODEL_READER_CENSUS_20261001.json",
+   "line": 170,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_MODEL_READER_CENSUS_20261001_0730Z.json",
+   "line": 170,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_MODEL_READER_CENSUS_20261001_1100Z.json",
+   "line": 170,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_MULTI_ASSET_READER_CENSUS_20261002.json",
+   "line": 166,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/R8_MULTI_ASSET_READER_CENSUS_AFTER_PRODUCER_20261002.json",
+   "line": 172,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "6 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/bd_290_census.py",
+   "line": 31,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/build_bd_mapped_set.py",
+   "line": 78,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/write_bd_mapped_rows.py",
+   "line": 86,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND3_CVO_INTAKE_20260912_Z.json",
+   "line": 566,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "7 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_INDEX_CHECK_20260914_Z.json",
+   "line": 17,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_INTAKE_20260914_Z.json",
+   "line": 172,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "31 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_PROOF_CHECK_20260914_Z.json",
+   "line": 148,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_RELEASE_CHECK_20260914_Z.json",
+   "line": 212,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/POSN_ASTTAX_ROUND4_CVO_SOURCE_CHECK_20260914_Z.json",
+   "line": 398,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "11 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_motifs.json",
+   "line": 31113,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "36 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json",
+   "line": 1286,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/STRUCTURE_POPULATION_CARRIER.json",
+   "line": 1,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "46 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/PROOF_OF_SPEC_A07_ALIASJOIN_DELTA_20260811.json",
+   "line": 91,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/PROOF_OF_SPEC_A07_CLASSIFICATION_DIM_20260811.json",
+   "line": 71,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform/deliverables/motif_c2c3_materialize_ab.json",
+   "line": 4881,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "2 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform~G/deliverables/perfrp_a1c_recoverability.py",
+   "line": 101,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 code line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.4.0_DS_ClientPlatform~N/deliverables/ADVI_49F.c02-VINTAGEDIGEST.proof_of_spec.json",
+   "line": 95,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "1 line(s) naming the old list"
+  },
+  {
+   "path": "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/D11_L3W2_FUSION/firm_cohort_shared.json",
+   "line": 90,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "tooling",
+   "detail": "3 line(s) naming the old list"
+  },
+  {
+   "path": "workflows/legacy_transform/blackdiamond-49financial/20260919T034609Z-c28c728/live-iam-census.json",
+   "line": 2657,
+   "surface": "UNMAPPED",
+   "kind": "old-list",
+   "band": "prod",
+   "detail": "5 line(s) naming the old list"
+  }
+ ],
+ "plant": {
+  "ran": true,
+  "found": true,
+  "planted": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/zz_fwd4_plant_46b9eaa1b1b4/etf_classification.py",
+  "source": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+  "kind": "client-copy,literal",
+  "kinds_reported": [
+   "client-copy",
+   "literal"
+  ],
+  "rescan": {
+   "scope_prefix": "infra/aws/lambda/v2_portal/",
+   "files": 285
+  },
+  "removed": true,
+  "untracked_check": "git status --short on the plant path must be empty"
+ },
+ "copies_by_kind": {
+  "literal": 134,
+  "client-copy": 2,
+  "old-list": 142,
+  "model": 27
+ },
+ "copies_by_band": {
+  "prod": 60,
+  "test": 44,
+  "tooling": 201
+ },
+ "copies_by_surface": {
+  "S06": 3,
+  "S07": 3,
+  "S10": 2,
+  "S11": 1,
+  "S12": 5,
+  "S13": 4,
+  "S16": 1,
+  "S22": 2,
+  "S23": 1,
+  "S24": 2,
+  "S25": 1,
+  "UNMAPPED": 280
+ },
+ "shipped_copies": [
+  {
+   "path": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
+   "shared_source": "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+   "byte_equal": false,
+   "verdict": "DIFFERS",
+   "bytes": 46247,
+   "shared_bytes": 73725
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py",
+   "shared_source": "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+   "byte_equal": false,
+   "verdict": "DIFFERS",
+   "bytes": 26406,
+   "shared_bytes": 73725
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py",
+   "shared_source": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+   "byte_equal": true,
+   "verdict": "BYTE-EQUAL",
+   "bytes": 14746,
+   "shared_bytes": 14746
+  },
+  {
+   "path": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/etf_classifications_dynamodb.py",
+   "shared_source": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py",
+   "byte_equal": true,
+   "verdict": "BYTE-EQUAL",
+   "bytes": 14746,
+   "shared_bytes": 14746
+  }
+ ],
+ "s13_resolution": {
+  "yang-generate-etf-returns/etf_classification.py": [
+   "infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py"
+  ],
+  "yang-generate-holdings-attribution/etf_classifications_dynamodb.py": [
+   "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py"
+  ],
+  "yang-generate-positioning/lambda_function.py": [
+   "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py"
+  ],
+  "market-overview-tiered-generator/lambda_function.py": [
+   "infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py"
+  ]
+ },
+ "unreadable": [],
+ "read_truncated_over_bytes": {
+  "limit": 3000000,
+  "files": [
+   "integrations/bloomberg/research/field_map.json",
+   "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/TIEOUT_49F_BD_POPULATION_E2.json",
+   "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~6/BD_POPULATION_PLAN_E3.json",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_MSBEFF/log_audit_3mo.json",
+   "org/tier1_exec/1.0.0_SA_CTO/deliverables/NFRA_TOOLUNIFY_CENSUS/D.raw_evidence.json",
+   "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_RESAPP_ROUND10_CVO_AUDIT_20260915_W.json",
+   "org/tier1_exec/3.0.0_SA_CVO/deliverables/kimi_subdivision_harness/c2_motifs.json",
+   "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/L2_VIEW_ARTIFACTS.json",
+   "org/tier1_exec/4.0.0_SA_CRO~A/deliverables/NFRA_C3MATERIALIZE.TO-L2-CROA/STRUCTURE_POPULATION_CARRIER.json",
+   "org/tier2_senior/0.4.0_DS_ClientPlatform~V/deliverables/emissions/perfrp_allocation_account.json",
+   "org/tier2_senior/0.4.0_DS_ClientPlatform~V/deliverables/emissions/perfrp_book_advisor.json",
+   "org/tier2_senior/0.4.0_DS_ClientPlatform~V/deliverables/emissions/perfrp_book_advisor_floor_aligned.json",
+   "org/tier2_senior/0.4.0_DS_ClientPlatform~V/deliverables/emissions/perfrp_gainloss_account.json",
+   "org/tier2_senior/0.4.0_DS_ClientPlatform~V/deliverables/emissions/perfrp_gainloss_relationship.json"
+  ]
+ },
+ "literal_clusters_below_threshold": 258,
+ "thresholds": {
+  "MIN_BLOCK": 3,
+  "MIN_LIST": 5,
+  "GAP": 25
+ },
+ "census_seconds": 60.5
+}
