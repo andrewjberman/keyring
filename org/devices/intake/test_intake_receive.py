@@ -6,6 +6,7 @@ import ast
 import io
 import json
 import os
+import pathlib
 import shutil
 import subprocess
 import sys
@@ -15,6 +16,7 @@ from contextlib import redirect_stdout
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
+import intake_check as ic  # noqa: E402
 import intake_receive as ir  # noqa: E402
 
 TOOL = os.path.join(HERE, "intake_receive.py")
@@ -282,6 +284,79 @@ def case_manifest_problems_refused():
     os.remove(os.path.join(pack2, "mfpkg-1.0-py3-none-any.whl.delivery.txt"))
     res2 = ir.verify_pack(pack2)
     assert not res2["ok"] and any("absent" in d for d in res2["pack_defects"]), res2
+
+
+def pack_by_check_tool(label, dist="checkpkg"):
+    """A pack written by intake_check.run_pack itself (the check tool's own pack function), not by this file's writer."""
+    base = pathlib.Path(TMP_ROOT) / label
+    cfg = ic.Cfg(root=base / "root", records=base / "records", av_json="", sites=[], signer_dir=base / "signer")
+    batch = "unit-batch"
+    rel = cfg.release(batch)
+    rel.mkdir(parents=True)
+    cfg.records_dir(batch).mkdir(parents=True)
+    wheel = os.path.basename(ir.build_synthetic_wheel(str(rel), dist, "1.0", {dist: "VALUE = 1\n"}))
+    sha = ir.sha256_file(os.path.join(str(rel), wheel))
+    checks = [{"n": n, "name": "check%d" % n, "verdict": "passed", "evidence": {"reason": "synthetic"},
+               "rules_out": "synthetic", "leaves": "synthetic"} for n in range(1, 9)]
+    checks[7]["evidence"] = {"signer": "synthetic signer", "path": "synthetic/signature.txt"}
+    rec = {"schema": "intake-check/1", "batch": batch, "file_name": wheel, "held_sha256": sha, "checks": checks,
+           "verdict": "checked", "checked_by": "synthetic", "at": ir.now_utc()}
+    with open(str(cfg.records_dir(batch) / (wheel + ".check.json")), "w", encoding="ascii", newline="\n") as fh:
+        json.dump(rec, fh, indent=2)
+        fh.write("\n")
+    with open(str(rel / (wheel + ".delivery.txt")), "w", encoding="ascii", newline="\n") as fh:
+        fh.write("synthetic delivery note\n")
+    out = base / "pack"
+    sink = io.StringIO()
+    rc = ic.run_pack(cfg, batch, str(out), out=sink)
+    assert rc == 0, sink.getvalue()
+    return str(out), wheel
+
+
+@case
+def case_pack_written_by_check_tool_verifies_and_proves():
+    pack, wheel = pack_by_check_tool("bychecktool")
+    with open(os.path.join(pack, "MANIFEST.json"), "rb") as fh:
+        man = json.loads(fh.read().decode("ascii"))
+    assert isinstance(man, dict) and len(man["files"]) == 1, man
+    for key in ("name", "sha256", "size", "check_record", "check_record_sha256", "delivery", "delivery_sha256"):
+        assert key in man["files"][0], key
+    res = ir.verify_pack(pack)
+    assert res["ok"] and res["verified"] == 1 and res["checked"] == 1 and res["stray"] == [] and not res["pack_defects"], res
+    rc, last, _ = cli("verify", "--from", pack)
+    assert rc == 0 and last == "INTAKE-VERIFY pack=pack wheels=1 verified=1 checked=1 stray=0 ok=True", last
+    rc2, summ, _ = run_prove(pack, scratch_for("bychecktool"))
+    assert rc2 == 0 and summ["installed"] == 1 and summ["imported"] == 1 and summ["refused"] == 0, summ
+
+
+@case
+def case_companion_absent_or_changed_refuses_that_wheel():
+    base_pack, wheel = pack_by_check_tool("companion_base")
+    arms = {"delivery_absent": ("delivery", "absent"), "delivery_changed": ("delivery", "changed"),
+            "record_changed": ("check", "changed"), "bytes_synonym": (None, "synonym")}
+    for label, (which, how) in arms.items():
+        pack = os.path.join(TMP_ROOT, "companion_" + label, "pack")
+        shutil.copytree(base_pack, pack)
+        if how == "synonym":
+            mp = os.path.join(pack, "MANIFEST.json")
+            with open(mp, "rb") as fh:
+                man = json.loads(fh.read().decode("ascii"))
+            man["files"][0]["bytes"] = man["files"][0].pop("size")
+            with open(mp, "w", encoding="ascii") as fh:
+                json.dump(man, fh)
+            assert ir.verify_pack(pack)["ok"], "bytes as a synonym of size was refused"
+            continue
+        target = os.path.join(pack, wheel + (".delivery.txt" if which == "delivery" else ".check.json"))
+        if how == "absent":
+            os.remove(target)
+        else:
+            with open(target, "ab") as fh:
+                fh.write(b" ")
+        res = ir.verify_pack(pack)
+        assert not res["ok"] and res["wheels"][0]["reasons"], (label, res)
+        rc, summ, _ = run_prove(pack, scratch_for("companion_" + label))
+        assert summ["installed"] == 0 and summ["refused"] == 1, (label, summ)
+        assert not os.path.exists(os.path.join(scratch_for("companion_" + label), ir.stem_of(wheel)))
 
 
 @case
