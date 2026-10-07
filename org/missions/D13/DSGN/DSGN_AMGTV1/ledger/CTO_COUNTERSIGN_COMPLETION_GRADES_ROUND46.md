@@ -111,3 +111,34 @@ blockless today. One limit, stated: the per-reason census (vendor absence agains
   coverage. The round-47 walk reads FWD-4, 7 and 8 on covered names, and walks one uncovered name only for its own designed state.
   FWD-7 and FWD-8 stay NOT_REALIZED meanwhile: AMD US is covered and shows no officers, and the Price column's mixed currencies are
   a property of the table, not of the name walked.
+
+## ROUND 47 -- CTO review of portal candidate `ec9f9a0e` (2026-10-07 ~11:2xZ; COO~D msg 30830, close @4650e2f1ed)
+
+**Read by this seat:** the product diff `8ddfe409..ec9f9a0e` in full (3 files, +11/-4, 0 non-ASCII added); `HeaderCards.tsx` around the
+new branch at the candidate; two walk captures from `round35/walk/read-20261007T105958Z/`, looked at: `fwd24-MSFT-US-header.png` at
+full size, and `tabs-BA-US-4-Model.png` at reduced size (its foot is legible in structure, not letter by letter). Not read: the
+check logs, the render instrument's JSON, the other captures.
+
+- **Placement:** `ec9f9a0e` contains `8ddfe409`, and `git ls-remote origin DEV` reads `8ddfe409`, so it is a fast-forward of DEV.
+- **Item 5 (an uncovered name says so once):** `HeaderCards` returns one sentence when every slot is absent and all share one served
+  reason. The MSFT US capture shows "We hold no stored company data for this name yet." once, with no tiles. Correct.
+  - The slots are already filtered to those with a value or a reason, so the branch never prints an empty line.
+  - The rule is keyed on the served SHAPE, not on coverage, because no coverage marker is served. So it also fires for a covered
+    name whose seven figures are all absent for one shared reason. That reads correctly too (one reason, said once).
+- **Item 2 (the Model tab's foot):** `SHORT_NAME` is removed from `V3_HEADER_LABELS`, which is the list the fact row iterates, so the
+  line is gone and no raw key can print in its place. The two wordings are plain. The news source string is mapped on the page to
+  "Articles we collect", beside the existing Bloomberg and Seeking Alpha mappings; an unmapped source reads "source not named".
+- **Item 1 (10 px):** the gap mark is 11 px. One class change.
+- **Item 4 (FWD-21):** 10 of 10 ellipsised labels carry the full name on hover. Focus was not read. Hover meets the condition of
+  ruling 5; FWD-21 stays REALIZED.
+
+**Verdict: APPROVED for DEV.** The page draws what is served and adds no figure.
+- The DEV push of product files is Andrew's word, through `0.0.0_AB_MSTR~Z`. PROD is his separate word.
+- **Item 3 is released to cut:** PRD v0.17 @8730d6c042 is ADMITTED (CVO~Z stamp @c50f85f679). `2.0.0_SA_COO~D` cuts `AV-zy-I` now;
+  FWD-20 is re-graded when the instrument reads PASS.
+
+**Seen in the MSFT capture, pre-existing and not this candidate's:** two served lines begin in lower case ("sector and country are
+not in this security's data"; "no company description is held for this name yet, ..."). FWD-27, producer wording.
+
+**For the next AMGT_RESAPP enrichment list** (named by the close, accepted here): a plain served news-source name; a served
+coverage marker for a pool name outside coverage; the two lower-case served lines above.
