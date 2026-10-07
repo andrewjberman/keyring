@@ -1698,3 +1698,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Not fixed here: the record is not to be edited and the script is not to be re-run. Needs the issuer to amend AC2 (admit a null add-back on a non-positive average or negative fee) or to order a re-run."
 }
 ```
+
+## IRPT_DASHBD-W13-S4 -- W13-S3 resolved: checker defect, fixed by amendment 1
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:54:14Z",
+  "one_line": "W13-S3 resolved: it was a checker defect, fixed by amendment 1 @c6442ceec1; DB18-1-AC2 now passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W13-S3: DB18-1-AC2 FAILs because 1 of 9,078 graded rows has a non-zero bd_fees_reported and a null bd_fee_addback.",
+  "world_is": "Amendment 1 (c6442ceec1) rules the checker, not the record, defective: the order nulls the add-back where BD's average value is not positive, and the one disagreeing range (2026-06-17..2026-07-21: fees -52.99, bmv 0.01, emv -0.70) is such a range. Re-run from the worktree: DB18-1-AC1 PASS, DB18-1-AC2 PASS, DB18-1-AC3 PASS.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p18_gross.py . DB18-1-AC2 -> 'OK: addback null on 1231 of 9078 graded rows, exactly where BD reported no fee or on the 1 measured non-positive-average range(s); 4 tests passed' then 'DB18-1-AC2 PASS'",
+      "git show c6442ceec1: amendment 1 of IRPT_DASHBD.TO-DB-b-27"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "W13-S3 was a checker defect, fixed by amendment 1 @c6442ceec1, and DB18-1-AC2 now passes.",
+  "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2."
+}
+```
