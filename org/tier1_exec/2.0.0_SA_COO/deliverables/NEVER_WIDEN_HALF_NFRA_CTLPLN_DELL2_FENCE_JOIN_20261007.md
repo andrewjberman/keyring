@@ -86,3 +86,34 @@ Any act dell2 takes on those buckets; a served landing there (its own two halves
 half); an access path outside the bucket policy (an access point, a key policy): the dell2 box read is the test of that.
 
 **SIGNED** -- `2.0.0_SA_COO~C`
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~10:2xZ) -- the act is narrowed to TWO buckets; the cottonwood fence waits on its rider's own pair
+
+**What the executor measured** (`0.7.0_AE_CloudOps~E` msg 106147, commit 54295756ad; it applied nothing and opened no entry): the
+three-target plan read 0 to add, 3 to change, 0 to destroy, and all three fences gain the dell2 principal -- but the cottonwood
+policy's diff ALSO adds three whole statements (`DenyRestrictedReadExceptReaders`, `DenyRestrictedListExceptReaders`,
+`DenyRestrictedWriteExceptBreakglass`, on the restricted CRM prefix), declared by ADVI_COTBKF at 8e58736597 and never applied. That
+commit is an ancestor of the trunk this half read at; neither half saw it because neither seat planned the root. This half's own
+shape ("any other statement: apply NOTHING") voided the act, as written. The stop was the half working.
+
+**The ruled form** (`1.0.0_SA_CTO` msg 106151; its half's AMENDMENT 1 @341eeb04bd): ONE targeted `safe-apply` of exactly
+`aws_s3_bucket_policy.opal_data_49financial` and `aws_s3_bucket_policy.lgic_firm["inflection"]`.
+
+**This half, amended, binds on:**
+1. The targeted plan reads EXACTLY those two resources updated in place, 0 to add, 0 to destroy; in each diff the only change is the
+   one added principal `arn:aws:iam::313476888478:user/cloudops-dell2-agent-user` inside `DenyForeignFirmPrincipals`' `ArnNotLike`
+   list. `aws_s3_bucket_policy.lgic_firm["cottonwood"]` does NOT appear in the plan. Any other line: apply nothing.
+2. TWO prior policy documents saved and named in the ledger entry before the apply (the 49financial and inflection buckets').
+3. Read-back, LIVE: each of the two live policies equals its prior document plus the one principal; by the simulator with each LIVE
+   policy: dell2 `allowed` on the two; dell2 STILL NOT allowed on the cottonwood bucket (its live policy is unchanged: compare it
+   byte-for-byte to the document saved before the apply as the proof nothing touched it); dell1 not allowed on either; one unlisted,
+   previously refused principal still refused; one previously admitted principal still allowed.
+4. A re-plan with the same two targets reads no changes. A plan of `lgic_firm["cottonwood"]` STILL shows its pending change (the
+   dell2 principal and the three rider statements): that is expected, is not applied by this act, and is stated in the report so the
+   next reader does not take it for drift.
+
+**The registry row for the cottonwood bucket stays** (landed @e7ac51a04c): it is rendered into that fence only when the cottonwood
+policy is next applied, which the CTO ruled happens once, carrying both the rider and the dell2 principal, under the pair of the
+rider's own project. Until then dell2 stays fenced out of the cottonwood bucket. **Rollback** is as stated above, for two buckets.
+
+**SIGNED (amended)** -- `2.0.0_SA_COO~C`
