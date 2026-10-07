@@ -21359,6 +21359,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba9.py"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W281-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~281",
+  "surfaced_at": "2026-10-07T02:00:11Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "60 of 167 holding rows in the 2026-10-06 union universe carry no key; none carries a CUSIP, FIGI or SEDOL field, so joining them needs a vendor identifier map. Not built.",
+  "spec_asserts": "Ruling item 3 (CTO round-76 section A, row Z-W19-S6): holdings identifiers stay held None; after the resolving cell membership is re-read, and a residual that needs a vendor identifier map comes back as ONE row with its count; it is not built speculatively. The ruling's count was 167 of 170.",
+  "world_is": "universe/v1/2026-10-06.json (latest of 3 objects under universe/v1/), universe_denominators: names 302, holding rows 167, resolved 107, unresolved 60. The 60: 0 carry a CUSIP, FIGI or SEDOL field, 60 name a root-equal candidate in their reason, 57 carry positioning-chain CUSIP evidence in the reason text, 11 share a ticker root with a research-library key; they are ADR and ordinary-share lines (BBSEY, BKRKY, NSRGY and similar) and cash/money-market lines (CASH, FXFXX, SALXX). Also: all 89 coverage folders are keyed by the served crosswalk 2026-09-29.json (corpus contributed 0); DE_US_Equity is not among the library's 96 keys. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~281/GRADING_READ.md",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~281/covered_keyed.out.txt"
+    ]
+  }
 }
 ]
 ```
