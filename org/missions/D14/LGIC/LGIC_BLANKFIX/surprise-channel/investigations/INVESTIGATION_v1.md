@@ -744,3 +744,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The run's last line reads ROOTCHECK ok=True items=15 (4 roles + 7 policies + 3 schedules + 1 event rule), but the stored files are not in it; the order's own comparison, against the map-aware scope, reads 17. The check was not weakened; BR6-AC1 is recorded FAIL and the order stays pending. The fix lies in lib/opal_naming_rootcheck.py (pass the map to root_items and key the entry by the map's own key form, one change with W2-S7), outside this worker's grant. A re-run after that fix would also grade the two stored-file lines, which this run has not."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S9 -- the two stored-file names of investor-reporting/directory are HOLE and only the registry can close them
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T19:14:37Z",
+  "one_line": "The two stored-file names of investor-reporting/directory print HOLE: each is skipped by Card 1, the card names no correct name and says no none-owed, and no key_rulings.json row can match them because the bucket is chosen per firm at run time.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/SECOND_ROOT_TRACE_round3.txt: 'HOLE S3Key investor-reporting/directory ... [infra/aws/lambda/investor-reporting/directory/handler.py:53]' and 'HOLE S3Key investor-reporting/directory/_refresh ... [infra/aws/lambda/investor-reporting/directory/refresh.py:71]'; last line 'ROOTCHECK ok=True ... items=17 right=13 fix=2 ... hole=2'.",
+      "lib/opal_naming_rootcheck.py load_card_rows(): both keys carry the Card 1 text ('segment 1 investor-reporting is neither a source nor a tier ... Zero registry mints follow'); key_rulings.json has 4 rows, none for these keys; opal_naming_keyfill.fill_keys(items, entry) returns 0 rows for the root's 2 stored files (measured).",
+      "infra/aws/lambda/investor-reporting/directory/handler.py:50-53: DIRECTORY_BUCKET_ENV = 'IRPT_DIRECTORY_BUCKET_MAP' (the bucket is read from an environment map, one bucket per firm) and DIRECTORY_PREFIX default 'investor-reporting/directory'; refresh.py:71 REFRESH_PREFIX = 'investor-reporting/directory/_refresh'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-6 AMENDMENT 2 step 6: holes are expected now that the two stored-file names are read; each is reported whole, grouped by what would close it.",
+  "world_is": "Closing either HOLE is a registry decision (4.0.0_SA_CRO owns key_rulings.json and the card): a ruling that the key is a prefix under each firm's own bucket and either names the canonical form or says none is owed. A (bucket, key) row cannot be written once because the bucket is per firm and not in the repository; nothing the run or the map entry (fills: [system], no firm) can supply closes it. The run honoured fills: no line fills a firm or a source from the map entry."
+}
+```

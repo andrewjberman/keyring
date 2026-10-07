@@ -297,10 +297,20 @@ def decide(item, ans, fourth=None):
     return "HOLE", "partial form %s; could not fill " % (form,) + "; ".join(why)
 
 
+_TF_PREFIX = "infra/aws/terraform/"
+
+
+def map_key(root):
+    """The root's map key: its folder path RELATIVE to infra/aws/terraform/ (investor-reporting/directory), whether the
+    root is given with or without that prefix and with or without a trailing slash. Never its last path word."""
+    r = str(root).replace("\\", "/").strip().strip("/")
+    return r[len(_TF_PREFIX):] if r.startswith(_TF_PREFIX) else r
+
+
 def check_root(root, map_path, not_judged=None, out=print, report_only=False, sink=None, key_rulings=None):
-    root = root.replace("\\", "/").rstrip("/")
+    root = _TF_PREFIX + map_key(root)
     rulings = load_key_rulings() if key_rulings is None else key_rulings
-    items, _stats = opal_naming_scope.root_items(root)
+    items, _stats = opal_naming_scope.root_items(root, map_path)
     if not_judged is None:
         card_rows = load_card_rows()
     else:
@@ -309,7 +319,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
             c = c if isinstance(c, dict) else {"plane": c[0], "name": c[1]}
             card_rows.setdefault((c.get("plane"), c.get("name")), []).append(c)
     doc = opal_naming_rootmap.load_map(map_path)
-    name = os.path.basename(opal_naming_scope._norm_root(root))
+    name = map_key(opal_naming_scope._norm_root(root))
     entry = (doc.get("roots") or {}).get(name)
     krows = {}
     for r in opal_naming_keyfill.fill_keys(items, entry):
@@ -340,7 +350,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
 
     if sink is not None:
         sink.append(entry)
-    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root)[0]), out, report_only, sink)
+    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root, map_path)[0]), out, report_only, sink)
 
 
 def _collisions(decided):
@@ -397,7 +407,7 @@ def run_items(root, items, answer_of, expected_n, out=print, report_only=False, 
 
 def lines_check(root, map_path, out=print):
     """Run the root and check its own output; the last printed line is ROOTCHECK-LINES. Returns the exit code."""
-    root = root.replace("\\", "/").rstrip("/")
+    root = _TF_PREFIX + map_key(root)
     lines, sink = [], []
     check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
     entry = sink[0] if sink else None
@@ -441,7 +451,7 @@ def lines_check(root, map_path, out=print):
 def keys_check(root, map_path, out=print):
     """One line per inline policy of the root: the system printed, the role's system, the exception if any and which won.
     The last line is ROOTCHECK-KEYS. Returns the exit code."""
-    root = root.replace("\\", "/").rstrip("/")
+    root = _TF_PREFIX + map_key(root)
     lines, sink = [], []
     check_root(root, map_path, out=lines.append, report_only=True, sink=sink)
     by_where = {}
