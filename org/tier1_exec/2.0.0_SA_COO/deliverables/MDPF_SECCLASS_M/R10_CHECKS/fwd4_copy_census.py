@@ -58,6 +58,9 @@ MIN_BLOCK = 3   # entries that make a literal block
 MIN_LIST = 5    # quoted tickers that make a class-named collection a literal
 GAP = 25        # lines between entries of one block
 MAX_BYTES = 3_000_000
+# the instrument and its own output name every pattern it looks for; reading them back would make each run report the last
+# one (an unstable fixed point). They stay in the denominator and are named in the JSON as self_excluded.
+SELF_EXCLUDED = {SELF, OUT}
 # C-TABLE's code members: the seed source, the seed path and the one client (the table itself is not code)
 ONE_LIST = {SHARED + "/etf_classification.py", V2 + "/yang_pipeline/seed-etf-classifications.py",
             SHARED + "/etf_classifications_dynamodb.py"}
@@ -291,7 +294,7 @@ def scan(root, files, extra, surf_paths):
             if not equal:
                 copies.append({"path": rel, "line": 1, "surface": surface_of(rel, surf_paths), "kind": "client-copy", "band": band,
                                "detail": f"differs from {SHARED}/{base}"})
-        if rel in ONE_LIST:
+        if rel in ONE_LIST or rel in SELF_EXCLUDED:
             continue  # the one shared list (C-TABLE) is not a copy; it is the thing the census measures against
         low = raw.lower()
         text = None
@@ -415,6 +418,7 @@ def main(argv):
     n = len(files)
     data = {
         "denominator_files": n,
+        "self_excluded": {"paths": sorted(SELF_EXCLUDED), "reason": "they name every pattern the census looks for; they stay in the denominator"},
         "scopes": scopes,
         "surfaces": surface_report(root, surf_paths, copies),
         "copies": copies,

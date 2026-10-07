@@ -1,5 +1,12 @@
 {
- "denominator_files": 21512,
+ "denominator_files": 21514,
+ "self_excluded": {
+  "paths": [
+   "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FWD4_CENSUS_20261007.json",
+   "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/fwd4_copy_census.py"
+  ],
+  "reason": "they name every pattern the census looks for; they stay in the denominator"
+ },
  "scopes": {
   "repo": {
    "enumerator": "git ls-files",
@@ -13,8 +20,8 @@
     ".sql",
     ".json"
    ],
-   "tracked_entries": 60150,
-   "code_files": 20229
+   "tracked_entries": 60152,
+   "code_files": 20231
   },
   "portal": {
    "enumerator": "git -C portal ls-files src",
@@ -2599,7 +2606,7 @@
  "plant": {
   "ran": true,
   "found": true,
-  "planted": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/zz_fwd4_plant_17805c00a80c/etf_classification.py",
+  "planted": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/zz_fwd4_plant_46b9eaa1b1b4/etf_classification.py",
   "source": "infra/aws/lambda/v2_portal/partners/lambdas/opal-partners-data/etf_classification.py",
   "kind": "client-copy,literal",
   "kinds_reported": [
@@ -2712,5 +2719,5 @@
   "MIN_LIST": 5,
   "GAP": 25
  },
- "census_seconds": 36.0
+ "census_seconds": 60.5
 }
