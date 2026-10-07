@@ -71,8 +71,7 @@ worktree and resolves into the shared portal; (2) every bun call is `bun --no-in
 scratch file outside it; (3) an import of a package NOT already in node_modules is STOP: no run, file a row, return -- a new dependency comes
 by the kit, never by bun. Never `npm install` or `bun install`.
 **RULE 106221 (laptop CTO, relayed by `1.0.0_SA_CTO~DELL2` msg 563), verbatim:** "Never `bun install`. Provision a worktree only with
-`wk-provision.sh --node-modules link` (it links C:\devjb_workspace\portal
-ode_modules, the kit tree) or `none`. The rest of 106215 stands:
+`wk-provision.sh --node-modules link` (it links C:\dev\ajb_workspace\portal\node_modules, the kit tree) or `none`. The rest of 106215 stands:
 bun only inside a portal tree holding node_modules, always --no-install, no registry-reaching probe."
 
 ### ACCEPTANCE
