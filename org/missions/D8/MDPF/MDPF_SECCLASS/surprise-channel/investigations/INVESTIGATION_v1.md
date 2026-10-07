@@ -3156,3 +3156,27 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The box's ruff version is a device matter; other seats on this device see the same refusal on any old shared file. Not widened."
 }
 ```
+## MDPF_SECCLASS-W28-S5 -- clean_name() mis-cases acronyms, tickers used as names, and small words
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "clean_name() title-cases acronym and ticker-shaped all-capitals names (BP PLC -> Bp Plc, GSK PLC -> Gsk Plc, MPLX LP -> Mplx Lp; 20 seed rows whose name is the ticker, e.g. WMT -> Wmt) and small words (Of, Na); the row set carries the function's output as specified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/security_name.py _word()/_token() at 89fe47bb41 (KEEP_UPPER lists ETF ETN USD USA US U.S. REIT II III IV only); org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/CLEAN_NAME_ROW_SET_20261007.tsv rows BP, GSK, MPLX (legacy, WRITE) and the 33 SEED-SOURCE rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e34: 'clean_name = clean_name(current_name)'; FWD-14 ACCEPT: 'the name beside each holding is the shared list's clean, properly capitalized name'.",
+  "world_is": "The set holds 495 WRITE, 33 SEED-SOURCE, 355 UNCHANGED over 883 named rows (2,624 unnamed). Among the 528 changed rows, 20 are seed rows whose seed name equals the ticker (ACSG, BSCN, DFAC, ..., WMT) and read 'Acsg', 'Bscn', ... ; the 3 legacy WRITE rows are BP PLC, GSK PLC, MPLX LP -> 'Bp Plc', 'Gsk Plc', 'Mplx Lp'; scheduled WRITE rows also read 'Bank Of America Na', 'Alltel Corp 7.875%32' style (small words capitalised). This is the function as cut, not an error in this cell; the set and the half request carry its output verbatim and the half request names the cases so the signing seats can hold them.",
+  "notes": "Whether to add an acronym rule or keep-upper tokens (BP, GSK, MPLX, NA) to security_name.py, and whether a ticker-as-name should be left alone, is SC-e-30's owner's call; this worker did not edit the function."
+}
+```
