@@ -2768,6 +2768,26 @@ paths:
     lane: IRPT_COMPLETION_SOURCE_MAP
     note: "Shared source map: incumbent YANG_PIPELINE_DEPLOY members preserved plus exact COO~P for IRPT build composition only, CTO ruling IRPT-P-BUILD-01. Non-IRPT member equality and offline package proof required. File-granular gate; member scope reviewed independently. No deploy grant."
 
+  "infra/aws/terraform/nfra-ctlpln-identity/**":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; the Dell IAM group, users and policies (C-IDENTITY); a new directory of this project only."
+
+  "infra/aws/terraform/nfra-ctlpln-agentbus/**":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; the Dell inbound queues (C-BUS); a new directory of this project only."
+
+  "infra/aws/terraform/modules/opal_name/main.tf":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; exact file: the fifo flag (4.0.0_SA_CRO patch OPAL_NAME_TF_FIFO_20261007.patch, NAMING_SCHEMA v1.14)."
+
+  "infra/aws/terraform/modules/opal_name/variables.tf":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; exact file: the fifo variable."
+
+  "infra/aws/terraform/modules/opal_name/tests/fifo.tftest.hcl":
+    lane: NFRA_CTLPLN_FAST_C
+    note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; exact NEW file: the fifo test."
+
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL
     note: "AWS infra (Terraform, IAM, Lambda) — AE 0.5/0.6/0.6.1/0.7 only"
