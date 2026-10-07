@@ -2092,3 +2092,80 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Each named row's condition is resolved at HEAD by the drained code and packet; W19-S4 disarms by the catch-up before any deploy."
 }
 ```
+
+## IRPT_DASHBD-W20-S1 -- the custodian's lot-table names and columns are typed in account_activity_lots.py (LOT_SOURCE), not declared in sources.json, because sources.json is outside TO-DB-b-35's grant
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~20",
+  "surfaced_at": "2026-10-07T14:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W20-S1",
+  "one_line": "C-ADAPTERS: the lot adapter's declaration (fact_rld, fact_uln, fact_ult and the columns read from them) sits in the producer's LOT_SOURCE block, not in sources.json, because sources.json is not in TO-DB-b-35's <paths> grant.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-ADAPTERS and sources.json's own header: the producer types no bucket, prefix or column of its own, the declaration is data; the order's <paths> block (the write grant) lists no sources.json.",
+  "world_is": "The three custodian lot tables and the 30-odd column names the lot tables read have no entry in sources.json, so account_activity_lots.py carries them in one LOT_SOURCE dict. Everything else is read from the declaration through the served producer's loaders: the bucket, the transaction prefix (the lot prefixes are its siblings), the account column and padding, the trade code and its column. Nothing deploys from this file in this cell (no upload path exists), so no served surface reads the typed names.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py@cfb9a56b0b LOT_SOURCE block",
+      "org/missions/D9/IRPT/IRPT_DASHBD/task-orders/IRPT_DASHBD.TO-DB-b-35.activity-and-lot-tables.md <paths> block"
+    ]
+  },
+  "notes": "Remedy for a later cell that holds sources.json in its grant: add a lot_source entry to the Schwab source, have LOT_SOURCE read it, and re-run ACTIVITY_LOTS_LOCAL_RUN.json at DELTA=0. Round 22's W18-S1 was the same shape and closed the same way."
+}
+```
+
+## IRPT_DASHBD-W20-S2 -- the activity identity ties on the named account-window; 20 of 2181 sampled account-days and 39 of 91 sampled account-windows fall outside it
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~20",
+  "surfaced_at": "2026-10-07T14:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W20-S2",
+  "one_line": "The activity identity ties on the named account-window (gap inside one cent) but not everywhere: 20 of 2181 graded account-days (8 accounts) exceed the rounding allowance, and 39 of 91 graded account-windows are above one cent.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order: beginning value + contributions - withdrawals + realized + unrealized change + income = ending value, within one cent, for ONE account and the window; if it cannot be made to hold on the sampled account-window, file BLOCKING and stop.",
+  "world_is": "It holds on the named account-window (DB23-1-AC1 PASS), so the BLOCKING condition is not met. Across the 100-account sample it holds for 52 of 91 graded windows within one cent; the rest are either rounding (every lot figure is a 2 dp amount and an account may carry hundreds of lots; the day grain derives an allowance from the lot counts) or a real difference. 20 account-days across 8 accounts exceed the allowance and are labelled GAP_ABOVE_ALLOWANCE with identity_gap carried, never plugged into a term; the largest are four to seven figures on days where the custodian value moves with no matching lot, flow or income figure (value held outside the lot tables, or a flow the served classifier books against another account-day). The cause is NOT diagnosed here. The account ids and amounts are in the record, not in this file.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json@cfb9a56b0b window_identity and coverage_census",
+      "org/standards/IRPT_DASHBD_ACCOUNT_ACTIVITY_DAILY_CONTRACT.json@cfb9a56b0b coverage enum and rule24_record"
+    ]
+  },
+  "notes": "For the round-23 analysis: the next enrichment names which of the two causes moves the GAP rows (a flow classified onto the wrong day, or value outside the lot tables) before the table is released."
+}
+```
+
+## IRPT_DASHBD-W20-S3 -- neither close_event_id nor event_id identifies one lot; the tables key a realized lot by the closing and opening event ids and sum open-lot rows that share an id
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~20",
+  "surfaced_at": "2026-10-07T14:28:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W20-S3",
+  "one_line": "The custodian's lot event ids do not identify one lot: close_event_id repeats across the lots of one order (131 distinct values over 726 realized lots) and event_id repeats within an account on the unrealized tables, so the lot keys are composites.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The order ties each realized lot to its closing transaction and builds a per-lot unrealized table; it does not say how a lot is keyed, and the prior art reads the lots as rows.",
+  "world_is": "Realized: the pair (close_event_id, close_open_event_id) is unique over all 726 sampled lots and is the lot_id; close_event_id alone is shared by every lot of one order. Unrealized: (event_id, cusip, acquired_date, original purchase date) leaves 28 lot-day rows in 160,549 sharing a key with another row, which the table sums with source_rows saying how many rows made the figure; sums are exact, no figure is lost. A repeat of a realized lot id refuses, so a source change shows rather than merging silently. One more measured property: each fact_rld partition holds only the lots closed that day (closing_date equals the partition date on every partition read), not a cumulative file, so the vintage read is the 24 per-day partitions 2026-09-01..2026-10-05.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py@cfb9a56b0b realized_rows and unrealized_rows",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json@cfb9a56b0b rld_vintage"
+    ]
+  }
+}
+```
