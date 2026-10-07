@@ -78,6 +78,8 @@ every assertion behind it held and `ok=False` otherwise.
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not block.
 
 <paths>
+lib/opal_naming_rootcheck.py
+lib/tests/test_opal_naming_rootcheck.py
 lib/opal_naming.py
 lib/tests/test_opal_naming_function_literal.py
 
@@ -136,6 +138,27 @@ because the name's TYPE changed, report it; edit no card and no registry file. T
 
 **The other four holes** (stored-file paths skipped by a card that names nothing) are `4.0.0_SA_CRO`'s to answer in the registry
 (same ruling). If any still prints `HOLE` when you run, `BR5-AC1` fails as written: report those lines whole; do not force it.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-07) -- STEP 0b: the run reads the registry's key rulings
+
+The four stored-file paths that print `HOLE` ("skipped by a card; the card gives no correct name and does not say none is owed")
+are answered. `4.0.0_SA_CRO` landed `infra/logic/registry/key_rulings.json` @662cbb0be5 on the CTO's ruling: a new file, keyed
+(bucket, key), each row carrying exactly one of `canonical` (the whole correct address) or `none_owed` (a plain sentence: no name
+is owed, and why). Read its `_about` for the exact row shape; one row is a prefix whose key has no trailing slash, as the item
+prints it. The card file is not edited and nothing reads these answers yet.
+
+**STEP 0b, build in `lib/opal_naming_rootcheck.py`** (the files are added to your grant; the order of round 3 that held them,
+`BF-r-2`, is merged before this order is handed):
+1. Load the file from the registry folder (`opal_naming.REGISTRY_DIR`). For a stored-file item, match on (bucket, key): the
+   bucket is the one `opal_naming_keyfill.bucket_of(item)` reads; a row whose bucket differs does not match.
+2. A matched row is tested BEFORE the card: with `canonical`, the line is `FIX` when the canonical differs from the current key
+   and `RIGHT` when it equals it, the detail the whole address; with `none_owed`, the line is `NOT-ASKED`, the detail "no name is
+   owed for this stored file: " and the row's sentence, and "no rename is owed".
+3. An item whose bucket cannot be read does not match any row; it keeps its card line and the reason says the bucket was not
+   read.
+4. Extend `lib/tests/test_opal_naming_rootcheck.py`: one case per branch, and the DIFFERENCE CONTROL: the same key matches a row
+   of its own bucket and does not match the same row under another bucket. `ROOTCHECK-TEST ok=True` still.
+Report what each of the four keys printed before and prints now.
 
 ---
 

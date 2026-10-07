@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -93,6 +93,22 @@ validated with `python .tools/proof-of-spec-check.py <instance> BR6-AC1,BR6-AC2`
 </proof_of_spec>
 
 **REPORT:** the last line whole; the trace's path; the count per kind; every `HOLE` line whole, grouped by what would close it and whose that is; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the root is picked; the order is handed
+
+`BF-r-3` is merged (@11ea2aa49a) and the landed map covers 13 roots. THE-ROOT is **`infra/aws/terraform/investor-reporting/directory`**
+(map key `investor-reporting/directory`). The issuer applied the rule stated in the cell to the 12 roots the map newly covers:
+three hold at least one schedule or event rule, one inline policy and one stored file (`investor-reporting/directory` 17 names,
+`cot-pipeline` 54, `opal-assets` 84); the fewest names is the pick. Measured by the issuer at the pick, with the scope's own
+`root_items(root, map)`: 17 names, 4 schedules or event rules, 7 policies, 2 stored files, 1 source folder.
+
+Two things to know about this root:
+- Its map entry carries `fills: ["system"]`: it serves more than one firm, so the entry may supply a system and never a firm. A
+  reader that honours that field is being built by another cell of this round (`BF-r-2`) and may not be merged in your worktree.
+  Run the check as your worktree has it, and say in your report whether your run honoured `fills` (does any line fill a firm
+  from the map entry?).
+- The run is of `lib/opal_naming_rootcheck.py` at your worktree's HEAD. If the map key form (`investor-reporting/directory`)
+  is not what `check_root` passes to `resolve`, that is a finding: report it and file one row; do not edit any `lib/` module.
 
 ---
 
