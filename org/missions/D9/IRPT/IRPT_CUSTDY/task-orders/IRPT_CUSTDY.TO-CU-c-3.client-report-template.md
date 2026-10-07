@@ -5,7 +5,8 @@
 <issued_to>0.9.0_WK_IRPT_CUSTDY~12</issued_to>
 <issued_by>2.0.0_SA_COO~K2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>superseded</status>
+<superseded_by>IRPT_CUSTDY.TO-CU-e-2 (round 5, @16d9b128c0 E2: the same template with a real-client render and eslint); this order was never spawned</superseded_by>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
