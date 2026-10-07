@@ -1184,3 +1184,30 @@ round.** Never edit an existing row.
   "notes": "The E3 documents apply also closed this hour (ledger advi-cotbkf-r6-documents-apply-20261007, 11,119 written, read back); it is calendar-free."
 }
 ```
+
+## ADVI_COTBKF-S18 -- DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood
+
+```json
+{
+  "id": "ADVI_COTBKF-S18",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T10:30Z",
+  "one_line": "DISARMS S12: the applies ran from dell2 against the bucket they actually write (opal-data-assets), each under a never-widen pair and a closed ledger; no write touched opal-data-cottonwood",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S13 @b9411881a0: the applies resolve to opal-data-assets; 1.0.0_SA_CTO~DELL2 re-ruling msg 264 struck the CT-d-2 wait",
+      "ledgers CLOSED 1/1: advi-cotbkf-r5-crosswalk-apply-20261007 @98652475d8; advi-cotbkf-r6-documents-apply-20261007 and advi-cotbkf-e2-account-links-apply-20261007 @3c39c9f4ae",
+      "every Put from dell2 on opal-data-assets admitted (crosswalk 2, documents 11,120, account_links 2); no call made under opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12 (BLOCKING, ARMED): no --apply of E3 or E5 from dell2 until a ruling names where they run.",
+  "world_is": "Ruled (msg 264) and run; branch A on all three applies.",
+  "notes": "Closes this seat's last ARMED row on ADVI_COTBKF."
+}
+```
