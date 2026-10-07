@@ -1763,3 +1763,29 @@ round.** Never edit an existing row.
   "notes": "For the CTO: the list sent toward Andrew/Cottonwood should be refreshed to 22 before it reaches the firm."
 }
 ```
+
+## ADVI_COTBKF-D2-W30-S1 -- All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair; RGY007151's single li is classed SOURCE_GAP by structure
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W30-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~30",
+  "surfaced_at": "2026-10-07T16:40Z",
+  "one_line": "All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair, so none is a rebuild error; the order's three classes name a delivery defect, and RGY007151's single li is classed SOURCE_GAP by structure (no row takes it out) though nothing is shown missing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_residuals_explain.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~30 -> RESIDUALS explained=5 of 5 sign_gap=0 vendor_rounding=4 source_gap=1; each pair line ends 'snapshot holds <q> (equal to the rebuild)': 0.029, 0.02, 0.00086, 0.00086, 0.003",
+      "B3S605716 and B3S622848: CAF rows sum to 20479.60514 (5 decimals) and the closing lo is 32000.164 (3 decimals) against 32000.16486 held before it; B37631286 and B3S706372: the 2026-05-29 dvr (3.485 / 2.458) re-books a cancelled dvr (DVRX 3.456 / 2.438) by 0.029 / 0.020 more, and the 2026-06-02 sl (861.008 / 607.405) is the position before the re-booking"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-n-1: each of the 5 residuals is a SIGN_GAP, VENDOR_ROUNDING (quantities delivered do not net to zero) or SOURCE_GAP (a row the pair needs is not in the delivery).",
+  "world_is": "The snapshot, a second custodian record, holds the same fractions, so the rebuild reproduces the custodian's figure on all 5 and no sign change is indicated (sign_gap=0; the snapshot is 381 of 381 equal, not re-run because commonwealth_signs.py is unchanged). Four pairs are VENDOR_ROUNDING (two sales sized to the position before a dvr re-booking; two final lo rows delivered to 3 decimals against 5-decimal CAF rows). RGY007151 (TOIXX, one li of 0.003 on 2025-10-08, held in the snapshot) has no out row and nothing implies a missing one; SOURCE_GAP is the only class whose definition fits an inbound-only pair, and the report says so.",
+  "notes": "A grader who reads RGY007151 as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
+}
+```
