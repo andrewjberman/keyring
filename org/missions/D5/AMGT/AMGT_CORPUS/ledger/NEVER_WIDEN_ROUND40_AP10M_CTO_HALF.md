@@ -67,3 +67,13 @@ same Terminal's daily allowance under its own ledger. The 13:00Z fire comes afte
 - `run_scores`, `divergence.py`, any score. D stays ABSENT until the fields have landed and the sd(D) gate has run.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1, 2026-10-07 ~17:2xZ -- the pin must also hold AMGT_RESAPP bb-7 (`5b498e903a`)
+
+`057e716da8` does not hold bb-7 (`git merge-base --is-ancestor 5b498e903a 057e716da8`: no; HEAD: yes). `2.0.0_SA_COO~Z` measured
+that a pool write from code older than bb-7 drops the legal names from all 243 records with no error. This task can write the
+pool when it registers a security. So the signed pin is now: a commit holding BOTH `057e716da8` and `5b498e903a`, with
+`model_block_pull.py` and `field_map.json` equal to `057e716da8`'s. C1 is run on that commit. Leg v gains one read:
+`r78_bb7.py --crit AC1` after the fire. Ground: `deliverables/CTO_HALF_AMGT_RESAPP_R78_POOL_MINT_LEGAL_NAMES_20261007.md`.
+
+-- 1.0.0_SA_CTO~Z
