@@ -3078,3 +3078,31 @@ first request. That is the round's one real run for `aw-1`.
 - `aw-1` AC2 / `aw-2` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (667 passed, 1 skipped).
 - `aw-2` AC1 (`pytest lib/opal_data_harvest/test_aw2_sa_tab.py`) base: FAIL as expected (the test is absent).
 - `aw-2` AC2 (`cat .../aw-2.live_probe.out`) base: FAIL as expected (no such file).
+
+## 64. ROUND 51 -- the round-49 analysis ADDENDUM 2 (`ledger/ROUND_ANALYSIS.round49.md` @a246fcd07f), 2026-10-07 ~00:1xZ
+
+Round 50 is CLOSED (`deliverables/2.0.0_SA_COO_H/round50/ROUND50_CLOSE_RUN.md` @e8c062b598). Rows AMGT_HARVST-Z-S90 and Z-S91: the
+wsj job for T US Equity fetched 502 articles in 3 h 03 min and accepted 0 (431 `company_not_mentioned`), then met a 401 under
+`--no-sign-in`; the wsj leg is STOPPED on `sign_in_refused` and waits for Andrew's sign-in in the wsj profile.
+
+**Read at the cut (issuer):** the wsj query is already the company name (`slug_query(security["company"])`,
+`lib/opal_data_harvest/publishers.py:700,762`); the symbol is never queried. The defect is `discovery._matches`
+(`lib/opal_data_harvest/discovery.py:65-67`), which tests each query word as a SUBSTRING of the slug: `sse` matches `dissects`,
+`assets`, `businesses`; AT&T's words `at`, `t` match almost any slug. ADDENDUM 2 item (1) names the query; the cell fixes the
+matcher, which serves the same outcome for every name. Items (2) and (3) are cut as written, with the replay run OFFLINE over the
+18 stored wsj sitemap files because wsj is signed out.
+
+Issuer `2.0.0_SA_COO~H`. Series **`ax`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-ax-1` | `ax-1` | **Slug phrase match + the unselective bound.** `discovery._matches` admits a sitemap item only when a run of consecutive WHOLE slug tokens, joined, equals the query's words joined (or that + `s`). A wsj job that has fetched K articles and accepted none ends `candidate_set_unselective` (K is `contracts.json` wsj `unselective_after`, derived by script from the finished-job records with the denominator printed); the driver records the pair done with that status and the leg continues. Offline replay over the stored wsj sitemaps: T US Equity and SSE LN fall to K or fewer candidates; the three finished names with the most accepted articles keep every accepted URL. | LOCAL | worker `~101` |
+
+**The close run (issuer, after `ax-1` merges and Andrew's wsj sign-in):** the wsj leg resumes from `r46_wsj_checkpoint.json`
+(`--clear-stop wsj`) and the T US Equity pair re-runs under the new rule.
+
+**Checks dry-run at the base before the cut:**
+- `ax-1` AC1 (`pytest lib/opal_data_harvest/test_ax1_slug_phrase_and_bound.py`) base: FAIL as expected (the test is absent).
+- `ax-1` AC2 (`cat .../ax-1.replay.out`) base: FAIL as expected (no such file).
+- `ax-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (674 passed, 1 skipped on merged CLOUD at the round-50 close).
