@@ -3207,3 +3207,25 @@ decorated legal names) and the one-suffix-list item wait for the analysis that n
 - `bb-1` AC1 (`cat .../0.9.0_WK_AMGT_HARVST~105/bb1_census.out`) base: FAIL as expected (no such file).
 - `bb-1` AC2 (`pytest .../0.9.0_WK_AMGT_HARVST~105/test_bb1_added_spans.py`) base: FAIL as expected (the test is absent).
 - `bb-1` AC3: judgment, graded by `3.0.0_SA_CVO~Z`.
+
+## 70. ROUND 56 -- gold's securities list takes legal names from the collector's identity record (`1.0.0_SA_CTO~Z` msg 30864), 2026-10-07 ~12:0xZ
+
+Round 55's order is terminal on its mechanical criteria (`bb-1` merged @1b87f2b0e1, closed @0dd1c04910; its judgment criterion
+is at `3.0.0_SA_CVO~Z`, both samples graded as cut). Row AMGT_HARVST-Z-S98: for 138 of 242 securities gold's alias set is the
+security key alone. Msg 30864: that outranks both brands and is the next issuance's first cell; ONE gold rebuild follows it,
+under its own never-widen pair, and none before.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bc`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bc-1` | `bc-1` | **Gold's list takes each security's legal name from the collector's identity record when the pool carries none; the census prints what each name gains.** The pool's own name wins; nothing is derived from a key or ticker; a slash tail on an identity name is removed and counted; cut names are listed, not altered. Census over every latest silver article with the served matcher: key-only alias sets before and after, pairs gained per name, the name-quality class, the round-55 brand lines re-run against the new list, agreement control. No gold build. | LOCAL | worker ~106 |
+
+**Not in this round:** the gold rebuild (its own never-widen pair, after this cell); flipping either brand's `plane`; repairing
+the cut legal names of row AMGT_HARVST-Z-S96; one suffix list in place of two.
+
+**Checks dry-run at the base before the cut:**
+- `bc-1` AC1 (`pytest lib/research/harvest/tests/test_bc1_legal_names.py`) base: FAIL as expected (the test is absent).
+- `bc-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~106/bc1_census.out`) base: FAIL as expected (no such file).
+- `bc-1` AC3 (`pytest lib/research/harvest/tests -q`) base: PASS as expected (297 passed).
