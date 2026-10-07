@@ -102,6 +102,36 @@ Read-only: the whole repository, in particular `lib/research/scores/divergence.p
    as your instance.
 4. Report ONCE: what you changed and where, every criterion's output line, the pytest summary line, your commit hashes and any row.
 
+## 6. AMENDMENT 1 (2026-10-07, the issuer's own; the one-name probe and the CTO's ruling)
+
+The build of section 1 is merged (drain `9b16c0cc86`): `FORECAST_FIELDS` carries the six names the consumer listed. The issuer
+then probed ONE name at Bloomberg (`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/
+r40_ap10_probe_BA_20261007.txt`, read it). Four of the six are not Bloomberg fields: `BEST_CPS_STANDARD_DEV`, `BEST_CPS_AVG`,
+`BEST_EPS_STANDARD_DEV` and `BEST_EPS_AVG` each returned `BAD_FLD/INVALID_FIELD` on every override. `BEST_CPS_NUMEST` and
+`BEST_EPS_NUMEST` returned, and so did the other spelling of the standard deviation, `BEST_CPS_STDDEV` and `BEST_EPS_STDDEV`.
+Ruled by `1.0.0_SA_CTO~Z`: pull the four that exist; the mean is `BEST_CPS` / `BEST_EPS`, already pulled; no new mean field.
+
+**Do, and only this:**
+1. `FORECAST_FIELDS` ends, after `BEST_CPS`, with exactly `BEST_CPS_STDDEV`, `BEST_CPS_NUMEST`, `BEST_EPS_STDDEV`,
+   `BEST_EPS_NUMEST` (16 fields, still 8 calls per name). Remove the four refused names from every list, basis map, money or
+   count set and unit-map family they were added to (this module keeps an invalid field out of its lists: see its comments at
+   about lines 97 and 218). Give the two `_STDDEV` names what the two `_STANDARD_DEV` names had (money per share, reporting
+   currency). The two `_NUMEST` names keep what they have (a count, no currency). Mark each edit `AMENDMENT 1 (CRPS-ap-7, round
+   40):` and cite the probe evidence file in the comment at `FORECAST_FIELDS`.
+2. **The period term (the CTO's).** A standard deviation and its mean must be for the SAME forecast period. State in the comment
+   at `FORECAST_FIELDS` which override each of the four is asked under: the same `BEST_FPERIOD_OVERRIDE` request as `BEST_CPS`
+   and `BEST_EPS`, one request per override in `FORECAST_OVERRIDES`. In `test_dispersion_fields_round40.py` add a test that, for
+   a stub pull of `BA US Equity`, PRINTS (and asserts equal) for each override the override the request carrying `BEST_CPS` and
+   `BEST_EPS` was sent under beside the override the request carrying each of the four was sent under, and that the derived
+   figures for a mean and its standard deviation carry the same `fiscal_period`. Paste that printed table into your report.
+3. Update the tests you touched in the build to the four names and the new counts (16 forecast fields; the total in
+   `test_model_block_22_fields.py`). Change no other assertion.
+4. Do not edit `lib/research/scores/divergence.py` (its rename is an AMGT_RESAPP cell).
+
+**Prove** AC1 and AC2 by their invocations in section 4 (the issuer's `ap7_check.py` now holds the four ruled names and the
+absence of the four refused ones). Then section 5 again: the proof instance updated, the checker after your final commit, and the
+status tag reading complete appended at the END of this file only if AC1 and AC2 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 10 + s.4 item 4; CTO msg 30490 (AMGT_RESAPP ROUND_ANALYSIS.round76 ADDENDUM 1 item 2 @a7b2c3e0ba). Base: ap7 build 0/1 control 2/2; the six files 51 passed. Calls per fire: 768 before, 768 after. A 2026-09-15 probe instrument spells `BEST_CPS_STDDEV`; the issuer's one-name scripted probe (CRPS-ap-10) settles the spelling before the re-pin.
@@ -111,3 +141,4 @@ Read-only: the whole repository, in particular `lib/research/scores/divergence.p
 <slot>~3</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+<status>in_progress</status>
