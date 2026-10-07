@@ -4129,3 +4129,28 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. Reported to 0.0.0_AB_MSTR~DELL1 for the laptop and Andrew, beside S49."
 }
 ```
+
+## MDPF_SECCLASS-W45-S1 -- test_seed_fields.py carried a ruff E402 at base that blocked the commit gate
+
+```json
+{
+  "id": "MDPF_SECCLASS-W45-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~45",
+  "surfaced_at": "2026-10-07T13:34Z",
+  "one_line": "test_seed_fields.py:32 carries a ruff E402 (import after sys.path.insert) that blocks any commit of that file through .tools/commit-gate.sh; the order named the file as editable and did not say it was already lint-red at base",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit first attempt on 0.9.0_WK_MDPF_SECCLASS~45: 'BLOCKED: ruff check failed on infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py' at line 32, a line this order did not edit (base 3a11e67c20 line 32: 'import etf_classification as ec  # path inserted above, same pattern as the seeders')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e64 paths grant lists test_seed_fields.py as editable; the commit gate (Rule 14) passes py_compile + ruff on an edited .py.",
+  "world_is": "The file failed ruff E402 at base, so any edit needed one lint fix. Resolved by appending '# noqa: E402' to line 32, the only non-assertion change in the file; no test logic moved.",
+  "notes": "Filed by the worker; the fix stays inside the order's paths."
+}
+```
