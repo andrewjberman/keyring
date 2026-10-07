@@ -83,7 +83,12 @@ FWD-11 retires it.
 **Round 61 (~Y) CLOSED 2026-10-07 ~09:0xZ:** E-Y1 @ad59d08617 (row S353), E-Y2 drained @1ade2e9989 (owner table: 14 fixtures/har
 REMOVE, templates.json KEEP, lane IRPT_COMPLETION_Y), E-Y3 = the release390 hand-over. S339 disarmed (row S351).
 
-**Next Y cell, ruled by `1.0.0_SA_CTO~DELL2` msg 233, PARKED:** drop the 14 `fixtures/har/*` from `irpt-ycharts-generate`'s
+**Round 62 (~Y), 2026-10-07 ~10:0xZ:** IB-yr-624 drained @d96da06035 (`files[]` 114 -> 100). L8 packet @390730c49b. L10
+(CTO~DELL2 msg 297): no new Y cell. E-Y4 is served only when the next `irpt-ycharts-generate` release passes its three legs,
+which are written into `release390/HANDOVER.md` for `~G2`: 0 `fixtures/har` in the deployed zip, the fixture tests green at
+the pin, and the trace control re-run on the deployed zip. S358 is `~G2`'s.
+
+**Superseded by round 62 (cut and drained); kept for the record:** the cell ruled by `1.0.0_SA_CTO~DELL2` msg 233, PARKED: drop the 14 `fixtures/har/*` from `irpt-ycharts-generate`'s
 `files[]`. Its criteria:
 (1) an import/open trace over the package at the pin shows no runtime reader;
 (2) the built package has no fixtures/har member, and the tests that read them still pass from the repo;

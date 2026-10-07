@@ -434,3 +434,19 @@ FEES reason; tolerance 0.35 pp and the closed set unchanged. The enrichment list
 | (E3) | `account_class_daily` and class contribution for 49F | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
 
 fanout: 1 of 1 chains, cap 8, reason: E2 consumes E1's record, so one worker queue; E3 waits on its named condition. Worker 0.9.0_WK_IRPT_DASHBD~13 in its own worktree.
+
+## 19. ROUND 19, WORKSTREAM B (2026-10-07 ~10:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-18 analysis @62026ca511 as ruled in msg 308)
+
+Round 18 is closed: DB-b-27 and DB-b-28 merged @0f304c6405; CVO compile ADJUDICATION_v6 @01ab2f9950, ARMED 0. On the gross basis 3,279 of
+9,078 graded segments are UNEXPLAINED; 2,299 of them span the 2025-01-09 closure and 980 do not. The analysis's E1 asked for BD's
+closure-day contribution from BD's own record; the landed pull holds only segment ranges (no daily data), so the issuer handed it back
+(msg 307). The CTO ruled (msg 308): E2 is cut now over the 980; E1 is REPLACED by E1', an Opal-side test of BD's day count, no BD pull.
+If E1' leaves most of the 2,299 unexplained, the split-range BD pull goes on Andrew's list as a per-use vendor act.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-29` | E1': the 2,299 closure segments recomputed on Opal's side with 2025-01-09 held (accrual, zero price return); count within 0.35 pp; the served figure unchanged | LOCAL (no vendor call; the gold read runs on the laptop under the standing rule) | DB-b-27 (merged) | B19a |
+| `DB-b-30` | E2: the 980 non-closure UNEXPLAINED segments against the closed set with named evidence; final UNEXPLAINED and its share of 9,078 | LOCAL | DB-b-27 (merged) | B19b |
+| (E3) | `account_class_daily` | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+
+fanout: 2 of 2 chains, cap 8, reason: E1' and E2 read disjoint segment sets of the merged GROSS record. Workers 0.9.0_WK_IRPT_DASHBD~14 and ~15, each in its own worktree.
