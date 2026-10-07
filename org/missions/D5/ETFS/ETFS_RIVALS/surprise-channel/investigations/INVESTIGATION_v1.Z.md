@@ -4297,5 +4297,27 @@
     "world_is": "The cut is exact (the fewest trades that fit) and costs repeated renders only on a day that is over the cap; a day under it renders once, as before. On a real day the cut would run inside the 07:00 ET publish Lambda, whose per-render time at the served size (1,381,244 B on 2026-10-07) was not measured by this cell. Within one window end, rows are dropped last-fund-first, so a partial cut of one window end is possible; the count and the oldest window end shown are still stated.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The first real over-cap day is the measure of the render time; until then the page is 34.1% under the cap and the path does not run."
   }
+  ,{
+    "id": "ETFS_RIVALS-Z-W4-S19",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~4",
+    "surfaced_at": "2026-10-07T09:19:00Z",
+    "one_line": "RIV-rt-1: the face asks for the gateway suites at 0 failed, but the suites carry 29 failures at base (schwab, asker, portal-grant, data-entitlement); the cell's change adds 3 passing tests and no failure.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest app/tests tests -q from infra/aws/ec2/opal-gateway at base HEAD 14a683c310 (the four cell files read back from git show HEAD): 29 failed, 601 passed",
+        "the same run with the cell's four files: 29 failed, 604 passed; the sorted FAILED lists are identical (diff empty)",
+        "failing files: tests/acceptance/test_local_acceptance.py, test_asker_binding.py, test_asker_scope.py, test_data_entitlement_guard.py, test_portal_grant.py, test_schwab_*.py; none touches rivalfunds or the route census; test_asker_binding::test_resolve_asker_class passes alone and fails only in the full ordering"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Face section 3: run the gateway suites before reporting: 0 failed.",
+    "world_is": "The suites have 29 failures with and without this cell; rivalfunds_view.py, test_rivalfunds_view.py and the route-census tests (test_principal_cutover.py) pass 28 of 28.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A different owner fixes the 29; this cell leaves them untouched."
+  }
 ]
 ```
