@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.16",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -69,6 +69,10 @@ shows one. Its producer is AMGT_RESAPP FWD-39 (v0.36), which serves the terms; t
   visible if you are not permitted"; `ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND41.md`). Its place is the read he named: a
   non-Opal viewer sees no Security Analysis sidebar item. The outcome's headline says three designed states.
 - This is an ENDPOINT change, so the CVO re-signs.
+**v0.17 (2026-10-07 ~10:4xZ):** FWD-20's DONE WHEN only, on `3.0.0_SA_CVO~Z`'s REFUSE of v0.16
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_DSGN_AMGTV1_v0.16_RATIFIED_TEXT_20261007_Z.md` @884009802f). The render
+check's clause still read "the four states present" against FWD-19's three. It now reads the three states of FWD-19. v0.16 missed
+it: this seat changed FWD-19 without searching the ENDPOINT for the other line that counts the states.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -300,7 +304,8 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     fonts == {Lato}, weights within
                     {400,700}, no size below 11, radii within {2,3,4,pill},
                     shadows == 0 outside the focus ring, lowContrastChars == 0,
-                    purpleFills per FWD-18 and the four states present; the
+                    purpleFills per FWD-18 and the three states of FWD-19
+                    present (v0.17); the
                     drafting, tabs and posture harnesses green; AND the
                     same instrument FAILS a planted page on each clause (one
                     violation per clause, each beside a clean control), and
