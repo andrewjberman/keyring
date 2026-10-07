@@ -9522,3 +9522,105 @@ name the one known failure instead of silently inheriting it.
   "notes": "Found reading the r25 release for the CVO never-widen half (signed with this row named). Candidate fix, one line: refuse an execution_id that does not match the id shape /trigger returns (for example ^[A-Za-z0-9:_-]{1,128}$) before formatting it. INERT: low exposure, internal callers, read-only."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S14",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T10:43Z",
+  "one_line": "The r25 host runner stages only app/ and deploy/ files into the REHEARSAL copy, so a release whose shipped set includes the gateway-root identity_tool_allowlist.txt would have been rehearsed on the INSTALLED allowlist.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_ssm_prog.py:49 and r25_ssm.py:58: the staged-file filter is (k.startswith(\"app/\") or k.startswith(\"deploy/\")).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_ssm_prog.py:49 and r26_ssm.py:58: the same filter with `or k == \"identity_tool_allowlist.txt\"` added; the r26 REHEARSAL output lists identity_tool_allowlist.txt among the staged files with md5 fbe94252 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_after_stage_allow.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Release form step 5: the REHEARSAL runs on the staged release bytes with the installed tree untouched.",
+  "world_is": "For a release that ships the allowlist (r26 is the first), the r25-form runner would have left the installed allowlist in the staged copy, so the rehearsal's ADMITTED answer for the status tool could not have appeared (it would read DENIED) and the rehearsal would have been a silent no-op for the row. Fixed in the r26 copies only; r25 and earlier runners are unchanged and drained.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Found by the previous session of this worker at step 5; written now because that session stopped before it could file it. A later release that ships any gateway-root file other than the allowlist needs the filter widened again."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S15",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T10:43Z",
+  "one_line": "The previous session read the bare ref `CLOUD` resolving to a different commit than `refs/heads/CLOUD`; not reproduced at this write.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~10:42Z `git rev-parse CLOUD refs/heads/CLOUD` in the worker worktree -> b3a369e53e243739531b20b52137113b7daa7f69 twice (equal).",
+      "RUN `git for-each-ref` filtered to /CLOUD$ and ^refs/CLOUD -> 0 other refs; `git rev-parse --verify -q refs/tags/CLOUD` and `refs/remotes/CLOUD` -> empty (rc 1).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/ANNOUNCE_OG-rl-12.md (the PARTIAL, at 2b34095a48) records the previous session's read; its measurement is not on disk as an output file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A bare branch name in a git command names the branch.",
+  "world_is": "At this write the bare name and refs/heads/CLOUD agree and no second ref named CLOUD exists, so the earlier divergence is unexplained. Every r26 measurement names refs/heads/CLOUD; the release proofs do not depend on the bare name.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Candidate cause, UNMEASURED: CLOUD advanced between two reads in the previous session (the branch moved from c38d69aa3d to b3a369e53e within this session alone). Recorded so a later reader does not rely on the bare name inside a long script."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S16",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T10:43Z",
+  "one_line": "The headmove guard allowed `FORCE_HEADMOVE=1 git reset --soft` in the linked release worktree and printed that it could not resolve the audit log: the override is NOT recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~10:12Z in /c/tmp/og-rel21: `git reset --soft 240ac2fe5a` -> ABORTED (destructive reset would discard 1 local commit, f1a6582ee1); `FORCE_HEADMOVE=1 git reset --soft 240ac2fe5a` -> 'WARN: headmove-guard cannot resolve the ajb_workspace audit log -- THIS OVERRIDE IS NOT RECORDED. WARN: destructive reset ALLOWED via FORCE_HEADMOVE -- 1 commit(s) discarded/rewritten; logged to org/git-author-override-audit.log'.",
+      "READ org/git-author-override-audit.log (24114 lines at 10:15Z): 1 line mentions HEADMOVE (2026-08-20, a BLOCK line of another seat); 0 of the last 60 lines do; the two lines of this worker's commit are the safe-commit OVERRIDE lines 24112-24113 (2026-10-07T10:13:55Z and :58Z)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The guard's own text: a forced move is logged to org/git-author-override-audit.log.",
+  "world_is": "From a linked worktree under /c/tmp the guard cannot find the shared workspace's audit log, so the sanctioned override leaves no record while saying it did. The commit discarded was f1a6582ee1, the worker's own earlier release commit, which the order directed be re-cut; it stays reachable by sha and in the reflog.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The order directed the reset; the only record of this one is this row and the commit message of the re-cut (feddb372443adbcf139febab35b69f109e49b664)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S17",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T10:43Z",
+  "one_line": "The host's real-holder run prints the Schwab master account id in its GA1_BODY and GA1Q_BODY lines, and the runner's redaction covered only the tid and oid, so the id sits in committed outputs of this worker's folder.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~10:30Z `python r26_ssm.py real rehearsal ...` printed `\"master\": \"<8 digits>\"` on both the GA1_BODY and GA1Q_BODY lines (value not repeated here).",
+      "RUN native Grep for `\"master\": \"\\d{6,}\"` under org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/ -> 254 matches in 52 files at the start of this seat's session, 23 of them in the 0.9.0_WK_NFRA_OPLGTW~28 folder (r23, r23b, r25, r26 and GA1 outputs and bodies); the other 29 are earlier workers' folders and sealed-expectation or grain files.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_ssm.py: red() now rewrites `\"master\": \"<digits>\"` to `\"master\": \"<master>\"`; the two r26 outputs this session had written (r26_before_real.out, r26_after_stage_real.out) were redacted by sed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's bounds: never print or commit an account id.",
+  "world_is": "The id is a Schwab master account, printed by the host body as a held-count key. It is already committed in the 21 older files of this seat's folder and in earlier workers' folders; redacting the working copy does not remove it from git history. The two r26 outputs and every Phase B output written through r26_ssm.py are redacted from here on. Nothing in this repo's gates caught it.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "NOT done here and outside the order's paths: the older files and the earlier folders. Whether a master id counts as the bound's 'account id' is the issuer's call; a single regex pass over those files would redact them. The host body (r26_real_host.py.txt) still prints it; only the saved copy is redacted. A second carrier: the per-file pytest output (r26_tests_release.out) held the id 5 times, printed by an acceptance test, and one synthetic gateway.test download URL with a token fragment; both redacted in this session's copy. The test output of earlier releases still holds them."
+}
+```
