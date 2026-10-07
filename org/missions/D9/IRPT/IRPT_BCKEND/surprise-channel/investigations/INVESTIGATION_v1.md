@@ -19061,3 +19061,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Issuer ruling (2.0.0_SA_COO~M2, inside its own unissued decomposition): c2 reads every Cottonwood account holding SPYI or PSLV, and each must tie (denominator printed); c3 reads the platinum header and FAILs an absent field as ABSENT. Reader amended in the same commit as this row; a second laptop read is relayed. E-M1 is not graded from @e9993e95fa."
 }
 ```
+
+## IRPT_BCKEND-S357 -- irpt-directory-refresh runs an older handler.py than its deploy record names; a release now ships UIR-07 as riders
+
+```json
+{
+  "id": "IRPT_BCKEND-S357",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T09:35:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-directory-refresh's deploy record misstates its running bytes: lambda-source-map.json says last_deployed_commit daed4433b4 (2026-10-04T21:47:58Z, deployed_code_sha256 DXuzx9jp..), but the live zip's handler.py is the 2026-09-11 blob (48313e9c0e, sha256 e46922a00379), not daed4433b4's (3865775e75f8, which carries UIR-07 49b935c213 + 1068a4b5a5). So any refresh release now also ships the two 09-26 UIR-07 handler commits as RIDERS.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~09:4xZ: python infra/aws/lambda/ci/release-census.py irpt-directory-refresh --pin b9411881a0 -> changed handler.py built=3865775e75f8 live=e46922a00379; changed refresh.py (round 61 IB-pr-333); changed_members=2",
+      "MEASURED: sha256 of git show <rev>:directory/handler.py -- daed4433b4 3865775e75f8, 49b935c213 3865775e75f8, 1068a4b5a5 9faf4224926b, 48313e9c0e e46922a00379 (= live); no CRLF in any blob",
+      "lambda-source-map.json irpt-directory-refresh: last_deployed_at 2026-10-04T21:47:58Z, last_deployed_commit daed4433b4"
+    ]
+  },
+  "spec_asserts": "A function's source-map deploy record names the commit whose bytes are running.",
+  "world_is": "The refresh function runs a handler.py older than its recorded deploy commit. The round-61 directory release packet names the UIR-07 riders for the CTO half and corrects the record at its close."
+}
+```
