@@ -1,13 +1,12 @@
 {
   "prd": "ETFS_RIVALS_PRD.md",
   "prd_version": "v0.18",
-  "prd_pin": "e0e0c3cf780f8c6e92586080acff251049abfa9c",
+  "prd_pin": "6e245cbebecb818cb5e95b3480593a71e12c12bc",
   "half": "ratified-text",
-  "half_hash": "839fa56e2b710f92cf6655a3b2adb5a0a5aa28f5b86e969e48792216f41c981f",
-  "endpoint_hash": "838b961ccad5983bedd0ffe43a21eb1e9606904dd70f85de42998ec1a357f47d",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_RESIGN_20261007_ETFS_RIVALS_v0.18_RV.md@45abbdca53",
+  "half_hash": "0509326d462bbb8bf0cc4a1c4960ab836c585cf3d35a78104a5619846e8332ff",
+  "endpoint_hash": "fcfcb09bf389894f3853b37cbc9d23e2cd9a8cf547f7380b7bd65b1a5edd7525",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_RESIGN_20261007_ETFS_RIVALS_v0.18b_RV.md@c27364f6f5",
   "signed_by": "3.0.0_SA_CVO~RV",
-  "signed_at": "2026-10-07T05:13:00Z",
-  "reason": "unit of 30d/90d/365d not stated; FWD-23 contradicts FWD-14/FWD-19"
+  "signed_at": "2026-10-07T05:34:25Z"
 }
