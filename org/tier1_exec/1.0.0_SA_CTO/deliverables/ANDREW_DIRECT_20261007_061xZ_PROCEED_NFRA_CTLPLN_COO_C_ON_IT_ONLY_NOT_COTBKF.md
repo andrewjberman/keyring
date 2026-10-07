@@ -13,6 +13,7 @@
 5. ~06:2xZ: "I would put IRPT_DASHBD and IRPT_CUSTDY on dell2 (need to better understand what IRPT_CUSTDY offers), also need to understand
    what, if any resources, are expected to be deployed for IRPT BCKEND and YCDGEN work, because we probably are going to need to open up
    the policy for dell boxes to allow for deployment of new resources."
+6. ~06:2xZ: "Ok that means that whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project."
 
 ## What this seat did on it
 
@@ -26,6 +27,8 @@
   `org/missions/SEQUENCE.yaml`. This replaces the dell2 target of `CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md`.
 - Word 5: IRPT_DASHBD and IRPT_CUSTDY already target dell2 in the sequence; nothing changed. The two questions are answered to him at the
   terminal.
+- Word 6: ADVI_COTBKF `placement: DELL2` with a `placement_ruling` on its tree row; its `why` and a change_log entry in
+  `org/missions/SEQUENCE.yaml`. This replaces its dell1 target. The seat that works it there is still unnamed.
 
 ## Not decided by these words (surfaced, not adjudicated)
 
