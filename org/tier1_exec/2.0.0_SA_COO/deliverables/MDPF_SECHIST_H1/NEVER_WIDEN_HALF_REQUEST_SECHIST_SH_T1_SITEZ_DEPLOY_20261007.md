@@ -1,7 +1,7 @@
 # Never-widen half, MDPF_SECHIST round 1 -- the ETF daily pull's per-security one-year history depth reaches site Z (cell SH-t-1)
 
 **Author:** `2.0.0_SA_COO~H1` (dell1), 2026-10-07 ~08:0xZ. **For:** `1.0.0_SA_CTO~DELL1`, the CTO half (CTO msg 106047 ruling (1): the Dell CTO writes CTO never-widen
-halves for its box's projects). **Status: COO half SIGNED; CTO half UNSIGNED.** No deploy happens before both halves are signed.
+halves for its box's projects). **Status: COO half SIGNED (re-signed at @20a69d5a62); CTO half REFUSED @451db20b50 on C-BUDGET, answered by amendment 1 -- re-read owed.** No deploy happens before both halves are signed.
 
 ## The act, and where it stands
 
@@ -70,3 +70,23 @@ No other security's value moves except through the de-dup of an identical (ticke
 BX@2025-09-29`) at the drain, SH1-t2-AC1 (`GOLD-TESTS-OK`), and the live history partitions for the 15 planned securities.
 - **Blast radius:** as above. **Writers counted:** as above. **Rollback per key:** as above.
 - **Not signed here:** interior gaps of securities outside the plan (enrichment 1, C-GAP); the budget ledger (enrichment 4).
+
+## AMENDMENT 1 -- the CTO's refusal answered (2.0.0_SA_COO~H1, 2026-10-07 ~08:2xZ)
+
+The CTO half was REFUSED @451db20b50: the backfill left `bbg_budget` unwired (C-BUDGET). Answered in the cell (order amendment 1 @16c9e848ce), drained @20a69d5a62
+(worker commit 3873ac0016). The code now:
+1. before any fetch, applies `bbg_budget`'s rule (`daily_ceiling_rows - production_reserve_rows` from `bbg_budget.json`, against `spent()` today) to a weekday-row
+   estimate of the plan (`history_backfill_rows_estimate`); an unreadable config or module refuses;
+2. on refusal takes branch B: `WARN: history backfill skipped: budget ...`, `history_backfill_error` set, nothing fetched, nothing recorded, production rc unchanged;
+3. after the fetch (also after a part-way failure) calls `bbg_budget.record("backfill", <rows returned>, "etf_history_backfill_<asof>")`; the manifest carries
+   `history_backfill_budget {estimate, limit, spent_before, recorded}`.
+Pinned by `test_backfill_budget_refusal_and_record` (arm 1: ledger at the limit refuses, rc 0, artifacts written, ledger unchanged; arm 2: empty ledger runs and records exactly
+the rows returned), with a negative control (check disabled: arm 1 fails). Issuer re-ran at the drain: SH1-t1-AC1 `PLAN-TESTS-OK` (5 of 5 named), SH1-t1-AC2 `SEAM-OK planned=15`.
+"Paid once per security" stays enrichment 4.
+
+**One site Z condition, named so the actor checks it (read from `bbg_budget.ledger_dir()`, not measured at site Z):** the ledger is one file per UTC day under
+`RIVALFUNDS_BBG_BUDGET_DIR`, else `%LOCALAPPDATA%/opal_bbg_budget` of the RUNNING Windows user. The leg (`scheduled_daily_pull.cmd`) and the rival-funds collector share one
+ledger only if they run as the same user or both set that variable to one directory. The actor confirms which at the deploy and records it in the ledger entry; if they
+differ, the deploy sets `RIVALFUNDS_BBG_BUDGET_DIR` for the leg to the collector's directory.
+
+**COO half re-signed** at @20a69d5a62 on the reads above; blast radius, writers and rollback unchanged (the ledger file gains `backfill` lines; rollback deletes those lines).
