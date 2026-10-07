@@ -2481,3 +2481,187 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "ETag is used as a body identity because every object here is a single-part SSE-S3 upload; B_01b alone was compared by cmp. NOT read: whether any gold run imports or executes the files under code/gold/tests/."
 }
 ```
+
+## MDPF_SECCLASS-S42 -- round 8's held counts are stale: the old list holds 10,965 rows, not 10,873; the seed module carries 20 remap tickers, not 19; the portal's loose census is 30 files, not 26
+
+```json
+{
+  "id": "MDPF_SECCLASS-S42",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "DECOMP_R8 carries counts held from the research seat that the round-8 cut re-measured differently: bd-securities 10,965 rows (R8 10,873), 2,381 keys shared with etf-classifications (R8 2,378), 7,133 NAME:: keys and 0 CUSIP: keys; the seed module holds 20 tickers of the rule-B remap set (R8 19); the loose portal Multi-Asset census is 30 files (R8 26), Market Performance carrying 6, not 3.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bd-securities: full consistent scan, us-east-1, 10,965 items, read at the round-8 cut 2026-10-07 ~07:4xZ-08:1xZ by the drafting of TO-SC-e26 and TO-SC-e32",
+      "seed module infra/aws/lambda/v2_portal/_shared/etf_classification.py at origin 1640a0e86e: 20 tickers of R9_CHECKS/MULTI_ASSET_REMAP_B_SET_20261007.tsv, 25 multi_asset tokens (SC8-e21-AC2 base line conflicts=25 off_vocab=20 remap_keys_moved=40 tokens=25)",
+      "portal at origin/DEV 8ddfe409: the loose pattern multi_asset|Multi-Asset|multiAsset matches 30 files under src/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DECOMP_R8 'Not read at this cut' and state items 2 and 4: 10,873 old rows, 2,378 in both lists, 19 funds (33 keys), 26 files on the loose pattern.",
+  "world_is": "The measured counts above. Each round-8 order inlines the measured value and names the difference, so no worker is cut against the held number; SC-e-26 re-measures the old list as its deliverable.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). No act is owed: the counts were held, not served."
+}
+```
+
+## MDPF_SECCLASS-S43 -- two contract pin tests are red at HEAD: they pin contract 0.3.0 and the contract is 0.4.0
+
+```json
+{
+  "id": "MDPF_SECCLASS-S43",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "At origin 1640a0e86e, infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py has 2 failing tests (15 pass) and test_model_classifier.py::test_contract_version_is_0_3_0 fails, all pinning org/standards/MDPF_SECCLASS_CONTRACT.json at 0.3.0 while the file reads 0.4.0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py at the base: 2 failed, 15 passed (the TO-SC-e27 drafting's base run)",
+      "test_model_classifier.py line ~245 test_contract_version_is_0_3_0 fails at the base (the TO-SC-e31 drafting's base run)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A contract bump moves its pin tests in the same commit (round 7 SC-e-1).",
+  "world_is": "The v0.4.0 bump left both pins at 0.3.0. Round 8 repairs both: TO-SC-e27 owns test_classified_by_v2.py and moves the pin to the next version; TO-SC-e31 owns test_model_classifier.py and replaces its pin.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Which commit bumped the contract to 0.4.0 was not read at this filing."
+}
+```
+
+## MDPF_SECCLASS-S44 -- the Bloomberg characteristics file reaches 114 securities of the table's 3,507, carries 10 GICS sectors where the producer adopts 11, and had no 2026-10-06 partition at 07:4xZ
+
+```json
+{
+  "id": "MDPF_SECCLASS-S44",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "FWD-12's planned source (the Bloomberg characteristics file the ETF producer reads) holds 114 securities against 3,507 etf-classifications rows; its newest file carries 10 distinct GICS_SECTOR_NAME values while the producer adopts 11; no bbg/2026-10-06/ partition existed at about 07:4xZ 2026-10-07.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SC8-e25 green arm at the base: sector=10 industry_group=23 rows=114",
+      "etf-classifications full consistent scan 2026-10-07 07:2xZ by 2.0.0_SA_COO~M1: 3,507 rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.12 FWD-12 / C-SECTOR: every security's row carries a sector and an industry group.",
+  "world_is": "The planned source covers about 3 percent of the table, so SC-e-28's writer alone cannot meet FWD-12; a second source for the other rows is unnamed. The partition gap may be a trading-day lag and was not resolved against lib/trading_calendar.py.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). An ENDPOINT question for 1.0.0_SA_CTO~DELL1 at the round-8 analysis: which source fills sector for the rows the file does not reach."
+}
+```
+
+## MDPF_SECCLASS-S45 -- 2,624 of 3,507 table rows carry no name, the 13 AI-made rows among them; the table holds no cash row
+
+```json
+{
+  "id": "MDPF_SECCLASS-S45",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "etf-classifications: 2,624 of 3,507 rows have no name attribute, including all 13 rows the AI classifier made, so FWD-14's clean names cannot be produced from table names alone; 0 rows read asset_class cash, so a six-class value bound leaves every AI cash verdict without a precedent row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only scan at the TO-SC-e30/e31 drafting, 2026-10-07 ~08:0xZ: 2,624 of 3,507 without name",
+      "full scan 2026-10-07 07:2xZ: equity 2,785, fixed_income 679, structured 20, commodities 12, alternatives 11, cash 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.12 FWD-14: every row prints a clean name; FWD-11: an AI-made row carries a clean name.",
+  "world_is": "Most rows have no name to clean. TO-SC-e34's row set covers named rows only and says so; the name source for the rest is unnamed.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). An ENDPOINT question for the round-8 analysis, beside S44."
+}
+```
+
+## MDPF_SECCLASS-S46 -- a seed run before SC-e-21 lands would undo part of the rule-B remap without counting a CONFLICT
+
+```json
+{
+  "id": "MDPF_SECCLASS-S46",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "Removing multi_asset from the seed module is not sufficient: 15 remapped rows carry no sub-class while the module still carries one, so a seed run writes it back without a CONFLICT; and a seed run drops the low_confidence flag the remap set on 15 seed rows, which the contract says seed rows do not carry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "seed module at origin 1640a0e86e versus the live rows written by the remap @0d9457b639 (updated_by mdpf-secclass-remap-b, 33 of 33 read back by 2.0.0_SA_COO~M1 at 07:2xZ)",
+      "1.0.0_SA_CTO half CTO_HALF_MDPF_SECCLASS_MULTI_ASSET_REMAP_B_20261007.md condition 1: no seed run until the module carries six-class values"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO condition 1 names the module's class values as the precondition for the next seed run.",
+  "world_is": "The precondition is wider than the class values. TO-SC-e21 covers the sub-class; its half request puts the low_confidence question to 1.0.0_SA_CTO~DELL1. The hazard is armed only if someone runs the seed script before TO-SC-e21 drains and its half is signed; this seat runs no seed meanwhile.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: TO-SC-e21 drained with SC8-e21-AC2 reading 0 CONFLICT and the half signed, or a seed-run refusal in the script."
+}
+```
+
+## MDPF_SECCLASS-S47 -- SC-e-40's FWD-4 instrument does not exist as a re-runnable tool, and PRD v0.12 names a wrong path for surface S26
+
+```json
+{
+  "id": "MDPF_SECCLASS-S47",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "DECOMP_R8 calls SC-e-40 a re-run of the FWD-4 census instrument from TO-SC-e3, but TO-SC-e3 is the round-2 thread re-census and left no reusable instrument; and PRD v0.12's S26 path is wrong: the file is infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-SC-e3 and deliverables/0.9.0_WK_MDPF_SECCLASS~4/ read at the TO-SC-e40 drafting",
+      "the S26 file located by path at origin 1640a0e86e"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "DECOMP_R8 SC-e-40: 'the FWD-4 census re-run'; PRD v0.12 S26's file path.",
+  "world_is": "TO-SC-e40 is cut as a build of the census with S22-S26 in its denominator, using the correct S26 path. The PRD path is the CTO's text to correct at the next addendum.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). -"
+}
+```
+
+## MDPF_SECCLASS-S48 -- a stray Inflection B_01b copy on S3, a push-gate re-upload of Cottonwood B_01b at 07:09:42Z, and a comp-pipescript blind spot on Cottonwood
+
+```json
+{
+  "id": "MDPF_SECCLASS-S48",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T08:30Z",
+  "one_line": "s3://opal-data-inf/code/gold/B_01b.classify_new_securities.py (2026-06-11) is referenced by no Inflection dispatcher; the push gate re-uploaded Cottonwood B_01b at 07:09:42Z 2026-10-07 at the same ETag as the rollback body (no harm, the S35/S39 hazard confirmed again); comp-pipescript deployed --firm cot reads every Cottonwood gold script as missing on S3 while s3 ls lists them present.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "S3 listings and dispatcher reads at the TO-SC-e35/e36/e37 drafting, 2026-10-07 ~07:5xZ-08:1xZ",
+      "Cottonwood B_01b version at 07:09:42Z: ETag equal to the 06:34:58Z rollback body (row S40)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Every shipped gold script has a dispatcher that calls it; the push gate moves no runnable body without a half; comp-pipescript deployed reads S3 truthfully.",
+  "world_is": "As stated. TO-SC-e35/e36/e37 hold their edits off any pushed range until the issuer's halves sign. The Inflection copy is listed for TO-SC-e37's half request. The comp-pipescript defect is a tool defect outside this project.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
+}
+```
