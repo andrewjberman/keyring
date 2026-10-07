@@ -4542,6 +4542,51 @@
     "spec_asserts": "Cell RIV-ml-1 (round 19): a strip's bought and sold months are the months of the trades listed beside it",
     "world_is": "True on 382 of 393 strips for the months the strip shows. The strip is drawn from gold buying_trend's month mark and the list from the trade markers; the two are built by different stages and the 11 differences are unread (candidates: a window ending in one month and counted in another, a refused window, a trade under the marker threshold). Separately, where the 365-day window spans 13 calendar months the oldest month's trades are in the net figure and the list but not on the strip",
     "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 19 is deployed): 2.0.0_SA_COO~RV. For the CVO's J1 on RIV-ml-1 and the round analysis: whether the strip should show 13 cells (with the year on the two Octobers) and what the 11 are."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S60",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:26:04Z",
+    "one_line": "Backfill preparation (read-only, no vendor call): as built, the Bloomberg range backfill would move the served rankings, would not give a formerly-held key its currency, and does not fit one day's budget",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/backfill_prep/ (build_list.py, securities_365d.txt, securities_365d.json), run 2026-10-07 ~12:3xZ read-only: 252 G1 day partitions 2025-10-06..2026-10-06; 863 distinct Bloomberg request securities over the year, 581 in the newest day, 282 formerly held, 102 identifier-keyed. The market-range DRY RUN (no request, nothing written) answers REFUSED: 217,476 points (863 securities x 252 trading days) against 119,245 left of the 120,000-point backfill budget (ceiling 150,000, reserve 30,000, 755 spent on 2026-10-07)",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py handler_entry (734-740) reads every G4 partition from as_of - 375 days to the page day, and _daily (402-410, read by the issuer) prices a holding-day g4_tri first, then g4_close when that day and the previous trading day both carry a close, then holding_implied. A backfill row carries px_close and no total_return_index, so every backfilled day moves from holding_implied to g4_close: contribution, price_source, the coverage counts and the ranks change for every period reaching back past the few days on file today. For a listing not quoted in dollars that is a local-currency price return in place of a dollar holding return",
+        "data/etfs/scripts/rivalfunds/publish_page.py _a1_newer_input: a G4 object newer than the day's holding_contribution marks it stale, so the next publish of any page day whose window covers a backfilled date rebuilds the table. The change reaches the served page without a deploy",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py _market_range (811) writes rows with px_close only: currency, total_return_index, gics, name and parsekey are NULL, marked only by as_of_source 'backfill'. No reader filters on that column (code read by a read-only helper under the issuer's brief; the three lines quoted here were re-read by the issuer). So a formerly-held key whose only G4 rows are backfill rows still has no stored currency and still reads 'No price history is stored for this holding yet.'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct @96d0ab2f4b: a Bloomberg price backfill for the rivalfunds funds only, for the modal's price curve; the three periods are the rivalfunds page only. CTO ruling msg 30817 term 1: the backfill's list includes formerly-held keys 'so each gains a stored currency and its closes; no new field', inside the budget ledger, split by day if over a day's allowance",
+    "world_is": "The backfill as built is not confined to the price curve: it changes the served rankings' numbers for every fund, on the deployed round-14 build as well as the new one, and it leaves the 96 no-currency holdings without a curve. It needs two days of budget at least. Nothing has been requested from Bloomberg and nothing written",
+    "notes": "disarm_owner (n/a, INERT: no backfill has run): 2.0.0_SA_COO~RV. BLOCKING for the backfill run only, not for the Lambda deploy (ruling 30817). Shapes for 1.0.0_SA_CTO~Z: (a) holding_contribution ignores rows marked as_of_source 'backfill', so the served rankings stay as they are and only the price curve reads them; (b) the backfill stamps each row with the security's CRNCY from one current-value reference request (a field the daily mode already asks for); (c) the range is split over two or more days inside the 120,000-point allowance."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S61",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:26:04Z",
+    "one_line": "Cause of row ETFS_RIVALS-Z-S57 read: buying_trend's G4 read does not load security_parsekey, so its parsekey join is always empty",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py handler_entry line 313 at CLOUD 2aba59986e: g4 = _read(s, g4u, (\"security_id\", \"date\", \"security_name\")); line 210: pk = parsekey_map(g4) with the comment 'RIV-al-1: the same parsekey the rankings join on'",
+        "data/etfs/scripts/rivalfunds/gold_holding_contribution.py parsekey_map line 178: returns {} when the frame has no security_parsekey column",
+        "Row ETFS_RIVALS-Z-S57: on the 2026-10-07 morning pass holding_contribution read MERGED 13 and buying_trend SPLIT 7 on the same build and the same G4 object"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey",
+    "world_is": "The trend stage calls the join and hands it a frame without the column, so the join returns nothing on the deployed build. Adding the column name to the read is the whole repair. The 2 MERGED pairs the morning pass counted in buying_trend are unexplained by this (both funds may simply report under the Bloomberg key)",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Not caught by al-1's check: its fixture hands build() a frame that carries the column. Rides the next cut as a repair, with a check that goes through handler_entry's own read."
   }
 ]
 ```
