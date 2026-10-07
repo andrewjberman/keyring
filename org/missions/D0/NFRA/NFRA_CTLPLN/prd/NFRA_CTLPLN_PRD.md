@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.15",
+ "prd_version": "v0.16",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"],
@@ -169,7 +169,9 @@
                     answers yes or no; afterwards Andrew can read who approved which package, on what
                     evidence, and when; a refusal reads as clearly as an approval
          SOURCE     brief O1, O2, O3; Andrew-direct 2026-10-07 ~14:0xZ, "some kind of request pipeline
-                    for additions to requirements.txt and a review process"
+                    for additions to requirements.txt and a review process"; who reviews, Andrew-direct
+                    ~15:1xZ, the research seat assesses and recommends, the technology seat decides and
+                    adds it
 
   FWD-17 For anything that reached a box, a person can say what was checked before it was sent and
          what those checks cannot rule out
@@ -181,18 +183,20 @@
                     is no; nothing is called clean beyond what was looked at
          SOURCE     brief O4 and Part V.1
 
-  FWD-18 A Dell that tries to get a package, a script or a program from the internet is stopped on
-         the box and told the route that works
+  FWD-18 A box that tries to get a package, a script or a program from the internet is stopped on
+         the box and told the route that works; the laptop alone fetches a package, by the checked
+         route
          DONE WHEN  EXERCISED -- a download tried on purpose and stopped, and the delivered file then
                     installed
-         ACCEPT     on a Dell someone tries, on purpose, to install a package from the public internet
-                    and is stopped, and what they are told names the route that works; a script or a
+         ACCEPT     on a Dell, and on site Z, someone tries, on purpose, to install a package from the
+                    public internet and is stopped, and what they are told names the route that works; on
+                    the laptop the only way a package arrives is the checked route; a script or a
                     program off the raw internet has no route at all and comes only from another Opal box;
-                    building the website on a Dell downloads nothing, including what a tool would fetch
+                    building the website on any box downloads nothing, including what a tool would fetch
                     on its own without being asked; what is counted is requests leaving the box, not the
                     absence of an error
          SOURCE     brief O5, O6, O7; Andrew-direct 2026-10-07 ~13:39Z, scripts and executables off the
-                    raw internet "never, ever"
+                    raw internet "never, ever"; every box, Andrew-direct ~15:1xZ, "Rec approved."
 
   FWD-19 Andrew can ask what a box downloaded and get an answer from a record, and a lane waiting on
          a package is seen, not stuck
@@ -589,3 +593,23 @@ then the other 29 packages of the first batch by the same route
   name, yes, and only in a place that holds no sign-in; building that place is its own outcome when the first new name is asked.
 
 An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to FWD-14 are unchanged.
+
+## ADDENDUM v0.16 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: the tiers bind every box; a package is approved by the control plane, not by Andrew
+
+**Word (verbatim):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_151xZ_TIERS_BIND_EVERY_BOX_DELL1_PUSHES_DEV_PACKAGE_APPROVAL_BY_CRO_THEN_CTO.md`.
+
+1. **Call A of v0.15 is RE-RULED: every box.** "Rec approved." on the card "Yes, every box, with the laptop as the one box that
+   may fetch a package and only through the checked route." FWD-18's text reads "a box" where it read "a Dell", and its ACCEPT
+   names site Z and the laptop. v0.15 held the tiers to the Dells because his words were spoken there; that limit is lifted by
+   his word, not by inference.
+2. **Call D of v0.15 is RE-RULED: Andrew approves no package name.** "The package approval needs to be handled automatically by
+   an agent on the laptop/control plane fabric". C-INTAKE gains clause 7:
+   **7. Review.** For every request, a new name or a version change alike, `4.0.0_SA_CRO` assesses legitimacy and stability
+   (the eight checks' inputs that need no fetch, the project's history, its maintainers, how near its name sits to a popular
+   one, what it pulls in) and delivers one recommendation, yes or no, with its evidence, as a file. `1.0.0_SA_CTO` decides,
+   and on a yes runs the addition to the approved list by clause 4's route. Check 8 of clause 1 (a person signs the batch)
+   is that same decision. The record FWD-16 promises names both seats and both files.
+3. **Call F stands:** a new name is run before a Dell runs it only in a place that holds no sign-in; until that place exists,
+   the CRO's recommendation on a new name says so and the CTO weighs it.
+
+FWD-1 to FWD-15, FWD-17 and FWD-19 are unchanged. The ratified-text half is owed by `3.0.0_SA_CVO` against this version.
