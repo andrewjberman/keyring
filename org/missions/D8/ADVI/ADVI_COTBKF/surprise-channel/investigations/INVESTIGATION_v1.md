@@ -332,3 +332,77 @@ round.** Never edit an existing row.
   "notes": "The cache is a local accelerator, not a store: it is never committed and nothing reads it but this script."
 }
 ```
+
+## ADVI_COTBKF-W11-S1 -- the TO's end-positions rule gives 455 of 459 old accounts an empty book (closed to cash); the build measures holdings just before the final in-kind exit
+
+```json
+{
+  "id": "ADVI_COTBKF-W11-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~11",
+  "surfaced_at": "2026-10-07T02:10Z",
+  "one_line": "the TO's end-positions rule gives 455 of 459 old accounts an empty book (closed to cash); the build measures holdings just before the final in-kind exit",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "script run on the cached table: first the literal rule (run1), then the add-back (.scratch/run2.txt, rerun as the AC2 invocation, ACCOUNT-LINKS old_accounts=459 every_old_account_listed=True linked=180 not_linked=279 ambiguous=13 chains=5)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-4 link rule: 'A's holdings at its end (rebuilt from A's own transactions up to its last trade) are moved in kind into B'; reason 'closed to cash' for an account that sold out.",
+  "world_is": "A rebuild through the last trade is empty after the move, because the move itself is a `lo` (Withdrawal from Asset) or trfo/trco row on each CUSIP at the last trade (account cvB3S605688 ends 2016-02-04 with 100+ lo rows). Literal run: 455 of 459 old accounts 'closed to cash', 4 'no in-kind receiver', 0 linked (.scratch/run1.txt). The build adds back the in-kind exit rows (lo/trfo/trco on a non-cash CUSIP) dated within 10 trading days before the last trade, so the positions are those held just before the exit; an account with no such rows is rebuilt as is and stays 'closed to cash' (90 of 459). Result: linked 180, not_linked 279 (ambiguous 13, below threshold 77, closed to cash 90, no in-kind receiver 99). The add-back is a reading of 'moved in kind', not the TO's words; CB3c4-AC3 grades it."
+}
+```
+
+## ADVI_COTBKF-W11-S2 -- a chain is followed only through OLD accounts: 46 of the 148 non-old link targets stopped trading before 2026-01-01, and their own replacements are not in this table
+
+```json
+{
+  "id": "ADVI_COTBKF-W11-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~11",
+  "surfaced_at": "2026-10-07T02:10Z",
+  "one_line": "a chain is followed only through OLD accounts: 46 of the 148 non-old link targets stopped trading before 2026-01-01, and their own replacements are not in this table",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pandas read of .scratch/advi_cotbkf/account_links/account_links.parquet against the cached table: last trade per LINKED target not in the old set; 46 below 2026-01-01, 56 below 2026-06-01"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-4: 'every OLD account gets exactly one row ... a chain (A -> B -> C) is followed and printed as the client's line.'",
+  "world_is": "Rows exist for the 459 old accounts only, so a chain continues only where B is itself an old account (5 chains of three accounts, e.g. cvB3S606716 -> B3S606716 -> 0QF886265). Of the 176 distinct LINKED targets, 148 are not old accounts; 46 of those have a last trade before 2026-01-01 (earliest B3S606708, 2018-01-03), so a client line that ends at such a B may continue to a later account this table does not test. The rule is not applied to non-old accounts, because the TO gives them no row and a row for them would break 'exactly one row per old account'."
+}
+```
+
+## ADVI_COTBKF-W11-S3 -- AC2 meets its 120-second bound only against a primed cache: the cold run took 89.5 s here, and a pyarrow S3 read of the 14 files failed with a network error on threads
+
+```json
+{
+  "id": "ADVI_COTBKF-W11-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~11",
+  "surfaced_at": "2026-10-07T02:10Z",
+  "one_line": "AC2 meets its 120-second bound only against a primed cache: the cold run took 89.5 s here, and a pyarrow S3 read of the 14 files failed with a network error on threads",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "time timeout 300 python ... --out .scratch/cold/out --cache .scratch/cold/cache: real 1m29.529s rc 0; time timeout 120 python ... --out .scratch/advi_cotbkf/account_links: real 1m11.618s rc 0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-4 BOUNDS: 'Within 120 seconds for CB3c4-AC2 (column projection; cache under .scratch/ and say so).'",
+  "world_is": "The default cache is <out>/../tx_cache, i.e. .scratch/advi_cotbkf/tx_cache (14 parquet files, 30 MB, uncommitted). Cold run (empty cache, boto3 download on 14 threads, then the rule): real 1m29.5s, same ACCOUNT-LINKS line. Cached run: real 1m11.6s on the first AC2 invocation, 2.6 s on re-runs (file-system cache). pyarrow's own S3 reader (threads) failed with 'AWS Error NETWORK_CONNECTION during GetObject', so the script downloads with boto3 (8 retries). A slower link than this device's (a sibling saw over 200 s for the sequential read) ends a cold run at rc 124. Also: the summary line's not_linked counts every NOT_LINKED row, ambiguous being one of its reasons, so linked+not_linked = 459 and ambiguous (13) is a subset of not_linked (279); the TO does not say whether ambiguous is inside or beside not_linked.",
+  "notes": "Disarm: copy C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-11/.scratch/advi_cotbkf/tx_cache to the shared tree's .scratch/advi_cotbkf/ before the worktree is removed (the script reads it with no flag), or run the script once without the timeout."
+}
+```
