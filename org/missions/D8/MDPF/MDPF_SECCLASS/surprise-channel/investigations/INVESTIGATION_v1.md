@@ -4345,3 +4345,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Order left in_progress; not flipped. No override used."
 }
 ```
+
+
+## MDPF_SECCLASS-W49-S2 -- W49-S1 resolved by the issuer's repair 4f0b68c9ce
+
+```json
+{
+  "id": "MDPF_SECCLASS-W49-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~49",
+  "surfaced_at": "2026-10-07T16:00:00Z",
+  "one_line": "SC-e-65: W49-S1 resolved -- the issuer's repair 4f0b68c9ce makes the <paths> block parse; the four build files committed at 16092a4806",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4f0b68c9ce repaired the order's <paths> block (lines 134-140 of MDPF_SECCLASS.TO-SC-e65, tag alone on its line, five entries)",
+      "safe-commit of the four build paths rc=0 at 16092a4806 on wk-MDPF_SECCLASS-49 (LOCAL); AC1 'SC-E65 ok=True', AC2 'PYTEST-OK rc=0 ... 229 passed'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row MDPF_SECCLASS-W49-S1 (BLOCKING): the order's <paths> block did not parse, so the lane gate granted ~49 nothing.",
+  "world_is": "The issuer's repair 4f0b68c9ce makes the block parse; the lane gate admitted all four build paths and the build is committed at 16092a4806. W49-S1's block no longer stands. No override was used.",
+  "notes": "S1 is not edited (append-only); this row resolves it by reference."
+}
+```
