@@ -7237,6 +7237,29 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Not measured: whether the served gold carries these four as mentions of the four companies, and whether the acceptance check tests the name as a whole word or as a substring (the substring counts above exceed the whole-word counts in all four). Carried to the acceptance stage's re-check per CTO 30522."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S94",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T03:34:11Z",
+      "one_line": "A pair whose job ends on a STOP status is recorded done and never retried: 37 (publisher, name) pairs across the four live checkpoints (wsj 8, bbg 8, barrons 12, sa 9) were skipped by every later resume, and the issuer's round-50 close record wrongly said the timed-out pairs re-ran.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Collection-run condition 1 and the driver's own help text: a stopped publisher 'resumes from its next undone pair'. ROUND50_CLOSE_RUN.md (issuer, @e8c062b598): 'The five TimeoutError pairs are undone in their checkpoints, so each leg's resume re-runs them'; and the issuer's report that barrons finished 234 of 234 with its two timed-out names re-run.",
+      "world_is": "`lib/opal_data_harvest/backfill_driver.py:314` appends EVERY job to `checkpoint[\"done\"]` whatever its status, and `:120` builds the skip set from `done`. So the pair a leg stopped on is done, and `--clear-stop` resumes at the pair AFTER it. Counted from the checkpoints' `done` rows whose status is in STOP_STATUSES: r46_wsj 8 (error 6, bot_check 1, sign_in_refused 1 -- the last is T US Equity); r46_bbg 8 (error 5, bot_check 3); r46_sa_barrons 16 (barrons error 11, barrons bot_check 1, sa upstream_unavailable 4); r47_sa 5 (upstream_unavailable 4, account_or_harvester_unavailable 1). Barrons' 234 of 234 is 234 CONCLUDED, of which 12 never collected, including security-6c77e5f2f3cc198f and security-26e22dc37b6dba24, the two the issuer reported as re-run. The T US Equity pair did not re-run at the 03:21Z wsj resume (the first job was UAL US Equity).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/backfill_driver.py:120 and :314 at CLOUD HEAD",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round52/stop_status_pairs.json (the 37 pairs, with status, run id and checkpoint)",
+          ".runtime/harvest-backfill/r52_wsj_run1.out first JOB line (UAL US Equity) against r46_wsj_checkpoint.json done row for security-f0731ffb117030c8 (sign_in_refused)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "DISARMING by re-run, issuer act: barrons' 12 pairs relaunched 03:3xZ on their own checkpoint (`r52_barrons_retry_checkpoint.json`, `--names`); the wsj 8, bbg 8 and sa 9 are re-run the same way when each leg's profile is free (a second driver on a live profile would collide). Not measured: how many of the 37 would have collected anything. The per-leg report (at-3) counts concluded pairs, so FWD-7's coverage figure includes these 37 until they are re-run. Carried to the CTO: the driver should not record a stop-status pair done."
     }
   ]
 ```

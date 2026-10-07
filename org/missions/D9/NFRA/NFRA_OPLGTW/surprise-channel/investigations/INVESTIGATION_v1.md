@@ -9393,3 +9393,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here. Candidate for the CTO's next enrichment list: return the execution id right after /trigger and leave the polling to a second read-only status tool. Whether the second send at 01:26Z overlapped the r23 gateway restart is unread."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S64",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T03:18Z",
+  "one_line": "The gateway's audit record for a rivalfunds page view cannot say WHICH page was served: its args are omitted fail-closed (the tool is not in the R8-PRIV allowlist) and it carries no bytes, so the day and the route (page, audit, archive) are recoverable only by joining the uvicorn access log by timestamp.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN ssm 338918d8-a37d-4a8f-bef6-2ecd1df192b1, 2026-10-07 ~03:2xZ: 4 of 4 rivalfunds_view audit records in 02:33-03:10Z read args {'_omitted': 'args fail-closed (tool not in R8-PRIV allowlist)'} and bytes null; outcome ok; user is Andrew 4 of 4 (digest compare).",
+      "RUN ssm c8827af1-d815-4b57-8020-fc4dd73432d5: the access log for the same four seconds reads 2 GET /rivalfunds/2026-10-06/audit 200 and 2 GET /rivalfunds 200.",
+      "FILE infra/aws/ec2/opal-gateway/app/rivalfunds_view.py:171-178 passes {'day', 'route'} to audit.log_call and no bytes_returned; app/audit.py _safe_args drops them."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ETFS_RIVALS round-13 ruling 1 (1.0.0_SA_CTO~Z): the proof of a served audit page is the gateway's access record, showing status, identity, size and time.",
+  "world_is": "No single gateway record shows all four. Path and status are in journald, which is not shipped to the audit lake; identity is in the audit record; size is in neither.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. Candidate: admit rivalfunds_view's day and route to the R8-PRIV args allowlist and pass bytes_returned. That widens what the audit lake stores, so it is the CTO's call; routed in the round-24 slug."
+}
+```
