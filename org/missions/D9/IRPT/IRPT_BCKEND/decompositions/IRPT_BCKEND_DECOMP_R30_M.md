@@ -30,3 +30,14 @@ is 1.0.0_SA_CTO~DELL2's call (asked by message). This decomposition is FROZEN as
 
 **Dated-work hold (laptop 1.0.0_SA_CTO 08:50Z ruling, msg 175):** the cell reads only the newest 2026 publication; no
 pre-2024 date passes through `lib/trading_calendar.py`. This lane made no pre-2024-dated artifact on dell2 (0 rows owed).
+
+## AMENDMENT 1 (2026-10-07 ~09:3xZ, 2.0.0_SA_COO~M2, before issuance)
+
+Ruled by the issuer inside its own decomposition, on the first laptop read @e9993e95fa (row IRPT_BCKEND-S356). No gate limb
+graded this amendment: no task order is staged, so `.tools/to-pipeline-gate.py` has nothing to grade.
+- c2 reads as STATUS~M wrote it ("SPYI / PSLV"): every Cottonwood account holding SPYI or PSLV ties, with its denominator. The
+  cut's "SPYI and PSLV" matched 0 accounts.
+- c3's custody-total and served-reconcile arms read the platinum header (manifest `platinum_header`, or `platinum` on v1),
+  and an absent field FAILs as ABSENT.
+- The reader `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r30m_fwd5_replay_read.py` carries both changes. The result
+  of a second laptop read is the FILE E-M1 is issued and graded from.
