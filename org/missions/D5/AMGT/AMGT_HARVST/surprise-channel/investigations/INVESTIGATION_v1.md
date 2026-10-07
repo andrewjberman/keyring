@@ -7526,6 +7526,47 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W108-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~108",
+      "surfaced_at": "2026-10-07T15:29:23Z",
+      "one_line": "HVST-bf-1 section 1 item 4 and the schema's x-address say the new job_record table needs an infra/logic/registry row; the registry holds no table-level rows, and neither the builder nor the naming gate refuses, so no row was added.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-bf-1 item 4: 'The new stored table needs its row under infra/logic/registry/ in this same change'; the schema x-address: 'Its infra/logic/registry row lands with the collector cell's commit (the writer's)'.",
+      "world_is": "infra/logic/registry/*.json hold systems, scopes, tiers, resources, legacy_addresses, reporting_policies, exemptions, remediations and root_map: no file carries a (source, scope, tier, table) row, and no seeking-alpha or harvest table is registered anywhere. systems.json already carries the source 'seeking-alpha' (VENDOR) and tiers.json already homes tier 'state' for the harvest scope. lib.research.harvest.store.address_of('seeking-alpha','state','job_record', ...) prints s3://opal-data-harvest/seeking-alpha/harvest/state/job_record/security_key=BP-SLASH-_LN_Equity/20261007T013300Z.json with no refusal; `python lib/opal_naming.py validate` rc=0 (VALIDATE: OK 53 system row(s), 13 scope row(s), 41 warning(s)); `python .tools/naming-gate.py --diff <the cell's diff> --enforce` prints NAMING-GATE: PASS 0 graded. No refusal means no missing row can be named, so the cell adds none and does not stop AC2. The 'registry row' the contract expects is not a row of any registry file today.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/logic/registry/ (9 files) read in the cell's worktree",
+          "python lib/opal_naming.py validate (rc=0)",
+          "python .tools/naming-gate.py --diff --enforce (NAMING-GATE: PASS 0 graded)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W108-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~108",
+      "surfaced_at": "2026-10-07T15:29:23Z",
+      "one_line": "A run record carries no per-job finished_at, so the record's finished_at (and its address) is the RUN's finished_at for the live writer and the emitter alike; a multi-job run gives its jobs one finished_at.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-bf-1 section 0: the run record 'carries finished_at, the job's status, gold_security_key, counts and keys_stored_join'; the schema: finished_at is 'when the job ended'.",
+      "world_is": "run_records/*.json carry finished_at at run level only; jobs[] entries carry job_id, publisher, security_key, status, keys_fetched, gold_security_key and no finished_at (worker.write_run_record). The per-job end time sits only in runs/<job_id>.json. Both the live writer (worker._write_job_records) and the emitter therefore take the run record's finished_at, so a job written live and later emitted maps to ONE address and the emitter's write is skipped_exists; the cost is that finished_at is the run's end, a few milliseconds after the job's own for the one-job runs the collector makes today (jobs_per_run 1), and shared by every job of a multi-job run. stored is likewise the job entry's keys_fetched (the per-job stored count), not len(keys_stored_join), which is run-level; the four known runs agree on both (616, 1992, 45, 9). INERT while runs hold one SA job per security.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py write_run_record (jobs.append entry) and _write_job_records",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
