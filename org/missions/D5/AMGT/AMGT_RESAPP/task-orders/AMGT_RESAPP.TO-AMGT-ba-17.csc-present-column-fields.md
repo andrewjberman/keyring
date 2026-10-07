@@ -91,3 +91,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @b8bac534e2; proof VALID (worktree checker); every PRESENT CSC column carries period_or_horizon, currency and source_field; AC1 6 of 6 (5 of 5 PRESENT columns), AC2 3 of 3 (5 present + 12 absent = 17); peers suite 68 passed</status>
