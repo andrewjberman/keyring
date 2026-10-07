@@ -73,6 +73,11 @@ FWD-11 retires it.
    not the YCharts producer, so it is NOT stopped. It is back to HELD under CTO batch 218, and the CTO re-rules it when
    4.0.0_SA_CRO's research on the check and swap operations lands (Andrew-direct ~08:0xZ, @1ea0796be2). Any live Kimi
    call still needs Andrew's per-use vendor word.
+   **SUPERSEDED by msg 120 (08:15Z, `1.0.0_SA_CTO~DELL2`, on the brief
+   `docs/briefs/irpt-check-swap-ai-autosuggest-ux-brief-20261007.md` @3d0ecacb0b section 4.1):** Y-5 packet 2 is
+   superseded by IRPT_YCDGEN S32 (FWD-16). There, the candidates come from etf-classifications, and the model ranks or
+   words them but never invents one. The check and swap UI changes R1-R9 go to IRPT_YCDGEN as a PRD addendum, not to
+   this workstream.
 4. Y stays open until IRPT_YCDGEN FWD-11, then closes with the removal of the YCharts path.
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
