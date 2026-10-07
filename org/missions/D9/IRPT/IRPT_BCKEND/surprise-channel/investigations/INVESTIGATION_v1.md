@@ -20285,3 +20285,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The admit is implemented in uploads.py and proven offline (AC1-AC3). The production principal does not yet carry allowedFirmIds, so with the real InteractiveAccess the admit is inert (fails closed to the existing refusal). Carrying the field needs a one-line change to InteractiveAccess.current() (read from the profile row) in _scope/interactive_access.py, which is not in this order's paths and was not edited. Owed to the issuer: a cell for that file before the TCKT_VNEXT live run."
 }
 ```
+
+## IRPT_BCKEND-W162-S1 -- ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, r
+
+```json
+{
+  "id": "IRPT_BCKEND-W162-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~162",
+  "surfaced_at": "2026-10-07T18:17:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, render/clientreport/types.ts) but PrintEntry's loaded bundle (RenderBundle) carries only performanceReport, dashboardPerformance, analysisReport and narrativePacket, and the typed client has no operation that returns a client report; so no PrintEntry-only change can mount the template. No edit made; stopped on IB70-3-AC1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx:457 @339851c7 -- export function ClientReportDocument({ report, ...slots }: { report: ClientReportData | NotCoveredClientReport } & ClientReportSlots)",
+      "portal/src/pages/InvestorReporting/render/manifest.ts:273-288 @339851c7 -- RenderBundle fields: reportKind ('performance' | 'analysis'), performanceReport, dashboardPerformance, analysisReport, narrativePacket, renderOptions, disclosures; no household/client report",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts:297 @339851c7 -- op = reportKind === 'performance' ? 'performance-report' : 'analysis-report'; no third branch; ReportKind is 'performance' | 'analysis'",
+      "portal/src/api/endpoints/investor-reporting.ts @339851c7 -- the typed client exposes getPerformanceReport, getAnalysisReport, getHoldingsSnapshot, getNarrativePacket, getOwnedAnalysisReport, getExportReceipt, getExportDownload; none returns a custody/client report; Grep for custody-report|ClientReport over portal/src/api finds no match"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-353 worker face: the page mounts ClientReportDocument for custody-report 'with the bundle it loads, the same way it mounts PerformanceDocument', in PrintEntry.tsx only.",
+  "world_is": "The only way to mount it in PrintEntry.tsx alone is to invent the `report` prop (a cast or fabricated household), which the order forbids by its own clause. The missing piece is a read that returns the household document (a typed-client operation plus a resolveBundle branch and a ReportKind/RenderBundle member), none of which is in this cell's paths. PrintEntry.tsx, the tests and the template are unchanged by this worker. Owed to the issuer: re-cut with the loader (api/endpoints/investor-reporting.ts, export/resolveBundle.ts, render/manifest.ts) in grant, and name the route that serves the household document.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
