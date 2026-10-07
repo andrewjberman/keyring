@@ -21380,6 +21380,48 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~281/covered_keyed.out.txt"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W287-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~287",
+  "surfaced_at": "2026-10-07T02:04:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "plan officers run against the live stores names 86 of 95 covered names needing a new officer pull (86 calls), not the 84 the order states; the other 9 are 7 served by a stored filing and 2 served by a stored Bloomberg officer list.",
+  "spec_asserts": "Order AMGT-ba-25 s.1 item 1: officers = the names whose chain needs a new pull, read as exec_roster_chain does (needs_new_pull, :195); '84 of 95 at the cut' (row Z-W227-S1).",
+  "world_is": "Measured 2026-10-07 ~02:00Z from C:/tmp/r77-287: covered_security_keys = 95; exec_roster_chain.run_chain(key, s3) per name, no dossier_read passed. Signature distribution: (not served, bloomberg leg needs_new_pull=True, 'not tried') 86; (served by filing) 7: BABA, BA, COST, HD, NU, SAP GY, VLO; (served by bloomberg stored list) 2: 2317 TT, ASML NA. plan officers prints 'names 86 calls 86'. The issuer's paired act ba-22 confirms with --confirm-calls, so it must state 86, or the difference of 2 names is explained by a store change since the cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/research_pulls.py (plan, _officer_names)",
+      "lib/research/management/exec_roster_chain.py:195 (needs_new_pull)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W287-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~287",
+  "surfaced_at": "2026-10-07T02:04:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The repository records no Bloomberg segment mnemonic, so the segment fields in research_pull_fields.json are proposals from field-naming convention, all UNPROBED; the issuer's one-name probe decides them.",
+  "spec_asserts": "Order AMGT-ba-25 s.1 item 1: 'Propose the segment mnemonics from what the repository already records about Bloomberg fields (integrations/bloomberg/research/field_map.json, integrations/bloomberg/docs/)'.",
+  "world_is": "field_map.json holds fundamentals mnemonics (ARD_*, IS_* and similar) and no segment field; integrations/bloomberg/ has no docs/ directory; a repo-wide search of lib/, integrations/, docs/, prd/ and infra/ for SEG_*, *_SEGMENT*, PRODUCT_SEG*, GEO_SEG*, BS_SEG* finds only unrelated code identifiers (AMGT_SEGMENT timing logs, segment_labels.py filing-text parsing). Proposed (not from the repo, no Bloomberg call made): SEGMENT_NAME, SEGMENT_REVENUE, GEOGRAPHIC_SEGMENT_NAME beside NAME (known, from the officer pull). The segment pull's bulk-field shape and any override it needs are also unknown; plan counts 1 call per name on that assumption.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "integrations/bloomberg/research/research_pull_fields.json",
+      "integrations/bloomberg/research/field_map.json"
+    ]
+  }
 }
 ]
 ```
