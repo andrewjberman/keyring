@@ -7280,6 +7280,190 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S95",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T09:05:00Z",
+      "one_line": "The alias cell HVST-az-1 takes the research-folder name from the crosswalk, but the crosswalk carries a folder on 96 of 237 records and on none of the cell's build or control names (Meta, Bank of America, AT&T) nor Amazon.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "ledger/ROUND_ANALYSIS.round49.md ADDENDUM 3 item 2 (lines 113-114): each name's alias set is the legal name without its corporate form plus the team's research-folder name, which 'is the firm's own short name (Meta, Amazon) and is already in the crosswalk'.",
+      "world_is": "Crosswalk s3://opal-data-harvest/crosswalk/v1/2026-09-29.json read through lib.research.identity.crosswalk.load_crosswalk(): 237 records, source_row.folder present on 96 (denominators.folders_in_records 96). META_US_Equity, BAC_US_Equity, T_US_Equity and AMZN_US_Equity each resolve to 1 record whose source_row.folder is None. LLY_US_Equity carries folder 'Eli Lilly LLY US' (a folder name is the company name plus ticker, not a bare short name). The harvest library has 0 references to a folder field (comp-find, 126 files scanned). As written, the cell's build case has no second alias to add.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python: crosswalk.load_crosswalk() records=237, with source_row.folder=96, per-ticker read of META/BAC/T/AMZN/LLY, 2026-10-07 ~09:0xZ",
+          "comp-find -i 'research.folder|research_folder|folder_name' lib/opal_data_harvest: 0 hits across 126 files",
+          "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md section 66"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S96",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T09:10:27Z",
+      "one_line": "The collector's identity file carries a decorated or cut legal name on up to 20 of 234 securities: 9 with a slash tail (Inc/The, Inc/MD), 1 with a receipt tail (ADR), and 10 that are exactly 30 characters long, 5 of them visibly cut mid-name.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/opal_data_harvest publishers.slug_query(company) yields the words a sitemap slug must carry; it assumes `company` is the name a headline uses once trailing form words are dropped.",
+      "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round47/rank_universe_identity_20261005.json, 234 records, field company.value. SLASH TAIL 9: BNY, EL, GS, HSY, KO, MAR, SCHW, TJX, TRV (_US_Equity) -- 'Goldman Sachs Group Inc/The' tokenizes to 'Goldman Sachs Group Inc The', so the trailing form words are no longer trailing and every one stays required. RECEIPT TAIL 1: TSM_US_Equity 'Taiwan Semiconductor Manufacturing Co Ltd ADR'. EXACTLY 30 CHARACTERS 10 (the longest clean-cut length; the file's other long names are 31, 32, 33, 42 and 45): visibly cut 5 -- AIG_US_Equity 'American International Group I', ICT_US_Equity 'International Container Termin', KCDMY_US_Equity 'Kimberly-Clark de Mexico SAB d', OMAB_US_Equity and OMAB_MM_Equity 'Grupo Aeroportuario del Centro'; cut with no lost name word 1 -- 8306_JP_Equity 'Mitsubishi UFJ Financial Group'; complete at 30 by coincidence 4 -- AEP, BBSEY, BIPC, JBHT. Bound: the cut test is length == 30 read by eye for a broken word; a name cut at a word boundary shorter than 30 is not detectable from this file alone. Not measured: how many candidates each of the 20 loses on a replay.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read of rank_universe_identity_20261005.json: records 234; '/' in company 9; trailing ADR 1; len(company)==30 10",
+          "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round49.md ADDENDUM 6 (the act owed: one row for the class with its count over the 234)",
+          "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_AZ1_BRAND_ALIAS_SOURCES_20261007.md section 'How large the gap is'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S97",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T10:59:30Z",
+      "one_line": "An upload-harvest that holds any row on SilverRowError exits rc=2 while uploading the rest; the driver prints the rc and carries on, and the held rows cleared on a second attempt in 5 of the 9 cases read (4 still pending at attempt 1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/opal_data_harvest/backfill_driver.py prints `UPLOAD <pub> <key> cap=<n> rc=<rc>` after a job that left something pending; a reader takes rc=0 as uploaded and a non-zero rc as an upload that failed.",
+      "world_is": "Round-54 close run: `UPLOAD wsj security-5589c162c9b5837b cap=126 rc=2` and `UPLOAD bbg security-5589c162c9b5837b cap=190 rc=2`. Read from progress.sqlite3 afterwards: wsj harvest_raw_outbox 574 uploaded 0 pending (the next job printed `cap=4 rc=0`, so 122 of 126 went up on the rc=2 call and 4 on the next); bbg 2,656 uploaded, 4 pending (TJOPTAKJH6V400, THLFSMKGCTFW00, TEDXG1KGIFSB00, TEBG85KIJHAI00), each attempts 1, error_code SilverRowError. bbg:TKM1JNR24U8600, pending on SilverRowError at the 06:30Z wind-down, reads uploaded with attempts 2. Not read: why a row raises SilverRowError on its first attempt and not its second; whether any row stays held past its second attempt.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round54/r54_wsj_az1.out and r54_bbg_az1.out (the UPLOAD lines)",
+          "sqlite read-only: SELECT status,count(*) FROM harvest_raw_outbox GROUP BY status on .runtime/opal-data-harvest-wsj and -bbg, 2026-10-07 ~10:58Z",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round54/ROUND54_CLOSE_RUN.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W105-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~105",
+      "surfaced_at": "2026-10-07T11:43:30Z",
+      "one_line": "Today's gold securities carry META_US_Equity with the alias set [\"META_US_Equity\"] (the security_key as the company name) and exact ticker [\"META\"], so no legal-name alias such as Meta Platforms is in the served set.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bb-1 item 1: baseline = the security's alias set as gold has it today; it names the brand as absent from that set and reads the pair as NEW when the security had 0 mentions under the served aliases.",
+      "world_is": "bb1_census.out: BASELINE META_US_Equity aliases=[\"META_US_Equity\"] exact=[\"META\"]; BASELINE LLY_US_Equity aliases=[\"Eli Lilly\"] exact=[\"LLY\"]; securities from universe_securities.build() at pool:universe/v1/2026-10-06.json, 242 securities. So Meta's census NEW pairs (672 of 935 articles) count articles that say Meta Platforms or Facebook as NEW pairs, since the baseline cannot see those names. Not read: why the universe name for META is empty or the key.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~105/bb1_census.out (BASELINE lines)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S98",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T11:49:43Z",
+      "one_line": "The gold text matcher's securities list carries NO company name for 138 of 242 securities: the only alias is the security key itself (AAPL_US_Equity, AMZN_US_Equity, JPM_US_Equity, META_US_Equity, MSFT_US_Equity, NVDA_US_Equity among them), so those names can be counted in article text only by exact ticker.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/research/harvest/universe_securities.py builds, from the pool universe, the `securities` list every publication_gold builder takes, each security carrying the alias set the word-bounded matcher counts as mentions of that company.",
+      "world_is": "universe_securities.build() run 2026-10-07 ~11:5xZ against pool universe/v1/2026-10-06.json (fallback_reason None): 242 securities; for 138 the alias set is exactly [security_key] (e.g. AAPL_US_Equity aliases ['AAPL_US_Equity'], exact ['AAPL']). The pool universe carries a `name` only on its coverage-sourced rows (96 of 237 in the crosswalk read of row Z-S95), and build() falls back to the key. Worker row AMGT_HARVST-Z-W105-S1 found it on META_US_Equity during the bb-1 census, where it makes Meta's 672 NEW pairs include articles that say Meta Platforms. The collector is NOT affected: it reads company names from its own identity file (234 records). NOT measured: whether the served gold was built from this same list or from another securities input; how many mention rows the 138 lose.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python: universe_securities.build() -> 242 securities, 138 whose aliases are only the security key, 2026-10-07",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~105/bb1_census.out (BASELINE META_US_Equity aliases=[\"META_US_Equity\"] exact=[\"META\"])",
+          "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_AZ1_BRAND_ALIAS_SOURCES_20261007.md (rows 1 and 4: 141 of 237 have no name on the pool plane; build() falls back to the security key)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:19:25Z",
+      "one_line": "build() has no switch to turn the legal-name join off, so the census BEFORE list is the same pool document run through securities_from_universe without the map, not a build() call.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bc-1 item 3: BEFORE = build() with the join off; AFTER = build() with it on. Item 1 gives build() one new keyword, legal_names_path, whose None reads the configured file.",
+      "world_is": "build(legal_names_path=None) joins the configured identity record, as item 1 requires, and the order names no off value. bc1_census.py builds BEFORE as securities_from_universe(document, rule=load_alias_rule()) on the document _read_universe() returned (the call build() makes, minus the map) and AFTER as build(); it prints a control that build() equals securities_from_universe(document, legal_names=load_legal_names()) and the control held (no CENSUS FAIL line).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.py (main(), the before_secs / after_secs / control_secs lines)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.out (CENSUS OK, no control failure)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:19:25Z",
+      "one_line": "The census counts 137 of 242 alias sets that are exactly [security_key] before the join, not 138, and 18,634 silver articles, not the 18,619 of round 55; 138 securities take a name from the identity record and 3 stay key-only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order section 0: for 138 of 242 securities the alias set is exactly [security_key]; section 0 also cites 18,619 silver articles from round 55.",
+      "world_is": "bc1_census.out at the pool universe/v1/2026-10-06.json: KEY-ONLY ALIAS SETS before 137 of 242, after 3 of 242 (6861_JP_Equity, CAT_US_Equity, CSL_AU_Equity: no pool name and no identity record); 141 securities have no pool name, 138 of them are in the identity record, and DELL, MU, TJX and ASML_US carry [security_key, whole brand] so they are not exactly [key]; DENOMINATOR silver articles 18634 (the silver corpus grew by 15 since round 55's 18,619).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.out (DENOMINATOR, KEY-ONLY ALIAS SETS, SUMMARY company_name_absent lines)",
+          "python: aliases != [security_key] among the identity-joined securities at the base list: DELL_US, MU_US, TJX_US, ASML_US_Equity, 2026-10-07"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:47:59Z",
+      "one_line": "The bd-1 census reads 18,638 silver articles, not the 18,634 of the cell text, and gold_brand_admitted lists every unanchored gold brand (the 6 plane:text entries as well as Meta), which the order leaves open.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bd-1 section 0 cites 18,634 articles for the Meta and Lilly counts; section 1 item 2 says the summary gains gold_brand_admitted, a list of {security_key, brand}, and that a gold brand is a plane == text entry OR one with gold.admitted == true.",
+      "world_is": "bd1_census.out DENOMINATOR: securities 242, silver articles 18638 (the silver corpus grew by 4 since bc1_census.out, as collection legs run live). Counts still reconcile with the cell: Meta pairs 775 to 946 (171 gained), mention_count 1147 to 4773 (3,626 gained); Lilly pairs gained 0, mention_count 767 to 1059 (292 gained). Reading of the order: a plane:text entry is a gold brand, so gold_brand_admitted holds Meta and the six text brands admitted as aliases (ASML x2, Dell, Micron, TJX, Uber); Spotify is already an alias and is in whole_brand_already_an_alias only. The order's existing whole_brand_* fields are unchanged in meaning; whole_brand_admitted gains Meta (6 to 7), so test_no_shipped_whole_brand_entry_is_refused_by_limb_a_or_limb_b counts text entries plus unanchored gold entries.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bd1_census.out (DENOMINATOR, SUMMARY gold_brand_admitted, META and LLY lines)",
+          "lib/research/harvest/universe_securities.py (the gold_admitted_rows / gold_anchored_rows / gold_refused_rows build, HVST-bd-1)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S99",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T12:57:01Z",
+      "one_line": "CORRECTS AMGT_HARVST-Z-S98: the SERVED gold was not built from the key-only list. Its last rebuild (#5, 2026-10-02) took a securities FILE of 212 names with 0 key-only alias sets (Apple Inc, Meta Platforms Inc, Eli Lilly & Co all present); the 138-of-242 defect was in universe_securities.build() read off the pool, which no rebuild record names as its input.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Row AMGT_HARVST-Z-S98 left unmeasured whether the served gold was built from the list build() returns; 1.0.0_SA_CTO~Z msg 30864 then read it as gold under-attributing AAPL, AMZN, JPM, META, MSFT and NVDA today, and rounds 56 and 57 measured their gains against build() with the join off.",
+      "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round37/gold_rebuild5_act_20261002T162933Z.json names universe_file = .../round33/securities.universe.r33.json; that file holds 212 securities, 0 with a key-only alias set (AAPL aliases ['Apple Inc','Apple'], META ['Meta Platforms Inc','Meta Platforms'], LLY ['Eli Lilly & Co','Eli Lilly']). It is the only securities.universe*.json under deliverables/2.0.0_SA_COO_H and the newest of 5 rebuild act records. So: (1) the served mention rows already attribute those names by company name; (2) bc-1's 'pairs 14,895 to 22,979, gained 8,084' and bd-1's 'Meta pairs 775 to 946' are deltas against build()-off-the-pool, NOT against what is served; (3) what bc-1 does change for a rebuild is the list's population (242 against 212) and its source (the identity record instead of a hand-carried file). NOT measured: the delta of the new list against the r33 file on mention and daily rows -- that is the rebuild's signing dry run; which 30 securities are new and whether any of the 212 is absent from the 242; whether any rebuild after #5 used another file (no later act record exists in the tree).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read 2026-10-07 ~13:0xZ: round33/securities.universe.r33.json securities 212, key-only alias sets 0",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round37/gold_rebuild5_act_20261002T162933Z.json (universe_file)",
+          ".runtime/harvest-backfill/gold5_signing_dryrun2.out (UNIVERSE FILE line, 212 securities; MENTION served 14375 -> built 22510)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

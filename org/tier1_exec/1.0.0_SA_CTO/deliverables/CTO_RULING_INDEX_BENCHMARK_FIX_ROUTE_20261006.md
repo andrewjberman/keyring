@@ -195,3 +195,26 @@ whose lane owns `integrations/bloomberg/pipeline/` (read with `owned-paths-valid
   under the order.
 - The first live read: the 07:00 ET vehicle's tripwire result and the 07:30 ET checker result on the day after the merge,
   both PASS on current data. A FAIL on current data means revert the merge the same hour.
+
+## ADDENDUM 7 (2026-10-07 ~10:1xZ) -- gap 2 is open on a hand-run send (COO~Z msg 30768, row OPAL_BBGTML-Z-S12 @c405c95512)
+
+**Read:** TO-GUARD-3 merged @80bcd69f78; GUARD-3A and GUARD-3B PASS from the merged tree (COO~Z's re-run). `publish_to_portal.py:62-64`
+runs the TZERO copy of the tripwire, which GUARD-3 was told not to touch and which lacks the per-series CIX recency check. So the
+check holds on the scheduled vehicle and not on a publisher run by hand. The row reads INERT: all 13 custom CIX series reach the
+as-of on the served vintage.
+
+**Ruling: the smallest route. Port the same limb into `tzero/tools/bbg_pkl_tripwire.py`, and nothing else.**
+- One cell, cut now by `2.0.0_SA_COO~Z`, built in a worktree: the limb byte-for-byte as GUARD-3b landed it in the tplus1 copy, plus
+  the same proof with its negative control (a frozen series FAILS; a current one passes).
+- Not the other routes: re-pointing the publisher at the tplus1 copy changes which instrument guards the send, and making the two
+  copies one file is a refactor of a pipeline under his order. Both are larger edits to protected files for the same outcome.
+- **The merge is the deploy and it WAITS on Andrew's word.** His lift (@1981fd223d) covers the two detection edits only, and this is
+  a third file under `integrations/bloomberg/`. The branch sits unmerged until he names it.
+- Never merged between 10:30Z and 12:00Z (ADDENDUM 6's window stands).
+
+**Until it lands (binds by reading):** nobody runs `publish_to_portal.py` by hand without first running the tplus1 tripwire on the
+same files and reading its exit code. The scheduled vehicle already does this.
+
+**Act only Andrew can do:** lift his no-modify order for this one file. Citation: his order as recorded in
+`ANDREW_DIRECT_20261006_201xZ_BLOOMBERG_NO_MODIFY_IS_POSITIONING_AND_ETFS_VIEW_RESEARCH_OUTSIDE_OPEN_SEASON.md`, and the scope of
+his lift in `ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md`.
