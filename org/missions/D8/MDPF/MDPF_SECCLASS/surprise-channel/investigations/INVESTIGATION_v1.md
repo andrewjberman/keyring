@@ -4101,3 +4101,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Read-only copy of scratch files; no upload, no firm bucket read."
 }
 ```
+
+## MDPF_SECCLASS-S54 -- the issuer's round-8 worktree provisioning ran bun install and fetched ~487 packages from the public registry
+
+```json
+{
+  "id": "MDPF_SECCLASS-S54",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T12:30Z",
+  "one_line": "This seat provisioned round-8 slot ~22 with `.tools/wk-provision.sh provision ... --node-modules install`, which runs `bun install --frozen-lockfile` (wk-provision.sh:151); the portal branch was created at 2026-10-07 04:07:32 EDT and the bun cache (~/.bun/install/cache) gained 487 entries in that same minute, so ~487 packages were fetched from the public npm registry -- egress off Opal infrastructure with no word, by the issuer itself. Round 9's slot ~37 used the same mode at ~11:4xZ but wrote no cache entry (every package cache-served).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git -C portal reflog wk-MDPF_SECCLASS-22-portal: 'Created from 8ddfe409' at 2026-10-07 04:07:32 -0400; the provision printed '377 packages installed [38.30s]'",
+      "ls -lt ~/.bun/install/cache: 487 of 500 entries timestamped 2026-10-07T04:07 EDT; 0 entries in the 07 EDT hour (round 9's install at ~11:4xZ)",
+      "laptop 1.0.0_SA_CTO msg 106215 (relayed as 0.0.0_AB_MSTR~DELL1 msg 221): bun runs only inside a portal tree that holds node_modules; no probe that can reach the public registry; CRO finding CRO_FINDING_BUN_AUTO_INSTALL_EGRESS_DELL2_20261007.md @fd0c709235"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Agent Autonomy: all egress off Opal infrastructure is excluded; the issuer's own spawn faces forbid any install or download (row S49).",
+  "world_is": "The issuer's provisioning step was not covered by the worker bound it wrote. The fetch happened once (round 8). Disarm: this seat provisions every portal worktree with `--node-modules link` against dell1's shared portal node_modules (unpacked from the laptop's pack at ~12:0xZ) or `none`, never `install`.",
+  "notes": "Filed on dell1. Reported to 0.0.0_AB_MSTR~DELL1 for the laptop and Andrew, beside S49."
+}
+```
