@@ -19035,3 +19035,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The face does not define 'protected field'; a whole-answer diff over-reports on shared metadata. The principal-specific definition is this worker's choice, recorded here for the L9 grader; it is stricter on ids and names, silent on schema constants."
 }
 ```
+
+## IRPT_BCKEND-S356 -- E-M1's first laptop read: c1 PASS; c2 tested a condition no account meets; c3 passed on two absent fields
+
+```json
+{
+  "id": "IRPT_BCKEND-S356",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T09:32:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The laptop 3.0.0_SA_CVO run of the E-M1 reader (@e9993e95fa, 2026-10-05 publications) is not a grade of FWD-5: c1 PASS (INF ****3282, 779,002.51, 2 partitions, 0 unbalanced); c2 FAIL because the reader required ONE Cottonwood account holding BOTH SPYI and PSLV (0 such accounts; 29 hold either), where STATUS~M wrote 'SPYI / PSLV'; c3 PASS on partition balance only, because the reader looked for custody_totals and the reconcile block in the dated MANIFEST, which never carries them (they are in the platinum header), and treated null as nothing to compare.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_M/R30M_FWD5_REPLAY_READ_20261007.md @e9993e95fa (laptop 3.0.0_SA_CVO), with r30m_fwd5_replay_read_20261007.json beside it: c1 PASS, c2 FAIL 'no Cottonwood account holds both SPYI/PSLV' (29 hold either), c3 PASS with custody_total_served and served_reconcile_block null at 3 of 3 firms",
+      "infra/aws/lambda/investor-reporting/holdings/publication.py publish(): the dated manifest carries gold, source_set_revision, clocks and platinum (v1) or platinum_header + partitions (v2); _platinum_plan's header is the snapshot minus nodes, so custody_totals and attribution_holdouts.reconcile are there, not in the manifest",
+      "org/missions/D9/IRPT/IRPT_BCKEND/STATUS~M.md 'Next proof': 'one Cottonwood selection holding SPYI / PSLV ties'"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND_DECOMP_R30_M.md cell IB-mr-301 (c2 'one Cottonwood selection holding SPYI and PSLV'; c3 the before/after reconcile with the served custody total) and reader @8258fed480.",
+  "world_is": "Issuer ruling (2.0.0_SA_COO~M2, inside its own unissued decomposition): c2 reads every Cottonwood account holding SPYI or PSLV, and each must tie (denominator printed); c3 reads the platinum header and FAILs an absent field as ABSENT. Reader amended in the same commit as this row; a second laptop read is relayed. E-M1 is not graded from @e9993e95fa."
+}
+```

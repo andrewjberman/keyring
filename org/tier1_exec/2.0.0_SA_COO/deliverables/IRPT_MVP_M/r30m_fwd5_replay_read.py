@@ -100,15 +100,21 @@ def ancestor_account(nodes, node):
     return node
 
 
-def firm_reconcile(nodes, manifest):
+def firm_reconcile(nodes, header):
+    """`header` is the served snapshot without its nodes (the platinum header, or the v1 body minus nodes).
+    An absent custody total or reconcile block is ABSENT and FAILS: an absent field is not a comparison that passed
+    (laptop 3.0.0_SA_CVO read @e9993e95fa, row IRPT_BCKEND-S353)."""
     count, bad, faults = partitions(nodes)
     accounts = [n for n in nodes if n.get("node_kind") == "ACCOUNT"]
     after = round(sum(val(n) or 0.0 for n in accounts), 2)
-    ct = ((manifest.get("custody_totals") or {}).get("total_market_value") or {}).get("value")
-    served = ((manifest.get("attribution_holdouts") or {}).get("reconcile")) or manifest.get("reconcile")
-    ok = count > 0 and not bad and not faults and (ct is None or abs(after - ct) <= RECON_TOLERANCE_USD) and (
-        served is None or served.get("reconciled") is True)
-    return {"nodes": len(nodes), "accounts": len(accounts),
+    ct = ((header.get("custody_totals") or {}).get("total_market_value") or {}).get("value")
+    served = (header.get("attribution_holdouts") or {}).get("reconcile")
+    arms = {"partitions_balance": count > 0 and not bad and not faults,
+            "account_sum_equals_custody_total": None if ct is None else abs(after - ct) <= RECON_TOLERANCE_USD,
+            "served_reconcile_reads_reconciled": None if served is None else served.get("reconciled") is True}
+    ok = all(v is True for v in arms.values())
+    return {"arms": {k: ("ABSENT" if v is None else ("PASS" if v else "FAIL")) for k, v in arms.items()},
+            "nodes": len(nodes), "accounts": len(accounts),
             "securities": sum(1 for n in nodes if n.get("node_kind") == "SECURITY"),
             "partitions": count, "partitions_unbalanced": bad[:20], "partitions_unbalanced_count": len(bad),
             "faults": faults[:20], "account_sum": after, "custody_total_served": ct,
@@ -129,9 +135,20 @@ def read_firm(s3, firm, bucket):
     sha = hashlib.sha256(data).hexdigest()
     assert sha == g["sha256"], "gold parquet sha256 differs from the manifest"
     nodes = [json.loads(s) for s in pq.read_table(io.BytesIO(data), columns=["node_json"]).column("node_json").to_pylist()]
-    pub = {"business_date": date, "revision": man.get("revision"), "manifest_key": m["key"],
-           "manifest_version": m.get("version_id"), "gold_key": g["key"], "gold_version": g["version_id"], "gold_sha256": sha}
-    return pub, man, nodes
+    # The served totals live in the platinum header (manifest v2) or the platinum body (v1), never in the manifest
+    # (infra/aws/lambda/investor-reporting/holdings/publication.py _platinum_plan / publish).
+    ref = man.get("platinum_header") or man.get("platinum")
+    if ref is None:
+        raise AssertionError("manifest names neither platinum_header nor platinum")
+    hb = s3.get_object(Bucket=ref["bucket"], Key=ref["key"], VersionId=ref["version_id"])["Body"].read()
+    if ref.get("sha256"):
+        assert hashlib.sha256(hb).hexdigest() == ref["sha256"], "platinum header sha256 differs from the manifest"
+    header = {k: v for k, v in json.loads(hb).items() if k != "nodes"}
+    pub = {"business_date": date, "revision": man.get("revision"), "schema_version": man.get("schema_version"),
+           "manifest_key": m["key"], "manifest_version": m.get("version_id"), "gold_key": g["key"],
+           "gold_version": g["version_id"], "gold_sha256": sha, "header_key": ref["key"],
+           "header_sha256_checked": bool(ref.get("sha256"))}
+    return pub, header, nodes
 
 
 def evaluate(pubs):
@@ -149,13 +166,17 @@ def evaluate(pubs):
             a = ancestor_account(cot, n)
             if a:
                 holders.setdefault(a["node_id"], set()).add(sym)
-    both = sorted(a for a, s in holders.items() if s == set(COT_SYMBOLS))
-    if both:
-        c2 = account_tie(cot, next(n for n in cot if n["node_id"] == both[0]))
-        c2["accounts_holding_both"] = len(both)
-    else:
-        c2 = {"ties": False, "reason": "no Cottonwood account holds both %s" % "/".join(COT_SYMBOLS),
-              "accounts_holding_either": len(holders)}
+    # c2 as STATUS~M wrote it ("one Cottonwood selection holding SPYI / PSLV ties"): every Cottonwood account holding
+    # SPYI or PSLV ties; the first read @e9993e95fa found 0 accounts holding both and 29 holding either (row S353).
+    by_id = {n["node_id"]: n for n in cot}
+    ties = {a: account_tie(cot, by_id[a]) for a in sorted(holders)}
+    failing = [a for a, t in ties.items() if not t["ties"]]
+    c2 = {"ties": bool(ties) and not failing, "accounts_holding_either": len(ties),
+          "accounts_holding_both": sum(1 for s in holders.values() if s == set(COT_SYMBOLS)),
+          "accounts_tied": len(ties) - len(failing), "accounts_failing": [ties[a] for a in failing][:10],
+          "per_symbol": {s: sum(1 for h in holders.values() if s in h) for s in COT_SYMBOLS}}
+    if not ties:
+        c2["reason"] = "no Cottonwood account holds %s" % " or ".join(COT_SYMBOLS)
     res["criteria"]["c2"] = {"verdict": "PASS" if c2["ties"] else "FAIL", **c2}
     c3 = {f: firm_reconcile(nodes, man) for f, (_, man, nodes) in pubs.items()}
     res["criteria"]["c3"] = {"verdict": "PASS" if all(r["reconciled"] for r in c3.values()) else "FAIL",
@@ -170,17 +191,26 @@ def self_test():
     good = [node("acc_015d15b45d7a8ac71f951a67", None, "ACCOUNT", 100.0), node("s1", "acc_015d15b45d7a8ac71f951a67", "SECURITY", 60.0),
             node("s2", "acc_015d15b45d7a8ac71f951a67", "SECURITY", 40.0),
             node("t1", "acc_015d15b45d7a8ac71f951a67", "SECURITY", 999.0, basis="TARGET")]
-    cot = [node("a2", None, "ACCOUNT", 50.0), node("x1", "a2", "SECURITY", 20.0, sym="SPYI"), node("x2", "a2", "SECURITY", 30.0, sym="PSLV")]
-    man = {"custody_totals": {"total_market_value": {"value": 100.0}}}
-    pubs = {"inflection": ({}, man, good), "cottonwood": ({}, {"custody_totals": {"total_market_value": {"value": 50.0}}}, cot),
-            "49financial": ({}, man, good)}
+    cot = [node("a2", None, "ACCOUNT", 50.0), node("x1", "a2", "SECURITY", 20.0, sym="SPYI"), node("x2", "a2", "SECURITY", 30.0),
+           node("a3", None, "ACCOUNT", 10.0), node("x3", "a3", "SECURITY", 10.0, sym="PSLV")]
+
+    def hdr(total):
+        return {"custody_totals": {"total_market_value": {"value": total}},
+                "attribution_holdouts": {"reconcile": {"reconciled": True}}}
+    pubs = {"inflection": ({}, hdr(100.0), good), "cottonwood": ({}, hdr(60.0), cot), "49financial": ({}, hdr(100.0), good)}
     r = evaluate(pubs)
     assert [r["criteria"][c]["verdict"] for c in ("c1", "c2", "c3")] == ["PASS"] * 3, r
+    assert r["criteria"]["c2"]["accounts_holding_either"] == 2 and r["criteria"]["c2"]["accounts_holding_both"] == 0, r
     # negative arm: a value redistributed out of a security breaks the tie even though the account total is unchanged
     bad = [dict(n, amount={"value": 70.0}) if n["node_id"] == "s1" else n for n in good]
-    r2 = evaluate({**pubs, "inflection": ({}, man, bad)})
+    r2 = evaluate({**pubs, "inflection": ({}, hdr(100.0), bad)})
     assert r2["criteria"]["c1"]["verdict"] == "FAIL" and r2["criteria"]["c3"]["verdict"] == "FAIL", r2
-    print("SELF-TEST OK: 2 arms (green 3 of 3 PASS; redistributed security FAILs c1 and c3)")
+    # absence arm: a header without custody totals or a reconcile block FAILS c3 as ABSENT, never PASS
+    r3 = evaluate({**pubs, "49financial": ({}, {}, good)})
+    arms = r3["criteria"]["c3"]["firms"]["49financial"]["arms"]
+    assert r3["criteria"]["c3"]["verdict"] == "FAIL" and arms["account_sum_equals_custody_total"] == "ABSENT", r3
+    print("SELF-TEST OK: 3 arms (green 3 of 3 PASS with c2 over either symbol; redistributed security FAILs c1 and c3;"
+          " absent header fields FAIL c3 as ABSENT)")
     return 0
 
 
