@@ -4704,3 +4704,56 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-W53-S1 by amendment 3 b2144dedb1; S1 is not edited. The shared-home files stay off every pushed range until both halves sign."
 }
 ```
+
+
+## MDPF_SECCLASS-W56-S1 -- held-set parquets reused from a sibling worktree; mixed-case form normalization turns 10 UNCHANGED rows into WRITE
+
+```json
+{
+  "id": "MDPF_SECCLASS-W56-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~56",
+  "surfaced_at": "2026-10-07T17:45Z",
+  "one_line": "The row-set builder needs held-set parquets under <worktree>/.scratch/hb_<firm>/, absent in this fresh worktree; the build was run with --held-root pointing at another worktree's existing build (reused, not rebuilt).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean_name_row_set_v2.py first run in C:/Dev/dry_e48: 'ERROR: held parquet for 49financial not found or ambiguous ([]); run with --build'",
+      "rerun with --held-root C:/Dev/wk-secclass-r9-38/.scratch (parquets from the TO-SC-e48 builder's own build_firm, dated 2026-10-07 08:26): custody=857, same as the prior set; table lines 884 vs 883 prior (new key HDB); dry run refused_stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e47 amendment R12 item 4: rebuild the set with clean_name_row_set_v2.py (read-only reads); a firm read denied on dell1 means file a row and stop.",
+  "world_is": "No firm read was denied: the held parquets already existed in a sibling worktree and the builder's documented --held-root option reuses them. The held set is therefore the one built at 08:26Z, not re-derived by this worker; the custody count (857) and the dry run's refused_stale=0 agree with it. Also: 10 live rows with mixed-case source names (e.g. 'Credicorp Ltd') moved UNCHANGED -> WRITE because the form rule now normalizes mixed-case input, as R12 item 2 requires."
+}
+```
+
+
+## MDPF_SECCLASS-W56-S2 -- R12b's literal X&Y rule (letters & letters) breaks the issuer's own census and touches 3 rows beyond the 8 S&P rows; narrowed to 1-2 letter halves
+
+```json
+{
+  "id": "MDPF_SECCLASS-W56-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~56",
+  "surfaced_at": "2026-10-07T17:58Z",
+  "one_line": "The R12b rule as worded (X&Y = letters, &, letters) upper-cases 11 rows, not the 8 the amendment counts, and one of the 3 extra (GR&INC) fails sc_e48_name_census.py form_upper; the worker narrowed the token to 1-2 letters each side.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first build with [A-Z]+&[A-Z]+: set diff vs 78715af985 = 11 rows; the 3 extras: CWGIX and WGIFX 'GR&INC' -> 'GR&INC', IFF 'FLAVORS&FRAGRANC' -> 'International FLAVORS&FRAGRANC'",
+      "same build, sc_e48_name_census.py: SC-E48-CENSUS ok=False form_upper=2 (the census regex \bINC\b matches inside GR&INC)",
+      "rebuilt with [A-Z]{1,2}&[A-Z]{1,2}: diff = 8 rows (IJJ IJK IJS IJT IVE IVW RSP SPGI), all names carrying '&'; census ok=True; dry run refused_stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e47 R12b item 1: keep an X&Y token (letters, an ampersand, letters, no space) upper in both halves when its input is upper; 8 of the 1,360 writes change.",
+  "world_is": "Read literally the rule changes 11 writes and fails AC3. The worker's reading: the issuer's count of 8 and its census define the intent (S&P, AT&T, P&G: halves of 1-2 letters), so the token is [A-Z]{1,2}&[A-Z]{1,2}. Consequence for the issuer: CWGIX and WGIFX stay 'Gr&inc' and IFF stays 'International Flavors&fragranc' (title-cased as in 78715af985), both unlovely but unchanged by this amendment; the issuer may rule a wider repair."
+}
+```
