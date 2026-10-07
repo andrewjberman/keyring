@@ -93,3 +93,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @fb68b0852c; proof VALID (worktree checker); top band news_items_newest inside 30 days; AC1 4 of 4, AC2 32 plant cases; api suite 741 passed in the worktree</status>
