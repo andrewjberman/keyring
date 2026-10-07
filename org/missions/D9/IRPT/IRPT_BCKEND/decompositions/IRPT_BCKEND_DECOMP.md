@@ -1982,3 +1982,17 @@ applier under their own pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r69/p6
 | `IB-pr-350` | back-fill covered_account_ids into pre-343 receipts: pass 1 census + packet (stop at halves), pass 2 apply + after-reads | FWD-2 | WORLD (an S3 write) | IB-pr-349, IB-pr-344 (drained) | P68-a (queued after IB-pr-349) |
 
 fanout: 1 of 1 chains, cap 8, reason: one write set, queued behind IB-pr-349 on the same applier.
+
+## 63. ROUND 70, WORKSTREAM ~P (2026-10-07 ~17:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's IRPT_CUSTDY round-6 ADDENDUM 1 @c3addc6f25 ruling item 2, cut now on msg 917)
+
+Hop 5 of IRPT_CUSTDY (the custody report export) breaks at five points (IRPT_CUSTDY-S14). Breaks 1, 2 and 4 are this workstream's.
+Round 70 runs concurrently with round 69 (IB-pr-350) under the one issuer. The write sets are disjoint: IB-pr-350 rewrites S3 receipts
+with a tool and changes no code. Check: `deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py`, dry-run at base c09237491c.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-351` | P-c1: custody write path (`reports/custody_write.py`) over `ReportRepository.persist`, round-tripped through `retained_export.resolve` | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; no deploy until its release pair) | none | P70-a |
+| `IB-pr-352` | P-c2: `submit_async.accept` reads the business date by kind | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; no deploy until its release pair) | none | P70-b |
+| `IB-pr-353` | P-c3: `PrintEntry` admits custody-report and mounts `ClientReportDocument` | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word, break 5) | none | P70-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets. Slots 0.9.0_WK_IRPT_BCKEND~150, ~151, ~152; portal_ref: 339851c7 (portal origin DEV).
