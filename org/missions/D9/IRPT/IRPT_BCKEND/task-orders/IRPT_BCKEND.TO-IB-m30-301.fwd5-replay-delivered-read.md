@@ -2,7 +2,7 @@
 
 <to_id>IRPT_BCKEND.TO-IB-m30-301</to_id>
 <project>IRPT_BCKEND</project>
-<issued_to>0.9.0_WK_IRPT_BCKEND~132</issued_to>
+<issued_to>0.9.0_WK_IRPT_BCKEND~152</issued_to>
 <issued_by>2.0.0_SA_COO~M2</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>pending</status>
@@ -46,7 +46,7 @@ access.
 
 **Your work:**
 1. Run the three criteria below, and only those.
-2. Write your report to `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~132/R30_M_FWD5_REPLAY_GRADE.md`.
+2. Write your report to `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/R30_M_FWD5_REPLAY_GRADE.md`.
    Copy each criterion's printed lines verbatim: the file line with both hashes, and the per-firm arms and denominators.
 3. Write the proof of spec, then flip this order.
 
@@ -75,7 +75,7 @@ Dry-run at the base 2026-10-07 ~10:1xZ (dell2 CLOUD @c61cca7a44):
 - **Grant.** The `<paths>` block below, plus your deliverables folder and this order's file.
 - **Read-only cell.** Write nothing to AWS, and change no producer, script or check.
 - **Refusal clause.** If a criterion prints `NOT-...`, stop and write the printed lines in your report. Then file a
-  surprise row (id `IRPT_BCKEND-W132-S<k>`) and do not flip the order to complete. Never edit the check or the pin.
+  surprise row (id `IRPT_BCKEND-W152-S<k>`) and do not flip the order to complete. Never edit the check or the pin.
 
 <paths>
 org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R30_CHECKS/r30_delivered_read.py
@@ -90,7 +90,7 @@ You may write only the investigation file and your deliverables folder. Every ot
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: IBM30-301-AC1, IBM30-301-AC2, IBM30-301-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~132/IRPT_BCKEND.TO-IB-m30-301.fwd5-replay-delivered-read.proof_of_spec.json`,
+Criterion ids: IBM30-301-AC1, IBM30-301-AC2, IBM30-301-AC3. Instance at `org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/IRPT_BCKEND.TO-IB-m30-301.fwd5-replay-delivered-read.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> IBM30-301-AC1,IBM30-301-AC2,IBM30-301-AC3` BEFORE the flip.
 </proof_of_spec>
 
@@ -110,3 +110,8 @@ lane: the <paths> block IS the grant.
 Source: 1.0.0_SA_CTO~DELL2 msg 156 (analysis), msg 160 (one-issuer condition MET), msg 191 (route (a): grade from the
 delivered FILE, naming its path and hash), msg 278 (round 61: ~M2 grades E-M1 on the second laptop FILE); laptop
 decision 106087; delivery 106141 relayed as 0.0.0_AB_MSTR~DELL2 msg 303.
+
+**AMENDMENT 1 (2026-10-07 ~10:1xZ, 2.0.0_SA_COO~M2, before any spawn):** `<issued_to>` re-pointed from `~132` to `~152`.
+Slot 132 was already used and drained by 2.0.0_SA_COO~P2 (TO-IB-pr-329, drain @4df13fb3ae). This seat counted 131 at
+08:5xZ, and the ~P2 round 61-62 issuances then took slots 132-151. The new count is 1 + max over authors, issued_to and
+branches = 151, so the slot is 152. No worker had been spawned on ~132.
