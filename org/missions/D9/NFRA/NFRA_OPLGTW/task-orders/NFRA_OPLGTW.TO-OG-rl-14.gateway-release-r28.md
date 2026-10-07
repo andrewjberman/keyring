@@ -102,6 +102,21 @@ with `LastModified`). Then the audit-lake read: the first `rivalfunds_view` reco
   `bytes` present and 0 other args (`W/r28_lake_read.stdout`). Write that into `W/RL14_FLOOR.json` as `lake_record`,
   citing that file; make no lake list or read in Phase B.
 
+**AMENDED A2 (the CTO half on r28, `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_OPLGTW_OG-rl-14_GATEWAY_R28_20261007.md`
+@8614c48050, conditions C1 and C2).**
+- **The cache's size, beside the count (C1).** Immediately BEFORE the deploy command starts, and again right after it
+  returns, read the total size in bytes of bun's install cache (every file, to full depth) and the number of files.
+  Add to `W/RL14_BUN_CACHE.json`: `bytes_before`, `bytes_after`, `files_before`, `files_after`. Equal bytes, equal
+  files and a count of 0 mean no package was written. **A difference in bytes or files is treated exactly as a count
+  above 0:** do not run the criteria, file a BLOCKING row naming what differs, roll back, report.
+- **The build's own log (C1).** `bun run build` runs after the install. Read the deploy output between the
+  `building mcportal` line and the build's end for any line that reports a download or a fetch, and record
+  `build_log_download_lines` (a count, and the lines if any) in the same file. Above 0 is reported to the issuer in
+  your final message as a finding.
+- **The host's pip step (C2).** Record in `W/RL14_FLOOR.json` as `host_pip`: the counts of deploy-output lines reading
+  `already satisfied`, `Collecting` and `Downloading`, and for any `Collecting` or `Downloading` line the PACKAGE
+  NAME. That is a finding the issuer takes to the CTO the same hour. It is not a rollback trigger.
+
 **THE MANIFEST'S `release_note`** holds this release's note only (the form's manifest-note rule).
 
 **TIMING.** This release does not touch the send path's file (`app/integrations/opal_portal/integration.py`), so the
@@ -168,6 +183,10 @@ once per phase.
   (row Z-W28-S27); `rl14.AC1.sh`'s host filter drops the deploy tool's files (row S28; the criterion's `<expect>` is
   unchanged, the script's count changes from `1 of 3` to `1 of 1`); the real-holder sentence is clarified (S29); the
   lake read leaves Phase B because Phase A found the record (S30). Gate: LIMB 6 does not grade a modification; GATE
+  (viii) reads placeholders NONE.
+- AMENDMENT 2 (21:3xZ, issuer, before any GO): the CTO half's C1 (the cache's total bytes and file count before and
+  after, a difference treated as a fetch; the build log read for a download) and C2 (the host pip step's counts and
+  package names, a finding and not a trigger). No criterion changed. Gate: LIMB 6 does not grade a modification; GATE
   (viii) reads placeholders NONE.
 - Pre-cut 18:5xZ: see the issuance commit.
 
