@@ -91,7 +91,7 @@ Rows: id `NFRA_OPLGTW-Z-W34-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - If the cause sits outside `app/audit.py`, the worker reports it and the issuer amends `<paths>`.
 - Pre-cut 18:3xZ: `lk1.AC1` FAIL (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <workstream>LAKE-KEY-R43</workstream>
 <slot>~34</slot>
