@@ -153,6 +153,28 @@ If `build_release.py` lists the package's files, add the two new modules there.
 - `AC3` names three test targets in one invocation (one clause, one expectation): the stopped-pair plants (they drive
   `run_job`'s status handling), the alias plants (they read `config.json`), and the freshness tests beside the schema.
 
+**BUILT AND MERGED 2026-10-07 ~15:5xZ (issuer); THE WRITE IS NOT YET DONE:**
+- **Built:** worker ~108 @f3276644e9 + @d5f7fa1256; merged @23d65887ca (9 paths, index check 0 of 9 differ). The switch reads
+  `{'enabled': False}` on merged CLOUD, so the merge changes no collector behaviour.
+- **AC1 PASS:** 16 of 16 (with the mutant: the switch check defeated makes plant (v) fail). **AC2 PASS:** EMIT DRY RUN OK.
+  **AC3 PASS:** 32 of 32. Issuer on merged CLOUD: the cell's plants plus AC3's targets, 48 passed. Worker's full collector
+  suite: 740 passed, 3 skipped.
+- **The dry run** (`deliverables/0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out`): run records read 446; Seeking Alpha jobs 84;
+  concluded 57 (new_articles 31, no_acceptable_new_articles 25, no_new_articles 1); not concluded 27 (contract_unavailable
+  10, cooldown 9, upstream_unavailable 6, account_or_harvester_unavailable 1, error 1); records planned 57 over 56 securities;
+  schema valid 57 of 57; already at the address 0 (57 HEADs, all absent); PUTS SENT 0. The four known runs read 616, 1,992,
+  45 and 9.
+- **Store time:** the publication record's `fetched_at`, set when the collector stores the article; `newest_article_stored_at`
+  is the newest one not after the job's `finished_at`, across both runtime roots.
+- **Rows:** AMGT_HARVST-Z-W108-S1 (NO registry row was added: the builder prints the address with no refusal,
+  `lib/opal_naming.py validate` rc 0, the naming gate `PASS 0 graded`, and the registry carries no table-level rows) and
+  Z-W108-S2 (a run record has no per-job end time; the run's `finished_at` is used by the writer and the emitter alike, so
+  both give one address).
+- **Existing assertions changed:** none.
+- **OWED BY THE ISSUER, in order, each recorded:** `1.0.0_SA_CTO~Z`'s exercised read of the dry run and its word on row
+  Z-W108-S1 (msg 31054 said the registry row lands with this cell); the change-management entry; `--write` of the one-time
+  emit; the switch flipped in its own commit; one live job seen writing its record.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
