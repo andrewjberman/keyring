@@ -554,3 +554,12 @@ E2 criterion (1) (the None hardening tested on pandas 2.2.3) is NOT cut: dell2 h
 barred; the environment is requested from the laptop through 1.0.0_SA_CTO~DELL2, and the cell is cut when it lands.
 
 fanout: 2 of 2 chains, cap 8, reason: no data edge between E1 and E2, and the write sets are disjoint (E1: handler, terraform, activity producer, sources.json, contracts; E2: account_return_daily.py and its None test file). Workers 0.9.0_WK_IRPT_DASHBD~23 and ~24, each in its own worktree.
+
+### 26a. Round 26 amendment (2026-10-07 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2 msg 1092)
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-43` | E2 criterion (1): the None-hardening test (`tests/test_account_return_daily_none.py`) run on the served layer's pandas 2.2.3 by LAPTOP RELAY: the test and the producer at pin b65c14f4df, relayed by 0.0.0_AB_MSTR~DELL2, the result returned as a FILE (pandas version printed beside the pytest summary). An issuer act, no worker; graded by the issuer on the returned file | LOCAL | DB-b-40 (merged) | B26-3 |
+
+The pandas 2.2.3 kit goes through the package route in parallel (4.0.0_SA_CRO~D2 intake, then 1.0.0_SA_CTO~DELL2). If DB-b-42 changes
+`classify_and_sum` (verdict CAN), the relay re-runs at the drain's pin.
