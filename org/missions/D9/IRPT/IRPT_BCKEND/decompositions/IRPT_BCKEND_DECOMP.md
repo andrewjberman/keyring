@@ -1881,3 +1881,20 @@ Checks: `deliverables/2.0.0_SA_COO~P2/checks/r61/p61_cells.py`, every one dry-ru
 | `IB-pr-335` | E-P7 FWD-2 replay on current bytes | FWD-2 | SERVED (read-only replay against the live API) | none | P61-f |
 
 fanout: 6 of 6 chains, cap 8, reason: five independent cells plus the E-P5 -> E-P6 queue that ships as one directory release packet. Slots 0.9.0_WK_IRPT_BCKEND~132..137, one worktree each; ~136 holds IB-pr-333 then IB-pr-334.
+
+## 55. ROUND 62, WORKSTREAM ~P (2026-10-07 ~10:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round-61 analysis @aae1ed7781 section 3 and the r61 directory release CTO half @74e91285b4)
+
+The rectangle is the analysis's ENRICHMENT LIST for ~P (E-P8, E-P9, E-P10; E-P11 is the issuer's own disarm row, filed in this
+issuance, not a cell) plus the two preconditions the r61 directory release's CTO half sets (the handler.py pin; the two-instrument consumer
+census). Write sets are disjoint: only IB-pr-337 edits lambda-source-map.json; IB-pr-336 owns export/ and the render host; IB-pr-338 adds
+tests only; IB-pr-339 owns _ids/. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r62/p62_cells.py`, every one dry-run at base bc794d2770.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-336` | E-P9 the export takes a client report (a1 submit, a3 render host + unknown-template refusal, a4 print package) | IRPT_CUSTDY hop 5; export integrity | WORLD (floor: infra/; analysis class LOCAL) | none | P62-a |
+| `IB-pr-337` | r61 release precondition: refresh stages handler.py from the running blob (S357) | FWD-7 (the directory release) | WORLD (floor: infra/) | none | P62-b |
+| `IB-pr-338` | r61 release precondition P1: every reader of the search response passes on plain and over-age (W136-S1) | FWD-7 (the directory release) | WORLD (floor: an infra/ test path) | none | P62-c |
+| `IB-pr-339` | E-P8 the seam holds no 'None'; ids.py treats 'None'/'nan' as unmapped; the writer named (IRPT_CUSTDY W5-S1) | FWD-1/FWD-2 coverage; IRPT_CUSTDY E1 gate | WORLD (floor: infra/; analysis class LOCAL) | none | P62-d |
+| `IB-pr-340` | E-P10 one fixture per gated route (W137-S1) | FWD-2 | SERVED | none | P62-e |
+
+fanout: 5 of 5 chains, cap 8, reason: five independent cells; the analysis's "fan-out 3" counts E-P8..E-P10, and the two release preconditions are this issuer's addition under the CTO half. Slots 0.9.0_WK_IRPT_BCKEND~138..142; portal_ref: 8ddfe409 (portal DEV at the cut) for ~138 and ~140.
