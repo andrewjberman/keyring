@@ -1982,3 +1982,50 @@ applier under their own pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r69/p6
 | `IB-pr-350` | back-fill covered_account_ids into pre-343 receipts: pass 1 census + packet (stop at halves), pass 2 apply + after-reads | FWD-2 | WORLD (an S3 write) | IB-pr-349, IB-pr-344 (drained) | P68-a (queued after IB-pr-349) |
 
 fanout: 1 of 1 chains, cap 8, reason: one write set, queued behind IB-pr-349 on the same applier.
+
+## 63. ROUND 70, WORKSTREAM ~P (2026-10-07 ~17:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's IRPT_CUSTDY round-6 ADDENDUM 1 @c3addc6f25 ruling item 2, cut now on msg 917)
+
+Hop 5 of IRPT_CUSTDY (the custody report export) breaks at five points (IRPT_CUSTDY-S14). Breaks 1, 2 and 4 are this workstream's.
+Round 70 runs concurrently with round 69 (IB-pr-350) under the one issuer. The write sets are disjoint: IB-pr-350 rewrites S3 receipts
+with a tool and changes no code. Check: `deliverables/2.0.0_SA_COO~P2/checks/r70/p70_cells.py`, dry-run at base c09237491c.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-351` | P-c1: custody write path (`reports/custody_write.py`) over `ReportRepository.persist`, round-tripped through `retained_export.resolve` | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; no deploy until its release pair) | none | P70-a |
+| `IB-pr-352` | P-c2: `submit_async.accept` reads the business date by kind | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; no deploy until its release pair) | none | P70-b |
+| `IB-pr-353` | P-c3: `PrintEntry` admits custody-report and mounts `ClientReportDocument` | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word, break 5) | none | P70-c |
+
+fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets. Slots 0.9.0_WK_IRPT_BCKEND~160, ~161, ~162 (AMENDMENT 1: re-slotted from ~150/~151/~152, which ~Y and ~M orders already hold); portal_ref: 339851c7 (portal origin DEV).
+
+## 64. ROUND 71, WORKSTREAM ~P (2026-10-07 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 945 on 2.0.0_SA_COO~Y2 msg 942, row W152-S1)
+
+IB-yr-631 (~Y) made uploads.py admit an internal filer on behalf of a firm its allowedFirmIds names. But InteractiveAccess.current()
+carries no allowedFirmIds, and authorize_current requires principal == current(), so the admit is unreachable in production. ALL never
+admits (ruling (2)). Y's X-1 release waits on this cell; both ship under one pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r71/p71_cells.py`,
+dry-run at base 6115baf2e7.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-354` | current() carries allowedFirmIds for an OPAL_GLOBAL subject; on-behalf admitted only on an explicit firm; ALL, an unlisted firm, a non-internal principal and a missing value refused | TCKT_VNEXT FWD-1 via intake | WORLD (floor: infra/; no deploy until the shared pair) | IB-yr-631 (drained) | P71-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one file. Slot 0.9.0_WK_IRPT_BCKEND~163 (census: max used 162).
+
+## 65. ROUND 72, WORKSTREAM ~P (2026-10-07 ~19:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO rulings msg 973 (row W162-S1, option (a)) and msg 998 (row IRPT_YCDGEN-S16), and the issuer's ruling on row W163-S1)
+
+IB-pr-353 stopped: the bundle carries only custody_report_ref and no route reads a retained CUSTODY_REPORT. The CTO ruled a scoped GET
+reusing retained_export.resolve. IB-pr-355 serves it and IB-pr-356 consumes it, both built to one contract stated in their faces.
+IB-pr-356 supersedes IB-pr-353.
+
+IB-pr-357 is the F1 stop: response_envelope leaks internal_correlation_id. IB-pr-358 wires IB-pr-354's profile reader into the
+analysis-input-upload constructor (row W163-S1). Both may write _authz/served.py, so they are one chain on one slot.
+
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py`, dry-run at base 0d2aff87b3.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-355` | GET custody-report/{reportId} (custody-report-read, irpt-export-render), authorized by retained_export.resolve; routes.json row | FWD-8 / CUSTDY hop 5 | WORLD (a route; release under a pair naming the route and every principal class) | IB-pr-351 (drained) | P72-a |
+| `IB-pr-356` | client op + manifest + resolveBundle + PrintEntry mount ClientReportDocument; supersedes IB-pr-353 | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word) | the contract (none at build) | P72-b |
+| `IB-pr-357` | response_envelope drops internal_correlation_id from every status | IRPT_YCDGEN F1 | WORLD (every success route using response_envelope) | none | P72-c |
+| `IB-pr-358` | the analysis-input-upload constructor passes the existing profile reader | TCKT_VNEXT X-1 | WORLD (floor: infra/; ships with Y's X-1 pair) | IB-pr-354 (drained), IB-pr-357 (same file) | P72-c |
+
+fanout: 3 of 3 chains, cap 8, reason: 355 and 356 are joined only by the stated contract, so they build in parallel; 357 then 358 share _authz/served.py on one queue. Slots ~164, ~165, ~166 (P block 160-199); portal_ref: portal origin DEV at the cut.

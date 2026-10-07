@@ -83,6 +83,18 @@ FWD-11 retires it.
 **Round 61 (~Y) CLOSED 2026-10-07 ~09:0xZ:** E-Y1 @ad59d08617 (row S353), E-Y2 drained @1ade2e9989 (owner table: 14 fixtures/har
 REMOVE, templates.json KEEP, lane IRPT_COMPLETION_Y), E-Y3 = the release390 hand-over. S339 disarmed (row S351).
 
+**Round 63 (~Y), 2026-10-07 ~17:4xZ-18:1xZ -- TCKT_VNEXT X-1 (external request, `2.0.0_SA_COO~V2` msg 919, ruled in by CTO~DELL2
+msg 925):** IB-yr-631 issued @07cc1b60fa and drained @b7dc881c10. `intake/uploads.py` admits an internal (OPAL_GLOBAL,
+opal-capital) filer whose `allowedFirmIds` names the owner firm, and records `acting_principal_id`. Refusals (a) internal
+without the firm, (b) non-internal for another firm and (c) an opal-capital/global owner hold, and the regression suite reads
+50 of 50. L8 packet @d0ffad425e. NOT LIVE: row W152-S1 shows `InteractiveAccess.current()` lacks `allowedFirmIds`.
+CTO~DELL2 msg 944:
+- `2.0.0_SA_COO~P2` cuts the `_scope/interactive_access.py` cell (lane IRPT_LIVE_SCOPE_P), with negative arms for a missing
+  firm, a non-internal principal and "ALL";
+- "ALL" never admits: an on-behalf filer names each firm, and which person may file for which firms is Andrew's
+  entitlement to grant;
+- Y's X-1 release and ~P2's cell ship under ONE never-widen pair, which this seat co-drafts when ~P2's cell drains.
+
 **Round 62 (~Y), 2026-10-07 ~10:0xZ:** IB-yr-624 drained @d96da06035 (`files[]` 114 -> 100). L8 packet @390730c49b. L10
 (CTO~DELL2 msg 297): no new Y cell. E-Y4 is served only when the next `irpt-ycharts-generate` release passes its three legs,
 which are written into `release390/HANDOVER.md` for `~G2`: 0 `fixtures/har` in the deployed zip, the fixture tests green at

@@ -795,6 +795,9 @@ def pip_one_cmd(folder, scratch, requirement):
 IMPORT_SNIPPET = ("import sys, importlib\nsys.path.insert(0, sys.argv[1])\nimportlib.import_module(sys.argv[2])\n")
 
 
+ANSI_ESCAPE = re.compile(r"\x1b\[[0-9;?]*[A-Za-z]")
+
+
 def import_one(scratch_dirs, module):
     """One import in its own subprocess. Returns ('ok', '') | ('missing', module) | ('failed', first error line)."""
     code = IMPORT_SNIPPET.replace("sys.path.insert(0, sys.argv[1])",
@@ -802,6 +805,9 @@ def import_one(scratch_dirs, module):
     cmd = [sys.executable, "-c", code, os.pathsep.join(str(s) for s in scratch_dirs), module]
     env = dict(os.environ)
     env["PYTHONIOENCODING"] = "utf-8"
+    env.pop("FORCE_COLOR", None)
+    env["NO_COLOR"] = "1"
+    env["PYTHON_COLORS"] = "0"
     try:
         r = subprocess.run(cmd, capture_output=True, timeout=IMPORT_BOUND, cwd=str(scratch_dirs[0]), env=env)
     except subprocess.TimeoutExpired:
@@ -810,7 +816,7 @@ def import_one(scratch_dirs, module):
         return "failed", asc(exc)
     if r.returncode == 0:
         return "ok", ""
-    lines = [ln for ln in r.stderr.decode("utf-8", "replace").splitlines() if ln.strip()]
+    lines = [ANSI_ESCAPE.sub("", ln) for ln in r.stderr.decode("utf-8", "replace").splitlines() if ln.strip()]
     last = asc(lines[-1]) if lines else "exit %d with no message" % r.returncode
     m = re.search(r"ModuleNotFoundError: No module named '([^']+)'", last)
     if m:

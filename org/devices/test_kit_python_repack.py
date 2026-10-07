@@ -348,6 +348,65 @@ def case10_byte_reproducible(tmp):
     return "sha256 %s identical across two runs (file mtime changed between them)" % sa[:12]
 
 
+def install_check_line(tmp, tag, dists):
+    """Re-pack the synthetic dists {name: (version, files)} and run install-check on them. -> (rc, text, last line)."""
+    base = tmp / tag
+    entries = []
+    site = None
+    for name, (version, files) in dists.items():
+        site, di = make_dist(base, name, version, files)
+        entries.append((name, version, di, "PURE-INSTALLED"))
+    cls = classification(tmp / (tag + ".json"), entries)
+    out = tmp / (tag + "out")
+    rc, text, last = run_repack(out, cls, site)
+    assert last.endswith("ok=True") and field(last, "built") == str(len(dists)), last
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        rc = kr.main(["install-check", "--from", str(out), "--scratch", str(tmp / (tag + "scratch"))])
+    text = buf.getvalue()
+    return rc, text, text.strip().splitlines()[-1]
+
+
+def case11_missing_dependency_is_not_failed(tmp):
+    # the missing module shares a prefix with the package's own name: it is still NOT the package's own module
+    rc, text, last = install_check_line(tmp, "c11", {"kitsynfour": ("1.0", {"kitsynfour/__init__.py":
+                                                                         b"import kitsynfour_extra_zz9\n"})})
+    want = "PY-KIT-INSTALL python=%d.%d.%d wheels=1 installed=1 imported=0 import_missing_dep=1 failed=0 ok=True" \
+        % sys.version_info[:3]
+    assert rc == 0 and last == want, (last, text)
+    assert "kitsynfour==1.0 installed import_missing_dep: missing kitsynfour_extra_zz9 (importing kitsynfour)" in text, text
+    # the same label when the interpreter colours its traceback (Python 3.13 and later does when FORCE_COLOR is set)
+    esc = chr(27)
+    coloured = ("Traceback (most recent call last):\n  File \"<string>\", line 1\n" + esc + "[1;35mModuleNotFoundError" + esc
+                + "[0m: " + esc + "[35mNo module named 'kitsynfour_extra_zz9'" + esc + "[0m\n").encode()
+    real_run = subprocess.run
+    seen_env = []
+
+    def fake(cmd, *a, **k):
+        seen_env.append(k.get("env") or {})
+        return subprocess.CompletedProcess(cmd, 1, b"", coloured)
+
+    kr.subprocess.run = fake
+    try:
+        got = kr.import_one([tmp / "c11scratch"], "kitsynfour")
+    finally:
+        kr.subprocess.run = real_run
+    assert got == ("missing", "kitsynfour_extra_zz9"), got
+    assert seen_env and "FORCE_COLOR" not in seen_env[0] and seen_env[0].get("NO_COLOR") == "1", seen_env
+    return last
+
+
+def case12_own_module_missing_stays_failed(tmp):
+    # a package whose OWN module cannot be found is a broken wheel: failed, never import_missing_dep
+    rc, text, last = install_check_line(tmp, "c12", {"kitsynfive": ("2.0", {"kitsynfive/__init__.py":
+                                                                         b"import kitsynfive.gone_zz9\n"})})
+    want = "PY-KIT-INSTALL python=%d.%d.%d wheels=1 installed=1 imported=0 import_missing_dep=0 failed=1 ok=True" \
+        % sys.version_info[:3]
+    assert last == want, (last, text)
+    assert "kitsynfive==2.0 installed import_failed: kitsynfive: own module missing: kitsynfive.gone_zz9" in text, text
+    return last
+
+
 CASES = [("pure package re-packs and its wheel verifies", case1_pure_repack),
          ("a file that differs from RECORD, and a file that is missing, mark MODIFIED and leave the package out",
           case2_modified_left_out),
@@ -360,7 +419,10 @@ CASES = [("pure package re-packs and its wheel verifies", case1_pure_repack),
          ("launchers are not packed, scripts go under .data/scripts, other outside paths mark PARTIAL",
           case8_scripts_launchers_partial),
          ("tags compress as the wheel specification states and name the file", case9_tags_and_names),
-         ("two builds of one package are byte-identical", case10_byte_reproducible)]
+         ("two builds of one package are byte-identical", case10_byte_reproducible),
+         ("an import that fails on a module that is not the package's own is import_missing_dep, coloured or not",
+          case11_missing_dependency_is_not_failed),
+         ("a package whose own module is missing stays failed", case12_own_module_missing_stays_failed)]
 
 
 def main():
