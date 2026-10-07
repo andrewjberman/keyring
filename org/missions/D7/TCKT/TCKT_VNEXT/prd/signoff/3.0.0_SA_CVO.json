@@ -1,0 +1,13 @@
+{
+  "prd": "TCKT_VNEXT_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "a6978b2ac259cb73286255c4e05ecdab38fa2186",
+  "half": "ratified-text",
+  "half_hash": "77c03c89bbf22c30a438f432fdcd7614b20dbd03649aaad896557c9564785243",
+  "endpoint_hash": "8af2c989fa0fcdbb5b49e7aab706d71bb7294b21bc95cb339f7278b420c007f2",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.1_RATIFIED_TEXT_REVIEW_20261007.md@003801aeb8",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-07T17:18:30Z",
+  "reason": "FWD-2 is an unqualified wait (real other-firm sign-in in front of Andrew); FWD-1/3/4 name Alyssa as the only actor; corrections R1-R2 in the review"
+}
