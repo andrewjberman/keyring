@@ -132,3 +132,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @0f83652b8b; proof VALID (worktree checker); house FCF forecast v1 with the sd(D) gate, the reported correlation and the labelled plain gap (AMENDMENT 1); dry run: 237 keyed, 92 forecasts MEASURED, 0 names with dispersion, correlation 0.943 over 84; AC1 7 of 7, AC2 5 of 5, AC3 3 of 3; rows Z-W280-S1 (issuer ruling: the worker's reading stands -- the gate overwrites only a MEASURED D), Z-W280-S2</status>
