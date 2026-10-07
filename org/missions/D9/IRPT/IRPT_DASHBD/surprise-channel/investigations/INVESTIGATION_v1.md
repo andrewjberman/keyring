@@ -2247,3 +2247,35 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   }
 }
 ```
+
+## IRPT_DASHBD-S30 -- W21-S1 disarmed for the served gold (layer pandas 2.2.3 measured)
+
+```json
+{
+  "id": "IRPT_DASHBD-S30",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T16:04:58Z",
+  "one_line": "W21-S1 disarmed for the served gold: the served reporting-gold function's layer carries pandas 2.2.3, so the None-to-NaN drop in classify_and_sum is pandas-3-only and hits LOCAL runs on dell2 (pandas 3.0.6), which DB-b-37 now runs under the served behaviour.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W21-S1"
+  ],
+  "spec_asserts": "W21-S1: classify_and_sum in the served producer resolves CONDITIONAL-BY-COUNTERPARTY rows with _final is None; under pandas 3 the None becomes NaN and the rows drop from the flow uncounted; whether the Lambda runtime carries pandas 3 was unmeasured.",
+  "world_is": "MEASURED: irpt-49f-reporting-gold-lambda takes pandas from irpt-performance-native-layer (lambda.tf:34-53); the layer's latest version is v1 (created 2026-09-24, python3.12), and its zip in the account's lambda-layers bucket lists pandas-2.2.3.dist-info, numpy-1.26.4.dist-info and pyarrow-14.0.2.dist-info (zip directory read by ranged S3 reads; nothing executed). So the served account_return_daily gold is not affected. This box runs pandas 3.0.6, so the round-23 local identity run was. DB-b-37 amendment 1 runs the call under the served behaviour and asserts the conditional rows resolve. LATENT: the served code still drops these rows if its layer ever moves to pandas 3; that hardening belongs to a release cell of the served producer.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws lambda list-layer-versions irpt-performance-native-layer: v1, 2026-09-24",
+      "layer zip directory: pandas-2.2.3, numpy-1.26.4, pyarrow-14.0.2",
+      "local python -c pandas.__version__: 3.0.6",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf:34-53"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The hazard is not live on the served gold (pandas 2.2.3 measured); its local effect is handled by DB-b-37 amendment 1; the latent pandas-3 hardening is named for the served producer's next release."
+}
+```
