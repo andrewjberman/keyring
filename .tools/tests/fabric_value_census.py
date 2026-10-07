@@ -2,7 +2,7 @@
 """Token census of the fabric value `site-z` / `sitez` (NFRA_CTLPLN.TO-CT-c-6; CLAUDE.md rule 24).
 
 Scans TRACKED files (git ls-files) under .tools/, lib/, org/devices/, org/modules/, .claude/skills/,
-org/standards/ (skips binaries and files over 1 MB). A HIT is a line where `site-z` or `sitez` appears on a
+org/standards/, org/surprise_channel/schemas/ (skips binaries and files over 1 MB). A HIT is a line where `site-z` or `sitez` appears on a
 word boundary (case-insensitive) within the same line as, or within three lines of, the word `fabric`
 (case-insensitive). Each hit is classified by the path-keyed table CLASS_BY_PATH below; a hit whose path is
 not in the table is UNCLASSIFIED. The table was written by READING every hit (see the rule-24 record).
@@ -16,7 +16,7 @@ import subprocess
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SCOPE = (".tools/", "lib/", "org/devices/", "org/modules/", ".claude/skills/", "org/standards/")
+SCOPE = (".tools/", "lib/", "org/devices/", "org/modules/", ".claude/skills/", "org/standards/", "org/surprise_channel/schemas/")
 MAX_BYTES = 1024 * 1024
 TOKEN = re.compile(r"(?<![A-Za-z0-9_])(site-z|sitez)(?![A-Za-z0-9_])", re.I)
 FABRIC = re.compile(r"fabric", re.I)
@@ -49,16 +49,30 @@ CLASS_BY_PATH = {
     ".tools/tests/test_direct_act_order.py": FIXTURE,
     "org/devices/test_readers.py": FIXTURE,
     "org/modules/graph/tests/nerves_resolve_battery/run_battery.py": FIXTURE,
-    # surprise-row-gate.py: ONE comparing line; the rest are comments, message text and self-test data
+    # surprise-row-gate.py: since CT-d-6 NO line compares (the id-to-fabric derivation reads the device register);
+    # the hits are comments, message text and self-test data
     ".tools/surprise-row-gate.py": DISPLAY,
-    ".tools/surprise-row-gate.py:2042": COMPARES,
-    ".tools/surprise-row-gate.py:3487": FIXTURE,
-    ".tools/surprise-row-gate.py:3489": FIXTURE,
+    ".tools/surprise-row-gate.py:3537": FIXTURE,
+    ".tools/surprise-row-gate.py:3539": FIXTURE,
+    # the census's own files and the Dell tests, keyed PER LINE on purpose: a hit in a NEW file under .tools/tests/, or a new
+    # line in one of these, stays UNCLASSIFIED until it is named here (there is no directory or wildcard key)
+    ".tools/tests/fabric_value_census.py:2": DISPLAY,
+    ".tools/tests/fabric_value_census.py:5": DISPLAY,
+    ".tools/tests/fabric_value_census.py:21": FIXTURE,
+    ".tools/tests/test_fabric_enum_dell.py:4": DISPLAY,
+    ".tools/tests/test_fabric_enum_dell.py:63": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:7": DISPLAY,
+    ".tools/tests/test_fabric_readers_dell.py:10": DISPLAY,
+    ".tools/tests/test_fabric_readers_dell.py:92": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:145": FIXTURE,
     # the allowed sets
     ".tools/to-pipeline-gate.py": DISPLAY,
     ".tools/to-pipeline-gate.py:93": ENUM_SOURCE,
     "org/devices/DEVICES.json": ENUM_SOURCE,
     "org/standards/PRD_HEADER.schema.json": ENUM_SOURCE,
+    # the two surprise-row schemas carry the fabric enum (the Draft-07 limb of the surprise-row gate validates against them)
+    "org/surprise_channel/schemas/investigation_item.schema.json": ENUM_SOURCE,
+    "org/surprise_channel/schemas/remediation_row.schema.json": ENUM_SOURCE,
 }
 
 

@@ -43,6 +43,7 @@ established that as the correct read, and a worktree read grades bytes the commi
 FAIL-CLOSED. An unreadable blob, an unparseable block, or an unexpected exception REFUSES.
 A gate that fails open is not a gate.
 """
+import importlib.util
 import inspect
 import json
 import os
@@ -102,7 +103,9 @@ FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 # carries no W; the fabric coordinate Z- stays and nests first. C- is the CVO's coordinate for its rows in adjudications/ -- admitted
 # here as a superset, REQUIRED only once the staged schema's id pattern admits it (the schema is the switch; either half alone
 # fails closed). v3's first drain minted NFRA_COMPEFFICACY-S34 twice from two indexes; the coordinate makes that impossible at mint.
-ID_RE = re.compile(r"^(?P<project>[A-Z0-9_]+)-(?P<z>Z-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$")
+# CT-d-6: `z` is any fabric-COORDINATE-SHAPED infix (a capital, optional digits); the device register, never this regex, says
+# which are held. W<n>- and C- keep their own meaning and can never be a coordinate (the lookahead).
+ID_RE = re.compile(r"^(?P<project>[A-Z0-9_]+)-(?P<z>(?!W[0-9]*-|C-)[A-Z][0-9]*-)?(?:W(?P<w>[0-9]+)-|(?P<c>C-))?S(?P<k>[0-9]+)$")
 WORKER_SERIAL_RE = re.compile(r"^0\.9\.0_WK_(?P<code>[A-Z0-9_]+?)[~_](?P<n>[0-9]+)$")
 # /endpoint --forward Phase-0 outcome id. PERMANENT AND NEVER REUSED by contract
 # (1.0.0_SA_CTO @b3584ea86a, landed in the skill AND the PRD template together).
@@ -1993,6 +1996,56 @@ def _worker_carrier_violations(rid, row):
     return out
 
 
+_GATE_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _fabric_of_id(rid):
+    """CT-d-6 (NFRA_CTLPLN, CTO msg 106069): (box, devices_module, register, why). The box the id's coordinate names, read from
+    the device register's `row_coordinate` field -- never a literal. `box` is None with `why` set when the register cannot be
+    read (REFUSED, no two-fabric fallback) or the id carries a coordinate the register does not hold."""
+    try:
+        spec = importlib.util.spec_from_file_location("opal_devices", os.path.join(_GATE_ROOT, "lib", "devices.py"))
+        dev = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(dev)
+        reg = dev.load()
+        coords = {}
+        for d in dev.devices(reg):
+            if "row_coordinate" not in d:
+                raise dev.RegisterError("device %r carries no row_coordinate" % d.get("name"))
+            if d["row_coordinate"] in coords:
+                raise dev.RegisterError("row_coordinate %r held by two devices" % d["row_coordinate"])
+            coords[d["row_coordinate"]] = d["name"]
+    except Exception as exc:  # noqa: BLE001 -- any failure to read the register is a refusal, never a default
+        return None, None, None, ("the device register cannot be read (%s: %s); this row is REFUSED, the gate has no built-in "
+                                  "fabric list" % (type(exc).__name__, exc))
+    m = ID_RE.match(str(rid))
+    coord = (m.group("z") or "")[:-1] if m else ""
+    if coord not in coords:
+        return None, dev, reg, ("the id carries the coordinate %r, which the device register does not hold; registered "
+                                "coordinates: %s" % (coord, ", ".join(repr(c) for c in sorted(coords) if c)))
+    return coords[coord], dev, reg, ""
+
+
+def _fabric_identity_violations(rid, fabric):
+    """The id-to-fabric half of RC1 identity: the row's `fabric` must be the box its id's coordinate names (bare = the box whose
+    coordinate is empty; a Dell's id carries D1-/D2- as read from the register). Returns a list of complaints."""
+    box, dev, reg, why = _fabric_of_id(rid)
+    if box is None:
+        return ["%s: fabric=%r -- %s" % (rid, fabric, why)]
+    held = {d["name"]: d["row_coordinate"] for d in dev.devices(reg)}
+    forms = "; ".join("%s = id <CODE>-%sS<n>" % ("/".join([d["name"]] + list(d.get("aliases", []))),
+                                                  d["row_coordinate"] + "-" if d["row_coordinate"] else "")
+                      for d in dev.devices(reg))
+    if dev.resolve(str(fabric), reg) == box:
+        return []
+    named = dev.resolve(str(fabric), reg)
+    if named is not None and not held[box] and held[named]:
+        return ["%s: fabric=%r but the id carries no coordinate. A row filed on %s is written <CODE>-%s-S<n> (worker: "
+                "<CODE>-%s-W<n>-S<k>); a bare id is the laptop's. Fabrics: %s." % (rid, fabric, named, held[named], held[named], forms)]
+    return ["%s: fabric=%r but the id's coordinate %r means box %r. Fabrics and their id forms: %s."
+            % (rid, fabric, held[box], box, forms)]
+
+
 def _check_row(row, kind, schema, carried=False):
     """Complaints about ONE NEW row. Schema-required + closed enums + the step-7/10 fields.
 
@@ -2039,7 +2092,6 @@ def _check_row(row, kind, schema, carried=False):
     # ---- AGREE WITH THE ID. Two carriers of one quantity, compared instead of derived.     ----
     m = ID_RE.match(str(rid))
     id_project = m.group("project") if m else str(rid).rsplit("-S", 1)[0]
-    id_fabric = "site-z" if (m and m.group("z")) else "laptop"
     for fld in ("project", "fabric"):
         if not str(row.get(fld, "")).strip():
             out.append("%s: NEW row carries no %r. Step-3 identity (project + fabric) is required on "
@@ -2048,10 +2100,8 @@ def _check_row(row, kind, schema, carried=False):
     if row.get("project") and row["project"] != id_project:
         out.append("%s: project=%r but the id says %r. The id prefix and the project field are two "
                    "carriers of one quantity; they must agree." % (rid, row["project"], id_project))
-    if row.get("fabric") and row["fabric"] != id_fabric:
-        out.append("%s: fabric=%r but the id %s the Z- infix, which means %r. site-z iff the id "
-                   "carries Z-." % (rid, row["fabric"], "carries" if id_fabric == "site-z" else "lacks",
-                                    id_fabric))
+    if row.get("fabric"):
+        out += _fabric_identity_violations(rid, row["fabric"])
 
     if kind == "INVESTIGATION":
         # STEP-7 TRIGGER, both halves. A row that cannot state both is an opinion, not a mismatch.

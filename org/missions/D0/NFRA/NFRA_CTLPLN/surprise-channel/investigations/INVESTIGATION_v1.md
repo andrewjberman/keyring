@@ -1382,6 +1382,136 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W13-S6 -- CT-k-2: The laptop's portal node_modules is an older install than the DEV lockfile (absent=6, extra=103), so the kit has no correct tree to carry yet
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T10:27:42Z",
+  "one_line": "The laptop's portal node_modules does NOT match the DEV lockfile: 6 locked packages are on disk at other versions and 103 packages on disk are in no lock entry, so describe reads absent=6 ok=False and pack refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_portal_tree.py describe (read-only, 1-2 s): PORTAL-TREE head=481b3bcc5f22 lockfile=bun.lock lock_sha256=b32cb20e3d31 equals_dev=True bun=1.3.9 node=v26.10.0 packages=487 present=409 absent=6 files=41952 bytes=447989421 ok=False, on branch wk-NFRA_CTLPLN-13 (base 16b9fd1ba8 + this commit)",
+      "PORTAL-ABSENT lines: @types/d3-array lock=3.2.2 disk=3.0.3; @types/d3-interpolate lock=3.0.4 disk=3.0.1; baseline-browser-mapping lock=2.10.0 disk=2.11.22; caniuse-lite lock=1.0.30001775 disk=1.0.30001810; d3-format lock=3.1.0 disk=1.4.5; d3-time-format lock=4.1.0 disk=3.0.0; PORTAL-CLASSES extra_on_disk=103 (for example @nivo/*, @puppeteer/browsers, @react-spring/animated)",
+      "the working bun.lock equals git show origin/DEV:bun.lock after folding CRLF to LF (equals_dev=True; raw SHA-256 differs only by line endings); node_modules has no .package-lock.json and mtime Feb 20 2026 (react/package.json Mar 2 2026), older than the lockfile, so the tree was installed from an earlier lockfile"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 2 and CTO msg 106138: the bring-up kit carries the laptop's portal dependency tree at the DEV lockfile.",
+  "world_is": "The laptop's tree is NOT at the DEV lockfile: it is an older install. The lockfile equals DEV, the tree does not equal the lockfile (absent=6 of 487, extra=103). The tool's pack therefore refuses (pack on the real tree was not run; no archive exists). The tree must be brought to the lockfile by an install on a box that may reach the registry, which this order forbids this worker to do; until then there is nothing correct to carry. The test cases and the tool's refusal arm are proven on stand-ins."
+}
+```
+
+## NFRA_CTLPLN-W9-S1 -- the row schemas still refuse a Dell id and a dell fabric value
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T08:46:27Z",
+  "one_line": "The two row schemas still admit only laptop and site-z (enum) and only the Z- infix (id pattern), so a Dell row is refused by the gate's Draft-07 limb even though CT-d-6's derivation now admits it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json and remediation_row.schema.json at f70d7dd545: properties.fabric.enum = ['laptop','site-z'] and properties.id.pattern = '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'",
+      "CT-d-6 worktree, 2026-10-07: surprise-row-gate._check_row on {id: X_PRJ-D1-S1, fabric: dell1} against investigation_item.schema.json prints \"fabric='dell1' is not in the ratified enum ['laptop', 'site-z']\" and \"'X_PRJ-D1-S1' does not match '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'\"; the identity derivation itself returns no complaint"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 1: after the edit a row filed on dell1 as <CODE>-D1-S<n> is admitted and a bare Dell id is refused; the order's paths name the gate, PRD_HEADER.schema.json and DEVICES.json only.",
+  "world_is": "The gate's id-to-fabric derivation now reads the register and admits D1-/D2- ids, but the row schemas it validates every new row against (outside this order's paths) still carry the two-value fabric enum and the (Z-)? id pattern, so a real Dell row is refused at the schema limb until both files change. The ID_RE grammar in the gate is widened; the two schema patterns are a third copy of that grammar. Not fixed here (not in the grant); the issuer or the CTO owns the schema edit."
+}
+```
+
+## NFRA_CTLPLN-W9-S2 -- adjudicates and disarms item patterns still carry the old id grammar
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T09:24:00Z",
+  "one_line": "Two more copies of the old id pattern remain in the row schemas: adjudicates items (investigation) and disarms items (remediation) still refuse a Dell id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json properties.adjudicates.items.pattern and remediation_row.schema.json properties.disarms.items.pattern, after the CT-d-6 AMENDMENT 2 edit, still read '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'",
+      "CT-d-6 worktree, 2026-10-07: Draft7Validator on each items subschema: 'X_PRJ-S1' ADMIT and 'X_PRJ-D1-S1' REFUSE, for adjudicates and for disarms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 2: change the fabric enum and the id pattern in both schemas and nothing else, so a Dell row is admitted by the schema limb.",
+  "world_is": "The id property is widened, but a row that cites a Dell id in `adjudicates` (an adjudication row) or in `disarms` (a remediation row) is still refused by the schema limb, because those two item patterns are separate copies of the old grammar and are outside the order's stated change. Not edited here. A Dell's plain row is unaffected; a Dell row that disarms or adjudicates another Dell row is not admitted until the two patterns follow."
+}
+```
+
+## NFRA_CTLPLN-W9-S3 -- two more readers of the old id grammar outside the order's grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T09:55:53Z",
+  "one_line": "Two more readers of the old id grammar sit outside the order's grant: proof-of-spec-check.py SURPRISE_ID_RE and surprise-watch.sh ID_RE refuse or miss a Dell row id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py:1198 at 4ff3443cb4: SURPRISE_ID_RE = ^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b ; CT-d-6 worktree 2026-10-07: re.match on 'X_PRJ-D1-S1' -> None, on 'X_PRJ-D1-W3-S2' -> None, on 'X_PRJ-S1' -> a match; the surprises limb (line 1308) turns a None into 'surprises[i] carries NO row id'",
+      "org/surprise_channel/surprise-watch.sh:82 at 4ff3443cb4: ID_RE='^[[:space:]]*\"id\":[[:space:]]*\"[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+\"' counts rows by the old grammar, so a Dell row (<CODE>-D1-S<n>) is not counted by the watcher"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 3 report asks whether any other file under .tools/ or org/surprise_channel/ still holds the old two-fabric id pattern; the order's paths name the gate, the two row schemas, the test and the census only.",
+  "world_is": "Two copies of the old id grammar remain outside the grant. proof-of-spec-check.py's surprises limb would refuse a Dell worker's proof instance that cites its own D1- row (the worker could not flip its order complete); surprise-watch.sh would not count a Dell row. Neither edited here. The gate's own ID_RE and both row schemas are current."
+}
+```
+
+## NFRA_CTLPLN-W9-S4 -- a fourth live reader of the old id grammar outside the order's grant: the IRPT_YCDGEN stop-row filer
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T10:32:46Z",
+  "one_line": "The whole-repo id-grammar sweep finds a fourth live reader of the old grammar outside the order's grant: infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py ID_PATTERN refuses a Dell row id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py:13 at 75b3d75714: ID_PATTERN = re.compile(r\"^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$\") with the comment 'investigation_item.schema.json id'; section() (line 19) raises ROW_ID_NOT_ADMITTED for any id the pattern does not match, so section(row, 'X_PRJ-D1-S1') is refused although the gate, both row schemas, the proof checker and the watcher now admit it",
+      "test_fabric_readers_dell.py sweep() at this worktree, 2026-10-07: ID-GRAMMAR-SWEEP files_scanned=57075 hits=60 fixed_here=8 gate_derived=2 record=49 live_outside_grant=1; the one live hit is the line above; a second, independent census (every non-record code file whose regex holds the project class [A-Z0-9_]+- , 6 files) found no other reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 4 item 3: the sweep's zero is the condition for landing; a LIVE-READER-OUTSIDE-GRANT is listed, not edited, and carried by old_grammar_left.",
+  "world_is": "One code file outside the grant still decides on the old two-fabric grammar. It is the IRPT_YCDGEN stop-row filer (prints a channel section for a runner stop row); a Dell-fabric stop row cannot be filed through it. Not edited here (path outside the order's grant); old_grammar_left carries 1, so CT4d6-AC1 reads old_grammar_left=1 ok=False until the issuer brings the file to the gate's grammar (or rules it out of scope) and the sweep reads zero."
+}
+```
+
 ## NFRA_CTLPLN-W14-S1 -- TO-CT-a-1: no declared SSM command document is RESIDENT-FIXED (0 of 16); dell2's policy carries no send statement
 
 ```json

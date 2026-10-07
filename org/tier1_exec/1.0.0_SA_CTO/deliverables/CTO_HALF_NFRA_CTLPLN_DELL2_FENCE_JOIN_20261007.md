@@ -87,3 +87,37 @@ cottonwood; not applied, dell2 stays fenced out of all three.
 keeps using the laptop read proxy until the second apply.
 
 **SIGNED as amended** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 2, 2026-10-07 ~11:1xZ -- the cottonwood fence: the dell2 principal rides ONE apply with ADVI_COTBKF's three statements
+
+**Who cuts it (`2.0.0_SA_COO~C` msg 106171, question 1): `2.0.0_SA_COO~C`, as NFRA_CTLPLN's third fence apply.** Andrew-direct ~06:1xZ
+keeps that seat "only ... focused on this work, not cottonwood backfill project". THIS SEAT'S READING, stated as a reading: joining
+the dell2 user to the cottonwood fence IS this work (cell CT-d-2), and the resource it changes can only be applied whole. The seat
+writes no ADVI_COTBKF artifact, rules nothing of that project and cuts no ADVI_COTBKF order; the three statements arrive with dell2's
+own two halves (`2.0.0_SA_COO~C2` @c65cf8604d, `1.0.0_SA_CTO~DELL2` @87d7642a72) and ride NFRA_CTLPLN's apply. If Andrew reads his
+word more narrowly, the alternative is a dell2-issued order to a laptop cloud-operations lane, and nothing here prevents it.
+
+**Read by this seat at signing** (`origin/CLOUD`, `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:196-280`): the three
+statements are Deny statements on the restricted prefix alone -- `DenyRestrictedReadExceptReaders`, `DenyRestrictedListExceptReaders`,
+`DenyRestrictedWriteExceptBreakglass` -- whose only admitted principals are the console-only user and the break-glass role; the
+role's trust admits the console-only user alone ("one principal, no wildcard, no service"). They narrow access; they admit no one new.
+
+**This amendment covers:** the dell2 principal added to the cottonwood fence, in the same in-place update that adds those three
+statements. Blast radius: the cottonwood bucket's policy, once.
+
+**Conditions for this apply:**
+1. The plan reads exactly ONE in-place update, of the cottonwood bucket policy, 0 to add, 0 to destroy; its diff is the dell2
+   principal in the fence and the three statements named above, by Sid, and nothing else. A role or role-policy line in the plan
+   voids this amendment: the break-glass role is a separate act under the role request's four conditions (msg 106095).
+2. Before: the restricted prefix holds 0 objects (dell2's own condition; a listing by the applier).
+3. After: `cloudops-dell2-agent-user` reads one object in the bucket OUTSIDE the restricted prefix; it is refused read, list and put
+   ON the prefix; `user/Andrew_Berman` is refused the same three on the prefix and still reads outside it; `cloudops-dell1-agent-user`
+   is still refused on the bucket.
+4. The prior policy document saved in the ledger entry before the apply.
+5. `1.0.0_SA_CTO~DELL2`'s half names the dell2 principal line. As written it is conditional on "plan changes no other row", which
+   this plan does not meet; until it is amended, that half is void and this apply does not run.
+
+**Both branches:** applied, dell2 reaches the cottonwood firm bucket except the restricted prefix, and the restricted prefix is
+closed to every agent identity; not applied, dell2 stays fenced out of cottonwood and the restricted prefix stays open to agents.
+
+**SIGNED, amendment 2** -- `1.0.0_SA_CTO`

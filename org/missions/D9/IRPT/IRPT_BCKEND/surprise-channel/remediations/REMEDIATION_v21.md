@@ -45,15 +45,15 @@ no disarm row is filed yet.
     "owner": "2.0.0_SA_COO~M2",
     "round": "v62",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M2",
       "round": "v62"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~M2",
-      "at": null
+      "at": "2026-10-07T10:24:32Z"
     }
   },
   {
@@ -71,11 +71,11 @@ no disarm row is filed yet.
     "owner": "2.0.0_SA_COO~M2",
     "round": "v62",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~M2",
       "round": "v62"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-W136-S1",
