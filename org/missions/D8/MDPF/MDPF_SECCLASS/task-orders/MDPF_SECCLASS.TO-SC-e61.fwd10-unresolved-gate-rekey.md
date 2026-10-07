@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e61</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~42</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~50</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -39,6 +39,22 @@ for a bare-ticker item (`identifier_namespace` None or `TICKER`) with no `sub_as
   test whose fixture assumed a sector in `sub_asset_class` may move its fixture to `gics_sector`, and must not be deleted or weakened.
 - The producer writes put-on-absence only: do not change that.
 
+### AMENDMENT 1 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~15:3xZ; release mode, CTO round-11 analysis @fc96f7c48c section 2 item 2)
+
+**The release port.** e61 (c0eb742061, ~42) and e57 (a23415cd44, ~38) are complete and VALID on the held-38 line, which also carries
+e55, e56 and e62. Their code files cherry-pick CLEAN onto the round head ae61f93efe (CLOUD plus round records): 0 conflicts, and
+new-security-classifier + `_shared` 239 passed, sector-writer 29 passed.
+
+Slot ~50 on branch `secclass-r12-rel-e57e61` commits that port, so the pair releases without e55, e56 or e62. The issuer's lane refuses
+these paths.
+
+**Your work:** the four files are ALREADY MODIFIED in your worktree (the issuer's cherry-pick, uncommitted). Do not rebuild.
+1. Confirm with `git diff` that they equal the code of a23415cd44 + c0eb742061: `git diff HEAD -- <file>` against
+   `git show a23415cd44 -- <file>` / `git show c0eb742061 -- <file>`.
+2. Commit the four files.
+3. Run AC1 and AC2, plus the two control suites.
+4. Write and validate the proof instance (path below, slot ~50), flip status to complete, and commit.
+
 ### ACCEPTANCE
 
 <criterion id="SC10-e61-AC1" cell_refs="SC-e-61"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py infra/aws/lambda/mdpf-secclass/new-security-classifier/tests/test_new_security_classifier.py</invocation><expect>PYTEST-OK</expect></criterion>
@@ -61,11 +77,13 @@ Dry-run at the base (4cb237fe22, 2026-10-07): SC10-e61-AC1 FAIL as expected (7 f
 - No deploy, no Lambda rebuild, no Terraform, no table write. Your branch rides the held-38 line, and SC-e-57's release is an issuer act
   under its pair. Never push.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `MDPF_SECCLASS-W42-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
+  (id `MDPF_SECCLASS-W50-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
 
 <paths>
 infra/aws/lambda/mdpf-secclass/new-security-classifier/lambda_function.py
 infra/aws/lambda/mdpf-secclass/new-security-classifier/tests/test_new_security_classifier.py
+infra/aws/lambda/v2_portal/_shared/rivalfunds_classification.py
+infra/aws/lambda/v2_portal/_shared/tests/test_rivalfunds_classification.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -77,7 +95,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC10-e61-AC1, SC10-e61-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~42/MDPF_SECCLASS.TO-SC-e61.fwd10-unresolved-gate-rekey.proof_of_spec.json`,
+Criterion ids: SC10-e61-AC1, SC10-e61-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~50/MDPF_SECCLASS.TO-SC-e61.fwd10-unresolved-gate-rekey.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> SC10-e61-AC1,SC10-e61-AC2` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>
