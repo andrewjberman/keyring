@@ -692,3 +692,55 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Read literally, item 1 also adds items the last-token rule never typed, which grows the census and the bd-pipeline root by one line; the measurement spec compares items that exist on both sides. Judged inside the cell: the minimal reading, a retype of what is already typed. If the issuer wants the 40 typed as Lambdas, it is one line in _census_classify (hoist the function-context test above the kind lookup and drop the `if t` guard); the grader would then judge 40 more names."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S7 -- the map entry is looked up by the root's last path word, not by the map's key
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:56:52Z",
+  "one_line": "check_root looks the map entry up by the root folder's last path word ('directory'), but the landed map keys a nested root by 'investor-reporting/directory'; so no entry is found for the second root and resolve() returns None for every name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py check_root: name = os.path.basename(opal_naming_scope._norm_root(root)); entry = doc['roots'].get(name); resolve(doc, name, ...) -- name is 'directory'",
+      "python (at worktree HEAD): doc['roots'].get('directory') -> None; resolve(doc,'directory','irpt-x','IAM_ROLE') -> None; resolve(doc,'investor-reporting/directory','irpt-x','IAM_ROLE') -> {'system':'irpt','scope':'global','source':'irpt','basis':'root-default'}",
+      "fills honoured: no line of org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/SECOND_ROOT_TRACE_round3.txt fills a firm from the map entry (no entry was read at all); the 2 FIX lines are schedule cadence suffixes, the system irpt is already in the current names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-6 AMENDMENT 1: the map key form is 'investor-reporting/directory'; if it is not what check_root passes to resolve, that is a finding.",
+  "world_is": "check_root passes the last path word, so a nested map key never matches. On a root whose names already lead with the system (this one) the run still reads RIGHT/FIX; on a root that needs {system} filled from the map it would print a HOLE 'no map entry for this root' though the map holds one. lib/ was not edited."
+}
+```
+
+## LGIC_BLANKFIX-W2-S8 -- the run counts 15 names, the scope with the map counts 17; the two stored files are never run
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:56:52Z",
+  "one_line": "check_root counts 15 names for investor-reporting/directory; the scope's own root_items(root, map) counts 17: the run calls root_items(root) with no map, so the 2 stored-file keys of the root's Lambda source folder (investor-reporting/directory and investor-reporting/directory/_refresh) are never run; BR6-AC1 cannot pass as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_second_root.py -> 'FAIL: items=15 but len(root_items(root, map)[0]) = 17' / 'SECOND-ROOT ok=False ... items=15 hole=0 differs=0' (rc 1)",
+      "lib/opal_naming_rootcheck.py check_root: opal_naming_scope.root_items(root) (no map_path), twice (items and expected_n), so ROOTCHECK ok=True is self-consistent at 15; with the map, scope adds source folder infra/aws/lambda/investor-reporting/directory",
+      "the two missing names: S3Key investor-reporting/directory [infra/aws/lambda/investor-reporting/directory/handler.py:53]; S3Key investor-reporting/directory/_refresh [infra/aws/lambda/investor-reporting/directory/refresh.py:71]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-6 BR6-AC1: `items` equals len(opal_naming_scope.root_items(root, map)[0]); AMENDMENT 1: 17 names, 4 schedules or event rules, 7 policies, 2 stored files, 1 source folder.",
+  "world_is": "The run's last line reads ROOTCHECK ok=True items=15 (4 roles + 7 policies + 3 schedules + 1 event rule), but the stored files are not in it; the order's own comparison, against the map-aware scope, reads 17. The check was not weakened; BR6-AC1 is recorded FAIL and the order stays pending. The fix lies in lib/opal_naming_rootcheck.py (pass the map to root_items and key the entry by the map's own key form, one change with W2-S7), outside this worker's grant. A re-run after that fix would also grade the two stored-file lines, which this run has not."
+}
+```
