@@ -36,11 +36,15 @@ Z-W28-S13 (their cells are built, not released); Z-W28-S11 (at the CTO). **Still
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v12",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v12"
+   "round": "v12",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round26.md ADDENDUM 1 @51572f8092 (R38 withdrawn: a Schwab master account id is outside the bound, restated as a client account identifier); census deliverables/2.0.0_SA_COO~O/R38_WHOLE_TREE_CENSUS_20261007.md @48e547c6f9 (the value in 1,314 of 62,041 tracked files, production code and S3 key segments among them)"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S18",
@@ -57,11 +61,15 @@ Z-W28-S13 (their cells are built, not released); Z-W28-S11 (at the CTO). **Still
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v12",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v12"
+   "round": "v12",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round26.md R39 @c474e2d3f3 (an AWS account id inside a bucket name is outside the bound; no redaction of deploy output is asked)"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S16",
@@ -78,11 +86,11 @@ Z-W28-S13 (their cells are built, not released); Z-W28-S11 (at the CTO). **Still
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v12",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v12"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-S66",
@@ -100,16 +108,16 @@ Z-W28-S13 (their cells are built, not released); Z-W28-S11 (at the CTO). **Still
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v12",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-07T14:59Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v12"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S19",
