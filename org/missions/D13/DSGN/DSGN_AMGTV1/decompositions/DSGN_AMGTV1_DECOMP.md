@@ -1982,3 +1982,25 @@ candidate (portal c123c5a0), so rounds 43 and 44 reach Andrew as ONE DEV push.
 b0051830 it reads 1 of 5: BA's point prints "not shown on this page"; there is no SegmentBreakdown; ThesisTab mounts none. PLANTED passes.
 Green 5 of 5 on scratch reference edits.
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Then:** a :5174 walk, CTO review, and ONE DEV push (43 + 44) on Andrew's word.
+
+## v45 -- ROUND 45 (issuer, 2026-10-07 ~02:0xZ, by hand, no loop) -- TWO CELLS: THE TOP BAND + INPUT PROVENANCE; THE FWD-18 PAGE REPAIRS
+
+**Rectangle:** AMGT_RESAPP `ledger/ROUND_ANALYSIS.round75.md` @326aea63b3 rulings 2-3 (the "DSGN round 45" line: the top-of-page band and the
+provenance panel, drawn from round 76's served fields), `ROUND_ANALYSIS.round76.md` @c8bbeeac10 ruling 6 (the FWD-18 page repairs) and its
+ADDENDUM 1 item 4 @a7b2c3e0ba (CTO msg 30491: round 45 carries the repairs and the removal of the /refresh control). **Base:** portal DEV
+34803ef6 (= PROD v2.1.202 ab3191d0's content), with RESAPP round 76 deployed as OVpDhfwD.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zw-1` | RESAPP FWD-16 (news half), FWD-12 (provenance half), PRD v0.41 (no re-run button) | NEW `components/TopBand.tsx`, NEW `components/InputProvenance.tsx`, NEW `topBandTypes.ts`, `SecurityAnalysis.tsx`, `hooks/useLeadPanelApi.ts`, `components/SecurityOverlay.tsx`, `__harness__/posture.harness.cjs` | ~106 (worker) |
+| `AV-zw-2` | RESAPP FWD-18 and FWD-1 on the page (ruling 6) | `components/ThesisDriverChart.tsx`, NEW `components/PassageTable.tsx`, `components/SegmentBreakdown.tsx`, `types.ts`, the `__harness__/` files naming `data-driver-chart` or `data-segment` | ~107 (worker) |
+
+**Chains:** 2, with no shared product file (`AV-zw-1` declares its types in `topBandTypes.ts` because `AV-zw-2` owns `types.ts`), so both
+cells run at once. **Not in this round:** `portal/src/api/endpoints/amgt-lead-panel.ts` and `pages/Freshness/` (RESAPP ba-4 writes them,
+COO~Z msg 30485); row DSGN_AMGTV1-Z-S21 (case value and currency attributes on `ModelTab.tsx`) waits for the next cut.
+
+**Checks:** `round45/checks/r45/r45.cjs` on fixtures captured from deployed OVpDhfwD (`round45/fixtures/overlay.{BA,MSFT}`): 1 of 5 at base
+DEV 34803ef6, 5 of 5 on scratch reference components. Its item arm PLANTS two items, because 0 of 95 covered names served a news item at
+the cut. `AV-zw-2` is graded by `2.0.0_SA_COO~Z`'s `round77/checks/r77_ba5.py` (@7daf7c5677): AC1, AC2 and AC3 read NO at base, controls passing.
+**Fan-out:** 2 of 2 (`fanout: 2`). **Risk:** LOCAL. **Then:** battery29 on the combined candidate, a :5174 walk, CTO review from the
+renders, and ONE DEV push on Andrew's word.
