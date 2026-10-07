@@ -2665,3 +2665,57 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
 }
 ```
+
+## MDPF_SECCLASS-W25-S1 -- the served per-firm Holdings objects are unreadable from this device (explicit deny), so TO-SC-e26's held read is a local producer build, not the served bytes
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "s3://opal-data-{cottonwood,inflection,49financial}/irpt/<firm>/platinum/holdings/current/manifest.json answers AccessDenied (explicit deny in a resource-based policy) to arn:aws:iam::313476888478:user/cloudops-dell1-agent-user, so the order's 'served Holdings builds per firm' cannot be read here.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get_object, list_objects_v2 (prefix irpt/) and head_object on all three opal-data-<firm> buckets, 2026-10-07 ~09:0xZ: 3 of 3 AccessDenied / 403, message 'with an explicit deny in a resource-based policy'",
+      "control: list_objects_v2 on opal-data-bd and opal-data-cot (gold/canonical/holdings/) returns keys on the same identity",
+      "the R9 leg-V and remint scripts that read these objects (multi_asset_leg_v.py, remint_served_effect.py) used the same boto3 default client; they ran on another device/identity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e26 WORKER FACE inputs: 'Held today: the served Holdings builds per firm (cottonwood, inflection, 49financial)... NAME the artifact and date you read in held_source'.",
+  "world_is": "The served objects were not read. The held set in OLD_LIST_CENSUS_20261007.json is the Holdings producer's own build (holdings_snapshot.py at the worktree HEAD, no --upload, --as-of 2026-10-05, the date the issuer's held read used), run locally against the same upstream sources; held_source says so and carries held_claim=inferred. Every consumer that needs the served bytes (TO-SC-e33's missing lists name 'source: served artifact read') will meet the same deny on this identity.",
+  "notes": "No policy was read or changed (the rail routes raw bucket-policy reads to comp-iam; not needed). The issuer decides whether an inferred held set is enough for FWD-15's 'held securities that have no entry' or whether a seat with firm-bucket read re-runs the held read against the served manifest; the census script takes the same parquet shape from either source."
+}
+```
+
+## MDPF_SECCLASS-W25-S2 -- the held-and-unlisted count reads 1,500 old rows (1,449 held securities) against the brief's 58; 829 NAME:: rows carry punctuation and 822 collide on re-slugging
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:50Z",
+  "one_line": "TO-SC-e26's census reads 1,500 old rows held today and absent from etf-classifications (1,449 distinct held securities with no shared entry, 1,046 of them with no old row at all) where the order's contract notes say 58 held; and 829 of the 7,133 NAME:: rows are not in the normalised slug form, 822 of which collide with a conforming row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OLD_LIST_CENSUS_20261007.json: by_membership in_both_lists 2381, held_today_not_in_shared 1500, rest 7084 of 10965; held_securities_not_in_shared 1449 of 3345 distinct held",
+      "the held set is the producer's own local build as-of 2026-10-05 (row W25-S1); inflection's custody_as_of reads 2026-10-02 in that build, cottonwood and 49financial 2026-10-05",
+      "key scan 2026-10-07: 7,133 NAME:: rows, 6,304 equal to their own normalised slug, 829 not; re-slugging the 829 yields 822 keys that already exist (bd-securities has the same name twice)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e26 contract notes: the research seat's brief counts 10,873 old rows, 2,378 already in both lists, and 58 held; FWD-17's gate is the count of old-list securities with no shared entry reading zero.",
+  "world_is": "Old rows 10,965 (+92 on the brief), in both 2,381 (+3). The 58 is not reproduced by any definition in this order: held securities with no shared entry read 1,449 under the symbol / CUSIP / name-slug match stated in match_rules, of which 15 carry a CUSIP: identity and most of the rest are 9-character bond identifiers. Whatever 58 measured (a narrower definition of held, or a dollar threshold) is not named in the order. NAME:: rows are 7,133 of the 10,965, so FWD-17's zero-gap gate covers 6,036 unheld NAME:: rows as well as the held ones.",
+  "notes": "The census states its match rules in the file; a different held definition changes b and c only, never the denominator, the key-form partition or a. The issuer names the definition that gives 58 if it is the intended one."
+}
+```
