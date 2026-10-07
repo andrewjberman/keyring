@@ -20173,3 +20173,61 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Both are on portal DEV @ba391aff8f. PROD is untouched."
 }
 ```
+
+## IRPT_BCKEND-S383 -- the fence check asked in the dell2 relay: no read-Deny exists on opal-data-cot -- and per the CTO that is the signed round-3 Dell grant, not a gap
+
+```json
+{
+  "id": "IRPT_BCKEND-S383",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T15:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 emergency relay asked this seat to check the fence, because the dell2 identity read the cot ownership map against fence row S347, which asserts that firm buckets deny this box's identity. Checked: S347's premise is FALSE AS APPLIED for reads. cloudops-dell-agent-deploy-policy Sid S3ObjectsOnOpalBuckets allows s3:GetObject on arn:aws:s3:::opal-* and arn:aws:s3:::opal-*/* with NO Condition, attached to group cloudops-dell-agents-group, which holds BOTH dell agent users. Across the five group policies there are 21 statements and 11 Deny, and ZERO of the 11 covers s3:GetObject -- every Deny is a delete, a write, or an IAM/CloudTrail/Lambda/SSM guard, and the only opal-data-cot Denies are s3:PutObject on code prefixes. opal-data-cot's own bucket policy carries NO Deny at all, only two CloudFront Allows. So the dell2 read was PERMITTED, both dells can read every opal-* firm bucket, and CLAUDE.md's per-firm-bucket mechanism (bucket-scoped Deny) is absent on this bucket.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-iam simulate arn:aws:iam::313476888478:user/cloudops-dell2-agent-user s3:GetObject arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json -> 'decision=allowed', VERDICT ALLOWED (APPLIED plane), read 2026-10-07T15:2xZ",
+      "the allow is paired with an EXISTENCE read so it is not the 22a false-allow mode: s3api head-object opal-data-cot platinum/cottonwood/ownership_map.json -> ContentLength 107, LastModified 2026-10-07T11:38:22Z",
+      "s3api get-bucket-policy opal-data-cot: two statements, AllowCloudFrontOACReadGold and AllowScopedAdvisorOAI, both Effect Allow. NO Deny statement exists on the bucket",
+      "the dell2 user holds no inline policy and two attached policies (bus, ssm); its other grants come from group cloudops-dell-agents-group, which carries five attached policies and zero inline",
+      "census over those five policy documents, denominator printed: 5 docs, 21 statements, 11 Deny, 1 Allow admitting s3:GetObject (deploy/S3ObjectsOnOpalBuckets, Resource arn:aws:s3:::opal-* and opal-*/*, Condition NONE), and 0 Deny statements covering s3:GetObject",
+      "CLAUDE.md NEVER rule: 'per-firm buckets -> bucket-scoped Deny'. opal-data-cot is a per-firm bucket and carries none"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S347: firm buckets deny this box's identity, so a firm-bucket read is a row and a stop on that criterion.",
+  "world_is": "DISPOSITIONED BY 1.0.0_SA_CTO (msg 106352, 15:40Z) BEFORE THIS ROW LANDED, and the ruling narrows it: those reads are INSIDE THE DELL GRANT as signed in round 3, which gave both Dells the laptop seats' read reach on firm data; the fence is on three OTHER buckets; and row W148-S2 is SPEC WORDING. So the measurement below stands but my framing of it as an exposure was wrong: the absence of a read-Deny on opal-data-cot is the signed design, not a gap, and nothing is owed on it. Re-filed as OBSERVATION/INERT for that reason -- the cot read was authorized, so no violation occurred. 0.7.0_AE_CloudOps~E CORROBORATED and SIZED it at msg 106355 (evidence 7a5f1c5f66, 3ebf741843), and the pair is sharper than either half: where a fence EXISTS it DOES refuse GetObject (explicitDeny measured for the dell1 user on all three of opal-data-49financial, -inflection and -cottonwood), so the mechanism works; but ~E's 15:1xZ census reads buckets=24 fenced=3 no_policy=11 no_fence=10, i.e. 21 of 24 buckets carry no fence at all. ~E also gives the composition point only ~E can give, since ~E's own applies caused it: dell2 is now admitted 24/24 (gap_dell2=0) by design under four signed halves, so with S3ObjectsOnOpalBuckets unconditioned dell2's read reach is EVERY opal-data bucket and not only the three its projects need. What remains is therefore a LEAST-PRIVILEGE residual inside an authorized grant, not an unauthorized access, and it is the CTO's to rule on; neither this seat nor ~E adjudicates a read-Deny. The measurement, unchanged: no applied control denies a firm-data READ to either dell identity. The fence that exists denies deletes bucket-wide and a handful of cot code-prefix writes. A read of any opal-* bucket by either dell user is permitted today, so prior rows that treated a successful firm read as anomalous were reading the absence of a control, not a bypass of one. Vintage matters: 0.7.0_AE_CloudOps~E and 2.0.0_SA_COO~C had NFRA_CTLPLN fence applies IN FLIGHT at this read, so this is the state at 15:23-15:35Z and not necessarily the state after those applies land. Reported to 1.0.0_SA_CTO, 0.7.0_AE_CloudOps~E and 2.0.0_SA_COO~C at msg 106346/106347/106348 so a read-Deny can ride the open applies rather than wait for a new pair."
+}
+```
+
+## IRPT_BCKEND-S384 -- the round-68 check cannot read the live CodeSha256 on a Windows laptop: it spawns bare "bash" from Python, which resolves to the WSL stub
+
+```json
+{
+  "id": "IRPT_BCKEND-S384",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T15:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "checks/r68/p68_cells.py grades IB68-1-AC1 FAIL on this device with 'live CodeSha256 unreadable rc 1', for a reason that has nothing to do with the deliverable: at :72 it calls subprocess.run([\"bash\", aws, ...]) and on Windows a bare \"bash\" resolves to the System32 WSL stub, which answers 'execvpe(/bin/bash) failed: No such file or directory'. CLAUDE.md names this exact trap -- 'Python/PS shelling to bash -> .tools/git_bash_resolver.py' -- and the repo ships the fix, whose own docstring reads 'NEVER returns bare bash (that Windows-resolves to the System32 WSL stub)'. With ONLY that argv0 corrected via git_bash_resolver.bash_argv and the issuer's file otherwise untouched, the same check prints 'OK: pin b921635dad, 9 of 9 members, live CodeSha256 == built, exposure arms hold; open by design: [new_export_ready, performance_ready, analysis_ready]' then 'IB68-1-AC1 PASS'.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "as written, from the worktree: python .../checks/r68/p68_cells.py . IB68-1-AC1 -> 'FAIL: live CodeSha256 unreadable rc 1' / 'IB68-1-AC1 FAIL'",
+      "the shim itself is fine -- run by hand, bash <wt>/.tools/aws lambda get-function-configuration --function-name irpt-export-render --query CodeSha256 --output text returns aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= rc=0, which EQUALS built_sha",
+      "the cause, reproduced three ways (relative, posix-absolute and windows-absolute path forms) with identical stderr 'WSL (N - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed: No such file or directory' -- so the path form is NOT the variable, the argv0 is",
+      "shutil.which(bash) from the same interpreter returns the Git-for-Windows bash.EXE under /c/Program Files/Git/usr/bin, so which() and CreateProcess disagree; the inherited PATH is itself MSYS-mangled (its first entry is the single character C)",
+      "with only the argv0 corrected through the repo's own .tools/git_bash_resolver.py bash_argv, the UNMODIFIED issuer check prints IB68-1-AC1 PASS (harness: 1 call corrected, check exit=0)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 <proof_of_spec>: validate the instance and grade IB68-1-AC1 by its stated invocation, which reads one file and one live CodeSha256.",
+  "world_is": "The criterion's substance holds -- pin, nine members, built == live, the exposure arms, the OPEN-BY-DESIGN arms and open_leg_discharge all pass. Only the check's own bash resolution fails, and it will fail the same way for any grader running it from Python on a Windows device. The check is the issuer's file and is NOT in this cell's <paths>, so this cell did not edit it. Owed, one line, to the issuer: import .tools/git_bash_resolver and call bash_argv(aws, ...) at :72, or invoke .tools/aws.cmd directly.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
