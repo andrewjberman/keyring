@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~9</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -53,7 +53,7 @@ what the gate does with a bare id filed from a Dell-fabric project. Build exactl
 
 ### ACCEPTANCE
 
-<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
+<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=8/8 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
 `CT4d6-AC1` -- both readers handle the four fabrics, refuse a fifth, and agree with the gate's enum; the mismatch and `dell3` arms are
 the controls.
 
@@ -80,6 +80,8 @@ touched must still be classified.
 .tools/surprise-row-gate.py
 org/standards/PRD_HEADER.schema.json
 org/devices/DEVICES.json
+org/surprise_channel/schemas/investigation_item.schema.json
+org/surprise_channel/schemas/remediation_row.schema.json
 .tools/tests/test_fabric_readers_dell.py
 .tools/tests/fabric_value_census.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -147,3 +149,40 @@ Gate limb: none graded this modification. WHERE THIS AMENDMENT AND THE FACE DIFF
 
 Also run `python org/devices/test_readers.py` (the register readers' own test, 15 cases at round 1) after the register edit and put
 its last line in your report: a new field must not break a reader.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~09:1xZ) -- REOPENED: the two row schemas (row NFRA_CTLPLN-W9-S1, BLOCKING)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits cdde57fe01 and 0aae70946c are
+inherited state. This branch is NOT merged to the trunk until this amendment is done: with the gate edit alone on the trunk, a bare
+id from a Dell is refused AND a coordinate id is refused by the schema limb, so a Dell could file no row at all.
+Gate limb: none graded this modification.
+
+**What row W9-S1 found:** `org/surprise_channel/schemas/investigation_item.schema.json` and
+`org/surprise_channel/schemas/remediation_row.schema.json` still carry the fabric enum `["laptop", "site-z"]` and the id pattern
+`^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$`, so the gate's Draft-07 limb refuses `X_PRJ-D1-S1` with `fabric: dell1`.
+
+**THE WORK (this is the whole of it):**
+
+1. In BOTH schema files: the `fabric` enum becomes the four values in the gate's order (`laptop`, `site-z`, `dell1`, `dell2`); the id
+   pattern admits a coordinate-shaped infix the way the gate's own `ID_RE` now does (one uppercase letter followed by digits, then a
+   hyphen; never `W<n>-` or `C-`, which keep their meaning). The schema cannot read the register, so its pattern admits the SHAPE and
+   the gate's register read decides which coordinates exist: say so in a `description` on the pattern. Both files are added to your
+   grant. Change nothing else in either schema.
+2. `.tools/tests/test_fabric_readers_dell.py` gains a row-schema arm, eight cases, validating whole row objects through the gate's
+   own schema limb (the function the gate uses, not a re-implementation): an investigation row with id `X_PRJ-D1-S1` and fabric
+   `dell1` -> admitted; `X_PRJ-D2-W3-S2` / `dell2` -> admitted; `X_PRJ-Z-S4` / `site-z` -> admitted; `X_PRJ-S5` / `laptop` -> admitted;
+   `X_PRJ-W9-S1` / `laptop` -> admitted (the laptop worker form); fabric `dell3` -> refused; id `X_PRJ-d1-S1` (lower case) -> refused;
+   and a remediation row with a `D1-` id -> admitted. LAST line gains `rowschema_ok=<c>/8`:
+   `FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/8 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>`.
+3. Re-run the gate's `--self-test`, `python -m py_compile` on the gate, and `python .tools/tests/fabric_value_census.py` (the two
+   schema files hold the word `fabric` beside `site-z`: classify the new hits in the census table as `ENUM-SOURCE`).
+4. THE END-TO-END CONTROL, in your report: in a temporary copy of a channel file, append one well-formed row with id
+   `NFRA_CTLPLN-D1-S1` and fabric `dell1` and run the gate on it exactly as the commit hook does (`STAGED` set to that path, or the
+   gate's own file argument): it must be admitted. Then the same row with a bare id: it must be refused. Paste both result lines. Do
+   not commit that temporary file.
+
+**ACCEPTANCE, replacing CT4d6-AC1's expectation (same id, same invocation):**
+`FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=8/8 enum_equal=True gate_selftest=ok ok=True`. CT4d6-AC2 is unchanged
+(`unclassified=0 ok=True`).
+
+Write a NEW proof instance over the old one at the same path, validate it, and flip `<status>` back to `complete` only when both pass.
