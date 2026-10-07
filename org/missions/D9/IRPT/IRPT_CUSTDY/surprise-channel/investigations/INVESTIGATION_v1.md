@@ -494,3 +494,58 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "Those two files now pass (39 with test_si_anchor.py). Two more tests and one self-test, in files this order cannot write, assert the retired hold on a 2019 date, and 2019 is on the calendar now. They need HELD_FIRST_DATA moved before 2010 (rule 3 -> NOT_AVAILABLE) and the held_si count and status checks re-pointed at NOT_AVAILABLE. ARMED because the drain's test run goes red on them until a cell that owns hop3_real_run.py makes that edit."
 }
 ```
+
+## IRPT_CUSTDY-W9-S4 -- AC3 cannot read green inside this order's paths: two CU-d-2 tests in tests/test_hop3_directory_gap.py assert 'today's documents carry no si_anchor', which CU-d-1 itself makes false
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S4",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:48:03Z",
+  "one_line": "CU10-AC3 reads SUITE passed=108 failed=2: tests/test_hop3_directory_gap.py::test_account_line_prints_name_source_and_absent_anchor_without_failing and ::test_a_present_si_anchor_prints_its_date_and_rule expect si_anchor=ABSENT on every account line, and every account document now carries si_anchor, so the file is outside this order's <paths> and the two tests cannot be fixed here",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-IRPT_CUSTDY-9 after merging CLOUD and implementing amendments 1 and 2: python data/assets/scripts/gold/irpt_custody/tests/run_suite_check.py -> SUITE dir=data/assets/scripts/gold/irpt_custody/tests passed=108 failed=2 errors=0 skipped=0 xfailed=1 (rc=1)",
+      "the 2: test_hop3_directory_gap.py line 83 (`assert \"ACCOUNT ****3333 name_source=OWNERSHIP_MAP si_anchor=ABSENT\" in acct_lines`, the comment on the next line reads 'today's documents carry no si_anchor') and line 97 (the stubbed third account is built from a real document whose accounts now all carry si_anchor, so printed[2] reads si_anchor=<date> rule=<n>, not ABSENT)",
+      "hop3_real_run.py _si_anchor_text (lines 228-234) prints ABSENT only when the document lacks the field; client_report_figures.build_documents has written `si_anchor` on every account since CU-d-1's first pass (e25f6f33ab)",
+      "with the field present the ABSENT assertions are false by construction; the fix is to the two tests (build the absent case by deleting the field from a copy of a document, as the second test already stubs the present case), which belong to a cell whose grant includes test_hop3_directory_gap.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1 amendment 1: after merging CLOUD the whole irpt_custody suite reads 0 failed and 0 errors (CU10-AC3); the grant names hop3_real_run.py and tests/test_hop3_real_run.py but not tests/test_hop3_directory_gap.py.",
+  "world_is": "CU10-AC3 is not met as written: failed=2, both in a file this order cannot write (CU-d-2 landed them expecting the field absent until CU-d-1 landed). Per the refusal clause the tests are not weakened, skipped or edited. ARMED because the drain's suite run goes red on them once this branch merges. Disarm: add tests/test_hop3_directory_gap.py to this order's paths (or to a successor order) so the two ABSENT assertions can be re-expressed as 'absent only when the document lacks the field'; everything else in CU10-AC1 and CU10-AC2 holds."
+}
+```
+
+## IRPT_CUSTDY-W9-S5 -- amendment 2 branch (c) as written ('holdings exist before Opal's first partition') cannot be read literally; implemented as 'holdings exist, or the zero read is unconfirmed, between the open date and the first funded day'; the real probe takes 153 s
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S5",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:48:03Z",
+  "one_line": "amendment 2 (c) says 'holdings exist before Opal's first partition' but nothing before Opal's first partition can be read; branch c is implemented as holdings present (or the zero read unconfirmed) on the silver positions days from the open date up to the first funded day, and the real probe run measured 153 s wall time",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order file @09f7e2ab87, AMENDMENT 2 bullets (b) 'the open date precedes Opal's first partition' and (c) 'holdings exist before Opal's first partition' -- (b) and (c) cannot both describe an open date before the first partition, and holdings before it are unreadable",
+      "client_report_figures.resolve_si_anchor_branch / _holdings_before_first: Opal's first partition = the master's earliest silver positions partition; (a) needs open >= that, first funded >= open, a positions partition for EVERY trading day in [open, first), and zero non-zero-quantity/value rows for the account on them; any holding, any missing trading-day partition, or an unreadable partition -> (c) (rule 2); an open date before the first partition, or an unknown first partition -> (b)",
+      "dell2 ~11:4xZ: python data/assets/scripts/gold/irpt_custody/si_anchor_probe.py --accounts-from-advisor matthew_gooch --as-of 2026-09-30 -> rc=0, wall 2m33s (153 s), SI-ANCHOR advisor=matthew_gooch accounts=14 rule1=12 rule2=2 rule3=0 no_anchor=0 branch_a=12 branch_b=2 branch_c=0 branch_rule2=0 branch_rule3=0 branch_none=0 labels_ok=True (12 a, 2 b: as the order expected)",
+      "the 153 s is above the 120 s bound the worker standard names for a criterion run; the cost is the positions-partition reads for the 12 branch-a accounts (one read per trading day between open and first funding, cached per master/day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: branch (c) 'holdings exist before Opal's first partition' -> rule 2 as (b); CU10-AC2 runs the probe on dell2.",
+  "world_is": "(c) is read as the only measurable thing: holdings on the days between opening and first funding (or an unconfirmable read). On real data no account lands in (c), so the reading changes no reported figure; the CTO or issuer should confirm or restate it. The probe's wall time is 153 s, so a timeout 120 wrapper would record rc=124; the criterion was run under timeout 600 and its output is recorded in the proof."
+}
+```
