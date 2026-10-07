@@ -100,7 +100,7 @@ Rows: id `NFRA_OPLGTW-Z-W33-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Chain: -> `OG-rl-14` (the r28 release ships the pre-check as changed here).
 - Pre-cut 18:5xZ: `bi3.AC1` FAIL (the test file is absent); `bi1.AC1` PASS 4 of 4 (the first cell, unchanged).
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~33</slot>
 <fabric>site-z</fabric>
