@@ -1,0 +1,12 @@
+{
+  "prd": "TCKT_VNEXT_PRD.md",
+  "prd_version": "v0.2",
+  "prd_pin": "99eb4053c2a416ceedd5c6bd86be6aafe4304c76",
+  "half": "ratified-text",
+  "half_hash": "41fc95eca7c0adf1da40e35598fa8448d59396db93dad0fee83fe18563892dfb",
+  "endpoint_hash": "cc5be01107eb475a357384e5c0f2b8e19028de9358431dd976e172fe37381733",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/TCKT_VNEXT_PRD_v0.2_RATIFIED_TEXT_REVIEW_20261007.md@8243f30edb",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-07T17:24:27Z"
+}

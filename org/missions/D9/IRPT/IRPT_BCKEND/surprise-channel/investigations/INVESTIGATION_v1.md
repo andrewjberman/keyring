@@ -20231,3 +20231,112 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
+
+## IRPT_BCKEND-S385 -- W148-S1 and W146-S1 DISARMED: irpt-export-render fails closed in production (IB-pr-349)
+
+```json
+{
+  "id": "IRPT_BCKEND-S385",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T16:51:44Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarms IRPT_BCKEND-W148-S1 (BLOCKING, ARMED: 7 non-Opal principals reach a fail-open export read) and IRPT_BCKEND-W146-S1 (ARMED: live irpt-export-render fail-open). The disarm condition is met: the deployed _covered refuses an empty list.",
+  "one_line": "IB-pr-349 released irpt-export-render at pin b921635dad (laptop applier 0.7.0_AE_CloudOps~I, both never-widen halves). Live CodeSha256 is aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= (LastModified 2026-10-07T14:38:36Z). The issuer's release-census at the pin reads changed_members=0. On the deployed bytes an existing receipt is REFUSED for an admin and a non-Opal principal, and an Opal read is ADMITTED. Ledger CLOSED; IB68-1-AC1 PASS and proof VALID, re-run by the issuer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer: python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> changed_members=0 (2026-10-07 ~14:4xZ)",
+      "issuer: p68_cells.py . IB68-1-AC1 -> PASS (live CodeSha256 == built, exposure arms true); proof-of-spec-check VALID rc=0 at HEAD 581ccf5454",
+      "org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md: Status CLOSED"
+    ]
+  },
+  "spec_asserts": "W148-S1 / W146-S1: the live export read admits a receipt that names no account.",
+  "world_is": "The live export read refuses it. Existing exports stay refused until the IB-pr-350 back-fill; new-export READY is OPEN-BY-DESIGN (S382)."
+}
+```
+
+## IRPT_BCKEND-W152-S1 -- IB-yr-631 admit is inert in production until InteractiveAccess.current() carries allowedFirmIds
+
+```json
+{
+  "id": "IRPT_BCKEND-W152-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~152",
+  "surfaced_at": "2026-10-07T21:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-yr-631: uploads.py now admits an internal principal whose allowedFirmIds names the owner firm, but InteractiveAccess.current() (the production principal source) does not carry allowedFirmIds, and its authorize_current compares principal != current, so the admit is unreachable in production until _scope/interactive_access.py (outside this cell's paths) states the field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:61-68 current() builds the OPAL_GLOBAL row as {firm_id, principal_id, home_firm_id, principal_class, advisor_id} -- no allowedFirmIds",
+      "same file :81 authorize_current returns False when principal != current(), so a principal enriched with allowedFirmIds outside current() is refused by the real callback",
+      "allowedFirmIds lives on the opal-users-v2 profile row: ycharts/generate/current_authority.py allowed_firm_ids() :67; _scope/canonical_profile_reads.py _USER_FIELDS :27",
+      "intake/uploads.py _internal_for_allowed_firm reads principal['allowedFirmIds']; intake/tests/test_uploads_on_behalf.py exercises it against a callback that models current()'s rule"
+    ]
+  },
+  "spec_asserts": "TO-IB-yr-631 cell: admit an INTERNAL principal whose allowedFirmIds contains the owner's firm_id, using the existing field; authorize_current stays the gate.",
+  "world_is": "The admit is implemented in uploads.py and proven offline (AC1-AC3). The production principal does not yet carry allowedFirmIds, so with the real InteractiveAccess the admit is inert (fails closed to the existing refusal). Carrying the field needs a one-line change to InteractiveAccess.current() (read from the profile row) in _scope/interactive_access.py, which is not in this order's paths and was not edited. Owed to the issuer: a cell for that file before the TCKT_VNEXT live run."
+}
+```
+
+## IRPT_BCKEND-W162-S1 -- ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, r
+
+```json
+{
+  "id": "IRPT_BCKEND-W162-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~162",
+  "surfaced_at": "2026-10-07T18:17:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ClientReportDocument requires a household document (`report`: ClientReportDocument | NotCoveredClientReport, render/clientreport/types.ts) but PrintEntry's loaded bundle (RenderBundle) carries only performanceReport, dashboardPerformance, analysisReport and narrativePacket, and the typed client has no operation that returns a client report; so no PrintEntry-only change can mount the template. No edit made; stopped on IB70-3-AC1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx:457 @339851c7 -- export function ClientReportDocument({ report, ...slots }: { report: ClientReportData | NotCoveredClientReport } & ClientReportSlots)",
+      "portal/src/pages/InvestorReporting/render/manifest.ts:273-288 @339851c7 -- RenderBundle fields: reportKind ('performance' | 'analysis'), performanceReport, dashboardPerformance, analysisReport, narrativePacket, renderOptions, disclosures; no household/client report",
+      "portal/src/pages/InvestorReporting/export/resolveBundle.ts:297 @339851c7 -- op = reportKind === 'performance' ? 'performance-report' : 'analysis-report'; no third branch; ReportKind is 'performance' | 'analysis'",
+      "portal/src/api/endpoints/investor-reporting.ts @339851c7 -- the typed client exposes getPerformanceReport, getAnalysisReport, getHoldingsSnapshot, getNarrativePacket, getOwnedAnalysisReport, getExportReceipt, getExportDownload; none returns a custody/client report; Grep for custody-report|ClientReport over portal/src/api finds no match"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-353 worker face: the page mounts ClientReportDocument for custody-report 'with the bundle it loads, the same way it mounts PerformanceDocument', in PrintEntry.tsx only.",
+  "world_is": "The only way to mount it in PrintEntry.tsx alone is to invent the `report` prop (a cast or fabricated household), which the order forbids by its own clause. The missing piece is a read that returns the household document (a typed-client operation plus a resolveBundle branch and a ReportKind/RenderBundle member), none of which is in this cell's paths. PrintEntry.tsx, the tests and the template are unchanged by this worker. Owed to the issuer: re-cut with the loader (api/endpoints/investor-reporting.ts, export/resolveBundle.ts, render/manifest.ts) in grant, and name the route that serves the household document.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W163-S1 -- IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg,
+
+```json
+{
+  "id": "IRPT_BCKEND-W163-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~163",
+  "surfaced_at": "2026-10-07T18:42:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-354: InteractiveAccess now carries allowedFirmIds from an INJECTED profile reader (profile_reader kwarg, CanonicalProfileReaders.get_user shape), but no production constructor passes one, so the on-behalf admit stays inert in production until those call sites are wired (outside this grant).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py: __init__ profile_reader=None; current() adds allowedFirmIds only for a verified internal subject when the reader returns the subject's own row with a named firm list; None reader, a raising reader, an absent/unreadable/empty value or ALL yields no field",
+      "comp-find 'InteractiveAccess(' over infra/aws/lambda/investor-reporting: production constructors _authz/served.py:856,873,903; export/submit_installed.py:116; performance/entry.py:171; reports/generate_installed.py:312; ycharts/generate/prospect_submission.py:55 -- none passes profile_reader; served.py:955 already builds CanonicalProfileReaders(boto3.client('dynamodb')).get_user(email)",
+      "prospect_owner() copied every actor key into the retained owner; it now drops allowedFirmIds so the entitlement is never stored in an owner record (same file)",
+      "pytest from infra/aws/lambda/investor-reporting: _scope/tests/test_interactive_access_on_behalf.py + test_interactive_access.py + intake/tests/test_uploads_on_behalf.py -> 28 passed, 7 subtests passed; _scope/tests -> 223 passed"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-354 AC1: current() carries allowedFirmIds from the existing profile reader, injected or the one canonical_profile_reads/current_authority use; edits only interactive_access.py and the new test.",
+  "world_is": "The carry is built and proven against the real InteractiveAccess with a fake reader (inject path allowed by the order). Reaching the live admit needs the Entry/consumer call sites to pass CanonicalProfileReaders(...).get_user as profile_reader, in files outside this grant (e.g. _authz/served.py); not edited. Owed to the issuer: a wiring cell before the TCKT_VNEXT live run. Each current() call with a reader costs an email-index query plus a consistent get_item on opal-users-v2 for an internal subject; the order did not specify caching."
+}
+```

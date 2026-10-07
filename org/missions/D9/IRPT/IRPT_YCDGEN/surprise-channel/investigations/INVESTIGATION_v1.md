@@ -2060,3 +2060,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Per CTO msg 481 the directory is NOT deleted (a recursive delete would need Andrew's word); it goes when that worktree is retired. The t-6 proof of record is the re-proof above, not the worker's run."
 }
 ```
+
+## IRPT_YCDGEN-S16 -- F1 stopped at ENVELOPE_STATUS: the analysis POST's success reply carries internal_correlation_id, which the browser's public-status check refuses
+
+```json
+{
+  "id": "IRPT_YCDGEN-S16",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T19:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Andrew's F1 run (localhost:5174, portal DEV 3b8c292f47) stopped at generation with 'This action is unavailable (ENVELOPE_STATUS). Your request is kept for retry.'; the code reading says the POST was accepted and the browser refused the success reply's status member",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "Every v1 response's status member is a PublicStatusEnvelope: operation, state, source_dates, actions, public_reason_code (+ contract_version); internal_correlation_id is x-server-only and never on the wire.",
+  "world_is": "Code at dell2 CLOUD: ycharts/generate/entry.py submit_analysis returns _status = _entry.status_envelope(...), which includes internal_correlation_id (_authz/served.py:295); response_envelope passes it through unchanged (served.py:928 path; measured locally: wire status keys = actions, internal_correlation_id, operation, public_reason_code, source_dates, state). Only the refusal path projects it out (served.py:416-423, added 0c2a7938cc 2026-09-22). The portal's requirePublicStatus (contracts/public-status.ts, closed key set, tightened c09fea54 2026-09-22) refuses the extra key, so envelope.ts:316-318 throws EnvelopeMismatch('status') -> public code ENVELOPE_STATUS (envelope.ts:94-96). So every ACCEPTED analysis POST since 2026-09-22 reads as a failure in the browser. UNMEASURED: the deployed bytes of the handler that served Andrew's POST, and whether his request row exists server side (dell2 is denied kms:Decrypt on irpt-jobs; read relayed to the laptop with f1_find_request.py).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "local run of entry.status_envelope + served.response_envelope at dell2 CLOUD (2026-10-07 ~18:5xZ): status keys include internal_correlation_id",
+      "portal 3b8c292f47 src/pages/InvestorReporting/contracts/public-status.ts requirePublicStatus closed key set; envelope.ts:94-96, 316-318; ProspectComposer.tsx:40 message",
+      "git -S: entry.py _status since 4356085122 (2026-09-11); served.py refusal projection 0c2a7938cc (2026-09-22); portal closed check c09fea54 (2026-09-22)"
+    ]
+  },
+  "notes": "Fix shape (a cell, not yet cut): project the success-path status the same way the refusal path does, so internal_correlation_id never reaches the wire. Ledger irpt-ycdgen-r6-branch-b2-20261006 stays OPEN with leg F1 failed at this point; nothing on it is re-run before the artifact is measured (NEVER-2)."
+}
+```

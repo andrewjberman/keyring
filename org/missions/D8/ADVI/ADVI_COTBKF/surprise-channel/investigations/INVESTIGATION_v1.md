@@ -1789,3 +1789,28 @@ round.** Never edit an existing row.
   "notes": "A grader who reads RGY007151 as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
 }
 ```
+
+## ADVI_COTBKF-D2-S26 -- The served document index carries no page count: page_count is 0 or empty for all 11,119 documents
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S26",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T18:50Z",
+  "one_line": "silver document_index.page_count sums to 0 over 11,119 documents in every doc_type (ADVS, CLNT, NCSD, REPR, STMT, TXRP), so the served index cannot say how long any document is",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read of s3://opal-data-assets/commonwealth/cottonwood/silver/document_index/date=2026-06-23/document_index.parquet (boto3 get_object, pandas): 11,119 rows; groupby(doc_type).page_count.sum() = 0.0 in all 6 types; the column is int64 in the schema"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-5: a person searches by account, type and date and opens the one document they need; the index carries page_count as a field.",
+  "world_is": "The documents open (11,119 VERIFIED in silver documents) and search works, so FWD-5 stands as realized; the page_count field is present but never filled. A one-cell enrichment (count pages from the served PDFs) would fill it.",
+  "notes": "Found by the issuer while answering Andrew's status question, not by a task order. Offered to 1.0.0_SA_CTO~DELL2 for the next enrichment list."
+}
+```
