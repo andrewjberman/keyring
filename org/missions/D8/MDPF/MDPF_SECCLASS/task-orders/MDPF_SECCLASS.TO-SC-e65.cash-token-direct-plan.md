@@ -123,7 +123,15 @@ Dry-run at the base (cbbda93539, 2026-10-07): SC11-e65-AC1 FAIL as expected (`BD
 
 ## BOUNDS
 
-- **Grant.** The `<paths>
+- **Grant.** The paths block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`,
+  uncommitted.
+- **No package install and no download of any kind** (no pip, npm, bun add, bun install, curl or tool fetch, into any environment;
+  rows S49, S54). No web search: the research of the other tickers is the issuer's act.
+- No table write, no deploy, no upload. This is a shipped `_shared` member, held off CLOUD until its pair signs. Never push.
+- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
+  (id `MDPF_SECCLASS-W49-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
+
+<paths>
 infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py
 infra/aws/lambda/v2_portal/_shared/tests/test_cash_token.py
 infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py
