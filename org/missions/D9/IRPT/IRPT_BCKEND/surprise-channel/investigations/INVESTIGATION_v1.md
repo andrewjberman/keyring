@@ -18853,3 +18853,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   }
 }
 ```
+
+## IRPT_BCKEND-W136-S2 -- an irpt-directory-search build was started without BUILD_ONLY; measured no upload and no map change
+
+```json
+{
+  "id": "IRPT_BCKEND-W136-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~136",
+  "surfaced_at": "2026-10-07T09:23:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-334: one build-and-upload.sh invocation for irpt-directory-search was started WITHOUT BUILD_ONLY (piped to head -0, so the script died on its first write); measured: no upload happened and the map is untouched.",
+  "spec_asserts": "IB-pr-334 refusal clause: a build upload is a defect; only BUILD_ONLY=1 builds are permitted to this worker.",
+  "world_is": "A worker typing error ran `bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-directory-search | head -0` at about 09:21Z. s3api head-object of investor-reporting/irpt-directory-search.zip (09:21:59Z read) shows LastModified 2026-10-06T01:38:00Z and content-sha256 cmNmYm1jeyjo.. equal to the map row's artifact_sha256, and `git diff` shows lambda-source-map.json unchanged by that run (only the committed files[]/staged_from edit is in the map). So the object and the map are as before; the exposure was the attempt, not an effect.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object (this worktree's .tools/aws shim), 2026-10-07T09:21:59Z: LastModified 2026-10-06T01:38:00+00:00, Metadata content-sha256 cmNmYm1jeyjoaUUeOCEV6AZS+Wdg3zfySn1DxC8Ftx0=",
+      "git status --short in wk-irpt-bckend-136 after the run: only portal and .scratch/"
+    ]
+  }
+}
+```
