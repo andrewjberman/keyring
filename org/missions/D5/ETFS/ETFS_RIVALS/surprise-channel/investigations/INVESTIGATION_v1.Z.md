@@ -4810,6 +4810,28 @@
     "spec_asserts": "PRD C-OWED-GRAIN (v0.19 G.4) and FWD-22 / FWD-23: a security's stored close for a day is on its chart and prices its contribution",
     "world_is": "For 2026-09-29, 413 stored closes are not read by any product stage. Seen on the served page as a break in a chart's curve around 29 Sep where the security is not among the 172; in the rankings a holding with no market price that day is priced from the fund's own valuation (holding_implied) or not at all. How many of the 413 are securities on the page today, and whether any served ranking figure would move, was not measured. The date stays inside the 30-day window until 2026-10-29 and inside the 365-day chart for a year",
     "notes": "ARMED and live: it is served now and has been since the charts deployed today (the rankings since round 14 or earlier). Not caused by today's deploys. Disarm: the readers' grain cell of round 25 (CTO ruling msg 31416: a date's rows are the union of all its objects, with a stated winner where two objects hold the same security and date), deployed and graded; it needs no rewrite of S3. No write of closes happens before that. Why two objects of one day differ by 262 securities (an early partial pull beside the full one) was not traced."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S70",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T21:44:28Z",
+    "one_line": "Correction to row ETFS_RIVALS-Z-S69: the object the readers pick for 2026-09-29 is an IMPORT with no price at all, so all 430 market closes of that day are unused, not 413; and the page shows it as a valuation-implied point, not a break in the curve",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Both objects of date=2026-09-29 opened 2026-10-07 ~21:4xZ: market-20260929-afcd903ad844.parquet (the one revision.newest picks) has 172 rows, source import:bbg/2026-09-29/characteristics.parquet, px_close non-null 0, total_return_index non-null 0, currency non-null 0, gics_sector non-null 164; market-20260929-53bc393958bd.parquet has 434 rows, source blp_client.reference_data, px_close non-null 430. 17 securities are in both; for all 17 the picked object's close is null",
+        "The served chart objects of 2026-10-07 (round 24): 355 fund-security entries have a key among the 413 securities priced only in the ignored object, and 355 of 355 carry a 2026-09-29 point, each from the fund's own valuation (point source 'i'). GQGU's Meta is not among them: the break seen in that chart near 29 Sep is something else and was not traced",
+        "The readers hand revision.newest bare uris (gold_holding_contribution._newest_by_date), so its rule that an import never outranks a live object has no provenance to act on, and neither name carries a capture time: the name decides"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A row's world_is states what was measured",
+    "world_is": "Row Z-S69 said 413 closes reach no stage and that the fault shows as a break in a chart's curve. Measured: 430 closes (413 of securities only in the ignored object, 17 of securities in both, null in the picked one); the day is drawn, from a valuation-implied price. Z-S69's class, standing and disarm stand. Still not measured: whether any served ranking figure moves; the readers' cell's never-widen pair carries that before and after",
+    "notes": "Cites ETFS_RIVALS-Z-S69. The rule the repair states for this date: the live pull's close for every security it prices, GICS from the live pull where it has one and from the import where only the import has one (round 25 cell RIV-rg-1)."
   }
 ]
 ```
