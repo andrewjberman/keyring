@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.10",
+ "prd_version": "v0.11",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -65,7 +65,8 @@
          DONE WHEN  EXERCISED -- a round carrying a pipeline script published, and nothing deployed
          ACCEPT     a published round that contains a pipeline script changes nothing in production
                     until a box deploys it as a named act or the shared trunk is pushed
-         SOURCE     brief O4
+         SOURCE     brief O4; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
+                    shared-branch wait for the dells"
 
   FWD-6  Site Z pushes a routine round on its own, and waits for Andrew on any round that would put
          something into production
@@ -157,7 +158,7 @@
 
 | Contract | Direction / owner | Binding agreement |
 |---|---|---|
-| C-ROLES: what each box is | Andrew's six cards; proposal 3 | **laptop:** the control plane. It alone writes the registers, receives Andrew's word, orders the merge queue and runs the planning seats (CTO, CRO, CVO); at most one execution lane. **sitez:** the integrator and the deploy box; it alone pushes the trunk and deploys; it keeps the Bloomberg jobs. **dell1, dell2:** the workhorses (v0.9): they run every project placed on them with no lane cap set here, deploy their own committed work as a named act, and create non-IAM resources; they never push the trunk, change access, call a vendor without Andrew's per-use word, or write a register. Site Z's planning lanes retire as their projects close, never mid-project (card 3). |
+| C-ROLES: what each box is | Andrew's six cards; proposal 3 | **laptop:** the control plane. It alone writes the registers, receives Andrew's word, orders the merge queue and runs the planning seats (CTO, CRO, CVO); at most one execution lane. **sitez:** the integrator; it merges the boxes' rounds, pushes the trunk and keeps the Bloomberg jobs. It is no longer the only box that deploys (v0.9: a Dell deploys its own committed work as a named act). **dell1, dell2:** the workhorses (v0.9): they run every project placed on them with no lane cap set here, deploy their own committed work as a named act, and create non-IAM resources; they never push the trunk, change access, call a vendor without Andrew's per-use word, or write a register. Site Z's planning lanes retire as their projects close, never mid-project (card 3). |
 | C-TRUNK-DEPLOY: a publish never deploys (FWD-5) | this project; `.tools/git-hooks/pre-push-safe-deploy.sh` | MEASURED at L4 (`pre-push-safe-deploy.sh:41-70`): the hook runs `safe-deploy.sh --commit-range` for EVERY pushed ref that is not a tag or a delete, so pushing any branch uploads the pipeline scripts in its range. After this contract: the deploy gate runs only when the pushed REMOTE ref is `refs/heads/CLOUD`. Every other branch push prints one line saying no deploy ran and why, and exits 0 for the deploy gate (the HALTGT checkpoint above it is unchanged). This lands BEFORE any round branch is published (brief PART V). |
 | C-QUEUE: publish and integrate (FWD-4) | this project; `/integrate` split in two (proposal 5.2) | A box publishes ONE branch per finished round, `q/<device>/<PROJECT>/r<N>`, and sends one bus line to the laptop. The laptop holds the ordered queue (SEQUENCE, then arrival). Site Z takes the head, merges in its own worktree (the commit hooks grade once, there), pushes the trunk, announces the new head, and deletes the queue branch. Every box pulls the trunk at its next round start. A same-line conflict at integration is a PLACEMENT finding routed to the laptop, never resolved silently at the merge. This is not the retired two-branch model: a queue branch lives one round and flows one way. |
 | C-PUSH-RULE: the standing push rule (FWD-6) | Andrew; the locked law files | The rule lives in `org/XXX.md` Step 1b and is enforced by `.tools/hooks/never-rules-gate.sh` gate 5. It changes only by an `ANDREW_LAW_EDIT_ORDER` naming a record in which Andrew approved the EXACT text. **The text is APPROVED** (Andrew ~15:1xZ 2026-10-06, "Yes, agreed with this"; record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_150xZ_PUSH_RULE_LAW_TEXT_APPROVED.md` @7b5782d0c6, the `ANDREW_LAW_EDIT_ORDER`). It lands TOGETHER WITH the publish-and-integrate flow (C-QUEUE) and the trunk-only deploy gate (C-TRUNK-DEPLOY), never before them; gate 5 and `CLAUDE.md`'s Git section carry the same rule in the same change. Until then the current rule stands: only the fabric managers push, on his word at that terminal. |
@@ -407,3 +408,10 @@ Andrew-direct ~06:5xZ at the `1.0.0_SA_CTO` terminal, answering four cards, VERB
   already allows (derived, never from memory), and one exercised refusal.
 
 A contract change under the ENDPOINT hash: it re-opens nothing beyond what v0.9 already re-opened.
+
+## v0.11 wording (1.0.0_SA_CTO, 2026-10-07) -- on `3.0.0_SA_CVO`'s review @18d52b19cf (msg 106015)
+
+Two findings, both taken. FWD-5's SOURCE cited brief O4 alone, which says the opposite of the v0.9 headline: it now also cites the
+word that amended it. C-ROLES still said site Z alone deploys: it now says site Z integrates and is not the only box that deploys.
+The SOURCE line is inside the ENDPOINT section, so the ratified-text half re-opens for `3.0.0_SA_CVO`; no outcome's DONE WHEN or
+ACCEPT changed.
