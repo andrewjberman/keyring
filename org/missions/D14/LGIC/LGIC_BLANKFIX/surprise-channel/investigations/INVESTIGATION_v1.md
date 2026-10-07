@@ -309,3 +309,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The token alone is present unpatched, through the verdicts closed list; only the sentence is absent. I read 'it' as the token plus its schema sentence (the bullet '- **NO-SYSTEM-ASKED:** <sentence>') and graded unpatched_has_verdict on that. Test not weakened: the sentence is the thing the cell names, and the patched arm shows it while the unpatched arm does not. Also measured: the committed 02_DOCTRINE.md already differs from an unpatched regeneration by 23 lines (stale stamps, row W2-S3)."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S3 -- the root check does not read the new REFUSED-CROSS-FIRM class, so the two Cottonwood-path HOLE lines lose their reason
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-07T14:00:00Z",
+  "one_line": "lib/opal_naming_rootcheck.py decide() reads the key basis only for class UNDECIDED, so the two cot-path HOLE lines, now class REFUSED-CROSS-FIRM, print the generic 'a blank remains that no module fills' and lose the cross-firm reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py:90 `if key is not None and key.get(\"class\") == \"UNDECIDED\": why.append(...)`; lines 69-72 read LEGACY and ADDRESS only",
+      "python lib/opal_naming.py census --root infra/aws/terraform/bd-pipeline (this worktree, after BF-e-3): ROOTCHECK ok=True items=140 right=9 fix=102 not_asked=6 pattern=1 carded=6 hole=16; HOLE S3Key code/bronze/cot_bronze_ingest.py -> partial form {source}/{scope}/code/bronze/cot_bronze_ingest.py; could not fill a blank remains that no module fills [bd-49f-fees-runner/lambda_function.py:43]",
+      "python lib/tests/test_opal_naming_rootcheck.py after BF-e-3: ROOTCHECK-TEST ok=True cases=27; right fell 10 to 9 and fix rose 101 to 102 because silver/prices/canonical_prices.parquet at bd-price-update:441 is no longer LEGACY (its bucket opal-data-bd is not the legacy row's opal-data-cot)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-3: REFUSED-CROSS-FIRM is a new class value, the registry's cross-firm separation stated on a line; the Cottonwood file is printed and reported.",
+  "world_is": "The new class reaches the root check, whose decide() has no branch for it: the line stays a HOLE (partial form with {source}/{scope}) as before, but its reason is the generic one, not the key row's basis (bucket or path token and both firms). The rootcheck module is outside this order's paths and was not edited; whether decide() should read REFUSED-CROSS-FIRM is the cell that owns that module."
+}
+```
