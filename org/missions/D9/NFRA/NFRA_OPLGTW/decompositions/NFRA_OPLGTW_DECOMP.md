@@ -1678,3 +1678,19 @@ Label `<round>27</round>`, ONE issuance, one cell.
 
 **After round 27.** The project parks again on OG-v-7, G-E and R7's flag (R28), with two items open at the issuer:
 the hash read at the first real send (CTO half on r26, C1) and row Z-W28-S17's disposition.
+
+## ADDENDUM R3-T.23 (2.0.0_SA_COO~O, 2026-10-07 ~17:5xZ) -- round 28, the deploy's install step cannot fetch
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31231, the ruling on row `NFRA_OPLGTW-Z-W28-S24` after the issuer's read
+`deliverables/2.0.0_SA_COO~O/S24_BUN_INSTALL_SOURCE_READ_20261007.md` @8c05d986a1. r27 (`OG-rl-13`) is terminal:
+`510c8cfed2` live since 2026-10-07T16:57:30Z.
+
+Label `<round>28</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-1` | 1 | `deploy-to-ec2.sh`'s dashboard install fails on a bun cache miss and never fetches: a pre-check of every lockfile entry against the cache, one guarded sequence with the install, a negative control on a copy of the cache. Row Z-W28-S24. | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-1` alone. **fanout:** 1 start, cap 8.
+
+**The hold.** No gateway deploy runs from site Z until this cell is complete and drained (CTO msgs 31228 and 31231).
