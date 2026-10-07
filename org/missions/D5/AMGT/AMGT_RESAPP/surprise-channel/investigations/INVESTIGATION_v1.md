@@ -21834,6 +21834,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased; no code edited. The remedy is a producer cell that leads round 78: the freshness reader takes a name's Seeking Alpha last read from the plane the collector writes, and a pilot-era object older than the collector's own record for the name does not set the date. Until it lands and redeploys, the page's three stale rows and its 92 'not collected' cells for Seeking Alpha are both wrong, in opposite directions."
+},
+{
+  "id": "AMGT_RESAPP-Z-W289-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~289",
+  "surfaced_at": "2026-10-07T16:03:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "AMD_US_Equity's newest stored segments object (20261007T145856Z) is a different-field pull with no PG_REVENUE and no field errors, which the order's usable rule (no field errors at all) selects, so AMD reads no revenue rows and check C1 FAILS.",
+  "spec_asserts": "Order AMGT-bb-1 section 1.2 usable = no PG_REVENUE error AND (carries PG_REVENUE or PG_OPERATING_INCOME, OR has no field errors at all); AC1 C1 expects 'AMD US serves clean revenue rows from the newest stored object that carries the table'; preflight: 76 names carry revenue rows, 9 none.",
+  "world_is": "Measured 2026-10-07 ~16:00Z, store reads only. s3://opal-data-harvest/bloomberg/harvest/bronze/segments/security_key=AMD_US_Equity/ holds 4 objects: 20261007T113201Z (field probe, only __field_errors__), 20261007T114801Z (PG_REVENUE 6 rows but PG_REVENUE not in errors; has errors for other fields), 20261007T115113Z (PG_REVENUE 6 rows, PG_OPERATING_INCOME, no errors), and 20261007T145856Z (362 bytes, written after the cut: keys CRNCY, EQY_FISCAL_YR_END, EQY_FUND_CRNCY, FISCAL_YEAR_PERIOD, LATEST_ANNOUNCEMENT_DT, LATEST_PERIOD_END_DT_FULL_RECORD, NAME, PRIMARY_PERIODICITY, SALES_REV_TURN; no PG_ fields; no __field_errors__). By the literal rule the newest object is usable, so read_segment_table('AMD_US_Equity') serves status none, reason 'Bloomberg's stored table for this name has no revenue by business line.', source 20261007T145856Z. AC1 output: 'FAIL C1 ... 0 row(s); source 20261007T145856Z.json' and 'FAIL C5 ... periods [] currency None' (C5 reads the same AMD result). C4 passes 85 of 85 because the check derives its expectation with the same literal rule (75 serving, 10 reason). No reader can pass both C1 and C4 on this data: skipping objects that carry neither PG field makes AMD serve rows but then C4 counts AMD as wrong. I implemented the order's literal rule and did not widen it. Side finding: the 145856Z object carries CRNCY, EQY_FUND_CRNCY and FISCAL_YEAR_PERIOD, i.e. a currency and fiscal period are now stored for the name in a different object, which the order's null-currency bound does not use. ARMED: any later non-segment pull into this folder hides the table for that name until the rule requires a PG field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Listing and body keys of the four AMD objects read by this worker 2026-10-07 via boto3 get_object, store reads only.",
+      "python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/checks/r78_bb1.py --crit AC1 --where local at the worktree branch wk-AMGT_RESAPP-289: C1 FAIL, C5 FAIL, C2 C3 C4 PASS, exit=1.",
+      "lib/research/api/segment_table.py _usable() implements section 1.2 literally and mirrors the check's own _usable at r78_bb1.py:105-109."
+    ]
+  },
+  "notes": "Remedy is the issuer's: either the usable rule gains 'and carries PG_REVENUE or PG_OPERATING_INCOME' (and the check's expectation with it), or the check's AMD expectation is amended. Surfaced, not chased; AC2 and AC3 pass."
 }
 ]
 ```
