@@ -21338,6 +21338,27 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "row AMGT_RESAPP-Z-S242 and 1.0.0_SA_CTO~Z's adjudication ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md section F"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W275-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~275",
+  "surfaced_at": "2026-10-07T01:21:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Name search: 138 of 237 keyed crosswalk records carry no research folder name and no stored registration name, so a company name typed for them (for example Apple for AAPL US) lists nothing; only their ticker root matches.",
+  "spec_asserts": "TO AMGT-ba-9 section 1: the name is the research folder name the record already carries (source_row.folder, such as 'Lenovo 992 HK'); a typed name matches a record's company name.",
+  "world_is": "Measured on the pool crosswalk s3://opal-data-harvest/crosswalk/v1/2026-09-29.json, 237 keyed records: source_row.folder is set on 96, identity.name on 67 (64 of them also have a folder), so 99 records carry some stored name and 138 carry neither. I added identity.name as a second name source (read from the same record, no crosswalk edit) beside the folder, and a ticker-root fallback so every candidate name is non-empty; that is beyond the order's folder-only wording. Even so resolve_query('apple') answers none for AAPL US (no stored name), while resolve_query('aapl') lists it. A name for those 138 needs a name source the order did not name (e.g. the classifications table); not built here. Seen, no verdict.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/name_search.py (_stored_names, _candidate)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba9.py"
+    ]
+  }
 }
 ]
 ```
