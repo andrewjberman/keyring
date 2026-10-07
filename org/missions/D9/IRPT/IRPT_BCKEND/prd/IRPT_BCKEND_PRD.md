@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.29",
+ "prd_version": "v0.30",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -160,7 +160,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
 | `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export, or the custody report revision for a custody-report export (exactly one, never null; ADDENDUMS v0.24, v0.29); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
-| `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
+| `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; **the non-empty list of account ids the export covers (ADDENDUM v0.30)**; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
 | `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates -- the business date is REQUIRED on an ANSWER-BEARING state (ready, partial, stale, needs-correction, uncertain) and MAY BE ABSENT, never null, on a NO-ANSWER state (queued, running, unavailable, failed) where no source read has occurred; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
 
@@ -702,3 +702,24 @@ document without this row). Written by `1.0.0_SA_CTO~DELL2` under NFRA_CTLPLN AD
       `submit_installed._validate` are `2.0.0_SA_COO~P2`'s cell (E-P9); the order's grant widens to them. The template is IRPT_CUSTDY's
       (C-TEMPLATE); the print package's kind is the page half.
     - No other CONTRACTS row changes. ENDPOINT is not edited.
+
+## ADDENDUM v0.30 -- an export receipt names its accounts, and a read FAILS CLOSED without them (L10; CONTRACTS changed: the ratified-text half re-opens)
+
+**Source.** `3.0.0_SA_CVO`'s sweep 13 slug (msg 436), row W142-S4 raised to ARMED. `export/entry.py:142-154` `_covered()` returns `True,
+0, 0` when the receipt names no account (`:151-152`), and `ExportReceipt.schema.json` has no field that names one. So every receipt
+reads as "covers nothing", and any advisor holding a grant at the firm and an export id is admitted to that export, whatever its
+accounts. Read by this seat at HEAD. Written by `1.0.0_SA_CTO~DELL2` under NFRA_CTLPLN ADDENDUM v0.12 C-ROLES, 2026-10-07 ~11:5xZ.
+
+33. **`ExportReceipt` carries `covered_account_ids`, a non-empty list, derived at freeze from the bundle's own report revisions,
+    never typed by a caller.** A receipt with a missing or empty list is invalid.
+34. **A read fails closed.** `_covered()` admits only when the list is present and non-empty and every id is inside the reader's
+    current `permitted_account_set`. A receipt that names no account is REFUSED (`NOT_AUTHORIZED`), never admitted. The
+    "covers nothing, so admit" branch is removed, not narrowed.
+35. **Existing receipts.** Each is back-filled from its own frozen bundle's revisions, by a one-time job under its own never-widen
+    pair that prints a denominator: receipts read, filled, and unfillable. An unfillable receipt stays unreadable (fail closed),
+    and it is listed by id with its reason.
+36. **Exposure is measured, not assumed.** For the period the fail-open branch was served, the read log is checked for any export
+    read by a principal whose scope did not cover that export's accounts (from 35's back-fill). The count is printed. A non-zero
+    count is filed as its own BLOCKING row naming each read.
+
+ENDPOINT is not edited.
