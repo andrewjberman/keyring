@@ -285,6 +285,27 @@ parked:
   YALP_MACROS:
     fabric: laptop
     why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  GLOBALALARM:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TICKET_VNEXT:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  AUTH_SELFHEAL:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXROSTER:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXSMA:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  ADVI_49F:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  ADVI_INSURE:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
 pending_placement:
 - subject: the projects behind the 07-28 sequence
   question: '''MDPF COMPLETION'', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?'
@@ -376,26 +397,31 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'gate -- the manual fabric-manager-live gates on MDPF_SECHIST (dell1) and IRPT_CUSTDY (dell2) confirmed MET. No order changed.'
   word: '''dell1 and dell2 are live, i have put them both on loops governing. i will bring their CTOs online now.'' (Andrew-direct 2026-10-07 ~07:1xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_DELLS_LIVE_GOVERN_LOOPS_DELL_CTOS_COMING.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'parked -- 7 more flat-register projects join the parked list (second pass of the park-or-close adjudication); 20 are now parked on that word. No order changed; no project closed by this entry.'
+  word: '''4.) Yes.'' answering the card ''May this seat park or close the quiet and cold projects itself?'' (Andrew-direct 2026-10-07 ~06:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-10-07T07:14:45Z",
-    "head": "c4f57e3639",
-    "sequence_file_last_commit": "3ff3b79d01 2026-10-07T02:51:42-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-10-07T07:41:47Z",
+    "head": "72e87b0e39",
+    "sequence_file_last_commit": "9b1121219b 2026-10-07T03:15:25-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
       "cap": 3,
       "live_coo_lanes": [
-        "2.0.0_SA_COO~C",
-        "2.0.0_SA_COO~M"
+        "2.0.0_SA_COO~C"
       ],
-      "free": 1,
+      "free": 2,
       "next_slot_order": [
+        "NFRA_CTLPLN",
         "MDPF_SECHIST",
         "IRPT_CUSTDY",
+        "MDPF_SECCLASS",
         "IRPT_DASHBD",
         "ADVI_COTBKF",
         "IRPT_BCKEND",
@@ -415,8 +441,8 @@ compiled:
     "flags": {
       "denominator": 26,
       "counts": {
-        "NEEDS-SLOT": 9,
-        "LANE-DARK": 7,
+        "NEEDS-SLOT": 10,
+        "LANE-DARK": 8,
         "UNMEASURED": 2,
         "WAITING": 2,
         "READY-IDLE": 2
@@ -430,10 +456,14 @@ compiled:
           "NFRA_CTLPLN": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.11 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "2742f9d8f4 2026-10-07T03:13:07-04:00",
-            "flags": [],
-            "notes": [],
+            "prd": "v0.12 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "48910c0e33 2026-10-07T03:34:54-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [],
             "coo_lane": null,
             "phase": null
@@ -496,9 +526,13 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.12 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c0c6874564 2026-10-07T02:42:27-04:00",
-            "flags": [],
-            "notes": [],
+            "last_activity": "495efa3c32 2026-10-07T03:23:06-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~M is not live on this box, so its round waits for a COO seat"
+            ],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~M",
             "phase": null
@@ -507,7 +541,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "83d5e34919 2026-10-07T03:32:34-04:00",
             "flags": [
               "LANE-DARK"
             ],
@@ -892,9 +926,13 @@ compiled:
       }
     ],
     "parked": [
+      "ADVI_49F",
+      "ADVI_INSURE",
       "ADVI_ROSTERCOLS",
+      "AUTH_SELFHEAL",
       "D12_PHONE_OTP_ALL_AWS",
       "D3_MODELOVERLAY",
+      "GLOBALALARM",
       "MDPF_GLOBAL",
       "NFRA_SUBSTRATECARDING",
       "NFRA_VELOCITY_CORE",
@@ -902,8 +940,11 @@ compiled:
       "OPAL_ADVIPOINTERS",
       "OPAL_KIMIPIPELINE",
       "OPAL_SQSCHAT",
+      "OPAL_TAXROSTER",
+      "OPAL_TAXSMA",
       "OPAL_TAXSMA_PT2",
       "OPAL_TAXSMA_REGISTRY",
+      "OPAL_TICKET_VNEXT",
       "WSE_COTMDL",
       "YALP_MACROS"
     ],
