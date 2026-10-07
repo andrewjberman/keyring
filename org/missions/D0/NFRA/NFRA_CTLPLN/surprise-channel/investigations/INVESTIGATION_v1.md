@@ -1750,3 +1750,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The order did not name the checkpoint call. The kit closes it in the environment it builds. The earlier seam probe (test case 5) built its own environment without the variable; it now sets CHECKPOINT_DISABLE=1 too (one added line in terraform_env, the case's expectations unchanged)."
 }
 ```
+
+## NFRA_CTLPLN-S13 -- bun auto-installs from the public registry on a run outside a node_modules tree: egress on dell2, the laptop unmeasured
+
+```json
+{
+  "id": "NFRA_CTLPLN-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:24:20Z",
+  "one_line": "bun installs a missing package from the public registry when it runs a file outside a node_modules tree; two such fetches happened on dell2, and the user-level setting meant to stop it was measured ineffective there on bun 1.4.2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C: cell CT-k-2 AMENDMENT 5 measures each candidate form against a loopback listener and the kit carries the form that passes; until then the CTO's interim rule (msg 106214) is the control on all three boxes",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "Relay file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1215Z.md, bus id 857091e4, from 0.0.0_AB_MSTR~DELL2: a seat's bun run fetched react and react-dom 19.3.0; the dell2 manager's own probe with ~/.bunfig.toml [install] auto = \"disable\" fetched left-pad (cache 506 -> 509)",
+      "Finding file named there as CRO_FINDING_BUN_AUTO_INSTALL_EGRESS_DELL2_20261007.md @fd0c709235; that commit is NOT on the laptop trunk at this row's filing (git cat-file: not a valid object; positive control 414eb87094 is an ancestor), so this row rests on the relay, not on the finding's bytes",
+      "1.0.0_SA_CTO msg 106214: the interim rule and the cell's control (a loopback listener that logs requests)",
+      "The laptop (bun 1.3.9) is UNMEASURED: no bun run was made by this seat for this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-KIT and the no-egress rule every order of this project carries: nothing a seat or worker runs on a box reaches a public package index without Andrew's per-use word; the portal kit (CT-k-2) was built so that a Dell needs no install.",
+  "world_is": "The kit delivers node_modules for the portal tree only. bun, the runtime the kit names, has an auto-install behaviour that fetches from the public registry whenever an import does not resolve from a node_modules tree, so a bun run of a scratch file egresses silently. The one disarm tried on dell2 did not work. A fetch failure and a disabled install print the same error, so a dead-proxy probe cannot tell them apart; the cell's control is a listener that counts requests.",
+  "notes": "Interim (CTO msg 106214), laptop and both Dells: bun runs only inside a portal tree that holds node_modules; no bun run of a file outside one; no probe that can reach the public registry. Disarms when the cell's measured form is in the kit and each box has read it back."
+}
+```
