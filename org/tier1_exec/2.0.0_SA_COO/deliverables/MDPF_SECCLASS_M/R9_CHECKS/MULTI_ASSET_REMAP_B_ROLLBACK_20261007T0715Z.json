@@ -1,0 +1,981 @@
+{
+ "rows": {
+  "AAETX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS 2030 TRGT DATE RETIRE A"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "AAETX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "ABALX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "American Funds American Balanced A"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "ABALX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "AMECX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS INCOME FUND OF AMER A"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "AMECX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "AOR": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "iShares Core Growth Allocation ETF"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "AOR"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "CAIBX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS CAPITAL INCOME BLDR A"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CAIBX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "CFIHX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS CAPITAL INCOME BLDR F3"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CFIHX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "CLBAX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS AMERICAN BALANCED 529A"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "CLBAX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "CUSIP:024071508": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS AMERICAN BALANCED 529A"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "CUSIP:024071508"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:02630T712": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS 2030 TRGT DATE RETIRE A"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "CUSIP:02630T712"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:140193103": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS CAPITAL INCOME BLDR A"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:140193103"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:140193780": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS CAPITAL INCOME BLDR F3"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:140193780"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:316345206": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "FIDELITY BALANCED"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "CUSIP:316345206"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:32008F606": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "FIRST EAGLE GLOBAL I"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:32008F606"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:353496490": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "FRANKLIN INCOME A"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:353496490"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:453320103": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "AMERICAN FUNDS INCOME FUND OF AMER A"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:453320103"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:56167N274": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "KENSINGTON DYNAMIC ALLOCATION INST"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "CUSIP:56167N274"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:704223205": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "IMPAX SUSTAINABLE ALLOCATION INSTL"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "CUSIP:704223205"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:808516306": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "BALANCED FUND"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "CUSIP:808516306"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "CUSIP:92202E508": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "identifier_namespace": {
+    "S": "CUSIP"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:15:19.554346+00:00"
+   },
+   "name": {
+    "S": "VANGUARD TARGET RETIREMENT 2035 FUND"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "CUSIP:92202E508"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "FBALX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "FIDELITY BALANCED"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "FBALX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "FKIQX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "FRANKLIN INCOME A"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "FKIQX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "FTYPX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "FIDELITY FREEDOM INDEX 2055 PREMIER"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "FTYPX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "KAGIX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "KENSINGTON DYNAMIC ALLOCATION INST"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "KAGIX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "LIPKX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "BlackRock LifePath Index 2050 Fund T"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "LIPKX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "MDLOX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "BLACKROCK GLOBAL ALLOCATION INV A"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "MDLOX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "SCGB1": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "scheduled"
+   },
+   "last_updated": {
+    "S": "2026-10-05T20:09:58.401157+00:00"
+   },
+   "name": {
+    "S": "BALANCED FUND"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "SCGB1"
+   },
+   "updated_by": {
+    "S": "mdpf-secclass-cusip-rows"
+   }
+  },
+  "SGIIX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "FIRST EAGLE GLOBAL I"
+   },
+   "sector": {
+    "S": "Flexible"
+   },
+   "sub_asset_class": {
+    "S": "Flexible"
+   },
+   "ticker": {
+    "S": "SGIIX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VSMGX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "Vanguard LifeStrategy Moderate Growth Fund"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "VSMGX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VTHRX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "Vanguard Target Retirement 2030 Fund"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "VTHRX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VTIVX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "Vanguard Target Retirement 2045 Fund"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "VTIVX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VTTHX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "passive"
+   },
+   "name": {
+    "S": "VANGUARD TARGET RETIREMENT 2030 FUND"
+   },
+   "sector": {
+    "S": "Target Date"
+   },
+   "sub_asset_class": {
+    "S": "Target Date"
+   },
+   "ticker": {
+    "S": "VTTHX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VWELX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "Vanguard Wellington Fund Investor"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "VWELX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  },
+  "VWENX": {
+   "asset_class": {
+    "S": "multi_asset"
+   },
+   "classified_by": {
+    "S": "seed"
+   },
+   "instrument_kind": {
+    "S": "fund"
+   },
+   "last_updated": {
+    "S": "2026-10-04T20:07:32Z"
+   },
+   "management_style": {
+    "S": "active"
+   },
+   "name": {
+    "S": "Vanguard Wellington Fund Admiral"
+   },
+   "sector": {
+    "S": "Fixed Mix"
+   },
+   "sub_asset_class": {
+    "S": "Fixed Mix"
+   },
+   "ticker": {
+    "S": "VWENX"
+   },
+   "updated_by": {
+    "S": "seed-script"
+   }
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-07T07:09:27.769417+00:00"
+}

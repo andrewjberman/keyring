@@ -96,12 +96,14 @@ projects:
     stage: 1
     waits_on:
     - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+      confirmed: '1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, ''dell1 and dell2 are live, i have put them both on loops governing''; 0.0.0_AB_MSTR~DELL1 on the bus (4db364bf, 07:10Z) reporting his /govern arm at dell1 and lanes ~M1 and ~H1 awarded there (relay msg 106029)'
     why: 'BOX: dell1, its FIRST lane. The securities history, a new project with nothing to migrate. Andrew ~19:2xZ 2026-10-06: round 1 on dell1. It defines the one store Cottonwood''s daily prices land in.'
   IRPT_CUSTDY:
     fabric: laptop
     stage: 1
     waits_on:
     - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+      confirmed: '1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, ''dell1 and dell2 are live, i have put them both on loops governing''. His word is the evidence for dell2: no bus message from dell2''s fabric manager had reached this seat at the confirmation'
     why: 'BOX: dell2, its FIRST lane. Custodian-level investor reporting replacing Black Diamond, the January 1 date. New, nothing to migrate.'
   MDPF_SECCLASS:
     fabric: laptop
@@ -370,14 +372,18 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'parked -- 13 flat-register projects join the parked list (first pass of the park-or-close adjudication). No order changed; no project closed by this entry.'
   word: '''4.) Yes.'' answering the card ''May this seat park or close the quiet and cold projects itself?'' (Andrew-direct 2026-10-07 ~06:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'gate -- the manual fabric-manager-live gates on MDPF_SECHIST (dell1) and IRPT_CUSTDY (dell2) confirmed MET. No order changed.'
+  word: '''dell1 and dell2 are live, i have put them both on loops governing. i will bring their CTOs online now.'' (Andrew-direct 2026-10-07 ~07:1xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_DELLS_LIVE_GOVERN_LOOPS_DELL_CTOS_COMING.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-10-07T06:50:42Z",
-    "head": "73bbe77a7a",
-    "sequence_file_last_commit": "85c7ee8c99 2026-10-07T02:42:56-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-10-07T07:14:45Z",
+    "head": "c4f57e3639",
+    "sequence_file_last_commit": "3ff3b79d01 2026-10-07T02:51:42-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -388,7 +394,8 @@ compiled:
       ],
       "free": 1,
       "next_slot_order": [
-        "NFRA_CTLPLN",
+        "MDPF_SECHIST",
+        "IRPT_CUSTDY",
         "IRPT_DASHBD",
         "ADVI_COTBKF",
         "IRPT_BCKEND",
@@ -408,10 +415,10 @@ compiled:
     "flags": {
       "denominator": 26,
       "counts": {
-        "NEEDS-SLOT": 8,
-        "UNMEASURED": 4,
-        "WAITING": 4,
+        "NEEDS-SLOT": 9,
         "LANE-DARK": 7,
+        "UNMEASURED": 2,
+        "WAITING": 2,
         "READY-IDLE": 2
       }
     },
@@ -423,14 +430,10 @@ compiled:
           "NFRA_CTLPLN": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.10 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "b8064e18d1 2026-10-07T02:48:14-04:00",
-            "flags": [
-              "NEEDS-SLOT"
-            ],
-            "notes": [
-              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
-            ],
+            "prd": "v0.11 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "2742f9d8f4 2026-10-07T03:13:07-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
             "coo_lane": null,
             "phase": null
@@ -447,15 +450,16 @@ compiled:
             "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
             "flags": [
-              "UNMEASURED",
-              "WAITING"
+              "NEEDS-SLOT"
             ],
-            "notes": [],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
-                "state": "UNMEASURED",
-                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+                "state": "MET",
+                "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, 'dell1 and dell2 are live, i have put them both on loops governing'; 0.0.0_AB_MSTR~DELL1 on the bus (4db364bf, 07:10Z) reporting his /govern arm at dell1 and lanes ~M1 and ~H1 awarded there (relay msg 106029)"
               }
             ],
             "coo_lane": null,
@@ -467,15 +471,16 @@ compiled:
             "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
             "flags": [
-              "UNMEASURED",
-              "WAITING"
+              "NEEDS-SLOT"
             ],
-            "notes": [],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
-                "state": "UNMEASURED",
-                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+                "state": "MET",
+                "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, 'dell1 and dell2 are live, i have put them both on loops governing'. His word is the evidence for dell2: no bus message from dell2's fabric manager had reached this seat at the confirmation"
               }
             ],
             "coo_lane": null,
@@ -634,8 +639,8 @@ compiled:
           "ETFS_RIVALS": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.18 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "e0e0c3cf78 2026-10-07T01:06:34-04:00",
+            "prd": "v0.18 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d06e19f939 2026-10-07T02:04:44-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -646,7 +651,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.41 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
+            "last_activity": "a24e2ac7f2 2026-10-07T02:07:21-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -702,7 +707,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
+            "last_activity": "2076c8a21a 2026-10-07T01:24:17-04:00",
             "flags": [],
             "notes": [],
             "gates": [],

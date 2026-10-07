@@ -2,10 +2,10 @@
 
 <to_id>NFRA_CTLPLN.TO-CT-c-4</to_id>
 <project>NFRA_CTLPLN</project>
-<issued_to>0.9.0_WK_NFRA_CTLPLN~4</issued_to>
+<issued_to>0.9.0_WK_NFRA_CTLPLN~5</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -78,7 +78,7 @@ IAM write is refused; each of the four failure arms turns `ok` false.
 - **No AWS call of any kind, no live bus send, no push, no role, no function.** Every AWS call in your tests goes to the fake command.
 - No non-ASCII in any file you write.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
-  `NFRA_CTLPLN-W4-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the test or the
+  `NFRA_CTLPLN-W5-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the test or the
   expected value.
 
 <paths>
@@ -99,7 +99,7 @@ The block is your WRITE grant. You READ and never edit: `org/devices/DEVICES.jso
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CT3c4-AC1, CT3c4-AC2. Instance at `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~4/NFRA_CTLPLN.TO-CT-c-4.role-roundtrip-check.proof_of_spec.json`,
+Criterion ids: CT3c4-AC1, CT3c4-AC2. Instance at `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~5/NFRA_CTLPLN.TO-CT-c-4.role-roundtrip-check.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> CT3c4-AC1,CT3c4-AC2` BEFORE the flip.
 </proof_of_spec>
 
