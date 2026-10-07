@@ -67,3 +67,17 @@ NOT DONE: 0 of 5 complete (5 REACHABLE, 0 UNREACHABLE).
 - `prd-signoff.py status`: ADMITTED at v0.2.
 - `sequence-check.py --project` x5: found the NEEDS-SLOT finding above.
 - `comp-find`: the rail refused a census piped to `tail`. Glob found the proof instances instead.
+
+## Addendum 07:55Z -- the Y / YCDGEN overlap ruling (MSTR msg 82, laptop assessment)
+
+Source: `CTO_ASSESSMENT_IRPT_BCKEND_Y_VS_IRPT_YCDGEN_OVERLAP_20261007.md` (laptop `1.0.0_SA_CTO`, sent as a finding, recommendations
+A-D) and `~Y2`'s Andrew-direct record @d9fd724744 ("check in with YCDGEN first and make sure you two are not duplicating each
+others work"). The seats' own split relied on a one-line notice for the shared files. That is not one writer per file.
+RULED (msg ids 90, 91 to `~G2` and `~Y2`):
+1. Two lanes stay. This departs from recommendation A because `~G2` already holds YCDGEN's open ledger and the F1 leg.
+   `~G2` is the ONLY writer and releaser of `ycharts/generate/resident_worker.py`, `upload_suggestions.py`,
+   `security_resolution.py` and the resident host. `~Y2` asks for changes there as named cells.
+2. `y-release-390` @f1e101d19c touches `resident_worker.py` and `recipe.py` (measured with `git diff --stat`). It rides
+   `~G2`'s next resident build after M1. `~Y2` supplies the branch, the tests and the never-widen pair text.
+3. B adopted: STOP Y-5 packet 2 (Kimi swap) and Y-6 runs 8-10. No new YCharts session, lease or firewall work.
+4. D adopted: Y stays open until YCDGEN FWD-11 and closes with the removal.
