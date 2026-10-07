@@ -467,3 +467,18 @@ a flow-totals guard.
 | (split BD pull) | BD's own figures either side of 2025-01-09 for the 2,299 closure segments | WORLD (vendor call) | Andrew's per-use word | not cut |
 
 fanout: 2 of 2 chains, cap 8, reason: E1 and E2 read disjoint segment sets (226 and 754) of the merged round-19 record. Workers 0.9.0_WK_IRPT_DASHBD~16 and ~17, each in its own worktree.
+
+## 21. ROUND 21, WORKSTREAM B (2026-10-07 ~11:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-20 analysis @58f3ed0501, msg 421)
+
+Round 20 is closed: DB-b-31 @8e4c07ce7e, DB-b-32 @00d950283a. The CVO's read is taken: the Modified Dietz rule does not discriminate
+(measured 22, midpoint control 19, overlap 3), so the 22 are not counted and UNEXPLAINED stays 3,279 of 9,078. FWD-8's thread is HELD on
+Andrew's per-use word for the split BD pull (2,299 accounts, 2,299 calls, 4,598 ranges); no further no-vendor cell is cut against it.
+The E3 gate has opened: `_shared/etf_classification.py` carries the six-class values (@63fa1a2e32).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-33` | E1: `account_class_daily` and its contract for 49F, built beside the served producer and run locally over 50 accounts x 5 trading days; classes sum to the account within 1e-9; unclassified its own class; six classes plus unclassified only | SERVED (gold producer; no S3 write in this cell) | the six-class values (open) | B21 |
+| (release) | upload of the producer, its first gold write and schedule under rule 13 | SERVED | DB-b-33 merged; never-widen halves | cut after B21 drains |
+| (FWD-8) | the split BD pull | WORLD (vendor call) | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; its release follows it. Worker 0.9.0_WK_IRPT_DASHBD~18 in its own worktree.
