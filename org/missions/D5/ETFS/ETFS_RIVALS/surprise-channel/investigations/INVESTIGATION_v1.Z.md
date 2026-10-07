@@ -4587,6 +4587,50 @@
     "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey",
     "world_is": "The trend stage calls the join and hands it a frame without the column, so the join returns nothing on the deployed build. Adding the column name to the read is the whole repair. The 2 MERGED pairs the morning pass counted in buying_trend are unexplained by this (both funds may simply report under the Bloomberg key)",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Not caught by al-1's check: its fixture hands build() a frame that carries the column. Rides the next cut as a repair, with a check that goes through handler_entry's own read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W10-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~10",
+    "surfaced_at": "2026-10-07T12:57:00Z",
+    "one_line": "RIV-bk-1: the cell says ONE CRNCY reference request for all securities with no stored currency; every other reference request in this module is batched at 50, and a live run with a few hundred lookups would send one very large request.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py (this branch) _market_range: one _blp_call(_blp_reference_data, lookups, [\"CRNCY\"]) for every security without a stored currency",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py DEFAULT_BATCH = 50 and _market_pull/_daily_dividends: every other reference request is built from build_market_plan batches of 50",
+        "integrations/bloomberg/mcp/blp_client.py reference_data (read only): appends every security to one ReferenceDataRequest with no batching of its own; a vendor per-request security limit was NOT measured in this repo"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-bk-1 interface 3: for a security with no stored currency the mode makes ONE reference request for the single field CRNCY for exactly those securities.",
+    "world_is": "Built as written: ONE request, however many securities (3 in bk-1.AC2, 60 in bf-1.AC2). Whether the vendor accepts a request of several hundred securities is unmeasured here. A refused request leaves the run FAILED, nothing landed, and the lookup points spent (a sent request is spent).",
+    "notes": "disarm_owner (n/a, INERT: no backfill has run): 2.0.0_SA_COO~RV. If the issuer wants batches of 50, the change is one loop in _market_range and the checks bk-1.AC2 (b) and bf-1.AC2 (a) count requests."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W10-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~10",
+    "surfaced_at": "2026-10-07T12:57:01Z",
+    "one_line": "RIV-bk-1: four points the cell is silent on were decided in the build: a null-currency stored row is passed over, the lookup is ledgered as mode market-range, the lookups count against max_points, an unreadable G4 object stops the run before any request.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py (this branch) _stored_currencies: a non-backfill row whose currency is blank is skipped for the security's next older non-backfill row; an exception from reading a G4 object is caught in _market_range and returned FAILED before any request",
+        "same file _market_range: need = points + len(lookups) is compared with max_points and given to bbg_budget.check_points once, before any request; bbg_budget.record(\"market-range\", len(lookups), batch_id) after the reference request",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/bk-1.AC2.py docstring open details (i)(ii)(iv): accepts all of these"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-bk-1 interface 3: stored currency is 'the currency of its newest non-backfill G4 row'; check_points before and record after the lookup; the plan's points and the budget check count only un-held dates.",
+    "world_is": "The cell does not say what a newest non-backfill row with no currency means, which ledger mode the lookup carries, whether max_points includes the lookups, or what an unreadable G4 object does. Built: skip to the next older row with a currency; mode market-range; max_points and the budget cover historical points plus lookups (the plan's points stay historical only); FAILED before any request.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. All four are one-line changes in _market_range / _stored_currencies if the issuer rules otherwise."
   }
 ]
 ```
