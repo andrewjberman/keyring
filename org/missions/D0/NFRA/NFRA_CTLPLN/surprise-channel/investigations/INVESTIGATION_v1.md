@@ -503,3 +503,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "DISARM (disarm_owner). The refusal was unknown-base: a sparse cone without the acting seat's home folder under org/tier2_senior. The remedy for an apply from a sparse worktree is the cone (add the seat's base home folder), and the gate now says so in its banner. Both Dell applies ran under the audited HALT_OVERRIDE and cite no halt-gate pass; nothing in the world depends on this row. Z-S1's diagnosis (letter count) is superseded by this row; its hazard (a banner prescribing a serial-file overwrite) is closed in code in the shared tree, and a worktree gets it at its next cut."
 }
 ```
+
+## NFRA_CTLPLN-S6 -- the CTO's rulings on NFRA_CTLPLN-W4-S1 to W4-S4, carried by the issuer: S1 and S2 allowed, S3 stands, S4 fixed before the apply
+
+```json
+{
+  "id": "NFRA_CTLPLN-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T07:15Z",
+  "one_line": "The CTO's rulings on rows NFRA_CTLPLN-W4-S1 to NFRA_CTLPLN-W4-S4, carried into the channel by the issuer at the CTO's ask (msg 106017): S1 and S2 stay allowed, S3's two Deny statements stand, S4's read actions land before the apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_CT_c_1_DELL_CREATE_GRANT_20261007.md @bb0e587e22: the rulings table and the CTO never-widen half for the Dell create grant, SIGNED on three conditions",
+      "CT-c-1 reopened by the issuer for W4-S4 (AMENDMENT 1, commit f51fb64cc4 on wk-NFRA_CTLPLN-4): one read-only statement, no read that returns secret material",
+      "CT-c-1 merged @7091ecaecc and NOT APPLIED at the time of this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.10 C-IDENTITY: a Dell creates non-IAM resources; the laptop administers access-granting resource policies (Andrew, card 2: 'For now, laptop should admin').",
+  "world_is": "RULED by 1.0.0_SA_CTO (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_CT_c_1_DELL_CREATE_GRANT_20261007.md @bb0e587e22). W4-S1: sqs:SetQueueAttributes and sns:SetTopicAttributes STAY ALLOWED; IAM has no condition separating the Policy attribute. W4-S2: the four create actions (key, queue, topic, bucket) STAY ALLOWED, policy parameter included; the reach is a resource the Dell is itself creating. For these six actions no cloud refusal backs the laptop-administers rule: the rule on a Dell is the write-in, and the mechanism is stated by the CTO as absent. W4-S3: the CloudTrail and opal-data lifecycle Deny statements STAND; those two acts go through the laptop write-in. W4-S4: the read actions the derived kinds need are added before the apply, read-only only; this is condition 2 of the CTO half and the issuer has reopened CT-c-1 for it. This row replaces the apply condition stated in NFRA_CTLPLN-S5 for W4-S1 and W4-S2: the apply now waits on the three conditions of the CTO half and the issuer's own half, nothing else."
+}
+```
