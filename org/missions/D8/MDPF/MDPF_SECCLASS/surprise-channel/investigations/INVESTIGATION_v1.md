@@ -3236,3 +3236,314 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The Lambda's name (a module block, not an aws_ resource) is not read by the checker in either case."
 }
 ```
+## MDPF_SECCLASS-W26-S2 -- test_model_classifier.py pinned `contract_version == "0.3.0"`; the contract is past it and moves again in SC-e-27
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:30Z",
+  "one_line": "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py test_contract_version_is_0_3_0 asserted contract_version == '0.3.0' while the contract reads 0.4.0 (1 failed, 17 passed at the base); replaced by a check that classified_by.values carries model and the two model fields are declared, no version literal. A second, exact-set pin on classified_by.values remains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py @ base 7ab55c330b: pytest -q reads '1 failed, 17 passed' (0.4.0 == 0.3.0)",
+      "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py test_contract_classified_by_gains_model asserts set(values) == {seed, scheduled, constituents, legacy, model}; it passes today and breaks the day a cell adds a writer value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e31 Build 4: replace the stale version pin with a check that the contract's classified_by.values carries model and declares classification_confidence and low_confidence, with no version literal.",
+  "world_is": "Done as written. The sibling test test_contract_classified_by_gains_model pins the EXACT value set of classified_by, the same failure shape as the version pin; the order did not ask for it to change and it was left as it is.",
+  "notes": "Not widened. SC-e-27 moves the contract this round; if it adds a classified_by value that test fails and is the issuer's to relax."
+}
+```
+
+## MDPF_SECCLASS-W26-S3 -- the dry run's firm input is a point-in-time residual file, not a live held reader
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:30Z",
+  "one_line": "TO-SC-e31 asks for one real firm's held (ticker, name) input readable without a write; the tree holds no per-firm live held reader that needs no typed S3 address, so ai_classifier_dry_run.py reads Inflection's 47 ticker-carrying entries of R2_UNRESOLVED_REVIEW_20260930.json (a 2026-09-30 residual, not today's held set).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_UNRESOLVED_REVIEW_20260930.json @ 7ab55c330b: inflection 76 entries (47 with ticker, 29 without), bd 207 and 49financial 601 all without ticker (python Counter over entries, 884 total)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_fwd10_dry_run.py: the one other held-input read types a bucket (SILVER_BUCKET), which TO-SC-e31 amendment 1 bound 2 forbids a worker to do"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e31 Build 5: runs the runner in dry run against one real firm's held input you can read without a write (state which one and why).",
+  "world_is": "Run 2026-10-07: AI-DRY-RUN held=47 present=16 direct=0 to_model=31 would_land=0 model_calls=0. direct=0 because no bd/gics/schwab lookup is wired live (the scheduled classifier wires only an optional legacy-fork lookup, which Inflection has none of), so this run shows the model path's reach, not the plan's. Most names in this input equal their ticker, so a landing row for them would carry no name (the name-equals-ticker rule of the earlier model-row writer).",
+  "notes": "The runner takes any [[ticker, name], ...] JSON via --held; the first real run's input is the issuer's choice."
+}
+```
+
+## MDPF_SECCLASS-W26-S4 -- the commit gate's pinned ruff 0.15.11 is not the ruff on this box (0.16.10)
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:50Z",
+  "one_line": "The commit gate's ruff is pinned to 0.15.11 (.tools/commit-gate.sh:46) but this box runs ruff 0.16.10, whose default rule set adds UP/C4 families; every edit to a pre-existing py39-era file (etf_classification_model.py 24 errors, etf_classification_scheduled.py 95) is refused for lint the pinned ruff does not raise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m ruff --version -> ruff 0.16.10 (site-packages of the Python314 on PATH); .tools/commit_gate_runner.py:146 runs sys.executable -m ruff check --target-version py39 --extend-select FA",
+      "ruff 0.15.11 (pip install into .scratch/venv15, a --system-site-packages venv put first on PATH for the commit only): 'All checks passed!' on the six files of TO-SC-e31; ruff 0.16.10 on the same six: 110 errors, mostly UP006/UP031/UP045 in code this cell did not write",
+      "safe-commit.sh first attempt on this cell's files: 'BLOCKED: ruff check failed on infra/aws/lambda/mdpf-secclass/ai-index/index_writer.py' (Found 15 errors)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 14 and .tools/commit-gate.sh:46: every .py edit passes commit-gate with ruff pinned to 0.15.11.",
+  "world_is": "The gate fails closed under 0.16.10 for any file carrying typing.Optional/List/Dict or percent formatting, so the worker before this one (row MDPF_SECCLASS-W26-S1) wrote str | None in a new file to pass it. This cell committed under a pinned 0.15.11 ruff in a throwaway venv (.scratch, uncommitted); no gate was bypassed and no code was changed to suit the newer ruff.",
+  "notes": "The box's ruff version is a device matter; other seats on this device see the same refusal on any old shared file. Not widened."
+}
+```
+## MDPF_SECCLASS-W28-S5 -- clean_name() mis-cases acronyms, tickers used as names, and small words
+
+```json
+{
+  "id": "MDPF_SECCLASS-W28-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~28",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "clean_name() title-cases acronym and ticker-shaped all-capitals names (BP PLC -> Bp Plc, GSK PLC -> Gsk Plc, MPLX LP -> Mplx Lp; 20 seed rows whose name is the ticker, e.g. WMT -> Wmt) and small words (Of, Na); the row set carries the function's output as specified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/security_name.py _word()/_token() at 89fe47bb41 (KEEP_UPPER lists ETF ETN USD USA US U.S. REIT II III IV only); org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/CLEAN_NAME_ROW_SET_20261007.tsv rows BP, GSK, MPLX (legacy, WRITE) and the 33 SEED-SOURCE rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e34: 'clean_name = clean_name(current_name)'; FWD-14 ACCEPT: 'the name beside each holding is the shared list's clean, properly capitalized name'.",
+  "world_is": "The set holds 495 WRITE, 33 SEED-SOURCE, 355 UNCHANGED over 883 named rows (2,624 unnamed). Among the 528 changed rows, 20 are seed rows whose seed name equals the ticker (ACSG, BSCN, DFAC, ..., WMT) and read 'Acsg', 'Bscn', ... ; the 3 legacy WRITE rows are BP PLC, GSK PLC, MPLX LP -> 'Bp Plc', 'Gsk Plc', 'Mplx Lp'; scheduled WRITE rows also read 'Bank Of America Na', 'Alltel Corp 7.875%32' style (small words capitalised). This is the function as cut, not an error in this cell; the set and the half request carry its output verbatim and the half request names the cases so the signing seats can hold them.",
+  "notes": "Whether to add an acronym rule or keep-upper tokens (BP, GSK, MPLX, NA) to security_name.py, and whether a ticker-as-name should be left alone, is SC-e-30's owner's call; this worker did not edit the function."
+}
+```
+
+## MDPF_SECCLASS-W26-S5 -- the AI runner builds no identifier_namespace, so a NAME::-keyed model row would read as TICKER
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "classify-residual-model.py landing_row() builds no identifier_namespace and write() copies only keys a row carries, so a model row keyed NAME::<slug> (or CUSIP:<9>) lands with the field absent, which the contract reads as TICKER; 2,482 of the 2,785 AI-route old rows are NAME:: rows.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:151-164 landing_row returns ticker, asset_class, sub_asset_class, name, classified_by, updated_by, classification_confidence, low_confidence only",
+      "org/standards/MDPF_SECCLASS_CONTRACT.json 0.5.0 fields.identifier_namespace.absent: 'a row without identifier_namespace reads as TICKER'; values TICKER, CUSIP, BLOOMBERG, NAME",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv at this commit: AI route NAME:: rows 2482 of 2785 (python csv count)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e32 step 2: AI rows go 'through SC-e-31's runner with its model enabled'; the contract says a name-keyed row's namespace is a stated attribute, never inferred from the key's shape.",
+  "world_is": "The runner (not mine to edit) states no namespace. In old_list_reclassify_write.py the table handed to the runner is wrapped by NamespaceTable, whose put_item adds identifier_namespace NAME or CUSIP by key prefix before the conditional put; tested against a fake table only (the NAME::-keyed AI row landed with identifier_namespace=NAME). The runner itself is unchanged.",
+  "notes": "Whether the runner should carry the field itself is the SC-e-31 owner's; the wrapper is the one place this cell's act adds it."
+}
+```
+
+## MDPF_SECCLASS-W26-S6 -- the 15 old cash rows cannot land: the table holds no cash row, so no cash sub-class, and the AI bound refuses a class with no live sub-class
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "The shared list holds 0 cash rows, so its vocabulary carries no cash class and no cash sub-class; the direct-match plan therefore does not admit cash, and apply_bound() in the AI runner returns 'no sub-class for cash' for any cash verdict, so the 15 old cash rows (T-Bill 8, Money Market 7) route AI and will end UNRESOLVED by name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf-classifications consistent scan 2026-10-07: 3,507 rows, asset_class cash 0 (TableVocabulary.from_live_table; seed ETF_CLASSIFICATIONS values: fixed_income 77, equity 71, multi_asset 20, structured 13, commodities 11, alternatives 5)",
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:143-147 apply_bound: 'if not sac: return None, no sub-class for <ac>'",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv: old (cash, T-Bill) 8 and (cash, Money Market) 7 rows, all route AI (python csv + bd-securities scan)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD addendum v0.10: six means six asset classes including cash; FWD-17: every old security has its entry placed again under the six; the AI path's value bound: a sub-class the live table already carries for that class.",
+  "world_is": "cash is one of the six, but with 0 table rows it has no live sub-class to land on, so the bound makes cash unreachable by DIRECT or AI. Nothing was changed to suit it. fixed_income already has a 'Cash' sub-class (335 old rows are fixed_income/Cash).",
+  "notes": "Needs a ruling on how a cash security lands (a cash seed row, a sub-class declared for cash, or the bound relaxed for a class with no rows); the half request names the 15 as UNRESOLVED-by-design until then."
+}
+```
+
+## MDPF_SECCLASS-W26-S7 -- the AI runner sends the NAME:: key string to the model as the security's ticker
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S7",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "run() passes (key, name) pairs and classify_many() sends the pair's first member as `ticker`; for the 2,482 NAME::-keyed AI rows the model's `ticker` field is the string 'NAME::<SLUG>', not a ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py:206 entries = [{'name': n, 'ticker': t} for t, n in pairs]",
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_model.py:100 data = {'name': name, 'ticker': ticker}; instruction says the strings are DATA IDENTIFIERS"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "etf_classification_model.py: 'the ONLY input sent to the model is a security's NAME and TICKER'.",
+  "world_is": "For a name-keyed row the 'ticker' sent is a synthetic key. It leaks no client data and the prompt treats both as identifiers, so the cell proceeds; whether the classification quality depends on it is unmeasured (no model call was made).",
+  "notes": "Observation only; the writer sends the old row's cleaned name with the shared key, as the runner takes it."
+}
+```
+
+## MDPF_SECCLASS-W26-S8 -- the old list's set cannot take FWD-15 to zero: 1,046 of the 1,449 held securities with no shared entry have no old row
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S8",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:10Z",
+  "one_line": "The reclassification set places the old list's rows, 1,500 held old rows not in the shared list; but the census counts 1,449 held security identities with no shared entry, of which 1,046 have no old row at all, so after this write those 1,046 still have no entry and the missing lists (SC-e-33) remain their path.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "OLD_LIST_CENSUS_20261007.json: held_securities_not_in_shared 1449, held_not_in_shared_with_no_old_row 1046, held_claim inferred (local producer builds, as-of 2026-10-05)",
+      "OLD_LIST_RECLASSIFY_SET_20261007.tsv: held=true and route DIRECT or AI 1,500 old rows = 1,259 + 241 distinct keys (python csv)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e32 cell: 'FWD-15: the held securities with no entry, per firm, reach zero' as an outcome this cell serves, held securities first.",
+  "world_is": "The set is built per old key, so a held security that is absent from bd-securities is outside it by construction. This cell makes no claim that FWD-15 reaches zero; the figure after the act is the issuer's measurement.",
+  "notes": "Recorded so the half request does not read as closing FWD-15; the half names the 1,046."
+}
+```
+## MDPF_SECCLASS-W25-S3 -- comp-find --corpus aws is BLOCKED for this principal, so the order's live-plane census was read directly with boto3 instead
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "comp-find --corpus aws 'bd-securities' prints BLOCKED (served-graph pull failed: secretsmanager:GetSecretValue on opal/mcp/graph-read-token denied to cloudops-dell1-agent-user), so SC-e-38's build item 1 live-plane step could not use the served graph; the trace's 'aws nodes' figure is UNREAD and a direct read-only IAM, Lambda and DynamoDB scan stands in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'bd-securities' run 2026-10-07 ~09:0xZ: 'BLOCKED: served-graph pull failed (ProjectionClientError: could not read the capability bearer from opal/mcp/graph-read-token (aws rc=254 ... AccessDeniedException ... no identity-based policy allows the secretsmanager:GetSecretValue action)) -- NO MEASUREMENT, not a zero.'",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/old_list_reader_trace.py prints the BLOCKED line and the direct read: 290 roles, 43 customer-managed policies, 232 functions, etf-classifications 3,507 rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e38 build item 1: 'the live plane: comp-find --corpus aws bd-securities for the IAM policies and functions that can read it. It prints DENOMINATOR: <files> files, <hits> hits; aws nodes <n>'.",
+  "world_is": "The served graph is unreachable from this device and identity, so there is no node count; the DENOMINATOR line reads 'aws nodes UNREAD (...)'. The direct read covers customer-managed and role-inline IAM policies and Lambda environments; it does NOT cover AWS-managed policies other than a name match for DynamoDB (one hit: opal-news-lambda-role / AmazonDynamoDBFullAccess), resource-based table policies, or permission boundaries.",
+  "notes": "The issuer's check does not read the aws figure. A seat with the graph bearer can re-run the one comp-find line to add the node count."
+}
+```
+## MDPF_SECCLASS-W25-S4 -- PRD surface S22 (semantic-news-layer3-curation) is a reader in code only: its schedules are deleted, it has no trigger and no log stream; the live news curation function does not read the table
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "The deployed semantic-news-layer3-curation Lambda (the PRD's S22) has no EventBridge rule, no resource policy, no event-source mapping and a log group that stores 0 bytes; news-pipeline/eventbridge.tf:11-17 records both of its schedules DELETED. The live curation function, opal-news-layer3-curation, names no securities table in its code but its role carries AmazonDynamoDBFullAccess.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/news-pipeline/eventbridge.tf:11-17: '2 semantic layer3 -> semantic-news-layer3-curation (DELETED) ... Lambda functions are retained; only their EventBridge schedules are removed.'",
+      "boto3 2026-10-07: get_function_configuration semantic-news-layer3-curation env=None, LastModified 2026-04-09; get_policy ResourceNotFoundException; list_event_source_mappings []; list_rule_names_by_target []; describe_log_groups storedBytes 0 retention 14d",
+      "opal-news-layer3-curation: rule layer3-gpt-curation-daily DISABLED (chain-invoked by infra/aws/lambda/news_trending_analysis/lambda_function.py:2078); infra/aws/lambda/news_layer3_curation/lambda_function.py has no 'securit' reference; role opal-news-lambda-role carries AWS-managed AmazonDynamoDBFullAccess (iam list_attached_role_policies)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.12 surface S22: infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py is 'a reader of the old list'; the order face lists it as a reader whose deployed config reads the table.",
+  "world_is": "By code it is a reader (cold-start scan, SECURITIES_TABLE default bd-securities) and the live function has no environment variable, so a run would read the old list. By behaviour nothing runs it, so the trace verdict is DEAD-READ with the unmeasured residue named (a manual invoke). The role gap is separate: opal-news-lambda-role could read the table through its blanket grant, and no code in the census names the table for it.",
+  "notes": "Switching or deleting the old list does not change any served news output. Whether to retire the dormant function and its layer3-bd-securities-read grant is outside this cell."
+}
+```
+## MDPF_SECCLASS-W25-S5 -- the census command misses readers that spell the table at run time, readers in data/black_diamond, and roles with a blanket DynamoDB grant
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "The 46-file census command finds bd_securities_fallback.py (the IRPT Holdings reader) only through its docstrings because the code assembles the table name at run time ('%s-securities' from the naming registry); it excludes the 16 data/black_diamond files that name the table; and it cannot see opal-news-lambda-role's AmazonDynamoDBFullAccess.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py:35-46 builds LEGACY_TABLE = '%s-securities' % slot; holdings_snapshot.py:851 builds the served label the same way; the census hits both only on docstring and comment text",
+      "git grep -l -E \"bd-securities|BD_SECURITIES_TABLE\" -- data/black_diamond returns 16 files (classify_bd_securities.py, seed_bd_securities.py, seed_canonical_securities.py, backfill_name_aliases.py, resolve_tickers.py, B_01.holdings_lots.py, B_01b, E_18, build_canonical_prices_v2.py, lib/etf_classifier.py, lib/s3_layout.py, build_bd_assets_dim.py, gold_dispatch.sh and tests); only resolve_tickers.py was named by the order",
+      "boto3 iam list_attached_role_policies over 290 roles: one AWS-managed DynamoDB or admin policy, opal-news-lambda-role / AmazonDynamoDBFullAccess"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1: 'The census is git grep -l -E \"bd-securities|BD_SECURITIES_TABLE\" ... minus data/black_diamond/**, org/** and test files: 46 files'.",
+  "world_is": "The 46-file census covers every reader outside the Black Diamond tree whose code spells the table literally; the IRPT fallback is in it by accident of its docstrings. The Black Diamond tree's other readers (BD E_18, B_01b, etf_classifier.py, build_bd_assets_dim.py, classify_bd_securities.py, seed scripts) were not traced; they are the old list's writers' tree (SC-e-35..37) and were out of this cell by its own bounds.",
+  "notes": "A reader that builds the name from the registry elsewhere would escape the census too; the live IAM scan in the trace (five role-inline grants and one managed policy on two roles) is the cross-check, and it names no role the code census did not already cover."
+}
+```
+## MDPF_SECCLASS-W25-S6 -- no producer can give a security first held after the old-list writers stop a canonical row: the canonical producer's only wired input is the old list, and the Cottonwood detection path cannot read it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "etf_classification_scheduled.py wires bd-securities as its only live classification input (GICS and Schwab lookups default to None), the Cottonwood E_18 scans bd-securities before reaching it on a host role that has no grant on it, and etf-classifications holds 0 rows stamped 'e18-scheduled'; so after SC-e-35 stops the old-list writers every reader that falls back (IRPT Holdings, the Advisor mix via a07) classifies a newly held security by name and ticker shape alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py:43-46, 371-388, 473-474, 526-541",
+      "data/cot/scripts/gold/E_18.detect_new_securities.py:244-245 (unguarded scan) and :317-323 (updated_by 'e18-scheduled'); iam inline policies cot-exporter-ec2-role/cot-exporter-policy (dynamodb only on etf-classifications) and cot-gold-layer-ec2-role/s3-scoped-cot (none); data/cot/scripts/gold/lib/etf_classifier.py:13-16",
+      "etf-classifications scan 2026-10-07: 3,507 rows; updated_by 'e18-scheduled' 0; 'mdpf-secclass-scheduled' 348, all CUSIP-keyed, last_updated 2026-09-30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 2: each real reader carries CANONICAL-PRODUCER, 'the producer that gives such a security an etf-classifications row before this reader runs, with its measured live write count'; the CTO's refusal text says E_18's canonical path has written 0 rows.",
+  "world_is": "Measured: the live write count of the E_18 canonical path is 0, and a read of the code and the host role says why it cannot be otherwise today (denied old-list scan; no other wired input). Every real reader's CANONICAL-PRODUCER line is therefore NONE, and each SERVED-NEW line reads the heuristic its code applies, not a canonical class. The gate this bears on is the issuer's, not this cell's.",
+  "notes": "Becomes load-bearing when SC-e-35 executes; INERT today because the old list still receives writes. No remedy proposed here."
+}
+```
