@@ -3106,3 +3106,35 @@ Issuer `2.0.0_SA_COO~H`. Series **`ax`**.
 - `ax-1` AC1 (`pytest lib/opal_data_harvest/test_ax1_slug_phrase_and_bound.py`) base: FAIL as expected (the test is absent).
 - `ax-1` AC2 (`cat .../ax-1.replay.out`) base: FAIL as expected (no such file).
 - `ax-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (674 passed, 1 skipped on merged CLOUD at the round-50 close).
+
+## 65. ROUND 52 -- the round-49 analysis ADDENDUM 3 item 1 (`ledger/ROUND_ANALYSIS.round49.md` @c6a7f4eff8), 2026-10-07 ~02:3xZ
+
+Round 51's order is terminal (`ax-1` merged @a02b56aaa5). Its live close run is owed (wsj waits on Andrew's sign-in). Row
+AMGT_HARVST-Z-S92: the round-51 matcher loses 33 of 3,282 accepted bbg URLs (Amazon.com 17 of 17); wsj keeps 566 of 566. The CTO
+ruled (b): the rule changes before bbg resumes. bbg is stopped on its own `bot_check` (01:55Z) and the issuer's stop file.
+
+**Measured at the cut (issuer, offline; `deliverables/2.0.0_SA_COO_H/round51/ax-1.matcher_rules_eval.out` plus the cut-time run):**
+`com` added to the one form list, and a slug matching when the joined-adjacent rule matches OR every query word is a whole slug
+token in any order, keeps 3,276 of 3,282 bbg and 566 of 566 wsj; AT&T 11 candidates, SSE 0, Bank of America 9, Amazon 94 in the
+26,907 stored wsj URLs. The 6 residual bbg URLs: 4 substring accidents (`sap` in `whatsapp`, `ubs` in `hubs`, `nokia` in
+`nokian`, `monster` in `monsterverse`) and 2 Eli Lilly slugs carrying `lilly` alone. ADDENDUM 3's bar of 3,282 of 3,282 is not
+reachable by a whole-token rule; the order's bar is bbg lost <= 6, each in one of those two classes.
+
+Issuer `2.0.0_SA_COO~H`. Series **`ay`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-ay-1` | `ay-1` | **Form words not required; name words as whole tokens in any order.** `_LEGAL_SUFFIX` (the one declared form list) gains `com`, so `Amazon.com Inc` queries `Amazon`. `discovery._matches` keeps round 51's joined-adjacent rule and also admits a slug in which every query word is a whole token (or the word + `s`), in any order; a word never matches inside a longer token. Offline replay over every accepted bbg and wsj URL and the stored wsj sitemaps: wsj 566 of 566; bbg lost <= 6, each a substring accident or an Eli Lilly alias case; AT&T, SSE and Bank of America at or below 100 candidates. | LOCAL | worker `~102` |
+
+## 66. ROUND 53 (not yet issued) -- the round-49 analysis ADDENDUM 3 item 2: an alias set per name
+
+Separate and non-gating by the ruling. One cell, `HVST-az-1`: each security's query is an alias SET (the legal name without its
+form words, plus the research-folder name), never a first-word rule; Meta Platforms is the build case (2 candidates where 118 wsj
+slugs carry `meta`), Bank of America and AT&T are the controls. Unread at this cut: where the research-folder name per security
+lives. Cut in its own issuance once that input is read.
+
+**Checks dry-run at the base before the round-52 cut:**
+- `ay-1` AC1 (`pytest lib/opal_data_harvest/test_ay1_name_tokens.py`) base: FAIL as expected (the test is absent).
+- `ay-1` AC2 (`cat .../ay-1.replay.out`) base: FAIL as expected (no such file).
+- `ay-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (695 passed, 1 skipped on merged CLOUD at the round-51 drain).
