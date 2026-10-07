@@ -120,3 +120,4 @@ expected (the account reads disarmed).
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+<status>complete -- drained @025bdba173 (worker HEAD c2ec3bb13a); proof VALID rc=0 on the worktree checker; AC1 and AC2 mechanical PASS; AC3 is the CVO's L9 read of WALK_ROUND77.md; FWD-1 on AMD is marked SEGMENT PULL NOT YET RUN and is re-read after ba-21</status>
