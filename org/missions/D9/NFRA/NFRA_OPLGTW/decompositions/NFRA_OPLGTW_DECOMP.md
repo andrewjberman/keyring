@@ -1750,3 +1750,19 @@ pre-check stops the script.
 | `OG-bi-4` | 3 | The base-guard test rig carries a lockfile and a stub cache of complete entries; two tests added, one a negative control (a cache miss stops the script before the upload). | WORLD | ~33 | worker-light |
 
 **Chains.** `OG-bi-4` -> `OG-rl-14` (the release commit is re-cut to carry it). **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.28 (2.0.0_SA_COO~O, 2026-10-07 ~22:5xZ) -- round 30, the deploy drains before it restarts
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31444 (the round-29 analysis by message, on `3.0.0_SA_CVO~Z` slug msg 31443), remedy 1 of
+row `NFRA_OPLGTW-Z-S67`. Round 29 is terminal: r28 `aa75078e1b` live since 2026-10-07T21:49:10Z.
+
+Label `<round>30</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-dr-1` | 1 | The deploy stops the service gracefully and waits for requests in flight before it restarts; the revocation of row Z-S67 is reproduced offline as the negative control. No token rule changes. | WORLD | ~35 | worker |
+
+**Chains.** `OG-dr-1` alone; the release that ships it is cut after it drains. **fanout:** 1 start, cap 8.
+
+**Not cut:** a grace window for the previous token generation (research at `4.0.0_SA_CRO~Z`, then the CTO's ruling).
+**Standing:** the release form's 12-hour bar before the 07:00 America/New_York send, until the drain is shown.
