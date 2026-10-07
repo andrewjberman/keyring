@@ -4648,3 +4648,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. FWD-1's firm view PASSes (CVO grade @a03020a049); only the client page remains."
 }
 ```
+
+
+## MDPF_SECCLASS-W56-S1 -- held-set parquets reused from a sibling worktree; mixed-case form normalization turns 10 UNCHANGED rows into WRITE
+
+```json
+{
+  "id": "MDPF_SECCLASS-W56-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~56",
+  "surfaced_at": "2026-10-07T17:45Z",
+  "one_line": "The row-set builder needs held-set parquets under <worktree>/.scratch/hb_<firm>/, absent in this fresh worktree; the build was run with --held-root pointing at another worktree's existing build (reused, not rebuilt).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean_name_row_set_v2.py first run in C:/Dev/dry_e48: 'ERROR: held parquet for 49financial not found or ambiguous ([]); run with --build'",
+      "rerun with --held-root C:/Dev/wk-secclass-r9-38/.scratch (parquets from the TO-SC-e48 builder's own build_firm, dated 2026-10-07 08:26): custody=857, same as the prior set; table lines 884 vs 883 prior (new key HDB); dry run refused_stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e47 amendment R12 item 4: rebuild the set with clean_name_row_set_v2.py (read-only reads); a firm read denied on dell1 means file a row and stop.",
+  "world_is": "No firm read was denied: the held parquets already existed in a sibling worktree and the builder's documented --held-root option reuses them. The held set is therefore the one built at 08:26Z, not re-derived by this worker; the custody count (857) and the dry run's refused_stale=0 agree with it. Also: 10 live rows with mixed-case source names (e.g. 'Credicorp Ltd') moved UNCHANGED -> WRITE because the form rule now normalizes mixed-case input, as R12 item 2 requires."
+}
+```
