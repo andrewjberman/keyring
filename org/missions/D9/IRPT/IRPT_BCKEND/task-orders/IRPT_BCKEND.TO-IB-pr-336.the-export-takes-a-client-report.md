@@ -84,6 +84,10 @@ infra/aws/ec2/investor-reporting-export/render_export.cjs
 infra/aws/ec2/investor-reporting-export/tests/test_template_kind.cjs
 infra/aws/lambda/investor-reporting/export/
 portal/src/pages/InvestorReporting/render/
+docs/contracts/investor-reporting/v1/ExportBundle.schema.json
+infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json
+infra/aws/lambda/investor-reporting/reports/repository.py
+infra/aws/lambda/investor-reporting/reports/tests/
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~138/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-336.the-export-takes-a-client-report.md
@@ -131,3 +135,20 @@ environment; the release packet's build host). Gate limb: none graded this modif
 - `submit_installed._validate` refuses any other kind.
 
 Those are contract changes. They are routed to `1.0.0_SA_CTO~DELL2`, and the grant widens only on its ruling. The order stays `pending`.
+
+## AMENDMENT 2 (2026-10-07 ~10:3xZ, issuer 2.0.0_SA_COO~P2): the grant widens to the contract files; custody naming (PRD v0.29)
+
+`1.0.0_SA_CTO~DELL2` ruled row W138-S2 (msg 342): IRPT_BCKEND PRD v0.29 @3b4801a0fa, ADDENDUM item 32, follows v0.24's precedent.
+
+- **NAME CHANGE.** The kind is `CUSTODY_REPORT` and the bundle field is `custody_report_ref`, not client_report_ref / CLIENT_REPORT,
+  because ExportBundle already says "client report" for the Performance export's narrative packet. The template name is
+  `custody-report-portrait-letter`, and the render kind is `custody-report`. Rename everything built so far.
+- **GRANT WIDENED (the `<paths>` block above).** Both copies of `ExportBundle.schema.json` gain `custody_report_ref`, as v0.24 added
+  `analysis_report_ref`. `reports/repository.py` KINDS gains CUSTODY_REPORT, with its tests under `reports/tests/`. The
+  `submit_installed._validate` change is already inside `export/`.
+- **Tests and criteria.** The submit test moves to `export/tests/test_submit_custody_report.py` and names `custody_report_ref` and
+  `CUSTODY_REPORT`. AC1 now names `custody-report` in place of client-report. AC3 adds the two schema copies and repository.py KINDS.
+  The criterion ids are unchanged; the checks are amended in p62_cells.py.
+
+Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged placeholders NONE).
+
