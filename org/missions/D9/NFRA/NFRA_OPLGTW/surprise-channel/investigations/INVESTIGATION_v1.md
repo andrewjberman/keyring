@@ -9368,3 +9368,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "If the issuer wants the merge for the drain-back, it is a Phase D act on the worker branch; nothing in Phase A depends on it."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S63",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T01:30Z",
+  "one_line": "opal_data_refresh_upload(confirm=True) holds the MCP call open while it polls the pipeline for up to 15 minutes; the client transport drops at about 120 s, so the caller loses the tool response although the send lands (2 of 2 real sends on 2026-10-07).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py:271-280: after POST /trigger the tool loops `for _ in range(45): time.sleep(20)` on the status route, about 15 minutes, inside the one tool call.",
+      "REPORT 0.0.0_AB_MSTR~Z msgs 30469 and 30499: both confirm=True sends (~00:17Z and ~01:26Z) lost the tool response when the opalgateway MCP transport dropped after 120 s; the served model_portfolio_benchmarks.json (generated_at 00:18:26Z, then 01:28:16Z) shows each send landed. Not re-measured by this seat."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The tool's docstring: it returns uploaded / pipeline / displayed confirmations.",
+  "world_is": "On a real send the confirmations are computed but never reach the caller, who must read the served artifact to know the outcome. A caller that reads the dropped transport as a failure may re-send, which fires the live pipeline again.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here. Candidate for the CTO's next enrichment list: return the execution id right after /trigger and leave the polling to a second read-only status tool. Whether the second send at 01:26Z overlapped the r23 gateway restart is unread."
+}
+```
