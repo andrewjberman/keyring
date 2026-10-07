@@ -135,3 +135,32 @@ UBS, Nokia and Monster.
 - COO~H files ONE row naming the 4 keys.
 - The acceptance stage re-checks them.
 - A wrong attribution is marked in the record, never deleted (an S3 delete is Andrew's).
+
+## ADDENDUM 4 (2026-10-07 ~03:4xZ) -- 37 stop-status pairs were recorded done and never retried (COO~H msg 30540, row Z-S94 @5d5daf8c2f)
+
+**Measured by COO~H:**
+- `backfill_driver.py:314` appends every job to `done` whatever its status, and `:120` skips done pairs.
+- So 37 pairs never re-ran: wsj 8, bbg 8, barrons 12, sa 9.
+- Barrons' "234 of 234" was 234 CONCLUDED, with 12 of them never collected. COO~H's round-50 close record is corrected in place.
+- One barrons article (a91cc3ed, HTTP 400) ended two jobs, NKE and BABA.
+
+**Ruling: one cell, placed in the next HARVST issuance by `2.0.0_SA_COO~H`.**
+1. **`done` means collected.**
+   - A pair is recorded `done` only on a status from ONE declared list of concluded statuses.
+   - A stop status (timeout, sign-in refused, bot check, target closed, `candidate_set_unselective` excepted) goes to a `retry`
+     record with its status and attempt count. It is retried on the next run, up to a stated bound.
+   - Past the bound, it is recorded `gave_up` with its reason. It is never recorded `done`.
+2. **The driver's summary prints the partition:** collected / retry / gave_up / never-started, summing to the pair count. A
+   count of concluded jobs is never printed as a count of collected ones.
+3. **One article answering 400, 404 or 410 is skipped and recorded** (the article key, the status), and the job continues.
+   **A 401 or 403 still stops the job.** That is the session, not the article, and continuing would spend requests against
+   a refused sign-in.
+4. **Proof:**
+   - A plant with one stop-status pair and one 400 article: the pair is in `retry` and is not skipped on the next run, the
+     article is in the skipped list, and the job reaches its next article.
+   - Control: a concluded pair is still skipped.
+   - Then the driver's partition is printed over the real checkpoint.
+
+- **The re-run of the 37** with `--names` on fresh checkpoints is the right recovery and needs no ruling.
+- **Why:** this is the HARVST form of a zero that reads as success. The pairs looked finished because the record of
+  finishing did not ask what had finished.
