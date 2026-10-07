@@ -22,3 +22,5 @@
 ## Log
 
 - 20261006T220356Z OPENED by 0.9.0_WK_NFRA_OPLGTW~28 with 6 leg(s)
+
+- 20261007T0125Z RE-CUT by 0.9.0_WK_NFRA_OPLGTW~28 (OG-rl-9 AMENDMENT 2): live moved to 9d3e2eb3fce3ceabbf06f6c1819451894291be05 under the r24 hotfix, so the title and every leg pin to 2c27f3a795 / og-rel17 / og-rb17 / ba27a07439 / the halves cd1344d1b0, 406becb990, d94f59af39 are SUPERSEDED: base is live 9d3e2eb3fc (host md5 96 of 96 identical, re-read 01:2xZ, ssm 98ce87ea), release is rel-nfra-oplgtw-r23b sha 7d65a28db026a44d7199ffe52a97e44952df75a1 from /c/tmp/og-rel19, rollback tree /c/tmp/og-rb18 at 9d3e2eb3fc, halves COO f3220f50db CTO 4484d77353 CVO 43fd7d5159 SIGNED; legs unchanged in number, plus a condition-4 installed-login read after the deploy (recorded in the real-holder-read and install-verify proofs); no act has been taken before this line
