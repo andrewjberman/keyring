@@ -20340,3 +20340,81 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The carry is built and proven against the real InteractiveAccess with a fake reader (inject path allowed by the order). Reaching the live admit needs the Entry/consumer call sites to pass CanonicalProfileReaders(...).get_user as profile_reader, in files outside this grant (e.g. _authz/served.py); not edited. Owed to the issuer: a wiring cell before the TCKT_VNEXT live run. Each current() call with a reader costs an email-index query plus a consistent get_item on opal-users-v2 for an internal subject; the order did not specify caching."
 }
 ```
+
+## IRPT_BCKEND-W164-S1 -- IB-pr-355: the new export/custody_read.py is not in the irpt-export-render zip's source list (lambda-source-ma
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T19:55:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-355: the new export/custody_read.py is not in the irpt-export-render zip's source list (lambda-source-map.json), so the route answers UNEXPECTED on a deployed zip until the map names it; entry.py imports it lazily so no other export route is touched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json:4633 lists the flat export-function members by file name (retained_export.py, submit_service.py, submit_installed.py ...) -- no custody_read.py; that file and any .tf are outside this order's <paths>",
+      "infra/aws/lambda/investor-reporting/export/entry.py: operations value for custody-report-read is a lambda doing __import__('custody_read') at call time, so a zip without the module fails that one operation only, never cold start (a top-level import would have killed all three existing export routes)",
+      "pytest from export/: tests/test_custody_read.py + tests/test_submit_custody_report.py -> 22 passed; from investor-reporting/: _authz/tests/test_unguarded_census.py -> 9 passed"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-355: entry.py takes two lines only (the ROUTES key and `custody-report-read: custody_report_read` in operations); no .tf edit; nothing applied here.",
+  "world_is": "A bare `custody_report_read` name in operations needs a top-level import in entry.py (a third line, and a cold-start ImportError for every export route if the zip lacks the module), so the operations value is a lazy lambda instead; the ROUTES key and the operation name are exactly as specified. The deployed route works only after custody_read.py is added to the irpt-export-render member list in lambda-source-map.json (and the build/apply the order excludes). Owed to the issuer: that source-map line in the deploy cell before IB-pr-356 relies on the route live.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-W164-S2 -- IB-pr-355: the face names `custody_report_read(ctx, request)` but the Entry calls an operation as `(request, s
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T19:55:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-355: the face names `custody_report_read(ctx, request)` but the Entry calls an operation as `(request, scope, event, ctx)`; built to the Entry signature, and the route's routes.json row carries no response_schema/consumer_operation (none exists for it).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:1067 `compute(req, scope, event, ctx)`; export/entry.py export_receipt(request, scope, event, ctx) is the shape the face says to follow",
+      "docs/contracts/investor-reporting/v1/routes.json: the export-receipt row carries response_schema responses/export-receipt.response.schema.json; no schema for the custody read is in this order's paths, so the new row names route_key, handler, cell, status, note and operation only; test_unguarded_census.py passes (9 passed)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-355 item 1: custody_report_read(ctx, request) shaped like export_receipt; item 3: one row in the same shape as the export-receipt row.",
+  "world_is": "The only callable the Entry can invoke is (request, scope, event, ctx); reportId comes from event.pathParameters and revision from event.queryStringParameters. The routes.json row omits response_schema and consumer_operation because the custody read has no schema file yet. Owed to the issuer, if wanted: a response schema file for custody-report-read and the consumer_operation name when IB-pr-356 lands."
+}
+```
+
+## IRPT_BCKEND-W164-S3 -- IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, 
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T20:04:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, so no route key containing {param} can ever be found in the slice; the criterion cannot pass on any correct entry.py.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py: block = entry[entry.index('ROUTES = {'):entry.index('}', entry.index('ROUTES = {'))]; then 'ROUTE not in block' fails",
+      "measured on worktree HEAD cf6839fe38: block ends ...'ROUTES = {\n    \"GET /api/scoped/investor-reporting/export/{exportId' ; the EXISTING route key 'GET /api/scoped/investor-reporting/export/{exportId}' is also not in the slice (False), as is the new key (False) and the operation name (False)",
+      "substance holds elsewhere: export/tests/test_custody_read.py asserts entry.ROUTES['GET /api/scoped/investor-reporting/custody-report/{reportId}'] == 'custody-report-read' and passes; _authz/tests/test_unguarded_census.py (pins ROUTES against routes.json) 9 passed; routes.json half of AC2 passes the checker's own routes.json test"
+    ]
+  },
+  "spec_asserts": "IB72-1-AC2: export/entry.py ROUTES maps the route key to custody-report-read, graded by p72_cells.py IB72-1-AC2 expecting 'IB72-1-AC2 PASS'.",
+  "world_is": "The checker cannot be satisfied by any entry.py whose ROUTES keys carry a path parameter brace. The entry.py edit is correct and tested; AC2 is left FAIL by its own invocation. Owed to the issuer (the checker is outside this grant): slice to the matching closing brace of the dict (e.g. the first '\n}' after 'ROUTES = {'), then re-grade IB72-1-AC2."
+}
+```

@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~17:1xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~D2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v25"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-W21-S5",
@@ -42,11 +42,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~17:1xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~D2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v25"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-W21-S6",
@@ -63,7 +63,7 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~17:1xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~D2",
   "round": "v25",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v25"
   },
