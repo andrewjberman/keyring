@@ -865,3 +865,32 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "A household document with zero accounts is neither refused nor marked: it takes the covered path and renders an empty 3-page shell. Inert today because hop3_real_run never emits one; carried to the round-7 analysis as a candidate refusal alongside the mixed-document error."
 }
 ```
+
+## IRPT_CUSTDY-S14 -- round 7 E2 cannot reach READY as cut: five breaks on hop 5 (no custody writer, accept KeyError, as_of_date, print page refuses custody-report, render host reads PROD)
+
+```json
+{
+  "id": "IRPT_CUSTDY-S14",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T17:30:00Z",
+  "one_line": "Round 7 E2 (hop 5 served) cannot reach READY as cut: no route writes a CUSTODY_REPORT to the retained store, the export's accept step reads report.dates.actual_end (absent on a custody document), the export wants as_of_date while hop 3 writes as_of, and the print page refuses custody-report -- and the render host loads the PROD portal, so a DEV landing alone does not reach it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "issuer read at HEAD: infra/aws/lambda/investor-reporting/export/submit_async.py:137 `business_date = resolved[\"report\"][\"dates\"][\"actual_end\"]` on the non-platinum branch (last change b66691eb1b); test_submit_custody_report.py calls serve_submit directly and never passes accept",
+      "issuer read at HEAD: export/narrative_submit.py custody_report_as_of requires `as_of_date`; data/assets/scripts/gold/irpt_custody/client_report_figures.py documents carry `as_of`",
+      "issuer read at HEAD: portal/src/pages/InvestorReporting/render/PrintEntry.tsx:102-104 -- readReportKind refuses ?kind=custody-report by name (IB-pr-336 note); ClientReportDocument is on wk-IRPT_CUSTDY-14-portal @4c10b488 only",
+      "Explore read (local, not live AWS): reports/repository.py:135 ReportRepository.persist has callers for PERFORMANCE and ANALYSIS only; docs/contracts/investor-reporting/v1/routes.json has no custody write route",
+      "Explore read: render host opens https://opalinvest.dev/investor-reporting/print (export/main.tf:95); portal deploy.yml runs on PROD pushes only, DEV->PROD is promote-to-prod.yml",
+      "Explore read: IRPT_BCKEND round-68 drain row S382 -- no authenticated Opal principal exists to drive a new export to READY"
+    ]
+  },
+  "disposition": "DECOMP_INVALIDATING",
+  "spec_asserts": "Round-6 analysis @881e552c2e section 1: 'the server half of hop 5 is served' (IB-pr-349 carries IB-pr-336); E2 = one CUSTODY_REPORT export per household requested through the real API, each reaching READY, after E1 lands on portal DEV.",
+  "world_is": "The Lambda is deployed, but the journey breaks at five points before READY: (1) no writer puts a custody document into the retained store; (2) accept KeyErrors on report.dates.actual_end; (3) as_of vs as_of_date; (4) PrintEntry refuses custody-report and does not mount ClientReportDocument; (5) the render host prints from the PROD portal, so DEV is not enough. (1), (2), (4) and the principal are IRPT_BCKEND's surface; (3) is IRPT_CUSTDY's (a one-key adapter). E2 is not cut; routed to 1.0.0_SA_CTO~DELL2 for a ruling."
+}
+```
