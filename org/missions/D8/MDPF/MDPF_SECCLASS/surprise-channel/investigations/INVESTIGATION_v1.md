@@ -4620,3 +4620,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "S1 is not edited (append-only); this row resolves it by reference."
 }
 ```
+
+## MDPF_SECCLASS-S61 -- an admin-profile walker gets 403 on a 49F client page that edge .004c should admit; FWD-1's client read is blocked
+
+```json
+{
+  "id": "MDPF_SECCLASS-S61",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T17:14Z",
+  "one_line": "FWD-1's live client-page read is blocked: the laptop 3.0.0_SA_CVO's page walker gets 403 on a 49 Financial client page on portal DEV fc18e50b, although its profile reads role=admin, and auth-validator-edge .004c (index.mjs ~:470) bypasses role==admin. By the code's own rule it should get 200. Unexplained.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop CVO render evidence @616a6f85e8 (relayed msg 473): 'No client page was reached (the 403 stands for the walker)'; the firm view rendered GLD/PHYS Metals, VXX Hedge",
+      "this seat's read-only trace BD_CLIENT_PAGE_AUTH_TRACE_20261007.md @6d9596048c: client route gated by edge .004c; role/firmRole admin bypass; the lambda checks allowed firms only",
+      "1.0.0_SA_CTO~DELL1 msg 483: the walker's profile reads role=admin, so the 403 contradicts the rule; S60's number was used for this in msgs 475/478/483, but MDPF_SECCLASS-S60 is the COT multi_asset row, so this is filed as S61"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-1 DONE WHEN: a real Black Diamond / 49F client page reads each security's canonical class and sub-class; an admin identity is admitted by .004c.",
+  "world_is": "An identity whose profile reads role=admin is refused 403 on the client route. Candidates: the session token lacks the role claim (issuance defect); or a firm-scope check refuses an opal-capital admin on 49financial. Next read (CTO msg 483): the laptop CVO decodes the walker's existing session token's claims (role, firmId, advisorId, scoped firm), with no new login, and never commits the token. Andrew's own read is held until then.",
+  "notes": "Filed on dell1. FWD-1's firm view PASSes (CVO grade @a03020a049); only the client page remains."
+}
+```
