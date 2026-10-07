@@ -118,6 +118,13 @@ Rows: id `NFRA_OPLGTW-Z-W35-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - The unit file ships to the host, so this cell rides a release; that release is itself under the form's 12-hour bar
   until the drain is shown on a real deploy.
 - Test 02 also converts row Z-S67's INFERRED mechanism into an exercised one, or refutes it.
+- DISPOSITION (23:2xZ, issuer, on `1.0.0_SA_CTO~Z` msg 31464): BUILT and NOT DRAINED. The worker completed the cell on
+  branch `wk-NFRA_OPLGTW-30-35` @47dd5053b2 (dr1.AC1 3 of 3 by its report; not re-graded by the issuer). Its own read
+  and the issuer's (`deliverables/2.0.0_SA_COO~O/S67_REVOCATION_READ_20261007.md` @acf83a5716) show the 21:49Z stop was
+  already graceful and the session was revoked on the new process, so the drain prevents nothing measured. The CTO
+  ruled it is not shipped. The remedy of row Z-S67 is at the client: one session holds the concierge's sign-in
+  (prepared by `0.0.0_AB_MSTR~Z`, applied on Andrew's word). This file's `<status>` on CLOUD stays as issued; the
+  branch is kept, undrained, as the record of the build.
 - Pre-cut 22:5xZ: `dr1.AC1` FAIL (the test file is absent); `bi4.AC1` PASS (file passed 8).
 
 <status>pending</status>
