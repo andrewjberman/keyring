@@ -179,7 +179,7 @@ once per phase.
   record. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
 - Pre-cut 15:0xZ: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>27</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>
