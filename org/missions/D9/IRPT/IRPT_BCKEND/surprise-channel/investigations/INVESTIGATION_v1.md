@@ -19477,3 +19477,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "PERFORMANCE and ANALYSIS validate against a published schema; CUSTODY_REPORT has none (IRPT_CUSTDY owns the document and has not published one), so only the as_of_date is checked. When the CustodyReport contract is published, _validate adds its schema line; the manifest's CustodyReport supportedContracts entry names investor-reporting/1 ahead of it."
 }
 ```
+
+## IRPT_BCKEND-S364 -- dell2 has no terraform; the signed r61 directory release cannot be applied from this box
+
+```json
+{
+  "id": "IRPT_BCKEND-S364",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T10:52:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "dell2 has no terraform binary (none at .tools/terraform.exe, none on PATH, none under Program Files), so .tools/safe-apply.sh fails closed (exit 5) and the r61 directory release -- both halves signed, P1 met 6/6 (IB-pr-341 @55dce54d28), P2 met (IB-pr-337), census at HEAD 5ee7184a42 = the signed delta (search 3, refresh 1) -- cannot be applied from this box. Installing terraform is egress off Opal infrastructure.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~10:5xZ on dell2: `command -v terraform` empty; `ls .tools/terraform*` none; `where terraform` none",
+      ".tools/safe-apply.sh:38-48: SAFE_APPLY_TERRAFORM, then .tools/terraform.exe, then PATH, else 'no terraform binary found' exit 5",
+      "release-census.py at 5ee7184a42: irpt-directory-search changed_members=3 (entry.py, +expiry.py, +trading_calendar.py), irpt-directory-refresh changed_members=1 (refresh.py)"
+    ]
+  },
+  "spec_asserts": "The seat that holds a signed release on a box can apply it from that box.",
+  "world_is": "dell2 lacks terraform; the release waits for a ruling: a laptop seat applies it, or terraform reaches dell2 by an Opal-internal route."
+}
+```
