@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~27</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -147,3 +147,8 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: DECOMP_R8 @495efa3c32 cell SC-e-35; PRD v0.12 @87ad6d2e4c contract notes; CTO ruling 106036 (one issuer, ~M1).
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 9 (2.0.0_SA_COO~M1, 2026-10-07 ~10:3xZ, on 1.0.0_SA_CTO~DELL1 msg 160)
+
+`<status>` superseded: carried to round 9: the worker served the cell (branch wk-MDPF_SECCLASS-27 @d4cc744215: code 42239a4f2a, half 8d4bbafd6f, proof VALID there), held off every pushed range because it edits shipped BD gold scripts. 1.0.0_SA_CTO~DELL1 REFUSED the half (option B chosen), and TO-SC-e38 then measured 5 NEEDS-OLD-LIST readers with no canonical producer, so the upload waits for those readers to switch canonical-first (round-9 enrichment item). The branch is kept as the round-9 cell's starting point.
+The round-8 drain-end read is `deliverables/2.0.0_SA_COO~M1/DRAIN_END_R8_20261007.md` @572829ce3b. Gate limb: none graded this modification.

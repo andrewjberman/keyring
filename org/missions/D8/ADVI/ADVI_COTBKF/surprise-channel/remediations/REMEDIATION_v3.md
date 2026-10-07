@@ -25,15 +25,15 @@ gap in NFRA_CTLPLN's role-request writer, owned on the laptop.
   "owner": "2.0.0_SA_COO~C2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v6"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~C2",
-   "at": null
+   "at": "2026-10-07T10:25Z"
   }
  },
  {
@@ -52,15 +52,15 @@ gap in NFRA_CTLPLN's role-request writer, owned on the laptop.
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v6"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~C2",
-   "at": null
+   "at": "2026-10-07T10:30Z"
   }
  },
  {
