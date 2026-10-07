@@ -288,3 +288,54 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The gate opened, and the returns data hop 3 needs exists for the as-of. The figures themselves must be computed where the firm bucket is readable: E2 is cut as a read-only wrapper the laptop runs (the standing rule, msg 213), writing the chosen advisor's client-report documents to a FILE that is then graded. S4 stays open until that FILE lands."
 }
 ```
+
+## IRPT_CUSTDY-W7-S1 -- the order's masking test ('no run of 8 or more digits in the file') cannot hold on a client-report document
+
+```json
+{
+  "id": "IRPT_CUSTDY-W7-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~7",
+  "surfaced_at": "2026-10-07T10:06:54Z",
+  "one_line": "the order's masking test ('no run of 8 or more digits in the file') cannot hold on a client-report document; the worker tests for an unmasked ACCOUNT number instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "whole-file 8-digit-run search on the fixture output: float fractions, master 08335338, _20260811 match (0 account numbers)",
+      "data/assets/scripts/gold/irpt_custody/hop3_real_run.py unmasked_runs (branch wk-IRPT_CUSTDY-7)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py lineage and classification_vintage fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-c-1 item 6: 'no unmasked account (no run of 8 or more digits in the file)'.",
+  "world_is": "The order's file-level test (no run of 8+ digits) fires on three things the documents must carry: every float figure (a fraction such as 0.0660583070761045), the Schwab master number in lineage.schwab_partitions (08335338, 8 digits), and the dated classification_vintage filename (..._20260811.json). So CU8-AC1's masking test is written on the account number it is for: unmasked_runs() walks the strings and integers, skips a float's fraction, a registry master and a _<digits> filename token, and fails on any other 8+ digit run; the tests also assert no fixture raw account string appears. This narrows the literal wording and the worker records it rather than weakening silently."
+}
+```
+
+## IRPT_CUSTDY-W7-S2 -- on dell2 the wrapper reads the ownership map and the directory, and is denied only at the firm bucket's silver
+
+```json
+{
+  "id": "IRPT_CUSTDY-W7-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~7",
+  "surfaced_at": "2026-10-07T10:06:54Z",
+  "one_line": "on dell2 the wrapper reads the ownership map and the directory, and is denied only at the firm bucket's silver/returns read; the largest advisor's book shows 308 NOT_IN_DIRECTORY and 114 PROJECTION_REFUSED accounts before any figure is built",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 run 2026-10-07T10:0xZ, wrapper at branch wk-IRPT_CUSTDY-7, summary line HOP3-REAL-RUN ... uncovered=422 error=AccessDenied",
+      "error text: explicit deny in a resource-based policy on s3:ListBucket opal-data-49financial for the dell2 agent user"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-c-1: on dell2 the wrapper records the AccessDenied in the file and exits nonzero.",
+  "world_is": "The order says the wrapper records AccessDenied on dell2. Measured: the real CLI run on dell2 for the advisor with the most granted accounts completed the ownership-map read (opal-data-bd) and the directory read, resolved the book, and was denied (explicit deny in a resource-based policy, s3:ListBucket on opal-data-49financial) at the coverage read, so the file carries error=AccessDenied and 422 uncovered accounts (308 NOT_IN_DIRECTORY, 114 PROJECTION_REFUSED), 0 households."
+}
+```
