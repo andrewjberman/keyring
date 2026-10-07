@@ -531,13 +531,56 @@ def validate(reg_dir=None, systems_file=None):
     if not re.match(r"^[0-9]{12}$", str(ex.get("account_id", ""))):
         refuse("exemptions.json", "account_id", "a twelve-digit account id")
     firm_buckets = set(_buckets_of_firms(reg))
+    # A row's key set is CLOSED (NFRA_CTLPLN CT-d-2 AMENDMENT 4; CTO msg 106230): a reader meeting a key it does not know
+    # REFUSES, never ignores, because the fence renders an ignored key as a FULL admission. `actions` and `prefix` are
+    # the optional pair that scopes an exemption to those S3 actions under that key prefix (read set only: no write
+    # action, no GetObjectVersion, no ListBucketVersions). The firm token a prefix must carry is read from scopes.json.
+    row_keys = ("principal", "arn", "reason", "signoff_ref", "actions", "prefix")
+    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation")
+    bucket_firm = {}
+    for s in scopes:
+        if s.get("class") == "FIRM":
+            bucket_firm[s.get("bucket")] = s.get("long")
+            for a in s.get("aliases", []):
+                if "bucket" in a.get("planes", []):
+                    bucket_firm[a["spelling"]] = s.get("long")
     for bucket, rows in (ex.get("exemptions") or {}).items():
         if bucket not in firm_buckets:
             refuse("exemptions.json exemptions", bucket, "not a provisioned bucket of a FIRM scope in scopes.json")
+        seen_principals = set()
         for j, r in enumerate(rows if isinstance(rows, list) else [None]):
+            rwhere = "exemptions.json exemptions.%s[%d]" % (bucket, j)
             for f in ("principal", "reason", "signoff_ref"):
                 if not isinstance(r, dict) or not isinstance(r.get(f), str) or not r.get(f):
-                    refuse("exemptions.json exemptions.%s[%d]" % (bucket, j), f, "missing or empty")
+                    refuse(rwhere, f, "missing or empty")
+            if not isinstance(r, dict):
+                continue
+            for k in sorted(r):
+                if k not in row_keys:
+                    refuse(rwhere, k, "not a key an exemptions row carries (closed set: %s); an unknown key is refused, never"
+                           " ignored, since a reader that ignored it would render the row as a FULL admission" % ", ".join(row_keys))
+            raw_who = r.get("arn") if isinstance(r.get("arn"), str) and r.get("arn") else r.get("principal")
+            who = raw_who
+            if isinstance(who, str) and who:
+                if not who.startswith("arn:"):
+                    who = "arn:aws:iam::%s:role/%s" % (ex.get("account_id"), who)
+                if who in seen_principals:
+                    refuse(rwhere, "principal", "%r already has a row under this bucket: at most one row per principal per bucket" % who)
+                seen_principals.add(who)
+            if "actions" not in r and "prefix" not in r:
+                continue
+            if ("actions" in r) != ("prefix" in r):
+                refuse(rwhere, "actions" if "actions" in r else "prefix", "actions and prefix come together or not at all")
+                continue
+            acts, pre = r["actions"], r["prefix"]
+            if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
+                refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
+            if not (isinstance(pre, str) and pre.endswith("/") and not pre.startswith("/") and not re.search(r"[*?]", pre)):
+                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?")
+            elif len(pre.split("/")) < 3 or pre.split("/")[1] != bucket_firm.get(bucket):
+                refuse(rwhere, "prefix", "its second path segment must be the firm token of this bucket (%r)" % bucket_firm.get(bucket))
+            if not (isinstance(raw_who, str) and raw_who.startswith("arn:") and not re.search(r"[*?]", raw_who)):
+                refuse(rwhere, "arn", "a scoped row names exactly one principal by its exact ARN (no * or ?)")
 
     # remediations.json
     known_buckets = firm_buckets | standing_shared | {s.get("bucket") for s in scopes}
