@@ -297,3 +297,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Disarm is a one-line widening of the lane pattern at halt-gate-check.sh:174 to one-or-more uppercase letters, plus a banner branch that names a VALID-BUT-UNADMITTED lane separately from a CORRUPT serial so the prescribed remedy is never 'overwrite your serial file'. .tools/ is outside this order's <paths>, so this seat names it and does not touch it. The same resolver contract is cited as shared with inbox-watch.sh:82-89 and agent-poller.py _find_agent_folder, so the fix is checked against those two before it lands -- my inbox watcher DOES deliver to ~RV, so at least inbox-watch.sh does not carry the same restriction, and that asymmetry is itself the tell that :174 is the outlier."
 }
 ```
+
+## NFRA_CTLPLN-Z-S2 -- disarm of NFRA_CTLPLN-Z-S1: the refusal was unknown-base from a sparse cone, reproduced; the letter count never refused ~RV
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T06:08:11Z",
+  "one_line": "Disarm of NFRA_CTLPLN-Z-S1 by its disarm_owner, on a reproduction and not on the fix: the 04:58Z halt-gate refusal of 0.7.0_AE_CloudOps~RV was check (1), unknown-base, from a sparse worktree whose cone lacked the seat's home folder; the letter count never refused ~RV. The misleading banner, the row's real hazard, is gone @1f1bacdf66.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduction by this seat 2026-10-07 ~06:1xZ, a fresh detached sparse worktree at EXACTLY 0ef817adb0 (the commit the seat applied from), HALT_GATE_REPO_ROOT set to it, serial 0.7.0_AE_CloudOps~RV. Cone WITHOUT org/tier2_senior: the new gate file (@1f1bacdf66) reads rc=1 reason unknown-base; the gate file AT 0ef817adb0 reads rc=1. Cone WITH org/tier2_senior/0.7.0_AE_CloudOps: the new file reads rc=0; the file AT 0ef817adb0 reads rc=0. Control: ~QQ on the new file reads rc=1 reason lane-no-inbox.",
+      "The gate file at 0ef817adb0, line 223, admits one, two or three uppercase letters; 64a3ef4b4e (the 1-to-3 rule) is an ancestor of 0ef817adb0 (merge-base --is-ancestor, with a positive control on the same instrument). So no copy of the gate the seat could have run refused ~RV on its lane.",
+      "2.0.0_SA_COO~O msg 30636 measured the same on the shared tree (rc=0 for ~RV, rc=1 for ~Zn). 1.0.0_SA_CTO~Z ruling ADDENDUM 1 @24ef9e0791 asked for this read before the disarm.",
+      "The fix, 0.0.0_AB_MSTR~Z @1f1bacdf66: the lane check is uppercase letters plus the existence of the lane's inbox; the refusal names which check failed and says a sparse worktree can give unknown-base for a real seat; the line that overwrote the session serial file is out of the banner. Falsifier .tools/halt-gate-lane-test.sh re-run by this seat: 10 of 10.",
+      "NOT reproduced: Z-S1's fifth evidence line (the refusal persisting after org/tier2_senior/0.7.0_AE_CloudOps/ joined the cone). By this seat's run the old gate admits the seat once that folder is present. What differed in the seat's second attempt is unread; the seat's worktree now carries all of org/tier2_senior (76 folders)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-Z-S1: the halt gate's principal resolver refuses a multi-letter lane. CTO ruling CTO_RULING_HALT_GATE_MULTI_LETTER_LANE_20261007.md and its ADDENDUM 1: close the row on a read of the named check from a sparse worktree, not on the fix.",
+  "world_is": "DISARM (disarm_owner). The refusal was unknown-base: a sparse cone without the acting seat's home folder under org/tier2_senior. The remedy for an apply from a sparse worktree is the cone (add the seat's base home folder), and the gate now says so in its banner. Both Dell applies ran under the audited HALT_OVERRIDE and cite no halt-gate pass; nothing in the world depends on this row. Z-S1's diagnosis (letter count) is superseded by this row; its hazard (a banner prescribing a serial-file overwrite) is closed in code in the shared tree, and a worktree gets it at its next cut."
+}
+```
