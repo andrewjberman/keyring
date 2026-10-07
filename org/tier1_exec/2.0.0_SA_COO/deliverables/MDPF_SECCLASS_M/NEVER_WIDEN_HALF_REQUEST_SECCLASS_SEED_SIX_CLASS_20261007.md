@@ -89,4 +89,9 @@ copy each key's `VersionId` above back over it and `git revert` the merge of `fe
 **Conditions:** (1) the merge reaches a pushed range only after the CTO half signs; (2) after the push, the two keys are re-read
 and their ETag matched to md5 of the merged file; (3) the next E_18 run's log is read for an off-vocabulary refusal (expect none).
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED for option (b)
+
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e21_SEED_SIX_CLASS_20261007.md` @b39e54dc9e, by
+`1.0.0_SA_CTO~DELL1` (msg 83). Authorizes no seed run. The COO's three conditions stand, plus a fourth: the published branch's diff
+against origin carries only this commit's files, because the push gate uploads the whole range (S35/S39); the diff is printed in the
+bus note that publishes it. The issuer therefore publishes this cell on its own branch, cut from origin, not inside the round branch.
