@@ -1,9 +1,9 @@
 {
-  "contract_version": "0.1.0",
+  "contract_version": "0.2.0",
   "project": "IRPT_DASHBD",
   "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
-  "authored_by": "0.9.0_WK_IRPT_DASHBD~20",
-  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json.",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~20; revised by 0.9.0_WK_IRPT_DASHBD~23",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-35 (round 23, workstream B), 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7 item E1 (PRD backlog B2, FWD-4). Written by 0.9.0_WK_IRPT_DASHBD~20 in the same commit as the producer; the shape follows org/standards/IRPT_DASHBD_ACCOUNT_RETURN_DAILY_CONTRACT.json. REVISED under IRPT_DASHBD.TO-DB-b-41 (round 26, workstream B), 1.0.0_SA_CTO~DELL2's round-25 analysis @3543da2f4d item E1: the columns the producer's SCHEMAS carry and this file did not, the composite primary_key (row IRPT_DASHBD-W20-S3), the basis_source enum (row IRPT_DASHBD-W22-S3) and the 0.05 per-account-window tolerance.",
   "table": "account_activity_daily",
   "grain": "account x trading day",
   "partition": "date=YYYY-MM-DD",
@@ -37,31 +37,55 @@
       "name": "contributions",
       "type": "double",
       "nullable": false,
-      "meaning": "capital in over the interval: the sum of the positive custodian-day NET external flows the interval folds in (the skipped-day rule). A day with both a deposit and a withdrawal nets within the day, because the served classifier returns the net per account-day and never the legs"
+      "meaning": "capital in over the interval: the sum of the positive custodian-day NET external flows the interval folds in (the skipped-day rule), an in-kind arrival counted at its market value on the transfer date. A day with both a deposit and a withdrawal nets within the day, because the served classifier returns the net per account-day and never the legs"
     },
     {
       "name": "withdrawals",
       "type": "double",
       "nullable": false,
-      "meaning": "capital out over the interval, as a non-negative amount: the negated sum of the negative custodian-day net external flows"
+      "meaning": "capital out over the interval, as a non-negative amount: the negated sum of the negative custodian-day net external flows, an in-kind departure counted at its market value on the transfer date"
     },
     {
       "name": "realized",
       "type": "double",
       "nullable": true,
-      "meaning": "the summed realized gain (proceeds less cost_basis_unamortized) of the lots closed on the custodian days the interval folds in; null with a coverage reason where the lot source is absent"
+      "meaning": "the summed realized gain of the lots closed on the custodian days the interval folds in, each lot's gain as account_lot_realized carries it (proceeds less cost_basis, the basis per its basis_source); null with a coverage reason where the lot source is absent"
     },
     {
       "name": "unrealized_change",
       "type": "double",
       "nullable": true,
-      "meaning": "the change in the summed unrealized gain of the open lots between the prior trading day and this one; a lot sold in the interval leaves the unrealized book at its gain, so realized + unrealized_change is each lot's interval gain once; null with a coverage reason where a lot partition is absent"
+      "meaning": "the change in the summed unrealized gain of the open lots between the prior trading day and this one (each lot's gain as account_lot_unrealized_daily carries it) plus inkind_departure_gain; a lot sold in the interval leaves the unrealized book at its gain, so realized + unrealized_change is each lot's interval gain once; null with a coverage reason where a lot partition is absent"
     },
     {
       "name": "income",
       "type": "double",
       "nullable": false,
-      "meaning": "income recognised on CASH RECEIPT over the same interval as the flow terms -- the served producer's income_received, unchanged"
+      "meaning": "income recognised on CASH RECEIPT over the same interval as the flow terms, NET of the fee-admin and withheld-tax cash rows: income_gross + income_fee_admin + income_withheld_tax"
+    },
+    {
+      "name": "income_gross",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the gross income the served producer's rule reads (income_received) over the interval; income = income_gross + income_fee_admin + income_withheld_tax"
+    },
+    {
+      "name": "income_fee_admin",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the signed cash rows of the interval that map to fee or administration and to no other term: a NEGATIVE component of income, 0.0 where none"
+    },
+    {
+      "name": "income_withheld_tax",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the signed cash rows of the interval that are withheld tax and map to no other term: a NEGATIVE component of income, 0.0 where none"
+    },
+    {
+      "name": "inkind_departure_gain",
+      "type": "double",
+      "nullable": false,
+      "meaning": "the gain, at the departure price, of the lots that left in kind in the interval (and the true-up of a custodian lot re-selection); it is INSIDE unrealized_change, shown beside it, 0.0 where none"
     },
     {
       "name": "ending_value",
@@ -73,7 +97,7 @@
       "name": "identity_gap",
       "type": "double",
       "nullable": true,
-      "meaning": "beginning_value + contributions - withdrawals + realized + unrealized_change + income - ending_value, never plugged into any term; null where the identity cannot be graded"
+      "meaning": "beginning_value + contributions - withdrawals + realized + unrealized_change + income - ending_value, never plugged into any term; null where the identity cannot be graded. GRADED PER ROW against rounding_allowance, and over a WINDOW against the 0.05 tolerance stated in window_identity_tolerance"
     },
     {
       "name": "rounding_allowance",
@@ -85,7 +109,7 @@
       "name": "method_version",
       "type": "int64",
       "nullable": false,
-      "meaning": "the method this figure was produced under (1)"
+      "meaning": "the method this figure was produced under (3)"
     },
     {
       "name": "coverage",
@@ -133,9 +157,23 @@
       "unexercised_members_proved_by_test": "NO_LOTS and LOT_PARTITION_ABSENT are 0 on live data (49 Financial has lot tables and every partition landed); each is produced by test_account_activity_lots.py on a synthetic row (test_a_firm_without_lot_tables_carries_null_lot_columns_and_no_lots, test_no_prior_value_and_an_absent_lot_partition_are_each_their_own_reason)."
     }
   },
-  "schema_hash": "8fddbdff00e32e9f271ee515f2f92e7933d3bc1c3272f8a6bce6b2c9b37ca197",
+  "schema_hash": "f305cf2af3903d7b912b278e67f0e2c7a591cf83bc2f5216c9843acd5f6323e3",
   "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_* schema carries -- the method that reproduces account_return_daily's published hash 1b25d37b... exactly. The check recomputes it against the landed parquet, so contract and artifact cannot drift.",
-  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names live only in the producer's LOT_SOURCE adapter block, which row IRPT_DASHBD-W20-S1 asks to move into sources.json.",
-  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_ACTIVITY schema this hash is taken from. The producer and this contract land together.",
-  "limits_of_method_version_1": "method_version 1: contributions and withdrawals are the sign split of the per-custodian-day NET flow (a day carrying both nets within the day); income is cash-receipt (the served producer's); fees, margin interest and any value held outside the lot tables are NOT terms, so they appear as identity_gap and are never plugged into a term; the lot tables are the custodian's, so an account whose value sits outside them grades GAP_ABOVE_ALLOWANCE rather than MEASURED."
+  "firm_specific_columns": "NONE. No Schwab code survives into this table (no tr_cd, sb_cd, h_t, l_s, close_event_id column); the custodian's lot-table and column names are declared in sources.json (the custody entry's lot_source), which the producer reads through lot_spec(); row IRPT_DASHBD-W20-S1 closed.",
+  "producer_pin": "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py -- the ARROW_ACTIVITY schema this hash is taken from (method_version 3, schema_version 1.2). The producer and this contract land together.",
+  "limits_of_method_version_1": "method_version 1: contributions and withdrawals are the sign split of the per-custodian-day NET flow (a day carrying both nets within the day); income is cash-receipt (the served producer's); fees, margin interest and any value held outside the lot tables are NOT terms, so they appear as identity_gap and are never plugged into a term; the lot tables are the custodian's, so an account whose value sits outside them grades GAP_ABOVE_ALLOWANCE rather than MEASURED. REVISED for method_version 3 (TO-DB-b-41): see the column meanings; in-kind legs are flows and departures at market value on the transfer date, fee-admin and withheld-tax cash rows are negative components of income, and a lot's basis is re-measured per basis_source.",
+  "primary_key": [
+    "firm",
+    "account_id",
+    "business_date"
+  ],
+  "primary_key_meaning": "one row per firm, account and trading day: the account-day is the grain, and the key is checked on every day emit_day() writes",
+  "window_identity_tolerance": {
+    "tolerance": 0.05,
+    "unit": "USD per account per window",
+    "applies_to": "the window grain: for one account over a window of trading days, the sum of the daily terms against the window's endpoints (beginning_value of the first day, ending_value of the last), every daily term as this table carries it",
+    "rule": "a window's gap is graded 'ties' within one cent (0.01); a gap above one cent and within 0.05 is ROUNDING (the sources carry 2 dp and the daily figures are rounded to 2 dp, so a 24-trading-day window can differ by a few cents); a gap above 0.05 is not rounding and is listed, never bent",
+    "measured": "round 25 (deliverables/0.9.0_WK_IRPT_DASHBD~22/WINDOWS_E1.json regrade): 91 account-windows graded over 2026-09-01..2026-10-05; 58 tie within one cent and the other 33 within the 0.05 rounding tolerance",
+    "basis": "measured"
+  }
 }
