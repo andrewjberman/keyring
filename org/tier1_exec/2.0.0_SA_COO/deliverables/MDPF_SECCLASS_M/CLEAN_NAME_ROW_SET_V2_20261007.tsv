@@ -1269,10 +1269,10 @@ IFF	scheduled		INTERNATIONAL FLAVORS&FRAGRANC COM	International Flavors&fragranc
 IGOV	scheduled		ISHARES INTERNATIONAL TREASURY BOND ETF	iShares International Treasury Bond ETF	WRITE	custody:cottonwood
 IGPT	scheduled		INVESCO AI AND NEXT GEN SOFTWARE ETF	Invesco AI and Next Gen Software ETF	WRITE	custody:cottonwood
 IHF	scheduled		iShares Dow Jones US Healthcare Provider	iShares Dow Jones US Healthcare Provider	WRITE	custody:inflection
-IJJ	scheduled		ISHARES S&P MID-CAP 400 VALUE ETF	iShares S&p Mid-Cap 400 Value ETF	WRITE	custody:cottonwood
-IJK	scheduled		ISHARES S&P MID-CAP 400 GROWTH ETF	iShares S&p Mid-Cap 400 Growth ETF	WRITE	custody:cottonwood
-IJS	scheduled		ISHARES S&P SMALL-CAP 600 VALUE ETF	iShares S&p Small-Cap 600 Value ETF	WRITE	custody:cottonwood
-IJT	scheduled		ISHARES S&P SMALL-CAP 600 GROWTH ETF	iShares S&p Small-Cap 600 Growth ETF	WRITE	custody:cottonwood
+IJJ	scheduled		ISHARES S&P MID-CAP 400 VALUE ETF	iShares S&P Mid-Cap 400 Value ETF	WRITE	custody:cottonwood
+IJK	scheduled		ISHARES S&P MID-CAP 400 GROWTH ETF	iShares S&P Mid-Cap 400 Growth ETF	WRITE	custody:cottonwood
+IJS	scheduled		ISHARES S&P SMALL-CAP 600 VALUE ETF	iShares S&P Small-Cap 600 Value ETF	WRITE	custody:cottonwood
+IJT	scheduled		ISHARES S&P SMALL-CAP 600 GROWTH ETF	iShares S&P Small-Cap 600 Growth ETF	WRITE	custody:cottonwood
 ILMN	scheduled		Illumina Inc	Illumina Inc	WRITE	custody:inflection
 IMO	scheduled		Imperial Oil Ltd	Imperial Oil LTD	WRITE	custody:inflection
 ING	scheduled		ING Group NV ADR	ING Group NV ADR	WRITE	custody:inflection
@@ -1290,8 +1290,8 @@ ITOT	scheduled		iShares Core S&P Total US Stock Market	iShares Core S&P Total US
 ITT	scheduled		ITT INC COM	Itt Inc	WRITE	custody:cottonwood
 ITW	scheduled		ILLINOIS TOOL WKS INC COM	Illinois Tool WKS Inc	WRITE	custody:cottonwood
 IUSG	scheduled		iShares Core S&P US Growth ETF	iShares Core S&P US Growth ETF	WRITE	custody:inflection
-IVE	scheduled		ISHARES S&P 500 VALUE ETF	iShares S&p 500 Value ETF	WRITE	custody:cottonwood
-IVW	scheduled		ISHARES S&P 500 GROWTH ETF	iShares S&p 500 Growth ETF	WRITE	custody:cottonwood
+IVE	scheduled		ISHARES S&P 500 VALUE ETF	iShares S&P 500 Value ETF	WRITE	custody:cottonwood
+IVW	scheduled		ISHARES S&P 500 GROWTH ETF	iShares S&P 500 Growth ETF	WRITE	custody:cottonwood
 IWD	scheduled		ISHARES RUSSELL 1000 VALUE ETF	iShares Russell 1000 Value ETF	WRITE	custody:cottonwood
 IWF	scheduled		iShares Russell 1000 Growth Fund	iShares Russell 1000 Growth Fund	WRITE	custody:49financial
 IWN	scheduled		ISHARES RUSSELL 2000 VALUE ETF	iShares Russell 2000 Value ETF	WRITE	custody:cottonwood
@@ -1530,7 +1530,7 @@ ROP	scheduled		ROPER TECHNOLOGIES INC COM	Roper Technologies Inc	WRITE	custody:c
 RPRX	scheduled		Royalty Pharma PLC	Royalty Pharma PLC	WRITE	custody:inflection
 RS	scheduled		RELIANCE INC COM	Reliance Inc	WRITE	custody:cottonwood
 RSG	scheduled		REPUBLIC SVCS INC COM	Republic SVCS Inc	WRITE	custody:cottonwood
-RSP	scheduled		INVESCO S&P 500 EQUAL WEIGHT ETF	Invesco S&p 500 Equal Weight ETF	WRITE	custody:cottonwood
+RSP	scheduled		INVESCO S&P 500 EQUAL WEIGHT ETF	Invesco S&P 500 Equal Weight ETF	WRITE	custody:cottonwood
 RVTY	scheduled		Revvity Inc	Revvity Inc	WRITE	custody:inflection
 RYCEY	scheduled		Rolls Royce Holdings Plc	Rolls Royce Holdings PLC	WRITE	custody:inflection
 RYN	scheduled		RAYONIER INC COM	Rayonier Inc	WRITE	custody:cottonwood
@@ -1586,7 +1586,7 @@ SONY	scheduled		Sony Group Corporation ADR	Sony Group Corporation ADR	WRITE	cust
 SPAXX	scheduled		Fidelity Govt Money Market	Fidelity Govt Money Market	WRITE	custody:inflection
 SPCX	scheduled		Space Exploration Technologies Corp.	Space Exploration Technologies Corp.	WRITE	custody:49financial
 SPEM	scheduled		State Street SPDR Portfolio Emerging Markets ETF	State Street SPDR Portfolio Emerging Markets ETF	WRITE	custody:49financial
-SPGI	scheduled		S&P GLOBAL INC COM	S&p Global Inc	WRITE	custody:cottonwood
+SPGI	scheduled		S&P GLOBAL INC COM	S&P Global Inc	WRITE	custody:cottonwood
 SPSB	scheduled		SPDR Portfolio Short Term Corp Bd ETF	SPDR Portfolio Short Term Corp Bd ETF	WRITE	custody:inflection
 SPTL	scheduled		SPDR Portfolio Long Term Treasury ETF	SPDR Portfolio Long Term Treasury ETF	WRITE	custody:inflection
 SPXC	scheduled		SPX TECHNOLOGIES INC COM	SPX Technologies Inc	WRITE	custody:cottonwood
