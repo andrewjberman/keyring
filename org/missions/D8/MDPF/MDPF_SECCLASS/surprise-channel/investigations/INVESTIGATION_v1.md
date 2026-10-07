@@ -2741,3 +2741,79 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by worker ~22 on dell1 (fabric field = the project register fabric). The two AC checks do not run iv-e-26 or iv-e-17; neither is weakened."
 }
 ```
+## MDPF_SECCLASS-W23-S1 -- TO-SC-e24 says ETF_GEOGRAPHY_MAPPING begins at line 96 of yang-generate-positioning/lambda_function.py; at bas
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "TO-SC-e24 says ETF_GEOGRAPHY_MAPPING begins at line 96 of yang-generate-positioning/lambda_function.py; at base b07521c5dd it begins at line 95 (the PRD's S26 text says 95).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py: sed -n 95p reads 'ETF_GEOGRAPHY_MAPPING = {'; ast.parse gives lineno 95; 92 tickers, values Emerging/Global/International/US"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order: ETF_GEOGRAPHY_MAPPING begins at line 96 (measured at the cut).",
+  "world_is": "Line 95, read by ast in the census script; the mapping file records :95.",
+  "notes": "No effect on the criteria; the AC1 check only requires the path to name yang-generate-positioning."
+}
+```
+
+## MDPF_SECCLASS-W23-S2 -- The census found screens and disagreements the cell did not name: Investor Reporting's securities table folds 
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "The census found screens and disagreements the cell did not name: Investor Reporting's securities table folds Cash into Fixed Income while its treemap and class bar draw Cash alone; the AI Performance Allocation card prints structured and commodities as raw lower-case tokens; Attribution's etf-categories.ts still lists Cash/Fixed Income/Equity/Hedge while the producer funnels to two groups.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/src/components/holdings/HoldingsBreakdownTable.tsx:330-331 displayClass 'Cash' -> 'Fixed Income'; portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTreemap.tsx:613 legendClassesFor(..., foldCash:false)",
+      "portal/src/pages/AdvisorIntelligence/_shared/perfrp/PerfrpAllocation.tsx:42-55 CLASS_LABELS has four entries; classLabel returns the token verbatim otherwise",
+      "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/lambda_function.py:594-603 funnel; portal/src/pages/Attribution/constants/etf-categories.ts:107-111 ASSET_CLASS_ORDER Cash, Fixed Income, Equity"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-16's census starts from the named class lists and finds the rest by search.",
+  "world_is": "Nineteen screens are in the mapping file; the three disagreements above are recorded in the notes of their rows, not resolved.",
+  "notes": "Two Investor Reporting screens with the same class names group Cash differently within one tab. Whether that is intended is the CTO's, not this cell's."
+}
+```
+
+## MDPF_SECCLASS-W23-S3 -- The native Grep tool fails in this worker environment (uv_spawn 'rg' ENOENT) and the Bash search rail denies a
+
+```json
+{
+  "id": "MDPF_SECCLASS-W23-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~23",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "The native Grep tool fails in this worker environment (uv_spawn 'rg' ENOENT) and the Bash search rail denies a recursive grep, so the census searches were run with a small python walker kept under .scratch/.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Grep call on portal/src returned 'ENOENT: no such file or directory, uv_spawn rg' at 2026-10-07 ~08:1xZ; the Bash hook denied 'grep -n ... -r .' with the comp-find routing message"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker face: read with comp-read and comp-find; every search names the worktree path.",
+  "world_is": "comp-find was not used; the walker is not committed. The deliverable script is the committed instrument and reproduces the denominator.",
+  "notes": "Tool availability only; no criterion affected."
+}
+```
