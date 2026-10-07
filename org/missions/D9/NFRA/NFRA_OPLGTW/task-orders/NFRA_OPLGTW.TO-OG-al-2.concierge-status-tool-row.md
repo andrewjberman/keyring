@@ -38,12 +38,26 @@ Do:
 2. Add `tests/test_identity_scope_status_row.py`, offline, reading the TRACKED overlay through `app/identity_scope.py`'s
    own loader. Four named tests, `test_ogal2_ac01` to `test_ogal2_ac04`, as `al2.AC1.sh`'s header lists them.
 3. Negative control: with the new row removed, `test_ogal2_ac01` fails. Record that run in `W/AL2_NEGATIVE_CONTROL.md`.
+4. **AMENDMENT 1 -- the execution-id shape check (row `NFRA_OPLGTW-Z-S65`, `3.0.0_SA_CVO~O`; CTO ruling in msg 30563).**
+   `opal_data_refresh_status(execution_id)` in `infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py`
+   formats the caller's `execution_id` straight into the status URL path (`STATUS_PATH`, about `:73` and `:163-166`).
+   - Before any request, refuse an id that is not a plain token: raise `IntegrationError` naming `execution_id` when it
+     does not fully match ONE conservative pattern of letters, digits, `-`, `_` and `:`, 1 to 200 characters.
+   - Read `infra/aws/lambda/data_refresh/lambda_function.py` (`handle_trigger`, `handle_status`) for the ids the portal
+     really mints, and make sure every one of those shapes passes. Say in your report which shapes you found.
+   - Apply the same check inside `_read_status_once`, so the send path cannot format an unchecked id either.
+   - Change nothing else in that file.
+   - Add `tests/test_opal_portal_status_id_shape.py`, offline, with two named tests:
+     - `test_ogal2_ac05`: ids containing `/`, `..`, `?`, `#`, `%2F`, a space or a newline are each refused, and NO HTTP
+       request is made for any of them;
+     - `test_ogal2_ac06`: a UUID-shaped id and every shape the portal mints are accepted and reach the status GET.
 
 `W` = `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~29/`.
 
 ## 2. BOUNDS
 
-- Do not edit `app/identity_scope.py`, its seed, `app/graph_scope_map.py` or any other gateway file.
+- Do not edit `app/identity_scope.py`, its seed, `app/graph_scope_map.py` or any other gateway file, except the one
+  shape check of item 4 in `app/integrations/opal_portal/integration.py`.
 - No release and no host act: that is `OG-rl-12`.
 - Never: push, `git stash`, rebase, `checkout --` or `clean`; override a gate; call a vendor.
 - REFUSE a criterion you cannot meet as written. File a BLOCKING row and keep working.
@@ -53,6 +67,8 @@ Do:
 <paths>
 infra/aws/ec2/opal-gateway/identity_tool_allowlist.txt
 infra/aws/ec2/opal-gateway/tests/test_identity_scope_status_row.py
+infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py
+infra/aws/ec2/opal-gateway/tests/test_opal_portal_status_id_shape.py
 org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~29/
 org/missions/D9/NFRA/NFRA_OPLGTW/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -64,16 +80,18 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 <proof_of_spec>
   <criterion id="AC1" cell_refs="OG-al-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r26/checks/al2.AC1.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 4 of 4; failed/error lines 0.*RESULT: PASS.*exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="OG-al-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r26/checks/al2.AC2.sh; echo "exit=$?"</invocation><expect>(?s)allowlist rows added 1 \(want 1\), removed 0 \(want 0\); the row is the unqualified status-tool row for a known identity: True; authorization cited above it: True; guard test files green 2 of 2.*RESULT: PASS.*exit=0</expect></criterion>
+  <criterion id="AC3" cell_refs="OG-al-2"><invocation>bash org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r26/checks/al2.AC3.sh; echo "exit=$?"</invocation><expect>(?s)named tests passed 2 of 2; failed/error lines 0.*send-split tests still green: yes.*RESULT: PASS.*exit=0</expect></criterion>
 </proof_of_spec>
 
 - `AC1`: the concierge is admitted for the status tool, nothing else widened, and its consent did not move.
 - `AC2`: the diff is exactly that one row with its authorization above it, and the guard tests stay green.
+- `AC3`: a malformed execution id is refused before any request, and the send-split tests stay green.
 
 ## 5. WHEN YOU ARE DONE
 
 1. Write the proof instance at `W/NFRA_OPLGTW.TO-OG-al-2.concierge-status-tool-row.proof_of_spec.json`.
 2. Validate it with `python .tools/proof-of-spec-check.py <instance>`.
-3. If both criteria PASS, edit this order's ONE `<status>` tag IN PLACE to `complete`.
+3. If all three criteria PASS, edit this order's ONE `<status>` tag IN PLACE to `complete`.
 4. Report once: literal AC output, the file diff, the negative control, commits and rows.
 
 <!-- ===================== RECORD FACE ===================== -->
@@ -82,6 +100,9 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Round 25 (addendum R3-T.19, item 1), cut on `1.0.0_SA_CTO~O` msg 30555. Chain: `OG-al-2` -> `OG-rl-12`.
 - Verbatim scope: the row is NOT client-qualified, because the ruling names the identity and the tool only. The
   existing upload row keeps its qualifier.
+- AMENDMENT 1 (04:4xZ, issuer, before the hand-off; GATE (viii) grades the modify): item 4 and `AC3` add the
+  execution-id shape check of row Z-S65, which the CTO ruled into this same release (msg 30563). Pre-cut `al2.AC3` FAIL
+  (the test file is absent).
 - Pre-cut 04:3xZ: `al2.AC1` FAIL (the test file is absent). `al2.AC2` FAIL (0 rows added; guard files 2 of 2).
 
 <status>pending</status>
