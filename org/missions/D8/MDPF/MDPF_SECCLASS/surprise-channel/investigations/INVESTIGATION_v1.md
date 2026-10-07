@@ -2420,3 +2420,34 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "NOT read: whether any Cottonwood gold run executed B_01b after 04:16:37Z; the next scheduled run time (row S35 INFERRED about 11:36Z from the prior run's stamp); which push carried the upload. 2.0.0_SA_COO~M is not registered live at 06:28Z (org/mcp/liveness.json lists four seats: 0.0.0_AB_MSTR, 1.0.0_SA_CTO, 2.0.0_SA_COO~C, 3.0.0_SA_CVO); the row is told to Andrew at this seat's terminal and to 1.0.0_SA_CTO in one line. S38 stays ARMED under its own id; this row is its fired state."
 }
 ```
+
+
+## MDPF_SECCLASS-S40 -- S39 and S38 disarmed: Cottonwood B_01b rolled back in S3 and read back; the repo file set to the same bytes; no run read the unsigned code
+
+```json
+{
+  "id": "MDPF_SECCLASS-S40",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T06:40Z",
+  "one_line": "Rows S39 and S38 disarmed. s3://opal-data-cot/code/gold/B_01b.classify_new_securities.py is back at the pre-8f67065e50 body (copy-object of VersionId _24mhLjaqbMSNl75DXKc7UjTnoG5B9nS, new latest u_QyPqqoZOveegVfVxS6w9jrYX1Rl9i5, 06:34:58Z), read back byte-equal. The repo file is set to the same bytes in this row's commit, so a later changed-script push uploads what S3 already holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ruling org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULING_MDPF_SECCLASS_S39_ROLL_BACK_COT_B01B_20261007.md (@a9a85869dc): roll back, the deploy is not signed; CTO msg 105923 (row S38): set B_01b at HEAD to the live S3 body, a commit, no deploy",
+      "pre-check 06:3xZ: get-object of VersionId _24mhLjaqbMSN (13737 bytes) cmp equal to git show 8f67065e50^:data/cot/scripts/gold/B_01b.classify_new_securities.py; not equal to HEAD a9a85869dc (14699 bytes)",
+      "06:34:58Z copy-object: CopySourceVersionId _24mhLjaqbMSNl75DXKc7UjTnoG5B9nS, new VersionId u_QyPqqoZOveegVfVxS6w9jrYX1Rl9i5, ETag eedfd1d1c5deb0c7e9e9e6100bbd3f77; read-back of latest (13737 bytes): cmp equal to the 8f67065e50^ blob, not equal to HEAD (negative control); list-object-versions after the act: 7 versions, Hh9lWlPap1OJ (04:16:37Z) kept as a non-latest version",
+      "ledger org/critical_paths/change_management/20261007T0634Z_secclass-s39-cot-b01b-rollback-m-20261007_deploy_completion.md: opened before the copy, legs R and V proven, CLOSED",
+      "no Cottonwood gold run between 04:16:37Z and 06:34:58Z: list-objects-v2 over opal-data-cot gold/ (auto-paginated, newest six per page printed), newest object 2026-10-06T11:39:05Z",
+      "repo: data/cot/scripts/gold/B_01b.classify_new_securities.py in this commit cmp equal to the S3 latest body; test_b01b_reads_the_canonical_holdings_and_admits_other removed from data/cot/scripts/gold/tests/test_other_admission.py (it asserts the rolled-back behaviour); the file's remaining 2 tests pass"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rows S38 and S39: before the next Cottonwood gold run the code goes back or the deploy is signed; after a rollback HEAD is also set to the S3 body.",
+  "world_is": "S3 and the repo agree on Cottonwood B_01b at the pre-8f67065e50 body. 8f67065e50's change (the gold/canonical/holdings/ listing, Andrew's rules, the class other) is in git history only; it returns as its own signed act, without the class other (six classes, Andrew's word of 2026-10-07). This commit is LOCAL until 0.0.0_AB_MSTR pushes; a push of it uploads bytes S3 already holds.",
+  "notes": "NOT read: whether the Cottonwood gold chain invokes B_01b with --upload; which push carried the 04:16:37Z upload. The disarm clocks of S38 and S39 are the CVO's to write; this row is the owner's evidence. The CTO ruling's second item (11 of 11 gold scripts of push 1: signed or not) is a separate read by this seat, reported in its own row."
+}
+```
