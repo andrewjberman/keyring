@@ -21466,6 +21466,46 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "lib/research/posture/comparable.py COMPANY_ID_FIELDS and company_identifier"
     ]
   }
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~280",
+  "surfaced_at": "2026-10-07T02:13:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W280-S1",
+  "one_line": "AMGT-ba-14 item 2 says a not-served universe gate writes every name's D ABSENT with the summary's reason; AMENDMENT 1 says D is ABSENT with exactly 'consensus dispersion is not yet pulled'. With no dispersion figure on any name the two collide.",
+  "spec_asserts": "AMGT-ba-14 section 1 item 2: when the universe summary reads served False, every name's D, U and Delta are written ABSENT with the summary's reason. Item 3 AMENDMENT 1: where the dispersion statistics are missing, D is ABSENT with exactly the reason 'consensus dispersion is not yet pulled'.",
+  "world_is": "Measured in the dry run (python -m lib.research.scores.run_scores --dry-run, 237 keyed names): 0 names carry dispersion statistics, so 0 names have a measured D, so check_degeneracy reads fewer than two values and the gate reads served False on every run. Read literally, item 2 would overwrite the amendment's exact reason on all 237 names. Done: the gate overwrites only a name whose D is MEASURED; a name whose D is already ABSENT keeps its own, more specific reason, and the summary (served False, its reason, sd_D, the correlation) rides in every record as universe_gate. Once dispersion is pulled and some names measure, the gate's overwrite applies as item 2 says. Pinned by test_gate_not_served_writes_a_measured_d_absent_and_keeps_an_absent_reason.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/scores/run_scores.py _apply_universe_gate on the worktree branch wk-AMGT_RESAPP-280",
+      "dry run 2026-10-06 summary: names_with_dispersion_statistics 0, universe_gate.served false, n 0"
+    ]
+  }
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~280",
+  "surfaced_at": "2026-10-07T02:13:09Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "AMGT_RESAPP-Z-W280-S2",
+  "one_line": "AMGT-ba-14's premise was measured on one name (BA); across the 237 keyed names the house forecast measures on 92, and 137 have no reported history pulled at all.",
+  "spec_asserts": "AMGT-ba-14 preflight: measured on BA_US_Equity's newest model block, 10 fiscal years of SALES_REV_TURN and CF_FREE_CASH_FLOW. The order reads as if the history is there for the keyed names.",
+  "world_is": "Dry run over the crosswalk's 237 keyed names, denominator printed: forecasts MEASURED 92; ABSENT 145 = 137 with no model block pulled, 7 with revenue but no CF_FREE_CASH_FLOW years ('only 0 years of reported free cash flow beside revenue'), 1 whose reported revenue years are not consecutive. Of the 92 measured, 4 carry no annual announcement date (reference.announcement_date null with its reason). Consensus FY1 free cash flow is carried on 86 names; 84 carry both, so the correlation is over n=84 (0.943). Consensus and revenue units and currencies matched on all 84. Not a defect in the producer: a coverage fact the next round's enrichment list may want.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dry run 2026-10-06: forecasts_measured 92, forecasts_absent 145, names_with_consensus_fy1 86, n_correlation 84",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~280/DRY_RUN.md"
+    ]
+  }
 }
 ]
 ```
