@@ -19851,3 +19851,213 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The function logs refusals only; an admitted read leaves no line and no record of covered set or caller scope, so the count is 0 identified but exposure is NOT excluded. The fail-open branch is still served live (fix IB-pr-343 not landed), so any read admitted from now is equally unrecoverable until a decision line is logged or the branch is closed."
 }
 ```
+
+## IRPT_BCKEND-S370 -- a change to irpt-ycharts-runner-role also changes what the dell2 box user can do (NFRA_CTLPLN dell2 command grant, CTO condition 7)
+
+```json
+{
+  "id": "IRPT_BCKEND-S370",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:55:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "A change to irpt-ycharts-runner-role now has a second blast radius: under NFRA_CTLPLN's dell2 command grant, whatever that role may do, the dell2 box user may do by sending a command to the resident host.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL_DENIES_AND_DELL2_GRANT_20261007.md @eb74cfb2d2, condition 7, verbatim: 'Any later change to irpt-ycharts-runner-role (an attached or inline policy, its boundary, its trust) is a never-widen act that names this route in its blast radius ... after the apply, the owner of that role's Terraform carries it.'",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json: ssm:SendCommand to instance i-0167fd745ad906a66 with documents irpt-ycharts-deploy and irpt-ycharts-run, both taking a free-text parameter",
+      "The role is declared in infra/aws/terraform/investor-reporting/ycharts/iam.tf; NFRA_CTLPLN's role census read it NO on IAM writes, audit-trail writes and production-data deletes at 2026-10-07T11:05:41Z",
+      "The grant is signed and NOT applied at this row's filing (order NFRA_CTLPLN.TO-APPLY-6 pending)"
+    ]
+  },
+  "spec_asserts": "The role's permissions were set for the resident host's own pipeline work, with the host as the only caller.",
+  "world_is": "Once NFRA_CTLPLN's apply lands, the role has a second caller. A later widening of the role (a new attached or inline policy, a changed boundary or trust) widens what dell2 can do without any change to dell2's own policies, and no gate joins the two. The control today is by reading: the seat that changes this role names the dell2 route in its never-widen sign-off. The census check that would show it is infra/aws/terraform/nfra-ctlpln-identity/tests/derive_reached_roles.py --check-fresh."
+}
+```
+
+## IRPT_BCKEND-W145-S1 -- TO IB-pr-343 requires facts.covered_account_ids non-empty in the receipt contract, but three existing tests mi
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-343 requires facts.covered_account_ids non-empty in the receipt contract, but three existing tests mint a receipt from an account-less RETAINED bundle through receipt.build and expect success (two validate or read it); a retained revision row carries no account and the ExportBundle contract (additionalProperties false) forbids one, so no honest receipt.build can pass them. They are outside <paths>, so IB65-1-AC1 (no failure beyond the six pypdf-only tests) is not reachable without an out-of-grant edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/tests/test_export.py::test_the_receipt_names_the_object_and_is_derived_from_the_two_hashes (builds from _bundle_inputs(): one retained row {report_id, revision, authorization_ref, immutable}, then bundle_mod.validate(built, \"ExportReceipt.schema.json\"))",
+      "infra/aws/lambda/investor-reporting/export/tests/test_download_signed_answer.py::test_the_receipt_names_the_live_route_and_no_other (bundle {\"performance_revisions\": []})",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_path_b_route.py::test_a_path_a_export_is_unchanged_and_never_calls_the_route_or_the_mint (a PATH A retained bundle, then validate)",
+      "worktree wk-IRPT_BCKEND-145 export suite after the change: 9 failed, 213 passed; 6 are the pypdf-only set, the other 3 fail with receipt.ReceiptRefused \"the frozen bundle names no covered account and none was supplied\"; base was 6 failed, 216 passed; the new test_covered_account_ids.py passes 11 of 11"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343: \"The export suite must show no failure beyond the six pypdf-only tests\"; derive covered_account_ids \"at freeze ... never empty for a READY receipt\"; paths exclude every existing test file.",
+  "world_is": "A retained report row has no account (ExportBundle contract forbids one; retained_export.resolve builds a 4-key row), so the covered set of a retained export is known only from the retained owner scope (stamped[\"account_ids\"], pending.json account_ids), never from the bundle. Three tests assert an account-less retained receipt is valid, which is the defect itself. Each needs a covered_account_ids argument (or a platinum bundle) in a test file the grant does not name."
+}
+```
+
+## IRPT_BCKEND-W145-S2 -- receipt.build now REFUSES a receipt with no covered account (PATH B derives its one account from the bundle). 
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "receipt.build now REFUSES a receipt with no covered account (PATH B derives its one account from the bundle). A retained export (PATH A / analysis / custody) can only name its accounts from the retained owner scope, which submit stores as pending.json account_ids; finalize_on_read.finalize builds the submission without them and handler.finalize_export calls receipt_mod.build without covered_account_ids, so after release every retained export would raise ReceiptRefused at finalize and never produce a receipt. Both files are outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/finalize_on_read.py:86-90 (submission = {identity, report_kind, bundle, bundle_sha256, artifact_key, contract_version}; pending[\"account_ids\"] is read at entry.py but never passed on)",
+      "infra/aws/lambda/investor-reporting/export/handler.py:321-326 receipt_mod.build(...) with no covered_account_ids",
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:111-112 write_pending(account_ids=stamped[\"account_ids\"]) -- the accounts ARE held at submit",
+      "tests/test_submit_service.py::test_submit_then_first_read_after_the_render_finalizes_the_receipt is one of the six pypdf-only tests, so it would be the first to show this once pypdf is present"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343 item 2: the receipt writer (receipt.py) writes facts.covered_account_ids \"at freeze time, never empty for a READY receipt\"; paths name receipt.py, bundle.py and entry.py only.",
+  "world_is": "receipt.build(covered_account_ids=...) is implemented and tested, but its two production callers (handler.finalize_export, finalize_on_read.finalize via submission) sit outside the grant. The wiring is: finalize_on_read adds \"covered_account_ids\": pending[\"account_ids\"] to the submission; handler.finalize_export passes submission.get(\"covered_account_ids\") through. Release must not precede it."
+}
+```
+
+## IRPT_BCKEND-W145-S3 -- entry._covered keeps collecting from account_ids, accountIds and covered_account_ids (the order says keep the 
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:02:27Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "entry._covered keeps collecting from account_ids, accountIds and covered_account_ids (the order says keep the other branches) and refuses only when all three name nothing. PRD v0.30 item 34 reads \"admits only when the list [covered_account_ids] is present and non-empty\". The writer never emits the legacy keys (the schema is additionalProperties false and the receipt is validated before it is written), but a test fixture in test_export_receipt_live_route.py depends on account_ids.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered (three-key loop kept)",
+      "infra/aws/lambda/investor-reporting/export/tests/test_export_receipt_live_route.py:_stored() uses facts.account_ids"
+    ]
+  },
+  "spec_asserts": "PRD v0.30 item 34: _covered() admits only when covered_account_ids is present and non-empty and every id is inside permitted_account_set. TO IB-pr-343: \"Keep the other branches.\"",
+  "world_is": "The legacy keys still count as naming accounts. Narrowing to covered_account_ids alone would fail test_export_receipt_live_route.py fixtures that are outside the grant."
+}
+```
+
+## IRPT_BCKEND-W145-S4 -- Amendment 1 item 1 says the submission records the covered accounts in pending.json; it already does (finalize
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Amendment 1 item 1 says the submission records the covered accounts in pending.json; it already does (finalize_on_read.write_pending stores account_ids=stamped[account_ids] at both submit_service call sites), so submit_async.py and dispatch.py were not edited and only handler.finalize_export and finalize_on_read.finalize were wired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:111-112 and :164-165 write_pending(account_ids=stamped[\"account_ids\"])",
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_finalize_names_accounts.py (submit -> pending.account_ids -> finalize -> receipt names both accounts)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343 AMENDMENT 1 item 1: the submission (submit_async.py / dispatch.py, which write pending.json) records the export's covered accounts in pending.json.",
+  "world_is": "pending.json is written by submit_service.write_pending (not submit_async/dispatch) and already carries account_ids; the missing half was only the finalizers passing them to receipt.build."
+}
+```
+
+## IRPT_BCKEND-W145-S5 -- TO IB-pr-344 dry run over opal-data-ycharts (firms 49financial, cottonwood): 1 receipt listed (firms/49financi
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:27:24Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO IB-pr-344 dry run over opal-data-ycharts (firms 49financial, cottonwood): 1 receipt listed (firms/49financial/generations/EXP-e29b5415a06f90f943481c41a1a4821b/receipt.json, 870 bytes, SSE aws:kms), 0 readable -- GetObject on the receipt, its pending.json and a bundle is AccessDenied because cloudops-dell2-agent-user has no kms:Decrypt on key 7f4d3042-10d8-49a7-b55e-3c963cea8111; HEAD and LIST work. Census is read 0 = filled 0 + unfillable 0, wrote 0, 1 DENIED object recorded; nothing widened.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~145/IB65-2_backfill_census.json (per_firm, denied_objects)",
+      "MEASURED 2026-10-07T12:27:24Z: boto3 get_object and head_object on the receipt, pending.json and bundle.json keys: get = AccessDenied (kms:Decrypt on the key above, no identity-based policy allows it), head = OK"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-344 item 3: run the dry run READ-ONLY against the real evidence buckets this box can read; read = filled + unfillable; a denied bucket is recorded and filed as a row, never widened.",
+  "world_is": "The bucket is readable for LIST and HEAD but its objects are KMS-encrypted under a key this identity cannot decrypt, so the census reconciles only vacuously (0 = 0 + 0). Whether the one receipt is FILLED or UNFILLABLE is unmeasured. Before the issuer applies, the dry run must be re-run under an identity with kms:Decrypt on that key (the tool is --dry-run by default: python infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py --census-out <file>). The tool runs unchanged; nothing is widened here."
+}
+```
+
+## IRPT_BCKEND-W148-S1 -- TO-IB-pr-347: 7 of 30 non-Opal principals (6 49financial FIRM_ADVISOR, 1 cottonwood FIRM_OPERATIONS admin) of 
+
+```json
+{
+  "id": "IRPT_BCKEND-W148-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~148",
+  "surfaced_at": "2026-10-07T12:50:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-347: 7 of 30 non-Opal principals (6 49financial FIRM_ADVISOR, 1 cottonwood FIRM_OPERATIONS admin) of 52 read in opal-users-v2 hold a firm grant that reaches the fail-open irpt-export-render read today, and the API is directly callable by any of them because the admin/dev gate is the page only.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~148/IB67-1_export_reach.json: principals_read 52 (22 opal-capital/Dev, 30 non-Opal all active), non_opal_reach 7, split 6 FIRM_ADVISOR + 1 FIRM_OPERATIONS; opaque ids and per-principal permitted-account counts (403, 5, 457, 989, 377, 276 for 49financial; 862 for cottonwood)",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py classify_principal/resolve/advisor_grant run over the live opal-users-v2 PROFILE rows, opal-partner-* rows, ownership_map.json (49financial 190 advisors; cottonwood 0; inflection absent) and directory.json (as_of 2026-10-05/05/06), headers reconstructed offline",
+      "live edge read-only: API GW 7k3ed8px20 routes GET export/{exportId}, GET export/{exportId}/download, POST export -> integration 61aupci -> irpt-export-render, authorizer naqxlm portal-jwt-authorizer (any valid human JWT admitted); CloudFront EVTSA9VEHNZVH /api/scoped/investor-reporting/* viewer-request auth-validator-edge:22; WAF no path rule",
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered: `if not named: return True, 0, 0` (fail-open) live in irpt-export-render CodeSha256 exDoi/uo5e..., LastModified 2026-10-06T01:35:28Z; portal/src/App.tsx :107/:462 page gate is client-side only"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 525: zero non-Opal principals reach the export read -> the fix waits for the terraform kit; non-zero -> a security exception and a laptop emergency apply.",
+  "world_is": "Non-zero: 7 non-Opal principals can call the export read now (6 limited-grant 49financial advisors for whom the fail-open branch widens same-firm reads of receipts naming no account; 1 cottonwood firm admin whose scope is the whole firm). Whether any receipt names no account was not read, and no unauthorized read is shown to have occurred (the function logs no admitted read, row W146-S1). Measured at 2026-10-07T12:3xZ-12:5xZ; the count moves with the ownership maps and the profile rows."
+}
+```
+
+## IRPT_BCKEND-W148-S2 -- TO-IB-pr-347 bound says firm buckets deny this box's identity (row S347); this identity (cloudops-dell2-agent-
+
+```json
+{
+  "id": "IRPT_BCKEND-W148-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~148",
+  "surfaced_at": "2026-10-07T12:50:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-347 bound says firm buckets deny this box's identity (row S347); this identity (cloudops-dell2-agent-user) read the ownership maps of opal-data-bd and opal-data-cot and the directory objects of opal-data-bd, opal-data-cot and opal-data-inf, and HeadObject on opal-data-inf's ownership map answered 404.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object s3://opal-data-bd/platinum/49financial/ownership_map.json -> 472,562 bytes; s3://opal-data-cot/platinum/cottonwood/ownership_map.json -> 107 bytes; investor-reporting/directory/latest.json and the directory.json it names read from opal-data-bd, opal-data-cot, opal-data-inf (7,768,167 / 539,903 / 565,951 bytes); head-object platinum/inflection/ownership_map.json on opal-data-inf -> 404 Not Found",
+      "sts get-caller-identity: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user; the bytes were processed into counts in a scratch directory and are not in any committed file; only the ownership-map and directory objects the _authz loaders read were touched, nothing under firms/, receipts or any other prefix"
+    ]
+  },
+  "spec_asserts": "The TO bounds: firm buckets deny this box's identity (row S347); a firm-bucket read is a row and a stop on that criterion.",
+  "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
+}
+```
