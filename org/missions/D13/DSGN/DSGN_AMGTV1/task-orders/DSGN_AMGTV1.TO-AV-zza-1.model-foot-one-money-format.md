@@ -37,6 +37,25 @@ the served unit starts with MILLIONS, and the currency code is put in front.
 - Do not type a currency code, a magnitude letter or a number format of your own: the formatter decides all of them. A fact served
   with no currency must not gain one; the formatter already says "currency not stated" for it.
 
+### AMENDMENT 1 (issuer, 2026-10-07) -- ONLY A DECLARED MONEY FACT TAKES THE MONEY FORMAT
+
+Your first pass is right for the two money facts and is kept. The reviewer asks for three small changes in the same function,
+`v3FactValue` in `tabs/ModelTab.tsx`:
+
+1. **Key the money format to a declared set.** Today every finite number goes through the currency format. The list of header facts is
+   open, so a future numeric fact that is not money would print as money. Declare one constant beside the function, a set holding
+   exactly these two mnemonics: `AVG_DAILY_VALUE_TRADED_3M` and `CRNCY_ADJ_MKT_CAP`. Only a fact whose `mnemonic` is in that set takes
+   `formatStatValue`.
+2. **A numeric fact that is NOT in the set prints as the plain grouped number** (`toLocaleString('en-US', { maximumFractionDigits: 0,
+   useGrouping: true })`), with no currency code, no "currency not stated" and no magnitude letter.
+3. **Make the comment true and remove dead lines.** The docstring above the function still says a number is grouped digits, that MILLIONS
+   says "million", and "Nothing is converted". Rewrite it to say what the function now does. `formatStatValue` never returns null for a
+   finite number, so the old " million" and currency lines after it can no longer run for a money fact: remove them, or keep only what
+   the non-money branch uses.
+
+The check has a new arm for this ("A NUMBER THAT IS NOT MONEY IS NOT FORMATTED AS MONEY"); AC1 now expects 4 of 4. It reads 3 of 4 on
+your first pass. AC2 and AC3 are unchanged. Re-write your proof instance for the three criteria and flip the status in the same commit.
+
 ## 2. BOUNDS
 
 1. No server, no fetch, no network, no install, no push, no deploy. REFUSE, do not rescue.
@@ -59,7 +78,7 @@ org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_
 ## 4. PROOF OF SPEC (literal; timeout 1800)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="AV-zza-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round49/checks/r49/r49.cjs"; echo "exit=$?"</invocation><expect>THE MODEL TAB'S FOOT PRINTS MONEY IN THE PAGE'S ONE MONEY FORMAT: 3 of 3 arms -- and exit=0</expect></criterion>
+  <criterion id="AC1" cell_refs="AV-zza-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round49/checks/r49/r49.cjs"; echo "exit=$?"</invocation><expect>THE MODEL TAB'S FOOT PRINTS MONEY IN THE PAGE'S ONE MONEY FORMAT: 4 of 4 arms -- and exit=0</expect></criterion>
   <criterion id="AC2" cell_refs="AV-zza-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round47/checks/r47/r47.cjs"; echo "exit=$?"</invocation><expect>THE MODEL TAB HAS NO SMALL TEXT, NO VENDOR SHORT NAME AND A PLAIN-WORDS LEDGER: 4 of 4 arms -- and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-zza-1"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; bash "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round29/checks/battery29.sh" "$(git rev-parse --show-toplevel)"; echo "exit=$?"</invocation><expect>BATTERY29: ALL PASS (0 skipped) -- and exit=0</expect></criterion>
 </proof_of_spec>
@@ -80,9 +99,10 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **The first read the CVO asked for:** both foot figures are page-formatted (`v3FactValue`); the What-changed row label in the vendor's
   words was not read in this round and is named in the close.
 - **Base:** the worker's portal is at 97598dc3, so the candidate becomes 97598dc3 + 1 product commit; the CTO re-reviews that commit.
+- **AMENDMENT 1:** CTO review msg 30881 of portal 8e4dad8f (the outcome is right; one amendment). r49.cjs gained arm 3 and reads 3 of 4 at base 8e4dad8f; a reference edit for the new arm was NOT run. No gate limb graded this modification.
 - **The round's second cell,** `AV-zza-2` (planted fail-and-clean pairs for the render check), is an issuer act with no order file.
 
-<status>complete</status>
+<status>pending</status>
 <round>49</round>
 <slot>~111</slot>
 <fabric>site-z</fabric>
