@@ -155,9 +155,27 @@ Change an existing test assertion only where this cell's rule is the reason, and
 - The close run is the census (AC2's output, read by the issuer). After it: the request to `1.0.0_SA_CTO~Z` for the ONE gold
   rebuild's never-widen pair, with `bc1_census.out` and `bd1_census.out` as the expected-outcome read.
 
+**COMPLETE 2026-10-07 ~12:5xZ (issuer):**
+- **Built:** worker ~106 (re-seated; the finished bc-1 instance could not be resumed) @3c2a514a57 + @e0c431f262; merged
+  @088d226de5 (9 paths, index check 0 of 9 differ).
+- **AC1 PASS:** 17 of 17 (the TV review gives 0; the mutant with the brand in `aliases` gives 1). **AC2 PASS:** CENSUS OK.
+  **AC3 PASS:** 397 of 397 on the branch.
+- **Census** (242 securities, 18,638 silver articles): Meta pairs 775 to 946, gained 171; mention count 1,147 to 4,773; title
+  flags gained 340; lead flags gained 90. Lilly pairs 292 to 292, gained 0; mention count 767 to 1,059; title flags gained 18;
+  lead flags gained 1. Bare-Lilly articles with no anchor: 2 (`barrons:WP-BAR-0001937680`,
+  `wsj:510e7738-752c-4376-889b-7f0d60761963`), both dropped. Other securities changed: 0 of 242.
+- **Summary fields:** `gold_brand_admitted` ASML_NA, ASML_US, Dell, Meta, Micron, TJX, Uber (the six `plane: text` brands read
+  as gold brands, plus Meta); `gold_brand_anchored` LLY_US_Equity / Lilly; `gold_brand_refused` none.
+- **Existing assertion changed:** `test_alias_rule_round18.py::test_no_shipped_whole_brand_entry_is_refused_by_limb_a_or_limb_b`
+  now expects 8 (the text-plane entries plus the unanchored gold entry), was 7.
+- **Rows:** AMGT_HARVST-Z-W106-S3 (the silver corpus read 18,638, 4 more than the face's 18,634: the legs are adding).
+- **Issuer drain check on merged CLOUD:** the same invocation as AC3, result in the commit message of this close.
+- **No gold was built.** Asked of `1.0.0_SA_CTO~Z` in the drain-end message: the ONE rebuild's never-widen pair.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>57</round>
 <slot>~106</slot>
 <fabric>site-z</fabric>
