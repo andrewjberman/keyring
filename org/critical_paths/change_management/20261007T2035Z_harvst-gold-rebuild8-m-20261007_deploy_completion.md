@@ -12,7 +12,7 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | git | round60/gold_rebuild8.act.py with the CTO half's C2 bounds in its record | commit hash |  | OPEN |
+| L1 | git | round60/gold_rebuild8.act.py with the CTO half's C2 bounds in its record | commit hash | c791a561cc (act script with the C2 stated_bounds block; commit gate clean) | CLOSED 20261007T203935Z |
 | L2 | verify | the act's own gate run (dry, PUTS 0) | RULE (rebuild #8): HOLDS and PUTS SENT: 0 in the act record's gate lines |  | OPEN |
 | L3 | verify | amgt/harvest/gold/article_security_mention and chatter_daily: one new part each | the two newest part keys in the act record's after block, read back by a list |  | OPEN |
 | L4 | verify | the rule on the WRITTEN parts | act record result DONE with verify.holds true, or ROLLED BACK with both digests equal to BEFORE |  | OPEN |
@@ -20,3 +20,4 @@
 ## Log
 
 - 20261007T203532Z OPENED by 2.0.0_SA_COO~H with 4 leg(s)
+- 20261007T203935Z LEG L1 closed: c791a561cc (act script with the C2 stated_bounds block; commit gate clean)
