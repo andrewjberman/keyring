@@ -60,6 +60,7 @@ portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx
 portal/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx
 portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx
 portal/src/pages/SecurityAnalysis/dossierLocator.ts
+portal/src/pages/SecurityAnalysis/reasonWords.ts
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.md
@@ -75,6 +76,7 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md`, `portal/DESIG
   <criterion id="AC3" cell_refs="CRPS-ap-4" judgment="true"/>
   <criterion id="AC4" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" rev portal</invocation><expect>(?m)^rev build 5/5 control 3/3$</expect></criterion>
   <criterion id="AC5" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" ap2 portal</invocation><expect>(?m)^ap2 build 1/1 control 1/1$</expect></criterion>
+  <criterion id="AC6" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)/portal" &amp;&amp; node src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs &gt; /dev/null 2&gt;&amp;1; echo "drafting rc=$?"</invocation><expect>(?m)^drafting rc=0$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the real `FeedList`, rendered to static markup on four hand-built headlines and three terms): build -- one term block per
@@ -130,6 +132,28 @@ the pillar opener). Also run `node "<the same page_check.cjs>" ap5 portal` and r
 (AC3 stays the judgment row), the checker after your final commit, and the status tag reading complete appended at the END of
 this file only if AC1, AC2, AC4 and AC5 pass. Report once, with the portal branch name and the full 40-character portal commit.
 
+## 7. AMENDMENT 2 (2026-10-07, the issuer's own; the render check on the amended candidate)
+
+AMENDMENT 1 is built: nested portal commit `5a526eba88ee69f747cee3b4c62da8d2523c00df` on branch `wk-AMGT_CORPUS-40-portal`, your
+INHERITED STATE. The issuer then ran the page's render check on it (`scripts/ui-contract-check.mjs --dist`): 75 PASS, 1 FAIL of
+77. The FAIL is the harness clause: `src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs` exits 1 with `Error: Cannot find
+module '../dossierLocator'`. This page's harness loaders resolve only the modules they already name (`ThesisTab.tsx` says so in
+its own comment above `dossierReportName`), and `drafting.harness.cjs` already resolves `'../reasonWords'` to the real file
+(its line 114). A NEW module cannot be imported by a component those harnesses load. The harness is not edited.
+
+**Do, and only this:**
+1. Move the locator helper, with its comment citing `lib/research/corpus/continuation.py` lines 35-37, out of
+   `dossierLocator.ts` into `portal/src/pages/SecurityAnalysis/reasonWords.ts` (now in `<paths>`) as an exported function, added
+   at the end of that file; change nothing else there. Both `tabs/ThesisTab.tsx` and `components/SecurityOverlay.tsx` already
+   import from `'../reasonWords'`: import the helper from there in both, and remove the `'../dossierLocator'` imports.
+2. Delete `dossierLocator.ts` (`git -C portal rm`).
+3. No wording changes: the rendered text of every cell stays exactly as AMENDMENT 1 left it.
+
+**Prove** AC1, AC2, AC4, AC5 and AC6 by their invocations in section 4 (AC6: the drafting harness exits 0), plus the `ap5` line.
+Then section 5 again: typecheck (exit code read directly), `tabs.harness.cjs` and `posture.harness.cjs` last lines, the proof
+instance updated (AC6 added), the checker after your final commit, and the status tag reading complete appended at the END of
+this file only if AC1, AC2, AC4, AC5 and AC6 pass. Report once with the full 40-character portal commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 7 + s.4 item 2. Base portal origin/DEV `ba391aff`: ap4 build 0/1 control 1/1. Queued behind ap-3 on slot ~5 (the mount line is in ap-3's file). Title match only: a feed item serves no term field. The Chatter axis half of FWD-18 is named NOT COVERED in the packet. Candidate to the CTO's render review.
@@ -141,3 +165,4 @@ this file only if AC1, AC2, AC4 and AC5 pass. Report once, with the portal branc
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>
+<status>in_progress</status>
