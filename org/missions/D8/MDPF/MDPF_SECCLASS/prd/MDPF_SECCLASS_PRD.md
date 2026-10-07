@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -144,7 +144,7 @@ The section below carries the endpoint's outcomes verbatim.
                     Classifier. Those can land without human review, but we want an index somewhere of
                     all those that land by AI")
 
-  FWD-12 The shared list carries each security's sector and industry group, and the Positioning
+  FWD-12 The shared list carries the sector and industry group of each security an Opal ETF holds, and the Positioning
          page's ETF view shows sector, industry group, class and sub-class from the shared list
          DONE WHEN  EXERCISED -- the ETF view opened for one Opal ETF and its holdings' sectors read
                     against the shared list
@@ -649,3 +649,33 @@ FWD-9 is amended in place (id unchanged): the depth is one year. TO-SC-e18 (comp
 deleted, because a delete is Andrew's act and he ordered none. From this version a new Rival Funds stock is filled one year back.
 The ENDPOINT changed, so the ratified-text half re-opens for `3.0.0_SA_CVO`. The depth policy per ingestion point is owned from here
 by MDPF_SECHIST; this outcome keeps the row and the fill.
+
+## ADDENDUM v0.13 (1.0.0_SA_CTO~DELL1, 2026-10-07) -- the round-8 analysis: FWD-12 amended in place; contract notes
+
+**Analysis:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_8_20261007.md` (same commit), on
+`3.0.0_SA_CVO`'s slug (msg 179, ADJUDICATION_v7 @cb765997e2). Author's authority: laptop `1.0.0_SA_CTO` ruling 106047 (1) and the
+NFRA_CTLPLN v0.12 addendum (a Dell CTO writes L4 and L10 for its box's projects).
+
+- **FWD-12 amended in place (id unchanged), row S44.** Its title read "each security", while its DONE WHEN and ACCEPT grade the ETF
+  view's holdings. The title now says what is graded: each security an Opal ETF holds. **No longer promised by this outcome:** a
+  sector or industry group on rows no Opal ETF holds (rival-fund stocks, client securities, unheld old rows). The source stays the
+  Bloomberg characteristics leg the ETF producer already reads. A held security the leg does not return is a C-PULL cell at site Z
+  under the daily vehicle's existing vendor use; nothing is inferred from a name.
+- **FWD-14 source (row S45), no wording change.** A held row with no name takes the custody feed's security name through `clean_name`,
+  once row W28-S5 is repaired. An AI-made row keeps FWD-11's clean name.
+- **FWD-15 path (row W26-S8).** FWD-11's producer runs over FWD-15's per-firm missing list, held first, after the direct-match plan,
+  under FWD-11's recorded C-VENDOR word (same model, name and ticker only).
+- **FWD-17 (row W25-S2).** The population is the whole old list, held or not. "Held" means a non-zero market value in the latest
+  served holdings partition of any of the three firms on the census as-of. The "58" is retired.
+- **C-BOUND (row W26-S6).** The contract's closed `sub_asset_class` list is the bound for a DIRECT or AI verdict, cash included, not
+  only the values the table holds today.
+- **C-SECTOR values (rows W24-S2, W24-S1).** `gics_sector` carries the 11 GICS sectors (Real Estate added). The industry-group list
+  carries full GICS names, and a decode table in the same contract maps the vendor's 30-character spellings to them. An unmapped
+  spelling leaves the field empty, and the row is listed.
+- **Manifest paths (row S47).** S13's files are `infra/aws/lambda/v2_portal/yang_pipeline/portfolios/yang-generate-etf-returns/etf_classification.py`,
+  `.../yang_pipeline/positioning/yang-generate-holdings-attribution/etf_classifications_dynamodb.py`,
+  `.../yang_pipeline/positioning/yang-generate-positioning/lambda_function.py` and
+  `infra/aws/lambda/v2_portal/01_market_overview/lambdas/market-overview-tiered-generator/lambda_function.py`. S26 is
+  `.../yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:95`.
+
+**Sign-off:** an ENDPOINT wording change on FWD-12, so the ratified-text half re-opens for `3.0.0_SA_CVO` (dell1).
