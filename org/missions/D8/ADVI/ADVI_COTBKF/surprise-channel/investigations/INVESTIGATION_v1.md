@@ -1633,3 +1633,32 @@ round.** Never edit an existing row.
   "notes": "Whether the 13 fractional residues are unrecorded corporate actions (the order's BLIND) or a snapshot that omits fractional lots is not measured here."
 }
 ```
+
+## ADVI_COTBKF-D2-S24 -- cash in lieu is never subtracted from rebuilt holdings
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S24",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-07T15:05Z",
+ "one_line": "The shared signed-quantity map (commonwealth_crosswalk.SIGN, imported by commonwealth_daily_holdings) has no entry for transaction type 'leu' (Cash in Lieu), so every fractional share paid out as cash stays in the rebuilt holdings: all 13 of round 12's snapshot differences are exactly that pair's leu quantities, and 515 leu rows across 69 accounts over-state every later day.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_crosswalk.SIGN (imported): 17 types, no 'leu' and no 'ileu' (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "deliverables/0.9.0_WK_ADVI_COTBKF~28/snapshot_differences.csv: 13 rows; for each, the sum of that (account, cusip)'s leu quantities in the silver transactions equals the residual, 13 of 13 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "silver transactions: leu 515 rows, all with a quantity, 69 accounts; ileu 267 rows, 1 with a quantity, 97 accounts (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "example B3S706372 / 78462F103 (SPY): li 40.324, sl 40, leu 0.324 (2021-01-15/20); li 21.581, sl 21, leu 0.581; li 53.095, sl 53, leu 0.095; the rebuild holds 1.000 after 2023-02-23 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "C-DAILY step 1: the daily holdings of every account follow its transactions; CB12l1-AC3: one account's daily holdings read right against its transactions across its span.",
+ "world_is": "They do not after a cash-in-lieu payout: the fraction sold for cash is never removed. Nothing is served or landed (local files only); the crosswalk's applied table uses the same rule for its pre-exit rebuild, where a stray fraction can only lower a match score.",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "notes": "INERT (no served output). Remedy: SIGN gains leu -1.0 (read ileu's one quantity row to decide it), daily holdings rebuilt with 0 snapshot differences, the account re-read, and the crosswalk re-scored on the fixed rule. Filed by the round-12 compile, which grades CB12l1-AC3 NOT MET on it."
+}
+```
