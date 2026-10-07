@@ -1388,3 +1388,31 @@ round.** Never edit an existing row.
   "notes": "Surfaced building TO CB-h-1 (the FWD-6 per-kind page)."
 }
 ```
+
+## ADVI_COTBKF-S19 -- MEASURED ABSENCE: opal-data-cottonwood/irpt/cottonwood/ listed to its leaves (725 objects, 205 prefixes, 468,525,549 B) holds 0 per-security daily price stores; FWD-3's price gap is therefore sized from Opal's usable stores alone: 2,914 of 4,634 securities unpriced, 8,091,310 of 9,388,961 security-days uncovered
+
+```json
+{
+  "id": "ADVI_COTBKF-S19",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T11:15Z",
+  "one_line": "MEASURED ABSENCE: opal-data-cottonwood/irpt/cottonwood/ listed to its leaves (725 objects, 205 prefixes, 468,525,549 B) holds 0 per-security daily price stores; FWD-3's price gap is therefore sized from Opal's usable stores alone: 2,914 of 4,634 securities unpriced, 8,091,310 of 9,388,961 security-days uncovered",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran data/assets/scripts/analysis/commonwealth_price_store_scan.py (@d97b008a7c) ~11:12Z; result JSON 222 B (Taildrop C:/Users/Test/Downloads/price_store_scan, sha256 229d8993...; origin copy to follow at deliverables/1.0.0_SA_CTO/price_store_scan): status=LISTED objects=725 prefixes=205 bytes=468525549 candidates=[] security_days_possible=0 need=9388961",
+      "dell2 run of the same script: status=DENIED (rc 3) -- the denied branch never read as empty",
+      "census on the 2010-2027 calendar (deliverables/2.0.0_SA_COO~C2/census_e2/, row S17): universe=4634 priced_any=1720 security_days_covered=1297651 security_days_needed=9388961",
+      "PRD v0.4 ADDENDUM 2 (prd/ADVI_COTBKF_PRD.md:214-222): C-DAILY's source is Yahoo Finance for equity/ETF/fund and Bloomberg at site Z for fixed income and other, on Andrew's word ('i like the yahoo finance vs bloomberg rec'); prices land in MDPF_SECHIST's securities history"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3: the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket.",
+  "world_is": "The last unlisted USABLE prefix is listed and holds no price store, so the census is complete on a measured absence. The gap: 4,634 - 1,720 = 2,914 securities and 9,388,961 - 1,297,651 = 8,091,310 security-days. CANDIDATE ACT, NOT A CUT: the PRD's C-DAILY sources fill it; any Yahoo or Bloomberg pull is a vendor call that needs Andrew's per-use word (CLAUDE.md Agent Autonomy), and the pull lands in MDPF_SECHIST's store, which is another project's (dell1).",
+  "notes": "Two need figures exist and are not the same quantity: 9,388,961 (the census, every security-day in the window) and 3,421,735 (PRICE_NEED @c907766ef4, held security-days by asset type, the figure ADDENDUM 2 cites). The gap above is on the census's basis; a pull would be sized on the held basis."
+}
+```
