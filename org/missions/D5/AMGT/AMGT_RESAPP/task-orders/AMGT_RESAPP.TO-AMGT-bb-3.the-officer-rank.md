@@ -117,3 +117,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @357436b20d; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads SERVED: YES; served only after the adapter cell bb-17</status>
