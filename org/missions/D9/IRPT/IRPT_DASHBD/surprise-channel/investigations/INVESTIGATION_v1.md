@@ -2437,3 +2437,55 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "For the CTO's next analysis: the two lot contracts need a basis_source and custodian_cost_basis line before any table is served."
 }
 ```
+
+## IRPT_DASHBD-W22-S4 -- Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S4",
+  "one_line": "Removing served_runtime() (DB-b-40 item 1) leaves round 24's regrade helper unable to regenerate: it calls aal.served_runtime().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 1: set the option once at the producer's entry and remove the per-call context.",
+  "world_is": "deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py calls aal.served_runtime() in its control block (two uses); with the function removed that file raises AttributeError if run again. It is a round-24 deliverable outside this order's paths, so it was not edited; the round-24 record it wrote (IDENTITY_REGRADE_E2.json) is unchanged and this worker's windows_e1.py does not use the removed name.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py run_flow_served and main controls",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py set_served_runtime, classify_flow_days"
+    ]
+  },
+  "notes": "Regenerating round 24's record needs either aal.set_served_runtime() in that helper or the pre-b-40 producer; neither is a data change."
+}
+```
+
+## IRPT_DASHBD-W22-S5 -- The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T19:25:53Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S5",
+  "one_line": "The served classify_and_sum cannot take a frame whose index repeats a label: it addresses rows with t.at[label, column].",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-40 item 2: make classify_and_sum resolve the conditional class without depending on None surviving a column; change nothing else.",
+  "world_is": "While testing that the hardened column does not depend on the frame's index, a frame with a repeated index label (as pd.concat of several partitions without ignore_index would give) made the unchanged stage 1 (t.at[idx, detail_col] or '') raise ValueError (the truth value of a Series is ambiguous). The same happens on the unhardened source, so it predates this order. The served read path builds one partition's frame per call, so the repeated-label case is not reached today; the new test uses a unique, shuffled index. Not changed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_return_daily.py classify_and_sum stage 1 (t.at[idx, detail_col])",
+      "data/assets/scripts/gold/irpt_reporting/tests/test_account_return_daily_none.py test_classify_and_sum_does_not_depend_on_the_frame_index_when_it_holds_the_final_column"
+    ]
+  },
+  "notes": "A reset_index(drop=True) on the copy at the top of classify_and_sum would remove it; out of scope for an order that changes nothing else in the file."
+}
+```
