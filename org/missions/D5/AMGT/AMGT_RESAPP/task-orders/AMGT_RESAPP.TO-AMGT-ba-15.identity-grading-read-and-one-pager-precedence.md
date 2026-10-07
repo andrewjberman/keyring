@@ -127,3 +127,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @dbfa9f5b1c; proof VALID (worktree checker); identity/covered_keyed.py and one_pager_precedence.py; keyed 89 of 89 (residual 0); 5 of 89 folders carry two workbooks, each with its superseded line; AC1, AC2, AC3 YES; row Z-W281-S1 (60 of 167 holding rows unkeyed, a vendor identifier map)</status>
