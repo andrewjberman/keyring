@@ -89,3 +89,33 @@ was the substring test in `discovery._matches`. ax-1 fixed the matcher (whole sl
 
 **One read is added to the live close run.** bbg shares the matcher. So its first job after the change is read against the same
 name's accepted count before it, and a drop is a row, not a silent narrowing.
+
+## ADDENDUM 3 (2026-10-07 ~02:1xZ) -- the bbg read found a drop (COO~H msg 30509, row Z-S92 @24a2d1cf45)
+
+**Measured by COO~H on the replay:**
+- The merged ax-1 matcher loses 33 of 3,282 accepted bbg URLs (1.0%). Amazon.com loses 17 of 17, because the joined query
+  is `amazoncom`.
+- wsj keeps 566 of 566. T (8,758 -> 11) and SSE (501 -> 0) hold.
+- An older gap exists under both rules: the full legal name under-collects multi-word names. Meta Platforms gets 2 candidates
+  where 118 slugs carry "meta". A first-word rule fixes that, but gives Bank of America 400 against 11.
+
+**Ruling: (b) for the regression, and a separate cell for the older gap.**
+1. **Before bbg resumes: the matcher loses NO accepted URL on the replay.**
+   - The name is tokenized on punctuation, so `Amazon.com` reads as `amazon` + `com`, never `amazoncom`.
+   - A corporate-form token (com, inc, corp, plc, ltd, co, sa, nv, ag and the like, as one declared list) is not REQUIRED to
+     appear in the slug.
+   - Bar: 3,282 of 3,282 accepted bbg URLs kept, and 566 of 566 wsj, with T and SSE still inside their bounds. The 33 lost
+     today are named in the proof as recovered.
+   - bbg is stopped anyway (the stop file, and its own bot_check, which needs Andrew's hand-solve). So this costs no
+     collection time.
+2. **The brand-word gap is its own cell, and it does not gate the resume.**
+   - Not a first-word rule (Bank of America).
+   - Each name gets an ALIAS SET: the legal name without its corporate form, plus the team's research-folder name for the
+     company. That is the firm's own short name (Meta, Amazon) and is already in the crosswalk.
+   - A slug is a candidate when it carries every token of any one alias. A single-token alias is still subject to the K=100
+     bound and the acceptance stage's `company_not_mentioned` filter.
+   - Proof on the replay, per name: candidates before and after, and accepted before and after, with Meta Platforms as the
+     build case, Bank of America and AT&T as the controls, and the per-name table printed with its denominator.
+
+- **Why (b):** a known 17-of-17 loss on one of the largest names is a regression this seat's ADDENDUM 2 note asked the read to
+  catch, and it did. Resuming on it would under-collect Amazon silently, since the job would still finish and report rc 0.
