@@ -9982,3 +9982,54 @@ name the one known failure instead of silently inheriting it.
   "notes": "The Phase A value (a record already exists after the r27 deploy, with kept arg names day and route and bytes present) is stated in the ANNOUNCE. Phase B should start r28_postdeploy.sh in the background."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S31",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T21:05Z",
+  "one_line": "rl14.AC2.sh compares the host record's served_release with the manifest's deployed_commit; the Phase A rehearsal record names 419297b525, so on the re-cut sha aa75078e1b it cannot pass; the rehearsal (step 5) was run once more with the new sha as its label.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/r29/checks/rl14_attest.py _lake_ok: `b.get(\"served_release\") == deployed`, where `deployed` is the manifest's opal-gateway deployed_commit (rl14.AC2.sh passes it as argv 3). The digest the host prints binds the body, so served_release cannot be edited in the record.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_after_stage_lake.out: the Phase A rehearsal body carries served_release 419297b525...; the amended order says step 5 stands because app/audit.py is byte-equal (proved by blob: d410052b85 in 419297b525, aa75078e1b and 6b3494143c, org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28b_diff_blob_proof.out).",
+      "RUN ONE more read-only host rehearsal, org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28b_after_stage_lake.out (SSM aeb63210, own scratch dir, removed; fake S3 recorder, 4 puts, real_s3_client_created=False, 0 lake objects written; staged file app/audit.py md5 fbba5336 the same as Phase A): the same four-record result, served_release aa75078e1b. With it the step-7 exercise ends AC2 'fields=yes ssm=Success digest=yes', RESULT: PASS (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28b_rl14.AC2_expected_pass_form.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amended order A1: 'The Phase A rehearsal (step 5) and verify-script exercise (step 6) stand.'",
+  "world_is": "The rehearsal's bytes stand, but its record names the old sha, and AC2 (and the step-7 exercise that stands in for Phase B) binds the record to the manifest's sha. One more host run was needed to exercise AC2 on the new sha. It changed nothing on the host.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Phase B writes its own RL14_READ.json from the installed-code run with the sha it is given (r28_postdeploy.sh takes the sha as an argument); give it the new sha aa75078e1b, not 419297b525."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S32",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T21:05Z",
+  "one_line": "The whole-repo diff 510c8cfed2..6b3494143c names a ROOT requirements.txt (commit bc10584676); the gateway's own requirements.txt is not in the diff, so the STOP condition 'the diff touches requirements.txt' does not fire.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git diff --name-only 510c8cfed2 6b3494143c | grep -E 'requirements.txt|bun.lock|opal_portal/integration.py' -> one line, the repo-root `requirements.txt`; the same grep on `-- infra/aws/ec2/opal-gateway` counts 0. git log 510c8cfed2..6b3494143c -- requirements.txt: bc10584676 'root requirements.txt regenerated from an import census of tracked code'.",
+      "RUN git ls-tree 510c8cfed2 and 6b3494143c on infra/aws/ec2/opal-gateway/requirements.txt: the same blob 68cc021b9d8e in both (the file the deploy tarball ships). The new release commit's gateway requirements.txt is that blob (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28b_diff_blob_proof.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14: 'If the diff touches requirements.txt or bun.lock, STOP and report: such a release goes to the CTO first.' Phase A's ANNOUNCE reported a whole-repo grep 'none'.",
+  "world_is": "The same whole-repo grep now returns the root file because CLOUD moved. The order's 'diff' is the gateway diff (the release set), where there is none; no STOP. A reader who re-runs the Phase A whole-repo grep will see one hit.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not a gateway file: nothing in the release touches the host's pip install input."
+}
+```
