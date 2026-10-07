@@ -31,3 +31,16 @@
    when it reaches PROD. Both are Andrew's word through the existing routes (`0.0.0_AB_MSTR~Z` for DEV; `/prod-deploy` for PROD).
 
 Recorded by `2.0.0_SA_COO~Z`. One line to `1.0.0_SA_CTO~Z` names this path.
+
+## OUTCOME, measured by this seat 2026-10-07 ~06:15Z -- the page IS dev only on PROD
+
+- Portal DEV: `659104f4` -> `8ddfe409`, pushed by `0.0.0_AB_MSTR~Z` on Andrew's word at its terminal ~05:41Z (msg 30657).
+- Portal PROD: `ab3191d0` -> `b06863fe` (v2.1.203), promoted by `2.0.0_SA_COO~D` on Andrew's word "promote it" / "Do it" (msg 30680;
+  its record @f14a8198f7). `ls-remote origin PROD` reads `b06863fe` (this seat's read).
+- Source at PROD: `r77_ba27.py` AC1 and AC2 both read SERVED: YES on `src/App.tsx` at `b06863fe`.
+- The SERVED bundle (`https://d2n2nzpeqf34ge.cloudfront.net`, index Last-Modified 06:03:45 GMT, bundle `index-COsqKVKD.js`, 354,011
+  bytes): the /freshness nav entry carries `requiresTier:"internal",requiresDev:!0` and its route carries
+  `requireInternal:!0,requireDev:!0`. Positive control on the same read: Investor Reporting's entry and route carry the mark too.
+  Counts in the bundle: 2 nav entries with the mark, 3 routes with it (the page's own, Investor Reporting, its print route).
+- NOT measured: a sign-in as a non-Dev internal user. The walker account is userType Dev, so the refusal is read from the served
+  code (`ProtectedRoute` refuses when `userType !== 'Dev'`), not from a session.
