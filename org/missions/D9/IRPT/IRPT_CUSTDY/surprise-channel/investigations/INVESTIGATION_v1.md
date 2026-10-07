@@ -575,3 +575,54 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E1: every account prints its anchor and rule, SI computes for every rule-1/rule-2 anchor on or after 2010 with the ruled labels, and a test fails on a rule-2 'inception' label. E2: the advisor's 4 NOT_IN_DIRECTORY accounts are counted with their denominator (4 of 18) but cannot be reported: they have no custodian key, so no Schwab data (W10-S1). E3: suite green on CLOUD. W9-S3 is disarmed by amendment 1 (hop3 tests re-expressed) and W9-S4 by amendment 3 (directory-gap tests re-expressed); both were seams between round-4 cells, not defects."
 }
 ```
+
+## IRPT_CUSTDY-W13-S1 -- CU-e-1 on real data: all 4 unkeyed accounts of matthew_gooch classify NOT_HELD (found=0, not_held=4); no seam-
+
+```json
+{
+  "id": "IRPT_CUSTDY-W13-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~13",
+  "surfaced_at": "2026-10-07T12:47:19Z",
+  "one_line": "CU-e-1 on real data: all 4 unkeyed accounts of matthew_gooch classify NOT_HELD (found=0, not_held=4); no seam-cell candidate exists, because Schwab silver holds none of them under any identifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 12:47Z on branch wk-IRPT_CUSTDY-13: python data/assets/scripts/gold/irpt_custody/unkeyed_lookup.py --advisor matthew_gooch --as-of 2026-09-30 -> UNKEYED-LOOKUP advisor=matthew_gooch accounts=4 found=0 not_held=4 classified=4, rc 0; 39 silver surfaces (19 + 20 tables of masters 08242234 and 08335338, partition 2026-09-30 or the latest before it), 8 identifiers per account (raw key, digits, no-leading-zeros, pad8-12, opaque id, seam key and seam values, census row), 0 matches",
+      "census cause for each of ****9851, ****0041, ****7341, ****9421: BD_KEY_ABSENT_FROM_EVERY_BRIDGE_SOURCE in IRPT_BCKEND's IB64-1_directory_coverage.json (key in none of dim_account_xref 53 partitions, dim_advisor_fee_role 53 partitions, fact_bd_allocation@2026-08-18, fact_taxsma_report@2026-07-17)",
+      "positive control: a real silver account_id from 08335338.fact_acc prefixed with z and fed to lookup_account classed FOUND_UNDER_OTHER_KEY, naming the silver columns that hold it (so a NOT_HELD is a search that could find)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-e-1: each of the 4 accounts is classed FOUND_UNDER_OTHER_KEY (a seam-cell candidate for IRPT_BCKEND) or NOT_HELD; the split is reported, not graded.",
+  "world_is": "The split is 0 found / 4 not held. The seam holds none of the 4 and Schwab silver (both masters, every table's key columns at 2026-09-30) holds none, so no seam row can fix them: these 4 accounts have no Schwab record on dell2's reachable silver at the as-of. Search scope stated: the as-of partition per table (or the latest before it), key columns account_id, mstracct_number, custdian_id and the unlabelled col_1..col_6 of fact_fam and fact_slm; an earlier-partition holding of a since-closed account would not be seen."
+}
+```
+
+## IRPT_CUSTDY-W13-S2 -- A NOT_HELD gap account has no directory household, so its not_covered account document sits in a household doc
+
+```json
+{
+  "id": "IRPT_CUSTDY-W13-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~13",
+  "surfaced_at": "2026-10-07T12:47:19Z",
+  "one_line": "A NOT_HELD gap account has no directory household, so its not_covered account document sits in a household document of its own that carries no household_returns or lineage; the document is added in run(), not build_file().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py validate_document @CLOUD 9ca7469fc3 requires ACCOUNT_KEYS (returns, market_value, holdings, activity, fees, si_anchor) on every account and TOP_KEYS (household_returns, lineage) on every document; that file is outside this order's paths, so a not_covered account cannot be a validate_document-conforming document",
+      "data/assets/scripts/gold/irpt_custody/si_anchor_probe.py reads acct['si_anchor'] and acct['returns']['SI'] on every account build_file returns; check_directory_gap.py counts reported + uncovered == granted, so a NOT_HELD account is counted once, in the data and not in uncovered (tests/test_unkeyed_lookup.py test_a_not_held_account_is_in_the_report_data_as_not_covered_with_its_reason_and_no_figures asserts it is not in uncovered)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-e-1 item 2: a NOT_HELD account renders in its client's report DATA (the account document, under its household) as \"not_covered\": {\"reason\": ...} with no figures.",
+  "world_is": "A gap account's household is its own singleton (ownership-map or account-only name), so its household document holds that one account document {account, not_covered}. hop3_real_run.run() appends these documents after build_file() (so si_anchor_probe, which iterates build_file's documents, is unaffected) and the summary line gains not_covered=<n> only when n>0. A consumer that iterates every account of the file expecting returns (a portal render of the file) must skip an account carrying not_covered; none exists in this repo's irpt_custody tree."
+}
+```
