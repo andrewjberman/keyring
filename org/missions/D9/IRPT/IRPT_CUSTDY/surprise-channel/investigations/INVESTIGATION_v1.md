@@ -236,3 +236,30 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "Both cannot hold on the fees figure. Reading taken: the order's later, explicit rule wins and the contract's label is kept as fees.source.label; the round-1 fees test is edited for exactly that. Also taken where the order is silent: market_value, each holding row and each activity row carry a source (rows 1 for a single row); the returns partition is `date=<d>` or `date=<first>..date=<last>`; an as-of whose quarter opens before 2024-01-01 is refused rather than computed. The issuer or CTO may overrule: the label move is one dict key in build_documents."
 }
 ```
+
+## IRPT_CUSTDY-W5-S1 -- the refused 'None' is a stringified null in IRPT_BCKEND's bundled seam file
+
+```json
+{
+  "id": "IRPT_CUSTDY-W5-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~5",
+  "surfaced_at": "2026-10-07T09:20:43Z",
+  "one_line": "The 'None' that the id projection refuses is a stringified null in IRPT_BCKEND's bundled custodian_key_seam.json (826 index values, 482 of 7022 live granted accounts refused); ids.py:387-388 guards `is not None` and lets the string through. The issuer routes the fix to IRPT_BCKEND.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~2026-10-07T09:20:43Z: python data/assets/scripts/gold/irpt_custody/none_source.py --ownership s3://opal-data-bd/platinum/49financial/ownership_map.json -> NONE-SOURCE file=infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json:48 owner=IRPT_BCKEND refused=482 distinct=7022 via_none=482 (the first of the 482 refused accounts; every one of the 482 has a seam index value equal to the string 'None')",
+      "infra/aws/lambda/investor-reporting/_ids/data/custodian_key_seam.json @e27b2bce34: index has 6202 entries, all str; 826 are 'None', 0 are JSON null; its _written_by is '0.9.0_WK_IRPT_BCKEND~1 / IRPT_BCKEND.TO-IB-rte-6' (git: 47f21dab95)",
+      "s3://opal-data-assets/blackdiamond/49f/silver/dim_account_xref/date=2026-09-16/data.parquet (the file's named source), read-only: 6202 rows, schwab_account_id isna()=826, equal to the string 'None'=0 -- so the stringification happened when the seam file was written (the writing script is not in the repo; the commit adds only the artifact)",
+      "infra/aws/lambda/investor-reporting/_ids/ids.py:387-389 @e27b2bce34: `mapped = idx.get(str(raw).strip())` / `if mapped is not None: return base(\"account\", mapped)` -- the guard passes the string 'None' to the mint, which raises IdRefused (_check_raw)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-1 analysis E1 and decomposition constraint 1: the advisor pick runs on the live ownership map; the projection resolves a granted account or refuses it by a reason the tool can name.",
+  "world_is": "482 of 7022 distinct granted accounts (31 of 190 advisors) are refused by the projection because the bundled seam file maps their custodian key to the string 'None' (the cross-reference has no Schwab id for them: 826 null rows of 6202). CU-b-1 counts them as UNCOVERED / PROJECTION_REFUSED and no longer raises; those advisors stay ineligible. The durable fix is in IRPT_BCKEND's files (omit null-mapped keys from the seam artifact, and guard the string in projection_with_seam so the account is returned raw and graded UNPROJECTED-ID rather than refused); CU-b-1 edits neither."
+}
+```
