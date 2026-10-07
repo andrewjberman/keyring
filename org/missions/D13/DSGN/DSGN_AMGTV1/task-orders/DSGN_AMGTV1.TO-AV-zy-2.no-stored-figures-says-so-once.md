@@ -76,7 +76,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   The served payload carries NO coverage marker; the page rule is keyed on the served shape. The marker is a producer item, named in the close.
 - **Issued when** `prd-signoff status DSGN_AMGTV1` read ADMITTED on PRD v0.17 @8730d6c042.
 
-<status>pending</status>
+<status>complete</status>
 <round>47</round>
 <slot>~109</slot>
 <fabric>site-z</fabric>
