@@ -1521,6 +1521,29 @@
  "spec_asserts": "safe-merge.sh --continue re-enters the same grade and the same authored commit as the one-shot path, so a drained branch lands whole.",
  "world_is": "The continue path landed 1 of 4 files and exited 0; only the read-only --verify-merge line showed the loss. Cause not established: either the merge's staged entries were unstaged between the conflict and the continue (another seat's commit ran in that window on the shared index), or --continue commits only what the resolver staged. The drain was repaired; the tool behaviour is unexamined.",
  "notes": "Tool owner is 2.0.0_SA_COO (.tools/safe-merge.sh). After any --continue, run --verify-merge and read the 'dropped' count."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W107-S2",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~107",
+ "surfaced_at": "2026-10-07T03:25Z",
+ "one_line": "AV-zw-2 Amendment 1 turns r77_ba5.py AC2 clause C3 red: C3 expects every served row label and figure INSIDE the table element, and Amendment 1 draws BA's two mismatched rows OUTSIDE it as unaligned lines; r77_ba5_harness.cjs is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node/python r77_ba5.py --crit AC2 on portal 49a9bf37: 'FAIL C3 every served row label and figure is in the table rows missing [\"Cumulative deliveries\",\"Deliveries\"] figures missing 12'; C1, C2, C4-C10 PASS; 'R77 BA5 AC2 SERVED: NO'; exit=1. AC1 and AC3 stay exit=0; r45b.cjs reads 4 of 4 arms.",
+   "r77_ba5_harness.cjs lines 247-251 (round77/checks): tableText = textOf(tables[0]); missingRows = table.rows labels not in tableText; missingValues = every served figure not in tableText; clause C3 requires tables.length === 1 and both lists empty. BA serves 5 + 8 = 13 figures; the 13th, '73', is found only because it is a substring of the column label '737' (clause C3 matches by substring on the table's text).",
+   "The Amendment text (WORKER_FACE.md, section AMENDMENT 1) anticipates this: 'if AC2's clauses on BA's table no longer hold because a clause expects the figures inside the grid, report the exact clause line and do not edit that check'."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "Amendment 1 of the order: AC1, AC2 and AC3 must stay green; AC5 (r45b.cjs) grades that a mismatched row is drawn outside the table.",
+ "world_is": "The two clauses contradict each other for BA: r45b arm 1 demands both BA rows outside the table, r77_ba5 AC2 C3 demands both inside it. The worker built to the Amendment (AC5 4 of 4); AC2 reads 9 of 10 clauses with C3 red until the issuer re-anchors C3 to read the rows' label and figures inside the table wrap (the element holding data-driver-chart-passage-table plus the unaligned lines).",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
