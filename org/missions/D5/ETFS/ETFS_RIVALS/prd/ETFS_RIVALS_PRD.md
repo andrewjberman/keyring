@@ -1222,9 +1222,12 @@ whole by this seat. The definition is in the ENDPOINT section. This addendum hol
 1. **"Per security AND per tracked fund"** is read as: the closes are kept per SECURITY, for every security any tracked fund held
    in the window. A (fund, security) pair is then whole because its security is. It is NOT read as the fund's own holdings
    history (506 daily partitions are already stored) or the fund's own share price. `FWD-24`'s NOT THIS line says so.
-2. **"Built into the ingestion sequence"** is read as his word for a STANDING Bloomberg request of daily closes for these
-   securities, inside the existing daily rivalfunds leg and its budget. His ~05:1xZ word covered an ad hoc backfill only. This
-   reading is stated to him in the same hour; the build proceeds and the first scheduled request waits for nothing else.
+2. **"Built into the ingestion sequence"** names no vendor, and his ~05:1xZ word covered an ad hoc backfill only. So it is NOT
+   taken as his word for a standing Bloomberg request. **The build proceeds: the history-owed step, the grain change, the reader
+   census and the leg's code, exercised with the request switched off. The first STANDING request of closes waits on his recorded
+   answer to one question, put to him the same hour: may the daily rivalfunds leg ask Bloomberg each day for the closes it finds
+   owed, inside the budget.** (Amended on `3.0.0_SA_CVO~RV`'s refusal of the first wording, msg 31400: CLAUDE.md, no vendor call
+   without his explicit per-use word.) The ad hoc one-time backfill stays covered by his ~05:1xZ word.
 
 ### G.3 -- CONTRACTS
 
