@@ -7423,6 +7423,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:47:59Z",
+      "one_line": "The bd-1 census reads 18,638 silver articles, not the 18,634 of the cell text, and gold_brand_admitted lists every unanchored gold brand (the 6 plane:text entries as well as Meta), which the order leaves open.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bd-1 section 0 cites 18,634 articles for the Meta and Lilly counts; section 1 item 2 says the summary gains gold_brand_admitted, a list of {security_key, brand}, and that a gold brand is a plane == text entry OR one with gold.admitted == true.",
+      "world_is": "bd1_census.out DENOMINATOR: securities 242, silver articles 18638 (the silver corpus grew by 4 since bc1_census.out, as collection legs run live). Counts still reconcile with the cell: Meta pairs 775 to 946 (171 gained), mention_count 1147 to 4773 (3,626 gained); Lilly pairs gained 0, mention_count 767 to 1059 (292 gained). Reading of the order: a plane:text entry is a gold brand, so gold_brand_admitted holds Meta and the six text brands admitted as aliases (ASML x2, Dell, Micron, TJX, Uber); Spotify is already an alias and is in whole_brand_already_an_alias only. The order's existing whole_brand_* fields are unchanged in meaning; whole_brand_admitted gains Meta (6 to 7), so test_no_shipped_whole_brand_entry_is_refused_by_limb_a_or_limb_b counts text entries plus unanchored gold entries.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bd1_census.out (DENOMINATOR, SUMMARY gold_brand_admitted, META and LLY lines)",
+          "lib/research/harvest/universe_securities.py (the gold_admitted_rows / gold_anchored_rows / gold_refused_rows build, HVST-bd-1)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
