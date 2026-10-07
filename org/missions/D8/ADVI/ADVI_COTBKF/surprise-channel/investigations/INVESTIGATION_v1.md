@@ -1814,3 +1814,29 @@ round.** Never edit an existing row.
   "notes": "Found by the issuer while answering Andrew's status question, not by a task order. Offered to 1.0.0_SA_CTO~DELL2 for the next enrichment list."
 }
 ```
+
+## ADVI_COTBKF-D2-W32-S1 -- the census reader keeps no price column; the valuation re-reads the stores with a price-keeping cleaner
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W32-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~32",
+  "surfaced_at": "2026-10-07T20:04Z",
+  "one_line": "the census read_store keeps no price (its cleaner drops the column) and the cached store frames are priceless, so the valuation re-reads the six stores from S3 with the cleaner swapped in memory",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/analysis/commonwealth_price_census.py _clean returns only kind,key,day,source; .scratch/price_census_cache/*.parquet columns = ['kind','key','day','source'] (6 files read with pandas)",
+      "first run of data/assets/scripts/silver/commonwealth_daily_valuation.py read the six stores read-only from S3 (cold 1m45s, over the 120 s bound once; cached reruns 74 s); inside one store 2204 gold-holdings and 3753 silver-canonical-prices security-days carry disagreeing rows (silver (max-min)/min median 4.6, i.e. the highest row is typically 5.6 times the lowest) and are left unpriced; gold had a further ~31,000 float32-noise disagreements (relative < 1e-6) that PRICE_TOL now treats as one price"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-p-1: prices come from the six census stores via STORES, read_store (or load_store_cached), symbol_claims, match_security -- the cache at .scratch/price_census_cache is usable.",
+  "world_is": "read_store/load_store_cached return day keys without prices, so no valuation can come from them or their cache. The script imports the census module, swaps pc._clean for a price-keeping variant for the duration of the read, and caches the priced frames under <data-dir>/price_cache. Nothing in the census file is edited. Same-key-day disagreement inside a store (silver 3753, gold 2204) is a data question for whoever owns the price load: the script blanks those days rather than choose.",
+  "notes": "The 3753 silver conflicts differ by a median factor of 5.6 (highest row over lowest), which looks like two different securities or units under one key and day, not rounding."
+}
+```
