@@ -3760,3 +3760,80 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The tests pass before and after (6 passed)."
 }
 ```
+## MDPF_SECCLASS-W35-S1 -- the W28-S5 acronym rule makes the vendor-suffix remainder SHS stay upper, so "ETF SHS COM" is no longer idempotent
+
+```json
+{
+  "id": "MDPF_SECCLASS-W35-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~35",
+  "surfaced_at": "2026-10-07T11:50:15Z",
+  "one_line": "Under the issuer's rule (a 2-4 letter token with no vowel stays upper) SHS is an acronym, so clean_name('ETF SHS COM') -> 'ETF SHS' and a second pass drops SHS -> 'ETF'; round 8's test_idempotent input 'ETF SHS COM' (where SHS became 'Shs') now fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_security_name.py test_vendor_suffix_token_left_after_one_drop_is_an_acronym (worktree wk-MDPF_SECCLASS-35)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/sc_e30_clean_name_table.py docstring ROUND 9 rule, read-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 8 test_idempotent held for every INPUTS entry including 'ETF SHS COM'; the round-9 rule is applied EXACTLY as written with everything else standing.",
+  "world_is": "The rule as written is implemented unchanged. The worker moved 'ETF SHS COM' out of the idempotent INPUTS list into an explicit test that pins the new two-pass behaviour (it did not delete coverage). The alternative, excluding VENDOR_SUFFIXES tokens from the acronym branch, would restore idempotence but departs from the issuer's wording, so it is left to the issuer. Real names carrying SHS mid-name are not in the grounded table.",
+  "notes": "Filed on dell1 by the worker of TO-SC-e47."
+}
+```
+
+## MDPF_SECCLASS-W35-S2 -- the held sets for SC-e-48 were copied from sibling slot ~33's .scratch (same producer, as-of 2026-10-05) rather than built here, and the inflection build is the 2026-10-02 partition
+
+```json
+{
+  "id": "MDPF_SECCLASS-W35-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~35",
+  "surfaced_at": "2026-10-07T12:09:50Z",
+  "one_line": "TO-SC-e48 says run holdings_snapshot.py per firm without --upload; ~33's builds of exactly that already sat in C:/Dev/wk-secclass-r9-33/.scratch/hb_<firm>, so they were copied (read-only, no new fetch) into this worktree's .scratch; the inflection parquet is date=2026-10-02, not 10-05.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Dev/wk-secclass-r9-33/.scratch/hb_49financial|hb_cottonwood|hb_inflection (one parquet each, node_json read; custody_as_of 2026-10-05, 2026-10-05, 2026-10-02)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/clean_name_row_set_v2.py run output, branch wk-MDPF_SECCLASS-35"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The worker builds each firm's held set with the producer (as-of 2026-10-05); the hard bound allows no download of any kind.",
+  "world_is": "A rebuild would read the upstream sources again (a download under the bound), so the existing builds were reused; claim stays inferred. The inflection build's data date is 2026-10-02: a key held only by inflection and bought after that date is absent from the held set, and the issuer judges whether that matters. 267 table keys are held by more than one firm with different descriptions; the first firm in the order wins as the order says.",
+  "notes": "Filed on dell1 by the worker of TO-SC-e48."
+}
+```
+
+## MDPF_SECCLASS-W35-S3 -- the set TSV carries two non-ASCII characters because two live security names do
+
+```json
+{
+  "id": "MDPF_SECCLASS-W35-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~35",
+  "surfaced_at": "2026-10-07T12:09:50Z",
+  "one_line": "CLEAN_NAME_ROW_SET_V2_20261007.tsv holds U+00AE (CUSIP:025083882 AMERICAN CENTURY ULTRA, registered sign) and U+2122 (VWUAX custody name VANGUARD US GROWTH ADMIRAL, trademark sign), so the TO's 'ASCII only' is met by every script and the half request but not by the data file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python scan of org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/CLEAN_NAME_ROW_SET_V2_20261007.tsv: 2 characters > 127 in 2 lines (round 8's set: 2 as well)",
+      "clean_name_set_v2_check.py compares current_name to the live bytes, so the characters cannot be stripped"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order says ASCII only; the issuer's check requires current_name equal to the live name and source_name to round-trip through clean_name.",
+  "world_is": "Both facts cannot hold for these two names. The data file is read as utf-8 by the check and the writer; the half request writes them as <U+XXXX>. The write of these two keys carries the symbols into the table name as the live value or custody feed already has them; whether to keep them is the issuer's call.",
+  "notes": "Filed on dell1 by the worker of TO-SC-e48."
+}
+```

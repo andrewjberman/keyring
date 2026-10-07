@@ -110,4 +110,3 @@ cleans to `ETF SHS` and a second pass to `ETF`. RULING: step 4 drops EVERY trail
 before any casing rule, so `clean_name(clean_name(x)) == clean_name(x)` for every input. The issuer's table gains `("ETF SHS COM", "ETF")`
 (base at the worker's head fcadb7a348: 1 mismatch). Move `ETF SHS COM` back into the idempotence test. `<status>` re-opened to
 in_progress; criteria unchanged. Gate limb: none graded this modification (no new order; no `<placeholders>`).
-
