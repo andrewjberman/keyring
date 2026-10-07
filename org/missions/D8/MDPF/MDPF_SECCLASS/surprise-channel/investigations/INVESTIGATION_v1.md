@@ -2665,3 +2665,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
 }
 ```
+
+
+## MDPF_SECCLASS-W22-S1 -- iv-e-26 wire-regen byte-identity arm fails on the SC-e-23 hand edit until SC-e-22; the test regenerates wire files in place
+
+```json
+{
+  "id": "MDPF_SECCLASS-W22-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~22",
+  "surfaced_at": "2026-10-07T08:24:16Z",
+  "one_line": "The wire-regen idempotency test iv-e-26 (and a bun test run over the dsgn-irptv1 directory) regenerates contracts/wire/*.ts from the published schema: it already failed at portal DEV 8ddfe40994 (content pin 18 of 18, ExportBundle drifts) and, after the SC-e-23 hand edit of HoldingsSnapshot.ts, also names HoldingsSnapshot as not byte-identical until SC-e-22 changes the schema enum.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test iv-e-26.wire-regen.test.ts at portal 8ddfe40994 (HoldingsSnapshot restored to HEAD): VERDICT WIRE-REGEN-FAILED -- content-pins.test.ts rc=1, expected 0; consumed operations offered 18 of 18, expected 17 of 17 (and ExportBundle.ts rewritten by the generator)",
+      "same test with the hand-edited HoldingsSnapshot.ts: 'gen-wire.ts regeneration is not byte-identical to the committed files: ExportBundle, HoldingsSnapshot'",
+      "a bun test run over src/pages/InvestorReporting/__tests__/dsgn-irptv1 rewrote 27 wire/*.ts files in the worktree (LF for CRLF) and reverted the hand edit; the worker restored them to HEAD bytes and re-applied the edit, portal commit 91d29d17"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e23: the wire type HoldingsSnapshot.ts drops multi_asset by hand edit and the published schema follows under SC-e-22; nothing else in the portal asserts the file equals the generator's output.",
+  "world_is": "iv-e-26's byte-identity arm asserts exactly that equality, so it fails on HoldingsSnapshot between SC-e-23 landing and SC-e-22 landing (and its other arms failed before this cell). SC-e-22 closes the HoldingsSnapshot half; the content-pin and ExportBundle failures are pre-existing and outside this cell. The drain's typecheck/test run should not run the dsgn-irptv1 directory in a tree whose wire files it needs to keep.",
+  "notes": "Filed by worker ~22 on dell1 (fabric field = the project register fabric). The two AC checks do not run iv-e-26 or iv-e-17; neither is weakened."
+}
+```
