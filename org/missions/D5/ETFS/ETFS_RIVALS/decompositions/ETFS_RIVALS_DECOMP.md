@@ -17,7 +17,8 @@
  "chains": 2,
  "join_cells": 0,
  "frozen": true,
- "revision": "1.3",
+ "revision": "1.4",
+ "revision_1_4": "2026-10-07 ~03:3xZ: round 14 (main workstream) cells APPENDED below (ab-1, as-1); no earlier cell is replaced.",
  "revision_1_3": "2026-10-06 ~19:4xZ: round 13 (main workstream) cells APPENDED below; no earlier cell is replaced (round-11 analysis ruling 4: an issued order's cells stay readable).",
  "revision_1_2": "2026-10-06 ~19:1xZ, issuer amendment on ADDENDUM 5 @a8fb9c1df1 (CTO~Z msg 30204/30218): RIV-al-1 is cut as ROUND 13 of workstream BBGLEG (round 12 BBGLEG already issued; ONE ISSUER PER ROUND per (round, workstream)). The main workstream's round 13 (ADDENDUM 4 step 3 + the Z-S50 rule) waits on J1.",
  "revision_1_1": "2026-10-06 ~17:5xZ (workstream BBGLEG: eb-1 + pk-1, the Bloomberg leg, disjoint write surface from au-1), issuer amendment on Andrew's word lifting the site-Z Bloomberg hold (MSTR~Z msg 30169, record @8555ce7e12): the two cells the v1.0 narrowing held (ADDENDUM 1 @982e914b1d pk-1; ADDENDUM 2 @b555e81836 eb-1) are added. RIV-au-1 is unchanged and complete (drained c34e0875e9, deployed 8c40451259).",
@@ -148,3 +149,46 @@ Deploy order (record): gw-1's gateway release under its pair BEFORE the publishe
   carries a section `id="citations"` with, per fund and account, its "Cited rows:" line (and [web] reads when present), each block
   `data-cited-fund="<fund>"` `data-ai-kind="<kind>"`. Deploys only after RIV-gw-1's route serves (never a 404).
 - **Organic trigger:** the 07:00 ET marker publish after the route serves.
+
+---
+
+## ROUND 14 (main workstream) -- APPENDED
+
+Source: `org/missions/D5/ETFS/ETFS_RIVALS/ledger/ROUND_ANALYSIS.round13.md` @594d1be8f8 (section 4 item 1 = ruling 4; ADDENDUM 1 =
+Z-S54) and Andrew-direct `cooRV_ANDREW_DIRECT_20261007_031xZ_RIVALFUNDS_AI_VARIANCE_DO_A_AND_C_NOT_B.md` @3e040ecbf2. Author
+2.0.0_SA_COO~RV; frozen; revision 1.4 of this file. Section 4 item 2 ("whatever the morning pass returns") is NOT in this
+issuance: the pass runs after the 2026-10-07 07:00 ET vehicle run and its rows go to the next round; Andrew's word on Z-S54 is
+cut now. Edges: none of data. ab-1 and as-1 both write `render.py` and `publish_page.py`: ONE chain (`~1`: ab-1 then as-1).
+
+| item | cell | chain | risk |
+|---|---|---|---|
+| Z-S54 (A) the sweep order + (C) the badge and its manifest count | RIV-ab-1 | ~1 (1 of 2) | SERVED |
+| ruling 4: the audit page's own size rule | RIV-as-1 | ~1 (2 of 2) | SERVED |
+
+### `RIV-ab-1` -- an AI account is written against the build the page serves, and its badge says so when it is not (row Z-S54; round-13 analysis ADDENDUM 1; Andrew: "not needed do a and c")
+- Measured on the served 2026-10-06 page (2.0.0_SA_COO~RV): 22 of 26 accounts carry a figure that differs from the panel beside it;
+  149 of 197 cited contribution figures moved (IDVZ direction verdict: "Petrobras ... +0.47%" against the rankings' +0.93%), each
+  under a green "Grounded". The AI step ran at 13:00:20Z against the 11:03Z tables; `sweep.run_ai_step` (sweep.py ~589) runs
+  `ai_stage.run_for_day` FIRST and only the republish after it (publish_page.produce_a1's stale rebuild) rebuilt
+  holding_contribution and buying_trend, at 13:05-13:06Z. The only disclosure is a small "Written against earlier tables" line.
+- Interface:
+  - (A) `sweep.run_ai_step` calls `publish_page.produce_a1(<sink object>, <sink spec>, <date>)` BEFORE `ai_stage.run_for_day` and
+    returns its result under `a1_refresh`; a refresh that raises is recorded and the AI step still runs; nothing is refreshed
+    when the AI step does not apply. Each account already records the revision of every row it cites (`cited_rows[].revision`).
+  - (C) the PASS badge is `<span class="rf-grounding-PASS" data-grade="PASS" data-build="served">Grounded</span>` when every
+    revision the account's cited rows carry for a vintage table (holding_contribution, buying_trend) is a revision the page
+    serves for that table, else `... data-build="earlier">Grounded on an earlier build</span>` -- the same element, place and
+    weight. `render.grounding_census(html) -> {"served": n, "earlier": m}`; `publish_page` writes it into the manifest as
+    `ai_grounding`. A FAIL badge is unchanged. NO account is re-run after a rebuild (Andrew: B is not needed).
+- **Organic trigger:** the 09:00 ET sweep's AI step and its republish.
+
+### `RIV-as-1` -- the audit page's own loud size rule (row Z-W1-S48; round-13 analysis ruling 4)
+- Measured 2026-10-07: the served audit.html is 1,381,244 B against the gateway's 2,097,152 B read cap (34.1% under); the trade
+  log grows every day; `publish_page` checks only index.html against MAX_PAGE_BYTES and writes audit.html unconditionally.
+- Interface: `render.AUDIT_SOFT_CAP` (bytes, default 1_950_000). `render.render_audit_page(ctx)` returns a document of at most
+  that size when a cut can achieve it: trade trace panels are dropped OLDEST first (by window end) until it fits, and the page
+  then carries one element `data-audit-cut="<count left out>"` stating in plain words how many trades were left out and the
+  oldest window end still shown; with nothing cut the attribute is absent. `publish_page`: the manifest carries
+  `audit_trades_left_out` (0 when none) and, when it is > 0, the stage prints a line starting `FAIL: audit page over cap` (the
+  day still publishes). The gateway never refuses the audit page silently.
+- **Organic trigger:** the 07:00 ET marker publish.
