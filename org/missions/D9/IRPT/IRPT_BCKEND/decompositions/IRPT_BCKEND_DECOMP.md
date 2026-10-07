@@ -1911,3 +1911,15 @@ orders at HEAD, so it is round 63. Check: `deliverables/2.0.0_SA_COO~P2/checks/r
 | `IB-pr-341` | the over-age status carries only public members; the 4 portal reader tests pass (W140-S1) | FWD-7 (the r61 directory release, P1) | WORLD (floor: infra/) | IB-pr-334, IB-pr-338 (drained) | P63-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one ruled cell. Slot 0.9.0_WK_IRPT_BCKEND~143; portal_ref: d53a7a0f (portal branch wk-IRPT_BCKEND-140-portal, IB-pr-338's reader tests).
+
+## 57. ROUND 64, WORKSTREAM ~P (2026-10-07 ~10:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IRPT_CUSTDY round-3 analysis @ec25e39844 S8(b), msg 383)
+
+One measurement cell routed to this workstream: which of the 7,022 granted accounts are NOT_IN_DIRECTORY (1,961 per IRPT_CUSTDY's run) and
+why each is absent. Read-only; the firm-bucket fence now admits dell2 on 49financial and inflection (cottonwood still denied). Check:
+`deliverables/2.0.0_SA_COO~P2/checks/r64/p64_cells.py`, dry-run at base 33949e002d.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-342` | directory-coverage census of the NOT_IN_DIRECTORY granted accounts, reason per account | FWD-1/FWD-7 directory coverage; IRPT_CUSTDY S8(b) | SERVED (read-only against served data) | none | P64-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one measurement cell. Slot 0.9.0_WK_IRPT_BCKEND~144.
