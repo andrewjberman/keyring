@@ -5,7 +5,7 @@
  "project": "TCKT_VNEXT",
  "directive": "D7",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md@750ec86588",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8"],
@@ -25,25 +25,28 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 
 ```
   FWD-1  Alyssa files an Analysis Request with a holdings file and opens the finished report from the same ticket
-         DONE WHEN  EXERCISED -- one real request for one household, one account, an Overview report and the default fee, followed from filing to the report opened on the ticket
-         ACCEPT     Alyssa files the request with the file attached, the report is made from that file without anyone re-typing the holdings, and she opens
-                    the finished report from the ticket; it fails if anyone forwarded a file by email or chat at any step
+         DONE WHEN  EXERCISED -- on DEV, an Opal sign-in in Alyssa's role files one request (one household, one account, an Overview report, the default fee)
+                    with a real holdings file and follows it to the report opened on the ticket; Alyssa's own first real request grades it again (the organic arm)
+         ACCEPT     someone at Opal files the request with the file attached, the report is made from that file without anyone re-typing the holdings, and the
+                    finished report opens from the ticket; it fails if anyone forwarded a file by email or chat at any step
          SOURCE     brief I.0 (the candidate thread), O1, O4
 
   FWD-2  A person at another firm cannot open the request or its file
-         DONE WHEN  EXERCISED -- a real sign-in from another firm tries both and is refused, in front of Andrew
-         ACCEPT     Andrew watches someone signed in for a different firm try to open the ticket and its attached file, and both are refused; a statement
-                    that it is refused does not count
+         DONE WHEN  EXERCISED -- a sign-in belonging to a different firm (a test account at that firm, made for the purpose) tries both and is refused,
+                    and the attempt can be repeated on demand for Andrew to watch
+         ACCEPT     someone signed in for a different firm tries to open the ticket and its attached file and is refused both times; Andrew can ask to see it
+                    done again at any time; a statement that it is refused does not count
          SOURCE     brief O2, finding F7, Part V
 
   FWD-3  The person filing learns at once when the file will not work, before anyone at Opal sees it
-         DONE WHEN  EXERCISED -- Alyssa's known-bad sheet is turned back with what to fix, and her known-good sheet goes through
+         DONE WHEN  EXERCISED -- a known-bad sheet (several accounts in one file, a totals row, a holding that cannot be priced) is turned back with what to
+                    fix, and a known-good sheet goes through; Alyssa's own two test sheets grade it again when she supplies them (the organic arm)
          ACCEPT     a file that today would come back from Alyssa by email comes back from the form instead, saying what to fix; the good file files normally
          SOURCE     brief O3, finding F6 (9 of 31 requests needed a resubmission)
 
   FWD-4  The person who filed a request can work it and finish it themselves
-         DONE WHEN  EXERCISED -- one person files a request, claims it and completes it
-         ACCEPT     Alyssa files a request and then claims and completes that same request, on any type of ticket; nothing stops her because she filed it
+         DONE WHEN  EXERCISED -- one Opal sign-in files a request, claims it and completes it, on DEV
+         ACCEPT     the person who filed a request claims and completes that same request, on any type of ticket; nothing stops them because they filed it
          SOURCE     brief finding F4; Andrew 2026-09-30 ("that rule of no one can file and run their own ticket is nonsensical", all tickets)
 
   FWD-5  Someone working the queue sees every open request of every type in one place and can tell them apart without opening them
@@ -89,7 +92,7 @@ IRPT_YCDGEN's PRD. Each is cited in section 1.
 
 | Contract | Owner | Binding agreement |
 |---|---|---|
-| C-ONE-DOOR: the holdings file enters by the Analysis upload door | IRPT_BCKEND (the door); this project (the call) | The Analysis Request's file goes through `POST .../analysis/inputs` (R8), which runs the same checks and the same firm attribution, and stores it once (R9). **The ticket stores the upload's handle (`upload_id`, `input_id`), never the bytes.** No ticket bucket is created for this type. This answers brief Part V's door question and the purpose document's WS-1 for the Analysis Request: the file's store and readers are IRPT's, already firm-fenced by IAM prefix. A type that needs bytes IRPT does not own (a later type, or statements) re-opens WS-1 for that type, and no write happens before that ruling (purpose document :168) |
+| C-ONE-DOOR: the holdings file enters by the Analysis upload door | IRPT_BCKEND (the door); this project (the call) | The Analysis Request's file goes through `POST .../analysis/inputs` (R8), which runs the same checks and the same firm attribution, and stores it once (R9). **The ticket stores the upload's handle (`upload_id`, `input_id`), never the bytes.** No ticket bucket is created for this type. **OWNED DEPENDENCY (CVO review P1, measured):** the door refuses an `opal-capital` owner (`intake/uploads.py:193`) and an actor whose home firm differs from the owner's (`:227-234`), so an internal filer working on behalf of an advisor's firm is refused today. **Ruling:** the door admits an internal principal whose `allowedFirmIds` names the owner firm, records BOTH the acting principal and the owner firm on the upload, and refuses everyone else exactly as now. That is a change to IRPT_BCKEND's contract, requested from its COO at L5, never written from this project. This answers brief Part V's door question and the purpose document's WS-1 for the Analysis Request: the file's store and readers are IRPT's, already firm-fenced by IAM prefix. A type that needs bytes IRPT does not own (a later type, or statements) re-opens WS-1 for that type, and no write happens before that ruling (purpose document :168) |
 | C-TYPE: a request type is a definition, not code | this project | A type is data: its label, its questions (field names, kinds, required), its checks (a call to a named door, or none), its route (`ROUTING_MATRIX` primary, secondary, visibility) and its output (what comes back on the ticket). `VALID_TYPES` and the submit body's admitted fields are read from the definitions. The four existing types are expressed as definitions with their behaviour unchanged. FWD-7 grades this |
 | C-ANALYSIS-REQUEST: the first type | this project; Alyssa's RT-01 + RT-02 (brief F6), one type by ruling A | **Questions:** advisor, firm, household, report type (Overview, Comparison, Multi-Comp), comparison model when needed, advisory fee (default stated), needed-by date, add commentary (yes or no). **Attachment:** one holdings file, through C-ONE-DOOR. **The type adds one check the door lacks:** one account per file (R8 found no multiple-accounts check). The ticket files only when the door returns NORMALIZED; NEEDS_CORRECTION comes back to the person filing, with the door's findings (FWD-3). **Output:** the generated report's handle on the ticket |
 | C-HANDOFF: the ticket asks for the report and receives it | IRPT_YCDGEN (generation); this project (the call) | When an Opal person works the ticket, the report is requested through `POST .../analysis` with the ticket's `input_id` (R10), as the person working it. The returned job or report reference is written to the ticket. The report opens from the ticket by the reference, through the report's own access path, so the reader's entitlement is IRPT's check, not a copy. IRPT_YCDGEN confirms at L5 that this entry is supported for a request it did not start from its own page. If not, that is a request to its COO, never a write into its paths |
@@ -160,3 +163,12 @@ Round 1 builds only this thread, on DEV, internal users only.
 | Part VII not claimed | R6 (repository drift since `481dde1dbf` not read); R10 (inferred) |
 
 -- 1.0.0_SA_CTO~DELL2
+
+## v0.2 (1.0.0_SA_CTO~DELL2, 2026-10-07 ~17:3xZ) -- on 3.0.0_SA_CVO's refusal (msg 906, review @003801aeb8)
+
+- **R1:** FWD-2 is now seat-driven. A test sign-in at another firm, made for the purpose, is refused on both reads, and the attempt is
+  repeatable on demand for Andrew. It is no longer a wait on his presence.
+- **R2:** FWD-1, FWD-3 and FWD-4 are now seat-driven on DEV by an Opal sign-in. Alyssa's real use, and her two sheets, are the organic
+  arm.
+- **P1:** C-ONE-DOOR now names the door's on-behalf refusal (`uploads.py:193, :227-234`) as an owned dependency, with its ruling.
+- **Ids:** none renumbered or retired. The ENDPOINT changed, so the ratified-text half re-opens.
