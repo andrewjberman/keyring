@@ -1913,11 +1913,14 @@ def _is_cadence(kind, schema):
 NAME_SCOPE_CLASSES = ("FIRM", "GLOBAL", "MASTER")
 
 
-def name(system, scope, function, kind, qualifier=None):
+def name(system, scope, function, kind, qualifier=None, fifo=False):
     """{system}-{scope}-{function}[-{qualifier}]-{kind} (NAMING_SCHEMA.json resource.grammar). Takes the scope's
     LONG form and writes its SHORT form (S4); scope None is a shared resource and carries no scope (S5). The
-    kind is a kind.values member, or a cadence for an EVENT_RULE or SCHEDULE."""
+    kind is a kind.values member, or a cadence for an EVENT_RULE or SCHEDULE. fifo=True appends the AWS-required
+    .fifo suffix after the kind, for an SQS_QUEUE kind only (NAMING_SCHEMA.json resource.fifo)."""
     reg, schema, v = _registry(), _schema(), _vocab()
+    if fifo and kind not in schema["kind"]["by_type"]["SQS_QUEUE"]:
+        raise ValueError("fifo is an SQS_QUEUE suffix; kind %r is not an SQS_QUEUE kind" % (kind,))
     if system != "opal" and system not in v.v1:
         raise ValueError("system %r is not a systems.json key (nor the reserved opal)" % (system,))
     body = []
@@ -1932,7 +1935,7 @@ def name(system, scope, function, kind, qualifier=None):
     nxt = (body + words)[0] if body + words else None
     if system == "opal" and nxt is not None and (nxt in v.v1 or nxt in v.v2):
         raise ValueError("opal before %r reads as a null prefix or an unresolved token (GRADING_RULE.md R2)" % nxt)
-    return "-".join([system] + body + words + [kind])
+    return "-".join([system] + body + words + [kind]) + (".fifo" if fifo else "")
 
 
 # The shapes the vectors are built over: (system, function, qualifier, kind), each crossed with every

@@ -1,0 +1,111 @@
+diff --git a/infra/aws/terraform/modules/opal_name/main.tf b/infra/aws/terraform/modules/opal_name/main.tf
+index f66a504c93..7f85e15db8 100644
+--- a/infra/aws/terraform/modules/opal_name/main.tf
++++ b/infra/aws/terraform/modules/opal_name/main.tf
+@@ -5,7 +5,7 @@
+ # and this file is format() over its maps. Locals and outputs only: NO resources, NO providers and NO
+ # `external` data source.
+ #
+-# output.name is lib/opal_naming.py name(system, scope, function, kind, qualifier):
++# output.name is lib/opal_naming.py name(system, scope, function, kind, qualifier, fifo):
+ #   {system}-{scope SHORT}-{function}[-{qualifier}]-{kind}, and {system}-{function}[-{qualifier}]-{kind}
+ #   when scope is null (a shared resource).
+ # tests/vectors.json is that function's own output (`python lib/opal_naming.py vectors`), and
+@@ -26,7 +26,10 @@ locals {
+   name_asked     = var.system != null || var.function != null || var.kind != null
+   name_complete  = var.system != null && var.function != null && var.kind != null
+ 
+-  name = local.name_complete ? format("%s%s-%s%s-%s", var.system, local.name_scope, var.function, local.name_qualifier, var.kind) : null
++  # fifo: the AWS-required .fifo suffix after an SQS_QUEUE kind (NAMING_SCHEMA.json resource.fifo)
++  name_fifo = var.fifo ? ".fifo" : ""
++
++  name = local.name_complete ? format("%s%s-%s%s-%s%s", var.system, local.name_scope, var.function, local.name_qualifier, var.kind, local.name_fifo) : null
+ }
+ 
+ output "name" {
+@@ -38,6 +41,11 @@ output "name" {
+     error_message = "A name takes system, function and kind together."
+   }
+ 
++  precondition {
++    condition     = var.fifo ? contains(["queue", "dlq"], coalesce(var.kind, "-")) : true
++    error_message = "fifo is an SQS_QUEUE suffix: kind must be queue or dlq."
++  }
++
+   precondition {
+     condition     = local.name_scope_ok
+     error_message = "scope must be the LONG form of a FIRM, GLOBAL or MASTER row of infra/logic/registry/scopes.json (generated_locals.tf scope_long, scope_class)."
+diff --git a/infra/aws/terraform/modules/opal_name/variables.tf b/infra/aws/terraform/modules/opal_name/variables.tf
+index dca563653e..ec548db648 100644
+--- a/infra/aws/terraform/modules/opal_name/variables.tf
++++ b/infra/aws/terraform/modules/opal_name/variables.tf
+@@ -1,4 +1,4 @@
+-# The arguments of lib/opal_naming.py name(system, scope, function, kind, qualifier=None).
++# The arguments of lib/opal_naming.py name(system, scope, function, kind, qualifier=None, fifo=False).
+ # All default null: a caller that only reads the registry maps (fence_patterns, scope_bucket) passes none,
+ # and output.name is then null. A caller that wants a name passes system, function and kind together.
+ 
+@@ -46,3 +46,10 @@ variable "qualifier" {
+     error_message = "qualifier must be lowercase kebab-case ASCII."
+   }
+ }
++
++variable "fifo" {
++  description = "true appends the AWS-required .fifo suffix after an SQS_QUEUE kind (queue or dlq); NAMING_SCHEMA.json resource.fifo."
++  type        = bool
++  default     = false
++  nullable    = false
++}
+diff --git a/infra/aws/terraform/modules/opal_name/tests/fifo.tftest.hcl b/infra/aws/terraform/modules/opal_name/tests/fifo.tftest.hcl
+new file mode 100644
+index 0000000000..c4d2f782ab
+--- /dev/null
++++ b/infra/aws/terraform/modules/opal_name/tests/fifo.tftest.hcl
+@@ -0,0 +1,47 @@
++# var.fifo (NAMING_SCHEMA.json resource.fifo, v1.14). Hand-written: the generated vectors carry no fifo shape.
++# Each expected name is lib/opal_naming.py name(..., fifo=True)'s own output for the same inputs.
++
++run "fifo_queue" {
++  command = plan
++
++  variables {
++    system   = "cloudops"
++    function = "agentbus-dell1-inbound"
++    kind     = "queue"
++    fifo     = true
++  }
++
++  assert {
++    condition     = output.name == "cloudops-agentbus-dell1-inbound-queue.fifo"
++    error_message = "fifo queue: output.name is not lib/opal_naming.py name(..., fifo=True)'s output."
++  }
++}
++
++run "fifo_dlq" {
++  command = plan
++
++  variables {
++    system   = "cloudops"
++    function = "agentbus-dell1-inbound"
++    kind     = "dlq"
++    fifo     = true
++  }
++
++  assert {
++    condition     = output.name == "cloudops-agentbus-dell1-inbound-dlq.fifo"
++    error_message = "fifo dlq: output.name is not lib/opal_naming.py name(..., fifo=True)'s output."
++  }
++}
++
++run "fifo_refused_on_another_kind" {
++  command = plan
++
++  variables {
++    system   = "cloudops"
++    function = "agentbus-dell1-inbound"
++    kind     = "lambda"
++    fifo     = true
++  }
++
++  expect_failures = [output.name]
++}
