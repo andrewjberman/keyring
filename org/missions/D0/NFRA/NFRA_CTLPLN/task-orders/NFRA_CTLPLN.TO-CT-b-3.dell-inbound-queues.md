@@ -66,6 +66,7 @@ infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf
 infra/aws/terraform/nfra-ctlpln-agentbus/.terraform.lock.hcl
 infra/aws/terraform/nfra-ctlpln-agentbus/tests/check_queues.py
 .tools/agentbus-sqs.sh
+.tools/agentbus-consumer.py
 .tools/tests/test_agentbus_tailnet_stamp.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -114,3 +115,26 @@ The issuer amends its own order; gate limb: none graded this modification (LIMB 
    exercise the envelope builder directly): for each of the four register boxes as sender, the stamped attributes and envelope carry that
    box's and the recipient's tailnet names; a message with an unknown sender name is refused; the register is read, not typed (point
    `OPAL_DEVICE_REGISTER` at a fixture with a fifth box and show it stamps without a script edit).
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~04:0xZ) -- rulings on rows W3-S1, W3-S2, W3-S3; the provider; refused mail never blocks the queue
+
+The issuer rules inside its own order; gate limb: none graded this modification (LIMB 6 grades new orders only; no `<placeholders>`).
+CT2b3-AC1's and CT2b3-AC2's invocations and expectations are UNCHANGED.
+1. **W3-S1 (AC1 FAIL, provider 5.100.0 rejects `max_message_size = 1048576`).** Measured by the issuer ~04:0xZ: both live bus queues read
+   `MaximumMessageSize 1048576` and no `RedrivePolicy`; the local provider cache holds only `5.100.0`. The value stays (mirror the live
+   queues exactly). THIS NEW ROOT pins `hashicorp/aws` `~> 6.0` (the naming module declares no provider constraint). Run `terraform init`
+   once BEFORE the timed criterion run (the plugin cache `C:/Users/AndrewBerman/.terraform.d/plugin-cache` then holds the 6.x provider; a
+   cold download took ~8 min). If a 6.x provider also rejects 1048576, stop under the refusal clause with the version and the error.
+   `nfra-agentbus-port2` carries the same latent defect; it is NOT in your grant -- name it in your report only.
+2. **W3-S2 (the `watch` primary path runs `.tools/agentbus-consumer.py`, which does not check).** Now in your `<paths>`: the consumer applies
+   the SAME check as `recv`, reading the register the same way (one shared reading, not a second copy of the rule where avoidable).
+3. **W3-S3 (a refused message left on a one-group FIFO queue blocks all later mail; unstamped mail from not-yet-updated boxes).**
+   - A message whose sender tailnet name the register does NOT hold is REFUSED: its whole body and attributes are written to
+     `org/mcp/inbox/_agentbus_refused/<UTC stamp>_<SQS message id>.json` (gitignored runtime tree), a line `REFUSED agentbus sender_tailnet=<name>
+     reason=<why> record=<path>` is printed, and the message is then DELETED from the queue, so it never blocks the FIFO group. Refused is
+     recorded, never silently dropped.
+   - A message with NO tailnet stamp (sent by a box still running the old script) is DELIVERED with a printed line `WARN agentbus
+     unstamped sender=<serial>`, until every box sends stamped; the strict refusal of an unstamped message is a later flip, not this order.
+   - Your test adds: a refused message is recorded to that path and deleted (the stubbed delete is called); an unstamped message is delivered
+     with the WARN line; the consumer path refuses an unknown name the same way. Keep the run under 120 s.
+4. **Inherited state:** your slot's prior commit `768fca164e` on `wk-NFRA_CTLPLN-3` (root, stamp, 11 tests). Build on it; do not redo it.
