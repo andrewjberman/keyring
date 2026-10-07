@@ -43,6 +43,26 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "A ticker needs depth when nothing is stored or its earliest stored date is later than asof - 365 days; the plan is bounded by cap=50.",
     "world_is": "A security whose true first trading day is inside the last year (or which has no vendor series) satisfies the need rule forever, so each run spends one request and one cap slot on it for zero new rows. At 15 needing of 172 today it is cheap; it would only crowd out real work if more than 50 such securities accumulate. Built exactly as ordered; a bound (e.g. a manifest-recorded 'requested, nothing older exists' memory) is a round-2 enrichment for the CTO to read."
+  },
+  {
+    "id": "MDPF_SECHIST-W1-S2",
+    "project": "MDPF_SECHIST",
+    "fabric": "laptop",
+    "surfaced_by": "0.9.0_WK_MDPF_SECHIST~1",
+    "surfaced_at": "2026-10-07T08:05:00Z",
+    "one_line": "Once the backfill block reads and writes the budget ledger, the first-pass test test_backfill_failure_keeps_production_rc would touch the shared pytest temp ledger unless it points RIVALFUNDS_BBG_BUDGET_DIR at its own tmp_path; one setenv line was added to it, outside the amendment's literal list.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/bbg_budget.py ledger_dir(): under pytest without the env var the ledger is a shared temp dir (opal_bbg_budget_pytest), so a prior run's spend would leak into the next run's spent()",
+        "integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py test_backfill_failure_keeps_production_rc: signature gained tmp_path, one monkeypatch.setenv line; assertions unchanged"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Amendment 1 item 6: nothing else moves; the test file edit is the one new test.",
+    "world_is": "The existing test calls main(), which now calls bbg_budget.spent() and record(); isolating its ledger needed one line in the same permitted file. No assertion of the first-pass tests changed."
   }
 ]
 ```
