@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>respol_ok=11/11 ssm_ok=</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -416,3 +416,13 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
 `kms get-key-policy`, `sts get-caller-identity`. NO object read, NO listing of the transcripts bucket, NO decrypt call, no apply,
 no plan against the backend, no download. Never print or save the content of a transcript.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~17:4xZ) -- one issuer repair: CTa1-AC2's expectation no longer names another cell's count
+
+`CTa1-AC2` expected `respol_ok=11/11 ssm_ok=`. The resource-policy block belongs to cell CT-d-5, whose amendment (merged
+@aa6b587487, applied) moved it to 13 arms, so this cell's criterion failed on a number it does not own. The expectation is now
+`ssm_ok=9/9 routes_ok=5/5 all_ok=True`: this cell's two blocks and the whole line's verdict. Nothing is weakened: `all_ok=True`
+requires every block, the resource-policy one included. Gate limb: none graded this modification.
+The worker re-runs the five criteria, rewrites the proof instance's `CTa1-AC2` row from that run (its `expect` field equal to the
+new expectation, `status` from the match), validates the instance, and flips the order to `complete` when all five pass.
+
