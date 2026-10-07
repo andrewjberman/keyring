@@ -9496,3 +9496,29 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here (the cell is drained). The caller texts already say 'or the portal's displayed date if that tool is not available to your identity'. Nothing in AC2 depends on displayed_date."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S65",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~O",
+  "surfaced_at": "2026-10-07T04:17Z",
+  "one_line": "OG-up-1's new tool opal_data_refresh_status formats the CALLER-supplied execution_id into the status URL path with no shape check; httpx collapses dot segments, so an id of '../../../general/x' sends the portal service account's GET to /api/general/x.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py at release 240ac2fe5a (opal_data_refresh_status): httpx.get(PORTAL_FRONT_DOOR + STATUS_PATH.format(execution_id=execution_id), headers=ph, ...) after only an empty-string check.",
+      "RUN python -c \"import httpx; print(httpx.URL('https://www.opalinvest.dev/api/scoped/data-refresh/status/' + '../../../general/x').path)\" -> /api/general/x (httpx 0.28.1 on this device; the host's httpx version is unread).",
+      "READ the pre-release code (live 7d65a28db0): the only execution_id ever formatted into STATUS_PATH came from the /trigger response, never from a caller."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "OG-up-1 / R33: the status tool reads the status route and the served manifest, GETs only, and fires nothing.",
+  "world_is": "The tool can be steered to GET any path under www.opalinvest.dev with the service account's JWT. What comes back to the caller is narrow: the top-level 'status' key of a 200 JSON object, else 'status HTTP <code>', else an error naming the exception class. So it is a path-existence and status-code oracle under the service identity, plus whatever a portal GET does on being read. The callers are signed-in identities at the integration's min_tier (standard); the scoped concierge is not on the tool's allowlist. Not exercised against the host or the portal by this seat.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Found reading the r25 release for the CVO never-widen half (signed with this row named). Candidate fix, one line: refuse an execution_id that does not match the id shape /trigger returns (for example ^[A-Za-z0-9:_-]{1,128}$) before formatting it. INERT: low exposure, internal callers, read-only."
+}
+```
