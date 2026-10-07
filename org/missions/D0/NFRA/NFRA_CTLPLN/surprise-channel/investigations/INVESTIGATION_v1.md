@@ -2792,3 +2792,111 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Free space on C: moved 29 GB at the start, 20 GB at the first install, 5.0 GB at its lowest, 14.6 GB at the end, with no step of mine writing more than the kit (502 MB) and two scratch installs (2075 MB each). A test whose result depends on the host's free disk is a flake. The helper change is one argument; the floor stays in repack and is exercised by the real cut (it printed 'disk: free 30.45 GB ... floor 10.0 GB')."
 }
 ```
+
+## NFRA_CTLPLN-W14-S7 -- TO-CT-a-1 amendment 5: placement IS recorded (as a target) in project.json, DIRECTIVES.yaml and the CTO four-box record; the order said no register lists it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:09:58Z",
+  "one_line": "The order says no register places a project on a Dell, but 13 tree project.json files carry a placement field of DELL1 or DELL2, the directive register places D7 (OPAL_TICKET_VNEXT) on DELL2, and the CTO four-box record places ADVI_PERFRP on DELL2; the field is the TARGET box, so a live project may still be running elsewhere until its round boundary",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py --from-file infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json prints one PLACED line per project with file:line: 13 org/missions/D*/*/*/project.json placement lines (DELL1: MDPF_HEALGAP, MDPF_SECCLASS, MDPF_SECHIST, MDPF_TAXSMA; DELL2: ADVI_BILLING, ADVI_COTBKF, DSGN_IRPTV1, IRPT_BCKEND, IRPT_CUSTDY, IRPT_DASHBD, IRPT_YCDGEN, NFRA_OPSWKF, NFRA_TRNSPT)",
+      "org/missions/DIRECTIVES.yaml:325 (D7 placement DELL2) and the members line naming OPAL_TICKET_VNEXT; org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md:18 (ADVI_PERFRP, DELL2, no tree home)",
+      "the CTO record says a live project moves at its next round boundary and the project.json placement_ruling for ADVI_COTBKF says 'TARGET BOX dell2 ... Replaces the dell1 target of the four-box layout': the field is a target and two registers disagree on ADVI_COTBKF (layout table DELL1, project.json DELL2); org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261007_071xZ_DELL2_SEATING_CTO_SELF_DRIVE_COO_CANONICAL_DRIVE_MSTR_ARMS.md lines 46-50 quote seats ~K2 ~C2 ~P2 ~Y2 ~M2 ~G2 ~D2 on dell2 for IRPT_CUSTDY, ADVI_COTBKF, IRPT_BCKEND, IRPT_YCDGEN, IRPT_DASHBD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5 step 1(c): 'NO register lists this (the directive register names DELL2 for D7 only; project rows carry laptop or site-z)'; infer placement from lane suffixes where the relay files confirm the convention.",
+  "world_is": "Project rows carry DELL1/DELL2 in a placement field (13 tree rows) and the census uses those lines, not the lane-suffix convention: org/devices/DEVICES.json lists no lane letters for dell1 or dell2 (lane_letters_claim absent), so the convention is read only from the relay files and places no project. placement_inferred=False for all 15 placed projects; the placed list is a TARGET list.",
+  "notes": "For the issuer: the join is only as current as the target; a project that has not yet moved still runs elsewhere, and a project moved later is missed until the census is retaken (--live)."
+}
+```
+
+## NFRA_CTLPLN-W14-S8 -- TO-CT-a-1 amendment 5: the whitelist scopes OpenAI to ETFS_RIVALS only, and the census finds MDPF_SECCLASS programs reading the OpenAI key
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:09:58Z",
+  "one_line": "The standing vendor-egress whitelist scopes OpenAI to ETFS_RIVALS only ('not any other project's use of OpenAI'), while the vendor census finds four MDPF_SECCLASS programs on dell1 reading openai-api-key; the Dell grant lets a Dell read the key and says nothing of whether a call is allowed, which the whitelist older wording would refuse for that project",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/ref/VENDOR_EGRESS_WHITELIST.yaml VEW-2: vendor OpenAI, scope 'ETFS_RIVALS -- the rivalfunds AI chain only', not_covered 'OpenAI for any project other than ETFS_RIVALS'; VEW-3 Kimi scope 'any'",
+      "tests/vendor_secrets_census.json join: MDPF_SECCLASS reads openai-api-key in data/black_diamond/scripts/classification/classify_bd_securities.py:159, data/black_diamond/scripts/gold/B_01b.classify_new_securities.py:283, data/cot/scripts/gold/B_01b.classify_new_securities.py:284, data/inf/scripts/classification/classify_assets.py:290",
+      "Andrew 18:3xZ item 4 ('The Dell Boxes have vendor egress as needed', org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md) is newer than the register row and broader; the register row was not struck or widened by it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: grant the Dell group read of exactly the vendor secrets its placed projects need; whether a given vendor call is one Andrew allowed stays the rule seats follow.",
+  "world_is": "openai-api-key is classed VENDOR (an AI model provider key read by name by MDPF_SECCLASS programs) and is in the built grant; the register row that records Andrew's standing OpenAI word covers one project. No call is made by this cell; the half request carries the secret so a person can strike it or widen VEW-2.",
+  "notes": "For 1.0.0_SA_CTO (the register's only writer): whether item 4 widens VEW-2 for the Dell-placed projects, or the key leaves the grant."
+}
+```
+
+## NFRA_CTLPLN-W14-S9 -- TO-CT-a-1 amendment 5: CTa1-AC5 cannot read ok=True after the apply, because its ok includes 'live key policy equals the pre-edit render'
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:26:53Z",
+  "one_line": "CTa1-AC5 reads ok=False on the live account because its check requires the LIVE transcripts key policy to equal the PRE-edit render, and the amendment 3 change has since been applied: the live key policy now holds 3 statements, the pre-edit render 2; every other field of the line passes",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py (rc 1) prints 'live key policy (kms get-key-policy) statements=3 equals the pre-edit render (one-element lists normalised as KMS stores them): False' and LAST line 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'",
+      "the same script on the committed amendment 3 state read ok=True in the earlier pass (proof instance row CTa1-AC5, before the apply); the render still reads 'statements after=3 before(55ec1bd250)=2' and the diff added=['DellAgentUsersDecryptOnly']",
+      "check_transcripts_dell_decrypt.py, the line after 'the live key policy equals the pre-edit render': live_same is part of ok, so a correct apply makes the check fail by construction; I did not compare the live statements' content to the after-render (kms get-key-policy is not in amendment 5's read list), so 'the live policy is the applied after-state' is inferred from the count 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: the other five criteria are unchanged and must still pass; CTa1-AC5 expects ok=True with statements_added=1.",
+  "world_is": "The check's ok includes 'live key policy equals the pre-edit render', true only before the apply. After the apply the line reads ok=False although the expected substring dell_decrypt=2/2 and statements_added=1 hold. I did not edit the test (a change to how ok is formed is the issuer's to rule, as amendment 4 did for AC2); the order stays in_progress with AC5 recorded FAIL.",
+  "notes": "For 2.0.0_SA_COO~C: amend CTa1-AC5 so the live comparison accepts the applied state (live equals the after-render) or drop it from ok, then re-run; no other criterion is affected."
+}
+```
+
+## NFRA_CTLPLN-W14-S10 -- TO-CT-a-1 amendment 5: CTa1-AC2's contiguous expectation cannot match a line that gains vendor_ok= before all_ok
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:45:52Z",
+  "one_line": "CTa1-AC2's expectation 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is a contiguous pattern, and amendment 5 makes the same line gain vendor_ok= before all_ok, so the line now reads 'routes_ok=5/5 vendor_ok=19/19 all_ok=True' and the pattern no longer matches although every token it names is present",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py (rc 0, 13 s) LAST line: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True",
+      "the proof checker decides a mechanical row by re.search(expect, output_evidence): 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is not a substring of that line (vendor_ok=19/19 sits between routes_ok=5/5 and all_ok=True)",
+      "amendment 5 says 'CTa1-AC2's line gains vendor_ok=' and the worker order says 'gains vendor_ok=<a>/<n> before all_ok'; neither fixes a position that keeps the old pattern contiguous, and the issuer did not restate the expectation as amendment 4 did"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: CTa1-AC2 expects 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' and its line gains vendor_ok=.",
+  "world_is": "Both cannot hold as a literal pattern. I placed vendor_ok immediately before all_ok and did not move it to make the pattern match; the proof row records CTa1-AC2 FAIL with the reason, and every named token (ssm_ok=9/9, routes_ok=5/5, all_ok=True) is present on the line.",
+  "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
+}
+```
