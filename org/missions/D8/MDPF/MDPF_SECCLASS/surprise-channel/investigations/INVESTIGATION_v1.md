@@ -3734,3 +3734,56 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1."
 }
 ```
+
+## MDPF_SECCLASS-W36-S1 -- The round-8 issuer check issuer_check_sc_e27.py now prints SC-E27-CONTRACT ok=False agains
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T11:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S1",
+  "one_line": "The round-8 issuer check issuer_check_sc_e27.py now prints SC-E27-CONTRACT ok=False against contract 0.6.0: it pins the contract to exactly two new fields and to the 10 measured sectors and 23 vendor spellings, all of which TO-SC-e54 changes by ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e27.py -> SC-E27-CONTRACT ok=False expected 2 new fields, found 3: ['gics_industry_group', 'gics_sector', 'sub_asset_class'] (run 2026-10-07 on branch wk-MDPF_SECCLASS-36)",
+      "its docstring: value sets equal SC-e-25's measured sets; neither new field named sub_asset_class"
+    ]
+  },
+  "spec_asserts": "TO-SC-e54 names only SC-e-54's check (issuer_check_sc_e54.py) as the contract's acceptance; the round-8 check for 0.5.0 is not named as a drain check for this cell.",
+  "world_is": "The 0.5.0 check cannot pass the 0.6.0 contract by construction (11 sectors, 25 full names and a sub_asset_class field are the rulings). It is a superseded round-8 check, read-only to the worker, not edited or weakened; the issuer decides whether it retires at the drain.",
+  "notes": "No criterion of this order depends on it."
+}
+```
+
+## MDPF_SECCLASS-W36-S2 -- Cash has no live sub-classes (0 table rows), so the contract's cash list was declared from
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T11:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S2",
+  "one_line": "Cash has no live sub-classes (0 table rows), so the contract's cash list was declared from the W26-S6 evidence (Money Market, T-Bill) plus Cash; and four existing sector-writer test assertions that pinned the old behaviour were moved with the contract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only scan of etf-classifications 2026-10-07 (3,507 rows): asset_class cash 0 rows; fixed_income/Cash 17 rows",
+      "row MDPF_SECCLASS-W26-S6 evidence: old (cash, T-Bill) 8 and (cash, Money Market) 7",
+      "infra/aws/lambda/mdpf-secclass/sector-writer/tests/test_sector_writer.py: Real Estate as the out-of-list example, 10/23 list lengths, and 'Made Up Group' as an out-of-list group no longer hold at 0.6.0; edited in place, all 20 tests pass"
+    ]
+  },
+  "spec_asserts": "TO-SC-e54 build 1: 'name the source of each cash value'; build 3: 'The existing writer tests keep passing'.",
+  "world_is": "The cash list [Cash, Money Market, T-Bill] is the worker's declaration from the two sources above, recorded in fields.sub_asset_class.source_by_class.cash; whether the CTO wants Cash in the cash list (it also sits in fixed_income, 17 rows) is not ruled. Real Estate admitted and an unknown group now reading NO-DECODE make four assertions of the old writer tests false by design; they were retargeted (Ultra Short Duration and an invented sector as the out-of-list examples, counts 11/25 plus 23 decode pairs), not weakened. W24-S6 (the seed dicts the writer reads do not exist) sits in seed_held(), a function this cell does not edit: NOT ridden.",
+  "notes": "Read-only AWS: one scan of etf-classifications and 33 in-memory reads of bbg characteristics.parquet; nothing written, no package or download."
+}
+```
