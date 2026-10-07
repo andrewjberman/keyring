@@ -21811,6 +21811,163 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased. A seat reading TERMINAL_DOWN from this driver may wait for a sign-in that is not needed, or report the Terminal down. Two repairs an owner may pick, neither taken: the driver distinguishes an import failure (its own exit word) from a failed health call; or the act's invocation names the interpreter the way scheduled_daily_pull.cmd does (PY_AWS). Until then: run the driver under ...\\Programs\\Python\\Python311\\python.exe."
+},
+{
+  "id": "AMGT_RESAPP-Z-S367",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T14:23:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "BLOCKING",
+  "one_line": "'Seeking Alpha last read' on the freshness page reads four per-security tables that the current collector does not write. Those tables hold exactly 3 partitions, the 2026-09-11 pilot objects for BABA, BA and COST, so those three read stale and the other 92 covered names read 'not collected'. Both readings are false; FWD-7 was graded on the three.",
+  "spec_asserts": "Round 77 cell ba-1 (the stale rule on the server) and the round-77 grade of FWD-7: a row reads stale when a COLLECTED input's last read is older than its rule allows, and the three rows 'Seeking Alpha last read 2026-09-11' (Alibaba, Boeing, Costco) are true stale rows beside 92 current ones.",
+  "world_is": "Asked by 1.0.0_SA_CTO~Z msg 31026 after 2.0.0_SA_COO~H measured (row AMGT_HARVST-Z-S100) that the Seeking Alpha leg read all three on 2026-10-06/07. (1) WHICH OBJECT THE DATE KEYS ON: lib/research/freshness/build_view.py latest_seeking_alpha_bronze_stamp (:156-170) takes the newest stamp across the tables _SEEKING_ALPHA_BRONZE_TABLES = (symbol, report, analysis, news) under s3://opal-data-harvest/seeking-alpha/harvest/bronze/<table>/security_key=<pool key>/. (2) WHAT IS THERE: one listing of the whole bronze root, 14,962 partitions: security_key= 3 (BABA_US_Equity, BA_US_Equity, COST_US_Equity), article_hash= 14,951, date= 8. Each of the three holds exactly 4 objects, one per table, stamped 2026-09-11T04:02Z to 04:03Z: the September pilot. build_view returns 20260911T040221Z, 20260911T040304Z and 20260911T040346Z for them. For the control C_US_Equity (Citigroup) and for AMD_US_Equity it returns None: no partition exists. (3) WHERE THE COLLECTOR WRITES TODAY: article/article_hash=<hash>/ (stamps 2026-09-11 through 2026-10-07T12:58Z) and news_listing/date=<day>/ (8 days, the newest 2026-10-07), with silver beside them as date-partitioned parquet (seeking-alpha/harvest/silver/article, listing_hit). None of it is under a security_key= partition, so the freshness reader cannot see it. (4) THE SHADOW QUESTION: no short-key record (BA, COST) exists in this store; the partitions are the pool keys. The three are not shadowed by a pilot record under another key. They are the ONLY names the reader's tables hold at all, and what they hold is the pilot. (5) HOW MANY OF THE 95 ARE SEPTEMBER PILOTS: 3 of 95, and they are the same three. The other 92 have no object in the four tables, so the stale rule, which keys only on collected inputs, never counts Seeking Alpha for them and they read 'All inputs current'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read by this seat 2026-10-07 ~14:3xZ, store reads only: a paginated listing of seeking-alpha/harvest/bronze/ grouped by table and partition (14,962 partitions; the six tables present are analysis, article, news, news_listing, report, symbol); build_view.latest_seeking_alpha_bronze_stamp() called on BABA, BA, COST, C and AMD; the silver children listed (article 11 date partitions, listing_hit 8).",
+      "NOT measured: where a per-security 'last read' can be derived from on the plane the collector writes. The article objects' top level is {data} and the silver parquet's columns were not opened. The collector's own run records (.runtime/opal-data-harvest-sa/run_records/) carry gold_security_key per row AMGT_HARVST-Z-S100, and were not read here.",
+      "NOT measured: the same question for the Bloomberg and web-search inputs' readers (latest_bloomberg_bronze_stamp, latest_bright_data_serp_stamp). Bloomberg's tables are written under security_key= today (this seat wrote 86 and 85 such objects today), so that reader sees current writes; the web-search reader was not checked."
+    ]
+  },
+  "notes": "Surfaced, not chased; no code edited. The remedy is a producer cell that leads round 78: the freshness reader takes a name's Seeking Alpha last read from the plane the collector writes, and a pilot-era object older than the collector's own record for the name does not set the date. Until it lands and redeploys, the page's three stale rows and its 92 'not collected' cells for Seeking Alpha are both wrong, in opposite directions."
+},
+{
+  "id": "AMGT_RESAPP-Z-W289-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~289",
+  "surfaced_at": "2026-10-07T16:03:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "AMD_US_Equity's newest stored segments object (20261007T145856Z) is a different-field pull with no PG_REVENUE and no field errors, which the order's usable rule (no field errors at all) selects, so AMD reads no revenue rows and check C1 FAILS.",
+  "spec_asserts": "Order AMGT-bb-1 section 1.2 usable = no PG_REVENUE error AND (carries PG_REVENUE or PG_OPERATING_INCOME, OR has no field errors at all); AC1 C1 expects 'AMD US serves clean revenue rows from the newest stored object that carries the table'; preflight: 76 names carry revenue rows, 9 none.",
+  "world_is": "Measured 2026-10-07 ~16:00Z, store reads only. s3://opal-data-harvest/bloomberg/harvest/bronze/segments/security_key=AMD_US_Equity/ holds 4 objects: 20261007T113201Z (field probe, only __field_errors__), 20261007T114801Z (PG_REVENUE 6 rows but PG_REVENUE not in errors; has errors for other fields), 20261007T115113Z (PG_REVENUE 6 rows, PG_OPERATING_INCOME, no errors), and 20261007T145856Z (362 bytes, written after the cut: keys CRNCY, EQY_FISCAL_YR_END, EQY_FUND_CRNCY, FISCAL_YEAR_PERIOD, LATEST_ANNOUNCEMENT_DT, LATEST_PERIOD_END_DT_FULL_RECORD, NAME, PRIMARY_PERIODICITY, SALES_REV_TURN; no PG_ fields; no __field_errors__). By the literal rule the newest object is usable, so read_segment_table('AMD_US_Equity') serves status none, reason 'Bloomberg's stored table for this name has no revenue by business line.', source 20261007T145856Z. AC1 output: 'FAIL C1 ... 0 row(s); source 20261007T145856Z.json' and 'FAIL C5 ... periods [] currency None' (C5 reads the same AMD result). C4 passes 85 of 85 because the check derives its expectation with the same literal rule (75 serving, 10 reason). No reader can pass both C1 and C4 on this data: skipping objects that carry neither PG field makes AMD serve rows but then C4 counts AMD as wrong. I implemented the order's literal rule and did not widen it. Side finding: the 145856Z object carries CRNCY, EQY_FUND_CRNCY and FISCAL_YEAR_PERIOD, i.e. a currency and fiscal period are now stored for the name in a different object, which the order's null-currency bound does not use. ARMED: any later non-segment pull into this folder hides the table for that name until the rule requires a PG field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Listing and body keys of the four AMD objects read by this worker 2026-10-07 via boto3 get_object, store reads only.",
+      "python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/checks/r78_bb1.py --crit AC1 --where local at the worktree branch wk-AMGT_RESAPP-289: C1 FAIL, C5 FAIL, C2 C3 C4 PASS, exit=1.",
+      "lib/research/api/segment_table.py _usable() implements section 1.2 literally and mirrors the check's own _usable at r78_bb1.py:105-109."
+    ]
+  },
+  "notes": "Remedy is the issuer's: either the usable rule gains 'and carries PG_REVENUE or PG_OPERATING_INCOME' (and the check's expectation with it), or the check's AMD expectation is amended. Surfaced, not chased; AC2 and AC3 pass."
+},
+{
+  "id": "AMGT_RESAPP-Z-W299-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~299",
+  "surfaced_at": "2026-10-07T16:34:00Z",
+  "spec_asserts": "AC3 of AMGT-bb-14 expects 94 other tracked files under integrations/bloomberg/ at the cut with the stamp 002e8c2034aba7d6 equal.",
+  "world_is": "At this worktree (HEAD 74701def43, the issuance commit) git ls-files lists 97 files under integrations/bloomberg, so 95 besides the two edited files; the checker reads 95 files, stamp db0d1fa54fda434f, and AC3 C1 FAILS. The shared tree also lists 97. Only the two named files are modified and nothing is untracked (AC3 C2 PASS), so the difference is in the checker's cut figure, not in this cell's edits.",
+  "one_line": "AC3 C1 of AMGT-bb-14 reads 95 other files and a different stamp than the 94 and stamp the checker was cut with; the two edited files are the only change.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Ran r78_bb14.py --crit AC3 --where local at worktree C:/tmp/r78-299: 'FAIL C1 ... 95 files; stamp db0d1fa54fda434f', 'PASS C2 ... 0 other path(s)', exit=1.",
+      "git ls-files integrations/bloomberg | wc -l = 97 in the worktree and in the shared tree; git log -1 -- integrations/bloomberg = 1f9361dd25 (CRPS-ap-7 amendment 1). NOT measured: which file the checker's cut figure omitted, or whether the stamp was computed before 1f9361dd25 landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "notes": "Surfaced, not chased; the checker was not edited. The issuer re-cuts the AC3 constant or confirms the cut base."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S1",
+  "spec_asserts": "AC1 of AMGT-bb-17 expects clause H5 to read every entry of the overlay's `provenance` carrying a `source_name` key, and to print R78 BB17 AC1 SERVED: YES.",
+  "world_is": "The overlay serves `provenance` as a dict {\"inputs\": [three entries]}. r78_bb17.py line 117 builds entries as `list(prov.values())` for a dict, which is [[three entries]], a list holding one list; line 118 then keeps only dicts, so entries is empty and H5 prints 'FAIL H5 ... 0 of 0' whatever the adapter serves. The adapter does serve source_name on all three entries (read in-process for BA_US_Equity: filings 'Company filings', harvested_news 'Articles we collect', bloomberg 'Bloomberg').",
+  "one_line": "r78_bb17.py H5 reads the overlay's provenance dict one level too shallow (list(prov.values()) is [[entries]]) and so counts 0 of 0 entries and FAILs; the three entries do carry source_name.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/checks/r78_bb17.py --crit AC1 --where local at wk-AMGT_RESAPP-302: PASS H1 H2 H3 H4 H6, 'FAIL H5 every provenance entry carries a plain source name key 0 of 0', 'R78 BB17 AC1 SERVED: NO', exit=1.",
+      "In-process handler read of /security/BA_US_Equity/overlay: type(provenance) is dict, keys ['inputs'], each of its 3 entries carries source_name {'name': ..., 'known': True}."
+    ]
+  },
+  "notes": "Not bent to: the check was not edited and the code was not shaped to it. The remedy is the issuer's: read prov['inputs'] when prov is a dict. All other AC1 clauses PASS."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S2",
+  "spec_asserts": "Section 1 item 3 of AMGT-bb-17 asks the overlay to serve the SAME one statement of inputs under `input_provenance`, passing None for the thesis only if reading the thesis would add a store read to the overlay's first paint.",
+  "world_is": "The overlay does not hold the thesis parts and building them is the whole /thesis read (drafted sections, segment rows, passage coverage, management), many store reads. statement(rows, None) does not mean 'unknown': it serves a filings row with outcome 'failed' and reason 'What this page took from company filings could not be read just now.' on every name, covered or not, which is untrue for a name whose filings were read. I therefore did NOT add the statement to the overlay: the overlay's input_provenance is unchanged (bloomberg, seekingalpha, serp, pack). The thesis serves the statement (H3 PASS).",
+  "one_line": "The overlay's input_provenance was left without the filings row, because the only cheap argument (thesis None) serves a false 'could not be read just now' line on every overlay.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/inputs_statement.py statement(): `if not isinstance(thesis, dict): row = _row('failed', _FAILED)`; test_inputs_statement.py::test_thesis_none_is_failed pins it.",
+      "Read of the overlay in-process for BA_US_Equity after the change: input_provenance inputs ['bloomberg', 'seekingalpha', 'serp', 'pack'] (no filings row)."
+    ]
+  },
+  "notes": "Cost of the alternative: one more store-read set per overlay for a true row, or a false row for free. The issuer decides; adding it is one line at the overlay's input_provenance."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S3",
+  "spec_asserts": "Section 1 of AMGT-bb-17: run lib/research/api/tests/ before the commit and report its last line.",
+  "world_is": "One test of the folder fails on the drained tree for a reason outside this cell's files: test_served_reasons_plain.py::test_peers_v_measure_reason_is_plain_at_the_producer asserts every Peers V absent_reason equals peers_v.MEASURE_NOT_COMPUTABLE_REASON; bb-13 (commit c8ff0a700e) made score_peers_v read '1 peer; 3 are needed' below three peers. Neither the test nor lib/research/scores/peers_v.py is in this cell's paths or touched by it.",
+  "one_line": "test_served_reasons_plain.py::test_peers_v_measure_reason_is_plain_at_the_producer is stale against bb-13's Peers V reason ('1 peer; 3 are needed'); not touched by bb-17.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest lib/research/api/tests/ at wk-AMGT_RESAPP-302: 1 failed, 828 passed; the failure is E assert '1 peer; 3 are needed' == 'this measure could not be worked out from the company's own figures'.",
+      "git log -- lib/research/scores/peers_v.py: c8ff0a700e (bb-13) is the newest commit."
+    ]
+  },
+  "notes": "Left as is: the test is another cell's, and the module is another cell's."
+},
+{
+  "id": "AMGT_RESAPP-Z-S368",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T17:56:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The deployed page serves 'USD' beside a foreign-listed peer price on a small number of peer rows: the currency is taken from a United States record of the same company, not from the listing the price belongs to.",
+  "spec_asserts": "DSGN_AMGTV1 FWD-8 and AMGT-bb-8: a peer price is shown with the currency of its own listing, or with a reason and no currency.",
+  "world_is": "Measured 2026-10-07 ~18:0xZ on the deployed function opal-amgt-scoped-api (CodeSha256 MkM9Kf37), r78_bb17.py --crit AC1 --where deployed, clause H6: over five subject names (2317 TT, AMD US, BA US, ASML NA, PBR US) 60 peer rows read, 2 wrong: under 2317_TT_Equity the peer row with scanner ticker 688910 is served price_currency USD from record TSM_US_Equity, and under PBR_US_Equity the peer row with scanner ticker 268236 is served USD from record PBR_US_Equity. The drafting read of bb-8 (round78/GROUP_B_NOTES.md, cell B2) counted price_currency on 25 of 676 priced peer rows across the covered names, 3 of the 25 carrying another listing's currency (TSM twice, Petrobras once). The whole 676 were not re-read today; the sample is five names. On the shared tree the same clause reads 60 rows, 0 wrong, since the adapter cell bb-17 (@5909213803) asks price_listing.record_for_price and serves a reason with no currency for such a row. NOT measured: whether any reader acted on a wrong currency.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r78_bb17.py --crit AC1 --where deployed, 2026-10-07: 'FAIL H6 ... rows read 60, wrong 2 [(2317_TT_Equity, 688910, TSM_US_Equity, USD), (PBR_US_Equity, 268236, PBR_US_Equity, USD)]'.",
+      "r78_bb17.py --crit AC1 --where local on the shared tree after the bb-17 merge: 'PASS H6 ... rows read 60, wrong 0'.",
+      "round78/GROUP_B_NOTES.md cell B2 and the bb-8 order's preflight line: 25 of 676 priced peer rows carry a currency, 3 of the 25 another listing's."
+    ]
+  },
+  "notes": "ARMED until the round-78 redeploy (order AMGT-bb-18, legs 1-2) carries bb-8 and bb-17: the wrong currency is on the served page today. Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong. About 650 priced peer rows carry no currency at all and stay so: the scanner's source workbook has no currency column (round78/reads/SCANNER_CURRENCY_READ.md), and a Bloomberg field for them is Andrew's word."
 }
 ]
 ```

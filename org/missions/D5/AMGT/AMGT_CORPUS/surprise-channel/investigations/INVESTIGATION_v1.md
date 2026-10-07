@@ -3836,6 +3836,99 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
   "world_is": "The census resolves 80 of 86 write-like calls clear and 6 unresolved (origins 'unknown'), all in the induction request/scheduled files and one induction test, and exits 1. Whether the six are legitimate opt-in writes the census cannot classify, or a regression of the bound, is not decided here.",
   "notes": "Filed by another project's issuer as an off-task observation; nothing was changed. NOT measured: whether the test failed before today (no base run was made), and whether the six sites need a census rule or a code change. Owner: the AMGT_CORPUS issuer.",
   "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W2-S21",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-07T14:32:30Z",
+  "one_line": "BLOCKING on CRPS-ap-6 AC2: the METHOD_VERSION bump the cell orders (/5 to /6) fails three literal-version tests that the cell's <paths> do not let the worker edit, and AC2 names one of them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/corpus/tests/test_dossier_case_body.py:159 asserts dossier.METHOD_VERSION == 'amgt-corpus-dossier/5'; test_dossier_case_positional.py:189 and test_dossier_case_unit.py:110 assert the same literal; none of the three is in the order's <paths>, and the order says only the <paths> change",
+      "pytest lib/research/corpus/tests -q at worktree HEAD after the bump: 4 failed, 482 passed; the failures are those three tests plus test_readonly_proof_bound.py::test_code_census_arm_leaves_no_amgt_corpus_entry (the pre-existing row AMGT_CORPUS-Z-S90, not caused by this cell)",
+      "AC2 as run: test_dossier.py + test_dossier_case_body.py + test_dossier_method_bump.py + test_dossier_heading_only_round40.py -> '1 failed, 34 passed'; the one failure is test_dossier_case_body.py::test_method_version_is_bumped_to_2",
+      "precedent: commit 597f0647ea (CRPS-x-1, the /4 to /5 bump) edited exactly these three literal-version tests in the same commit; the same one-line edit each is what this bump needs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's section 1 point 4 says to bump METHOD_VERSION by one and satisfy test_dossier_method_bump.py; AC2 expects the four named test files to pass; section 3 lists the files that may change and omits the three tests that pin the literal /5.",
+  "world_is": "Bumping to /6 makes AC2 read '1 failed, 34 passed' (test_dossier_case_body.py line 159). Making AC2 pass needs a one-line edit in each of test_dossier_case_body.py, test_dossier_case_unit.py and test_dossier_case_positional.py (assert /6), which the worker may not do. The worker kept the bump, updated test_dossier_method_bump.py (in paths) and left the other three untouched; AC2 is therefore a FAIL and the order stays open. ap6_check.py reads 'ap6 build 2/2 control 2/2'.",
+  "notes": "Hazard is ARMED because the dossier module and the tests disagree at the branch HEAD until the three literals are moved. Disarm: the issuer either amends this order's <paths> to add the three test files and has the edit made (the same one-line change in each, /5 to /6), or makes that edit itself at the drain. Nothing else in the cell is open.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W5-S8",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~5",
+  "surfaced_at": "2026-10-07T15:31:00Z",
+  "one_line": "BLOCKING on CRPS-ap-4 amendment 1 AC2 and AC4: page_check.cjs stubs every non-react import, so the mandated shared locator helper renders as the report key and the check reads ap3 0/1 and rev r2 0.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs lines 66-73 and 83-87: stubFn returns its first non-null argument as text and the require shim stubs every module but react and '/constants'; amendment item 2 orders the helper imported by relative path from the new dossierLocator.ts in ThesisTab.tsx and SecurityOverlay.tsx",
+      "as run on the portal commit 5a526eba88ee69f747cee3b4c62da8d2523c00df (nested portal repository): ap3 reads 'ap3 build 0/1 control 2/2' with 'no s3 key in text false'; rev reads 'r2 one locator wording 0 ... rev build 4/5 control 3/3'; ap4 1/1, ap2 1/1, ap5 3/3 pass",
+      "a scratch copy of the check (worktree .scratch/chk, only the require shim changed so '../dossierLocator' resolves to the transpiled real file) reads 'ap3 build 1/1 control 2/2' and 'rev build 5/5 control 3/3'; the helper's output is therefore right and the instrument cannot see it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AC2 expects 'ap3 build 1/1 control 2/2' and AC4 expects 'rev build 5/5 control 3/3' from page_check.cjs on a candidate in which both files import one shared locator helper by relative path.",
+  "world_is": "Against the issuer's unmodified check, AC2 reads 'ap3 build 0/1 control 2/2' and AC4 reads 'rev build 4/5 control 3/3', so both FAIL and the order stays open. The shared helper renders as the s3 report key under the stub. No way to satisfy the check and item 2 together exists without moving the wording back into the two callers, which item 2 forbids; the worker built item 2 as ordered.",
+  "notes": "Disarm: the issuer lets the check's require shim resolve a name ending '/dossierLocator' to the real transpiled file (the scratch copy shows the one-line shape), then re-runs AC2 and AC4 on the portal commit. The worker did not edit the check (order bound 4).",
+  "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W2-S22",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-07T16:12:00Z",
+  "one_line": "CRPS-ap-6 amendment 2: ap6_check.py arm b4 (pdf dash) passes without the amendment because its lines carry no bold_all and no size above the page median, so continuation._pdf_is_standalone_heading never flags the dash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py lines 67-74: every pdf line is {text, page, size 9.96} with no bold_all; continuation.py:529-536 flags a line only when its size exceeds 1.15 x the page median or bold_all is set",
+      "mutant run in the worker worktree: the first-item skip in _section_block_items disabled in both branches, ap6_check.py reads 'ap6 build 3/4 control 2/2' (b3 fails, b4 still passes)",
+      "the worker's own pdf test (test_pdf_flagged_first_item_after_the_lead_does_not_end_the_block) builds the dash bold and, separately, at size 16.0, and asserts _pdf_is_standalone_heading is true for it; with the skip disabled that test fails"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 says arm b4 is a pdf dash case in the shape of TSM's Positives, which the block reader used to end at.",
+  "world_is": "b4 reads 1 with or without the amendment, so ap6_check.py cannot see the pdf half of the rule; the pdf half is proved by the worker's test file only. The check was not edited (order bound 4).",
+  "notes": "INERT: the build is right and the worker's test covers the pdf branch. Disarm not needed; the issuer may add bold_all True (or a larger size) to the dash line in the check so b4 can fail.",
+  "disarm_owner": "2.0.0_SA_COO~X"
+},
+{
+  "id": "AMGT_CORPUS-Z-W2-S23",
+  "project": "AMGT_CORPUS",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_CORPUS~2",
+  "surfaced_at": "2026-10-07T16:13:00Z",
+  "one_line": "CRPS-ap-6 amendment 2: with the first item skipped, a heading followed by ONE unnamed bold heading and then a named lead or the end serves 'heading + that heading' as the passage, because the heading-only test counts any non-empty item after the lead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "lib/research/corpus/dossier.py _section_block_is_heading_only: 'if any(t for _loc, t in items[1:]): return False'; after the amendment items[1] can be an unnamed bold heading such as 'Valuation', so [lead, 'Valuation'] is not heading-only and is served as 'Management/Board 80 Valuation'",
+      "before the amendment the same document read heading-only (the unnamed heading ended the block at once); the order's text rules that the first item never ends the block and says nothing about a block whose only later item is that heading",
+      "NOT measured on a served document: the census files list no such case among the 49 bare headings, and the worker may not run the recompose census (it reads S3)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2 item 1 says only that the unnamed heading-like item directly after the lead does not end the block; the earlier build says a section with no text beyond its lead line is absent.",
+  "world_is": "The two rules meet at a block whose only item after the lead is an unnamed heading-like line. The worker kept the ruling as written and left the heading-only test unchanged, so such a block is served as the heading plus that line.",
+  "notes": "Disarm: the issuer reads the recompose census (changed lines whose new value is a lead plus one short bold line) and, if any appear, orders a narrow guard (heading-only when the only non-empty item after the lead is the skipped, non-prose heading-like item). The worker did not widen the order.",
+  "disarm_owner": "2.0.0_SA_COO~X"
 }
 ]
 ```

@@ -68,13 +68,15 @@ every assertion behind it held and `ok=False` otherwise.
 
 - **Grant.** The paths block below plus your deliverables folder and this order's file.
 - **No edit outside the grant.** No AWS call, no network call, no `terraform` command, no registry edit, no rename of any resource.
-- Your whole build lives in your deliverables folder, which the tree convention grants; the block below names only the investigation file.
+- AMENDMENT 2 adds the root check and its test to your grant; edit no other `lib/` module.
 - The judgment criterion gets its artifact path and NO verdict from you.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
   `LGIC_BLANKFIX-W2-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing) in the investigation file, and do not weaken the test or
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not block.
 
 <paths>
+lib/opal_naming_rootcheck.py
+lib/tests/test_opal_naming_rootcheck.py
 
 org/missions/D14/LGIC/LGIC_BLANKFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -109,6 +111,32 @@ Two things to know about this root:
   from the map entry?).
 - The run is of `lib/opal_naming_rootcheck.py` at your worktree's HEAD. If the map key form (`investor-reporting/directory`)
   is not what `check_root` passes to `resolve`, that is a finding: report it and file one row; do not edit any `lib/` module.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-07) -- the two defects your run found are yours to fix; then the run again
+
+Your first run failed `BR6-AC1` correctly: 15 lines against the scope's 17 names. Rows `LGIC_BLANKFIX-W2-S7` and `W2-S8` are the
+cause, both in `lib/opal_naming_rootcheck.py`, which is now in your grant (commits 349f9feff4 and 918043d74f are merged; your
+check script and trace are at HEAD). This sentence of the cell no longer holds: "You build nothing in `lib/`."
+
+**Build in `lib/opal_naming_rootcheck.py`:**
+1. **The map key (W2-S7).** `check_root` finds the root's map entry by the root's path RELATIVE to `infra/aws/terraform/`
+   (`investor-reporting/directory`), not by its last path word. A root given with or without the `infra/aws/terraform/` prefix
+   or a trailing slash resolves the same. `bd-pipeline` must resolve exactly as before.
+2. **The scope with the map (W2-S8).** `check_root` asks the scope for the root's names WITH the map
+   (`opal_naming_scope.root_items(root, map_path)`), so a source folder the map assigns to the root is read. The last line's
+   `items` must equal that count.
+3. **Honour `fills`** on the entry, as the merged `opal_naming_keyfill.fill_keys` and the root check's own system fill already do
+   for an entry they are given: check that with the entry now actually found, a root whose entry carries `fills: ["system"]`
+   fills no firm and no source from it; where a stored-file line then cannot be completed it prints `HOLE` with the reason.
+4. Extend `lib/tests/test_opal_naming_rootcheck.py`: a root two folders deep finds its entry (the DIFFERENCE CONTROL: the same
+   root looked up by its last word alone finds none); the run's `items` equals the scope's count with the map on a small
+   temporary root whose map entry lists a source folder. `ROOTCHECK-TEST ok=True` still.
+5. Re-run the control: `python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json
+   --report-only` must print the same last line before and after your edit (another worker is changing stored-file buckets
+   in `lib/opal_naming_keyfill.py` at the same time, so compare before and after IN YOUR OWN worktree). Report both lines.
+6. Then re-run steps 1 and 2 of the cell: overwrite the saved trace with the new live run and re-run `check_second_root.py`.
+   Holes are expected now that the two stored-file names are read; report each whole, grouped by what would close it.
+Extend your proof-of-spec instance and re-validate it. Your rows continue at `LGIC_BLANKFIX-W2-S9`.
 
 ---
 

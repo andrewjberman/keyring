@@ -91,7 +91,7 @@ Rows: id `NFRA_OPLGTW-Z-W32-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Same file as OG-al-2 and OG-up-2 (both complete and on CLOUD); it builds on CLOUD and is held until r26 closes.
 - Pre-cut 10:5xZ: `sd1.AC1` FAIL (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~32</slot>
 <fabric>site-z</fabric>

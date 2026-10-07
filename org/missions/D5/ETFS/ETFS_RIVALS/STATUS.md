@@ -1,22 +1,25 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; round 14 DEPLOYED and proven; rounds 15-20 MERGED on site-Z CLOUD, NOT deployed)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; rounds 15-22 DEPLOYED 2026-10-07 17:3xZ and the 2026-10-07 page republished; ledger legs L3-L5 open)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-07 ~13:2xZ. The drive logs are the hour-by-hour record:
-`org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12}Z_opal_bloomberg.md`.
+As of 2026-10-07 ~17:5xZ. The drive logs are the hour-by-hour record:
+`org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12,13,14}Z_opal_bloomberg.md`.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Deployed artifact pin | CLOUD **22844f744f** in the five rivalfunds Lambdas (round 14). Ledger `etfs-rivalfunds-r14` CLOSED @cc02eeac7d |
+| Deployed artifact pin | CLOUD **beb13d39ff** in the five rivalfunds Lambdas (rounds 15 to 22), 3,008 MB each. Ledger `etfs-rivalfunds-r22` OPEN: L1 apply and L2 republish CLOSED (@dca1f916d9); L3 the read through the gateway (sign-in wall, reader asked of the CTO); L4, L5 the 2026-10-08 11:00Z and 13:00Z REPORT lines. Rollback pin: 22844f744f (round 14) |
+| Served page | 2026-10-07 republished 17:47Z: index 1,690,862 B, 13 chart objects, equal to the prediction (`round22/served_grade_2026-10-07.json`). Republish run 164.5 s, 1,009 MB |
 | pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
 | Round 14 proof | The 2026-10-07 13:00Z sweep read: four gate items MET (`round14/SWEEP_READ_2026-10-07.md` @93f23ea2f4) |
-| Built, not deployed | Rounds 15 to 20 on site-Z CLOUD; last merge 42462181c1; suite 865 passed, 2 skipped, 0 failed at 6bee8e3a91 |
-| Push state | LOCAL. Origin CLOUD f1260c7754 (ls-remote 12:17Z); site Z carries 189 commits not on its tracking ref |
-| Worktrees | None of this project's. Deploy tree `C:/tmp/rv-r8` (pin 22844f744f) and `C:/tmp/rv-replay` remain |
+| Built, not deployed | Rounds 15 to 22 on site-Z CLOUD; last merge c6ac7335a5; suite 876 passed, 2 skipped, 0 failed and 26 of 26 check files PASS at 23d65887ca |
+| Deploy pin (prepared) | CLOUD **beb13d39ff**: rounds 15 to 22 plus memory_size 1024 -> 3008 (CTO ruling msg 31149, row Z-S63). Plan 0 add, 5 change, 0 destroy. COO half SIGNED `round22/NEVER_WIDEN_HALF_COO_R22_DEPLOY.md` @b2ed0588f4; CTO half asked 16:58Z |
+| Gateway | Release r26 live since 14:03:49Z (2.0.0_SA_COO~O msg 31038); the chart route is not yet exercised: no chart object is served |
+| Push state | Rounds 15 to 20 are ON ORIGIN: 0.0.0_AB_MSTR~Z pull-merged origin and pushed, origin CLOUD fad25b1527 (its ls-remote read, msg 30999; re-read by this seat 14:1xZ). Round 21's merge and later were LOCAL at 16:5xZ (origin CLOUD 28e3a2082a by ls-remote; the deploy pin is not on it) |
+| Worktrees | None of this project's. Deploy tree `C:/tmp/rv-r8` is detached at beb13d39ff with the packages staged and `C:/tmp/rv_apply22.tfplan` saved |
 
 ## Rounds 15 to 19 (2026-10-07)
 
@@ -27,6 +30,8 @@ As of 2026-10-07 ~13:2xZ. The drive logs are the hour-by-hour record:
 | 17 | 7a27742b3a | nc-1 | No stored currency: no curve, "No price history is stored for this holding yet." (CTO ruling msg 30817) | 1cbee3e716 |
 | 18 | 8813da6c04 | tl-1 | The dialog's trade list is written from the chart object's markers (row S56) | 4c10ccc170 |
 | 19 | d309f31b5d | ml-1 | The month strip labels each cell with its month, counted back from the window end (row S58) | 233b033a9f |
+| 21 | 722eb2804e | pl-1 | The month strip shows every month of its window (13 cells, the two Octobers with their year); the trade list is headed by its window; the chart fills its frame and its currency label clears the axis (CVO ADJUDICATION_v20) | e3ea0014bc |
+| 22 | 96792f2f46 (+6ce602bd1e) | pm-1 | The oldest strip cell is marked as a part month; no curve without two prices; markers through the page day; no zero-dollar marker; one security has one key on the page, so GQGU's markers are found (row C-S64; CVO: pm-1 J1 MET, C-S64 REMEDIATED @8ee36f16f5) | c6ac7335a5 |
 | 20 | 312c34ca27 | bk-1 | Backfill rows feed the price curve only and carry their currency; a range is finished on later days; the trend's parsekey join reads its column (rows S60, S61; CTO ruling msg 30897) | 42462181c1 |
 
 Each round's packet, real-run record and screenshots: `deliverables/2.0.0_SA_COO~RV/round{15..20}/`. The round-19 run
@@ -42,9 +47,11 @@ Measured on the real run of day 2026-10-06 (live inputs, local writes only), lat
 
 ## THE ORDER OF ACTS (each waits on the one before it)
 
-1. The push of site-Z CLOUD (Andrew's word at 0.0.0_AB_MSTR~Z).
-2. The gateway release that serves the chart route (NFRA_OPLGTW; cut from origin).
-3. The rivalfunds Lambda deploy at a pin holding rounds 15 to 20, under a NEVER-2 ledger entry and a never-widen pair.
+1. ~~The push of site-Z CLOUD~~ DONE 2026-10-07 ~13:51Z (origin CLOUD fad25b1527, holding rounds 15 to 20).
+2. ~~The gateway release that serves the chart route~~ DONE: r26 live 14:03:49Z.
+3. ~~DONE 2026-10-07 17:3xZ~~ the rivalfunds Lambda deploy at pin beb13d39ff, under a NEVER-2 ledger entry and a never-widen pair (COO half
+   signed; CTO half owed). Then ONE republish of 2026-10-07 with `refresh_a1` true, the served grade, and the first-run
+   Max Memory Used and Duration of each function (above 720 s is a BLOCKING row before backfill day 1).
    The page's script calls the route, so the Lambdas do not go before the release.
 4. The Bloomberg backfill, over two days or more. **It does NOT run before step 3:** the DEPLOYED round-14 rankings stage
    does not ignore backfill rows, so a backfill written to live S3 before the round-20 code is deployed would move the
@@ -62,8 +69,8 @@ The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
 
 1. **3.0.0_SA_CVO~RV:** seven J1 grades (pd-2, md-1, co-1, pc-1, nc-1, tl-1, ml-1) on the round-19 run, RIV-ab-1's J1
    (round 14) on the served 2026-10-07 page, and the slug.
-2. **Andrew, at 0.0.0_AB_MSTR~Z:** the push of site-Z CLOUD. The gateway release is cut from origin, so it waits on the
-   push; the Lambda deploy waits on the release (the page's script calls the new route).
+2. **NFRA_OPLGTW (ask carried by 1.0.0_SA_CTO~Z):** the gateway release that serves the chart route; its commits are on
+   origin. The Lambda deploy waits on the release (the page's script calls the new route).
 3. **1.0.0_SA_CTO~Z:** carries the gateway release ask to NFRA_OPLGTW (msg 30755; route shape
    `round15/GATEWAY_CHART_ROUTE_AS_BUILT.md`); the CTO never-widen halves for the Lambda deploy and the backfill run.
 4. **2.0.0_SA_COO~RV (this seat):**
@@ -79,12 +86,23 @@ The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
 |---|---|---|
 | Z-S55, Z-S56, Z-S58, Z-S60 | BLOCKING, INERT | Repaired in rounds 16, 18, 19, 20; disposition is the CVO's |
 | Z-S57, Z-S61 | OBSERVATION | Served: buying_trend carries 7 securities under two keys; cause read (its G4 read omitted the parsekey column) and repaired in round 20, not yet deployed |
+| Z-S63 | BLOCKING, INERT | The deployed daily Lambda used 864 MB of 1,024 MB; the new stages peak at 1,552 MB on site Z. Ruled: 3,008 MB in the same apply; the first runs' REPORT lines are ledger legs |
+| Z-S65 | OBSERVATION | 4 GQGU mentions (META, ASML) open a dialog holding only a name (served today: 0); stated in the COO half; repair is one cell of the next round |
+| Z-S62 | OBSERVATION | The 11:00Z vehicle runs the working tree: round 20's enrichment change first runs 2026-10-08 11:00Z; its log line is owed a read |
 | Z-W10-S1 | OBSERVATION | The backfill's one CRNCY lookup is unmeasured at real size (282 keys) |
-| Z-S59 | OBSERVATION | 11 of 393 month strips disagree with the markers' months; a 365-day window's oldest month is off the 12-cell strip |
+| Z-S59 | OBSERVATION | Down to 4 of 393 strips, each a marker in the part month before the window's first day (by design, marked with an asterisk) |
 | Z-W1-S53 | OBSERVATION | The audit page keeps "History not yet backfilled" (it carries no script by Andrew's word) |
 | Z-W2-S16 | OBSERVATION | Chart objects are written only when the page's bytes change |
 | Z-W4-S19 | OBSERVATION | 29 gateway-suite failures at base, none in rivalfunds; owner NFRA_OPLGTW |
 | Z-W1-S49, Z-W1-S50 | INERT | Carried from round 14 |
+
+## The round analysis (1.0.0_SA_CTO~Z, `ledger/ROUND_ANALYSIS.round20.md` @c9a9e27770)
+
+Seven rulings and the round-21 list. Done from that list: the three reads (`round21/READ_R3_S59_CAUSE.md`,
+`round21/READ_R5_R6.md`) and the first display cell (round 21). Owed: the second display cell (the oldest strip cell marked
+as a part month; no curve for a holding with markers and no prices, or for a range with fewer than two prices; markers
+through the page day; no zero-dollar marker), then the deploy and its served grades, then the backfill's days.
+FWD-22 and FWD-23 stay NOT REALIZED until served.
 
 ## Not exercised by any run so far
 

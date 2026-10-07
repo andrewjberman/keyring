@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.8",
+  "prd_version": "v0.9",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -430,6 +430,30 @@ its one essential wait is expressly qualified: Andrew's standing word for the re
                     team's Upside/Base/Downside cases still render as the
                     team's, cited. Rows the template carries are graded under
                     FWD-20 (a figure on every row).
+         AMENDED    1.0.0_SA_CTO~Z, v0.9 (ADDENDUM D), 2026-10-07. WHICH SHEET
+                    IS NAMED, AND "FOR THAT BUSINESS TYPE" IS STRUCK. The team
+                    has no per-business-type template set; it has one workbook
+                    per company. DONE WHEN now reads: for a served name whose
+                    research folder holds a figure-carrying workbook, the rows
+                    are those of THAT workbook's team sheet, in its order and
+                    labels. The team sheet is `Model NEW VERSION` where the
+                    workbook holds it, else `Model`. Where a folder holds two
+                    or more such workbooks, the one with the newest stored
+                    modified date is read. For a served name with no
+                    figure-carrying workbook, the rows are those of the master
+                    `FactSet Based ONE PAGER TEMPLATE 2026 03 09_v2.xlsx` by
+                    the same sheet rule. The read prints, per name, the
+                    workbook and the sheet it was compared with; the three
+                    classes (own workbook on `Model NEW VERSION` / own workbook
+                    on `Model` / master) sum to the served names. THE CHOICE OF
+                    `Model NEW VERSION` IS INFERRED from the workbooks' shape;
+                    nobody on the research team has stated it. So for every
+                    workbook that holds both sheets, the read prints the rows
+                    of `Model` beside the rows of `Model NEW VERSION`; a read
+                    that compares one sheet alone for such a workbook does not
+                    meet this DONE WHEN. The grade is on `Model NEW VERSION`;
+                    the `Model` rows are reported. The rest of the v0.7 text
+                    stands.
   FWD-13 Every folded field is CITED or ABSENT with a readable reason
          DONE WHEN  EXERCISED -- a census over the dossier's fields prints zero
                     fields that are neither cited nor reason-bearing, with the
@@ -1042,5 +1066,32 @@ held hostage to a stamp.
   would break it again. So the partition is fixed, not the instance. The fourth class is `FWD-19`'s (which sums 83 + 13 + 1 = 97),
   so the two censuses now share one partition.
 - **Not changed:** every other outcome and every contract.
+- **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
+  the CRO).
+
+## ADDENDUM D, v0.9, 2026-10-07 -- FWD-12 names the team's sheet (`1.0.0_SA_CTO~Z`, on the round-40 sheet census)
+
+- **What changes:** `FWD-12`'s DONE WHEN, by an AMENDED line in the fence. Two things. (1) "The template for that business type"
+  is struck: the research found one generic template family and no per-business-type set, and the team keeps one workbook per
+  company. (2) The sheet is named: `Model NEW VERSION` where the workbook holds it, else `Model`; a name with no figure-carrying
+  workbook is compared to the master template by the same rule.
+- **The evidence:** `deliverables/2.0.0_SA_COO~X/evidence/r40_ap9_sheet_census_20261007.txt` @ef4bac1308, read whole by this seat.
+  97 folders; 79 workbooks, 79 opened; 35 carry figures. Of the 35, 11 hold `Model` alone and 24 hold both sheets; none holds
+  `Model NEW VERSION` alone.
+- **Why `Model NEW VERSION` where both exist** (three reads of that file's own lines, by this seat):
+  1. It carries more figure rows than `Model` in 24 of 24 (for example 137 against 105; 111 against 39 for TotalEnergies).
+  2. `Model` is close to one fixed grid in those workbooks: 119 labelled rows in 23 of 24, and the same 1,111 numeric cells over
+     105 figure rows in 16 of 24. `Model NEW VERSION` differs per company: 124 to 153 labelled rows.
+  3. By the dates in the file names, the 11 `Model`-only workbooks are January and February 2026, and all 24 that hold both are
+     dated 2026-03-06 or later. The second sheet arrived in March and every workbook since carries it.
+- **What kind of claim this is: INFERRED.** It is read from the workbooks' shape. Nobody on the research team has said which
+  sheet they work in, and `2.0.0_SA_COO~X`'s own read was the other way (`Model`, as the one sheet present in all 35). So the
+  comparison prints the `Model` rows beside the `Model NEW VERSION` rows for the 24, reported and not graded, and one word from
+  Andrew or the team reverses the choice with no rework beyond the grade.
+- **A consequence the issuer should expect:** the team's sheet differs per company, so "the team's rows" is not one list. The
+  comparison's first output states how many labels all 24 `Model NEW VERSION` sheets share, so the next analysis can say whether
+  the tab needs a per-name row set or a shared core.
+- **Not changed:** the v0.7 text otherwise (rows with no origin in the team's sheet leave the page; figures are graded under
+  `FWD-20`); every other outcome and every contract. `ONE PAGE TEMPLATE - FactSet_QA_QTR.xlsx` is still not treated as current.
 - **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
   the CRO).

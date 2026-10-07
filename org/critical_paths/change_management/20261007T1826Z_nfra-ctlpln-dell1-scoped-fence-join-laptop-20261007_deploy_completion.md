@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-07T18:26:09.644450+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261007T185115Z
 **Deploy:** NFRA_CTLPLN CT-d-2 as amended -- BOX: THE LAPTOP. ONE targeted safe-apply of THREE firm bucket policies (opal_data_49financial, lgic_firm[cottonwood], lgic_firm[inflection]) admitting cloudops-dell1-agent-user to each fence AND confining it in the SAME apply by three DenyScopedExemption1 statements per bucket, so the join is READ-ONLY and PREFIX-BOUND to that bucket's own irpt/<firm>/platinum/holdings/. Admission WITHOUT confinement would be whole-bucket read AND write on three firms' data, because dell1's identity policy allows get, put and list on the estate pattern. Both halves SIGNED: COO @ca90fc5303 (six conditions), CTO @f4643f1530 (plus condition 7). Plan measured 0 to add, 3 to change, 0 to destroy; 129 added lines, 0 removed.
 **Authored by:** 0.7.0_AE_CloudOps~E
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,135 +12,20 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| A1 | activation | one targeted safe-apply of the three firm bucket policies at the laptop | the four fence inputs byte-identical at 17b61b4124 and HEAD (blob hashes, with a working control); both checks ok=True immediately before the plan; plan reads EXACTLY 0 to add / 3 to change / 0 to destroy on the three named addresses; per bucket 43 added lines classified to the one dell1 ARN plus exactly the three signed Sids with that bucket's OWN firm prefix and no other firm's token; 129 added / 0 removed in total; ZERO changed-value lines; no role resource; safe-apply completes 0 added 3 changed 0 destroyed |  | OPEN |
-| V1 | verify | per bucket, the live document equals the saved one plus the planned additions | parsed comparison against the three PRIOR8_* documents (49financial sha256 a3edb171..., cottonwood e73fc892..., inflection a405f60f...) plus exactly the dell1 ARN and the three DenyScopedExemption1 statements; planted-mutant control through the same comparator; statement counts 4 -> 7, 4 -> 7 and 1 -> 4 |  | OPEN |
-| V2 | verify | the ALLOWED arms per bucket, each with its matched statement | dell1 s3:GetObject UNDER irpt/<firm>/platinum/holdings/ allowed; s3:GetBucketLocation allowed; s3:ListBucket with the prefix supplied allowed -- in all three buckets, by the simulator against the LIVE policy with dell1's live attached policies as the identity side |  | OPEN |
-| V3 | verify | the CONFINING arms per bucket -- each refusal attributed to a DenyScopedExemption1 statement BY NAME | dell1 s3:GetObject OUTSIDE the prefix, s3:PutObject UNDER the prefix, s3:ListBucket with NO prefix, and s3:GetObjectVersion under the prefix -- each explicitDeny, and each matched statement named so the refusal is attributed to the confinement and not to the fence. This is the leg that distinguishes a scoped read grant from whole-bucket read and write |  | OPEN |
-| V4 | verify | the other-principal arms and the cross-project arm | dell2 s3:GetObject outside the prefix STILL allowed (unchanged by this act); one unlisted previously-refused principal STILL refused; and on cottonwood dell1 refused on the restricted prefix commonwealth/cottonwood/bronze/crm/, which proves another project's three statements applied earlier today still bind the newly admitted principal |  | OPEN |
-| V5 | verify | AC1 + AC2 + AC3 and the census reported with its scope | check_dell_fence_join.py reads cross_firm_leaks=0 scoped_rows=3 scoped_confined=3/3 ok=True; check_fence_scoped_rows.py reads unchanged_today=True scoped_rendered=9/9 sim_ok=30/30 refusals_ok=7/7 ok=True; the re-plan of the three targets reads exit=0; and the live census dell1_admitted moving 21/24 -> 24/24 is reported with the words 'scoped, 3 of 24' per COO condition 5 |  | OPEN |
+| A1 | activation | one targeted safe-apply of the three firm bucket policies at the laptop | the four fence inputs byte-identical at 17b61b4124 and HEAD (blob hashes, with a working control); both checks ok=True immediately before the plan; plan reads EXACTLY 0 to add / 3 to change / 0 to destroy on the three named addresses; per bucket 43 added lines classified to the one dell1 ARN plus exactly the three signed Sids with that bucket's OWN firm prefix and no other firm's token; 129 added / 0 removed in total; ZERO changed-value lines; no role resource; safe-apply completes 0 added 3 changed 0 destroyed | APPLIED at the LAPTOP 2026-10-07 ~18:2xZ via .tools/safe-apply.sh -chdir=infra/aws/terraform/shared-infra apply -input=false -no-color -auto-approve with the three targets opal_data_49financial, lgic_firm[cottonwood] and lgic_firm[inflection]. Result: Apply complete! Resources: 0 added, 3 changed, 0 destroyed. GATING EVIDENCE: the four fence inputs byte-identical at 17b61b4124 and HEAD by BLOB HASH (s3-49financial.tf ae957bccea05, s3-lgic-firm-buckets.tf b65e1ef4cd61, modules/opal_name/main.tf ff1859d31c6f, exemptions.json 4b391ffd96c0), proven positively because the order's git-diff form is UNCONTROLLED here -- 17b61b4124 is a trunk pin that did not touch those files, so its diff is trivially empty; a WORKING control was found instead (the same four-file pathspec across d5516cb074^..HEAD prints 36 insertions). Both checks ok=True at 18:07:43Z immediately before the plan. The plan read 0 to add, 3 to change, 0 to destroy on the three named addresses, 129 added and 0 removed in total -- matching the COO half's own measurement -- and was CLASSIFIED PER BUCKET, not skimmed: 43 added lines each, exactly the three signed Sids, the dell1 ARN on 4 lines, and ONE holdings prefix naming that bucket's OWN firm (cottonwood, inflection, 49financial) with no other firm's token present. ZERO changed-value lines: every ~ in the plan is a container marker showing the nesting path down to an addition, so no existing statement's value is replaced. NO ROLE, checked not assumed: the two aws_iam_role occurrences are data.aws_iam_role.irpt_performance_adapter DATA-SOURCE READS, neither a resource block nor on a changed line. Another project's three DenyRestricted statements on cottonwood appear on 0 added or removed lines. The three targeted argv strings were echoed back and arrive intact through MSYS. | CLOSED 20261007T185113Z |
+| V1 | verify | per bucket, the live document equals the saved one plus the planned additions | parsed comparison against the three PRIOR8_* documents (49financial sha256 a3edb171..., cottonwood e73fc892..., inflection a405f60f...) plus exactly the dell1 ARN and the three DenyScopedExemption1 statements; planted-mutant control through the same comparator; statement counts 4 -> 7, 4 -> 7 and 1 -> 4 | PASS 3/3. Per bucket the LIVE document equals the SAVED prior document plus exactly the dell1 ARN in DenyForeignFirmPrincipals and the three DenyScopedExemption1 statements, by parsed comparison: opal-data-49financial 4 -> 7 statements (prior sha256 a3edb171b9ab187337af1aa30cd2560c6aca0b49ba8bc227974c92f227417766), opal-data-cottonwood 4 -> 7 (e73fc8922b0f2f32dac33a9100dfe856d5167d1e40892dc9a6935ed805ab03b4), opal-data-inflection 1 -> 4 (a405f60f5f7622ec50abe9d2352179964d1dd18ea036df8ba8d2a5e13624f866). NEGATIVE CONTROL through the same comparator on all three: a planted Sid-rename reads False. The cottonwood document still carries its three DenyRestricted statements from TO-APPLY-5 alongside the three new ones, so two projects' work now coexists in that one policy with neither disturbed. Evidence: deliverables/READBACK8_step6_20261007.txt and the three AFTER8_* documents. | CLOSED 20261007T185113Z |
+| V2 | verify | the ALLOWED arms per bucket, each with its matched statement | dell1 s3:GetObject UNDER irpt/<firm>/platinum/holdings/ allowed; s3:GetBucketLocation allowed; s3:ListBucket with the prefix supplied allowed -- in all three buckets, by the simulator against the LIVE policy with dell1's live attached policies as the identity side | PASS 9/9, three allowed arms in each of the three buckets, by simulate_principal_policy against the LIVE policy with dell1's live attached policies as the identity side. Per bucket: s3:GetObject UNDER that bucket's own irpt/<firm>/platinum/holdings/ allowed; s3:GetBucketLocation allowed; s3:ListBucket allowed with the prefix supplied as an s3:prefix CONTEXT ENTRY -- supplied because the listing statement is conditioned on it and an unevaluated condition returns implicitDeny byte-identical to a real deny. All nine matched cloudops-dell-agent-deploy-policy on the identity side with no resource-policy deny remaining, which is what admission past the fence means. | CLOSED 20261007T185113Z |
+| V3 | verify | the CONFINING arms per bucket -- each refusal attributed to a DenyScopedExemption1 statement BY NAME | dell1 s3:GetObject OUTSIDE the prefix, s3:PutObject UNDER the prefix, s3:ListBucket with NO prefix, and s3:GetObjectVersion under the prefix -- each explicitDeny, and each matched statement named so the refusal is attributed to the confinement and not to the fence. This is the leg that distinguishes a scoped read grant from whole-bucket read and write | PASS 12/12, and the attribution is BY CONSTRUCTION after a first instrument was found wrong and discarded. The condition requires each refusal attributed to a DenyScopedExemption1 statement BY NAME. MatchedStatements names the source as 'Resource Policy' and NOT the Sid, so a name is not available from that field -- measured on TO-APPLY-5 earlier today. TWO INSTRUMENTS WERE TRIED AND ONE WAS WRONG. (i) An all-three differential: full document vs the same document with all three scoped statements removed -- 12/12 read full=explicitDeny and minus=allowed, which proves the refusals belong to the three statements collectively. (ii) A column-offset mapping to name the Sid: it returned DenyForeignFirmPrincipals for all 12, which CONTRADICTED (i), because a statement that no longer refuses an admitted principal cannot be the cause. Root cause measured: the API returns StartPosition Line 1 Column N against the single-line json.dumps string actually passed, while the helper windowed into a re-indented rendering whose Sids sit on lines 5/28/47/59 -- two different coordinate spaces, so it always caught the first Sid. A second attempt mapping the column into the exact string passed named a DenyScopedExemption1 statement on only 6 of 12 and still disagreed with (i), so OFFSET ARITHMETIC WAS ABANDONED ENTIRELY. (iii) LEAVE-ONE-OUT, which needs no arithmetic: remove each scoped statement individually and see which removal lifts the refusal. 12/12 attributed to a NAMED statement, and every result is semantically exactly right and identical across all three buckets -- get OUTSIDE the prefix -> DenyScopedExemption1ObjectsOutsidePrefix; PUT under the prefix -> DenyScopedExemption1AnyOtherAction; ListBucket with NO prefix -> DenyScopedExemption1ListingOutsidePrefix; GetObjectVersion under the prefix -> DenyScopedExemption1AnyOtherAction. That coherence is itself evidence the instrument is sound where the offset one was not. THIS IS THE LEG THAT DISTINGUISHES A SCOPED READ GRANT FROM WHOLE-BUCKET READ AND WRITE: without these statements all 12 arms read allowed, including PUT. Evidence: deliverables/READBACK8_attribution_by_leave_one_out_20261007.txt and READBACK8_sid_naming_20261007.txt, the latter kept deliberately as the record of the discarded instrument. | CLOSED 20261007T185114Z |
+| V4 | verify | the other-principal arms and the cross-project arm | dell2 s3:GetObject outside the prefix STILL allowed (unchanged by this act); one unlisted previously-refused principal STILL refused; and on cottonwood dell1 refused on the restricted prefix commonwealth/cottonwood/bronze/crm/, which proves another project's three statements applied earlier today still bind the newly admitted principal | PASS 7/7. dell2 s3:GetObject outside the prefix STILL allowed in all three buckets, matched cloudops-dell-agent-deploy-policy -- so this act changed nothing for the principal admitted under TO-APPLY-4 and TO-APPLY-5. The UNLISTED previously-refused principal arn:aws:iam::313476888478:role/opal-gateway-role STILL explicitDeny in all three, matched the Resource Policy -- the fence still fences everyone without a row. AND THE CROSS-PROJECT ARM, which is the one that could have gone wrong: on opal-data-cottonwood dell1 is explicitDeny on commonwealth/cottonwood/bronze/crm/, so ADVI_COTBKF's three restricted-prefix statements applied by this seat earlier today still bind a principal admitted to that bucket AFTERWARDS. Two projects' confinements now compose correctly in one policy. | CLOSED 20261007T185114Z |
+| V5 | verify | AC1 + AC2 + AC3 and the census reported with its scope | check_dell_fence_join.py reads cross_firm_leaks=0 scoped_rows=3 scoped_confined=3/3 ok=True; check_fence_scoped_rows.py reads unchanged_today=True scoped_rendered=9/9 sim_ok=30/30 refusals_ok=7/7 ok=True; the re-plan of the three targets reads exit=0; and the live census dell1_admitted moving 21/24 -> 24/24 is reported with the words 'scoped, 3 of 24' per COO condition 5 | PASS on AC1, AC2 and AC3; THE CENSUS READ ok=False AND THAT IS REPORTED, NOT SMOOTHED. AC1: check_dell_fence_join.py reads cross_firm_leaks=0 scoped_rows=3 scoped_confined=3/3 ok=True, matching the expect. AC2: check_fence_scoped_rows.py reads rows_today=32 unchanged_today=True scoped_rendered=9/9 sim_ok=30/30 refusals_ok=7/7 unknown_key_refused_by=validator+module ok=True, matching the expect. AC3: the re-plan of the three targets reads No changes with exit=0. CENSUS, per COO condition 5: dell1_admitted moved 21/24 -> 24/24 and IS REPORTED WITH THE WORDS 'SCOPED, 3 OF 24' as that condition requires; gap_dell1 still 1 (pre-existing, reported under TO-APPLY-4 with proof it predates these acts); dell2_admitted unchanged at 24/24. BUT THE CENSUS'S OWN VERDICT WENT FROM ok=True TO ok=False, which NEITHER HALF PREDICTED. Cause measured, not guessed: it prints three new rows, 'DISAGREE opal-data-<firm> dell1 reading=ADMITTED evaluator=explicitDeny', on exactly the three scoped buckets, and its ok is computed with disagree==0. The census's reading limb parses the fence's ArnNotLike list and sees dell1 ADMITTED; its evaluator limb simulates and gets explicitDeny, because the three scoped statements refuse its generic probe. So the disagreement IS the scope the halves intended, and the census has no concept of admitted-but-scoped. A CONTROL FOR THAT READING SITS IN THE SAME RUN: dell2, which has no scoped statements, reads ADMITTED/allowed with NO disagreement on the same three buckets, so the divergence is specific to the scoped rows and not a general breakage. THIS SEAT DOES NOT ADJUDICATE IT: the CTO half's point 2 already puts 'a cell to make the census print scope beside admission' on NFRA_CTLPLN's list, but it anticipated a MISLEADING COUNT, not a FAILING VERDICT, so the gap between what it anticipated and what the check now returns is the issuer's and the CTO's to close. Reported to 2.0.0_SA_COO~C. Note the census is NOT one of this order's acceptance criteria -- AC1, AC2 and AC3 are the two checks and the re-plan, and all three pass. Evidence: deliverables/CENSUS8_live_BEFORE_20261007.txt and CENSUS8_live_AFTER_20261007.txt. | CLOSED 20261007T185114Z |
 
 ## Log
 
 - 20261007T182609Z OPENED by 0.7.0_AE_CloudOps~E with 6 leg(s)
-
----
-
-## BOX
-
-**THE LAPTOP.** Executor `0.7.0_AE_CloudOps~E`, seated by `2.0.0_SA_COO~C` under
-`NFRA_CTLPLN.TO-APPLY-8.dell1-scoped-fence-join-apply-laptop` @c6037a3f5e (GO msg 106487, acked). Applying identity
-`arn:aws:iam::313476888478:user/Andrew_Berman`. Terraform v1.15.8 on PATH.
-
-## WHAT MAKES THIS DIFFERENT FROM THE DELL2 JOINS, and why the confinement is the whole act
-
-Under TO-APPLY-4 and TO-APPLY-5 this seat applied these same three resources to admit **dell2**, and admission was
-the whole change. **Here admission alone would be a write grant.** `cloudops-dell1-agent-user`'s own identity policy
-allows get, PUT and list on the estate's bucket pattern, and a principal admitted through a fence is outside that
-fence's Deny. So plain admission would give dell1 **whole-bucket read AND write on three firms' data**.
-
-What keeps it narrow is that the same apply adds, for that principal only and per bucket, three statements:
-
-| Sid | what it refuses |
-|---|---|
-| `DenyScopedExemption1AnyOtherAction` | every action except the three named |
-| `DenyScopedExemption1ObjectsOutsidePrefix` | any object read outside `irpt/<firm>/platinum/holdings/` |
-| `DenyScopedExemption1ListingOutsidePrefix` | any listing whose prefix is not under that path (absent or empty included) |
-
-The CTO half rests its signature on the ORDER the work landed in: the reader that refuses an unknown registry key
-came first (@3b6c321227), the rows second (@d5516cb074), the checks third (@17b61b4124) -- so the state *"dell1
-admitted to a whole bucket with its own put allowed"* **was never plannable**. That is why a plan admitting dell1
-without the three statements is a STOP rather than a smaller version of the same act.
-
-## BLAST RADIUS
-
-Three S3 bucket policies. It changes what **one** principal may do in three buckets and nothing for any other
-principal. No IAM object, no role, no other bucket of the 24, no object, no served output.
-
-| bucket | prior | after |
-|---|---|---|
-| `opal-data-49financial` | 4 statements, fence admits 20 | 7 statements, fence admits 21 |
-| `opal-data-cottonwood` | 4 statements, fence admits 6 | 7 statements, fence admits 7 |
-| `opal-data-inflection` | 1 statement, fence admits 6 | 4 statements, fence admits 7 |
-
-**What dell1 GAINS:** `s3:GetObject` under that bucket's own `irpt/<firm>/platinum/holdings/`, `s3:ListBucket` when
-the request's prefix is under that path, and `s3:GetBucketLocation` -- in each of the three. Before this act dell1
-was refused everything in all three (`dell1_admitted=21/24`, `gap_dell1=1`).
-
-**Named so it is not read as covered:** `s3:GetObjectVersion` is REFUSED by ruling. After this act dell1 reads the
-served holdings of **all three firms** -- that is the placement Andrew set (the securities layer on dell1,
-classifying what every firm holds), read-only, one prefix per bucket. A fourth firm bucket is a new row and a new
-half.
-
-**THE CENSUS WILL READ 24/24 FOR dell1 AND THAT NUMBER IS MISLEADING ALONE.** The census counts ADMISSION, not
-SCOPE. COO condition 5 and CTO point 2 require it always be reported with the words **"scoped, 3 of 24"**. A cell to
-make the census print scope beside admission is on NFRA_CTLPLN's list; until then nobody quotes that count alone.
-
-## ROLLBACK PER BUCKET -- independent
-
-S3 keeps **no prior version** of a bucket policy, so the three saved documents ARE the rollback:
-
-| bucket | saved document | sha256 | bytes |
-|---|---|---|---|
-| `opal-data-49financial` | `deliverables/PRIOR8_bucket_policy_opal-data-49financial_20261007.json` | `a3edb171b9ab187337af1aa30cd2560c6aca0b49ba8bc227974c92f227417766` | 2572 |
-| `opal-data-cottonwood` | `deliverables/PRIOR8_bucket_policy_opal-data-cottonwood_20261007.json` | `e73fc8922b0f2f32dac33a9100dfe856d5167d1e40892dc9a6935ed805ab03b4` | 1772 |
-| `opal-data-inflection` | `deliverables/PRIOR8_bucket_policy_opal-data-inflection_20261007.json` | `a405f60f5f7622ec50abe9d2352179964d1dd18ea036df8ba8d2a5e13624f866` | 560 |
-
-Per bucket, independently: `4.0.0_SA_CRO` removes that bucket's scoped row and the same targeted apply runs for that
-bucket; **or**, same window, `s3api put-bucket-policy --policy file://<the saved document>`, whose bytes are the
-exact string S3 returned.
-
-**TRIGGERS, and one of them is sharper than usual --- CTO condition 7:** if dell1's exercised read shows **a put
-succeeding, or a get outside the prefix succeeding**, in any of the three buckets, that bucket's saved policy goes
-back **in the same window** and `1.0.0_SA_CTO` is told. That branch is a write grant on a firm's data and is not left
-standing while it is investigated. Also triggering: AC1/AC2 failing, an AC3 regression, or any live document ceasing
-to equal saved-plus-additions.
-
-## PRE-APPLY EVIDENCE IN HAND
-
-- **THE FOUR FENCE INPUTS ARE UNCHANGED SINCE SIGNING.** `s3-49financial.tf` `ae957bccea05`,
-  `s3-lgic-firm-buckets.tf` `b65e1ef4cd61`, `modules/opal_name/main.tf` `ff1859d31c6f`, `exemptions.json`
-  `4b391ffd96c0` -- each blob EQUAL at `17b61b4124` and HEAD, and the working tree clean. Proven POSITIVELY by blob
-  hash, because the order's `git diff` form is uncontrolled here: `17b61b4124` is a TRUNK PIN that did not itself
-  touch these files, so its diff is trivially empty. **A working control was found instead:** the same four-file
-  pathspec across `d5516cb074^..HEAD` prints 36 insertions, so the instrument discriminates and the empty gate is a
-  real absence.
-- **BOTH CHECKS, run 18:07:43Z immediately before the plan:**
-  `FENCE-JOIN pairs=3 rows=3/3 typed_in_tf=0 cross_firm_leaks=0 evaluator_allowed=3/3 negative_arm=denied
-  other_rows_changed=0 validator=ok scoped_rows=3 scoped_confined=3/3 ok=True`; and
-  `FENCE-SCOPED rows_today=32 unchanged_today=True scoped_rendered=9/9 sim_ok=30/30 refusals_ok=7/7
-  unknown_key_refused_by=validator+module ok=True`. The `scoped_confined=3/3` is the check's own statement that each
-  scoped row carries its confinement.
-- **CENSUS BEFORE:** `dell1_admitted=21/24 gap_dell1=1`, matching the half's expectation exactly;
-  dell1 evaluator decisions `explicitDeny 3 / allowed 21`.
-- **THE THREE PRIOR DOCUMENTS** saved with SHA-256 above; in each, **dell1 absent from the fence** and **zero
-  `DenyScopedExemption1*` statements** before the act.
-- **THE PLAN, classified per bucket rather than skimmed** -- `Plan: 0 to add, 3 to change, 0 to destroy`; 3 resource
-  blocks; **129 added lines and 0 removed in total**, matching the COO half's own measurement; and per bucket: 43
-  added lines, exactly the three signed Sids, the dell1 ARN on 4 added lines, and **one holdings prefix naming that
-  bucket's OWN firm with no other firm's token present** (`cottonwood` -> cottonwood, `inflection` -> inflection,
-  `49financial` -> 49financial). **ZERO changed-value lines** (`~ ... -> ...`): every `~` in the plan is a container
-  marker showing the nesting path down to an addition, so no existing statement's value is replaced.
-- **ANOTHER PROJECT'S WORK IS UNTOUCHED:** the cottonwood policy's three `DenyRestricted*` statements, applied by
-  this seat earlier today under TO-APPLY-5, appear on **0** added or removed lines.
-- **NO ROLE.** The plan's two `aws_iam_role` occurrences are `data.aws_iam_role.irpt_performance_adapter`
-  **data-source reads** (`Reading...` / `Read complete`) -- how Terraform looks up the existing adapter role's ARN
-  for the 49financial fence. Neither is a resource block and neither is on a changed line. Checked, not assumed.
-- The three targeted argv strings were ECHOED BACK before use and arrive intact through MSYS, brackets and quotes
-  preserved.
-
-## INSTRUMENT NOTES carried into the verify legs
-
-The decisive leg is V3, and it needs more than a refusal: on these buckets `DenyForeignFirmPrincipals` and the three
-new statements can refuse the same principal for different reasons, so **each refusal must be attributed to a
-`DenyScopedExemption1...` statement BY NAME** or it does not distinguish a scoped grant from the fence still
-refusing. Every list arm supplies an `s3:prefix` CONTEXT ENTRY, because the listing statements are conditioned on it
-and an unevaluated condition returns `implicitDeny` byte-identical to a real deny. One resource ARN per call. An
-`allowed` is read as "the policy admits an ARN of that shape", never as proof an object exists.
-
-## NOT EXERCISED, and the limits of this evidence
-
-**This seat reads NO object and lists NO firm bucket.** The simulator's `s3:prefix` value is SUPPLIED, not taken
-from a real list request, and organization policies are not evaluated -- both named by the COO half as what its
-evidence is not. The exercised read is dell1's own, from dell1, by another route, and is owed after this apply (one
-get under the prefix, one get outside refused, one put refused). **Until it runs the join is APPLIED, NOT
-EXERCISED.**
+- 20261007T185113Z LEG A1 closed: APPLIED at the LAPTOP 2026-10-07 ~18:2xZ via .tools/safe-apply.sh -chdir=infra/aws/terraform/shared-infra apply -input=f
+- 20261007T185113Z LEG V1 closed: PASS 3/3. Per bucket the LIVE document equals the SAVED prior document plus exactly the dell1 ARN in DenyForeignFirmPrin
+- 20261007T185113Z LEG V2 closed: PASS 9/9, three allowed arms in each of the three buckets, by simulate_principal_policy against the LIVE policy with del
+- 20261007T185114Z LEG V3 closed: PASS 12/12, and the attribution is BY CONSTRUCTION after a first instrument was found wrong and discarded. The condition
+- 20261007T185114Z LEG V4 closed: PASS 7/7. dell2 s3:GetObject outside the prefix STILL allowed in all three buckets, matched cloudops-dell-agent-deploy-p
+- 20261007T185114Z LEG V5 closed: PASS on AC1, AC2 and AC3; THE CENSUS READ ok=False AND THAT IS REPORTED, NOT SMOOTHED. AC1: check_dell_fence_join.py rea
+- 20261007T185115Z CLOSED -- all 6 legs proven

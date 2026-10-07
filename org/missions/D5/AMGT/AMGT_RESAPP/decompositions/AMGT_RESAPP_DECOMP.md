@@ -8947,3 +8947,140 @@ mid-round; his word is what opens it, and it opens it for this cell only.
   --> a PROD promote, which is where the mark takes effect for the users who see the page today.
 - **The reading not taken:** the page off the PROD branch altogether. It is named in the record for Andrew.
 - `fanout` change: `orders_total: 23`; `wave_0` gains `ba-27 ~288`. ba-27 writes `App.tsx`, which no other cell of the round writes.
+
+## 86. ROUND 78 -- THE SEGMENTS READER AND ITS PERIOD LABELS, ONE STATEMENT OF INPUTS, THE OFFICER RANK, THE SLASH READER, THE POOL'S LEGAL NAMES, PEER LISTING CURRENCY, COUNTRY, THE COVERAGE MARKER, SOURCE NAMES, PEERS V BELOW THREE, THE DRIVER'S STOP WORD, THE ROT SIGNAL'S HOME, THE COLLECTOR-RECORD READER, THE DISPERSION FIELDS, NINE LINE-ENDING FILES, THE ADAPTER CELL, REDEPLOY, WALK. Nineteen orders and three issuer acts
+
+**Input:** the CTO's round-77 analysis `ledger/ROUND_ANALYSIS.round77.md` @a1e519f9eb with ADDENDUM 1 @6d7cd1fe3c; the CTO's rulings
+on the calls at the cut `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_RULINGS_AMGT_RESAPP_ROUND78_CALLS_AT_THE_CUT_20261007.md`
+@f97be3fd6f; CTO rulings msg 31077 (the segment period is labelled from stored revenue where it ties) and msg 31087 (the four
+dispersion fields Bloomberg serves). Drafted in five groups; the group notes are
+`deliverables/2.0.0_SA_COO~Z/round78/GROUP_{A..E}_NOTES.md`, and the orders are generated from them by `round78/cut_orders.py`.
+
+### 86a. MEASURED AT THE CUT (deployed `MkM9Kf37`, LastModified 2026-10-07T04:40:17Z, unless named)
+
+- **Segments:** 85 stored partitions; 76 names carry revenue rows, 9 none. The object states no period and no currency. Period 1's
+  top-level sum equals a stored fiscal year's revenue on 72 of the 76, does not on 4 (8766 JP, SAN FP, AMXB MM, RIO LN), and no
+  name lacks stored revenue; all 72 tie to the NEWEST stored year (`round78/reads/SEGMENT_PERIOD_LABEL_READ.md`).
+- **Inputs:** 95 of 95 covered names serve `input_provenance` with no filings row, while the overlay's `provenance` says no filings
+  run is recorded and 12 theses cite a filing.
+- **Officers:** a chief-executive row is present and not first in 17 of 93 served rosters. The reader finds 89 of 91 stored folders;
+  the two slash names (BP/ LN, NG/ LN) are stored and never read.
+- **Names:** 100 of 243 pool records carry a name the search can read; this project's own stored objects name 243 of 243
+  (`round78/GROUP_E_NOTES.md`).
+- **Peers:** `price_currency` is served on 25 of 676 priced peer rows; 3 of the 25 carry another listing's currency. The scanner's
+  source workbook carries no currency column (`round78/reads/SCANNER_CURRENCY_READ.md`): 0 of the other 651 rows gain one from it.
+- **Country:** all capitals on 95 of 95, 22 distinct values. **Coverage marker:** none served on 97 overlays read; the pool holds 243
+  names, 95 covered. **Source names:** 640 feed items carry a code only.
+- **Seeking Alpha last read:** the reader takes the date from four tables holding 3 pilot partitions dated 2026-09-11: 95 of 95 wrong
+  (row Z-S367). The contract for the collector's record is `lib/research/freshness/seeking_alpha_job_record.schema.json` @25ebedb3a3;
+  no record exists yet.
+- **Dispersion:** Bloomberg refuses 4 of the 6 field names `scores/divergence.py:64-65` asks for (AMGT_CORPUS probe, one name).
+- **Line endings:** 45 tracked files carry CR in the index under `eol=lf`; 34 of the 41 `.py` fail the commit gate as they stand;
+  7 sit under `infra/aws/lambda/`; 9 are landable (`round78/HYGIENE_LANDABLE_FILES_20261007.txt`).
+- **The adapter check at the base** (`r78_bb17.py --crit AC1 --where local`): H1 to H5 fail, H6 reads 2 wrong rows of 60.
+- **Filings (a read, no cell):** the 41 "no cik" markers are dated 2026-09-17 and a CIK is stored today for 21 of them; the 42 with
+  no document stop before any fetch; the form is decided for 12 of 95 (`round78/reads/FILING_COVERAGE_READ.md`).
+- **The drafting step (a read, no cell):** no prompt asks for a recommendation; the section holds the company's own guidance on 12
+  of 12 (`round78/reads/DRAFTING_STEP_READ.md`).
+- **Portal:** origin/DEV `ba391aff` at the cut.
+
+### 86b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-bb-1` | the segments reader: a segment table from the stored object; built, NOT served this round | `~289` | worker | LOCAL | new `api/segment_table.py` + test |
+| `AMGT-bb-2` | one statement of inputs with a filings row (row Z-W286-S2) | `~290` | worker-light | LOCAL | new `api/inputs_statement.py` + test |
+| `AMGT-bb-3` | the officer rank: chief executive, chief financial officer, then as served | `~291` | worker-light | LOCAL | new `management/officer_rank.py` + test |
+| `AMGT-bb-4` | the slash-safe officers reader (row Z-S365) | `~292` | worker-light | LOCAL | `management/bloomberg_fallback.py` + test |
+| `AMGT-bb-7` | the pool record carries its legal name and name search reads it (row Z-W275-S1) | `~293` | worker | LOCAL | `identity/crosswalk.py`, its schema, `identity/add_security.py`, `api/name_search.py` + tests |
+| `AMGT-bb-8` | each peer price with the currency of its own listing | `~294` | worker-light | LOCAL | new `peers/price_listing.py` + test |
+| `AMGT-bb-9` | the country in plain case | `~295` | worker-light | LOCAL | new `api/country_name.py` + test |
+| `AMGT-bb-10` | one served marker for a name outside coverage (row Z-S364) | `~296` | worker-light | LOCAL | new `api/coverage_marker.py` + test |
+| `AMGT-bb-11` | a plain served news-source name | `~297` | worker-light | LOCAL | new `api/source_names.py` + test |
+| `AMGT-bb-13` | Peers V below three peers reads not available with its reason (row Z-S162) | `~298` | worker-light | LOCAL | `scores/peers_v.py` + test |
+| `AMGT-bb-14` | the pull driver gives a missing Bloomberg library its own stop word (row Z-S366) | `~299` | worker-light | LOCAL | `integrations/bloomberg/research/research_pulls.py` + its test |
+| `AMGT-bb-15` | the rot signal gets a home its own module owns (row Z-W279-S2) | `~300` | worker-light | LOCAL | `lists/` (a copy, never a move) |
+| `AMGT-bb-16` | the Seeking Alpha last-read reader over the collector's job records, on fixtures (row Z-S367); built, NOT served | `~301` | worker-light | LOCAL | new `freshness/collector_record.py` + test |
+| `AMGT-bb-17` | THE ADAPTER CELL: the six hookups (coverage marker, country, statement of inputs, officer rank, source names, peer listing) | `~302` | worker | LOCAL | `api/scoped_amgt.py`, `api/tests/` |
+| `AMGT-bb-18` | the redeploy carrying the adapter's hookups; r76 c62/c63, r75 c59 and the round-77 shape pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, ledger |
+| `AMGT-bb-19` | the walk on DEV: FWD-16 with one press, FWD-12, FWD-7, FWD-1, the coverage marker, the officer order | `~303` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-bb-20` | nine files re-committed with LF endings (row Z-S362, narrowed by the CTO) | `~304` | worker-light | WORLD by the path floor only (applies nothing) | six `.py`, three `.tf` |
+| `AMGT-bb-21` | the segment table's period and currency, labelled only where they tie to stored revenue; built, NOT served | `~305` | worker-light | LOCAL | new `api/segment_period.py` + test |
+| `AMGT-bb-22` | the divergence score reads the dispersion fields Bloomberg serves | `~306` | worker-light | LOCAL | `scores/divergence.py`, two test files |
+| issuer act 1 | the pool mint that carries the legal names, after bb-7 drains | the issuer | ISSUER ACT, no order file | SERVED, its own pair | the crosswalk object at the builder's address |
+| issuer act 2 | ABNB's model-block pull (ruling 7; Andrew may stop it) | the issuer | ISSUER ACT, no order file | SERVED, its own pair | bronze at the builder's address |
+| issuer act 3 | the eleven ARMED rows read one by one, hazard or not printed per row; a row for the 3 wrong peer currencies | the issuer | ISSUER ACT, no order file | LOCAL | the surprise channel |
+
+**Ids not used:** `bb-5`, `bb-6` and `bb-12` were reads, done at the cut (`round78/GROUP_C_NOTES.md`). **Not cut, and why:**
+- **The segment table's hookup** (bb-1 with bb-21 into `/thesis`): the CTO reads this round's built result first (rulings file, bb-1;
+  msg 31077). The 4 names that do not tie are a Bloomberg re-pull, which is Andrew's word.
+- **The Seeking Alpha reader's hookup** (bb-16 into `/freshness`): it deploys only when the collector's records exist for the reached
+  names (rulings file C2); the writer is AMGT_HARVST's cell.
+- **The page halves** (one statement of inputs, the coverage marker, the plain source name, the Recommendation label) are
+  DSGN_AMGTV1's page.
+- **The filing coverage** (83 names): the read is delivered to the CTO; no cell is cut on it this round.
+- **The 36 line-ending files not landed:** 34 fail the commit gate as they stand and Lambda sources are excluded; row Z-S362 stays open.
+
+### 86c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the round-77 analysis's enrichment list plus the rulings at the cut. By subtraction: the segments
+  reader -> bb-1, bb-21; the inputs statement -> bb-2; officers -> bb-3, bb-4; name search -> bb-7 and issuer act 1; peer currency ->
+  bb-8; country -> bb-9; coverage -> bb-10; source names -> bb-11; Peers V -> bb-13; the driver -> bb-14; the rot signal -> bb-15;
+  the Seeking Alpha column -> bb-16; hygiene -> bb-20; the dispersion fields (arrived at the cut, msg 31087) -> bb-22; every hookup ->
+  bb-17; redeploy -> bb-18; the walk and FWD-16's one press -> bb-19; ruling 7 -> issuer act 2; the eleven ARMED rows -> issuer act 3.
+  Uncovered, stated above: the two unserved hookups, the page halves, the filing coverage.
+- **(ii) Same grain:** one module, one read or one act per cell.
+- **(iii) Intent.** One axis per cell. bb-17 is the declared exception: it is the round's ONLY writer of `scoped_amgt.py`.
+- **(iv) What a cell does NOT move:**
+  - bb-1, bb-16 and bb-21 change no served byte: nothing reads them this round;
+  - bb-7 makes no store write, and every existing field of every pool record is unchanged (the mint is issuer act 1);
+  - bb-13 and bb-22 do not run the scores producer; `run_scores` is not re-run this round (rulings file);
+  - bb-17 changes no existing value: ADDED fields, one reordered list, and a currency withheld where the listing is not the price's;
+  - bb-20 changes line endings only, and no file under `infra/aws/lambda/`; it applies nothing;
+  - bb-14, bb-19 and every build cell make no vendor call.
+- **Write sets:** 0 same-wave overlaps of 171 pairs. The 8 cross-wave overlaps are all bb-17's `api/tests/` against a wave-0 cell's
+  own test file (bb-1, bb-2, bb-7, bb-9, bb-10, bb-11, bb-21, bb-22): bb-17 is cut after every one of them drains.
+
+### 86d. EDGES AND FAN-OUT
+```
+bb-2, bb-3, bb-8, bb-9, bb-10, bb-11 --> bb-17 (the adapter: six hookups) --> bb-18 (redeploy, one pair) --> bb-19 (walk)
+bb-1, bb-7, bb-21, bb-22 --> bb-17      # no hookup; they share its test folder, so they drain first
+bb-7 --> issuer act 1 (the pool mint, its own pair)
+bb-4, bb-13, bb-14, bb-15, bb-16, bb-20 (independent)
+fanout:
+  cap: 8
+  orders_total: 19
+  issuer_acts: 3
+  chains_total: 16              # wave-0 cells with no unmet dependency
+  wave_0: [bb-2 ~290, bb-3 ~291, bb-8 ~294, bb-9 ~295, bb-10 ~296, bb-11 ~297, bb-1 ~289, bb-7 ~293,   # first eight: the adapter's predecessors
+           bb-21 ~305, bb-22 ~306, bb-4 ~292, bb-13 ~298, bb-14 ~299, bb-15 ~300, bb-16 ~301, bb-20 ~304]   # queued; a slot frees as each drains
+  wave_1: [bb-17 ~302]                          # after the ten cells that share its surfaces drain
+  wave_2: [bb-18 0.7.0_AE_CloudOps~A]           # after bb-17 drains, and its pair
+  wave_3: [bb-19 ~303]                          # after bb-18 closes
+  issuer: [pool mint after bb-7, ABNB model-block pull, the eleven ARMED rows]
+  no_s3_deletes: true
+  egress: none in any order; issuer act 2 is the one Bloomberg call of the round, under its own pair
+  portal_ref: ba391aff   # origin/DEV at the cut
+```
+
+### 86e. ADDENDUM 1 (2026-10-07 ~17:3xZ) -- ONE CELL ADDED MID-ROUND ON A CTO RULING
+
+**The ruling:** CTO msg 31206, on Andrew's word of 2026-10-07 ~15:1xZ that no package is fetched from the internet on any box
+(record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_151xZ_TIERS_BIND_EVERY_BOX_DELL1_PUSHES_DEV_PACKAGE_APPROVAL_BY_CRO_THEN_CTO.md`).
+The decomposition is frozen mid-round; that ruling opens it for this cell only.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-bb-23` | the build takes pyarrow 16.1.0 and Linux rpds-py 2026.6.3 from Opal's own deployed zip, proved by its hash against the live function, never a download | `0.7.0_AE_CloudOps~A`, as LEG 0 of the bb-18 order (AMENDMENT 1) | seat order | WORLD by the path floor only (runs no build, applies nothing) | `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh`, new `vendor_from_deployed.py` |
+
+- **Measured at the cut:** 0 of the build's 8 pinned wheels are on this box (`round78/reads/BB18_OFFLINE_WHEELS_READ.md`). The
+  deployed zip on disk hashes to the live CodeSha256 `MkM9Kf37` and holds both packages: 147 files in four folders
+  (`round78/reads/BB18_DEPLOYED_PACKAGE_READ.md`, `GROUP_F_NOTES.md`).
+- **What it does NOT move:** no served byte (the build is not run); the five pure pins and the local-interpreter rpds-py pin stay
+  pip's, satisfied offline from the files the laptop sends; `content_diff.py`, `upload_verified.sh` and every `.tf`.
+- **Edge:** bb-23 --> bb-18. bb-18's pair now also states: the three build variables (`AMGT_DEPLOYED_ZIP`, `PIP_NO_INDEX=1`,
+  `PIP_FIND_LINKS`), the built zip's four folders against the deployed zip's (`r78_bb23.py --compare-zip`), and that the
+  then-deployed zip is KEPT on disk after the apply, since the next build is refused without it.
+- **Carrier:** GATE (x) of `.tools/to-pipeline-gate.py` admits no second order file in a round, so the cell is LEG 0 of the bb-18
+  order (its AMENDMENT 1, criteria AC4-AC6), not an order of its own. `fanout` is unchanged: `orders_total: 19`; the bb-18 order
+  now owns two cells and is pending for LEG 0 only.
