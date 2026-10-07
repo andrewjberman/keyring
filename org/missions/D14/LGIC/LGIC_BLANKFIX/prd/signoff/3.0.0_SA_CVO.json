@@ -1,12 +1,12 @@
 {
   "prd": "LGIC_BLANKFIX_PRD.md",
-  "prd_version": "v0.1",
-  "prd_pin": "11b74e6468f5c81ca4b7a3b2f2b2c66d160215c3",
+  "prd_version": "v0.2",
+  "prd_pin": "47ef4c98cc61213d3fe9b2c3c5e9cfa0f9b7567c",
   "half": "ratified-text",
-  "half_hash": "31aa8a09023a4ad11085a5471195fd51fd27b444e74fa585d72939161020bb55",
-  "endpoint_hash": "4c0d123d44e1250dff2cd5bcf463b445cfd25024fb4cf2711263d13fcdc64b40",
+  "half_hash": "517eaf6f440a3c7589ca0fa4e027396d796ff63d9eeef6209131ade445d6ca03",
+  "endpoint_hash": "a00d507fe7647d3798b1e23a5d90404f833baf7765742a91649f2adea5a0f359",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_BLANKFIX_PRD_V01_RATIFIED_TEXT_REVIEW_20261007.md@1ecb9537fc",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/LGIC_BLANKFIX_PRD_V02_RATIFIED_TEXT_REVIEW_20261007.md@11a52d9ae3",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-07T10:54:48Z"
+  "signed_at": "2026-10-07T11:07:47Z"
 }

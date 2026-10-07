@@ -14,6 +14,9 @@
       "aliases": [
         "cloud-local"
       ],
+      "row_coordinate": "",
+      "row_coordinate_claim": "held",
+      "row_coordinate_source": "1.0.0_SA_CTO msg 106069 (row ids: a seat's row is <CODE>-<coordinate>-S<n>, a worker's <CODE>-<coordinate>-W<n>-S<k>, the laptop bare); read by .tools/surprise-row-gate.py",
       "role": "control-plane",
       "role_text": "Writes the registers, receives Andrew's word, orders the merge queue, runs the planning seats (CTO, CRO, CVO); at most one execution lane.",
       "role_claim": "held",
@@ -45,6 +48,9 @@
         "Z"
       ],
       "aliases_source": "site-z: PRD C-PLACEMENT's fabric enum; Z: the lane-letter suffix of existing per-box files (INVESTIGATION_v1.Z.md), read as sitez's (1.0.0_SA_CTO msg 105634)",
+      "row_coordinate": "Z",
+      "row_coordinate_claim": "held",
+      "row_coordinate_source": "1.0.0_SA_CTO msg 106069 (row ids: a seat's row is <CODE>-<coordinate>-S<n>, a worker's <CODE>-<coordinate>-W<n>-S<k>, the laptop bare); read by .tools/surprise-row-gate.py",
       "role": "integrator",
       "role_text": "The integrator and the deploy box: it alone pushes the trunk and deploys; it keeps the Bloomberg jobs.",
       "role_claim": "held",
@@ -71,6 +77,9 @@
     {
       "name": "dell1",
       "aliases": [],
+      "row_coordinate": "D1",
+      "row_coordinate_claim": "held",
+      "row_coordinate_source": "1.0.0_SA_CTO msg 106069 (row ids: a seat's row is <CODE>-<coordinate>-S<n>, a worker's <CODE>-<coordinate>-W<n>-S<k>, the laptop bare); read by .tools/surprise-row-gate.py",
       "role": "execution",
       "role_text": "Runs rounds of the projects placed on it; deploys only trunk code through the deploy tools and never changes access (FWD-10 as amended v0.6).",
       "role_claim": "held",
@@ -95,6 +104,9 @@
     {
       "name": "dell2",
       "aliases": [],
+      "row_coordinate": "D2",
+      "row_coordinate_claim": "held",
+      "row_coordinate_source": "1.0.0_SA_CTO msg 106069 (row ids: a seat's row is <CODE>-<coordinate>-S<n>, a worker's <CODE>-<coordinate>-W<n>-S<k>, the laptop bare); read by .tools/surprise-row-gate.py",
       "role": "execution",
       "role_text": "Runs rounds of the projects placed on it; deploys only trunk code through the deploy tools and never changes access (FWD-10 as amended v0.6).",
       "role_claim": "held",

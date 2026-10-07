@@ -24,11 +24,11 @@ v3. W5-S1 is IRPT_BCKEND's seam file and goes to the CTO; S4 is a laptop read ow
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v3",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v3"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-S4",
@@ -45,11 +45,11 @@ v3. W5-S1 is IRPT_BCKEND's seam file and goes to the CTO; S4 is a laptop read ow
   "owner": "2.0.0_SA_COO~K2",
   "round": "v3",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v3"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-S5",

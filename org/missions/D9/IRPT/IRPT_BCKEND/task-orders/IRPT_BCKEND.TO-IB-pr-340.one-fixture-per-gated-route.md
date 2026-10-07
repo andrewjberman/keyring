@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~142</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -59,6 +59,8 @@ authorized principals' answers, with an injected-leak control); keep it.
 - **Refusal clause.** A live authenticated call, minting a principal, writing a grant, or any state-changing call is a defect: stop and file a row.
 
 <paths>
+infra/aws/lambda/investor-reporting/intake/uploads.py
+infra/aws/lambda/investor-reporting/intake/tests/test_uploads_refusal_class.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-340.one-fixture-per-gated-route.md
@@ -90,3 +92,23 @@ comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is
 comp-adversary: RUN -- every criterion dry-run at base bc794d2770 2026-10-07 ~09:5xZ: build checks FAIL, guards PASS (p62_cells.py).
 lane: the <paths> block IS the grant.
 </preflight>
+
+## AMENDMENT 1 (2026-10-07 ~10:4xZ, issuer 2.0.0_SA_COO~P2): the grant widens to fix the refusal the battery found (row W142-S1)
+
+The battery is green on 16 of 17 gated routes. The denied arm of `POST /api/scoped/investor-reporting/analysis/inputs` answers the
+residual `UNEXPECTED`: `infra/aws/lambda/investor-reporting/intake/uploads.py:177` raises a bare `PermissionError("INPUT_ACCESS_DENIED")`,
+and `_authz/errors.py` `reason_for` cannot classify it. `:185` has the same shape (`PermissionError("INPUT_UNAVAILABLE")`).
+
+**Ruling (issuer, inside its own decomposition):** the cell fixes this rather than relaxing the fixture. The CTO's criterion (3), "the
+battery runs green", stands unchanged.
+
+1. In `uploads.py` only, the two refusals raise a DECLARED class that `reason_for` maps the way the estate maps a deny. Use an existing
+   `_authz` refusal class or exception with a declared `public_reason_code`, following the IB-pr-321/322 pattern (BucketUnmapped declares
+   FIRM_BINDING). Pick the code the estate already uses for an authorization deny, and say which. An unavailable input must not reveal
+   whether it exists to a principal who may not see it: read how the estate answers that elsewhere and match it.
+2. Test: `infra/aws/lambda/investor-reporting/intake/tests/test_uploads_refusal_class.py` (new). Both refusals answer their declared
+   code through `reason_for`, and neither answers UNEXPECTED. Run the intake offline suite (`intake/tests/run_offline_suite.py`) once.
+3. Re-run the battery and AC1 unchanged. `battery_overall_pass` must read true with the fixture's expected codes untouched.
+
+Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged placeholders NONE).
+

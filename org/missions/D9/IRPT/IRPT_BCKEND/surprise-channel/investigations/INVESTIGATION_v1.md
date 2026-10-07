@@ -19297,3 +19297,424 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Condition (a) met and graded. S352 DISARMED, S356 superseded. E-M1 (cell IB-mr-301) complete for round 30 ~M."
 }
 ```
+
+## IRPT_BCKEND-S363 -- E-M2 (round 31 ~M) is a fenced firm-bucket read: routed to the laptop as a FILE
+
+```json
+{
+  "id": "IRPT_BCKEND-S363",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T10:40:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E-M2 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_30_M_20261007.md @e252251fbe) reads the same three firms' served Holdings publications that S352 measured refused to the dell2 identity; under 1.0.0_SA_CTO~DELL2's standing rule (msg 217) the read is a committed read-only script run by a laptop seat and delivered as a FILE.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S352 (measured 2026-10-07 ~08:4xZ): HeadObject 403 on irpt/<firm>/platinum/holdings/current/manifest.json at all three firm buckets for arn:aws:iam::313476888478:user/cloudops-dell2-agent-user; not re-measured since; the fence fix is NFRA_CTLPLN TO-APPLY-4 (laptop 106139)",
+      "reader org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r31m_fwd5_proof_cases_read.py, committed with this row; --self-test 3 arms OK on dell2"
+    ]
+  },
+  "spec_asserts": "Round 31 ~M issues E-M2 as a SERVED read of the three firms' newest Holdings publications.",
+  "world_is": "No dell2 principal can read them. Disarms when the laptop FILE is delivered and graded, or when the fence join admits the dell2 identity read-only. This row widens no policy."
+}
+```
+
+## IRPT_BCKEND-W143-S1 -- TO-IB-pr-341 premise: C:/dev/ajb_workspace/portal/node_modules does not exist; node_modules junctioned from C:
+
+```json
+{
+  "id": "IRPT_BCKEND-W143-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~143",
+  "surfaced_at": "2026-10-07T10:34:45Z",
+  "one_line": "TO-IB-pr-341 premise: C:/dev/ajb_workspace/portal/node_modules does not exist; node_modules junctioned from C:/dev/wk-ycdgen-6-t5/portal/node_modules instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls C:/dev/ajb_workspace/portal/node_modules -> cannot access",
+      "ls C:/dev/wk-ycdgen-6-t5/portal/node_modules/react -> present; bun test then ran 10 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "The order says to junction node_modules from C:/dev/ajb_workspace/portal/node_modules.",
+  "world_is": "That path is absent (ls: cannot access). A sibling worktree C:/dev/wk-ycdgen-6-t5/portal/node_modules exists with react present; the worker junctioned it into C:/dev/wk-irpt-bckend-143/portal/node_modules (gitignored, uncommitted). No install or network call was made.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-W143-S2 -- TO-IB-pr-341: the P3 over-age reader test compared full option rows to plain rows, which now differ in the par
+
+```json
+{
+  "id": "IRPT_BCKEND-W143-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~143",
+  "surfaced_at": "2026-10-07T10:34:45Z",
+  "one_line": "TO-IB-pr-341: the P3 over-age reader test compared full option rows to plain rows, which now differ in the parsed availability; the test compares rows without availability.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting/__tests__/ir-62-overage/ before the body edit: 9 pass 1 fail (P3 over-age toEqual diff on availability); after: 10 pass 0 fail",
+      "portal worktree commit 5c726cf439"
+    ]
+  },
+  "spec_asserts": "The order says turn the four test.failing reader tests into plain test (readers not edited) and nothing about the test bodies.",
+  "world_is": "With the public status the over-age answer parses and each P3 row carries availability state STALE / DIRECTORY_OVER_AGE (business date 2026-10-02) where the status-less plain answer carries UNCERTAIN, so toEqual(plain.rows) failed after the marker was removed. The worker edited only that test body (search-readers.test.ts, inside the grant) to compare the same rows with the availability key removed recursively; no reader, envelope.ts or fixture was hand-edited. Portal commit 5c726cf439.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-W138-S1 -- IB62-1-AC2 cannot pass on this box: the export suite has 6 tests that import pypdf, which no Python on this la
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "IB62-1-AC2 cannot pass on this box: the export suite has 6 tests that import pypdf, which no Python on this laptop carries (and installing it is a fetch off Opal infrastructure, barred by the order). The 6 fail identically with and without this order's edits; the new test_submit_client_report.py passes 11 of 11 and the rest of the suite passes 214 of 220.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 in C:/dev/wk-irpt-bckend-138/infra/aws/lambda/investor-reporting/export: python -m pytest -q tests/ -> 6 failed, 214 passed; every failure is ModuleNotFoundError/ValidationUnavailable 'pypdf' (test_export x3, test_export_path_b::test_the_receipt_names_the_frozen_as_of, test_submit_async::test_the_marked_event_builds_and_the_handle_reaches_the_receipt, test_submit_service::test_submit_then_first_read_after_the_render_finalizes_the_receipt)",
+      "MEASURED: the same six pypdf failures reproduce on a git-archive of HEAD (base bc794d2770 tree) in .scratch/base; python -c 'import pypdf' fails on C:/Users/Test/AppData/Local/Programs/Python/Python314/python.exe and on the two other python shims",
+      "the order bounds: no call off Opal infrastructure; a test failing for a reason the worker did not cause is a row and a stop on that criterion, never an edit to another test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "IB62-1-AC2 (p62_cells.py): the export suite passes on the worker's workspace.",
+  "world_is": "The suite needs pypdf (render.validate_pdf reads real PDFs); this box has none. AC2's last line is FAIL for that reason alone. A box that carries pypdf (the issuer's drain run, or any seat with it) should re-run IB62-1-AC2 unchanged."
+}
+```
+
+## IRPT_BCKEND-W138-S2 -- E-P9 a1 is complete inside the order's grant but a client report cannot be frozen against the PUBLISHED contra
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "E-P9 a1 is complete inside the order's grant but a client report cannot be frozen against the PUBLISHED contracts: ExportBundle.schema.json (additionalProperties false, oneOf narrative_packet_ref | analysis_report_ref | PATH B) has no client_report_ref, reports/repository.py KINDS is ('PERFORMANCE','ANALYSIS'), and submit_installed._validate refuses any other kind -- all outside <paths>.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/lambda/investor-reporting/_contracts/ExportBundle.schema.json (top-level oneOf lists exactly narrative_packet_ref, analysis_report_ref and the PATH B branch; additionalProperties false); infra/aws/lambda/investor-reporting/reports/repository.py line 21 KINDS = ('PERFORMANCE', 'ANALYSIS') and _report_identity refuses 'unsupported report kind'; export/submit_installed.py _validate raises 'only a Performance or an Analysis report exports' for any other kind",
+      "BUILT inside the grant: retained_export.resolve/render_grant/print_query admit CLIENT_REPORT; bundle.freeze/rebrand carry client_report_ref; handler.submit_export takes client_report_ref and names client-report-portrait-letter; submit_service.serve_submit takes the branch and dates the answer from the document's as_of_date; tests/test_submit_client_report.py 11 passed, which proves the freeze end to end against a tmp copy of the published schema plus exactly the client_report_ref property and oneOf branch (shaped like analysis_report_ref)",
+      "the unamended published schema refuses the client-report bundle at bundle.validate (loud, a jsonschema ValidationError), so nothing served changes until the contract moves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order E-P9 item 1: a client-report reference is resolved, granted and frozen into the bundle as IB-pr-281 did for ANALYSIS.",
+  "world_is": "IB-pr-281 needed no contract change because ANALYSIS already had analysis_report_ref and a repository kind; the client-report kind has neither. A real submit needs, outside this grant: the ExportBundle schema (published copy under docs, the packaged copy under _contracts, and the PRD CONTRACTS table row), a ClientReport contract for the document and for submit_installed._validate, and the repository KINDS entry. The document's address is also still unbuilt (CRO research a2: no LGIC builder address, PRD S06). Open question for the issuer: route the contract edit to the CTO's contract lane. The client report's as-of is read from document field as_of_date, an assumption IRPT_CUSTDY's template contract must confirm or replace."
+}
+```
+
+## IRPT_BCKEND-W138-S3 -- The render host's PRINT_QUERY_KEYS allow-list has no 'report' key, so a client-report print query's report id 
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:08:38Z",
+  "one_line": "The render host's PRINT_QUERY_KEYS allow-list has no 'report' key, so a client-report print query's report id is dropped before the page opens (as the Analysis print's already is); and the lambda manifest.ts copy was already 20 lines behind portal DEV 8ddfe409 when edited, with its lambda-source-map pin (outside the grant) now stale.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ infra/aws/ec2/investor-reporting-export/render_export.cjs PRINT_QUERY_KEYS = bundle, tenant, revision, kind, selection, start, end, account, version, request (no 'report'); tests/test_print_query.cjs asserts that line's text byte for byte, so the list was left unchanged; the client-report print is identified by bundle + kind + selection, which are listed",
+      "MEASURED: diff of export/render_manifest/manifest.ts (HEAD) against portal/src/pages/InvestorReporting/render/manifest.ts at 8ddfe409 differs (382 vs 402 lines; the portal adds StatusEnvelope); this order's edit is additive to the lambda copy only; render_manifest/PROVENANCE.json sha256 is updated to the edited file a8073df43a4a3167acdcdfba42c3f02e30470e7b7355bc83fa767dd466cee4eb; infra/aws/lambda/ci/lambda-source-map.json (line ~4924) still pins the old sha and is outside the grant",
+      "portal/src/pages/InvestorReporting/render/manifest.ts was NOT edited: __tests__/fe-s-4/manifest.test.ts asserts templates.length 2 and supportedContracts keys equal RENDERED_CONTRACTS, and the portal toolchain is not on this box; PrintEntry.tsx names the kind and refuses it by name instead"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order E-P9 item 3: the package lists the client-report kind with a schemaVersion and the portal render package names it.",
+  "world_is": "The lambda copy lists the kind, template and ClientReport investor-reporting/1; the portal package names the kind in PrintEntry.tsx (a refusal until IRPT_CUSTDY's page lands). The portal manifest.ts adds the kind when the page lands and its test is updated with it. The issuer re-pins the source-map row at the release."
+}
+```
+
+## IRPT_BCKEND-W138-S4 -- No CustodyReport document schema is published, so submit_installed._validate admits CUSTODY_REPORT on its own 
+
+```json
+{
+  "id": "IRPT_BCKEND-W138-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~138",
+  "surfaced_at": "2026-10-07T10:40:00Z",
+  "one_line": "No CustodyReport document schema is published, so submit_installed._validate admits CUSTODY_REPORT on its own as_of_date alone; and row W138-S3's manifest.ts sha256 pin is superseded by the custody rename.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: ls infra/aws/lambda/investor-reporting/_contracts lists AnalysisReport, PerformanceReport, ExportBundle and others but no CustodyReport.schema.json; bundle.validate(report, <schema>) therefore has nothing to grade a custody report against; submit_installed._validate('CUSTODY_REPORT', r) requires r.as_of_date (narrative_submit.custody_report_as_of) and returns True",
+      "MEASURED: after the amendment-2 rename render_manifest/manifest.ts sha256 is e728053fa8d75ee10556db6b19475d1d61c915196a289cec029eec634dc9cd4f (PROVENANCE.json updated); row W138-S3 cites the pre-rename a8073df4...; lambda-source-map.json still pins the byte-copy sha and is the issuer's release act",
+      "MEASURED: reports/tests 101 passed; _contracts 190 passed; export suite 216 passed, 6 failed (the six pypdf-only tests admitted by amendment 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: CUSTODY_REPORT is admitted in submit_installed._validate beside PERFORMANCE and ANALYSIS, each validated against its own contract.",
+  "world_is": "PERFORMANCE and ANALYSIS validate against a published schema; CUSTODY_REPORT has none (IRPT_CUSTDY owns the document and has not published one), so only the as_of_date is checked. When the CustodyReport contract is published, _validate adds its schema line; the manifest's CustodyReport supportedContracts entry names investor-reporting/1 ahead of it."
+}
+```
+
+## IRPT_BCKEND-S364 -- dell2 has no terraform; the signed r61 directory release cannot be applied from this box
+
+```json
+{
+  "id": "IRPT_BCKEND-S364",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T10:52:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "dell2 has no terraform binary (none at .tools/terraform.exe, none on PATH, none under Program Files), so .tools/safe-apply.sh fails closed (exit 5) and the r61 directory release -- both halves signed, P1 met 6/6 (IB-pr-341 @55dce54d28), P2 met (IB-pr-337), census at HEAD 5ee7184a42 = the signed delta (search 3, refresh 1) -- cannot be applied from this box. Installing terraform is egress off Opal infrastructure.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "1.0.0_SA_CTO~DELL2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~10:5xZ on dell2: `command -v terraform` empty; `ls .tools/terraform*` none; `where terraform` none",
+      ".tools/safe-apply.sh:38-48: SAFE_APPLY_TERRAFORM, then .tools/terraform.exe, then PATH, else 'no terraform binary found' exit 5",
+      "release-census.py at 5ee7184a42: irpt-directory-search changed_members=3 (entry.py, +expiry.py, +trading_calendar.py), irpt-directory-refresh changed_members=1 (refresh.py)"
+    ]
+  },
+  "spec_asserts": "The seat that holds a signed release on a box can apply it from that box.",
+  "world_is": "dell2 lacks terraform; the release waits for a ruling: a laptop seat applies it, or terraform reaches dell2 by an Opal-internal route."
+}
+```
+
+## IRPT_BCKEND-W142-S1 -- The installed upload boundary (reports/generate_installed.build_boundary) refuses a verified partner advisor t
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The installed upload boundary (reports/generate_installed.build_boundary) refuses a verified partner advisor that the ordinary authorizer does not admit with public_reason_code UNEXPECTED: intake/uploads.py:177 raises a bare PermissionError('INPUT_ACCESS_DENIED'), _authz/errors.reason_for has no by_type entry for PermissionError, and the Entry declares no reasons class for it. Nothing is written or sent; the refusal is fail-closed but not actionable. The IB-pr-340 denied arm for this route is FAIL, so battery_overall_pass is false.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/analysis/inputs'].denied: case partner_without_ordinary_authorizer answered UNEXPECTED, expected NOT_AUTHORIZED or OBJECT_NOT_COVERED (battery run 2026-10-07 on CLOUD c6442ceec1)",
+      "internal record of that call: exception_type PermissionError, exception_text INPUT_ACCESS_DENIED, classifier_code UNEXPECTED, operation analysis-input-upload (printed by p340_owned_world.py under P340_WORLD=upload)",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:177 raise PermissionError('INPUT_ACCESS_DENIED'); python -c 'errors.reason_for(PermissionError(\"x\"))' -> UNEXPECTED at CLOUD c6442ceec1",
+      "the same call writes nothing: table rows 0, queue messages 0 (the arm's nothing_written check passed)"
+    ]
+  },
+  "spec_asserts": "A refusal at the guarded boundary carries a code a caller can act on: _authz/tests/test_guarded_entries.py asserts every refusal is in BOUNDARY_REASONS and 'code != UNEXPECTED' ('an unclassified refusal is not a refusal a caller can act on'); served.py _handle_prospect maps ProspectOwnershipRefused to NOT_AUTHORIZED.",
+  "world_is": "MEASURED in-process on the repository's own deferred-upload world: the non-admitted partner upload answers UNEXPECTED, while the same boundary answers NOT_AUTHORIZED when the edge marker is absent. UNMEASURED live (no authenticated call was made).",
+  "notes": "Found by the IB-pr-340 fixture battery, denied class of POST /analysis/inputs. The fix is outside this order's paths (intake/uploads.py or the Entry's reasons map, a PermissionError -> NOT_AUTHORIZED declaration); the issuer disposes."
+}
+```
+
+## IRPT_BCKEND-W142-S2 -- The analysis-requests success answer's status (state QUEUED) includes internal_correlation_id, which PublicSta
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The analysis-requests success answer's status (state QUEUED) includes internal_correlation_id, which PublicStatusEnvelope.schema.json (additionalProperties false, no such key) rejects; performance/entry.py records that the portal's requirePublicStatus closes the same key set and refuses a whole success response that carries it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/analysis'].allowed.detail.public_status_envelope_valid = 'INVALID: Additional properties are not allowed (internal_correlation_id was unexpected)'",
+      "jsonschema Draft202012 over docs/contracts/investor-reporting/v1/PublicStatusEnvelope.schema.json: the status object INVALID with the key, VALID without it (run in worktree wk-IRPT_BCKEND-142 on CLOUD c6442ceec1)",
+      "infra/aws/lambda/investor-reporting/ycharts/generate/entry.py submit_analysis returns _entry.status_envelope(...) as _status; performance/entry.py comment 'NO internal_correlation_id on a SUCCESS status'"
+    ]
+  },
+  "spec_asserts": "A SUCCESS status on a scoped route is the PublicStatusEnvelope: no internal_correlation_id (performance/entry.py, CTO amended ruling IRPT-HOLDINGS-SUCCESS-STATUS-20260924).",
+  "world_is": "MEASURED in-process with a recorded SubmissionService: the QUEUED success status of POST /analysis carries internal_correlation_id (holdings, performance and submit-export successes validate). UNMEASURED whether the deployed composition reaches the success path (the custody factory may be absent there).",
+  "notes": "Not an arm of this battery; recorded as an observation on the allowed answer."
+}
+```
+
+## IRPT_BCKEND-W142-S3 -- ops/status_loader.status_loader names its job from request.object_id, request.params[job|job_id|jobId] or requ
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ops/status_loader.status_loader names its job from request.object_id, request.params[job|job_id|jobId] or request.job_id; Entry.handle fills those only from event['object_id'] / event['params'], keys API Gateway never sets. With pathParameters {jobId} and queryStringParameters {job} the module Entry answers NOT_FOUND for a job whose lease row exists; the fixture had to set event['object_id'] to get SERVED. GET /status has no job parameter at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "in-process run 2026-10-07 on CLOUD c6442ceec1: get_status fixture with event pathParameters {jobId: JOB-0001} + queryStringParameters {job: JOB-0001} -> NOT_FOUND KeyError 'status_loader needs a tenant ... and a job (request.object_id / params[job|job_id|jobId]...)'; with event object_id JOB-0001 -> SERVED state RUNNING",
+      "infra/aws/lambda/investor-reporting/ops/status_loader.py docstring: translating the {jobId} path parameter into object_id 'is a later cell's wiring, not fabricated here'",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/fixtures/get_status.allowed.json notes"
+    ]
+  },
+  "spec_asserts": "The TO says to shape each fixture from the route's own request contract (routes.json, the contracts, the entry's validators): GET /status and GET /status/{jobId} are scoped authenticated reads.",
+  "world_is": "The module Entry's authenticated GET /status can only answer NOT_FOUND on an API-shaped event; the fixture uses object_id, the field the compute reads. The deployed GET /status/{jobId} is served by the owned reader (build_owned_entry, driven separately and SERVED); the deployed GET /status still uses this loader (UNMEASURED live).",
+  "notes": "route routes.json note: 'the prefix probe the unauthenticated difference control uses'."
+}
+```
+
+## IRPT_BCKEND-W142-S4 -- export/entry.py _covered returns (True, 0, 0) when facts names no account; ExportReceipt.schema.json facts is 
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "export/entry.py _covered returns (True, 0, 0) when facts names no account; ExportReceipt.schema.json facts is additionalProperties false and has no account_ids member. For a contract-valid stored receipt the CURRENT-scope coverage check therefore never refuses; the route's object scoping is the guard (any grant) plus the bound firm's key prefix. The foreign_object cases of the export fixtures use the entry's own offline receipt_fixture seam with a non-contract facts.account_ids to exercise that branch.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered(): 'if not named: return True, 0, 0' at CLOUD c6442ceec1",
+      "docs/contracts/investor-reporting/v1/ExportReceipt.schema.json properties.facts: additionalProperties false, members page_count, validation_status, validation_failures only",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/fixtures/get_export_exportId.allowed.json notes. No stored receipt was read (firm buckets deny this box)."
+    ]
+  },
+  "spec_asserts": "export_receipt docstring: 'The ExportReceipt for an export the caller's CURRENT scope covers'; export_download: 'the CURRENT scope must cover every account on the receipt'.",
+  "world_is": "By the code and the schema a contract-valid receipt names no account, so the coverage test passes for any grant-holding advisor of the firm who holds the export id. UNMEASURED against a real stored receipt.",
+  "notes": "An observation for the issuer; this order changes nothing."
+}
+```
+
+## IRPT_BCKEND-W142-S5 -- export.submit_export composes its ports from env (IRPT_REQUESTS_TABLE, IRPT_EVIDENCE_BUCKET, IRPT_PORTAL_CHECK
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:29:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "export.submit_export composes its ports from env (IRPT_REQUESTS_TABLE, IRPT_EVIDENCE_BUCKET, IRPT_PORTAL_CHECKOUT) and the real report index; none exists offline here, so the allowed principal's operation-shaped POST gets past the boundary and answers its own named NOT_READY (_ExportNotWiredHere). The composed QUEUED payload is exercised only by export/tests/test_submit_entry.py's pytest world.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~142/IB62-5_replay_output.json rows['POST /api/scoped/investor-reporting/export'].allowed: answer NOT_READY, cause _ExportNotWiredHere",
+      "routes.json POST /export note: 'graded on that absence REPORT, never on a render'"
+    ]
+  },
+  "spec_asserts": "The TO asks one operation-shaped ALLOWED fixture per gated route and the battery run on them.",
+  "world_is": "For POST /export the allowed fixture's defined outcome is PAST_BOUNDARY with the declared cause, because a SERVED answer needs a composed report-index world; the denied class is fully driven (refused before the operation).",
+  "notes": "Same limit applies, by the fixture's declared expectation, to nothing else: every other gated route's allowed arm is SERVED."
+}
+```
+
+## IRPT_BCKEND-W142-S6 -- AMENDMENT 1 named the two refusals at the old :177 and :185 (now InputAccessDenied NOT_AUTHORIZED and InputUna
+
+```json
+{
+  "id": "IRPT_BCKEND-W142-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~142",
+  "surfaced_at": "2026-10-07T10:59:28Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 named the two refusals at the old :177 and :185 (now InputAccessDenied NOT_AUTHORIZED and InputUnavailable NOT_FOUND; row W142-S1's UNEXPECTED is gone: the denied arm answers NOT_AUTHORIZED, battery_overall_pass true). Two bare PermissionError raises in the same file are untouched, being outside the amendment: load_input_owner's INPUT_UNAVAILABLE (now :160, the OWNED_INPUT guard's owner lookup, same text and meaning as the fixed :185 site) and NORMALIZATION_UNAVAILABLE (now :409). Each would answer UNEXPECTED through reason_for if it reached the classifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/intake/uploads.py @ worktree HEAD+edit: raise PermissionError at :160 and :409 (Grep, 2 matches); the amended sites are :177/:185 before the edit, now InputAccessDenied/InputUnavailable",
+      "infra/aws/lambda/investor-reporting/intake/tests/test_uploads_refusal_class.py: 6 passed, covering the two amended sites only"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: both refusals (:177 and :185) raise a declared class; the grant is uploads.py only.",
+  "world_is": "The two named refusals are fixed and the battery reads 17 of 17 gated routes green. Whether the :160 owner lookup (it could reuse InputUnavailable, preserving the not-found-equals-not-yours answer) and the :409 raise get the same treatment is a later cell's call; this worker did not widen the order.",
+  "notes": "No fixture reaches :160 or :409 in the battery, so neither is graded by AC1."
+}
+```
+
+## IRPT_BCKEND-S365 -- PrintEntry custody-report candidate waits on a portal toolchain; readReportKind still falls back to performance
+
+```json
+{
+  "id": "IRPT_BCKEND-S365",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T11:10:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Portal PrintEntry.tsx @cdda4378 (IB-pr-336's portal half, the custody-report kind refused by name) is reviewed LAND-WITH-NOTE by 1.0.0_SA_CTO~DELL2 (msg 403) but cannot land on DEV yet: its conditions are a typecheck + eslint pass and one test (?kind=custody-report yields the refusal with 0 requests), and dell2 has no portal toolchain (tsc absent). NOTE for the next round: readReportKind (PrintEntry.tsx:109) still maps any unknown kind to 'performance' on the page side; it must refuse an unknown kind as the render host now does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 403: @cdda4378 vs origin/DEV, 1 file +15/-1; conditions (1) typecheck + eslint + one test, (2) readReportKind :109 refuses an unknown kind next round",
+      "wk-provision on dell2: 'TSC: ABSENT' at every portal worktree provision this session"
+    ]
+  },
+  "spec_asserts": "A reviewed portal candidate lands on DEV once its named checks run.",
+  "world_is": "The checks need a portal toolchain dell2 lacks (bring-up kit). The page-side unknown-kind fallback is next round's enrichment item."
+}
+```
+
+## IRPT_BCKEND-W144-S1 -- TO-IB-pr-342 names the firm buckets opal-data-49financial / opal-data-inflection / opal-data-cottonwood; the d
+
+```json
+{
+  "id": "IRPT_BCKEND-W144-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~144",
+  "surfaced_at": "2026-10-07T11:11:41Z",
+  "one_line": "TO-IB-pr-342 names the firm buckets opal-data-49financial / opal-data-inflection / opal-data-cottonwood; the directory's own registry maps the three firms to opal-data-bd / opal-data-inf / opal-data-cot, and the ownership map and served directory live there. opal-data-cottonwood answers 403 (the named fence, not widened); opal-data-cot answers 200, so the cottonwood ownership map (advisors=0) was read there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED head/get on 2026-10-07: s3://opal-data-bd/platinum/49financial/ownership_map.json 200 (472562 bytes), s3://opal-data-bd/investor-reporting/directory/latest.json 200; s3://opal-data-inf/investor-reporting/directory/latest.json 200; s3://opal-data-inf/platinum/inflection/ownership_map.json 404; s3://opal-data-cot/platinum/cottonwood/ownership_map.json 200 (107 bytes, advisors=0); s3://opal-data-cottonwood/... 403 on both keys",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:177-185 @94e67927f5 firm_bucket_map(): 49financial -> opal-data-bd, inflection -> opal-data-inf, cottonwood -> opal-data-cot; data/assets/scripts/gold/runners_49f/runner_common.py:34 GOLD_BUCKET = opal-data-49financial (the gold dimension plane the directory builds from, read-only here)",
+      "no fence was widened: the denied bucket opal-data-cottonwood was probed once and never read; the cot directory.json itself was not read (zero granted accounts there)",
+      "census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~144/IB64-1_directory_coverage.json per_firm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "opal-data-cottonwood is the denied cottonwood bucket and opal-data-49financial / opal-data-inflection are the readable firm buckets; cottonwood accounts are to be recorded under a fence reason.",
+  "world_is": "All 7,022 granted accounts are 49financial (ownership map in opal-data-bd). Inflection has no ownership_map object; cottonwood's map (opal-data-cot) holds 0 advisors, so zero cottonwood accounts needed the fence reason; FENCE_COTTONWOOD_BUCKET_DENIED is declared with count 0."
+}
+```

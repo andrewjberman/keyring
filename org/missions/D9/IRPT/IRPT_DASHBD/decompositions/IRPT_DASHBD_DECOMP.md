@@ -450,3 +450,20 @@ If E1' leaves most of the 2,299 unexplained, the split-range BD pull goes on And
 | (E3) | `account_class_daily` | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
 
 fanout: 2 of 2 chains, cap 8, reason: E1' and E2 read disjoint segment sets of the merged GROSS record. Workers 0.9.0_WK_IRPT_DASHBD~14 and ~15, each in its own worktree.
+
+## 20. ROUND 20, WORKSTREAM B (2026-10-07 ~11:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-19 analysis @b402b7b2e3 and its E1 method ruling msg 400)
+
+Round 19 is closed: DB-b-29 @33949e002d (E1' refuted the day-count hypothesis: 0 of 2,299) and DB-b-30 @5831f348b8; CVO compile
+ADJUDICATION_v7 @e475d95687, ARMED 0. The split-at-2025-01-09 BD pull is listed for Andrew (2,299 accounts, 2,299 calls, 4,598 ranges)
+and is NOT in this issuance. E1 asked for BD's booking dates, which the landed pull does not hold; the issuer handed it back (msg 399)
+and the CTO ruled the method (msg 400): a Modified Dietz of Opal's dated flows over BD's own totals, with a midpoint negative control and
+a flow-totals guard.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-31` | E1: measure the 226 inferred FLOW_TIMING segments (Dietz over BD's bmv/emv/netAdditions with Opal's dated flows; midpoint control; flows_match guard); the UNEXPLAINED count on a measured basis | LOCAL (S3 reads only) | DB-b-30 (merged) | B20a |
+| `DB-b-32` | E2: the 754 non-closure UNEXPLAINED segments re-read with Opal's served series (readable since the fence join) against the closed set | LOCAL (S3 reads only) | DB-b-30 (merged) | B20b |
+| (E3) | `account_class_daily` | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+| (split BD pull) | BD's own figures either side of 2025-01-09 for the 2,299 closure segments | WORLD (vendor call) | Andrew's per-use word | not cut |
+
+fanout: 2 of 2 chains, cap 8, reason: E1 and E2 read disjoint segment sets (226 and 754) of the merged round-19 record. Workers 0.9.0_WK_IRPT_DASHBD~16 and ~17, each in its own worktree.

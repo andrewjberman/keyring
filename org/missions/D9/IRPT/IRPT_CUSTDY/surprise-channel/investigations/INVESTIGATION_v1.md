@@ -364,3 +364,55 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The 'None' source is fixed upstream, so the tracer's fixture premise no longer holds against HEAD's ids.py. The tool did its job (W5-S1 -> E-P8). Next round's repair batch: retire none_source.py or re-point its test at a fixture projection that still refuses; this round does not re-cut it."
 }
 ```
+
+## IRPT_CUSTDY-S8 -- E2 graded from the real hop-3 run on dell2: QTD/YTD/1Y OK, sources 124/124, SI NO_DATA (no anchor), 4 not in directory
+
+```json
+{
+  "id": "IRPT_CUSTDY-S8",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T10:50:00Z",
+  "one_line": "E2 graded on dell2 from the real hop-3 run (the fence on opal-data-49financial lifted ~10:44Z): 10 households, 14 accounts; QTD/YTD/1Y OK on 14/14 accounts; every figure names its source; but SI is NO_DATA everywhere (no inception anchor), and 4 granted accounts are NOT_IN_DIRECTORY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~10:46Z, HEAD after f4ccdbf04e: python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 --out <scratchpad file, not committed: real client figures> -> HOP3-REAL-RUN advisor=matthew_gooch as_of=2026-09-30 households=10 accounts=14 uncovered=4 held_si=0 error=none, rc 0, 666158 bytes",
+      "graded from that file: accounts QTD OK 14/14, YTD OK 14/14, 1Y OK 14/14, SI NO_DATA 14/14; households QTD OK 10/10, YTD OK 10/10, 1Y OK 7 NO_DATA 3, SI NO_DATA 10/10; figures with a source {table, partition, rows}: 124/124; uncovered 4, all NOT_IN_DIRECTORY; numbers of 8+ digits other than the two masters: 19 distinct, 0 matching any ownership-map account",
+      "1.0.0_SA_CTO~DELL2 msg 358 / 0.0.0_AB_MSTR~DELL2 msg 367: cloudops-dell2-agent-user reads opal-data-49financial gold from ~10:44Z; relay 346 withdrawn by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 analysis E2 (round 1's E4 criteria): QTD, YTD, 1Y at 2026-09-30 computed; SI held under HOLD A where inception is before 2024; each figure names its rows.",
+  "world_is": "Criteria 1 and 3 hold on real data (household 1Y is NO_DATA in place for 3 of 10, the households carrying an uncovered account). Criterion 2 is vacuous: no SI is held because no SI anchor resolves (inception column absent from the accounts the wrapper builds; gold manifest first_data_date not used) -- with HOLD A lifted for 2010-2027 this is now the SI gap, a next-round item beside moving the hold floor to 2010. S4 and S6 close on this run: the fenced read is no longer fenced and the figures FILE exists on dell2."
+}
+```
+
+## IRPT_CUSTDY-W10-S1 -- CU-d-2 on real data: the 4 NOT_IN_DIRECTORY accounts have no Schwab key; 0 documents move
+
+```json
+{
+  "id": "IRPT_CUSTDY-W10-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~10",
+  "surfaced_at": "2026-10-07T11:10:00Z",
+  "one_line": "CU-d-2 on real data: the 4 NOT_IN_DIRECTORY accounts of matthew_gooch are not in the custodian key seam, so none can be built; they move from reason NOT_IN_DIRECTORY to NO_SCHWAB_KEY and 0 documents move from uncovered to reported.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~11:08Z, branch wk-IRPT_CUSTDY-10 after the CU-d-2 edit: python data/assets/scripts/gold/irpt_custody/check_directory_gap.py --advisor matthew_gooch --as-of 2026-09-30 -> UNCOVERED NO_SCHWAB_KEY=4 / DIRECTORY-GAP advisor=matthew_gooch granted=18 not_in_directory=4 reported=14 all_reported=True, rc 0",
+      "read-only probe through hop3_real_run.real_inputs() (no figures printed): of the advisor's 18 granted ownership-map accounts, 14 are in the custodian_key_seam index (5376 entries) and resolve to a Schwab key; the 4 not in the directory (masked ****9851, ****0041, ****7341, ****9421) are not in the seam index and schwab_key() returns None for each; none of the advisor's 12 map relationships is an acct:<id> singleton, so the OWNERSHIP_MAP name rule would have had no key for them either",
+      "the same 14 accounts and 10 households as round 3 (row IRPT_CUSTDY-S8: households=10 accounts=14 uncovered=4); the wrapper's gap rule is exercised on fixtures only (tests/test_hop3_directory_gap.py), where an account with Schwab data and no directory entry gets a document named OWNERSHIP_MAP or ACCOUNT_ONLY"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-d-2 cell text and the CTO ruling: an account NOT_IN_DIRECTORY still gets its report, named from the ownership map; 'those 4 got no report' is the gap to close; CU11-AC2 reports the counts (all_reported=True).",
+  "world_is": "On the chosen advisor the gap is not a directory gap alone: the 4 accounts have no Schwab key at all (absent from the custodian key seam, so no silver or returns gold can be read for them), so no report can be built whatever the directory holds. They stay uncovered, now under NO_SCHWAB_KEY, still counted (not_in_directory=4 of=18). all_reported=True holds because no granted account WITH Schwab data lacks a document. Whether these 4 accounts exist at Schwab under another key (a seam coverage gap) is not measured here and is the open question for the next cut."
+}
+```
