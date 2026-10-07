@@ -8929,3 +8929,21 @@ fanout:
   egress: none in any order; the three issuer acts are the authorized Bloomberg calls
   portal_ref: 13509c52   # origin/DEV at the cut
 ```
+
+### 85e. ADDENDUM 1 (2026-10-07 ~04:4xZ) -- ONE CELL ADDED MID-ROUND ON ANDREW'S DIRECT WORD
+
+**Andrew, verbatim, at the `2.0.0_SA_COO~Z` terminal ~04:2xZ:** "is freshness page dev only? if not it should be". Record:
+`org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20261007_042xZ_FRESHNESS_PAGE_DEV_ONLY.md`. The decomposition is frozen
+mid-round; his word is what opens it, and it opens it for this cell only.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ba-27` | the /freshness page carries the portal's dev-only mark: `requiresDev: true` on its nav entry and `requireDev` on its route | `~288` | worker-light, DIRECT ACT | LOCAL (portal, DEV only) | `portal/src/App.tsx` |
+
+- **Measured at the cut:** portal PROD `ab3191d0` and DEV `659104f4` both carry the page behind `requiresTier: 'internal'` and
+  `requireInternal` only, so every Opal-internal user sees it. The mark exists already (Investor Reporting: 1 nav entry, 2 routes).
+- **What it does NOT move:** no other page's mark; no /freshness page file; the function.
+- **Edge:** ba-4's approved candidate `504ddb3d` --> ba-27 (merged first, then the mark) --> the CTO's review --> the DEV push
+  --> a PROD promote, which is where the mark takes effect for the users who see the page today.
+- **The reading not taken:** the page off the PROD branch altogether. It is named in the record for Andrew.
+- `fanout` change: `orders_total: 23`; `wave_0` gains `ba-27 ~288`. ba-27 writes `App.tsx`, which no other cell of the round writes.
