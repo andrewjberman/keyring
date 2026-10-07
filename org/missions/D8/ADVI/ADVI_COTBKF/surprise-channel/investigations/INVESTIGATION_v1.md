@@ -1550,3 +1550,30 @@ round.** Never edit an existing row.
   "notes": "Resolves D2-W27-S1 once CB-k-1's AC2 passes under the amendment."
 }
 ```
+
+## ADVI_COTBKF-D2-W28-S1 -- The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W28-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~28",
+  "surfaced_at": "2026-10-07T13:10Z",
+  "one_line": "The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_daily_holdings.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~28 -> DAILY-HOLDINGS accounts=1533 account_days=1691729 holding_rows=23226716 snapshot_accounts=83 snapshot_pairs=394 snapshot_equal=381 snapshot_diffs=13 (rc 0)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~28/daily_holdings.md: REBUILD-CHECK basis pairs=381 equal=381; 13 differences over 3 accounts, all fractional quantities (0.09 to 1.014) the rebuild holds and the snapshot does not list",
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:209-219 rebuild_check iterates only the snapshot's own pairs, so it cannot see a rebuilt-open security absent from the snapshot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-l-1 cell text step 2: compare each snapshot account's rebuilt quantity with the snapshot, non-cash only, write EVERY difference; the final line carries snapshot_pairs, snapshot_equal, snapshot_diffs. The crosswalk's rebuild_check, which the cell says already does this comparison, counts only pairs the snapshot lists.",
+  "world_is": "Taking the snapshot's own pairs, the rebuild matches 381 of 381. Taking every non-cash (account, cusip) either side holds for the 83 snapshot accounts, there are 394 pairs and 13 differ: the 13 are securities the transactions leave open in small fractional quantities that the snapshot does not list. The script uses the second reading so that every difference is a row, and the md carries the first reading beside it. Two further rules were chosen where the order is silent: a transaction on a non-trading day takes effect on the next trading day (220 of 3,537 distinct trade dates are non-trading), and an account's span runs to that day when its last transaction is on a non-trading day; a running quantity within 1e-6 of zero is not stored. The last daily state of all 1,533 accounts equals the full rebuild.",
+  "notes": "Whether the 13 fractional residues are unrecorded corporate actions (the order's BLIND) or a snapshot that omits fractional lots is not measured here."
+}
+```
