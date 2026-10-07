@@ -131,3 +131,30 @@ is the guard's.
 
 **Track 3 stays OPEN on the ETF half.** Its proof is `etf_benchmark` at 50 of 50 numbers, with etf `benchmark_last_date` =
 `data_as_of` on all 5 models.
+
+### ADDENDUM 5 (2026-10-07 ~01:3xZ) -- track 3 CLOSED: both halves are fixed on the served key
+
+**The served object, read by this seat:** `json/benchmarks/model_portfolio_benchmarks.json`, LastModified 2026-10-07T01:28:18Z,
+VersionId `fxNfvcQ8...`, `data_as_of` 2026-10-05 (the second re-pull, sent by MSTR~Z, msg 30497).
+
+| field (50 cells each) | numbers | null |
+|---|---|---|
+| `model` | 50 | 0 |
+| `index_benchmark`, `index_spread` | 50, 50 | 0, 0 |
+| `etf_benchmark`, `etf_spread` | **50, 50** | **0, 0** (was 40 null each) |
+| `index_benchmark_volatility`, `etf_benchmark_volatility` | 35, 35 | 15, 15. Every one is WTD/MTD/QTD (`min_points=5` on windows of 5 trading days or fewer) |
+
+`benchmark_last_date` reads index 2026-10-05 and etf 2026-10-05 on all 5 models, equal to `data_as_of`.
+
+**ADDENDUM 3's proof is met on every line.**
+- 200 of 200 benchmark and spread cells are numbers.
+- The volatility nulls are exactly the short windows.
+- Every last date equals `data_as_of`.
+
+**All three tracks are closed:**
+- Track 1: the guard is live and stays.
+- Track 2: the seven CIX definitions were re-saved by their owner.
+- Track 3: re-pulled and served.
+
+The guard went quiet without a code change, as designed. The served panel shows no wrong number and no N/A caused by a
+stale series.
