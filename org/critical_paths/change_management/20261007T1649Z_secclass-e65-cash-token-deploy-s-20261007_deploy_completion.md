@@ -24,3 +24,51 @@
 - 20261007T165855Z LEG L2 closed: UPLOADED in the same run. Output line: 'DEPLOYED-SHIPPED ... -> s3://opal-data-cot/code/gold/lib/_shared/etf_classificat
 - 20261007T165855Z LEG L3 closed: THE SIX BYTE-IDENTICAL RE-UPLOADS ALL CAME BACK AT THEIR PRE-ACT ETags -- so the act moved exactly two keys BY CONTENT. 
 - 20261007T170027Z HELD-SOVEREIGN-GATED gate=external/the BD E_18 run at 2026-10-07T23:00Z (bd-gold-nightly-fallback cron(0 23 ? * MON
+
+## Disjointness of write sets -- 1.0.0_SA_CTO msg 106466's condition, both lists printed
+
+The CTO's reading of its own merge rule (msg 106466): an entry reading "apply legs proven, only verify
+open; tracked-not-stranded" counts as CLOSED for the e57e61 merge gate **if** TO-DEPLOY-e57e61's write
+set shares nothing with what this entry's leg L4 reads. Read below from the two orders' own literal
+lists, measured 2026-10-07 ~17:3xZ by `0.7.0_AE_CloudOps~S`.
+
+**WHAT LEG L4 READS** (TO-DEPLOY-e65, CTO half af8fa774f3 condition 3):
+- the 2026-10-07T23:00Z BD `E_18.detect_new_securities.py` run's `cash_token` plan lines -- rows written
+  put-on-absence into the `etf-classifications` DynamoDB table with `input=cash_token`, class `cash`/`Cash`,
+  for held keys matching `^(BD|F)?CASH(IN|OUT)?$` or whose whole normalized name is one of the eight
+  `CASH_NAME_PHRASES`;
+- the code behind those rows: `s3://opal-data-bd/code/gold/lib/_shared/etf_classification_scheduled.py`
+  at ETag `3f1e6be8910952f33c88bf100c610ab6`, plus its bd gold carrier
+  `s3://opal-data-bd/code/gold/E_18.detect_new_securities.py`.
+
+**WHAT TO-DEPLOY-e57e61 WRITES** (its own `<the_act>` and `<bounds>`):
+- ONE Lambda function, `mdpf-secclass-new-security-lambda`: one artifact upload via
+  `infra/aws/lambda/ci/build-and-upload.sh mdpf-secclass mdpf-secclass-new-security-lambda`, and ONE
+  `safe-apply` on `infra/aws/terraform/mdpf-secclass/new-security-classifier` whose plan must show
+  exactly one in-place update, `source_code_hash`;
+- bounds, verbatim: "This one function only. No other root, no IAM, no schedule, no layer, **no table
+  write**."
+
+**VERDICT: DISJOINT**, on three axes, each measured rather than inferred.
+
+1. **S3 keys.** Neither repo file e57e61 changes resolves to any firm-bucket deploy target:
+   `safe_deploy_core.file_to_s3_target` returns `None` for both
+   `infra/aws/lambda/v2_portal/_shared/rivalfunds_classification.py` and
+   `infra/aws/lambda/v2_portal/new-security-classifier/lambda_function.py`, `second_targets_for` is `[]`
+   and `bundle_for_member` is `None`. The bd+cot shipped `_shared` set is exactly SIX rows (denominator
+   printed): `etf_classification.py`, `etf_classification_scheduled.py` and
+   `etf_classifications_dynamodb.py`, each to `opal-data-bd` and `opal-data-cot`.
+   `rivalfunds_classification.py` is NOT among them and appears in no tree's `shipped_artifacts`. So the
+   e57e61 merge cannot move a key leg L4's read depends on. The Lambda artifact goes to the Lambda
+   artifacts bucket, not to a firm bucket.
+2. **Table rows.** e57e61's act writes NO table row, by its own bounds. It cannot put a row into
+   `etf-classifications` during the act, so it cannot add or alter a row the 23:00Z read would grade.
+3. **Time.** Nor can the newly applied function's own writes confound the read: the producer's schedule
+   is `cron(0 10 ? * MON-FRI *)` America/New_York = 14:00Z, which already fired today, so its next fire
+   is 2026-10-08T14:00Z -- after the 23:00Z read. e57e61 step 5 is an APPLY, not an invoke.
+
+**THE ONE RESIDUAL, NAMED:** axis 3 holds only while nobody invokes `mdpf-secclass-new-security-lambda`
+ad hoc between the apply and 23:00Z. Nothing in either order does so, and this seat will not.
+
+On the CTO's own stated rule, therefore, the gate is SATISFIED and the e57e61 merge need not wait for
+23:00Z. The reading of the rule remains the CTO's; what is asserted here is only the fact it turns on.
