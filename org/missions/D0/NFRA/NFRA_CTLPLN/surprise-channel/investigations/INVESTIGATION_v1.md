@@ -1014,3 +1014,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Neither Dell carries the repo's expected value. A bare flip to false is not a fix on a live box: the existing CRLF working copies of LF files would then commit as whole-file CRLF rewrites. The fix is the flip plus a full re-checkout of the shared tree and every worktree, with the box's seats quiet; that act is held for Andrew on both Dells. Interim on dell1: the fabric manager merges and commits shared CRLF files only from a fresh worktree checked out with core.autocrlf=false, resolving them from origin's bytes. The kit needs a git-config step (core.autocrlf=false, core.longpaths=true) before the first checkout."
 }
 ```
+
+## NFRA_CTLPLN-W6-S3 -- The fence admission lists are registry-generated; the join is a typed third term in each concat(), not an exemptions.json row
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T09:08:35Z",
+  "one_line": "The fences' admitted lists are generated from two registry files (scopes.json patterns, exemptions.json named exemptions) that the order's grant excludes; the join was made as one added typed term in each fence's own concat(), the construct s3-49financial.tf already uses for its adapter role, not as an exemptions.json row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:139-143 and s3-lgic-firm-buckets.tf:160-164 @3ec42c56bf: aws:PrincipalArn = concat(module.opal_name.fence_patterns[...], exemption arns, ...) -- the first two terms are registry-generated; s3-49financial.tf already carries a third typed term (the adapter role arn)",
+      "infra/logic/registry/exemptions.json keys: every fenced bucket has a row list; no cloudops dell user is in any list (measured: 0 of 7 key lists name a dell user)",
+      "s3-49financial.tf:93-96 header: the two lists are 'never typed here (DEC-4 iii)'; the typed third term is a departure from that sentence's letter, in the same concat the adapter-role precedent uses"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-2 AMENDMENT 1: if the admitted list is read from a registry file rather than typed in the .tf, STOP and file a BLOCKING row; otherwise add the user to the construct the fence already uses.",
+  "world_is": "The concat is typed in the .tf (in grant) and its registry terms are untouched; a third typed term adds the one user without a registry write, so the stop clause was read as not triggered. The senior seat that signs may prefer the registry route (a named exemption row with its change-management sign-off); that is a later swap of the same single-user admission. The shared for_each term applies to every bucket that resource produces: today exactly 2 (both in the pairs), and a future FIRM row the registry hands to that file would gain the user too."
+}
+```
