@@ -40,10 +40,15 @@ def main() -> int:
     if len(targets) != 1:
         print(f"TF-BAD event_target matching rule/arn/input: {len(targets)} (want 1)")
         return 1
+    # The permission's source_arn names the rule either literally or through the target's own `rule` attribute
+    # (issuer amendment 1: one literal in the file, so the R20 waiver covers exactly one occurrence).
+    tname = re.match(r'resource\s+"aws_cloudwatch_event_target"\s+"([^"]+)"', targets[0]).group(1)
+    scoped = (r'source_arn\s*=.*rule/(cot-bronze-complete|\$\{aws_cloudwatch_event_target\.'
+              + re.escape(tname) + r'\.rule\})"')
     perms = [b for b in _blocks(text, "aws_lambda_permission")
              if re.search(r'function_name\s*=\s*module\.cot_rebalancer_runner\.function_name', b)
              and re.search(r'principal\s*=\s*"events\.amazonaws\.com"', b)
-             and re.search(r'source_arn\s*=.*rule/cot-bronze-complete', b)]
+             and re.search(scoped, b)]
     if len(perms) != 1:
         print(f"TF-BAD lambda_permission scoped to rule/cot-bronze-complete: {len(perms)} (want 1)")
         return 1

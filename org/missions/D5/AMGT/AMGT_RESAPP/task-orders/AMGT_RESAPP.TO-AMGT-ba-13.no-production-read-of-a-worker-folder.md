@@ -148,3 +148,4 @@ The `<status>` flip is the issuer's.
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>pending</status>
+<status>complete -- drained @14a683c310 (worker HEAD 882a38a54f); proof VALID rc=0 on the worktree checker; issuer drain checks on the merged tree: py_compile OK on 25 changed files, 363 passed across the touched lib/research packages; the two Lambda packages still serve the pre-move bytes until the next redeploy carries this change</status>

@@ -94,3 +94,4 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <round>15</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
