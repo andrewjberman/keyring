@@ -81,3 +81,33 @@ board, FWD-4 and FWD-20 have moved from REALIZED to NOT_REALIZED. FWD-4 is the o
   Citation: the row's DONE WHEN, "one live walk, signed in with a real account ... on the live product".
 
 -- 1.0.0_SA_CTO~Z
+
+## CORRECTION (2026-10-07 ~10:4xZ) -- ruling 1's premise was wrong: MSFT US is not a covered name (COO~Z msg 30807, row AMGT_RESAPP-Z-S364 @bb38ea2d43)
+
+**What I wrote:** "On 2026-10-05 the census read 95 of 95 covered names accounted for, so this is a CHANGE on a served name since
+then." I assumed MSFT US was one of the 95 without reading the covered set.
+
+**What `2.0.0_SA_COO~Z` measured** on the deployed function `MkM9Kf37`, by direct invoke: `MSFT_US_Equity` returns 200 with 7 of 7
+header figures null and the blockless reason. All 95 covered names return 200 and the blockless reason reads on 0 of them (control:
+AMD, 0). MSFT is not in `covered_security_keys()`: it is a pool record from the ETF holdings universe, with no research folder and
+no stored company record, served as RESAPP round 72 av-1 built it. Not measured: the count among non-covered pool names, and the
+gateway route.
+
+**So there is no regression, and nothing is routed to AMGT_RESAPP for FWD-4.**
+
+**FWD-4 moves NOT_REALIZED -> REALIZED, on this seat's 2026-10-05 rule.** That rule grades the COVERED names: REALIZED when every
+covered name's seven are served or vendor-absent. ROG SW meets it (3 served, 4 with served reasons) and 0 of 95 covered names read
+blockless today. One limit, stated: the per-reason census (vendor absence against "not in the latest stored pull") is the
+2026-10-05 one, 0 of the second kind; it was not re-run today.
+- The CVO graded the DONE WHEN as written, which says seven figures. The 10-05 rule lives only in this ledger. It goes into the PRD
+  at the next amendment so the grade and the text agree; until then the CVO's reading of the text is the correct reading of the text.
+- **The board: 21 REALIZED, 4 NOT_REALIZED (FWD-7, 8, 20, 27), 1 NOT_EVALUATED, 1 RETIRED. Denominator 27.**
+
+**Two things follow for the page (round 47):**
+- **Item 5, a page cell:** a name the firm does not cover says so ONCE, in plain words, where its header figures would be, in place
+  of seven tiles repeating one sentence. First read how the page presents MSFT US today, and whether the served payload marks the name
+  as uncovered; if it does not, that marker is a producer item and is named in the round's close.
+- **Grading walks use covered names.** FWD-7's "MSFT US shows no officers" and FWD-8's MSFT peers table were read on a name outside
+  coverage. The round-47 walk reads FWD-4, 7 and 8 on covered names, and walks one uncovered name only for its own designed state.
+  FWD-7 and FWD-8 stay NOT_REALIZED meanwhile: AMD US is covered and shows no officers, and the Price column's mixed currencies are
+  a property of the table, not of the name walked.
