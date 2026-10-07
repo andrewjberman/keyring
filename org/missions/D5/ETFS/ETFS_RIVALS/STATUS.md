@@ -1,129 +1,81 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; round 7 DEPLOYED 75ad1e4d2e and CLOSED; round 8 cut after the 2026-10-05 grades)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; round 14 DEPLOYED and proven; rounds 15-19 MERGED on site-Z CLOUD, NOT deployed)
 
-Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL on Andrew's word ("yes you can move to /canonical-drive for the remainder";
-record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261002_141xZ_CANONICAL_DRIVE_MAX_PARALLEL_RELAYED.md`).
-Goal (Andrew ~04:59Z): "i want mcp.opalinvest.dev/rivalfunds demoable Today".
+Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
+~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
+ruled by `1.0.0_SA_CTO~Z`.
 
-Team:
-- reviewer `3.0.0_SA_CVO~RV`: round-7 L8/L9 part A at caf8f6bf69; the drain-end packet was sent 00:08Z;
-- open calls `4.0.0_SA_CRO~RV`: CALLs 1-14 ruled (CALL 14: LONG_COMP_NAME rides R-21).
-
-As of 2026-10-04T19:4xZ (seat relaunched after the site-Z crash at 18:58Z; hourly drive and the three Monday reads re-armed).
+As of 2026-10-07 ~12:2xZ. The drive logs are the hour-by-hour record:
+`org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10}Z_opal_bloomberg.md`.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Deployed artifact pin | CLOUD **75ad1e4d2e** in the five rivalfunds Lambdas (round 7: sa-1, pv-1, cu-1, rd-1, nt-1, nm-2, cg-1, cs-1). The sweep schedule input carries `run_path: "scheduled"` |
-| Deploy record | NEVER-2 `etfs-rivalfunds-round7` CLOSED 6/6 (65ebcbdd20). Pair: COO 76f548ce47 / CTO be6048931d. Post-act: `deliverables/2.0.0_SA_COO~RV/round7/postact_round7_deploy.json` |
-| Served page 2026-10-02 | batch rv-publish-1002r7: 13/13 funds, 213 trades, AI 12/12, 1,886,555 B (cap 2,097,152). "Single trade" 58, UNRESOLVED 0, case-only name clashes 2 |
-| Round 7 | 8/8 orders complete (issuance ce9f61d933; flips db36578751 + 2998d045a2); every worker worktree removed |
-| I-1 (W4-S9) | DISARMED (30fb2b5079, row Z-S15); the continuation half is cu-1, now deployed |
+| Deployed artifact pin | CLOUD **22844f744f** in the five rivalfunds Lambdas (round 14). Ledger `etfs-rivalfunds-r14` CLOSED @cc02eeac7d |
+| pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
+| Built, not deployed | Rounds 15 to 19 on site-Z CLOUD; last merge 233b033a9f; suite 857 passed, 2 skipped, 0 failed at 2aba59986e |
+| Push state | LOCAL. Origin CLOUD f1260c7754 (ls-remote 12:17Z); site Z carries 189 commits not on its tracking ref |
+| Worktrees | None of this project's. Deploy tree `C:/tmp/rv-r8` (pin 22844f744f) and `C:/tmp/rv-replay` remain |
 
-## Round 7 CLOSED (CTO analysis 115645c4b4, on CVO slug 28841 @904caf2003)
+## Rounds 15 to 19 (2026-10-07)
 
-The apply PASSES and rd-1's J1 PASSES. sa-1's J1 and ui-5 are NOT_EVALUATED until 10-05, by design.
+| Round | Issuance | Cells | What it does | Merge |
+|---|---|---|---|---|
+| 15 | d06e19f939 | pd-1, pd-2, pd-3, ps-1, tm-1, co-1, bf-1, rt-1, md-1 | 30d / 90d / 365d calendar days (FWD-23); the security dialog's price curve, trade markers, chart object, gateway route, the page's one script, the Bloomberg range backfill (FWD-22) | 8b9455602b, 6bf5bb0251, ca77f9dda6, f7f2cb7c2e, 116eadfa37 (+ fix 370ae7a279) |
+| 16 | 49a74229dd | pc-1 | A holding-implied price only for a listing stored as USD; the chart says the currency (row S55; CTO ruling msg 30787) | efea405c1e |
+| 17 | 7a27742b3a | nc-1 | No stored currency: no curve, "No price history is stored for this holding yet." (CTO ruling msg 30817) | 1cbee3e716 |
+| 18 | 8813da6c04 | tl-1 | The dialog's trade list is written from the chart object's markers (row S56) | 4c10ccc170 |
+| 19 | d309f31b5d | ml-1 | The month strip labels each cell with its month, counted back from the window end (row S58) | 233b033a9f |
 
-## Round 8 (2026-10-04 night): BUILT, NOT MERGED -- the Monday runbook
+Each round's packet, real-run record and screenshots: `deliverables/2.0.0_SA_COO~RV/round{15..19}/`. The round-19 run
+(`round19/DRAIN_END_PACKET.round19.md` @629a94a0e8) is the artifact for the seven open J1 grades.
 
-On Andrew's "yes, build round 8 tonight" (@0a4321b843) and his signed-in smoke (@1c31a5f6ce; PRD v0.14 @4cc8e40575).
-- Workstream A @5f6b2a22d7: dt-1, an-1, rw-1, rp-1, lg-1. Workstream B @c222ecc8fa: gc-1, hc-1, bt-1, rn-1.
-- Built on 7 local branches (worktrees `C:/tmp/wk-riv-r8-1..7`): wk-ETFS_RIVALS-1 dt-1; -2 an-1 + rw-1 + rn-1 (+ issuer
-  amend ce381fd792, merge 3ab4b943fc); -3 rp-1; -4 lg-1; -5 gc-1; -6 hc-1; -7 bt-1 (+ issuer check fix 4b33f05d4b).
-- Integration dry-run (all 7 overlaid, 27 disjoint files): suite 638 passed / 0 failed; all 15 round-8 checks PASS.
-- Rows to rule at the drain: Z-W4-S18 (controls-only overflow day reads FAILED/exit 3), Z-W2-S13 (ruled: g82 test amended),
-  Z-W5-S33 (grader /6 bump: kept), Z-W7-S1 (ruled: the check's QTD was wrong, ea8dbeba5e).
-- The four B orders' H1 titles read "WORKSTREAM A" (template residue); fix at the drain.
+Measured on the real run of day 2026-10-06 (live inputs, local writes only), latest build:
+- Currency: jumps over 3x at the market / implied boundary 0 (was 152 of 598); USD points identical 263 of 263.
+- Priced points 49,639 of 174,445 (was 137,292): 335 non-dollar securities draw only the 2 to 3 closes on file and 97
+  draw none, until the Bloomberg backfill lands a year of closes.
+- Trade list agrees with the chart object on 702 of 702 frames. Month strips labelled on 393 of 393; 382 agree with the
+  markers' months.
+- Page 1,640,613 B, 15.9 percent under the 1,950,000 cap (round 14: 34.4 percent).
 
-**Added 2026-10-05 ~02:4x-04:1xZ (Andrew-direct, then CTO~Z adjudicating while Andrew is AFK):**
-- No MTD; "Data available since <date>"; dates under each pill; short QTD greyed (PRD v0.15). rn-1 amended (b11bead42b) and
-  rebuilt on -2 (280b8dc66a). SCHY is a rival, ACWI/IWM the benchmarks once D13 flips: lg-1 amended (25ff7f18e7), rebuilt on
-  -4 (481d101ab1).
-- Workstream C @b98cc6d13d: fc-1, every security opens its one modal (FWD-21, PRD v0.16), built on -2 (57f7403405). Known
-  gap for the CVO: a page name spelled exactly in AI prose stays plain text.
-- Workstream D @c81854cd9f: su-1, gold `security_universe` (C-SECURITY-UNIVERSE, PRD v0.17), the list laptop MDPF_SECCLASS
-  reads; building on -8. Its `produce_a1` hookup is the issuer's at the merge.
-- 3-year cap on every rivalfunds lookback (@357e681ddf). ACWI/IWM backfill budget ruled by CTO~Z (msg 29445): 1M rows, per
-  date, stop on first failure, cost measured first. WCMG: data starts 2026-04-23, accepted (msg 29453).
-- IDVZ/PFOE Bloomberg backfill to 2026-01-01 directed (@a36e70f335): after the grades, under its pair; first confirm a
-  backfill marker cannot be consumed by the 09:00 sweep.
+## What is open, and on whom
 
-**Monday, in order (a fresh session runs this list if the session crons are gone):**
-1. 07:12 / 08:17 ET: the vehicle reads (below, item 1).
-2. 07:41 ET, only after the 07:00 ET vehicle run finished: drain the 7 branches into CLOUD via `.tools/safe-merge.sh`, chain
-   by chain (1, 3, 4, 5, 6, 7, then 2), each carrying its order's `<status>` close; suite once; remove the 7 worktrees.
-3. 09:21 ET: the sweep read (below, item 2); 13:30Z: 3.0.0_SA_CVO~RV's grades.
-4. After the grades: the round-8 Lambda deploy under a NEVER-2 ledger entry and its never-widen pair; then the D13 gate flip
-   (ACWI/IWM) and the D12 gate flip (IDVZ/PFOE history), each with its own pair; then cut item 3.
+1. **3.0.0_SA_CVO~RV:** seven J1 grades (pd-2, md-1, co-1, pc-1, nc-1, tl-1, ml-1) and the slug. RIV-ab-1's J1 (round 14)
+   waits on the 13:00Z sweep read.
+2. **Andrew, at 0.0.0_AB_MSTR~Z:** the push of site-Z CLOUD. The gateway release is cut from origin, so it waits on the
+   push; the Lambda deploy waits on the release (the page's script calls the new route).
+3. **1.0.0_SA_CTO~Z:** carries the gateway release ask to NFRA_OPLGTW (msg 30755; route shape
+   `round15/GATEWAY_CHART_ROUTE_AS_BUILT.md`); the CTO never-widen halves for the Lambda deploy and the backfill run.
+4. **2.0.0_SA_COO~RV (this seat):**
+   - the 2026-10-07 sweep read after 13:05Z (a1_refresh, ai_grounding.earlier 0, IDVZ Petrobras equals the panel), to the
+     CVO and the CTO;
+   - the COO never-widen halves; then the deploy in the order gateway route -> Lambdas -> backfill dry run -> backfill;
+   - the Bloomberg backfill: Andrew-authorized (@96d0ab2f4b, @69c7f24b44), securities of the rivalfunds funds only, about
+     365 calendar days, ad hoc on the existing route, ONLY after a day's 11:00Z vehicle run, dry run first, inside the
+     bbg_budget ledger; its security list includes formerly-held keys, split by day if over a day's allowance (CTO
+     ruling msg 30817). No worker ever calls Bloomberg.
 
-## Next proof: Monday 2026-10-05, named readers (ROUND_ANALYSIS.round7.md ruling 2)
+## Open rows (owner 2.0.0_SA_COO~RV unless named)
 
-If a seat is not live at its time, its first live session reads before any other act.
+| Row | Class | State |
+|---|---|---|
+| Z-S55, Z-S56, Z-S58 | BLOCKING, INERT | Repaired in rounds 16, 18, 19; disposition is the CVO's |
+| Z-S57 | OBSERVATION | Served: buying_trend still carries 7 securities under two keys after the parsekey join; cause unread |
+| Z-S59 | OBSERVATION | 11 of 393 month strips disagree with the markers' months; a 365-day window's oldest month is off the 12-cell strip |
+| Z-W1-S53 | OBSERVATION | The audit page keeps "History not yet backfilled" (it carries no script by Andrew's word) |
+| Z-W2-S16 | OBSERVATION | Chart objects are written only when the page's bytes change |
+| Z-W4-S19 | OBSERVATION | 29 gateway-suite failures at base, none in rivalfunds; owner NFRA_OPLGTW |
+| Z-W1-S49, Z-W1-S50 | INERT | Carried from round 14 |
 
-1. **11:00Z (07:00 ET) and after 08:03 ET, `2.0.0_SA_COO~RV`:** the vehicle pull.
-   - `get(id(), name())` gives names, not ticker forms.
-   - G4 `security_name` is populated, with `__field_errors__` empty (CRO~RV CALL 14).
-   - **A LONG_COMP_NAME field error -> revert `enrichment_bloomberg.py` in CLOUD the same session.**
-2. **13:00Z (09:00 ET) sweep -> 13:30Z read.**
-   - `2.0.0_SA_COO~RV` reads the evidence: the REPORT line, `gold/research_hypotheses/date=2026-10-05/` with run_path
-     "scheduled", the attempt record, and the page manifest's `ai-` batch.
-   - `3.0.0_SA_CVO~RV` grades sa-1's J1 and ui-5 on the SERVED 10-05 page.
-   - "Nothing happened" is a FAIL that morning.
-3. **Round 8: ONE issuance after those grades.** The enrichment list:
-   - W1-S46's deadline-aware vendor timeout (a planted deadline still republishes);
-   - the 3 money-market keys (DGCXX x2, IJGXX) in reader words;
-   - what the 10-05 grades leave open;
-   - the walk-register remainder.
-   **PREPARED, not issued:** on CLOUD via drain 1b2d733c6d (branch `rv-prep8` @3dd34fd858, now deleted) --
-   `deliverables/2.0.0_SA_COO~RV/round8/`:
-   - DECOMP_DRAFT.md: 4 cells on 3 chains (dt-1; an-1 -> rw-1; rp-1), with 7 rulings;
-   - register_r7.json: 33 items, 17 REALIZED / 8 PARTIAL / 6 NOT / 2 not-yet;
-   - 7 checks, each base FAIL and fix PASS.
-   The cut adds item 3, re-runs the checks at the then-current base, and issues once.
-   Repairs batched into one cell: Z-S18 (rp-1). Z-S16 was dismissed by the CVO (C-S26) and Z-S17 is retracted (Z-S19).
-   The G5 replay (D10) is NOT cut (draft ruling 4): its 6 cells roll off around 10-08, and a replay route would help for
-   about 2 days.
+## Not exercised by any run so far
 
-## Issuer acts still owed
+- The served gateway chart route. A page deployed before it serves reads "Chart could not load" in every frame.
+- RIV-pd-3 on real data: the AI accounts still name MTD / QTD / YTD until a sweep's AI run on the new build.
+- RIV-bf-1 live.
 
-- **G5 replay (D10): ruled NOT owed** (round-8 draft ruling 4). A rebuild at the deployed code would clear the 6 n/a
-  cells (measured locally at `C:/tmp/r7measure/g5pin/`). But no deployed route rebuilds G5, a local gold write is QA-only,
-  and the cells roll off around 10-08. If Monday's grades raise it, a replay-route cell joins the repair chain.
-- **I-2: UN-PARKED by Andrew-direct ~20:3xZ 2026-10-03** ("yes to all recommendations", card 6 "(b) resume"; record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261003_20xxZ_YES_TO_ALL_SEVEN_OPEN_CALL_RECS.md` @9fe6e6f111,
-  relayed by CTO~Z msg 29004). Each act runs under its own never-widen pair, and vendor reads go through the scripted
-  vehicle only (CRO CALL 14).
-  - **Measured 2026-10-03 ~21:0xZ, and STOPPED at the gate (row Z-S20, BLOCKING/ARMED).** One scripted query for
-    2026-10-01 returns IDVZ 45 / PFOE 24 / ACWI 2,198 / IWM 1,979 rows (4,246; ~15 s).
-  - The leg's single per-date query is capped at 2,000 rows, and an overflow crashes the WHOLE daily leg. The gate also
-    switches all four names together.
-  - So: NO gate flip and NO backfill until round-8 cell **lg-1** lands. lg-1 queries the controls on their own with a cap
-    sized from this measurement, makes an overflow a per-name partial, and splits the gate (D12 / D13). The issuer's
-    backfill acts follow under their pairs.
-  - The park that preceded it:
-  - What it is: IDVZ/PFOE trend from inception (D12); ACWI/IWM benchmarks (D13, the v0.8 leg: +4 names on the same 1
-    query, measured offline).
-  - Andrew-direct ~17:3xZ 2026-10-03 (MSTR broadcast msg 28913; record
-    `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261003_17xxZ_RELEASE_ALL_QUARANTINE_NO_DATA_OPS_CHANGES_WITHOUT_DIRECTIVE.md`):
-    "it is inappropriate for agents to adjust our data engineering operations without my explicit directive ... We will
-    discuss internally on how to proceed with further data collection after review."
-  - Both acts are new data collection, so neither runs until his directive names them. Owner: 2.0.0_SA_COO~RV. Un-park
-    condition: Andrew's explicit word on D12 and/or D13.
-  - No ETFS_RIVALS quarantine exists to release: "quarantin" has 0 hits in the mission tree, the rivalfunds package, and
-    3,996 rivalfunds/etfs S3 keys.
+## Standing directives
 
-## Open findings (rows, owner named)
-
-- Z-S16 is DISMISSED (CVO C-S26, ADJUDICATION_v7.Z). A skipped step omits `run_path` rather than misstating it; no stored
-  value is wrong.
-- Z-S17 is RETRACTED by Z-S19. The 0 -> 0 G5 exit row is ruled behaviour (CRO~RV CALL 12, ratified): G5 keeps the row and
-  the page hides and counts it. Round 6's x-1.AC3 pins it. Nothing is owed.
-- Z-S18 (COO~RV): the census's +2 missing prices are PFOE's ServiceNow and Workday. cg-1 re-keyed them to the rankings'
-  key, and the holding-implied lookup still reads the books by the G1 key. The page is unaffected; next round.
-- 795 snake_case tokens remain on the page: cited table names and guardrail codes, left out of rd-1 by the cut.
-- IDVZ (I-4): the TrueShares layout changed on 10-01 (Andrew's or CRO~RV's call on the source policy).
-
-## Limits
-
-No product ID is PASS until `3.0.0_SA_CVO~RV` grades the served artifact. Workers never call a vendor, write S3 or deploy.
-An agent-turn vendor call is excluded by the PRD's NEVER line (:891), even under a launch word (CRO~RV CALL 14).
+- Periods are 30d / 90d / 365d CALENDAR days on the rivalfunds page only; QTD, YTD, MTD keep computing and are not shown.
+- The page carries exactly ONE inline script; the audit page carries none (@efc0acb127).
+- No agent-turn vendor call; Bloomberg only through the scripted vehicle; workers never call a vendor, write S3 or deploy.
+- No product ID is PASS until `3.0.0_SA_CVO~RV` grades the served artifact.
