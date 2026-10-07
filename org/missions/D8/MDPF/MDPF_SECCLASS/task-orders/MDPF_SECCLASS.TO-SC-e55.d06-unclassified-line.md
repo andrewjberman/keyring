@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e55</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~38</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~53</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -50,6 +50,20 @@ top-level mix sums to 1.0. That matches FWD-13's rule that a security the list d
 **Shipped file:** `data/assets/scripts/gold/` is a shared home the pre-push deploy gate ships (`.tools/safe_deploy_core.py`
 `shared_repo_homes`): your branch stays OFF every pushed range until both halves sign.
 
+### AMENDMENT 2 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~16:4xZ; release mode, CTO round-11 analysis @fc96f7c48c section 2 item 2)
+
+**The release port.** e55 (46bda757e1 + amendment-1 build 4e73b996d0, ~38) is complete and VALID on the held-38 line. Its three files
+cherry-pick CLEAN onto the round head a6e799fa0d (CLOUD plus round records, S58/S59; no old S55), and the d06 test passes 5 of 5.
+AC2 stays WITHDRAWN per amendment 1: its live dry-run is the release seat's precondition in the half.
+
+Slot ~53 on branch `secclass-r12-rel-e55` commits that port. The issuer's lane refuses these paths.
+
+**Your work:** the three files below are ALREADY STAGED (the issuer's cherry-pick, uncommitted). Do not rebuild.
+1. Confirm each blob equals 4e73b996d0's (`git rev-parse :<path>` vs `git rev-parse 4e73b996d0:<path>`).
+2. Commit them.
+3. Run AC1 and AC3.
+4. Write and validate the proof instance (slot ~53, ids SC9-e55-AC1,SC9-e55-AC3), flip status to complete, and commit.
+
 ### ACCEPTANCE
 
 <criterion id="SC9-e55-AC1" cell_refs="SC-e-55"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py</invocation><expect>PYTEST-OK</expect></criterion>
@@ -73,15 +87,13 @@ Dry-run at the base (5d70aab6c9, 2026-10-07): SC9-e55-AC1 FAIL as expected (PYTE
 - No upload, no deploy, no S3 write: the local run writes only the `--out` file.
 - Never push: a shipped shared-home file.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `MDPF_SECCLASS-W38-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
+  (id `MDPF_SECCLASS-W53-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
 
 <paths>
 data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py
 data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py
-org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/D06_MIX_DRY_RUN_20261007.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_D06_UNCLASSIFIED_20261007.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
-data/assets/scripts/gold/runners_49f/d00_census_out.json
 </paths>
 
 The block is your WRITE grant. Everything else named here you READ and never edit.
@@ -92,7 +104,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC9-e55-AC1, SC9-e55-AC2, SC9-e55-AC3. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~38/MDPF_SECCLASS.TO-SC-e55.d06-unclassified-line.proof_of_spec.json`,
+Criterion ids: SC9-e55-AC1, SC9-e55-AC2, SC9-e55-AC3. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~53/MDPF_SECCLASS.TO-SC-e55.d06-unclassified-line.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> SC9-e55-AC1,SC9-e55-AC3` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>
