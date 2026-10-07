@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~13</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -191,11 +191,11 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC3` -- every Dell-placed root's provider lock was read; the same line must read `ok=True`, stated in the proof row, with the
 `no_lock` count reported.
 
-<criterion id="CTk2-AC4" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_terraform_providers.py</invocation><expect>TF-KIT-TEST cases=6/6</expect></criterion>
+<criterion id="CTk2-AC4" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_terraform_providers.py</invocation><expect>TF-KIT-TEST cases=10/10</expect></criterion>
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -320,3 +320,51 @@ and `ok=True`, stated in the proof row. (Run it with `AGENTBUS_DEVICE=laptop` ex
 Write a NEW proof instance over the old one covering all six ids, validate it with
 `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6`, and flip `<status>` back to
 `complete` only when all six pass. If you stopped at a read, do NOT flip.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~11:5xZ) -- REOPENED: the kit carries the Terraform binary beside the provider cache
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and the earlier commits are inherited state
+(merged to the trunk @786ca6d8e4). Authority: `1.0.0_SA_CTO` msg 106172, verbatim: "Kit: dell2 has no terraform binary (row
+IRPT_BCKEND-S364). The kit cell carries the laptop's binary beside the provider cache, to both Dells, read back by terraform
+version and one no-op plan." Gate limb: none graded this modification. The three kits above are done and stay; THE WORK below is
+the whole of this amendment. THE NO-NETWORK RULE STANDS: nothing is downloaded; the binary carried is the one already on this box.
+
+1. `org/devices/kit_terraform_providers.py` gains the binary:
+   - `binary`: locates the Terraform binary this box's `safe-apply.sh` would run -- read `.tools/safe-apply.sh` for its resolution
+     order (the `SAFE_APPLY_TERRAFORM` override, the sibling `.tools/terraform.exe`, then PATH) and resolve it the SAME way; print the
+     path, the size, the SHA-256, and `terraform version -json` parsed (version, platform). If the three sources disagree (a sibling
+     and a PATH binary of different versions), print both and say which the wrapper would run. LAST line
+     `TF-BINARY found=<True|False> version=<v> platform=<os_arch> sha256=<12 hex> bytes=<b> source=<override|sibling|path> ok=<True|False>`.
+   - `pack --out <dir>` now ALSO places the binary at `<dir>/bin/terraform.exe` (a copy, or a hard link on the same volume) and
+     records it in `MANIFEST.json` (path, SHA-256, size, version, platform) beside the providers. `--no-binary` omits it.
+   - `verify --from <dir>` checks the binary against the manifest like every other file, and with `--run-binary` executes
+     `<dir>/bin/terraform.exe version -json` and compares the reported version and platform to the manifest's (a mismatch refuses).
+     On success it prints, besides the CLI-config snippet, the one line that tells a Dell where to put the binary so that
+     `.tools/safe-apply.sh` finds it WITHOUT a baked path: by the wrapper's own resolution order (the sibling location or PATH; say
+     which the wrapper prefers on a box that has neither today) -- and a `--install-binary <target>` flag that copies it there and
+     re-verifies the copy's SHA-256.
+   - `readback --root <dir>`: the Dell's read-back, in two parts, each printed: (a) `terraform version` through the SAME resolution
+     the wrapper uses; (b) "one no-op plan": `terraform -chdir=<root> init -input=false` with the mirror config, then
+     `terraform -chdir=<root> plan -input=false -lock=false -detailed-exitcode`, reporting the exit code (0 = no changes; 2 = changes,
+     which is NOT a failure of the kit but is reported loudly; 1 = error). It needs the Dell's own AWS identity and the state backend,
+     so YOU DO NOT RUN PART (b) against a real root: the test runs it against a root with a LOCAL backend and no provider resources.
+     LAST line `TF-READBACK version=<v> init=<ok|fail> plan_exit=<0|1|2> ok=<True|False>`.
+2. `org/devices/test_kit_terraform_providers.py` gains four cases (ten in all): the binary is located by the wrapper's own order;
+   `pack` includes it and `verify --run-binary` passes; one byte of the packed binary flipped -> `verify` refuses BEFORE running it
+   (the test asserts the tampered file was never executed); `readback` on a temporary root with a local backend and only locals and
+   outputs reads `init=ok plan_exit=0`. LAST line `TF-KIT-TEST cases=<k>/10 skipped=<s> ok=<True|False>`.
+3. Cut the REAL provider-and-binary pack once, outside every git tree, to `C:/tmp/kit-terraform-pack-<UTC date>` (derive the drive
+   prefix), with `--include-unlocked` as the earlier pass built it, run `verify --from <dir> --run-binary` on it as the self-check,
+   and record the manifest's totals. Do not send it anywhere and do not commit it. Add its record to your deliverables folder as
+   `KIT_TERRAFORM_PACK_RECORD.md`: path, total bytes, each provider and version, the binary's version and SHA-256, and the exact
+   commands a Dell runs (verify, install the binary, write the CLI config, read back).
+
+**ACCEPTANCE.** CTk2-AC4's expectation becomes `TF-KIT-TEST cases=10/10` (same invocation; the line must read `ok=True`). One
+criterion is ADDED; the other five are unchanged and must still pass:
+
+<criterion id="CTk2-AC7" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py binary</invocation><expect>TF-BINARY found=True</expect></criterion>
+`CTk2-AC7` -- the binary this box's apply wrapper runs is located, hashed and versioned. The same line must read `ok=True`.
+
+Write a NEW proof instance over the old one covering all seven ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7`, and flip `<status>`
+back to `complete` only when all seven pass.
