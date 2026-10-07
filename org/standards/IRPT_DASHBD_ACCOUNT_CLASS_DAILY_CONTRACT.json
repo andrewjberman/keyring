@@ -1,0 +1,156 @@
+{
+  "contract_version": "0.1.0",
+  "project": "IRPT_DASHBD",
+  "prd": "org/missions/D9/IRPT/IRPT_DASHBD/prd/IRPT_DASHBD_PRD.md",
+  "authored_by": "0.9.0_WK_IRPT_DASHBD~18",
+  "authored_under": "IRPT_DASHBD.TO-DB-b-33 (round 21, workstream B), 1.0.0_SA_CTO~DELL2's round-20 analysis @58f3ed0501 item E1. Built and run LOCALLY; nothing here has been written to the served gold.",
+  "table": "account_class_daily",
+  "grain": "account x trading day x asset class",
+  "partition": "date=YYYY-MM-DD",
+  "producer": "data/assets/scripts/gold/irpt_reporting/account_class_daily.py",
+  "returns_producer": "data/assets/scripts/gold/irpt_reporting/account_return_daily.py",
+  "columns": [
+    {
+      "name": "firm",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the registry-derived firm scope this row belongs to; never a typed token"
+    },
+    {
+      "name": "account_id",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the custodian account id in the declaration's account form (10-char zero-padded), as account_return_daily carries it"
+    },
+    {
+      "name": "business_date",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the TRADING day (lib/trading_calendar.py), the same performance axis as account_return_daily"
+    },
+    {
+      "name": "asset_class",
+      "type": "string",
+      "nullable": false,
+      "meaning": "one of class_enum; the class the held securities (and, for cash, the custodian's cash lines) map to"
+    },
+    {
+      "name": "market_value_eod",
+      "type": "double",
+      "nullable": false,
+      "meaning": "MV_c,t -- the class's end-of-day market value; the classes of one account-day sum to account_return_daily.market_value_eod (to the cent, the sub-cent rounding residual sits in cash) on a MEASURED day"
+    },
+    {
+      "name": "class_return_daily",
+      "type": "double",
+      "nullable": true,
+      "meaning": "the class's CONTRIBUTION to the account's daily total return (not the class's own return): (MV_c,t - MV_c,t-1 - NF_c,t) / V_(t-1). Null whenever coverage is not MEASURED"
+    },
+    {
+      "name": "method_version",
+      "type": "int64",
+      "nullable": false,
+      "meaning": "the class-split method this figure was produced under (1); distinct from account_return_daily.method_version"
+    },
+    {
+      "name": "coverage",
+      "type": "string",
+      "nullable": false,
+      "meaning": "why class_return_daily is, or is not, served for this account-day; a member of enums.coverage"
+    },
+    {
+      "name": "schema_version",
+      "type": "string",
+      "nullable": false,
+      "meaning": "the shape of this emission"
+    }
+  ],
+  "class_enum": [
+    "cash",
+    "fixed_income",
+    "equity",
+    "structured",
+    "alternatives",
+    "commodities",
+    "unclassified"
+  ],
+  "enums": {
+    "asset_class": [
+      "cash",
+      "fixed_income",
+      "equity",
+      "structured",
+      "alternatives",
+      "commodities",
+      "unclassified"
+    ],
+    "coverage": [
+      "MEASURED",
+      "ACCOUNT_RETURN_NOT_MEASURABLE",
+      "POSITIONS_PARTITION_ABSENT",
+      "CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT",
+      "LINKED_VALUATION_CHAIN",
+      "TRADE_FLOW_UNREADABLE"
+    ]
+  },
+  "class_source": {
+    "module": "infra/aws/lambda/v2_portal/_shared/etf_classification.py",
+    "pin": "63fa1a2e32",
+    "pin_meaning": "the commit that gave the module its six-class values (MDPF_SECCLASS SC-e-21: fixed_income, equity, structured, alternatives, commodities, and no multi_asset); read at that pin or later through the dictionary ETF_CLASSIFICATIONS",
+    "supersedes": "PRD ruling 13 (Q3): the portal's HoldingAssetClass type was the interim authority 'until MDPF_SECCLASS lands a class value list'; this contract cites the module at @63fa1a2e32 instead, by this addendum and not silently",
+    "read_as": "the producer reads the module's DICTIONARY, never its helper get_asset_class(ticker, default='equity'), which returns 'equity' for a ticker it does not know (a guess)",
+    "rules": [
+      "a holding is identified by its ticker_symbol, else its cusip, else '<no identifier>'",
+      "a cash identifier (CASH, CASH_USD) is `cash`, whatever the module says: the module files CASH_USD under fixed_income",
+      "an identifier the module names is that class; an identifier it does not name is `unclassified`, its own class and never folded into another",
+      "a module value outside the vocabulary REFUSES the run; it is neither mapped nor guessed",
+      "the custodian's cash lines (money_mkt_funds, net_credit_debit, margin_balance) are `cash`"
+    ]
+  },
+  "method": {
+    "method_version": 1,
+    "formula": "class_return_daily_c,t = (MV_c,t - MV_c,t-1 - NF_c,t) / D_t, with D_t = V_(t-1), the account_return_daily producer's own denominator",
+    "terms": {
+      "V_t, V_(t-1), F_t": "the account_return_daily producer's own whole-account values and external flow, imported read-only from that producer; not recomputed",
+      "MV_c": "the class's summed position market value (dim_position market_value_settled_unsettled); for cash, the position cash rows plus the custodian's cash lines",
+      "NF_c (non-cash)": "net trade flow into the class on day t from fact_trn: buys minus sells at gross_amount over every custodian partition day the producer's skipped-day rule carries into t, plus the securities that crossed the account boundary in kind AND entered F_t, valued and admitted by the producer's own classify_and_sum",
+      "NF_cash": "F_t minus the sum of the other classes' NF, so the NF terms sum to F_t by construction"
+    },
+    "identity": "sum over classes of class_return_daily = (V_t - V_(t-1) - F_t) / V_(t-1) = account_return_daily.total_return_daily, because sum(MV_c) = V on both days and sum(NF_c) = F_t. Measured on the local run to a largest gap of about 2e-16",
+    "adaptation": "The producer's numerator is V_t - F_t - V_(t-1) over V_(t-1) (r_t = (V_t - F_t) / V_(t-1) - 1), which is exactly MV_t - MV_t-1 - external_flow_t on the whole account, so the class numerator needed no adaptation on a day the producer links in one step. A day the producer links through an intervening custodian valuation (its sub-period chain) has no such numerator and is not decomposed (coverage LINKED_VALUATION_CHAIN).",
+    "sum_check": "On each of the two days the class values read from positions and the cash lines are compared to the producer's V; they must tie to within 0.005 (positions carry four decimals, the balance two). Where they do, cash is set to V less the non-cash classes so the sum is exact and the sub-cent residual sits in cash. Where they do not the day is not measurable for classes: class_return_daily is null with coverage CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT. No plug covers a real gap.",
+    "coverage_precedence": [
+      "ACCOUNT_RETURN_NOT_MEASURABLE",
+      "POSITIONS_PARTITION_ABSENT",
+      "CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT",
+      "LINKED_VALUATION_CHAIN",
+      "TRADE_FLOW_UNREADABLE",
+      "MEASURED"
+    ],
+    "limits": [
+      "INCOME LANDS IN CASH under method_version 1: a dividend or interest receipt is cash received, so it is the cash class's contribution; a reinvested dividend is a buy out of cash into the security, so the security's class shows the price move only and the receipt shows in cash. Per-class income is not split out.",
+      "Advisory fees, commissions and other expenses land in cash (cash is the plug class).",
+      "A corporate action carried by no trade or in-kind row (a split, a merger with no in-kind leg) shows as the class's own return, as the account producer treats it.",
+      "An in-kind leg the producer classifies INTERNAL is not in F_t and so is not a class flow: it shows as the class's return, consistent with account_return_daily.",
+      "A day the producer links through an intervening valuation (LINKED_VALUATION_CHAIN) and a day whose class values do not tie to the account (CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT) carry null, never an estimate.",
+      "Cash positions are the identifiers CASH and CASH_USD; a money-market fund held as a position is a security and takes the module's class, or `unclassified` where the module does not name it. It is not reassigned to cash.",
+      "The Schwab trade-leg tokens (tr_cd TR, trade_typcd BUY/SELL, ticker_symbol) are declared in the producer's TRADE_LEG_DECLARATION block because sources.json is outside this cell's grant (surprise row IRPT_DASHBD-W18-S1); the release cell moves them into the declaration.",
+      "Only the account_return_daily producer's measured accounts and days exist here: no row before an account's first positive value."
+    ]
+  },
+  "rule24_record": {
+    "i_mece_over_a_declared_domain": {
+      "asset_class": "domain: 'which class a holding contributes to'. Six module classes plus cash and unclassified. Covered by subtraction: a holding is cash (a cash identifier or a custodian cash line), else the module names it (one of fixed_income, equity, structured, alternatives, commodities), else it is `unclassified`. The module's helper default 'equity' is NOT a member of the domain; the producer never calls it.",
+      "coverage": "domain: 'why this account-day's class return is, or is not, served'. Covered by subtraction: the account return is measurable or not (ACCOUNT_RETURN_NOT_MEASURABLE); the positions partitions exist or not (POSITIONS_PARTITION_ABSENT); the class values tie to V or not (CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT); the producer linked in one step or through a chain (LINKED_VALUATION_CHAIN); the trade legs read or not (TRADE_FLOW_UNREADABLE); otherwise MEASURED. Precedence is the list order, so each account-day carries exactly one member."
+    },
+    "ii_same_grain": "asset_class is a row property (account-day-class); coverage is an ACCOUNT-DAY property repeated on each class row of that account-day.",
+    "iii_intent_coherence": "coverage answers ONE question, whether the class return is served and if not why. It does not say whether the account's own return is served (account_return_daily.day_quality) except through its member ACCOUNT_RETURN_NOT_MEASURABLE, which names that dependency.",
+    "iv_state_coherence": "WHICH VALUES ONE REMEDY DOES NOT MOVE. Landing the classification module's missing tickers moves rows from `unclassified` into a named class and moves no coverage member. Repairing a position-to-balance gap at the custodian moves CLASS_VALUES_DO_NOT_SUM_TO_ACCOUNT only. A future decomposition of the linked chain moves LINKED_VALUATION_CHAIN only. None of them moves ACCOUNT_RETURN_NOT_MEASURABLE, which is the account producer's state.",
+    "token_census": "NOT RUN in this cell: the word-boundary census of the two enums over the corpus is owed by the release cell before the contract is served."
+  },
+  "schema_hash": "a180cd424f50fbd00187d475cd2337ba2768ef06e7cd2cccdd0a79fd7a267fb1",
+  "schema_hash_basis": "sha256 over the sorted 'name:type' lines joined by newline, types as the pyarrow type name the producer's ARROW_SCHEMA carries (the same method as the account_return_daily contract).",
+  "firm_specific_columns": "NONE. No Schwab code survives into this table.",
+  "served": false,
+  "served_note": "No object of this table exists in any bucket. The first gold write, its schedule and its served release are the next cell, under their own never-widen halves."
+}
