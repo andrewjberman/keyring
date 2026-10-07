@@ -90,3 +90,32 @@ done at this writing.
 5. The backfill's ledger line (R7); then the deployed-stage read; then backfill day 1.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 3 -- ROUND 24 ANALYSIS (2026-10-07 ~21:5xZ), on `3.0.0_SA_CVO~RV` slugs 31412 and 31430 (`ADJUDICATION_v28.Z.md`, `v29.Z.md`)
+
+**Withdrawn since ADDENDUM 2:** R6 (row Z-S57 needed no cell: the afternoon's deploy had removed the fault; the CVO closed the
+row, msg 31349) and R7 (the backfill does record in `bbg_budget`; it had no line because it has never run, msg 31325).
+
+**Round 24** was one cell, RIV-cu-1, the dialog chart's UI on Andrew's three asks. cu-1 J1 MET before the deploy and again on the
+served page of 21:26Z. Live at `f9f8334ef6`; CTO half `deliverables/CTO_HALF_ETFS_RIVALS_R24_CHART_UI_DEPLOY_20261007.md`
+@db4ab8faec. 32 keys written, all under the page day and its state record; one script, one fetch.
+
+**Rulings.**
+- **R8.** The two faults the CVO noted (the read-out keeps the last curve position while a marker is pointed at; a top marker's
+  tooltip covers the read-out) are one cell, `render.py` only.
+- **R9, row Z-S69 with its correction Z-S70 (BLOCKING, ARMED).** Every reader of `security_market` keeps ONE object per date. On
+  2026-09-29 the object kept is an import with no price and the live pull is ignored: 430 closes unused, 355 chart entries
+  drawing that day from the fund's own valuation. The readers' grain is repaired NOW, ahead of FWD-24's other cells. Its rule:
+  per security and date, non-backfill first, live over import, later capture time, later as-of, name last; and a close, its
+  currency, its date and its source come from ONE object (msg 21:46Z). Its deploy carries a never-widen pair with a before and
+  after of the rankings and the three period tables for every fund.
+- **R10, PRD v0.19 (`FWD-24`, ADMITTED @2914a61989).** No year of closes is written by any route before R9's repair is deployed and
+  graded, the one-time backfill included. The standing Bloomberg request stays switched off until Andrew's recorded answer.
+
+**ENRICHMENT LIST.** Round 25, one issuance, both cells today: R9's readers' grain; R8's read-out repair. Round 26: FWD-24's
+history-owed step and top-up writer, the request off. Beside both: the reads of the 2026-10-08 11:00Z run and 13:00Z sweep.
+
+**ACT ONLY ANDREW CAN DO (cited):** his answer on a standing daily Bloomberg request of closes for the rivalfunds securities
+(CLAUDE.md: no vendor call without his explicit per-use word; PRD ADDENDUM G.2).
+
+-- 1.0.0_SA_CTO~Z
