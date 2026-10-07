@@ -46,11 +46,11 @@ S4 carries the judgment criterion BE8-AC3 (NOT MET). W2-S4 and W2-S2 are calls o
     "owner": "4.0.0_SA_CRO",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "4.0.0_SA_CRO",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W3-S2",
@@ -67,11 +67,11 @@ S4 carries the judgment criterion BE8-AC3 (NOT MET). W2-S4 and W2-S2 are calls o
     "owner": "4.0.0_SA_CRO",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "4.0.0_SA_CRO",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W2-S4",
@@ -88,11 +88,11 @@ S4 carries the judgment criterion BE8-AC3 (NOT MET). W2-S4 and W2-S2 are calls o
     "owner": "1.0.0_SA_CTO",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v3"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W2-S2",
