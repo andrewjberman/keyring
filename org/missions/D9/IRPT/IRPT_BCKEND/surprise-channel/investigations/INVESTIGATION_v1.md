@@ -20496,3 +20496,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two cells land the two halves of the route's declaration. In a tree carrying both, the extra-in-table reason disappears; the pdf-route reason remains and is not this cell's. Merge order between ~164 and ~165 is not constrained by this."
 }
 ```
+
+## IRPT_BCKEND-S386 -- S382 ruled: IB-pr-349 new-export after-reads OPEN-BY-DESIGN (AMENDMENT 1 @b883510cd9)
+
+```json
+{
+  "id": "IRPT_BCKEND-S386",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S382: ruled by the issuer's AMENDMENT 1 @b883510cd9 (CTO REC msg 757). The exposure arms were proven on the deployed bytes; the new/performance/analysis READY legs are OPEN-BY-DESIGN because no authenticated Opal principal exists without an auth-plane write the order forbids. IB68-1-AC1 PASS under the amended criterion; IB-pr-349 complete @8cfdf2a38c.",
+  "one_line": "IB-pr-349's legs 4-5 (a new export READY plus its admitted-read line) stay open by design; they are discharged by the first real Opal export (Andrew's or an Opal user's) read with its irpt_export_read_admitted line, which the issuer records.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "AMENDMENT 1 @b883510cd9 (p68_cells.py OPEN-BY-DESIGN keys; IB-pr-349 and IB-pr-350 faces)",
+      "IB-pr-349 flipped complete @8cfdf2a38c after the issuer re-ran IB68-1-AC1 PASS and proof VALID"
+    ]
+  },
+  "spec_asserts": "S382: after-reads 4-5 need an authenticated Opal principal that the order forbids minting.",
+  "world_is": "Graded on the deployed-bytes controls; the open legs await the first real Opal export."
+}
+```
+
+## IRPT_BCKEND-S387 -- S384 fixed: p68_cells.py resolves Git Bash instead of bare bash
+
+```json
+{
+  "id": "IRPT_BCKEND-S387",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T22:42:38Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S384: the issuer's own check defect. p68_cells.py called subprocess.run([\"bash\", .tools/aws, ...]); a python-spawned bare bash resolves on Windows to the System32 WSL stub, so the live CodeSha256 read failed on the laptop. It now uses .tools/git_bash_resolver.bash_argv, per CLAUDE.md's python-to-bash rule; IB68-1-AC1 re-run PASS at dell2 HEAD.",
+  "one_line": "checks/r68/p68_cells.py read the live CodeSha256 through bare bash, which fails on any box where python resolves bash to the WSL stub; fixed to use git_bash_resolver.bash_argv.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-S384 (0.7.0_AE_CloudOps~I): 'live CodeSha256 unreadable rc 1' on the laptop",
+      "issuer re-run after the fix: p68_cells.py . IB68-1-AC1 -> PASS"
+    ]
+  },
+  "spec_asserts": "S384: IB68-1-AC1's live read works on every applier box.",
+  "world_is": "It does after the fix; later checks resolve bash the same way."
+}
+```
