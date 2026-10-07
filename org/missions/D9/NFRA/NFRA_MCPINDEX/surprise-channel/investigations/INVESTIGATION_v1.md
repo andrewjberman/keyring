@@ -5372,6 +5372,211 @@ carries none.
     "spec_asserts": "Z-S72 notes: retire unrealized's document merge only when bd-silver-merge processes the 6 files or they are ruled out with evidence.",
     "world_is": "bd-silver-merge processed all 6 as recorded empty stubs with failures=0 on its first scheduled run after the fix.",
     "notes": "MX-s-16 completes on unrealized + allocations (A3). Transactions and realized stay 2-writer by the A2 HOLD, carried in REMEDIATION_v5 with the cot sentinel fix."
-  }
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S1",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The order's SmartX location s3://opal-data-smartx-v2/ does not exist in this account; SmartX served silver sits in opal-data-assets smartx/platform/silver/ (13 datasets), found by listing opal-data-assets's top level.",
+    "spec_asserts": "MX-m-2 'Where to look': SmartX at s3://opal-data-smartx-v2/ (no silver tier found).",
+    "world_is": "list-buckets (40 buckets) has no bucket named smartx; s3api list-objects-v2 on opal-data-smartx-v2 returns NoSuchBucket. SmartX data is in opal-data-assets smartx/{account,allocation,model,platform}/ (platform/silver/ holds 13 fact datasets, newest date=2026-10-01) and opal-data-bd smartx/{bronze,raw,jwt}/ (bronze, not silver). The census record uses opal-data-assets.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: the order's own bound 3 and the mdpf012 probe (BUCKET constant opal-data-smartx-v2) name a bucket that no longer exists; no work depends on it."
+  },
+  {
+    "id": "NFRA_MCPINDEX-Z-W26-S2",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~26",
+    "surfaced_at": "2026-10-01T16:30Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~MI",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Orion and Eclipse silver is served from TWO places with equal row counts (opal-data-inf silver/ and opal-data-assets {orion,eclipse}/inflection/silver/), and the order's silver/aum_snapshot/ is absent.",
+    "spec_asserts": "MX-m-2 'Where to look': Orion under opal-data-inf silver/{api_dims,transactions,aum_snapshot,accounts_dim}; Eclipse under silver/eclipse/{date}/.",
+    "world_is": "opal-data-inf silver/ lists 12 prefixes and has no aum_snapshot. opal-data-assets orion/inflection/silver/ holds fact_{assets,performance,positions,transactions} and eclipse/inflection/silver/ holds fact_{model_composition,models,portfolios_full,portfolios_simple}; on 2026-10-01 the newest-partition row counts equal the opal-data-inf counterparts (transactions 1,495,705; performance 479,016; positions/assets 36,111; eclipse 9/18/859/845). The census counts both copies (denominator orion 24, eclipse 8) with the bucket in each key; a round-8 tool names one source of truth.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~26/PLATFORM_CENSUS_round7.json"
+      ]
+    },
+    "notes": "INERT: a census; the duplicate copies are recorded, not judged."
+  },
+{
+  "id": "NFRA_MCPINDEX-Z-W25-S1",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~25",
+  "surfaced_at": "2026-10-02T01:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "silver/unrealized/ carries six 8,016-byte objects (2026-07-03..07-09) written 2026-09-30T21:39Z, so the newest mtime under the prefix is a backfill write, not the weekly 2026-09-27 production write the weekly basis grades.",
+  "spec_asserts": "MX-f-1 Build 2/3: the weekly branch grades a table STALE when its last write predates the most recent passed weekly production day; the last write is get_latest_modified (the newest object LastModified under the prefix).",
+  "world_is": "aws s3api list-objects-v2 --prefix silver/unrealized/ (2026-10-02T01Z): the weekly partitions 2026-07-10..09-25 were written Sundays 00:14-00:32Z (latest 2026-09-27T00:16:18Z), but 2026-07-03,04,05,06,07,09 were written 2026-09-30T21:39:18-27Z (empty stubs, Z-S76). get_latest_modified takes the max over a flat prefix, so a stub or backfill write landing after a missed weekly run resets the clock and reads that missed run FRESH. Today the 09-30 write is before the 2026-10-04 due day, so today's verdict is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~25/SKIP_PATH_RECORD.json (weekday measurement block)",
+      "s3://opal-data-bd/silver/unrealized/ list-objects-v2 read 2026-10-02T01Z"
+    ]
+  },
+  "notes": "INERT: the reader is not deployed to the gold EC2 and the production gate takes the not_on_path skip (SKIP_PATH_RECORD.json), so no verdict is served from this reader on the production path. Becomes ARMED if comp-freshness is installed on the gold EC2 and a stub or backfill write lands after a missed weekly run. Disposition left to the issuer; a partition-key basis (as_of_source: silver-partition-key) is the existing alternative the reader already carries."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-W25-S2",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_MCPINDEX~25",
+  "surfaced_at": "2026-10-02T01:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The measured weekly production weekday is SUNDAY on the UTC clock (00:12-00:32Z), which is Saturday evening US Eastern; the partition's own date is the Friday before.",
+  "spec_asserts": "MX-f-1 Build 2: measure which weekday BD produces each table from the partitions' write dates and state it; the order does not name the clock.",
+  "world_is": "For both silver/allocations/ and silver/unrealized/, 12 of 12 weekly partitions 2026-07-10..2026-09-25 (partition date a Friday) have LastModified Sunday 00:12:53-00:32:14Z (Saturday 20:12-20:32 EDT). weekly_production_weekday: sunday is on the UTC clock, the clock S3 LastModified and comp-freshness both use; the partition key is the Friday, so a partition-key reader would need friday. silver/allocations/ is documented FROZEN at 2026-07-10 (feed DEPRECATED) yet still receives a new weekly partition, so its mtime moves while its content vintage is pinned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~25/SKIP_PATH_RECORD.json (weekday measurement block)",
+      "s3://opal-data-bd/silver/allocations/ and silver/unrealized/ list-objects-v2 read 2026-10-02T01Z"
+    ]
+  },
+  "notes": "INERT: recorded so the weekday value is not later read on the wrong clock."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-S77",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T20:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The evening SSM documents and the morning bd-silver-merge Lambda write the SAME silver keys from DIFFERENT copies of merge-daily-incremental.py: the evening copy is 43,492 bytes LastModified 2026-06-29, the morning copy 59,820 bytes LastModified 2026-10-01, 695 differing lines.",
+  "spec_asserts": "MX-a-1 section 1 EVENING: \"The document now runs only scripts/merge-daily-incremental.py over the morning run's bronze ... It is a second merger of the same bronze, not a second source.\"",
+  "world_is": "True that it is not a second source, but it is a second CODE PATH, three months behind. aws s3api head-object: scripts/merge-daily-incremental.py = 43,492 B, 2026-06-29T15:16:30Z, ETag 418d6225c30502c647b3563b20f5f7fe; code/silver/merge-daily-incremental.py = 59,820 B, 2026-10-01T21:27:57Z, ETag 91eaf2486fc56ece76db2f0d862096f7. diff: 1,149 vs 1,392 lines, 226 lines only in the evening copy, 469 only in the morning copy. Present in the morning copy and ABSENT from the evening copy: the ETag content-skip machinery (_bronze_etag, _load_processed_etags, _should_skip, _select_target_files), ALLOC_MIN_ROW_FRACTION (the allocations stub-guard), _latest_alloc_row_count, the unrealized _EMPTY_STUB handling, and the lambda_handler/run() entry. Both write silver/{transactions,allocations,realized,unrealized} and the same four manifests.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3api head-object on both keys, read 2026-10-06T20:2xZ",
+      "diff of the two downloaded copies (.scratch/mxa1/merge_evening.py vs merge_morning.py)",
+      "aws ssm get-document --document-version 3 for opal-bd-transaction-download (served Default)",
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.json evening.engine"
+    ]
+  },
+  "notes": "INERT, and the reason is specific: the two evening documents invoke only incremental_merge() (no flag) and incremental_realized_merge() (--realized), so the stale copy's missing allocations stub-guard and unrealized empty-stub handling are UNREACHABLE on this path. What IS reachable is the missing ETag content-skip -- see the cusip row. Becomes ARMED if either document is ever given --allocations, --unrealized or --all. Retiring the two documents retires this divergence; see verdict precondition P7 on the orphaned key."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-S78",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T20:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The CAUSE of the weekly allocations/unrealized cadence already recorded in NFRA_MCPINDEX-Z-W25-S2 is measured: the 00:00Z run plus BD_SNAPSHOT_ASOF_LAG_BDAYS=1 asks BD for a snapshot about 4 hours old in US Eastern, which BD returns with 0 data rows, so every weekday run is REJECTED pre-write and only the Sunday run (asking for the Friday) lands.",
+  "spec_asserts": "Z-W25-S2 records the weekly cadence and the Sunday write clock as an observation; it names no cause. MX-a-1 PHASE A 1 requires the per-table date-window semantics of the morning run.",
+  "world_is": "Measured, not inferred. CloudWatch /aws/lambda/bd-49f-runner, filter REJECTED, read 2026-10-06: one \"REJECTED <table> @as_of=<date> -- empty snapshot export, nothing landed\" line per weekday run for BOTH allocations and unrealized, at as_of 2026-09-22, 09-23, 09-24, 09-25 and 09-28. The runner RESULT lines corroborate: run_date 10-01, 10-02, 10-03 and 10-06 each rejected [allocations, unrealized]; 10-04 (Sunday) landed all four with allocations and unrealized at as_of 2026-10-02; 10-05 skipped both as already-landed. Note 2026-09-25 is a FRIDAY as-of that was REJECTED on the Saturday run and then LANDED on the Sunday run -- the discriminator between \"BD has no Friday snapshot\" and \"we asked too early\". Landing census: unrealized 75 objects, last daily as-of 2026-07-10 then 12 consecutive 7-day gaps to 10-02; allocations 28 ALLOCATIONS_DAILY_* objects, same 12 Fridays. The flip coincides with the as-of lag being enabled (engine comment: CTO GO 2026-07-09).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws logs filter-log-events --log-group-name /aws/lambda/bd-49f-runner --filter-pattern REJECTED, read 2026-10-06T20:1xZ",
+      "aws logs filter-log-events same group --filter-pattern RESULT, run_date 2026-10-01..10-06",
+      "aws s3api list-objects-v2 forwardfill_v2/{unrealized,allocations}/ full census, read 2026-10-06",
+      "s3://opal-data-bd/code/bronze/cot_bronze_ingest.py _as_of_for / _shift_business_days / SNAPSHOT_TABLES"
+    ]
+  },
+  "notes": "INERT here because this cell is read-only and the defect is not in the cell boundary. Not fixed by the MX-a-1 verdict and not caused by the evening run -- neither evening document touches allocations or unrealized. The two candidate remedies are a lag of 2 business days or a later run time; which one is right is not this cell's call, and NEITHER is moved by retiring the evening documents. Cites and extends Z-W25-S2 rather than restating it."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-S79",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T20:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "A silver/transactions partition written by the EVENING path is missing the cusip column the MORNING path writes: 73 columns against 74, because the stale engine logs \"[enrich] bd_assets_dim unavailable; skipping cusip join\".",
+  "spec_asserts": "MX-a-1 PHASE A 3: \"Is any field present in the evening's output and absent from the morning's?\" -- the order asks the question in that direction only.",
+  "world_is": "The answer in the asked direction is NO; the delta runs the other way. pyarrow schema read 2026-10-06: silver/transactions/2026-10-04.parquet (LastModified 2026-10-04T00:16:38Z, morning bd-silver-merge) = 5,144 rows, 74 columns including cusip; silver/transactions/2026-10-05.parquet (LastModified 2026-10-05T21:53:58Z, matching the evening document's 21:53Z dispatch) = 0 rows, 73 columns, cusip absent and nothing present that the morning partition lacks. silver/realized 2026-10-04 (morning) vs 2026-10-05 (evening) are identical at 15 columns in the same order, so the loss is specific to the transactions leg.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pyarrow.parquet schema read of the four named partitions, downloaded 2026-10-06T20:3xZ",
+      "s3://opal-data-bd/logs/transaction-download-2026-10-05.log (the enrich line, verbatim)",
+      "s3://opal-data-bd/scripts/merge-daily-incremental.py load_bd_assets_dim (aws-CLI shell) vs code/silver/ copy (boto3)"
+    ]
+  },
+  "notes": "INERT because NOT YET EXERCISED ON DATA: the one measured evening-written transactions partition has 0 rows, so no row has yet lost a cusip value. ARMING CONDITION, named: a sentinel-less date whose newest transactions tile carries rows -- then the evening run lands a cusip-less partition into silver/transactions and any consumer joining on cusip reads nothing for that date. Note the 0-row partition ITSELF is not an evening defect: ANNOUNCE_MX-s-18 section 4 records the morning path has no empty-skip on transactions either and cites silver/transactions/2026-09-07.parquet as a 0-row 74-column precedent. Retiring the evening documents retires this row."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-S80",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T20:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "The unrealized bronze export carries EXACTLY 500,000 data rows while its template sets isLimitSize=False -- a round number that is a truncation tell we cannot resolve without a BD-side read.",
+  "spec_asserts": "MX-a-1 PHASE A 1 requires each table's landed row count; it does not ask whether the count is complete.",
+  "world_is": "openpyxl iteration count of UNREALIZED_DAILY_2026-10-02.xlsx (38,627,659 B) = 500,000 data rows, max_row 500001, 15 columns. Sibling weekly files sit in a 38.5-38.7 MB band (09-04 38,701,102; 09-11 38,545,739; 09-18 38,677,214; 09-25 38,586,191; 10-02 38,627,659), which is what a row cap rather than a varying population looks like. code/bronze/templates/unrealized.json reads isLimitSize=False, includeAll=False, so no cap was requested by us. Downstream silver/unrealized/2026-10-02.parquet is 107,034 rows and 09-25 is 111,527 after dedup, so the silver counts do NOT inherit the round number and would not reveal a cap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "openpyxl read_only iteration of the named xlsx, 2026-10-06",
+      "aws s3api list-objects-v2 forwardfill_v2/unrealized/ sizes, read 2026-10-06",
+      "s3://opal-data-bd/code/bronze/templates/unrealized.json isLimitSize/includeAll",
+      "pyarrow row counts of silver/unrealized/2026-10-02.parquet and 2026-09-25.parquet"
+    ]
+  },
+  "notes": "INERT and DELIBERATELY UNRESOLVED: distinguishing a BD export cap from a genuine 500,000-row population needs a request to BD with a narrowed window, which is vendor egress and needs Andrew's per-use word -- outside this order's BOUNDS clause 2. Recorded so the count is not later quoted as a measured population. An Opal-side partial discriminator that needs no egress: check whether distinct tax-lot keys in the export equal 500,000 exactly."
+},
+{
+  "id": "NFRA_MCPINDEX-Z-S81",
+  "project": "NFRA_MCPINDEX",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~MI",
+  "surfaced_at": "2026-10-06T20:55Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~MI",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "Two different task orders carry the same cell id MX-a-1, and the decomposition row for MX-a-1 is the OTHER one: the decomp S8 table assigns MX-a-1 to the Portal property and Black Diamond to MX-a-3, while this BD run-shape order also declares owned_cells MX-a-1.",
+  "spec_asserts": "TO-MX-a-1.bd-run-shape-morning-vs-evening decomp_ref: <decomp_doc>.../NFRA_MCPINDEX_DECOMP.md</decomp_doc> <owned_cells>MX-a-1</owned_cells>.",
+  "world_is": "The decomp at HEAD (vintage 9108f11494) line 377 reads \"| `MX-a-1` | Portal: `platinum/mdpf`, `platinum/etfs`, `platinum/advi`, `json/*` in `opal-data-portal-v2`; advisor intelligence in the Inflection and Cottonwood firm buckets | S8, FWD-2, C5, A2 | deliverables only | OPEN |\", and line 380 assigns Black Diamond to `MX-a-3`. Line 398 reads \"`MX-a-1`: the four surface families are the denominator (C5, A2)\", which is the portal cell's grading rule, not this one's. Two order files exist: task-orders/NFRA_MCPINDEX.TO-MX-a-1.analysis-portal.md (issued_to 0.9.0_WK_NFRA_MCPINDEX~3, <status>complete</status>) and task-orders/NFRA_MCPINDEX.TO-MX-a-1.bd-run-shape-morning-vs-evening.md (issued_to 0.7.0_AE_CloudOps~MI, this order). A census of the task-orders directory shows MX-a-1 is the only duplicated MX-a id; MX-a-2..MX-a-8 are unique, and MX-a-8 is itself the round-5 Black Diamond re-cut.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md lines 377-380 and 398, read at HEAD 986ea1ddfc",
+      "ls org/missions/D9/NFRA/NFRA_MCPINDEX/task-orders/ -- two files share the TO-MX-a-1 stem",
+      "NFRA_MCPINDEX.TO-MX-a-1.analysis-portal.md lines 5 and 8 (issued_to, status complete)",
+      "python .tools/to-check.py --all --assignee 0.7.0_AE_CloudOps~MI -> total=1, resolves this order only"
+    ]
+  },
+  "notes": "INERT TODAY, and the reason is specific: the portal order is already <status>complete</status>, and to-check plus the proof-of-spec instance path both key on the FILENAME SLUG rather than the bare cell id, so no active-TO ambiguity exists -- to-check returns total=1 for this lane. ARMING CONDITIONS, named: (i) any reader keyed on the BARE cell id -- the decomp status column, a cell_refs field, a round-N analysis, or a human -- will attribute this BD record to the portal cell and read the portal cell's four-surface denominator as this record's grading rule; (ii) a re-cut of the portal MX-a-1 would collide on the stem. The issuer notes say this cell was \"cut mid-round 7 on his word, as workstream BDOPS\", and BDOPS appears nowhere in the decomp (0 hits), so the cell has no decomp row of its own to point at -- which is the actual condition, not a typo. Remedy is the issuer's: either a BDOPS cell id outside the MX-a-* space, or an explicit decomp row. This seat did not edit the decomp or the order's decomp_ref: mid-round the spec AND the decomposition are FROZEN (CLAUDE.md rule 27)."
+}
 ]
 ```

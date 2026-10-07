@@ -96,3 +96,29 @@ It deploys, applies and grants nothing. It re-measured only:
 - `.tools/m365-mcp-kit/README.md` at HEAD;
 - `LINEAGE_R18.json` (18 items, all SHIPS_IN_RELEASE);
 - ROUTE_CLASS's call sites (`test_principal_cutover.py:489-598`, `test_data_entitlement_guard.py:719-729`).
+
+## 6. Addendum ~04:5xZ 2026-10-06 -- R22, OA-e-10 does not ship as built (CTO half on OG-rl-7, REFUSED)
+
+**The finding.** Read at HEAD: `token_broker.py:46`, `:55-62`, `:263-265`, `:365-385`.
+- `/login` is the ONLY path that grants a person delegated Graph scopes. The MCP `/authorize` bridge asks for `email`
+  only.
+- `redeem_consent` writes the PRINCIPAL-keyed cache that person's Graph-using tools read.
+- A lapsed cache raises `NeedsLogin`, which tells the user to open `/login`.
+
+**The effect.** OA-e-10 narrows `/login` to the server-held identities (andrew@). Every non-restricted principal
+(`WRITE_CAPABLE_EMAILS`: alyssa@, opalbloomberg@) whose cache lapses then meets a 403 dead end, discovered as an
+outage. OA-e-10's census counted email-keyed server-held dependents only (DEPENDENTS 1) and missed this population.
+The host holds 3 principal-keyed caches written in the window (row S53).
+
+**R22.**
+1. **Revert.** The issuer reverts OA-e-10's two files on CLOUD (the `server.py` `/login` hunk of `8ed37b3266`, and
+   `tests/test_login_retire.py`) in a commit citing R22. It re-cuts r19 from CLOUD, so the release and CLOUD stay
+   equal (R16 drain-back intact), and takes fresh halves. The other CLOUD-only items ship as asked.
+2. **Re-cut.** OA-e-10 is re-cut under NFRA_OPALAI's spec (this seat):
+   - `/login` admits the server-held identities PLUS every principal whose resolved tier (`tier.resolve_tier`) carries
+     a Graph-using tool.
+   - Restricted profiles and the Analyst's service identity stay REFUSED.
+   - Fail closed: an unresolvable tier refuses.
+   - Its acceptance includes a non-restricted principal's NeedsLogin -> `/login` -> consent round trip, and a
+     restricted principal's 403.
+3. **Disposition.** `LINEAGE_R18.json` records OA-e-10 as REVERTED-PENDING-RECUT, citing this section.

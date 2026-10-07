@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-19</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~24</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -49,7 +49,36 @@ trigger rule disabled through Terraform (`infra/aws/terraform/bd-pipeline/`) wit
 3. Open the NEVER-2 ledger `nfra-mcpindex-r7-bd-doc-retire`, naming BOTH the entry under
    `org/critical_paths/change_management/` AND `org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json`.
 4. Publish, apply, read back, run s19.AC1. Leave the ledger OPEN until the acceptance: s19.AC2 reads the scheduled runs
-   of 2026-10-05 and 2026-10-06. On 2 of 2 close it; on a failure roll back that table per the ANNOUNCE and report.
+   of 2026-10-12 and 2026-10-13. On 2 of 2 close it; on a failure roll back that table per the ANNOUNCE and report.
+
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- acceptance re-dated.** The seat was down from 2026-10-02 04:26Z
+to 10-06 18:1xZ, so MX-s-17/s-18 did not apply before 10-05 and the original dates (10-05, 10-06) ran with the old
+writers: both read sentinel ABSENT (measured 18:29Z). The acceptance is now the first Mon/Tue pair after this order's
+apply: 2026-10-12 and 2026-10-13. `s19.AC2.sh` carries the same dates. If the apply lands after 2026-10-12T00:00Z, the
+issuer re-dates to the next Mon/Tue pair before the halves. Graded by: no gate limb graded this modification.
+
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-06 ~20:5xZ) -- re-addressed; re-sequenced behind a proven Monday and Tuesday.**
+- **Re-addressed** from `0.9.0_WK_NFRA_MCPINDEX~24` to `0.7.0_AE_CloudOps~MI` on Andrew-direct 2026-10-06 ~19:4xZ
+  ("bringing on a 0.7.0_AE_CloudOps~MI ... to handle these operations"; record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_194xZ_BD_CONSOLIDATE_WRITERS_INVESTIGATE_SHAPE_FIRST_SEAT_AE_MI.md`).
+  The PHASE A work stands as built on branch `wk-nfra_mcpindex-r7-24` @3709ae40d6 (worktree
+  `C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r7-24`); work there and commit there. Your write surface adds
+  `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**`; the proof instance goes there under the
+  same file name.
+- Basis: the MX-a-1 verdict (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.md`): the evening documents fetch nothing from BD and emit
+  no field the morning path lacks; they remain the only same-day merger on sentinel-withheld days.
+- **Precondition, replacing A1's dates:** PHASE B starts only after MX-s-18's Monday 2026-10-12 AND Tuesday
+  2026-10-13 reads both pass with the evening rules still enabled. Andrew: "we need to confirm the shape first
+  before making that move."
+- **PHASE B is the rule disable only:** `bd-transaction-pipeline-trigger` and `bd-realized-pipeline-trigger`
+  ENABLED -> DISABLED through a saved targeted plan and `safe-apply`. No document version is published, nothing is
+  deleted, no instance is stopped or terminated. `opal-bd-asset-dim-download` and its rule and instance are not
+  touched. Retiring the documents, trigger Lambdas and instances is a later order after one observed week.
+- **Acceptance (s19.AC2):** the first Monday and Tuesday after the disable, 2026-10-19 and 2026-10-20; `s19.AC2.sh`
+  carries those dates. If the disable lands later, the issuer re-dates.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
+- Graded by: no gate limb graded this modification.
 
 ## 2. BOUNDS
 
@@ -67,6 +96,7 @@ infra/aws/terraform/bd-pipeline/
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -80,7 +110,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
 <proof_of_spec>
   <expected_criteria>AC1,AC2,AC3</expected_criteria>
   <criterion id="AC1" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC1.sh; echo "exit=$?"</invocation><expect>WRITER CENSUS: 4 of 4 BD silver tables have exactly 1 writer -- RESULT: PASS -- exit=0</expect></criterion>
-  <criterion id="AC2" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC2.sh; echo "exit=$?"</invocation><expect>2026-10-05 and 2026-10-06 each: sentinel present, transactions SUMMARY failures=0, partitions written 00:00-03:00Z >=1; empty-window acceptance dates passing 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
+  <criterion id="AC2" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC2.sh; echo "exit=$?"</invocation><expect>2026-10-19 and 2026-10-20 each: sentinel present, transactions SUMMARY failures=0, partitions written 00:00-03:00Z >=1; empty-window acceptance dates passing 2 of 2 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-s-19" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s19.AC3.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
   <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/NFRA_MCPINDEX.TO-MX-s-19.bd-doc-merge-retire.proof_of_spec.json</instance_path>
 </proof_of_spec>

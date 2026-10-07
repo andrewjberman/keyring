@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-17</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~24</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -52,6 +52,43 @@ step at `code/silver/`, the script `bd-silver-merge` runs. Disarm read: both doc
 5. Publish both documents, set DEFAULT, read Default == Latest back, run s17.AC1, close the ledger. Roll back on any
    failed leg; never half-landed.
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- disarm row Z-W24-S9 before the publish.**
+- Between steps 4 and 5: on the instance the documents target, run ONE read-only SSM command,
+  `python3 -c "import boto3, pandas; print('OK:', boto3.__version__, pandas.__version__)"`, from the documents' working
+  directory, and quote its output. `OK:` disarms Z-W24-S9 (cite this amendment). An ImportError is a BLOCKING row:
+  publish nothing, close the ledger as not-applied, report.
+- Publish window: outside 21:30-22:15Z (the two document crons, 21:45Z and 21:53Z).
+- Base pins re-read by the issuer at 2026-10-06T18:29Z: both documents Default 3 = Latest 3, Active, which equals the
+  ANNOUNCE's rollback version. `code/silver/merge-daily-incremental.py` ETag `91eaf248...`, 59,820 B. If either differs
+  at your first act, stop and report.
+- Graded by: no gate limb graded this modification.
+
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-06 ~20:5xZ) -- re-addressed; kept in the chain.**
+- **Re-addressed** from `0.9.0_WK_NFRA_MCPINDEX~24` to `0.7.0_AE_CloudOps~MI` on Andrew-direct 2026-10-06 ~19:4xZ
+  ("bringing on a 0.7.0_AE_CloudOps~MI ... to handle these operations"; record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_194xZ_BD_CONSOLIDATE_WRITERS_INVESTIGATE_SHAPE_FIRST_SEAT_AE_MI.md`).
+  The PHASE A work stands as built on branch `wk-nfra_mcpindex-r7-24` @3709ae40d6 (worktree
+  `C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r7-24`); work there and commit there. Your write surface adds
+  `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**`; the proof instance goes there under the
+  same file name.
+- Basis: the MX-a-1 verdict (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.md`): the evening documents fetch nothing from BD and emit
+  no field the morning path lacks; they remain the only same-day merger on sentinel-withheld days.
+- This order stays FIRST in the chain: until the evening rules are disabled (MX-s-19, after a proven Monday and
+  Tuesday) the documents keep running, and the verdict measured their frozen 2026-06-29 script writing transactions
+  WITHOUT the `cusip` column. The repoint removes that divergence for the interim. PHASE B only on the issuer's GO.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
+- Graded by: no gate limb graded this modification.
+
+**GO -- PHASE B (2.0.0_SA_COO~MI, 2026-10-06 ~21:2xZ), to 0.7.0_AE_CloudOps~MI.**
+  Halves: COO SIGNED `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-17_s-18_20261006.md`
+  @27501e83dd; CTO SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MX-s-17_s-18_20261006.md`
+  @fb8486aa9f. Read both before the first act; the CTO's four conditions bind (base-moved clause; exactly one IAM
+  statement at plan 0/2/0; both branches; nothing disabled or retired).
+- Publish window: NOT between 21:30Z and 22:15Z. Start after 22:15Z today. This order lands BEFORE MX-s-18's apply.
+- Run A1's Z-W24-S9 disarm (the boto3/pandas import read) before the publish. It is one read-only SSM command on the
+  documents' target instance; if the instance is stopped, do not start it -- report that as the measurement instead.
+
 ## 2. BOUNDS
 
 1. One producer per table after the round: no second schedule, no parallel path, no comparator.
@@ -66,6 +103,7 @@ infra/aws/ssm/opal-bd-realized-download.json
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-repoint.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 

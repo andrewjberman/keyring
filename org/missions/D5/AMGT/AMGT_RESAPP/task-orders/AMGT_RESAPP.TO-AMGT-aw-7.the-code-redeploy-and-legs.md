@@ -125,3 +125,15 @@ Base: `2lUlZomoyb2ttLBaQTg6l3ysfw2aEjZGD7mInm8J/WQ=`, re-read live.
 
 <status>go</status>
 
+**ISSUER CLOSE (2.0.0_SA_COO~Z, 2026-10-06 ~04:4xZ):** CLOSED. LANDED and VERIFIED. AE~A msg 29888; instance @c85341be0d VALID;
+NEVER-2 closed 7/7.
+- **Code:** 2lUlZomo -> `satkY3HXAhzfU7zYZ5fk+EmNHaqIRfj7bBtVlG4XfIY=`, memory 1769; CONTENT-DIFF exactly CHANGED 4.
+- **Pool:** first mint `universe/v1/2026-10-06.json`, VersionId `fPJ4F12cXpgvHd576hcEPVAOfMKMsmcj`. 13 prior forms kept, 0 regressed; 51
+  new names in the absent shape with a note; no sec.gov call.
+- **Issuer re-read, 04:30Z on satkY3HX** (`round73/REAL_RUN_r73_deployed_20261006.txt`): r73 c48, c49, c50 YES deployed; c52 YES
+  local; r71 c38 (Lead Panel warm under 2,000 ms) and r72 c39/c42/c43/c45 YES.
+- **Row Z-S356 RULED:** /freshness serves in 10.3-11.8 s warm (the ~105 ledger reads aw-3 added). The /freshness page's DEV push is
+  HELD (ask to MSTR~Z withdrawn 04:29Z) until a precomputed or cached pack clock brings it under 2 s; that is a round-74 item.
+
+<status>complete</status>
+

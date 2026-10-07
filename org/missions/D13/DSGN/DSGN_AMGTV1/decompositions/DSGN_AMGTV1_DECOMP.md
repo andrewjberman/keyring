@@ -1967,3 +1967,18 @@ At base e6ab82ad it reads 2 of 5: ROG SW-shaped bundle 3 tiles with none of the 
 numbers 688910/677172/677381/645026; SYNOPSYS INC, ADOBE INC and CADENCE DESIGN SYS on the price face; three name-first sites). KEEP and
 PLANTED pass. Green 5 of 5 on scratch reference edits (CHECK_SRC_OVERRIDE, issuer run).
 **Fan-out:** 1 of 1. **Risk:** LOCAL. **Then:** a :5174 walk, CTO review, and the DEV push and PROD on Andrew's word.
+
+## v44 -- ROUND 44 (issuer, 2026-10-06 ~06:1xZ, by hand, no loop) -- ONE CELL: DRIVER PASSAGE + SEGMENT BREAKDOWN
+
+**Rectangle:** AMGT_RESAPP `ledger/ROUND_ANALYSIS.round73.md` @cf0d03deb2 item 1 (msg 29921): (a) FWD-18, a driver-chart click opens the
+served `passage_text` with its cite; (b) FWD-1, the served `segment_breakdown` drawn with its cites, or its reason. **Base:** the round-43
+candidate (portal c123c5a0), so rounds 43 and 44 reach Andrew as ONE DEV push.
+
+| cell | serves | owned files | worker |
+|---|---|---|---|
+| `AV-zv-1` | FWD-18 (a), FWD-1 (b) | `components/ThesisDriverChart.tsx`, NEW `components/SegmentBreakdown.tsx`, `tabs/ThesisTab.tsx`, `types.ts` | ~105 (worker) |
+
+**Check:** `round44/checks/r44/r44.cjs` on fixtures captured from deployed satkY3HX (`round44/fixtures/thesis.{BA,MSFT}`). At base DEV
+b0051830 it reads 1 of 5: BA's point prints "not shown on this page"; there is no SegmentBreakdown; ThesisTab mounts none. PLANTED passes.
+Green 5 of 5 on scratch reference edits.
+**Fan-out:** 1 of 1. **Risk:** LOCAL. **Then:** a :5174 walk, CTO review, and ONE DEV push (43 + 44) on Andrew's word.

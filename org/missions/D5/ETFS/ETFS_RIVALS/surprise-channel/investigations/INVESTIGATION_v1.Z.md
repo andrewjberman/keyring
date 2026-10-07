@@ -3946,6 +3946,266 @@
     "spec_asserts": "RIV-ok-1 cell: 'WCMG reports the Bloomberg id, the same CUSIP on the row'; a CUSIP-only row takes the Bloomberg key another row carries for that CUSIP, so Nebius renders once.",
     "world_is": "WCMG's row has no CUSIP or ISIN; the only shared identifier is the bare ticker NBIS. ok-1 is a no-op for Nebius on real data and J1 cannot pass. The cut's premise was written from the page's name map, not measured on G1.",
     "notes": "disarm_owner: 2.0.0_SA_COO~RV (the issuer; the cut's defect). The ok-1 deploy (round-11 item 3) is HELD: it would ship a no-op for J1. Remedy options go to 1.0.0_SA_CTO~Z (a Bloomberg-key lookup per CUSIP in the G4 reference request, joined by ok-1)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S44",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T06:59Z",
+    "one_line": "The Z-S24 capacity probe's anchor moved from '#N/A Daily Capacity, request is blocked.' (14:33Z 10-05 .. 02:57Z 10-06) to '#N/A Requesting Data...' on 4 consecutive hourly probes (03:57, 04:57, 05:57, 06:57Z): the Terminal no longer refuses on capacity but the sheet does not resolve within the collector's wait -- neither branch of the probe ruling.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "sidecars C:/bbg_backfill/probe_0357, probe_0457, probe_0557, probe_0657: anchor '#N/A Requesting Data...', status SKIPPED, captures {2026-10-01: BAD-ANCHOR}",
+        "sidecars probe_2311, probe_2359, probe_0105, probe_0157, probe_0257: anchor '#N/A Review: Error: #N/A Daily Capacity, request is blocked.'",
+        "the change falls at ~04:00Z = midnight ET, where a daily allowance would reset"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The probe ruling (CTO~Z @b5167de528) has two outcomes: 'ID' (capacity back) or 'Daily Capacity' (still capped).",
+    "world_is": "A third state: the request is accepted but unresolved at read time. It may be a slow first answer after the allowance reset, or a Terminal session that is not serving data; one probe per hour cannot tell which. The 07:00 ET vehicle (11:00Z) depends on it.",
+    "notes": "No act taken under the ruling (no line to MSTR~Z, no leg re-run, no backfill). MSTR~Z's 10:45Z P0 probe owns the Terminal read before the vehicle; this row is the record it can read."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S45",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T07:39Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S44: CAUSE named by 0.0.0_AB_MSTR~Z msg 29955 -- the Terminal is not running and there is no 8194 listener (P0 layer 1 FAIL at 07:21Z and 07:37Z); the box was in Modern Standby 03:09Z-07:36Z, which contains the 03:57Z anchor change; held for Andrew's sign-in.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~Z msg 29955 (P0 layer 1: bbcomm restart, network and socket eliminated; wintrv absent)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The Z-S24 probe reads the Terminal's capacity state ('ID' or 'Daily Capacity').",
+    "world_is": "'#N/A Requesting Data...' was a Terminal that was not running, not a capacity state; the hourly probe keeps running and its first 'ID' read after the sign-in is MSTR~Z's trigger to re-run OPAL_BBGTML.",
+    "notes": "Cites ETFS_RIVALS-Z-S44. The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S46",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T13:11Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S31: DISARMED on the organic run -- the deployed Lambdas read gold/security_names and write gold/security_universe under RIV-iam-1's grant (applied 2026-10-06 00:0xZ, drain 5d75016e03).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "holding_contribution date=2026-10-06 holding_contribution-20261006T130556Z-bd0200b20c0a (13:05:58Z, the sweep's A1 refresh): input_manifest security_names = .../security_names/date=2026-10-06/security_names-20261006T123354Z-2b58c8c5a8e8.parquet, no security_names_note (read OK); 3,851 rows",
+        "gold/security_universe/date=2026-10-05/universe-20261006T130739Z-b845e2cc9c8c.parquet written 13:07:40Z by the 13:00Z sweep (etfs-rivalfunds-daily-lambda REPORT de6ac4f0, 447 s, no AccessDenied in the log)",
+        "the names object itself was written 12:33:59Z by the terminal-side enrichment in OPAL_BBGTML's re-run (RC_RIVENR 94)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 9's two tables are readable and writable by the stages that use them (RIV-nm-3, RIV-su-2).",
+    "world_is": "Both exercised on the organic 2026-10-06 runs with no AccessDenied: the read at 13:05Z and the write at 13:07Z.",
+    "notes": "Cites ETFS_RIVALS-Z-S31 (round-10 analysis item 5: S31's disarm is 2.0.0_SA_COO~RV's at the 10-06 run). The row's disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S47",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-06T13:35Z",
+    "one_line": "The first organic full-day page (2026-10-06, batch ai-2026-10-06-517fd371, 13 of 13 funds updated) renders with holding dialogs OFF: 0 clickable security names and 0 security dialogs, against 1,948 buttons and 441 dialogs on the 10-05 r9 page. The with-dialogs render crossed render.DIALOG_SOFT_CAP (1,950,000 B), so fc-1's and ln-1's outcome (Andrew: 'anytime a stock/ticker is mentioned, it should be clickable to the modal') is absent on the served page.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3://opal-data-etfs/rivalfunds/etfs/platinum/page/date=2026-10-06/index.html (1,813,001 B, 13:07:38Z): data-holding-dialogs=\"off\" on rf-panels; counts data-sec-dialog 0, data-sec= 0, class=rf-h 0 (this seat's read)",
+        "platinum/page/date=2026-10-05/index.html batch rv-publish-1005r9 (1,870,715 B): data-sec-dialog 441, data-sec= 1,948",
+        "data/etfs/scripts/rivalfunds/render.py:1793-1802 at the live pin ca39e20a20: DIALOG_SOFT_CAP = 1_950_000; above it the page is re-rendered without holding dialogs",
+        "manifest date=2026-10-06: a1_produced buying_trend/holding_contribution/input_census OK (a full A1 day), funds 13 of 13 updated"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-fc-1 J1 and RIV-ln-1 J1 (both graded PASS-in-part on 10-05 pages): every security mention opens its one modal, under the gateway cap; ROUND_ANALYSIS.round8.md ruling 3: if linking everything would cross the cap, the cell links a name once per face and states that rule.",
+    "world_is": "The fallback is binary: past the soft cap every dialog goes, not just enough of them to fit. 10-05's pages fit (r9 at 1.87 MB with dialogs) because that day carried less A1 content. A normal full day with D12's IDVZ/PFOE rows crosses the cap, so production will serve plain names on most days. The page itself publishes correctly (1.81 MB), and nothing tells anyone that the dialogs are off: the attribute is in the HTML only.",
+    "notes": "For the round-11 issuer and CTO~Z: a size budget for dialogs (lighter dialog content, one shared dialog per security already in place; a partial fallback that keeps the dialogs that fit; or a lazy-load route under the gateway) is a ruling. INERT: no wrong value is served, but a FWD outcome is absent."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S48",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "3.0.0_SA_CVO~RV",
+    "surfaced_at": "2026-10-06T13:55Z",
+    "one_line": "With the Terminal down, the vehicle's ENRICHMENT step (python -m rivalfunds.enrichment_bloomberg --mode daily) never returned: it looped on blpapi reconnects to 8194 from 11:0xZ until it was interrupted (^C) about 29 minutes later. It wrote no exit code, no result JSON and no state record, so eg-1's guard (an error or empty RESPONSE) was never reached and nothing recorded that the step failed.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "%USERPROFILE%/opal_bbg_logs/bbg_tplus1_20261006_070001.log :80-81 PRECONDITION FAILED (DAPI DOWN), :87-88 rivalfunds leg SKIPPED BAD-ANCHOR exit 93, :89 ENRICHMENT started, reconnect loop to 07:29 local, ^C (this seat's fork read)",
+        "no state/pull_enrichment record and no gold/security_market object written 11:00Z-12:30Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-eg-1: on a no-data Terminal the enrichment reads REFUSED, nothing is written and the prior revision stays newest (DRAIN_END_READ_ROUND10.md); a producer's failure must be distinguishable from a genuine negative (CLAUDE.md rule 28 q7).",
+    "world_is": "An unreachable DAPI is a third case beside an error response and an empty response: the session never opens, so the step hangs instead of refusing. The outcome was safe (no empty G4 landed) only because the process was killed. The vehicle's own precondition read DAPI DOWN at :80 but still started the step.",
+    "notes": "For the round-11 issuer: a session-open timeout that exits with a recorded REFUSED (DAPI unreachable), or the vehicle skips enrichment when its own precondition fails. INERT: nothing wrong was written."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S49",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.7.0_AE_CloudOps~RV",
+    "surfaced_at": "2026-10-06T13:19Z",
+    "one_line": "The five rivalfunds stage Lambdas emit ZERO application log lines -- only the runtime's INIT_START/START/END/REPORT -- so a CloudWatch 'no AccessDenied' or 'logs are clean' read of this pipeline is vacuous, and a REPORT-line positive control does not detect that.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "filter-log-events over /aws/lambda/etfs-rivalfunds-daily-lambda since 12:00Z returned 4 events, read WHOLE: INIT_START, START, END, REPORT (Duration 447265.56 ms) and nothing else",
+        "the same read on /aws/lambda/rivalfunds-publish-page-lambda since 10:00Z returned 4 events across two invocations, again runtime lines only",
+        "filter patterns 'security_names', 'security_universe' and '?AccessDenied ?\"not authorized\"' each returned 0 on both groups, in windows where the REPORT control returned 1 -- the control came from the RUNTIME population, the hunted string from the APPLICATION population, whose denominator is 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A deployed stage Lambda's CloudWatch log group can witness whether its S3 calls were authorized, so an absence of AccessDenied there is evidence the grant served.",
+    "world_is": "It cannot. The application emits nothing, so an AccessDenied the code catches and fail-softs leaves no trace, and an unhandled one would only ever appear as a traceback. The COO half for RIV-iam-1 notes a fail-soft repair already serves holding_contribution, so swallowing is live behaviour in this codebase. The sound oracle is the S3 ARTIFACT: gold/security_universe/date=2026-10-05/universe-20261006T130739Z-b845e2cc9c8c.parquet, 58411 B, LastModified 2026-10-06T13:07:40Z (s3api UTC; aws s3 ls renders LOCAL and read 09:07:40), written inside the 13:00Z sweep's own 447 s invocation -- a write that was implicitDeny on both roles before the RIV-iam-1 apply.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Filed off-task while closing RIV-iam-1; it does not affect that cell, whose AC1 oracle is simulate-principal-policy and whose condition-6 evidence is the artifact above. It DOES bound any future claim of the form 'the logs are clean' about these five functions, including one this seat nearly made: I reported '0 AccessDenied with positive controls firing' one tick before reading the 4 events whole."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S48",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-06T17:08Z",
+    "one_line": "RIV-au-1: the new audit.html is written with no size guard (publish_page checks only index.html against MAX_PAGE_BYTES), and the data-status section (absences, input-census absences) now appears only on the audit page when a fund is updated.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py (this worktree, uncommitted at filing): MAX_PAGE_BYTES is compared to len(html_b) of the main page only; audit_b is written unconditionally. The cell cites the closed audit block at 1,119,671 B of the 10-06 page, so the audit document plus its own dialogs is expected near 1.2-1.3 MB, under the 2 MB gateway cap today.",
+        "render._render_page_body (main page, n_updated > 0) no longer appends _status_section; it moved with the audit trail into render._render_audit_body, as the cell prescribes ('trades, holdings, refused and status sections' on the audit page)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-au-1 interface: publish_page writes audit.html with read-back and names it in the manifest; the audit route and link land in a later round.",
+    "world_is": "audit.html has the same soft-cap fallback as the main page (its dialogs go off over DIALOG_SOFT_CAP, reported by the same FAIL line and audit_holding_dialogs in the manifest) but no refusal over the gateway's 2 MB cap, so a very large day could write an audit object the later gateway route cannot serve. The status section (the A1 absences) is no longer reachable from the main page until the audit route and link exist.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For the audit-gateway round: decide whether the audit page needs its own MAX bytes check or a split, and where the data status should live on the main page."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S50",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T17:18:43Z",
+    "one_line": "After RIV-au-1, the real 10-06 render links 2,073 security mentions to 424 dialogs with 0 dead, but 5 AI-text mentions of 3 names stay plain: a display name two dialog-bearing listings share (Samsung Electronics Co Ltd: 005930/005935_KS; Universal Music Group NV: UMG_NA/UNVGY_US; Reckitt Benckiser Group PLC: RBGLY_US/RKT_LN) renders as a titled span by the round-9 RIV-ln-1 rule. Andrew-direct 16:3xZ reads 'Any mention of a security by ticker should be hyperlinked'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/2.0.0_SA_COO~RV/round12/real_run.py on C:/tmp/wk-riv-r12-1 (branch @a71cb76ab3), live inputs read-only, A1 producers off: index.html 1,294,421 B, holding_dialogs on, data_sec_buttons 2,073, dialogs 424, dead_buttons 0 (real_run_2026-10-06.json)",
+        "the same page: <span class=\"rf-sec\" title=\"shared by 005930_KS_Equity and 005935_KS_Equity\">Samsung Electronics Co Ltd</span> (x2), title \"shared by UMG_NA_Equity and UNVGY_US_Equity\" (x2), title \"shared by RBGLY_US_Equity and RKT_LN_Equity\" (x1); 386 dialog names scanned, 3 found plain",
+        "ROUND_ANALYSIS.round9 / RIV-ln-1 interface: 'a name two dialog-bearing securities share links to the key the account's citation list names, else stays plain with both identifiers in its title'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Andrew-direct 2026-10-06 ~16:3xZ and ADDENDUM 4 step 2: every ticker mention is a popovertarget button to its modal (mentions = buttons, 0 dead).",
+    "world_is": "Mentions in tables and most AI text link; the residual is the ln-1 ambiguity class, where one company name is carried by two listings and the AI account cites neither key. A link there would have to pick one listing's modal (or a combined one), which is a ruling, not a renderer fix.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. For 1.0.0_SA_CTO~Z: does Andrew's word supersede ln-1's plain-span rule for shared names, and if so which modal does a shared name open (first-held listing, the fund's own holding, or a merged dialog)?"
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W2-S14",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~2",
+    "surfaced_at": "2026-10-06T18:27:41Z",
+    "one_line": "RIV-pk-1 check pk-1.AC1.py arm (a) cannot pass on this device's pandas 3.0.3: a null security_parsekey reads back as NaN, and `not pk.get(\"NBIS_US_Equity\")` is False for NaN.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round12/checks/pk-1.AC1.py at wk-ETFS_RIVALS-2 working tree: the arm-(a) print reads parsekey {'999999999': 'ZZZ US Equity', 'N97284108': 'NBIS US Equity', 'NBIS_US_Equity': nan}, asked PARSEKYABLE_DES for ['/cusip/999999999', '/cusip/N97284108'] (exactly the two identifier keys), then `FAIL: (a)`; arms (b) and (c) print OK; AC1 RESULT: FAIL 1 failures, rc=1.",
+        "pk-1.AC1.py line 99-100: the (a) conjunct `not pk.get(\"NBIS_US_Equity\")`. python -c \"print(not float('nan'))\" -> False; pandas 3.0.3 / pyarrow 24.0.0: pa.table({'a': pa.array(['x', None], type=pa.string())}).to_pandas()['a'] -> dtype str, ['x', nan] (not None).",
+        "every other conjunct of (a) holds in the same run: asked == the two identifier keys, pk['N97284108'] == 'NBIS US Equity', pk['999999999'] == 'ZZZ US Equity'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pk-1 interface and check docstring: G4 column security_parsekey is 'null when not asked or not answered', and arm (a) accepts NBIS_US_Equity's parsekey as falsy.",
+    "world_is": "A true parquet null (what the interface prescribes, and what the code writes) is NaN after to_pandas on pandas 3.0.3, which is truthy, so arm (a) fails for any correct implementation on this device. The only ways to satisfy it as written are to store an empty string (not null, against the interface) or to hand-write pandas object-dtype metadata into the G4 parquet (a storage hack for one check). Neither is in the order.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. One-line amendment of the check within the issuer's own authority: replace `not pk.get(\"NBIS_US_Equity\")` with `pd.isna(pk.get(\"NBIS_US_Equity\"))` (or `pk.get(...) in (None, '') or pk.get(...) != pk.get(...)`). Everything else is built; nothing in the worker's tree depends on the choice."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S51",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T18:37:30Z",
+    "one_line": "Cites ETFS_RIVALS-Z-W2-S14: the defect was the issuer's check, not the build -- pk-1.AC1 arm (a) read a stored null with `not pk.get(...)`, and a null reads back as NaN (truthy) on pandas 3.0.3 / pyarrow 24; the check now treats None and NaN alike (amend 6ff7fc5dbc) and AC1 PASSES 3/3 (instance fc705a1bd4).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "round12/checks/pk-1.AC1.py at 6ff7fc5dbc: `_null(x)` = x is None or x != x; arm (a) uses it in place of `not pk.get(\"NBIS_US_Equity\")`",
+        "re-run on wk-ETFS_RIVALS-2 by the issuer: AC1 RESULT: PASS 0 failures; at base the arm still FAILS (PARSEKYABLE_DES never asked)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pk-1 interface: security_parsekey is null when not asked or not answered.",
+    "world_is": "The build stores a true null; the check's truthiness test was the wrong instrument for a null on this toolchain.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Resolves the S14 entry in the pk-1 instance's surprises list; the row's final disposition stays the CVO's."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S52",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T19:41:25Z",
+    "one_line": "The L8 slug gate read round 11 as non-terminal: it takes the FIRST <status> tag of an order (orders append their flips, so the first is 'pending'), then falls back to the proof instance, whose cell_ref check reads the decomposition at HEAD -- and DECOMP v1.1 (ce6c8e89ee, this seat) had replaced round 11's cells in place, so 'RIV-gt-1' / 'RIV-dr-1' were not found. Two complete orders read INVALID; the CVO's slug needed an audited override.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO~RV slug commit 69de0f08e0: '# surprise-row-override: round 11's orders gt-1 and dr-1 ARE complete (last <status> tag complete ...). The gate reads the FIRST <status> tag (pending) ... cell_ref RIV-gt-1 / RIV-dr-1 not found'",
+        "ROUND_ANALYSIS.round11.md @3ae96d6bc7 ruling 4: the gate reads the LAST <status> tag; the cell_ref check reads the decomposition at the order's issuance commit",
+        "decomposition v1.3 (37849d84e8): this seat now APPENDS round-13 cells instead of replacing earlier ones, so issued orders' cells stay readable at HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A slug gate grades an order's TERMINAL state: its last <status> tag, and its cells as issued.",
+    "world_is": "It grades the first tag and the decomposition at HEAD, so a true terminal state reads INVALID and invites routine overrides.",
+    "notes": "disarm_owner (n/a, INERT): the gate's lane owner (the L8 slug gate / proof-of-spec checker), not this project's cells (round-11 analysis item 4). Filed by 2.0.0_SA_COO~RV as the analysis directs; the in-place replacement that triggered the cell_ref half was this seat's, now avoided by appending."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S53",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-06T22:00:02Z",
+    "one_line": "Cites ETFS_RIVALS-Z-S52: .tools/to-check.py carries the same first-status-tag read as the slug gate. It lists ETFS_RIVALS.TO-RIV-iam-1 as PENDING for 0.7.0_AE_CloudOps~RV (1 active TO) while the order's last <status> tag is complete -- so 'what does this seat owe' over-counts a closed order.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/to-check.py --all --assignee 0.7.0_AE_CloudOps~RV at 21:59Z: '1 active TOs ... [PENDING] ETFS_RIVALS.TO-RIV-iam-1.round9-table-grants'",
+        "the order file: line 82 <status>pending</status>, line 86 <status>complete</status> (issuer close in the round-10 drain-end packet 64459cbbb1)",
+        "the same call for 2.0.0_SA_COO~RV at session start returned 0 active TOs (no order addressed to it), so the two reads are not comparable evidence of 'nothing owed'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "to-check reports an order's CURRENT status (org/XXX.md Step 1b B.1: 'find the work you hold').",
+    "world_is": "It reports the FIRST status tag; orders append their flips, so every issuer-closed tree order that began pending reads PENDING forever.",
+    "notes": "disarm_owner (n/a, INERT): the owner of .tools/to-check.py, with Z-S52's gate fix (read the LAST tag). Found while answering MSTR~Z's pre-integrate state ask; it changed nothing in that answer (the order is complete)."
   }
 ]
 ```

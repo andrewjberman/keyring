@@ -5,7 +5,7 @@
   "project": "AMGT_CORPUS",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.7",
+  "prd_version": "v0.8",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-claude-analysis-layer-brief-20260922.md@6c52138c2f",
   "endpoint_outcomes": [
@@ -447,6 +447,15 @@ its one essential wait is expressly qualified: Andrew's standing word for the re
                     empty-or-workbook-only) SUM TO THE FOLDER COUNT every time
          ACCEPT     Andrew can name any folder and get an answer, never a silence.
          SOURCE     brief O5 :77; C-FOLDER-LIST-IS-THE-DENOMINATOR
+         AMENDED    1.0.0_SA_CTO~Z, v0.8 (ADDENDUM C), 2026-10-06. FOUR
+                    counts, not three: resolved / ambiguous /
+                    empty-or-workbook-only / UNRESOLVED-WITH-REASON, summing
+                    to the folder count every time. The three-class partition
+                    had no member for a folder whose security does not
+                    resolve (Brookfield BN CA, round 38: 96 of 97), so it was
+                    not exhaustive over its declared domain (rule 24 i). The
+                    fourth class is FWD-19's own, so the two censuses share
+                    one partition.
   FWD-15 The fund of record and last stated position read as the TEAM'S stated
          posture, cited, beside the unchanged machine judgment
          DONE WHEN  EXERCISED -- both render cited on the header posture line and
@@ -1023,3 +1032,15 @@ Both changed sections are in the RATIFIED half: ENDPOINT (`FWD-12` amended, `FWD
 CONTRACTS (B.2). So the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted: the brief was
 written by `4.0.0_SA_CRO~Z` (CLAUDE.md L4-R PROPORTIONATE SIGN-OFF). Per R-10, the review is kept and the round is not
 held hostage to a stamp.
+
+## ADDENDUM C, v0.8, 2026-10-06 -- FWD-14's partition gains its fourth class (`1.0.0_SA_CTO~Z`, round-38 analysis)
+
+- **What changes:** `FWD-14`'s DONE WHEN partition. Three counts become FOUR: resolved / ambiguous / empty-or-workbook-only /
+  unresolved-with-reason, summing to the folder count. The amendment sits in the fence (AMENDED line).
+- **Why:** round 38 graded limb 2 at 84 + 0 + 12 = 96 of 97 folders. Brookfield BN CA does not resolve, and no class held it
+  (`ADJUDICATION_v44.md` @8a796bc632). Resolving Brookfield would make the sum work this once, and the next unresolvable folder
+  would break it again. So the partition is fixed, not the instance. The fourth class is `FWD-19`'s (which sums 83 + 13 + 1 = 97),
+  so the two censuses now share one partition.
+- **Not changed:** every other outcome and every contract.
+- **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
+  the CRO).

@@ -32,11 +32,11 @@ Review: `org/tier1_exec/3.0.0_SA_CVO/deliverables/ETFS_RIVALS_R9_REVIEW_20261005
     "owner": "1.0.0_SA_CTO~Z",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~Z",
       "round": "v9"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-W6-S2",

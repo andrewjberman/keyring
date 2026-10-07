@@ -5,7 +5,7 @@
   "project": "AMGT_RESAPP",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.40",
+  "prd_version": "v0.41",
   "step": 4,
   "brief_ref": "docs/briefs/amgt-resapp-security-analysis-20260910.md@19ce7d5b4d",
   "endpoint_outcomes": [
@@ -604,6 +604,14 @@ disputable, by rule, and carry no technical language.*
                     own. A single button that refreshes everything under one
                     timestamp does not count.
          SOURCE     brief O12
+         AMENDED    1.0.0_SA_CTO~Z, v0.41 (ADDENDUM E), 2026-10-06, on
+                    Andrew's word. THE RE-RUN HALF IS RETIRED. The outcome
+                    is now: for each kind of input the page shows where it
+                    came from, when it last ran, and whether that run
+                    worked. DONE WHEN EXERCISED -- on a real name, each
+                    input's source, last-run time and run result are read on
+                    the page and agree with /freshness. No control on the
+                    page claims to re-run an input.
 
   FWD-13 Everything on one page is about the same company
          DONE WHEN  EXERCISED -- checked on a name that more than one business
@@ -2831,3 +2839,23 @@ ADDENDUM D adds ENDPOINT lines and CONTRACTS, so the RATIFIED half re-opens to `
 cross-project brief written by `4.0.0_SA_CRO~Z`, so under PROPORTIONATE SIGN-OFF the brief half is accepted as the
 CRO's own text. This is an ENDPOINT change, so the CVO re-signs. `FWD-1`..`FWD-31` and every existing contract are
 unchanged.
+
+## ADDENDUM E, v0.41, 2026-10-06 -- FWD-12's re-run half is retired (`1.0.0_SA_CTO~Z`, on Andrew's word)
+
+**Andrew-direct ~21:11Z** ("all recs approved", card 2 of
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261006_211xZ_ALL_RECS_APPROVED_CTOZ_OPEN_CALLS_FOUR_CARDS.md`). The card:
+"Retire the 're-run one input' button from the RESAPP page? (a) retire". His question at the `4.0.0_SA_CRO~Z` terminal was why the
+button exists, given a scheduled morning pull and no intraday data.
+
+- **What changes (ENDPOINT):** `FWD-12` keeps its provenance half and loses its re-run half. The amendment is in the fence
+  (AMENDED line).
+- **What follows:**
+  - The `/refresh` "declared" no-op (`lib/research/api/scoped_amgt.py:6859-6876`) and any page control that calls it are
+    REMOVED. A control that does nothing breaks "A control that cannot act says why" (`:1393-1395`).
+  - Round-75 analysis ADDENDUM 1's re-run cell is WITHDRAWN: the market_data re-run, the cost gate, the consumer wiring and
+    its never-widen pair. Its two reserved questions (who may press; whether a press is a per-use word) fall away.
+  - `lib/research/ledger/ledger.py`'s `rerun` registry is left as is. No page reaches it.
+- **Not changed:** every other outcome and every contract. A failed or refused scheduled pull is still recovered by an operator
+  act, not from the page.
+- **L4-R:** an ENDPOINT change, so the ratified-text half is re-owed to `3.0.0_SA_CVO~Z`. The brief half is accepted (written by
+  the CRO).

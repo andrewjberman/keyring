@@ -101,3 +101,6 @@
 2026-10-06T14:34:50Z HOLD DSGN_REBRND seat=2.0.0_SA_COO~D surface=- expires=2026-10-07T14:34:50Z by=andrew-direct-stop-REBRND
 2026-10-06T14:43:11Z ARM NFRA_CTLPLN seat=2.0.0_SA_COO~C surface=.tools/git-hooks,org/missions/D0/NFRA/NFRA_CTLPLN,org/devices expires=2026-10-06T18:43:11Z by=1.0.0_SA_CTO on Andrew-direct 2026-10-06 ~14:4xZ (Let's bring on COO~C to take it on, /closer-drive instruction)
 2026-10-06T17:28:31Z END NFRA_CTLPLN mode=FAST seat=2.0.0_SA_COO~C by=1.0.0_SA_CTO
+2026-10-06T13:39:25Z HOLD AMGT_RESAPP seat=2.0.0_SA_COO~Z surface=- expires=2026-10-06T17:39:25Z by=2.0.0_SA_COO~Z
+2026-10-06T16:26:03Z HOLD AMGT_RESAPP seat=2.0.0_SA_COO~Z surface=- expires=2026-10-06T18:26:03Z by=2.0.0_SA_COO~Z
+2026-10-06T17:46:05Z END AMGT_RESAPP mode=HOLD seat=2.0.0_SA_COO~Z by=2.0.0_SA_COO~Z

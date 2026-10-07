@@ -8630,3 +8630,181 @@ fanout:
   egress: none   # no vendor, no SEC, no ft.com/wsj.com fetch (Andrew's FT hold)
   portal_ref: 2146031c   # portal origin/DEV at the cut
 ```
+
+## 82. ROUND 74 -- /freshness FAST + PAGE FIXED, MENTIONS-DECODE CUT, SLASH-KEY ROUTES, THE PRINT IN OPAL BRAND FORM, REDEPLOY, WALK. Six orders
+
+**Input:** the CTO's round-73 analysis `ledger/ROUND_ANALYSIS.round73.md` @cf0d03deb2 (msg 29920), section 4 RESAPP items 1-7 and
+rulings 2-5. PRD v0.40, ADMITTED. FWD-18 and FWD-1 page work goes to DSGN round 44 (ruling 1); not cut here.
+
+### 82a. MEASURED AT THE CUT (deployed `satkY3HX` unless named)
+
+- c53: /freshness warm 10.7-11.3 s deployed, 20.6-23.6 s local; 95 covered rows.
+- c54 (local, fresh process): the first chatter request decodes mentions in 1,290 ms (deployed up to 3,720 ms).
+- c55: the APPLIED gateway `opal-portal-data-proxy-api` (7k3ed8px20) has 10 security GET routes, all single-segment
+  `{security_key}`, so 0 match a key containing '/'. The FUNCTION answers 200 for BP/_LN and NG/_LN (raw and %2F) on overlay,
+  thesis, peers and print, so the 404 is the GATEWAY's. The routes live in `infra/aws/terraform/harvest/scoped-amgt-api.tf` (~`:500`).
+- c56, per print (BA, AMD, ASML_NA):
+  - 0% Lato;
+  - 3 company-description headings, 2 current market-cap lines ("Market cap" and "Market capitalisation", the same value), 5 raw
+    `[MACHINE-...` markers;
+  - the c48 floor holds (0/0/0/0).
+  - The brand font is Lato: `portal/src/index.css`; the TTFs are at `portal/src/pages/InvestorReporting/render/assets/fonts/`
+    (Regular + Bold ~1.3 MB, inside the package's 8.2 MB spare).
+
+### 82b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ax-1` | /freshness warm under 2 s (served_cache or a precomputed view), values EQUAL on all rows | `~252` | worker | LOCAL | `lib/research/api/` |
+| `AMGT-ax-2` | the /freshness PAGE: the current pack field, a never-collected input stated once, brand contrast, sorts that reorder; proven on a render (on aw-4's portal candidate) | `~253` | worker | LOCAL (portal) | `portal/src/pages/Freshness/` |
+| `AMGT-ax-3` | the cold cut: mentions decode within 500 ms local, bodies equal | `~254` | worker | LOCAL | `lib/research/api/`, `lib/research/coverage/` |
+| `AMGT-ax-4` | FWD-5 in Opal Brand form (Lato, the brand heading styles and colour tokens), duplicates and raw markers removed | `~255` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-ax-5` | the redeploy carrying ax-1/3/4, plus the ROUTE leg: slash-capable gateway routes for the security endpoints (list item 4); c55 joins every later redeploy's regression set | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, gateway routes tf, ledger |
+| `AMGT-ax-6` | the walk after ax-5: FWD-5 (3 rendered prints), FWD-7 (open the page, find a stale name), FWD-4 (links, after HARVST gold #6) | `~256` | worker | LOCAL (a read) | own deliverables |
+
+### 82c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is RESAPP items 1-7. Item 4, the slash-key fix, is an infrastructure route change, so it rides ax-5's pair as
+  a leg. Its pin (c55) is a check file every later redeploy runs.
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ax-1 and ax-3 change no value (bodies equal);
+  - ax-4 changes no figure;
+  - ax-2 moves no served data;
+  - the route leg adds routes and removes none.
+
+### 82d. EDGES AND FAN-OUT
+```
+ax-1, ax-3, ax-4 --> ax-5 (redeploy + route leg, one pair) --> ax-6 (the walk)
+ax-2 (portal; independent; its DEV push is Andrew's word after a CTO review FROM A RENDER on the deployed route)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [ax-1 ~252, ax-2 ~253, ax-3 ~254, ax-4 ~255]
+  wave_1: [ax-5 0.7.0_AE_CloudOps~A]   # after ax-1/3/4 drain and its pair
+  wave_2: [ax-6 ~256]                  # after ax-5; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none
+  portal_ref: fb939c4a   # aw-4's /freshness candidate (on DEV 2146031c); DEV head at the cut e0ff23a9
+```
+
+## 83. ROUND 75 -- PRINT DATED + SERVED THESIS, /freshness SNAPSHOT, NAMES-PHASE CUT, SEGMENT HEADINGS + TABLE LABELS, REDEPLOY, WALK. Six orders
+
+**Input:** the CTO's round-74 analysis `ledger/ROUND_ANALYSIS.round74.md` @0967e3d9c5 (msg 29990), section 4 items 1-7 and rulings
+1-6. PRD v0.40, ADMITTED. Ruling 4 (95 of 95 stale is correct) is not a cell.
+
+### 83a. MEASURED AT THE CUT (deployed `0MZWPl7n` unless named)
+
+- c57, per print (BA, AMD, ASML_NA): fiscal-year lines stamped with the run date 368 / 491 / 396; the run date appears 743 / 820 / 856
+  times. Every line reads "Label: value - as of <run date> - Bloomberg".
+- c58: BA's /thesis serves 17 drafted sentences (company_description 3, investment_thesis 2, risks 3, recommendation 9). The BA print
+  carries 0 of them and prints "No investment thesis / risks / recommendation has been written" (row Z-W256-S1).
+- c59 (local): no snapshot builder; 0 of 302 rows. A /freshness cache miss is 7,488 ms in the handler (Init 653 ms), 2,850,172 B; warm
+  68 ms (the issuer's probe after the walk).
+- c60 (local, fresh process): the chatter `names` phase (`monthly_chatter._display_names`) takes 1,560 ms (deployed cold 1,220 ms, the
+  largest cold phase now). The cold chatter read is 3.7-4.7 s.
+- c61: 36 segment headings across the 95 covered names are filing sections, figures or sentences. BA serves 10 distinct headings for 3
+  segments: "ITEM 7..." x2; BCA/BDS/BGS beside the full names; "BGS total backlog of $29,720 million at December 31, 2025". BA's 3
+  driver-chart passages are table runs (54-81% numeric tokens) with no labels.
+
+### 83b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-ay-1` | FWD-5: each figure carries its own period or quote date, the run date once in the header; the print reads the drafted sections from the /thesis reader (rulings 1-2) | `~257` | worker | LOCAL | `lib/research/print/` |
+| `AMGT-ay-2` | FWD-7: /freshness as ONE precomputed snapshot at an `address()` key, written by the refresh step, read by the route; falls back when absent (ruling 3) | `~258` | worker | LOCAL | `lib/research/freshness/`, `scoped_amgt.py` (freshness + refresh functions); a missing registry row moves to ay-5's pair |
+| `AMGT-ay-3` | the names-phase cut, bodies equal (ruling 5) | `~259` | worker | LOCAL | `lib/research/api/monthly_chatter.py` (+ new module) |
+| `AMGT-ay-4` | segment rows headed by one segment name; table passages with row and column labels (ruling 6) | `~260` | worker | LOCAL | `scoped_amgt.py` (`_segment_rows`, `_point_passage`), new helper module |
+| `AMGT-ay-5` | the redeploy carrying ay-1..ay-4, any snapshot grant, and the FIRST snapshot write; r74 c55 pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, IAM if named, the snapshot key, ledger |
+| `AMGT-ay-6` | the walk: FWD-5 (3 prints), FWD-7 (a first visit), FWD-18 and FWD-1 if DSGN 43+44 is on the portal ref | `~261` | worker | LOCAL (a read) | own deliverables |
+
+**Issuer ruling at the cut (write-set overlap):** ay-2 and ay-4 both write `lib/research/api/scoped_amgt.py`, in disjoint functions.
+ay-2 takes `read_coverage_freshness`, the /freshness route and the refresh path; ay-4 takes `_segment_rows` and `_point_passage`. Each
+order names the other's functions as not its own. The drains merge by hunk; a conflict is resolved by the issuer at the drain.
+
+### 83c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-7. Items 1 and 2 share one file (`render_pack.py`), so they are ONE cell (ay-1). Item 4 (95 of 95
+  stale) is ruled correct and is not a cell.
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - ay-1 changes no figure value; ay-3 changes no served body;
+  - ay-2 changes no row value (EQUAL on every row);
+  - ay-4 changes no figure or sentence, only headings and the added labels;
+  - only ay-5 writes a store object.
+
+### 83d. EDGES AND FAN-OUT
+```
+ay-1, ay-2, ay-3, ay-4 --> ay-5 (redeploy + snapshot write, one pair) --> ay-6 (the walk)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [ay-1 ~257, ay-2 ~258, ay-3 ~259, ay-4 ~260]
+  wave_1: [ay-5 0.7.0_AE_CloudOps~A]   # after ay-1..ay-4 drain and its pair
+  wave_2: [ay-6 ~261]                  # after ay-5; the issuer holds the MSTR~Z walker slot
+  no_s3_deletes: true
+  egress: none
+  portal_ref: 4ca437eb   # the portal DEV head at the cut (origin/DEV); the api suite reads a portal fixture
+```
+
+## 84. ROUND 76 -- /freshness RENDER FOR REVIEW, TOP BAND + INPUT PROVENANCE, REMEDIATION TRIAGE, COLD-PHASE TABLE + CUT, REDEPLOY, WALK ON DEV. Six orders
+
+**Input:** the CTO's round-75 analysis `ledger/ROUND_ANALYSIS.round75.md` @326aea63b3 (msg 30046), section 4 items 1-6 and rulings
+1-5. PRD v0.40, ADMITTED. FWD-12's re-run half and FWD-20 are design forks at the CRO (ruling 3); not cut. DSGN round 45 draws the
+band and the panel (`2.0.0_SA_COO~D`).
+
+### 84a. MEASURED AT THE CUT (deployed `D29LJCXh` unless named)
+
+- Ruling 1: no render of the /freshness candidate `6de76f0509` is in the record. Round 75's walk captures were in a gitignored folder
+  of a removed worktree.
+- c62: `top_band` absent on 95 of 95 covered names' /overlay.
+- c63: `input_provenance` absent on 95 of 95.
+- c64 (local): 109 OPEN remediation rows (of 461; 352 REMEDIATED), 0 with a TRIAGE citing row. Owners: ~W 41, ~Z 23, CTO~Z 21, ~ZZZ 15,
+  others 9.
+- c65 (local, fresh process): chatter phases generation read 1,242 ms, mentions decode 467, compute 320 + 908, names 0, classification
+  4. The deployed cold chatter read is 3,339-3,774 ms (ay-5).
+- The schedule `amgt-global-freshness-snapshot-daily` fired organically at 12:30:45Z; the snapshot stamp moved 11:32Z -> 12:30:45Z.
+
+### 84b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-az-1` | /freshness rendered for the CTO's review, captures kept in the record (ruling 1; thread-breaking: it unblocks the DEV ask) | `~262` | worker | LOCAL (a read) | own deliverables |
+| `AMGT-az-2` | /overlay `top_band` (FWD-16 news half) and `input_provenance` (FWD-12 provenance half) | `~263` | worker | LOCAL | `scoped_amgt.py`, new `top_band.py` |
+| `AMGT-az-3` | a TRIAGE citing row for each of the 109 OPEN remediation rows (ruling 4) | `~264` | worker | LOCAL | the investigation file (append), own deliverables |
+| `AMGT-az-4` | the deployed cold phase table and a cut of any phase above 1 s, bodies equal (ruling 5) | `~265` | worker | LOCAL | `monthly_chatter.py`, `names_read.py`, `pool_reader.py` |
+| `AMGT-az-5` | the redeploy carrying az-2 and az-4; r74 c55 and r75 c59 pinned | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, ledger |
+| `AMGT-az-6` | the walk on DEV after Andrew's push: FWD-7, 18, 1 (and 16 if DSGN 45 is on the ref) | `~266` | worker | LOCAL (a read) | own deliverables |
+
+### 84c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is items 1-6 plus ruling 1's render. Items 1 and 2 share one function's body (/overlay), so they are one
+  cell (az-2).
+- **(ii) Same grain.**
+- **(iii) Intent.** One axis per cell.
+- **(iv) What a cell does NOT move:**
+  - az-1 and az-6 move nothing (reads);
+  - az-2 changes no existing /overlay value;
+  - az-3 edits no existing row;
+  - az-4 changes no body (EQUAL 3 of 3).
+
+### 84d. EDGES AND FAN-OUT
+```
+az-1 (render) --> the CTO's review --> Andrew's DEV ask (with DSGN 43+44) --> az-6 (walk on DEV)
+az-2, az-4 --> az-5 (redeploy, one pair) --> az-6
+az-3 (independent)
+fanout:
+  cap: 8
+  orders_total: 6
+  chains_total: 4
+  wave_0: [az-1 ~262, az-2 ~263, az-3 ~264, az-4 ~265]
+  wave_1: [az-5 0.7.0_AE_CloudOps~A]   # after az-2 and az-4 drain and its pair
+  wave_2: [az-6 ~266]                  # after az-5 AND Andrew's DEV push
+  no_s3_deletes: true
+  egress: none
+  portal_ref: cf3f10c6   # the portal DEV head at the cut; az-1 runs on the /freshness candidate 6de76f0509
+```

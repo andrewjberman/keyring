@@ -1388,6 +1388,71 @@
  "spec_asserts": "TO-AV-zp-1 AMENDMENT 1 section 2 (and C-PRESENTATION-ONLY): a bare served day prints as a day, never a time of day; the amendment scopes this to a card's footer (CardFooter.tsx, PanelFooter.tsx).",
  "world_is": "The card footers print a bare day as a day (CardFooter passes the pre-formatted day through the new PanelFooter timeText prop). The page's end line is the shared PageEnd, which this order cannot edit; it still appends 5:00p ET to the served day.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W104-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~104",
+ "surfaced_at": "2026-10-06T04:02Z",
+ "one_line": "AC2 battery29 reads 13 of 14 harnesses green: tabs.harness.cjs prints CHECKS-WRONG-WAY short_read_control_served (control ranking not SERVED with 3 <li>); the same line prints with RankedList.tsx reverted to HEAD, so it is not this order's edit.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh on portal 4fa0312e + this order's 5 files: 'ALL BOUND: 13 of 14 harnesses green [rc=1]', 'BATTERY29: FAIL (0 skipped)', exit=1; tsc rc=0, eslint rc=0; r43.cjs 5 of 5 exit=0.",
+   "portal/src/pages/SecurityAnalysis/__harness__/tabs.harness.cjs:545: controlServed = good.ranking_status === 'SERVED' && countOf(controlHtmlList, '<li') === 3; run with RankedList.tsx at HEAD: CHECKS-WRONG-WAY short_read_control_served, same."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zu-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after the four-file change.",
+ "world_is": "The battery fails on one harness check whose input is the adapter's control ranking (adapter.control), a surface outside this order's paths; it was not measured red-or-green at the unedited base (git stash is barred here), only with the RankedList edit removed.",
+ "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W105-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~105",
+ "surfaced_at": "2026-10-06T05:58Z",
+ "one_line": "AC2 battery29 reads 13 of 14 harnesses green: drafting.harness.cjs throws 'Cannot find module ../components/SegmentBreakdown' because its import loader stubs each ThesisTab import by name and the new import is unstubbed; the harness file is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D -- amend the order's <paths> to admit portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs and add one stub line beside its ThesisDriverChart stub (name === '../components/SegmentBreakdown' returns { SegmentBreakdown: () => null }); until then the drain's combined battery29 run is red on this harness.",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "battery29.sh on portal c123c5a0 + this order's 4 files (uncommitted at the run): 'ALL BOUND: 13 of 14 harnesses green [rc=1]', 'HARNESS RED drafting.harness.cjs :: rc=1', 'BATTERY29: FAIL (0 skipped)', exit=1; tsc -b rc=0; eslint --quiet rc=0; r44.cjs 5 of 5 exit=0.",
+   "node portal/src/pages/SecurityAnalysis/__harness__/drafting.harness.cjs: 'Error: Cannot find module ../components/SegmentBreakdown' at drafting.harness.cjs:116 (load -> req(name)) from ThesisTab.tsx:19; the harness stubs ../components/ThesisDriverChart at line 98 and falls through to req() for any other unnamed import."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO-AV-zv-1 AC2: BATTERY29: ALL PASS (0 skipped), exit=0 after mounting SegmentBreakdown in ThesisTab.tsx as the order directs (bounds item 4 and <paths> name no harness file).",
+ "world_is": "The mount the order directs adds an import the drafting harness cannot resolve, and the one-line stub that would resolve it sits in a file the order's write grant does not name; this worker did not edit it. Other 13 harnesses incl. tabs and thesisLadder are green.",
+ "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S21",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-06T22:10Z",
+ "one_line": "Re-owned from AMGT_RESAPP-Z-W173-S3 (2.0.0_SA_COO~Z msg 30368, ruling round76 section F @fb9ca91ad5): a SERVED model case on the Security Analysis page carries no value or currency data attribute, so a reader keys a served case on name and formula only.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "portal DEV 6b4e89a8, regex data-(model-)?case-(value|currency|formula) over src: 2 hits, both in __harness__/exportCompare.harness.cjs (lines 297, 307) reading data-model-case-formula; 0 hits for a value or currency attribute.",
+   "AMGT_RESAPP surprise-channel/remediations/REMEDIATION_v14.md row AMGT_RESAPP-Z-W173-S3: remedy 'the value and currency attributes asked of DSGN_AMGTV1 were never added'."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "A served model case on the page exposes its value and its currency as data attributes a walk can read.",
+ "world_is": "Neither attribute exists in portal src. The case line lives in ModelTab.tsx, which AMGT_CORPUS round 39 (ao-3/ao-4, 2.0.0_SA_COO~X msg 30247) is writing; a DSGN cell for it waits for that drain to reach DEV. Gates nothing.",
+ "notes": "Backlog row for the next DSGN round cut; not armed."
 }
 ]
 ```

@@ -7128,6 +7128,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       },
       "disposition": "UNDER_INVESTIGATION",
       "notes": "Outside the au-2 write set; not touched."
+    },
+    {
+      "id": "AMGT_HARVST-Z-S90",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-06T21:47:26Z",
+      "one_line": "A wsj job for a short ticker fetches hundreds of articles and accepts almost none: T US Equity (AT&T) is at 257 requests over 85 minutes and still running; SSE LN fetched 482 and 280 with 0 accepted, against a median of 1 fetched per finished wsj job.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "A wsj backfill job fetches the candidate articles that are about its security (the per-name invocation, decomposition section 59 run shape), paced at the leg's request budget.",
+      "world_is": "The live wsj job for T US Equity started 20:19:45Z and by 21:44Z had made 257 requests, all HTTP 200, spread across unrelated sections (finance 36, world 26, opinion 24, business 23, pro 19, politics 18, arts-culture 16, tech 13). Of 252 finished wsj jobs the median fetched 1 article; the largest were SSE LN 482 and 280 (accepted 0), NVDA 121 (0), AAPL 116 (1), INTC 84 (0). The leg holds one slot for the whole job, so the other 80 wsj names wait behind it, and every request spends the publisher's tolerance on articles that are then rejected.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".runtime/opal-data-harvest-wsj/events.jsonl http events since 2026-10-06T20:19:45Z (257, all 200; path first-segment distribution)",
+          ".runtime/opal-data-harvest-wsj/runs/*.json: fetched_keys and accepted per finished wsj job (252 jobs)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "Not measured: which matcher admits the candidates (sitemap title match on the ticker token or the company name), and the rejection reasons of the T job, which is still running. The job is left to finish so its run record carries them. Carried to the round-50 analysis."
     }
   ]
 ```

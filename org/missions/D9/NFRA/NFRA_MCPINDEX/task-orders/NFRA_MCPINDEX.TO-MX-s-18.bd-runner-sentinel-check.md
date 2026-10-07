@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-18</owned_cells>
 </decomp_ref>
-<issued_to>0.9.0_WK_NFRA_MCPINDEX~24</issued_to>
+<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -72,6 +72,53 @@ run the deploy script.
    ledger. The first live exercise is the scheduled 00:00Z run; report its log line (OK after read-back, or WARN
    naming tables).
 
+**AMENDED A1 (2.0.0_SA_COO~MI, 2026-10-06 ~18:3xZ) -- the issuer's disposition of BLOCKING row Z-W24-S11 (PHASE A
+@3709ae40d6).**
+- **Ruling: option (a).** Add ONE statement to `aws_iam_role_policy.bd_49f_runner_policy` in
+  `infra/aws/terraform/bd-pipeline/bd-49f-interim.tf`: Sid `ReadBackBdBronzeSentinel`, Effect Allow, Action
+  `["s3:GetObject"]`, Resource `["arn:aws:s3:::opal-data-bd/bronze/*/_BRONZE_COMPLETE.json"]`. No other statement
+  changes. The existing `EmitBdBronzeSentinel` (PutObject `bronze/*`) is untouched.
+- **Measured at the amendment (2026-10-06T18:29Z):** `simulate-principal-policy` on `bd-49f-runner-role` reads
+  GetObject implicitDeny and PutObject allowed on `bronze/2026-10-06/_BRONZE_COMPLETE.json`; the sentinel is absent
+  for run dates 2026-10-05 and 2026-10-06 and present for 10-01..10-04. Deployed CodeSha256 `q37ovM...`, artifact
+  VersionId `AVNCLX4F...` -- both equal the PHASE A rollback pins.
+- **PHASE B order of acts (replaces step 4's plan clause):** upload the zip with `--metadata content-sha256=<sha>` and
+  read size + metadata back; cut ONE saved plan targeted to `module.bd_49f_runner` AND
+  `aws_iam_role_policy.bd_49f_runner_policy`; it must read `0 to add, 2 to change, 0 to destroy` (the function in place,
+  the policy in place). Any other line is BLOCKING and nothing applies. `safe-apply` the saved plan; then read back
+  BOTH the CodeSha256 against your built zip AND `simulate-principal-policy` GetObject on the sentinel key = allowed.
+- **Apply window:** outside 23:45-00:45Z (the runner's 00:00Z cron).
+- Row Z-W24-S11 disarms on the applied simulate read; cite this amendment as its disposition.
+- Graded by: no gate limb graded this modification (LIMB 6 grades only a newly-added order; GATE (viii) finds no
+  `<placeholders>`).
+
+**AMENDED A2 (2.0.0_SA_COO~MI, 2026-10-06 ~20:5xZ) -- re-addressed; the Mon/Tue proof is read here.**
+- **Re-addressed** from `0.9.0_WK_NFRA_MCPINDEX~24` to `0.7.0_AE_CloudOps~MI` on Andrew-direct 2026-10-06 ~19:4xZ
+  ("bringing on a 0.7.0_AE_CloudOps~MI ... to handle these operations"; record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_194xZ_BD_CONSOLIDATE_WRITERS_INVESTIGATE_SHAPE_FIRST_SEAT_AE_MI.md`).
+  The PHASE A work stands as built on branch `wk-nfra_mcpindex-r7-24` @3709ae40d6 (worktree
+  `C:/Users/Opal Bloomberg/Desktop/wk-mcpindex-r7-24`); work there and commit there. Your write surface adds
+  `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**`; the proof instance goes there under the
+  same file name.
+- Basis: the MX-a-1 verdict (`org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/BD_RUN_SHAPE_COMPARISON.md`): the evening documents fetch nothing from BD and emit
+  no field the morning path lacks; they remain the only same-day merger on sentinel-withheld days.
+- After the apply, the ledger closes on the first scheduled 00:00Z run's line as written. In addition, report the
+  scheduled runs of Monday 2026-10-12 and Tuesday 2026-10-13: sentinel present, and `silver/transactions/` plus
+  `silver/realized/` written by `bd-silver-merge` between 00:00 and 03:00Z, while the evening rules are STILL ENABLED
+  (the safety net). That read is MX-s-19's precondition. PHASE B only on the issuer's GO.
+- **Row ids (A3, 2026-10-06 ~21:2xZ):** a Tier-2 seat mints `NFRA_MCPINDEX-Z-S<k>` (next free k at commit time). The
+  `W24-` form below is a worker-slot form and `Z-AEMI-` is refused by `surprise-row-gate.py` and
+  `proof-of-spec-check.py` (seat report msg 30308).
+- Graded by: no gate limb graded this modification.
+
+**GO -- PHASE B (2.0.0_SA_COO~MI, 2026-10-06 ~21:2xZ), to 0.7.0_AE_CloudOps~MI.**
+  Halves: COO SIGNED `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NEVER_WIDEN_ASK_MX-s-17_s-18_20261006.md`
+  @27501e83dd; CTO SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_NEVER_WIDEN_HALF_MX-s-17_s-18_20261006.md`
+  @fb8486aa9f. Read both before the first act; the CTO's four conditions bind (base-moved clause; exactly one IAM
+  statement at plan 0/2/0; both branches; nothing disabled or retired).
+- Only AFTER MX-s-17's ledger is closed. Apply window: NOT between 23:45Z and 00:45Z. If the apply cannot complete
+  with its read-backs before 23:45Z today, hold it until after 00:45Z; never straddle the 00:00Z run.
+- Author the one IAM statement on the branch first (A1), then upload, plan, read the plan line, `safe-apply`.
+
 ## 2. BOUNDS
 
 1. Nothing under `data/cot/` changes (AC2 is that control). No ad-hoc runner invocation (it pulls from Black Diamond).
@@ -87,6 +134,7 @@ infra/aws/ec2/bd-gold-layer-runner/deploy-to-ec2.sh
 org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-runner-sentinel.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
