@@ -104,6 +104,26 @@ Append-only. Worker rows `MDPF_SECHIST-W<n>-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "PRD section 2 THREAD: the row exists (MDPF_SECCLASS FWD-10) and the analyst reads the security's class, sector and clean name with its returns.",
     "world_is": "Three of the round's live negative cases have no sector on the served page. Not this project's to fix (C-TABLE); routed to the round-N analysis so the CTO can sequence it against MDPF_SECCLASS FWD-12. The FWD-1 real run will grade returns and classification separately."
+  },
+  {
+    "id": "MDPF_SECHIST-S3",
+    "project": "MDPF_SECHIST",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~H1",
+    "surfaced_at": "2026-10-07T21:35:00Z",
+    "one_line": "Two corrections: (1) investigation row ids MDPF_SECHIST-S1 (1.0.0_SA_CTO~DELL1, 08:44Z) and MDPF_SECHIST-S2 (2.0.0_SA_COO~H1, 12:40Z) reuse the ids REMEDIATION_v1.md already gave its graduated rows at 08:33Z; (2) S2's evidence is stale: the 2026-10-07 13:01:37Z publish shows CSCO, BX and LNVGY with a sector and 4 of 8 windows.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "REMEDIATION_v1.md (a7010ab13e, 3.0.0_SA_CVO, 08:33Z) carries ids MDPF_SECHIST-S1 and MDPF_SECHIST-S2; INVESTIGATION_v1.md carries S1 (26d1a33719, 08:44Z) and S2 (676bb5a882, 12:40Z) with different content",
+        "R1_CHECKS/sh_fwd1_served_read.py at 2026-10-07T21:2xZ against positioning_data.json LastModified 2026-10-07T13:01:37Z: DIVZ CSCO 'Equity / Information Technology / Technology Hardware & Equipment' 4/8; DIVZ BX 'Equity / Financials / Financial Services' 4/8; IDVZ LNVGY 'Equity / Information Technology / Technology Hardware & Equipment' 4/8. S2's read was of the 2026-10-06T13:01:32Z publish"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ids are unique within a project's channel (surprise-row gate duplicate-id limb); S2 states the three securities show no sector on the served page.",
+    "world_is": "Two id pairs collide across documents (the gate grades each new row in its own file, so it did not see the other document); and the sector gap S2 named closed on the 10-07 publish without any SECCLASS FWD-12 write (the table's legacy seed values now reach the page). The FWD-1 read on 2026-10-08 grades classification against the page as it stands then."
   }
 ]
 ```
