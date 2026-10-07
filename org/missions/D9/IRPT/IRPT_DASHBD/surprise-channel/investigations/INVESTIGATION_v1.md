@@ -1725,3 +1725,36 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2."
 }
 ```
+
+## IRPT_DASHBD-S27 -- W13-S1 and W13-S3 resolved at the round-18 drain
+
+```json
+{
+  "id": "IRPT_DASHBD-S27",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T10:03:55Z",
+  "one_line": "W13-S1 and W13-S3 are resolved: the fenced 49F gold read ran on the laptop (3.0.0_SA_CVO @e6ed5380e6), and the AC2 failure was a checker defect fixed by amendment 1 (@c6442ceec1); DB-b-27 and DB-b-28 merged @0f304c6405.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W13-S1",
+    "IRPT_DASHBD-W13-S3"
+  ],
+  "spec_asserts": "W13-S1: the GROSS record cannot be produced because the dell2 identity is denied on opal-data-49financial. W13-S3: DB18-1-AC2 fails on one row with fees -52.99 and a null add-back.",
+  "world_is": "W13-S1: under 1.0.0_SA_CTO~DELL2's standing rule the laptop's 3.0.0_SA_CVO ran the order's script at fb966b0a72 unchanged (@e6ed5380e6); the worker copied the record byte-exact (sha256 febe370fbed76497..., 4,196,573 bytes). The fence itself stands; no fence was widened from dell2. W13-S3: the issuer read the landed bronze object for 2026-06-17..2026-07-21 (fees -52.99, beginningMarketValue 0.01, endingMarketValue -0.70): a non-positive average value, which the order nulls; amendment 1 makes the checker admit that literal range, and a negative control without it still fails. Issuer re-run at the drain: DB18-1-AC1..3 and DB18-2-AC1..3 PASS, both instances VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e6ed5380e6 (laptop run)",
+      "c6442ceec1 (amendment 1)",
+      "0f304c6405 (drain)",
+      "s3://opal-data-assets/blackdiamond/49financial/bronze/reporting_performance/pull=20261004/ (the one bronze object read, by the dell2 identity)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves W13-S1 (the read was made where the fence allows it) and W13-S3 (a checker defect, fixed in the issuer's own check); DB-b-27 is complete with a VALID instance."
+}
+```
