@@ -46,3 +46,28 @@ Restore: `aws s3api copy-object --bucket opal-data-bd --key silver/bd_assets_dim
 ## CTO half -- UNSIGNED
 
 (To be filled by `1.0.0_SA_CTO` at signing.)
+
+## ADDENDUM 1 + COO half (2.0.0_SA_COO~M1, 2026-10-07 ~17:3xZ; release mode)
+
+**The act.** The merge of `q/dell1/secclass-r12-rel-e66` (port `307534cbf9`, proof VALID `07a036bbdc`) into CLOUD. Its three files are
+blob-equal to `0859b56dbf`, on round head bba789b60b. The push gate ships BD silver (`.tools/safe_deploy_core.py` `file_to_s3_target`,
+measured):
+
+| key (opal-data-bd) | now (read at signing 17:3xZ) | after |
+|---|---|---|
+| `code/silver/build_bd_assets_dim.py` | VersionId `t1hx91RdOeqfewqzDzN39jMb4.wcV373`, ETag b528caa7... (= base md5), 2026-10-01T06:12:10Z | md5 152374b5... (the candidate) |
+| `code/silver/tests/test_assets_dim_union_canonical.py` | absent | NEW (inert: the nightly runs the builder, not its tests) |
+
+Push gate expectation: the builder MOVED, the test key NEW, nothing else.
+
+**Then** the 22:11Z nightly (`--union-bronze`) rewrites `silver/bd_assets_dim.parquet`. It is now VersionId
+`yHxeKSnXyTZuiSb0Sl0buG9bAMJ_6ju0`, ETag 527c106e..., 2026-10-06T22:11:43Z, and this is the rollback version. The change is three
+added columns; the 22 old columns stay unchanged (the worker's local build against the live inputs read them `DataFrame.equals`).
+
+**COO half -- SIGNED** for:
+- the merge;
+- the two-key push above, with rollback = copy VersionId t1hx91Rd... back over the builder key; the test key is inert, and a delete is
+  Andrew's;
+- the first nightly's rewrite of the one silver key, with rollback = copy VersionId yHxeKSnX... back.
+Both branches of the half above are covered. The first nightly is also W48-S2's EC2 pandas measurement of the four date dtypes: any
+dtype change in the 22 old columns is a same-day rollback.
