@@ -1712,3 +1712,28 @@ round.** Never edit an existing row.
  "world_is": "Both cannot hold for that one assertion: an endswith on the old last field fails once fields follow it. The test file is in the order's paths; every other existing assertion of the file is unchanged. No test was weakened: the new assertion checks the whole tail of the line."
 }
 ```
+
+## ADVI_COTBKF-D2-W29-S3 -- The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:39Z",
+ "one_line": "The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_rule_change_diff.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> account_links_changed=2 while CLASS lines read 'closed to cash: 495 -> 544' and 'no in-kind receiver: 51 -> 2' and INFO 'account_links reason differs on 52 rows'",
+   "control: both scripts re-run with the OLD tables (crosswalk SIGN and HOLDING_SIGN as at 65ce59b838) give crosswalk_changed=0 account_links_changed=0 against the applied tables (439 matched, 212 linked), so every difference is the rule change and none is input drift (scratch run, .scratch/rcd_control.py, uncommitted)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-2 step 3: account links are compared by old_account on status and new_account; the last line counts those changes.",
+ "world_is": "Those two fields moved on 2 rows (one gained link, one lost). The reason text, end_positions and score moved on 52, 87 and 52 rows with status unchanged, because the one table adds `ci` (Contribution to Income) to the link rebuild: the old links table with `ci` added gives account_links_changed=2 (the same 2 rows), with `12b1` added 0 (scratch ablation). The diff keeps the order's counts and adds an INFO line per extra field (reason_code, positions_compared, positions_matched, holdings_basis for the crosswalk; reason, end_positions, matched, score for the links) so a reason shift is not read as no change."
+}
+```
