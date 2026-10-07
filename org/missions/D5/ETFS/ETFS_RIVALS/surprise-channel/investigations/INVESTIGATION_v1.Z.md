@@ -4496,6 +4496,30 @@
     "spec_asserts": "Cell RIV-al-1 (round 13, deployed at 92cf1f322b): the three readers take pk-1's parsekey, so one security under two listings is one key on the whole page",
     "world_is": "One reader does and one does not on the same build: holding_contribution carries one key for every pair two funds hold; buying_trend carries GQGU's rows under the CUSIP key beside the other funds' rows under the Bloomberg key for 7 securities. No merged pair has disagreeing names, so there is no wrong merge and nothing to roll back",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Served today, and it was split before the deploy as well, so the act made nothing worse. Unread: whether the trend's GQGU rows come from trade history keyed before the parsekey existed (then they merge as that history is rebuilt) or from the reader not applying the join. For the round analysis. The 13 IDENTIFIER_ONLY pairs keep a CUSIP as the page key, with the name from G4."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S58",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T11:49:51Z",
+    "one_line": "Round 18 real run: the month-by-month buying strip labels its cells January to December by position, but the 365-day trend's months start at the window's first month, so a trade is shown under the wrong month",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "The issuer's real run of day 2026-10-06 at CLOUD 5be2c73b12 (record org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round18/real_run_2026-10-06.after_tl1.json; local layer C:/tmp/rv-r18-realrun/layer on site Z): gold buying_trend for the day holds 349 R365 rows with a trend_mark; the mark carries 13 month tokens on 248 rows, 11 on 28, 10 on 55 and 7 on 18 (the 354 YTD rows carry 10 each, January to October)",
+        "The rendered index.html holds 393 month strips; cells per strip: {12: 180, 2: 87, 4: 54, 7: 12, 11: 20, 10: 40}",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round18/r18_realrun_modal_trade_list.png: BASG, Kla Corp -- the dialog lists three sales on 2025-10-08, 2025-10-10 and 2025-11-03, and the strip above them shows 'sold' under Jan and Feb and 'no trade' under Oct and Nov",
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py _months(day, start): the mark's months run from the window start's month, oldest first; data/etfs/scripts/rivalfunds/render.py _month_chart and MONTH_CSS: the labels are Jan..Dec by cell position and only the first 12 tokens are drawn (toks[:12]), so a 13-token mark also loses its newest month",
+        "Cells RIV-pd-1 and RIV-pd-2 (round 15) moved the panel's trend from the calendar year to the last 365 days; the strip's labels were not in either cell"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The month strip is 'the year's buying, month by month and LABELLED' (Andrew-direct 2026-10-02, quoted in render._month_chart), and FWD-23 (PRD v0.18) puts the trend on the last 365 calendar days",
+    "world_is": "On the round-15 build every month strip is mislabelled unless the 365-day window happens to start in January, and the newest month is dropped where the window spans 13 calendar months. The served page (round 14, calendar-year trend) is correct today; the defect ships with the round-15 Lambda deploy",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 18 is deployed): 2.0.0_SA_COO~RV. BLOCKING: the Lambda deploy does not go out with it open. Not caught by a check: pd-2's fixture trend starts in January. Repair inside cells RIV-pd-2 / render.py: each cell carries its own month label from the row's window start, and the strip shows the window's last 12 months."
   }
 ]
 ```
