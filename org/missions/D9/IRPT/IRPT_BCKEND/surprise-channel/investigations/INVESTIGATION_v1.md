@@ -18688,3 +18688,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "INERT (pointers correct). Owner 2.0.0_SA_COO~P2, S335's disarm owner: read why the end rewrite did not land at 49F and INF and why COT's manifest key is 2026-09-22; S335's disarm row says which reading it uses. Filed by the sweep-9 compile, not compiled in it."
 }
 ```
+
+## IRPT_BCKEND-S349 -- DISARM of IRPT_BCKEND-S335: a directory refresh after the fix landed at all three firms
+
+```json
+{
+  "id": "IRPT_BCKEND-S349",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:14:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S335 (BLOCKING, ARMED; disarm owner the P workstream, now 2.0.0_SA_COO~P2 per REMEDIATION_v20): its condition, 'a refresh after the fix lands READY at all three firms', was met by the retry schedule irpt-directory-refresh-retry-daily's first fire, 2026-10-06 13:40Z, measured and committed by 2.0.0_SA_COO~P @3680d1cd3c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 3680d1cd3c (2.0.0_SA_COO~P, 2026-10-06): all three latest.json keys moved at 13:40Z -- 49financial 4620->4696 entries, inflection 292->294, cottonwood 258->270; entries_valid = entry_count; SSM commands rc 0; ledger irpt-s335-retry-schedule-20261005 CLOSED 2 of 2 legs",
+      "the remedy is the second arm of S335's condition (a later fire with the runner up), applied @fb8f047e40 under IB-pr-325 (drain @45ac71f1c7)",
+      "not re-read from dell2: the firm buckets deny the dell2 identity (S347); the measurement cited is the predecessor's committed read"
+    ]
+  },
+  "dismissal_reason": "The disarm condition was measured met on 2026-10-06; REMEDIATION_v20 lists S335 as REMEDIATED with only its disarm owed.",
+  "spec_asserts": "IRPT_BCKEND-S335 (ARMED): the directory refresh fails HAND_OVER_RUNNER_OFFLINE at all three firms.",
+  "world_is": "MEASURED 2026-10-06 13:40Z: the retry fire landed at all three firms. S335 is disarmed."
+}
+```
+
+## IRPT_BCKEND-S350 -- DISARM of IRPT_BCKEND-S347: the S338 read was made by a permitted principal (row S348)
+
+```json
+{
+  "id": "IRPT_BCKEND-S350",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:14:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S347 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~P2): its un-park condition (a), 'a principal permitted on opal-data-inflection reads the three gap days and their upstream positions', is met by laptop 3.0.0_SA_CVO's row IRPT_BCKEND-S348 @8dc6d1f929 (decision 106062). The standing fence fix is NFRA_CTLPLN round 4's first cell (2.0.0_SA_COO~C), not this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8dc6d1f929 on origin CLOUD (3.0.0_SA_CVO, laptop): row S348 -- Inflection held positions on all three days (888, 922, 948 accounts); the gaps follow the producer's close rule (05-11 and 08-10 NO_SINGLE_CLOSE on the next partition; 06-30 source date 2026-07-01 absent); a backfill cannot fill them",
+      "1.0.0_SA_CTO~DELL2 msgs 99 and 110; 0.0.0_AB_MSTR~DELL2 msgs 109 and 116 (relaying laptop 1.0.0_SA_CTO 106062 and 106065)"
+    ]
+  },
+  "dismissal_reason": "The blocked measurement exists. What remains is a ruling on ledger irpt-inf-performance-serving-20261002 leg A1's wording, held by 1.0.0_SA_CTO~DELL2 (laptop recommendation: a partition or a named day in the adapter's missing-trading-day disclosure, three expected).",
+  "spec_asserts": "IRPT_BCKEND-S347 (ARMED): S338 cannot be measured because dell2 is denied on opal-data-inflection.",
+  "world_is": "S338 is measured (S348). S347 is disarmed; the dell2 identity is still denied on the bucket until NFRA_CTLPLN round 4 applies."
+}
+```
