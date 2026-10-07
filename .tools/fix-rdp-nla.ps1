@@ -14,7 +14,8 @@
 #
 # WHAT THIS WIDENS: step 1 removes the pre-session authentication of RDP, and step 3 enables the built-in
 # "Remote Desktop" rules on every network profile they cover, not only the tailnet. -TailnetOnly replaces step 3
-# with one inbound rule for TCP 3389 from 100.64.0.0/10 and leaves the built-in group as it is.
+# with one inbound rule for TCP 3389 from 100.64.0.0/10 and then DISABLES the built-in group, so RDP is reachable
+# from the tailnet only. That is the form Andrew chose (~22:5xZ: "Yeah we only want tailnet access").
 #
 # usage:  powershell -NoProfile -ExecutionPolicy Bypass -File .tools\fix-rdp-nla.ps1 [-TailnetOnly] [-ReadOnly]
 #         -ReadOnly prints the current state and changes nothing.
@@ -42,7 +43,8 @@ function Read-State {
 if ($ReadOnly) { Read-State | ForEach-Object { if ($_ -is [string]) { $_ } }; exit 0 }
 
 if ($TailnetOnly) {
-    $fw = 'if (-not (Get-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" -Direction Inbound -Protocol TCP -LocalPort 3389 -RemoteAddress 100.64.0.0/10 -Action Allow | Out-Null } else { Enable-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" }'
+    # The tailnet rule first, then the built-in group OFF, so a box that already ran the wide form ends tailnet-only.
+    $fw = 'if (-not (Get-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" -ErrorAction SilentlyContinue)) { New-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" -Direction Inbound -Protocol TCP -LocalPort 3389 -RemoteAddress 100.64.0.0/10 -Action Allow | Out-Null } else { Enable-NetFirewallRule -DisplayName "RDP - Tailscale tailnet only (TCP-In)" }' + "`r`n" + 'Disable-NetFirewallRule -DisplayGroup "Remote Desktop"'
 } else {
     $fw = 'Enable-NetFirewallRule -DisplayGroup "Remote Desktop"'
 }
@@ -74,6 +76,9 @@ if ($elevated) {
 "after:"
 $ok = $false
 Read-State | ForEach-Object { if ($_ -is [string]) { "  $_" } else { $ok = $_ } }
+if ($ok -and $TailnetOnly -and @(Get-NetFirewallRule -DisplayGroup 'Remote Desktop' -ErrorAction SilentlyContinue | Where-Object { $_.Enabled -eq 'True' }).Count -gt 0) {
+    "ERROR: -TailnetOnly was asked and a built-in Remote Desktop rule is still enabled: RDP is NOT tailnet-only."; exit 1
+}
 if ($ok) { "OK: NLA is off, RDP is allowed, a firewall rule is enabled and TermService is running."; exit 0 }
 "ERROR: the read-back does not show all four. The acts did not all land; read the lines above."
 exit 1
