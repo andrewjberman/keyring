@@ -2296,3 +2296,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
 }
 ```
+
+## NFRA_CTLPLN-S19 -- the directives check knows two boxes; a directive placed on a Dell prints as unruled
+
+```json
+{
+  "id": "NFRA_CTLPLN-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T16:10:12Z",
+  "one_line": "The directives check knows two boxes: a directive placed on a Dell prints as unruled, so the first Dell placement (D7 on dell2) reads as having no placement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/directives-check.py device_of(): `for d in (\"LAPTOP\", \"SITEZ\")` then `return \"UNRULED\"` (read by this seat)",
+      "Issuer's run of `python .tools/directives-check.py` at 2026-10-07 ~16:1xZ: `8. D7  Opal Ticketing` / `Where:   UNRULED`",
+      "org/missions/DIRECTIVES.yaml D7 placement set to DELL2 @98fcdce272 (1.0.0_SA_CTO); asked as a row in 1.0.0_SA_CTO msg 106361",
+      "Unread: the full population of tools that parse a placement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN FWD-2 / C-REGISTRY: a box is named once, in org/devices/DEVICES.json, and every script that names devices reads that file.",
+  "world_is": "At least one placement parser carries its own two-box list. A cell for the next issuance: every tool that parses a directive's placement reads the device register, found by a sweep of the repository for placement parsers with its denominator printed, not by this one named function."
+}
+```
