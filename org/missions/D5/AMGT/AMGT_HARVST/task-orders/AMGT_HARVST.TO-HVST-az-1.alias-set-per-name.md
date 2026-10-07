@@ -163,9 +163,28 @@ Change an existing test assertion only where this cell's rule is the reason, and
   further brand entry; a Bloomberg short-name pull.
 - The close run is the issuer's: the META and LLY pairs re-run with `--names` on wsj and bbg after the merge.
 
+**COMPLETE 2026-10-07 ~09:5xZ (issuer):**
+- **Built:** worker ~104 @3f9bcd5a03 + @bce12586e1; merged @05638ecfd9 (12 paths, index check 0 of 12 differ).
+- **AC1 PASS:** 7 of 7. **AC2 PASS:** REPLAY OK -- bbg kept 3,481 of 3,487 before and 3,483 after (4 still lost, all
+  `substring_accident`); wsj 640 of 640 before and after; over 26,907 stored wsj URLs Meta Platforms 2 to 118, Eli Lilly 28 to
+  33, Bank of America 9 to 9, AT&T 11 to 11; changed 2 of 234 names. The recall denominators are above the face's 3,282 and 566
+  because the live legs added run records since round 52; the face's bar (bbg kept >= 3,278) was written against the old
+  denominator and is met on the new one with the same 4 lost. **AC3 PASS:** 40 of 40.
+- **Issuer drain check on merged CLOUD:** `pytest lib/opal_data_harvest` plus the two research tests: 766 passed, 1 skipped.
+- **Call sites:** `_sitemap_items` selects candidates and now passes the alias set; `_bloomberg_sitemap` and
+  `_dow_jones_sitemap` only stamp `search_query` and are unchanged.
+- **Existing assertions changed** (`lib/research/harvest/tests/test_alias_rule_round18.py`, each because every entry now
+  carries a `plane`): the planted KOF, WALMEX and UBS entries gained `plane: text`; the shipped-list test checks the 7 text
+  brands among text-plane entries and the 2 slug entries separately; the refusal-count test compares text-plane entries only.
+- **Rows:** none from the worker.
+- **Close run:** in flight at this close -- the META and LLY pairs re-run on wsj and bbg with `--names` on fresh checkpoints
+  `r54_<leg>_az1_checkpoint.json`, each after its leg ends on a stop file, and each leg restarts after. Outputs
+  `.runtime/harvest-backfill/r54_<leg>_az1.out`; the read goes into `deliverables/2.0.0_SA_COO_H/round54/`.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>54</round>
 <slot>~104</slot>
 <fabric>site-z</fabric>
