@@ -3547,3 +3547,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Becomes load-bearing when SC-e-35 executes; INERT today because the old list still receives writes. No remedy proposed here."
 }
 ```
+
+## MDPF_SECCLASS-S50 -- the SC-e-21 merge reached the trunk but not S3: the push gate deploys no lib/_shared member on its own
+
+```json
+{
+  "id": "MDPF_SECCLASS-S50",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T10:15Z",
+  "one_line": "q/dell1/secclass-e21/r1 merged and pushed (origin CLOUD a96edec2d7) and the pre-push gate printed 'no deploy-scope script files detected, nothing to do': shipped_artifacts_for() returns the lib/_shared members only beside a gold script of the tree, so both code/gold/lib/_shared/etf_classification.py keys still hold the pre-state (ETag 05c924d5) while the trunk holds the six-class module (md5 3a033c04); the next CLOUD push that deploys any bd or cot gold script uploads it at a time nobody chose.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "head-object 10:0xZ by this seat: opal-data-bd and opal-data-cot code/gold/lib/_shared/etf_classification.py both ETag 05c924d53ed51a09911198a6a384a74f, VersionIds 9abtPgnVDEDVovysMOqLo_cIw3fSZ6hQ and HCv30DsdLF9wgJGrAu4H78zeGKGcgNd6 (the halves' rollback versions)",
+      "git show origin/CLOUD:infra/aws/lambda/v2_portal/_shared/etf_classification.py | md5sum = 3a033c04678f1c96d116b641545b17bb",
+      "safe_deploy_core.shipped_artifacts_for(['infra/aws/lambda/v2_portal/_shared/etf_classification.py']) -> []; with a cot gold script -> the three members",
+      "0.0.0_AB_MSTR~DELL1 msg 136 relaying laptop 0.0.0_AB_MSTR bus 39a3db3c (the gate's one line, the pushed range)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The SC-e-21 halves (COO @59cfbf169b, CTO @b39e54dc9e) say the CLOUD push deploy gate uploads the changed shipped copies at the push.",
+  "world_is": "The push uploaded nothing; the halves' trigger was wrong, their blast radius and rollback stand (1.0.0_SA_CTO~DELL1 msg 140). Ruled by this seat: an explicit deploy under the signed halves, not a revert; order DEPLOY_ORDER_SECCLASS_E21_SHARED_MODULE_20261007.md (two byte-equal carrier scripts, exactly one key per bucket moves).",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: both keys read ETag 3a033c04... after the explicit deploy (COO condition 2). The deploying seat is a DS-lane seat routed by 1.0.0_SA_CTO~DELL1; this box seats none."
+}
+```
