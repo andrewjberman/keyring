@@ -41,8 +41,8 @@ everything else. Use the census's asset-class reading of each security.
 Write `PRICE_NEED_FOR_SECHIST.csv` (the rows) and `PRICE_NEED_FOR_SECHIST.json` (totals per source and overall, the census line it
 reconciles to, and the basis stated in words) to `--out`. The script's LAST line exactly:
 `PRICE-NEED-FILE securities=<n> security_days=<d> yahoo_securities=<a> yahoo_days=<b> bloomberg_securities=<c> bloomberg_days=<e> sums_ok=<True|False> fetched=0`
-where `sums_ok` is True when the per-source counts add to the totals and the totals equal the census's `universe - priced_any` and
-`security_days_needed - security_days_covered`. **No price is fetched** -- no vendor import, no network beyond the S3 reads the census
+where `sums_ok` is True when the per-source counts add to the totals, `security_days` equals the census's
+`security_days_needed - security_days_covered`, and `securities` equals the count of securities with ANY uncovered day (AMENDMENT 1). **No price is fetched** -- no vendor import, no network beyond the S3 reads the census
 already makes.
 
 **Tests** `data/assets/scripts/analysis/tests/test_commonwealth_price_need_file.py` (stubs, no AWS): a stub census of 4 securities (2
@@ -55,7 +55,7 @@ a stub whose per-source totals are forced off prints `sums_ok=False` (the contro
 <criterion id="CB11k1-AC1" cell_refs="CB-k-1"><invocation>python -m pytest -q data/assets/scripts/analysis/tests/test_commonwealth_price_need_file.py</invocation><expect>passed</expect></criterion>
 `CB11k1-AC1` -- rows, sources, the sums control and the no-vendor-import arm on stubs.
 
-<criterion id="CB11k1-AC2" cell_refs="CB-k-1"><invocation>python data/assets/scripts/analysis/commonwealth_price_need_file.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27</invocation><expect>PRICE-NEED-FILE securities=2914 security_days=8091310</expect></criterion>
+<criterion id="CB11k1-AC2" cell_refs="CB-k-1"><invocation>python data/assets/scripts/analysis/commonwealth_price_need_file.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27</invocation><expect>PRICE-NEED-FILE securities=4545 security_days=8091310</expect></criterion>
 `CB11k1-AC2` -- the real FILE reconciles to the census (the per-source figures and `sums_ok` on the same line are recorded, not presumed).
 
 <expected_criteria>CB11k1-AC1,CB11k1-AC2</expected_criteria>
@@ -86,6 +86,12 @@ Criterion ids: CB11k1-AC1, CB11k1-AC2. Instance at
 `org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27/ADVI_COTBKF.TO-CB-k-1.price-need-file.proof_of_spec.json`, validated
 with `python .tools/proof-of-spec-check.py <instance> CB11k1-AC1,CB11k1-AC2` BEFORE the flip.
 </proof_of_spec>
+
+**AMENDMENT 1 (issuer, 2026-10-07 ~12:5xZ; row D2-W27-S1):** the face's "2,914 securities" was the issuer's error -- 2,914 is the
+never-priced securities (6,259,410 days); the 8,091,310 uncovered security-days span 4,545 securities (2,914 never priced + 1,631 with
+gaps, 1,831,900 days). MDPF_SECHIST pulls every uncovered day, so the FILE carries all 4,545 rows; the JSON keeps both splits
+(`row_split`). CB11k1-AC2 expects `securities=4545 security_days=8091310`; `sums_ok` is redefined above. Graded by: no gate limb (a
+MODIFIED order; to-pipeline-gate grades only newly-added orders except GATE viii, and this order declares `<placeholders>NONE</placeholders>`).
 
 **REPORT:** the PRICE-NEED-FILE line, the per-source totals, the top 10 securities by days_needed, commits.
 
