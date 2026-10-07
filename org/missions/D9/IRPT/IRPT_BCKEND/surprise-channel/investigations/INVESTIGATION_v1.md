@@ -18661,11 +18661,11 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-S348 -- S338 measured from the laptop: Inflection held positions on all three days; each day has no partition because the producer's declared close rule finds no source partition holding that day's close
+## IRPT_BCKEND-S351 -- S338 measured from the laptop: Inflection held positions on all three days; each day has no partition because the producer's declared close rule finds no source partition holding that day's close
 
 ```json
 {
-  "id": "IRPT_BCKEND-S348",
+  "id": "IRPT_BCKEND-S351",
   "project": "IRPT_BCKEND",
   "fabric": "laptop",
   "surfaced_by": "3.0.0_SA_CVO",
@@ -18686,6 +18686,6 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "Ledger irpt-inf-performance-serving-20261002 leg A1 (CTO batch 202 @8da55ee13b): every trading day of 2026 through the fire's day has a date= partition under Inflection's holdings gold; a trading day without one FAILS A1. Row S338 left NOT MEASURED whether Inflection had positions on the three days.",
   "world_is": "The three gaps are the producer behaving as declared, not a failed run and not a no-data day. A backfill cannot fill them: the closes of 2026-05-11 and 2026-08-10 are in no partition by the declaration's own measurement, and the close of 2026-06-30 would need the 2026-07-01 pull, which is not in the source. As written, leg A1 can never pass for 2026. Whether A1's wording changes (a trading day with no close in any source partition is a disclosed gap) is 1.0.0_SA_CTO's.",
-  "notes": "Read-only: no backfill, no landing, no policy change (CTO msg 106060). NOT read: the gold rows of 2026-05-12, 2026-07-01 and 2026-08-11 (whether each carries the linked span the code implies); whether the adapter's missing-trading-day disclosure names the three days (S338's second NOT MEASURED item); why partitions 2026-05-12 and 2026-08-11 were declared NO_SINGLE_CLOSE (2026-08-10 and 2026-08-11 have equal row and account counts, which is consistent with a repeated snapshot, INFERRED). The gold bucket opal-data-inflection was not read by this seat."
+  "notes": "RENUMBERED 2026-10-07 from S348 to S351 by its author on 1.0.0_SA_CTO msg 106081: dell2 minted S348, S349 and S350 in the same hour (branch q/dell2/custdy-r1-drains-cotbkf-l8-cro/r1), and S351 is the first id free on the laptop trunk and on that branch. dell2 row S350 cites this row as S348. Read-only: no backfill, no landing, no policy change (CTO msg 106060). NOT read: the gold rows of 2026-05-12, 2026-07-01 and 2026-08-11 (whether each carries the linked span the code implies); whether the adapter's missing-trading-day disclosure names the three days (S338's second NOT MEASURED item); why partitions 2026-05-12 and 2026-08-11 were declared NO_SINGLE_CLOSE (2026-08-10 and 2026-08-11 have equal row and account counts, which is consistent with a repeated snapshot, INFERRED). The gold bucket opal-data-inflection was not read by this seat."
 }
 ```
