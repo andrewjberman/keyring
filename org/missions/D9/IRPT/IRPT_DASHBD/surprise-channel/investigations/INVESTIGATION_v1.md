@@ -2357,3 +2357,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "If the served producer is ever hardened (a pd.isna test in classify_and_sum, named in S30), this wrapper becomes redundant and its refusal can go with it."
 }
 ```
+
+## IRPT_DASHBD-W22-S1 -- the lag order measures all trades but the bound governs in-kind legs; reinvested-dividend lots carry the trade date in orgpurch_date
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T17:47:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S1",
+  "one_line": "The order measures the lag of every trade, but LEG_LAG_DAYS governs only in-kind legs; and a reinvested-dividend buy has no lot acquired on its trade date, its same-day lot carries the trade date in orgpurch_date instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-38 item 1: for every trade that should produce or relieve a lot (buys, sells, in-kind), find its lot row and the lag in trading days; the measured distribution sets LEG_LAG_DAYS.",
+  "world_is": "LEG_LAG_DAYS is read only by _one_security, for in-kind legs; the buy and sell lags (873 of 887 trades) are measured beside it and do not feed any producer rule. Matching a buy to its lot by acquired_date left 7 of 765 buys unmatched, all sb_cd RD (reinvested dividend): the custodian posts their lot the same day with acquired_date earlier and orgpurch_date equal to the trade date. They match on orgpurch_date at lag 0. Result: 887 of 887 matched, 886 at lag 0 and 1 at lag 1 (an in-kind departure), so LEG_LAG_DAYS is 1.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/LOT_LAG_E2.json lags, by_kind, buys_matched_by",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/lot_lag_e2.py buy matching",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py LEG_LAG_DAYS, _one_security"
+    ]
+  },
+  "notes": "The sample holds 14 in-kind legs; the bound is measured on a window with 1 lagged leg. A longer history would tighten it. The producer lists a leg past the bound and never bends it."
+}
+```
