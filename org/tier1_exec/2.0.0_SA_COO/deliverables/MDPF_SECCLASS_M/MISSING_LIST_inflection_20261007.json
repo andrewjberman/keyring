@@ -1,0 +1,3878 @@
+{
+ "firm": "inflection",
+ "as_of": "2026-10-05",
+ "source": "local producer build as-of 2026-10-05 @4b258de305, inferred (not the served bytes)",
+ "claim": "inferred",
+ "source_detail": "holdings_snapshot.py run without --upload for this firm only; parquet .scratch\\hb_inflection\\opal-data-inflection\\irpt\\inflection\\gold\\holdings\\date=2026-10-02\\07e05d176a9f4de728b13e7a962eb708040c131439a2b1a8e1b21ee2cc551f83.parquet; served opal-data-<firm> bucket not readable by this device's principal",
+ "excluded": "0 cash-line SECURITY node(s) (ticker CASH, description CASH) and all non-SECURITY nodes",
+ "held_count": 1601,
+ "missing_amount_usd": 2830405.28,
+ "missing": [
+  {
+   "key": "021ESC017",
+   "name": "Altaba Inc Escrow",
+   "amount": 0.0
+  },
+  {
+   "key": "02XXXXBK4",
+   "name": "American Express Co 3.625% 12/5/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "03XXXXEY7",
+   "name": "Ameris Bk Moultrie Ga Ctf Dep 3.75% 8/18/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "04XXXXB55",
+   "name": "Associated Bk Natl Assn Green Bay Wis Ctf Dep 3.90% 10/22/2026",
+   "amount": 60989.63
+  },
+  {
+   "key": "05XXXXQB9",
+   "name": "Bmo Harris Bank N 4.60% 5/8/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXX3U8",
+   "name": "Bank Of America Na Ctf Dep 5.45% 10/11/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXX4Y5",
+   "name": "Bank Of America 3.80% 12/28/2026",
+   "amount": 229763.1
+  },
+  {
+   "key": "06XXXX5Q5",
+   "name": "Bank Of America 5.35% 5/29/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXX5S1",
+   "name": "Bank Of America, 5.25%24 Cd Fdic Ins Due 12/5/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXB84",
+   "name": "Bank Of America 3.90% 8/27/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXD90",
+   "name": "Bank Of America 3.85% 3/17/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXDY5",
+   "name": "Bank Of America Nt 5.00% 6/1/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXEF5",
+   "name": "Bank Amer Na Charlotte Nc Ctf Dep 5.20% 12/8/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXFH8",
+   "name": "Bank Of America, 3.90% 2/26/2027",
+   "amount": 102863.01
+  },
+  {
+   "key": "06XXXXJL7",
+   "name": "Bank Amer Na Charlotte Nc Ctf Dep 4.05% 10/24/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXK76",
+   "name": "Bank Of America NA CD 3.80% 4/22/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXKD3",
+   "name": "Bank Amer Na Charlotte Nc 4.35% 11/7/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXRM1",
+   "name": "Barclays Bank De 5.10% 9/22/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXS65",
+   "name": "Bank Of China - 5.35% 6/21/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "06XXXXUQ3",
+   "name": "Bank Of America 4.00% 5/7/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "07XXXX5Y9",
+   "name": "Beal Bank Usa 4.05% 9/24/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "07XXXXG50",
+   "name": "Beal Bank Usa 5.25% 10/16/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "07XXXXK97",
+   "name": "Beal Bank Usa 5.25% 10/30/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "07XXXXXA0",
+   "name": "Beal Banka 5.45% 4/10/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "14XXXXVE2",
+   "name": "Cathay Bank Los Angel CA CD 4.15% 2/18/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "15XXXXCG1",
+   "name": "Charles Schwab B 5.35% 12/4/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "15XXXXDB1",
+   "name": "Charles Schwab Bk Ssb Westlake Tex Ctf Dep 4.05% 10/9/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "15XXXXDD7",
+   "name": "Charles Schwab Bk Ssb Westlake Tex Ctf Dep 4.20% 10/23/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "15XXXXDM7",
+   "name": "Charles Schwab B 4.35% 12/2/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "17XXXXKC9",
+   "name": "City Natl Bk Fla Miami Ctf Dep 4.20% 7/31/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "23XXXXNV6",
+   "name": "Customers Bank 5.00% 3/31/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "25XXXX2Y1",
+   "name": "Discover Bank 5.10% 9/20/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "25XXXXAK3",
+   "name": "District Columbia Tob Settlement Fing 6.75% 5/15/2040",
+   "amount": 0.0
+  },
+  {
+   "key": "25XXXXBU2",
+   "name": "Discover Bank 5.40% 5/13/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "25XXXXCF0",
+   "name": "Dollar Bank Fed 5.45% 10/10/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "25XXXXCN7",
+   "name": "Discover Bank 5.30% 11/19/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "27XXXXEQ2",
+   "name": "Eaglemark Saving 4.65% 4/19/2027",
+   "amount": 10017.9
+  },
+  {
+   "key": "30XXXX339",
+   "name": "First Trust 40/60 Strat Alloc 2q21 Mo Fe Re",
+   "amount": 0.0
+  },
+  {
+   "key": "30XXXX601",
+   "name": "Ft Unit 9273 Int Rate Hedge Port Ser 135 Monthly Cash",
+   "amount": 0.0
+  },
+  {
+   "key": "30XXXX777",
+   "name": "First Trust Portfolios * Unit 9241 Ft High Income Model Portfolio 2q 21 M",
+   "amount": 0.0
+  },
+  {
+   "key": "31XXXXYV7",
+   "name": "Fifth Third Bank CD 5.50% 10/17/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "32XXXXDC1",
+   "name": "First Dakota Natl Bank SD CD 5.45% 10/10/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "32XXXXLK0",
+   "name": "First Finl Bank CD 3.65% 10/30/2026",
+   "amount": 29985.6
+  },
+  {
+   "key": "33XXXXGX4",
+   "name": "Flagstar Bk Natl Assn Hicksville New York Ctf Dep 5.00% 5/18/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "33XXXXKU5",
+   "name": "First Ntnl Bank 4.85% 4/12/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "34XXXXHF9",
+   "name": "Flushing Bank NY CD 5.40% 9/3/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "34XXXXNR9",
+   "name": "Ford Motor Credit Company Seni Or Medium Term Note Clbl 3.50% 9/20/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "38XXXXAE6",
+   "name": "Goldman Sachs Gr 3.75% 5/22/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "38XXXXDP3",
+   "name": "Goldman Sachs Bank 3.80% 6/9/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "38XXXXFH7",
+   "name": "Goldman Sachs Bank 5.00% 3/28/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "38XXXXNA3",
+   "name": "Goldman Sachs Bk Usa New York Ctf Dep 5.45% 4/11/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "38XXXXTL3",
+   "name": "Goldman Sachs Ban 5.10% 4/30/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "41XXXXBS0",
+   "name": "Hatch Bank San Marcos CA CD 4.25% 9/4/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "436CVR021",
+   "name": "CONTRA HOLOGIC INCORPO",
+   "amount": 0.0
+  },
+  {
+   "key": "43XXXXSC8",
+   "name": "Homestreet Bank 5.30% 2/22/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "46XXXXJY7",
+   "name": "JP Morgan Chase & Co 3.875% 9/10/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "46XXXXS36",
+   "name": "JP Morgan Chase 5.30% 3/4/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "46XXXXVR9",
+   "name": "JP Morgan Chase & 5.55% 11/29/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "50XXXXAD8",
+   "name": "Kraft Heinz Foods Co Sr Glbl N T 3.00% 6/1/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "525ESC0S9",
+   "name": "Lehman Brothers Holdings Escrow 0.00% 9/28/2037",
+   "amount": 0.0
+  },
+  {
+   "key": "55XXXXBZ4",
+   "name": "M Y Safra Bank FSB NY CD 3.65% 10/16/2026",
+   "amount": 22994.48
+  },
+  {
+   "key": "60XXXX2P5",
+   "name": "Mizuho Bank (usa 4.60% 3/25/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "61XXXX4C9",
+   "name": "Morgan Stanley B 4.05% 5/7/2027",
+   "amount": 49895.5
+  },
+  {
+   "key": "61XXXXAC8",
+   "name": "Moody Natl Bank Galveston TX CD 4.15% 2/20/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "61XXXXZW1",
+   "name": "Morgan Stanley Bk N A Salt Lake City Utah Ctf Dep 4.10% 5/13/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "640CVR031",
+   "name": "Neoleukin Therapeutics Inc Cvr",
+   "amount": 0.0
+  },
+  {
+   "key": "68XXXXDJ7",
+   "name": "Oriental Bank Brokered Instl CD Cd 3.85% 4/14/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "68XXXXQF8",
+   "name": "Old Ntnl Bank 3.75%26 Cd Fdic Ins Due 6/26/2026 Us",
+   "amount": 0.0
+  },
+  {
+   "key": "69XXXXGV1",
+   "name": "Pnc Bk Natl Assn Wilmington Del Ctf Dep 4.30% 6/18/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "69XXXXMP7",
+   "name": "Pnc Bk Natl Assn Wilmington Del Ctf Dep 4.15% 7/30/2027",
+   "amount": 99729.0
+  },
+  {
+   "key": "71XXXXCQ4",
+   "name": "Peoples Bank 4.10% 12/31/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "723ESC059",
+   "name": "Esc Pioneer Diversified High Income Fd Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "73XXXXMX3",
+   "name": "Port Seattle WA Rev Bds Ser 0.00% 5/1/2028",
+   "amount": 0.0
+  },
+  {
+   "key": "75XXXX207",
+   "name": "Radius Health Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "75XXXXQR8",
+   "name": "Citizens Bank, Ntnl 5.00% 4/25/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "77XXXXBW8",
+   "name": "Rondout Svgs Bank Kingston NY CD 5.30% 9/30/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "78XXXXNQ0",
+   "name": "Safra Natl Bk New York Ctf Dep Instl Ctf Dep 5.00% 4/8/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "78XXXXSV4",
+   "name": "Safra Ntnl Bank 3.80% 3/23/2027",
+   "amount": 52869.09
+  },
+  {
+   "key": "80XXXXYM7",
+   "name": "Santander Bk Natl Assn Wilmington De Ctf Dep 4.35% 8/15/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "83XXXXAH9",
+   "name": "Sofi Bank National Association Cd 4.70% 11/28/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "83XXXXBB1",
+   "name": "Sofi Bank Ntnl A 5.30% 7/26/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "84XXXXCP0",
+   "name": "Southstate Bank Natl Assn Winter CD 3.90% 4/16/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "85XXXXAA8",
+   "name": "State Bk India Chicago Ill Ctf Dep 4.35% 9/3/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "85XXXXBD1",
+   "name": "State Bank of India Chicago IL 3.85% 4/2/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "85XXXXGA7",
+   "name": "State Bank Of India 4.00% 5/26/2027",
+   "amount": 25929.54
+  },
+  {
+   "key": "87XXXXFQ9",
+   "name": "Tcm Bank Natl Assoc Tampa FL CD 4.50% 11/17/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "89XXXXDY6",
+   "name": "Truist Bank 4.95% 10/27/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "89XXXXGA5",
+   "name": "Truist Bank 5.15% 6/21/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "89XXXXJR5",
+   "name": "Truist Bank 4.35% 9/8/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "89XXXXRF0",
+   "name": "Toyota Financial SVGS Bank Hend NV DC 4.00% 4/10/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "90XXXXAZ1",
+   "name": "Union Svgs Bk Danbury Conn Ctf Dep 5.35% 7/12/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "90XXXXBG9",
+   "name": "US Bank NA 5.50% 12/3/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "90XXXXLL7",
+   "name": "U S Bank 4.30% 2/19/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXX7B0",
+   "name": "US Treasury Note 1.875% 6/30/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXGH4",
+   "name": "Unity Bk Clinton Nj Ctf Dep 5.40% 9/10/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXHY0",
+   "name": "US Treasury Note 4.625% 9/15/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXKH3",
+   "name": "US Treasury Note 4.50% 3/31/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXME8",
+   "name": "US Treasury Note 4.25% 12/31/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXQH7",
+   "name": "Valley Natl Bk Passaic N J Ctf Dep 4.20% 10/6/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "91XXXXU57",
+   "name": "US Treasury Note 2.125% 11/30/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "931CVR013",
+   "name": "Contra Walgreens Boots",
+   "amount": 0.0
+  },
+  {
+   "key": "93XXXXHB9",
+   "name": "WA Fed Bank Seattle CD 4.00% 5/15/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "93XXXXHG8",
+   "name": "Washington Federal Cd Seattle Wa Act 4.35% 12/22/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXX2U9",
+   "name": "Wells Fargo Bk N A Sioux Falls 4.20% 10/20/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXCA0",
+   "name": "Wells Fargo Bank National Assn Wells Fargo Bank 5.1 24 5.10% 5/8/2024",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXLS1",
+   "name": "Wells Fargo Bank 4.85% 2/5/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXNP5",
+   "name": "Wells Fargo Bank Natl Assn CD 5.20% 5/12/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXNS9",
+   "name": "Webster Bank Natl Assn Waterbury CD 5.20% 1/17/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXSF2",
+   "name": "Wells Fargo Bank 3.75% 9/30/2026",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXTE4",
+   "name": "Wells Fargo Bk N A Sioux Falls S D Ctf Dep 3.75% 12/18/2026",
+   "amount": 149836.5
+  },
+  {
+   "key": "94XXXXTR6",
+   "name": "Webbank Salt Lake City Utah Ctf Dep 4.60% 8/14/2023",
+   "amount": 0.0
+  },
+  {
+   "key": "94XXXXVF8",
+   "name": "Wells Fargo Bank 3.90% 4/7/2027",
+   "amount": 25940.98
+  },
+  {
+   "key": "94XXXXVU5",
+   "name": "Wells Fargo Bank National ASSN CD 3.95% 4/20/2027",
+   "amount": 39909.2
+  },
+  {
+   "key": "94XXXXYD0",
+   "name": "Wells Fargo Bk N A Sioux Falls S D Ctf Dep 4.10% 6/25/2027",
+   "amount": 19946.8
+  },
+  {
+   "key": "95XXXXAC0",
+   "name": "Werner Hldg Del Inc Sr Sub Nt 10.00% 11/15/2007",
+   "amount": 0.0
+  },
+  {
+   "key": "95XXXXVX6",
+   "name": "Western Alliance Bk Phoenix Az Ctf Dep 4.25% 12/10/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "95XXXXWQ0",
+   "name": "Western Alliance Bk Phoenix Az Ctf Dep 4.25% 9/29/2025",
+   "amount": 0.0
+  },
+  {
+   "key": "AAAGX",
+   "name": "Thrivent Large Cap Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "AAASX",
+   "name": "DWS Real Assets Fund Cl S",
+   "amount": 0.0
+  },
+  {
+   "key": "AAGIY",
+   "name": "AIA Group Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "AALGX",
+   "name": "Thrivent Large Cap Stock A",
+   "amount": 0.0
+  },
+  {
+   "key": "AALXX",
+   "name": "Thrivent Money Market Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "AAMBX",
+   "name": "Thrivent Municipal Bond A",
+   "amount": 0.0
+  },
+  {
+   "key": "AASCX",
+   "name": "Thrivent Mid Cap Stock A",
+   "amount": 0.0
+  },
+  {
+   "key": "ADOZX",
+   "name": "Alger Dynamic Opportunities Z",
+   "amount": 0.0
+  },
+  {
+   "key": "ADRNY",
+   "name": "Koninklijke Ahold Delhaize NV",
+   "amount": 0.0
+  },
+  {
+   "key": "AFMBX",
+   "name": "American Balanced Fd Cl F3",
+   "amount": 0.0
+  },
+  {
+   "key": "AFNAX",
+   "name": "AAM/Bahl & Gaynor Income Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "AGI",
+   "name": "Alamos Gold Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "AGNC",
+   "name": "AGNC Invt Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "AGVGX",
+   "name": "American Global Insight F-2",
+   "amount": 0.0
+  },
+  {
+   "key": "AGZ",
+   "name": "iShares Agency Bond ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "AIQUY",
+   "name": "Air Liquide ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "AJNMY",
+   "name": "Ajinomoto Co Inc Adr",
+   "amount": 0.0
+  },
+  {
+   "key": "AKRIX",
+   "name": "Akre Focus Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "ALIZY",
+   "name": "Allianz SE Unsponsored ADS",
+   "amount": 0.0
+  },
+  {
+   "key": "ALR",
+   "name": "Alerislife Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "AMANX",
+   "name": "Amana Income",
+   "amount": 0.0
+  },
+  {
+   "key": "AMKBY",
+   "name": "A P Moller-B ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "AMMXX",
+   "name": "Thrivent Money Market A",
+   "amount": 0.0
+  },
+  {
+   "key": "AMSC",
+   "name": "American Superconductor Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "ANBFX",
+   "name": "American Strategic Bond F2",
+   "amount": 0.0
+  },
+  {
+   "key": "AOS",
+   "name": "AO Smith Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "APDKX",
+   "name": "Artisan Intl Value Fund Adv",
+   "amount": 0.0
+  },
+  {
+   "key": "APHJX",
+   "name": "Artisan International Small-Mid Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "AQEAX",
+   "name": "Columbia Large Core Quantitative A",
+   "amount": 0.0
+  },
+  {
+   "key": "AQMIX",
+   "name": "AQR Managed Futures Strategy Cl I",
+   "amount": 0.0
+  },
+  {
+   "key": "ARGFX",
+   "name": "Ariel Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "ARGT",
+   "name": "Global X FTSE Argentina 20",
+   "amount": 0.0
+  },
+  {
+   "key": "ARI",
+   "name": "Apollo Coml Real Estate Fin Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ARKF",
+   "name": "ARK Blockchain And Fintech Innovation ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "ARQ",
+   "name": "ARQ Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ARSIX",
+   "name": "AMG River Road Small Cap Value I",
+   "amount": 0.0
+  },
+  {
+   "key": "ARTL",
+   "name": "Artelo Biosciences Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ARTS",
+   "name": "Artfest Intl Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ASAZY",
+   "name": "Lazard Assa Abloy Spon ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "ASBFY",
+   "name": "Associated British Foods Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "ASVIX",
+   "name": "American Century Small Cap Value Inv",
+   "amount": 0.0
+  },
+  {
+   "key": "ATCIX",
+   "name": "ATAC Inflation Rotation Fund Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "ATLKY",
+   "name": "Atlas Copco Ser A",
+   "amount": 0.0
+  },
+  {
+   "key": "ATOIX",
+   "name": "Aberdeen Ultra Short Muni Inc Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "AU",
+   "name": "AngloGold Ashanti Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "AXAHY",
+   "name": "AXA SA",
+   "amount": 0.0
+  },
+  {
+   "key": "AXS",
+   "name": "Axis Capital Holdings Limited",
+   "amount": 0.0
+  },
+  {
+   "key": "AZ",
+   "name": "A2Z Cust2Mate Solutions Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "AZN-OLD02022026",
+   "name": "AstraZeneca PLC ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "AZNAX",
+   "name": "Virtus Invt Tr Allianz Income & Growth Fd Cl A",
+   "amount": 0.0
+  },
+  {
+   "key": "BAB",
+   "name": "Invesco Taxable Municipal Bond ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "BANR",
+   "name": "Banner Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "BAYRY",
+   "name": "Bayer AG Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "BCH",
+   "name": "Banco de Chile",
+   "amount": 0.0
+  },
+  {
+   "key": "BCOIX",
+   "name": "Baird Core Plus Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BCOSX",
+   "name": "Baird Core Plus Bond Inv",
+   "amount": 0.0
+  },
+  {
+   "key": "BDFIX",
+   "name": "Baron Discovery Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BDMIX",
+   "name": "BlackRock Global Equity Market Neutral Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "BDRBF",
+   "name": "Bombardier Inc Cl B",
+   "amount": 0.0
+  },
+  {
+   "key": "BELFB",
+   "name": "Bel Fuse Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "BEXIX",
+   "name": "Baron Emerging Markets Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BF B",
+   "name": "Brown-Forman Corporation Class B",
+   "amount": 0.0
+  },
+  {
+   "key": "BFIGX",
+   "name": "American Inflation Linked Bond F2",
+   "amount": 0.0
+  },
+  {
+   "key": "BFMCX",
+   "name": "BlackRock Core Bond I",
+   "amount": 0.0
+  },
+  {
+   "key": "BHKLY",
+   "name": "BOC Hong Kong Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "BIICX",
+   "name": "BlackRock Multi-Asset Income I",
+   "amount": 51919.4
+  },
+  {
+   "key": "BINI",
+   "name": "Bollinger Innovations Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "BITO",
+   "name": "ProShares Bitcoin Strategy ETF",
+   "amount": 13536.0
+  },
+  {
+   "key": "BKRIY",
+   "name": "Bank Ireland Group P F Unsponsored Adr 1 Adr Reps 1 Ord Shs",
+   "amount": 0.0
+  },
+  {
+   "key": "BLNK",
+   "name": "Blink Charging Co",
+   "amount": 0.0
+  },
+  {
+   "key": "BLX",
+   "name": "Bladex, Inc.",
+   "amount": 0.0
+  },
+  {
+   "key": "BMBIX",
+   "name": "Baird Intermediate Municipal Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BMEZ",
+   "name": "BlackRock Health Sciences",
+   "amount": 0.0
+  },
+  {
+   "key": "BOND",
+   "name": "PIMCO Total Return Active ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "BRHYX",
+   "name": "BlackRock High Yield Bond",
+   "amount": 0.0
+  },
+  {
+   "key": "BSBIX",
+   "name": "Baird Short Term Bd Fd Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BSBSX",
+   "name": "Baird Short-Term Bond Inv",
+   "amount": 0.0
+  },
+  {
+   "key": "BSTZ",
+   "name": "Blackrock Science And Tech Tr II",
+   "amount": 0.0
+  },
+  {
+   "key": "BTMIX",
+   "name": "Baird Short-Term Municipal Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "BTMSX",
+   "name": "Baird Short Term Muni Bd Inv",
+   "amount": 0.0
+  },
+  {
+   "key": "BUFEX",
+   "name": "Buffalo Large Cap Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "BUFOX",
+   "name": "Buffalo Emerging Opportunities",
+   "amount": 0.0
+  },
+  {
+   "key": "BUFSX",
+   "name": "Buffalo Small Cap",
+   "amount": 0.0
+  },
+  {
+   "key": "BUPXX",
+   "name": "Blackrock Liquidity Fund Fedfund Cl Premier",
+   "amount": 0.0
+  },
+  {
+   "key": "BURBY",
+   "name": "Burberry Group PLC",
+   "amount": 0.0
+  },
+  {
+   "key": "BUXX",
+   "name": "EA Series Trust Strive Enhanced",
+   "amount": 0.0
+  },
+  {
+   "key": "BXBLY",
+   "name": "Brambles Ltd Fadr",
+   "amount": 0.0
+  },
+  {
+   "key": "CAAP",
+   "name": "Corporation America Airports Sa Com Usd1",
+   "amount": 0.0
+  },
+  {
+   "key": "CACG",
+   "name": "ClearBridge All Cap Growth",
+   "amount": 0.0
+  },
+  {
+   "key": "CAG",
+   "name": "Conagra Brands Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "CAIFX",
+   "name": "American Capital Income Builder F2",
+   "amount": 220312.63
+  },
+  {
+   "key": "CAIXY",
+   "name": "Caixabank",
+   "amount": 0.0
+  },
+  {
+   "key": "CAJPY",
+   "name": "Canon Inc ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "CAKE",
+   "name": "Cheesecake Factory Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "CALM",
+   "name": "Cal-Maine Foods Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "CAMZD",
+   "name": "Camino Minerals Corp F",
+   "amount": 0.0
+  },
+  {
+   "key": "CAXIX",
+   "name": "Catalyst Map Global Capital Appreciation I",
+   "amount": 0.0
+  },
+  {
+   "key": "CBMSX",
+   "name": "Allspring Fds C&B Mid Cap Value Fd Cl I",
+   "amount": 0.0
+  },
+  {
+   "key": "CCBBX",
+   "name": "BlackRock Core Bond BlackRock",
+   "amount": 0.0
+  },
+  {
+   "key": "CCVAX",
+   "name": "Calvert Small Cap A",
+   "amount": 0.0
+  },
+  {
+   "key": "CDX",
+   "name": "Simplify High Yield PLUS Credit Hedge ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "CEE",
+   "name": "Central and Eastern Europe Fund Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "CEFS",
+   "name": "Saba Closed End Funds ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "CFIPX",
+   "name": "Franklin Global Equity Fund A",
+   "amount": 0.0
+  },
+  {
+   "key": "CGCP",
+   "name": "Capital Group Core Plus Income ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "CGSD",
+   "name": "Capital Group Short Duration Income ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "CHWY",
+   "name": "Chewy Inc A",
+   "amount": 0.0
+  },
+  {
+   "key": "CIM",
+   "name": "Chimera Investment Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "CKHUY",
+   "name": "CK Hutchison Holdings Limited Unsp ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "CLLNY",
+   "name": "Cellnex Telecom Sau Unspon Adr Each Rep 0.5 Ord Shs",
+   "amount": 0.0
+  },
+  {
+   "key": "CMNWX",
+   "name": "Principal Cap Appreciation A",
+   "amount": 0.0
+  },
+  {
+   "key": "CMPGY",
+   "name": "Compass Group Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "CNL",
+   "name": "Collective Mining Ltd Com",
+   "amount": 0.0
+  },
+  {
+   "key": "CNSWF",
+   "name": "Constellation Software Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "COFYX",
+   "name": "Columbia Contrarian Core Y",
+   "amount": 0.0
+  },
+  {
+   "key": "COMT",
+   "name": "iShares GSCI Commodity Dynamic Roll Strategy ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "COTZX",
+   "name": "Columbia Acorn Thermostat Z",
+   "amount": 0.0
+  },
+  {
+   "key": "CPODX",
+   "name": "Morgan Stanley Insight Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "CQQQ",
+   "name": "Invesco China Technology",
+   "amount": 0.0
+  },
+  {
+   "key": "CRSOX",
+   "name": "Credit Suisse Commodity Return Strategy I",
+   "amount": 0.0
+  },
+  {
+   "key": "CSIBX",
+   "name": "Calvert Bond A",
+   "amount": 4013.96
+  },
+  {
+   "key": "CSQ",
+   "name": "Calamos Strategic Total Return Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "CTA",
+   "name": "Simplify Managed Futures ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSTODIAL_CASH",
+   "name": "Custodial Cash",
+   "amount": 78027.97
+  },
+  {
+   "key": "CVSA",
+   "name": "Covista Inc Com",
+   "amount": 0.0
+  },
+  {
+   "key": "CWBFX",
+   "name": "American Capital World Bond A",
+   "amount": 0.0
+  },
+  {
+   "key": "CXGCX",
+   "name": "Calamos Global Convertible I",
+   "amount": 0.0
+  },
+  {
+   "key": "DANOY",
+   "name": "Danone ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "DBA",
+   "name": "Invesco DB Agriculture",
+   "amount": 0.0
+  },
+  {
+   "key": "DBLTX",
+   "name": "DoubleLine Total Return Bond Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "DBOEY",
+   "name": "Deutsche Boerse ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "DBSDY",
+   "name": "DBS Group Holdings Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "DCARX",
+   "name": "DFA CA Muni Real Rtrn I",
+   "amount": 0.0
+  },
+  {
+   "key": "DDD",
+   "name": "3D Systems Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "DDVAX",
+   "name": "Delaware Value A",
+   "amount": 0.0
+  },
+  {
+   "key": "DEVLX",
+   "name": "Delaware Small Cap Value A",
+   "amount": 0.0
+  },
+  {
+   "key": "DEW",
+   "name": "WisdomTree Global High Dividend Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "DFCMX",
+   "name": "DFA Calif Short-Term Municipal Bond",
+   "amount": 0.0
+  },
+  {
+   "key": "DFCSX",
+   "name": "DFA Contl Small Company",
+   "amount": 0.0
+  },
+  {
+   "key": "DFJSX",
+   "name": "DFA Japanese Small Company",
+   "amount": 0.0
+  },
+  {
+   "key": "DFLIX",
+   "name": "BNY Mellon Floating Rate Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "DFSV",
+   "name": "Dimensional US Small Cap Value ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "DHC",
+   "name": "Diversified Healthcare Tr",
+   "amount": 0.0
+  },
+  {
+   "key": "DLICY",
+   "name": "Daiichi Life Group Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "DNA",
+   "name": "Ginkgo Bioworks Holdings Inc A",
+   "amount": 0.0
+  },
+  {
+   "key": "DNAVX",
+   "name": "Dunham Dynamic Macro N",
+   "amount": 0.0
+  },
+  {
+   "key": "DNZOY",
+   "name": "Denso Corp ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "DQ",
+   "name": "Daqo New Energy Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "DQJCY",
+   "name": "Pan Pac Intl Hldgs Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "DSNKY",
+   "name": "Daiichi Sankyo Co Ltd Sponsored Adr",
+   "amount": 0.0
+  },
+  {
+   "key": "DVRIX",
+   "name": "MFS Global Alternative Strategy I",
+   "amount": 0.0
+  },
+  {
+   "key": "EA",
+   "name": "Electronic Arts Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "EBSIX",
+   "name": "Campbell Systematic Macro Fund Class I Shares",
+   "amount": 0.0
+  },
+  {
+   "key": "ECOIX",
+   "name": "Ecofin Global Renewables Infra Ins",
+   "amount": 0.0
+  },
+  {
+   "key": "EEIIX",
+   "name": "Eaton Vance Emerging Markets Local Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "EG",
+   "name": "Everest RE Group Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "EIBRX",
+   "name": "Eaton Vance Income Fund Of Boston R6",
+   "amount": 0.0
+  },
+  {
+   "key": "EIDOX",
+   "name": "Eaton Vance Emerging Markets Dbt Opps I",
+   "amount": 0.0
+  },
+  {
+   "key": "EIHMX",
+   "name": "Eaton Vance Natl Municipals Income Income Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "EKHAX",
+   "name": "Allspring Fds High Yield Bd Fd Cl A",
+   "amount": 0.0
+  },
+  {
+   "key": "EKWYX",
+   "name": "Allspring Fds Precious Metals Fd Instl Cl",
+   "amount": 0.0
+  },
+  {
+   "key": "EMBC",
+   "name": "Embecta Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "EMLP",
+   "name": "First Trust North American Energy Infrastructure Fund ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "EONGY",
+   "name": "E On Se",
+   "amount": 0.0
+  },
+  {
+   "key": "EPOL",
+   "name": "iShares MSCI Poland Investable Market",
+   "amount": 0.0
+  },
+  {
+   "key": "EPU",
+   "name": "iShares MSCI All Peru Capped Index Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "ERASX",
+   "name": "Eaton Vance Atlanta Capital Smid Cap R6",
+   "amount": 0.0
+  },
+  {
+   "key": "ESGU",
+   "name": "iShares ESG Aware MSCI USA ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "ESLOY",
+   "name": "Essilor Luxottica Unsponsored ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "ESPO",
+   "name": "VanEck Video Gaming and eSports ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "ETH",
+   "name": "Grayscale Ethereum Staking Mini ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "ETJ",
+   "name": "Eaton Vance Risk Managed Diversified Equity Income",
+   "amount": 0.0
+  },
+  {
+   "key": "ETY",
+   "name": "Eaton Vance Tax Managed Diversified",
+   "amount": 0.0
+  },
+  {
+   "key": "EUHY",
+   "name": "iShares Inc Global Ex Usd High Yield Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "EWO",
+   "name": "iShares MSCI Austria Index",
+   "amount": 0.0
+  },
+  {
+   "key": "EWP",
+   "name": "iShares MSCI Spain Index",
+   "amount": 0.0
+  },
+  {
+   "key": "EWS",
+   "name": "iShares MSCI Singapore Index",
+   "amount": 0.0
+  },
+  {
+   "key": "EXG",
+   "name": "Eaton Vance Tax Managed Global",
+   "amount": 0.0
+  },
+  {
+   "key": "EXLS",
+   "name": "Exlservice Holdings Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "FAFFX",
+   "name": "Fidelity Advisor Freedom 2040 A",
+   "amount": 0.0
+  },
+  {
+   "key": "FAGCX",
+   "name": "Fidelity Advisor Growth Opportunities I",
+   "amount": 0.0
+  },
+  {
+   "key": "FAMKX",
+   "name": "Fidelity Advisor Emerging Markets A",
+   "amount": 0.0
+  },
+  {
+   "key": "FATHX",
+   "name": "Fidelity Advisor Freedom 2035 A",
+   "amount": 0.0
+  },
+  {
+   "key": "FAUDX",
+   "name": "Fidelity Strategic Advisers Short Duration",
+   "amount": 0.0
+  },
+  {
+   "key": "FBAUX",
+   "name": "Fidelity Advisor Balanced I",
+   "amount": 0.0
+  },
+  {
+   "key": "FBHTX",
+   "name": "American 2045 Target Date Retirement F2",
+   "amount": 0.0
+  },
+  {
+   "key": "FBIIX",
+   "name": "Fidelity Int'l Bond Index Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FBLTX",
+   "name": "Fidelity SAI Long-Term Treasury Bd Idx",
+   "amount": 0.0
+  },
+  {
+   "key": "FCASH",
+   "name": "Fidelity Cash Fund",
+   "amount": 853279.16
+  },
+  {
+   "key": "FCPGX",
+   "name": "Fidelity Small Cap Growth",
+   "amount": 0.0
+  },
+  {
+   "key": "FDD",
+   "name": "First Trust Stoxx European Select Dividend Income Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FDEGX",
+   "name": "Fidelity Growth Strategies",
+   "amount": 0.0
+  },
+  {
+   "key": "FDESX",
+   "name": "Fidelity Advisor Diversified Stock O",
+   "amount": 95863.36
+  },
+  {
+   "key": "FDIC91232",
+   "name": "Leader Bank IRA",
+   "amount": 0.0
+  },
+  {
+   "key": "FDKVX",
+   "name": "Fidelity Freedom 2060",
+   "amount": 43245.12
+  },
+  {
+   "key": "FE",
+   "name": "FirstEnergy Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "FEIAX",
+   "name": "Fidelity Advisor Equity Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "FENCX",
+   "name": "Fid Sai Enhanced Muni Income Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FESGX",
+   "name": "First Eagle Global C",
+   "amount": 0.0
+  },
+  {
+   "key": "FEZ",
+   "name": "SPDR Index Fds Euro Stoxx 50",
+   "amount": 0.0
+  },
+  {
+   "key": "FFFEX",
+   "name": "Fidelity Freedom 2030",
+   "amount": 0.0
+  },
+  {
+   "key": "FFFHX",
+   "name": "Fidelity Freedom 2050",
+   "amount": 28639.66
+  },
+  {
+   "key": "FGM",
+   "name": "First TR Exch Trd Alpha FD II",
+   "amount": 0.0
+  },
+  {
+   "key": "FGOVX",
+   "name": "Fidelity Govt Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FGTXX",
+   "name": "Goldman Sachs Financial Sq Government Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "FHQRX",
+   "name": "Franklin High Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "FID:CASH",
+   "name": "Fidelity Cash Fund**",
+   "amount": -32350.58
+  },
+  {
+   "key": "FIFAX",
+   "name": "American Income Fund of America F3",
+   "amount": 0.0
+  },
+  {
+   "key": "FIHLX",
+   "name": "Federated Institutional High Yield Bond Fund Class R6",
+   "amount": 0.0
+  },
+  {
+   "key": "FIKMX",
+   "name": "Fidelity Advisor Real Estate Income Z",
+   "amount": 0.0
+  },
+  {
+   "key": "FILFX",
+   "name": "Fidelity Strategic Advisors Intl",
+   "amount": 0.0
+  },
+  {
+   "key": "FISZX",
+   "name": "Fidelity SAI Intl SMA Cmpltn",
+   "amount": 0.0
+  },
+  {
+   "key": "FIWCX",
+   "name": "Fidelity SAI International Value Index",
+   "amount": 0.0
+  },
+  {
+   "key": "FIXD",
+   "name": "First Trust TCW Opportunistic Fixed Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FJTSY",
+   "name": "Fujitsu Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "FKBAX",
+   "name": "Franklin Total Return A",
+   "amount": 0.0
+  },
+  {
+   "key": "FKINX",
+   "name": "Franklin Income A1",
+   "amount": 0.0
+  },
+  {
+   "key": "FKRCX",
+   "name": "Franklin Gold & Precious Metals A",
+   "amount": 0.0
+  },
+  {
+   "key": "FKUSX",
+   "name": "Franklin US Govt Secs A",
+   "amount": 0.0
+  },
+  {
+   "key": "FLIC",
+   "name": "First Of Long Island Corporation",
+   "amount": 0.0
+  },
+  {
+   "key": "FLMI",
+   "name": "Franklin Dynamic Municipal Bond ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "FMAGX",
+   "name": "Fidelity Magellan",
+   "amount": 0.0
+  },
+  {
+   "key": "FMCSX",
+   "name": "Fidelity Mid Cap Stock",
+   "amount": 0.0
+  },
+  {
+   "key": "FNCMX",
+   "name": "Fidelity Nasdaq Composite Index",
+   "amount": 0.0
+  },
+  {
+   "key": "FNDX",
+   "name": "Schwab Fundamental US Large Company Index ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "FNSOX",
+   "name": "Fidelity Short-Term Bond Index",
+   "amount": 0.0
+  },
+  {
+   "key": "FNSXX",
+   "name": "Fidelity Investments Money Market Portfolio",
+   "amount": 0.0
+  },
+  {
+   "key": "FOCSX",
+   "name": "Fidelity SmallCap Growth K6",
+   "amount": 0.0
+  },
+  {
+   "key": "FPA",
+   "name": "First Tr Exch Trd Alpha Fd II",
+   "amount": 0.0
+  },
+  {
+   "key": "FPCIX",
+   "name": "Fidelity Strategic Advisors Core Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FPIOX",
+   "name": "Fidelity Strategic Advisors Income Opportunities",
+   "amount": 0.0
+  },
+  {
+   "key": "FPURX",
+   "name": "Fidelity Puritan",
+   "amount": 0.0
+  },
+  {
+   "key": "FRDRX",
+   "name": "Franklin Rising Dividends R",
+   "amount": 0.0
+  },
+  {
+   "key": "FRIRX",
+   "name": "Fidelity Advisor Real Estate Income Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "FRSTX",
+   "name": "Franklin Strategic Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "FSAKX",
+   "name": "Strategic Advisers U.S. Total Stock Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FSAMX",
+   "name": "Fidelity Strategic Advisers Emerging Markets",
+   "amount": 0.0
+  },
+  {
+   "key": "FSCJX",
+   "name": "Fidelity SAI Canada Equity Index",
+   "amount": 0.0
+  },
+  {
+   "key": "FSCSX",
+   "name": "Fidelity Select Software & IT Svcs Port",
+   "amount": 0.0
+  },
+  {
+   "key": "FSHOX",
+   "name": "Fidelity Select Construction & Housing",
+   "amount": 0.0
+  },
+  {
+   "key": "FSKGX",
+   "name": "Fidelity Growth Strategies K6 Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FSKLX",
+   "name": "Fidelity SAI Intl Minimum Volatility Index",
+   "amount": 0.0
+  },
+  {
+   "key": "FSLR",
+   "name": "First Solar Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "FSLTX",
+   "name": "Fidelity Strategic Advisers Alternatives Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "FSMD",
+   "name": "Fidelity Small-Mid Factor Etf",
+   "amount": 0.0
+  },
+  {
+   "key": "FSMJX",
+   "name": "Fidelity Salem Street Trust Cons Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FSMNX",
+   "name": "Fidelity SAI Municipal Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FSNUY",
+   "name": "Fresenius Se ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "FSPWX",
+   "name": "Fidelity SAI Inflation-Protected Bd Idx",
+   "amount": 0.0
+  },
+  {
+   "key": "FSRNX",
+   "name": "Fidelity Real Estate Index",
+   "amount": 33130.93
+  },
+  {
+   "key": "FSRPX",
+   "name": "Fidelity Select Retailing",
+   "amount": 0.0
+  },
+  {
+   "key": "FSTBX",
+   "name": "Federated Global Allocation A",
+   "amount": 0.0
+  },
+  {
+   "key": "FSTFX",
+   "name": "Fidelity Limited Term Municipal Income",
+   "amount": 0.0
+  },
+  {
+   "key": "FSUGY",
+   "name": "Fortescue Metal Group Ltd Sponsored ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "FTGC",
+   "name": "First Trust Global Tactical Commodity Strategy",
+   "amount": 0.0
+  },
+  {
+   "key": "FTSL",
+   "name": "First Trust Senior Loan",
+   "amount": 0.0
+  },
+  {
+   "key": "FUJIY",
+   "name": "Fuji Photo ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "FUSRX",
+   "name": "Franklin US Govt Secs R",
+   "amount": 0.0
+  },
+  {
+   "key": "FVFRX",
+   "name": "Franklin Small Cap Value R",
+   "amount": 0.0
+  },
+  {
+   "key": "FWGIX",
+   "name": "American Capital World Growth & Income F3",
+   "amount": 0.0
+  },
+  {
+   "key": "FXF",
+   "name": "Invesco CurrencyShares Swiss Franc Trust",
+   "amount": 0.0
+  },
+  {
+   "key": "FXU",
+   "name": "First Trust Utilities Alphadex",
+   "amount": 0.0
+  },
+  {
+   "key": "FXY",
+   "name": "Invesco CurrencyShares Japanese Yen Trust",
+   "amount": 0.0
+  },
+  {
+   "key": "FZDXX",
+   "name": "Fidelity Mmkt Premium",
+   "amount": 0.0
+  },
+  {
+   "key": "GAIOX",
+   "name": "American Growth & Income Portfolio A",
+   "amount": 0.0
+  },
+  {
+   "key": "GCOW",
+   "name": "Pacer Global High Dividend ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "GCVIX",
+   "name": "Goldman Sachs Structured LargeCap Value Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GDL",
+   "name": "The GDL Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "GDX",
+   "name": "VanEck Gold Miners ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "GEACX",
+   "name": "GMO Trust Resources FD I",
+   "amount": 0.0
+  },
+  {
+   "key": "GFBLX",
+   "name": "American Funds Global Balanced F3",
+   "amount": 0.0
+  },
+  {
+   "key": "GGSAX",
+   "name": "Goldman Sachs Growth Strategy A",
+   "amount": 0.0
+  },
+  {
+   "key": "GICIX",
+   "name": "Goldman Sachs Intl Small Cap Insights Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GIJIX",
+   "name": "Guggenheim Municipal Income Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GIOAX",
+   "name": "Guggenheim Macro Opportunities A",
+   "amount": 0.0
+  },
+  {
+   "key": "GIYIX",
+   "name": "Guggenheim Ultra Short Duration Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GLNCY",
+   "name": "Glencore PLC ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "GLRBX",
+   "name": "James Advantage Balanced Golden Rainbow Retail",
+   "amount": 0.0
+  },
+  {
+   "key": "GLTR",
+   "name": "abrdn Physical Precious Metals Basket Shares ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "GMAB",
+   "name": "Genmab As Spon ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "GOFXX",
+   "name": "Federated Hermes Government Obligations Fund Premier",
+   "amount": 0.0
+  },
+  {
+   "key": "GOLY",
+   "name": "Strategy Shares Gold Enhanced Yield ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "GREK",
+   "name": "Global X FTSE Greece 20",
+   "amount": 0.0
+  },
+  {
+   "key": "GSDIX",
+   "name": "Goldman Sachs Emerging Markets Debt Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GSFTX",
+   "name": "Columbia Dividend Income Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "GSIHX",
+   "name": "Goldman Sachs GQG Partners Intl Op A",
+   "amount": 0.0
+  },
+  {
+   "key": "GSIMX",
+   "name": "Goldman Sachs GQG Partners Intl Op Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "GSINX",
+   "name": "Goldman Sachs GQG Ptnrs Intl Opp IR",
+   "amount": 28231.74
+  },
+  {
+   "key": "GSPI",
+   "name": "Green Star Products Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "HALO",
+   "name": "Halozyme Therapeutics Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "HAUZ",
+   "name": "Xtrackers International Real Estate ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "HDB",
+   "name": "HDFC Bank Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "HDLMY",
+   "name": "Heidelberg Materials AG",
+   "amount": 0.0
+  },
+  {
+   "key": "HEI A",
+   "name": "Heico Corp Cl A",
+   "amount": 0.0
+  },
+  {
+   "key": "HERO",
+   "name": "Global X Video Games & eSports ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "HFQIX",
+   "name": "Janus Henderson Global Equity Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "HIMS",
+   "name": "Hims & Hers Health Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "HLIZX",
+   "name": "Harding Loevner International Equity Instl Z",
+   "amount": 0.0
+  },
+  {
+   "key": "HOCPY",
+   "name": "Hoya Corp Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "HOLX",
+   "name": "Hologic Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "HR",
+   "name": "Healthcare Realty Tr A",
+   "amount": 0.0
+  },
+  {
+   "key": "HTZWW",
+   "name": "Hertz Global Hldgs Inc New Wt Exp 06/30/51",
+   "amount": 0.0
+  },
+  {
+   "key": "HXGBY",
+   "name": "Hexagon Ab",
+   "amount": 0.0
+  },
+  {
+   "key": "IBIT",
+   "name": "iShares Bitcoin ETF",
+   "amount": 43577.49
+  },
+  {
+   "key": "IBMP",
+   "name": "iShares iBonds Dec 2027 Term Muni Bd ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IBTL",
+   "name": "Ishares TrIBonds Dec 2031 Term Treas ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "ICBFX",
+   "name": "Aim Invesco Corp Bond R6",
+   "amount": 0.0
+  },
+  {
+   "key": "ICSIX",
+   "name": "Innealta Capital Sector Rotation I",
+   "amount": 0.0
+  },
+  {
+   "key": "ICVT",
+   "name": "iShares Convertible Bond ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IDMO",
+   "name": "Invesco S&P International Developed Momentum",
+   "amount": 0.0
+  },
+  {
+   "key": "IFGL",
+   "name": "iShares International REIT ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IGAAX",
+   "name": "American International Growth & Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "IGIC",
+   "name": "International Gen Ins Hldgs Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "IIGD",
+   "name": "Invesco Investment Grade Defensive ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IIINX",
+   "name": "Thrivent Core Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "IILGX",
+   "name": "Thrivent Large Cap Stock Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "IJUL",
+   "name": "Innovator MSCI EAFE Power Buffer",
+   "amount": 0.0
+  },
+  {
+   "key": "INFIX",
+   "name": "Tortoise MLP & Energy Income Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "INFL",
+   "name": "Horizon Kinetics Inflation Beneficiaries ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "INIYX",
+   "name": "Van Eck International Invs Gold Y",
+   "amount": 0.0
+  },
+  {
+   "key": "IOCT",
+   "name": "Innovator International Developed Power Buffer ETF- October",
+   "amount": 0.0
+  },
+  {
+   "key": "IPXHY",
+   "name": "Inpex Holdings Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ISCIX",
+   "name": "Federated International Sm Mid Co Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "ISHG",
+   "name": "iShares S&P/Citigroup 1-3 Yr Intl Treas Bd",
+   "amount": 0.0
+  },
+  {
+   "key": "ISUZY",
+   "name": "Isuzu Motors ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "ITBFX",
+   "name": "Hartford Total Return Bd F",
+   "amount": 0.0
+  },
+  {
+   "key": "ITOCY",
+   "name": "Itochu Corp ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "IUSV",
+   "name": "iShares Core S&P U.S. Value ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IX",
+   "name": "Orix Corporation ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "IXG",
+   "name": "iShares S&P Global Financials Sector Index",
+   "amount": 0.0
+  },
+  {
+   "key": "IXN",
+   "name": "iShares Global Tech ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "IYE",
+   "name": "iShares U.S. Energy ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "JACTX",
+   "name": "Janus Henderson Forty Fund Class T",
+   "amount": 0.0
+  },
+  {
+   "key": "JALAX",
+   "name": "John Hancock Lifestyle Aggressive A",
+   "amount": 0.0
+  },
+  {
+   "key": "JALGX",
+   "name": "John Hancock Lifestyle Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "JALRX",
+   "name": "John Hancock Lifestyle Conservative A",
+   "amount": 0.0
+  },
+  {
+   "key": "JAVTX",
+   "name": "Janus Venture T",
+   "amount": 0.0
+  },
+  {
+   "key": "JBALX",
+   "name": "Janus Henderson Balanced I",
+   "amount": 0.0
+  },
+  {
+   "key": "JBLU",
+   "name": "JetBlue Airways Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "JCONX",
+   "name": "Janus Henderson Contrarian I",
+   "amount": 0.0
+  },
+  {
+   "key": "JCPUX",
+   "name": "JP Morgan Core Plus Bond R6",
+   "amount": 0.0
+  },
+  {
+   "key": "JCVIX",
+   "name": "John Hancock Classic Value I",
+   "amount": 0.0
+  },
+  {
+   "key": "JEEDX",
+   "name": "John Hancock Enduring Equity R6",
+   "amount": 0.0
+  },
+  {
+   "key": "JENYX",
+   "name": "Jensen Funds Qty Growth Cl Y",
+   "amount": 0.0
+  },
+  {
+   "key": "JFLEX",
+   "name": "Janus Henderson Flexible Bond Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "JFR",
+   "name": "Nuveen Floating Rate Income",
+   "amount": 0.0
+  },
+  {
+   "key": "JHEQX",
+   "name": "JP Morgan Hedged Equity I",
+   "amount": 0.0
+  },
+  {
+   "key": "JMGRX",
+   "name": "Janus Henderson Enterprise I",
+   "amount": 0.0
+  },
+  {
+   "key": "JMIA",
+   "name": "Jumia Technologies AG ADS",
+   "amount": 0.0
+  },
+  {
+   "key": "JMIEX",
+   "name": "JP Morgan Emerging Markets Equity Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "JNBSX",
+   "name": "JP Morgan Inc Builder Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "JNVMX",
+   "name": "JP Morgan Intl Value R6",
+   "amount": 0.0
+  },
+  {
+   "key": "JSCOX",
+   "name": "Janus Henderson Small Cap Value Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "JVLIX",
+   "name": "John Hancock Disciplined Value I",
+   "amount": 0.0
+  },
+  {
+   "key": "KAOOY",
+   "name": "Kao Corp F Unsponsored Adr 1 Adr Reps 0.2 Ord Shs",
+   "amount": 0.0
+  },
+  {
+   "key": "KBCSY",
+   "name": "KBC Group Nv ADR Funsponsored ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "KDDIY",
+   "name": "KDDI Corp ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "KGFHY",
+   "name": "Kingfisher PLC",
+   "amount": 0.0
+  },
+  {
+   "key": "KGSPY",
+   "name": "Kingspan Group Plc ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "KMTUY",
+   "name": "Komatsu Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "KOD",
+   "name": "Kodiak Sciences Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "KSS",
+   "name": "Kohls Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "KUBTY",
+   "name": "Kubota Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "KWHIY",
+   "name": "Kawasaki Heavy Inds Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "KXI",
+   "name": "iShares S&P Global Consumer Staples",
+   "amount": 0.0
+  },
+  {
+   "key": "LBHIX",
+   "name": "Thrivent High Yield Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "LBHYX",
+   "name": "Thrivent High Yield A",
+   "amount": 0.0
+  },
+  {
+   "key": "LBIIX",
+   "name": "Thrivent Income S",
+   "amount": 0.0
+  },
+  {
+   "key": "LBLAX",
+   "name": "Thrivent Limited Maturity Bond A",
+   "amount": 0.0
+  },
+  {
+   "key": "LBNDX",
+   "name": "Lord Abbett Bond Debenture A",
+   "amount": 0.0
+  },
+  {
+   "key": "LDP",
+   "name": "Cohen & Steers Ltd Duration Pfd & Income Fd Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "LEGAX",
+   "name": "Columbia Cornerstone Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "LEINX",
+   "name": "Voya GNMA Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "LEVIX",
+   "name": "Lazard US Equity Val Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "LGOV",
+   "name": "First Tr Exchange Traded Fd IV Long Duration Opportunity",
+   "amount": 0.0
+  },
+  {
+   "key": "LGRDY",
+   "name": "Legrand S A Adr Unsponsored",
+   "amount": 0.0
+  },
+  {
+   "key": "LRN",
+   "name": "Stride Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "LSWWX",
+   "name": "Loomis Sayles Global Allocation Y",
+   "amount": 0.0
+  },
+  {
+   "key": "LUBIX",
+   "name": "Thrivent Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "LZOEX",
+   "name": "Lazard Emerging Markets Equity Open",
+   "amount": 0.0
+  },
+  {
+   "key": "MAA",
+   "name": "Mid-America Apartment Communities Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "MAFRX",
+   "name": "Victory Pioneer Multi-Asset Ultrashort Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "MBXIX",
+   "name": "Catalyst/Millburn Hedge Strategy I",
+   "amount": 0.0
+  },
+  {
+   "key": "MEDIX",
+   "name": "MFS Emerging Markets Debt I",
+   "amount": 0.0
+  },
+  {
+   "key": "MEHCQ",
+   "name": "Chrome Holding Co",
+   "amount": 0.0
+  },
+  {
+   "key": "MEMJX",
+   "name": "MFS Emerging Markets Equity R5",
+   "amount": 2776.4
+  },
+  {
+   "key": "MFBKX",
+   "name": "MFS Bond R5",
+   "amount": 0.0
+  },
+  {
+   "key": "MGDDY",
+   "name": "Michelin Compagnie Generale des Establissements ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "MHCAX",
+   "name": "NYLI MacKay High Yield Corporate Bond Class A",
+   "amount": 0.0
+  },
+  {
+   "key": "MHK",
+   "name": "Mohawk Industries Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "MHYSX",
+   "name": "ainStay MacKay High Yield Corporate Bond Fund R6",
+   "amount": 0.0
+  },
+  {
+   "key": "MIAYX",
+   "name": "American Multi Sector Income F2",
+   "amount": 0.0
+  },
+  {
+   "key": "MIEIX",
+   "name": "MFS Intl Equity",
+   "amount": 0.0
+  },
+  {
+   "key": "MIMIX",
+   "name": "MFS Municipal Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "MITEY",
+   "name": "Mitsubishi Estate Unspons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "MKKGY",
+   "name": "Merck Kgaa U/ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "MLAIX",
+   "name": "NYLI Winslow Large Cap Growth Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "MLPTX",
+   "name": "Invesco SteelPath MLP Select 40 Y",
+   "amount": 0.0
+  },
+  {
+   "key": "MMHIX",
+   "name": "MainStay MacKay High Yield Municipal Bond Fund I",
+   "amount": 0.0
+  },
+  {
+   "key": "MMIIX",
+   "name": "MFS Municipal High Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "MNA",
+   "name": "NYLI Merger Arbitrage ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "MNDKX",
+   "name": "MFS New Discovery R5",
+   "amount": 4455.75
+  },
+  {
+   "key": "MPV",
+   "name": "Barings Participation Investors",
+   "amount": 0.0
+  },
+  {
+   "key": "MQBKY",
+   "name": "MacQuarie Bk Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "MT",
+   "name": "Arcelor Mittal",
+   "amount": 0.0
+  },
+  {
+   "key": "MTSUY",
+   "name": "Mitsubishi Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "MURGY",
+   "name": "Muenchener Rueckvers",
+   "amount": 0.0
+  },
+  {
+   "key": "MUST",
+   "name": "Columbia Multi-Sector Municipal Inc",
+   "amount": 14340.0
+  },
+  {
+   "key": "NBCM",
+   "name": "Neuberger Berman Com Strategy ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "NBPIX",
+   "name": "Neuberger Berman Large Cap Value Fund Institutional",
+   "amount": 0.0
+  },
+  {
+   "key": "NBR",
+   "name": "Nabors Industries Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "NBRWF",
+   "name": "Nabors Industries Ordf",
+   "amount": 0.0
+  },
+  {
+   "key": "NDARX",
+   "name": "American Ret Inc Port Enhanced A",
+   "amount": 0.0
+  },
+  {
+   "key": "NH2036000",
+   "name": "NH Portfolio 2036 (Fidelity Fund Port)",
+   "amount": 21972.92
+  },
+  {
+   "key": "NHB203907",
+   "name": "NH Portfolio 2039 (Fidelity Blend)",
+   "amount": 7764.8
+  },
+  {
+   "key": "NHX203903",
+   "name": "NH Portfolio 2039 (Fidelity Index)",
+   "amount": 36585.29
+  },
+  {
+   "key": "NHYDY",
+   "name": "Norsk Hydro AS SA",
+   "amount": 0.0
+  },
+  {
+   "key": "NLY",
+   "name": "Annaly Capital Management Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "NMI",
+   "name": "Nuveen Municipal Income Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "NPNYY",
+   "name": "Nippon Yusen Kbshki S/ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "NPSRX",
+   "name": "Nuveen Preferred Securities & Income Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "O",
+   "name": "Realty Income Corp",
+   "amount": 72480.07
+  },
+  {
+   "key": "OAZIX",
+   "name": "Oakmark International Fund R6",
+   "amount": 0.0
+  },
+  {
+   "key": "OFIX",
+   "name": "Orthofix Med Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "OGGFX",
+   "name": "JP Morgan Small Cap Growth Select",
+   "amount": 0.0
+  },
+  {
+   "key": "OGI-OLD04032025",
+   "name": "OrganiGram Global Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "ONGAX",
+   "name": "JP Morgan Inv Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "OOSYX",
+   "name": "Invesco Oppenheimer Senior Floating Rate Y",
+   "amount": 0.0
+  },
+  {
+   "key": "ORDNX",
+   "name": "North Square Preferred and Income Securities Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "OSCIX",
+   "name": "Invesco Oppenheimer International Small-Mid Company R6",
+   "amount": 0.0
+  },
+  {
+   "key": "OTCKX",
+   "name": "MFS Mid Cap Growth R6",
+   "amount": 5402.41
+  },
+  {
+   "key": "OTLY",
+   "name": "Oatly Group AB Sponsored ADS",
+   "amount": 0.0
+  },
+  {
+   "key": "OVCHY",
+   "name": "Oversea-Chinese ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "PALAF",
+   "name": "Paladin Energy Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "PAPR",
+   "name": "Innovator S&P 500 Power Buffer ETF - April",
+   "amount": 0.0
+  },
+  {
+   "key": "PARTX",
+   "name": "Putnam Short Duration Bond Fund Class A",
+   "amount": 0.01
+  },
+  {
+   "key": "PBDPX",
+   "name": "PIMCO Invt Grade Credit Bond I2",
+   "amount": 0.0
+  },
+  {
+   "key": "PCEF",
+   "name": "Invesco CEF Income Composite",
+   "amount": 0.0
+  },
+  {
+   "key": "PCGJX",
+   "name": "Principal SAM Conservative Growth J",
+   "amount": 0.0
+  },
+  {
+   "key": "PCOXX",
+   "name": "Federated Money Market Prime Cash Obligs Instl",
+   "amount": 167280.48
+  },
+  {
+   "key": "PCRIX",
+   "name": "PIMCO Commodity Real Return Strategy Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PCTIX",
+   "name": "PIMCO California Municipal Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PCTY",
+   "name": "Paylocity Holding Corporation Com",
+   "amount": 0.0
+  },
+  {
+   "key": "PDEAX",
+   "name": "Prudential Jennison Emerging Markets Equity A",
+   "amount": 0.0
+  },
+  {
+   "key": "PDI",
+   "name": "PIMCO Dynamic Income",
+   "amount": 0.0
+  },
+  {
+   "key": "PDIIX",
+   "name": "PIMCO Diversified Income Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PELBX",
+   "name": "PIMCO Emerging Local Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PFBPX",
+   "name": "PIMCO International Bond (U.S. Dollar-Hedged) Fund Class I-2",
+   "amount": 0.0
+  },
+  {
+   "key": "PFF",
+   "name": "iShares Preferred & Income Securities ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "PFG",
+   "name": "Principal Financial Group Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "PFNUX",
+   "name": "PIMCO Dynamic Bond Fund Class I-3",
+   "amount": 0.0
+  },
+  {
+   "key": "PFONX",
+   "name": "PIMCO International Bond Fund (U.S. Dollar-Hedged) Class I-3",
+   "amount": 0.0
+  },
+  {
+   "key": "PFUIX",
+   "name": "PIMCO Foreign Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PFUMX",
+   "name": "Principal Finisterre Uncons EM Bd Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PGMSX",
+   "name": "T. Rowe Price Global Multi-Sector Bd I",
+   "amount": 0.0
+  },
+  {
+   "key": "PHEZX",
+   "name": "Prudential Global Total Ret (USD Hdg) Z",
+   "amount": 0.0
+  },
+  {
+   "key": "PHIYX",
+   "name": "PIMCO High Yield Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PHLPX",
+   "name": "PIMCO High Yield I2",
+   "amount": 0.0
+  },
+  {
+   "key": "PHNNX",
+   "name": "Pimco High Yield Cl I3",
+   "amount": 0.0
+  },
+  {
+   "key": "PICB",
+   "name": "Invesco International Corporate Bond",
+   "amount": 0.0
+  },
+  {
+   "key": "PIREX",
+   "name": "Principal Real Estate Secs Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PIZ",
+   "name": "Invesco Dorsey Wright Developed Markets Momentum ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "PLMR",
+   "name": "Palomar Hldgs Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "PMAQX",
+   "name": "Principal Midcap Fund Class R6",
+   "amount": 0.0
+  },
+  {
+   "key": "PMAR",
+   "name": "Innovator S&P 500 Power Buffer ETF - March",
+   "amount": 0.0
+  },
+  {
+   "key": "PNOV",
+   "name": "Innovator S&P 500 Power Buffer ETF - November",
+   "amount": 0.0
+  },
+  {
+   "key": "PNRAX",
+   "name": "Putnam Research A",
+   "amount": 0.0
+  },
+  {
+   "key": "PPSAX",
+   "name": "Principal Spectrum Preferred and Capital Securities Income Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "PPT",
+   "name": "Franklin Premier Income Trust",
+   "amount": 0.0
+  },
+  {
+   "key": "PPVAX",
+   "name": "American Preservation A",
+   "amount": 0.0
+  },
+  {
+   "key": "PRDO",
+   "name": "Perdoceo Ed Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "PRF",
+   "name": "Invesco RAFI US 1000 ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "PRG",
+   "name": "Prog Hldgs Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "PRKZX",
+   "name": "Prudential Real Estate Income Z",
+   "amount": 0.0
+  },
+  {
+   "key": "PRNDY",
+   "name": "Pernod-Ricard SA ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "PROSY",
+   "name": "Prosus N V F Unsponsored Adr 1 Adr Reps 1 Ord Shs",
+   "amount": 0.0
+  },
+  {
+   "key": "PRSP",
+   "name": "Perspecta Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "PRYMY",
+   "name": "Prysmian Spa ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "PRZIX",
+   "name": "T Rowe Price Emerging Markets Stock I",
+   "amount": 0.0
+  },
+  {
+   "key": "PSA",
+   "name": "Public Storage Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "PSDTX",
+   "name": "Putnam Ultra Short Duration Income",
+   "amount": 0.0
+  },
+  {
+   "key": "PSI",
+   "name": "Invesco Dynamic Semiconductors",
+   "amount": 0.0
+  },
+  {
+   "key": "PSMIX",
+   "name": "Principal Global Multi-Strategy Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "PSTQX",
+   "name": "PGIM Short Term Corporate Bond R6",
+   "amount": 0.0
+  },
+  {
+   "key": "PTAOX",
+   "name": "Performance Trust Strategic Bond A",
+   "amount": 0.0
+  },
+  {
+   "key": "PURAX",
+   "name": "Prudential Global Real Estate A",
+   "amount": 0.0
+  },
+  {
+   "key": "PVAL",
+   "name": "Putnam ETF Trust Focused Lar Cap",
+   "amount": 0.0
+  },
+  {
+   "key": "PXH",
+   "name": "Invesco FTSE RAFI Emerging Markets",
+   "amount": 0.0
+  },
+  {
+   "key": "PYELX",
+   "name": "Payden Emerging Mkts Local Bd Inv",
+   "amount": 0.0
+  },
+  {
+   "key": "PYEMX",
+   "name": "Payden Emerging Market Bond",
+   "amount": 0.0
+  },
+  {
+   "key": "PZTRX",
+   "name": "Prudential Global Total Return Z",
+   "amount": 0.0
+  },
+  {
+   "key": "QBYIQ",
+   "name": "FDIC Insured Deposit Account",
+   "amount": 0.0
+  },
+  {
+   "key": "QDEF",
+   "name": "Flexshares Quality Divid Defensive Index",
+   "amount": 0.0
+  },
+  {
+   "key": "QDSIX",
+   "name": "AQR Diversifying Strategies I",
+   "amount": 0.0
+  },
+  {
+   "key": "QMHIX",
+   "name": "AQR Managed Futures Strategy HV I",
+   "amount": 0.0
+  },
+  {
+   "key": "QPX",
+   "name": "Advisorshares Tr Q Dynamic Growth",
+   "amount": 0.0
+  },
+  {
+   "key": "QQMNX",
+   "name": "Federated Hermes Mdt Mar Ket Neutral Inst",
+   "amount": 0.0
+  },
+  {
+   "key": "QUSCQ",
+   "name": "US Bank FDIC Insured Deposit",
+   "amount": 0.0
+  },
+  {
+   "key": "RALCX",
+   "name": "Russell Investments LifePoints Growth Strategy Fund Class C",
+   "amount": 0.0
+  },
+  {
+   "key": "RCS",
+   "name": "PIMCO Strategic Income Fund Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "RDDT",
+   "name": "Reddit Inc A",
+   "amount": 0.0
+  },
+  {
+   "key": "REM",
+   "name": "iShares Mortgage Real Estate Capped",
+   "amount": 0.0
+  },
+  {
+   "key": "REVG",
+   "name": "Rev Group Inc Com",
+   "amount": 0.0
+  },
+  {
+   "key": "RICIX",
+   "name": "T. Rowe Price Intl Concentr Equity I",
+   "amount": 0.0
+  },
+  {
+   "key": "RLY",
+   "name": "SPDR SSGA Active Tr Multi-Asset Real Return",
+   "amount": 66547.9
+  },
+  {
+   "key": "RPIDX",
+   "name": "T. Rowe Price Dynamic Credit",
+   "amount": 0.0
+  },
+  {
+   "key": "RSYYX",
+   "name": "Victory High Yield Y",
+   "amount": 0.0
+  },
+  {
+   "key": "RWX",
+   "name": "SPDR Dow Jones International Real Estate",
+   "amount": 0.0
+  },
+  {
+   "key": "RYAAY",
+   "name": "Ryanair Holdings PLC ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "RYVPX",
+   "name": "Royce Value Plus Svc",
+   "amount": 0.0
+  },
+  {
+   "key": "SABPX",
+   "name": "Principal SAM Balanced A",
+   "amount": 0.0
+  },
+  {
+   "key": "SACAX",
+   "name": "Principal SAM Strategic Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "SAIPX",
+   "name": "Principal SAM Conservative Balanced A",
+   "amount": 0.0
+  },
+  {
+   "key": "SBMAX",
+   "name": "Clearbridge Mid Cap Core A",
+   "amount": 0.0
+  },
+  {
+   "key": "SBTYX",
+   "name": "Legg Mason Western Asset Inter Term Municipals I",
+   "amount": 0.0
+  },
+  {
+   "key": "SDCI",
+   "name": "USCF SummerHaven Strategy No K-1 ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "SEA",
+   "name": "Us Global Sea To Sky Cargo",
+   "amount": 0.0
+  },
+  {
+   "key": "SEEGX",
+   "name": "JP Morgan Large Cap Growth Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "SEIC",
+   "name": "SEI Investments Co",
+   "amount": 0.0
+  },
+  {
+   "key": "SFLNX",
+   "name": "Schwab Fundamental US Large Company Index",
+   "amount": 0.0
+  },
+  {
+   "key": "SFSNX",
+   "name": "Schwab Fundamental US Small Company Index",
+   "amount": 0.0
+  },
+  {
+   "key": "SGAPY",
+   "name": "Singapore Telecommunications Ltd Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "SGENX",
+   "name": "First Eagle Global A",
+   "amount": 0.0
+  },
+  {
+   "key": "SGIOY",
+   "name": "Shionogi & Co Unsp",
+   "amount": 0.0
+  },
+  {
+   "key": "SGOIX",
+   "name": "First Eagle Overseas I",
+   "amount": 0.0
+  },
+  {
+   "key": "SHAG",
+   "name": "Wisdomtree Barclays Yield Enhanced U S Short Term Aggregate Bd Etf",
+   "amount": 0.0
+  },
+  {
+   "key": "SHAPX",
+   "name": "Legg Mason Clearbridge Appreciation A",
+   "amount": 0.0
+  },
+  {
+   "key": "SHFVX",
+   "name": "Legg Mason Clearbridge Fundamental All Cap Value A",
+   "amount": 0.0
+  },
+  {
+   "key": "SHRAX",
+   "name": "Legg Mason Clearbridge Aggressive Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "SIGWX",
+   "name": "Touchstone Small Company Fund Cl Y",
+   "amount": 0.0
+  },
+  {
+   "key": "SITEX",
+   "name": "SEI Emerging Markets Debt F",
+   "amount": 0.0
+  },
+  {
+   "key": "SIVR",
+   "name": "Aberdeen Std Silver ETF Tr Physical Silvr",
+   "amount": 0.0
+  },
+  {
+   "key": "SIXA",
+   "name": "6 Meridian Mega Cap Equity ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "SKE",
+   "name": "Skeena Resources Ltd Com",
+   "amount": 0.0
+  },
+  {
+   "key": "SKNRX",
+   "name": "Deutsche Enhanced Commodity Strategy A",
+   "amount": 0.0
+  },
+  {
+   "key": "SLDP",
+   "name": "Solid Power Inc A",
+   "amount": 0.0
+  },
+  {
+   "key": "SLQD",
+   "name": "iShares 0-5 Year Investment Grade Corporate Bond",
+   "amount": 0.0
+  },
+  {
+   "key": "SMTOY",
+   "name": "Sumitomo Ele-Adr",
+   "amount": 0.0
+  },
+  {
+   "key": "SOUN",
+   "name": "SOUNDHOUND AI INC CLASS A",
+   "amount": 0.0
+  },
+  {
+   "key": "SPG",
+   "name": "Simon Property Group Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "SPHD",
+   "name": "Invesco S&P 500 High Dividend Low Volatility ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "SRBFX",
+   "name": "Columbia Total Return Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "SRXH",
+   "name": "SRX Global Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "SSEZY",
+   "name": "SSE Plc",
+   "amount": 0.0
+  },
+  {
+   "key": "SSYS",
+   "name": "Stratasys Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "STN",
+   "name": "Stantec Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "STXE",
+   "name": "Strive Emerging Markets Ex-China ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "STXT",
+   "name": "STRIVE TOTAL RETURN BD ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "SUBFX",
+   "name": "Carillon Reams Unconstrained Bond I",
+   "amount": 0.0
+  },
+  {
+   "key": "SWDSX",
+   "name": "Schwab Dividend Equity",
+   "amount": 0.0
+  },
+  {
+   "key": "SWSCX",
+   "name": "Schwab Small Cap Equity",
+   "amount": 0.0
+  },
+  {
+   "key": "SZCIX",
+   "name": "Deutsche Small Cap Core Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "SZKMY",
+   "name": "Suzuki Mtr Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "TAAAX",
+   "name": "Thrivent Aggressive Allocation A",
+   "amount": 0.0
+  },
+  {
+   "key": "TAAIX",
+   "name": "Thrivent Aggressive Allocation Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TAK",
+   "name": "Takeda Pharmaceutical Co Ltd ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "TBFIX",
+   "name": "Thrivent Govt Bond I",
+   "amount": 0.0
+  },
+  {
+   "key": "TBLU",
+   "name": "Tortoise Capital Series Trust ESG Global Water Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "TBWIX",
+   "name": "Thornburg Better World International I",
+   "amount": 0.0
+  },
+  {
+   "key": "TCAAX",
+   "name": "Thrivent Moderately Conservative Allocation A",
+   "amount": 0.0
+  },
+  {
+   "key": "TCAIX",
+   "name": "Thrivent Moderately Conservative Allocation Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TDTF",
+   "name": "FlexShares iBoxx 5-Year Target Duration TIPS Index",
+   "amount": 0.0
+  },
+  {
+   "key": "TEGAX",
+   "name": "Touchstone Mid Cap Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "TEGRX",
+   "name": "Templeton Growth R",
+   "amount": 0.0
+  },
+  {
+   "key": "TEPLX",
+   "name": "Templeton Growth A",
+   "amount": 0.0
+  },
+  {
+   "key": "TESIX",
+   "name": "Franklin Mutual Shares A",
+   "amount": 0.0
+  },
+  {
+   "key": "TEVA-OLD09152026",
+   "name": "Teva Pharmaceutical industries Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "TGBAX",
+   "name": "Templeton Global Bond Adv",
+   "amount": 0.0
+  },
+  {
+   "key": "TGEIX",
+   "name": "TCW Emerging Markets Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "TGEPX",
+   "name": "TCW Emerging Markets Income Plan",
+   "amount": 0.0
+  },
+  {
+   "key": "TGMNX",
+   "name": "TCW Total Return Bond Fund Class N",
+   "amount": 0.0
+  },
+  {
+   "key": "TGNA",
+   "name": "Tegna Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "TGOPY",
+   "name": "3I Group Unsp ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "THIFX",
+   "name": "Thornburg Limited Term Income A",
+   "amount": 0.0
+  },
+  {
+   "key": "THIIX",
+   "name": "Thornburg Limited Term Income I",
+   "amount": 0.0
+  },
+  {
+   "key": "THLCX",
+   "name": "Thrivent Large Cap Growth S",
+   "amount": 0.0
+  },
+  {
+   "key": "THLIX",
+   "name": "Thrivent Limited Maturity Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "THLLY",
+   "name": "Thales Sa",
+   "amount": 0.0
+  },
+  {
+   "key": "THMAX",
+   "name": "Thrivent Moderate Allocation A",
+   "amount": 0.0
+  },
+  {
+   "key": "THMBX",
+   "name": "Thrivent High Inc Muncpl Bd S",
+   "amount": 0.0
+  },
+  {
+   "key": "THMR-OLD04152026",
+   "name": "Thornburg Mortgage Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "THYFX",
+   "name": "Thrivent Diversified Income Plus I",
+   "amount": 0.0
+  },
+  {
+   "key": "TIBAX",
+   "name": "Thornburg Invt Income Builder A",
+   "amount": 0.0
+  },
+  {
+   "key": "TIGO",
+   "name": "Millicom Intl Cellular",
+   "amount": 0.0
+  },
+  {
+   "key": "TLVIX",
+   "name": "Thrivent Large Cap Value Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TLVOX",
+   "name": "Thrivent Low Volatility Equity S",
+   "amount": 0.0
+  },
+  {
+   "key": "TMAAX",
+   "name": "Thrivent Moderately Aggressive Allocation A",
+   "amount": 29254.03
+  },
+  {
+   "key": "TMAFX",
+   "name": "Thrivent Moderately Aggressive Allocation Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TMAIX",
+   "name": "Thrivent Moderate Allocation S",
+   "amount": 0.0
+  },
+  {
+   "key": "TMBIX",
+   "name": "Thrivent Municipal Bond Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TMCI",
+   "name": "Treace Med Concepts Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "TMCPX",
+   "name": "Touchstone Mid Cap Fund Class Y",
+   "amount": 0.0
+  },
+  {
+   "key": "TMLDX",
+   "name": "Thrivent Multidimensional Income S",
+   "amount": 0.0
+  },
+  {
+   "key": "TMSIX",
+   "name": "Thrivent Mid Cap Stock S",
+   "amount": 0.0
+  },
+  {
+   "key": "TOST",
+   "name": "Toast Inc Class A",
+   "amount": 0.0
+  },
+  {
+   "key": "TPCQX",
+   "name": "Prudential Core Bd Q",
+   "amount": 0.0
+  },
+  {
+   "key": "TRAIX",
+   "name": "T. Rowe Price Capital Appreciation I",
+   "amount": 0.0
+  },
+  {
+   "key": "TRGXX",
+   "name": "T Rowe Price US Treasury Money I",
+   "amount": 603.79
+  },
+  {
+   "key": "TRRBX",
+   "name": "T Rowe Price Retirement 2020",
+   "amount": 0.0
+  },
+  {
+   "key": "TSCGX",
+   "name": "Thrivent Small Cap Growth S",
+   "amount": 0.0
+  },
+  {
+   "key": "TSCSX",
+   "name": "Thrivent Small Cap Stock S",
+   "amount": 0.0
+  },
+  {
+   "key": "TSRYY",
+   "name": "Treasury Wine Estates Ltd",
+   "amount": 0.0
+  },
+  {
+   "key": "TTE-OLD12092025",
+   "name": "TotalEnergies SE",
+   "amount": 0.0
+  },
+  {
+   "key": "TTNDY",
+   "name": "Techtronics Ind Ltd Spons ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "TV",
+   "name": "Grupo Televisa SA",
+   "amount": 0.0
+  },
+  {
+   "key": "TWAAX",
+   "name": "Thrivent Partner Worldwide Allocation A",
+   "amount": 0.0
+  },
+  {
+   "key": "TWAIX",
+   "name": "Thrivent Partner Worldwide Allocation Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "TXNM",
+   "name": "TXNM Energy Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "TYA",
+   "name": "Simplify Exchange Traded Funds Risk Parity Trea",
+   "amount": 0.0
+  },
+  {
+   "key": "UBVFX",
+   "name": "Undiscovered Managers Behavioral Value R6",
+   "amount": 0.0
+  },
+  {
+   "key": "UBVSX",
+   "name": "Undiscovered Managers Behavioral Value Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "UCBJY",
+   "name": "Ucb S A",
+   "amount": 0.0
+  },
+  {
+   "key": "UCON",
+   "name": "First Trust TCW Unconstrained Pls Bd ETF",
+   "amount": 14921.76
+  },
+  {
+   "key": "UMBMX",
+   "name": "Carillon Scout Mid Cap Instl",
+   "amount": 0.0
+  },
+  {
+   "key": "UNIT",
+   "name": "Uniti Group Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "UPMMY",
+   "name": "Upm-Kymmene Corp Adr Unsponsor Ed",
+   "amount": 0.0
+  },
+  {
+   "key": "UPRO",
+   "name": "Proshares UltraPro S&P 500",
+   "amount": 0.0
+  },
+  {
+   "key": "URA",
+   "name": "Global X Uranium ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "USAS",
+   "name": "Americas Gold And Silver Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "USIG",
+   "name": "iShares Broad USD Invm Grd Corp Bd ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "USMC",
+   "name": "Principal US Mega-Cap Multi-Factor ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "UTI",
+   "name": "Universal Technical Institute Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "VBIAX",
+   "name": "Vanguard Balanced Index Adm",
+   "amount": 0.0
+  },
+  {
+   "key": "VBLAX",
+   "name": "Vanguard Bd Index Fd Inc Lng Trm Idx",
+   "amount": 0.0
+  },
+  {
+   "key": "VCOBX",
+   "name": "Vanguard Core Bond Fund Admiral Shares",
+   "amount": 0.0
+  },
+  {
+   "key": "VERU",
+   "name": "Veru Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "VEXRX",
+   "name": "Vanguard Explorer Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VFIIX",
+   "name": "Vanguard GNMA",
+   "amount": 0.0
+  },
+  {
+   "key": "VFIJX",
+   "name": "Vanguard GNMA Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VFORX",
+   "name": "Vanguard Target Retirement 2040",
+   "amount": 0.0
+  },
+  {
+   "key": "VFVA",
+   "name": "Vanguard Wellington Fd US Value Factor ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "VLUE",
+   "name": "iShares MSCI USA Value Factor",
+   "amount": 0.0
+  },
+  {
+   "key": "VMEO",
+   "name": "Vimeo Inc",
+   "amount": 0.0
+  },
+  {
+   "key": "VMFXX",
+   "name": "Vanguard Money Market Reserves Fed",
+   "amount": 0.0
+  },
+  {
+   "key": "VSEIX",
+   "name": "JP Morgan Small Cap Equity Fund Class I",
+   "amount": 0.0
+  },
+  {
+   "key": "VTMSX",
+   "name": "Vanguard Tax Managed Small Cap Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VUSE",
+   "name": "Vident Core US Equity",
+   "amount": 0.0
+  },
+  {
+   "key": "VUZI",
+   "name": "Vuzix Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "VWALX",
+   "name": "Vanguard High-Yield Tax-Exempt Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VWIAX",
+   "name": "Vanguard Wellesley Income Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VWNAX",
+   "name": "Vanguard Windsor II Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "VWNEX",
+   "name": "Vanguard Windsor Admiral",
+   "amount": 0.0
+  },
+  {
+   "key": "WACPX",
+   "name": "Western Asset Core Plus Bond I",
+   "amount": 0.0
+  },
+  {
+   "key": "WATFX",
+   "name": "Western Asset Core Bond I",
+   "amount": 0.0
+  },
+  {
+   "key": "WEFIX",
+   "name": "Weitz Short Duration Income Instl Fund",
+   "amount": 0.0
+  },
+  {
+   "key": "WFBFX",
+   "name": "American Capital World Bond F3",
+   "amount": 0.0
+  },
+  {
+   "key": "WH",
+   "name": "Wyndham Hotels & Resorts",
+   "amount": 0.0
+  },
+  {
+   "key": "WPP",
+   "name": "WPP Group PLC",
+   "amount": 0.0
+  },
+  {
+   "key": "WSBIX",
+   "name": "Allspring Fds Short Term Municipal Bd Fd Instl Cl",
+   "amount": 0.0
+  },
+  {
+   "key": "WSHAP",
+   "name": "Washington Fed 4.875% Ser-A",
+   "amount": 3922.5
+  },
+  {
+   "key": "XLRE",
+   "name": "SPDR Real Estate Select Sector ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "XME",
+   "name": "SPDR Ser TR S&P Metals & Mining ETF",
+   "amount": 0.0
+  },
+  {
+   "key": "YAHOY",
+   "name": "LY Corp",
+   "amount": 0.0
+  },
+  {
+   "key": "YARIY",
+   "name": "Yara Intl Asa Sponsored ADR",
+   "amount": 0.0
+  },
+  {
+   "key": "ZG",
+   "name": "Zillow Group Inc A",
+   "amount": 0.0
+  },
+  {
+   "key": "ZVZZT",
+   "name": "FIX Test Symbol",
+   "amount": 0.0
+  }
+ ],
+ "total": 773
+}
