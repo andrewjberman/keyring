@@ -284,3 +284,79 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The fourth verdict applies only when no registry row resolves a system (BF-t-2's face, from _slots R1.e). infra/logic/registry/resources.json holds a row placing openpyxl-layer under tradeops, so the name grades OUT-OF-PATTERN with a complete fix that adds a system. Whether a row outranks the ruling for layers, or the row should go, is the registry owner's and the CTO's; nothing was changed."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S4 -- the cell's DIFFERENCE CONTROL (daily-named rule on cron(30 22 ? * MON-FRI *) reads agrees=False) contradicts AMENDMENT 1 P1, under which that cron gives daily and agrees=True
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T13:58:30Z",
+  "one_line": "the cell's DIFFERENCE CONTROL (daily-named rule on cron(30 22 ? * MON-FRI *) reads agrees=False) contradicts AMENDMENT 1 P1, under which that cron gives daily and agrees=True",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_cadence.py (branch wk-LGIC_BLANKFIX-1): CADENCE-TEST ok=True cases=45",
+      "python lib/opal_naming_cadence.py contradicted infra/aws/terraform/bd-pipeline: CADENCE-CONTRADICTED ok=True root=infra/aws/terraform/bd-pipeline rows=20 contradicted=0",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/E1_CADENCE_RULES_RATIFIED.md (Correction to this seat's round-1 analysis)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1 cell text: a name carrying daily on cron(30 22 ? * MON-FRI *) reads agrees=False, the same name on cron(30 22 * * ? *) reads agrees=True.",
+  "world_is": "AMENDMENT 1 P1 (NAMING_SCHEMA.json v1.16 cadence.daily_definition) gives daily to a once-a-day cron on five or more days of the week, so word_for(cron(30 22 ? * MON-FRI *)) is daily and verdict_for reads agrees=True for a daily-named rule; the amendment governs where it and the cell text differ. The test file keeps a difference control of the same shape on a schedule that does NOT give daily (a daily-named rule on rate(15 minutes) reads agrees=False; on cron(30 22 * * ? *) agrees=True) and asserts MON-FRI agrees=True. Real root: contradicted=0."
+}
+```
+
+## LGIC_BLANKFIX-W1-S5 -- choices the cell left open: a ruled event rule's row word is its on-{event} tail, and word_for also reads */N, 0/N minute and hour steps
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T13:58:30Z",
+  "one_line": "choices the cell left open: a ruled event rule's row word is its on-{event} tail, and word_for also reads */N, 0/N minute and hour steps",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_cadence.py estate (branch wk-LGIC_BLANKFIX-1): CADENCE-ESTATE ok=True rows=142 decided=119 undecided=23",
+      "lib/opal_naming_cadence.py cadences() and _cron()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1: a ruled event rule has the complete canonical name in lib/opal_naming_event_rules.json; word_for returns the ratified word for each period AMENDMENT 1 names by the same exact-period rule as today.",
+  "world_is": "The cell does not say what the cadences() row word is for the ruled event rule, nor whether step crons are read. Built: the ruled row's word is the tail of the canonical from -on- ('on-session-complete'), which is what _cadence_slot reads from the renamed form, so it agrees once renamed; the root therefore prints decided=20 undecided=0. Cron minute steps */N and 0/N (N dividing 60) give {N}min, and an hour step 0/N or */N (N dividing 24, N 2 to 23, minute single, every day) gives {N}h; a step that does not divide the period (0/7) stays undecided. Whole estate: rows=142 decided=119 undecided=23 (12 unruled event rules, 2 non-literal expressions, 1 Nth-weekday, 7 several-hours-a-day, 1 rate(72 hours))."
+}
+```
+
+## LGIC_BLANKFIX-W1-S6 -- the naming commit limb (ENFORCE) refuses lib/opal_naming_event_rules.json, the data file the cell mandates, as a NEW hand-kept carrier of 'bd' and '49f'
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T14:06:53Z",
+  "one_line": "the naming commit limb (ENFORCE) refuses lib/opal_naming_event_rules.json, the data file the cell mandates, as a NEW hand-kept carrier of 'bd' and '49f'",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- lib/opal_naming_event_rules.json (branch wk-LGIC_BLANKFIX-1, 2026-10-07): ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). naming-gate REFUSE lib/opal_naming_event_rules.json:5 bd-49f-session-complete -> lookup('49financial'); REFUSE :7 blackdiamond-49f-runner-on-session-complete -> lookup('49financial'); NAMING-GATE: REFUSE 2 graded",
+      ".tools/naming-gate.py header, THE CONTEXT RULE: a firm token is permitted only in infra/logic/registry/*.json, generated blocks, key()/address()/name()/lookup() arguments, or opal_name module arguments; nothing admits lib/*.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1: ruled event-rule rows are kept as DATA in a new file lib/opal_naming_event_rules.json, {name, type, canonical, evidence}, inside the order's write grant.",
+  "world_is": "The ruled row holds two real names (bd-49f-session-complete and its ruled canonical). The commit limb is in ENFORCE and refuses both strings in a new file outside the registry, with no override a worker may use. The file is written and the library reads it; it is NOT committed. The branch tip commit carries the code, tests and rows, and lib/opal_naming_cadence.py fails loud (FileNotFoundError) on a checkout without that file. The issuer or the CTO decides the carrier: an R20 declared exception for the file, or the rows in a path the context rule admits (infra/logic/registry/, outside this grant). The order is NOT flipped to complete."
+}
+```
