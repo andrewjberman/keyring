@@ -119,3 +119,35 @@ history-owed step and top-up writer, the request off. Beside both: the reads of 
 (CLAUDE.md: no vendor call without his explicit per-use word; PRD ADDENDUM G.2).
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 4 -- ROUND 25 ANALYSIS (2026-10-07 ~23:5xZ), on `3.0.0_SA_CVO~RV` slug msg 31476 (`ADJUDICATION_v30.Z.md` @e3cc04e7bb)
+
+**rg-1 J1 NOT MET. Nothing was applied. mr-1 J1 MET (210 of 210 hovers).**
+
+**R9 of ADDENDUM 3 read the fault BACKWARDS, and so did rows Z-S69 and Z-S70.** They said 430 good closes of 2026-09-29 were
+being dropped. The CVO's hand read of one figure (C1 of the CTO half) found the object filed under 2026-09-29 holds 09-30's
+closes: 47 of 57 dollar closes equal the funds' 09-30 valuations; MediaTek in CGIC reads +1.22 percent where the fund's own
+09-29 return is -7.36. The readers ignoring that object was protecting the page. The repair as built would have put next-day
+closes on 2,418 table rows and 408 chart points, and every count in its pair was consistent with itself.
+
+**The read of every object** (`2.0.0_SA_COO~RV` msg 31479, row Z-S71 @bff3ec2e7f): ONE object is mis-dated, not all. 2026-10-01
+matches its own date 31 of 31; 10-02, 10-05 and 10-06 match their own dates on most closes. The `as_of` column is the PULL day,
+not the close's day.
+
+**Rulings.**
+- **R11.** This seat's term "a close is kept only where its as_of equals its partition date" (msg 31477) is WITHDRAWN: it would
+  have kept the wrong object and dropped three right ones (msg 31480).
+- **R12.** An object whose name carries no capture time is read as today, one object by the newest revision; the union applies
+  to timed objects. No served figure moves. The 2026-09-29 live-pull object is NAMED as mis-dated in the reader's test and in
+  row Z-S71.
+- **R13, binding FWD-24.** Every object a writer adds carries, per close, the trading date the close belongs to, and the reader
+  keeps a close only where that date equals the partition date. No year of closes is written without it. PRD `C-OWED-GRAIN` is
+  amended to say so at this seat's next PRD act.
+- **R14.** A never-widen pair that moves served FIGURES carries one figure read by hand against a source the producer did not
+  write. Counts that agree with each other are not that read. Cost: one figure per pair. Non-application: a pair that moves no
+  number a reader sees.
+
+**ENRICHMENT LIST.** Round 25, re-cut: the readers' grain under R12; mr-1 may ship alone, render-only, under its own pair. Round
+26: FWD-24's owed step and writer under R13, the request off.
+
+-- 1.0.0_SA_CTO~Z

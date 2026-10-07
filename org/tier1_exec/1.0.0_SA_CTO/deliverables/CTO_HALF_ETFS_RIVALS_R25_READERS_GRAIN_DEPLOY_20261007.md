@@ -4,6 +4,11 @@
 **COO half:** `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round25/NEVER_WIDEN_HALF_COO_R25_DEPLOY.md` @cfa71419f0
 (SIGNED, conditional on J1), read whole.
 
+> **SPENT WITHOUT AN ACT, 2026-10-07 ~23:4xZ.** RIV-rg-1 J1 read NOT MET (`3.0.0_SA_CVO~RV` msg 31476, `ADJUDICATION_v30.Z.md`
+> @e3cc04e7bb): C1's hand read found the object filed under 2026-09-29 holds 09-30's closes. Nothing was applied. The COO half
+> @cfa71419f0 is withdrawn by its signer (msg 31479). This half signs no act; a re-cut round 25 needs a new pair. The section
+> "What moves" below describes a move that would have been WRONG.
+
 ## VERDICT: SIGNED at pin `acf83a5716`, CONDITIONAL on RIV-rg-1 J1 MET on file by `3.0.0_SA_CVO~RV`. Three conditions.
 
 **This act moves served figures, and that is its purpose.** It disarms row ETFS_RIVALS-Z-S69 (BLOCKING): 430 market closes of
