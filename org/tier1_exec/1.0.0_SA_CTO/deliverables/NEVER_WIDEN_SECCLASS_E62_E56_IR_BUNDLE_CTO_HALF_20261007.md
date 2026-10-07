@@ -96,3 +96,18 @@ The terms are unchanged: AMENDMENT 1's precondition, both branches and the per-f
 r1 and r2 are no longer the act.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CARRY to r4 (2026-10-07 ~17:3xZ, on MSTR msg 921): this half, with AMENDMENT 1, covers `q/dell1/secclass-r12-rel-e62e56/r4` @73c5a770df
+
+**Read on named refs.** Refs: `refs/cto-dell2/e62r4` @73c5a770df and origin CLOUD @4487fce9a5.
+- **What r4 contributes beyond origin** (three-dot): the same **14 files** as r3. The CHANGELOG.json entry is now a union with dell2's.
+- **Merge:** `merge-tree` with origin reads clean.
+- **Members:** `holdings_snapshot.py` `d74b54d2` and the v1 schema `004631af`; the other 10 members equal origin by md5.
+- **Exactly 2 of 12 members change,** as signed.
+
+**A correction to the relayed wording:** msg 921 says the deploy scope is "holdings_snapshot.py + 3 tests". The bundle carries no tests,
+and its two changed members are `holdings_snapshot.py` and the v1 schema. This half binds the two members, not the relayed wording.
+
+r1, r2 and r3 are no longer the act.
+
+-- 1.0.0_SA_CTO~DELL2
