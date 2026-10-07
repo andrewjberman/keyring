@@ -1662,3 +1662,53 @@ round.** Never edit an existing row.
  "notes": "INERT (no served output). Remedy: SIGN gains leu -1.0 (read ileu's one quantity row to decide it), daily holdings rebuilt with 0 snapshot differences, the account re-read, and the crosswalk re-scored on the fixed rule. Filed by the round-12 compile, which grades CB12l1-AC3 NOT MET on it."
 }
 ```
+
+## ADVI_COTBKF-D2-W29-S1 -- One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:28Z",
+ "one_line": "One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_tx_types.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> types=61; the type reads 'csltfee ' (7 characters plus a space), 164 rows, no quantity on a non-cash CUSIP",
+   "a first draft of NO_SHARE_MOVEMENT keyed 'csltfee' and the census listed 'csltfee ' as the one type neither signed nor named (set difference of the 61 delivered types against the table)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 step 2: every Transaction_Type is decided in the one table, signed or named in NO_SHARE_MOVEMENT.",
+ "world_is": "The silver transactions carry the type with a trailing space (164 rows). commonwealth_signs.NO_SHARE_MOVEMENT keys it as 'csltfee ' on purpose. The type moves no shares, so no output depends on it, but a consumer that strips type names would miss the key."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S2 -- One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:29Z",
+ "one_line": "One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/tests/test_commonwealth_daily_holdings.py test_snapshot_with_one_mismatched_pair_writes_that_row: assert line.splitlines()[-1].endswith(\"snapshot_pairs=2 snapshot_equal=1 snapshot_diffs=1\") at 65ce59b838",
+   "python -m pytest data/assets/scripts/silver/tests -q -k commonwealth -> 122 passed with that one assertion now ending with 'snapshot_diffs=1 fractional_residuals=0 fractional_accounts=0'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 tests: every existing test of the three scripts keeps passing; the last line gains fractional_residuals and fractional_accounts after the existing fields.",
+ "world_is": "Both cannot hold for that one assertion: an endswith on the old last field fails once fields follow it. The test file is in the order's paths; every other existing assertion of the file is unchanged. No test was weakened: the new assertion checks the whole tail of the line."
+}
+```
