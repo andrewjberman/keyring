@@ -730,3 +730,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "dell1's seats (1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~M1, 2.0.0_SA_COO~H1) committed between ~07:15Z and the install with only the owned-paths gate, so their local commits before it (incl. 78756a9b74, ea7b1706a9, a35cc608fe) were not graded by the law lock, to-pipeline gate or surprise-row gate; the trunk merge at site Z grades them on the merged index. dell2 is unmeasured from here. The kit has no hook step, so every future box repeats it. The prd-header-notify orphan is repo-wide, not dell1's."
 }
 ```
+
+## NFRA_CTLPLN-S9 -- a Dell's Git for Windows sets core.autocrlf=true system-wide; every Dell commit rewrites the CRLF files it touches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "dell1 and dell2 run with core.autocrlf=true from C:/Program Files/Git/etc/gitconfig and no repo-local override; the laptop's effective value is false. A Dell's checkout writes CRLF working copies and its commits normalise CRLF and mixed files to LF, so a Dell's branch rewrites line endings the trunk keeps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 2026-10-07 ~08:05Z: git config --show-origin --get-all core.autocrlf -> file:C:/Program Files/Git/etc/gitconfig true; no repo-local value",
+      "dell1 git ls-files --eol: 60165 tracked; 2238 i/crlf, 466 i/mixed, 53429 i/lf",
+      "dell2 (0.0.0_AB_MSTR~DELL2, bus 13e46198): same system value, no override; 41,747 i/lf w/crlf working copies",
+      "q/dell1/CLOUD/r2 a9672da2a7 refused at the laptop merge: 206 CRLF endings in this file rewritten as LF (laptop 0.0.0_AB_MSTR, bus 81673b47)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The bring-up kit (Opal_New_Device_Kit_20261007 README_NEW_DEVICE.md) sets no git config; the git-pull skill's prerequisites name core.autocrlf=false for this repo.",
+  "world_is": "Neither Dell carries the repo's expected value. A bare flip to false is not a fix on a live box: the existing CRLF working copies of LF files would then commit as whole-file CRLF rewrites. The fix is the flip plus a full re-checkout of the shared tree and every worktree, with the box's seats quiet; that act is held for Andrew on both Dells. Interim on dell1: the fabric manager merges and commits shared CRLF files only from a fresh worktree checked out with core.autocrlf=false, resolving them from origin's bytes. The kit needs a git-config step (core.autocrlf=false, core.longpaths=true) before the first checkout."
+}
+```
