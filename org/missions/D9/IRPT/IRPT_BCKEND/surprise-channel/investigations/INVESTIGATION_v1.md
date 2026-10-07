@@ -19851,3 +19851,33 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The function logs refusals only; an admitted read leaves no line and no record of covered set or caller scope, so the count is 0 identified but exposure is NOT excluded. The fail-open branch is still served live (fix IB-pr-343 not landed), so any read admitted from now is equally unrecoverable until a decision line is logged or the branch is closed."
 }
 ```
+
+## IRPT_BCKEND-S381 -- an unregistered operator script in export/ refuses the signed emergency build; the override is the only in-lane route
+
+```json
+{
+  "id": "IRPT_BCKEND-S381",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T14:03:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "build-and-upload.sh refused the TO-IB-pr-349 emergency build at pin b921635dad: ADHC_DRIFTD.002 (disk -> manifest) flagged backfill_covered_account_ids.py present in infra/aws/lambda/investor-reporting/export/ but absent from lambda-source-map.json files[]. The file was added by TO-IB-pr-344 (@802216e2e0), a different cell, and is the PRD v0.30 item 35 back-fill tool that both never-widen halves name as the NEXT act under its own pair. Registering it would make the package 64 members and widen the signed set, which both halves stop the release for and the TO's source-map bound forbids; editing the script ignore list is out of this lane. BAU_PARITY_SKIP=1 was taken: it disables ONLY the disk->manifest extras limb, leaving the manifest->disk existence check and every member sha256 verification in force, and it produces exactly the 63-member / 9-changed package both halves signed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build refusal, first run with no override: 'ERROR: ADHC_DRIFTD.002 parity check failed - Files present in source_dir but NOT in lambda-source-map.json files[]: + backfill_covered_account_ids.py'; PARTIAL - 0 built, 1 failed",
+      "git ls-tree: the file is present at BOTH b921635dad and d1abea06f8, so building AT the pin does not avoid the limb; positive control entry.py present at both",
+      "git log --diff-filter=A: introduced by 802216e2e0, TO-IB-pr-344, 0.9.0_WK_IRPT_BCKEND~145 (dry-run default, --apply never run)",
+      "import census over the export source dir: 45 .py files scanned, 1 reference to backfill_covered_account_ids and it is tests/test_backfill_covered_account_ids.py:22 -- a path the parity limb itself excludes (test_*.py) and the build never packages; positive control 13 imports of 'bundle' proves the scanner works, so the zero over packaged members is a true absence",
+      "build-and-upload.sh:399-411 the manifest->disk existence check runs BEFORE the limb and passed; :431 the override guards only the extras loop; staging printed 'sha256 verified' for all members incl. entry.py@34f71024a1",
+      "the script's own docstring: '--apply ... is the issuer's act under a never-widen pair and is NOT run by the worker that built it'"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 step 3: the build runs from a tree at b921635dad or a descendant whose census is unchanged; both halves: exactly nine changed members of 63, one member more or fewer stops the release.",
+  "world_is": "The id is BARE and deliberately gapped to S381: the device register holds coordinates 'D1', 'D2', 'Z' and NONE for the laptop, so a laptop seat can only mint a bare id and races dell2's bare sequence (dell2 r4 is at bare max S370). That race already forced the S370 withdrawal @3f56b516ee. The gap leaves S371-S380 for dell2 near-term mints; it narrows the window, it does not close it, and the id space itself is the gate owner's to fix. The build refuses at the pin and at its descendant for a reason neither half anticipated: a sibling cell left an operator script in the shared source dir unregistered. The ImportError failure mode the limb exists to catch cannot occur here -- no packaged member imports the file. The signed member set is unchanged by the override. What is owed, and is NOT this cell's: register backfill_covered_account_ids.py in files[] (or the script ignore list) under TO-IB-pr-344's own pair, so the next build of this function does not need an override.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
