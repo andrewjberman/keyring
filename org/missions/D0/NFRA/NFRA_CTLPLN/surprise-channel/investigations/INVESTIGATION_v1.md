@@ -2141,3 +2141,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
 }
 ```
+
+## NFRA_CTLPLN-W13-S16 -- two installed RECORDs (PyMuPDF, ruff) list every file twice, once with backslash separators and a hash and onc
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T16:00:28Z",
+  "one_line": "two installed RECORDs (PyMuPDF, ruff) list every file twice, once with backslash separators and a hash and once with forward slashes and NO hash, and ruff lists its own binary at its wheel path, so a plain RECORD read marks them missing or unverifiable",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PyMuPDF 1.27.1 installed RECORD (<site-packages:3.12>/pymupdf-1.27.1.dist-info/RECORD): 109 forward-slash lines with an empty hash and 109 backslash-separator lines carrying sha256 and size for the same files, including pymupdf/_mupdf.pyd; ruff 0.15.11: 7 empty-hash lines and 8 backslash-separator lines, plus the line 'ruff-0.15.11.data/scripts/ruff.exe' (written with backslash separators, hashed, 32283648 bytes) and '../../Scripts/ruff.exe' (no hash); ruff has no entry_points.txt, so its Scripts/ruff.exe is the tool's own binary and NOT a generated launcher",
+      "org/devices/kit_python_repack.py plan_package: reads RECORD with backslashes normalised to '/', merges duplicate paths with the hashed line winning, reads a '<name>-<version>.data/scripts/<f>' line whose file is not under site-packages as '../../Scripts/<f>' (the plan notes list it), and packs ruff.exe under ruff-0.15.11.data/scripts/; with this, 0 of the 49 packages carry an unverified (empty-hash) file and ruff is built (before the merge the first cut read ruff as MODIFIED: 'ruff-0.15.11.data/scripts/ruff.exe listed in RECORD, missing on disk')",
+      "org/devices/test_kit_python_repack.py case 8 builds a synthetic distribution with exactly this duplicated shape and asserts one packed file with the hash verified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 7: RECORD paths are relative to site-packages with forward slashes; a file listed with an empty hash is not a mismatch only for RECORD itself and sometimes INSTALLER; a file listed in RECORD but missing on disk is MODIFIED.",
+  "world_is": "Two of the 49 installed RECORDs hold duplicate and partly unhashed lines (the installer that wrote them recorded both the wheel's layout and the installed layout). Read literally, the order's rule would have marked ruff MODIFIED and left it out, and would have counted PyMuPDF's compiled files as unverifiable. The worker merged the duplicates (the hashed line wins) so every byte is still compared with a hash RECORD states; this is a choice the order did not state."
+}
+```
+
+## NFRA_CTLPLN-W13-S17 -- pip rewrote the first line of four installed scripts (awscli aws and aws_completer, pdfminer.six dumppdf.py an
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T16:00:28Z",
+  "one_line": "pip rewrote the first line of four installed scripts (awscli aws and aws_completer, pdfminer.six dumppdf.py and pdf2txt.py) to this machine's python.exe path, so the kit carries them with the line put back to '#!python' and their bytes differ from the installed ones by that line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Scripts/aws and Scripts/dumppdf.py first line on disk: '#!' plus the absolute path of this machine's Python312 python.exe, followed by CRLF; the RECORD hashes match those rewritten bytes (pip hashes after the rewrite), so the byte comparison passes while the shebang is still the laptop's path",
+      "org/devices/kit_python_repack.py restore_shebang puts '#!python' back (pip rewrites a first line that starts '#!python' at install, with the Dell's interpreter) and lists each restored path in MANIFEST.json shebangs_restored: awscli 2, pdfminer.six 2; the wheel's RECORD carries the hash of the restored bytes",
+      "org/devices/test_kit_python_repack.py case 8 asserts the restored bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 7: a file outside site-packages, such as a script in Scripts/, is placed under <name>-<version>.data/scripts/; every file is compared with the hash its RECORD states before packing; a kit must not carry bytes no index ever published.",
+  "world_is": "Copying the installed script byte for byte would carry the laptop's interpreter path into the Dell's Scripts folder, where it names a python.exe that does not exist. Restoring the line makes the packed bytes differ from the installed bytes (and from the installed RECORD hash) for these four files, while matching what the package's own wheel carries; the worker chose restoration, said so here, and the order did not say it."
+}
+```
