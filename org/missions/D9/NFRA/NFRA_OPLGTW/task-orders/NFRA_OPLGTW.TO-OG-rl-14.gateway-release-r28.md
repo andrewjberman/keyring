@@ -84,6 +84,24 @@ with `LastModified`). Then the audit-lake read: the first `rivalfunds_view` reco
   `day`, `route`, `fund` kept in a rivalfunds record; the status tool failing on a well-formed id; a refused id
   making a request; tools off 66; consent off 9; a floor read off its bar.
 
+**AMENDED A1 (after Phase A; rows Z-W28-S27 to S30).**
+- **RE-CUT.** The release set gains `tests/test_deploy_base_guard.py` (cell `OG-bi-4`, source only): on the release tree
+  cut in Phase A three of its tests failed, because its rig carried no lockfile. Cut a NEW branch
+  `rel-nfra-oplgtw-r28b` in a NEW worktree `/c/tmp/og-rel24` at live `510c8cfed2`, ONE commit carrying the 8 files
+  (as r23b was cut). Leave `rel-nfra-oplgtw-r28` and `/c/tmp/og-rel23` untouched: delete nothing, move no head. Then re-run form steps 2, 3 and 7 on the NEW sha, and
+  re-read steps 1 and 4. The Phase A rehearsal (step 5) and verify-script exercise (step 6) stand: the one file that
+  reaches the host, `app/audit.py`, is byte-equal in both commits, and you prove that by blob.
+- **`rl14.AC1.sh` is amended by the issuer** (row S28): `deploy-to-ec2.sh` and `ops/` are no longer counted as host
+  files. Its expected-PASS form now reads `1 of 1`. Run it again in step 7.
+- **The floor's real-holder read stands** (row S29). It uses the issuer's off-repo file
+  `%LOCALAPPDATA%/opal/og-salt/ga1/holder_pks.json`, passed inside the SSM parameters, as in every release since r23.
+  "No principal identifier is needed by this order. Do not read one." means: read none from any OTHER source, and
+  never the sign-in cache.
+- **The audit-lake read is DROPPED from Phase B** (row S30). Phase A's read already found it: the first
+  `rivalfunds_view` record after the r27 deploy was written 2026-10-07T18:55:34Z and keeps `day` and `route`, with
+  `bytes` present and 0 other args (`W/r28_lake_read.stdout`). Write that into `W/RL14_FLOOR.json` as `lake_record`,
+  citing that file; make no lake list or read in Phase B.
+
 **THE MANIFEST'S `release_note`** holds this release's note only (the form's manifest-note rule).
 
 **TIMING.** This release does not touch the send path's file (`app/integrations/opal_portal/integration.py`), so the
@@ -146,6 +164,11 @@ once per phase.
   `eq of n` will not match and the issuer amends the script's filter BEFORE the GO (form step 7).
 - `rl14.AC2` reads `RL14_READ.json` through `rl14_attest.py`, the r27 instrument with one new field rule.
 - OWED BY THE ISSUER, carried: the content-hash read at the first real send (CTO half on r26, C1).
+- AMENDMENT 1 (20:5xZ, issuer, after Phase A and before any GO): the release is re-cut to carry `OG-bi-4`
+  (row Z-W28-S27); `rl14.AC1.sh`'s host filter drops the deploy tool's files (row S28; the criterion's `<expect>` is
+  unchanged, the script's count changes from `1 of 3` to `1 of 1`); the real-holder sentence is clarified (S29); the
+  lake read leaves Phase B because Phase A found the record (S30). Gate: LIMB 6 does not grade a modification; GATE
+  (viii) reads placeholders NONE.
 - Pre-cut 18:5xZ: see the issuance commit.
 
 <status>pending</status>
