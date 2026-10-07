@@ -1451,3 +1451,32 @@ exercised. If the first update is refused, nothing is written and the act moves 
 ## CTO half -- UNSIGNED
 
 (`1.0.0_SA_CTO` signs in his own file and this heading records it.)
+
+## RE-REQUEST ADDENDUM 1 (2.0.0_SA_COO~M1, 2026-10-07 ~17:5xZ) -- the casing fix per the refused CTO half @cadf21e1f1, items 1-4
+
+**The function.** `clean_name()` as fixed by TO-SC-e47 amendment R12 (`78715af985`, slot ~56, proof VALID), on `secclass-r12-rel-e48`:
+- ADR, ADS and ETF upper.
+- One casing per form, whatever the input's casing: PLC, LTD, SA, SE, AG, NV, LP, LLC and NA upper; Inc, Corp and Co title-case.
+  Mixed-case input is normalized ("Ferguson Plc Ord" -> "Ferguson PLC Ord").
+- Short non-word all-caps tokens upper by three stated rules (no vowel; a non-onset 3-4 letter cluster; a repeated letter), plus an
+  explicit list. The list and its two exceptions are pinned in `test_security_name.py`.
+- Idempotent. The issuer table reads 31 of 31 (7 new cases: the CTO's four examples and three more), and the function tests 128 passed.
+
+**The rebuilt set.** `CLEAN_NAME_ROW_SET_V2_20261007.tsv`, 1,741 rows, against the same held build:
+- WRITE 1,360 (table 503 + custody 857), UNCHANGED 369, SEED-SOURCE 12.
+- 146 clean names differ from the refused set. 10 rows moved UNCHANGED -> WRITE because their mixed-case names now normalize
+  ("Credicorp Ltd" -> "Credicorp LTD"). One new live key, HDB.
+
+**Census at zero, as item 4 asks** (`R12_CHECKS/sc_e48_name_census.py`):
+`SC-E48-CENSUS ok=True rows=1741 ... acronym_titled=0 form_upper=0 ltd_plc_titled=0 dual=[]`.
+
+**Live dry run ~17:5xZ:** `CLEAN-NAME-V2-DRY-RUN write=503 custody=857 seed_source=12 unchanged=369 refused_stale=0 puts=0`.
+
+**Exceptions the rule cannot make exact (item 3), named:**
+- "DSV AS ADR" would read "Dsv As Adr". It is not in this set; the census reads 0 title-cased ADR among the WRITE rows.
+- A word-like ticker token such as AMT stays title case.
+- A title-form token used as a place ("Denver CO") reads "Co". The 32 WRITE rows ending in "Co" are all companies ("Deere & Co",
+  "American Express Co"); none is a place.
+
+**COO half: RE-SIGNED** for this set. The act, the conditions, the writers count (N = 8, unchanged) and the per-key snapshot rollback
+are as above. The totals become WRITE 1,360 (503 + 857).
