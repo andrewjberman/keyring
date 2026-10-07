@@ -1,18 +1,18 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; rounds 15-22 DEPLOYED 2026-10-07 17:3xZ and the 2026-10-07 page republished; ledger legs L3-L5 open)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; rounds 15-23 DEPLOYED 2026-10-07; Andrew looked and likes the dialogs; round 24 = the chart UI cell, being cut)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-07 ~17:5xZ. The drive logs are the hour-by-hour record:
+As of 2026-10-07 ~19:5xZ. The drive logs are the hour-by-hour record:
 `org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12,13,14}Z_opal_bloomberg.md`.
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Deployed artifact pin | CLOUD **beb13d39ff** in the five rivalfunds Lambdas (rounds 15 to 22), 3,008 MB each. Ledger `etfs-rivalfunds-r22` OPEN: L1 apply and L2 republish CLOSED (@dca1f916d9); L3 the read through the gateway (sign-in wall, reader asked of the CTO); L4, L5 the 2026-10-08 11:00Z and 13:00Z REPORT lines. Rollback pin: 22844f744f (round 14) |
-| Served page | 2026-10-07 republished 17:47Z: index 1,690,862 B, 13 chart objects, equal to the prediction (`round22/served_grade_2026-10-07.json`). Republish run 164.5 s, 1,009 MB |
+| Deployed artifact pin | CLOUD **6124b079f3** in the five rivalfunds Lambdas (rounds 15 to 23), 3,008 MB each. Ledger `etfs-rivalfunds-r23` CLOSED 3 of 3 (@cdd9b8187c). Ledger `etfs-rivalfunds-r22`: L1 to L3 CLOSED (L3 on Andrew's look ~19:0xZ); L4, L5 OPEN = the 2026-10-08 11:00Z and 13:00Z REPORT lines. Rollback pins: beb13d39ff (rounds 15-22), 22844f744f (round 14) |
+| Served page | 2026-10-07 republished 19:19Z by round 23: index 1,690,296 B, 13 chart objects, `fund_sections` 0 missing of 2,247, equal to the prediction (`round23/served_grade_2026-10-07.after_r23.json`). Run 74.4 s, 558 MB |
 | pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
 | Round 14 proof | The 2026-10-07 13:00Z sweep read: four gate items MET (`round14/SWEEP_READ_2026-10-07.md` @93f23ea2f4) |
 | Built, not deployed | Rounds 15 to 22 on site-Z CLOUD; last merge c6ac7335a5; suite 876 passed, 2 skipped, 0 failed and 26 of 26 check files PASS at 23d65887ca |
@@ -85,9 +85,10 @@ The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
 | Row | Class | State |
 |---|---|---|
 | Z-S55, Z-S56, Z-S58, Z-S60 | BLOCKING, INERT | Repaired in rounds 16, 18, 19, 20; disposition is the CVO's |
-| Z-S57, Z-S61 | OBSERVATION | Served: buying_trend carries 7 securities under two keys; cause read (its G4 read omitted the parsekey column) and repaired in round 20, not yet deployed |
+| Z-S57, Z-S61 | OBSERVATION | Repaired in round 20 and SERVED: GQGU's Meta is under one key in both served tables (read 19:4xZ); the 16 remaining same-name pairs are different listings or share classes and stay (CTO ruling msg 31341); the CVO re-reads Z-S57 |
 | Z-S63 | BLOCKING, INERT | The deployed daily Lambda used 864 MB of 1,024 MB; the new stages peak at 1,552 MB on site Z. Ruled: 3,008 MB in the same apply; the first runs' REPORT lines are ledger legs |
-| Z-S65 | OBSERVATION | 4 GQGU mentions (META, ASML) open a dialog holding only a name (served today: 0); stated in the COO half; repair is one cell of the next round |
+| Z-S65, Z-S66 | OBSERVATION | Repaired by round 23 (RIV-ks-1) and SERVED 19:19Z: 0 missing; ks-1 J1 MET on the real run (CVO ADJUDICATION_v25); disposition is the CVO's |
+| Z-S67, Z-S68 | OBSERVATION, ARMED / INERT | bbg_budget's two checks use different units (surfaced by 0.0.3_BG_BBGTerminal); Z-S68 is this seat's disarm statement: the backfill's guard is check_points, points requested bound records returned. Day 1's log gives the measured ratio |
 | Z-S62 | OBSERVATION | The 11:00Z vehicle runs the working tree: round 20's enrichment change first runs 2026-10-08 11:00Z; its log line is owed a read |
 | Z-W10-S1 | OBSERVATION | The backfill's one CRNCY lookup is unmeasured at real size (282 keys) |
 | Z-S59 | OBSERVATION | Down to 4 of 393 strips, each a marker in the part month before the window's first day (by design, marked with an asterisk) |

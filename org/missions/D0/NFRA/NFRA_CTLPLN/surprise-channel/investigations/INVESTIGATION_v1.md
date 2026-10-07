@@ -1986,3 +1986,501 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
 }
 ```
+
+## NFRA_CTLPLN-S17 -- disarm record for NFRA_CTLPLN-S13: --no-install measured on bun 1.3.9 and 1.4.2; dell2 covered by Andrew's word; a bare run still fetches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T14:23:01Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-S13: the flag --no-install stops bun's registry fetch on bun 1.3.9 (laptop) and bun 1.4.2 (dell1), measured by request count; dell2 is not measured, on Andrew's word that dell1's read stands for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Laptop, issuer's own run at 3b95b7c3aa: BUN-NO-EGRESS bun=1.3.9 positive_requests=6 candidates=9 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell1, bus c1d80ce3 (file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md), behind an outbound firewall block on bun.exe that Andrew added in an elevated shell: BUN-LISTENER-SELFCHECK ok=True; BUN-NO-EGRESS bun=1.4.2 positive_requests=6 candidates=12 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell2: NOT measured. Andrew-direct at the dell2 terminal ~14:0xZ as relayed by 0.0.0_AB_MSTR msg 106292, verbatim: 'we dont need to test the bun firewall process here because we've already proved it on dell1.' dell2 runs bun 1.4.2 by its own earlier report (msg 106209)",
+      "Merged @e131723efb: org/devices/kit_bun_no_egress.py wrap carries the flag and refuses install-class commands; .tools/wk-provision.sh refuses its install mode without a non-public registry redirect (CTk2-AC8 7/7, CTk2-AC9 ok)",
+      "Not read at this filing: dell1's confirmation that the firewall rule was removed; dell1's full result file (kept on dell1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-S13 (ARMED): bun fetches from the public registry on a run outside a node_modules tree; disarm when the measured form is in the kit and each box has read it back.",
+  "world_is": "The measured form is in the kit and two of three boxes read it back; the third is covered by Andrew's word, not by a measurement. What the disarm is: a wrapper and a flag a seat must USE. A bare `bun run` of a file outside a node_modules tree still fetches on every box; nothing mechanical stops a seat from typing it. The CTO's interim rule (msgs 106214, 106220: bun only inside a portal tree that holds node_modules; no bun install) therefore remains the standing control, and S13 is disarmed only for a seat that follows it or uses the wrapper. Whether a mechanical stop is wanted (a PATH shim, a standing firewall rule) is an open question for the CTO and Andrew, not built here."
+}
+```
+
+## NFRA_CTLPLN-W8-S3 -- TO-CT-d-5 amendment: dell_respol_policy.json has no generator and the script has no --check
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The amendment says dell_respol_policy.json is produced by tests/derive_respol_actions.py and names a --check and a regenerate command; the script is a read-only checker that takes no argument and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py main(): reads the four policy documents and the Deny statement, prints, returns; no write call and no argparse",
+      "git log --follow dell_respol_policy.json: one commit, ce05f0e838, the file created by hand with the build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: add sqs:SetQueueAttributes by the file's own generator (tests/derive_respol_actions.py), regenerate with the generator's own command, run its --check.",
+  "world_is": "The JSON (hand-wrapped, one Deny statement, sorted actions) was edited by inserting one sorted entry in place; derive_respol_actions.py was changed to carry the action as RULED-IN (removed from RULED_ALLOWED) and its single run is the check: RESPOL-DERIVED ... actions=75 covered=75/75 ruled_allowed_caught=0 ok=True. No --check flag exists and none was added."
+}
+```
+
+## NFRA_CTLPLN-W8-S4 -- TO-CT-d-5 amendment: the simulation block count 13 needs one arm the amendment did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The existing respol block already held sqs:SetQueueAttributes -> allowed, so adding the two named arms to a block of 11 cannot read 13: that arm has to flip, giving 12; a neighbouring-action control (sqs:TagQueue -> allowed) was added to reach the ordered respol_ok=13/13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py RESPOL list before this pass: 11 arms including (sqs:SetQueueAttributes, allowed)",
+      "last line of the simulation after the edit: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: extend the block by two arms (SetQueueAttributes -> explicitDeny; CreateQueue -> allowed); the block then reads 13 of 13.",
+  "world_is": "Block is now 9 explicitDeny arms + sqs:SetQueueAttributes explicitDeny + sqs:CreateQueue allowed + sqs:TagQueue allowed + sns:SetTopicAttributes allowed = 13; the old SetQueueAttributes-allowed arm was changed, not kept. TagQueue is the unnamed addition: it shows the Deny does not catch the neighbouring queue action the create policy allows."
+}
+```
+
+## NFRA_CTLPLN-W8-S5 -- TO-CT-d-5 amendment: the Deny leaves a dead Allow, and a read-only derivation still lists SetQueueAttributes as a queue update need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "dell_create_policy.json still Allows sqs:SetQueueAttributes and tests/derive_resource_kinds.py still lists it as an update action of aws_sqs_queue; the explicit Deny now overrides both, so a Dell can no longer update a queue, and six roots that declare a separate queue policy cannot be applied from a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/queue_attribute_writers.json declared.by_root and the native Grep over infra/aws/terraform for the four resource kinds: 23 aws_sqs_queue, 9 aws_sqs_queue_policy, 0 redrive_policy, 0 redrive_allow_policy",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json line 36 and tests/derive_resource_kinds.py line 80 at b062620452"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT: deny sqs:SetQueueAttributes for the Dell group; a later change goes by write-in; say which roots declare a separate policy resource and whether any is Dell-placed.",
+  "world_is": "Read-only files are unchanged (dell_create_policy.json line 36, derive_resource_kinds.py line 80); check_identity.py still reads ok=True. Roots declaring a separate aws_sqs_queue_policy: globgrph, inf-pipeline, nfra-agentbus, nfra-agentbus-alyssa01, opal-gateway, partner-etl-ops-alerts (9 resources). No project row in org/projects carries a Dell fabric (392 rows: 38 laptop, 16 site-z, 338 unset), and the root-to-project mapping was not read, so no root is shown Dell-placed or not."
+}
+```
+
+## NFRA_CTLPLN-W13-S14 -- ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 bu
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 but is neither pure Python nor stable-ABI; the order's classes do not name it, so it is classed ABI3-INSTALLED with fit_kind no-abi-platform",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json requirements[name=ruff]: class ABI3-INSTALLED, tags [py3-none-win_amd64], fit_kind no-abi-platform, evidence <site-packages:3.12>/ruff-0.15.11.dist-info",
+      "packaging.tags.compatible_tags(python_version=(3,14), interpreter='cp314', platforms=['win_amd64']) yields py3-none-win_amd64, so the target installs it; the order defines PURE-INSTALLED as Root-Is-Purelib true with py*-none-any and ABI3-INSTALLED as cp3X-abi3-win_amd64 only",
+      "the other ABI3-INSTALLED rows are true stable-ABI builds (bcrypt cp39, curl_cffi cp39, psutil cp37, PyMuPDF cp310, cryptography cp311, safetensors cp38, tokenizers cp39); the tool also reserves fit_kind native-target for an installed cp314 build, which no copy on this machine is"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: an installed distribution is PURE-INSTALLED (py3-none-any, Root-Is-Purelib true), ABI3-INSTALLED (cp3X-abi3-win_amd64, X <= 14), or does not fit (cp312-cp312-win_amd64); no class for a platform-specific, ABI-free build.",
+  "world_is": "ruff 0.15.11 is a py3-none-win_amd64 wheel: it fits 3.14 on win_amd64 and has no Python-version binding, but its files include a platform binary and a Scripts entry, so a re-pack from RECORD must keep the platform tag. The tool classed it ABI3-INSTALLED and says why in fit_kind; the issuer may rename or split the class."
+}
+```
+
+## NFRA_CTLPLN-W13-S15 -- this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL-ON-DISK: every non-compiled-for-3.12 package depends on an offline re-pack from installed files, and the 3.14 stand-in folder is empty",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json sources: pip cache present, entries 0, bytes 0; kit pack output (3 directories under the temporary root), Downloads (45597 directories walked), this worktree and the base checkout: 0 wheels identified (the only .whl file under the repository is a 0-byte numpy-1.26.4-cp312 file under infra/aws/lambda/layers/pyiceberg-nessie-deps/python, counted not_a_wheel)",
+      "interpreters: py -0p lists one (3.12.10 under the user's Programs\\Python\\Python312); a Program Files Python314 folder has Doc, Lib/site-packages (empty) and Scripts but no python.exe; HKLM PythonCore 3.14 has no InstallPath; HKCU PythonCore 3.12 names an anaconda3 folder that does not exist",
+      "pip cache list prints 'No locally built wheels cached.'; the kit's own pack tool (a) 'wheel already in pip's local cache' therefore finds nothing on this machine"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: sources to read include the pip HTTP and wheel caches, kit pack output, Downloads and the repository for wheel files, and the installed distributions of every interpreter py -0p lists.",
+  "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
+}
+```
+
+## NFRA_CTLPLN-S18 -- requirements.txt omits 73 dependencies of the 67 packages it lists; 12 are compiled for Python 3.12 only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T15:28:38Z",
+  "one_line": "The regenerated root requirements.txt lists 67 packages and omits 73 that those packages themselves require; 12 of the 73 are compiled for Python 3.12 only, so an install from the file alone would not be complete on any box and cannot be on a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's re-run on the merged tool: PY-REQ lines=67 parsed=67 unparsed=0 in_both=20 only_requirements=47 only_census=0 ok=True; PY-WHEELS target=cp314-win_amd64 requirements=67 wheel_on_disk=0 pure_installed=41 abi3_installed=8 needs_fetch=18 not_applicable=0 unparsed=0 undeclared_deps=73 ok=True",
+      "Decision file org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md (merged @bd489b912b): the 73 names with the requirement that needs each; in a secondary read of the installed copies 59 are pure, 12 compiled for cp312 only (aiohttp, cffi, charset-normalizer, click, contourpy, coverage, fonttools, greenlet, jiter, kiwisolver, mmh3, regex), 2 fit",
+      "requirements.txt @bc10584676 (3.0.0_SA_CVO, on Andrew's word); the file's own caveat: a clean-start resolve is not verified",
+      "1.0.0_SA_CTO msg 106317 item 3: 'The 73 omitted dependencies are a defect in requirements.txt; file it for 3.0.0_SA_CVO, who wrote the file.'",
+      "How the 73 were counted: the Requires-Dist of each found installed copy, markers evaluated for Python 3.14 on 64-bit Windows; a dependency needed only under another marker is not counted; a package with no installed copy here contributes none"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The record for the regenerated file: requirements.txt holds all actual dependencies.",
+  "world_is": "The file holds the packages the firm's code imports directly. Their own dependencies are not listed, so the list is complete for an index-backed install (pip resolves the rest) and incomplete for an offline one, which is the only kind a Dell may make. The Python kit therefore installs with no dependency resolution and reports an import that fails for a missing dependency as its own class. Owner of the file: 3.0.0_SA_CVO. Whether the file should pin the full closure, or a second generated file should, is for that owner and the package-intake design (PRD v0.16, C-INTAKE)."
+}
+```
+
+## NFRA_CTLPLN-W6-S6 -- AMENDMENT 4: check_dell_fence_join.py is still a reader that ignores an unknown row key, and it is outside the grant and pinned
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "After the validator and the module refuse an unknown key, tests/check_dell_fence_join.py (render_arns, registry_diff) still ignores one: measured by derive_fence_row_shape.py, a scratch row with an unknown key renders the dell1 ARN into 3 of 3 buckets there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output (AC2 after the build): validator refusals 3 for rows plus an unknown key; terraform plan in a scratch module rc=1 (precondition); join check renderer: dell1 ARN in the rendered list of 3/3 buckets; FENCE-ROW-SHAPE ... extra_key_ignored=1 extra_key_refused=2",
+      "infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py render_arns() reads r.get('arn') / r['principal'] only; the check is not in this amendment's write grant and the order says not to touch it or its pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4: every reader of the file must refuse an unknown key, never ignore it.",
+  "world_is": "Two of the three row-parsing readers now refuse (the validator, and the module at plan time). The third is a test that renders nothing into any policy, so the hazard is INERT: it can only mis-grade, not admit. It is left as it is by the order; the issuer re-grades it at the merge when it moves the pin."
+}
+```
+
+## NFRA_CTLPLN-W6-S7 -- AMENDMENT 4: derive_fence_row_shape.py (AC2) did not finish in 120 s at the start of this pass, and its probe had to change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "CT4d2-AC2's script read rc=124 after 120 s on this worktree before any edit; the order did not say it would need changes, but the amendment's closed key set makes its actions+prefix probe a valid row, and its scratch module copy collided with the landed output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py before any edit: real 2m0.7s, rc=124 (check_dell_fence_join.py in the same worktree: 1m9s, rc=0)",
+      "after the edit: real 42 s, rc=0, last line FENCE-ROW-SHAPE rows=29 key_sets=1 rows_with_actions=0 rows_with_prefix=0 readers=16 extra_key_ignored=1 extra_key_refused=2 can_carry_today=False ok=True",
+      "changes: sim_call caches results in a temporary directory outside the repository (key = the whole request incl. the document bytes, TTL 3600 s, an ERROR never cached); 6 workers instead of 2; the extra-key probe is now an UNKNOWN key (actions and prefix are known keys); the scratch module copy no longer writes the proposed HCL (it is the module now)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 criterion CT4d2-AC2 and AMENDMENT 4's rule that every invocation finish under timeout 120.",
+  "world_is": "The simulator shim runs about 3 s a call; the old script made ~38 calls with 2 workers. The script's meaning is kept (rows, readers, can_carry_today as measured) and its three-reader count now reads 1 ignored, 2 refused."
+}
+```
+
+## NFRA_CTLPLN-W6-S8 -- AMENDMENT 4: lib/tests/test_opal_naming.py reads 6 failed / 87 passed on the pinned base, not the 2 / 91 its docstring states
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "Before any edit of lib/opal_naming.py (the base file written over the worktree copy, then restored) pytest on test_opal_naming.py gives 6 failed, 87 passed; after the edit the same 6 ids fail and 87 pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/tests/test_opal_naming.py with the file at 06c783b92b: 6 failed, 87 passed; failing ids: test_grade_agrees_with_every_worked_case for inf-silver-chain|LAMBDA, Inflection-SilverChain-DimConversionFailure|CW_ALARM, inf/otp-relay/token|SECRET, opal-portal-data-proxy-api|API_GW, wsb-49f-model-aua-pull-daily|SCHEDULE; and test_lambda_plane_consumers_is_import_aware_not_a_bare_substring (8 == 7)",
+      "the same pytest after the edit: the identical six ids, 6 failed, 87 passed; run as a script (python lib/tests/test_opal_naming.py) the file prints nothing and exits 0 both before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the test file's docstring: the baseline is 2 failed / 91 passed.",
+  "world_is": "The baseline has moved since the docstring was written; the identical failing set before and after is the control, so this build changes none. Not adjudicated here."
+}
+```
+
+## NFRA_CTLPLN-W6-S9 -- AMENDMENT 4: the module also refuses a half-scoped or malformed scoped row, which the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "The order asked the module to refuse an unknown key; main.tf also refuses a row with only one of actions/prefix, an action outside the closed set, a prefix not ending in /, and a wildcard or non-ARN principal on a scoped row, because the module renders from rows the validator may not have graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fence_scoped_rows.py: module plan in a scratch root refuses cases 1,2,3,4,6 (unknown key, actions without prefix, prefix without /, PutObject in actions, wildcard ARN); cases 5 (other firm's prefix) and 7 (duplicate principal) are validator-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 item 1: the module must refuse a key outside the closed set.",
+  "world_is": "Without the extra rules, a row with actions but no prefix would pass the module's key check and render as a full admission. Each extra rule is one more precondition on the same two outputs; fence_exemption_arns' value is unchanged for today's rows."
+}
+```
+
+## NFRA_CTLPLN-W6-S10 -- AMENDMENT 4: CT4d2-AC3's expect carries an unescaped + that the checker reads as a quantifier
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:44:38Z",
+  "one_line": "CT4d2-AC3's <expect> unknown_key_refused_by=validator+module is read by the proof checker as a regex, where + is a quantifier, so the criterion's own correct output line can never match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c re.search('unknown_key_refused_by=validator+module', <the check's last line>, re.S) returns None; re.search(r'unknown_key_refused_by=validator\\+module', same line, re.S) matches (the last line reads unknown_key_refused_by=validator+module)",
+      "python .tools/proof-of-spec-check.py on the instance with AC3 status PASS: VIOLATION acceptance[CT4d2-AC3]: status=PASS but output_evidence does NOT match expect 'unknown_key_refused_by=validator+module' -- INVALID",
+      "the order's own last-line format names the token validator+module as one of four values (validator+module|validator|module|none), so the output cannot be changed to satisfy the pattern"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 CT4d2-AC3: <expect>unknown_key_refused_by=validator+module</expect>, graded by the checker as a regex match on the output.",
+  "world_is": "The expectation is a literal string that contains a regex metacharacter. The criterion is met by its words (the line reads validator+module with ok=True and unchanged_today=True), but a mechanical PASS row cannot be written. The worker did not amend the expectation (the issuer's to amend, with the gate limb stated); the proof row records AC3 as UNVERIFIABLE-BY-INSTRUMENT with the verbatim line, and the order stays in_progress.",
+  "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
+}
+```
+
+## NFRA_CTLPLN-S19 -- the directives check knows two boxes; a directive placed on a Dell prints as unruled
+
+```json
+{
+  "id": "NFRA_CTLPLN-S19",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T16:10:12Z",
+  "one_line": "The directives check knows two boxes: a directive placed on a Dell prints as unruled, so the first Dell placement (D7 on dell2) reads as having no placement.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/directives-check.py device_of(): `for d in (\"LAPTOP\", \"SITEZ\")` then `return \"UNRULED\"` (read by this seat)",
+      "Issuer's run of `python .tools/directives-check.py` at 2026-10-07 ~16:1xZ: `8. D7  Opal Ticketing` / `Where:   UNRULED`",
+      "org/missions/DIRECTIVES.yaml D7 placement set to DELL2 @98fcdce272 (1.0.0_SA_CTO); asked as a row in 1.0.0_SA_CTO msg 106361",
+      "Unread: the full population of tools that parse a placement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN FWD-2 / C-REGISTRY: a box is named once, in org/devices/DEVICES.json, and every script that names devices reads that file.",
+  "world_is": "At least one placement parser carries its own two-box list. A cell for the next issuance: every tool that parses a directive's placement reads the device register, found by a sweep of the repository for placement parsers with its denominator printed, not by this one named function."
+}
+```
+
+## NFRA_CTLPLN-W13-S16 -- two installed RECORDs (PyMuPDF, ruff) list every file twice, once with backslash separators and a hash and onc
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T16:00:28Z",
+  "one_line": "two installed RECORDs (PyMuPDF, ruff) list every file twice, once with backslash separators and a hash and once with forward slashes and NO hash, and ruff lists its own binary at its wheel path, so a plain RECORD read marks them missing or unverifiable",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PyMuPDF 1.27.1 installed RECORD (<site-packages:3.12>/pymupdf-1.27.1.dist-info/RECORD): 109 forward-slash lines with an empty hash and 109 backslash-separator lines carrying sha256 and size for the same files, including pymupdf/_mupdf.pyd; ruff 0.15.11: 7 empty-hash lines and 8 backslash-separator lines, plus the line 'ruff-0.15.11.data/scripts/ruff.exe' (written with backslash separators, hashed, 32283648 bytes) and '../../Scripts/ruff.exe' (no hash); ruff has no entry_points.txt, so its Scripts/ruff.exe is the tool's own binary and NOT a generated launcher",
+      "org/devices/kit_python_repack.py plan_package: reads RECORD with backslashes normalised to '/', merges duplicate paths with the hashed line winning, reads a '<name>-<version>.data/scripts/<f>' line whose file is not under site-packages as '../../Scripts/<f>' (the plan notes list it), and packs ruff.exe under ruff-0.15.11.data/scripts/; with this, 0 of the 49 packages carry an unverified (empty-hash) file and ruff is built (before the merge the first cut read ruff as MODIFIED: 'ruff-0.15.11.data/scripts/ruff.exe listed in RECORD, missing on disk')",
+      "org/devices/test_kit_python_repack.py case 8 builds a synthetic distribution with exactly this duplicated shape and asserts one packed file with the hash verified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 7: RECORD paths are relative to site-packages with forward slashes; a file listed with an empty hash is not a mismatch only for RECORD itself and sometimes INSTALLER; a file listed in RECORD but missing on disk is MODIFIED.",
+  "world_is": "Two of the 49 installed RECORDs hold duplicate and partly unhashed lines (the installer that wrote them recorded both the wheel's layout and the installed layout). Read literally, the order's rule would have marked ruff MODIFIED and left it out, and would have counted PyMuPDF's compiled files as unverifiable. The worker merged the duplicates (the hashed line wins) so every byte is still compared with a hash RECORD states; this is a choice the order did not state."
+}
+```
+
+## NFRA_CTLPLN-W13-S17 -- pip rewrote the first line of four installed scripts (awscli aws and aws_completer, pdfminer.six dumppdf.py an
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T16:00:28Z",
+  "one_line": "pip rewrote the first line of four installed scripts (awscli aws and aws_completer, pdfminer.six dumppdf.py and pdf2txt.py) to this machine's python.exe path, so the kit carries them with the line put back to '#!python' and their bytes differ from the installed ones by that line",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Scripts/aws and Scripts/dumppdf.py first line on disk: '#!' plus the absolute path of this machine's Python312 python.exe, followed by CRLF; the RECORD hashes match those rewritten bytes (pip hashes after the rewrite), so the byte comparison passes while the shebang is still the laptop's path",
+      "org/devices/kit_python_repack.py restore_shebang puts '#!python' back (pip rewrites a first line that starts '#!python' at install, with the Dell's interpreter) and lists each restored path in MANIFEST.json shebangs_restored: awscli 2, pdfminer.six 2; the wheel's RECORD carries the hash of the restored bytes",
+      "org/devices/test_kit_python_repack.py case 8 asserts the restored bytes"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 7: a file outside site-packages, such as a script in Scripts/, is placed under <name>-<version>.data/scripts/; every file is compared with the hash its RECORD states before packing; a kit must not carry bytes no index ever published.",
+  "world_is": "Copying the installed script byte for byte would carry the laptop's interpreter path into the Dell's Scripts folder, where it names a python.exe that does not exist. Restoring the line makes the packed bytes differ from the installed bytes (and from the installed RECORD hash) for these four files, while matching what the package's own wheel carries; the worker chose restoration, said so here, and the order did not say it."
+}
+```
+
+## NFRA_CTLPLN-S20 -- dell1's Python 3.14 holds pyarrow, pyiceberg and hdbscan at versions off the pins; their likely source is an index install at bring-up, a fifth fetch if so
+
+```json
+{
+  "id": "NFRA_CTLPLN-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T17:19:29Z",
+  "one_line": "dell1 imports pyarrow 25.0.1, pyiceberg 0.12.0 and hdbscan on Python 3.14.7; the pins are 18.1.0, 0.9.1 and 0.8.41 and no kit delivered them, so they reached the box some other way, likely a requirements install from the public index this morning.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1700Z.md block 1, bus da723c41, from 1.0.0_SA_CTO~DELL1 at 16:57Z: the three imports succeed at those versions; kuzu absent; 'the source is unread (box image or an earlier install)'",
+      "Same block, added by dell1's fabric manager: dell1's bring-up session installed the repository requirements on Python 3.14 this morning (its handoff records 'all 83 requirements.txt packages, pip check clean'), before the download tiers were stated",
+      "1.0.0_SA_CTO msg 106445: the off-pin copies are not used; those cells run on the laptop by relay; nothing is uninstalled today; this row asked",
+      "Not read by this seat: dell1's interpreter, its pip log or cache, or the handoff the manager cites. HOW and WHEN are therefore the manager's inference, not a measurement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN v0.16 C-INTAKE and Andrew's download-tier word: a package reaches a box by the checked route (the laptop checks it, then Taildrop); a box fetches nothing itself. Today's earlier counted fetches: two bun auto-installs on dell2, the provisioning install on dell1, the laptop's frozen-lockfile install.",
+  "world_is": "If the manager's inference holds, dell1 made an index install of the whole requirements file at bring-up: a fifth fetch, larger than the other four, made before the tiers were stated. It also explains the off-pin versions: on Python 3.14 the pinned versions have no build, so a resolver that was not held to the pins took newer ones. Open, for dell1 to measure and report: the install's time and command (pip's own log or the cache's file times), what it fetched (count and names), and whether the same was done on dell2 (dell2 reported no PyMuPDF this morning, which argues against). No uninstall is ordered; the copies are simply not imported by project work."
+}
+```
+
+## NFRA_CTLPLN-S21 -- the Python kit on dell2: 49 of 49 wheels verified and installed offline; 3 imports fail on dependencies the kit does not carry, and the tool mislabelled them
+
+```json
+{
+  "id": "NFRA_CTLPLN-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T17:19:29Z",
+  "one_line": "The 49-wheel kit installs on Python 3.14 with no index; 46 of 49 packages import, and the three that do not each lack a dependency the requirements file never listed. The kit's tool reported them as failed where its own design calls them a missing dependency.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1700Z.md block 2, bus a7670095, from 0.0.0_AB_MSTR~DELL2 at 16:57Z, Python 3.14.7: tar sha256 matches; PY-KIT-VERIFY wheels=49 verified=49 stray=0 ok=True; PY-KIT-INSTALL installed=49 imported=46 import_missing_dep=0 failed=3 ok=True",
+      "The three, as dell2 names them: pandas_market_calendars (needs exchange_calendars), yfinance (needs frozendict), s3fs (needs aiobotocore). Real install then made offline with --no-index --no-deps --user, rc 0; nothing fetched",
+      "org/devices/kit_python_repack.py (merged @f0d4d48d4e): the worker's report says 'A package whose own module is missing is counted as failed, not as import_missing_dep'; dell2 reads the three as mislabelled. Which branch of the tool took them is not read by this seat",
+      "Row NFRA_CTLPLN-S18: requirements.txt omits 73 dependencies; 1.0.0_SA_CTO msg 106445: 'That is C-INTAKE clause 2's closure gap, measured: close the list before round 5 fetches.'",
+      "First install of this kit on any Python 3.14: the eight compiled packages' stable-ABI claim held for import on dell2 (46 imported; which 46 is in dell2's result file, unread here). dell1's result is not reported"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 7: an import that fails for an absent dependency is reported as import_missing_dep with the module's name, distinct from a wheel that will not install; C-INTAKE clause 2: a list is closed under dependencies before anything is fetched.",
+  "world_is": "The kit is proven to install on 3.14 and is live on dell2. Two things follow for round 5. (1) Its first cell is the closure: the full dependency set of the 67 requirements for Python 3.14 on 64-bit Windows, computed from metadata with no index call where the laptop holds the metadata, the remainder named as unknown until fetched; the three names here are its first measured members. (2) The tool's label is repaired in that cell so a missing dependency of a dependency (the import error names a module that is not the package's own) reads import_missing_dep."
+}
+```
+
+## NFRA_CTLPLN-W14-S6 -- TO-CT-a-1 amendment 3: the policy simulator reads the key policy's account-root principal as a direct grant, so two admin arms read allowed in the raw run
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T17:07:15Z",
+  "one_line": "iam simulate-custom-policy reads the account-root principal of a KMS key policy as a direct grant to every account user, so kms:ScheduleKeyDeletion and kms:PutKeyPolicy read allowed for a Dell user on the transcripts key policy before AND after this change; KMS itself treats the root statement as delegation to IAM, and the Dell users' own live policies refuse both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py, ARM lines: for both cloudops-dell1-agent-user and cloudops-dell2-agent-user, kms:ScheduleKeyDeletion and kms:PutKeyPolicy read raw_doc=allowed AND raw_pre_edit_doc=allowed (identical on the document without this change); with the root statement removed (named_statements_only) both read implicitDeny; the rule the script counts is the KMS rule (a statement naming the user, or a root statement naming the action AND the user's own policy allowing it): own_policies kms:ScheduleKeyDeletion implicitDeny, kms:PutKeyPolicy explicitDeny (cloudops-dell-agent-respol-policy), so the counted result is dell_write_refused=10/10 while the raw simulator reads 6/10",
+      "the simulator also refuses a bare Resource \"*\" in a resource policy (ResourceNames are not in a valid ARN format), so the script passes the document with each \"*\" replaced by the key ARN for the simulator call only; the rendered and committed document keeps \"*\"",
+      "the same two raw 'allowed' arms exist today for any account user the root statement of RootAdministersTheKeyAndCannotUseIt names by principal; the amendment's expectation (each write arm implicitDeny or explicitDeny) is therefore met under the KMS rule and not under the raw simulator, and the proof row says which"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 3 step 3: each Dell user kms:Encrypt, kms:GenerateDataKey, kms:ReEncryptFrom, kms:ScheduleKeyDeletion, kms:PutKeyPolicy -> NOT allowed, by iam simulate-custom-policy with the rendered document as the resource policy.",
+  "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
+}
+```
+
+## NFRA_CTLPLN-Z-S3 -- the trading calendar's fallback ends at 2027: on 2028-01-01 every staleness read on a function that runs the fallback raises
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T19:49:57Z",
+  "one_line": "lib/trading_calendar.py's hardcoded fallback covers 2010-2027 and now raises CalendarCoverageError outside it; a Lambda packaged without pandas_market_calendars runs on that fallback, so once the frontier date is in 2028 its trading-day reads raise where they answered before.",
+  "spec_asserts": "lib/trading_calendar.py:14-16 and :34 at CLOUD HEAD: the fallback is 2010-2027, an out-of-range year raises CalendarCoverageError, and the module's own header says 'Regenerate NYSE_HOLIDAYS_FALLBACK (lib/tests/gen_nyse_closures.py --write) before 2028.' The change is NFRA_CTLPLN's (commit 4b766e4e2d, 0.9.0_WK_NFRA_CTLPLN~12).",
+  "world_is": "Read 2026-10-07 for the AMGT_RESAPP round-78 redeploy pair (COO half org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/NEVER_WIDEN_HALF_COO_BB18.md @b7530ac2d4; CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_RESAPP_R78_BB18_REDEPLOY_20261007.md @24536e3cbe, condition C4). The deployed opal-amgt-scoped-api package holds 0 members of pandas_market_calendars, so that function runs on the fallback; its next build carries this module. Callers in that function's closure: scoped_amgt._stale_trading_days (three call sites, one unguarded), the top band (wrapped), rolling_windows, harvest/window_tone, freshness/stale_rule._age. Inside 2010-2027 nothing moves: the closure dates for 2024-2027 are equal in the deployed and the new copy (41 and 41), and 302 of 302 rows of the live freshness snapshot answered with 0 raised. The hazard is dated: from 2028-01-01 the frontier itself is outside the range. NOT measured: which other deployed functions package this module without pandas_market_calendars; whether any scheduled regeneration of the fallback exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at CLOUD HEAD, lines 14-16, 34, 48, 111-113, 118-158 (read 2026-10-07): the range, the raise and the 'before 2028' instruction.",
+      "The AMGT_RESAPP bb-18 COO half, section SEVEN FILES FROM OTHER PROJECTS, item 1: 0 pandas_market_calendars members in the deployed zip; 302 of 302 snapshot rows answered.",
+      "The CTO half's C4: 'on 2028-01-01 the frontier itself leaves the range and every staleness read on this function raises ... One surprise row on NFRA_CTLPLN, filed by the issuer, disarm_owner that project's issuer.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "notes": "Filed at the CTO's direction (msg 31336). The disarm is the fallback regenerated to cover 2028 onward and carried by a redeploy of each function that runs it, before 2028-01-01. Surfaced, not chased; no code edited."
+}
+```

@@ -111,6 +111,12 @@ org/devices/kit_terraform_required.json
 org/devices/kit_portal_tree.py
 org/devices/test_kit_portal_tree.py
 org/devices/kit_bun_no_egress.py
+org/devices/kit_python_wheels.py
+org/devices/test_kit_python_wheels.py
+org/devices/kit_python_wheels_cp314.json
+org/devices/kit_python_repack.py
+org/devices/test_kit_python_repack.py
+requirements.txt
 org/devices/test_kit_bun_no_egress.py
 .tools/wk-provision.sh
 .tools/tests/test_wk_provision_no_registry.py
@@ -199,7 +205,7 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -465,3 +471,131 @@ AC8's line reads `ok=False`, you file a BLOCKING row with the arms, leave the or
 Write a NEW proof instance over the old one covering all nine ids, validate it with
 `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9`, and
 flip `<status>` back to `complete` only when all nine pass.
+
+## AMENDMENT 6 (2.0.0_SA_COO~C, 2026-10-07 ~14:0xZ) -- REOPENED: the Python kit against the regenerated requirements.txt, and which packages have a wheel for the Dells' Python
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state on the trunk. Authority: `1.0.0_SA_CTO` msg 106278, verbatim: "that file is now the list the Python kit is built
+against, in place of whatever list the cell derived itself. The Dells run Python 3.14 and the laptop 3.12, so a wheel set built
+here does not fit there (the PyMuPDF case); the cell states per package whether a 3.14 win_amd64 wheel exists on the laptop
+without a fetch, and lists the ones that do not as a file for me." The file: the repository root `requirements.txt` @bc10584676
+(67 installable lines, regenerated from an import census on Andrew's word; record
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261007_133xZ_REQUIREMENTS_TXT_ALL_ACTUAL_DEPENDENCIES.md`; its own
+caveat: a clean-start resolve is NOT verified). Gate limb: none graded this modification. `requirements.txt` is in the grant to be
+READ; YOU DO NOT EDIT IT. THE NO-NETWORK RULE STANDS: no `pip install`, no `pip download`, no `pip index`, no `pip wheel` of a
+remote package, no request to any package index. Every pip call you make carries `--no-index` or is one of `pip --version`,
+`pip list`, `pip show`, `pip cache dir`, `pip cache list`, `pip inspect`, `pip config list` (which make no request).
+
+1. `org/devices/kit_python_wheels.py`, three verbs:
+   - `required`: parse the root `requirements.txt` (names, specifiers, markers, extras; a line it cannot parse is printed and
+     counted, never skipped silently) and compare it with the list this cell derived itself (`org/devices/kit_python_required.json`,
+     20 distributions): print the names only in one, only in the other, and in both. LAST line
+     `PY-REQ lines=<n> parsed=<p> unparsed=<u> in_both=<b> only_requirements=<r> only_census=<c> ok=<True|False>`.
+   - `wheels --python-tag cp314 --platform win_amd64`: for EACH requirement, state whether a wheel that Python 3.14 on 64-bit
+     Windows can install exists ON THIS MACHINE WITHOUT A FETCH, and where. Sources to read, each counted: the pip HTTP and wheel
+     caches (`pip cache dir`; the wheel cache holds locally built wheels by name; the HTTP cache holds downloaded files under
+     hashed names whose bodies are zip archives with a `*.dist-info/WHEEL` member: identify a cached wheel by reading that member
+     and `METADATA`, never by a file name alone); any wheel files already on disk in the kit's own earlier pack output, in
+     `C:/tmp/kit-*`, in the user's Downloads folder and under the repository (search for `*.whl`; derive every path, bake none);
+     and the installed distributions of every Python interpreter on this machine (`py -0p` lists them: an installed pure-Python
+     distribution whose `WHEEL` file reads `Root-Is-Purelib: true` and tag `py3-none-any` (or `py2.py3-none-any`) can be re-packed
+     into a wheel offline and fits 3.14; an installed distribution tagged `cp312-cp312-win_amd64` does NOT fit, and one tagged
+     `cp3X-abi3-win_amd64` with X <= 14 does fit).
+     Classify each requirement as exactly one of: `WHEEL-ON-DISK` (a file that fits, with its path and tags), `PURE-INSTALLED` (no
+     file, but an installed pure-Python copy that can be re-packed offline; say at which version and whether that version
+     satisfies the specifier), `ABI3-INSTALLED` (an installed stable-ABI build that fits), `NEEDS-FETCH` (compiled for another
+     Python only, or absent), `UNPARSED`. A requirement whose marker excludes Python 3.14 or Windows is `NOT-APPLICABLE` with the
+     marker printed. Compatibility is decided by the `packaging` library's tag logic if it is installed here
+     (`packaging.tags`), computed for the TARGET (3.14, win_amd64), not for the running interpreter; if `packaging` is not
+     installed, implement the three rules above and say so.
+     It does NOT follow dependencies of the listed packages (the file is stated to be the full list; its caveat is a clean-start
+     resolve is unverified): say that in the output, and, for each `WHEEL-ON-DISK` or installed copy, print the `Requires-Dist`
+     names that are NOT themselves lines of `requirements.txt`, as a count and a list, so the gap is visible.
+     Writes `org/devices/kit_python_wheels_cp314.json` (per requirement: name, specifier, class, evidence path or installed
+     version, tags) and LAST line
+     `PY-WHEELS target=cp314-win_amd64 requirements=<n> wheel_on_disk=<a> pure_installed=<b> abi3_installed=<c> needs_fetch=<d> not_applicable=<e> unparsed=<u> undeclared_deps=<k> ok=<True|False>`
+     (`ok=True` when every requirement got exactly one class and `unparsed=0`).
+   - `--from-file <json>` re-prints the last line from the saved file (the criterion's bounded form).
+2. `org/devices/test_kit_python_wheels.py`: on synthetic fixtures in a temporary directory (tiny hand-made wheel archives and
+   `dist-info` folders, no real package): a `py3-none-any` wheel fits; a `cp312-cp312-win_amd64` wheel does not; a
+   `cp39-abi3-win_amd64` wheel fits; a `cp314-cp314-win_amd64` wheel fits; a `cp314-cp314-manylinux` wheel does not; a
+   requirement with a marker excluding Windows is NOT-APPLICABLE; an unparseable line is counted. LAST line
+   `PY-WHEELS-TEST cases=<k>/7 ok=<True|False>`.
+3. THE FILE FOR THE CTO, in your deliverables folder: `PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md` -- the `NEEDS-FETCH` list (name,
+   specifier, why: compiled for 3.12 only, or absent), the `PURE-INSTALLED` list with any version that does not satisfy its
+   specifier, the undeclared dependencies, PyMuPDF's line by name (it is the case that prompted this), which Python
+   interpreters this machine holds, and what stays unread. Standard technical English; it is a decision document.
+
+**ACCEPTANCE.** One criterion is ADDED; the other nine are unchanged and must still pass:
+
+<criterion id="CTk2-AC10" cell_refs="CT-k-2"><invocation>python org/devices/kit_python_wheels.py wheels --from-file org/devices/kit_python_wheels_cp314.json</invocation><expect>PY-WHEELS target=cp314-win_amd64 requirements=</expect></criterion>
+`CTk2-AC10` -- every requirement classified; the same line must read `ok=True`.
+
+Write a NEW proof instance over the old one covering all ten ids, validate it with `python .tools/proof-of-spec-check.py <instance>
+CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10`, and flip `<status>` back to `complete`
+only when all ten pass.
+
+## AMENDMENT 7 (2.0.0_SA_COO~C, 2026-10-07 ~15:1xZ) -- REOPENED: re-pack the 49 packages that fit Python 3.14 into wheels, offline, as the Python kit
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state on the trunk (the classification merged @bd489b912b). Authority: `1.0.0_SA_CTO` msg 106317, verbatim: "(1) The 41
+pure packages and the 8 that already fit, PyMuPDF among them, are re-packed offline and carried as the Python kit now. The Dell
+proves them: pip install with no index from the kit folder, then one import each, read back; a package that fails there joins the
+list below. (2) The 18 cp312-only requirements and the 12 unlisted compiled dependencies are NOT fetched today." Gate limb: none
+graded this modification. THE NO-NETWORK RULE STANDS, as in AMENDMENT 6: no request to any index; allowed pip calls are the
+read-only ones named there. YOU DO NOT `pip install` ANYTHING ON THIS MACHINE and you fetch nothing.
+
+1. `org/devices/kit_python_repack.py`:
+   - `repack --out <dir>`: for each requirement classed `PURE-INSTALLED` or `ABI3-INSTALLED` in
+     `org/devices/kit_python_wheels_cp314.json` (49 expected: 41 + 8; re-derive the set from the file, do not type the names),
+     rebuild a wheel from the INSTALLED copy with the standard library only: the files listed in that distribution's `RECORD`
+     (paths under site-packages; a file outside it, such as a script in `Scripts/` or a `.data` entry, is placed under the
+     wheel's `<name>-<version>.data/scripts/` or reported and the package marked `PARTIAL`), the `dist-info` directory as
+     installed MINUS `INSTALLER`, `REQUESTED`, `direct_url.json` and `RECORD`, a regenerated `RECORD` (sha256, urlsafe-base64, no
+     padding, sizes; the RECORD line for itself empty), and the wheel file named from the `WHEEL` file's own tags
+     (`{name}-{version}-{python tag}-{abi tag}-{platform tag}.whl`, name and version normalised as the wheel specification
+     states). Never include a `__pycache__` or `.pyc` file. A file listed in `RECORD` but missing on disk, or present with a
+     different hash than `RECORD` states (a locally modified install), is REPORTED and the package marked `MODIFIED` and left OUT
+     of the kit: a kit must not carry bytes no index ever published. Verify each built wheel by re-opening it: every `RECORD`
+     hash matches, `WHEEL` and `METADATA` parse, and the tags fit the target (cp314, win_amd64) by the same tag logic the
+     classifier uses.
+     Writes `<dir>/MANIFEST.json` (per wheel: name, version, file name, sha256, bytes, tags, class, source interpreter version;
+     the lists of packages left out and why; the target; the requirements file's commit) and `<dir>/requirements-kit.txt` (the
+     exact `name==version` lines the kit satisfies, in the requirements file's order).
+     LAST line `PY-REPACK target=cp314-win_amd64 selected=<n> built=<b> verified=<v> partial=<p> modified=<m> failed=<f> bytes=<total> ok=<True|False>`
+     (`ok=True` when `built == verified` and `failed == 0`; `partial` and `modified` are reported, not hidden).
+   - `verify --from <dir>`: checks every wheel against the manifest (sha256, size) and that the folder holds nothing the manifest
+     does not list. It then prints the EXACT commands a Dell runs, which the tool also offers as verb `install-check`:
+     `python -m pip install --no-index --no-deps --find-links <dir> -r <dir>/requirements-kit.txt --target <scratch>` into a
+     scratch target directory first (so a failure changes nothing in the Dell's real environment), then one `import` of each
+     distribution's top-level module (taken from the wheel's `top_level.txt` where present, otherwise from the first package
+     directory in `RECORD`; import names differ from distribution names), run with that scratch directory first on the path, each
+     import in its own subprocess with a 60-second bound, reporting per package `installed`, `imported` or the first error line.
+     `--no-deps` is deliberate: the 73 unlisted dependencies are NOT in the kit, so an import that fails for a missing dependency
+     is the expected finding for that package and is reported as `import_failed: missing <module>`, distinct from a wheel that
+     will not install. LAST line of `install-check`
+     `PY-KIT-INSTALL python=<version> wheels=<n> installed=<i> imported=<m> import_missing_dep=<d> failed=<f> ok=<True|False>`
+     (`ok=True` when `installed == wheels`; the import counts are the finding).
+     YOU DO NOT RUN `install-check` AGAINST A REAL TARGET HERE: this machine has no Python 3.14. The test runs it on synthetic
+     wheels with this machine's interpreter.
+2. `org/devices/test_kit_python_repack.py`, on synthetic distributions in a temporary site-packages (hand-made, tiny): a pure
+   package re-packs and its wheel verifies; a file whose bytes differ from `RECORD` marks the package MODIFIED and leaves it out;
+   a `.pyc` is never packed; the regenerated `RECORD` hashes match; `verify` refuses a wheel with one byte flipped and a stray
+   file in the folder; `install-check` on two synthetic wheels with THIS interpreter (`--no-index`, a temporary target) installs
+   both and imports both, and reports a third whose import needs an absent module as `import_missing_dep`. LAST line
+   `PY-REPACK-TEST cases=<k>/<n> ok=<True|False>`.
+3. Cut the REAL kit once, outside every git tree, to `C:/tmp/kit-python-pack-<UTC date as YYYYMMDD>` (derive the drive prefix),
+   run `verify --from` on it as the self-check, and write `KIT_PYTHON_WHEELS_PACK_RECORD.md` in your deliverables folder: path,
+   total bytes, the wheels built by class, every package left out and why (PARTIAL, MODIFIED, failed), PyMuPDF's wheel by name
+   with its tags and size, the commands a Dell runs in order (verify, install-check into a scratch target, then the real install
+   on the Dell's own decision), and what stays unproven (nothing was installed on a 3.14 interpreter here). Do not send the kit
+   anywhere and do not commit it.
+
+**ACCEPTANCE.** One criterion is ADDED; the other ten are unchanged and must still pass:
+
+<criterion id="CTk2-AC11" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_python_repack.py</invocation><expect>PY-REPACK-TEST cases=</expect></criterion>
+`CTk2-AC11` -- the same line must read `ok=True` with every case passing. The real kit's `PY-REPACK` and `verify` lines go in the
+proof row's evidence and in the record.
+
+Write a NEW proof instance over the old one covering all eleven ids, validate it, and flip `<status>` back to `complete` only
+when all eleven pass.

@@ -625,3 +625,54 @@ earlier cell is replaced. Chain `~13`, one cell, file render.py, risk SERVED.
   from this round the issuer's real-run read prints `fund_sections.missing` in the packet.
 - **Organic trigger:** GQGU's panel on the live page; the issuer's real run of the served day reads `fund_sections`
   missing 0 and 0 dialogs with no section.
+
+## ROUND 24 (main workstream) -- APPENDED 2026-10-07, revision 1.14 of this file
+
+One cell, item 1 of the ENRICHMENT LIST of ROUND_ANALYSIS.round22 ADDENDUM 2 @be5cb4f530 (the chart's UI: ADDENDUM 1,
+Andrew-direct 2026-10-07 ~19:0xZ, record @f76452470f). Item 2 (row Z-S57) is withdrawn by CTO ruling msg 31341; items 3
+to 5 are the issuer's reads and acts. Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Chain `~14`, one cell, files
+render.py and page_theme.py, risk SERVED.
+
+### `RIV-cu-1` -- the dialog chart is framed, its x-axis is dated, its hover read-out is bold and focal, and a buy or sell marker has a dramatic tooltip (Andrew-direct 2026-10-07 ~19:0xZ; analysis round 22 ADDENDUM 1 and 2)
+- Measured on the served page (rounds 15 to 23): the chart is a 600 x 200 svg with no border and no x-axis label; the
+  hover read-out is one `<p class="rf-ch-read">` under the chart in the dialog's body type; a marker's hover text is the
+  svg's own `<title>` (a small delayed browser tooltip). Andrew's words: the price/date read-out "should be much more focal,
+  bold, and obvious"; the tooltip, "especially when hovering over a buy/sell moment, should be much more dramatic"; "a box
+  around the chart element itself with clear dates on x-ticks, give it a little more space and make it more of an event".
+  "The mechanics are all there": no change to the data.
+- Interface (all in `render.py` -- `CHART_SCRIPT`, `CHART_CSS` -- and `page_theme.py`; one inline script as today):
+  1. **Dated x-ticks.** A new pure function `window.rfChart.ticks(pl)` takes a plan (`rfChart.plan(s, from, to)`, whose
+     `a` and `b` are the range's first and last day numbers) and returns an array of 4 to 7 objects `{x, label}`: `x` a day
+     number with `pl.a <= x <= pl.b`, strictly increasing; `label` a date a reader can place: day and month ("8 Sep") for a
+     range of 100 days or fewer, month and two-digit year ("Oct 25") for a longer one; no two labels equal. The script's
+     draw writes one svg `text` per tick carrying the attribute `data-tick` with that label as its text, under the plot.
+  2. **The frame and the room.** The chart's svg sits inside an element of class `rf-ch-frame`; `render.CHART_CSS` gives
+     `.rf-ch-frame` a border of at least 1px solid, a border-radius, a padding of at least 10px and a background; the svg's
+     viewBox height is at least 280 (today 200) with the same 600 width.
+  3. **The read-out.** The read-out element (class `rf-ch-read`) is placed BEFORE the svg inside the frame, and
+     `render.CHART_CSS` gives `.rf-ch-read` a `font-size` of at least 20px and a `font-weight` of at least 700 (the dialog's
+     body is 17px, weight 400), stated as plain numbers in px. On a pointer move over the curve it shows the price with
+     its currency and the date, as today; the price and the date are each in their own child element (`data-read="price"`,
+     `data-read="date"`) so the price can be the larger.
+  4. **The marker tooltip.** The script creates ONE element of class `rf-ch-tip` per chart (hidden by default: the
+     attribute `hidden`), inside the frame. On `mouseover` (and `focus`) of a marker it is shown (no `hidden`), carries
+     `data-side="buy"` or `"sell"`, and its text states the side in a word ("Bought" / "Sold"), the dollars, and the date
+     or dates -- the content of `rfChart.words(m)` at least; on `mouseout` (and `blur`) it is hidden again. `CHART_CSS`
+     gives `.rf-ch-tip` a `font-size` of at least 16px, a `font-weight` of at least 600, `position:absolute`, a padding and
+     a coloured background or border that differs by `data-side` (green for buy, red for sell, the script's `G` and `X`
+     colours). Each marker is focusable (`tabindex="0"`). The svg `<title>` of a marker stays.
+- Rulings at the cut (issuer): nodes are built with `createElement` / `createElementNS`, never `innerHTML`. No key is
+  added to the chart object and no gold table, price series, marker or window changes. The audit page is untouched (it
+  has no script). The dialog's static trade list and month strip stay as they are. Everything rounds 15 to 23 built
+  stays: every existing check file under `round15/checks/` still ends `PASS 0 failures`. The page stays under its
+  1,950,000-byte cap; the script may grow by at most 3,000 bytes (today 7,369) and the frame adds no per-dialog markup
+  to the static page (it is built by the script).
+- Rulings on the check drafter's questions (issuer; the check files accept exactly these): a tick's label names the date
+  its own `x` falls on; the 100-day boundary is `pl.b - pl.a`; the price child shows the stored currency code, not a
+  sign; the date child names the same point as the price; the tooltip states "Bought" or "Sold" (never both), the
+  dollars with thousands separators and the date or dates; the tooltip's colour by side is set by `CHART_CSS` rules on
+  `[data-side=buy]` and `[data-side=sell]`, not by inline style; hidden means the attribute `hidden`; a marker is a
+  circle with a `title` child and `data-m`, focusable with `tabindex="0"`; there is exactly one frame, one read-out and
+  one tooltip per chart after every range switch; CSS lengths are in px and the frame's padding is at least 10px on
+  every side; the static page carries no `rf-ch-frame` or `rf-ch-tip` markup.
+- **Organic trigger:** any security dialog on the live page, pointer over the curve and over a buy or sell marker.

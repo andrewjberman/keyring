@@ -79,6 +79,7 @@ Read-only: the whole repository, in particular `lib/research/corpus/extract.py`,
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 6/6 control 3/3$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_heading_only_round40.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^[0-9]+ passed(, [0-9]+ warnings?)? in [0-9.]+s$</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6r_check.py"</invocation><expect>(?m)^ap6r build 3/3 control 3/3$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the REAL `_resolve_section_field` on four hand-built documents): build -- "Management/Board 80" followed by a bold heading,
@@ -179,6 +180,42 @@ Supporting documentation: Business model" (a page header, a page number and the 
 by their invocations in section 4. Then section 5 again: the proof instance updated, the checker after your final commit, and the
 status tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 
+## 9. AMENDMENT 4 (2026-10-07, the issuer's own; the CVO's read of the gained passages and the CTO's ruling msg 31352)
+
+AMENDMENTS 1 to 3 are merged and are your INHERITED STATE. The 95 dossiers were then WRITTEN at `amgt-corpus-dossier/6` (stored,
+not yet served). `3.0.0_SA_CVO~Z` read the 25 gained values whole
+(`git show 32c6593acf:org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_CORPUS_ROUND40_AP10D_GAINED_PASSAGES_GRADE_20261007.md`, read
+it): two end in a token that is not the section's prose (Nike special items ends "...Jobs Act. 4_7_2026", the source file's date,
+and the served method-5 value is clean, so that one is a REGRESSION; SAP positives ends "...too mission-critical. sec"), and six
+stop mid-sentence (LLY negatives, NU positives and negatives, QXO negatives, UNH negatives, SHOP management). Ruled: a value cut
+mid-sentence is not served as it is.
+
+**Do, and only this, in `dossier.py` (plus tests):**
+1. A served section VALUE ends at its last sentence end. A sentence end is `.`, `!` or `?`, optionally followed by a closing
+   quote or bracket, and then whitespace or the end of the text; a full stop followed by a digit or a letter (a decimal such as
+   `$4.35bn`, an abbreviation inside a word) is NOT one. Everything after the last sentence end is dropped: an unfinished last
+   sentence, a trailing source-file date, a stray token.
+2. The trim looks only at the text AFTER the section's lead line. When that text holds no sentence end at all (a section of
+   bullet lines with no full stop), the value is left exactly as it is. The trim never empties a value and never turns a served
+   value into an absent one.
+3. The citation `passage` (the first `_PASSAGE_CAP` characters) is taken from the TRIMMED value, so a passage never shows text
+   the value no longer has; where the value is longer than the cap the passage is cut by the cap as today.
+4. `--section-recompose-census` already prints every changed field. Add to each changed line that is a TRIM (the new value is a
+   prefix of the served value) the marker `TRIM` and the number of characters dropped, and print a last line
+   `section_recompose_census trims <n> chars_dropped_max <m>`.
+5. Bump `METHOD_VERSION` to `amgt-corpus-dossier/7`; update the pinned literal in the four test files that pin it
+   (`test_dossier_method_bump.py`, `test_dossier_case_body.py`, `test_dossier_case_unit.py`, `test_dossier_case_positional.py`,
+   all in `<paths>`), each with an `AMENDMENT 4 (CRPS-ap-6, round 40):` comment.
+6. Tests in `test_dossier_heading_only_round40.py`: the three build shapes and the three controls of the issuer's check, a value
+   ending in a closing quote after its full stop, and the passage taken from the trimmed value.
+
+The recommendation, risks, pillar and case paths are untouched.
+
+**Prove** AC1, AC2 and AC3 by their invocations in section 4 (AC3 is `ap6r_check.py`: `ap6r build 3/3 control 3/3`), and run
+`test_dossier_case_unit.py` and `test_dossier_case_positional.py` and report the line. Then section 5 again: the proof instance
+updated (AC3 added), the checker after your final commit, and the status tag reading complete appended at the END of this file
+only if AC1, AC2 and AC3 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 9 + s.4 item 3; row Z-S89. Base: ap6 build 0/2 control 2/2; the three existing files 25 passed. The served census and the dossier re-write are the issuer's CRPS-ap-10.
@@ -187,6 +224,8 @@ status tag reading complete appended at the END of this file only if AC1 and AC2
 <round>40</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
+<status>in_progress</status>
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>

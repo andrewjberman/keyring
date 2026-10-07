@@ -2,8 +2,8 @@
   "claim": "measured: static ast read of tracked .py under .tools/ and lib/; versions are those installed on the box that ran it",
   "counts": {
     "distributions": 20,
-    "local": 50,
-    "modules": 139,
+    "local": 54,
+    "modules": 143,
     "not_installed_here": 1,
     "stdlib": 68,
     "third_party": 21
@@ -455,7 +455,7 @@
     "python_version": "3.12.10"
   },
   "scan": {
-    "files": 754,
+    "files": 764,
     "pathspecs": [
       ".tools/*.py",
       "lib/*.py"

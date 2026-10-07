@@ -45,3 +45,48 @@ Rounds 15 to 22 are LIVE at `beb13d39ff` since ~17:4xZ: the dialog charts, the t
 - His own look at `mcp.opalinvest.dev/rivalfunds`: the sign-in is his (his login).
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1, 2026-10-07 ~19:0xZ -- Andrew looked at the live page; the chart's UI joins round 23
+
+Record, his words verbatim: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_190xZ_RIVALFUNDS_SMOKED_POPUPS_GOOD_CHART_UI_NEXT.md`.
+
+- **Section 2 item 1 is met.** He opened the dialogs through the signed-in page and saw the charts. Ledger leg L3 closes on his
+  report. He did not say he used the 30d / 90d / 365d switch, so that control has no reader yet.
+- **Enrichment list item 5, round 23: the dialog chart's UI, three asks, his words.**
+  1. The price and date read-out on hover is "much more focal, bold, and obvious".
+  2. The tooltip on hover, most of all on a buy or sell marker, is "much more dramatic".
+  3. "A box around the chart element itself with clear dates on x-ticks", with "a little more space".
+- **How it is cut.** One cell, in `render.py` / `page_theme.py` only. "The mechanics are all there": no change to the price series,
+  the markers, the windows or any gold table. The page stays under its 1,950,000-byte cap (served: 1,690,862).
+- **How it is graded.** Mechanical: the x-axis carries dated ticks in every window; the chart sits in a bordered frame; the
+  hover read-out's type size and weight are above the body text's, stated as numbers. JUDGMENT, by `3.0.0_SA_CVO~RV` on the
+  served page and never by the issuer: hovering a buy or sell marker shows what was traded, when and for how much without
+  reading small text. Then Andrew's own look, which is the acceptance.
+- **Order in round 23:** this cell and the trade-sentence key repair (R1) are the two page cells; both ship in one deploy
+  after the 2026-10-08 11:00Z run has read under 720 s. (REPLACED at 19:0xZ by msg 31267: the repair deploys today as its own
+  act; a render-only deploy does not wait for the 11:00Z run. The chart cell is round 24.)
+
+-- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 2 -- ROUND 23 ANALYSIS (2026-10-07 ~19:4xZ), on `3.0.0_SA_CVO~RV` slug msg 31320 (`ADJUDICATION_v25.Z.md` @61f0469fd2)
+
+Round 23 was one cell, RIV-ks-1, the trade-sentence key repair (R1). ks-1 J1 MET on the round's real run: 0 of 2,247 buttons
+without their fund's section; exactly 4 buttons differ from the served page. Row Z-S63 REMEDIATED (5 of 5 functions at 3,008 MB).
+Rows Z-S65 and Z-S66 stay OPEN until the repair is served. Its deploy is signed at both ends (CTO half
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_ETFS_RIVALS_R23_KS1_DEPLOY_20261007.md` @e1c74f75b3) and had not been reported
+done at this writing.
+
+**Rulings.**
+- **R6.** Row Z-S57 (Meta in GQGU under two keys) is not the cause R1 repaired, by the issuer's trace. It is its own cell in
+  round 24: one company, one key on the page.
+- **R7.** The price-history backfill records each day's draw in `bbg_budget` before its day 1 (msg 31291). The Terminal's ledger
+  does not see it today, and the pacer `0.0.3_BG_BBGTerminal` orders it third of four claims on the day's allowance.
+
+**ENRICHMENT LIST, round 24** (one issuance by `2.0.0_SA_COO~RV`):
+1. The dialog chart's UI, Andrew's three asks (ADDENDUM 1). JUDGMENT graded by `3.0.0_SA_CVO~RV`; then his own look.
+2. Row Z-S57 (R6).
+3. The served grade of the repair, with the count of mentions that became plain text (the CTO half's condition).
+4. The read of the 2026-10-08 11:00Z run and 13:00Z sweep (round-22 list item 2), unchanged.
+5. The backfill's ledger line (R7); then the deployed-stage read; then backfill day 1.
+
+-- 1.0.0_SA_CTO~Z

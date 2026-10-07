@@ -1,12 +1,12 @@
 {
   "prd": "IRPT_YCDGEN_PRD.md",
-  "prd_version": "v0.9",
-  "prd_pin": "8499df49ce6e844f60bb94d3bfe0e092a641c964",
+  "prd_version": "v0.10",
+  "prd_pin": "5a04dc8c4a0270ab09d6f7ac4c6e196d257a864d",
   "half": "ratified-text",
-  "half_hash": "58da2ab2844e686b89f4ea8791f4a185becde895d823cbfcc141ea6a5bf68994",
-  "endpoint_hash": "e2ed506ee7eab531d70be3a6441cd9f6ab8a98a0ed7ce651edba7703cbc5fe04",
+  "half_hash": "08db6524eaff15b6574b13d35e3c668a5acc82dd3aceb6ecfdbbc9a553210469",
+  "endpoint_hash": "49717e2ed5af3b024d807041ba8447b45a21e7548c89efbc8faf0dd0c21792c9",
   "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.9_RATIFIED_TEXT_REVIEW_20261007.md@bcac50ac02",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_YCDGEN_PRD_v0.10_RATIFIED_TEXT_REVIEW_20261007.md@b128f12427",
   "signed_by": "3.0.0_SA_CVO",
-  "signed_at": "2026-10-07T08:47:00Z"
+  "signed_at": "2026-10-07T13:41:53Z"
 }

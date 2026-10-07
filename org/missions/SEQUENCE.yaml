@@ -146,7 +146,7 @@ projects:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: sitez (at its next round boundary). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It works beside the gateway and tool family at site Z.'
+    why: 'TARGET BOX: dell2, the box that runs IRPT_YCDGEN, whose generated reports its commentary follows. It is between rounds, so it moves now by the laptop fabric manager''s award. Its deployed mail pull runs cloud-side and does not move.'
   ETFS_RIVALS:
     fabric: site-z
     stage: 5
@@ -401,6 +401,10 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'parked -- 7 more flat-register projects join the parked list (second pass of the park-or-close adjudication); 20 are now parked on that word. No order changed; no project closed by this entry.'
   word: '''4.) Yes.'' answering the card ''May this seat park or close the quiet and cold projects itself?'' (Andrew-direct 2026-10-07 ~06:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'placement -- NFRA_TRNSPT targets dell2, the box that runs IRPT_YCDGEN, not site Z (the row''s why and its tree row''s placement field). Its stage and every other row are unchanged.'
+  word: '''I would like for whatever device is handling the YCDGEN workstreams to also take on NFRA_TRNSPT, as I believe this is the project that runs the investment commentary which is the secondary layer that follows from the generation.'' (Andrew-direct 2026-10-07 ~13:4xZ at the 4.0.0_SA_CRO terminal; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_134xZ_NFRA_TRNSPT_TO_THE_BOX_HOLDING_IRPT_YCDGEN_DELL2.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.

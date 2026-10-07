@@ -284,3 +284,463 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The fourth verdict applies only when no registry row resolves a system (BF-t-2's face, from _slots R1.e). infra/logic/registry/resources.json holds a row placing openpyxl-layer under tradeops, so the name grades OUT-OF-PATTERN with a complete fix that adds a system. Whether a row outranks the ruling for layers, or the row should go, is the registry owner's and the CTO's; nothing was changed."
 }
 ```
+
+## LGIC_BLANKFIX-W5-S1 -- the unpatched section already carries the bare token NO-SYSTEM-ASKED; the check grades the schema sentence
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W5-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~5",
+  "surfaced_at": "2026-10-07T13:50:53Z",
+  "one_line": "The unpatched renderer's section already contains the token NO-SYSTEM-ASKED (verdicts closed list), so the difference control cannot be the bare token; the check grades the schema sentence bullet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/check_canon_patch.py prints: informational: the bare token NO-SYSTEM-ASKED in the UNPATCHED section (verdicts closed list): True",
+      "infra/logic/render_naming_section.py:322-323 renders grade.verdicts as a whole; line 324 reads only ALIAS and OUT-OF-PATTERN sentences"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO LGIC_BLANKFIX.TO-BF-e-5: the check asserts the UNPATCHED renderer's output does not contain NO-SYSTEM-ASKED and its schema sentence.",
+  "world_is": "The token alone is present unpatched, through the verdicts closed list; only the sentence is absent. I read 'it' as the token plus its schema sentence (the bullet '- **NO-SYSTEM-ASKED:** <sentence>') and graded unpatched_has_verdict on that. Test not weakened: the sentence is the thing the cell names, and the patched arm shows it while the unpatched arm does not. Also measured: the committed 02_DOCTRINE.md already differs from an unpatched regeneration by 23 lines (stale stamps, row W2-S3)."
+}
+```
+
+## LGIC_BLANKFIX-W3-S3 -- the root check does not read the new REFUSED-CROSS-FIRM class, so the two Cottonwood-path HOLE lines lose their reason
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-07T14:00:00Z",
+  "one_line": "lib/opal_naming_rootcheck.py decide() reads the key basis only for class UNDECIDED, so the two cot-path HOLE lines, now class REFUSED-CROSS-FIRM, print the generic 'a blank remains that no module fills' and lose the cross-firm reason.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py:90 `if key is not None and key.get(\"class\") == \"UNDECIDED\": why.append(...)`; lines 69-72 read LEGACY and ADDRESS only",
+      "python lib/opal_naming.py census --root infra/aws/terraform/bd-pipeline (this worktree, after BF-e-3): ROOTCHECK ok=True items=140 right=9 fix=102 not_asked=6 pattern=1 carded=6 hole=16; HOLE S3Key code/bronze/cot_bronze_ingest.py -> partial form {source}/{scope}/code/bronze/cot_bronze_ingest.py; could not fill a blank remains that no module fills [bd-49f-fees-runner/lambda_function.py:43]",
+      "python lib/tests/test_opal_naming_rootcheck.py after BF-e-3: ROOTCHECK-TEST ok=True cases=27; right fell 10 to 9 and fix rose 101 to 102 because silver/prices/canonical_prices.parquet at bd-price-update:441 is no longer LEGACY (its bucket opal-data-bd is not the legacy row's opal-data-cot)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-3: REFUSED-CROSS-FIRM is a new class value, the registry's cross-firm separation stated on a line; the Cottonwood file is printed and reported.",
+  "world_is": "The new class reaches the root check, whose decide() has no branch for it: the line stays a HOLE (partial form with {source}/{scope}) as before, but its reason is the generic one, not the key row's basis (bucket or path token and both firms). The rootcheck module is outside this order's paths and was not edited; whether decide() should read REFUSED-CROSS-FIRM is the cell that owns that module."
+}
+```
+
+## LGIC_BLANKFIX-W7-S1 -- The root map proposal carries no source_dirs: the landed map has one entry (bd-pipeline), which owns no contes
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "The root map proposal carries no source_dirs: the landed map has one entry (bd-pipeline), which owns no contested folder, and the repository decides the folder owners but not the scope of their entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/root_map.json roots keys: ['bd-pipeline'] at HEAD",
+      "infra/aws/lambda/ci/lambda-source-map.json: irpt-directory-refresh/-search -> investor-reporting/directory, irpt-export-render -> export, irpt-holdings -> holdings, irpt-intake-poller -> intake, irpt-narrative -> narrative, irpt-status -> ops, irpt-performance-adapter -> performance, irpt-49f-reporting-publish-lambda -> reporting-publish, irpt-ycharts-generate -> ycharts/generate, each tf_file in the same-named root; cot-rebalancer-runner tf_file infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf; five cot-pipeline folders tf_file in infra/aws/terraform/cot-pipeline",
+      "scope undecided: investor-reporting roots read per-firm buckets from firm_registry.json (directory/iam.tf:1-14, ycharts/generate.tf:236-249), performance spans orion, blackdiamond and cottonwood, holdings, intake, ops and reporting-publish name no firm; cot-pipeline names opal-data-cot, opal-data-bd, opal-data-inf, opal-data-etfs and resources.json places its cot-* names under five systems (advi, mdpf, posn, blackdiamond, etfs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7: the proposal is the landed map plus source_dirs on the entry of the root shown to own each contested folder, adding an entry only where the repository decides system, scope and source.",
+  "world_is": "No entry could be added on the repository's word, so ROOT_MAP_SOURCE_DIRS_PROPOSED.json is the landed map byte for byte and the reader assigns nothing from it (SCOPE-TABLE unassigned=119 both ways). With a scratch map listing the eleven owners as source_dirs the reader assigns 40 of the 51 contested items (table unassigned 119 -> 79). Missing: scope for each of the 11 roots (and system for cot-pipeline and opal-assets, source for the investor-reporting roots other than ycharts), which is the registry owner's to decide. The parent folder infra/aws/lambda/investor-reporting (11 items: shared _authz, _keys, _scope and reports code) is declared by all 12 sibling roots and is left undecided on purpose."
+}
+```
+
+## LGIC_BLANKFIX-W7-S2 -- infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe holds 4 repository names and is declared by no root's .tf
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe holds 4 repository names and is declared by no root's .tf and no source-map function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep bd-cot-freshness-probe -- infra/aws/terraform infra/aws/lambda/ci matches only infra/aws/terraform/cot-pipeline/CHANGELOG.json at HEAD",
+      "python lib/opal_naming_scope.py contested: infra/aws/lambda/cot-pipeline items=4 (these four) before the sub-folder cot-rebalancer-runner items=4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7 cell: the owner of a folder is the root whose .tf declares the Lambda functions built from it.",
+  "world_is": "For bd-cot-freshness-probe there is no such root: it is under the cot-pipeline folder only by the artifact_key prefix of the cot-pipeline root. If the map lists infra/aws/lambda/cot-pipeline for the cot-pipeline root, the reader assigns the four names to it by the parent listing; whether that is the right root for an undeclared function is the registry owner's call."
+}
+```
+
+## LGIC_BLANKFIX-W7-S3 -- The order says the table reads 1,962 repository names; at HEAD of this branch it reads 1,965 with the same 119
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "The order says the table reads 1,962 repository names; at HEAD of this branch it reads 1,965 with the same 119 unassigned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_scope.py table at the base of wk-blankfix-7 (before any edit): SCOPE-TABLE ok=True roots=61 items=1965 assigned=1846 unassigned=119",
+      "row LGIC_BLANKFIX-W1-S1 recorded items=1962 assigned=1843 unassigned=119 on branch wk-LGIC_BLANKFIX-1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7 THE CELL: python lib/opal_naming_scope.py table reads 1,962 repository names and leaves 119 unassigned.",
+  "world_is": "The repository gained three assigned names since that run; the unassigned 119 and the 51 contested items are unchanged. No test of this order depends on 1,962: the tests read the total from the census."
+}
+```
+
+## LGIC_BLANKFIX-W1-S4 -- the cell's DIFFERENCE CONTROL (daily-named rule on cron(30 22 ? * MON-FRI *) reads agrees=False) contradicts AMENDMENT 1 P1, under which that cron gives daily and agrees=True
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T13:58:30Z",
+  "one_line": "the cell's DIFFERENCE CONTROL (daily-named rule on cron(30 22 ? * MON-FRI *) reads agrees=False) contradicts AMENDMENT 1 P1, under which that cron gives daily and agrees=True",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/tests/test_opal_naming_cadence.py (branch wk-LGIC_BLANKFIX-1): CADENCE-TEST ok=True cases=45",
+      "python lib/opal_naming_cadence.py contradicted infra/aws/terraform/bd-pipeline: CADENCE-CONTRADICTED ok=True root=infra/aws/terraform/bd-pipeline rows=20 contradicted=0",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/E1_CADENCE_RULES_RATIFIED.md (Correction to this seat's round-1 analysis)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1 cell text: a name carrying daily on cron(30 22 ? * MON-FRI *) reads agrees=False, the same name on cron(30 22 * * ? *) reads agrees=True.",
+  "world_is": "AMENDMENT 1 P1 (NAMING_SCHEMA.json v1.16 cadence.daily_definition) gives daily to a once-a-day cron on five or more days of the week, so word_for(cron(30 22 ? * MON-FRI *)) is daily and verdict_for reads agrees=True for a daily-named rule; the amendment governs where it and the cell text differ. The test file keeps a difference control of the same shape on a schedule that does NOT give daily (a daily-named rule on rate(15 minutes) reads agrees=False; on cron(30 22 * * ? *) agrees=True) and asserts MON-FRI agrees=True. Real root: contradicted=0."
+}
+```
+
+## LGIC_BLANKFIX-W1-S5 -- choices the cell left open: a ruled event rule's row word is its on-{event} tail, and word_for also reads */N, 0/N minute and hour steps
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T13:58:30Z",
+  "one_line": "choices the cell left open: a ruled event rule's row word is its on-{event} tail, and word_for also reads */N, 0/N minute and hour steps",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_cadence.py estate (branch wk-LGIC_BLANKFIX-1): CADENCE-ESTATE ok=True rows=142 decided=119 undecided=23",
+      "lib/opal_naming_cadence.py cadences() and _cron()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1: a ruled event rule has the complete canonical name in lib/opal_naming_event_rules.json; word_for returns the ratified word for each period AMENDMENT 1 names by the same exact-period rule as today.",
+  "world_is": "The cell does not say what the cadences() row word is for the ruled event rule, nor whether step crons are read. Built: the ruled row's word is the tail of the canonical from -on- ('on-session-complete'), which is what _cadence_slot reads from the renamed form, so it agrees once renamed; the root therefore prints decided=20 undecided=0. Cron minute steps */N and 0/N (N dividing 60) give {N}min, and an hour step 0/N or */N (N dividing 24, N 2 to 23, minute single, every day) gives {N}h; a step that does not divide the period (0/7) stays undecided. Whole estate: rows=142 decided=119 undecided=23 (12 unruled event rules, 2 non-literal expressions, 1 Nth-weekday, 7 several-hours-a-day, 1 rate(72 hours))."
+}
+```
+
+## LGIC_BLANKFIX-W1-S6 -- the naming commit limb (ENFORCE) refuses lib/opal_naming_event_rules.json, the data file the cell mandates, as a NEW hand-kept carrier of 'bd' and '49f'
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T14:06:53Z",
+  "one_line": "the naming commit limb (ENFORCE) refuses lib/opal_naming_event_rules.json, the data file the cell mandates, as a NEW hand-kept carrier of 'bd' and '49f'",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-commit.sh ... -- lib/opal_naming_event_rules.json (branch wk-LGIC_BLANKFIX-1, 2026-10-07): ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode). naming-gate REFUSE lib/opal_naming_event_rules.json:5 bd-49f-session-complete -> lookup('49financial'); REFUSE :7 blackdiamond-49f-runner-on-session-complete -> lookup('49financial'); NAMING-GATE: REFUSE 2 graded",
+      ".tools/naming-gate.py header, THE CONTEXT RULE: a firm token is permitted only in infra/logic/registry/*.json, generated blocks, key()/address()/name()/lookup() arguments, or opal_name module arguments; nothing admits lib/*.json"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-1: ruled event-rule rows are kept as DATA in a new file lib/opal_naming_event_rules.json, {name, type, canonical, evidence}, inside the order's write grant.",
+  "world_is": "The ruled row holds two real names (bd-49f-session-complete and its ruled canonical). The commit limb is in ENFORCE and refuses both strings in a new file outside the registry, with no override a worker may use. The file is written and the library reads it; it is NOT committed. The branch tip commit carries the code, tests and rows, and lib/opal_naming_cadence.py fails loud (FileNotFoundError) on a checkout without that file. The issuer or the CTO decides the carrier: an R20 declared exception for the file, or the rows in a path the context rule admits (infra/logic/registry/, outside this grant). The order is NOT flipped to complete."
+}
+```
+
+## LGIC_BLANKFIX-W2-S4 -- TO BF-e-8 rule 1 says an inline policy's {system} is filled from its role
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T15:07:22Z",
+  "one_line": "TO BF-e-8 rule 1 says an inline policy's {system} is filled from its role; the root map also holds ruled exceptions for inline-policy names (cross-firm-bucket-deny -> firmsep, describe-tags-self -> cloudops, monolith-bd49f-xref-silver-read -> schwab) whose role's system is advi, and the order does not say which wins.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_policyrole.py root infra/aws/terraform/bd-pipeline: cross-firm-bucket-deny (iam.tf:658), describe-tags-self (iam.tf:636) and monolith-bd49f-xref-silver-read (iam.tf:470) all sit on bd-exporter-ec2-role, role_system=advi",
+      "infra/logic/registry/root_map.json roots.bd-pipeline.exceptions: those three names carry ruled systems firmsep, cloudops, schwab (Andrew-direct 2026-09-21 CALL 2 a5 families F02, F05, F14); the base run printed them as FIX firmsep-/cloudops-/schwab- names and the round-2 run prints them unchanged"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-8 rule 1: for an IAM_POLICY whose canonical carries {system} and whose declaration policy_roles knows, fill {system} from its role's system.",
+  "world_is": "lib/opal_naming_rootcheck.py decide() applies the role's system only when the root map gives the name no ruled exception (basis root-default) or no entry; a ruled exception keeps winning, so the run's lines for those three names did not change and no ruling is overridden. If the order meant the role to win over an exception, those three lines would print advi- instead and contradict three ruled families; the issuer decides."
+}
+```
+
+## LGIC_BLANKFIX-W2-S5 -- TO BF-e-8 rule 4 says a CARDED line prints 'the whole correct name where the card gives one', but no card row of NOT_JUDGED_R13.json carries a correct
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T15:07:22Z",
+  "one_line": "TO BF-e-8 rule 4 says a CARDED line prints 'the whole correct name where the card gives one', but no card row of NOT_JUDGED_R13.json carries a correct-name field, so no CARDED line of the run can print one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_ENFORCE/deliverables/0.9.0_WK_LGIC_ENFORCE~1/NOT_JUDGED_R13.json: 462 rows, the union of keys over every row is {name, plane, type, where, card, card_ref}; the six cards of bd-pipeline carry K1/K3/K4a reasons and no name",
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only: six CARDED lines, each the card's first sentence"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-e-8 rule 4: a CARDED line prints the card's text up to its first sentence end, and the whole correct name where the card gives one.",
+  "world_is": "decide() prints the first sentence and, if a card row ever gains a correct_name, canonical or canonical_name key, appends it as 'Correct name: ...' (tested with a hand-made card). On the real file no card gives one, so the clause is reachable in the test only."
+}
+```
+
+## LGIC_BLANKFIX-S4 -- a refused key's line says another firm's store though its bucket is this firm's
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-07T15:24:34Z",
+  "one_line": "The two REFUSED lines of the round-2 run say 'this key belongs to another firm's store' while the same line gives the key's bucket as the 49 Financial bucket; the refusal rests on a path token, and the sentence states more than was read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/THREAD_TRACE_round2_bd-pipeline.txt: REFUSED S3Key code/bronze/cot_bronze_ingest.py ... conflict: path token 'cot' names firm 'cottonwood', the root entry's scope is '49financial'; the key's bucket: opal-data-bd (two lines, bd-49f-fees-runner/lambda_function.py:43 and bd-49f-runner/lambda_function.py:59)",
+      "BF-e-3 worker report: the path-token conflict check, firm tokens and source tokens alike, routes to REFUSED-CROSS-FIRM; whether this is a real cross-firm reference is not decided"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ROUND_ANALYSIS.round1.md E3: a match is on (bucket, key), never the key alone; a key matched across two firms is refused. Round-2 decomposition: a REFUSED line states a finding about the code whole.",
+  "world_is": "The key's bucket is 49 Financial's (opal-data-bd) and only its path names Cottonwood (a file called cot_bronze_ingest.py under code/bronze/). The line's opening sentence asserts another firm's store; what was measured is a Cottonwood-named code file kept in the 49 Financial bucket. A reader who did not build the check could take it as a cross-firm data reference. The run exits 0 with these two lines; whether FWD-1 reads them as actionable, and whether the wording should say 'names another firm' instead, is for BE8-AC3's grader and the CTO. Nothing was changed."
+}
+```
+
+## LGIC_BLANKFIX-W2-S6 -- the order's counts (1,965 names, 119 unassigned, 51 contested) and three test assertions are stale; the repository reads 1,966 / 120 / 52
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:25:30Z",
+  "one_line": "TO BF-r-3 states 1,965 names, 119 unassigned and 51 in contested folders; the repository at the worktree HEAD reads 1,966, 120 and 52, so three typed-total assertions of test_opal_naming_scope.py failed at the base and BR3-AC1 could not pass until they were rewritten as relations.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_scope.py table at 5b74b29963: SCOPE-TABLE roots=61 items=1966 assigned=1846 unassigned=120; contested: items=52",
+      "python lib/tests/test_opal_naming_scope.py at 5b74b29963: three FAIL lines (contested --map last line, contested --map counts, no-map line) comparing against folders=12 items=51; with the landed map table reads unassigned=68 as AMENDMENT 1 says"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-3 CONTEXT: the table reads 1,965 repository names, 119 unassigned, 51 in 12 contested folders; the existing scope test passes at the base.",
+  "world_is": "The repository holds one more census name in a contested folder (52), so every total is one higher. The three assertions that typed 51 were rewritten in lib/tests/test_opal_naming_scope.py to hold on relations (folders listed equal the contested rows, items equal the sum of the CONTESTED lines, assigned plus unassigned equals items, assigned with the map greater than without, assigned equal to the held folder's items)."
+}
+```
+
+## LGIC_BLANKFIX-W1-S7 -- TO BF-r-2 expects the role rule to change what the three W2-S4 policies print; it changes nothing on the real root, because the grader already places 
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T17:50:00Z",
+  "one_line": "TO BF-r-2 expects the role rule to change what the three W2-S4 policies print; it changes nothing on the real root, because the grader already places those names",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py keys infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json: 36 policies; the six policies whose exception now names its role (bd-silver-merge-policy, bd-allocation-checker-permissions, monolith-bd49f-xref-silver-read, describe-tags-self, cross-firm-bucket-deny, historical-prices-policy) print the exception's system with system_slot_filled_here=no; the four policies whose {system} slot the run fills (pipeline-chain x2, runner-shared-read, gold-layer-trigger) fill it from the role",
+      "python lib/opal_naming.py grade: describe-tags-self -> cloudops-describe-tags-self-policy, cross-firm-bucket-deny -> firmsep-cross-firm-bucket-deny-policy, monolith-bd49f-xref-silver-read -> schwab-monolith-bd49f-xref-silver-read-policy: the system is in the grader's own canonical form (resources.json rows), so the map exception is not read for it",
+      "ROOTCHECK line of infra/aws/terraform/bd-pipeline before (HEAD d6291f1bac modules) and after this order: identical, diff empty; items=140 right=9 fix=111 not_asked=9 pattern=3 carded=0 refused=2 hole=6"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-2 cell: an exception keyed (name, type) with no role never overrides a role's answer; round 2 built the opposite for three policies (W2-S4), so the build should change what those lines print or fix them.",
+  "world_is": "No line of the real root changes: the three W2-S4 policies print firmsep-/cloudops-/schwab- before and after, because grade() already returns a canonical form with the system filled, and decide() reads the root map's system only where the canonical keeps a {system} blank. The role rule is built and proved by the difference control in the three tests and by the keys command (exception_with_role=6, exception_without_role_overriding=0), but on this root it has nothing to override. The six exceptions' only live effect today is as the root map's record."
+}
+```
+
+## LGIC_BLANKFIX-W1-S8 -- TO BF-r-2 AMENDMENT 1 item 3 limits what `fills` stops the entry from filling; it does not say whether the entry's home scope may still judge a key's 
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T17:50:00Z",
+  "one_line": "TO BF-r-2 AMENDMENT 1 item 3 limits what `fills` stops the entry from filling; it does not say whether the entry's home scope may still judge a key's firm",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_keyfill.py _classify: REFUSED-CROSS-FIRM compares the key's bucket firm with the entry's scope, and _conflict compares path tokens with the entry's scope and source",
+      "infra/logic/registry/root_map.json _about.fills: 'a reader must then print the item's partial form and the reason ... rather than a finished name built from the home value'",
+      "run of every root whose entry carries fills (opal-assets and the ten investor-reporting roots): the root check's lines are identical before and after the build, so no real line moves"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 3: with fills, a {scope} or {source} blank is not filled from the entry and the line prints HOLE with the reason; nothing is said about the refusal tests that read the entry's scope.",
+  "world_is": "Judged inside the cell: when an entry's fills leaves out scope, the bucket-firm refusal does not compare against the home scope; when it leaves out scope or source, the path-token conflict is not run. The home value is not the key's firm, so a refusal built on it would state a finding about the code that was not measured (the defect of row LGIC_BLANKFIX-S4). Entries without fills behave as before. If the issuer wanted the refusals kept against the home scope, it is one condition in _classify."
+}
+```
+
+
+## LGIC_BLANKFIX-W1-S9 -- TO BF-r-5 AMENDMENT 2: two of the four key rulings (etf_universe.json, daily/49financial) are not matched, because opal_naming_keyfill.bucket_of canno
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T18:26:00Z",
+  "one_line": "TO BF-r-5 AMENDMENT 2: two of the four key rulings (etf_universe.json, daily/49financial) are not matched, because opal_naming_keyfill.bucket_of cannot read their bucket; hole=2 remains",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only: ROOTCHECK ok=True items=140 right=9 fix=114 not_asked=10 pattern=3 carded=0 refused=2 hole=2; the two HOLE lines are S3Key daily/49financial [infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/backfill_49f_daily_from_monolith_rps.py:65] and S3Key config/etf_universe.json [same file:66]",
+      "opal_naming_keyfill.bucket_of on both returns (None, 'the file has 2 bucket candidates and the key's statement picks none: opal-data-assets (line 61), opal-data-etfs (line 64)'): the key is a module-level constant (DAILY_PREFIX, UNIVERSE_KEY) whose own statement names no bucket; the bucket ETFS_BUCKET = 'opal-data-etfs' is a separate constant at line 64",
+      "infra/logic/registry/key_rulings.json rows ('opal-data-etfs', 'daily/49financial') and ('opal-data-etfs', 'config/etf_universe.json') exist; per AMENDMENT 2 item 3 an item whose bucket cannot be read matches no row and keeps its card line, which is what prints (card line plus 'the bucket was not read (...)')"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the four stored-file HOLE lines are answered by key_rulings.json; the bucket is the one opal_naming_keyfill.bucket_of(item) reads.",
+  "world_is": "Two of the four are answered (session-trigger-mode.json prints FIX to blackdiamond/49financial/state/session-trigger-mode.json; ticker_lookup.json prints NOT-ASKED). The two ETF keys stay HOLE because bucket_of picks no bucket for them. lib/opal_naming_keyfill.py is outside this order's grant. A reader that follows a key's constant to the bucket the code pairs it with (ETFS_BUCKET at the call sites) would match both; or the rows could name the file. BR5-AC1 fails as written on hole=2 and is reported, not forced."
+}
+```
+
+## LGIC_BLANKFIX-W1-S10 -- TO BF-r-5 AMENDMENT 1 step 0 is built as a RETYPE only: 40 more literals under a function-name context carry no kind token and stay untyped, one of th
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T18:26:00Z",
+  "one_line": "TO BF-r-5 AMENDMENT 1 step 0 is built as a RETYPE only: 40 more literals under a function-name context carry no kind token and stay untyped, one of them in the bd-pipeline root",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first build typed every kebab literal under a function-name context LAMBDA: census_repo() items went 1966 -> 2006, 40 items absent -> LAMBDA, among them infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:54 opal-assets-bd49f-reporting-pull (a 141st item of the bd-pipeline root, against the order's 140 of 140)",
+      "shipped build: the rule applies only where the last-token rule would have typed the literal; python lib/tests/test_opal_naming_function_literal.py -> FNLITERAL-TEST ok=True fees_runner=LAMBDA runner=LAMBDA retyped=2 other_changes=0 items=1966",
+      "the other 39 are in inf-pipeline, investor-reporting, news and seeking-alpha Lambdas (e.g. inf-api-txn at inf-pipeline/inf-api-txn/lambda_function.py:161)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 step 0 item 1: a literal held under a function-name context is typed LAMBDA, before the last-token rule; item 2: nothing else changes. The test measures 'every item whose type changed', every one to LAMBDA.",
+  "world_is": "Read literally, item 1 also adds items the last-token rule never typed, which grows the census and the bd-pipeline root by one line; the measurement spec compares items that exist on both sides. Judged inside the cell: the minimal reading, a retype of what is already typed. If the issuer wants the 40 typed as Lambdas, it is one line in _census_classify (hoist the function-context test above the kind lookup and drop the `if t` guard); the grader would then judge 40 more names."
+}
+```
+
+## LGIC_BLANKFIX-W2-S7 -- the map entry is looked up by the root's last path word, not by the map's key
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S7",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:56:52Z",
+  "one_line": "check_root looks the map entry up by the root folder's last path word ('directory'), but the landed map keys a nested root by 'investor-reporting/directory'; so no entry is found for the second root and resolve() returns None for every name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py check_root: name = os.path.basename(opal_naming_scope._norm_root(root)); entry = doc['roots'].get(name); resolve(doc, name, ...) -- name is 'directory'",
+      "python (at worktree HEAD): doc['roots'].get('directory') -> None; resolve(doc,'directory','irpt-x','IAM_ROLE') -> None; resolve(doc,'investor-reporting/directory','irpt-x','IAM_ROLE') -> {'system':'irpt','scope':'global','source':'irpt','basis':'root-default'}",
+      "fills honoured: no line of org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/SECOND_ROOT_TRACE_round3.txt fills a firm from the map entry (no entry was read at all); the 2 FIX lines are schedule cadence suffixes, the system irpt is already in the current names"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-6 AMENDMENT 1: the map key form is 'investor-reporting/directory'; if it is not what check_root passes to resolve, that is a finding.",
+  "world_is": "check_root passes the last path word, so a nested map key never matches. On a root whose names already lead with the system (this one) the run still reads RIGHT/FIX; on a root that needs {system} filled from the map it would print a HOLE 'no map entry for this root' though the map holds one. lib/ was not edited."
+}
+```
+
+## LGIC_BLANKFIX-W2-S8 -- the run counts 15 names, the scope with the map counts 17; the two stored files are never run
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S8",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:56:52Z",
+  "one_line": "check_root counts 15 names for investor-reporting/directory; the scope's own root_items(root, map) counts 17: the run calls root_items(root) with no map, so the 2 stored-file keys of the root's Lambda source folder (investor-reporting/directory and investor-reporting/directory/_refresh) are never run; BR6-AC1 cannot pass as written.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_second_root.py -> 'FAIL: items=15 but len(root_items(root, map)[0]) = 17' / 'SECOND-ROOT ok=False ... items=15 hole=0 differs=0' (rc 1)",
+      "lib/opal_naming_rootcheck.py check_root: opal_naming_scope.root_items(root) (no map_path), twice (items and expected_n), so ROOTCHECK ok=True is self-consistent at 15; with the map, scope adds source folder infra/aws/lambda/investor-reporting/directory",
+      "the two missing names: S3Key investor-reporting/directory [infra/aws/lambda/investor-reporting/directory/handler.py:53]; S3Key investor-reporting/directory/_refresh [infra/aws/lambda/investor-reporting/directory/refresh.py:71]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-6 BR6-AC1: `items` equals len(opal_naming_scope.root_items(root, map)[0]); AMENDMENT 1: 17 names, 4 schedules or event rules, 7 policies, 2 stored files, 1 source folder.",
+  "world_is": "The run's last line reads ROOTCHECK ok=True items=15 (4 roles + 7 policies + 3 schedules + 1 event rule), but the stored files are not in it; the order's own comparison, against the map-aware scope, reads 17. The check was not weakened; BR6-AC1 is recorded FAIL and the order stays pending. The fix lies in lib/opal_naming_rootcheck.py (pass the map to root_items and key the entry by the map's own key form, one change with W2-S7), outside this worker's grant. A re-run after that fix would also grade the two stored-file lines, which this run has not."
+}
+```

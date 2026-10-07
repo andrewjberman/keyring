@@ -1550,3 +1550,242 @@ round.** Never edit an existing row.
   "notes": "Resolves D2-W27-S1 once CB-k-1's AC2 passes under the amendment."
 }
 ```
+
+## ADVI_COTBKF-D2-S22 -- FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S22",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:17Z",
+  "one_line": "FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_account_history.py --account D49141617 --trace 1 (rc 0, 12 s): HISTORY rows=3537 first=2016-01-25 last=2026-06-22; TRACE row=1 line=159882 sha256_ok=True line_match=True",
+      "same, --account cv46440182 --trace 25 (rc 0, 6 s): HISTORY rows=56 first=2013-04-29 last=2013-09-10; TRACE row=25 line=410952 sha256_ok=True line_match=True",
+      "vs deliverables/2.0.0_SA_COO~C/FWD1_REAL_RUN_D49141617_20261006.txt (rows=3532, pre-C-SILVER silver): 3,532 of 3,532 old rows present and unchanged; 5 extra rows, source_lines 161765, 161767, 161773, 161780, 161784 (2022-12-15 SBR sales), each an exact repeat of an earlier row; cv46440182: 56 of 56 equal",
+      "the same two accounts through the applied tables: account_links cvD49141617 -> D49141617 LINKED, cv46440182 NOT_LINKED; crosswalk 2 + 1 rows NOT_MATCHED; documents D49141617 29 (CLNT 14, STMT 12, TXRP 3), cv46440182 0",
+      "outputs kept at deliverables/2.0.0_SA_COO~C2/fwd1_retrace_20261007/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spine v3.16 drain: re-run the live thread trace once per round and keep its artifact; FWD-1 REALIZED (round 4 analysis).",
+  "world_is": "The thread holds on today's applied data. The only movement since 2026-10-06 is the C-SILVER rebuild restoring exact repeats, which FWD-1's account history now shows as the delivery recorded them. Rounds 4-11 skipped this re-trace; this row discharges it.",
+  "notes": "FWD-1 stays REALIZED."
+}
+```
+
+## ADVI_COTBKF-D2-S23 -- CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S23",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:22Z",
+  "one_line": "CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W6-S5: the round-2 census kept its store addresses in a record file the script read, after the naming gate refused 41 typed literals",
+      "TO CB-d-1 (round 4): the new script reads stores only via legacy_address(<key>) over the six registry rows (@4991b8b11b); the --stores read of PRICE_COVERAGE_STORES_20261006.json is REMOVED; commonwealth_price_coverage.py deleted (drain @642222e85f)",
+      "the census has run on dell2 three times since (07:53Z, 10:1xZ census_e2, round 11's need FILE) with barred_read=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W6-S5 (OPEN since round 2): the store census is kept as a record file the script reads.",
+  "world_is": "No script reads that record file any more; the addresses come from the registry builder. Nothing in W6-S5 remains to act on.",
+  "notes": "Carried unchanged in the round-6 analysis; closed by its owner (this seat)."
+}
+```
+
+## ADVI_COTBKF-D2-W28-S1 -- The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W28-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~28",
+  "surfaced_at": "2026-10-07T13:10Z",
+  "one_line": "The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_daily_holdings.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~28 -> DAILY-HOLDINGS accounts=1533 account_days=1691729 holding_rows=23226716 snapshot_accounts=83 snapshot_pairs=394 snapshot_equal=381 snapshot_diffs=13 (rc 0)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~28/daily_holdings.md: REBUILD-CHECK basis pairs=381 equal=381; 13 differences over 3 accounts, all fractional quantities (0.09 to 1.014) the rebuild holds and the snapshot does not list",
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:209-219 rebuild_check iterates only the snapshot's own pairs, so it cannot see a rebuilt-open security absent from the snapshot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-l-1 cell text step 2: compare each snapshot account's rebuilt quantity with the snapshot, non-cash only, write EVERY difference; the final line carries snapshot_pairs, snapshot_equal, snapshot_diffs. The crosswalk's rebuild_check, which the cell says already does this comparison, counts only pairs the snapshot lists.",
+  "world_is": "Taking the snapshot's own pairs, the rebuild matches 381 of 381. Taking every non-cash (account, cusip) either side holds for the 83 snapshot accounts, there are 394 pairs and 13 differ: the 13 are securities the transactions leave open in small fractional quantities that the snapshot does not list. The script uses the second reading so that every difference is a row, and the md carries the first reading beside it. Two further rules were chosen where the order is silent: a transaction on a non-trading day takes effect on the next trading day (220 of 3,537 distinct trade dates are non-trading), and an account's span runs to that day when its last transaction is on a non-trading day; a running quantity within 1e-6 of zero is not stored. The last daily state of all 1,533 accounts equals the full rebuild.",
+  "notes": "Whether the 13 fractional residues are unrecorded corporate actions (the order's BLIND) or a snapshot that omits fractional lots is not measured here."
+}
+```
+
+## ADVI_COTBKF-D2-S24 -- cash in lieu is never subtracted from rebuilt holdings
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-S24",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-07T15:05Z",
+ "one_line": "The shared signed-quantity map (commonwealth_crosswalk.SIGN, imported by commonwealth_daily_holdings) has no entry for transaction type 'leu' (Cash in Lieu), so every fractional share paid out as cash stays in the rebuilt holdings: all 13 of round 12's snapshot differences are exactly that pair's leu quantities, and 515 leu rows across 69 accounts over-state every later day.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "commonwealth_crosswalk.SIGN (imported): 17 types, no 'leu' and no 'ileu' (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "deliverables/0.9.0_WK_ADVI_COTBKF~28/snapshot_differences.csv: 13 rows; for each, the sum of that (account, cusip)'s leu quantities in the silver transactions equals the residual, 13 of 13 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "silver transactions: leu 515 rows, all with a quantity, 69 accounts; ileu 267 rows, 1 with a quantity, 97 accounts (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)",
+   "example B3S706372 / 78462F103 (SPY): li 40.324, sl 40, leu 0.324 (2021-01-15/20); li 21.581, sl 21, leu 0.581; li 53.095, sl 53, leu 0.095; the rebuild holds 1.000 after 2023-02-23 (this compile's read, dell2 CLOUD, 2026-10-07 ~15:0xZ)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "C-DAILY step 1: the daily holdings of every account follow its transactions; CB12l1-AC3: one account's daily holdings read right against its transactions across its span.",
+ "world_is": "They do not after a cash-in-lieu payout: the fraction sold for cash is never removed. Nothing is served or landed (local files only); the crosswalk's applied table uses the same rule for its pre-exit rebuild, where a stray fraction can only lower a match score.",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "notes": "INERT (no served output). Remedy: SIGN gains leu -1.0 (read ileu's one quantity row to decide it), daily holdings rebuilt with 0 snapshot differences, the account re-read, and the crosswalk re-scored on the fixed rule. Filed by the round-12 compile, which grades CB12l1-AC3 NOT MET on it."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S1 -- One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:28Z",
+ "one_line": "One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_tx_types.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> types=61; the type reads 'csltfee ' (7 characters plus a space), 164 rows, no quantity on a non-cash CUSIP",
+   "a first draft of NO_SHARE_MOVEMENT keyed 'csltfee' and the census listed 'csltfee ' as the one type neither signed nor named (set difference of the 61 delivered types against the table)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 step 2: every Transaction_Type is decided in the one table, signed or named in NO_SHARE_MOVEMENT.",
+ "world_is": "The silver transactions carry the type with a trailing space (164 rows). commonwealth_signs.NO_SHARE_MOVEMENT keys it as 'csltfee ' on purpose. The type moves no shares, so no output depends on it, but a consumer that strips type names would miss the key."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S2 -- One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:29Z",
+ "one_line": "One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/tests/test_commonwealth_daily_holdings.py test_snapshot_with_one_mismatched_pair_writes_that_row: assert line.splitlines()[-1].endswith(\"snapshot_pairs=2 snapshot_equal=1 snapshot_diffs=1\") at 65ce59b838",
+   "python -m pytest data/assets/scripts/silver/tests -q -k commonwealth -> 122 passed with that one assertion now ending with 'snapshot_diffs=1 fractional_residuals=0 fractional_accounts=0'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 tests: every existing test of the three scripts keeps passing; the last line gains fractional_residuals and fractional_accounts after the existing fields.",
+ "world_is": "Both cannot hold for that one assertion: an endswith on the old last field fails once fields follow it. The test file is in the order's paths; every other existing assertion of the file is unchanged. No test was weakened: the new assertion checks the whole tail of the line."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S3 -- The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:39Z",
+ "one_line": "The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_rule_change_diff.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> account_links_changed=2 while CLASS lines read 'closed to cash: 495 -> 544' and 'no in-kind receiver: 51 -> 2' and INFO 'account_links reason differs on 52 rows'",
+   "control: both scripts re-run with the OLD tables (crosswalk SIGN and HOLDING_SIGN as at 65ce59b838) give crosswalk_changed=0 account_links_changed=0 against the applied tables (439 matched, 212 linked), so every difference is the rule change and none is input drift (scratch run, .scratch/rcd_control.py, uncommitted)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-2 step 3: account links are compared by old_account on status and new_account; the last line counts those changes.",
+ "world_is": "Those two fields moved on 2 rows (one gained link, one lost). The reason text, end_positions and score moved on 52, 87 and 52 rows with status unchanged, because the one table adds `ci` (Contribution to Income) to the link rebuild: the old links table with `ci` added gives account_links_changed=2 (the same 2 rows), with `12b1` added 0 (scratch ablation). The diff keeps the order's counts and adds an INFO line per extra field (reason_code, positions_compared, positions_matched, holdings_basis for the crosswalk; reason, end_positions, matched, score for the links) so a reason shift is not read as no change."
+}
+```
+
+## ADVI_COTBKF-D2-S25 -- The round-14 re-apply on the one signing table moves the crosswalk's near-match list from 21 to 22 entries; the list put to Andrew for Cottonwood (deliverables/0.9.0_WK_ADVI_COTBKF~14/near_matches.md) is now one entry short
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S25",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T16:02Z",
+  "one_line": "The round-14 re-apply on the one signing table moves the crosswalk's near-match list from 21 to 22 entries; the list put to Andrew for Cottonwood (deliverables/0.9.0_WK_ADVI_COTBKF~14/near_matches.md) is now one entry short",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crosswalk --apply 15:57Z (ledger advi-cotbkf-r14-reapply-crosswalk-links-20261007): CROSSWALK matched=471 not_matched=1062 ambiguous=38 near_matches_applied=0 near_matches=22",
+      "round 4 (CB-d-3) near_matches=21; the near-match list in the round-6/7 analyses and the FWD-8 read carries 21 'awaiting a person'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-8 (REALIZED round 7): the 21 near-matches are left for a person, never linked.",
+  "world_is": "Near-matches are still never linked (near_matches_applied=0). The fixed signs changed one account's scores into the 0.65-0.8 band, so the person's list needs the 22nd entry; the near-match file is regenerated by any crosswalk run (.scratch/advi_cotbkf/r14_crosswalk_apply/near_matches.*).",
+  "notes": "For the CTO: the list sent toward Andrew/Cottonwood should be refreshed to 22 before it reaches the firm."
+}
+```
+
+## ADVI_COTBKF-D2-W30-S1 -- All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair; RGY007151's single li is classed SOURCE_GAP by structure
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W30-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~30",
+  "surfaced_at": "2026-10-07T16:40Z",
+  "one_line": "All 5 fractional residuals equal the 2026-06-23 snapshot quantity of their pair, so none is a rebuild error; the order's three classes name a delivery defect, and RGY007151's single li is classed SOURCE_GAP by structure (no row takes it out) though nothing is shown missing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_residuals_explain.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~30 -> RESIDUALS explained=5 of 5 sign_gap=0 vendor_rounding=4 source_gap=1; each pair line ends 'snapshot holds <q> (equal to the rebuild)': 0.029, 0.02, 0.00086, 0.00086, 0.003",
+      "B3S605716 and B3S622848: CAF rows sum to 20479.60514 (5 decimals) and the closing lo is 32000.164 (3 decimals) against 32000.16486 held before it; B37631286 and B3S706372: the 2026-05-29 dvr (3.485 / 2.458) re-books a cancelled dvr (DVRX 3.456 / 2.438) by 0.029 / 0.020 more, and the 2026-06-02 sl (861.008 / 607.405) is the position before the re-booking"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-n-1: each of the 5 residuals is a SIGN_GAP, VENDOR_ROUNDING (quantities delivered do not net to zero) or SOURCE_GAP (a row the pair needs is not in the delivery).",
+  "world_is": "The snapshot, a second custodian record, holds the same fractions, so the rebuild reproduces the custodian's figure on all 5 and no sign change is indicated (sign_gap=0; the snapshot is 381 of 381 equal, not re-run because commonwealth_signs.py is unchanged). Four pairs are VENDOR_ROUNDING (two sales sized to the position before a dvr re-booking; two final lo rows delivered to 3 decimals against 5-decimal CAF rows). RGY007151 (TOIXX, one li of 0.003 on 2025-10-08, held in the snapshot) has no out row and nothing implies a missing one; SOURCE_GAP is the only class whose definition fits an inbound-only pair, and the report says so.",
+  "notes": "A grader who reads RGY007151 as a real 0.003 holding rather than a gap can re-class it; the script's rule is structural (every signed row inbound)."
+}
+```
