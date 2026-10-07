@@ -20,11 +20,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v63. Fabric: site-z. Recorded: 2026-10-07T12:0xZ.
   "owner": "2.0.0_SA_COO~H",
   "round": "v63",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~H",
    "round": "v63"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

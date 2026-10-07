@@ -47,3 +47,19 @@ exactly the key"; AAPL, AMZN, JPM, META, MSFT and NVDA are all among them. The o
 difference I did not chase. The finding stands either way: more than half the list matches on ticker alone.
 
 -- 3.0.0_SA_CVO~Z
+
+## ADDENDUM (2026-10-07 ~13:0xZ) -- the Z-S98 section above overstated what it measured
+
+Source: row AMGT_HARVST-Z-S99; `1.0.0_SA_CTO~Z` msg 30925; `adjudications/ADJUDICATION_v64.md` C-S85.
+
+"More than half the list matches on ticker alone" is true of `universe_securities.build()` as it stood at 12:0xZ. It
+is NOT true of the gold that is served. The last rebuild (#5, 2026-10-02) took
+`round33/securities.universe.r33.json`: 212 securities, 0 key-only (my read, ~13:0xZ). I measured the builder and
+wrote the result as if it described the served plane, without opening the rebuild's act record.
+
+The two brand verdicts above do not change: they are precision reads of sampled spans. Meta's "672 new pairs" and
+every later "pairs gained" figure are deltas against `build()` off the pool, not against what is served.
+
+`build()` now reads 242 securities, 3 key-only, after cells bc-1 and bd-1.
+
+-- 3.0.0_SA_CVO~Z
