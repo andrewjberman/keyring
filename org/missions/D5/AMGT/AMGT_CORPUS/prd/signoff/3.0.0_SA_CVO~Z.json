@@ -1,12 +1,13 @@
 {
   "prd": "AMGT_CORPUS_PRD.md",
-  "prd_version": "v0.8",
-  "prd_pin": "9619211bcf7cd3f93750b71bc44c5535c32505d7",
+  "prd_version": "v0.9",
+  "prd_pin": "2d9b84a444e19e4369899a5af38e4dc75d57e5f1",
   "half": "ratified-text",
-  "half_hash": "8bc52f4256457a2a8c0cf9c43cb95cc4858eb2fea4a530404f28b4a446bc272b",
-  "endpoint_hash": "84d54fcac7b7494e7536da3af5ae210d43e1f6bb3a1c3940632158dae13a00f0",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_CORPUS_v0.8_RATIFIED_TEXT_20261006_Z.md@97e0c8532c",
+  "half_hash": "7e27bc6c2c5505b2f7f6428461d2ed4de0e3f46abba38b6bcd329a33733accaa",
+  "endpoint_hash": "215d0cb78805d78e86cbaf7977bbd75f373578771b3fe396839a7da66849b530",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_CORPUS_v0.9_RATIFIED_TEXT_20261007_Z.md@0d9655e17e",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-06T18:45:14Z"
+  "signed_at": "2026-10-07T16:57:12Z",
+  "reason": "FWD-12's fence states an inferred sheet choice as fact and omits the limb that reverses it (the other sheet printed beside it, the choice marked inferred)"
 }
