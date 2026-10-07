@@ -19,11 +19,11 @@ Author: `3.0.0_SA_CVO~Z`. Written 2026-10-07T17:49:35Z.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v13",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v13"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S21",
@@ -40,16 +40,16 @@ Author: `3.0.0_SA_CVO~Z`. Written 2026-10-07T17:49:35Z.
   "owner": "2.0.0_SA_COO~O",
   "round": "v13",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~O",
-   "at": null
+   "at": "2026-10-07T18:26Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~O",
    "round": "v13"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S20",
@@ -66,11 +66,11 @@ Author: `3.0.0_SA_CVO~Z`. Written 2026-10-07T17:49:35Z.
   "owner": "2.0.0_SA_COO~O",
   "round": "v13",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~O",
    "round": "v13"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S26",
