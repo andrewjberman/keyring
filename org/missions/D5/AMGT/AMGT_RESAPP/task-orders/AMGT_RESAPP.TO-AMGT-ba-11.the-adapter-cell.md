@@ -94,6 +94,30 @@ HOOKUPS (appended by the issuer at the cut)
    `lib.research.identity.one_pager_precedence`. This is the one hookup outside `scoped_amgt.py`.
 Verify every line reference at your base before you edit; the names are the contract, the numbers are a guide.
 
+**AMENDMENT 1 (issuer, from the nine exporters' drained reports, before the spawn). Where it differs from a hookup above, this binds:**
+- **Hookup 1 (ba-8).** Call `top_band.news_items_newest(rows, as_of)` with `as_of` the SAME date the caller passes today as
+  `day` (the last settled trading day; the function reads no clock; `window_days` defaults to 30). `rows` must be the name's
+  gold mention rows for the WHOLE 30-day window ending at `as_of`: the caller's read fetches one day today, so widen that read
+  to the window, or the rule cannot find an older day. `top_band(description, news)` is unchanged and still passes `day`,
+  `items`, `items_reason` and `items_without_link`.
+- **Hookup 2 (ba-9).** `name_search.resolve_query(q)` answers 200 for all three statuses (`exact`, `candidates`, `none`). It
+  RAISES when the crosswalk cannot be loaded: answer that as a 500 with a plain reason, never as `none`.
+- **Hookup 3 (ba-10).** TWO sites take `**translated_text.served_translation(sentence)`: the sections builder (about lines
+  2962-2970) and the description header (about lines 5152-5160; it copies named fields, so it needs its own merge). The
+  read-boundary re-check (about lines 2793-2807) serves nothing and takes none.
+- **Hookup 3b (issuer ruling on ba-10's finding).** The served chart object `thesis_driver_chart` is built from `series`,
+  `unit`, `points` and `resolution` only, so it drops the stored driver's translated fields. Where the stored driver carries
+  them, the chart also serves `series_translated`, `unit_translated` and `why_translated` as ADDED keys beside the originals
+  (null when the driver has none). No existing key changes.
+- **Hookups 5-6 (ba-6).** The first point's passage text is `points[0].get("passage_text") if points else None`.
+- **Hookup 7 (ba-7).** `read_section_coverage` takes an optional `passage_map=`: pass the analysis passage map when it is
+  already in hand, which saves a read. The block carries `sections`, `not_covered`, `passages_outside_sections`, `source` and
+  `reason`, and it never raises.
+- **Hookup 8 (ba-15).** In `build_universe.py` the change is the last line of `_find_one_pager_files` (about line 145).
+- **One deployed-shape check to add to your report** (not a criterion): the body of `GET /freshness?view=page` on your local
+  adapter: its size in bytes, its row count, the stale count, and the owner line. ba-2 measured 22,855 B and 95 rows on the
+  module alone; ba-1 measured 3 stale of 95.
+
 For each hookup: the import is lazy or at module scope as the neighbouring code does it; a module a hookup needs that is ABSENT
 from your base is a BLOCKING row for that hookup only, and you finish the rest.
 
