@@ -6,7 +6,7 @@ exactly that word's period (NAMING_SCHEMA.json v1.16 block cadence: P1 daily on 
 SCHEDULE name the naming library's census_tf_names() finds in a root's .tf files and attaches the expression read from
 the SAME resource block. carried_word() reads the word a NAME carries with the grader's own _cadence_slot, and
 verdict_for() sets the two side by side. An event rule with no schedule takes its word from the ruled rows of
-lib/opal_naming_event_rules.json (P3), never from a derivation. Python 3.9, ASCII only, stdlib plus lib/opal_naming.py.
+infra/logic/registry/event_rules.json (P3), never from a derivation. Python 3.9, ASCII only, stdlib plus lib/opal_naming.py.
 
     python lib/opal_naming_cadence.py root ROOT
     python lib/opal_naming_cadence.py contradicted ROOT
@@ -22,7 +22,7 @@ import opal_naming  # noqa: E402
 
 TYPES = ("EVENT_RULE", "SCHEDULE")
 _TF_ROOT = "infra/aws/terraform"
-_EVENT_RULES = os.path.join(os.path.dirname(os.path.abspath(__file__)), "opal_naming_event_rules.json")
+_EVENT_RULES = os.path.join(opal_naming.REGISTRY_DIR, "event_rules.json")  # the registry lane's file (row W1-S6)
 
 _RATE_RE = re.compile(r"^rate\(\s*(\d+)\s+(minute|minutes|hour|hours|day|days)\s*\)$")
 _CRON_RE = re.compile(r"^cron\(\s*([^()]*?)\s*\)$")
@@ -171,7 +171,7 @@ def word_for(expression):
 
 
 def _ruled_event_rules():
-    """{(name, type): row} from lib/opal_naming_event_rules.json."""
+    """{(name, type): row} from infra/logic/registry/event_rules.json."""
     with open(_EVENT_RULES, "r", encoding="utf-8") as fh:
         data = json.load(fh)
     return {(r["name"], r["type"]): r for r in data.get("rules", [])}
