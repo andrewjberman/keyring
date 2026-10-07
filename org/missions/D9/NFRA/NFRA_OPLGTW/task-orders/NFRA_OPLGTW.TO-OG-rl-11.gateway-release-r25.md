@@ -138,7 +138,7 @@ Report once per phase.
 - Pre-cut 02:5xZ: `rl11.AC1` FAIL (no ledger; 4 gateway files differ; floor yes/yes). `rl11.AC2` and `rl11.AC3` FAIL
   (the records are absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>
