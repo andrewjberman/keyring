@@ -2,7 +2,12 @@
   "schema_version": 1,
   "contract": "NFRA_CTLPLN C-REGISTRY (FWD-2): the ONE place a box is named. Every script that names devices reads this file; a box is added here once and nowhere else.",
   "identity": "A box's own name comes from the user environment variable AGENTBUS_DEVICE, set once at bring-up. It is never derived from a path (LD-0405).",
-  "claim_values": ["measured", "inferred", "held", "absent"],
+  "claim_values": [
+    "measured",
+    "inferred",
+    "held",
+    "absent"
+  ],
   "devices": [
     {
       "name": "laptop",
@@ -14,7 +19,11 @@
       "inbound_queue": "agentbus-ajbdev-sitez-to-laptop.fifo",
       "inbound_queue_claim": "measured",
       "inbound_queue_source": "git:4ec79c0472:.tools/agentbus-sqs.sh queue_for (moved here by FWD-2); live read aws sqs get-queue-url 2026-10-06 15:4xZ, queue exists",
-      "seat_limit": {"coo_sessions": 3, "coo_sessions_exception": "4 for the IRPT seating of 2026-09-24 and today, on Andrew's word", "execution_lanes_target": 1},
+      "seat_limit": {
+        "coo_sessions": 3,
+        "coo_sessions_exception": "4 for the IRPT seating of 2026-09-24 and today, on Andrew's word",
+        "execution_lanes_target": 1
+      },
       "seat_limit_claim": "held",
       "seat_limit_source": "Andrew's standing word (three COO sessions, Codex included); target one execution lane per PRD C-ROLES; ruled by 1.0.0_SA_CTO msg 105617 (batch 284)",
       "lane_letters": [],
@@ -24,7 +33,10 @@
     },
     {
       "name": "sitez",
-      "aliases": ["site-z", "Z"],
+      "aliases": [
+        "site-z",
+        "Z"
+      ],
       "aliases_source": "site-z: PRD C-PLACEMENT's fabric enum; Z: the lane-letter suffix of existing per-box files (INVESTIGATION_v1.Z.md), read as sitez's (1.0.0_SA_CTO msg 105634)",
       "role": "integrator",
       "role_text": "The integrator and the deploy box: it alone pushes the trunk and deploys; it keeps the Bloomberg jobs.",
@@ -33,13 +45,65 @@
       "inbound_queue": "agentbus-ajbdev-laptop-to-sitez.fifo",
       "inbound_queue_claim": "measured",
       "inbound_queue_source": "git:4ec79c0472:.tools/agentbus-sqs.sh queue_for (moved here by FWD-2); live read aws sqs get-queue-url 2026-10-06 15:4xZ, queue exists",
-      "seat_limit": {"execution_lanes": null},
+      "seat_limit": {
+        "execution_lanes": null
+      },
       "seat_limit_claim": "absent",
       "seat_limit_source": "no ruling read",
-      "lane_letters": ["Z"],
+      "lane_letters": [
+        "Z"
+      ],
       "lane_letters_default": false,
       "lane_letters_claim": "measured",
       "lane_letters_source": "org/mcp/agentbus-trunk/messages/*__0.0.0_AB_MSTR~Z__*.json (the ~Z lanes are site Z's)"
+    },
+    {
+      "name": "dell1",
+      "aliases": [],
+      "role": "execution",
+      "role_text": "Runs rounds of the projects placed on it; deploys only trunk code through the deploy tools and never changes access (FWD-10 as amended v0.6).",
+      "role_claim": "held",
+      "role_source": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md C-ROLES, FWD-10, C-IDENTITY; placement org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md",
+      "tailnet_name": "dell1",
+      "tailnet_address": "100.79.95.44",
+      "tailnet_claim": "measured",
+      "tailnet_source": "tailscale status and tailscale ping from the laptop, 2026-10-07 ~02:0xZ (1.0.0_SA_CTO); RDP 3389 answers over the tailnet",
+      "inbound_queue": null,
+      "inbound_queue_claim": "absent",
+      "inbound_queue_source": "no queue exists (0.0.0_AB_MSTR read, msg 105917); C-BUS names it agentbus-global-dell1-queue plus the FIFO suffix through an LGIC registry change; created in NFRA_CTLPLN round 2",
+      "seat_limit": {
+        "execution_lanes": null
+      },
+      "seat_limit_claim": "absent",
+      "seat_limit_source": "no ruling read",
+      "lane_letters": [],
+      "lane_letters_default": false,
+      "lane_letters_claim": "absent",
+      "lane_letters_source": "no lane runs on this box yet"
+    },
+    {
+      "name": "dell2",
+      "aliases": [],
+      "role": "execution",
+      "role_text": "Runs rounds of the projects placed on it; deploys only trunk code through the deploy tools and never changes access (FWD-10 as amended v0.6).",
+      "role_claim": "held",
+      "role_source": "org/missions/D0/NFRA/NFRA_CTLPLN/prd/NFRA_CTLPLN_PRD.md C-ROLES, FWD-10, C-IDENTITY; placement org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md",
+      "tailnet_name": "dell2",
+      "tailnet_address": "100.104.84.87",
+      "tailnet_claim": "measured",
+      "tailnet_source": "tailscale status and tailscale ping from the laptop, 2026-10-07 ~02:0xZ (1.0.0_SA_CTO); RDP 3389 answers over the tailnet",
+      "inbound_queue": null,
+      "inbound_queue_claim": "absent",
+      "inbound_queue_source": "no queue exists (0.0.0_AB_MSTR read, msg 105917); C-BUS names it agentbus-global-dell2-queue plus the FIFO suffix through an LGIC registry change; created in NFRA_CTLPLN round 2",
+      "seat_limit": {
+        "execution_lanes": null
+      },
+      "seat_limit_claim": "absent",
+      "seat_limit_source": "no ruling read",
+      "lane_letters": [],
+      "lane_letters_default": false,
+      "lane_letters_claim": "absent",
+      "lane_letters_source": "no lane runs on this box yet"
     }
   ]
 }
