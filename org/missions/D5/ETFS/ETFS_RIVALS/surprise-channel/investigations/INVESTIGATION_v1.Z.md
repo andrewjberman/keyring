@@ -4874,6 +4874,30 @@
     "spec_asserts": "A non-backfill row before a backfill row; backfill rows handled after the union exactly as today",
     "world_is": "Built exactly as the order states. In a partition that mixes a live object and a backfill object, a security with a live row without a close would be priced from the backfill row and then dropped by the rankings and the G1 join, losing its live descriptive fields. Today no partition mixes them",
     "notes": "Raised for the round-N analysis; no change made."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S71",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T23:42:51Z",
+    "one_line": "Rows ETFS_RIVALS-Z-S69 and Z-S70 read the fault backwards: the 2026-09-29 live object of gold security_market holds the closes of 2026-09-30, so the readers ignoring it protected the page; and that object's as_of column does not show it",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO~RV ADJUDICATION_v30.Z.md @e3cc04e7bb (the hand read asked by the CTO half's C1): 47 of 57 closes filed under 2026-09-29 equal the funds' 2026-09-30 valuations; RIV-rg-1 J1 NOT MET; 1.0.0_SA_CTO~Z ruling msg 31477: nothing is applied",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round25/g4_date_offset_read_20261007.json (this seat, all 8 objects, USD closes of fund-held securities against the funds' valuation price within 0.2 percent on the partition date and two reports either side). market-20260929-53bc393958bd.parquet: 58 comparable closes; 48 match 2026-09-30, 32 match ONLY 2026-09-30; 6 match its own date and 0 match only its own date",
+        "Same read, the other objects that carry closes: date=2026-10-01 31 of 31 match their own date (21 only it); date=2026-10-02 86 of 125 (50 only it; two objects with the same closes); date=2026-10-05 142 of 165 (106 only it); date=2026-10-06 142 of 165 (115 only it). So ONE object is mis-dated, of five that carry closes. A sixth, date=2026-10-02 market-20261005T123318Z, has 601 rows and 0 closes",
+        "The as_of column: the mis-dated object says as_of 2026-09-29, EQUAL to its partition date. The four correctly dated pulls say as_of 2026-10-04, 2026-10-04, 2026-10-06 and 2026-10-07, the day they were pulled, NOT their partition date; the 2026-10-01 object says 2026-10-01"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "PRD C-OWED-GRAIN and FWD-22 / FWD-23: a close filed under a date is that date's close. Rows Z-S69 and Z-S70 asserted that 430 closes of 2026-09-29 were wrongly unused",
+    "world_is": "The 430 closes are 2026-09-30's, filed a day early. The served page (rounds 15 to 24) does not read them: correct by accident, through a name tie-break. Round 25's RIV-rg-1 as merged on site-Z CLOUD (1d2241ca66) WOULD read them as 2026-09-29's: it is not deployed and must not be deployed as it stands. The before and after this seat produced (2,418 moved rows; MediaTek +0.233) measured the effect of that mis-dated day and was presented as a repair. A rule keyed on as_of equal to the partition date would keep the mis-dated object and drop four correct ones. Why the object is a day early was not traced; 2026-09-30 itself has no partition",
+    "notes": "Cites ETFS_RIVALS-Z-S69 and Z-S70, whose class and direction this row replaces. ARMED: site-Z CLOUD HEAD carries a reader that would serve wrong closes if deployed; the deploy tree and the saved plan C:/tmp/rv_apply25.tfplan are at that pin. Disarm: no apply of pin acf83a5716 or any pin holding 1d2241ca66 until RIV-rg-1 is amended and re-graded; the COO half @cfa71419f0 is WITHDRAWN by this row. The miss was this seat's: it counted closes and did not check whose day they were; the CTO's condition C1 and the reviewer's hand read caught it."
   }
 ]
 ```
