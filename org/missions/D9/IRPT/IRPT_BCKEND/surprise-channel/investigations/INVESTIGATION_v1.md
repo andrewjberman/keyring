@@ -19088,3 +19088,58 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The refresh function runs a handler.py older than its recorded deploy commit. The round-61 directory release packet names the UIR-07 riders for the CTO half and corrects the record at its close."
 }
 ```
+
+## IRPT_BCKEND-W140-S1 -- all four portal readers of the directory-search response refuse the over-age answer (internal_correlation_id on the success-path status)
+
+```json
+{
+  "id": "IRPT_BCKEND-W140-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~140",
+  "surfaced_at": "2026-10-07T10:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-338: all four PORTAL readers of the directory-search response (parseIrEnvelope, LiveClient.searchDirectory, DirectorySearchRunner.flush, fetchComposerAccountEntries) throw EnvelopeMismatch('status') on the over-age answer, because the real boundary's success-path status carries the server-only internal_correlation_id and requirePublicStatus is a closed shape.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07: bun test src/pages/InvestorReporting/__tests__/ir-62-overage/search-readers.test.ts (portal wk-IRPT_BCKEND-140-portal on DEV 8ddfe409): with the four over-age arms un-marked, 4 fail, 6 pass; each failure is EnvelopeMismatch field 'status' at contracts/envelope.ts:318 (requirePublicStatus). The plain arms pass (4 of 4).",
+      "The over-age wire is the REAL guarded irpt-directory-search handler's answer (recorded storage, entry._today=2026-10-07, directory as_of 2026-10-02): status = {operation, state STALE, source_dates, actions, public_reason_code DIRECTORY_OVER_AGE, internal_correlation_id}. infra/aws/lambda/investor-reporting/_authz/served.py:1111 response_envelope(..., status, ...) passes `status` whole; only refuse() (served.py:422-423) drops internal_correlation_id.",
+      "ISOLATED: the same over-age wire with internal_correlation_id deleted parses (refused=false, state STALE, publicReasonCode DIRECTORY_OVER_AGE, 2 hits); the same status shape under OBJECT_NOT_COVERED/PARTIAL (the existing withheld path, entry.py:238-248) is refused identically. So the cause is the success-path status projection, not DIRECTORY_OVER_AGE's absence from BOUNDARY_REASONS (W136-S1: the portal check is a regex, not an enum).",
+      "portal/src/pages/InvestorReporting/contracts/public-status.ts:20 closed(value, ['operation','state','source_dates','actions','public_reason_code'], ['contract_version']) @8ddfe409",
+      "NOT MEASURED: whether an edge layer between the Lambda and the browser strips internal_correlation_id (no AWS read was made; this order forbids a deploy and the served bytes were not read). The census is of the code paths, not the served route."
+    ]
+  },
+  "spec_asserts": "IB-pr-338 worker face: each reader of the directory-search response passes a test on BOTH the plain and the over-age fixture; a reader that breaks on the envelope is a FAIL, recorded, and not fixed.",
+  "world_is": "Four of four portal readers break on the over-age answer as the boundary emits it; their tests are written test.failing (green while broken, red when fixed) and the census records FAIL. If the over-age answer is released as it stands and nothing downstream strips internal_correlation_id, an advisor's directory search over an over-age directory renders an ENVELOPE_STATUS refusal instead of the stale hits. No reader was edited. The fix is either the boundary (project status public on the success path, served.py) or the portal parser; both are the next round's, and the release holds on this row (CTO condition: any failure holds the release). The B1 backend reader (served.py Entry.handle) passes its own test because it unwraps correctly; the defect is what it emits."
+}
+```
+
+## IRPT_BCKEND-W140-S2 -- IRPT_CUSTDY hop-1 reader load_directory raises KeyError on the over-age envelope
+
+```json
+{
+  "id": "IRPT_BCKEND-W140-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~140",
+  "surfaced_at": "2026-10-07T10:12:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-338: IRPT_CUSTDY's hop-1 reader advisor_client_list.load_directory raises KeyError 'entries' on the over-age envelope {_data,_status}; it handles the plain list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07: python -m pytest data/assets/scripts/gold/irpt_custody/tests/test_directory_search_overage_reader.py: with the over-age test un-marked, 1 failed (KeyError: 'entries' at advisor_client_list.py:159), 2 passed (control, plain). Committed as xfail(strict=True, raises=KeyError): 8 passed, 1 xfailed over this file plus the backend file.",
+      "data/assets/scripts/gold/irpt_custody/advisor_client_list.py:157-160: a dict payload is read as payload['entries'] (or followed through payload['key']); a list is taken as the entries.",
+      "STATED PREMISE, not decided: this reader's declared input is directory_runner's directory.json ({'entries': [...]}) and the PRD v0.3 names the ownership map as hop 1's advisor source, so it does not call the search route today. It is in the census because the CTO condition names 'IRPT_CUSTDY's hop-1 reader' and its --directory flag takes any JSON file, including a saved search answer. The issuer decides whether this is a release hold or a note."
+    ]
+  },
+  "spec_asserts": "IB-pr-338 worker face: IRPT_CUSTDY's hop-1 reader is a reader of the search response and passes on both fixtures.",
+  "world_is": "The reader handles the plain list and breaks on the envelope; it does not consume the live route, only a file handed to --directory. Recorded FAIL, not fixed. INERT: nothing feeds it a search envelope today."
+}
+```
