@@ -86,6 +86,19 @@ runner `tests/run_suite_check.py` landed @e05799d167). Resolve a conflict in the
 this order file by taking CLOUD's version. Then re-express the two tests and the self-test flag under the new rule (a 2019 anchor now
 computes or reports by rules 1-3; nothing is `HELD_CALENDAR_FIX`), keep their intent, and do not skip or xfail. Then AC3.
 
+### AMENDMENT 2 (issuer, 2026-10-07 ~11:3xZ) -- the CTO's ruling on row W9-S2 (msg 423), verbatim branches
+
+Rule 1 now splits by whether Opal holds the opening date; print, per account, which branch it took (`branch=a|b|c|rule2|rule3|none`):
+- **(a)** Opal's data covers the open date, and the days from opening to first funding show ZERO holdings (measure it: read the holdings
+  between the open date and the first funded day): SI runs from first funding and IS since inception; label it
+  `since inception (first funded <date>)`.
+- **(b)** the open date precedes Opal's first partition: rule 1 yields to rule 2, label `since <date>, the first date Opal holds`, never
+  "inception".
+- **(c)** holdings exist before Opal's first partition: rule 2, as (b).
+Real data (round-4 probe): 12 of the chosen advisor's 14 accounts are expected under (a), 2 (opened 2022) under (b) -- reported, not graded.
+Tests (in `tests/test_si_anchor.py`): one per branch; the (a) label only when the zero-holdings read is confirmed; a (b)/(c) account is
+never labelled "inception". The probe's per-account line adds `branch=`; its `labels_ok` also checks (b)/(c) carry no "inception".
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
