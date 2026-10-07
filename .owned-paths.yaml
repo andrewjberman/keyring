@@ -560,6 +560,7 @@ lanes:
       - 0.8.0_AE_CloudComp
       - 4.0.0_SA_CRO~SWEEP   # sweep-executor, gate-constrained (ruling CTOB-RCG-001)
       - 2.0.0_SA_COO~M
+      - 2.0.0_SA_COO~M1   # successor of ~M on dell1 (ruling 106036); 1.0.0_SA_CTO~DELL1 grant 2026-10-07, msg 86
     description: "CTO grantor, IRPT RULINGS batch 64, 2026-10-01 (msg 103505): the CLOUD_OPS_OR_ETL members preserved verbatim plus exact COO~M, for the exact files of the MDPF_SECCLASS FAST lease (drive-mode.log, ARM MDPF_SECCLASS 2026-10-01T05:39:44Z). Files: the single-home etf-classifications client under v2_portal/_shared and the BD gold dispatch script. Code only: no deploy or apply grant; served moves keep both never-widen halves. Struck when MDPF_SECCLASS closes."
 
   MDPF_SECCLASS_FAST_M_POD4:
@@ -2706,6 +2707,10 @@ paths:
   "infra/aws/lambda/v2_portal/_shared/tests/test_set_instrument_kind.py":
     lane: MDPF_SECCLASS_FAST_M_AE
     note: "MDPF_SECCLASS FAST lease, exact test file (the contract-version pin, row W11-S1); CTO grantor batch 73 (2026-10-01)."
+
+  "infra/aws/lambda/v2_portal/_shared/tests/test_seed_fields.py":
+    lane: MDPF_SECCLASS_FAST_M_AE
+    note: "MDPF_SECCLASS exact test file of the seed module (SC-e-21); 1.0.0_SA_CTO~DELL1 grant 2026-10-07 (msg 86), was CLOUD_OPS_OR_ETL by glob."
 
   "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py":
     lane: MDPF_SECCLASS_FAST_M_AE
