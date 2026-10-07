@@ -419,3 +419,29 @@ backfill run and is not a cell.
   keys or to `publish_page.py`. The sentence is not shown on the audit page (it carries no script).
 - **Organic trigger:** opening the dialog of a holding that left the funds before the market table began; the issuer's
   real run reads the 96 in a browser.
+
+## ROUND 18 (main workstream) -- APPENDED 2026-10-07, revision 1.8 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S56 (the issuer's round-17 real run, packet
+`deliverables/2.0.0_SA_COO~RV/round17/DRAIN_END_PACKET.round17.md`). Author 2.0.0_SA_COO~RV; the issuer rules it inside
+cell RIV-md-1's surface. No earlier cell is replaced. Chain `~8`, one cell, file render.py, risk SERVED.
+
+### `RIV-tl-1` -- the dialog's trade list never says "No trades in the last 365 days" about a window it has not read (FWD-22, F.7; row Z-S56)
+- Measured (round-17 real run, day 2026-10-06): 618 chart frames carry the static words "No trades in the last 365 days";
+  542 of them belong to a fund-security whose chart object holds one or more markers; 77 more list fewer trades than the
+  object holds markers. The static list is built from the trades in the page context; the markers from the fund's trades
+  over 365 days.
+- Interface: `render._trade_list(trades)` with no trade in the page context returns `<p data-chart-trades>` holding exactly
+  `"The fund's trades over the last 365 days load with the chart."`; with context trades it lists them as today. The
+  static page no longer prints "No trades in the last 365 days" anywhere. The page's one script gains a pure function
+  `tradelines(markers)`, exposed as `window.rfChart.tradelines`: no marker -> `["No trades in the last 365 days"]`;
+  otherwise one `words(m)` line per marker, NEWEST first by `end` (ties by `start`, newest first), at most 20 lines, and
+  when there are more a last line `"and <N> earlier trades in the last 365 days."` (`"trade"` when N is 1). When a chart
+  object loads, the script replaces the content of the frame's `[data-chart-trades]` element with those lines built from
+  ALL of the security's markers in the object (not the chosen range), for a holding with or without a stored currency
+  (so before the `nohist` return). On a failed or missing object the static element stays as rendered.
+- Rulings at the cut (issuer): the list is written once per object load and is not redrawn on a range click. A line is
+  text (`textContent`), never markup. The AUDIT page is untouched. `round15/checks/md-1.AC1.py` pins the static words
+  "No trades in the last 365 days" for the fixture's IDVZ Apple frame; the cell may change that one expected sentence to
+  the new static sentence (and the docstring line that quotes it), and nothing else in that file.
+- **Organic trigger:** opening any security dialog on the live page; the issuer's real run re-measures the 618.
