@@ -109,7 +109,7 @@ Rows: id `NFRA_OPLGTW-Z-W33-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - If the pre-check lands outside `ops/`, the worker reports it and the issuer amends `<paths>`.
 - Pre-cut 17:5xZ: `bi1.AC1` FAIL (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>28</round>
 <slot>~33</slot>
 <fabric>site-z</fabric>
