@@ -418,11 +418,14 @@ approved it.
          SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
                     (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
                     SECURITY_MODAL_PRICE_SERIES_WITH_TRADE_MARKERS.md)
-         RESERVED   Two points are Andrew's, carded by the CTO (ADDENDUM F):
-                    whether pointing at ANY day of the curve reads that day's
-                    price (it needs a script on a page whose rule is no
-                    script), and whether a Bloomberg price backfill is
-                    authorized for the days the pipeline does not hold.
+         HOVER      Pointing at any part of the curve reads that day's price
+                    and date, as Market Overview does. Andrew asked for it;
+                    it is part of this outcome, and FWD-22 is NOT REALIZED
+                    without it.
+         RESERVED   One point is Andrew's (ADDENDUM F.3): whether the page
+                    may carry ONE script, which that hover needs on a page
+                    whose rule is no script. The Bloomberg backfill is
+                    answered YES (F.5).
 
   FWD-23 (NEW, v0.18) Every period on the page is 30d, 90d or 365d rolling
          DONE WHEN  EXERCISED -- every ranking, trend, account and modal on
@@ -432,6 +435,16 @@ approved it.
          ACCEPT     90d sits where QTD sat and 365d where YTD sat. A period a
                     fund's history does not reach reads partial with its
                     reason. The AI accounts name the same three periods.
+         UNIT       ONE unit serves all three periods and the curve's ranges.
+                    Whether it is calendar days or NYSE trading days is
+                    RESERVED to Andrew: his 2026-10-04 word set the 30-day
+                    period as "the last 30 trading days", and a 365-trading-
+                    day period is about 17 months. No 90d or 365d cell is cut
+                    until his answer is recorded here.
+         AMENDS     FWD-14 and FWD-19 where they name the displayed periods
+                    (30 trading days, quarter to date, year to date): the
+                    displayed set is this outcome's. Nothing else in either
+                    outcome changes.
          SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
                     (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
                     PERIODS_30D_90D_365D_EVERYWHERE.md)
@@ -1066,16 +1079,19 @@ the ENDPOINT section. This addendum holds the contracts and the reserved points.
 
 ### F.3 -- RESERVED to Andrew (two cards; the build of everything else does not wait)
 
-1. **Does pointing at ANY day of the curve read that day's price, as Market Overview does?** It needs one script on a page
-   whose rule is no script. Without it, v1 reads prices at the axis and at the trade markers only.
+1. **May the rivalfunds page carry ONE script?** Andrew already asked for the price and date on pointing at any part of the
+   curve ("just like in market overview"), and that hover is in FWD-22's fence. What is open is only the means: it needs one
+   script on a page whose rule is no script. Until he answers, the build delivers everything else, and FWD-22 is graded NOT
+   REALIZED (CVO~Z's condition, review @fe586ea2e2).
 2. **Is a Bloomberg price-history backfill authorized for the securities and days the pipeline does not hold?** Without it,
    the curve has gaps wherever no universe fund held the security.
 
 ### F.4 -- L4-R
 
 ENDPOINT lines and CONTRACTS are added, so the RATIFIED half re-opens to `3.0.0_SA_CVO~RV`. The brief half is Andrew's own
-words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-1`..`FWD-21` and every existing contract are
-unchanged.
+words, recorded verbatim, and no CRO brief is cut for a two-item addendum. `FWD-14` and `FWD-19` are AMENDED where they name the displayed
+periods (FWD-23's AMENDS line; CVO~RV's finding @45abbdca53). Every other outcome of `FWD-1`..`FWD-21` and every existing contract
+is unchanged.
 
 ### F.5 (2026-10-07 ~05:2xZ) -- Andrew's answers, and where the curves live (COO~RV msg 30612)
 
