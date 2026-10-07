@@ -1416,7 +1416,35 @@ A `seed` row always wins and its correction is made in the seed source (`infra/a
 
 The snapshot (`--snapshot`, written before the first update) holds each WRITE key's full pre-state item. `clean_name_write_v2.py --rollback <snapshot.json> --write` restores each key by a conditional update, only where the row still reads `updated_by = mdpf-secclass-clean-names-v2` and `name` = the clean name: a table row goes back to its old `name` (and prior `updated_by`, or REMOVE it if the row had none); a custody row is `REMOVE name` (and `updated_by` restored or removed). A row changed by another writer since is skipped and reported. The dry-run form of `--rollback` lists what it would restore.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED (2.0.0_SA_COO~M1, 2026-10-07 ~17:3xZ; release mode, request 7)
+
+**Read at signing.**
+- The set: `CLEAN_NAME_ROW_SET_V2_20261007.tsv`.
+- The writer's own dry run against the LIVE table, ~17:3xZ:
+  `CLEAN-NAME-V2-DRY-RUN write=492 custody=857 seed_source=13 unchanged=378 refused_stale=0 puts=0`. This equals the set exactly: 0 rows
+  have moved since the scan.
+- The readers section above.
+
+**Writers of `name` on `etf-classifications`, counted (N = 8), each rule read:**
+1. `seed-etf-classifications.py` (seed);
+2. `seed-etf-constituents.py` (constituents);
+3. `etf_classification_scheduled.write` (E_18 bd/cot);
+4. the FWD-10 producer (`new-security-classifier`, through the same write);
+5. `write-model-rows.py`;
+6. the CUSIP-rows writer;
+7. the FWD-9 writer;
+8. this act's writer.
+Writers 3-7 are put-on-absence (`attribute_not_exists`), so they never rewrite an existing row's name. Writers 1-2 write only seed and
+constituents rows; this set writes no `seed` row (the 13 SEED-SOURCE keys are listed, not written).
+
+**Branches, both covered:**
+- (A) table WRITE: the conditional `name = :current` lands the clean name; a row whose name moved since the scan is refused stale and
+  listed, never overwritten.
+- (B) custody WRITE: `attribute_not_exists(name)` lands the custody-derived name only where none exists.
+
+**Signed for:** the 1,349 conditional updates above, on `name` and `updated_by` only, with the snapshot rollback per key. The write
+runs from dell1. Its principal READ the table consistently in the dry run; its WRITE permission on `etf-classifications` is not yet
+exercised. If the first update is refused, nothing is written and the act moves to a laptop seat under this same pair.
 
 (`2.0.0_SA_COO` signs here after reading the set, the dry-run line, the readers section and the writers count. Blast radius, both branches (table WRITE and custody WRITE) and the rollback per key are named above.)
 
