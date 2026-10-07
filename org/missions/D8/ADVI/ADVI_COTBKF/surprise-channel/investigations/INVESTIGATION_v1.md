@@ -1211,3 +1211,154 @@ round.** Never edit an existing row.
   "notes": "Closes this seat's last ARMED row on ADVI_COTBKF."
 }
 ```
+
+## ADVI_COTBKF-W22-S1 -- the order's "today's positions on 2026-06-23" is the Cottonwood account's first holdings dated 2026-06-30; the current side holds nothing dated 2026-06-23 for it
+
+```json
+{
+  "id": "ADVI_COTBKF-W22-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~22",
+  "surfaced_at": "2026-10-07T11:00Z",
+  "one_line": "CB-g-2 compares old positions to the current account's first holdings (2026-06-30), the crosswalk's own basis, not to 2026-06-23 positions",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "crosswalk.parquet evidence for 04003450617: current account z0927272491's first holdings (2026-06-30)",
+      "silver positions (2026-06-23) holds no current-side account id (z0927272491: 0 rows); FWD8_READ.md cites the holdings date it used"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order cell step 2: the new account's positions are 'today's positions on 2026-06-23'.",
+  "world_is": "Current-side holdings for z0927272491 begin 2026-06-30; the read uses them (the matching rule's basis) and states the date."
+}
+```
+
+## ADVI_COTBKF-W23-S1 -- The applied silver transactions table reads 1,416,497 rows, not the 1,415,137 that W2-S1 says the silver table keeps after dropping 1,360 duplicates
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The applied silver transactions table reads 1,416,497 rows, not the 1,415,137 that W2-S1 says the silver table keeps after dropping 1,360 duplicates",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "count_rows over the transactions prefix on 2026-10-07: 1,416,497",
+      "coverage.parquet transactions rows=1416497"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W2-S1: the silver table keeps 1,415,137 rows after dropping 1,360 exact duplicates.",
+  "world_is": "The applied transactions prefix counts 1,416,497 rows (dataset count_rows, 14 files) and the applied coverage table reports transactions rows=1,416,497; the 1,360-row drop is not visible in what was applied. The coverage statement reports the applied count.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S2 -- The silver positions table is one snapshot (2026-06-23): 469 positions for 83 of the 1,533 accounts that traded
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The silver positions table is one snapshot (2026-06-23): 469 positions for 83 of the 1,533 accounts that traded",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coverage.parquet positions earliest=latest=2026-06-23 rows=469 distinct_accounts=83"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: a reader learns what the backfill holds; positions is read as a history alongside transactions.",
+  "world_is": "The positions table holds one AsOfDate (2026-06-23), 469 rows, 83 accounts; the delivery's positions file is a single snapshot, so earlier holdings are rebuilt from transactions (crosswalk, account_links). Stated on the coverage page.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S3 -- 1,544 of the 11,119 indexed documents carry no account: all NCSD (1,239), ADVS (165), REPR (13) and 127 of 932 CLNT
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "1,544 of the 11,119 indexed documents carry no account: all NCSD (1,239), ADVS (165), REPR (13) and 127 of 932 CLNT",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Counter of doc_type where account is null on document_index.parquet: NCSD 1239, ADVS 165, CLNT 127, REPR 13"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: the document index ties each document to an account.",
+  "world_is": "document_index account is null for NCSD, ADVS, REPR and 127 CLNT; STMT and TXRP carry one. Stated on the coverage page as a gap; the cause is read from the types, not from the vendor's listing text.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S4 -- The silver coverage table grades only transactions, performance and positions (5 record kinds); nothing in it covers the crosswalk, account_links, documents or bronze
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "The silver coverage table grades only transactions, performance and positions (5 record kinds); nothing in it covers the crosswalk, account_links, documents or bronze",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "coverage.parquet record_kind values: transactions, performance_month, performance_year, performance_inception, positions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: coverage is the one account of what the backfill holds.",
+  "world_is": "coverage.parquet has 5 rows (transactions, performance_month/year/inception, positions). The one-page statement is the only account of the other tables.",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
+
+## ADVI_COTBKF-W23-S5 -- 14 of the 1,533 accounts in transactions have no performance record (1,519 accounts in performance, none outside transactions)
+
+```json
+{
+  "id": "ADVI_COTBKF-W23-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~23",
+  "surfaced_at": "2026-10-07T11:10Z",
+  "one_line": "14 of the 1,533 accounts in transactions have no performance record (1,519 accounts in performance, none outside transactions)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "distinct Account_Number over the silver transactions and performance prefixes on 2026-10-07"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-6: the delivery's performance file covers every transacting account.",
+  "world_is": "Set difference of Account_Number: transactions 1,533, performance 1,519, performance-minus-transactions 0, transactions-minus-performance 14 (4876983, B3S728493, RGY006662, VUL1019560 and ten cv-prefixed accounts).",
+  "notes": "Surfaced building TO CB-g-3 (the FWD-6 coverage statement)."
+}
+```
