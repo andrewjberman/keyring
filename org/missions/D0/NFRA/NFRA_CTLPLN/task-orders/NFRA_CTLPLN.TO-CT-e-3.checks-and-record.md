@@ -117,7 +117,7 @@ No non-ASCII in any file you write. Standard library only unless the order names
 `CT5e3-AC2` -- the difference control: on a synthetic clean file the tool cannot reach "checked" without the CTO's signature file.
 </proof_of_spec>
 
-<expected_criteria>CT5e3-AC1,CT5e3-AC2</expected_criteria>
+<expected_criteria>CT5e3-AC1,CT5e3-AC2,CT5e3-AC3</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~6/NFRA_CTLPLN.TO-CT-e-3.checks-and-record.proof_of_spec.json`, validate it
@@ -150,3 +150,71 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: PRD `prd/NFRA_CTLPLN_PRD.md` v0.17 @301f06300d (ADMITTED), ADDENDUM v0.15 and v0.16, contract C-INTAKE; brief
 `docs/briefs/nfra-ctlpln-package-intake-and-download-tiers-brief-20261007.md` @adc8997f1b Part V.1; CTO msgs 106327, 106363, 106372,
 106424, 106436, 106445.
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~20:0xZ) -- REOPENED: check 7 as ruled -- the ACTIVE antivirus read on-access, never the disabled scanner's exit
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state on the trunk (merged @99f1d26949). Your row `NFRA_CTLPLN-W6-S11` found that the Windows command-line scanner
+exits 2 with "Product/Feature disabled" on this laptop, so check 7 as built can never pass here. Authority: `1.0.0_SA_CTO`
+msg 106549, verbatim: "Measured by me at ~19:5xZ (SecurityCenter2): two products registered. Windows Defender, productState
+393472 (off). 'Little Dog Tech Managed Antivirus Antimalware', productState 266240 (on, definitions current). So MpCmdRun's exit 2
+says nothing about the file. Check 7, as ruled: the tool reads SecurityCenter2 and names the active product and its state. It
+writes the fetched file into the holding folder, waits a stated number of seconds, and records whether the file is still present
+and unchanged by hash. PASS reads exactly: 'on-access scan by <product>, state enabled and current; file present and unchanged
+after N s; no on-demand verdict available'. A missing or changed file, or no active product, is FAIL. No test-virus file is
+planted as a control: it would raise the managed product's alarm. The record states that limit beside the check."
+Gate limb: none graded this modification. THE WORK below is the whole of this amendment; checks 1 to 6 and 8, `release` and
+`pack` are unchanged.
+
+1. Check 7 in `org/devices/intake/intake_check.py` becomes, in this order:
+   - READ THE ACTIVE PRODUCT: query the Windows Security Center's antivirus registrations (the `root/SecurityCenter2` namespace,
+     class `AntiVirusProduct`: `displayName`, `productState`) through PowerShell with a 30-second bound, parsed as JSON. Decode
+     `productState` by its documented bytes (the second byte: real-time protection on or off; the third: definitions current or
+     out of date) and print the decoding you used with the two values the CTO measured as its worked examples (393472 -> off;
+     266240 -> on, current). The ACTIVE product is one whose state decodes to on. None active, the query failing, or timing out
+     is `failed` with the reason. More than one active: name them all; it is still a pass condition.
+   - THE ON-ACCESS READ, which must really cause an on-access event rather than only wait: copy the held file's bytes to a NEW
+     file beside it in the same holding folder (`<file name>.scan-copy`), flush and close it, open and read it back fully, then
+     wait `--scan-wait-seconds` (default 20; print and record the value), then read BOTH the held file and the copy again and
+     compare each SHA-256 with the held file's hash from before; delete the copy afterwards (and report if the delete itself is
+     refused or the copy is already gone: a product that quarantined the copy has given a verdict). `passed` only when the
+     active product decodes to on with definitions current AND the held file and the copy are both present and unchanged; then
+     the evidence summary reads EXACTLY
+     `on-access scan by <product>, state enabled and current; file present and unchanged after <N> s; no on-demand verdict available`.
+     A missing or changed held file, a missing or changed copy, definitions out of date, or no active product: `failed` with
+     the reason.
+   - THE LIMIT, written into the record beside the check and into the delivery text for this check, in these words: "No
+     test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows that an
+     enabled, current product did not remove or alter the file within the wait, and does not show that the product inspected
+     it." The brief's own "Leaves" text for check 7 stays as it is, verbatim, beside it.
+   - `MpCmdRun` is no longer run by the tool at all. `OPAL_INTAKE_SCANNER` is retired; tests inject the product reading through
+     a new environment variable `OPAL_INTAKE_AV_JSON` (a path to a JSON file standing in for the Security Center answer) and
+     may set the wait to 0.
+2. `org/devices/intake/test_intake_check.py`: replace the stub-scanner cases with: an on and current product with the file
+   unchanged passes and the summary equals the exact sentence; the product off -> failed; definitions out of date -> failed;
+   no product -> failed; the query's stand-in unreadable -> failed; the held file changed during the wait -> failed; the copy
+   removed during the wait (simulate a quarantine by a hook the test controls) -> failed; the copy is always cleaned up on a
+   pass; the two worked examples decode as the CTO measured. ONE further case reads the REAL Security Center on this machine
+   and runs the real on-access read on a tiny harmless synthetic wheel you made, with the default wait, and prints what it
+   read (counted as skipped only if the query itself cannot run). Every earlier case that does not concern check 7 still
+   passes. The `selftest-unsigned` verb uses the stand-in and still prints `c8=unsigned verdict=not_checked`.
+
+**ACCEPTANCE.** `CT5e3-AC1` and `CT5e3-AC2` are unchanged (their lines move only in the case count). One criterion is ADDED:
+
+<criterion id="CT5e3-AC3" cell_refs="CT-e-3"><invocation>python org/devices/intake/intake_check.py selftest-av</invocation><expect>INTAKE-AV products=[0-9]+ active=</expect></criterion>
+`CT5e3-AC3` -- a new verb that reads the REAL Security Center and prints one line
+`INTAKE-AV products=<n> active=<names or NONE> realtime=<on|off> definitions=<current|out_of_date|unknown> ok=<True|False>`
+(`ok=True` when at least one product is on and current). It must read `ok=True` on this laptop today, the CTO having measured
+one such product; if it does not, report what it read: do not adjust the decoding to make it pass.
+
+**BOUNDS.** No test-virus file, no EICAR string, anywhere, for any reason. No change to any antivirus setting. Read-only queries
+of the Security Center. Nothing from a package file is installed, imported or executed. No request leaves this machine.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~21:2xZ) -- one issuer repair: CT5e3-AC3's expectation matches the line AMENDMENT 1 itself fixed
+
+AMENDMENT 1 fixed the verb's line as `INTAKE-AV products=<n> active=...` and wrote the expectation as `INTAKE-AV active=`, which is
+not a substring of that line (row `NFRA_CTLPLN-W6-S13`; the worker followed the line and recorded the criterion FAIL rather than
+bend the tool). The expectation is now `INTAKE-AV products=[0-9]+ active=`. Nothing in the tool or its tests changes. Gate limb:
+none graded this modification. The worker re-runs the three criteria, rewrites the `CT5e3-AC3` proof row from that run (its
+`expect` equal to the new expectation), validates the instance, and flips the order to `complete` when all three pass.
+
