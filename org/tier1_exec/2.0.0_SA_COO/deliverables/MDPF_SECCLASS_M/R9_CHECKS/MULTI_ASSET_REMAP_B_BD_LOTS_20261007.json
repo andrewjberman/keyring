@@ -1,0 +1,175 @@
+{
+ "by_class": {
+  "equity": 7072365.5,
+  "fixed_income": 1672002.62
+ },
+ "by_key": {
+  "AAETX": [
+   "equity",
+   3,
+   1110334.21
+  ],
+  "ABALX": [
+   "equity",
+   240,
+   459348.95
+  ],
+  "AMECX": [
+   "fixed_income",
+   170,
+   111557.44
+  ],
+  "AOR": [
+   "equity",
+   3,
+   0.0
+  ],
+  "CAIBX": [
+   "fixed_income",
+   188,
+   461918.33
+  ],
+  "CFIHX": [
+   "fixed_income",
+   22,
+   92706.34
+  ],
+  "CLBAX": [
+   "equity",
+   61,
+   115942.2
+  ],
+  "CUSIP:024071508": [
+   "equity",
+   63,
+   115942.2
+  ],
+  "CUSIP:02630T712": [
+   "equity",
+   3,
+   1110334.21
+  ],
+  "CUSIP:140193103": [
+   "fixed_income",
+   199,
+   570116.42
+  ],
+  "CUSIP:140193780": [
+   "fixed_income",
+   24,
+   93932.54
+  ],
+  "CUSIP:316345206": [
+   "equity",
+   66,
+   797913.22
+  ],
+  "CUSIP:32008F606": [
+   "equity",
+   63,
+   109583.09
+  ],
+  "CUSIP:353496490": [
+   "fixed_income",
+   120,
+   100964.64
+  ],
+  "CUSIP:453320103": [
+   "fixed_income",
+   178,
+   139842.28
+  ],
+  "CUSIP:56167N274": [
+   "equity",
+   1394,
+   155942.1
+  ],
+  "CUSIP:704223205": [
+   "equity",
+   1,
+   0.0
+  ],
+  "CUSIP:808516306": [
+   "equity",
+   21,
+   185046.27
+  ],
+  "CUSIP:92202E508": [
+   "equity",
+   19,
+   95599.35
+  ],
+  "FBALX": [
+   "equity",
+   66,
+   797913.22
+  ],
+  "FKIQX": [
+   "fixed_income",
+   120,
+   100964.64
+  ],
+  "FTYPX": [
+   "equity",
+   3,
+   0.0
+  ],
+  "KAGIX": [
+   "equity",
+   1394,
+   155942.1
+  ],
+  "LIPKX": [
+   "equity",
+   55,
+   184887.49
+  ],
+  "MDLOX": [
+   "equity",
+   63,
+   65537.38
+  ],
+  "SCGB1": [
+   "equity",
+   2,
+   57314.3
+  ],
+  "SGIIX": [
+   "equity",
+   63,
+   109583.09
+  ],
+  "VSMGX": [
+   "equity",
+   12,
+   0.0
+  ],
+  "VTHRX": [
+   "equity",
+   1,
+   0.0
+  ],
+  "VTIVX": [
+   "equity",
+   26,
+   0.0
+  ],
+  "VTTHX": [
+   "equity",
+   81,
+   95599.35
+  ],
+  "VWELX": [
+   "equity",
+   46,
+   0.0
+  ],
+  "VWENX": [
+   "equity",
+   73,
+   1349602.78
+  ]
+ },
+ "partition": "gold/timeseries/holdings_lots/2026-10-02.parquet",
+ "rows_total": 1292495
+}

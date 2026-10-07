@@ -124,6 +124,95 @@ declared_devices() {
     _devices names
 }
 
+# --- THE TAILNET STAMP (NFRA_CTLPLN FWD-3, C-BUS; CTO msg 105932 on Andrew's word "the tailnet name is the
+# real identifier") ---------------------------------------------------------------------------------------
+# Every message carries the sender's and the recipient's TAILNET NAME (register field `tailnet_name`, the
+# MagicDNS name), as SQS message attributes AND in the body envelope beside the serial. The names are read
+# from the device register through lib/devices.py (OPAL_DEVICE_REGISTER honoured) and never typed here.
+#   _tailnet of <label>   -> the tailnet name of the box a name or alias resolves to (rc 2 unknown/none)
+#   _tailnet all          -> every tailnet name the register holds, one per line
+# Fail-closed like _devices: no python or an unreadable register is rc 3, never a built-in list.
+_tailnet() {
+    local _root _p
+    _root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." 2>/dev/null && pwd)"
+    for _p in python python3; do
+        if command -v "$_p" >/dev/null 2>&1; then
+            "$_p" -c '
+import sys
+sys.path.insert(0, sys.argv[1] + "/lib")
+import devices
+mode = sys.argv[2]
+try:
+    reg = devices.load()
+except devices.RegisterError as exc:
+    print(str(exc), file=sys.stderr)
+    sys.exit(3)
+if mode == "all":
+    print("\n".join(d["tailnet_name"] for d in devices.devices(reg) if d.get("tailnet_name")))
+    sys.exit(0)
+canon = devices.resolve(sys.argv[3], reg)
+for d in devices.devices(reg):
+    if d["name"] == canon and d.get("tailnet_name"):
+        print(d["tailnet_name"])
+        sys.exit(0)
+sys.exit(2)
+' "$_root" "$@" | tr -d '\r'
+            return "${PIPESTATUS[0]}"
+        fi
+    done
+    echo "agentbus-sqs: no python to read the device register (lib/devices.py) -- refusing" >&2
+    return 3
+}
+
+# RECEIVE-SIDE REFUSAL (AMENDMENT 2, rows W3-S2/W3-S3). Input: the receive-message JSON in $1, the queue URL in $q.
+# Sets DELIVER_JSON to the same JSON holding only the messages to deliver, and REFUSED_N to the count refused.
+#   - sender tailnet name (attribute from_tailnet) HELD by the register  -> delivered.
+#   - NO from_tailnet stamp (a box still running the old script)         -> delivered, with one line
+#       WARN agentbus unstamped sender=<serial>      (until every box sends stamped; strict refusal is a later flip)
+#   - a stamped name the register does NOT hold                          -> REFUSED: the whole message (body and
+#       attributes) is written to ${AGENTBUS_REFUSED_DIR:-org/mcp/inbox/_agentbus_refused}/<UTC stamp>_<message id>.json,
+#       one line  REFUSED agentbus sender_tailnet=<name> reason=<why> record=<path>  is printed, and only THEN is the
+#       message DELETED from the queue so it can never block the one-group FIFO. Recorded, never silently dropped:
+#       a record that cannot be written leaves the message on the queue.
+# The consumer (agentbus-consumer.py) applies the same rule and reads the register the same way (lib/devices.py).
+# Fail closed: without a resolvable jq, or with an unreadable register, the check cannot be made, so EVERY message is
+# withheld (not delivered, and NOT deleted -- there is nothing to record a judgement on).
+partition_by_sender() {
+    local json="$1" held rdir stamp
+    DELIVER_JSON=""; REFUSED_N=0
+    if [ -z "$JQ" ]; then
+        REFUSED_N="$(printf '%s' "$json" | grep -o '"MessageId"' | wc -l | tr -d ' ')"
+        echo "[agentbus] WITHHELD ${REFUSED_N} message(s): no jq resolvable, so the sender tailnet name cannot be checked against the register -- NOT delivered, NOT deleted; they remain on the queue."
+        return 0
+    fi
+    held="$(_tailnet all | "$JQ" -R . | "$JQ" -s -c .)" || {
+        echo "[agentbus] WITHHELD ALL: the device register's tailnet names could not be read -- NOT delivered, NOT deleted." >&2
+        REFUSED_N="$(printf '%s' "$json" | "$JQ" '.Messages | length' | tr -d '')"; return 0; }
+    rdir="${AGENTBUS_REFUSED_DIR:-${_jq_self_dir}/../org/mcp/inbox/_agentbus_refused}"
+    # unstamped mail: delivered with a WARN naming the serial
+    printf '%s' "$json" | "$JQ" -r '.Messages[] | select((.MessageAttributes.from_tailnet.StringValue // "") == "")
+         | "WARN agentbus unstamped sender=" + (.MessageAttributes.from.StringValue // "unknown")' | tr -d ''
+    REFUSED_N="$(printf '%s' "$json" | "$JQ" --argjson held "$held"         '[.Messages[] | (.MessageAttributes.from_tailnet.StringValue // "") as $t | select($t != "" and (($held | index($t)) == null))] | length' | tr -d '')"
+    if [ "$REFUSED_N" -gt 0 ]; then
+        mkdir -p "$rdir"
+        stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+        printf '%s' "$json" | "$JQ" -c --argjson held "$held"             '.Messages[] | (.MessageAttributes.from_tailnet.StringValue // "") as $t | select($t != "" and (($held | index($t)) == null))'             | tr -d '' | while read -r m; do
+            local mid tn rh rec
+            mid="$(printf '%s' "$m" | "$JQ" -r .MessageId | tr -d '')"
+            tn="$(printf '%s' "$m" | "$JQ" -r '.MessageAttributes.from_tailnet.StringValue' | tr -d '')"
+            rh="$(printf '%s' "$m" | "$JQ" -r '.ReceiptHandle // ""' | tr -d '')"
+            rec="${rdir}/${stamp}_${mid}.json"
+            if printf '%s' "$m" | "$JQ" --arg at "$stamp" --arg tn "$tn"                 '{refused_at: $at, sender_tailnet: $tn, reason: "sender tailnet name not held by the device register", message: .}' > "$rec"; then
+                echo "REFUSED agentbus sender_tailnet=${tn} reason=not-held-by-the-device-register record=${rec}"
+                aws sqs delete-message --region "$REGION" --queue-url "$q" --receipt-handle "$rh" >/dev/null 2>&1                     || echo "[agentbus] WARN: the refused message ${mid} was recorded but its delete FAILED; it will redeliver and be refused again."
+            else
+                echo "[agentbus] REFUSED [id ${mid}] sender tailnet name [${tn}] but the record could not be written to ${rec} -- NOT deleted; it remains on the queue."
+            fi
+        done
+    fi
+    DELIVER_JSON="$(printf '%s' "$json" | "$JQ" -c --argjson held "$held"         '.Messages |= map(select(((.MessageAttributes.from_tailnet.StringValue // "") as $t | ($t == "" or (($held | index($t)) != null)))))')"
+}
+
 # --- JQ RESOLUTION (NFRA_TOOLARCH.PATHFIX) --------------------------------------------------------
 # RESOLVE THE TRACKED BINARY, NEVER THE BARE NAME. `command -v jq` FAILS IN EVERY HARNESS SHELL --
 # they are non-interactive, source no profile, and so never put .tools on PATH. That made the
@@ -217,13 +306,22 @@ case "$cmd" in
     body="$*"
     [ -n "$body" ] || { echo "agentbus-sqs: refusing to send an empty body" >&2; exit 2; }
     ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    # THE TAILNET STAMP (see _tailnet above): the sender's box is this device (AGENTBUS_DEVICE through the
+    # register), the recipient's is the box named by <to>; both names come from the register's tailnet_name.
+    me="$(this_device)"
+    if [ -z "$me" ] || [ "$me" = "UNKNOWN" ]; then
+        echo "agentbus-sqs: REFUSING to send -- this box is unresolved, so the sender's tailnet name cannot be stamped (set AGENTBUS_DEVICE)." >&2
+        exit 2
+    fi
+    from_tn="$(_tailnet of "$me")" || { echo "agentbus-sqs: REFUSING to send -- the register holds no tailnet_name for sender box '${me}'." >&2; exit 2; }
+    to_tn="$(_tailnet of "$to")" || { echo "agentbus-sqs: REFUSING to send -- the register holds no tailnet_name for recipient '${to}'." >&2; exit 2; }
     # MessageGroupId is REQUIRED on a FIFO queue. One group keeps global ordering across
     # the channel; switch to a per-conversation group if strict ordering per thread is
     # wanted and cross-thread head-of-line blocking becomes a problem.
     out=$(aws sqs send-message --region "$REGION" --queue-url "$(queue_for "$to")" \
         --message-group-id opal-sqschat \
-        --message-attributes "from={StringValue=${from},DataType=String},sent_at={StringValue=${ts},DataType=String}" \
-        --message-body "[${ts}] [from ${from}] ${body}")
+        --message-attributes "from={StringValue=${from},DataType=String},sent_at={StringValue=${ts},DataType=String},from_tailnet={StringValue=${from_tn},DataType=String},to_tailnet={StringValue=${to_tn},DataType=String}" \
+        --message-body "[${ts}] [from ${from}] [tailnet ${from_tn} -> ${to_tn}] ${body}")
     # THE TRUNCATION QUESTION, ANSWERED AND WRITTEN DOWN (0.0.0_AB_MSTR asked for the reason, not
     # just the change): an SQS MessageId is a UUID -- charset [0-9a-f-] -- so it CANNOT contain a
     # quote and the escaped-quote truncation that destroyed message BODIES cannot occur on THIS
@@ -300,7 +398,17 @@ case "$cmd" in
         echo "(no messages addressed to ${dev}) -- this is a REAL empty queue: the API call succeeded."
         exit 0
     fi
-    printf '%s\n' "$out"
+    # RECEIVE-SIDE REFUSAL (see partition_by_sender above): a message from a sender tailnet name the register
+    # does not hold is recorded, reported and deleted; unstamped mail is delivered with a WARN.
+    partition_by_sender "$out"
+    REFUSED_N="${REFUSED_N//$'\r'/}"
+    if [ -n "$DELIVER_JSON" ] && [ "$(printf '%s' "$DELIVER_JSON" | "$JQ" '.Messages | length' | tr -d '\r')" -gt 0 ]; then
+        out="$DELIVER_JSON"
+        printf '%s\n' "$out"
+    else
+        echo "(no deliverable messages: ${REFUSED_N} refused/withheld above)" >&2
+        exit 4
+    fi
     if [ "$keep" -eq 1 ]; then
         echo
         echo "--keep: messages NOT deleted; they return to the queue after the visibility timeout."
@@ -325,6 +433,10 @@ case "$cmd" in
         fi
         echo
         echo "Consumed (deleted from queue). ACK each MessageId above to the sender -- deletion is NOT an ack."
+    fi
+    if [ "$REFUSED_N" -gt 0 ]; then
+        echo "agentbus-sqs: ${REFUSED_N} message(s) REFUSED (sender tailnet name not in the register), recorded and removed from the queue." >&2
+        exit 4
     fi
     ;;
 
@@ -422,6 +534,16 @@ case "$cmd" in
             continue
         fi
         if printf '%s' "$out" | grep -q '"Messages"'; then
+            # RECEIVE-SIDE REFUSAL (partition_by_sender): a message whose sender tailnet name the register
+            # does not hold is recorded, reported and deleted (partition_by_sender). This loop is the aws-CLI fallback;
+            # the boto3 consumer (agentbus-consumer.py) is the primary watch path.
+            partition_by_sender "$out"
+            REFUSED_N="${REFUSED_N//$'\r'/}"
+            out="$DELIVER_JSON"
+            if [ -z "$out" ] || [ "$(printf '%s' "$out" | "$JQ" '.Messages | length' | tr -d '\r')" -eq 0 ]; then
+                sleep 5
+                continue
+            fi
             # EMIT THE MessageId WITH THE BODY. The first version emitted the body alone, and
             # that is not cosmetic: Rule 22b's ONLY delivery oracle is an ack NAMING the
             # MessageId, so a consumer that hides the id STRUCTURALLY PREVENTS THE DISCIPLINE

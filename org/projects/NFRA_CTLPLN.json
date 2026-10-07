@@ -4,10 +4,10 @@
  "directive": "D0",
  "macro_code": "NFRA",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The four-device control plane: laptop plans, site Z integrates and deploys, dell1 and dell2 execute -- one round at a time, one writer per file, no deploy from a publish",
  "generated_from": "org/missions/D0/NFRA/NFRA_CTLPLN/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-06T13:16:17Z"
+ "generated_at": "2026-10-07T02:35:11Z"
 }

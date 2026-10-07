@@ -8,7 +8,7 @@
   "dep_stage": "EXECUTING",
   "created": "2026-10-06",
   "registered_under_tree": "2026-10-06",
-  "placement": "LAPTOP",
+  "placement": "DELL1",
   "pods": [],
   "related": [
     "MDPF_SECCLASS",
@@ -47,5 +47,6 @@
   "leads": {
     "cto": "1.0.0_SA_CTO",
     "coo": "2.0.0_SA_COO~C (CTO reading of Andrew's 'All agreed', record ANDREW_DIRECT_20261006_174xZ; seating 0.0.0_AB_MSTR's)"
-  }
+  },
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }

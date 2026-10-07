@@ -1,0 +1,160 @@
+{
+ "49financial": {
+  "after": {
+   "equity": {
+    "amount": 1971366.25,
+    "nodes": 23
+   },
+   "fixed_income": {
+    "amount": 544234.93,
+    "nodes": 12
+   }
+  },
+  "by_fund_key": {
+   "ABALX": {
+    "amount": 653854.59,
+    "class_today": "multi_asset",
+    "nodes": 7,
+    "target": "equity"
+   },
+   "AMECX": {
+    "amount": 27788.19,
+    "class_today": "multi_asset",
+    "nodes": 3,
+    "target": "fixed_income"
+   },
+   "CAIBX": {
+    "amount": 324861.63,
+    "class_today": "multi_asset",
+    "nodes": 3,
+    "target": "fixed_income"
+   },
+   "CFIHX": {
+    "amount": 91844.33,
+    "class_today": "multi_asset",
+    "nodes": 1,
+    "target": "fixed_income"
+   },
+   "FKIQX": {
+    "amount": 99740.78,
+    "class_today": "multi_asset",
+    "nodes": 5,
+    "target": "fixed_income"
+   },
+   "MDLOX": {
+    "amount": 66459.5,
+    "class_today": "multi_asset",
+    "nodes": 2,
+    "target": "equity"
+   },
+   "SCGB1": {
+    "amount": 176092.61,
+    "class_today": "multi_asset",
+    "nodes": 9,
+    "target": "equity"
+   },
+   "SGIIX": {
+    "amount": 75599.41,
+    "class_today": "multi_asset",
+    "nodes": 3,
+    "target": "equity"
+   },
+   "VWENX": {
+    "amount": 999360.14,
+    "class_today": "multi_asset",
+    "nodes": 2,
+    "target": "equity"
+   }
+  },
+  "date": "2026-10-05",
+  "parts": 188,
+  "today": {
+   "multi_asset": 2515601.18
+  },
+  "total_parts": 188
+ },
+ "cottonwood": {
+  "after": {
+   "equity": {
+    "amount": 160910.85,
+    "nodes": 5
+   }
+  },
+  "by_fund_key": {
+   "SGIIX": {
+    "amount": 160910.85,
+    "class_today": "multi_asset",
+    "nodes": 5,
+    "target": "equity"
+   }
+  },
+  "date": "2026-10-05",
+  "parts": 27,
+  "today": {
+   "multi_asset": 160910.85
+  },
+  "total_parts": 27
+ },
+ "inflection": {
+  "after": {
+   "equity": {
+    "amount": 15241.0,
+    "nodes": 13
+   },
+   "fixed_income": {
+    "amount": 25571.89,
+    "nodes": 7
+   }
+  },
+  "by_fund_key": {
+   "ABALX": {
+    "amount": 0.0,
+    "class_today": "multi_asset",
+    "nodes": 4,
+    "target": "equity"
+   },
+   "AMECX": {
+    "amount": 0.0,
+    "class_today": "multi_asset",
+    "nodes": 4,
+    "target": "fixed_income"
+   },
+   "CAIBX": {
+    "amount": 25571.89,
+    "class_today": "multi_asset",
+    "nodes": 3,
+    "target": "fixed_income"
+   },
+   "FBALX": {
+    "amount": 0.0,
+    "class_today": "multi_asset",
+    "nodes": 1,
+    "target": "equity"
+   },
+   "SGIIX": {
+    "amount": 15241.0,
+    "class_today": "multi_asset",
+    "nodes": 4,
+    "target": "equity"
+   },
+   "VWELX": {
+    "amount": 0.0,
+    "class_today": "multi_asset",
+    "nodes": 2,
+    "target": "equity"
+   },
+   "VWENX": {
+    "amount": 0.0,
+    "class_today": "multi_asset",
+    "nodes": 2,
+    "target": "equity"
+   }
+  },
+  "date": "2026-10-05",
+  "parts": 51,
+  "today": {
+   "multi_asset": 40812.89
+  },
+  "total_parts": 51
+ }
+}

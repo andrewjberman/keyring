@@ -1,0 +1,35 @@
+# MDPF_SECCLASS rule B remap proposal (Andrew "I like B", ~00:5xZ 2026-10-07): every multi_asset row -> equity or fixed_income
+# columns: key<TAB>name<TAB>old_sub_class<TAB>target_class<TAB>basis<TAB>named_or_edge
+AAETX	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	Target Date	equity	rule B: target-date (name)	named
+ABALX	American Funds American Balanced A	Fixed Mix	equity	rule B: balanced (name)	named
+AMECX	AMERICAN FUNDS INCOME FUND OF AMER A	Flexible	fixed_income	rule B: income-oriented (name)	named
+AOR	iShares Core Growth Allocation ETF	Fixed Mix	equity	rule B: allocation (name)	named
+CAIBX	AMERICAN FUNDS CAPITAL INCOME BLDR A	Flexible	fixed_income	rule B: income-oriented (name)	named
+CFIHX	AMERICAN FUNDS CAPITAL INCOME BLDR F3	Flexible	fixed_income	rule B: income-oriented (name)	named
+CLBAX	AMERICAN FUNDS AMERICAN BALANCED 529A	Fixed Mix	equity	rule B: balanced (name)	named
+CUSIP:024071508	AMERICAN FUNDS AMERICAN BALANCED 529A	Fixed Mix	equity	rule B: balanced (name)	named
+CUSIP:02630T712	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	Target Date	equity	rule B: target-date (name)	named
+CUSIP:140193103	AMERICAN FUNDS CAPITAL INCOME BLDR A	Flexible	fixed_income	rule B: income-oriented (name)	named
+CUSIP:140193780	AMERICAN FUNDS CAPITAL INCOME BLDR F3	Flexible	fixed_income	rule B: income-oriented (name)	named
+CUSIP:316345206	FIDELITY BALANCED	Fixed Mix	equity	rule B: balanced (name)	named
+CUSIP:32008F606	FIRST EAGLE GLOBAL I	Flexible	equity	seat's call: First Eagle Global (Flexible) has no category word in its name	EDGE
+CUSIP:353496490	FRANKLIN INCOME A	Flexible	fixed_income	rule B: income-oriented (name)	named
+CUSIP:453320103	AMERICAN FUNDS INCOME FUND OF AMER A	Flexible	fixed_income	rule B: income-oriented (name)	named
+CUSIP:56167N274	KENSINGTON DYNAMIC ALLOCATION INST	Flexible	equity	rule B: allocation (name)	named
+CUSIP:704223205	IMPAX SUSTAINABLE ALLOCATION INSTL	Fixed Mix	equity	rule B: allocation (name)	named
+CUSIP:808516306	BALANCED FUND	Fixed Mix	equity	rule B: balanced (name)	named
+CUSIP:92202E508	VANGUARD TARGET RETIREMENT 2035 FUND	Target Date	equity	rule B: target-date (name)	named
+FBALX	FIDELITY BALANCED	Fixed Mix	equity	rule B: balanced (name)	named
+FKIQX	FRANKLIN INCOME A	Flexible	fixed_income	rule B: income-oriented (name)	named
+FTYPX	FIDELITY FREEDOM INDEX 2055 PREMIER	Target Date	equity	rule B: target-date (name)	named
+KAGIX	KENSINGTON DYNAMIC ALLOCATION INST	Flexible	equity	rule B: allocation (name)	named
+LIPKX	BlackRock LifePath Index 2050 Fund T	Target Date	equity	rule B: target-date (name)	named
+MDLOX	BLACKROCK GLOBAL ALLOCATION INV A	Flexible	equity	rule B: allocation (name)	named
+SCGB1	BALANCED FUND	Fixed Mix	equity	rule B: balanced (name)	named
+SGIIX	FIRST EAGLE GLOBAL I	Flexible	equity	seat's call: First Eagle Global (Flexible) has no category word in its name	EDGE
+VSMGX	Vanguard LifeStrategy Moderate Growth Fund	Fixed Mix	equity	seat's call: LifeStrategy is an allocation fund family, not by name	EDGE
+VTHRX	Vanguard Target Retirement 2030 Fund	Target Date	equity	rule B: target-date (name)	named
+VTIVX	Vanguard Target Retirement 2045 Fund	Target Date	equity	rule B: target-date (name)	named
+VTTHX	VANGUARD TARGET RETIREMENT 2030 FUND	Target Date	equity	rule B: target-date (name)	named
+VWELX	Vanguard Wellington Fund Investor	Fixed Mix	equity	seat's call: Wellington is a balanced fund by category, not by name	EDGE
+VWENX	Vanguard Wellington Fund Admiral	Fixed Mix	equity	seat's call: Wellington is a balanced fund by category, not by name	EDGE

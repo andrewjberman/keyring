@@ -1,0 +1,35 @@
+# MDPF_SECCLASS rule B remap SET (Andrew "I like B"): key, name, old_sub, old_classified_by, target_class, target_sub ("-" = clear), basis, named_or_edge, prior_class_before_batch183
+# a remapped row keeps its classified_by; the sub-class is restored ONLY where the row read the same class before batch 183 (5 rows), else cleared (28 rows, low_confidence true)
+AAETX	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	Target Date	seed	equity	-	rule B: target-date (name)	named	--
+ABALX	American Funds American Balanced A	Fixed Mix	seed	equity	US Large Cap	rule B: balanced (name)	named	equity/US Large Cap
+AMECX	AMERICAN FUNDS INCOME FUND OF AMER A	Flexible	seed	fixed_income	-	rule B: income-oriented (name)	named	--
+AOR	iShares Core Growth Allocation ETF	Fixed Mix	seed	equity	Global	rule B: allocation (name)	named	equity/Global
+CAIBX	AMERICAN FUNDS CAPITAL INCOME BLDR A	Flexible	seed	fixed_income	-	rule B: income-oriented (name)	named	--
+CFIHX	AMERICAN FUNDS CAPITAL INCOME BLDR F3	Flexible	seed	fixed_income	-	rule B: income-oriented (name)	named	--
+CLBAX	AMERICAN FUNDS AMERICAN BALANCED 529A	Fixed Mix	seed	equity	-	rule B: balanced (name)	named	--
+CUSIP:024071508	AMERICAN FUNDS AMERICAN BALANCED 529A	Fixed Mix	scheduled	equity	-	rule B: balanced (name)	named	--
+CUSIP:02630T712	AMERICAN FUNDS 2030 TRGT DATE RETIRE A	Target Date	scheduled	equity	-	rule B: target-date (name)	named	--
+CUSIP:140193103	AMERICAN FUNDS CAPITAL INCOME BLDR A	Flexible	scheduled	fixed_income	-	rule B: income-oriented (name)	named	--
+CUSIP:140193780	AMERICAN FUNDS CAPITAL INCOME BLDR F3	Flexible	scheduled	fixed_income	-	rule B: income-oriented (name)	named	--
+CUSIP:316345206	FIDELITY BALANCED	Fixed Mix	scheduled	equity	-	rule B: balanced (name)	named	--
+CUSIP:32008F606	FIRST EAGLE GLOBAL I	Flexible	scheduled	equity	-	seat's call: First Eagle Global (Flexible) has no category word in its name	EDGE	--
+CUSIP:353496490	FRANKLIN INCOME A	Flexible	scheduled	fixed_income	-	rule B: income-oriented (name)	named	--
+CUSIP:453320103	AMERICAN FUNDS INCOME FUND OF AMER A	Flexible	scheduled	fixed_income	-	rule B: income-oriented (name)	named	--
+CUSIP:56167N274	KENSINGTON DYNAMIC ALLOCATION INST	Flexible	scheduled	equity	-	rule B: allocation (name)	named	--
+CUSIP:704223205	IMPAX SUSTAINABLE ALLOCATION INSTL	Fixed Mix	scheduled	equity	-	rule B: allocation (name)	named	--
+CUSIP:808516306	BALANCED FUND	Fixed Mix	scheduled	equity	-	rule B: balanced (name)	named	--
+CUSIP:92202E508	VANGUARD TARGET RETIREMENT 2035 FUND	Target Date	scheduled	equity	-	rule B: target-date (name)	named	--
+FBALX	FIDELITY BALANCED	Fixed Mix	seed	equity	-	rule B: balanced (name)	named	--
+FKIQX	FRANKLIN INCOME A	Flexible	seed	fixed_income	-	rule B: income-oriented (name)	named	--
+FTYPX	FIDELITY FREEDOM INDEX 2055 PREMIER	Target Date	seed	equity	-	rule B: target-date (name)	named	--
+KAGIX	KENSINGTON DYNAMIC ALLOCATION INST	Flexible	seed	equity	-	rule B: allocation (name)	named	--
+LIPKX	BlackRock LifePath Index 2050 Fund T	Target Date	seed	equity	-	rule B: target-date (name)	named	--
+MDLOX	BLACKROCK GLOBAL ALLOCATION INV A	Flexible	seed	equity	-	rule B: allocation (name)	named	--
+SCGB1	BALANCED FUND	Fixed Mix	scheduled	equity	-	rule B: balanced (name)	named	--
+SGIIX	FIRST EAGLE GLOBAL I	Flexible	seed	equity	-	seat's call: First Eagle Global (Flexible) has no category word in its name	EDGE	--
+VSMGX	Vanguard LifeStrategy Moderate Growth Fund	Fixed Mix	seed	equity	-	seat's call: LifeStrategy is an allocation fund family, not by name	EDGE	fixed_income/Intermediate
+VTHRX	Vanguard Target Retirement 2030 Fund	Target Date	seed	equity	Global	rule B: target-date (name)	named	equity/Global
+VTIVX	Vanguard Target Retirement 2045 Fund	Target Date	seed	equity	-	rule B: target-date (name)	named	fixed_income/Cash
+VTTHX	VANGUARD TARGET RETIREMENT 2030 FUND	Target Date	seed	equity	-	rule B: target-date (name)	named	--
+VWELX	Vanguard Wellington Fund Investor	Fixed Mix	seed	equity	US Large Cap	seat's call: Wellington is a balanced fund by category, not by name	EDGE	equity/US Large Cap
+VWENX	Vanguard Wellington Fund Admiral	Fixed Mix	seed	equity	US Large Cap	seat's call: Wellington is a balanced fund by category, not by name	EDGE	equity/US Large Cap

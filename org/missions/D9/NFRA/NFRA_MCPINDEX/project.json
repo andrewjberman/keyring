@@ -52,5 +52,6 @@
     "RE-SEATED TO THE ~O FABRIC, NOT RE-HOMED -- 2026-09-24 ~23:0xZ by 1.0.0_SA_CTO~O under Andrew's goal 'Finish all D6 opal_ai work, including the MCPINDEX' (org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260924_210xZ_CTO_O_GOAL_FINISH_ALL_D6_OPAL_AI.md). The laptop released it on measurement: 0.0.0_AB_MSTR ACK d36628dc 22:43:52Z, 'Clear to move to 1.0.0_SA_CTO~O'; branch wk-nfra_mcpindex-1-1d pushed @119a49eef0. The tree STAYS under D9: a folder move was attempted and correctly refused by to-pipeline-gate (every moved order graded as a new issuance, 222 violations), then reverted with nothing lost. Directive membership and placement stay D9's, and D9's own move to site Z is Andrew's 2026-09-22 word for 0.0.0_AB_MSTR~Z to apply. The work is issued from site Z under ONE TRUNK."
   ],
   "thread_counter": 0,
-  "threads": []
+  "threads": [],
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was SITEZ. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }

@@ -134,6 +134,8 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 5 cut from the CTO's round-4 analysis @a1b47e6b3f sections 2-3 (E1-E6) and REMEDIATION_v4 (W3-S6, S7) with W4-S4; decomposition round 5 v1.0 (`IRPT_YCDGEN_DECOMP_R5.md`); PRD v0.1 @8b364d6d94; Andrew's egress word @ce20ca6854 (the issuer's live calls only). Chain `~1`. Risk WORLD: the gate's floor for infra paths. Checks dry-run at the base: r-5.AC1 FAIL as expected; r-5.AC2 FAIL as expected; r-5.AC3 FAIL as expected.
 
+**DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~11:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @beb0e52cfb (code) and, re-landed by a fresh slot-~1 worker after the issuer widened the sparse worktree to every mission home, @bcb83344c1 (proof and row W1-S2); merged 84a7af1854. r-5.AC1 PASS (2), r-5.AC2 PASS (3), r-5.AC3 PASS (2) on the merged tree; research suite 116 passed. Row W1-S2 ACCEPTED (lookup takes --region, default us-east-1, through runner.research_s3). STATUS NOTE (2.0.0_SA_COO~Y, 2026-10-07): the flip to 'complete' is NOT recorded here: the TO issuance gate refuses it because the instance's artifact-resolution check reports runner.py, keeper.py, lookup.py and their tests as PENDING-THIS-COMMIT yet older than the instance's commit bcb83344c1; the order stays 'issued' until the instance is re-landed or the CTO rules.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>

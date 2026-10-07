@@ -2273,3 +2273,120 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in SC-e-20 amendment 2 (its working id was MDPF_SECCLASS-W20-S8); adopted as a seat row by 2.0.0_SA_COO~M. Needed from the issuer: grant comp-constants.config.yaml (canonical_value and both site values and lines) to this lane, or edit it, then commit the C_06 edit, the mix_views edit and the new test file with it. The Cottonwood lists are not registered, which is why pass 1 and 2 did not meet this gate."
 }
 ```
+
+
+## MDPF_SECCLASS-S35 -- the S29 gold fix is live in S3 ahead of its never-widen pair; the served move is the next scheduled run
+
+```json
+{
+  "id": "MDPF_SECCLASS-S35",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:12Z",
+  "one_line": "The S29 gold fix is already LIVE in S3 before its never-widen pair is signed: MSTR's push deploy gates uploaded the Cottonwood files at 2026-10-06 16:20-16:21Z (D_03 18:53Z) and the Black Diamond files at 23:47Z, so the served move happens at the next scheduled gold runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 head and body read 2026-10-07 00:1xZ: opal-data-cot code/gold/{C_06,lib/mix_views,D_04,B_01b} LastModified 10-06 16:20-16:21Z, D_03 18:53Z; opal-data-bd code/gold/{D_03,C_06,lib/mix_views} 23:47Z; every body equals the repo file at CLOUD and carries multi_asset",
+      "MSTR msgs 105640 (push 66b1b42a71, 'Deploy gate: 6 data/cot ... deployed and verified') and 105817 (push ae7d9991a0, 'Deploy gate: 5 deployed and verified, 6 first-mints skipped'): the pre-push deploy gate deploys changed gold scripts",
+      "last served runs read: Black Diamond firm_composition generated 2026-10-06T05:25:49Z; Cottonwood platinum/firm/mix_summary.json generated 2026-10-06T11:38:30Z (so the next scheduled runs are about 05:25Z and 11:36Z on 10-07, INFERRED from those stamps)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off (CTO+COO); the S29 act is a served move, to ride its pair (CTO msg 105624: 'send the pair with the four clients before and after').",
+  "world_is": "The deploy half of the act landed through the push gate (code only, no gold run, no write by this seat). The served move is the next scheduled run of each firm. Disarm: the CTO half of the pair signed before the first run, or a rollback of the eight objects by copy-object of the prior VersionId (listed in ledger secclass-s29-class-lists-m-20261006).",
+  "notes": "Not a defect of the push gate: deploying changed scripts is its job; the gap is that a served-output script rides a push before its pair is signed. Rollback decision rule in the pair: no CTO half by 04:45Z -> roll Black Diamond back; by 11:00Z -> roll Cottonwood back."
+}
+```
+
+
+## MDPF_SECCLASS-S36 -- a Black Diamond gold run at 00:26Z rewrote the composition WITHOUT multi_asset (old code), ahead of the scheduled run
+
+```json
+{
+  "id": "MDPF_SECCLASS-S36",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:42Z",
+  "one_line": "A Black Diamond gold run at 2026-10-07 00:26Z (not the scheduled 05:25Z) rewrote firm_composition.json and firm_mix_views.json WITHOUT multi_asset: the composition gap reads $5,445,416.28, so whatever ran used the OLD gold code, not the S3 objects deployed at 23:47Z.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 read 2026-10-07 00:3xZ: opal-data-bd gold/views/firm_composition.json LastModified 00:26:22Z, generated_at 00:26:21Z, data_as_of 2026-10-02: total $1,994,163,246.13, class sum $1,988,717,829.85 over seven classes (no multi_asset), gap $5,445,416.28; gold/artifacts/firm_mix_views.json 00:28:44Z with no multi_asset in the latest quarter; mix_daily_summary.json and client_timeseries_watermark.json still 10-04 05:27Z",
+      "SSM list_commands since 10-06 23:00Z: no BD gold document and no command naming BD near 00:26Z (the unlabeled RunShellScript commands at 00:05-00:15Z target the gateway host i-07dccb1615503ac99); so the run did not come through opal-bd-gold-run",
+      "the S3 code at 23:47Z carries multi_asset in D_03, C_06 and lib/mix_views (ledger secclass-s29-class-lists-m-20261006 leg B); the same code, run in process, closed the gap to $0.00 (bd_mix_multi_asset_check.py)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Pair acceptance 2: after Black Diamond's next gold run, firm_composition total equals the class sum within $0.01 with multi_asset about $5.44 M (CTO half @6cf5f02f14).",
+  "world_is": "The served BD composition today is a fresh old-code render: the same shortfall, a new $5.45 M gap. Not a widening (it is the old behaviour) and not the pair's move. Who or what ran is not established (not SSM; a local or other-device ad hoc run from older code is possible, INFERRED). Leg RB stays open for the next run with the live code.",
+  "notes": "Not read: the run's executor and its code revision; whether the scheduled 05:25Z run still happens; the EC2 runner's baked code. Read after the next BD change."
+}
+```
+
+
+## MDPF_SECCLASS-S37 -- S35 disarmed: the eight S29 gold objects rolled back and read back; no run read the new code
+
+```json
+{
+  "id": "MDPF_SECCLASS-S37",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "Row S35 disarmed: the eight S29 gold objects (Cottonwood 5, Black Diamond 3) are rolled back by copy-object to their prior versions and read back equal, before any scheduled run read the new code; the CTO half is withdrawn on Andrew's six-class word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Andrew-direct ~00:4xZ 2026-10-07 (record ANDREW_DIRECT_20261007_004xZ_NO_MULTI_ASSET_CLASS_SIX_CLASSES_ONLY.md): no multi-asset class, six classes only",
+      "CTO msg 105871: his half is withdrawn in CTO_HALF_MDPF_SECCLASS_S29_CLASS_LISTS_20261007.md; roll the eight objects back now, read each back, close RC/RB as ROLLED BACK, disarm S35",
+      "00:55:09-00:55:11Z: eight copy-object calls of the prior VersionIds, each prior body pre-checked free of the string multi_asset; read back: 8 of 8 equal to the prior body, none carrying multi_asset (ledger secclass-s29-class-lists-m-20261006, legs RC and RB closed as ROLLED BACK, ledger CLOSED)",
+      "no Cottonwood or Black Diamond scheduled run read the new code: Cottonwood's last run 10-06 11:34Z, Black Diamond's 00:26Z run (row S36) used the old code"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S35's disarm: the served move rides a signed pair or the code goes back.",
+  "world_is": "S3 holds the pre-S29 gold code again at all eight keys. The REPO still carries the S29 edits (the multi_asset list entries and labels, and C_06's guard over the emitted mix, merged in CLOUD): a later changed-script push could re-upload them, so the repo edits are reverted next (the guard stays), as an amendment of the cell. The four Cottonwood clients' mixes and Black Diamond's composition keep their old short sums until the six-class remap of the 33 multi_asset rows lands.",
+  "notes": "S35's disarm clock is the CVO's to write (R-15); this row is the evidence the owner files. Remap: Andrew chose rule B (record ANDREW_DIRECT_20261007_00xxZ_RULE_B_CATEGORY_RULE_FOR_MULTI_ASSET_FUNDS.md)."
+}
+```
+
+
+## MDPF_SECCLASS-S38 -- the next CLOUD push would deploy B_01b's never-deployed classifier change (8f67065e50); the S29 rollback and the repo restore disagree on that one file
+
+```json
+{
+  "id": "MDPF_SECCLASS-S38",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-07T01:58Z",
+  "one_line": "The next CLOUD push would deploy Cottonwood B_01b with 8f67065e50's classifier change, which has never been deployed. a62580ef8f (LOCAL) touches B_01b, and repo HEAD carries 8f67065e50's bytes, while S3 holds the pre-8f67065e50 body. The pre-push deploy gate uploads every changed gold script in the pushed range.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object opal-data-cot code/gold/B_01b.classify_new_securities.py (this seat, 2026-10-07 01:5xZ): VersionId _24mhLjaqb..., 00:55:10Z, no multi_asset; the body is byte-equal to git show 8f67065e50^ and differs from git show HEAD (HEAD adds the class other, Andrew's personal and held-away rules, and reads gold/canonical/holdings/ instead of holdings_lots)",
+      "the other seven S29 keys (Cottonwood C_06, lib/mix_views, D_04, D_03; Black Diamond D_03, C_06, lib/mix_views) read at the ledger's rollback VersionIds, no multi_asset, each byte-equal to HEAD: 7 of 8",
+      "8f67065e50 subject: 'code and dry run only, not deployed, no upload'; list-object-versions B_01b: 2026-09-26 02:39:19Z PbDCWhVV, 02:44:33Z nSr3.NM7H, 2026-10-06 16:20:49Z agc2ZP7e (S29 push), 2026-10-07 00:55:10Z _24mhLjaq (rollback)",
+      "git merge-base --is-ancestor a62580ef8f origin/CLOUD: NOT on origin (ls after fetch, origin CLOUD ba32125d62); a62580ef8f restores B_01b among the eight files",
+      ".tools/git-hooks/pre-push-safe-deploy.sh:78 runs safe-deploy.sh --commit-range over the pushed range"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off (CTO+COO); 8f67065e50 was committed as not deployed.",
+  "world_is": "The S29 rollback restored S3 to its pre-16:20Z objects, and for B_01b that object predates 8f67065e50. The repo restore (a62580ef8f) went back to the pre-S29 REPO bytes, which include 8f67065e50. The two disagree on B_01b only, so the next push that carries a62580ef8f deploys a classifier change with no sign-off: a new class (other), new rules, and a new input prefix, writing bd-securities classifications that feed served classes. Disarm, before the next CLOUD push: either B_01b at HEAD set to the live S3 body (8f67065e50^), or 8f67065e50's deploy signed as its own act; the post-act read is HEAD == S3 for B_01b.",
+  "notes": "Found while verifying S35's disarm for its clock. S35 itself is disarmed for the S29 move (S3 read above). The same shape as S35: a served-output script rides a push before its sign-off."
+}
+```

@@ -210,3 +210,13 @@ record-level repeats. Nothing else is unexplained.
 
 Ruled under the self-adjudication order (`ANDREW_DIRECT_20260903_052xZ_..._TWO_READS.md`). The ENDPOINT changed: the ratified-text
 half re-opens for `3.0.0_SA_CVO`.
+
+## v0.4 ADDENDUM 2 (1.0.0_SA_CTO, 2026-10-07 ~01:3xZ) -- the price source for C-DAILY, Andrew's word
+
+Measured by `2.0.0_SA_COO~C` (`deliverables/0.9.0_WK_ADVI_COTBKF~8/PRICE_NEED_20261007.json` @c907766ef4): 4,634 securities, 3,421,735
+security-days (equity 1,453,884; ETF 331,153; fund 752,921; fixed income 688,679; other 195,098). Opal's own stores cannot serve them
+(other firms' buckets; no fixed income). Andrew at this terminal, VERBATIM: "i like the yahoo finance vs bloomberg rec". C-DAILY's price
+source is therefore: **Yahoo Finance for equity, ETF and fund securities; Bloomberg at site Z for fixed income and other**, the Bloomberg
+leg drawing on `bbg_budget.py` behind the production reserve. Prices land once per security in the securities history MDPF_SECHIST
+owns (C-SERIES), never in another firm's bucket. A security neither source prices leaves its days UNPRICED. Contracts only; the
+ENDPOINT is unchanged.
