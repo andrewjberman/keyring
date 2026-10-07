@@ -184,3 +184,25 @@ go back to the CVO for re-grade after it.
 - Still open on the instrument: it counts four designed states where PRD v0.17 says three (the grades file's own key is
   `fourStates`, with one no-permission capture). The CVO judged that stricter, not looser. Round 50's cell @1694478a45 brings it to three.
 - The grade is on a candidate that is not on DEV. It is read again on DEV after Andrew's push.
+
+## THE GRADE ON DEV `4b167888`, countersigned (2026-10-07 ~14:1xZ; CVO~Z msg 31018, @dbf5b5cff8)
+
+Portal DEV moved `8ddfe409` -> `4b167888` at ~13:3xZ on Andrew's word at the `0.0.0_AB_MSTR~Z` terminal ("all recs approved.", its
+msg 30951). Origin DEV reads `4b167888b26fe0fec9bcfc200d5678b8d3ae01f7` and CI run 37629125673 concluded success at 13:35:01Z (both
+this seat's reads). The CVO graded on `2.0.0_SA_COO~D`'s DEV read @d41d3434bd; this seat did not open the grade file.
+
+- **FWD-20: REALIZED on DEV.** Countersigned.
+- **The uncovered-name read: MET** (MSFT US says its one sentence once).
+- **FWD-7: NOT REALIZED, 93 of 95.** BP/ LN and NG/ LN are both covered names and serve no officer list until the slash reader
+  ships (row AMGT_RESAPP-Z-S365, a round-78 cell). The CVO reads the ACCEPT as accepting a labelled Bloomberg list. So FWD-7 closes
+  on that one producer cell and its redeploy, with no page work.
+- **The board on DEV: 22 REALIZED, 3 NOT_REALIZED (FWD-7, 8, 27), 1 NOT_EVALUATED (FWD-1), 1 RETIRED (FWD-3). Denominator 27.**
+
+**One finding, routed:** MSFT US reads "No articles collected for this name this month" beside a news item dated October 2nd. The
+two lines draw on different inputs (the month's collected chatter over the covered names; the news feed), and MSFT is not a covered
+name. To AMGT_RESAPP's round-78 list: for a name outside coverage the chatter line says the name is not in the covered set, and
+never "no articles", which the item beside it contradicts.
+
+**What is left on this project, all outside the page:** FWD-7 (the slash reader), FWD-8 (peer prices with their currency), FWD-27
+(the country's case and the Filings line), each in AMGT_RESAPP's round 78; and FWD-1, Andrew's own signed-in walk. PROD is at
+`b06863fe`; the promote of `4b167888` is his separate word. DSGN_AMGTV1 cuts no page round until RESAPP round 78 deploys.

@@ -1,114 +1,133 @@
-# AMGT_CORPUS -- L5 decomposition v39.1 -- ROUND 39 (the skip key; FWD-20's three page defects; FWD-21's FY+3 fit; the FWD drive; the FWD-14 four-class census)
+# AMGT_CORPUS -- L5 decomposition v40.0 -- ROUND 40 (FWD-14's printed line; three page builds and a row label; the Z-S89 extraction; six dispersion mnemonics; the DEV drive; FWD-12's sheet census)
 
-**Issuer:** `2.0.0_SA_COO~X`, 2026-10-06 ~18:5xZ.
+**Issuer:** `2.0.0_SA_COO~X`, 2026-10-07 ~14:3xZ.
 
-**Source:** `1.0.0_SA_CTO~Z` round-38 analysis `ledger/ROUND_ANALYSIS.round38.md` @`9619211bcf` s.4 (msg 30195, READ-acked);
-PRD v0.8 (ADDENDUM C), both L4-R halves SIGNED (`prd-signoff.py status` reads ADMITTED; CVO sign @`daa0645141`). The rectangle is
-the analysis's five items. Item 1 splits into the code cell and the issuer's served act that proves it. Round 38's decomposition is
-kept as `AMGT_CORPUS_DECOMP.round38.md`. Base: CLOUD HEAD at the cut; portal origin/DEV `e2130d42`.
+**Source:** `1.0.0_SA_CTO~Z` round-39 analysis `ledger/ROUND_ANALYSIS.round39.md` @`5ccdc90368` s.4 and ADDENDUM 1 (msgs 30972,
+30980, 31011, all READ-acked), and its ruling msg 31013 on ruling 3 (the row label is a PAGE cell; the served class token stays).
+PRD v0.8, both L4-R halves SIGNED; no ENDPOINT change this round. The rectangle is the analysis's six items. Round 39's
+decomposition is kept as `AMGT_CORPUS_DECOMP.round39.md`. Base: CLOUD HEAD at the cut; portal origin/DEV `ba391aff`.
 
 ## 0. What this round IS
 
 | # | item (analysis s.4) | cell | path | risk |
 |---|---|---|---|---|
-| 1a | The daily refresh's same-day skip keys on the PULL date, not the derived stamp (ruling 6, row Z-S88) | `CRPS-ao-1` | worker `0.9.0_WK_AMGT_CORPUS~1` (worker-light, direct act) | LOCAL |
-| 1b | Re-pin `amgt-induction-daily` to the ao-1 drain; one same-UTC-day re-derive PLANT on one name before 13:00Z; read the 2026-10-07 13:00Z scheduled fire: the plant name is pulled, 96 pulled, rc 0. Disarms Z-S88 | `CRPS-ao-2` | the issuer's paired act (pair to `1.0.0_SA_CTO~Z`), after ao-1 drains | SERVED |
-| 2 | FWD-20's page cell: the header-fact line names its currency; every in-row "--" carries a cell mark; each `UNMEASURED:` basis reads in a PM's words, the bare raw figure suppressed (rulings 2-4) | `CRPS-ao-3` | worker `0.9.0_WK_AMGT_CORPUS~2` (worker) | LOCAL (portal DEV candidate, CTO render review) |
-| 3 | FWD-21's fit: the Model sheet shows FY+3 (2028E) unclipped at 1440 px on TSM and ASML; history byte-unchanged (ruling 5) | `CRPS-ao-4` | worker `0.9.0_WK_AMGT_CORPUS~2`, queued after ao-3 (same write set) | LOCAL (portal DEV candidate, CTO render review) |
-| 4 | The read-only drive of FWD-10/11/12/15/16/18, each named limb, plus the round's one real run of FWD-20/21 on the page (ruling 8) | `CRPS-ao-5` | the issuer's read, after ao-3 and ao-4 land on DEV; walker slot from `0.0.0_AB_MSTR~Z` | LOCAL (read) |
-| 5 | The FWD-14 four-class census: resolved / ambiguous / empty-or-workbook-only / unresolved-with-reason, summing to the folder count (ruling 1, ADDENDUM C) | `CRPS-ao-6` | the issuer's read (v0.8 is signed, so it runs at the cut) | LOCAL (read) |
+| 1 | FWD-14's printed line: four named counts and their sum, non-zero exit when the sum is not the folder count (ruling 1) | `CRPS-ap-1` | worker `0.9.0_WK_AMGT_CORPUS~1` (worker-light, direct act) | LOCAL |
+| 2a | FWD-10: a team pillar opens to its report and passage (ruling 7) | `CRPS-ap-2` | worker `~4` | LOCAL (portal DEV candidate, CTO render review) |
+| 2b | FWD-15: the team's fund of record and last stated position read cited on the header (ruling 7) | `CRPS-ap-3` | worker `~5` | LOCAL (portal DEV candidate, CTO render review) |
+| 2c | FWD-18: the header feed filters to a pillar's terms (ruling 7) | `CRPS-ap-4` | worker `~5`, queued after ap-3 (the mount line is in ap-3's file) | LOCAL (portal DEV candidate, CTO render review) |
+| 2d | FWD-20: a zero-dominated row's unit reads in plain words (ruling 3, as settled by msg 31013) | `CRPS-ap-5` | worker `~4`, queued after ap-2 (worker-light, direct act) | LOCAL (portal DEV candidate, CTO render review) |
+| 3 | `Z-S89`: a section value that is only its own heading is not a passage; a census of short served passages (ruling 9) | `CRPS-ap-6` | worker `~2` | LOCAL |
+| 4 | The six consensus-dispersion mnemonics ride the model-block pull, calls per fire stated against 768 (ruling 10) | `CRPS-ap-7` | worker `~3` | LOCAL |
+| 5 | ONE read-only drive on DEV after the page cells land: the rendered-rows census (ruling 2), the no-forecast read (4), the FWD-11 walk on a name with a team passage AND a filing roster (5), the FWD-16 comparison extended to pillars and management (6), and the round's one real run of ap-2..ap-5 | `CRPS-ap-8` | the issuer's read; walker slot from `0.0.0_AB_MSTR~Z` | LOCAL (read) |
+| 6 | FWD-12: the census of which sheet (`Model` or `Model NEW VERSION`) carries each covered name's figures, both counts printed, then the row comparison against each name's OWN workbook (ADDENDUM 1 rulings 1 and 2) | `CRPS-ap-9` | the issuer's read, through the Opal gateway's SharePoint read (a worker holds no gateway tool) | LOCAL (read) |
+| 3s, 4s | The SERVED halves of items 3 and 4: the short-passage census on the served dossiers and the dossier re-write that ap-6 changes; the one-name scripted probe of the six mnemonics and the re-pin of `amgt-induction-daily` to ap-7's drain | `CRPS-ap-10` | the issuer's paired acts (one never-widen pair per act, to `1.0.0_SA_CTO~Z`), after ap-6 and ap-7 drain | SERVED |
 
-**Chains:**
-- `ao-1 -> ao-2` (the 2026-10-07 13:00Z fire is the acceptance clock);
-- `ao-3 -> ao-4 -> ao-5` (ao-3 and ao-4 write the same Model-tab files, so they are one worker's queue; ao-5 walks the landed page);
-- `ao-6` (no edge).
+**Chains (M = 5 worker chains):**
+- `ap-1` (no edge);
+- `ap-6 -> ap-10` (the dossier half);
+- `ap-7 -> ap-10` (the pull half);
+- `ap-2 -> ap-5 -> ap-8` (one worker's queue: two tab files, one portal branch; ap-8 walks the landed page);
+- `ap-3 -> ap-4 -> ap-8` (one worker's queue: ap-4's mount line is in ap-3's file);
+- `ap-9` (no edge; the issuer's).
 
-`fanout: 2 of 2 worker chains, cap 8`. Slot `~1` runs ao-1; slot `~2` runs ao-3, then ao-4 by continuation. The issuer runs ao-2,
-ao-5 and ao-6.
+`fanout: 5 of 5 worker chains, cap 8`. Slots: `~1` ap-1; `~2` ap-6; `~3` ap-7; `~4` ap-2 then ap-5 by continuation; `~5` ap-3
+then ap-4 by continuation. The issuer runs ap-8, ap-9 and ap-10.
 
-**Write sets (disjoint):**
-- ao-1: `integrations/bloomberg/research/model_block_pull.py` (`cmd_refresh` and its stamp helper only) + one new test + the
-  round-34 refresh test's planting (it plants "current" through derived keys);
-- ao-3: `portal/src/pages/SecurityAnalysis/modelSheet.ts`, `tabs/ModelTab.tsx`, `components/StatTile.tsx`,
-  `components/HeaderCards.tsx`, `components/model/WhatChangedPanel.tsx` (the callers that pass the basis);
-- ao-4: `tabs/ModelTab.tsx` (the sheet table's layout only) and `modelSheet.ts` (value formatting only, if the fit needs it).
+**Write sets (disjoint; census at the cut over 2,285 task-order files on every project: 118 name one of these files in
+`<paths>`, 0 of them non-terminal):**
+- ap-1: `lib/research/corpus/backlog.py`, `lib/research/corpus/tests/test_backlog_fence14.py`;
+- ap-6: `lib/research/corpus/dossier.py`, three dossier test files (one new);
+- ap-7: `integrations/bloomberg/research/model_block_pull.py`, `build_unit_map.py`, seven test files (one new);
+- ap-2: `portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx`;
+- ap-5: `portal/src/pages/SecurityAnalysis/tabs/ModelTab.tsx` (`rowUnitWords` only);
+- ap-3: `portal/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx` (`DossierPositionLine` only);
+- ap-4: `portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx`, and ONE mount line in `SecurityOverlay.tsx`.
 
-No non-terminal order on any project names these portal files in `<paths>` (census at the cut over every task-order folder).
-DSGN_AMGTV1 (`2.0.0_SA_COO~D`) maintains the Model tab's design; told at the cut.
+No cell edits `types.ts` or a `__harness__/` file. DSGN_AMGTV1 (`2.0.0_SA_COO~D`) maintains this page's design; told at the cut.
+Portal worktrees take their dependencies by link, never by install (`1.0.0_SA_CTO~Z` interim rule, msg 30907).
 
 ## 1. The cells
 
-**CRPS-ao-1.** `cmd_refresh` (`model_block_pull.py:2227`) skips a name when `_model_block_latest_stamps(s3)` (the newest
-DERIVED stamp) reads today's UTC date (`:2243`). Round 38's an-2 re-derived the 96 at 03:20Z, so the 10-06 13:00Z fire skipped
-all 96 and pulled 0 (Z-S88). The skip must key on the name's last PULL: the newest stamp under the pull-log state prefix
-(`_state_pull_log_prefix`) or the bronze refdata/histdata stamps (`_bronze_prefix`). A same-day re-derive no longer silences the
-fire; a same-day pull still skips.
-- **Check** `checks/round39/skip_key_check.py` at the base: `skip build 0/1 control 2/2` (the PLANT name, derived 03:00Z today and
-  pulled yesterday, is skipped). As expected.
+**CRPS-ap-1.** `_print_fence14_line` (`backlog.py:458-480`) sums three classes and prints the fourth beside the sum:
+`sum 96 outside-fence 1` against 97 folders. The line becomes four named counts (the fourth `unresolved-with-reason`, PRD v0.8
+ADDENDUM C) and their sum, and the function returns False when the sum is not `folders_read`.
+- **Check** `checks/round40/ap1_check.py` at the base: `ap1 build 0/1 control 2/2`. As expected.
 
-**CRPS-ao-2.** Like round 38's an-2 shape, paired:
-- (0) the pair: COO half + CTO half, blast radius = the task's pin and ONE plant name's derived stamp (its values re-derive from
-  the same raw stamp, so values move 0);
-- (r) re-pin `amgt-induction-daily` to the ao-1 drain commit;
-- (p) after 00:00Z 2026-10-07 and before 13:00Z, re-derive ONE name (`BA_US_Equity`) from its current raw stamp;
-- (v) read the 13:00Z fire's log: the plant name is in the pulled set, `pulled 96`, rc 0. That read, then the CVO's, is FWD-22's
-  acceptance. Z-S88 disarms on it.
+**CRPS-ap-2.** `ResearchTeamPillars` (`ThesisTab.tsx:111-175` on DEV) shows a pillar's lead, text, terms and report file name. The
+served citation's `passage` and `locator` are not shown and nothing opens a pillar. The cell adds a native opener per pillar with
+the passage and its location; a pillar with no served passage says so. No control opens the report DOCUMENT: no route by report
+key exists, so the cell shows the passage and names the report.
+- **Check** `checks/round40/page_check.cjs ap2` at the base: `ap2 build 0/1 control 1/1`. As expected.
 
-**CRPS-ao-3.** Measured at the cut on portal origin/DEV `e2130d42` with `checks/round39/ao_fixture.json` (captured from the real
-read path for TSM, BA and ASML):
-- (currency) `buildModelSheet`'s `v3Facts` carry `{mnemonic, label, value, unit}` and never `currency`
-  (`modelSheet.ts:431`). 6 of 6 header facts with a served currency drop it. **Check** `ao3_check.cjs currency`: `build 0/1
-  control 1/1`.
-- (marks) TSM shows 99 in-row "--" cells with no reason: EPS, DPS and P/E across 2016-2025 (30, no history served), and 23 lines
-  across 2026E-2028E (69, no consensus served). TSM's `fiscal_unresolved` is empty, so `cellReasons` is null on all 99.
-  **Check** `ao3_check.cjs marks`: `build 0/1 control 1/1`.
-- (words) `formatStatValue` renders TSM enterprise value as "unit not resolved -- raw figure 77,689,148.37" and net debt as
-  "-2.00T currency not stated"; both figures' `currency_basis` read `UNMEASURED: ...`. **Check** `ao3_check.cjs words`:
-  `build 0/1 control 1/1` (BA's resolved EV and net debt unchanged: "USD 184B", "USD 26.96B").
+**CRPS-ap-3.** `DossierPositionLine` (`SecurityOverlay.tsx:251-287`) prints the team's fund of record and last stated position
+with no citation, though each served field carries one. The cell shows each field's report file name, location and passage, marks
+the line as the research team's, and leaves the machine's `PostureHeaderLine` byte-unchanged. The Posture TAB half of FWD-15's
+DONE WHEN is not in this cell (ruling 7 names the header line); ap-8 reads it.
+- **Check** `page_check.cjs ap3` at the base: `ap3 build 0/1 control 2/2`. As expected.
 
-**CRPS-ao-4.** At 1440 px the Model sheet clips 2028E on TSM and ASML (2027E too on ASML) at the card edge
-(`ADJUDICATION_v44.md`). The table is `w-full` inside `overflow-x-auto` (`ModelTab.tsx:480-481`). **Check** `ao4_check.cjs` at the
-base: `ao4 control 2/2` (history and full sheet values unchanged; a control, so PASS at the base). The fit itself is the judgment
-criterion, graded on ao-5's 1440 px walk.
+**CRPS-ap-4.** `FeedList` (`HeaderBrief.tsx:106-152`) lists the served headlines and filters nothing. A feed item serves no term
+field, so the filter matches the team's pillar terms against the headline's TITLE: one native block per term with its count and
+its matching headlines. The terms reach the feed through ONE mount line in `SecurityOverlay.tsx`. The Chatter axis half of FWD-18
+is NOT covered by this round and is named so in the packet.
+- **Check** `page_check.cjs ap4` at the base: `ap4 build 0/1 control 1/1`. As expected.
 
-**CRPS-ao-5.** With a walker slot from MSTR~Z (ARM, DISARM through it), after `:5174` answers 200, on the DEV build carrying ao-3
-and ao-4:
-- FWD-20: TSM, SAP, BA Model tab -- header facts with currency, every "--" marked, EV and net debt in words;
-- FWD-21: TSM and ASML Model tab at 1440 px -- 2028E unclipped;
-- FWD-10: IMB LN, open one pillar to its report and passage;
-- FWD-11: a name whose pack carries no management reads ABSENT; ASML's roster count unchanged against round 38's 7;
-- FWD-12: one name's cases against the SharePoint template's rows, order and labels;
-- FWD-15: the header posture line cited; the Posture tab byte-unchanged against the round-38 capture;
-- FWD-16: the docx control's recovered count before (round-38 served object) and now;
-- FWD-18: the feed filtered to one pillar term.
-Each limb is a named capture or read in the drain packet.
+**CRPS-ap-5.** The phrase "zero-dominated: no magnitude: 10 of 10 fiscal years are zero" is SERVED text
+(`integrations/bloomberg/research/build_unit_map.py:556`), and its prefix is a class token three readers match
+(`lib/research/provenance/validate.py:27`, `render_print.py:86`, two tests). Ruled a page cell (msg 31013): one branch in
+`rowUnitWords` (`ModelTab.tsx:160-182`) reads the two counts from the served text and words them; an unparseable text falls back
+to the served text. Served text unchanged.
+- **Check** `page_check.cjs ap5` at the base: `ap5 build 1/3 control 3/3` (the fallback arm already holds). As expected.
 
-**CRPS-ao-3 AMENDMENT 1 (v39.1, 2026-10-06 ~20:5xZ, the issuer's own).**
-- **Source:** the CTO's render review of the candidate, `ledger/CTO_REVIEW_PORTAL_e1ee93a9_ROUND39.md` @`1a9f406750` (msg 30286):
-  e1ee93a9 APPROVED for one DEV push; the Net debt tile still shows "-2.00T" with an unconfirmed currency beside "USD 2.52T".
-- **The amendment:** in `formatStatValue` (`components/StatTile.tsx` only), a money figure whose currency basis begins
-  `UNMEASURED` shows NO number, as the unresolved-unit Enterprise-value tile already does. The order is REOPENED
-  (`in_progress`) with criterion AC5; slot `~2` is re-seated on the candidate branch at `e1ee93a9`. One DEV push then carries
-  ao-3 (amended) and ao-4.
-- **Check** `checks/round39/ao7_check.cjs` at the base (portal e1ee93a9): `ao7 build 0/1 control 1/1` (2 UNMEASURED figures, 4
-  renders, 2 with a number; 24 resolved renders unchanged). As expected.
-- **Gate:** a MODIFIED order. `.tools/to-pipeline-gate.py` refused the first shape of this amendment (a new order `ao-7`: "round
-  39 already has an issuance at HEAD; a re-cut MODIFIES its orders and adds no file"), so it is cut as a modification.
+**CRPS-ap-6.** `_resolve_section_field` (`dossier.py:384-396`) serves a section block that is only its own lead line; the one
+refusal today is empty text (`:373-375`). The cell refuses a block with no prose beyond its heading (absent, with a reason, the
+case path's `heading_only` shape), bumps `METHOD_VERSION`, and adds a read-only `--short-passage-census <N>`.
+- **Check** `checks/round40/ap6_check.py` at the base: `ap6 build 0/2 control 2/2` (both heading-only fixtures serve
+  "Management/Board 80"). As expected.
 
-**CRPS-ao-6.** `python -m lib.research.corpus.backlog --coverage-dry-run` (read-only, `written NONE`): the four counts and the
-folder count, beside FWD-19's partition.
+**CRPS-ap-7.** `FORECAST_FIELDS` (`model_block_pull.py:330-334`) holds 12 names; the six `lib/research/scores/divergence.py:64-65`
+divides by are absent (0 of 6). Appended, they ride the three existing forecast requests: 8 calls per name before and after, 768
+per fire before and after. `_NUMEST` is a count and carries no currency.
+- **Check** `checks/round40/ap7_check.py` at the base: `ap7 build 0/1 control 2/2`. As expected.
+
+**CRPS-ap-8.** With a walker slot from MSTR~Z, on the DEV build carrying ap-2..ap-5:
+- FWD-20: the census of shown / refused / absent / unmapped over the Model sheet's rows for every covered name with a block,
+  unmapped 0, denominators printed (ruling 2); ASML's row label read in words (ap-5);
+- FWD-21: a name without forecast years walked and its reason read, or the census showing 0 served names lack them, with its
+  denominator (ruling 4);
+- FWD-11: one walk on a name with BOTH a team passage and a FILING roster (BA US or VLO US), "unchanged" compared by content, name
+  by name; a labelled Bloomberg officer list is not the filing roster (ruling 5);
+- FWD-16: the 2026-09-29 comparison extended to pillars and management, 95 names (ruling 6);
+- FWD-10, FWD-15, FWD-18: the opener, the cited header line (and the Posture tab's half), the term filter, each on a real name.
+
+**CRPS-ap-9.** Through the gateway's SharePoint read (CRO file `CORPUS_FWD12_SHAREPOINT_TEMPLATE_LOCATION_20261007.md`
+@`acb0fd45bd`): for each covered name's own `<Company> FactSet Based ONE PAGER TEMPLATE <date>_vN.xlsx`, which of `Model` and
+`Model NEW VERSION` carries the company's figures; both counts printed; a split reported, not averaged. Then the Model tab's rows,
+order and labels against that sheet's, per name; a name with no workbook is compared to the master and the read says so. No
+workbook content enters the repository beyond the row labels compared. The CTO amends FWD-12's DONE WHEN after the census.
+
+**CRPS-ap-10.** Two paired acts, each with its own never-widen pair and ledger entry:
+- (d) after ap-6 drains: the short-passage census on the served dossiers (8306 JP and 8316 JP are the named fail cases), then the
+  dossier re-write for the names whose a field changes, read back;
+- (m) after ap-7 drains: ONE name pulled through the scripted producer as the probe (each of the six returned, or its field error
+  read), then the re-pin of `amgt-induction-daily` to the ap-7 drain; the next scheduled fire is the acceptance. No one-off pull
+  of the population (CTO msg 30490).
 
 ## 2. Found at the cut (rows, not cells)
 
-None new. Z-S88 stays ARMED until ao-2's fire read. Z-S87 is carried (analysis ruling 9).
+None new. `Z-S89` is this round's ap-6. `Z-S87` is carried (analysis ruling 11). A 2026-09-15 probe instrument spells
+`BEST_CPS_STDDEV` where the consumer spells `BEST_CPS_STANDARD_DEV`; ap-10 (m)'s probe settles it before any re-pin.
 
 ## 3. Coverage
 
 | cell | order | slot |
 |---|---|---|
-| CRPS-ao-1 | `AMGT_CORPUS.TO-CRPS-ao-1.skip-keys-on-the-pull-date.md` | `~1` |
-| CRPS-ao-2 | the issuer's paired act (no order) | -- |
-| CRPS-ao-3 | `AMGT_CORPUS.TO-CRPS-ao-3.model-page-currency-marks-words.md` (AMENDMENT 1, v39.1: reopened) | `~2` |
-| CRPS-ao-4 | `AMGT_CORPUS.TO-CRPS-ao-4.sheet-fits-fy3-at-1440.md` | `~2` (after ao-3) |
-| CRPS-ao-5 | the issuer's read (no order) | -- |
-| CRPS-ao-6 | the issuer's read (no order) | -- |
+| CRPS-ap-1 | `AMGT_CORPUS.TO-CRPS-ap-1.fence14-line-four-counts.md` | `~1` |
+| CRPS-ap-2 | `AMGT_CORPUS.TO-CRPS-ap-2.pillar-opens-to-its-passage.md` | `~4` |
+| CRPS-ap-3 | `AMGT_CORPUS.TO-CRPS-ap-3.header-dossier-line-cited.md` | `~5` |
+| CRPS-ap-4 | `AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.md` | `~5` (after ap-3) |
+| CRPS-ap-5 | `AMGT_CORPUS.TO-CRPS-ap-5.zero-dominated-in-plain-words.md` | `~4` (after ap-2) |
+| CRPS-ap-6 | `AMGT_CORPUS.TO-CRPS-ap-6.heading-only-section-is-absent.md` | `~2` |
+| CRPS-ap-7 | `AMGT_CORPUS.TO-CRPS-ap-7.six-dispersion-mnemonics.md` | `~3` |
+| CRPS-ap-8 | the issuer's read (no order) | -- |
+| CRPS-ap-9 | the issuer's read (no order) | -- |
+| CRPS-ap-10 | the issuer's paired acts (no order) | -- |

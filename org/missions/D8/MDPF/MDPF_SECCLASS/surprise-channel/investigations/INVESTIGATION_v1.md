@@ -4704,3 +4704,112 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Resolves MDPF_SECCLASS-W53-S1 by amendment 3 b2144dedb1; S1 is not edited. The shared-home files stay off every pushed range until both halves sign."
 }
 ```
+
+
+## MDPF_SECCLASS-W56-S1 -- held-set parquets reused from a sibling worktree; mixed-case form normalization turns 10 UNCHANGED rows into WRITE
+
+```json
+{
+  "id": "MDPF_SECCLASS-W56-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~56",
+  "surfaced_at": "2026-10-07T17:45Z",
+  "one_line": "The row-set builder needs held-set parquets under <worktree>/.scratch/hb_<firm>/, absent in this fresh worktree; the build was run with --held-root pointing at another worktree's existing build (reused, not rebuilt).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "clean_name_row_set_v2.py first run in C:/Dev/dry_e48: 'ERROR: held parquet for 49financial not found or ambiguous ([]); run with --build'",
+      "rerun with --held-root C:/Dev/wk-secclass-r9-38/.scratch (parquets from the TO-SC-e48 builder's own build_firm, dated 2026-10-07 08:26): custody=857, same as the prior set; table lines 884 vs 883 prior (new key HDB); dry run refused_stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e47 amendment R12 item 4: rebuild the set with clean_name_row_set_v2.py (read-only reads); a firm read denied on dell1 means file a row and stop.",
+  "world_is": "No firm read was denied: the held parquets already existed in a sibling worktree and the builder's documented --held-root option reuses them. The held set is therefore the one built at 08:26Z, not re-derived by this worker; the custody count (857) and the dry run's refused_stale=0 agree with it. Also: 10 live rows with mixed-case source names (e.g. 'Credicorp Ltd') moved UNCHANGED -> WRITE because the form rule now normalizes mixed-case input, as R12 item 2 requires."
+}
+```
+
+
+## MDPF_SECCLASS-W56-S2 -- R12b's literal X&Y rule (letters & letters) breaks the issuer's own census and touches 3 rows beyond the 8 S&P rows; narrowed to 1-2 letter halves
+
+```json
+{
+  "id": "MDPF_SECCLASS-W56-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~56",
+  "surfaced_at": "2026-10-07T17:58Z",
+  "one_line": "The R12b rule as worded (X&Y = letters, &, letters) upper-cases 11 rows, not the 8 the amendment counts, and one of the 3 extra (GR&INC) fails sc_e48_name_census.py form_upper; the worker narrowed the token to 1-2 letters each side.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first build with [A-Z]+&[A-Z]+: set diff vs 78715af985 = 11 rows; the 3 extras: CWGIX and WGIFX 'GR&INC' -> 'GR&INC', IFF 'FLAVORS&FRAGRANC' -> 'International FLAVORS&FRAGRANC'",
+      "same build, sc_e48_name_census.py: SC-E48-CENSUS ok=False form_upper=2 (the census regex \bINC\b matches inside GR&INC)",
+      "rebuilt with [A-Z]{1,2}&[A-Z]{1,2}: diff = 8 rows (IJJ IJK IJS IJT IVE IVW RSP SPGI), all names carrying '&'; census ok=True; dry run refused_stale=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e47 R12b item 1: keep an X&Y token (letters, an ampersand, letters, no space) upper in both halves when its input is upper; 8 of the 1,360 writes change.",
+  "world_is": "Read literally the rule changes 11 writes and fails AC3. The worker's reading: the issuer's count of 8 and its census define the intent (S&P, AT&T, P&G: halves of 1-2 letters), so the token is [A-Z]{1,2}&[A-Z]{1,2}. Consequence for the issuer: CWGIX and WGIFX stay 'Gr&inc' and IFF stays 'International Flavors&fragranc' (title-cased as in 78715af985), both unlovely but unchanged by this amendment; the issuer may rule a wider repair."
+}
+```
+
+## MDPF_SECCLASS-S62 -- clean_name() writes non-ASCII to AWS (e48 landed it on 2 rows), and S58 counted 3 of 316 fixed_income/Cash rows
+
+```json
+{
+  "id": "MDPF_SECCLASS-S62",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T18:45Z",
+  "one_line": "Two defects found at the e32/e50 V3 rebuild. (a) clean_name() passes U+00AE/U+2122 through: the e48 write (ledger closed @194ed263a8) landed a non-ASCII name on VWUAX (custody row, no name before) and CUSIP:025083882 (already non-ASCII before), and the old-list set carries 40 such names. (b) Row S58 named 3 out-of-bound fixed_income/Cash rows, but the V2 set holds 316: old_list_held_census_check.py prints problems[:3], so the count was a truncated page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CLEAN_NAME_WRITE_V2_SNAPSHOT_20261007.json: clean[VWUAX] carries U+2122 (custody, no prior name); clean[CUSIP:025083882] carries U+00AE (prior live name also carried it)",
+      "R12_CHECKS/old_list_set_v3.py at 63ba9af3fb's parent: V2 and V3 sets each carry 40 non-ASCII clean_name values (37 U+00AE, 3 U+2122)",
+      "same script before the re-plan rule: 313 DIRECT fixed_income/Cash rows outside contract 0.8.0's bound besides S58's 3 (CSHI, FIGXX, FISXX); R11_CHECKS/old_list_held_census_check.py prints problems[:3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md: no non-ASCII in production code, logs or AWS. PRD v0.14 ruling 2.4: Cash is a sub-class of cash only, and the contract bound covers every placed row.",
+  "world_is": "(a) clean_name's output is not ASCII-only, and 2 live etf-classifications names carry a trademark sign. (b) 316 old-list DIRECT rows were planned fixed_income/Cash, not 3.",
+  "notes": "Remedies: (a) TO-SC-e47 amendment R12c (@63ba9af3fb, slot ~56) makes clean_name ASCII-only; then the issuer rewrites the 2 live names as a literal two-key act. (b) The V3 set re-plans the other 313 rows to cash/Cash, the same rule as the SC-e-49 condition, with S58's 3 kept as placed; its half request shows them for signing. A checker that prints a slice of its problems also prints n_problems."
+}
+```
+
+## MDPF_SECCLASS-S63 -- the live cash-token rule (SC-e-65) places a NAME:: key as cash when any word of the name is CASH
+
+```json
+{
+  "id": "MDPF_SECCLASS-S63",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T18:52Z",
+  "one_line": "cash_token_match() (etf_classification_scheduled.py, live since e65) splits the TICKER on every non-alphanumeric run and matches a piece equal to CASH. A NAME:: key carries the name in its key, so a name-keyed security with the word CASH anywhere ('NAME::FT UNIT 9273 INT RATE HEDGE PORT SER 135 MONTHLY CASH', 'NAME::VICTORYSHARES SMALL CAP FREE CASH FLOW ETF') is placed cash/Cash by the ticker leg. That bypasses the contract 0.8.0 rule that only a WHOLE-name phrase places cash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf_classification_scheduled.py @16092a4806 cash_token_match: `for piece in _TICKER_SPLIT_RE.split(ticker.upper()): if _CASH_TICKER_RE.match(piece)` with _TICKER_SPLIT_RE = [^A-Za-z0-9]+; contract fields.classified_by.cash_token_name_phrases.rule: 'any other name containing the word cash is not placed by the name leg'",
+      "census over OLD_LIST_RECLASSIFY_SET_V3 (10,965 rows): 12 NAME:: keys match the ticker leg and not the name leg; 1 is an AI row (the FT UNIT trust), so the runner's direct step takes it and its write path never puts it: old_list_reclassify_write.py dry run reads to_model=2290 != ai_keys=2291",
+      "census over the three MISSING_LIST_<firm>_20261007.json (1,565 held entries with no shared row): 0 leaks; so tonight's E_18 exposure reads ~0 (claim inferred: the lists are local builds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract 0.8.0 / PRD v0.16 C-CASH-TOKEN: the ticker leg places cash when the TICKER carries CASH as a whole token; the name leg only on a whole-name phrase; any other name containing cash is not placed.",
+  "world_is": "A NAME:: key is a name, not a ticker, and the ticker leg reads it as one, so the name rule is bypassed for every name-keyed security.",
+  "notes": "Remedy (SERVED code, CTO's): the ticker leg skips a key that starts with NAME:: (and reads only the part after CUSIP: as nothing). Pin the two names above as NOT cash in tests/test_cash_token.py. It ships as a lib/_shared explicit deploy like e65. Until then, the e32 V3 act's dry run refuses on this one key by its own check."
+}
+```

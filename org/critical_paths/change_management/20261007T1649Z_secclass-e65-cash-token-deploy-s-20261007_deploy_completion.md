@@ -72,3 +72,43 @@ ad hoc between the apply and 23:00Z. Nothing in either order does so, and this s
 
 On the CTO's own stated rule, therefore, the gate is SATISFIED and the e57e61 merge need not wait for
 23:00Z. The reading of the rule remains the CTO's; what is asserted here is only the fact it turns on.
+
+### CORRECTION to the disjointness section above (`0.7.0_AE_CloudOps~S`, 2026-10-07 ~18:2xZ)
+
+**The section above claims disjointness on THREE independent axes. That overstates it. There is ONE.**
+
+`infra/aws/lambda/ci/lambda-source-map.json`, entry `mdpf-secclass-new-security-lambda`, `staged_from`:
+the producer's artifact bundles `etf_classification_scheduled.py`, staged from
+`infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py` and packaged flat beside
+`etf_classification.py`, `etf_classifications_dynamodb.py` and `rivalfunds_classification.py`.
+**That is the module TO-DEPLOY-e65 moved.** So after the e57e61 build the producer Lambda carries the
+cash-token rule too, and becomes a SECOND writer of cash-class rows into `etf-classifications` -- the
+very table leg L4 grades.
+
+Why the original axes do not cover it:
+- **Axis 1 (S3 keys) is literally true but answers a narrower question than the section implies.**
+  `file_to_s3_target` does return `None` for both repo files e57e61 changes, and
+  `rivalfunds_classification.py` is in no tree's shipped set. What that establishes is that the e57e61
+  merge moves no FIRM-BUCKET key. It says nothing about what the e57e61 BUILD stages into a Lambda zip,
+  and the staging is where the two orders meet. Reading a deploy map answers "which keys does a push
+  move"; it does not answer "which source files does a build bundle", and the section used the first to
+  claim the second.
+- **Axis 2 (no table write) remains true of the ACT** and false of the artifact's future runs, which is
+  the distinction that matters here.
+- **Axis 3 (timing) is the axis actually carrying the verdict.**
+
+**The verdict does not change: the 23:00Z read is still clean.** The producer's schedule is
+`cron(0 10 ? * MON-FRI *)` America/New_York = 14:00Z, which already fired today, so its next fire is
+2026-10-08T14:00Z, after the read. `E_18` writes put-on-absence, so had a producer row landed first,
+`E_18` would plan nothing for that key and the 23:00Z read would UNDER-count -- the confound is real in
+shape, and only the clock prevents it.
+
+**What changes is the margin and the weight of the residual.** The residual named above -- that nobody
+invokes `mdpf-secclass-new-security-lambda` ad hoc between the apply and 23:00Z -- was presented as a
+footnote beside three independent guarantees. It is in fact the only thing standing between the apply
+and a confounded read, together with the cron. Recorded here at that weight.
+
+Put to `1.0.0_SA_CTO` as msg 106497 with `0.0.0_AB_MSTR` copied, and `MDPF_SECCLASS.TO-DEPLOY-e57e61` is
+HELD BY THIS SEAT pending that answer -- run now, or apply after 23:00Z for zero coupling. The order
+reads `pending` at `origin/CLOUD` (the issuer's GO is given); the hold is this seat's own, on this
+finding, and is not a gate on anybody else.

@@ -112,6 +112,13 @@ if [ "${1:-}" = "--self-test" ]; then
   # REGRESSION ARM (NFRA_OPLGTW-Z-S61): the commit path reads the INDEX against HEAD after the merge lands.
   chk "the commit path reads the index against HEAD after MERGED (exit 6 when merged paths are stale)" \
       "grep -q '_verify_shared_index HEAD' '$0' && grep -q 'THE INDEX DISAGREES WITH HEAD ON' '$0'"
+  # REGRESSION ARMS (NFRA_OPLGTW-Z-S66): one merge per worktree, and the commit re-reads MERGE_HEAD.
+  chk "the one-shot path refuses a merge it did not open and takes the one-merge lock before the clean-index check" \
+      "grep -q 'A MERGE IS ALREADY OPEN in this worktree' '$0' && [ \"\$(grep -n 'ANOTHER safe-merge RUN HOLDS THIS WORKTREE' '$0' | tail -1 | cut -d: -f1)\" -lt \"\$(grep -n 'the index carries STAGED changes' '$0' | tail -1 | cut -d: -f1)\" ]"
+  chk "the commit refuses when MERGE_HEAD is no longer the one this run opened" \
+      "grep -q 'MERGE_HEAD CHANGED UNDER THIS RUN' '$0'"
+  chk "--abort and --continue refuse a merge held by another seat's lock" \
+      "[ \"\$(grep -c 'is held by another run' '$0')\" -ge 3 ]"
   chk "--verify-index refuses a non-merge commit" \
       "! bash '$0' --verify-index \"\$(git rev-list --no-merges -n 1 HEAD)\" >/dev/null 2>&1"
   chk "--verify-merge refuses a non-merge commit" \
@@ -140,6 +147,37 @@ STATE="$(git rev-parse --git-path safe-merge-conflict 2>/dev/null || echo '')"
 [ -n "$STATE" ] || { echo "safe-merge: cannot resolve the git dir" >&2; exit 2; }
 
 _merge_open() { [ -f "$(git rev-parse --git-path MERGE_HEAD 2>/dev/null || echo /nonexistent)" ]; }
+
+# ---------------------------------------------------------------- the ONE-MERGE lock
+# NFRA_OPLGTW-Z-S66 (2.0.0_SA_COO~O, 2026-10-07): two safe-merge runs inside one window in the shared tree produced
+# 9f146f853a -- one seat's subject and branch parent, the other seat's author and tree. MERGE_HEAD is ONE file per
+# worktree, so two open merges cannot coexist; the second run's `git merge` either fails on the first's MERGE_HEAD or
+# replaces it, and the first run's commit then lands on a MERGE_HEAD it did not write. The lock is a directory in the
+# git dir (mkdir is atomic; Git Bash has no flock), taken BEFORE the clean-index check and held to the commit. A
+# conflict (exit 4) KEEPS it for the seat that opened the merge; --continue and --abort release it.
+_LOCK="$(git rev-parse --git-path safe-merge.lock.d 2>/dev/null || echo '')"
+_LOCK_MINE=0
+_KEEP_LOCK=0
+_lock_who() { echo "serial $(cat "$_LOCK/serial" 2>/dev/null || echo '?'), branch $(cat "$_LOCK/what" 2>/dev/null || echo '?'), since $(cat "$_LOCK/since" 2>/dev/null || echo '?'), pid $(cat "$_LOCK/pid" 2>/dev/null || echo '?')"; }
+_lock_write() {
+  printf '%s\n' "${OPAL_AGENT_SERIAL:-unknown}" > "$_LOCK/serial"; echo "$$" > "$_LOCK/pid"
+  date -u +%Y-%m-%dT%H:%M:%SZ > "$_LOCK/since"; printf '%s\n' "$1" > "$_LOCK/what"; _LOCK_MINE=1
+}
+_lock_take() {
+  [ -n "$_LOCK" ] || return 1
+  if mkdir "$_LOCK" 2>/dev/null; then _lock_write "$1"; return 0; fi
+  # Held. It is STALE only when all three read empty: the holder's process is gone, no merge is open, and no conflict
+  # state is armed. A conflict the holder left open keeps the lock although its process has exited.
+  _hp="$(cat "$_LOCK/pid" 2>/dev/null || echo '')"
+  if { [ -z "$_hp" ] || ! kill -0 "$_hp" 2>/dev/null; } && ! _merge_open && [ ! -f "$STATE" ]; then
+    echo "safe-merge: WARN -- clearing a STALE one-merge lock ($(_lock_who)): its process is gone, no merge is open, no conflict state" >&2
+    rm -rf "$_LOCK" 2>/dev/null || true
+    if mkdir "$_LOCK" 2>/dev/null; then _lock_write "$1"; return 0; fi
+  fi
+  return 1
+}
+_lock_drop() { [ "$_LOCK_MINE" -eq 1 ] && [ "$_KEEP_LOCK" -eq 0 ] && rm -rf "$_LOCK" 2>/dev/null; return 0; }
+trap _lock_drop EXIT
 
 # ---------------------------------------------------------------- post-commit TREE check
 # ⛔ 1.0.0_SA_CTO~Z 2026-09-29 (DSGN_AMGTV1 round-2 DRAIN_END_READ s.3 @e724da66a2): under shared-tree
@@ -267,8 +305,14 @@ if [ "${1:-}" = "--abort" ]; then
     echo "safe-merge: no merge in progress and no conflict state -- nothing to abort" >&2
     exit 2
   fi
+  # An open merge under ANOTHER seat's lock is that seat's: aborting it here is how one drain destroys another.
+  if [ -d "$_LOCK" ] && [ "$(cat "$_LOCK/serial" 2>/dev/null)" != "${OPAL_AGENT_SERIAL:-unknown}" ]; then
+    echo "safe-merge: REFUSED -- the open merge is held by another run ($(_lock_who)). --abort does not abort another seat's merge. Nothing was touched." >&2
+    exit 2
+  fi
   git merge --abort || { echo "safe-merge: git merge --abort FAILED; the tree is NOT restored" >&2; exit 1; }
   rm -f "$STATE" "$STATE.branch" 2>/dev/null || true
+  rm -rf "$_LOCK" 2>/dev/null || true
   echo "safe-merge: merge aborted; tree restored and conflict state cleared"
   exit 0
 fi
@@ -294,11 +338,22 @@ if [ "${1:-}" = "--continue" ]; then
     echo "            seat's, which is the one thing --continue exists to check. Finish the merge" >&2
     echo "            the way it was started, or abort it and re-run safe-merge from the top." >&2
     exit 2; }
+  # The lock a conflict left behind belongs to the seat that opened the merge; --continue re-takes it for this process.
+  if [ -d "$_LOCK" ]; then
+    if [ "$(cat "$_LOCK/serial" 2>/dev/null)" != "${OPAL_AGENT_SERIAL:-unknown}" ]; then
+      echo "safe-merge: REFUSED -- the open merge is held by another run ($(_lock_who)). --continue finishes only the merge this seat opened. Nothing was touched." >&2
+      exit 2
+    fi
+    _lock_write "$(cat "$STATE.branch" 2>/dev/null || echo '<unknown>')"
+  else
+    mkdir "$_LOCK" 2>/dev/null && _lock_write "$(cat "$STATE.branch" 2>/dev/null || echo '<unknown>')"
+  fi
   _UNRES="$(git diff --name-only --diff-filter=U | wc -l | tr -d ' ')"
   if [ "$_UNRES" != "0" ]; then
     echo "safe-merge: REFUSED -- ${_UNRES} path(s) still carry unresolved conflict markers:" >&2
     git diff --name-only --diff-filter=U | sed 's/^/              /' >&2
     echo "            Resolve and \`git add\` them, then re-run --continue. The merge stays OPEN." >&2
+    _KEEP_LOCK=1
     exit 4
   fi
   # ⛔ THE FOREIGN-PATH CHECK. The one-shot path gets this free from its pre-merge index guard
@@ -317,6 +372,7 @@ if [ "${1:-}" = "--continue" ]; then
     echo "            draining seat's authorship, with no lane check firing -- merges are exempt" >&2
     echo "            by design. Unstage them (their owner will re-commit), then --continue." >&2
     echo "            The merge is left OPEN; nothing has landed." >&2
+    _KEEP_LOCK=1
     exit 4
   fi
   BRANCH="$(cat "$STATE.branch" 2>/dev/null || echo '<unknown>')"
@@ -334,6 +390,24 @@ fi
 if [ "$_CONTINUING" -eq 0 ]; then
 git rev-parse --verify "$BRANCH" >/dev/null 2>&1 || {
   echo "safe-merge: REFUSED -- '$BRANCH' is not a ref in this repo" >&2; exit 2; }
+fi
+
+# ONE MERGE AT A TIME IN A WORKTREE (NFRA_OPLGTW-Z-S66). A merge already open here was not opened by this run: refuse and
+# touch nothing -- never abort it. Then take the lock, before the clean-index check, so a second run cannot pass that
+# check in the seconds before this run's `git merge` stages.
+if [ "$_CONTINUING" -eq 0 ]; then
+  if _merge_open; then
+    echo "safe-merge: REFUSED -- A MERGE IS ALREADY OPEN in this worktree (MERGE_HEAD $(git rev-parse --short -q --verify MERGE_HEAD 2>/dev/null || echo '?')); this run did not open it." >&2
+    [ -d "$_LOCK" ] && echo "            Holder: $(_lock_who)." >&2
+    echo "            Nothing was touched. Wait for that merge to commit, then re-run; or drain in a linked worktree." >&2
+    exit 2
+  fi
+  if ! _lock_take "$BRANCH"; then
+    echo "safe-merge: REFUSED -- ANOTHER safe-merge RUN HOLDS THIS WORKTREE ($(_lock_who))." >&2
+    echo "            Two merges cannot be open in one worktree: the second would commit on the first's MERGE_HEAD." >&2
+    echo "            Nothing was touched. Re-run when that run has committed; or drain in a linked worktree." >&2
+    exit 2
+  fi
 fi
 
 # A dirty index is not ours to merge into: the union we would grade would carry
@@ -413,9 +487,13 @@ if ! git merge --no-commit --no-ff "$BRANCH"; then
   echo "            Or give up cleanly:  bash .tools/safe-merge.sh --abort" >&2
   echo "            STOP: Do NOT finish this with a bare \`git commit\` -- that is precisely the" >&2
   echo "            hand-merge that runs no index guard and no row gate." >&2
+  _KEEP_LOCK=1
   exit 4
 fi
 fi
+
+# The merge this run holds, by hash. The commit below refuses if MERGE_HEAD no longer reads this (Z-S66).
+_MY_MH="$(git rev-parse -q --verify MERGE_HEAD 2>/dev/null || echo none)"
 
 # STOP: THE PRIVATE INDEX IS TAKEN HERE, RIGHT AFTER THE MERGE, NOT AFTER THE GRADE (NFRA_OPLGTW-Z-S23 residual,
 # 0.0.0_AB_MSTR~Z 2026-10-03: drain 1e54d613a2 carried 1.0.0_SA_CTO~O's NFRA_OPLGTW project.json). The grade takes
@@ -525,6 +603,16 @@ _try=0
 while :; do
   _try=$((_try + 1))
   _t0=$(date +%s)
+  # MERGE_HEAD is read again at each attempt: a commit on a MERGE_HEAD this run did not write lands this run's tree
+  # under another branch's parent (9f146f853a). Refuse and abort NOTHING -- an open merge here is no longer this run's.
+  _NOW_MH="$(git rev-parse -q --verify MERGE_HEAD 2>/dev/null || echo none)"
+  if [ "$_NOW_MH" != "$_MY_MH" ] || [ "$_MY_MH" = "none" ]; then
+    echo "safe-merge: *** REFUSED -- MERGE_HEAD CHANGED UNDER THIS RUN (opened ${_MY_MH}, now ${_NOW_MH}). ***" >&2
+    echo "            Another process aborted or replaced this merge. NOT committing and NOT aborting: whatever" >&2
+    echo "            is open now is not this run's. Nothing landed. Re-run safe-merge from the top." >&2
+    rm -f "$_PRIV_IDX" "$STATE" "$STATE.branch" 2>/dev/null || true
+    exit 1
+  fi
   if GIT_INDEX_FILE="$_PRIV_IDX" git commit --no-edit --author "$_AUTH" -m "$SUBJECT"; then break; fi
   if [ -f "$_HANG_MARK" ] && [ "$(date -r "$_HANG_MARK" +%s 2>/dev/null || echo 0)" -ge "$_t0" ] && [ "$_try" -lt 3 ]; then
     echo "safe-merge: commit attempt $_try failed on a KILLED HUNG HOOK ($(cat "$_HANG_MARK" 2>/dev/null)); the merge is intact -- retrying git commit only" >&2

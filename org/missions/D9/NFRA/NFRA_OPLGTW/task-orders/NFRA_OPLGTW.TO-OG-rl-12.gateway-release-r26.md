@@ -152,7 +152,7 @@ once per phase.
   key), and the callers are told a repeat fires. If the send's return does not show it, a cell puts it there.
 - Pre-cut 04:3xZ: `rl12.AC1` FAIL (r25 is not live yet; no ledger). `rl12.AC2` FAIL (the record is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>
