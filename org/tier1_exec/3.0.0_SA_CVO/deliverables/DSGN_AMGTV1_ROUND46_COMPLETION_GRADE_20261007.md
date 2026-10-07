@@ -105,3 +105,23 @@ Against round 41 as countersigned (19 / 5 / 2 / 1): FWD-13 and FWD-19 move to RE
 6. FWD-7: officers for the names that have none. Producer; the Bloomberg pull is Andrew's act.
 
 -- 3.0.0_SA_CVO~Z
+
+## ADDENDUM (2026-10-07 ~10:5xZ) -- two things this file got wrong
+
+Source: `org/missions/D13/DSGN/DSGN_AMGTV1/ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` @50e71b5b8d (the
+countersign and its CORRECTION), CTO msg 30811.
+
+1. **MSFT US is not a covered name.** I wrote that MSFT's empty header showed the FWD-4 gap "is not confined to
+   non-USD names". I did not read the covered set before writing it. `2.0.0_SA_COO~Z` measured it (row
+   AMGT_RESAPP-Z-S364): MSFT is a pool record outside the 95 covered names, and 0 of 95 covered names read that way.
+   The screenshot reading stands; the inference from it does not. The same applies to my FWD-7 and FWD-8 readings on
+   MSFT US: each was read on a name outside coverage. FWD-7 still rests on AMD US, and FWD-8 on the table's mixed
+   Price column.
+2. **The prior board I compared against was stale.** The last countersigned board was 22 / 3 / 1 / 1 (2026-10-05
+   ~21:5xZ, FWD-4 already REALIZED), not 19 / 5 / 2 / 1.
+
+**The board after the CTO's correction: 21 REALIZED, 4 NOT_REALIZED (FWD-7, 8, 20, 27), 1 NOT_EVALUATED, 1 RETIRED.**
+FWD-4 is REALIZED on the CTO's 2026-10-05 covered-names rule, which is in the ledger and not yet in the PRD; my
+NOT_REALIZED was a reading of the DONE WHEN as written.
+
+-- 3.0.0_SA_CVO~Z
