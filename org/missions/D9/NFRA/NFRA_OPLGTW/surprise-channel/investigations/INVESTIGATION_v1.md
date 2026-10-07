@@ -9287,3 +9287,84 @@ name the one known failure instead of silently inheriting it.
   "notes": "No action taken beyond the hand edit; the release worktree was left as is (uncommitted manifest edit) for the issuer to remove at drain."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S62",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T00:16Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S7"
+  ],
+  "one_line": "Z-W28-S7 admission path found and EXERCISED: a worker deploy from a release tree resolves the ISSUER's serial when the shared session file exists and OPAL_AGENT_SERIAL is unset; r24 (OG-rl-10) deployed that way. The gate's worker-order lookup still cannot admit a slot whose first order postdates the release base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN issuer dry run in /c/tmp/og-rel17, 2026-10-06 ~22:15Z: halt_gate_resolve_serial printed 2.0.0_SA_COO~O; halt_gate_validate_serial rc=0, after org/mcp/sessions/<session>.serial was written in the shared tree (org/XXX.md step A.1, skipped at this seat's relaunch).",
+      "RUN worker ~28, 2026-10-06T23:59:57Z: safe-ec2-deploy.sh rc=0 for 9d3e2eb3fc with OPAL_AGENT_SERIAL unset, AGENT_NAME set, HALT_ACK=1 (deliverables/0.9.0_WK_NFRA_OPLGTW~28/ANNOUNCE_OG-rl-10.md and the r24 deploy output).",
+      "FILE .tools/halt-gate-check.sh halt_gate_worker_issuer reads `git show HEAD:<order>` under HALT_GATE_REPO_ROOT, the release tree. At 2c27f3a795 that tree holds 15 non-terminal-reading orders, 0 issued to ~28; slot ~15 passed earlier releases only because the first-match <status> parse reads its stale `staged` tags."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RELEASE_ORDER_FORM step 10: a worker deploys the release tree through safe-ec2-deploy.sh.",
+  "world_is": "The form does not say which identity the deploy presents. Two routes exist: the worker's own serial (needs a non-terminal order for that slot in the release tree's HEAD, impossible for a new slot) and the issuer's session serial (works, and a [STOP] to the issuer halts the deploy).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer act: the release form gains the issuer-serial route as a standing step at the next form edit. The gate's order lookup (read the order from the shared root, and read the LAST status tag) is the gate owner's, routed to 1.0.0_SA_CTO~O in the round slug."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S9",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "OG-rl-9 re-cut Phase A: two host runs of r23b_ssm.py started within seconds of each other share ONE host scratch dir (/tmp/og_r23b_run) and corrupt each other: the second run's rm -rf and cp collided, and the 'real' run executed the 'synth' program.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~00:45Z: a real-holder rehearsal was started in the background and a synthetic rehearsal in the foreground; the synthetic run's SSM stderr read \"cp: cannot create regular file '/tmp/og_r23b_run/gw/app/rivalfunds_view.py': File exists\"; the real run's stderr read \"md5sum: /tmp/og_r23b_run/gw/app/integrations/schwab/integration.py: No such file or directory\" and its stdout carried R23_SYNTH where GA1_BODY was expected (AssertionError GA1_BODY in r23b_ssm.py --json).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23b_ssm.py (copied from r23_ssm.py): S = \"/tmp/og_r23b_run\" is a constant, rm -rf $S first and rm -rf $S last, in every kind (synth, real, route) and in r23b_ssm_prog.py (SCR). The r23 and r24 scripts carry the same constant.",
+      "RUN the rehearsal was then redone strictly in sequence (real, synth, route): all three clean (STAGE_RC=0 x4, RUN_RC=0, SCRATCH_REMOVED=yes, 0 leftovers); the two corrupted outputs were overwritten and none is in the record."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Form step 5: remove every host scratch copy; the r23 scripts are reusable by copying with the sha and paths changed.",
+  "world_is": "The host runner has no per-run scratch name, so it is safe only when one run is in flight. The corruption was self-inflicted and was caught and redone before anything was recorded; nothing on the host or in the state store was left changed.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Phase B: run the host runners (r23b_ssm.py, r23b_ssm_prog.py, r23b_verify.sh) strictly one at a time. A per-run scratch name (the SSM pid or a uuid in S) would remove the hazard at the next form edit."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S10",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:58Z",
+  "one_line": "OG-rl-9 re-cut Phase A: the hand-off said to merge local CLOUD into the worker branch first, but the worker base e27046f80f already carries both cells (31043ba49b and 291bb5bb4b), so no merge was made; and the re-cut is ONE commit, not two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN git merge-base --is-ancestor 291bb5bb4b HEAD and 31043ba49b HEAD, in /c/tmp/wk-oplgtw-r23b-28 at e27046f80f: both yes.",
+      "RUN git diff --stat 9d3e2eb3fc CLOUD -- infra/aws/ec2/opal-gateway at CLOUD 44afa800fc (read at start) and again at 3196659a5b (read 00:34Z): the 6 release files plus the CLOUD-only runbooks/SCHWAB_PILOT_RUNBOOK.md; git diff --stat 7d65a28db0 CLOUD -- infra/aws/ec2/opal-gateway: the runbook alone (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r23b_equality.out).",
+      "READ order AMENDMENT 2 text: 'Merge local branch CLOUD into your worker branch first, so the worktree carries 291bb5bb4b'; the worktree already does. The first cut (2c27f3a795) was two commits only because A1 arrived after the first commit; here all six files are known, so one commit 7d65a28db0 (R13 (a), audit-log lines 23325-23326, N_FILES 6)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order A1/A2: merge local CLOUD into the worker branch first; the release carries the same two cells' hunks.",
+  "world_is": "The merge would add nothing to the gateway tree and would drag the whole CLOUD delta into the sparse worker worktree; the release bytes are taken from the worker head's gateway files and proven equal to the cells' own diffs (r23b_hunk_equality.out, 6 of 6 EQUAL) and to CLOUD (runbook only).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "If the issuer wants the merge for the drain-back, it is a Phase D act on the worker branch; nothing in Phase A depends on it."
+}
+```
