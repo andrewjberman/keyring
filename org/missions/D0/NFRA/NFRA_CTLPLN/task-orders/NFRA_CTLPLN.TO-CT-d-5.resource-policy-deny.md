@@ -82,7 +82,7 @@ and every earlier block holds.
 `tests/render_passrole.py --check` and `tests/derive_protected_functions.py --check` and put their last lines in your report: both
 must still read `in_sync=True`.
 
-<expected_criteria>CT4d5-AC1,CT4d5-AC2,CT4d5-AC3</expected_criteria>
+<expected_criteria>CT4d5-AC1,CT4d5-AC2,CT4d5-AC3,CT4d5-AC4</expected_criteria>
 
 ## BOUNDS
 
@@ -102,6 +102,8 @@ infra/aws/terraform/nfra-ctlpln-identity/iam.tf
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/read_queue_attribute_writers.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/queue_attribute_writers.json
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -136,3 +138,55 @@ Source: PRD v0.12 @2f61412157 ADDENDUM v0.10; Andrew-direct record
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md`;
 rows NFRA_CTLPLN-S6, W4-S1, W4-S2; decomposition round 4. Base dry-run at the cut: CT4d5-AC1 base FAIL as expected (no file);
 CT4d5-AC2 base FAIL as expected (no `respol_ok`); CT4d5-AC3 is a control and reads PASS at the base (the round-3 drain's read).
+
+## AMENDMENT (2.0.0_SA_COO~C, 2026-10-07 ~13:5xZ) -- REOPENED: deny `sqs:SetQueueAttributes` for the Dell group, after one read of what it would break
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state, merged AND APPLIED (order NFRA_CTLPLN.TO-APPLY-6, 8 added, the 74-action Deny is live). Authority:
+`1.0.0_SA_CTO` msg 106274, verbatim: "a queue's policy is written by sqs:SetQueueAttributes, which stays allowed. Ruling: deny it
+for the Dell group. A queue's attributes are set when Terraform creates it; a later change goes by write-in. One cell, one half
+request, narrowing only." Rows `NFRA_CTLPLN-W4-S1`, `W4-S2`, `S6`. Gate limb: none graded this modification. THE WORK below is the
+whole of this amendment. The ruling names the queue action ONLY: `sns:SetTopicAttributes` is NOT added by this pass.
+
+1. **THE FIRST READ, before any edit: does denying it break a Terraform CREATE of a queue?** The ruling rests on "a queue's
+   attributes are set when Terraform creates it". That is true only if the provider sends them inside `sqs:CreateQueue`; if the
+   provider calls `sqs:SetQueueAttributes` during create (for the policy, the redrive policy, or any attribute), a Dell-placed
+   project could no longer create a queue at all. Measure it, read-only, in
+   `tests/read_queue_attribute_writers.py`, by TWO independent reads, and save the result as `tests/queue_attribute_writers.json`:
+   - (a) THE AUDIT TRAIL: `aws cloudtrail lookup-events` for event name `SetQueueAttributes` and for `CreateQueue` over the widest
+     window the lookup allows (90 days), auto-paginated, counted client-side. For each `CreateQueue` made by a Terraform user agent,
+     is there a `SetQueueAttributes` on the same queue by the same session within 120 seconds? Print: creates by Terraform, of
+     those how many were followed by a set, and which attribute NAMES the set carried (names only, never a policy body). Also
+     print how many `SetQueueAttributes` events were NOT near a create (the later-change population the ruling sends to write-in)
+     and by which principals.
+   - (b) THE DECLARED POPULATION: every `aws_sqs_queue`, `aws_sqs_queue_policy`, `aws_sqs_queue_redrive_policy` and
+     `aws_sqs_queue_redrive_allow_policy` resource under `infra/aws/terraform/` (native search; count by root). The three
+     separate-resource kinds are written by `sqs:SetQueueAttributes` by construction: a root that declares one cannot be applied
+     from a Dell once the Deny lands. Say which roots those are and whether any is a Dell-placed project's root (read
+     `org/devices/DEVICES.json` and the project rows' `fabric` for placement; if placement cannot be read, say so).
+   - LAST line `QUEUE-ATTR-WRITERS creates_by_terraform=<c> create_followed_by_set=<s> set_not_near_create=<n> queue_resources=<q> separate_policy_resources=<p> roots_with_separate=<r> create_needs_set=<True|False|UNKNOWN> ok=<True|False>`
+     (`ok=True` when both reads completed; `create_needs_set` is the finding).
+   - IF `create_needs_set` READS True OR UNKNOWN: STOP THERE. Make no policy edit. File ONE row (BLOCKING), write the finding into
+     your deliverables as `QUEUE_ATTRIBUTE_DENY_FINDING.md` with the numbers and the narrowest alternative you can state (for
+     example a Deny conditioned so that it bites only outside a create, if the service offers such a condition key: check the
+     service authorization reference you have locally, do not download it; or the separate-resource kinds refused at the
+     wrapper), leave the order `in_progress`, and report. The CTO re-rules on the measured fact.
+2. ONLY IF `create_needs_set=False`: add `sqs:SetQueueAttributes` to `DenyResourcePolicyWrites` in `dell_respol_policy.json` by the
+   file's own generator (`tests/derive_respol_actions.py`; make it a RULED-IN action with its ruling cited, so `--check` stays in
+   sync and the count reads 75), keep the document inside the size limit, and extend `tests/simulate_policy.py`'s resource-policy
+   block by two arms: a Dell `sqs:SetQueueAttributes` -> explicitDeny; a Dell `sqs:CreateQueue` -> still allowed (the control).
+   The block then reads 13 of 13. `tests/check_identity.py` unchanged unless a count it asserts moves.
+3. A plan note in your deliverables, `PLAN_NOTE_QUEUE_ATTRIBUTE_DENY.md`: what the apply would show (by reading: one managed
+   policy updated in place, a new default version; nothing added or destroyed), who loses what (both Dell users: any later change
+   to a queue's attributes, its policy included), and the rollback (IAM keeps the prior policy version).
+
+**ACCEPTANCE.** One criterion is ADDED; AC2's expectation moves ONLY if step 2 ran (`respol_ok=13/13`); AC1 and AC3 unchanged:
+
+<criterion id="CT4d5-AC4" cell_refs="CT-d-5"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/read_queue_attribute_writers.py --from-file infra/aws/terraform/nfra-ctlpln-identity/tests/queue_attribute_writers.json</invocation><expect>QUEUE-ATTR-WRITERS creates_by_terraform=</expect></criterion>
+`CT4d5-AC4` -- the read was made and saved; the same line must read `ok=True`; `create_needs_set` is reported as measured. The live
+read (`--live`) may take longer than 120 seconds and is run once outside the bound; the criterion reads the saved file.
+
+**BOUNDS.** Read-only AWS: `cloudtrail lookup-events`, `iam simulate-*`, `sts get-caller-identity`, `iam get-policy*`. No apply, no
+plan against the backend, no queue created or changed, no network download, every Terraform call (if any) with
+`CHECKPOINT_DISABLE=1`. Never print or save a policy body or a message body from an audit event: attribute NAMES, event names,
+times, principal ARNs and user agents only.

@@ -1200,6 +1200,7 @@ class _Vocab:
         self.bd_vendor = _BD_VENDOR
         refused = reg["systems"].get("refused_keys", {})
         self.cadences = set(schema["cadence"]["values"])
+        self.cadence_token = re.compile(schema["cadence"]["interval_form"]["token_regex"])  # P2: {N}min / {N}h
         self.v3 = {m for ms in refused.values() if isinstance(ms, list) for m in ms}
         self.v3 |= self.cadences | set(self.scope) | {"bd"}
         pw = refused.get("purpose_word", [])
@@ -1407,10 +1408,10 @@ def _cadence_slot(func, v):
         k = func.index("on")
         if k < len(func) - 1:
             return func[:k], "-".join(func[k:]), False
-    if func and func[-1] in v.cadences:
+    if func and (func[-1] in v.cadences or v.cadence_token.match(func[-1])):
         return func[:-1], func[-1], False
     for k in range(len(func) - 1, -1, -1):
-        if func[k] in v.cadences:
+        if func[k] in v.cadences or v.cadence_token.match(func[k]):
             return func[:k] + func[k + 1:], func[k], False
     return func, "{cadence}", True
 
