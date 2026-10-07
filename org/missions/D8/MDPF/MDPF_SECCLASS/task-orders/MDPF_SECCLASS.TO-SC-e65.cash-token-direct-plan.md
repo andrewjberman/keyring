@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~49</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -51,6 +51,21 @@ cash/Cash by the direct plan, with classified_by naming the rule. A test pins BD
 3. Add `infra/aws/lambda/v2_portal/_shared/tests/test_cash_token.py`. It pins BDCASHIN and FCASH to cash/Cash with `input` naming
    the rule, CASHMERE out (not cash/Cash), and a name-only case (a ticker with no CASH whose name has the word "Cash").
 4. Do not change any other source's precedence. An existing row is never planned, as today.
+
+### AMENDMENT 3 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~18:5xZ; row MDPF_SECCLASS-S63)
+
+**Why it re-opens.** `cash_token_match()` splits the TICKER on every non-alphanumeric run and matches a piece equal to CASH. A
+`NAME::` key carries the security's NAME in its key. So `NAME::FT UNIT 9273 INT RATE HEDGE PORT SER 135 MONTHLY CASH` (a unit trust)
+and `NAME::VICTORYSHARES SMALL CAP FREE CASH FLOW ETF` (an equity ETF) are planned cash/Cash by the ticker leg. Contract 0.8.0 says
+any name that is not a whole cash phrase is not placed by the name leg, and the ticker leg must not reopen that through a name key.
+1. In `cash_token_match()`, the ticker leg skips a key that starts with `NAME::`. The whole-name leg still applies to every key, so
+   `NAME::CASH` named `Cash` is still cash/Cash. A `CUSIP:` key has no CASH token by shape; leave it as it is.
+2. Pin in `tests/test_cash_token.py`: the two names above are NOT cash; `NAME::CASH` / `Cash` IS cash; BDCASHIN, FCASH and CASHMERE
+   are unchanged.
+3. Change nothing else in the module, and do not edit the contract. Base for this work: origin/CLOUD 03f7f8fb5c (e65 merged at
+   124bf03071), in the worktree you are given.
+AC1's check gained the three NAME:: cases (base: FAIL as expected; FT UNIT and VICTORYSHARES read cash/Cash). AC2 is unchanged and
+must stay PYTEST-OK over the whole `_shared/tests` directory.
 
 ### AMENDMENT 2 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~15:1xZ; CTO round-11 analysis @fc96f7c48c release mode, PRD v0.16 @5f4b2f17d0)
 
