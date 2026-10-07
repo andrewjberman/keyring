@@ -9062,3 +9062,25 @@ fanout:
   egress: none in any order; issuer act 2 is the one Bloomberg call of the round, under its own pair
   portal_ref: ba391aff   # origin/DEV at the cut
 ```
+
+### 86e. ADDENDUM 1 (2026-10-07 ~17:3xZ) -- ONE CELL ADDED MID-ROUND ON A CTO RULING
+
+**The ruling:** CTO msg 31206, on Andrew's word of 2026-10-07 ~15:1xZ that no package is fetched from the internet on any box
+(record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_151xZ_TIERS_BIND_EVERY_BOX_DELL1_PUSHES_DEV_PACKAGE_APPROVAL_BY_CRO_THEN_CTO.md`).
+The decomposition is frozen mid-round; that ruling opens it for this cell only.
+
+| id | cell | slot | class | risk | write surface |
+|---|---|---|---|---|---|
+| `AMGT-bb-23` | the build takes pyarrow 16.1.0 and Linux rpds-py 2026.6.3 from Opal's own deployed zip, proved by its hash against the live function, never a download | `0.7.0_AE_CloudOps~A`, as LEG 0 of the bb-18 order (AMENDMENT 1) | seat order | WORLD by the path floor only (runs no build, applies nothing) | `infra/aws/terraform/harvest/build-and-upload-scoped-amgt.sh`, new `vendor_from_deployed.py` |
+
+- **Measured at the cut:** 0 of the build's 8 pinned wheels are on this box (`round78/reads/BB18_OFFLINE_WHEELS_READ.md`). The
+  deployed zip on disk hashes to the live CodeSha256 `MkM9Kf37` and holds both packages: 147 files in four folders
+  (`round78/reads/BB18_DEPLOYED_PACKAGE_READ.md`, `GROUP_F_NOTES.md`).
+- **What it does NOT move:** no served byte (the build is not run); the five pure pins and the local-interpreter rpds-py pin stay
+  pip's, satisfied offline from the files the laptop sends; `content_diff.py`, `upload_verified.sh` and every `.tf`.
+- **Edge:** bb-23 --> bb-18. bb-18's pair now also states: the three build variables (`AMGT_DEPLOYED_ZIP`, `PIP_NO_INDEX=1`,
+  `PIP_FIND_LINKS`), the built zip's four folders against the deployed zip's (`r78_bb23.py --compare-zip`), and that the
+  then-deployed zip is KEPT on disk after the apply, since the next build is refused without it.
+- **Carrier:** GATE (x) of `.tools/to-pipeline-gate.py` admits no second order file in a round, so the cell is LEG 0 of the bb-18
+  order (its AMENDMENT 1, criteria AC4-AC6), not an order of its own. `fanout` is unchanged: `orders_total: 19`; the bb-18 order
+  now owns two cells and is pending for LEG 0 only.

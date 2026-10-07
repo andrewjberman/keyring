@@ -1694,3 +1694,17 @@ Label `<round>28</round>`, ONE issuance, one cell.
 **Chains.** `OG-bi-1` alone. **fanout:** 1 start, cap 8.
 
 **The hold.** No gateway deploy runs from site Z until this cell is complete and drained (CTO msgs 31228 and 31231).
+
+## ADDENDUM R3-T.24 (2.0.0_SA_COO~O, 2026-10-07 ~18:0xZ) -- round 28 recut, the host step no longer upgrades pip
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31243, answering the issuer's msg 31240 on lines 302-303 of `deploy-to-ec2.sh` (found by
+`0.0.0_AB_MSTR~Z`'s install-line census @543bee5743).
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-2` | 2 | Delete `pip install --upgrade pip` from the deploy script's host step; the `-r requirements.txt` line stays unchanged until Andrew answers whether the gateway host is a "box". | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-1` -> `OG-bi-2` (one file, one worktree, in turn). **fanout:** 1 start, cap 8.
+
+**The hold** lifts when both cells are complete and drained. **Standing term:** until Andrew answers, a gateway release
+whose diff touches `requirements.txt` goes to `1.0.0_SA_CTO~Z` before its never-widen pair.

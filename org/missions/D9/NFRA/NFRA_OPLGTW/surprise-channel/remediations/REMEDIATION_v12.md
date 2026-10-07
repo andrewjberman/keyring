@@ -134,16 +134,16 @@ Z-W28-S13 (their cells are built, not released); Z-W28-S11 (at the CTO). **Still
   "owner": "2.0.0_SA_COO~O",
   "round": "v12",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~O",
-   "at": null
+   "at": "2026-10-07T16:57Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~O",
    "round": "v12"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "NFRA_OPLGTW-Z-W28-S14",
