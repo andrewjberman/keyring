@@ -19162,3 +19162,57 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the adapter builds past the parity gate at CLOUD after 52d6068f97. Nothing is deployed by this."
 }
 ```
+
+## IRPT_BCKEND-S360 -- CLOSE of S358: no runtime caller of intake/parse.py leaves the mapping path unset
+
+```json
+{
+  "id": "IRPT_BCKEND-S360",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T10:15:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "CLOSE of IRPT_BCKEND-S358 by caller read (1.0.0_SA_CTO~DELL2 msg 298, a LOCAL cell owned by 2.0.0_SA_COO~G2): the one bare load_mapping() is parse.py:787 inside parse_holdings(mapping=None), and the one runtime caller of parse_holdings, intake/uploads.py:283, always passes mapping=self.parse_mapping() after :280-281 refuses an empty or non-dict mapping (PARSER_MAPPING_REQUIRED).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep -n 'load_mapping(' -- '*.py' at dell2 CLOUD 62026ca511: 9 hits; the only argument-less call into intake/parse.py is parse.py:787 ('mapping = mapping or load_mapping()'); the hits in cot_account_mapping.py, orion_account_mapping.py, performance/retained.py and D11_MANIFEST/l0_declare_identity.py are other functions of the same name; the IB-rt-11 deliverables pass an explicit path",
+      "git grep -n 'parse_holdings(' -- '*.py', excluding tests and deliverables: 1 caller, intake/uploads.py:283 'parsed = parse_holdings(saved[\"data\"], filename, upload_id, mapping=mapping)'",
+      "intake/uploads.py:279-281: 'mapping = self.parse_mapping()' then 'if not isinstance(mapping, dict) or not mapping: raise UploadRefused(\"PARSER_MAPPING_REQUIRED\")'; parse_mapping is a required constructor callable (uploads.py:147-155)"
+    ]
+  },
+  "dismissal_reason": "S358's own close condition (CTO msg 298: 'It closes on the caller read if no caller is bare') is met: no runtime path reaches the packaged default. A missing default file would return an empty mapping marked absent (parse.py:424-425), not raise, but no runtime path reaches it.",
+  "spec_asserts": "IRPT_BCKEND-S358: every path a packaged module opens at runtime is packaged with it; parse.py's default mapping path is not packaged in irpt-ycharts-generate.",
+  "world_is": "MEASURED by reading the code at dell2 CLOUD 62026ca511: the default is unreachable from the Lambda's runtime path. Not exercised; nothing deployed."
+}
+```
+
+## IRPT_BCKEND-S361 -- the directory functions stage the pre-fix trading calendar (0cbb0ad174); the r61 release keeps it, a re-pin is its own cell
+
+```json
+{
+  "id": "IRPT_BCKEND-S361",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T10:14:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "irpt-directory-search and irpt-directory-refresh stage lib/trading_calendar.py from the PRE-FIX pin 0cbb0ad174, not the fail-closed calendar now on CLOUD (fix 83ab7192ee via merge 0a73ed06a0, laptop decision 106145). The r61 directory release keeps the old pin, because its CTO half binds the refresh census to exactly one changed member (refresh.py). Moving both functions to the fixed calendar is its own release-scoped cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lambda-source-map.json at dell2 CLOUD (after 0a73ed06a0): irpt-directory-search and irpt-directory-refresh staged_from trading_calendar.py pin 0cbb0ad174",
+      "git log -1 -- lib/trading_calendar.py: 4b766e4e2d 2026-10-07; 0.0.0_AB_MSTR~DELL2 msg 311 (HOLD LIFTED for 2010-2027)",
+      "CTO half @74e91285b4 item (1): the refresh census must print exactly 1 changed member"
+    ]
+  },
+  "spec_asserts": "A served function that grades trading-day age stages the estate's current trading calendar.",
+  "world_is": "Both directory functions stage the pre-fix calendar; the directory works only on 2026 dates, which the fallback covers, so nothing served is wrong today. The re-pin is for the next round's enrichment list, with its own census and halves."
+}
+```
