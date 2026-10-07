@@ -49,11 +49,20 @@ CLASS_BY_PATH = {
     ".tools/tests/test_direct_act_order.py": FIXTURE,
     "org/devices/test_readers.py": FIXTURE,
     "org/modules/graph/tests/nerves_resolve_battery/run_battery.py": FIXTURE,
-    # surprise-row-gate.py: ONE comparing line; the rest are comments, message text and self-test data
+    # surprise-row-gate.py: since CT-d-6 NO line compares (the id-to-fabric derivation reads the device register);
+    # the hits are comments, message text and self-test data
     ".tools/surprise-row-gate.py": DISPLAY,
-    ".tools/surprise-row-gate.py:2042": COMPARES,
-    ".tools/surprise-row-gate.py:3487": FIXTURE,
-    ".tools/surprise-row-gate.py:3489": FIXTURE,
+    ".tools/surprise-row-gate.py:3537": FIXTURE,
+    ".tools/surprise-row-gate.py:3539": FIXTURE,
+    # the census's own files and the Dell tests, keyed PER LINE on purpose: a hit in a NEW file under .tools/tests/, or a new
+    # line in one of these, stays UNCLASSIFIED until it is named here (there is no directory or wildcard key)
+    ".tools/tests/fabric_value_census.py:2": DISPLAY,
+    ".tools/tests/fabric_value_census.py:5": DISPLAY,
+    ".tools/tests/fabric_value_census.py:21": FIXTURE,
+    ".tools/tests/test_fabric_enum_dell.py:4": DISPLAY,
+    ".tools/tests/test_fabric_enum_dell.py:63": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:7": DISPLAY,
+    ".tools/tests/test_fabric_readers_dell.py:72": FIXTURE,
     # the allowed sets
     ".tools/to-pipeline-gate.py": DISPLAY,
     ".tools/to-pipeline-gate.py:93": ENUM_SOURCE,

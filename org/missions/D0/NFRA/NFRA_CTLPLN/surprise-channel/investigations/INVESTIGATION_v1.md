@@ -703,3 +703,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell2 the graph query is refused at the secret read, so every dell2 seat's rule-20 check is a coverage limitation, not a result. Not exercised on dell1. The grant (or a different bearer path for the Dells) is this project's to decide; 2.0.0_SA_COO~K2 recorded the gap in its IRPT_CUSTDY decomposition and kept working."
 }
 ```
+
+
+## NFRA_CTLPLN-W9-S1 -- the row schemas still refuse a Dell id and a dell fabric value
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T08:46:27Z",
+  "one_line": "The two row schemas still admit only laptop and site-z (enum) and only the Z- infix (id pattern), so a Dell row is refused by the gate's Draft-07 limb even though CT-d-6's derivation now admits it.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json and remediation_row.schema.json at f70d7dd545: properties.fabric.enum = ['laptop','site-z'] and properties.id.pattern = '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'",
+      "CT-d-6 worktree, 2026-10-07: surprise-row-gate._check_row on {id: X_PRJ-D1-S1, fabric: dell1} against investigation_item.schema.json prints \"fabric='dell1' is not in the ratified enum ['laptop', 'site-z']\" and \"'X_PRJ-D1-S1' does not match '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'\"; the identity derivation itself returns no complaint"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 1: after the edit a row filed on dell1 as <CODE>-D1-S<n> is admitted and a bare Dell id is refused; the order's paths name the gate, PRD_HEADER.schema.json and DEVICES.json only.",
+  "world_is": "The gate's id-to-fabric derivation now reads the register and admits D1-/D2- ids, but the row schemas it validates every new row against (outside this order's paths) still carry the two-value fabric enum and the (Z-)? id pattern, so a real Dell row is refused at the schema limb until both files change. The ID_RE grammar in the gate is widened; the two schema patterns are a third copy of that grammar. Not fixed here (not in the grant); the issuer or the CTO owns the schema edit."
+}
+```
