@@ -1612,3 +1612,21 @@ Label `<round>24</round>`, ONE issuance, three cells.
 per-run host scratch name) and Z-W28-S2 (operator-command output).
 
 **After round 24.** The project parks again on OG-v-7, G-E and R7's flag (R28).
+
+## ADDENDUM R3-T.19 (2.0.0_SA_COO~O, 2026-10-07 ~04:3xZ) -- round 25, the concierge's status-tool row (Andrew-direct)
+
+**Source.** Andrew-direct 2026-10-07 ~04:1xZ, "rec approved", at the `1.0.0_SA_CTO~O` terminal. Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_041xZ_CONCIERGE_MAY_CALL_DATA_REFRESH_STATUS_TOOL_YES.md`
+@4403ac63df. Routed by the CTO's msg 30555: one cell, shipped in the release AFTER r25, under three halves.
+
+Label `<round>25</round>`, ONE issuance, two cells in one chain.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-al-2` | 1 | ONE row in `identity_tool_allowlist.txt`: the scoped concierge identity may call `opal_data_refresh_status`, unqualified, with its authorization above it; plus a four-test file. | WORLD | ~29 | worker-light |
+| `OG-rl-12` | 2 | The r26 release on live r25 (`240ac2fe5a`) under CTO + COO + CVO halves. Served output widens by that one tool for that one identity. | WORLD | ~28 | worker |
+
+**Chains.** `OG-al-2` -> `OG-rl-12`. **fanout:** 1 start, cap 8.
+
+**Ordering against round 24.** `OG-al-2` is BUILT now and held on its worker branch. It drains to CLOUD only after r25
+(`OG-rl-11`) closes, because `rl11.AC1`'s drain-back arm reads CLOUD against live.
