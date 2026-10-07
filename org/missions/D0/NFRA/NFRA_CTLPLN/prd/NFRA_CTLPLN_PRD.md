@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -451,5 +451,36 @@ Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LG
   refusal in the apply path, proposed to LGIC_ENFORCE as its owner, since it is that project's gate.
 - **UNMEASURED:** that both naming gates fire on dell1 and dell2. Each Dell's fabric manager runs one known-bad name through
   `naming-apply-gate.py` and reports the refusal line.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.14 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING CORRECTED: what "registered" is; and the Dell Python environment. Contract only
+
+**A correction of this seat's own v0.13.** v0.13 clause (3) said a new resource's row lands in
+`infra/logic/registry/resources.json`. That file is not a list of resources. MEASURED by `0.9.0_WK_NFRA_CTLPLN~11`
+(`org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~11/PROPOSAL_MISSING_ROW_REFUSAL_FOR_LGIC_ENFORCE.md` @0a8a337aac,
+rows NFRA_CTLPLN-W11-S1 and W11-S2) and READ by this seat in the file's own `_about`: each of its 465 rows fills a `{system}`
+placeholder for a name whose own tokens resolve no system; 0 of 465 names grade CONFORMANT; and `lib/opal_naming.validate()` REFUSES a
+row for a conformant name as redundant. That is the design of LGIC_ENFORCE ruling 97177, not a defect: a conformant name carries its
+own registration in its tokens, checked against `systems.json`, `scopes.json` and `tiers.json`.
+
+- **C-NAMING clause (3), replaced:** a new resource is REGISTERED when (i) it is declared in a Terraform root in the repository, in
+  the commit that creates it; (ii) its name is builder output and grades CONFORMANT, so its system, scope and tier are rows of the
+  registry; and (iii) it reads as declared, not drifted, in the cloud graph (`comp-find --corpus aws`, the `drift_class` of its node).
+  A `resources.json` row is added ONLY for a name whose tokens resolve no system, and only if `validate()` accepts it.
+- **The index Andrew's word points at is therefore two things the estate already has:** the registry's vocabulary files for WHAT a
+  name may be, and the cloud graph for WHAT EXISTS and whether Terraform declares it. No third list is built.
+- **The missing-row refusal of v0.13 is WITHDRAWN** as a proposal to LGIC_ENFORCE. A badly formed name is already refused at apply
+  (the proposal's case C, measured). A well-formed, undeclared, running resource is found by clause (iii).
+- **Round 4's cells, amended by their issuer:** CT-d-7 adds a `resources.json` row for a Dell resource name only where `validate()`
+  accepts it and prints the validator's count; the round-close read (v0.13 cell a) reads each created resource's graph node and
+  `drift_class` instead of a row.
+
+**C-KIT-PYTHON (new contract).** A Dell's Python environment equals the laptop's for the packages the repository's tools and
+shared modules import. Two measured gaps on 2026-10-07, both reported from the Dells: `pandas_market_calendars` is absent on both
+(so `lib/trading_calendar.py` miscounts before 2024), and `ruff` was absent on dell1, where a worker installed it from PyPI with no
+word of Andrew's (row MDPF_SECCLASS-S49). The kit carries the packages FROM THE LAPTOP over the tailnet, as files already on Opal's
+own boxes; nothing is fetched from PyPI by a Dell. Cell for round 4: the list of third-party imports of `.tools/` and `lib/` against
+each Dell's installed set, N of N printed, and the transfer of what is missing.
 
 A contract change under the ENDPOINT hash.
