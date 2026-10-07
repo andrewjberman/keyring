@@ -18583,3 +18583,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Per the predecessor's log: the recorder's commit takes a dirty unrelated file, is refused, and each retry adds a duplicate CHANGELOG entry. The next release on this workstream is the exercise: run the recorder with source-map-reconcile-audit.jsonl dirty and count CHANGELOG entries. Remedy owner: the recorder's lane; 2.0.0_SA_COO~P2 owns the row."
 }
 ```
+
+## IRPT_BCKEND-S345 -- irpt-adapter-render-grant-kms-20260927: the A1 proof was never exercised; the KMS statement is live
+
+```json
+{
+  "id": "IRPT_BCKEND-S345",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-adapter-render-grant-kms-20260927 closes SUPERSEDED (CTO batch 270): statement DecryptRenderGrantsViaS3Only is live on irpt-performance-adapter-role exactly as planned, but its A1 proof (a RENDER_DELEGATE render reads Performance, READY %PDF) was NOT EXERCISED; this row owns that proof.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~08:0xZ: aws iam get-role-policy irpt-performance-adapter-role / irpt-performance-render-grant-read-policy, Sid DecryptRenderGrantsViaS3Only: kms:Decrypt on key 7f4d3042-10d8-49a7-b55e-3c963cea8111, StringEquals kms:EncryptionContext:aws:s3:arn arn:aws:s3:::opal-data-ycharts and kms:ViaService s3.us-east-1.amazonaws.com -- equal to the ledger's leg D1 planned statement",
+      "the ledger log carries no A1 invoke; the predecessor's 2026-10-06 session log lists the adapter as held out of r57 and r58 with this ledger waiting"
+    ]
+  },
+  "spec_asserts": "ledger leg A1 (next K8 window): the render's Performance read as RENDER_DELEGATE succeeds (no AccessDenied); READY %PDF",
+  "world_is": "MEASURED: the grant is live. NOT MEASURED: any render that exercised it. Today's form of the proof: one export-render of a selection whose Performance section the adapter serves as RENDER_DELEGATE, reading READY and a %PDF body with no AccessDenied in the adapter's log. Starting an export is a write that may reach a vendor render path, so it waits on Andrew's per-use word (same call as S340-S342)."
+}
+```
+
+## IRPT_BCKEND-S346 -- irpt-adapter-render-selection-20260927: the A1 proof was never exercised; the selection change is in the running bytes
+
+```json
+{
+  "id": "IRPT_BCKEND-S346",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:05:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Ledger irpt-adapter-render-selection-20260927 closes SUPERSEDED (CTO batch 270): the RENDER_DELEGATE grant-pinned selection change (backend c8ef8b7751) is in the running irpt-performance-adapter build NU6YVERL, but its A1 proof (render reads Performance, READY %PDF) was NOT EXERCISED; this row owns that proof.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED: live irpt-performance-adapter CodeSha256 NU6YVERLJ0i6qmazBYWUF+1xVDPGHwdMKqQ5vgjmVc4= (LastModified 2026-10-03T18:44:32Z) = lambda-source-map.json deployed_code_sha256 and artifact_sha256",
+      "MEASURED: that row's entry.py staged_from pin b15f0ed7df (member sha256 d19c0386176b..., equal to git show b15f0ed7df:entry.py) defines _resolve_render_selection and _render_grant; the fix pin c8ef8b7751 defines both; negative control: pre-fix pin 52604d790b defines neither",
+      "not read: the live zip member itself (the map's sha equality is the link)"
+    ]
+  },
+  "spec_asserts": "ledger leg A1 (next K8 window): the render's Performance read as RENDER_DELEGATE succeeds (no AccessDenied); READY %PDF",
+  "world_is": "MEASURED: the change runs. NOT MEASURED: any render that exercised a RENDER_DELEGATE reading only the grant-pinned selection. Today's form: the same single export as S345 exercises both; it waits on Andrew's per-use word."
+}
+```
+
+## IRPT_BCKEND-S347 -- the dell2 identity is denied on opal-data-inflection, so S338 and the INF serving ledger cannot be measured from dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-S347",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T07:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 agent identity (cloudops-dell2-agent-user) is refused s3:ListBucket on opal-data-inflection by an explicit deny in the bucket policy, so the dell2 successor of workstream P cannot measure row S338 (whether Inflection held positions on 2026-05-11, 06-30, 08-10) or close leg A1 of ledger irpt-inf-performance-serving-20261002 from this box.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~08:1xZ: .tools/aws s3api list-objects-v2 --bucket opal-data-inflection --prefix irpt/inflection/gold/ : AccessDenied, User arn:aws:iam::313476888478:user/cloudops-dell2-agent-user not authorized to perform s3:ListBucket ... with an explicit deny in a resource-based policy; same on five date= probes including two control days (2026-05-08, 2026-05-12)",
+      "the predecessor 2.0.0_SA_COO~P listed the same prefix from the laptop on 2026-10-06 (row S338: 1615 partitions), so the deny is per identity, not per bucket state"
+    ]
+  },
+  "spec_asserts": "The seat that inherits workstream P (SEQUENCE v6, IRPT_BCKEND on dell2) can read the firm buckets its open ledgers are graded against.",
+  "world_is": "The dell2 identity is denied on the Inflection bucket. The ledger stays OPEN, parked. It un-parks when either (a) a principal permitted on opal-data-inflection reads the three gap days and their upstream positions, or (b) 1.0.0_SA_CTO~DELL2 or the bucket policy's owner admits the dell2 identity read-only. This row does not widen any policy (CLAUDE.md cross-firm guard; never-widen)."
+}
+```
