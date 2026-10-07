@@ -19,10 +19,6 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS and MDPF_SECHIST, AUTHORITY-UNVERIFIED (transient): reported live ~07:16Z 2026-10-07 by
-  `0.0.0_AB_MSTR` msg 106033 from dell1's bus messages 3725cd36 and c512943f. Andrew said at the `1.0.0_SA_CTO` terminal ~07:1xZ "i will bring
-  their CTOs online now"; his words at the dell1 terminal that armed this loop are not read by this seat. Re-class to DIRECTED when that
-  record is read. Paired lanes on dell1: `2.0.0_SA_COO~M1`, `2.0.0_SA_COO~H1`. Landed by 1.0.0_SA_CTO.
 - `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
   4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
   to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
@@ -101,6 +97,17 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_194xZ_SELF_DRIVE_60M_AMGT_FRIDAY_RESTART_AFTER_SENTINELONE_CRASH.md`.
     Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z. The terms above carry unchanged. Each paired seat re-arms
     its own loop (MSTR~Z relays). `2.0.0_SA_COO~RV` stays on `/canonical-drive` FULL.
+- DELL1 (Andrew-direct ~07:15Z 2026-10-07 at the `0.0.0_AB_MSTR~DELL1` terminal, relayed as msg 1, VERBATIM: "Bring CTO online
+  with instructions to run /self-drive on the underlying COOs projects with a 60m interval. Furthermore, the COOs should be running
+  /canonical-drive on their projects."). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md`.
+  Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~DELL1. Stop: both projects `status: complete`, HELD-AT-STOP, or his stand-down.
+  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST.
+  - `2.0.0_SA_COO~M1` `/canonical-drive MDPF_SECCLASS` and `2.0.0_SA_COO~H1` `/canonical-drive MDPF_SECHIST`. He named no cadence,
+    so each uses the skill's 10m DIRECTED own-project default.
+  - The `/govern` arms of the two fabric managers are the two DIRECTED rows at the top of this section.
+  - Re-classes the AUTHORITY-UNVERIFIED row that 1.0.0_SA_CTO landed @e37552ef87, which is folded into this row.
+  - `3.0.0_SA_CVO` (base, dell1) runs these seats' surprise channels ad hoc, with NO cron.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
