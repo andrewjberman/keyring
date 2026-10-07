@@ -1245,3 +1245,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The id property is widened, but a row that cites a Dell id in `adjudicates` (an adjudication row) or in `disarms` (a remediation row) is still refused by the schema limb, because those two item patterns are separate copies of the old grammar and are outside the order's stated change. Not edited here. A Dell's plain row is unaffected; a Dell row that disarms or adjudicates another Dell row is not admitted until the two patterns follow."
 }
 ```
+
+## NFRA_CTLPLN-W9-S3 -- two more readers of the old id grammar outside the order's grant
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T09:55:53Z",
+  "one_line": "Two more readers of the old id grammar sit outside the order's grant: proof-of-spec-check.py SURPRISE_ID_RE and surprise-watch.sh ID_RE refuse or miss a Dell row id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/proof-of-spec-check.py:1198 at 4ff3443cb4: SURPRISE_ID_RE = ^\\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\\b ; CT-d-6 worktree 2026-10-07: re.match on 'X_PRJ-D1-S1' -> None, on 'X_PRJ-D1-W3-S2' -> None, on 'X_PRJ-S1' -> a match; the surprises limb (line 1308) turns a None into 'surprises[i] carries NO row id'",
+      "org/surprise_channel/surprise-watch.sh:82 at 4ff3443cb4: ID_RE='^[[:space:]]*\"id\":[[:space:]]*\"[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+\"' counts rows by the old grammar, so a Dell row (<CODE>-D1-S<n>) is not counted by the watcher"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 3 report asks whether any other file under .tools/ or org/surprise_channel/ still holds the old two-fabric id pattern; the order's paths name the gate, the two row schemas, the test and the census only.",
+  "world_is": "Two copies of the old id grammar remain outside the grant. proof-of-spec-check.py's surprises limb would refuse a Dell worker's proof instance that cites its own D1- row (the worker could not flip its order complete); surprise-watch.sh would not count a Dell row. Neither edited here. The gate's own ID_RE and both row schemas are current."
+}
+```

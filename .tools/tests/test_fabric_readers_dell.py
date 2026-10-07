@@ -6,16 +6,18 @@ ID arm (9): the surprise-row gate's id-to-fabric derivation (`_fabric_of_id` / `
 and one case with the register path pointing nowhere:
   bare -> laptop | Z- -> site-z | D1- -> dell1 | D2- -> dell2 | D1-W3-S2 -> dell1 | -D3- -> refused (unregistered
   coordinate) | a D1- id whose row says dell2 -> refused | a bare id whose row says dell1 -> refused | no register -> refused.
-Row-schema arm (8): whole row objects through the gate's OWN schema limb (`_check_row`, which runs the Draft-07 validator and the
+Row-schema arm (12): whole row objects through the gate's OWN schema limb (`_check_row`, which runs the Draft-07 validator and the
 closed-enum walk) against the two row schemas in org/surprise_channel/schemas/: investigation D1/dell1, D2-W3/dell2, Z/site-z,
 bare/laptop and W9/laptop admitted; fabric dell3 refused; a lower-case coordinate id refused; a remediation row with a D1- id
-admitted. A verdict reads only the complaints the schema limb raises (schema violation / ratified enum), because the gate's other
+admitted; then the REFERENCE positions (AMENDMENT 3): an investigation row whose `adjudicates` names a D1- id admitted and a
+lower-case one refused, a remediation row whose `disarms` names a D2-W3- id admitted and a malformed one refused. A verdict reads
+only the complaints the schema limb raises (schema violation / ratified enum), because the gate's other
 limbs (register agreement, owner, worker suffix) are graded by the id arm and by the gate's own --self-test.
 Schema arm (5): one PRD header instance per fabric value validated against org/standards/PRD_HEADER.schema.json
 (4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals FABRIC_ENUM read from the source of
 .tools/to-pipeline-gate.py. Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
 
-LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/8 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>
+LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>
 """
 import ast
 import importlib.util
@@ -96,7 +98,7 @@ def schema_cases(enum):
 
 
 def rowschema_cases(gate):
-    """Eight whole-row cases through gate._check_row; only the schema limb's complaints decide each verdict."""
+    """Twelve whole-row cases through gate._check_row; only the schema limb's complaints decide each verdict."""
     def load(name):
         with open(os.path.join(ROW_SCHEMAS, name), encoding="utf-8") as fh:
             return json.load(fh)
@@ -113,6 +115,13 @@ def rowschema_cases(gate):
                 "mechanism": "a well-formed test mechanism", "evidence": ["test evidence line"], "remedy": "a test remedy",
                 "owner": "1.0.0_SA_CTO", "round": "v1", "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"}}
 
+    def with_key(row, key, value):
+        return dict(row, **{key: value})
+
+    def disarming(refs):   # a row carrying `disarms` must carry the `disarm` block (the schema's allOf)
+        return dict(rem_row("X_PRJ-S6", "laptop"), disarms=refs,
+                    disarm={"state": "DISARMED", "owner": "1.0.0_SA_CTO", "at": "2026-10-07T09:30:00Z"})
+
     def schema_complaints(row, kind, schema):
         out = gate._check_row(row, kind, schema)
         return [c for c in out if "schema violation" in c or "ratified enum" in c]
@@ -127,6 +136,14 @@ def rowschema_cases(gate):
         ("investigation fabric dell3 refused", inv_row("X_PRJ-D1-S1", "dell3"), "INVESTIGATION", inv, False, "fabric"),
         ("investigation X_PRJ-d1-S1 (lower case) refused", inv_row("X_PRJ-d1-S1", "dell1"), "INVESTIGATION", inv, False, "id"),
         ("remediation X_PRJ-D1-S1 / dell1", rem_row("X_PRJ-D1-S1", "dell1"), "REMEDIATION", rem, True, None),
+        ("investigation adjudicates X_PRJ-D1-S1", with_key(inv_row("X_PRJ-C-S1", "laptop"), "adjudicates", ["X_PRJ-D1-S1"]),
+         "INVESTIGATION", inv, True, None),
+        ("investigation adjudicates X_PRJ-d1-S1 (lower case) refused",
+         with_key(inv_row("X_PRJ-C-S1", "laptop"), "adjudicates", ["X_PRJ-d1-S1"]), "INVESTIGATION", inv, False, "adjudicates"),
+        ("remediation disarms X_PRJ-D2-W3-S2", disarming(["X_PRJ-D2-W3-S2"]),
+         "REMEDIATION", rem, True, None),
+        ("remediation disarms a malformed id refused", disarming(["X_PRJ-D1-S"]),
+         "REMEDIATION", rem, False, "disarms"),
     ]:
         got = schema_complaints(row, kind, schema)
         if admit:
@@ -167,8 +184,8 @@ def main():
     a = sum(1 for _l, ok, _d in ids if ok)
     b = sum(1 for _l, ok, _d in sch if ok)
     c = sum(1 for _l, ok, _d in rows if ok)
-    ok = a == 9 and b == 5 and c == 8 and enum_equal and selftest == "ok"
-    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/8 enum_equal=%s gate_selftest=%s ok=%s"
+    ok = a == 9 and b == 5 and c == 12 and enum_equal and selftest == "ok"
+    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/12 enum_equal=%s gate_selftest=%s ok=%s"
           % (a, b, c, enum_equal, selftest, ok))
     return 0 if ok else 1
 
