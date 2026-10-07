@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.17",
+ "prd_version": "v0.18",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25"],
@@ -238,8 +238,9 @@
          that are the box's own; one that touches another box is settled between the two, on the record
          DONE WHEN  EXERCISED -- one decision that touched one box settled there and never shown to
                     Andrew, and one that touched two boxes read afterwards from both sides
-         ACCEPT     a decision that touches only one box is settled by that box's technology lead and
-                    never reaches Andrew as a question; a decision that touches another box goes from
+         ACCEPT     a decision that touches only one box may be settled by that box's technology lead
+                    and then does not reach Andrew as a question; an act only he can do still reaches him,
+                    named as that act; a decision that touches another box goes from
                     one manager to the other, and afterwards someone on either box can read what was
                     agreed and by whom; neither box learns of the other's decision by finding its effect
          SOURCE     brief O5, O6; Andrew-direct 2026-10-07 ~16:3xZ, "they must have their MSTR reach out
@@ -734,3 +735,27 @@ FWD-18's DONE WHEN now names a Dell and site Z, as its headline and ACCEPT alrea
 on who decides instead of restating them.
 
 An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. FWD-1 to FWD-15, FWD-17 and FWD-19 are unchanged.
+
+## ADDENDUM v0.18 (1.0.0_SA_CTO, 2026-10-07) -- Andrew's twelve answers of ~18:3xZ: mail for requests, the installer, vendor calls from the Dells, the law line; FWD-22's ACCEPT corrected
+
+**Word (verbatim and entire):** `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md`.
+
+1. **Call F of v0.17 is RE-RULED: mail IS read for work requests.** "Yes, I want this." C-SEATS gains clause 9:
+   **9. Mail.** Only his own mailbox, through the gateway. A message is considered ONLY when both hold: its sender's domain is one
+   of the five he named (Cottonwood, Inflection, 49 Financial, Alongside, and Opal for internal), each domain string read from
+   the estate's firm records and never typed; and its body names "Andrew". A message failing either test is not passed to any
+   model. FWD-20's thread stays the Teams request; mail is its first enrichment.
+2. **C-INTAKE, the installer.** "The installer can be included in requirements, let them have it/download it." The Python 3.12
+   installer is admitted by his word as an exception to the red tier. It is listed beside the requirements with its exact file
+   name and published hash; a box takes it only when its signature reads valid and its hash equals the listed one. Running it
+   needs elevation, which he does himself. With 3.12 on a Dell, every compiled package is re-packed offline from the laptop and
+   the fetch batch of v0.16 shrinks to what has no copy on any Opal box.
+3. **C-INTAKE, vendor calls.** "Vendor egress does not count as raw internet access; those are protected channels. The Dell Boxes
+   have vendor egress as needed." A vendor call is not the red tier, and the Dell boxes may make one where their work needs it.
+   This is his word for the Dells. The laptop and site Z keep the per-use rule until he says otherwise for them.
+4. **Call B of v0.17 is closed on his express order:** "Sure but keep it light and to the point". CLAUDE.md rule 32 is that line;
+   it points here and restates nothing else. The substance is built in launchers, loops and skills (clauses 1 and 2).
+5. **FWD-22's ACCEPT** no longer says a one-box decision "never reaches Andrew". His word was that the lead "can adjudicate";
+   an act only he can do still reaches him.
+
+An ENDPOINT change (FWD-22's ACCEPT): the ratified-text half re-opens for `3.0.0_SA_CVO`. All other outcomes are unchanged.

@@ -71,6 +71,11 @@ TABLE = [
     ("ISHARES S&P 500 GROWTH ETF", "iShares S&P 500 Growth ETF"),
     ("AT&T INC", "AT&T Inc"),
     ("P&G CO", "P&G Co"),
+    # R12c (row S62): the output is ASCII only; a trademark sign is dropped, never carried (CLAUDE.md: no non-ASCII in AWS).
+    ("SCHWAB\u00ae S&P 500 INDEX", "Schwab S&P 500 Index"),
+    ("VANGUARD US GROWTH ADMIRAL\u2122", "Vanguard US Growth Admiral"),
+    ("AMERICAN CENTURY ULTRA\u00ae INV", "American Century Ultra Inv"),
+    ("IPATH\u00ae B BLOOMBERG COPPER TTL RET ETN", "Ipath B Bloomberg Copper TTL Ret ETN"),
     # empty
     (None, None),
     ("   ", None),

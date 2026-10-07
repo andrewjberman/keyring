@@ -1,0 +1,2510 @@
+{
+ "planned": [
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "iShares Short Duration High Yield Muni Active ETF",
+   "sub_asset_class": "Municipal",
+   "ticker": "SHYM",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Allspring Intermediate TAX/AMT-FR Inst",
+   "sub_asset_class": "Intermediate",
+   "ticker": "WITIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Nuveen Amt-Free Mun Value FD",
+   "sub_asset_class": "Municipal",
+   "ticker": "NUW",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Nuveen Strategic Municipal Opps I",
+   "sub_asset_class": "Municipal",
+   "ticker": "NSIOX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Eaton Vance National Municipal Income I",
+   "sub_asset_class": "Municipal",
+   "ticker": "EIHMX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Blackrock Mun Target Term TR Com SHS Ben in",
+   "sub_asset_class": "Municipal",
+   "ticker": "BTT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "FRCZX - Franklin CA Interm-Term Tx-Fr Inc Adv",
+   "sub_asset_class": "Municipal",
+   "ticker": "FRCZX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "DTF Tax-Free Income 2028 Term",
+   "sub_asset_class": "Municipal",
+   "ticker": "DTF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vcadx - Vanguard Ca Interm-Term Tax-Exempt ADM",
+   "sub_asset_class": "Municipal",
+   "ticker": "VCADX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Western Asset Mun High Income",
+   "sub_asset_class": "Municipal",
+   "ticker": "MHF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vanguard Short-Term Bond Idx I",
+   "sub_asset_class": "Short Duration",
+   "ticker": "VBITX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "alternatives",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Eaglerock LD LLC CL A SHS Rep LTD",
+   "sub_asset_class": "Real Estate",
+   "ticker": "EROK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Reaves Util Income FD Com SH Ben Int",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "UTG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Global X MLP ETF",
+   "sub_asset_class": "Global",
+   "ticker": "MLPA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Lord Abbett High Income Muni Bond I",
+   "sub_asset_class": "Municipal",
+   "ticker": "HYMIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Davis Ny Venture Y",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "DNVYX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Rising Dividends A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "OARDX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Triumph Financial Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "TFIN",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Equally-WTD S&P 500 R6",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VADFX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Fidelity Advisor Interm Muni Inc Z",
+   "sub_asset_class": "Municipal",
+   "ticker": "FIQZX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Thornburg Strategic Income I",
+   "sub_asset_class": "Intermediate",
+   "ticker": "TSIIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "State Street SPDR Portfolio Long Term Corporate Bond ETF",
+   "sub_asset_class": "Long Duration",
+   "ticker": "SPLB",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Blackrock Short Obligations Instl",
+   "sub_asset_class": "Ultra Short Duration",
+   "ticker": "BISOX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vanguard Total Intl BD Idx Institutional",
+   "sub_asset_class": "International",
+   "ticker": "VTIFX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "JPMorgan Equity Income I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "HLIEX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PIMCO Corporate & Income Oppor",
+   "sub_asset_class": "High Yield",
+   "ticker": "PTY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Goldman Sachs Short-Term Cnsrv Inc Instl",
+   "sub_asset_class": "Short Duration",
+   "ticker": "GPPIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Thornburg International Equity I",
+   "sub_asset_class": "International",
+   "ticker": "TGVIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Anglogold Ashanti PLC",
+   "sub_asset_class": "Global",
+   "ticker": "AU",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Morgan Stanley Inst Growth I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "MSEQX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Intrepid Potash Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "IPI",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Fcstx - Fidelity California LTD TRM Tax-Free BD",
+   "sub_asset_class": "Municipal",
+   "ticker": "FCSTX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Nchrx - Nuveen Ca High Yield Municipal Bond I",
+   "sub_asset_class": "Municipal",
+   "ticker": "NCHRX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Olcyx - Invesco Limited Term Ca Municipal Y",
+   "sub_asset_class": "Municipal",
+   "ticker": "OLCYX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Dolby Laboratories Inc Com CL A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "DLB",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Columbia Dividend Income INST3",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "CDDYX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Cheniere Energy Partners L P Com Unit",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "CQP",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "CART",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "CART",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Hasbro Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "HAS",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Technology A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "ITYAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "First Ctzns Bancshares Inc Del CL A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FCNCA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Fluor Corp",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FLR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vanguard Morn Total STK MKT Idx Instl",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VITSX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Fidelity Advisor Otc Z",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FOTJX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Western Asset Inter Muni",
+   "sub_asset_class": "Municipal",
+   "ticker": "SBI",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco LTD",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "IVZ",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "BCE Inc Com New",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "BCE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Equipmentshare Com Inc Com CL A",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "EQPT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "alternatives",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Tortoise Energy Infrastructure TR Ins",
+   "sub_asset_class": "Real Estate",
+   "ticker": "TORIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PIMCO Mun Income FD II",
+   "sub_asset_class": "Municipal",
+   "ticker": "PML",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "T. Rowe Price Integrated US SM GR Eq I",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "TQAIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Federated Hermes International Equity Is",
+   "sub_asset_class": "International",
+   "ticker": "PIUIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Main Street Mid Cap A",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "OPMSX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Water Resources ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PHO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Undiscovered Managers Behavioral Val I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "UBVSX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Principal Financial Group Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PFG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "iShares S&P 500 Index K",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "WFSPX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Banc of California Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "BANC",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Permian Basin RTY TR Unit Ben Int",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "PBT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Dodge & Cox Income X",
+   "sub_asset_class": "Intermediate",
+   "ticker": "DOXIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "alternatives",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "First Eagle Global C",
+   "sub_asset_class": "Real Estate",
+   "ticker": "FESGX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PIMCO High Income FD",
+   "sub_asset_class": "High Yield",
+   "ticker": "PHK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "SLR Investment Corp",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "SLRC",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Global Focus A",
+   "sub_asset_class": "Global",
+   "ticker": "GLVAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Price T Rowe Group Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "TROW",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Putnam International Equity Y",
+   "sub_asset_class": "International",
+   "ticker": "POVYX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "MAGWX",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "MAGWX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Franklin Growth A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FKGRX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Calvert International Equity I",
+   "sub_asset_class": "International",
+   "ticker": "CWVIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco High Yield Municipal R6",
+   "sub_asset_class": "Municipal",
+   "ticker": "ACTSX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "American Funds Tax-Exempt Bond A",
+   "sub_asset_class": "Municipal",
+   "ticker": "AFTEX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Janus Henderson Enterprise T",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "JAENX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Fidelity Advisor Total Bond Z",
+   "sub_asset_class": "Intermediate",
+   "ticker": "FBKWX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vanguard S&P Mid-Cap 400 Value ETF",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "IVOV",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Equally-WTD S&P 500 Y",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VADDX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Morgan Stanley Inst International Eq I",
+   "sub_asset_class": "International",
+   "ticker": "MSIQX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Red River Bancshares Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "RRBI",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "JPMorgan Small Cap Growth R6",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "JGSMX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Wisdomtree Emerging Markets High Dividend Fund",
+   "sub_asset_class": "EM",
+   "ticker": "DEM",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Tradeweb MKTS Inc CL A",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "TW",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Lord Abbett High Income Muni Bond A",
+   "sub_asset_class": "Municipal",
+   "ticker": "HYMAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Northern Oil & Gas Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "NOG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Janus Henderson Triton T",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "JATTX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Morgan Stanley Emkt DBT FD Inc",
+   "sub_asset_class": "International",
+   "ticker": "MSD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Avery Dennison Corp",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "AVY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Equally-WTD S&P 500 A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VADAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "ESGU",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "ESGU",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "MFS Aggressive Growth Allocation I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "MIAGX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Direxion NASDAQ-100 Equal Weighted Index ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "QQQE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Vaneck Vietnam ETF",
+   "sub_asset_class": "EM",
+   "ticker": "VNM",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "American Funds American Balanced R-5",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "RLBFX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Aberdeen Multi-Market Income SH Ben Int",
+   "sub_asset_class": "High Yield",
+   "ticker": "MMT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Xtrackers Artificial Intelligence and Big Data ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "XAIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Schein Henry Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "HSIC",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "American FDS Itmt BD FD of Amer A",
+   "sub_asset_class": "Intermediate",
+   "ticker": "AIBAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Janus Henderson Enterprise I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "JMGRX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Invesco Bloomberg Financial Data Providers ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FDIQ",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Jacobs Solutions Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "J",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "DTCR",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "DTCR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Revolution Medicines Inc",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "RVMD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Thornburg International Equity R5",
+   "sub_asset_class": "International",
+   "ticker": "TIVRX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Everest Group LTD",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "EG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Counterpoint Tactical Municipal I",
+   "sub_asset_class": "Municipal",
+   "ticker": "TMNIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Blackrock LTD Duration Income",
+   "sub_asset_class": "Long Duration",
+   "ticker": "BLW",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "First Eagle High Yield Municipal I",
+   "sub_asset_class": "High Yield",
+   "ticker": "FEHIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Hotchkis & Wiley Mid-Cap Value Fund Class Z",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "HWMZX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Seafarer Overseas Value Institutional",
+   "sub_asset_class": "International",
+   "ticker": "SIVLX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Abrdn Asia Pacific Income Fund Com New",
+   "sub_asset_class": "International",
+   "ticker": "FAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Eaton Vance Limited Duration I",
+   "sub_asset_class": "Short Duration",
+   "ticker": "EVV",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "BLDR",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "BLDR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Janus Henderson Enterprise N",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "JDMNX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Western Asset High Income Oppo",
+   "sub_asset_class": "High Yield",
+   "ticker": "HIO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Baron Technology ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "BCTK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Procure Space ETF",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "UFO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "CRK",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "CRK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Angel Oak Income ETF",
+   "sub_asset_class": "High Yield",
+   "ticker": "CARY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PGIM Jennison Utility Z",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PRUZX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Putnam Focused Large Cap Value ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PVAL",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Nuveen Amt Free Mun CR Inc FD",
+   "sub_asset_class": "Municipal",
+   "ticker": "NVG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "First Trust Health Care Alphadex Fund",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FXH",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "FE",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PIMCO Multisector Bond Active Exchange-Traded Fund",
+   "sub_asset_class": "Structured Credit",
+   "ticker": "PYLD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Eaton Vance Mortgage Opportunities ETF",
+   "sub_asset_class": "Structured Credit",
+   "ticker": "EVMO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "AGCO",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "AGCO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "VCR",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VCR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Venture Global Inc Com CL A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "LMND",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "LMND",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Hotchkis & Wiley High Yield Fund",
+   "sub_asset_class": "High Yield",
+   "ticker": "HWHZX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "CHRD",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "CHRD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Teradyne Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "TER",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Berkley W R Corp",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "WRB",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "PPG Inds Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PPG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Amaze Holdings Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "AMZE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "AIA Group LTD",
+   "sub_asset_class": "International",
+   "ticker": "AAGIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Koninklijke Ahold Delhaize NV",
+   "sub_asset_class": "International",
+   "ticker": "ADRNY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Air Liquide ADR",
+   "sub_asset_class": "International",
+   "ticker": "AIQUY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Ajinomoto Co Inc ADR",
+   "sub_asset_class": "International",
+   "ticker": "AJNMY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Allianz SE Unsponsored ADS",
+   "sub_asset_class": "International",
+   "ticker": "ALIZY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "A P Moller-B ADR",
+   "sub_asset_class": "International",
+   "ticker": "AMKBY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "ARK Blockchain And Fintech Innovation ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "ARKF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Artelo Biosciences Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "ARTL",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Lazard Assa Abloy Spon ADR",
+   "sub_asset_class": "International",
+   "ticker": "ASAZY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Associated British Foods LTD ADR",
+   "sub_asset_class": "International",
+   "ticker": "ASBFY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Atlas Copco Ser A",
+   "sub_asset_class": "International",
+   "ticker": "ATLKY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Axa SA",
+   "sub_asset_class": "International",
+   "ticker": "AXAHY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Bayer AG Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "BAYRY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "BOC Hong Kong Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "BHKLY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Bank Ireland Group P F Unsponsored ADR 1 ADR Reps 1 Ord Shs",
+   "sub_asset_class": "International",
+   "ticker": "BKRIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Burberry Group PLC",
+   "sub_asset_class": "International",
+   "ticker": "BURBY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Brambles LTD Fadr",
+   "sub_asset_class": "International",
+   "ticker": "BXBLY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Conagra Brands Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "CAG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Caixabank",
+   "sub_asset_class": "International",
+   "ticker": "CAIXY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Canon Inc ADR",
+   "sub_asset_class": "International",
+   "ticker": "CAJPY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Cheesecake Factory Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "CAKE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Cal-Maine Foods Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "CALM",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "CK Hutchison Holdings Limited Unsp ADR",
+   "sub_asset_class": "International",
+   "ticker": "CKHUY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Cellnex Telecom Sau Unspon ADR Each Rep 0.5 Ord Shs",
+   "sub_asset_class": "International",
+   "ticker": "CLLNY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Compass Group Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "CMPGY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Constellation Software Inc",
+   "sub_asset_class": "International",
+   "ticker": "CNSWF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Danone ADR",
+   "sub_asset_class": "International",
+   "ticker": "DANOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "DoubleLine Total Return Bond Fund Class I",
+   "sub_asset_class": "Intermediate",
+   "ticker": "DBLTX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Deutsche Boerse ADR",
+   "sub_asset_class": "International",
+   "ticker": "DBOEY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "DBS Group Holdings Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "DBSDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Dimensional US Small Cap Value ETF",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "DFSV",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Daiichi Life Group Inc",
+   "sub_asset_class": "International",
+   "ticker": "DLICY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Ginkgo Bioworks Holdings Inc A",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "DNA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Denso Corp ADR",
+   "sub_asset_class": "International",
+   "ticker": "DNZOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Pan Pac Intl Hldgs Corp",
+   "sub_asset_class": "International",
+   "ticker": "DQJCY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Daiichi Sankyo Co LTD Sponsored ADR",
+   "sub_asset_class": "International",
+   "ticker": "DSNKY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Electronic Arts Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "EA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Eaton Vance Emerging Markets Dbt Opps I",
+   "sub_asset_class": "International",
+   "ticker": "EIDOX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Embecta Corp",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "EMBC",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "E On SE",
+   "sub_asset_class": "International",
+   "ticker": "EONGY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Essilor Luxottica Unsponsored ADR",
+   "sub_asset_class": "International",
+   "ticker": "ESLOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Federated Institutional High Yield Bond Fund Class R6",
+   "sub_asset_class": "High Yield",
+   "ticker": "FIHLX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "First Trust TCW Opportunistic Fixed Income",
+   "sub_asset_class": "Intermediate",
+   "ticker": "FIXD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fujitsu LTD ADR",
+   "sub_asset_class": "International",
+   "ticker": "FJTSY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Franklin Income A1",
+   "sub_asset_class": "Intermediate",
+   "ticker": "FKINX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fidelity Magellan",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FMAGX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "First Solar Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FSLR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fidelity Small-Mid Factor ETF",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "FSMD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fresenius SE ADR",
+   "sub_asset_class": "International",
+   "ticker": "FSNUY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fidelity Select Retailing",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "FSRPX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fidelity Limited Term Municipal Income",
+   "sub_asset_class": "Municipal",
+   "ticker": "FSTFX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fortescue Metal Group LTD Sponsored ADR",
+   "sub_asset_class": "International",
+   "ticker": "FSUGY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Fuji Photo ADR",
+   "sub_asset_class": "International",
+   "ticker": "FUJIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Goldman Sachs Intl Small Cap Insights Instl",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "GICIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Glencore PLC ADR",
+   "sub_asset_class": "International",
+   "ticker": "GLNCY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Genmab As Spon ADR",
+   "sub_asset_class": "International",
+   "ticker": "GMAB",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Goldman Sachs GQG Partners Intl Op Fund",
+   "sub_asset_class": "International",
+   "ticker": "GSIMX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Halozyme Therapeutics Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "HALO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Heidelberg Materials AG",
+   "sub_asset_class": "International",
+   "ticker": "HDLMY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Hims & Hers Health Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "HIMS",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Hoya Corp Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "HOCPY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Hexagon Ab",
+   "sub_asset_class": "International",
+   "ticker": "HXGBY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Inpex Holdings Inc",
+   "sub_asset_class": "International",
+   "ticker": "IPXHY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Isuzu Motors ADR",
+   "sub_asset_class": "International",
+   "ticker": "ISUZY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Itochu Corp ADR",
+   "sub_asset_class": "International",
+   "ticker": "ITOCY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "iShares Core S&P U.S. Value ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "IUSV",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Orix Corporation ADR",
+   "sub_asset_class": "International",
+   "ticker": "IX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "iShares S&P Global Financials Sector Index",
+   "sub_asset_class": "Developed",
+   "ticker": "IXG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "iShares Global Tech ETF",
+   "sub_asset_class": "Developed",
+   "ticker": "IXN",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "JetBlue Airways Corp",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "JBLU",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Jumia Technologies AG ADS",
+   "sub_asset_class": "EM",
+   "ticker": "JMIA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "John Hancock Disciplined Value I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "JVLIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kao Corp F Unsponsored ADR 1 ADR Reps 0.2 Ord Shs",
+   "sub_asset_class": "International",
+   "ticker": "KAOOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "KBC Group NV ADR Funsponsored ADR",
+   "sub_asset_class": "International",
+   "ticker": "KBCSY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "KDDI Corp ADR",
+   "sub_asset_class": "International",
+   "ticker": "KDDIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kingfisher PLC",
+   "sub_asset_class": "International",
+   "ticker": "KGFHY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kingspan Group PLC ADR",
+   "sub_asset_class": "International",
+   "ticker": "KGSPY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Komatsu LTD ADR",
+   "sub_asset_class": "International",
+   "ticker": "KMTUY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kohls Corp",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "KSS",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kubota Corp",
+   "sub_asset_class": "International",
+   "ticker": "KUBTY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Kawasaki Heavy Inds LTD",
+   "sub_asset_class": "International",
+   "ticker": "KWHIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Legrand S A ADR Unsponsored",
+   "sub_asset_class": "International",
+   "ticker": "LGRDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Stride Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "LRN",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Michelin Compagnie Generale des Establissements ADR",
+   "sub_asset_class": "International",
+   "ticker": "MGDDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Mohawk Industries Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "MHK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "MFS Intl Equity",
+   "sub_asset_class": "International",
+   "ticker": "MIEIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Mitsubishi Estate Unspons ADR",
+   "sub_asset_class": "International",
+   "ticker": "MITEY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Merck Kgaa U/ADR",
+   "sub_asset_class": "International",
+   "ticker": "MKKGY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "MacQuarie Bk LTD ADR",
+   "sub_asset_class": "International",
+   "ticker": "MQBKY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Arcelor Mittal",
+   "sub_asset_class": "International",
+   "ticker": "MT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Mitsubishi Corp",
+   "sub_asset_class": "International",
+   "ticker": "MTSUY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Muenchener Rueckvers",
+   "sub_asset_class": "International",
+   "ticker": "MURGY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Neuberger Berman Large Cap Value Fund Institutional",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "NBPIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Nabors Industries Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "NBR",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Nabors Industries Ordf",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "NBRWF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Norsk Hydro AS SA",
+   "sub_asset_class": "International",
+   "ticker": "NHYDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Nippon Yusen Kbshki S/ADR",
+   "sub_asset_class": "International",
+   "ticker": "NPNYY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Oakmark International Fund R6",
+   "sub_asset_class": "International",
+   "ticker": "OAZIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "JP Morgan Small Cap Growth Select",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "OGGFX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Oversea-Chinese ADR",
+   "sub_asset_class": "International",
+   "ticker": "OVCHY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Paladin Energy LTD",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "PALAF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Paylocity Holding Corporation Com",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "PCTY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "PIMCO International Bond (U.S. Dollar-Hedged) Fund Class I-2",
+   "sub_asset_class": "International",
+   "ticker": "PFBPX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "PIMCO Foreign Bond Instl",
+   "sub_asset_class": "International",
+   "ticker": "PFUIX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Principal Midcap Fund Class R6",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "PMAQX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Perdoceo Ed Corp",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "PRDO",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Invesco RAFI US 1000 ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "PRF",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Pernod-Ricard SA ADR",
+   "sub_asset_class": "International",
+   "ticker": "PRNDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Prosus N V F Unsponsored ADR 1 ADR Reps 1 Ord Shs",
+   "sub_asset_class": "International",
+   "ticker": "PROSY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Prysmian Spa ADR",
+   "sub_asset_class": "International",
+   "ticker": "PRYMY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Reddit Inc A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "RDDT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Rev Group Inc Com",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "REVG",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Ryanair Holdings PLC ADR",
+   "sub_asset_class": "International",
+   "ticker": "RYAAY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "JP Morgan Large Cap Growth Fund Class I",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SEEGX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Singapore Telecommunications LTD Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "SGAPY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Shionogi & Co Unsp",
+   "sub_asset_class": "International",
+   "ticker": "SGIOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Legg Mason Clearbridge Appreciation A",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SHAPX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Solid Power Inc A",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "SLDP",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Sumitomo Ele-Adr",
+   "sub_asset_class": "International",
+   "ticker": "SMTOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Soundhound AI Inc Class A",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "SOUN",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Invesco S&P 500 High Dividend Low Volatility ETF",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "SPHD",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "SSE PLC",
+   "sub_asset_class": "International",
+   "ticker": "SSEZY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Schwab Small Cap Equity",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "SWSCX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Suzuki Mtr Corp",
+   "sub_asset_class": "International",
+   "ticker": "SZKMY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Takeda Pharmaceutical Co LTD ADR",
+   "sub_asset_class": "International",
+   "ticker": "TAK",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "TCW Emerging Markets Income Plan",
+   "sub_asset_class": "International",
+   "ticker": "TGEPX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Tegna Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "TGNA",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "3I Group Unsp ADR",
+   "sub_asset_class": "International",
+   "ticker": "TGOPY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Thales SA",
+   "sub_asset_class": "International",
+   "ticker": "THLLY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Toast Inc Class A",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "TOST",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Treasury Wine Estates LTD",
+   "sub_asset_class": "International",
+   "ticker": "TSRYY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Techtronics Ind LTD Spons ADR",
+   "sub_asset_class": "International",
+   "ticker": "TTNDY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Ucb S A",
+   "sub_asset_class": "International",
+   "ticker": "UCBJY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Uniti Group Inc",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "UNIT",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Upm-Kymmene Corp ADR Unsponsor Ed",
+   "sub_asset_class": "International",
+   "ticker": "UPMMY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Vanguard Balanced Index Adm",
+   "sub_asset_class": "Global",
+   "ticker": "VBIAX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Veru Inc",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VERU",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "iShares MSCI USA Value Factor",
+   "sub_asset_class": "US Large Cap",
+   "ticker": "VLUE",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Vanguard Tax Managed Small Cap Admiral",
+   "sub_asset_class": "US Small Cap",
+   "ticker": "VTMSX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "fixed_income",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Vanguard High-Yield Tax-Exempt Admiral",
+   "sub_asset_class": "High Yield",
+   "ticker": "VWALX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "WPP Group PLC",
+   "sub_asset_class": "International",
+   "ticker": "WPP",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "LY Corp",
+   "sub_asset_class": "International",
+   "ticker": "YAHOY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "inflection",
+   "name": "Yara Intl Asa Sponsored ADR",
+   "sub_asset_class": "International",
+   "ticker": "YARIY",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "49financial",
+   "name": "JHX",
+   "sub_asset_class": "International",
+   "ticker": "JHX",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  },
+  {
+   "asset_class": "equity",
+   "classified_by": "scheduled",
+   "firm": "cottonwood",
+   "name": "Coreweave Inc Com CL A",
+   "sub_asset_class": "US Mid Cap",
+   "ticker": "CRWV",
+   "updated_by": "mdpf-secclass-fwd15-direct"
+  }
+ ],
+ "present_before": [],
+ "table": "etf-classifications",
+ "taken_at": "2026-10-07T18:23:53.386165+00:00",
+ "updated_by": "mdpf-secclass-fwd15-direct"
+}
