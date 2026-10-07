@@ -21879,6 +21879,72 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "2.0.0_SA_COO~Z",
   "notes": "Surfaced, not chased; the checker was not edited. The issuer re-cuts the AC3 constant or confirms the cut base."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S1",
+  "spec_asserts": "AC1 of AMGT-bb-17 expects clause H5 to read every entry of the overlay's `provenance` carrying a `source_name` key, and to print R78 BB17 AC1 SERVED: YES.",
+  "world_is": "The overlay serves `provenance` as a dict {\"inputs\": [three entries]}. r78_bb17.py line 117 builds entries as `list(prov.values())` for a dict, which is [[three entries]], a list holding one list; line 118 then keeps only dicts, so entries is empty and H5 prints 'FAIL H5 ... 0 of 0' whatever the adapter serves. The adapter does serve source_name on all three entries (read in-process for BA_US_Equity: filings 'Company filings', harvested_news 'Articles we collect', bloomberg 'Bloomberg').",
+  "one_line": "r78_bb17.py H5 reads the overlay's provenance dict one level too shallow (list(prov.values()) is [[entries]]) and so counts 0 of 0 entries and FAILs; the three entries do carry source_name.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/checks/r78_bb17.py --crit AC1 --where local at wk-AMGT_RESAPP-302: PASS H1 H2 H3 H4 H6, 'FAIL H5 every provenance entry carries a plain source name key 0 of 0', 'R78 BB17 AC1 SERVED: NO', exit=1.",
+      "In-process handler read of /security/BA_US_Equity/overlay: type(provenance) is dict, keys ['inputs'], each of its 3 entries carries source_name {'name': ..., 'known': True}."
+    ]
+  },
+  "notes": "Not bent to: the check was not edited and the code was not shaped to it. The remedy is the issuer's: read prov['inputs'] when prov is a dict. All other AC1 clauses PASS."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S2",
+  "spec_asserts": "Section 1 item 3 of AMGT-bb-17 asks the overlay to serve the SAME one statement of inputs under `input_provenance`, passing None for the thesis only if reading the thesis would add a store read to the overlay's first paint.",
+  "world_is": "The overlay does not hold the thesis parts and building them is the whole /thesis read (drafted sections, segment rows, passage coverage, management), many store reads. statement(rows, None) does not mean 'unknown': it serves a filings row with outcome 'failed' and reason 'What this page took from company filings could not be read just now.' on every name, covered or not, which is untrue for a name whose filings were read. I therefore did NOT add the statement to the overlay: the overlay's input_provenance is unchanged (bloomberg, seekingalpha, serp, pack). The thesis serves the statement (H3 PASS).",
+  "one_line": "The overlay's input_provenance was left without the filings row, because the only cheap argument (thesis None) serves a false 'could not be read just now' line on every overlay.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/inputs_statement.py statement(): `if not isinstance(thesis, dict): row = _row('failed', _FAILED)`; test_inputs_statement.py::test_thesis_none_is_failed pins it.",
+      "Read of the overlay in-process for BA_US_Equity after the change: input_provenance inputs ['bloomberg', 'seekingalpha', 'serp', 'pack'] (no filings row)."
+    ]
+  },
+  "notes": "Cost of the alternative: one more store-read set per overlay for a true row, or a false row for free. The issuer decides; adding it is one line at the overlay's input_provenance."
+},
+{
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~302",
+  "surfaced_at": "2026-10-07T17:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "id": "AMGT_RESAPP-Z-W302-S3",
+  "spec_asserts": "Section 1 of AMGT-bb-17: run lib/research/api/tests/ before the commit and report its last line.",
+  "world_is": "One test of the folder fails on the drained tree for a reason outside this cell's files: test_served_reasons_plain.py::test_peers_v_measure_reason_is_plain_at_the_producer asserts every Peers V absent_reason equals peers_v.MEASURE_NOT_COMPUTABLE_REASON; bb-13 (commit c8ff0a700e) made score_peers_v read '1 peer; 3 are needed' below three peers. Neither the test nor lib/research/scores/peers_v.py is in this cell's paths or touched by it.",
+  "one_line": "test_served_reasons_plain.py::test_peers_v_measure_reason_is_plain_at_the_producer is stale against bb-13's Peers V reason ('1 peer; 3 are needed'); not touched by bb-17.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest lib/research/api/tests/ at wk-AMGT_RESAPP-302: 1 failed, 828 passed; the failure is E assert '1 peer; 3 are needed' == 'this measure could not be worked out from the company's own figures'.",
+      "git log -- lib/research/scores/peers_v.py: c8ff0a700e (bb-13) is the newest commit."
+    ]
+  },
+  "notes": "Left as is: the test is another cell's, and the module is another cell's."
 }
 ]
 ```
