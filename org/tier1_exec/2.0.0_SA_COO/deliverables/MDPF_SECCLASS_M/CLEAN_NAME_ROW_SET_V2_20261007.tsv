@@ -3,7 +3,7 @@ key	classified_by	current_name	source_name	clean_name	action	source
 AAETX	seed	AMERICAN FUNDS 2030 TRGT DATE RETIRE A		American Funds 2030 TRGT Date Retire A	SEED-SOURCE	table
 AAPL	legacy	Apple Inc		Apple Inc	UNCHANGED	table
 ABALX	seed	American Funds American Balanced A		American Funds American Balanced A	UNCHANGED	table
-ABB	scheduled	ABB LTD SPONSORED ADR		Abb LTD Sponsored Adr	WRITE	table
+ABB	scheduled	ABB LTD SPONSORED ADR		ABB LTD Sponsored ADR	WRITE	table
 ABBV	legacy	AbbVie Inc		AbbVie Inc	UNCHANGED	table
 ABNFX	seed	American Funds The Bond Fund of America Class F-2		American Funds The Bond Fund of America Class F-2	UNCHANGED	table
 ABT	legacy	Abbott Laboratories		Abbott Laboratories	UNCHANGED	table
@@ -32,7 +32,7 @@ AWSHX	seed	American Funds Washington Mutual Investors Fund Class A		American Fun
 AZN	legacy	AstraZeneca PLC		AstraZeneca PLC	UNCHANGED	table
 BA	legacy	The Boeing Co		The Boeing Co	UNCHANGED	table
 BAC	legacy	Bank of America Corp		Bank of America Corp	UNCHANGED	table
-BAP	scheduled	Credicorp Ltd		Credicorp Ltd	UNCHANGED	table
+BAP	scheduled	Credicorp Ltd		Credicorp LTD	WRITE	table
 BBSEY	legacy	BB Seguridade Participacoes SA		BB Seguridade Participacoes SA	UNCHANGED	table
 BBY	legacy	Best Buy Co Inc		Best Buy Co Inc	UNCHANGED	table
 BE	legacy	Bloom Energy Corp		Bloom Energy Corp	UNCHANGED	table
@@ -63,7 +63,7 @@ BX	legacy	Blackstone Inc		Blackstone Inc	UNCHANGED	table
 BZLFY	legacy	Bunzl PLC		Bunzl PLC	UNCHANGED	table
 C	legacy	Citigroup Inc		Citigroup Inc	UNCHANGED	table
 CACI	scheduled	CACI International Inc		CACI International Inc	UNCHANGED	table
-CADUX	scheduled	CION ARES DIVERSIFIED CREDIT I		Cion Ares Diversified Credit I	WRITE	table
+CADUX	scheduled	CION ARES DIVERSIFIED CREDIT I		CION Ares Diversified Credit I	WRITE	table
 CAIBX	seed	AMERICAN FUNDS CAPITAL INCOME BLDR A		American Funds Capital Income BLDR A	SEED-SOURCE	table
 CASH	legacy	Cash & Cash Equivalents		Cash & Cash Equivalents	UNCHANGED	table
 CASH_USD	seed	U.S. Dollar Cash		U.S. Dollar Cash	UNCHANGED	table
@@ -71,7 +71,7 @@ CCEP	scheduled	COCA-COLA EUROPACIFIC PARTNERS SHS		Coca-Cola Europacific Partner
 CDSIX	seed	Calvert Short Duration Income Fund Class I		Calvert Short Duration Income Fund Class I	UNCHANGED	table
 CEMIX	seed	Causeway Emerging Markets Fund Institutional Class		Causeway Emerging Markets Fund Institutional Class	UNCHANGED	table
 CFIHX	seed	AMERICAN FUNDS CAPITAL INCOME BLDR F3		American Funds Capital Income BLDR F3	SEED-SOURCE	table
-CGEMY	scheduled	CAPGEMINI S E UNSPONSORED ADR		Capgemini S E Unsponsored Adr	WRITE	table
+CGEMY	scheduled	CAPGEMINI S E UNSPONSORED ADR		Capgemini S E Unsponsored ADR	WRITE	table
 CI	legacy	Cigna Corp		Cigna Corp	UNCHANGED	table
 CICHY	legacy	China Construction Bank Corp		China Construction Bank Corp	UNCHANGED	table
 CIEN	legacy	Ciena Corp		Ciena Corp	UNCHANGED	table
@@ -88,7 +88,7 @@ COSIX	scheduled	COLUMBIA STRATEGIC INCOME INST		Columbia Strategic Income Inst	W
 COWZ	seed	Pacer US Cash Cows 100 ETF		Pacer US Cash Cows 100 ETF	UNCHANGED	table
 CPA	legacy	Copa Holdings SA		Copa Holdings SA	UNCHANGED	table
 CSCO	legacy	Cisco Systems Inc/Delaware		Cisco Systems Inc/Delaware	UNCHANGED	table
-CUSIP:00130HCH6	scheduled	THE AES CORP     5.45%28		The Aes Corp 5.45%28	WRITE	table
+CUSIP:00130HCH6	scheduled	THE AES CORP     5.45%28		The AES Corp 5.45%28	WRITE	table
 CUSIP:002824BS8	scheduled	ABBOTT LABORATORIES 4%31		Abbott Laboratories 4%31	WRITE	table
 CUSIP:00900W100	scheduled	INVESCO GLOBAL A		Invesco Global A	WRITE	table
 CUSIP:009CVR036	scheduled	AKOUOS INC SHS		Akouos Inc	WRITE	table
@@ -111,8 +111,8 @@ CUSIP:052414RA9	scheduled	AUSTIN TEX ELEC UTIL SYS REV 5% 11/15/2030		Austin Tex
 CUSIP:052414TX7	scheduled	AUSTIN TEX ELEC UTIL SYS REV 5% 11/15/2034		Austin Tex Elec Util Sys Rev 5% 11/15/2034	WRITE	table
 CUSIP:052477PH3	scheduled	AUSTIN TEX WTR & WASTEWATER SY 5% 11/15/2026		Austin Tex WTR & Wastewater Sy 5% 11/15/2026	WRITE	table
 CUSIP:053015AJ2	scheduled	AUTOMATIC DATA PROCESSING INC 4.75% 05/08/2032		Automatic Data Processing Inc 4.75% 05/08/2032	WRITE	table
-CUSIP:05554TQJ7	scheduled	BBVA GLOBAL SECS B V 0% 09/16/2030		Bbva Global Secs B V 0% 09/16/2030	WRITE	table
-CUSIP:05556NSE7	scheduled	BBVA GLOBAL SECURITIES BV		Bbva Global Securities BV	WRITE	table
+CUSIP:05554TQJ7	scheduled	BBVA GLOBAL SECS B V 0% 09/16/2030		BBVA Global Secs B V 0% 09/16/2030	WRITE	table
+CUSIP:05556NSE7	scheduled	BBVA GLOBAL SECURITIES BV		BBVA Global Securities BV	WRITE	table
 CUSIP:05612LBD3	scheduled	BMW BK NORTH AMER SALT LAKE CI 3.9% 2027		BMW BK North Amer Salt Lake Ci 3.9% 2027	WRITE	table
 CUSIP:05612LHJ4	scheduled	BMW BK NORTH AMER SALT LAKE CI 3.75% 2029		BMW BK North Amer Salt Lake Ci 3.75% 2029	WRITE	table
 CUSIP:05612LHS4	scheduled	BMW BK NORTH AMER SALT LAKE CI 3.7% 2028		BMW BK North Amer Salt Lake Ci 3.7% 2028	WRITE	table
@@ -124,14 +124,14 @@ CUSIP:06051YBM1	scheduled	BANK OF AMERICA NA 4.1% 2027		Bank of America NA 4.1% 
 CUSIP:067167ZF6	scheduled	BARBERS HILL TEX INDPT SCH DIS 4% 02/15/2033		Barbers Hill Tex Indpt SCH Dis 4% 02/15/2033	WRITE	table
 CUSIP:06745PR94	scheduled	BARCLAYS BANK PLC 0% 02/04/2027		Barclays Bank PLC 0% 02/04/2027	WRITE	table
 CUSIP:067626KU4	scheduled	BARKER CYPRESS MUN UTIL DIST T 4% 04/01/2031		Barker Cypress Mun Util Dist T 4% 04/01/2031	WRITE	table
-CUSIP:073900X72	scheduled	BEAUFORT CNTY S C SCH DIST 5% 03/01/2028		Beaufort Cnty S C SCH Dist 5% 03/01/2028	WRITE	table
+CUSIP:073900X72	scheduled	BEAUFORT CNTY S C SCH DIST 5% 03/01/2028		Beaufort CNTY S C SCH Dist 5% 03/01/2028	WRITE	table
 CUSIP:075896AA8	scheduled	BED BATH & BEYO 3.749XXX		Bed Bath & Beyo 3.749XXX	WRITE	table
 CUSIP:075896AB6	scheduled	20230930-DK-BUT 4.915%34		20230930-DK-BUT 4.915%34	UNCHANGED	table
-CUSIP:076059GK4	scheduled	BEDFORD CNTY PA 3.125% 09/01/2028		Bedford Cnty Pa 3.125% 09/01/2028	WRITE	table
+CUSIP:076059GK4	scheduled	BEDFORD CNTY PA 3.125% 09/01/2028		Bedford CNTY Pa 3.125% 09/01/2028	WRITE	table
 CUSIP:079860AK8	scheduled	BELLSOUTH, LLC      6%34		Bellsouth, LLC 6%34	WRITE	table
-CUSIP:084538GV3	scheduled	BERKS CNTY PA MUN A 5%40		Berks Cnty Pa Mun A 5%40	WRITE	table
-CUSIP:0882815C0	scheduled	BEXAR CNTY TEX 5% 06/15/2034		Bexar Cnty Tex 5% 06/15/2034	WRITE	table
-CUSIP:088281M72	scheduled	BEXAR CNTY TEX 5% 06/15/2032		Bexar Cnty Tex 5% 06/15/2032	WRITE	table
+CUSIP:084538GV3	scheduled	BERKS CNTY PA MUN A 5%40		Berks CNTY Pa Mun A 5%40	WRITE	table
+CUSIP:0882815C0	scheduled	BEXAR CNTY TEX 5% 06/15/2034		Bexar CNTY Tex 5% 06/15/2034	WRITE	table
+CUSIP:088281M72	scheduled	BEXAR CNTY TEX 5% 06/15/2032		Bexar CNTY Tex 5% 06/15/2032	WRITE	table
 CUSIP:09182TBT3	scheduled	BLACK BELT ENERGY GAS DIST ALA 5.5% 11/01/2053		Black Belt Energy Gas Dist Ala 5.5% 11/01/2053	WRITE	table
 CUSIP:09290DAA9	scheduled	BLACKROCK INC 4.7% 03/14/2029		Blackrock Inc 4.7% 03/14/2029	WRITE	table
 CUSIP:102853GQ5	scheduled	BOWLING GREEN OHIO  5%27		Bowling Green Ohio 5%27	WRITE	table
@@ -150,15 +150,15 @@ CUSIP:14040HBN4	scheduled	CAPITAL ONE FINL 3.75%27		Capital One Finl 3.75%27	WRI
 CUSIP:14042RVK4	scheduled	CAPITAL ONE, NTN 4.95%26		Capital One, NTN 4.95%26	WRITE	table
 CUSIP:159195ZA7	scheduled	CHANNELVIEW TEX INDPT SCH DIST 5% 08/15/2030		Channelview Tex Indpt SCH Dist 5% 08/15/2030	WRITE	table
 CUSIP:17239YLP5	scheduled	CINCO TEX MUN UTIL DIST NO 1 C 3.5% 12/01/2033		Cinco Tex Mun Util Dist No 1 C 3.5% 12/01/2033	WRITE	table
-CUSIP:181059ZV1	scheduled	CLARK CNTY NEV SCH DIST 4% 06/15/2036		Clark Cnty Nev SCH Dist 4% 06/15/2036	WRITE	table
-CUSIP:181234N35	scheduled	CLARK CNTY WASH SCH DIST NO 11 4% 12/01/2036		Clark Cnty Wash SCH Dist No 11 4% 12/01/2036	WRITE	table
-CUSIP:18604TEB0	scheduled	CLEVELAND CNTY OKLA EDL FACS A 4% 06/01/2027		Cleveland Cnty Okla Edl Facs A 4% 06/01/2027	WRITE	table
-CUSIP:18605QCU5	scheduled	CLEVELAND CNTY OKLA PUB FACS A 5% 05/01/2032		Cleveland Cnty Okla Pub Facs A 5% 05/01/2032	WRITE	table
-CUSIP:186072TK0	scheduled	CLEVELAND CNTY OKLA INDPT SCH 4% 03/01/2027		Cleveland Cnty Okla Indpt SCH 4% 03/01/2027	WRITE	table
+CUSIP:181059ZV1	scheduled	CLARK CNTY NEV SCH DIST 4% 06/15/2036		Clark CNTY Nev SCH Dist 4% 06/15/2036	WRITE	table
+CUSIP:181234N35	scheduled	CLARK CNTY WASH SCH DIST NO 11 4% 12/01/2036		Clark CNTY Wash SCH Dist No 11 4% 12/01/2036	WRITE	table
+CUSIP:18604TEB0	scheduled	CLEVELAND CNTY OKLA EDL FACS A 4% 06/01/2027		Cleveland CNTY Okla Edl Facs A 4% 06/01/2027	WRITE	table
+CUSIP:18605QCU5	scheduled	CLEVELAND CNTY OKLA PUB FACS A 5% 05/01/2032		Cleveland CNTY Okla Pub Facs A 5% 05/01/2032	WRITE	table
+CUSIP:186072TK0	scheduled	CLEVELAND CNTY OKLA INDPT SCH 4% 03/01/2027		Cleveland CNTY Okla Indpt SCH 4% 03/01/2027	WRITE	table
 CUSIP:187720F44	scheduled	CLINTON IOWA 5% 06/01/2035		Clinton Iowa 5% 06/01/2035	WRITE	table
 CUSIP:194469EA6	scheduled	COLLEGE STATION TEX 2.625% 02/15/2032		College Station Tex 2.625% 02/15/2032	WRITE	table
 CUSIP:194469QX3	scheduled	COLLEGE STATION TEX 5%31		College Station Tex 5%31	WRITE	table
-CUSIP:194748CH0	scheduled	COLLIN CNTY TEX MUN UTIL DIST 3.125% 02/15/2028		Collin Cnty Tex Mun Util Dist 3.125% 02/15/2028	WRITE	table
+CUSIP:194748CH0	scheduled	COLLIN CNTY TEX MUN UTIL DIST 3.125% 02/15/2028		Collin CNTY Tex Mun Util Dist 3.125% 02/15/2028	WRITE	table
 CUSIP:19648GZD7	scheduled	COLORADO HSG & FIN AUTH 4.85% 10/01/2050		Colorado HSG & Fin Auth 4.85% 10/01/2050	WRITE	table
 CUSIP:19648GZE5	scheduled	COLORADO HSG & FIN AUTH 4.9% 10/01/2055		Colorado HSG & Fin Auth 4.9% 10/01/2055	WRITE	table
 CUSIP:196707XS7	scheduled	COLORADO ST BRD GOVERNORS UNIV 4% 03/01/2047		Colorado ST BRD Governors Univ 4% 03/01/2047	WRITE	table
@@ -172,7 +172,7 @@ CUSIP:20826FBJ4	scheduled	CONOCOPHILLIPS CO 4.7%30		Conocophillips Co 4.7%30	WRI
 CUSIP:208399W84	scheduled	CONROE TEX 4% 11/15/2036		Conroe Tex 4% 11/15/2036	WRITE	table
 CUSIP:208418T37	scheduled	CONROE TEX INDPT SCH DIST 5% 02/15/2027		Conroe Tex Indpt SCH Dist 5% 02/15/2027	WRITE	table
 CUSIP:208422KW4	scheduled	CONROE TEX MUN M 3.25%34		Conroe Tex Mun M 3.25%34	WRITE	table
-CUSIP:213291QW0	scheduled	COOK CNTY ILL CMNTY CONS SCH D 4% 12/01/2027		Cook Cnty Ill Cmnty Cons SCH D 4% 12/01/2027	WRITE	table
+CUSIP:213291QW0	scheduled	COOK CNTY ILL CMNTY CONS SCH D 4% 12/01/2027		Cook CNTY Ill Cmnty Cons SCH D 4% 12/01/2027	WRITE	table
 CUSIP:220113LN2	scheduled	CORPUS CHRISTI TEX 5% 03/01/2035		Corpus Christi Tex 5% 03/01/2035	WRITE	table
 CUSIP:220802AV4	scheduled	CORTRUST BK MITCHELL N A SOUTH 3.7% 2028		Cortrust BK Mitchell N A South 3.7% 2028	WRITE	table
 CUSIP:225470VM2	scheduled	CREDIT SUISSE FI 5.75%36		Credit Suisse Fi 5.75%36	WRITE	table
@@ -186,9 +186,9 @@ CUSIP:240091LL0	scheduled	DAYTON TEX INDPT SC 5%31		Dayton Tex Indpt SC 5%31	WRI
 CUSIP:241064EM2	scheduled	DEKALB PRIVATE HOSP 5%29		Dekalb Private Hosp 5%29	WRITE	table
 CUSIP:245505XY3	scheduled	DEL VALLE TEX INDPT 5%29		Del Valle Tex Indpt 5%29	WRITE	table
 CUSIP:248415YU9	scheduled	DENISON TEX INDPT SCH DIST 5% 08/01/2036		Denison Tex Indpt SCH Dist 5% 08/01/2036	WRITE	table
-CUSIP:24880SJM6	scheduled	DENTON CNTY TEX MUN UTIL DIST 4% 09/01/2034		Denton Cnty Tex Mun Util Dist 4% 09/01/2034	WRITE	table
+CUSIP:24880SJM6	scheduled	DENTON CNTY TEX MUN UTIL DIST 4% 09/01/2034		Denton CNTY Tex Mun Util Dist 4% 09/01/2034	WRITE	table
 CUSIP:25434V401	scheduled	DIMENSIONAL U.S. EQUITY MARKET ETF		Dimensional U.S. Equity Market ETF	WRITE	table
-CUSIP:283497U45	scheduled	EL PASO CNTY TEX 5% 02/15/2031		El Paso Cnty Tex 5% 02/15/2031	WRITE	table
+CUSIP:283497U45	scheduled	EL PASO CNTY TEX 5% 02/15/2031		El Paso CNTY Tex 5% 02/15/2031	WRITE	table
 CUSIP:283822XR0	scheduled	EL PASO TEX WTR & SWR REV 5% 03/01/2035		El Paso Tex WTR & SWR Rev 5% 03/01/2035	WRITE	table
 CUSIP:29270C2H7	scheduled	ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2028		Energy Northwest Wash Elec Rev 5% 07/01/2028	WRITE	table
 CUSIP:29270C3B9	scheduled	ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2027		Energy Northwest Wash Elec Rev 5% 07/01/2027	WRITE	table
@@ -196,8 +196,8 @@ CUSIP:29270C6C4	scheduled	ENERGY NORTHWEST WASH ELEC REV 5% 07/01/2027		Energy N
 CUSIP:2982635G5	scheduled	EULESS TEX 5% 02/15/2036		Euless Tex 5% 02/15/2036	WRITE	table
 CUSIP:302950407	scheduled	FS CR REAL ESTATE INCOM TR INC COM CL I		FS CR Real Estate Incom TR Inc Com CL I	WRITE	table
 CUSIP:30303M8T2	scheduled	META PLATFORMS INC 4.55% 08/15/2031		Meta Platforms Inc 4.55% 08/15/2031	WRITE	table
-CUSIP:30382AJM5	scheduled	FAIRFAX CNTY VA 5% 10/01/2029		Fairfax Cnty Va 5% 10/01/2029	WRITE	table
-CUSIP:312432H34	scheduled	FAYETTE CNTY KY SCH DIST FIN C 4% 05/01/2035		Fayette Cnty Ky SCH Dist Fin C 4% 05/01/2035	WRITE	table
+CUSIP:30382AJM5	scheduled	FAIRFAX CNTY VA 5% 10/01/2029		Fairfax CNTY Va 5% 10/01/2029	WRITE	table
+CUSIP:312432H34	scheduled	FAYETTE CNTY KY SCH DIST FIN C 4% 05/01/2035		Fayette CNTY Ky SCH Dist Fin C 4% 05/01/2035	WRITE	table
 CUSIP:31421N402	scheduled	FEDERATED HERMES KAUFMANN SMALL CAP IS		Federated Hermes Kaufmann Small Cap Is	WRITE	table
 CUSIP:316146356	scheduled	FIDELITY U.S. BOND INDEX		Fidelity U.S. Bond Index	WRITE	table
 CUSIP:316345206	scheduled	FIDELITY BALANCED		Fidelity Balanced	WRITE	table
@@ -219,9 +219,9 @@ CUSIP:34160KAN0	scheduled	FLORIDA ST DEPT TRANSN FING CO 5% 07/01/2031		Florida 
 CUSIP:3431362G1	scheduled	FLORIDA ST TPK AU 3.5%42		Florida ST TPK Au 3.5%42	WRITE	table
 CUSIP:343137ER2	scheduled	FLORIDA ST TPK AUTH TPK REV 5% 07/01/2032		Florida ST TPK Auth TPK Rev 5% 07/01/2032	WRITE	table
 CUSIP:345370BP4	scheduled	FORD MTR CO 7.5% 08/01/2026		Ford MTR Co 7.5% 08/01/2026	WRITE	table
-CUSIP:346766T99	scheduled	FORT BEND CNTY TEX 5% 03/01/2028		Fort Bend Cnty Tex 5% 03/01/2028	WRITE	table
-CUSIP:34681XHN5	scheduled	FORT BEND CNTY TE 3.5%29		Fort Bend Cnty Te 3.5%29	WRITE	table
-CUSIP:346905LN0	scheduled	FORT BEND CNTY TE 3.5%35		Fort Bend Cnty Te 3.5%35	WRITE	table
+CUSIP:346766T99	scheduled	FORT BEND CNTY TEX 5% 03/01/2028		Fort Bend CNTY Tex 5% 03/01/2028	WRITE	table
+CUSIP:34681XHN5	scheduled	FORT BEND CNTY TE 3.5%29		Fort Bend CNTY Te 3.5%29	WRITE	table
+CUSIP:346905LN0	scheduled	FORT BEND CNTY TE 3.5%35		Fort Bend CNTY Te 3.5%35	WRITE	table
 CUSIP:353496490	scheduled	FRANKLIN INCOME A		Franklin Income A	WRITE	table
 CUSIP:358776PU0	scheduled	FRISCO TEX 4% 02/15/2028		Frisco Tex 4% 02/15/2028	WRITE	table
 CUSIP:35880C7B4	scheduled	FRISCO TEX INDPT SCH DIST 4% 02/15/2036		Frisco Tex Indpt SCH Dist 4% 02/15/2036	WRITE	table
@@ -240,19 +240,19 @@ CUSIP:406450H58	scheduled	HALTOM CITY TEX 5% 02/01/2030		Haltom City Tex 5% 02/0
 CUSIP:41013MQP8	scheduled	JOHN HANCOCK LIFE INSURANCE CO 5% 06/15/2028		John Hancock Life Insurance Co 5% 06/15/2028	WRITE	table
 CUSIP:410223408	scheduled	JHANCOCK BOND I		Jhancock Bond I	WRITE	table
 CUSIP:412295107	scheduled	HARDING LOEVNER INTERNATIONAL EQ INSTL		Harding Loevner International Eq Instl	WRITE	table
-CUSIP:4140052R8	scheduled	HARRIS CNTY TEX 5% 09/15/2029		Harris Cnty Tex 5% 09/15/2029	WRITE	table
-CUSIP:4140055E4	scheduled	HARRIS CNTY TEX 5% 09/15/2027		Harris Cnty Tex 5% 09/15/2027	WRITE	table
-CUSIP:414009JS0	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2026		Harris Cnty Tex Cultural Ed Fa 5% 10/01/2026	WRITE	table
-CUSIP:414009JT8	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2027		Harris Cnty Tex Cultural Ed Fa 5% 10/01/2027	WRITE	table
-CUSIP:414009UA6	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 12/01/2029		Harris Cnty Tex Cultural Ed Fa 5% 12/01/2029	WRITE	table
-CUSIP:414205HV9	scheduled	HARRIS CNTY TEX UTIL DIST NO 6 4.125% 03/01/2032		Harris Cnty Tex Util Dist No 6 4.125% 03/01/2032	WRITE	table
-CUSIP:41420QJH2	scheduled	HARRIS CNTY TEX MUN UTIL DIST 3.25% 09/01/2026		Harris Cnty Tex Mun Util Dist 3.25% 09/01/2026	WRITE	table
-CUSIP:41423PAQ0	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2033		Harris Cnty Tex Toll RD Rev 5% 08/15/2033	WRITE	table
-CUSIP:41423PAR8	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2034		Harris Cnty Tex Toll RD Rev 5% 08/15/2034	WRITE	table
-CUSIP:41423PAS6	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2035		Harris Cnty Tex Toll RD Rev 5% 08/15/2035	WRITE	table
-CUSIP:414962RD4	scheduled	HARRIS CNTY TEX MUN UTIL DIST 3.5% 03/01/2034		Harris Cnty Tex Mun Util Dist 3.5% 03/01/2034	WRITE	table
-CUSIP:414974FB6	scheduled	HARRIS CNTY TEX MUN UTIL DIST 4% 04/01/2033		Harris Cnty Tex Mun Util Dist 4% 04/01/2033	WRITE	table
-CUSIP:421025DG9	scheduled	HAYS CNTY TEX DEV DIST NO 1 3% 04/01/2027		Hays Cnty Tex Dev Dist No 1 3% 04/01/2027	WRITE	table
+CUSIP:4140052R8	scheduled	HARRIS CNTY TEX 5% 09/15/2029		Harris CNTY Tex 5% 09/15/2029	WRITE	table
+CUSIP:4140055E4	scheduled	HARRIS CNTY TEX 5% 09/15/2027		Harris CNTY Tex 5% 09/15/2027	WRITE	table
+CUSIP:414009JS0	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2026		Harris CNTY Tex Cultural Ed Fa 5% 10/01/2026	WRITE	table
+CUSIP:414009JT8	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 10/01/2027		Harris CNTY Tex Cultural Ed Fa 5% 10/01/2027	WRITE	table
+CUSIP:414009UA6	scheduled	HARRIS CNTY TEX CULTURAL ED FA 5% 12/01/2029		Harris CNTY Tex Cultural Ed Fa 5% 12/01/2029	WRITE	table
+CUSIP:414205HV9	scheduled	HARRIS CNTY TEX UTIL DIST NO 6 4.125% 03/01/2032		Harris CNTY Tex Util Dist No 6 4.125% 03/01/2032	WRITE	table
+CUSIP:41420QJH2	scheduled	HARRIS CNTY TEX MUN UTIL DIST 3.25% 09/01/2026		Harris CNTY Tex Mun Util Dist 3.25% 09/01/2026	WRITE	table
+CUSIP:41423PAQ0	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2033		Harris CNTY Tex Toll RD Rev 5% 08/15/2033	WRITE	table
+CUSIP:41423PAR8	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2034		Harris CNTY Tex Toll RD Rev 5% 08/15/2034	WRITE	table
+CUSIP:41423PAS6	scheduled	HARRIS CNTY TEX TOLL RD REV 5% 08/15/2035		Harris CNTY Tex Toll RD Rev 5% 08/15/2035	WRITE	table
+CUSIP:414962RD4	scheduled	HARRIS CNTY TEX MUN UTIL DIST 3.5% 03/01/2034		Harris CNTY Tex Mun Util Dist 3.5% 03/01/2034	WRITE	table
+CUSIP:414974FB6	scheduled	HARRIS CNTY TEX MUN UTIL DIST 4% 04/01/2033		Harris CNTY Tex Mun Util Dist 4% 04/01/2033	WRITE	table
+CUSIP:421025DG9	scheduled	HAYS CNTY TEX DEV DIST NO 1 3% 04/01/2027		Hays CNTY Tex Dev Dist No 1 3% 04/01/2027	WRITE	table
 CUSIP:42211HGY9	scheduled	HEADWATERS MUN UTIL DIST TEX H 4% 08/15/2029		Headwaters Mun Util Dist Tex H 4% 08/15/2029	WRITE	table
 CUSIP:434207AA4	scheduled	HODGE BK & TR CO LA 3.5% 2027		Hodge BK & TR Co La 3.5% 2027	WRITE	table
 CUSIP:435475SM1	scheduled	HOLLIDAYSBURG PA 3.25%30		Hollidaysburg Pa 3.25%30	WRITE	table
@@ -268,7 +268,7 @@ CUSIP:450812Q96	scheduled	IBERIA PARISH LA PA 5%30		Iberia Parish La Pa 5%30	WRI
 CUSIP:45204ELJ5	scheduled	ILLINOIS FIN AUT 3.25%45		Illinois Fin Aut 3.25%45	WRITE	table
 CUSIP:453320103	scheduled	AMERICAN FUNDS INCOME FUND OF AMER A		American Funds Income Fund of Amer A	WRITE	table
 CUSIP:458140BH2	scheduled	INTEL CORP       2.45%29		Intel Corp 2.45%29	WRITE	table
-CUSIP:46613P3G9	scheduled	JEA FLA WTR & SWR SYS REV 5% 10/01/2027		Jea Fla WTR & SWR Sys Rev 5% 10/01/2027	WRITE	table
+CUSIP:46613P3G9	scheduled	JEA FLA WTR & SWR SYS REV 5% 10/01/2027		JEA Fla WTR & SWR Sys Rev 5% 10/01/2027	WRITE	table
 CUSIP:466247ZR7	scheduled	J P MORGAN MORTG 5.75%36		J P Morgan Mortg 5.75%36	WRITE	table
 CUSIP:46659CHT0	scheduled	JPMORGAN CHASE BK N A 4% 2030		JPMorgan Chase BK N A 4% 2030	WRITE	table
 CUSIP:480256EB8	scheduled	JONESBORO ARK CITY  5%31		Jonesboro Ark City 5%31	WRITE	table
@@ -276,7 +276,7 @@ CUSIP:48134XQ99	scheduled	JPMORGAN CHASE FINL CO LLC 0% 04/20/2028		JPMorgan Cha
 CUSIP:486053CM1	scheduled	KATY TEX DEV AUTH REV 5% 06/01/2037		Katy Tex Dev Auth Rev 5% 06/01/2037	WRITE	table
 CUSIP:486053CP4	scheduled	KATY TEX DEV AUTH REV 5% 06/01/2039		Katy Tex Dev Auth Rev 5% 06/01/2039	WRITE	table
 CUSIP:4860632S8	scheduled	KATY TEX INDPT SCH DIST 5% 02/15/2031		Katy Tex Indpt SCH Dist 5% 02/15/2031	WRITE	table
-CUSIP:495242N54	scheduled	KING CNTY WASH SCH DIST NO 412 4% 12/01/2037		King Cnty Wash SCH Dist No 412 4% 12/01/2037	WRITE	table
+CUSIP:495242N54	scheduled	KING CNTY WASH SCH DIST NO 412 4% 12/01/2037		King CNTY Wash SCH Dist No 412 4% 12/01/2037	WRITE	table
 CUSIP:51166FCK3	scheduled	LAKELAND FLA ENERGY SYS REV 5.25% 10/01/2036		Lakeland Fla Energy Sys Rev 5.25% 10/01/2036	WRITE	table
 CUSIP:51166FFB0	scheduled	LAKELAND FLA ENERGY SYS REV 4% 10/01/2037		Lakeland Fla Energy Sys Rev 4% 10/01/2037	WRITE	table
 CUSIP:516824NX3	scheduled	LAREDO TEX 5% 02/15/2029		Laredo Tex 5% 02/15/2029	WRITE	table
@@ -284,7 +284,7 @@ CUSIP:52109HRX3	scheduled	LAZY NINE MUN UTIL DIST NO 1B 4% 03/01/2033		Lazy Nine
 CUSIP:521769DQ9	scheduled	LEAGUE CITY TEX 4% 02/15/2027		League City Tex 4% 02/15/2027	WRITE	table
 CUSIP:521854CH0	scheduled	LEANDER TODD MUN UT 2%31		Leander Todd Mun Ut 2%31	WRITE	table
 CUSIP:52471R630	scheduled	CLEARBRIDGE SELECT C		Clearbridge Select C	WRITE	table
-CUSIP:527843BP0	scheduled	LEWIS CNTY WASH PUB UTIL DIST 4% 12/01/2026		Lewis Cnty Wash Pub Util Dist 4% 12/01/2026	WRITE	table
+CUSIP:527843BP0	scheduled	LEWIS CNTY WASH PUB UTIL DIST 4% 12/01/2026		Lewis CNTY Wash Pub Util Dist 4% 12/01/2026	WRITE	table
 CUSIP:532457AZ1	scheduled	ELI LILLY & CO 5.5% 03/15/2027		Eli Lilly & Co 5.5% 03/15/2027	WRITE	table
 CUSIP:5380366N9	scheduled	LIVE OAK BKG CO NC 3.75% 2027		Live Oak BKG Co NC 3.75% 2027	WRITE	table
 CUSIP:5380366P4	scheduled	LIVE OAK BKG CO NC 3.75% 2027		Live Oak BKG Co NC 3.75% 2027	WRITE	table
@@ -295,25 +295,25 @@ CUSIP:549271AF1	scheduled	LUBRIZOL CORP 6.5% 10/01/2034		Lubrizol Corp 6.5% 10/0
 CUSIP:554479FC4	scheduled	MACHIAS SVGS BK ME 4.2% 2028		Machias SVGS BK Me 4.2% 2028	WRITE	table
 CUSIP:56065GDH8	scheduled	MAINSTREET BANK  3.95%26		Mainstreet Bank 3.95%26	WRITE	table
 CUSIP:56167N274	scheduled	KENSINGTON DYNAMIC ALLOCATION INST		Kensington Dynamic Allocation Inst	WRITE	table
-CUSIP:57325VAM1	scheduled	MARTIN CNTY TEX HOSP DIST 4% 04/01/2028		Martin Cnty Tex Hosp Dist 4% 04/01/2028	WRITE	table
+CUSIP:57325VAM1	scheduled	MARTIN CNTY TEX HOSP DIST 4% 04/01/2028		Martin CNTY Tex Hosp Dist 4% 04/01/2028	WRITE	table
 CUSIP:574193TW8	scheduled	MARYLAND ST 5% 03/01/2027		Maryland ST 5% 03/01/2027	WRITE	table
 CUSIP:574193VF2	scheduled	MARYLAND ST 5% 06/01/2029		Maryland ST 5% 06/01/2029	WRITE	table
 CUSIP:57429NCH3	scheduled	MARYLAND ST TRANSN  4%34		Maryland ST Transn 4%34	WRITE	table
 CUSIP:57587GZM0	scheduled	MASSACHUSETTS ST HSG FIN AGY H 4.6% 06/01/2032		Massachusetts ST HSG Fin Agy H 4.6% 06/01/2032	WRITE	table
 CUSIP:58178CDN4	scheduled	MC KINNEY TEX 5% 08/15/2036		MC Kinney Tex 5% 08/15/2036	WRITE	table
 CUSIP:592112YW0	scheduled	METROPOLITAN GOVT NASHVILLE & 5% 01/01/2028		Metropolitan Govt Nashville & 5% 01/01/2028	WRITE	table
-CUSIP:59333AGU9	scheduled	MIAMI-DADE CNTY  5.25%31		Miami-Dade Cnty 5.25%31	WRITE	table
-CUSIP:59334DKH6	scheduled	MIAMI-DADE CNTY FLA WTR & SWR 4% 10/01/2034		Miami-Dade Cnty Fla WTR & SWR 4% 10/01/2034	WRITE	table
-CUSIP:59334DPD0	scheduled	MIAMI-DADE CNTY FLA WTR & SWR 5% 10/01/2032		Miami-Dade Cnty Fla WTR & SWR 5% 10/01/2032	WRITE	table
+CUSIP:59333AGU9	scheduled	MIAMI-DADE CNTY  5.25%31		Miami-Dade CNTY 5.25%31	WRITE	table
+CUSIP:59334DKH6	scheduled	MIAMI-DADE CNTY FLA WTR & SWR 4% 10/01/2034		Miami-Dade CNTY Fla WTR & SWR 4% 10/01/2034	WRITE	table
+CUSIP:59334DPD0	scheduled	MIAMI-DADE CNTY FLA WTR & SWR 5% 10/01/2032		Miami-Dade CNTY Fla WTR & SWR 5% 10/01/2032	WRITE	table
 CUSIP:603827WS1	scheduled	MINNEAPOLIS & ST PA 5%27		Minneapolis & ST Pa 5%27	WRITE	table
 CUSIP:60534TLN3	scheduled	MISSISSIPPI DEV BK  3%29		Mississippi Dev BK 3%29	WRITE	table
 CUSIP:60534WYU6	scheduled	MISSISSIPPI DEV BK  5%32		Mississippi Dev BK 5%32	WRITE	table
 CUSIP:60637AVY5	scheduled	MISSOURI ST HEALTH  5%33		Missouri ST Health 5%33	WRITE	table
-CUSIP:61075TQX9	scheduled	MONROE CNTY N Y  3.75%39		Monroe Cnty N Y 3.75%39	WRITE	table
-CUSIP:611530DC7	scheduled	MONROEVILLE PA FIN AUTH UPMC R 5% 02/15/2030		Monroeville Pa Fin Auth Upmc R 5% 02/15/2030	WRITE	table
-CUSIP:61370NLG6	scheduled	MONTGOMERY CNTY TEX 2%30		Montgomery Cnty Tex 2%30	WRITE	table
-CUSIP:61371AWR7	scheduled	MONTGOMERY CNTY TEX 2%32		Montgomery Cnty Tex 2%32	WRITE	table
-CUSIP:61372GFX9	scheduled	MONTGOMERY CNTY TEX 2%31		Montgomery Cnty Tex 2%31	WRITE	table
+CUSIP:61075TQX9	scheduled	MONROE CNTY N Y  3.75%39		Monroe CNTY N Y 3.75%39	WRITE	table
+CUSIP:611530DC7	scheduled	MONROEVILLE PA FIN AUTH UPMC R 5% 02/15/2030		Monroeville Pa Fin Auth UPMC R 5% 02/15/2030	WRITE	table
+CUSIP:61370NLG6	scheduled	MONTGOMERY CNTY TEX 2%30		Montgomery CNTY Tex 2%30	WRITE	table
+CUSIP:61371AWR7	scheduled	MONTGOMERY CNTY TEX 2%32		Montgomery CNTY Tex 2%32	WRITE	table
+CUSIP:61372GFX9	scheduled	MONTGOMERY CNTY TEX 2%31		Montgomery CNTY Tex 2%31	WRITE	table
 CUSIP:61690U3L2	scheduled	MORGAN STANLEY BA 4.9%28		Morgan Stanley Ba 4.9%28	WRITE	table
 CUSIP:61746BCY0	scheduled	MORGAN STANLEY 6.25% 08/09/2026		Morgan Stanley 6.25% 08/09/2026	WRITE	table
 CUSIP:61756E784	scheduled	MORGAN STANLEY INST ADVANTAGE I		Morgan Stanley Inst Advantage I	WRITE	table
@@ -342,21 +342,21 @@ CUSIP:66285WT48	scheduled	NORTH TEX TWY AUTH REV 5% 01/01/2028		North Tex Twy Au
 CUSIP:662903WT6	scheduled	NORTH TEX MUN WTR DIST TEX WTR 4% 09/01/2031		North Tex Mun WTR Dist Tex WTR 4% 09/01/2031	WRITE	table
 CUSIP:66476QFV5	scheduled	NORTHERN BANK &  3.95%26		Northern Bank & 3.95%26	WRITE	table
 CUSIP:666495AY2	scheduled	NORTHLAKE TEX 3.5% 08/15/2028		Northlake Tex 3.5% 08/15/2028	WRITE	table
-CUSIP:670386RC7	scheduled	NUECES CNTY TEX 4% 02/15/2034		Nueces Cnty Tex 4% 02/15/2034	WRITE	table
+CUSIP:670386RC7	scheduled	NUECES CNTY TEX 4% 02/15/2034		Nueces CNTY Tex 4% 02/15/2034	WRITE	table
 CUSIP:67180K205	scheduled	BLUE OWL REAL ESTATE NET LEASE COM CL I INV		Blue Owl Real Estate Net Lease Com CL I Inv	WRITE	table
 CUSIP:675561CL6	scheduled	OCOEE FLA CAP IM 3.75%41		Ocoee Fla Cap Im 3.75%41	WRITE	table
 CUSIP:677523DJ8	scheduled	OHIO ST 5% 03/01/2028		Ohio ST 5% 03/01/2028	WRITE	table
 CUSIP:677523KD3	scheduled	OHIO ST 5% 11/01/2033		Ohio ST 5% 11/01/2033	WRITE	table
 CUSIP:67765QTH9	scheduled	OHIO ST WTR DEV AUTH REV 5% 12/01/2029		Ohio ST WTR Dev Auth Rev 5% 12/01/2029	WRITE	table
-CUSIP:678514EP1	scheduled	OKLAHOMA CAP IMP AUTH ST HWY C 5% 07/01/2027		Oklahoma Cap Imp Auth ST Hwy C 5% 07/01/2027	WRITE	table
-CUSIP:678688KX9	scheduled	OKLAHOMA CNTY OKLA 3.75% 05/01/2031		Oklahoma Cnty Okla 3.75% 05/01/2031	WRITE	table
+CUSIP:678514EP1	scheduled	OKLAHOMA CAP IMP AUTH ST HWY C 5% 07/01/2027		Oklahoma Cap Imp Auth ST HWY C 5% 07/01/2027	WRITE	table
+CUSIP:678688KX9	scheduled	OKLAHOMA CNTY OKLA 3.75% 05/01/2031		Oklahoma CNTY Okla 3.75% 05/01/2031	WRITE	table
 CUSIP:67884GWN0	scheduled	OKLAHOMA DEV FIN AU 5%31		Oklahoma Dev Fin Au 5%31	WRITE	table
 CUSIP:679111XT6	scheduled	OKLAHOMA TRANSN AUTH OK F/K/A 5% 01/01/2035		Oklahoma Transn Auth Ok F/K/A 5% 01/01/2035	WRITE	table
 CUSIP:679111YY4	scheduled	OKLAHOMA TRANSN AUTH OK F/K/A 5% 01/01/2027		Oklahoma Transn Auth Ok F/K/A 5% 01/01/2027	WRITE	table
 CUSIP:67919PPD9	scheduled	OKLAHOMA ST WTR RES BRD REVOLV 5% 04/01/2030		Oklahoma ST WTR Res BRD Revolv 5% 04/01/2030	WRITE	table
 CUSIP:681725NC7	scheduled	OMAHA NEB ARPT AUTH ARPT REV 5.25% 12/15/2038		Omaha Neb Arpt Auth Arpt Rev 5.25% 12/15/2038	WRITE	table
 CUSIP:68609UWD3	scheduled	OREGON ST 5% 05/01/2030		Oregon ST 5% 05/01/2030	WRITE	table
-CUSIP:693390882	scheduled	PIMCO INTERNATIONAL BOND (USD-HDG) INSTL		Pimco International Bond (usd-Hdg) Instl	WRITE	table
+CUSIP:693390882	scheduled	PIMCO INTERNATIONAL BOND (USD-HDG) INSTL		PIMCO International Bond (usd-Hdg) Instl	WRITE	table
 CUSIP:69349LAR9	scheduled	PNC BK N A PITTSBURGH PA DISC 4.05% 07/26/2028		PNC BK N A Pittsburgh Pa Disc 4.05% 07/26/2028	WRITE	table
 CUSIP:695114CD8	scheduled	PACIFICORP 5.75% 04/01/2037		Pacificorp 5.75% 04/01/2037	WRITE	table
 CUSIP:696878EW3	scheduled	PALMER PLANTATION MUN UTIL DIS 4% 09/01/2030		Palmer Plantation Mun Util Dis 4% 09/01/2030	WRITE	table
@@ -375,13 +375,13 @@ CUSIP:73412PBV4	scheduled	PORT FREEPORT TEX S 4%48		Port Freeport Tex S 4%48	WRI
 CUSIP:736278KJ0	scheduled	PORTER MUN UTIL DIST TEX 3% 03/01/2027		Porter Mun Util Dist Tex 3% 03/01/2027	WRITE	table
 CUSIP:740614DX7	scheduled	PREMONT TEX IND 3.625%47		Premont Tex Ind 3.625%47	WRITE	table
 CUSIP:742718CB3	scheduled	PROCTER & GAMBLE CO 5.5% 02/01/2034		Procter & Gamble Co 5.5% 02/01/2034	WRITE	table
-CUSIP:74440Y801	scheduled	PGIM HIGH YIELD Z		Pgim High Yield Z	WRITE	table
+CUSIP:74440Y801	scheduled	PGIM HIGH YIELD Z		PGIM High Yield Z	WRITE	table
 CUSIP:746802800	scheduled	PUTNAM LARGE CAP GROWTH A		Putnam Large Cap Growth A	WRITE	table
 CUSIP:74913G881	scheduled	QWEST CORP 6.5%  6.5%PFD		Qwest Corp 6.5% 6.5%PFD	WRITE	table
 CUSIP:749685AV5	scheduled	RPM INTERNTNL IN 3.75%27		RPM Interntnl in 3.75%27	WRITE	table
 CUSIP:749685AX1	scheduled	RPM INTERNTNL IN 4.55%29		RPM Interntnl in 4.55%29	WRITE	table
 CUSIP:754730AG4	scheduled	RAYMOND JAMES FINL INC 4.65% 04/01/2030		Raymond James Finl Inc 4.65% 04/01/2030	WRITE	table
-CUSIP:755791EK2	scheduled	REAGAN CNTY TEX INDPT SCH DIST 5% 02/15/2033		Reagan Cnty Tex Indpt SCH Dist 5% 02/15/2033	WRITE	table
+CUSIP:755791EK2	scheduled	REAGAN CNTY TEX INDPT SCH DIST 5% 02/15/2033		Reagan CNTY Tex Indpt SCH Dist 5% 02/15/2033	WRITE	table
 CUSIP:756109CE2	scheduled	REALTY INCOME CORP 2.7% 02/15/2032		Realty Income Corp 2.7% 02/15/2032	WRITE	table
 CUSIP:76720AAS5	scheduled	RIO TINTO FIN 4.875% 30F		Rio Tinto Fin 4.875% 30F	WRITE	table
 CUSIP:767278JF2	scheduled	RIO VISTA TEX INDPT SCH DIST 5% 08/15/2035		Rio Vista Tex Indpt SCH Dist 5% 08/15/2035	WRITE	table
@@ -400,11 +400,11 @@ CUSIP:808516108	scheduled	LARGE CAP EQUITY MANAGED POOL		Large Cap Equity Manage
 CUSIP:808516306	scheduled	BALANCED FUND		Balanced Fund	WRITE	table
 CUSIP:808516702	scheduled	TOTAL MARKET EQUITY INDEX POOL		Total Market Equity Index Pool	WRITE	table
 CUSIP:808516801	scheduled	INTERNATIONAL EQUITY INDEX POOL		International Equity Index Pool	WRITE	table
-CUSIP:809545WJ1	scheduled	SCOTT CNTY KY SCH D 4%29		Scott Cnty Ky SCH D 4%29	WRITE	table
+CUSIP:809545WJ1	scheduled	SCOTT CNTY KY SCH D 4%29		Scott CNTY Ky SCH D 4%29	WRITE	table
 CUSIP:812643C77	scheduled	SEATTLE WASH MUN LT & PWR REV 5% 02/01/2030		Seattle Wash Mun LT & PWR Rev 5% 02/01/2030	WRITE	table
 CUSIP:812643UP7	scheduled	SEATTLE WASH MUN LT & PWR REV 5% 07/01/2030		Seattle Wash Mun LT & PWR Rev 5% 07/01/2030	WRITE	table
-CUSIP:833209LX5	scheduled	SNOHOMISH CNTY WASH SCH DIST N 4% 12/01/2032		Snohomish Cnty Wash SCH Dist N 4% 12/01/2032	WRITE	table
-CUSIP:833240HJ6	scheduled	SNOHOMISH CNTY WASH 5%29		Snohomish Cnty Wash 5%29	WRITE	table
+CUSIP:833209LX5	scheduled	SNOHOMISH CNTY WASH SCH DIST N 4% 12/01/2032		Snohomish CNTY Wash SCH Dist N 4% 12/01/2032	WRITE	table
+CUSIP:833240HJ6	scheduled	SNOHOMISH CNTY WASH 5%29		Snohomish CNTY Wash 5%29	WRITE	table
 CUSIP:83748CAZ9	scheduled	SOUTH CORRECTIONAL ENTITY FAC 5% 12/01/2028		South Correctional Entity Fac 5% 12/01/2028	WRITE	table
 CUSIP:842400HQ9	scheduled	SOUTHERN CALIF EDISON CO 4.7% 06/01/2027		Southern Calif Edison Co 4.7% 06/01/2027	WRITE	table
 CUSIP:845080JG6	scheduled	SOUTHWEST LOC SCH D 4%26		Southwest Loc SCH D 4%26	WRITE	table
@@ -412,9 +412,9 @@ CUSIP:845437BR2	scheduled	SOUTHWESTERN ELEC PWR CO 4.1% 09/15/2028		Southwestern
 CUSIP:853207AN8	scheduled	STANDARD CALIF SCH DIST 3.125% 08/01/2027		Standard Calif SCH Dist 3.125% 08/01/2027	WRITE	table
 CUSIP:858620Z83	scheduled	STEPHEN F AUSTIN ST UNIV TEX U 4% 10/15/2032		Stephen F Austin ST Univ Tex U 4% 10/15/2032	WRITE	table
 CUSIP:867344AM5	scheduled	SUNFIELD MUN UTIL D 3%34		Sunfield Mun Util D 3%34	WRITE	table
-CUSIP:876387EP2	scheduled	TARRANT CNTY TEX HOSP DIST 5% 08/15/2031		Tarrant Cnty Tex Hosp Dist 5% 08/15/2031	WRITE	table
-CUSIP:87638QQG7	scheduled	TARRANT CNTY TEX CULTURAL ED F 5% 12/01/2030		Tarrant Cnty Tex Cultural Ed F 5% 12/01/2030	WRITE	table
-CUSIP:880591DX7	scheduled	TVA              4.65%35		Tva 4.65%35	WRITE	table
+CUSIP:876387EP2	scheduled	TARRANT CNTY TEX HOSP DIST 5% 08/15/2031		Tarrant CNTY Tex Hosp Dist 5% 08/15/2031	WRITE	table
+CUSIP:87638QQG7	scheduled	TARRANT CNTY TEX CULTURAL ED F 5% 12/01/2030		Tarrant CNTY Tex Cultural Ed F 5% 12/01/2030	WRITE	table
+CUSIP:880591DX7	scheduled	TVA              4.65%35		TVA 4.65%35	WRITE	table
 CUSIP:881685BB6	scheduled	TEXACO CAP INC MTNS B E 8% 08/01/2032		Texaco Cap Inc MTNS B E 8% 08/01/2032	WRITE	table
 CUSIP:881797AG9	scheduled	TEXARKANA COLLEGE TEX 4% 02/01/2027		Texarkana College Tex 4% 02/01/2027	WRITE	table
 CUSIP:881847VA2	scheduled	TEXARKANA TEX INDPT SCH DIST 5% 02/15/2034		Texarkana Tex Indpt SCH Dist 5% 02/15/2034	WRITE	table
@@ -433,7 +433,7 @@ CUSIP:88579EAC9	scheduled	3M CO             5.7%37		3M Co 5.7%37	WRITE	table
 CUSIP:887772DF5	scheduled	TIOGA TEX 5% 08/15/2028		Tioga Tex 5% 08/15/2028	WRITE	table
 CUSIP:89214A102	scheduled	TOWN SPORTS INTL HLDGS INC COM		Town Sports Intl Hldgs Inc	WRITE	table
 CUSIP:892778UG4	scheduled	TRAIL OF THE LAKES MUN UTIL DI 4% 04/01/2029		Trail of the Lakes Mun Util Di 4% 04/01/2029	WRITE	table
-CUSIP:89439YDU0	scheduled	TRAVIS CNTY TEX HEALTHCARE DIS 5% 03/01/2036		Travis Cnty Tex Healthcare Dis 5% 03/01/2036	WRITE	table
+CUSIP:89439YDU0	scheduled	TRAVIS CNTY TEX HEALTHCARE DIS 5% 03/01/2036		Travis CNTY Tex Healthcare Dis 5% 03/01/2036	WRITE	table
 CUSIP:895272EZ1	scheduled	TRENTON TEX INDPT SCH DIST 5% 02/01/2036		Trenton Tex Indpt SCH Dist 5% 02/01/2036	WRITE	table
 CUSIP:89602HGC5	scheduled	TRIBOROUGH BRDG & T 5%36		Triborough BRDG & T 5%36	WRITE	table
 CUSIP:899645G74	scheduled	TULSA OKLA 4% 03/01/2031		Tulsa Okla 4% 03/01/2031	WRITE	table
@@ -489,8 +489,8 @@ CUSIP:922908751	scheduled	VANGUARD MORNINGSTAR SMALL-CAP ETF		Vanguard Morningst
 CUSIP:92343VHF4	scheduled	VERIZON COMMUNIC 4.75%33		Verizon Communic 4.75%33	WRITE	table
 CUSIP:92778UAZ3	scheduled	VIRGINIA COMMLTH TRANSN BRD FE 5% 09/15/2028		Virginia Commlth Transn BRD Fe 5% 09/15/2028	WRITE	table
 CUSIP:92778VJG4	scheduled	VIRGINIA COLLEGE BLDG AUTH VA 5% 02/01/2028		Virginia College BLDG Auth Va 5% 02/01/2028	WRITE	table
-CUSIP:932449CN9	scheduled	WALLER CNTY TEX 3.375%34		Waller Cnty Tex 3.375%34	WRITE	table
-CUSIP:938688ZM3	scheduled	WASHINGTON CNTY TEX JR COLLEGE 5% 10/01/2036		Washington Cnty Tex JR College 5% 10/01/2036	WRITE	table
+CUSIP:932449CN9	scheduled	WALLER CNTY TEX 3.375%34		Waller CNTY Tex 3.375%34	WRITE	table
+CUSIP:938688ZM3	scheduled	WASHINGTON CNTY TEX JR COLLEGE 5% 10/01/2036		Washington CNTY Tex JR College 5% 10/01/2036	WRITE	table
 CUSIP:93974D6H6	scheduled	WASHINGTON ST 5% 02/01/2028		Washington ST 5% 02/01/2028	WRITE	table
 CUSIP:93974DX52	scheduled	WASHINGTON ST 5% 08/01/2033		Washington ST 5% 08/01/2033	WRITE	table
 CUSIP:93974DXD5	scheduled	WASHINGTON ST 5% 08/01/2031		Washington ST 5% 08/01/2031	WRITE	table
@@ -501,8 +501,8 @@ CUSIP:949764SJ4	scheduled	WELLS FARGO BANK 3.75%26		Wells Fargo Bank 3.75%26	WRI
 CUSIP:949764XN9	scheduled	WELLS FARGO BANK NATL ASSN 4.15% 2028		Wells Fargo Bank Natl Assn 4.15% 2028	WRITE	table
 CUSIP:949797AA2	scheduled	WELLS FARGO MORTGAG 6%37		Wells Fargo Mortgag 6%37	WRITE	table
 CUSIP:95000U2D4	scheduled	WELLS FARGO & CO 4.15% 01/24/2029		Wells Fargo & Co 4.15% 01/24/2029	WRITE	table
-CUSIP:953086NM3	scheduled	WEST HARRIS CNTY TEX MUN UTIL 5.5% 06/01/2028		West Harris Cnty Tex Mun Util 5.5% 06/01/2028	WRITE	table
-CUSIP:969078TT1	scheduled	WILL CNTY ILL CMNTY UNIT SCH D 4% 11/01/2036		Will Cnty Ill Cmnty Unit SCH D 4% 11/01/2036	WRITE	table
+CUSIP:953086NM3	scheduled	WEST HARRIS CNTY TEX MUN UTIL 5.5% 06/01/2028		West Harris CNTY Tex Mun Util 5.5% 06/01/2028	WRITE	table
+CUSIP:969078TT1	scheduled	WILL CNTY ILL CMNTY UNIT SCH D 4% 11/01/2036		Will CNTY Ill Cmnty Unit SCH D 4% 11/01/2036	WRITE	table
 CUSIP:97112AEA2	scheduled	WILLOW CREEK FARM 3.5%36		Willow Creek Farm 3.5%36	WRITE	table
 CUSIP:974433JM7	scheduled	WINNEBAGO BOONE ETC 5%31		Winnebago Boone Etc 5%31	WRITE	table
 CUSIP:976656BW7	scheduled	WISCONSIN ELECT 5.625%33		Wisconsin Elect 5.625%33	WRITE	table
@@ -526,7 +526,7 @@ DFSD	seed	Dimensional Short-Duration Fixed Income ETF		Dimensional Short-Duratio
 DG	legacy	Dollar General Corp		Dollar General Corp	UNCHANGED	table
 DGRO	seed	iShares Core Dividend Growth ETF		iShares Core Dividend Growth ETF	UNCHANGED	table
 DIVZ	seed	Opal Dividend Income ETF		Opal Dividend Income ETF	UNCHANGED	table
-DSCLX	scheduled	DFA INTERNATIONAL SOCIAL COR EQ INSTL		Dfa International Social Cor Eq Instl	WRITE	table
+DSCLX	scheduled	DFA INTERNATIONAL SOCIAL COR EQ INSTL		DFA International Social Cor Eq Instl	WRITE	table
 DSL	scheduled	DOUBLELINE INCOME SOLUTIONS FD COM		Doubleline Income Solutions FD	WRITE	table
 DTE	legacy	DTE Energy Co		DTE Energy Co	UNCHANGED	table
 DVY	seed	iShares Select Dividend ETF		iShares Select Dividend ETF	UNCHANGED	table
@@ -541,10 +541,10 @@ EL	legacy	The Estee Lauder Cos Inc		The Estee Lauder Cos Inc	UNCHANGED	table
 EMB	seed	iShares JP Morgan USD Emerging Markets Bond ETF		iShares JP Morgan USD Emerging Markets Bond ETF	UNCHANGED	table
 ENB	legacy	Enbridge Inc		Enbridge Inc	UNCHANGED	table
 ENLAY	legacy	Enel SpA		Enel SpA	UNCHANGED	table
-EQNR	scheduled	EQUINOR ASA SPONSORED ADR		Equinor Asa Sponsored Adr	WRITE	table
+EQNR	scheduled	EQUINOR ASA SPONSORED ADR		Equinor ASA Sponsored ADR	WRITE	table
 ES	legacy	Eversource Energy		Eversource Energy	UNCHANGED	table
 ETIRX	scheduled	EVENTIDE CORE BOND I		Eventide Core Bond I	WRITE	table
-ETOR	scheduled	Etoro Group Ltd		Etoro Group Ltd	UNCHANGED	table
+ETOR	scheduled	Etoro Group Ltd		Etoro Group LTD	WRITE	table
 ETR	legacy	Entergy Corp		Entergy Corp	UNCHANGED	table
 EVNT	seed	EVNT		EVNT	UNCHANGED	table
 EVSM	seed	Eaton Vance Short Duration Municipal Income ETF		Eaton Vance Short Duration Municipal Income ETF	UNCHANGED	table
@@ -560,7 +560,7 @@ FIMKX	scheduled	FIDELITY ADVISOR FOCUSED EM MKTS I		Fidelity Advisor Focused Em 
 FIX	legacy	Comfort Systems USA Inc		Comfort Systems USA Inc	UNCHANGED	table
 FKIQX	seed	FRANKLIN INCOME A		Franklin Income A	SEED-SOURCE	table
 FLCOX	seed	Fidelity Large Cap Value Index Fund		Fidelity Large Cap Value Index Fund	UNCHANGED	table
-FLEX	legacy	Flex Ltd		Flex Ltd	UNCHANGED	table
+FLEX	legacy	Flex Ltd		Flex LTD	WRITE	table
 FLOT	seed	iShares Floating Rate Bond ETF		iShares Floating Rate Bond ETF	UNCHANGED	table
 FLRN	scheduled	STATE STREET SPDR BLOOMBERG INVESTMENT GRADE FLOATING RATE ETF		State Street SPDR Bloomberg Investment Grade Floating Rate ETF	WRITE	table
 FM	scheduled	FIRST QUANTUM MINERALS LTD COM		First Quantum Minerals LTD	WRITE	table
@@ -573,7 +573,7 @@ FTNT	legacy	Fortinet Inc		Fortinet Inc	UNCHANGED	table
 FTYPX	seed	FIDELITY FREEDOM INDEX 2055 PREMIER		Fidelity Freedom Index 2055 Premier	SEED-SOURCE	table
 FXFXX	legacy	First American Treasury Obligations Fund		First American Treasury Obligations Fund	UNCHANGED	table
 GARP	seed	GARP		GARP	UNCHANGED	table
-GENI	scheduled	Genius Sports Ltd		Genius Sports Ltd	UNCHANGED	table
+GENI	scheduled	Genius Sports Ltd		Genius Sports LTD	WRITE	table
 GEV	legacy	GE Vernova Inc		GE Vernova Inc	UNCHANGED	table
 GIBIX	scheduled	GUGGENHEIM TOTAL RETURN BOND INSTL		Guggenheim Total Return Bond Instl	WRITE	table
 GIGB	scheduled	GOLDMAN SACHS ACCESS INVESTMENT GRADE CORPORATE BOND ETF		Goldman Sachs Access Investment Grade Corporate Bond ETF	WRITE	table
@@ -590,19 +590,20 @@ GS	legacy	The Goldman Sachs Group Inc		The Goldman Sachs Group Inc	UNCHANGED	tab
 GSG	seed	iShares S&P GSCI Commodity-Indexed Trust		iShares S&P GSCI Commodity-Indexed Trust	UNCHANGED	table
 GSK	legacy	GSK PLC		GSK PLC	UNCHANGED	table
 HD	legacy	The Home Depot Inc		The Home Depot Inc	UNCHANGED	table
+HDB	scheduled	HDFC Bank Ltd		HDFC Bank LTD	WRITE	table
 HES	scheduled	HESS CORP COM		Hess Corp	WRITE	table
 HESAY	legacy	Hermes International SCA		Hermes International SCA	UNCHANGED	table
 HHHFX	scheduled	HARTFORD SCHRODERS EMERGING MKTS EQ F		Hartford Schroders Emerging MKTS Eq F	WRITE	table
 HSBC	legacy	HSBC Holdings PLC		HSBC Holdings PLC	UNCHANGED	table
 HSY	legacy	The Hershey Co		The Hershey Co	UNCHANGED	table
-HTHT	scheduled	H World Group Ltd		H World Group Ltd	UNCHANGED	table
+HTHT	scheduled	H World Group Ltd		H World Group LTD	WRITE	table
 HWM	legacy	Howmet Aerospace Inc		Howmet Aerospace Inc	UNCHANGED	table
 HYG	seed	iShares iBoxx High Yield Corporate Bond ETF		iShares iBoxx High Yield Corporate Bond ETF	UNCHANGED	table
 IAGG	seed	iShares Core International Aggregate Bond ETF		iShares Core International Aggregate Bond ETF	UNCHANGED	table
 IAU	seed	iShares Gold Trust		iShares Gold Trust	UNCHANGED	table
 IBDRY	legacy	Iberdrola SA		Iberdrola SA	UNCHANGED	table
 IBIL	seed	iShares Treasury Bill ETF		iShares Treasury Bill ETF	UNCHANGED	table
-IBN	legacy	ICICI Bank Ltd		ICICI Bank Ltd	UNCHANGED	table
+IBN	legacy	ICICI Bank Ltd		ICICI Bank LTD	WRITE	table
 IBND	seed	IBND		IBND	UNCHANGED	table
 IBTF	seed	iShares iBonds Dec 2028 Term Treasury ETF		iShares iBonds Dec 2028 Term Treasury ETF	UNCHANGED	table
 ICSH	seed	iShares Ultra Short Duration Bond Active ETF		iShares Ultra Short Duration Bond Active ETF	UNCHANGED	table
@@ -661,7 +662,7 @@ LIPKX	seed	BlackRock LifePath Index 2050 Fund T		BlackRock LifePath Index 2050 F
 LITE	legacy	Lumentum Holdings Inc		Lumentum Holdings Inc	UNCHANGED	table
 LLY	legacy	Eli Lilly & Co		Eli Lilly & Co	UNCHANGED	table
 LMT	legacy	Lockheed Martin Corp		Lockheed Martin Corp	UNCHANGED	table
-LNVGY	legacy	Lenovo Group Ltd		Lenovo Group Ltd	UNCHANGED	table
+LNVGY	legacy	Lenovo Group Ltd		Lenovo Group LTD	WRITE	table
 LONZ	seed	Pimco Senior Loan Active ETF		Pimco Senior Loan Active ETF	UNCHANGED	table
 LQD	seed	iShares iBoxx Investment Grade Corporate Bond ETF		iShares iBoxx Investment Grade Corporate Bond ETF	UNCHANGED	table
 LRCX	legacy	Lam Research Corp		Lam Research Corp	UNCHANGED	table
@@ -702,15 +703,15 @@ NEM	legacy	Newmont Corp		Newmont Corp	UNCHANGED	table
 NEWFX	scheduled	AMERICAN FUNDS NEW WORLD A		American Funds New World A	WRITE	table
 NFFFX	scheduled	AMERICAN FUNDS NEW WORLD F2		American Funds New World F2	WRITE	table
 NFLX	legacy	Netflix Inc		Netflix Inc	UNCHANGED	table
-NGG	scheduled	NATIONAL GRID PLC SPONSORED ADR NE		National Grid PLC Sponsored Adr Ne	WRITE	table
+NGG	scheduled	NATIONAL GRID PLC SPONSORED ADR NE		National Grid PLC Sponsored ADR Ne	WRITE	table
 NOK	legacy	Nokia Oyj		Nokia Oyj	UNCHANGED	table
 NOW	legacy	ServiceNow Inc		ServiceNow Inc	UNCHANGED	table
 NRSRX	scheduled	NUVEEN INTERNATIONAL RES EQ R6		Nuveen International Res Eq R6	WRITE	table
 NSRGY	legacy	Nestle SA		Nestle SA	UNCHANGED	table
 NTRS	legacy	Northern Trust Corp		Northern Trust Corp	UNCHANGED	table
-NU	legacy	NU Holdings Ltd		NU Holdings Ltd	UNCHANGED	table
-NULG	scheduled	NUVEEN ESG LARGE-CAP GROWTH ETF		Nuveen Esg Large-Cap Growth ETF	WRITE	table
-NULV	scheduled	NUVEEN ESG LARGE-CAP VALUE ETF		Nuveen Esg Large-Cap Value ETF	WRITE	table
+NU	legacy	NU Holdings Ltd		NU Holdings LTD	WRITE	table
+NULG	scheduled	NUVEEN ESG LARGE-CAP GROWTH ETF		Nuveen ESG Large-Cap Growth ETF	WRITE	table
+NULV	scheduled	NUVEEN ESG LARGE-CAP VALUE ETF		Nuveen ESG Large-Cap Value ETF	WRITE	table
 NVDA	legacy	NVIDIA Corp		NVIDIA Corp	UNCHANGED	table
 NVS	legacy	Novartis AG		Novartis AG	UNCHANGED	table
 NYT	seed	The New York Times Company Class A		The New York Times Company Class A	UNCHANGED	table
@@ -721,7 +722,7 @@ OMAB	legacy	Grupo Aeroportuario del Centro Norte SAB de CV		Grupo Aeroportuario 
 ONIAX	scheduled	JPMORGAN CORE PLUS BOND A		JPMorgan Core Plus Bond A	WRITE	table
 ORANY	legacy	Orange SA		Orange SA	UNCHANGED	table
 OSK	scheduled	OSHKOSH CORP COM		Oshkosh Corp	WRITE	table
-PAAA	seed	PGIM AAA CLO ETF		Pgim Aaa Clo ETF	SEED-SOURCE	table
+PAAA	seed	PGIM AAA CLO ETF		PGIM AAA CLO ETF	UNCHANGED	table
 PBR	legacy	Petroleo Brasileiro SA		Petroleo Brasileiro SA	UNCHANGED	table
 PCG	legacy	PG&E Corp		PG&E Corp	UNCHANGED	table
 PCHI	seed	Polen High Yield ETF		Polen High Yield ETF	UNCHANGED	table
@@ -733,14 +734,14 @@ PFMIX	seed	PIMCO Municipal Bond Fund Institutional Class		PIMCO Municipal Bond F
 PFOE	seed	Pathfinder Focused Opportunities ETF		Pathfinder Focused Opportunities ETF	UNCHANGED	table
 PGBOX	scheduled	JPMORGAN CORE BOND A		JPMorgan Core Bond A	WRITE	table
 PHYS	seed	Sprott Physical Gold Trust		Sprott Physical Gold Trust	UNCHANGED	table
-PIMIX	scheduled	PIMCO INCOME INSTL		Pimco Income Instl	WRITE	table
-PIPNX	scheduled	PIMCO INCOME I-3		Pimco Income I-3	WRITE	table
+PIMIX	scheduled	PIMCO INCOME INSTL		PIMCO Income Instl	WRITE	table
+PIPNX	scheduled	PIMCO INCOME I-3		PIMCO Income I-3	WRITE	table
 PLFDX	scheduled	ARISTOTLE FLOATING RATE INCOME I-2		Aristotle Floating Rate Income I-2	WRITE	table
 PLTR	legacy	Palantir Technologies Inc		Palantir Technologies Inc	UNCHANGED	table
 PM	legacy	Philip Morris International Inc		Philip Morris International Inc	UNCHANGED	table
-PONAX	scheduled	PIMCO INCOME A		Pimco Income A	WRITE	table
-PONPX	scheduled	PIMCO INCOME I2		Pimco Income I2	WRITE	table
-PPHPF	scheduled	KERING S A UNSPONSORED ADR		Kering S A Unsponsored Adr	WRITE	table
+PONAX	scheduled	PIMCO INCOME A		PIMCO Income A	WRITE	table
+PONPX	scheduled	PIMCO INCOME I2		PIMCO Income I2	WRITE	table
+PPHPF	scheduled	KERING S A UNSPONSORED ADR		Kering S A Unsponsored ADR	WRITE	table
 PRTMX	seed	T. Rowe Price Intermediate Municipal Bond Fund I Class		T. Rowe Price Intermediate Municipal Bond Fund I Class	UNCHANGED	table
 PSLV	seed	Sprott Physical Silver Trust		Sprott Physical Silver Trust	UNCHANGED	table
 QBER	seed	TrueShares Quarterly Bear Hedge ETF		TrueShares Quarterly Bear Hedge ETF	UNCHANGED	table
@@ -752,7 +753,7 @@ QQQM	seed	Invesco Nasdaq 100 ETF		Invesco Nasdaq 100 ETF	UNCHANGED	table
 QUAL	seed	iShares MSCI USA Quality Factor ETF		iShares MSCI USA Quality Factor ETF	UNCHANGED	table
 QXO	legacy	QXO Inc		QXO Inc	UNCHANGED	table
 RBGLD	legacy	Reckitt Benckiser Group PLC		Reckitt Benckiser Group PLC	UNCHANGED	table
-RBGLY	scheduled	RECKITT BENCKISER GRP PLC SPONSORED ADR		Reckitt Benckiser GRP PLC Sponsored Adr	WRITE	table
+RBGLY	scheduled	RECKITT BENCKISER GRP PLC SPONSORED ADR		Reckitt Benckiser GRP PLC Sponsored ADR	WRITE	table
 REGN	legacy	Regeneron Pharmaceuticals Inc		Regeneron Pharmaceuticals Inc	UNCHANGED	table
 RHHBY	legacy	Roche Holding AG		Roche Holding AG	UNCHANGED	table
 RIO	legacy	Rio Tinto PLC		Rio Tinto PLC	UNCHANGED	table
@@ -800,19 +801,19 @@ SWAGX	scheduled	SCHWAB US AGGREGATE BOND INDEX		Schwab US Aggregate Bond Index	W
 SYLD	seed	SYLD		SYLD	UNCHANGED	table
 T	legacy	AT&T Inc		AT&T Inc	UNCHANGED	table
 TBIL	seed	US Treasury 3 Month Bill ETF		US Treasury 3 Month Bill ETF	UNCHANGED	table
-TCOM	scheduled	Trip.com Group Ltd		Trip.com Group Ltd	UNCHANGED	table
+TCOM	scheduled	Trip.com Group Ltd		Trip.com Group LTD	WRITE	table
 TFLO	seed	iShares Treasury Floating Rate Bond ETF		iShares Treasury Floating Rate Bond ETF	UNCHANGED	table
 THC	scheduled	Tenet Healthcare Corp		Tenet Healthcare Corp	UNCHANGED	table
 TIP	seed	iShares TIPS Bond ETF		iShares TIPS Bond ETF	UNCHANGED	table
 TJX	legacy	The TJX Cos Inc		The TJX Cos Inc	UNCHANGED	table
 TKOMY	legacy	Tokio Marine Holdings Inc		Tokio Marine Holdings Inc	UNCHANGED	table
 TLT	seed	iShares 20+ Year Treasury Bond ETF		iShares 20+ Year Treasury Bond ETF	UNCHANGED	table
-TOELY	scheduled	TOKYO ELECTRON LTD UNSPON ADR		Tokyo Electron LTD Unspon Adr	WRITE	table
+TOELY	scheduled	TOKYO ELECTRON LTD UNSPON ADR		Tokyo Electron LTD Unspon ADR	WRITE	table
 TRREX	seed	T. Rowe Price Real Estate Fund		T. Rowe Price Real Estate Fund	UNCHANGED	table
 TRV	legacy	The Travelers Cos Inc		The Travelers Cos Inc	UNCHANGED	table
 TSBRX	scheduled	NUVEEN CORE IMPACT BOND R6		Nuveen Core Impact Bond R6	WRITE	table
 TSLA	legacy	Tesla Inc		Tesla Inc	UNCHANGED	table
-TSM	legacy	Taiwan Semiconductor Manufacturing Co Ltd ADR		Taiwan Semiconductor Manufacturing Co Ltd ADR	UNCHANGED	table
+TSM	legacy	Taiwan Semiconductor Manufacturing Co Ltd ADR		Taiwan Semiconductor Manufacturing Co LTD ADR	WRITE	table
 TTE	legacy	TotalEnergies SE		TotalEnergies SE	UNCHANGED	table
 TXN	legacy	Texas Instruments Inc		Texas Instruments Inc	UNCHANGED	table
 UAL	legacy	United Airlines Holdings Inc		United Airlines Holdings Inc	UNCHANGED	table
@@ -829,7 +830,7 @@ UTEN	seed	US Treasury 10 Year Note ETF		US Treasury 10 Year Note ETF	UNCHANGED	t
 UTWO	seed	US Treasury 2 Year Note ETF		US Treasury 2 Year Note ETF	UNCHANGED	table
 UVXY	seed	ProShares Ultra VIX Short-Term Futures ETF		ProShares Ultra VIX Short-Term Futures ETF	UNCHANGED	table
 V	legacy	Visa Inc		Visa Inc	UNCHANGED	table
-VALE	scheduled	VALE S A SPONSORED ADS		Vale S A Sponsored Ads	WRITE	table
+VALE	scheduled	VALE S A SPONSORED ADS		Vale S A Sponsored ADS	WRITE	table
 VB	seed	Vanguard Small-Cap ETF		Vanguard Small-Cap ETF	UNCHANGED	table
 VBTIX	scheduled	VANGUARD TOTAL BOND MARKET INDEX I		Vanguard Total Bond Market Index I	WRITE	table
 VCIT	seed	Vanguard Intermediate-Term Corporate Bond ETF		Vanguard Intermediate-Term Corporate Bond ETF	UNCHANGED	table
@@ -860,7 +861,7 @@ VTTHX	seed	VANGUARD TARGET RETIREMENT 2030 FUND		Vanguard Target Retirement 2030
 VTV	seed	Vanguard Value ETF		Vanguard Value ETF	UNCHANGED	table
 VUG	seed	Vanguard Growth ETF		Vanguard Growth ETF	UNCHANGED	table
 VUSB	seed	Vanguard Ultra-Short Bond ETF		Vanguard Ultra-Short Bond ETF	UNCHANGED	table
-VWAGY	scheduled	VOLKSWAGEN AG ADR RP PFD SHS		Volkswagen AG Adr RP PFD	WRITE	table
+VWAGY	scheduled	VOLKSWAGEN AG ADR RP PFD SHS		Volkswagen AG ADR RP PFD	WRITE	table
 VWELX	seed	Vanguard Wellington Fund Investor		Vanguard Wellington Fund Investor	UNCHANGED	table
 VWENX	seed	Vanguard Wellington Fund Admiral		Vanguard Wellington Fund Admiral	UNCHANGED	table
 VWO	seed	Vanguard FTSE Emerging Markets ETF		Vanguard FTSE Emerging Markets ETF	UNCHANGED	table
@@ -870,7 +871,7 @@ VXX	seed	iPath Series B S&P 500 VIX Short-Term Futures ETN		iPath Series B S&P 5
 VZ	legacy	Verizon Communications Inc		Verizon Communications Inc	UNCHANGED	table
 WDAY	legacy	Workday Inc		Workday Inc	UNCHANGED	table
 WDC	legacy	Western Digital Corp		Western Digital Corp	UNCHANGED	table
-WDS	scheduled	WOODSIDE ENERGY GROUP LTD SPONSORED ADR		Woodside Energy Group LTD Sponsored Adr	WRITE	table
+WDS	scheduled	WOODSIDE ENERGY GROUP LTD SPONSORED ADR		Woodside Energy Group LTD Sponsored ADR	WRITE	table
 WM	legacy	Waste Management Inc		Waste Management Inc	UNCHANGED	table
 WMG	scheduled	WARNER MUSIC GROUP CORP COM CL A		Warner Music Group Corp Com CL A	WRITE	table
 WMMVY	legacy	Wal-Mart de Mexico SAB de CV		Wal-Mart de Mexico SAB de CV	UNCHANGED	table
@@ -886,7 +887,7 @@ A	scheduled		AGILENT TECHNOLOGIES INC COM	Agilent Technologies Inc	WRITE	custody
 AAAZX	scheduled		DWS RREEF Real Assets Fund - Class Inst	DWS RREEF Real Assets Fund - Class Inst	WRITE	custody:inflection
 AAHYX	scheduled		Thrivent Diversified Income Plus A	Thrivent Diversified Income Plus A	WRITE	custody:inflection
 AAL	scheduled		American Airlines Group Inc	American Airlines Group Inc	WRITE	custody:inflection
-AAON	scheduled		AAON INC COM PAR $0.004	Aaon Inc Com Par $0.004	WRITE	custody:cottonwood
+AAON	scheduled		AAON INC COM PAR $0.004	AAON Inc Com Par $0.004	WRITE	custody:cottonwood
 AB	scheduled		ALLIANCEBERNSTEIN HLDG L P UNIT LTD PARTN	Alliancebernstein HLDG L P Unit LTD Partn	WRITE	custody:cottonwood
 ABNB	scheduled		AIRBNB INC COM CL A	Airbnb Inc Com CL A	WRITE	custody:cottonwood
 ABNDX	scheduled		American Bond Fund of America A	American Bond Fund of America A	WRITE	custody:inflection
@@ -900,7 +901,7 @@ ADSK	scheduled		AUTODESK INC COM	Autodesk Inc	WRITE	custody:cottonwood
 AEM	scheduled		AGNICO EAGLE MINES LTD COM	Agnico Eagle Mines LTD	WRITE	custody:cottonwood
 AEPFX	scheduled		AMERICAN FUNDS EUPAC F-2	American Funds Eupac F-2	WRITE	custody:cottonwood
 AER	scheduled		AerCap Holdings NV	AerCap Holdings NV	WRITE	custody:inflection
-AES	scheduled		AES CORP COM	Aes Corp	WRITE	custody:cottonwood
+AES	scheduled		AES CORP COM	AES Corp	WRITE	custody:cottonwood
 AFL	scheduled		AFLAC Inc	AFLAC Inc	WRITE	custody:inflection
 AGTHX	scheduled		AMERICAN FUNDS GROWTH FD OF AMER A	American Funds Growth FD of Amer A	WRITE	custody:cottonwood
 AHITX	scheduled		American High Income A	American High Income A	WRITE	custody:inflection
@@ -936,7 +937,7 @@ ANWPX	scheduled		American New Perspective A	American New Perspective A	WRITE	cus
 AON	scheduled		AON PLC SHS CL A	Aon PLC SHS CL A	WRITE	custody:cottonwood
 APA	scheduled		APA CORPORATION COM	Apa Corporation	WRITE	custody:cottonwood
 APD	scheduled		AIR PRODUCTS AND CHEMICALS INC COM	Air Products and Chemicals Inc	WRITE	custody:cottonwood
-APG	scheduled		API GROUP CORP COM STK	Api Group Corp Com STK	WRITE	custody:cottonwood
+APG	scheduled		API GROUP CORP COM STK	API Group Corp Com STK	WRITE	custody:cottonwood
 APH	scheduled		AMPHENOL CORP CL A	Amphenol Corp CL A	WRITE	custody:cottonwood
 APHFX	scheduled		Artisan High Income-Inst	Artisan High Income-Inst	WRITE	custody:inflection
 APHKX	scheduled		ARTISAN INTERNATIONAL VALUE INSTL	Artisan International Value Instl	WRITE	custody:cottonwood
@@ -964,7 +965,7 @@ AXON	scheduled		AXON ENTERPRISE INC COM	Axon Enterprise Inc	WRITE	custody:cotton
 AXP	scheduled		AMERICAN EXPRESS CO COM	American Express Co	WRITE	custody:cottonwood
 AZO	scheduled		AutoZone Inc	AutoZone Inc	WRITE	custody:inflection
 B	scheduled		BARRICK MNG CORP COM SHS	Barrick MNG Corp	WRITE	custody:cottonwood
-BABA	legacy		ALIBABA GROUP HLDG LTD SPONSORED ADS	Alibaba Group HLDG LTD Sponsored Ads	WRITE	custody:cottonwood
+BABA	legacy		ALIBABA GROUP HLDG LTD SPONSORED ADS	Alibaba Group HLDG LTD Sponsored ADS	WRITE	custody:cottonwood
 BAESY	scheduled		BAE Systems Spons ADR	BAE Systems Spons ADR	WRITE	custody:inflection
 BAH	scheduled		BOOZ ALLEN HAMILTON HLDG CORP CL A	Booz Allen Hamilton HLDG Corp CL A	WRITE	custody:cottonwood
 BALL	scheduled		BALL CORP COM	Ball Corp	WRITE	custody:cottonwood
@@ -974,7 +975,7 @@ BBVA	scheduled		Banco Bilbao Viscaya Argentina ADR	Banco Bilbao Viscaya Argentin
 BC	scheduled		BRUNSWICK CORP COM	Brunswick Corp	WRITE	custody:cottonwood
 BCS	scheduled		Barclays PLC	Barclays PLC	WRITE	custody:inflection
 BDX	scheduled		BECTON DICKINSON & CO COM	Becton Dickinson & Co	WRITE	custody:cottonwood
-BHP	scheduled		BHP Group Ltd ADR	BHP Group Ltd ADR	WRITE	custody:inflection
+BHP	scheduled		BHP Group Ltd ADR	BHP Group LTD ADR	WRITE	custody:inflection
 BIIB	scheduled		BIOGEN INC COM	Biogen Inc	WRITE	custody:cottonwood
 BILL	scheduled		BILL HOLDINGS INC COM	Bill Holdings Inc	WRITE	custody:cottonwood
 BJ	scheduled		BJS Wholesale Club Hldgs Inc	BJS Wholesale Club Hldgs Inc	WRITE	custody:inflection
@@ -990,8 +991,8 @@ BRKB	scheduled		Berkshire Hathaway Inc Class B	Berkshire Hathaway Inc Class B	WR
 BRO	scheduled		BROWN & BROWN INC COM	Brown & Brown Inc	WRITE	custody:cottonwood
 BSNIX	scheduled		BAIRD STRATEGIC MUNICIPAL BOND INSTL	Baird Strategic Municipal Bond Instl	WRITE	custody:cottonwood
 BSX	scheduled		BOSTON SCIENTIFIC CORP COM	Boston Scientific Corp	WRITE	custody:cottonwood
-BUD	scheduled		ANHEUSER BUSCH INBEV SA NV SPONSORED ADR	Anheuser Busch Inbev SA NV Sponsored Adr	WRITE	custody:cottonwood
-BUG	scheduled		Global X Fds Cybersecurity Etf	Global X Fds Cybersecurity Etf	WRITE	custody:inflection
+BUD	scheduled		ANHEUSER BUSCH INBEV SA NV SPONSORED ADR	Anheuser Busch Inbev SA NV Sponsored ADR	WRITE	custody:cottonwood
+BUG	scheduled		Global X Fds Cybersecurity Etf	Global X Fds Cybersecurity ETF	WRITE	custody:inflection
 BWA	scheduled		BORGWARNER INC COM	Borgwarner Inc	WRITE	custody:cottonwood
 BYND	scheduled		Beyond Meat Inc	Beyond Meat Inc	WRITE	custody:inflection
 CAH	scheduled		CARDINAL HEALTH INC COM	Cardinal Health Inc	WRITE	custody:cottonwood
@@ -1000,7 +1001,7 @@ CAR	scheduled		AVIS BUDGET GROUP INC COM	Avis Budget Group Inc	WRITE	custody:cot
 CARR	scheduled		CARRIER GLOBAL CORPORATION COM	Carrier Global Corporation	WRITE	custody:cottonwood
 CAT	scheduled		CATERPILLAR INC COM	Caterpillar Inc	WRITE	custody:cottonwood
 CB	scheduled		CHUBB LIMITED COM	Chubb Limited	WRITE	custody:cottonwood
-CBRE	scheduled		CBRE GROUP INC CL A	Cbre Group Inc CL A	WRITE	custody:cottonwood
+CBRE	scheduled		CBRE GROUP INC CL A	CBRE Group Inc CL A	WRITE	custody:cottonwood
 CCI	scheduled		CROWN CASTLE INC COM	Crown Castle Inc	WRITE	custody:cottonwood
 CCJ	scheduled		Cameco Corp	Cameco Corp	WRITE	custody:inflection
 CCK	scheduled		CROWN HLDGS INC COM	Crown Hldgs Inc	WRITE	custody:cottonwood
@@ -1028,7 +1029,7 @@ CLX	legacy		CLOROX CO DEL COM	Clorox Co Del	WRITE	custody:cottonwood
 CMCSA	scheduled		COMCAST CORP NEW CL A	Comcast Corp New CL A	WRITE	custody:cottonwood
 CMG	scheduled		CHIPOTLE MEXICAN GRILL INC COM	Chipotle Mexican Grill Inc	WRITE	custody:cottonwood
 CMGIX	scheduled		BlackRock Mid-Cap Growth Equity I	BlackRock Mid-Cap Growth Equity I	WRITE	custody:inflection
-CMPS	scheduled		COMPASS PATHWAYS PLC SPONSORED ADS	Compass Pathways PLC Sponsored Ads	WRITE	custody:cottonwood
+CMPS	scheduled		COMPASS PATHWAYS PLC SPONSORED ADS	Compass Pathways PLC Sponsored ADS	WRITE	custody:cottonwood
 CMS	scheduled		CMS ENERGY CORP COM	CMS Energy Corp	WRITE	custody:cottonwood
 CNP	scheduled		CENTERPOINT ENERGY INC COM	Centerpoint Energy Inc	WRITE	custody:cottonwood
 CNQ	scheduled		Canadian Natural Resources Limited	Canadian Natural Resources Limited	WRITE	custody:inflection
@@ -1078,10 +1079,10 @@ DEO	scheduled		Diageo PLC	Diageo PLC	WRITE	custody:inflection
 DFAI	scheduled		Dimensional International Core Equity Market ETF	Dimensional International Core Equity Market ETF	WRITE	custody:49financial
 DFEM	scheduled		Dimensional Emerging Markets Core Equity 2 ETF	Dimensional Emerging Markets Core Equity 2 ETF	WRITE	custody:49financial
 DFEVX	scheduled		DFA Emerging Markets Value	DFA Emerging Markets Value	WRITE	custody:inflection
-DFIEX	scheduled		DFA INTERNATIONAL CORE EQUITY 2 I	Dfa International Core Equity 2 I	WRITE	custody:cottonwood
+DFIEX	scheduled		DFA INTERNATIONAL CORE EQUITY 2 I	DFA International Core Equity 2 I	WRITE	custody:cottonwood
 DFISX	scheduled		DFA Intl Small Company Instl	DFA Intl Small Company Instl	WRITE	custody:inflection
 DFIVX	scheduled		DFA International Value Portfolio (I)	DFA International Value Portfolio (I)	WRITE	custody:inflection
-DFSTX	scheduled		DFA US SMALL CAP I	Dfa US Small Cap I	WRITE	custody:cottonwood
+DFSTX	scheduled		DFA US SMALL CAP I	DFA US Small Cap I	WRITE	custody:cottonwood
 DFTX	scheduled		DEFINIUM THERAPEUTICS INC COM SHS	Definium Therapeutics Inc	WRITE	custody:cottonwood
 DGRW	scheduled		WisdomTree U.S. Quality Dividend Growth ETF	WisdomTree U.S. Quality Dividend Growth ETF	WRITE	custody:inflection
 DGX	scheduled		Quest Diagnostic Inc	Quest Diagnostic Inc	WRITE	custody:inflection
@@ -1091,7 +1092,7 @@ DHR	scheduled		DANAHER CORP DEL COM	Danaher Corp Del	WRITE	custody:cottonwood
 DINO	scheduled		HF SINCLAIR CORP COM	HF Sinclair Corp	WRITE	custody:cottonwood
 DIS	scheduled		DISNEY WALT CO COM	Disney Walt Co	WRITE	custody:cottonwood
 DKNG	scheduled		DRAFTKINGS INC NEW COM CL A	Draftkings Inc New Com CL A	WRITE	custody:cottonwood
-DLR	scheduled		DIGITAL RLTY TR INC COM	Digital Rlty TR Inc	WRITE	custody:cottonwood
+DLR	scheduled		DIGITAL RLTY TR INC COM	Digital RLTY TR Inc	WRITE	custody:cottonwood
 DLTR	scheduled		DOLLAR TREE INC COM	Dollar Tree Inc	WRITE	custody:cottonwood
 DOCU	scheduled		DOCUSIGN INC COM	Docusign Inc	WRITE	custody:cottonwood
 DODFX	scheduled		Dodge & Cox Intl Stock Fund	Dodge & Cox Intl Stock Fund	WRITE	custody:inflection
@@ -1100,7 +1101,7 @@ DOV	scheduled		DOVER CORP COM	Dover Corp	WRITE	custody:cottonwood
 DOW	scheduled		Dow Inc	Dow Inc	WRITE	custody:inflection
 DOX	scheduled		AmDocs Limited	AmDocs Limited	WRITE	custody:inflection
 DOXGX	scheduled		DODGE & COX STOCK X	Dodge & Cox Stock X	WRITE	custody:cottonwood
-DSDVY	scheduled		DSV AS ADR	DSV As Adr	WRITE	custody:inflection
+DSDVY	scheduled		DSV AS ADR	DSV As ADR	WRITE	custody:inflection
 DTEGY	scheduled		Deutsche Telekom ADR	Deutsche Telekom ADR	WRITE	custody:inflection
 DTH	scheduled		WISDOMTREE INTERNATIONAL HIGH DIVIDEND FUND	Wisdomtree International High Dividend Fund	WRITE	custody:cottonwood
 DUK	scheduled		DUKE ENERGY CORP NEW COM NEW	Duke Energy Corp New Com New	WRITE	custody:cottonwood
@@ -1123,7 +1124,7 @@ EMN	scheduled		EASTMAN CHEM CO COM	Eastman Chem Co	WRITE	custody:cottonwood
 EMR	scheduled		EMERSON ELEC CO COM	Emerson Elec Co	WRITE	custody:cottonwood
 ENSG	scheduled		ENSIGN GROUP INC COM	Ensign Group Inc	WRITE	custody:cottonwood
 ENTG	scheduled		ENTEGRIS INC COM	Entegris Inc	WRITE	custody:cottonwood
-EOG	scheduled		EOG RES INC COM	Eog Res Inc	WRITE	custody:cottonwood
+EOG	scheduled		EOG RES INC COM	EOG Res Inc	WRITE	custody:cottonwood
 EOI	scheduled		Eaton Vance Enhanced Equity Income Fund	Eaton Vance Enhanced Equity Income Fund	WRITE	custody:inflection
 EPD	scheduled		ENTERPRISE PRODS PARTNERS L P COM	Enterprise Prods Partners L P	WRITE	custody:cottonwood
 EQIX	scheduled		EQUINIX INC COM	Equinix Inc	WRITE	custody:cottonwood
@@ -1149,7 +1150,7 @@ FANG	scheduled		DIAMONDBACK ENERGY INC COM	Diamondback Energy Inc	WRITE	custody:
 FANUY	scheduled		Fanuc Corp	Fanuc Corp	WRITE	custody:inflection
 FAST	scheduled		FASTENAL CO COM	Fastenal Co	WRITE	custody:cottonwood
 FBGRX	scheduled		Fidelity Blue Chip Growth	Fidelity Blue Chip Growth	WRITE	custody:inflection
-FCN	scheduled		FTI CONSULTING INC COM	Fti Consulting Inc	WRITE	custody:cottonwood
+FCN	scheduled		FTI CONSULTING INC COM	FTI Consulting Inc	WRITE	custody:cottonwood
 FCNTX	scheduled		FIDELITY CONTRAFUND	Fidelity Contrafund	WRITE	custody:cottonwood
 FDGRX	scheduled		Fidelity Growth Company	Fidelity Growth Company	WRITE	custody:inflection
 FDIVX	scheduled		Fidelity Diversified Intl	Fidelity Diversified Intl	WRITE	custody:inflection
@@ -1158,7 +1159,7 @@ FDRXX	scheduled		FIDELITY PHILLIPS STREET TRUST GOVT CASH RESV	Fidelity Phillips
 FDTRX	scheduled		Franklin Dynatech R6	Franklin Dynatech R6	WRITE	custody:inflection
 FELV	scheduled		Fidelity Covington Tr Enhanced Large Cap Value ETF	Fidelity Covington Tr Enhanced Large Cap Value ETF	WRITE	custody:inflection
 FEQIX	scheduled		FIDELITY EQUITY-INCOME	Fidelity Equity-Income	WRITE	custody:cottonwood
-FERG	scheduled		Ferguson Plc Ord	Ferguson Plc Ord	WRITE	custody:inflection
+FERG	scheduled		Ferguson Plc Ord	Ferguson PLC Ord	WRITE	custody:inflection
 FEUPX	scheduled		American Funds EUPAC Fund Class F-3	American Funds EUPAC Fund Class F-3	WRITE	custody:inflection
 FFFGX	scheduled		Fidelity Freedom 2045	Fidelity Freedom 2045	WRITE	custody:inflection
 FFICX	scheduled		American Investment Company of America F3	American Investment Company of America F3	WRITE	custody:inflection
@@ -1196,7 +1197,7 @@ FSMDX	scheduled		Fidelity Mid Cap Index Fund	Fidelity Mid Cap Index Fund	WRITE	c
 FSPSX	scheduled		FIDELITY INTERNATIONAL INDEX	Fidelity International Index	WRITE	custody:cottonwood
 FSPTX	scheduled		Fidelity Technology	Fidelity Technology	WRITE	custody:inflection
 FSSNX	scheduled		Fidelity Small Cap Index Fund	Fidelity Small Cap Index Fund	WRITE	custody:inflection
-FTAI	scheduled		FTAI AVIATION LTD SHS	Ftai Aviation LTD	WRITE	custody:cottonwood
+FTAI	scheduled		FTAI AVIATION LTD SHS	FTAI Aviation LTD	WRITE	custody:cottonwood
 FTCS	scheduled		First Tr Capital Strength ETF Db Strategic Value Index	First Tr Capital Strength ETF Db Strategic Value Index	WRITE	custody:inflection
 FTI	scheduled		TECHNIPFMC PLC COM	Technipfmc PLC	WRITE	custody:cottonwood
 FTRE	scheduled		Fortrea Hldgs Inc	Fortrea Hldgs Inc	WRITE	custody:inflection
@@ -1210,8 +1211,8 @@ GAFFX	scheduled		American Growth Fund of America F3	American Growth Fund of Amer
 GAP	scheduled		GAP INC COM	Gap Inc	WRITE	custody:cottonwood
 GD	scheduled		GENERAL DYNAMICS CORP COM	General Dynamics Corp	WRITE	custody:cottonwood
 GDDY	scheduled		GoDaddy Inc A	GoDaddy Inc A	WRITE	custody:inflection
-GE	scheduled		GE AEROSPACE COM NEW	Ge Aerospace Com New	WRITE	custody:cottonwood
-GEHC	scheduled		GE HEALTHCARE TECHNOLOGIES INC COMMON STOCK	Ge Healthcare Technologies Inc Common Stock	WRITE	custody:cottonwood
+GE	scheduled		GE AEROSPACE COM NEW	GE Aerospace Com New	WRITE	custody:cottonwood
+GEHC	scheduled		GE HEALTHCARE TECHNOLOGIES INC COMMON STOCK	GE Healthcare Technologies Inc Common Stock	WRITE	custody:cottonwood
 GEN	scheduled		GEN DIGITAL INC COM	Gen Digital Inc	WRITE	custody:cottonwood
 GFFFX	scheduled		AMERICAN FUNDS GROWTH FD OF AMER F-2	American Funds Growth FD of Amer F-2	WRITE	custody:cottonwood
 GFS	scheduled		GLOBALFOUNDRIES INC ORDINARY SHARES	Globalfoundries Inc Ordinary Shares	WRITE	custody:cottonwood
@@ -1228,10 +1229,10 @@ GQGIX	scheduled		GQG Partners Emerging Markets Equity Inst	GQG Partners Emerging
 GSEP	scheduled		First Trust Cboe Vest US Equity Moderate Buffer ETF	First Trust Cboe Vest US Equity Moderate Buffer ETF	WRITE	custody:inflection
 GSLC	scheduled		Goldman Sachs Activebeta US LC ETF	Goldman Sachs Activebeta US LC ETF	WRITE	custody:inflection
 GWPAX	scheduled		American Growth Portfolio A	American Growth Portfolio A	WRITE	custody:inflection
-GXO	scheduled		GXO LOGISTICS INCORPORATED COMMON STOCK	Gxo Logistics Incorporated Common Stock	WRITE	custody:cottonwood
+GXO	scheduled		GXO LOGISTICS INCORPORATED COMMON STOCK	GXO Logistics Incorporated Common Stock	WRITE	custody:cottonwood
 HAL	legacy		HALLIBURTON CO COM	Halliburton Co	WRITE	custody:cottonwood
 HBAN	scheduled		HUNTINGTON BANCSHARES INC COM	Huntington Bancshares Inc	WRITE	custody:cottonwood
-HCA	scheduled		HCA HEALTHCARE INC COM	Hca Healthcare Inc	WRITE	custody:cottonwood
+HCA	scheduled		HCA HEALTHCARE INC COM	HCA Healthcare Inc	WRITE	custody:cottonwood
 HIG	scheduled		Hartford Insurance Group Inc	Hartford Insurance Group Inc	WRITE	custody:inflection
 HII	scheduled		Huntington Ingalls Industries Inc	Huntington Ingalls Industries Inc	WRITE	custody:inflection
 HILIX	scheduled		Hartford International Value I	Hartford International Value I	WRITE	custody:inflection
@@ -1239,7 +1240,7 @@ HIMFX	scheduled		American High-Income Municipal Bond Fund Class F3	American High
 HKXCY	scheduled		Hong Kong Ex & Cl Uns ADR	Hong Kong Ex & Cl Uns ADR	WRITE	custody:inflection
 HL	scheduled		HECLA MINING COMPANY COM	Hecla Mining Company	WRITE	custody:cottonwood
 HLMIX	scheduled		Harding Loevner Intl Equity	Harding Loevner Intl Equity	WRITE	custody:inflection
-HLN	scheduled		Haleon Plc Shs Adr	Haleon Plc Shs Adr	WRITE	custody:inflection
+HLN	scheduled		Haleon Plc Shs Adr	Haleon PLC Shs ADR	WRITE	custody:inflection
 HLT	scheduled		Hilton Worldwide Holdings Inc	Hilton Worldwide Holdings Inc	WRITE	custody:inflection
 HMC	scheduled		Honda Motor	Honda Motor	WRITE	custody:inflection
 HON	scheduled		HONEYWELL INTL INC COM	Honeywell Intl Inc	WRITE	custody:cottonwood
@@ -1250,7 +1251,7 @@ HPQ	scheduled		HP INC COM	HP Inc	WRITE	custody:cottonwood
 HRB	scheduled		H & R Block Inc	H & R Block Inc	WRITE	custody:inflection
 HRL	scheduled		HORMEL FOODS CORP COM	Hormel Foods Corp	WRITE	custody:cottonwood
 HST	scheduled		HOST HOTELS & RESORTS INC COM	Host Hotels & Resorts Inc	WRITE	custody:cottonwood
-HTHIY	scheduled		Hitachi Ltd	Hitachi Ltd	WRITE	custody:inflection
+HTHIY	scheduled		Hitachi Ltd	Hitachi LTD	WRITE	custody:inflection
 HTRB	scheduled		Hartford Total Return Bond ETF	Hartford Total Return Bond ETF	WRITE	custody:inflection
 HTZ	scheduled		Hertz Global Holdings Inc	Hertz Global Holdings Inc	WRITE	custody:inflection
 HUBB	scheduled		HUBBELL INC COM	Hubbell Inc	WRITE	custody:cottonwood
@@ -1266,14 +1267,14 @@ IDA	scheduled		IDACORP INC COM	Idacorp Inc	WRITE	custody:cottonwood
 IDCC	scheduled		Interdigital Communications Co	Interdigital Communications Co	WRITE	custody:inflection
 IFF	scheduled		INTERNATIONAL FLAVORS&FRAGRANC COM	International Flavors&fragranc	WRITE	custody:cottonwood
 IGOV	scheduled		ISHARES INTERNATIONAL TREASURY BOND ETF	iShares International Treasury Bond ETF	WRITE	custody:cottonwood
-IGPT	scheduled		INVESCO AI AND NEXT GEN SOFTWARE ETF	Invesco Ai and Next Gen Software ETF	WRITE	custody:cottonwood
+IGPT	scheduled		INVESCO AI AND NEXT GEN SOFTWARE ETF	Invesco AI and Next Gen Software ETF	WRITE	custody:cottonwood
 IHF	scheduled		iShares Dow Jones US Healthcare Provider	iShares Dow Jones US Healthcare Provider	WRITE	custody:inflection
-IJJ	scheduled		ISHARES S&P MID-CAP 400 VALUE ETF	iShares S&p Mid-Cap 400 Value ETF	WRITE	custody:cottonwood
-IJK	scheduled		ISHARES S&P MID-CAP 400 GROWTH ETF	iShares S&p Mid-Cap 400 Growth ETF	WRITE	custody:cottonwood
-IJS	scheduled		ISHARES S&P SMALL-CAP 600 VALUE ETF	iShares S&p Small-Cap 600 Value ETF	WRITE	custody:cottonwood
-IJT	scheduled		ISHARES S&P SMALL-CAP 600 GROWTH ETF	iShares S&p Small-Cap 600 Growth ETF	WRITE	custody:cottonwood
+IJJ	scheduled		ISHARES S&P MID-CAP 400 VALUE ETF	iShares S&P Mid-Cap 400 Value ETF	WRITE	custody:cottonwood
+IJK	scheduled		ISHARES S&P MID-CAP 400 GROWTH ETF	iShares S&P Mid-Cap 400 Growth ETF	WRITE	custody:cottonwood
+IJS	scheduled		ISHARES S&P SMALL-CAP 600 VALUE ETF	iShares S&P Small-Cap 600 Value ETF	WRITE	custody:cottonwood
+IJT	scheduled		ISHARES S&P SMALL-CAP 600 GROWTH ETF	iShares S&P Small-Cap 600 Growth ETF	WRITE	custody:cottonwood
 ILMN	scheduled		Illumina Inc	Illumina Inc	WRITE	custody:inflection
-IMO	scheduled		Imperial Oil Ltd	Imperial Oil Ltd	WRITE	custody:inflection
+IMO	scheduled		Imperial Oil Ltd	Imperial Oil LTD	WRITE	custody:inflection
 ING	scheduled		ING Group NV ADR	ING Group NV ADR	WRITE	custody:inflection
 INOD	scheduled		Innodata Inc	Innodata Inc	WRITE	custody:inflection
 IONQ	scheduled		Ionq Inc	Ionq Inc	WRITE	custody:inflection
@@ -1289,8 +1290,8 @@ ITOT	scheduled		iShares Core S&P Total US Stock Market	iShares Core S&P Total US
 ITT	scheduled		ITT INC COM	Itt Inc	WRITE	custody:cottonwood
 ITW	scheduled		ILLINOIS TOOL WKS INC COM	Illinois Tool WKS Inc	WRITE	custody:cottonwood
 IUSG	scheduled		iShares Core S&P US Growth ETF	iShares Core S&P US Growth ETF	WRITE	custody:inflection
-IVE	scheduled		ISHARES S&P 500 VALUE ETF	iShares S&p 500 Value ETF	WRITE	custody:cottonwood
-IVW	scheduled		ISHARES S&P 500 GROWTH ETF	iShares S&p 500 Growth ETF	WRITE	custody:cottonwood
+IVE	scheduled		ISHARES S&P 500 VALUE ETF	iShares S&P 500 Value ETF	WRITE	custody:cottonwood
+IVW	scheduled		ISHARES S&P 500 GROWTH ETF	iShares S&P 500 Growth ETF	WRITE	custody:cottonwood
 IWD	scheduled		ISHARES RUSSELL 1000 VALUE ETF	iShares Russell 1000 Value ETF	WRITE	custody:cottonwood
 IWF	scheduled		iShares Russell 1000 Growth Fund	iShares Russell 1000 Growth Fund	WRITE	custody:49financial
 IWN	scheduled		ISHARES RUSSELL 2000 VALUE ETF	iShares Russell 2000 Value ETF	WRITE	custody:cottonwood
@@ -1310,7 +1311,7 @@ JKHY	scheduled		HENRY JACK & ASSOC INC COM	Henry Jack & Assoc Inc	WRITE	custody:
 JLGMX	scheduled		JPMORGAN LARGE CAP GROWTH R6	JPMorgan Large Cap Growth R6	WRITE	custody:cottonwood
 JLL	scheduled		JONES LANG LASALLE INC COM	Jones Lang Lasalle Inc	WRITE	custody:cottonwood
 JMST	scheduled		JPMorgan Ultra-Short Municipal Income ETF	JPMorgan Ultra-Short Municipal Income ETF	WRITE	custody:49financial
-JPME	scheduled		Jp Morgan Divers Rtrn Us Md Cp Eqty Etf	Jp Morgan Divers Rtrn Us Md Cp Eqty Etf	WRITE	custody:inflection
+JPME	scheduled		Jp Morgan Divers Rtrn Us Md Cp Eqty Etf	Jp Morgan Divers Rtrn Us Md Cp Eqty ETF	WRITE	custody:inflection
 JSOSX	scheduled		JPMORGAN STRATEGIC INCOME OPPORTS I	JPMorgan Strategic Income Opports I	WRITE	custody:cottonwood
 JVMRX	scheduled		John Hancock Disciplined Value Mid Cap R6	John Hancock Disciplined Value Mid Cap R6	WRITE	custody:inflection
 KBWB	scheduled		Invesco KBW Bank	Invesco KBW Bank	WRITE	custody:inflection
@@ -1321,7 +1322,7 @@ KEY	scheduled		KEYCORP COM	Keycorp	WRITE	custody:cottonwood
 KGC	scheduled		KINROSS GOLD CORP COM	Kinross Gold Corp	WRITE	custody:cottonwood
 KHC	scheduled		KRAFT HEINZ CO COM	Kraft Heinz Co	WRITE	custody:cottonwood
 KKR	scheduled		KKR & CO INC COM	KKR & Co Inc	WRITE	custody:cottonwood
-KLAC	scheduled		KLA CORP COM NEW	Kla Corp Com New	WRITE	custody:cottonwood
+KLAC	scheduled		KLA CORP COM NEW	KLA Corp Com New	WRITE	custody:cottonwood
 KMB	legacy		Kimberly-Clark Corp	Kimberly-Clark Corp	WRITE	custody:inflection
 KMI	scheduled		KINDER MORGAN INC DEL COM	Kinder Morgan Inc Del	WRITE	custody:cottonwood
 KMX	scheduled		CARMAX INC COM	Carmax Inc	WRITE	custody:cottonwood
@@ -1371,7 +1372,7 @@ MFEKX	scheduled		MFS Growth R6	MFS Growth R6	WRITE	custody:inflection
 MFG	scheduled		Mizuho Financial Group Inc	Mizuho Financial Group Inc	WRITE	custody:inflection
 MGK	scheduled		Vanguard Morningstar Mega Cap Growth ETF	Vanguard Morningstar Mega Cap Growth ETF	WRITE	custody:inflection
 MGM	scheduled		MGM Resorts International	MGM Resorts International	WRITE	custody:inflection
-MHVIY	scheduled		Mitsubishi Heavy Industries Unsponsored Ads	Mitsubishi Heavy Industries Unsponsored Ads	WRITE	custody:inflection
+MHVIY	scheduled		Mitsubishi Heavy Industries Unsponsored Ads	Mitsubishi Heavy Industries Unsponsored ADS	WRITE	custody:inflection
 MHYIX	scheduled		NYLI MacKay High Yield Corporate Bond Class I	NYLI MacKay High Yield Corporate Bond Class I	WRITE	custody:inflection
 MICC	scheduled		Magnum Ice cream Co NV Ord Shs	Magnum Ice cream Co NV Ord Shs	WRITE	custody:inflection
 MIEKX	scheduled		MFS INTERNATIONAL EQUITY I	MFS International Equity I	WRITE	custody:cottonwood
@@ -1389,20 +1390,20 @@ MRAAY	scheduled		Murata Manufacturing	Murata Manufacturing	WRITE	custody:inflect
 MRNA	scheduled		MODERNA INC COM	Moderna Inc	WRITE	custody:cottonwood
 MRSH	scheduled		MARSH & MCLENNAN COS INC COM	Marsh & Mclennan Cos Inc	WRITE	custody:cottonwood
 MS	scheduled		MORGAN STANLEY COM NEW	Morgan Stanley Com New	WRITE	custody:cottonwood
-MSCI	legacy		MSCI INC COM	Msci Inc	WRITE	custody:cottonwood
+MSCI	legacy		MSCI INC COM	MSCI Inc	WRITE	custody:cottonwood
 MSGS	scheduled		MADISON SQUARE GRDN SPRT CORP CL A	Madison Square GRDN SPRT Corp CL A	WRITE	custody:cottonwood
 MSI	scheduled		MOTOROLA SOLUTIONS INC COM NEW	Motorola Solutions Inc Com New	WRITE	custody:cottonwood
 MSTR	scheduled		Strategy Inc	Strategy Inc	WRITE	custody:inflection
 MTDR	scheduled		MATADOR RES CO COM	Matador Res Co	WRITE	custody:cottonwood
-MUFG	scheduled		MITSUBISHI UFJ FINANCIAL GROUP SPONSORED ADS	Mitsubishi Ufj Financial Group Sponsored Ads	WRITE	custody:cottonwood
-MUNI	scheduled		PIMCO INTERMEDIATE MUNICIPAL BOND ACTIVE EXCHANGE-TRADED FUND	Pimco Intermediate Municipal Bond Active Exchange-Traded Fund	WRITE	custody:cottonwood
+MUFG	scheduled		MITSUBISHI UFJ FINANCIAL GROUP SPONSORED ADS	Mitsubishi UFJ Financial Group Sponsored ADS	WRITE	custody:cottonwood
+MUNI	scheduled		PIMCO INTERMEDIATE MUNICIPAL BOND ACTIVE EXCHANGE-TRADED FUND	PIMCO Intermediate Municipal Bond Active Exchange-Traded Fund	WRITE	custody:cottonwood
 MUSA	scheduled		MURPHY USA INC COM	Murphy USA Inc	WRITE	custody:cottonwood
 MWNIX	scheduled		MFS Intl New Discovery I	MFS Intl New Discovery I	WRITE	custody:inflection
 MWTIX	scheduled		TCW Metropolitan West Total Return Bond I	TCW Metropolitan West Total Return Bond I	WRITE	custody:inflection
 NAD	scheduled		NUVEEN QUALITY MUNCP INCOME FD COM	Nuveen Quality Muncp Income FD	WRITE	custody:cottonwood
 NCLH	scheduled		NORWEGIAN CRUISE LINE HLDGS LT SHS	Norwegian Cruise Line Hldgs LT	WRITE	custody:cottonwood
 NDAQ	scheduled		NASDAQ INC COM	Nasdaq Inc	WRITE	custody:cottonwood
-NEA	scheduled		NUVEEN AMT FREE QLTY MUN INCME COM	Nuveen Amt Free Qlty Mun Incme	WRITE	custody:cottonwood
+NEA	scheduled		NUVEEN AMT FREE QLTY MUN INCME COM	Nuveen Amt Free QLTY Mun Incme	WRITE	custody:cottonwood
 NEFFX	scheduled		AMERICAN FUNDS NEW ECONOMY F-2	American Funds New Economy F-2	WRITE	custody:cottonwood
 NFG	scheduled		NATIONAL FUEL GAS CO COM	National Fuel Gas Co	WRITE	custody:cottonwood
 NGNE	scheduled		Neurogene Inc Com	Neurogene Inc Com	WRITE	custody:inflection
@@ -1416,15 +1417,15 @@ NOV	scheduled		NOV INC COM	Nov Inc	WRITE	custody:cottonwood
 NRG	scheduled		NRG ENERGY INC COM NEW	NRG Energy Inc Com New	WRITE	custody:cottonwood
 NSC	scheduled		NORFOLK SOUTHN CORP COM	Norfolk Southn Corp	WRITE	custody:cottonwood
 NTAP	scheduled		NETAPP INC COM	Netapp Inc	WRITE	custody:cottonwood
-NTDOY	scheduled		Nintendo Co Ltd ADR	Nintendo Co Ltd ADR	WRITE	custody:inflection
+NTDOY	scheduled		Nintendo Co Ltd ADR	Nintendo Co LTD ADR	WRITE	custody:inflection
 NTNX	scheduled		NUTANIX INC CL A	Nutanix Inc CL A	WRITE	custody:cottonwood
-NTR	scheduled		Nutrien Ltd	Nutrien Ltd	WRITE	custody:inflection
+NTR	scheduled		Nutrien Ltd	Nutrien LTD	WRITE	custody:inflection
 NTRA	scheduled		NATERA INC COM	Natera Inc	WRITE	custody:cottonwood
 NUE	scheduled		NUCOR CORP COM	Nucor Corp	WRITE	custody:cottonwood
 NUV	scheduled		NUVEEN MUN VALUE FD INC COM	Nuveen Mun Value FD Inc	WRITE	custody:cottonwood
 NUVBX	scheduled		Nuveen Intermediate Duration Municipal Bond I	Nuveen Intermediate Duration Municipal Bond I	WRITE	custody:inflection
 NVO	scheduled		Novo Nordisk ADR	Novo Nordisk ADR	WRITE	custody:inflection
-NWG	scheduled		Natwest Group Plc	Natwest Group Plc	WRITE	custody:inflection
+NWG	scheduled		Natwest Group Plc	Natwest Group PLC	WRITE	custody:inflection
 NWSA	scheduled		NEWS CORP NEW CL A	News Corp New CL A	WRITE	custody:cottonwood
 NXPI	scheduled		NXP SEMICONDUCTORS N V COM	NXP Semiconductors N V	WRITE	custody:cottonwood
 OAKIX	scheduled		Oakmark International Fund	Oakmark International Fund	WRITE	custody:inflection
@@ -1435,7 +1436,7 @@ OGN	scheduled		Organon & Co	Organon & Co	WRITE	custody:inflection
 OHI	scheduled		OMEGA HEALTHCARE INVS INC COM	Omega Healthcare Invs Inc	WRITE	custody:cottonwood
 OIEJX	scheduled		JPMORGAN EQUITY INCOME R6	JPMorgan Equity Income R6	WRITE	custody:cottonwood
 OKE	scheduled		ONEOK INC NEW COM	Oneok Inc New	WRITE	custody:cottonwood
-OKLO	scheduled		OKLO INC COM CL A	Oklo Inc Com CL A	WRITE	custody:cottonwood
+OKLO	scheduled		OKLO INC COM CL A	OKLO Inc Com CL A	WRITE	custody:cottonwood
 OLN	scheduled		OLIN CORP COM PAR $1	Olin Corp Com Par $1	WRITE	custody:cottonwood
 OMC	scheduled		OMNICOM GROUP INC COM	Omnicom Group Inc	WRITE	custody:cottonwood
 OMF	scheduled		ONEMAIN HLDGS INC COM	Onemain Hldgs Inc	WRITE	custody:cottonwood
@@ -1456,8 +1457,8 @@ PAYX	scheduled		PAYCHEX INC COM	Paychex Inc	WRITE	custody:cottonwood
 PBCKX	scheduled		Principal Blue Chip Instl	Principal Blue Chip Instl	WRITE	custody:inflection
 PCAR	scheduled		PACCAR INC COM	Paccar Inc	WRITE	custody:cottonwood
 PCBIX	scheduled		PRINCIPAL MIDCAP INSTITUTIONAL	Principal Midcap Institutional	WRITE	custody:cottonwood
-PCRHY	scheduled		Panasonic Corp Adr	Panasonic Corp Adr	WRITE	custody:inflection
-PDBZX	scheduled		PGIM TOTAL RETURN BOND Z	Pgim Total Return Bond Z	WRITE	custody:cottonwood
+PCRHY	scheduled		Panasonic Corp Adr	Panasonic Corp ADR	WRITE	custody:inflection
+PDBZX	scheduled		PGIM TOTAL RETURN BOND Z	PGIM Total Return Bond Z	WRITE	custody:cottonwood
 PDGIX	scheduled		T Rowe Price Dividend Growth Fund I Class	T Rowe Price Dividend Growth Fund I Class	WRITE	custody:inflection
 PEG	scheduled		PUBLIC SVC ENTERPRISE GROUP COM	Public SVC Enterprise Group	WRITE	custody:cottonwood
 PEGA	scheduled		PEGASYSTEMS INC COM	Pegasystems Inc	WRITE	custody:cottonwood
@@ -1465,7 +1466,7 @@ PEIYX	scheduled		PUTNAM LARGE CAP VALUE Y	Putnam Large Cap Value Y	WRITE	custody
 PEP	scheduled		PEPSICO INC COM	Pepsico Inc	WRITE	custody:cottonwood
 PFE	scheduled		PFIZER INC COM	Pfizer Inc	WRITE	custody:cottonwood
 PFGC	scheduled		Performance Food Group Co	Performance Food Group Co	WRITE	custody:inflection
-PFORX	scheduled		PIMCO INTERNATIONAL BOND (USD-HDG) INSTL	Pimco International Bond (usd-Hdg) Instl	WRITE	custody:cottonwood
+PFORX	scheduled		PIMCO INTERNATIONAL BOND (USD-HDG) INSTL	PIMCO International Bond (usd-Hdg) Instl	WRITE	custody:cottonwood
 PG	scheduled		PROCTER & GAMBLE CO COM	Procter & Gamble Co	WRITE	custody:cottonwood
 PGR	scheduled		PROGRESSIVE CORP COM	Progressive Corp	WRITE	custody:cottonwood
 PH	scheduled		PARKER-HANNIFIN CORP COM	Parker-Hannifin Corp	WRITE	custody:cottonwood
@@ -1496,7 +1497,7 @@ PTRQX	scheduled		PGIM Total Return Bond R6	PGIM Total Return Bond R6	WRITE	custo
 PTTAX	scheduled		PIMCO Total Return A	PIMCO Total Return A	WRITE	custody:inflection
 PTTRX	scheduled		PIMCO Total Return Instl	PIMCO Total Return Instl	WRITE	custody:inflection
 PUK	scheduled		Prudential PLC ADR	Prudential PLC ADR	WRITE	custody:inflection
-PULS	scheduled		PGIM ULTRA SHORT BOND ETF	Pgim Ultra Short Bond ETF	WRITE	custody:cottonwood
+PULS	scheduled		PGIM ULTRA SHORT BOND ETF	PGIM Ultra Short Bond ETF	WRITE	custody:cottonwood
 PWR	legacy		Quanta Services, Inc.	Quanta Services, Inc.	WRITE	custody:49financial
 PYPL	scheduled		PAYPAL HLDGS INC COM	Paypal Hldgs Inc	WRITE	custody:cottonwood
 Q	scheduled		QNITY ELECTRONICS INC COMMON STOCK	Qnity Electronics Inc Common Stock	WRITE	custody:cottonwood
@@ -1510,7 +1511,7 @@ RBC	scheduled		RBC BEARINGS INC COM	RBC Bearings Inc	WRITE	custody:cottonwood
 RBLX	scheduled		Roblox Corp CL A	Roblox Corp CL A	WRITE	custody:inflection
 RCL	scheduled		ROYAL CARIBBEAN GROUP COM	Royal Caribbean Group	WRITE	custody:cottonwood
 RDVY	scheduled		First Trust Rising Dividend Achievers ETF	First Trust Rising Dividend Achievers ETF	WRITE	custody:inflection
-RELX	scheduled		RELX PLC ADR	Relx PLC Adr	WRITE	custody:inflection
+RELX	scheduled		RELX PLC ADR	RELX PLC ADR	WRITE	custody:inflection
 REYN	scheduled		REYNOLDS CONSUMER PRODS INC COM	Reynolds Consumer Prods Inc	WRITE	custody:cottonwood
 RF	scheduled		REGIONS FINANCIAL CORP NEW COM	Regions Financial Corp New	WRITE	custody:cottonwood
 RGA	scheduled		REINSURANCE GROUP AMER INC COM NEW	Reinsurance Group Amer Inc Com New	WRITE	custody:cottonwood
@@ -1519,7 +1520,7 @@ RHI	scheduled		ROBERT HALF INC. COM	Robert Half Inc.	WRITE	custody:cottonwood
 RIOT	scheduled		Riot Platforms Inc	Riot Platforms Inc	WRITE	custody:inflection
 RIVN	scheduled		RIVIAN AUTOMOTIVE INC COM CL A	Rivian Automotive Inc Com CL A	WRITE	custody:cottonwood
 RKLB	scheduled		ROCKET LAB CORP COM	Rocket Lab Corp	WRITE	custody:cottonwood
-RLI	scheduled		RLI CORP COM	Rli Corp	WRITE	custody:cottonwood
+RLI	scheduled		RLI CORP COM	RLI Corp	WRITE	custody:cottonwood
 RMBS	scheduled		RAMBUS INC DEL COM	Rambus Inc Del	WRITE	custody:cottonwood
 RMD	scheduled		RESMED INC COM	Resmed Inc	WRITE	custody:cottonwood
 RNG	scheduled		RINGCENTRAL INC CL A	Ringcentral Inc CL A	WRITE	custody:cottonwood
@@ -1529,14 +1530,14 @@ ROP	scheduled		ROPER TECHNOLOGIES INC COM	Roper Technologies Inc	WRITE	custody:c
 RPRX	scheduled		Royalty Pharma PLC	Royalty Pharma PLC	WRITE	custody:inflection
 RS	scheduled		RELIANCE INC COM	Reliance Inc	WRITE	custody:cottonwood
 RSG	scheduled		REPUBLIC SVCS INC COM	Republic SVCS Inc	WRITE	custody:cottonwood
-RSP	scheduled		INVESCO S&P 500 EQUAL WEIGHT ETF	Invesco S&p 500 Equal Weight ETF	WRITE	custody:cottonwood
+RSP	scheduled		INVESCO S&P 500 EQUAL WEIGHT ETF	Invesco S&P 500 Equal Weight ETF	WRITE	custody:cottonwood
 RVTY	scheduled		Revvity Inc	Revvity Inc	WRITE	custody:inflection
-RYCEY	scheduled		Rolls Royce Holdings Plc	Rolls Royce Holdings Plc	WRITE	custody:inflection
+RYCEY	scheduled		Rolls Royce Holdings Plc	Rolls Royce Holdings PLC	WRITE	custody:inflection
 RYN	scheduled		RAYONIER INC COM	Rayonier Inc	WRITE	custody:cottonwood
-SAFRY	scheduled		Safran Sa Unspon/ ADR	Safran Sa Unspon/ ADR	WRITE	custody:inflection
+SAFRY	scheduled		Safran Sa Unspon/ ADR	Safran SA Unspon/ ADR	WRITE	custody:inflection
 SAGPX	scheduled		Principal SAM Conservative Growth A	Principal SAM Conservative Growth A	WRITE	custody:inflection
 SAN	legacy		Banco Santander S.A. ADR	Banco Santander S.A. ADR	WRITE	custody:inflection
-SAP	legacy		Sap Se ADR	Sap Se ADR	WRITE	custody:inflection
+SAP	legacy		Sap Se ADR	Sap SE ADR	WRITE	custody:inflection
 SBGSY	scheduled		Schneider Electric SE	Schneider Electric SE	WRITE	custody:inflection
 SBUX	scheduled		STARBUCKS CORP COM	Starbucks Corp	WRITE	custody:cottonwood
 SCCO	scheduled		SOUTHERN COPPER CORP COM	Southern Copper Corp	WRITE	custody:cottonwood
@@ -1558,7 +1559,7 @@ SFGYY	scheduled		Sony Financial Group Inc	Sony Financial Group Inc	WRITE	custody
 SFM	scheduled		SPROUTS FMRS MKT INC COM	Sprouts FMRS MKT Inc	WRITE	custody:cottonwood
 SGI	scheduled		Somnigroup International Inc	Somnigroup International Inc	WRITE	custody:inflection
 SHECY	scheduled		Shin-Etsu Chemical Co	Shin-Etsu Chemical Co	WRITE	custody:inflection
-SHEL	scheduled		SHELL PLC SPON ADS	Shell PLC Spon Ads	WRITE	custody:cottonwood
+SHEL	scheduled		SHELL PLC SPON ADS	Shell PLC Spon ADS	WRITE	custody:cottonwood
 SHM	scheduled		State Street SPDR Nuveen ICE Short Term Municipal Bond ETF	State Street SPDR Nuveen ICE Short Term Municipal Bond ETF	WRITE	custody:49financial
 SHOP	legacy		Shopify Inc	Shopify Inc	WRITE	custody:inflection
 SHW	scheduled		SHERWIN WILLIAMS CO COM	Sherwin Williams Co	WRITE	custody:cottonwood
@@ -1570,7 +1571,7 @@ SJM	scheduled		J. M. Smucker Company	J. M. Smucker Company	WRITE	custody:inflect
 SLB	legacy		SLB LIMITED COM STK	SLB Limited Com STK	WRITE	custody:cottonwood
 SMCFX	scheduled		American Funds SMALLCAP World Fund Class F2	American Funds SMALLCAP World Fund Class F2	WRITE	custody:inflection
 SMCWX	scheduled		AMERICAN FUNDS SMALLCAP WORLD A	American Funds Smallcap World A	WRITE	custody:cottonwood
-SMERY	scheduled		Siemens Energy Ag F Unsponsored Adr	Siemens Energy Ag F Unsponsored Adr	WRITE	custody:inflection
+SMERY	scheduled		Siemens Energy Ag F Unsponsored Adr	Siemens Energy AG F Unsponsored ADR	WRITE	custody:inflection
 SMFG	scheduled		Sumitomo Mitsui Finl Group Inc	Sumitomo Mitsui Finl Group Inc	WRITE	custody:inflection
 SMH	scheduled		VANECK SEMICONDUCTOR ETF	Vaneck Semiconductor ETF	WRITE	custody:cottonwood
 SN	scheduled		SharkNinja Inc Com	SharkNinja Inc Com	WRITE	custody:inflection
@@ -1585,7 +1586,7 @@ SONY	scheduled		Sony Group Corporation ADR	Sony Group Corporation ADR	WRITE	cust
 SPAXX	scheduled		Fidelity Govt Money Market	Fidelity Govt Money Market	WRITE	custody:inflection
 SPCX	scheduled		Space Exploration Technologies Corp.	Space Exploration Technologies Corp.	WRITE	custody:49financial
 SPEM	scheduled		State Street SPDR Portfolio Emerging Markets ETF	State Street SPDR Portfolio Emerging Markets ETF	WRITE	custody:49financial
-SPGI	scheduled		S&P GLOBAL INC COM	S&p Global Inc	WRITE	custody:cottonwood
+SPGI	scheduled		S&P GLOBAL INC COM	S&P Global Inc	WRITE	custody:cottonwood
 SPSB	scheduled		SPDR Portfolio Short Term Corp Bd ETF	SPDR Portfolio Short Term Corp Bd ETF	WRITE	custody:inflection
 SPTL	scheduled		SPDR Portfolio Long Term Treasury ETF	SPDR Portfolio Long Term Treasury ETF	WRITE	custody:inflection
 SPXC	scheduled		SPX TECHNOLOGIES INC COM	SPX Technologies Inc	WRITE	custody:cottonwood
@@ -1650,7 +1651,7 @@ VCISY	scheduled		Vinci SA ADR	Vinci SA ADR	WRITE	custody:inflection
 VDC	scheduled		Vanguard Consumer Staples	Vanguard Consumer Staples	WRITE	custody:inflection
 VDIGX	scheduled		Vanguard Dividend Growth Investor Shares	Vanguard Dividend Growth Investor Shares	WRITE	custody:inflection
 VEEV	scheduled		VEEVA SYS INC CL A COM	Veeva Sys Inc CL A	WRITE	custody:cottonwood
-VEIRX	scheduled		VANGUARD EQUITY-INCOME ADM	Vanguard Equity-Income Adm	WRITE	custody:cottonwood
+VEIRX	scheduled		VANGUARD EQUITY-INCOME ADM	Vanguard Equity-Income ADM	WRITE	custody:cottonwood
 VEVRX	scheduled		Victory Sycamore Established Value R6	Victory Sycamore Established Value R6	WRITE	custody:inflection
 VFIAX	scheduled		VANGUARD 500 INDEX ADMIRAL	Vanguard 500 Index Admiral	WRITE	custody:cottonwood
 VGELX	scheduled		Vanguard Energy Fund Admiral Shares	Vanguard Energy Fund Admiral Shares	WRITE	custody:inflection
@@ -1675,7 +1676,7 @@ VRSK	scheduled		VERISK ANALYTICS INC COM	Verisk Analytics Inc	WRITE	custody:cott
 VRT	scheduled		VERTIV HOLDINGS CO COM CL A	Vertiv Holdings Co Com CL A	WRITE	custody:cottonwood
 VRTX	scheduled		VERTEX PHARMACEUTICALS INC COM	Vertex Pharmaceuticals Inc	WRITE	custody:cottonwood
 VSGAX	scheduled		Vanguard Small Cap Growth Index Adm	Vanguard Small Cap Growth Index Adm	WRITE	custody:inflection
-VSIAX	scheduled		VANGUARD MORN SMALL CAP VALUE INDEX ADM	Vanguard Morn Small Cap Value Index Adm	WRITE	custody:cottonwood
+VSIAX	scheduled		VANGUARD MORN SMALL CAP VALUE INDEX ADM	Vanguard Morn Small Cap Value Index ADM	WRITE	custody:cottonwood
 VSMAX	scheduled		Vanguard Small Cap Index Adm	Vanguard Small Cap Index Adm	WRITE	custody:inflection
 VSNT	scheduled		VERSANT MEDIA GROUP INC COM CL A	Versant Media Group Inc Com CL A	WRITE	custody:cottonwood
 VST	scheduled		VISTRA CORP COM	Vistra Corp	WRITE	custody:cottonwood
@@ -1690,7 +1691,7 @@ VV	scheduled		Vanguard Morningstar Large-Cap ETF	Vanguard Morningstar Large-Cap 
 VVIAX	scheduled		Vanguard Value Index Adm	Vanguard Value Index Adm	WRITE	custody:inflection
 VVOAX	scheduled		INVESCO VALUE OPPORTUNITIES A	Invesco Value Opportunities A	WRITE	custody:cottonwood
 VWEHX	scheduled		Vanguard High Yield Corporate Inv	Vanguard High Yield Corporate Inv	WRITE	custody:inflection
-VWIUX	scheduled		VANGUARD INTERM-TERM TX-EX ADM	Vanguard Interm-Term TX-Ex Adm	WRITE	custody:cottonwood
+VWIUX	scheduled		VANGUARD INTERM-TERM TX-EX ADM	Vanguard Interm-Term TX-Ex ADM	WRITE	custody:cottonwood
 VWNFX	scheduled		Vanguard Windsor II	Vanguard Windsor II	WRITE	custody:inflection
 VWUAX	scheduled		VANGUARD US GROWTH ADMIRAL™	Vanguard US Growth Admiral™	WRITE	custody:cottonwood
 VYM	scheduled		Vanguard High Dividend Yield	Vanguard High Dividend Yield	WRITE	custody:inflection
@@ -1699,7 +1700,7 @@ WAT	scheduled		WATERS CORP COM	Waters Corp	WRITE	custody:cottonwood
 WBD	scheduled		WARNER BROS DISCOVERY INC COM SER A	Warner Bros Discovery Inc Com Ser A	WRITE	custody:cottonwood
 WCC	scheduled		WESCO INTL INC COM	Wesco Intl Inc	WRITE	custody:cottonwood
 WCN	scheduled		Waste Connections Inc	Waste Connections Inc	WRITE	custody:inflection
-WEC	scheduled		WEC ENERGY GROUP INC COM	Wec Energy Group Inc	WRITE	custody:cottonwood
+WEC	scheduled		WEC ENERGY GROUP INC COM	WEC Energy Group Inc	WRITE	custody:cottonwood
 WELL	scheduled		WELLTOWER INC COM	Welltower Inc	WRITE	custody:cottonwood
 WERN	scheduled		Werner Enterprises Inc	Werner Enterprises Inc	WRITE	custody:inflection
 WES	scheduled		WESTERN MIDSTREAM PARTNERS LP COM UNIT LP INT	Western Midstream Partners LP Com Unit LP Int	WRITE	custody:cottonwood
@@ -1730,7 +1731,7 @@ XLY	scheduled		STATE STREET CONSUMER DISCRETIONARY SELECT SECTOR SPDR ETF	State 
 XSMO	scheduled		Invesco Exchange Traded Fd Tr S&P Smlcp Moment	Invesco Exchange Traded Fd Tr S&P Smlcp Moment	WRITE	custody:inflection
 XYL	scheduled		XYLEM INC COM	Xylem Inc	WRITE	custody:cottonwood
 XYZ	scheduled		BLOCK INC CL A	Block Inc CL A	WRITE	custody:cottonwood
-YACKX	scheduled		AMG YACKTMAN I	Amg Yacktman I	WRITE	custody:cottonwood
+YACKX	scheduled		AMG YACKTMAN I	AMG Yacktman I	WRITE	custody:cottonwood
 YETI	scheduled		YETI HLDGS INC COM	Yeti Hldgs Inc	WRITE	custody:cottonwood
 YUM	scheduled		YUM BRANDS INC COM	Yum Brands Inc	WRITE	custody:cottonwood
 ZBH	scheduled		ZIMMER BIOMET HOLDINGS INC COM	Zimmer Biomet Holdings Inc	WRITE	custody:cottonwood
@@ -1738,4 +1739,4 @@ ZION	scheduled		ZIONS BANCORPORATION NATL ASSN COM	Zions Bancorporation Natl Ass
 ZM	scheduled		ZOOM COMMUNICATIONS INC CL A	Zoom Communications Inc CL A	WRITE	custody:cottonwood
 ZS	scheduled		Zscaler Inc	Zscaler Inc	WRITE	custody:inflection
 ZTS	legacy		ZOETIS INC CL A	Zoetis Inc CL A	WRITE	custody:cottonwood
-ZURVY	scheduled		Zurich Insurance Group Ltd	Zurich Insurance Group Ltd	WRITE	custody:inflection
+ZURVY	scheduled		Zurich Insurance Group Ltd	Zurich Insurance Group LTD	WRITE	custody:inflection

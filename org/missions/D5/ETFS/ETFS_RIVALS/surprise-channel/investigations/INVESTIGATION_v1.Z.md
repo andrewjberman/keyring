@@ -4654,6 +4654,92 @@
     "spec_asserts": "CLAUDE.md NEVER-2: a deploy opens a ledger entry in org/critical_paths/change_management/ at its start; an order whose cell can deploy names that surface",
     "world_is": "Two worker cells changed a file the scheduled vehicle executes from the working tree, and the issuer's merges put them live without an entry. Both changes sit in the ad hoc market-range mode, which the vehicle never calls, and the first is proven harmless by a real run. The exposure is the class: the next cell that edits a daily-path function of these files deploys at its merge",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The issuer reads the 2026-10-08 11:00Z enrichment line as round 20's proof on the daily path. For the next cut touching collector_bloomberg.py, enrichment_bloomberg.py, bbg_budget.py or security_names.py: the order names change_management and its sentinel, and the merge is timed after a day's vehicle run."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W11-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~11",
+    "surfaced_at": "2026-10-07T13:36:00Z",
+    "one_line": "RIV-pl-1: ml-1.AC1.py's cell parser reads only three letters of data-m, so its arm (a) cannot see the year on 'Oct 25' / 'Oct 26'; arm (a) now expects bare Oct at both ends.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/ml-1.AC1.py line 41: the regex data-m=\"?([A-Za-z]{3})\"? reads 'Oct' from data-m=\"Oct 25\"; the year is pinned by pl-1.AC1.py (a) and tests/test_r19ml1_month_labels.py"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-pl-1: ml-1.AC1 arms (a) and (e) may change to the 13-cell rule and nothing else in that file.",
+    "world_is": "The parser line is outside those two arms, so it was left alone; arm (a) expects the parsed labels Oct, Nov .. Sep, Oct for 13 cells; arm (e) expects the named months unique except the one repeated Oct.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Widen the regex to carry the year if the issuer wants arm (a) to."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S63",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T16:13:28Z",
+    "one_line": "Deploy preparation for rounds 15 to 22: the deployed daily Lambda already peaks at 864 MB of its 1,024 MB, and the new code's stages peak at 1,247 MB and 1,552 MB on this machine",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "CloudWatch /aws/lambda/etfs-rivalfunds-daily-lambda, the 2026-10-07 11:0xZ run of the deployed round-14 code (RequestId de6ac642-50b3-46b4-a26f-5a528f8f4086): Duration 439,946.98 ms of a 900 s timeout; Memory Size 1024 MB; Max Memory Used 864 MB. One REPORT line was read; the sweep's and the publish Lambda's lines were not",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round22/timing_2026-10-07.json (time_publish.py at CLOUD a4542de7f9, day 2026-10-07, live inputs, local writes only, one process on site Z): gold holding_contribution 61.0 s, peak working set 1,247 MB; gold buying_trend 110.2 s; publish-page with the 13 chart objects 125.2 s, peak 1,552 MB",
+        "infra/aws/terraform/etfs-rivalfunds/gen_policies.py line 229: every rivalfunds Lambda is memory_size 1024; timeout 900 (fetch-holdings 300). The plan made at the pin (rv_apply22.plan.at_1024MB.txt: 0 to add, 5 to change, 0 to destroy; source_code_hash and last_modified only) leaves that as it is",
+        "The new code reads more than round 14's: the tables' windows reach 365 calendar days back (round 14: the year to date), and the publisher builds chart objects from a year of G1, G5 and G4"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-2 and the never-widen rule: a deploy's sign-off names the act's blast radius and the outcome on both branches; the 11:00Z daily run and the 13:00Z sweep must publish the page after the deploy as they do today",
+    "world_is": "Nothing measures the new code's memory on Lambda. The two figures are from different machines and allocators and are not comparable as numbers; together they say the margin is 160 MB today and the new code needs more than the old on the one machine where both are known to run. An out-of-memory kill of the daily Lambda would leave the day's page unpublished",
+    "notes": "disarm_owner (n/a, INERT: nothing is deployed): 2.0.0_SA_COO~RV. BLOCKING for the Lambda deploy at 1,024 MB. Shape for 1.0.0_SA_CTO~Z: raise memory_size in the same apply (the one line in gen_policies.py; REC 3008 MB for the five, or for the daily and publish-page Lambdas only), and read Max Memory Used on the first run of each as a leg of the deploy ledger. Time: the three stages sum to 296 s here against a 900 s timeout and a 440 s run today; not measured on Lambda either."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S65",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T16:55:00Z",
+    "one_line": "On the page rounds 15 to 22 produce, 4 security mentions in GQGU's panel open a dialog holding a name and nothing else; the served round-14 page has 0",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round22/real_run_2026-10-07.at_pin_beb13d39ff.json: fund_sections buttons 2247, with_section 2243, missing 4; the publisher prints its FAIL line 'fund sections missing' and publishes",
+        "The 4, read from the run's index.html by the same parse as render.fund_section_census: GQGU's trade sentence 'The fund also opened META PLATFORMS INC for $10.6 million, ASML HOLDING NV-NY REG SHS for $6.3 million' (the panel carries it twice) targets rf-s-30303M102 and rf-s-N07059210; those two dialogs are 232 and 240 bytes with 0 sections. The full dialogs are rf-s-META_US_Equity and rf-s-ASML_US_Equity, each with a GQGU section",
+        "The same count across this seat's real runs of day 2026-10-06: 0 in rounds 13 to 16; 3 from round 17; 6 from round 21 and in round 22. The served manifest of round 14 reads 2076 / 2076 / 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 13 RIV-fe-1: every security mention in a fund panel opens that fund's engagement with the security; round 22 RIV-pm-1: one security has one key on the page",
+    "world_is": "The trade sentence links a trade by the trade schedule's recorded key (a CUSIP for these GQGU entries) and is not folded to the one key the dialogs use. Which round's change raised the count from 0 to 3 and from 3 to 6 was not traced. The count was in every real-run record since round 17 and the issuer did not report it in the packets of rounds 17 to 22",
+    "notes": "disarm_owner n/a (INERT: not deployed). Stated in the COO never-widen half for the deploy of rounds 15 to 22 as a known fault the act would serve. Repair shape: one cell in the next round -- the sentence's link takes the key through the same one-key rule as the dialogs; check: fund_sections.missing 0 on the real day."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S66",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T17:17:11Z",
+    "one_line": "Correction to row ETFS_RIVALS-Z-S65: the cause it names for the 4 name-only dialogs was a guess, not a read",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row ETFS_RIVALS-Z-S65 world_is says the sentence links a trade by the trade schedule's recorded key. No code was read for that",
+        "What is read: the phrase 'also opened' is in no file of data/etfs/scripts/rivalfunds, so the sentence is not built by the renderer; it is in GQGU's account text. A dialog shell of 232 and 240 bytes with 0 sections exists under each CUSIP key (30303M102, N07059210) on the run's page"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A row's world_is states what was measured",
+    "world_is": "The cause of row Z-S65 is not traced: which stage emits a dialog shell under the CUSIP key, and why the account text's name links to it and not to the Bloomberg-keyed dialog. The fault, its count of 4 and the repair being one cell of the next round stand",
+    "notes": "Cites ETFS_RIVALS-Z-S65. The COO never-widen half for the deploy carries the same correction."
   }
 ]
 ```

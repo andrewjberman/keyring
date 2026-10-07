@@ -2345,8 +2345,10 @@ _SECRET_NAME_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9/_+=.@-]*$")
 _KIND_NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)+$")
 _KEY_CTX_RE = re.compile(r"(key|prefix)s?$|(^|_)(key|prefix)s?(_|$)", re.I)
 _SECRET_CTX_RE = re.compile(r"secret_?(name|id|arn|path)?$", re.I)
+FUNCTION_LITERAL_RULE = True  # module-level switch: a test flips it to measure what the rule retypes
 _TEST_FILE_RE = re.compile(r"^(test_.*|.*_test\.py|conftest\.py|.*\.(test|spec)\.[cm]?[jt]s)$")
 _JS_LIT_RE = re.compile(r"""(?:([A-Za-z_$][A-Za-z0-9_$]*)["']?\s*[:=]\s*)?(['"`])((?:(?!\2)[^\\\n]|\\.)*)\2""")
+_JS_ENV_RE = re.compile(r"""process\.env(?:\.|\[["'])([A-Za-z_][A-Za-z0-9_]*)["']?\]?\s*(?:\|\||\?\?)\s*$""")
 
 
 class CensusError(Exception):
@@ -2583,8 +2585,20 @@ def _census_classify(value, ctx, v, kinds):
     if _KIND_NAME_RE.match(value):
         t = kinds.get(value.rsplit("-", 1)[-1])
         if t:
+            # A literal the last-token rule types, held under a function-name context, is a Lambda's name. Only a
+            # RETYPE: a literal that rule leaves untyped stays untyped (the rule adds no item to the census).
+            if FUNCTION_LITERAL_RULE and _function_ctx(ctx):
+                t = "LAMBDA"
             return [(t, value)]
     return []
+
+
+def _function_ctx(ctx):
+    """True when the holding name has function or lambda as a whole word part, split at _ - . and a camelCase edge."""
+    if not ctx:
+        return False
+    parts = re.split(r"[^A-Za-z0-9]+|(?<=[a-z0-9])(?=[A-Z])", ctx)
+    return any(p.lower() in ("function", "lambda") for p in parts if p)
 
 
 def _py_literals(text):
@@ -2646,7 +2660,14 @@ def _js_literals(text):
         for m in _JS_LIT_RE.finditer(line):
             if m.group(2) == "`" and "${" in m.group(3):
                 continue
-            out.append((m.group(3), m.group(1), n))
+            ctx = m.group(1)
+            if FUNCTION_LITERAL_RULE and not ctx:
+                # process.env.X_FUNCTION_NAME || "lit": the variable's own name is the holding name, used only when it
+                # names a function so that no other literal's context changes.
+                e = _JS_ENV_RE.search(line[:m.start(2)])
+                if e and _function_ctx(e.group(1)):
+                    ctx = e.group(1)
+            out.append((m.group(3), ctx, n))
     return out
 
 

@@ -7464,6 +7464,129 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S100",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T14:13:27Z",
+      "one_line": "ANSWER to 1.0.0_SA_CTO~Z msg 31017: the Seeking Alpha leg DID read Alibaba, Boeing and Costco on 2026-10-06 and 10-07 -- each job concluded new_articles, reached listing dates to the run day, stored 616 / 1,992 / 45 articles and uploaded all of them -- so a freshness view reading 'last read 2026-09-11' for them reads a plane these runs do not write.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMGT_RESAPP's freshness page (round 77 ruling 10, ADJUDICATION_v94 @3408907be0) reads 'Seeking Alpha last read 2026-09-11' for BABA, BA and COST beside 92 names reading current, and the cause is taken to be the collector's.",
+      "world_is": "Seeking Alpha backfill checkpoint .runtime/harvest-backfill/r47_sa_checkpoint.json (51 done pairs, retry 0, gave_up 0) and each job's run record under .runtime/opal-data-harvest-sa/run_records/. BABA_US_Equity (collector key security-85663a3912a0c415): run 20261006T224539Z-run-5cf2aeea, 22:45-23:16Z, mode backfill, status new_articles, reached_span 2014-01-08 to 2026-10-06, fetched and stored 616 (rejected 591, skipped as held 478), outbox 616 uploaded. BA_US_Equity (collector key BA): run 20261007T002530Z-run-ecf26946, 00:25-01:33Z, new_articles, span 2015-03-23 to 2026-10-07, stored 1,992 (rejected 1,613), 1,992 uploaded. COST_US_Equity (collector key COST): run 20261007T111148Z-run-c2310424, 11:11-11:30Z, new_articles, span 2008-05-29 to 2026-10-07, stored 45 (rejected 605), 45 uploaded. Each run record stamps gold_security_key with the pool key. CONTROL, C_US_Equity (collector key security-7fc817a6bb1bf24e): run 20261007T124653Z-run-6b3d3a63, same shape (backfill, new_articles, span to 2026-10-07, stored 9, 9 uploaded). So of the three outcomes asked: not 'not attempted', not 'attempted and stopped'; it is 'stored where the freshness view does not read'. One difference from the control that may matter: BA and COST run under the collector's PILOT keys ('BA', 'COST'; config.json pilot_securities), not a security-hash key, and all three were collected in the September pilot. NOT measured here (the view is AMGT_RESAPP's): which object the freshness view reads for 'last read', whether it prefers a pilot-era record keyed on the pilot key, and whether the 92 current names include any of the other pilots (HD and SAP have no sa job yet on this checkpoint).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read 2026-10-07 ~14:1xZ: r47_sa_checkpoint.json done rows for keys security-85663a3912a0c415, BA, COST",
+          ".runtime/opal-data-harvest-sa/run_records/20261006T224539Z-run-5cf2aeea.json, 20261007T002530Z-run-ecf26946.json, 20261007T111148Z-run-c2310424.json, 20261007T124653Z-run-6b3d3a63.json (status, reached_span, counts, gold_security_key)",
+          "sqlite read-only: harvest_raw_outbox status by article_key for each run's keys_stored_join (616, 1992, 45, 9 uploaded)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W107-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~107",
+      "surfaced_at": "2026-10-07T14:11:49Z",
+      "one_line": "HVST-be-1 AC2 cannot print LIST OK: 7 securities with an identity record cannot carry the record's name among their aliases, because the module's existing _usable_alias drops a form shorter than 3 characters or equal to a ticker token (BP, KPN, RWE, SAP, GSK, Nokia).",
+      "class": "BLOCKING",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-be-1 section 0 R1 'the identity legal name is ALWAYS in a security's alias set and is never replaced', section 1 item 1 'the legal name's forms (through the module's existing _entry_aliases path)', and item 4 LIST OK 'every security that has an identity record carries that record's name among its aliases'. The two sentences cannot both hold: _entry_aliases drops a candidate through _usable_alias.",
+      "world_is": "be1_list_compare.out at the cell's commit prints IDENTITY NAME NOT AMONG ALIASES: 7 of 234 records: BP/_LN_Equity 'BP' (2 characters < MIN_ALIAS_CHARS 3), BP_US_Equity 'BP' (same; its served alias 'BP PLC' is the missing one), KPN_NA_Equity 'KPN', RWE_GR_Equity 'RWE', SAP_GY_Equity 'SAP', GSK_LN_Equity 'GSK' (each equal to a token of the security's own ticker), NOKIA_FH_Equity 'Nokia' (equal to the ticker token NOKIA). Each carries the upper-case form as a case-sensitive ticker_aliases entry (BP, KPN, RWE, SAP, GSK, NOKIA, read off securities.universe.r58.json); the mixed-case 'Nokia' is not carried by anything. Admitting the name as a case-insensitive alias would let 'sap' and 'bp' hit unrelated prose, which is the exact reason _usable_alias and the whole_brands list exist; the cell did not do it. Result: LIST FAIL on 7 lines; the other conditions hold. The pool names 'GSK LN', 'SAP GY', 'Nokia FH', 'RWE AG RWE GY' are refused as decorated, so GSK, NOKIA, RWE, SAP now have an EMPTY alias set (before: the decorated pool name). Not measured: how many gold pairs the served file's 'SAP GY'/'GSK LN' style aliases produced.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out (IDENTITY NAME NOT AMONG ALIASES line)",
+          "lib/research/harvest/universe_securities.py _usable_alias lines 248-256 @ the cell's commit"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W107-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~107",
+      "surfaced_at": "2026-10-07T14:11:49Z",
+      "one_line": "HVST-be-1 R1 makes ASML_NA_Equity's company name 'ASML', so limb (a) of brand_refusal now refuses the whole brand 'ASML' for ASML_US_Equity: a served alias is lost (served ['ASML Holding NV','ASML Holding','ASML'], after without 'ASML'); whole brands admitted 7 before, 6 after.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "TO HVST-be-1 names no effect on whole_brands; universe_securities.brand_refusal's docstring says two listings of one issuer that both carry the brand (ASML NA / ASML US) do not refuse each other because limb (a) compares to what the others carry BEFORE any whole-brand addition.",
+      "world_is": "With the legal name first, the identity record's 'ASML' is ASML_NA_Equity's company name, so forms_by_key['ASML_NA_Equity'] holds 'asml' and the limb (a) compare refuses ASML_US_Equity's brand 'ASML' (summary whole_brand_refused = [ASML_US_Equity ASML], 0 before). ASML_NA keeps its own brand (the owner is skipped). be1_list_compare.out prints it under SERVED ALIAS MISSING with reason 'whole brand refused by limb (a)' and WHOLE BRANDS: refused before 0 after 1. Left alone, a gold rebuild from build() drops the 'ASML' pairs of ASML_US (the census row says 2 pairs, 3 added mentions, 6 added mentions shared with ASML_NA). The cell did not change brand_refusal or add a brand: both are outside its order.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~107/be1_list_compare.out (STILL MISSING ASML_US_Equity and WHOLE BRANDS lines)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round57/securities.universe.r57.summary.json whole_brand_refused []"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W108-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~108",
+      "surfaced_at": "2026-10-07T15:29:23Z",
+      "one_line": "HVST-bf-1 section 1 item 4 and the schema's x-address say the new job_record table needs an infra/logic/registry row; the registry holds no table-level rows, and neither the builder nor the naming gate refuses, so no row was added.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-bf-1 item 4: 'The new stored table needs its row under infra/logic/registry/ in this same change'; the schema x-address: 'Its infra/logic/registry row lands with the collector cell's commit (the writer's)'.",
+      "world_is": "infra/logic/registry/*.json hold systems, scopes, tiers, resources, legacy_addresses, reporting_policies, exemptions, remediations and root_map: no file carries a (source, scope, tier, table) row, and no seeking-alpha or harvest table is registered anywhere. systems.json already carries the source 'seeking-alpha' (VENDOR) and tiers.json already homes tier 'state' for the harvest scope. lib.research.harvest.store.address_of('seeking-alpha','state','job_record', ...) prints s3://opal-data-harvest/seeking-alpha/harvest/state/job_record/security_key=BP-SLASH-_LN_Equity/20261007T013300Z.json with no refusal; `python lib/opal_naming.py validate` rc=0 (VALIDATE: OK 53 system row(s), 13 scope row(s), 41 warning(s)); `python .tools/naming-gate.py --diff <the cell's diff> --enforce` prints NAMING-GATE: PASS 0 graded. No refusal means no missing row can be named, so the cell adds none and does not stop AC2. The 'registry row' the contract expects is not a row of any registry file today.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "infra/logic/registry/ (9 files) read in the cell's worktree",
+          "python lib/opal_naming.py validate (rc=0)",
+          "python .tools/naming-gate.py --diff --enforce (NAMING-GATE: PASS 0 graded)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W108-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~108",
+      "surfaced_at": "2026-10-07T15:29:23Z",
+      "one_line": "A run record carries no per-job finished_at, so the record's finished_at (and its address) is the RUN's finished_at for the live writer and the emitter alike; a multi-job run gives its jobs one finished_at.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "TO HVST-bf-1 section 0: the run record 'carries finished_at, the job's status, gold_security_key, counts and keys_stored_join'; the schema: finished_at is 'when the job ended'.",
+      "world_is": "run_records/*.json carry finished_at at run level only; jobs[] entries carry job_id, publisher, security_key, status, keys_fetched, gold_security_key and no finished_at (worker.write_run_record). The per-job end time sits only in runs/<job_id>.json. Both the live writer (worker._write_job_records) and the emitter therefore take the run record's finished_at, so a job written live and later emitted maps to ONE address and the emitter's write is skipped_exists; the cost is that finished_at is the run's end, a few milliseconds after the job's own for the one-job runs the collector makes today (jobs_per_run 1), and shared by every job of a multi-job run. stored is likewise the job entry's keys_fetched (the per-job stored count), not len(keys_stored_join), which is run-level; the four known runs agree on both (616, 1992, 45, 9). INERT while runs hold one SA job per security.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/opal_data_harvest/worker.py write_run_record (jobs.append entry) and _write_job_records",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~108/bf1_emit_dryrun.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S101",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-07T17:04:41Z",
+      "one_line": "The new exact-case ticker form CSL for CSL_AU_Equity also matches Carlisle Companies, which trades as CSL in New York; the form sample's 5 CSL rows all read CSL Limited, so the sample did not show it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Gold rebuild #8 signing read 2: form CSL, 42 pairs, 'the company's name is CSL'; the form sample's other-forms group is graded on bar 29 of 30.",
+      "world_is": "GOLD_REBUILD8_FORM_SAMPLE.md row 80 (drawn for MSCI) carries the text 'newly promoted Carlisle Companies ( CSL )'. An article with that text and no MSCI mention would pair with CSL_AU_Equity on the form. How many of the 42 CSL pairs are Carlisle is not measured; the 5 sampled CSL rows are CSL Limited.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round58/GOLD_REBUILD8_FORM_SAMPLE.md row 80",
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND58_GOLD_REBUILD8_GAIN_AND_FORM_GRADE_20261007.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

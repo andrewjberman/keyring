@@ -89,7 +89,7 @@ Rows: id `NFRA_OPLGTW-Z-W31-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - If another audit test file must change, the worker reports it; the issuer amends `<paths>`.
 - Pre-cut 10:5xZ: `au2.AC1` FAIL (the test file is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>26</round>
 <slot>~31</slot>
 <fabric>site-z</fabric>

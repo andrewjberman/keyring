@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e62</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~43</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~51</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -50,6 +50,21 @@ A consistent full scan (2026-10-07) found 0 `multi_asset` rows in `etf-classific
    refusal the producer now raises.
 5. Do not touch `holdings_snapshot.py`.
 
+### AMENDMENT 1 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~15:5xZ; release mode, CTO round-11 analysis @fc96f7c48c section 2 item 2)
+
+**The release port.** e62 (c90cbf057f, ~43) and e56 (39043b3f90, ~38) are complete and VALID on the held-38 line. Their files
+cherry-pick CLEAN onto the round head ae61f93efe (CLOUD plus round records): 0 conflicts, the IR Holdings suite 340 passed, and
+`sc_e62_holdings_enum_equal.py` ok (15 enums, 1 distinct). They must land together: e62's enum tests assume e56's `ASSET_CLASS_VALUES`.
+
+Slot ~51 on branch `secclass-r12-rel-e62e56` commits that port without e55, e57 or e61. The issuer's lane refuses these paths.
+
+**Your work:** the eleven files below are ALREADY STAGED in your worktree (the issuer's cherry-pick, uncommitted). Do not rebuild.
+1. Confirm each file's blob equals its source commit: `git rev-parse :<path>` against `git rev-parse 39043b3f90:<path>` or
+   `c90cbf057f:<path>`.
+2. Commit them.
+3. Run AC1 and AC2, plus the IR Holdings suite as a control.
+4. Write and validate the proof instance (slot ~51), flip status to complete, and commit.
+
 ### ACCEPTANCE
 
 <criterion id="SC10-e62-AC1" cell_refs="SC-e-62"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/sc_e62_holdings_enum_equal.py</invocation><expect>SC-E62 ok=True</expect></criterion>
@@ -72,15 +87,20 @@ Dry-run at the base (4cb237fe22, 2026-10-07): SC10-e62-AC1 FAIL as expected (15 
 - No Terraform, no deploy, no publish of the contract. Your branch rides the held-38 line: the laptop CTO reviews it before DEV or release
   (ruling 2.3), and SC-e-56's release goes through IRPT_BCKEND. Never push.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `MDPF_SECCLASS-W43-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
+  (id `MDPF_SECCLASS-W51-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
 
 <paths>
+data/assets/scripts/gold/investor_reporting/holdings_snapshot.py
+data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py
+data/assets/scripts/gold/investor_reporting/tests/test_holdings_narrowed.py
+data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py
 docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json
 infra/aws/lambda/investor-reporting/_contracts/HoldingsSnapshot.schema.json
 infra/aws/lambda/investor-reporting/holdings/contracts/HoldingsSnapshot.schema.json
 infra/aws/terraform/investor-reporting/CHANGELOG.json
-data/assets/scripts/gold/investor_reporting/tests/test_holdings_snapshot.py
-data/assets/scripts/gold/investor_reporting/tests/test_holdings_narrowed.py
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/HOLDINGS_CUSIP_NEWLY_PLACED_20261007.json
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_HOLDINGS_CUSIP_LOOKUP_20261007.md
+org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/holdings_cusip_newly_placed.py
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -92,7 +112,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC10-e62-AC1, SC10-e62-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~43/MDPF_SECCLASS.TO-SC-e62.holdings-enum-six-class.proof_of_spec.json`,
+Criterion ids: SC10-e62-AC1, SC10-e62-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~51/MDPF_SECCLASS.TO-SC-e62.holdings-enum-six-class.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> SC10-e62-AC1,SC10-e62-AC2` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>

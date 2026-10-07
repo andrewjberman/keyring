@@ -4,10 +4,10 @@
  "directive": "D7",
  "macro_code": "TCKT",
  "fabric": "laptop",
- "dep_stage": "PRD",
+ "dep_stage": "EXECUTING",
  "status": "active",
  "name": "The Ticket Center takes typed requests, the Analysis Request first: a holdings file attached through the Analysis upload door and the finished report returned on the ticket",
  "generated_from": "org/missions/D7/TCKT/TCKT_VNEXT/project.json",
  "generated_by": ".tools/missions-tree-index.py",
- "generated_at": "2026-10-07T17:12:13Z"
+ "generated_at": "2026-10-07T18:39:25Z"
 }

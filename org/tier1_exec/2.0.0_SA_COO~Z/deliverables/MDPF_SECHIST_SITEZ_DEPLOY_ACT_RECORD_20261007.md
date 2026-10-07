@@ -61,3 +61,63 @@ keys, the next Positioning gold run WILL read its rows; that is the served move 
 L1 close (the merge commit) -> L2 (working-tree blob reads `0e399c9523f60511107b8491b9894c892a6aeb60`, `py_compile` rc 0) ->
 `plan_only()` at site Z (read-only; the plan and the budget inputs) -> the local copy -> the ONE ad-hoc run -> the comparisons ->
 report to `0.0.0_AB_MSTR~Z` for dell1 with the entry path. L3 stays OPEN for tomorrow's scheduled run.
+
+---
+
+# 4. THE MERGE LANDED (13:45Z); L1 and L2 CLOSED; NO hand run today (ruled); L3 waits for tomorrow's scheduled pull
+
+Sections 2 and 3 above were written before the ruling below. Their "ONE ad-hoc run" did NOT happen and will not: this section
+supersedes them.
+
+## The ruling on the ad-hoc run
+
+This seat put the overwrite to `1.0.0_SA_CTO~Z` before running anything (msg 30967). **Ruling msg 30968: (b), no hand run of the
+leg today.** Reasons as ruled: it overwrites today's seven scheduled `bbg/2026-10-06/` objects on an unversioned bucket and turns
+`run_class` to adhoc, on keys that feed Positioning and the ETF view under Andrew's no-modify order, and no pair covers that
+overwrite; the backfill is paid once per security, so a hand run would spend what tomorrow's acceptance run is meant to exercise;
+a local byte copy is a rollback only this seat's process can vouch for. `1.0.0_SA_CTO~DELL1` ACCEPTED (relay msg 30975): its
+ruling 167 is superseded for the site-Z act, and MDPF_SECHIST FWD-1 is re-dated to tomorrow's scheduled 07:00 ET pull.
+
+## L1 -- the merge (CLOSED)
+
+`fad25b1527` (parents `b1a8bc190f`, `45899bfc6c`), by `0.0.0_AB_MSTR~Z` at 2026-10-07T13:45:36Z on Andrew's word (@b72e8ae904),
+after the 10:30Z-12:00Z exclusion. Read by this seat at 13:52Z: a commit; an ancestor of HEAD; `20a69d5a62` an ancestor of HEAD;
+no `.git/MERGE_HEAD`. Pushed: origin CLOUD reads `fad25b1527` by MSTR~Z's ls-remote (msg 30998); its pre-push gate uploaded
+nothing.
+
+## L2 -- the working-tree bytes (CLOSED)
+
+| read | value |
+|---|---|
+| `git hash-object integrations/bloomberg/pipeline/etf_daily_pull.py` (the site-Z working tree) | `0e399c9523f60511107b8491b9894c892a6aeb60` |
+| `git rev-parse HEAD:<file>` | the same |
+| `git rev-parse 20a69d5a62:<file>` (the signed bytes) | the same |
+| `py_compile` under Python 3.11 | rc 0 |
+
+**The deploy is live from 13:45Z:** the scheduled task runs the working tree, so the next run of the leg is the new code.
+
+## `plan_only()` at site Z, read-only (13:52Z, the merged bytes, no fetch, nothing written)
+
+`asof 2026-10-06`, `universe_count 172` (166 constituents + 4 funds + 2 extra securities), `needing_count 15`, `capped []`,
+`written []`. The 15: 2602335D, BBY, BE, BX, CSCO, DG, ED, EXPD, GEV, LNVGY, META, MRNA, PFDE, PFOE, PWR, each from 2025-09-29 to
+the day before its earliest held row (CSCO and BX to 2026-09-17). That is the same 15 the COO half read on dell1.
+
+Budget inputs at 13:53Z: `daily_ceiling_rows 150000`, `production_reserve_rows 30000`, `spent()` today 755 rows,
+`ledger_dir()` `C:\Users\Opal Bloomberg\AppData\Local\opal_bbg_budget`. The request's own bound for the first run is about
+15 x 250 = 3,750 rows, far under the 120,000 a backfill may spend. The figure tomorrow is tomorrow's ledger, which starts empty
+(one file per UTC day).
+
+## L3 -- OPEN, tomorrow
+
+The first scheduled `OPAL_BBGTML_daily_pull` after the merge: 2026-10-08 07:00 America/New_York (11:00Z).
+- **Owed BEFORE it (the CTO half's condition, restated by dell1 in relay 30975):** `ledger_dir()` for the leg and the collector
+  re-measured against the MERGED tree and printed here.
+- **Owed AFTER it:** the manifest at `bbg/2026-10-07/run_manifest.json` (as-of 2026-10-07): the planned securities with rows
+  returned, `history_backfill_error` null, `history_backfill_budget {estimate, limit, spent_before, recorded}`, the leg's exit 0
+  in the vehicle log, and a `backfill` line in that day's ledger file. Then L3 closes, or the rollback of the COO half runs.
+
+## A note on the ledger entry's `.md`
+
+`close-leg` re-rendered the entry from its sentinel, and the "PRE-MERGE MEASUREMENT" section this seat appended at the open is no
+longer in the file (0 matches at 13:54Z). It stands in section 1 of this record and in git at e4e17dd7bc. The tool said so
+itself ("The .md is a RENDERING of the sentinel -- never hand-edit it"); the measurement belongs here, not there.

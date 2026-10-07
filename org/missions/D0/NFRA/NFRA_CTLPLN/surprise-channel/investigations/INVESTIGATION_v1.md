@@ -2375,3 +2375,84 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Copying the installed script byte for byte would carry the laptop's interpreter path into the Dell's Scripts folder, where it names a python.exe that does not exist. Restoring the line makes the packed bytes differ from the installed bytes (and from the installed RECORD hash) for these four files, while matching what the package's own wheel carries; the worker chose restoration, said so here, and the order did not say it."
 }
 ```
+
+## NFRA_CTLPLN-S20 -- dell1's Python 3.14 holds pyarrow, pyiceberg and hdbscan at versions off the pins; their likely source is an index install at bring-up, a fifth fetch if so
+
+```json
+{
+  "id": "NFRA_CTLPLN-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T17:19:29Z",
+  "one_line": "dell1 imports pyarrow 25.0.1, pyiceberg 0.12.0 and hdbscan on Python 3.14.7; the pins are 18.1.0, 0.9.1 and 0.8.41 and no kit delivered them, so they reached the box some other way, likely a requirements install from the public index this morning.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1700Z.md block 1, bus da723c41, from 1.0.0_SA_CTO~DELL1 at 16:57Z: the three imports succeed at those versions; kuzu absent; 'the source is unread (box image or an earlier install)'",
+      "Same block, added by dell1's fabric manager: dell1's bring-up session installed the repository requirements on Python 3.14 this morning (its handoff records 'all 83 requirements.txt packages, pip check clean'), before the download tiers were stated",
+      "1.0.0_SA_CTO msg 106445: the off-pin copies are not used; those cells run on the laptop by relay; nothing is uninstalled today; this row asked",
+      "Not read by this seat: dell1's interpreter, its pip log or cache, or the handoff the manager cites. HOW and WHEN are therefore the manager's inference, not a measurement"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN v0.16 C-INTAKE and Andrew's download-tier word: a package reaches a box by the checked route (the laptop checks it, then Taildrop); a box fetches nothing itself. Today's earlier counted fetches: two bun auto-installs on dell2, the provisioning install on dell1, the laptop's frozen-lockfile install.",
+  "world_is": "If the manager's inference holds, dell1 made an index install of the whole requirements file at bring-up: a fifth fetch, larger than the other four, made before the tiers were stated. It also explains the off-pin versions: on Python 3.14 the pinned versions have no build, so a resolver that was not held to the pins took newer ones. Open, for dell1 to measure and report: the install's time and command (pip's own log or the cache's file times), what it fetched (count and names), and whether the same was done on dell2 (dell2 reported no PyMuPDF this morning, which argues against). No uninstall is ordered; the copies are simply not imported by project work."
+}
+```
+
+## NFRA_CTLPLN-S21 -- the Python kit on dell2: 49 of 49 wheels verified and installed offline; 3 imports fail on dependencies the kit does not carry, and the tool mislabelled them
+
+```json
+{
+  "id": "NFRA_CTLPLN-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T17:19:29Z",
+  "one_line": "The 49-wheel kit installs on Python 3.14 with no index; 46 of 49 packages import, and the three that do not each lack a dependency the requirements file never listed. The kit's tool reported them as failed where its own design calls them a missing dependency.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1700Z.md block 2, bus a7670095, from 0.0.0_AB_MSTR~DELL2 at 16:57Z, Python 3.14.7: tar sha256 matches; PY-KIT-VERIFY wheels=49 verified=49 stray=0 ok=True; PY-KIT-INSTALL installed=49 imported=46 import_missing_dep=0 failed=3 ok=True",
+      "The three, as dell2 names them: pandas_market_calendars (needs exchange_calendars), yfinance (needs frozendict), s3fs (needs aiobotocore). Real install then made offline with --no-index --no-deps --user, rc 0; nothing fetched",
+      "org/devices/kit_python_repack.py (merged @f0d4d48d4e): the worker's report says 'A package whose own module is missing is counted as failed, not as import_missing_dep'; dell2 reads the three as mislabelled. Which branch of the tool took them is not read by this seat",
+      "Row NFRA_CTLPLN-S18: requirements.txt omits 73 dependencies; 1.0.0_SA_CTO msg 106445: 'That is C-INTAKE clause 2's closure gap, measured: close the list before round 5 fetches.'",
+      "First install of this kit on any Python 3.14: the eight compiled packages' stable-ABI claim held for import on dell2 (46 imported; which 46 is in dell2's result file, unread here). dell1's result is not reported"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 7: an import that fails for an absent dependency is reported as import_missing_dep with the module's name, distinct from a wheel that will not install; C-INTAKE clause 2: a list is closed under dependencies before anything is fetched.",
+  "world_is": "The kit is proven to install on 3.14 and is live on dell2. Two things follow for round 5. (1) Its first cell is the closure: the full dependency set of the 67 requirements for Python 3.14 on 64-bit Windows, computed from metadata with no index call where the laptop holds the metadata, the remainder named as unknown until fetched; the three names here are its first measured members. (2) The tool's label is repaired in that cell so a missing dependency of a dependency (the import error names a module that is not the package's own) reads import_missing_dep."
+}
+```
+
+## NFRA_CTLPLN-W14-S6 -- TO-CT-a-1 amendment 3: the policy simulator reads the key policy's account-root principal as a direct grant, so two admin arms read allowed in the raw run
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T17:07:15Z",
+  "one_line": "iam simulate-custom-policy reads the account-root principal of a KMS key policy as a direct grant to every account user, so kms:ScheduleKeyDeletion and kms:PutKeyPolicy read allowed for a Dell user on the transcripts key policy before AND after this change; KMS itself treats the root statement as delegation to IAM, and the Dell users' own live policies refuse both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py, ARM lines: for both cloudops-dell1-agent-user and cloudops-dell2-agent-user, kms:ScheduleKeyDeletion and kms:PutKeyPolicy read raw_doc=allowed AND raw_pre_edit_doc=allowed (identical on the document without this change); with the root statement removed (named_statements_only) both read implicitDeny; the rule the script counts is the KMS rule (a statement naming the user, or a root statement naming the action AND the user's own policy allowing it): own_policies kms:ScheduleKeyDeletion implicitDeny, kms:PutKeyPolicy explicitDeny (cloudops-dell-agent-respol-policy), so the counted result is dell_write_refused=10/10 while the raw simulator reads 6/10",
+      "the simulator also refuses a bare Resource \"*\" in a resource policy (ResourceNames are not in a valid ARN format), so the script passes the document with each \"*\" replaced by the key ARN for the simulator call only; the rendered and committed document keeps \"*\"",
+      "the same two raw 'allowed' arms exist today for any account user the root statement of RootAdministersTheKeyAndCannotUseIt names by principal; the amendment's expectation (each write arm implicitDeny or explicitDeny) is therefore met under the KMS rule and not under the raw simulator, and the proof row says which"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 3 step 3: each Dell user kms:Encrypt, kms:GenerateDataKey, kms:ReEncryptFrom, kms:ScheduleKeyDeletion, kms:PutKeyPolicy -> NOT allowed, by iam simulate-custom-policy with the rendered document as the resource policy.",
+  "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
+}
+```
