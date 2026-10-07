@@ -121,7 +121,7 @@ ran and which assertions you re-anchored, and any row.
   `data-segment`.
 - **Issued by hand, no loop.**
 
-<status>pending</status>
+<status>complete</status>
 <round>45</round>
 <slot>~107</slot>
 <fabric>site-z</fabric>
