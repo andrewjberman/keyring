@@ -1474,6 +1474,29 @@
  "spec_asserts": "TO-AV-zw-1 (d): remove the re-run button; the order names posture.harness.cjs only among the harnesses and AC2 expects BATTERY29 ALL PASS.",
  "world_is": "shell.harness.cjs carried a check that counts the Refresh button's purple fill (the 'ONE purple fill on this view', FWD-18); removing the button makes the count 0, so the order's literal edits alone leave AC2 red. The Security view now has no primary-fill control; whether a later cell wants one is not decided here.",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-W107-S1",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "0.9.0_WK_DSGN_AMGTV1~107",
+ "surfaced_at": "2026-10-07T02:10Z",
+ "one_line": "r44.cjs (round 44 issuer check) reads 2 of 5 arms after AV-zw-2: arms 1, 2 and 4 grade the pre-AV-zw-2 contract (open state keyed on passage id, segment label on every row in served order) that this order's items 1 and 4 change; the check file is outside this order's <paths>.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "node r44.cjs on portal 34803ef6 + this order's 4 files (uncommitted at the run): ARM FAIL 'A CLICKED DRIVER POINT SHOWS ITS SERVED PASSAGE (FWD-18)' (served passage_text not shown), ARM FAIL 'THE SEGMENTS ARE DRAWN WITH THEIR CITES (FWD-1)' (row 4: segment not at rest; rows 5-11 text/cite not at rest), ARM FAIL 'MOUNT + KEEP' (a point resolved through sections lost its passage); ARM PASS arms 3 and 5; last line '2 of 5 arms'.",
+   "r44.cjs renderOpen() stubs React.useState so that init === null returns the PASSAGE ID as the open state (r44.cjs lines 62-67); ThesisDriverChart now keys the open state on the point index (order item 1), so no point reads open under that stub. r44.cjs gradeSegments() pairs the i-th data-segment-row with the i-th SERVED row and expects the segment name inside each row; item 4 groups rows by segment (BA: served order CA,CA,BDS,BDS,GS,GS,GS,CA,BDS,GS,CA is drawn CA x4, BDS x3, GS x4) and prints the name once as the heading.",
+   "The same checks r77_ba5.py AC1, AC2, AC3 read C1-C5, C1-C10, C1-C6 PASS and exit=0; tsc -b rc=0; eslint --quiet rc=0; drafting, posture, shell, tabs, thesisLadder harnesses green with no assertion edited. The r44 baseline on 34803ef6 was not re-run by this worker (git stash is refused on this tree); the three failing arms are attributed from the code lines cited."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "The worker's order text: the existing round-44 check must stay green after the change; if a required change moves an arm, report which and why.",
+ "world_is": "Items 1 and 4 of the order necessarily move the three r44 arms named; the check cannot be edited by this worker, so the drain's r44 run reads 2 of 5 until the issuer re-anchors it to the point-keyed open state and the grouped rows.",
+ "notes": "Worker-authored record; form only, no significance judged."
 }
 ]
 ```
