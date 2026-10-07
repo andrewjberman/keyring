@@ -4158,3 +4158,61 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Not a criterion of this order. The upload completed and is proven (AC1 ok=True); ledger secclass-e42-a07-deploy-s-20261007 leg L1 CLOSED, leg L2 (the post-run read) OPEN. Also recorded in that ledger entry's opening commit da2368a603. The general shape -- a never-widen half pinned to an unpushed commit on the authoring device -- is wider than this one cell."
 }
 ```
+
+## MDPF_SECCLASS-S56 -- the SC-e-42 CTO half became readable after the act; its bytes were read and all eight conditions check out, so S55's premise no longer holds
+
+```json
+{
+  "id": "MDPF_SECCLASS-S56",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~S",
+  "surfaced_at": "2026-10-07T15:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The CTO half pinned @b3092be6d2 resolved on a later fetch -- dell1 had pushed candidate branches carrying it after this seat's earlier read -- and its own bytes confirm every one of the eight conditions was carried by the completed deploy; the file is still absent from origin/CLOUD's tree, so a reader on the trunk alone still cannot print it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git cat-file -t b3092be6d2 now returns 'commit' where it returned 'fatal: Not a valid object name' at ~13:30Z; git branch -r --contains b3092be6d2 names 10 refs, all dell1 candidates (origin/q/dell1/CLOUD/r10..r14, origin/q/dell1/record-package-intake/r1, origin/q/dell1/secclass-r10-held-d04/r1, origin/q/dell1/secclass-r8/r7..r9); none of them existed at the earlier full fetch, which reported exactly one new branch (origin/q/dell1/secclass-r8/r6)",
+      "git merge-base --is-ancestor b3092be6d2 origin/CLOUD => NO, and git ls-tree -r origin/CLOUD on the CTO half's path is still empty: the half is reachable only through a candidate branch, not the trunk",
+      "the commit reads 'half(1.0.0_SA_CTO~DELL1): MDPF_SECCLASS SC-e-42 a07 canonical-first -- CTO never-widen half SIGNED (164 named moves; live spot-check; CASH row correction carried as a condition)', authored 2026-10-07 08:49:47 -0400",
+      "the half's VERDICT line reads SIGNED for the one key from 88c7018366, and its conditions 1-6 map onto the eight without loss: CTO 1 = COO 1 + COO 5 (ledger opens first, naming the key and the IsLatest VersionId read before the upload, no unread rollback key), CTO 2 = COO 2 (safe-deploy only, by a bucket-admitted principal), CTO 3 = COO 3 (pushed range after both halves sign) plus 'and the range carries no other shipped file', CTO 4 = COO 4 + COO 6 (the post-run census, mix totals and move-set comparison; an unlisted move stops the close), CTO 5 = the CASH row (new), CTO 6 = no upload inside a chain run's window (new)",
+      "each was carried: ledger da2368a603 opened before the act naming key and VersionId 72tSRnxMSKkBdtgAJZtqQcHeebqACIl1; ONE safe-deploy run from the laptop; the post-run read is ledger leg L2, OPEN; the window was measured shut (host stopped, both of the day's dispatches complete, no InProgress or Pending SSM command)"
+    ]
+  },
+  "spec_asserts": "TO-DEPLOY-e42 <the_act>: 'BOTH halves are SIGNED for exactly this upload; read both in full first and carry every condition (eight).'",
+  "world_is": "The read the order asked for is now done, after the act rather than before it. Nothing in the CTO half contradicts what was carried, and two of its conditions are not this seat's at all: condition 5 (the CASH row reads fixed_income/UltraShortDuration and a round-10 cell corrects it under C-BOUND) and the second clause of condition 3, which binds the trunk merge rather than the upload. The residual is availability, not authorization: a never-widen half that lives only on its author's candidate branches is unverifiable from any other device until it reaches the trunk.",
+  "notes": "Cites MDPF_SECCLASS-S55 and retires its premise; S55's own disposition is the CVO's act, not this seat's, per the round-9 wording the issuer was asked to fix. The second clause of CTO condition 3 is filed separately as S57 because it is a live reading on an act that has not happened yet."
+}
+```
+
+## MDPF_SECCLASS-S57 -- CTO condition 3 says the pushed range carries no other shipped file; the held branch carries a second one, and its S3 key does not exist
+
+```json
+{
+  "id": "MDPF_SECCLASS-S57",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~S",
+  "surfaced_at": "2026-10-07T15:00Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "q/dell1/secclass-r9-held-32/r1 adds TWO shipped paths over its merge base, not one: a07 (deployed, proven) and data/assets/scripts/gold/runners_49f/tests/test_a07_canonical_first.py, which resolves to the real deploy target s3://opal-data-49financial/_code/tests/test_a07_canonical_first.py -- a key that does not exist, so the trunk merge lands a repo file whose S3 home is a first-mint",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "merge base of origin/CLOUD and b0132b22a8 is b55059ee33 (the round-9 issuance), exactly the base the COO half declares; git diff --name-only b55059ee33 b0132b22a8 lists 8 files, of which the shipped paths are data/assets/scripts/gold/runners_49f/a07_dim_asset_classification.py and data/assets/scripts/gold/runners_49f/tests/test_a07_canonical_first.py",
+      "safe_deploy_core.file_to_s3_target resolves the test file to ('opal-data-49financial', '_code/tests/test_a07_canonical_first.py', 'advi') -- a declared target under the advi tree's longest-prefix gold layer, not an unmapped path",
+      "safe_deploy_core.s3_key_exists on opal-data-49financial: _code/tests/test_a07_canonical_first.py => False, while the two sibling a07 test keys _code/tests/test_a07_vintage_digest.py and _code/tests/test_a07_provenance_stamp.py => True. s3_prefix_keycount: _code/tests/ = 7 keys, _code/ = 84 keys",
+      "the first measurement of this was WRONG and is recorded as such: git diff --name-only origin/CLOUD b0132b22a8 returned 1226 files including ten irpt_custody and three irpt_reporting shipped paths. That diff is two-ended and counts what the trunk has moved ahead on; only the merge-base diff names what a merge would carry. The 1226 number is an artifact of the wrong base, not a finding"
+    ]
+  },
+  "spec_asserts": "CTO half SC-e-42 condition 3: 'The code commit reaches a pushed range only after both halves sign, and the range carries no other shipped file.'",
+  "world_is": "Whether a test file that deploys to _code/tests/ counts as an 'other shipped file' is the half's authors' read, not this seat's. Two things are measured either way: the range is not single-file, and after the merge the advi tree carries one repo path with no S3 object, which a deploy sweep reads as MISSING_ON_S3 / first-mint. TO-DEPLOY-e42's bounds say 'This one key only', so the deploying seat correctly did NOT mint it; nothing is owed by this seat and nothing was skipped. Disarm is a word from the issuer: either the test key is minted under its own explicit first-mint act, or condition 3 is read as covering deploy targets of the runner only and the gap is accepted and recorded.",
+  "notes": "Surfaced before the merge rather than after, because the merge is 0.0.0_AB_MSTR's next act on this branch. No upload was made for this row."
+}
+```
