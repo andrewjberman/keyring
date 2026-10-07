@@ -19665,3 +19665,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "notes": "No fixture reaches :160 or :409 in the battery, so neither is graded by AC1."
 }
 ```
+
+## IRPT_BCKEND-S365 -- PrintEntry custody-report candidate waits on a portal toolchain; readReportKind still falls back to performance
+
+```json
+{
+  "id": "IRPT_BCKEND-S365",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T11:10:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Portal PrintEntry.tsx @cdda4378 (IB-pr-336's portal half, the custody-report kind refused by name) is reviewed LAND-WITH-NOTE by 1.0.0_SA_CTO~DELL2 (msg 403) but cannot land on DEV yet: its conditions are a typecheck + eslint pass and one test (?kind=custody-report yields the refusal with 0 requests), and dell2 has no portal toolchain (tsc absent). NOTE for the next round: readReportKind (PrintEntry.tsx:109) still maps any unknown kind to 'performance' on the page side; it must refuse an unknown kind as the render host now does.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 403: @cdda4378 vs origin/DEV, 1 file +15/-1; conditions (1) typecheck + eslint + one test, (2) readReportKind :109 refuses an unknown kind next round",
+      "wk-provision on dell2: 'TSC: ABSENT' at every portal worktree provision this session"
+    ]
+  },
+  "spec_asserts": "A reviewed portal candidate lands on DEV once its named checks run.",
+  "world_is": "The checks need a portal toolchain dell2 lacks (bring-up kit). The page-side unknown-kind fallback is next round's enrichment item."
+}
+```
