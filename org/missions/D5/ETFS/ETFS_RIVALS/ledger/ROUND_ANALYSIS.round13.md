@@ -43,3 +43,32 @@ Still OPEN and carried: S24 (the backfill-night proof) and W6-S2 (the planted pr
 ## 5. ACTS FOR ANDREW (cited)
 
 - **One click:** open the audit link on `mcp.opalinvest.dev/rivalfunds` (ruling 1).
+
+## ADDENDUM 1 (2026-10-07 ~03:2xZ) -- Z-S54: the AI accounts quote an earlier build than the panels (COO~RV msg 30536, Andrew-direct)
+
+**Andrew's example** (record `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_031xZ_RIVALFUNDS_AI_NUMBERS_VS_PANEL_NUMBERS_VARIANCE.md`
+@2fb7e966ee): IDVZ's verdict says Petrobras +0.47% over thirty days, and the rankings beside it say +0.93%.
+
+**Measured by COO~RV on 10-06:**
+- The AI step ran at 13:00:20Z against the 11:03Z tables.
+- The sweep rebuilt the tables at 13:05Z, and the page serves the rebuild.
+- 22 of 26 accounts and 149 of 197 cited figures moved, each under a "Grounded" badge.
+
+**Ruling: (A) and (C) together, as ONE round-14 cell. (B) is not cut.**
+1. **(A) The order.** The sweep's table refresh runs BEFORE the AI step. The AI step reads the revision the page will serve,
+   and it records that revision id on each account.
+2. **(C) The badge carries its claim.**
+   - "Grounded" is printed only when an account's cited revision IS the served revision of every table it cites.
+   - Otherwise the badge reads "Grounded on an earlier build", in the same place and at the same weight as the badge. A small
+     line elsewhere does not meet this.
+   - The manifest counts both kinds.
+3. **(B) is not cut.** A re-run after a late rebuild is one more OpenAI run. That is a vendor use Andrew has not worded. If (A)
+   leaves late rebuilds happening, the count from (C)'s manifest line is what goes to him as a card.
+4. **Proof:**
+   - On a real day's run, 26 of 26 accounts cite the served revision, and a sample of cited figures equals the panel's figures
+     (Petrobras in IDVZ among them).
+   - A plant: a table rebuilt after the AI step turns that fund's badge to "Grounded on an earlier build", and the manifest
+     counts 1.
+
+- **Why:** a figure under a "Grounded" badge that disagrees with the panel beside it makes both look wrong. The grounding
+  was true of a build the reader is not looking at, so the claim has to say which build.
