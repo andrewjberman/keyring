@@ -29,7 +29,11 @@
       "lane_letters": [],
       "lane_letters_default": true,
       "lane_letters_claim": "inferred",
-      "lane_letters_source": "every ~lane not claimed by another box runs on the laptop"
+      "lane_letters_source": "every ~lane not claimed by another box runs on the laptop",
+      "tailnet_name": "andrew",
+      "tailnet_address": "100.96.167.100",
+      "tailnet_claim": "measured",
+      "tailnet_source": "tailscale status from the laptop, 2026-10-06 ~20:0xZ and 2026-10-07 ~02:0xZ (1.0.0_SA_CTO)"
     },
     {
       "name": "sitez",
@@ -55,7 +59,11 @@
       ],
       "lane_letters_default": false,
       "lane_letters_claim": "measured",
-      "lane_letters_source": "org/mcp/agentbus-trunk/messages/*__0.0.0_AB_MSTR~Z__*.json (the ~Z lanes are site Z's)"
+      "lane_letters_source": "org/mcp/agentbus-trunk/messages/*__0.0.0_AB_MSTR~Z__*.json (the ~Z lanes are site Z's)",
+      "tailnet_name": "opal-bloomberg",
+      "tailnet_address": "100.99.180.19",
+      "tailnet_claim": "measured",
+      "tailnet_source": "tailscale status from the laptop, 2026-10-06 ~20:0xZ and 2026-10-07 ~02:0xZ (1.0.0_SA_CTO)"
     },
     {
       "name": "dell1",
@@ -105,5 +113,6 @@
       "lane_letters_claim": "absent",
       "lane_letters_source": "no lane runs on this box yet"
     }
-  ]
+  ],
+  "tailnet": "Every box carries its tailnet (Tailscale) name and address; the tailnet name is the box's real network identifier and rides every bus message beside the sender's serial (Andrew-direct 2026-10-07, NFRA_CTLPLN C-BUS)."
 }
