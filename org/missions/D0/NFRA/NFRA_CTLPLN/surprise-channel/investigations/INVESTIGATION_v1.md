@@ -783,3 +783,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The instance is VALID and the criterion's output was true where it was run; on the trunk the same invocation fails. Cause: a check whose population (tracked files) changes when the check itself is committed. The issuer's drain re-ran CT3c6-AC1 and not AC2. Repair: cell CT-d-6 of round 4 (handed, worker ~9) repairs the census table and keeps a hit in a new test file UNCLASSIFIED until named. The general case for the drain: re-run every criterion whose invocation reads tracked files AFTER the merge, not before it."
 }
 ```
+
+## NFRA_CTLPLN-W11-S1 -- CT-d-8 probe finding
+
+```json
+{
+  "id": "NFRA_CTLPLN-W11-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~11",
+  "surfaced_at": "2026-10-07T08:32:10Z",
+  "one_line": "No resources.json row names a builder-conformant resource: all 465 rows grade OUT-OF-PATTERN, so CT-d-8's case (A), 'a builder-conformant name that HAS a row', cannot be built, and the probe's registered_wellnamed key measures a registered legacy name instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/probe_missing_registry_row.py, 2026-10-07 ~08:3xZ: 'registry census: resources.json holds 465 row(s); 0 of 465 row name(s) grade CONFORMANT under lib/opal_naming.grade()'",
+      "case A re-uses the first LAMBDA row, inf-gold-trigger (registry_count=1): the gate prints 'NAMING REFUSE ... inf-gold-trigger -> advi-inf-gold-trigger-lambda' and exits 1 (OUT-OF-PATTERN as LAMBDA), so a registered name is refused on its grade, not admitted",
+      "infra/logic/registry/resources.json _about and lib/opal_naming.py:605-610 @208c5d85ee: a row fills a {system} placeholder for a name whose own tokens resolve no system; the row never makes the name conformant"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-8 build item 1 (A): 'a builder-conformant name that HAS a row in infra/logic/registry/resources.json (pick an existing row and re-use its name)', and the last-line key registered_wellnamed.",
+  "world_is": "resources.json holds the system attribution of 465 legacy, non-conformant names; none of them is a registered well-named resource, and the gate refuses the one the probe tried. The probe ran case A as the order's recipe says (an existing row's name) and prints the census beside it; the key registered_wellnamed=refused therefore reads 'a registered legacy name is refused', which is a stronger statement than the key suggests. ok=True and AC1 are unaffected (they rest on case C). No test was weakened."
+}
+```
+
+## NFRA_CTLPLN-W11-S2 -- CT-d-8 probe finding
+
+```json
+{
+  "id": "NFRA_CTLPLN-W11-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~11",
+  "surfaced_at": "2026-10-07T08:32:40Z",
+  "one_line": "C-NAMING clause (3), 'its row lands in resources.json in the same commit as its Terraform', collides with lib/opal_naming.py validate(): a row for a builder-conformant name is REFUSED as redundant, so a missing-row refusal for a conformant name would demand a row the registry validator rejects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch copy of infra/logic/registry in .scratch/regcopy with one row appended {name: blackdiamond-49f-missing-row-probe-lambda, type: LAMBDA, system: blackdiamond}: lib/opal_naming.validate(reg_dir=...) returns 1 refusal: \"already resolves 'blackdiamond' from its own tokens (type 'LAMBDA'); a row naming the same system is redundant\" (baseline validate on the unmodified registry: 0 refusals)",
+      "lib/opal_naming.py:642-664 @208c5d85ee, the redundant-row check; infra/logic/registry/resources.json _about (rows exist only for names whose tokens resolve no system)",
+      "the same probe: the unregistered, builder-conformant name is ADMITTED by the apply gate (NAMING-PLAN: PASS 1 graded), so today nothing requires the row that clause (3) says must exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN PRD v0.13 C-NAMING clause (3) and cell (b): every new resource has a row in infra/logic/registry/resources.json, and an apply for a missing row is refused.",
+  "world_is": "For a conformant name the row resources.json can hold is a redundant one that validate() refuses, so 'the missing row' is undefined for exactly the resources C-NAMING is about; the proposal for CT-d-8 states this and offers the index question to the gate's owner rather than choosing. Whether a commit-time or CI gate runs validate() on a pushed registry was not measured by this worker; only the function's return was."
+}
+```
