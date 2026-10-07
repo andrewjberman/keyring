@@ -4318,3 +4318,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Write set limited to composition.ts and its test; neither types.ts nor the panel was edited."
 }
 ```
+
+## MDPF_SECCLASS-W49-S1 -- the SC-e-65 order's <paths> block does not parse, so the lane gate grants ~49 nothing
+
+```json
+{
+  "id": "MDPF_SECCLASS-W49-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~49",
+  "surfaced_at": "2026-10-07T15:12:00Z",
+  "one_line": "SC-e-65: the order's <paths> block is not on its own line, so the lane gate reads 0 granted paths and refuses every build commit of ~49",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/owned-paths-validate.py:151 _TO_PATHS_RE requires the <paths> tag alone on its line (^[ \t]*<paths>[ \t]*\r?\n); the order MDPF_SECCLASS.TO-SC-e65 @42730b6f02 line 126 reads '- **Grant.** The `<paths>' with the entries after it",
+      "measured: _paths_block_entries(git show HEAD:<the order>) == [] ; _worker_orders(root, 'MDPF_SECCLASS') lists the order issued_to ~49 with 0 entries; safe-commit of the 4 build paths refused rc=1 with 'WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' for all 4",
+      "contrast: MDPF_SECCLASS.TO-SC-e64 @42730b6f02 lines 70-76 carries <paths> and </paths> each alone on its line and parses"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's BOUNDS block states the <paths> block IS the worker's write grant, naming five paths.",
+  "world_is": "The grant parses to zero entries, so no commit of the five named paths can land from ~49 without an audited override, which the worker rules forbid. The build is complete and verified in the worktree wk-secclass-49 (uncommitted: etf_classification_scheduled.py, tests/test_cash_token.py, tests/test_classified_by_v2.py, MDPF_SECCLASS_CONTRACT.json): AC1 'SC-E65 ok=True', AC2 'PYTEST-OK ... 229 passed'. Issuer fix: re-cut the order's BOUNDS so <paths> and </paths> each stand alone on a line, then re-dispatch or authorize the commit.",
+  "notes": "Order left in_progress; not flipped. No override used."
+}
+```
