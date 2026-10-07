@@ -7464,6 +7464,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S100",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T14:13:27Z",
+      "one_line": "ANSWER to 1.0.0_SA_CTO~Z msg 31017: the Seeking Alpha leg DID read Alibaba, Boeing and Costco on 2026-10-06 and 10-07 -- each job concluded new_articles, reached listing dates to the run day, stored 616 / 1,992 / 45 articles and uploaded all of them -- so a freshness view reading 'last read 2026-09-11' for them reads a plane these runs do not write.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "AMGT_RESAPP's freshness page (round 77 ruling 10, ADJUDICATION_v94 @3408907be0) reads 'Seeking Alpha last read 2026-09-11' for BABA, BA and COST beside 92 names reading current, and the cause is taken to be the collector's.",
+      "world_is": "Seeking Alpha backfill checkpoint .runtime/harvest-backfill/r47_sa_checkpoint.json (51 done pairs, retry 0, gave_up 0) and each job's run record under .runtime/opal-data-harvest-sa/run_records/. BABA_US_Equity (collector key security-85663a3912a0c415): run 20261006T224539Z-run-5cf2aeea, 22:45-23:16Z, mode backfill, status new_articles, reached_span 2014-01-08 to 2026-10-06, fetched and stored 616 (rejected 591, skipped as held 478), outbox 616 uploaded. BA_US_Equity (collector key BA): run 20261007T002530Z-run-ecf26946, 00:25-01:33Z, new_articles, span 2015-03-23 to 2026-10-07, stored 1,992 (rejected 1,613), 1,992 uploaded. COST_US_Equity (collector key COST): run 20261007T111148Z-run-c2310424, 11:11-11:30Z, new_articles, span 2008-05-29 to 2026-10-07, stored 45 (rejected 605), 45 uploaded. Each run record stamps gold_security_key with the pool key. CONTROL, C_US_Equity (collector key security-7fc817a6bb1bf24e): run 20261007T124653Z-run-6b3d3a63, same shape (backfill, new_articles, span to 2026-10-07, stored 9, 9 uploaded). So of the three outcomes asked: not 'not attempted', not 'attempted and stopped'; it is 'stored where the freshness view does not read'. One difference from the control that may matter: BA and COST run under the collector's PILOT keys ('BA', 'COST'; config.json pilot_securities), not a security-hash key, and all three were collected in the September pilot. NOT measured here (the view is AMGT_RESAPP's): which object the freshness view reads for 'last read', whether it prefers a pilot-era record keyed on the pilot key, and whether the 92 current names include any of the other pilots (HD and SAP have no sa job yet on this checkpoint).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read 2026-10-07 ~14:1xZ: r47_sa_checkpoint.json done rows for keys security-85663a3912a0c415, BA, COST",
+          ".runtime/opal-data-harvest-sa/run_records/20261006T224539Z-run-5cf2aeea.json, 20261007T002530Z-run-ecf26946.json, 20261007T111148Z-run-c2310424.json, 20261007T124653Z-run-6b3d3a63.json (status, reached_span, counts, gold_security_key)",
+          "sqlite read-only: harvest_raw_outbox status by article_key for each run's keys_stored_join (616, 1992, 45, 9 uploaded)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
