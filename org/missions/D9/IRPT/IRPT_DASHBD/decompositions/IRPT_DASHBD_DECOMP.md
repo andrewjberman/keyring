@@ -482,3 +482,18 @@ The E3 gate has opened: `_shared/etf_classification.py` carries the six-class va
 | (FWD-8) | the split BD pull | WORLD (vendor call) | Andrew's per-use word | held |
 
 fanout: 1 of 1 chains, cap 8, reason: one build cell; its release follows it. Worker 0.9.0_WK_IRPT_DASHBD~18 in its own worktree.
+
+## 22. ROUND 22, WORKSTREAM B (2026-10-07 ~12:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-21 analysis @214a0ef324, msg 448)
+
+Round 21 is closed: DB-b-33 @75717e8580 (account_class_daily built and run locally; REMEDIATION_v7 @d116b31dba). W18-S2 RULED: release
+as is, the unclassified share of value shown beside the class breakdown with its reason; single-stock and money-market coverage is ASKED
+of MDPF_SECCLASS through the laptop, then the table is re-run. The release is the smallest change: the existing reporting-gold function
+also emits account_class_daily; its role writes one more prefix; the schedule is unchanged.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-34` | E1 prep: handler + bundle + role + declaration (W18-S1) + tests; local release run (returns DELTA=0, class identity, unclassified share); the never-widen packet | SERVED (source only; no apply) | DB-b-33 (merged) | B22 |
+| (apply) | safe-apply of the reporting-gold root, the first fire, the after-read (CTO criteria 2-3) | SERVED | DB-b-34 merged; both halves signed; the dell2 terraform kit | the issuer's act |
+| (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one prep cell; the apply follows it. Worker 0.9.0_WK_IRPT_DASHBD~19 in its own worktree.
