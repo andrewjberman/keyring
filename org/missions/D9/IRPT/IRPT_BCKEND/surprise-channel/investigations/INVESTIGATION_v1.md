@@ -18879,3 +18879,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_BCKEND-S354 -- S338 measured (the laptop CVO's FILE, filed on dell2): three no-close days, a backfill cannot fill them
+
+```json
+{
+  "id": "IRPT_BCKEND-S354",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-07T09:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Row S338's NOT MEASURED half, filed on dell2 from the laptop CVO's FILE: Inflection held positions on 2026-05-11, 2026-06-30 and 2026-08-10 (888, 922 and 948 accounts). Each lacks a gold partition because, under the producer's declared close rule, no source partition holds that day's close (two NO_SINGLE_CLOSE by declaration, one because the 2026-07-01 source partition is absent). A backfill cannot fill them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_S338_INFLECTION_THREE_DAYS_MEASURED_20261007.md @9c0a10062f (origin CLOUD e688467732): the laptop CVO's read-only measurement, delivered as a FILE under laptop CTO rulings 106091/106092 (only dell2 mints row ids for this project); it was first filed on the laptop as S348 (@8dc6d1f929), renumbered S351 (@ffd56930e6), then withdrawn",
+      "the producer's own close_partitions(), run read-only by the laptop CVO on the three days, with a control day (2026-08-07) that resolves to three present partitions"
+    ]
+  },
+  "spec_asserts": "Leg A1 of ledger irpt-inf-performance-serving-20261002 (amendment 20261003): every 2026 trading day through the fire's day has a date= partition under Inflection's holdings gold.",
+  "world_is": "Three 2026 trading days can never have a partition under the producer's declared close rule, so the amendment's clause could not pass. Leg A1 was amended @9204974f23 to pass on three disclosed no-close days; this row is the evidence that amendment cites."
+}
+```
