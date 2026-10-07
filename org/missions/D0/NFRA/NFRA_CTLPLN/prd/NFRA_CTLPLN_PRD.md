@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.13",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -430,5 +430,26 @@ On `3.0.0_SA_CVO`'s verdict UPHELD (msg 106050; `org/tier1_exec/3.0.0_SA_CVO/del
   the same box, and the task-order gate's LIMB 6 reads SIGNED there without a hop to the laptop. The laptop's `3.0.0_SA_CVO` signs
   for laptop-written PRDs only. UNMEASURED: that `prd-signoff.py` accepts the same base serial from a second box without a clash in
   the sign-off file; the first Dell sign is the read, and a refusal there comes back to this seat as a row.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.13 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING: every new resource, on any box, is builder-named and registered. Contract only
+
+Andrew-direct ~08:1xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "ALso make sure that everyone is being very diligence with LGIC_NAMING for any new resource creation, everything should be registered as well, i believe there is some index we have for this ecxact purpose."
+Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`.
+
+- **C-NAMING (new contract; owner this project for the four-box rule; the vocabulary and builders stay LGIC_NAMING's and LGIC_ENFORCE's).**
+  On the laptop, site Z, dell1 and dell2 alike: (1) a new AWS resource is created only by `.tools/safe-apply.sh` of a Terraform root,
+  never by a CLI or SDK create call; (2) its name is `lib/opal_naming.py` `name()` output and every S3 address is `address()` output;
+  (3) its row lands in `infra/logic/registry/resources.json` in the same commit as its Terraform; (4) a builder refusal is answered by
+  the missing registry row, and on a Dell that row is asked of the laptop CTO when the scope or system does not exist yet.
+- **What enforces it today:** `.tools/naming-apply-gate.py` inside `safe-apply.sh` refuses a badly named resource being ADDED (its plan
+  mode). Clause (1) and clause (3) have no gate: the Dell create grant permits a create outside Terraform at the cloud, and no gate
+  refuses an apply for a missing registry row.
+- **Next issuance, two cells:** (a) one read at each round's close, by the round's COO: every resource the round created, against
+  `resources.json`, N of N printed, a missing row filed as a row (a read at the drain, not a standing checker); (b) the missing-row
+  refusal in the apply path, proposed to LGIC_ENFORCE as its owner, since it is that project's gate.
+- **UNMEASURED:** that both naming gates fire on dell1 and dell2. Each Dell's fabric manager runs one known-bad name through
+  `naming-apply-gate.py` and reports the refusal line.
 
 A contract change under the ENDPOINT hash.
