@@ -83,7 +83,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   key is the HEAD sha) with vite from the linked node_modules; no registry is reached.
 - **Base:** the worker's portal is at b3440392, so the candidate becomes b3440392 + 1 commit touching no product file.
 
-<status>pending</status>
+<status>complete</status>
 <round>50</round>
 <slot>~112</slot>
 <fabric>site-z</fabric>
