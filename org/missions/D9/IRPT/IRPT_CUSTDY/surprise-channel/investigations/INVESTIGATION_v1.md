@@ -210,3 +210,29 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E3 is held out of round 2's issuance on dell2 (the issuer's ruling, recorded in the round-2 decomposition): its build and both its checks need the portal toolchain. It is cut when the bring-up kit carries portal node_modules to dell2, or on the CTO's placement of the cell on the laptop."
 }
 ```
+
+## IRPT_CUSTDY-W6-S1 -- the order's per-figure `source` object collides with the contract's fees.source label
+
+```json
+{
+  "id": "IRPT_CUSTDY-W6-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~6",
+  "surfaced_at": "2026-10-07T09:22:21Z",
+  "one_line": "CU-b-3 asks every figure to carry source {table, partition, rows}, but the round-1 contract already gives fees a `source` that is the string SCHWAB_TXN_FEE_ROWS; the worker moved the label into fees.source.label.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_CUSTDY/decompositions/IRPT_CUSTDY_DECOMP.md:81 fees: {amount, source: SCHWAB_TXN_FEE_ROWS, is_billed_fee: UNKNOWN}",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py (this worker's branch wk-IRPT_CUSTDY-6) FEES_KEYS keeps order amount, source, is_billed_fee; source is now a dict carrying label",
+      "grep of the worktree for SCHWAB_TXN_FEE_ROWS and client_report_figures: no code consumer outside the module and its tests (the issuer's template join is not yet built)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-b-3 build item 2: every figure carries `source`: {table, partition, rows}. The round-1 contract: fees.source is the label SCHWAB_TXN_FEE_ROWS.",
+  "world_is": "Both cannot hold on the fees figure. Reading taken: the order's later, explicit rule wins and the contract's label is kept as fees.source.label; the round-1 fees test is edited for exactly that. Also taken where the order is silent: market_value, each holding row and each activity row carry a source (rows 1 for a single row); the returns partition is `date=<d>` or `date=<first>..date=<last>`; an as-of whose quarter opens before 2024-01-01 is refused rather than computed. The issuer or CTO may overrule: the label move is one dict key in build_documents."
+}
+```
