@@ -364,3 +364,29 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The 'None' source is fixed upstream, so the tracer's fixture premise no longer holds against HEAD's ids.py. The tool did its job (W5-S1 -> E-P8). Next round's repair batch: retire none_source.py or re-point its test at a fixture projection that still refuses; this round does not re-cut it."
 }
 ```
+
+## IRPT_CUSTDY-S8 -- E2 graded from the real hop-3 run on dell2: QTD/YTD/1Y OK, sources 124/124, SI NO_DATA (no anchor), 4 not in directory
+
+```json
+{
+  "id": "IRPT_CUSTDY-S8",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T10:50:00Z",
+  "one_line": "E2 graded on dell2 from the real hop-3 run (the fence on opal-data-49financial lifted ~10:44Z): 10 households, 14 accounts; QTD/YTD/1Y OK on 14/14 accounts; every figure names its source; but SI is NO_DATA everywhere (no inception anchor), and 4 granted accounts are NOT_IN_DIRECTORY.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~10:46Z, HEAD after f4ccdbf04e: python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 --out <scratchpad file, not committed: real client figures> -> HOP3-REAL-RUN advisor=matthew_gooch as_of=2026-09-30 households=10 accounts=14 uncovered=4 held_si=0 error=none, rc 0, 666158 bytes",
+      "graded from that file: accounts QTD OK 14/14, YTD OK 14/14, 1Y OK 14/14, SI NO_DATA 14/14; households QTD OK 10/10, YTD OK 10/10, 1Y OK 7 NO_DATA 3, SI NO_DATA 10/10; figures with a source {table, partition, rows}: 124/124; uncovered 4, all NOT_IN_DIRECTORY; numbers of 8+ digits other than the two masters: 19 distinct, 0 matching any ownership-map account",
+      "1.0.0_SA_CTO~DELL2 msg 358 / 0.0.0_AB_MSTR~DELL2 msg 367: cloudops-dell2-agent-user reads opal-data-49financial gold from ~10:44Z; relay 346 withdrawn by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 analysis E2 (round 1's E4 criteria): QTD, YTD, 1Y at 2026-09-30 computed; SI held under HOLD A where inception is before 2024; each figure names its rows.",
+  "world_is": "Criteria 1 and 3 hold on real data (household 1Y is NO_DATA in place for 3 of 10, the households carrying an uncovered account). Criterion 2 is vacuous: no SI is held because no SI anchor resolves (inception column absent from the accounts the wrapper builds; gold manifest first_data_date not used) -- with HOLD A lifted for 2010-2027 this is now the SI gap, a next-round item beside moving the hold floor to 2010. S4 and S6 close on this run: the fenced read is no longer fenced and the figures FILE exists on dell2."
+}
+```
