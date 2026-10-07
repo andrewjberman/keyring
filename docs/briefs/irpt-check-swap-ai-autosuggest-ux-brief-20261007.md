@@ -209,9 +209,8 @@ Measured 2026-10-07 08:12Z at workspace `30f94c3ab1` and portal `origin/DEV` `8d
 
 ## PART VII -- WHAT THIS BRIEF DOES NOT CLAIM
 
-- **The page was not rendered.** Portal `node_modules` is absent on dell2. The page test
-  `upload-accept-suggestion.test.tsx` failed at import ("Cannot find package 'react'"), and no 5174 build or `/ui-walk`
-  was run. The section 4.2 walk is read from source and fixtures. Exact pixels, layout and focus order are unverified.
+- **The page's text was rendered later** (Part IX, after msg 469). No 5174 build or `/ui-walk` was run, so pixels, layout and
+  focus order are unverified.
 - No external products were researched (section 4.3, egress).
 - (Answered in Part VIII: `InputReview.tsx` is mounted, and the provider row carries a name.)
 - The delisted/successor behaviour (5c, R9) is inferred from the prompt text and was not exercised.
@@ -250,6 +249,32 @@ Measured 2026-10-07 08:12Z at workspace `30f94c3ab1` and portal `origin/DEV` `8d
 - **Not checked:** whether served requests reach that panel carrying `UNRESOLVED_SECURITY` findings. The panel's
   "Review required" line appears only when `request.findings` is non-empty. Reachability is measured from code, and the
   page was not rendered.
+
+---
+
+## PART IX -- THE CARD, RENDERED (2026-10-07 12:11Z, after msg 469 placed portal node_modules)
+
+- **Instrument:** `ProspectComposer` was rendered server-side at portal `DEV` `8ddfe409` with the fixture adapter, using
+  `bun --no-install`. The four findings were TICKER_NOT_FOUND with a suggestion (APPL), TICKER_DATA_NOT_ENTITLED (TIMXX),
+  TICKER_AMBIGUOUS (BRK) and TICKER_CHECK_UNAVAILABLE (VTI), with the server's words where the server declares them. The page
+  tests `upload-accept-suggestion` and `iv-e-153.upload-proxy` pass (5 pass, 0 fail).
+- **Text as rendered, in order:**
+  ```
+  Review required: CURRENCY_CONFIRMATION_REQUIRED Correct the file or valuation options and review again, or name a proxy below ...
+  Row 2: Our data provider does not recognize this ticker. Check it for a typo, or name a similar ticker ... (a proxy); ...
+  Row 3: This holding is a real fund, but our data provider does not cover funds of this kind, ... Name a similar ticker ...
+  TICKER_AMBIGUOUS, row 4
+  TICKER_CHECK_UNAVAILABLE, row 5
+  Name a proxy
+  APPL (row 2) is analysed as [ ] Did you mean AAPL? [Use AAPL]
+  TIMXX (row 3) is analysed as [ ]
+  [Review with these proxies]
+  ```
+- **This confirms 4.2 steps 4, 5a, 5b, 5d and 5e as measured, not inferred.** BRK and VTI get a raw code and no control.
+- **New, not in 4.2:** the summary line prints `result.reason` as a raw code ("Review required: CURRENCY_CONFIRMATION_REQUIRED"),
+  because the fixture's top-level reason is a code. Whether served results carry a code or words there is not checked. Added
+  to R7: the summary line needs words.
+- **Still not checked:** layout, styling and focus order. This was text from static markup, not a browser screenshot.
 
 ---
 

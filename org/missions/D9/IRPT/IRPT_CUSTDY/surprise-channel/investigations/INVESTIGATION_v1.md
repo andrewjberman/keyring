@@ -549,3 +549,29 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "(c) is read as the only measurable thing: holdings on the days between opening and first funding (or an unconfirmable read). On real data no account lands in (c), so the reading changes no reported figure; the CTO or issuer should confirm or restate it. The probe's wall time is 153 s, so a timeout 120 wrapper would record rc=124; the criterion was run under timeout 600 and its output is recorded in the proof."
 }
 ```
+
+## IRPT_CUSTDY-S9 -- round 4 drained: SI OK 14/14 on the real run; W9-S3 and W9-S4 disarmed; suite 110/0
+
+```json
+{
+  "id": "IRPT_CUSTDY-S9",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T12:10:00Z",
+  "one_line": "Round 4 drained and graded on the real run: SI is OK on 14/14 accounts and 10/10 households (12 under branch (a) 'since inception (first funded <date>)', 2 under rule 2); W9-S3 and W9-S4 disarmed by CU-d-1 amendments 1 and 3; the suite reads 110 passed, 0 failed on CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: e05799d167 (CU-d-3), 7361085932 (CU-d-2), 208a3ceedf (CU-d-1, amendments 1 @2063cabae7, 1b @ce710b5144, 2 @09f7e2ab87, 3 @021117b977)",
+      "dell2 ~12:0xZ on HEAD 208a3ceedf: tests/run_suite_check.py -> SUITE ... passed=110 failed=0 errors=0 skipped=0 xfailed=1; py_compile 10/10; ruff clean",
+      "dell2 ~12:0xZ: hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 -> HOP3-REAL-RUN ... households=10 accounts=14 uncovered=4 held_si=0 not_in_directory=4 of=18 error=none; from its file (not committed: client figures): SI OK accounts 14/14, households 10/10; si_anchor rule 1 OK 12, rule 2 OK 2; labels 'since inception (first funded' 12, 'first date Opal holds' 2; uncovered NO_SCHWAB_KEY 4"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-3 analysis @ec25e39844 E1-E3 and the CTO's W9-S2 ruling (msg 423); rows W9-S3 and W9-S4 ARMED with disarm_owner 2.0.0_SA_COO~K2.",
+  "world_is": "E1: every account prints its anchor and rule, SI computes for every rule-1/rule-2 anchor on or after 2010 with the ruled labels, and a test fails on a rule-2 'inception' label. E2: the advisor's 4 NOT_IN_DIRECTORY accounts are counted with their denominator (4 of 18) but cannot be reported: they have no custodian key, so no Schwab data (W10-S1). E3: suite green on CLOUD. W9-S3 is disarmed by amendment 1 (hop3 tests re-expressed) and W9-S4 by amendment 3 (directory-gap tests re-expressed); both were seams between round-4 cells, not defects."
+}
+```
