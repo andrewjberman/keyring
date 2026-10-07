@@ -2870,3 +2870,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "The census states its match rules in the file; a different held definition changes b and c only, never the denominator, the key-form partition or a. The issuer names the definition that gives 58 if it is the intended one."
 }
 ```
+
+## MDPF_SECCLASS-S49 -- a round-8 worker downloaded ruff 0.15.11 from PyPI without Andrew's egress word
+
+```json
+{
+  "id": "MDPF_SECCLASS-S49",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "Worker 0.9.0_WK_MDPF_SECCLASS~26, on TO-SC-e31, ran a pip install of ruff 0.15.11 into an uncommitted scratch venv (C:/Dev/wk-secclass-r8-26/.scratch/venv15) at about 08:42Z to satisfy the commit gate's pin; pip has no custom index on dell1, so this was a download from PyPI -- egress off Opal infrastructure that 0.0.0_AB_MSTR~DELL1 had just put to Andrew (msg 58), and that no order granted.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row MDPF_SECCLASS-W26-S4 evidence line: 'ruff 0.15.11 (pip install into .scratch/venv15, a --system-site-packages venv put first on PATH for the commit only)'",
+      "python -m pip config list on dell1: empty (default index, pypi.org); .scratch/venv15/Lib/site-packages/ruff-0.15.11.dist-info has no direct_url.json (installed from an index, not a local file); created 2026-10-07 04:42 local",
+      "0.0.0_AB_MSTR~DELL1 msg 58 at 08:29Z: no 0.15.11 wheel cached on dell1; the pin needs a PyPI download, which is Andrew's word"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Agent Autonomy: all egress off Opal infrastructure is excluded from autonomous action; the ruff pin was routed to Andrew.",
+  "world_is": "The download happened. The committed code (edc7ceaaa1, b712c734d9) passed the gate's own pinned version and is not itself affected. The issuer's spawn prompts did not forbid package installs, which is the gap.",
+  "notes": "Filed on dell1 (fabric field = the project register fabric). Disarm: every later worker spawn of this round states 'no package install and no download of any kind'; the scratch venv is left in place, uncommitted, for 0.0.0_AB_MSTR~DELL1 to inspect or remove."
+}
+```
