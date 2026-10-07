@@ -4648,3 +4648,59 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. FWD-1's firm view PASSes (CVO grade @a03020a049); only the client page remains."
 }
 ```
+
+## MDPF_SECCLASS-W53-S1 -- the staged e55 port is the pre-amendment build, and the census file is missing
+
+```json
+{
+  "id": "MDPF_SECCLASS-W53-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~53",
+  "surfaced_at": "2026-10-07T16:42:20Z",
+  "one_line": "The three files the issuer staged for the e55 release port are the PRE-amendment blobs (46bda757e1), not 4e73b996d0's; the amendment-1 build also carries d00_census_out.json, which the staged set and this order's <paths> omit. Refusal clause fired; nothing committed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse :<path> vs 4e73b996d0:<path> at ad636c9c03 index: d06_firm_mix_summary.py 2a8f45a3 vs 355b2b98; tests/test_d06_unclassified_line.py 2ddaaac8 vs 7141c932; half request b0a86387 vs a99fba4a -- all three DIFFER",
+      "the staged blobs equal 46bda757e1's (2a8f45a3, 2ddaaac8, b0a86387): the original ~38 build before AMENDMENT 1",
+      "the diff is substantive: staged test keeps test_only_shape_delta_against_the_frozen_census_is_the_new_key (expects the census to REFUSE the fourth key); staged half still says the census edit is outside the grant and has no RELEASE PRECONDITION section; 4e73b996d0 carries the census-passes control and the precondition",
+      "git diff 46bda757e1 4e73b996d0 -- data/assets/scripts/gold/runners_49f/d00_census_out.json = 4 insertions: the amendment-1 build also changed the census, which is neither staged nor in this order's <paths>; without it the shipped emitter refuses every publish (Branch B of the half, row W38-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 2: the three staged files are the issuer's cherry-pick of 4e73b996d0 and each blob equals 4e73b996d0's.",
+  "world_is": "None of the three equals 4e73b996d0's; they equal 46bda757e1's. The correct port needs the 4e73b996d0 blobs of the three files PLUS d00_census_out.json, and that census path is not in <paths>. The worker committed nothing and did not weaken or rebuild anything; AC1/AC3 not run on the wrong blobs.",
+  "notes": "Fix for the issuer: re-stage the three paths from 4e73b996d0 (git restore --source=4e73b996d0 --staged --worktree) and add d00_census_out.json to this order's <paths> and the staged set, then re-issue slot ~53."
+}
+```
+
+## MDPF_SECCLASS-W53-S2 -- W53-S1 resolved by amendment 3: the four staged blobs equal 4e73b996d0's and the e55 port is committed
+
+```json
+{
+  "id": "MDPF_SECCLASS-W53-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~53",
+  "surfaced_at": "2026-10-07T16:48:00Z",
+  "one_line": "AMENDMENT 3 (b2144dedb1) re-staged all four files from 4e73b996d0 and added d00_census_out.json to <paths>; the re-seated slot ~53 confirmed blob equality and committed the port at b359a829d7. W53-S1 is resolved by citation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse :<path> == git rev-parse 4e73b996d0:<path> for all four: d06_firm_mix_summary.py 355b2b98; test_d06_unclassified_line.py 7141c932; d00_census_out.json 66c09de8; half request a99fba4a",
+      "committed on secclass-r12-rel-e55 at b359a829d7 (LOCAL, not pushed)",
+      "SC9-e55-AC1 PYTEST-OK rc=0 (6 passed); SC9-e55-AC3 HALF-READY rc=0; AC2 WITHDRAWN (amendment 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3: the four staged files are 4e73b996d0's blobs and d00_census_out.json is in <paths>.",
+  "world_is": "Matches the amendment. W53-S1's armed hazard (wrong blobs, missing census) is disarmed: the committed set equals the amendment-1 build.",
+  "notes": "Resolves MDPF_SECCLASS-W53-S1 by amendment 3 b2144dedb1; S1 is not edited. The shared-home files stay off every pushed range until both halves sign."
+}
+```
