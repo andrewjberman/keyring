@@ -2066,3 +2066,19 @@ edit, with `round42/checks/r42/r42.cjs` still 5 of 5.
 both run at once. **Fan-out:** 2 of 2 (`fanout: 2`). PRD v0.17 @8730d6c042 reads ADMITTED. `AV-zy-I` stays NOT CUT: its clause text is
 the CTO's to send (msg 30797: "I send its hash"). **The round-47 grading walk** reads FWD-4, 7 and 8 on covered names and one uncovered
 name only for its designed state.
+
+## v48 -- ROUND 48 (issuer, 2026-10-07 ~11:3xZ) -- ONE CELL: THE RENDER CHECK'S PURPLE-FILL CLAUSE
+
+**Rectangle:** round 47's item 3 (`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` ruling 3), named `AV-zy-I` in v47 and held there
+for the PRD addendum. Cut now on the CTO's word (msg 30831: "cut AV-zy-I now, PRD v0.17 @8730d6c042 is ADMITTED"). It is its own round
+because the issuance gate admits ONE issuance per round and round 47's is @de235b1e7c; the cell is renamed `AV-zz-1` to fit the cell-id
+grammar. **Base:** portal ec9f9a0e, the round-47 candidate, APPROVED for DEV @07ff6ebe34 (the push is Andrew's word).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zz-1` | FWD-18 (the amended DONE WHEN), FWD-20 (the render check passes) | `portal/scripts/ui-contract-check.mjs` | ~110 (worker-light) |
+
+**Check:** `round47/checks/r47i/r47i.cjs` lifts the `purpleFills` predicate and `gradeFwd18` out of the script's text and evaluates them:
+1 of 4 at base ec9f9a0e, 4 of 4 on a scratch reference edit. The order also runs the instrument once and reads 0 FAIL cells in its
+candidate grades (10 today, all this clause). The candidate becomes ec9f9a0e + 1 commit touching no product file.
+**Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
