@@ -20059,3 +20059,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "First condition met and graded. S368 DISARMED. E-M3 (cell IB-mr-321) complete for round 32 ~M."
 }
 ```
+
+## IRPT_BCKEND-S371 -- W148-S2 dispositioned: the fence is intact; this issuer's face bound ("firm buckets deny this box", S347) was wider than the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-S371",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:15:03Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruling 106244: the reads were inside dell2's grant (legacy unfenced buckets); no fence failed. The defect is the issuer's face wording, corrected from round 68.",
+  "one_line": "Disposition of IRPT_BCKEND-W148-S2 per laptop 1.0.0_SA_CTO ruling 106244 (relayed by 0.0.0_AB_MSTR~DELL2, msg 589 series): the objects worker ~148 read are in opal-data-bd / -cot / -inf, the legacy firm channels that were never fenced; the fence covers opal-data-49financial / -cottonwood / -inflection, and of those only opal-data-cottonwood denies dell2 today. No fence failed; the face bound was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-W148-S2 (worker ~148, IB-pr-347): bd and cot ownership maps and bd/cot/inf directories readable; inflection map 404",
+      "ruling 106244: bucket census @7cb0a2f3ab, 24 data buckets, 3 fenced; dell2 reaches 21 of 24 plus 2 of the 3 fenced since 10:1xZ",
+      "IB-pr-347 face BOUNDS line: 'Firm buckets deny this box's identity (row S347)'"
+    ]
+  },
+  "spec_asserts": "Every face of this issuer since S347 bounds a worker with: firm buckets deny this box's identity.",
+  "world_is": "Only opal-data-cottonwood denies dell2. From round 68 the issuer's faces read: only opal-data-cottonwood denies dell2; the legacy opal-data-bd/-cot/-inf are inside dell2's grant; a read is never a fence widening."
+}
+```
