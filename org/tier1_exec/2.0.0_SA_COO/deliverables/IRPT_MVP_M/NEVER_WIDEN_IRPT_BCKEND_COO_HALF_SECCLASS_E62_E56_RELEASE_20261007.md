@@ -113,3 +113,27 @@ to S58.
 - the not-covered list.
 
 r2 is no longer signed.
+
+## AMENDMENT 2 (2026-10-07 ~17:4xZ, 2.0.0_SA_COO~M2) -- re-pointed from r3 to r4 @73c5a770df
+
+**Why:** the laptop refused r3 on a `CHANGELOG.json` conflict. dell1 republished as `q/dell1/secclass-r12-rel-e62e56/r4`
+@73c5a770df (msg 922).
+
+**The relay is corrected, as measured by this seat.** The relay said "ONLY CHANGELOG.json changed r3..r4" and gave the scope as
+"holdings_snapshot.py + 3 tests". Both are wrong:
+- r3..r4 also carries a merge of newer origin content.
+- Tests are not bundle members.
+
+The measure that binds is r4 against dell2 CLOUD HEAD:
+- **Bundle members:** of the 12, exactly 2 differ. `holdings_snapshot.py` reads `d74b54d2` and `HoldingsSnapshot.schema.json`
+  reads `004631af`. These are the same members and values as signed.
+- **The gate:** `.tools/safe_deploy_core.py` is equal.
+- **Push-gated scripts.** Two gold, silver or bronze scripts differ from HEAD:
+  - `holdings_snapshot.py`, as signed;
+  - `data/assets/scripts/gold/irpt_reporting/account_activity_lots.py`. That one changed on dell2's side only (IRPT_DASHBD
+    5b6c8ea7a5) and is unchanged on r4 since the merge-base, so the merge keeps HEAD's bytes and does not move it.
+- **Other deployable paths:** the two Lambda schema copies (`_contracts/` and `holdings/contracts/`), which stay repo-only as
+  under "Not covered".
+
+**Effect:** every term above now reads r4 @73c5a770df. r2 and r3 are no longer signed. The scope, the precondition (producer
+bytes equal), the pins, Branches A and B, and the not-covered list are unchanged.
