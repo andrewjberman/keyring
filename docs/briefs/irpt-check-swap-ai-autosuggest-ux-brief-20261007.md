@@ -159,6 +159,37 @@ agent autonomy. This brief therefore cites no external product. The patterns the
 side-by-side, bulk accept, undo) are carried as hypotheses in section 4.4, labelled model-prior, never as cited findings.
 With Andrew's word, a cited external pass can be appended as section 4.3b.
 
+### 4.3b Outside the estate (added 2026-10-07 ~13:4xZ, on Andrew's word)
+
+**Authority and method:** Andrew-direct ~13:3xZ, "Websearch is fine, but downloading needs to be gated", record
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_133xZ_WEBSEARCH_FINE_DOWNLOADS_GATED_PENDING_MANUAL_REVIEW.md`
+@e031cd6991. Four web searches were run and **no page was opened**: opening a page is a fetch, and fetches are held under that
+word. Every line below is the search tool's summary of a result, cited to that result's URL. It is NOT a reading of the page.
+Treat each as a lead to confirm, not a finding.
+
+| # | Pattern (as summarized) | Source | Bears on |
+|---|---|---|---|
+| E1 | On an import, a security that fails to match shows a red error. Clicking it opens a "Map Security" menu. Matching runs through a fixed identifier order: Morningstar Performance ID, Security ID, SEDOL, ISIN, CUSIP, Fund ID, Ticker | Morningstar Office Cloud importing guide, https://advisor.morningstar.com/AWSOE/Training/IACloud/Importing.pdf | R4, R5: the fix happens on the failing row through a chooser, not a free-text box |
+| E2 | Import rules can rename a ticker automatically at upload, after a user has corrected it once | PropReports, "Ticker Symbol Import Rules", https://propreports.atlassian.net/wiki/spaces/PR/pages/6291672/Ticker+Symbol+Import+Rules | a remembered correction, not in this brief's list (see R13) |
+| E3 | A holding is re-pointed to the correct ticker or exchange, keeping its history ("Rename Symbol") | Navexa help, https://help.navexa.com/en/articles/8878818-change-a-holding-s-ticker-symbol-or-exchange | R6: a typo fix is a rename, distinct from a stand-in |
+| E4 | For holdings the tool does not support (annuities, UITs, individual bonds), the vendor recommends a proxy: "an index or a fund with similar characteristics" | Kwanti, https://kwanti.com/product | R10: an advisor-analysis peer offers stand-ins of the same kind |
+| E5 | A suggestion carries a recommendation, a reason, a confidence, a preview, and apply/dismiss; "the model should suggest; the user decides" | csvbox, "Designing AI-friendly import flows", https://blog.csvbox.io/designing-ai-friendly-import-flows/ | R1 (reason beside the suggestion), R2 |
+| E6 | Do not show a raw percentage ("87% confident"). Use tiers: high confidence renders normally, medium gets a "review suggested" badge | DEV Community, "Design AI confidence as a recovery path, not a percentage", https://dev.to/haaaaaley/design-ai-confidence-as-a-recovery-path-not-a-percentage-41og | R1's choice to keep reason as text and show no number |
+| E7 | Against "accept all": deliberate friction at high-impact moments, so the user owns the AI's output | Spread.ai, "The case for friction in AI UX: why accept all is the wrong pattern", https://www.spread.ai/resources/stories/the-case-for-friction-in-ai-ux-why-accept-all-is-the-wrong-pattern | **qualifies R2's bulk accept**; see below |
+| E8 | Every AI action is undoable, and AI changes are never silent | same csvbox source as E5 | R2 (undo before re-review), R6 (disclosure) |
+
+**What this changes in 4.4:**
+- **R2 is qualified.** Bulk accept stays for verified typo suggestions only, where each suggestion has passed the provider's
+  exact-match read. Stand-ins (R5, R10) are never bulk-accepted: a stand-in changes what the report measures, which is E7's
+  high-impact moment. Each stand-in is accepted row by row.
+- **R1 is supported** by E5 and E6: show the reason and the name, and show no numeric confidence.
+- **R13 (new, TODAY, small backend):** remember an advisor-accepted typo correction per firm and offer it first next time
+  (E2). It reuses the retained correction. Whether a firm-scoped memory is wanted is a product call.
+- No source contradicts R4, R5 or R6. E1 and E3 are the closest peer patterns for them.
+
+**Not done:** no page was read in full; no vendor product was used; YCharts' and Orion's own unmatched-security screens were
+not found by these searches.
+
 ### 4.4 Question 4 -- recommendations, ranked by user value against cost
 
 Tags: **TODAY** works on today's YCharts intake; **FWD-16** needs Opal's own data (S31, S32); **VENDOR** needs a vendor
@@ -211,7 +242,7 @@ Measured 2026-10-07 08:12Z at workspace `30f94c3ab1` and portal `origin/DEV` `8d
 
 - **The page's text was rendered later** (Part IX, after msg 469). No 5174 build or `/ui-walk` was run, so pixels, layout and
   focus order are unverified.
-- No external products were researched (section 4.3, egress).
+- External products: searched in section 4.3b from result summaries only; no page was opened.
 - (Answered in Part VIII: `InputReview.tsx` is mounted, and the provider row carries a name.)
 - The delisted/successor behaviour (5c, R9) is inferred from the prompt text and was not exercised.
 - No costs are estimated beyond small/medium. No numbers are proposed for a confidence threshold.
