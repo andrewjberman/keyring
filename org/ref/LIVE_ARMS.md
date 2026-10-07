@@ -19,6 +19,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS and MDPF_SECHIST, AUTHORITY-UNVERIFIED (transient): reported live ~07:16Z 2026-10-07 by
+  `0.0.0_AB_MSTR` msg 106033 from dell1's bus messages 3725cd36 and c512943f. Andrew said at the `1.0.0_SA_CTO` terminal ~07:1xZ "i will bring
+  their CTOs online now"; his words at the dell1 terminal that armed this loop are not read by this seat. Re-class to DIRECTED when that
+  record is read. Paired lanes on dell1: `2.0.0_SA_COO~M1`, `2.0.0_SA_COO~H1`. Landed by 1.0.0_SA_CTO.
 - `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
   4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
   to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
