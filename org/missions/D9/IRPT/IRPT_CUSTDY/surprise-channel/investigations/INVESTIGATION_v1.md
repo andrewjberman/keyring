@@ -391,6 +391,32 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
 }
 ```
 
+## IRPT_CUSTDY-W10-S1 -- CU-d-2 on real data: the 4 NOT_IN_DIRECTORY accounts have no Schwab key; 0 documents move
+
+```json
+{
+  "id": "IRPT_CUSTDY-W10-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~10",
+  "surfaced_at": "2026-10-07T11:10:00Z",
+  "one_line": "CU-d-2 on real data: the 4 NOT_IN_DIRECTORY accounts of matthew_gooch are not in the custodian key seam, so none can be built; they move from reason NOT_IN_DIRECTORY to NO_SCHWAB_KEY and 0 documents move from uncovered to reported.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~11:08Z, branch wk-IRPT_CUSTDY-10 after the CU-d-2 edit: python data/assets/scripts/gold/irpt_custody/check_directory_gap.py --advisor matthew_gooch --as-of 2026-09-30 -> UNCOVERED NO_SCHWAB_KEY=4 / DIRECTORY-GAP advisor=matthew_gooch granted=18 not_in_directory=4 reported=14 all_reported=True, rc 0",
+      "read-only probe through hop3_real_run.real_inputs() (no figures printed): of the advisor's 18 granted ownership-map accounts, 14 are in the custodian_key_seam index (5376 entries) and resolve to a Schwab key; the 4 not in the directory (masked ****9851, ****0041, ****7341, ****9421) are not in the seam index and schwab_key() returns None for each; none of the advisor's 12 map relationships is an acct:<id> singleton, so the OWNERSHIP_MAP name rule would have had no key for them either",
+      "the same 14 accounts and 10 households as round 3 (row IRPT_CUSTDY-S8: households=10 accounts=14 uncovered=4); the wrapper's gap rule is exercised on fixtures only (tests/test_hop3_directory_gap.py), where an account with Schwab data and no directory entry gets a document named OWNERSHIP_MAP or ACCOUNT_ONLY"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-d-2 cell text and the CTO ruling: an account NOT_IN_DIRECTORY still gets its report, named from the ownership map; 'those 4 got no report' is the gap to close; CU11-AC2 reports the counts (all_reported=True).",
+  "world_is": "On the chosen advisor the gap is not a directory gap alone: the 4 accounts have no Schwab key at all (absent from the custodian key seam, so no silver or returns gold can be read for them), so no report can be built whatever the directory holds. They stay uncovered, now under NO_SCHWAB_KEY, still counted (not_in_directory=4 of=18). all_reported=True holds because no granted account WITH Schwab data lacks a document. Whether these 4 accounts exist at Schwab under another key (a seam coverage gap) is not measured here and is the open question for the next cut."
+}
+```
+
 ## IRPT_CUSTDY-W9-S1 -- the Schwab silver has no dim_account; the custodian's account open date is fact_acc.date_opened
 
 ```json

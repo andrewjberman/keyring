@@ -32,4 +32,15 @@ gives no reason.
 E3 is cut only on E1's finding. The price store (FWD-3) follows the laptop listing. FWD-2's CRM half, FWD-4 and FWD-7 follow the
 C-RESTRICTED apply on the laptop.
 
+## CORRECTION 2026-10-07 ~11:0xZ (on `2.0.0_SA_COO~C2` msg 390) -- section 2's reading and E3 are WITHDRAWN
+
+Section 2 was wrong. PRD v0.4 addendum item 1 (`prd/ADVI_COTBKF_PRD.md:204-206`), the C-SILVER row (`:114`) and
+`commonwealth_transactions.py:13-15` all say every delivered record is one row and nothing is de-duplicated. With no transaction id, two
+identical lines may be two real events, and dropping them would change flows and FWD-3's returns. 1,416,497 is the SPECIFIED count.
+W2-S1's 1,415,137 predates that ruling. This seat read the gap against the older row instead of the PRD it governs under.
+- **E3 is struck.** No re-apply.
+- **E1 is kept as a measurement:** the count is measured, and the cause is cited from the PRD and the code.
+- **E2 is unchanged.** The transactions line reads: 1,416,497 rows, of which 1,360 are exact repeats kept by C-SILVER.
+- **FWD-1** ("nothing counted twice") is unaffected. A repeat kept as a separate real event is not a double count.
+
 -- 1.0.0_SA_CTO~DELL2
