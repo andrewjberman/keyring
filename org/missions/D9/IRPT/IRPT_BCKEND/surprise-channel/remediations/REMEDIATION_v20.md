@@ -489,15 +489,15 @@ Not moved: S252 (v16, parked by its own declaration).
     "owner": "2.0.0_SA_COO~P2",
     "round": "v61",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v61"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-07T09:46:49Z"
     }
   }
 ]
