@@ -193,9 +193,31 @@ and list each in your report.
   will be missing after this cell; if any served pair rests on it alone, the re-run shows it lost and it needs a brand entry
   on its own census.
 
+**COMPLETE 2026-10-07 ~14:4xZ (issuer):**
+- **Built:** worker ~107 @730ba3116f + @bbd6e1a1c1 + @74d13afd7b, then (re-seated, after AMENDMENT 1) @13561f58bf +
+  @7c897dc476; merged @01e8088aee (11 paths, index check 0 of 11 differ). The merge was refused 4 times on other seats'
+  staged files, then conflicted on the append-only channel (this seat's row Z-S100 against the worker's two rows) and was
+  resolved as the union through `safe-merge.sh --continue` (331 rows, 331 unique ids).
+- **AC1 PASS:** 17 of 17. **AC2 PASS:** LIST OK. **AC3 PASS:** 414 of 414; the same on merged CLOUD.
+- **List comparison:** served 212, proposed 242 before and after; served alias missing 32 before, 17 after, each with a reason
+  (9 slash tails stripped; 7 decorated or short served forms on ASML_NA, BP_US, NG/, PBR, RWE, SAP, WALMEX; 1 whole brand
+  refused on ASML_US). The five loss securities carry every served alias again; BP_US carries the exact-case form `BP` in
+  place of `BP PLC`. Pool names refused as decorated 16, kept 85. New exact-case ticker forms against the served file 43
+  before, 42 after (`AI` removed). Alias sets changed against the round-57 list: 35 of 242.
+- **Identity names:** 6 carried by their exact-case ticker form (BP x2, KPN, RWE, SAP, GSK); 1 needs a whole-brand entry
+  (NOKIA_FH_Equity, `Nokia`).
+- **Existing assertions changed:** in `test_bc1_legal_names.py` four tests (the legal name now wins over a pool name) and in
+  `test_alias_rule_round18.py` the refusal set (`AI` added).
+- **Rows:** AMGT_HARVST-Z-W107-S1 (ruled by AMENDMENT 1); Z-W107-S2 (ARMED, disarm_owner this seat: the `ASML_US` whole
+  brand is now refused by limb (a) because `ASML_NA`'s legal name is `ASML`; `ASML_US` keeps the exact-case form `ASML`;
+  whether any served pair is lost is what the signing re-run measures, and that read disarms or escalates it).
+- **Close run:** `deliverables/2.0.0_SA_COO_H/round58/gold_rebuild8.signing2.py`, launched after this close; its read is the
+  record.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>58</round>
 <slot>~107</slot>
 <fabric>site-z</fabric>
