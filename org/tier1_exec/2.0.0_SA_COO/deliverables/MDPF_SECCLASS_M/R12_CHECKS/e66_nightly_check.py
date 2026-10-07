@@ -33,7 +33,11 @@ for t, want in EXPECT.items():
 shared = sorted(set(cur["asset_id"]) & set(old["asset_id"]))
 c2 = cur.set_index("asset_id").loc[shared]
 o2 = old.set_index("asset_id").loc[shared]
-old_cols = [c for c in old.columns if c != "asset_id"]
+# CTO ruling 421c314080 (condition 3 re-specified): the nightly refreshes its REFRESHABLE columns from bronze and stamps
+# built_at on every row, so those are input drift, not the code change; the others must stay value-equal.
+NIGHTLY_DRIFT = {"built_at", "cusip", "alternative_identifier", "symbol", "ticker", "asset_name", "asset_display_name",
+                 "original_asset_name", "asset_super_class_bd", "asset_class", "asset_segment"}
+old_cols = [c for c in old.columns if c != "asset_id" and c not in NIGHTLY_DRIFT]
 equal = sum(1 for c in old_cols if c2[c].reset_index(drop=True).equals(o2[c].reset_index(drop=True)))
 dates = [c for c in old.columns if "date" in c.lower()]
 dtypes_same = all(str(cur[c].dtype) == str(old[c].dtype) for c in dates)
