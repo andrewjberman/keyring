@@ -21811,6 +21811,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased. A seat reading TERMINAL_DOWN from this driver may wait for a sign-in that is not needed, or report the Terminal down. Two repairs an owner may pick, neither taken: the driver distinguishes an import failure (its own exit word) from a failed health call; or the act's invocation names the interpreter the way scheduled_daily_pull.cmd does (PY_AWS). Until then: run the driver under ...\\Programs\\Python\\Python311\\python.exe."
+},
+{
+  "id": "AMGT_RESAPP-Z-S367",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T14:23:17Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "BLOCKING",
+  "one_line": "'Seeking Alpha last read' on the freshness page reads four per-security tables that the current collector does not write. Those tables hold exactly 3 partitions, the 2026-09-11 pilot objects for BABA, BA and COST, so those three read stale and the other 92 covered names read 'not collected'. Both readings are false; FWD-7 was graded on the three.",
+  "spec_asserts": "Round 77 cell ba-1 (the stale rule on the server) and the round-77 grade of FWD-7: a row reads stale when a COLLECTED input's last read is older than its rule allows, and the three rows 'Seeking Alpha last read 2026-09-11' (Alibaba, Boeing, Costco) are true stale rows beside 92 current ones.",
+  "world_is": "Asked by 1.0.0_SA_CTO~Z msg 31026 after 2.0.0_SA_COO~H measured (row AMGT_HARVST-Z-S100) that the Seeking Alpha leg read all three on 2026-10-06/07. (1) WHICH OBJECT THE DATE KEYS ON: lib/research/freshness/build_view.py latest_seeking_alpha_bronze_stamp (:156-170) takes the newest stamp across the tables _SEEKING_ALPHA_BRONZE_TABLES = (symbol, report, analysis, news) under s3://opal-data-harvest/seeking-alpha/harvest/bronze/<table>/security_key=<pool key>/. (2) WHAT IS THERE: one listing of the whole bronze root, 14,962 partitions: security_key= 3 (BABA_US_Equity, BA_US_Equity, COST_US_Equity), article_hash= 14,951, date= 8. Each of the three holds exactly 4 objects, one per table, stamped 2026-09-11T04:02Z to 04:03Z: the September pilot. build_view returns 20260911T040221Z, 20260911T040304Z and 20260911T040346Z for them. For the control C_US_Equity (Citigroup) and for AMD_US_Equity it returns None: no partition exists. (3) WHERE THE COLLECTOR WRITES TODAY: article/article_hash=<hash>/ (stamps 2026-09-11 through 2026-10-07T12:58Z) and news_listing/date=<day>/ (8 days, the newest 2026-10-07), with silver beside them as date-partitioned parquet (seeking-alpha/harvest/silver/article, listing_hit). None of it is under a security_key= partition, so the freshness reader cannot see it. (4) THE SHADOW QUESTION: no short-key record (BA, COST) exists in this store; the partitions are the pool keys. The three are not shadowed by a pilot record under another key. They are the ONLY names the reader's tables hold at all, and what they hold is the pilot. (5) HOW MANY OF THE 95 ARE SEPTEMBER PILOTS: 3 of 95, and they are the same three. The other 92 have no object in the four tables, so the stale rule, which keys only on collected inputs, never counts Seeking Alpha for them and they read 'All inputs current'.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read by this seat 2026-10-07 ~14:3xZ, store reads only: a paginated listing of seeking-alpha/harvest/bronze/ grouped by table and partition (14,962 partitions; the six tables present are analysis, article, news, news_listing, report, symbol); build_view.latest_seeking_alpha_bronze_stamp() called on BABA, BA, COST, C and AMD; the silver children listed (article 11 date partitions, listing_hit 8).",
+      "NOT measured: where a per-security 'last read' can be derived from on the plane the collector writes. The article objects' top level is {data} and the silver parquet's columns were not opened. The collector's own run records (.runtime/opal-data-harvest-sa/run_records/) carry gold_security_key per row AMGT_HARVST-Z-S100, and were not read here.",
+      "NOT measured: the same question for the Bloomberg and web-search inputs' readers (latest_bloomberg_bronze_stamp, latest_bright_data_serp_stamp). Bloomberg's tables are written under security_key= today (this seat wrote 86 and 85 such objects today), so that reader sees current writes; the web-search reader was not checked."
+    ]
+  },
+  "notes": "Surfaced, not chased; no code edited. The remedy is a producer cell that leads round 78: the freshness reader takes a name's Seeking Alpha last read from the plane the collector writes, and a pilot-era object older than the collector's own record for the name does not set the date. Until it lands and redeploys, the page's three stale rows and its 92 'not collected' cells for Seeking Alpha are both wrong, in opposite directions."
 }
 ]
 ```
