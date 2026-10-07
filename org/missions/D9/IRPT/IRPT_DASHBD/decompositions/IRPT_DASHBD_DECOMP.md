@@ -524,3 +524,17 @@ realized gain and no flow. W20-S1 and W20-S3 ride the release packet. The releas
 | `DB-b-37` | E2: fix the named cause; re-grade the same 91 accounts; one window with realized gain and a flow ties to the cent | LOCAL | DB-b-36 | B24 |
 
 fanout: 1 of 1 chains, cap 8, reason: E2 fixes what E1 names, so one worker queue. Worker 0.9.0_WK_IRPT_DASHBD~21 in its own worktree.
+
+## 25. ROUND 25, WORKSTREAM B (2026-10-07 ~17:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-24 analysis @99580aac8c, msg 899)
+
+Round 24 is closed: DB-b-36 and DB-b-37 @f71fd042c1 (REMEDIATION_v10 @f7bd5e9a6c). FWD-4 is exercised locally on one window (realized
+gain and both flows, gap 0.0075) and not served; 55 of 91 windows tie, 32 of the 36 misses are ROUNDING. The release of the activity and
+lot tables follows E1 under its own halves, carrying W20-S1 and W20-S3.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-38` | E2: the lot-lag bound measured (W21-S5); LEG_LAG_DAYS set from the distribution with its percentile | LOCAL | DB-b-37 (merged) | B25 |
+| `DB-b-39` | E1: the 4 non-rounding windows read against lot events and fixed through the rule; the 91 windows re-run (W21-S4) | LOCAL | DB-b-38 | B25 |
+| `DB-b-40` | E3: the pandas option once per process; the served classify_and_sum hardened against None in source (W21-S6) | LOCAL | DB-b-39 (write set) | B25 |
+
+fanout: 1 of 2 chains, cap 8, reason: E1 re-runs with E2's LEG_LAG_DAYS (a data edge); E3 has no data edge but edits the same producer file as both, so it runs last in the one queue (cut by write set). Worker 0.9.0_WK_IRPT_DASHBD~22 in its own worktree.
