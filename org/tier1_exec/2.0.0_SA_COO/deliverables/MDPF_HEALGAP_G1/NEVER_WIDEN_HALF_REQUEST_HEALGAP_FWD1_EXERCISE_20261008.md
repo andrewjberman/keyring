@@ -1,7 +1,7 @@
 # Never-widen half, MDPF_HEALGAP round 1 -- the one real run of FWD-1: one morning's Cottonwood Rebalancer pull made to fail, healed the same day
 
-**Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-07 ~14:3xZ. **For:** `1.0.0_SA_CTO~DELL1`, the CTO half. **Status: COO half SIGNED; CTO
-half owed.** The exercise runs only after `MDPF_HEALGAP.TO-HG-d2` is complete (the re-attempt target live, `WIRED-OK`) and both halves
+**Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-07 ~14:3xZ. **For:** `1.0.0_SA_CTO~DELL1`, the CTO half. **Status: BOTH HALVES SIGNED** -- CTO half
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_HEALGAP_FWD1_EXERCISE_20261008.md` @b05cdf04c1, conditions (1) GO only after HG-d2 completes with its SKIP probe and WIRED-OK, (2) each put-targets timed and read back, RESTORED-OK by 06:20Z, (3) a targeted plan reads no change after the restore, (4) whether the 13:30Z floor was met is recorded, (5) one date only -- all carried into `MDPF_HEALGAP.TO-HG-d3`. The exercise runs only after `MDPF_HEALGAP.TO-HG-d2` is complete (the re-attempt target live, `WIRED-OK`) and both halves
 are signed. Order: `MDPF_HEALGAP.TO-HG-d3`. **Andrew's word:** ACT 1 @e5fb41862f ("1.) Yes, rec approved."), which names this exercise
 as covered (the same call on the same runner).
 

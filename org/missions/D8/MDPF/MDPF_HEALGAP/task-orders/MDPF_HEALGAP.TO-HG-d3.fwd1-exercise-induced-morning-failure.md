@@ -17,7 +17,7 @@
 (`decompositions/MDPF_HEALGAP_DECOMP.md`, the issuer's drain act 4: "The one real run of FWD-1") | **outcome_ref:** FWD-1 |
 **depends_on:** `MDPF_HEALGAP.TO-HG-d2` (complete)
 
-**GO condition (all, read on the trunk):** `MDPF_HEALGAP.TO-HG-d2` reads `complete`; both never-widen halves SIGNED in
+**GO condition (all, read on the trunk):** `MDPF_HEALGAP.TO-HG-d2` reads `complete` with its act-0 SKIP probe passed and HG1-d2-AC1 `WIRED-OK` (CTO half condition 1); both never-widen halves SIGNED in
 `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_FWD1_EXERCISE_20261008.md`. The issuer flips
 `<status>` to `pending`. Exercise date D = 2026-10-08; if the GO lands after 05:50Z that day, the GO commit amends D to the next date.
 
@@ -38,10 +38,14 @@ standing word (ACT 1, @e5fb41862f) covers this exercise.
 1. Before 05:50Z on D: `aws events list-targets-by-rule --rule cot-rebalancer-runner-daily` (exactly one target), then
    `aws events put-targets --rule cot-rebalancer-runner-daily` re-putting THAT target (same Id, same Arn) with
    Input `{"mode":"pull","induce":"auth-lapse"}`. Read it back; print it in the ledger.
-2. After 06:05Z and before 06:20Z on D: re-put the same target with Input `{"mode":"pull"}`; run HG1-d3-AC3. Close nothing yet.
+2. After 06:05Z and before 06:20Z on D: re-put the same target with Input `{"mode":"pull"}`; run HG1-d3-AC3. Then
+   `terraform plan -target=aws_cloudwatch_event_target.cot_rebalancer_runner_daily` in `infra/aws/terraform/opal-assets` must read
+   no change (CTO half condition 3). Time-stamp both put-targets and the plan in the ledger (condition 2). Close nothing yet.
 3. Do NOT touch anything at ~11:32Z: the heal must happen with nobody acting.
 4. After 13:00Z on D: run HG1-d3-AC1 and HG1-d3-AC2. If AC2 reads BAD after 18:00Z, the half's branch (B) remedy applies: ONE invoke of
    `cot-rebalancer-runner` with `{"mode":"pull"}` for D, recorded in the ledger, and the report says FWD-1 was NOT realized for D.
+4b. Record in the ledger whether the date's served Cottonwood figures were in place by 13:30Z (CTO half condition 4): the
+   newest silver/gold write time for D under the existing `on_success` chain against 13:30Z, MET or MISSED.
 5. Close the ledger entry and commit it (exact pathspec; never another seat's sentinel, row MDPF_HEALGAP-S6).
 
 ### ACCEPTANCE
