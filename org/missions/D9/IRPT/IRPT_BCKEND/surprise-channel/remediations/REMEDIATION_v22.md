@@ -23,11 +23,11 @@ with its mechanism corrected by this seat's read (the missing mapping does not r
     "owner": "2.0.0_SA_COO~G2",
     "round": "v63",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G2",
       "round": "v63"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
