@@ -1297,3 +1297,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The two statements cannot both hold under a substring match. The order of the other fields was changed (graph_unread moved up two places and past none of the named values); the expectation and every value are unchanged. A consumer that reads the line by field name is unaffected; one that reads it by position would see the move."
 }
 ```
+
+## NFRA_CTLPLN-W13-S4 -- CT-k-2: The agentbus root has no .terraform.lock.hcl, so the premise that the identity and agentbus roots lock two dif
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:55:00Z",
+  "one_line": "The agentbus root has no .terraform.lock.hcl, so the premise that the identity and agentbus roots lock two different major versions does not hold: the tree locks exactly one provider version (hashicorp/aws 5.100.0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_terraform_providers.py required: TF-REQUIRED roots=15 locked=10 no_lock=5 providers=1 distinct_versions=1 ok=True, on branch wk-NFRA_CTLPLN-13 (base df95fb06b5); infra/aws/terraform/nfra-ctlpln-agentbus holds main.tf, sqs.tf, tests/ and no lock file (git ls-files lists 39 lock files, none there)",
+      "infra/aws/terraform/nfra-ctlpln-agentbus/main.tf required_providers: hashicorp/aws version ~> 6.0; the identity root's lock pins 5.100.0 under ~> 5.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 1 item 5 (1): required lists hashicorp/aws and at least the two versions this project's two roots lock (the identity root and the agentbus root lock different major versions).",
+  "world_is": "Only the identity root locks a version (5.100.0). The agentbus root declares ~> 6.0 and carries no lock, so its init resolves the newest 6.x the source offers. Test case 1 asserts what is true (identity LOCKED at 5.100.0; agentbus NO-LOCK declaring ~> 6.0) rather than two locked versions. The kit carries the agentbus need through pack --include-unlocked: the highest on-box version satisfying the declared constraint (6.67.0 in the plugin cache). Whether the Dell should lock the agentbus root at 6.67.0 is the issuer's call."
+}
+```
+
+## NFRA_CTLPLN-W13-S5 -- CT-k-2: Five of the 15 derived Terraform roots (bd-49f-auto-login, estate-report, mdpf-secclass, modules, nfra-ctlpln-
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:55:30Z",
+  "one_line": "Five of the 15 derived Terraform roots (bd-49f-auto-login, estate-report, mdpf-secclass, modules, nfra-ctlpln-agentbus) have no lock file; a mirror built from locks alone would not serve them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_terraform_providers.py required prints NO-LOCK for those five roots, with declared constraints hashicorp/aws ~> 5.0 (four roots), ~> 6.0 (agentbus) and hashicorp/archive ~> 2.4 (estate-report)",
+      "python org/devices/kit_terraform_providers.py located prints UNLOCKED lines: best on-box satisfying versions aws 5.100.0, aws 6.67.0, archive 2.8.1 (plugin cache holds aws 5.100.0 and 6.67.0, archive 2.8.0 and 2.8.1, local 2.9.1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 1 item 1: a root with no lock file is NO-LOCK, counted; the pack lays out the found providers the roots LOCK.",
+  "world_is": "no_lock=5 of 15. The order's pack covers locked providers only (1 version); the five NO-LOCK roots need aws 5.x, aws 6.x and archive 2.x. This worker added an off-order flag, pack --include-unlocked, which adds the highest on-box version satisfying each declared constraint; without it the Dell cannot init those roots from the mirror. The flag is opt-in and the test suite does not depend on it."
+}
+```
