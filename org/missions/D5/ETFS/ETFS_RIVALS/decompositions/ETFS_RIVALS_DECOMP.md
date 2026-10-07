@@ -469,3 +469,50 @@ cell RIV-pd-2's surface. No earlier cell is replaced. Chain `~9`, one cell, file
   the same strip through the same function.
 - **Organic trigger:** any fund panel's trend and any security dialog on the live page; the issuer's real run reads the
   strips against the listed trades.
+
+## ROUND 20 (main workstream) -- APPENDED 2026-10-07, revision 1.10 of this file
+
+One repair cell, on rows ETFS_RIVALS-Z-S60 and ETFS_RIVALS-Z-S61 and the ruling of 1.0.0_SA_CTO~Z msg 30897 (shapes (a),
+(b), (c), four terms). Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Chain `~10`, one cell, files
+gold_holding_contribution.py, gold_canonical_shape.py, enrichment_bloomberg.py, gold_buying_trend.py, risk WORLD (it
+changes a Bloomberg-calling mode; no worker makes a call).
+
+### `RIV-bk-1` -- backfill rows feed the price curve only, carry their currency, and a range can be finished on a later day; the trend's parsekey join reads its column (rows Z-S60, Z-S61; CTO ruling 30897)
+- Measured (backfill preparation, read-only, `deliverables/2.0.0_SA_COO~RV/backfill_prep/`): 863 securities x 252 trading
+  days = 217,476 points against a 120,000-point daily allowance. Read in code: `gold_holding_contribution._daily` prices
+  a holding-day from two consecutive G4 closes before the holding-implied return, and a newer G4 object makes the next
+  publish rebuild that table, so backfilled closes would move every fund's served rankings; `_market_range` writes rows
+  with `px_close` only (currency NULL), marked `as_of_source == "backfill"`, and no reader filters on that mark;
+  `gold_buying_trend.handler_entry` reads G4 as `("security_id", "date", "security_name")`, so `parsekey_map(g4)` is
+  always `{}` there (morning pass 2026-10-07: holding_contribution MERGED 13, buying_trend SPLIT 7).
+- Interface:
+  1. `gold_holding_contribution.drop_backfill(g4) -> DataFrame` returns the frame without rows whose `as_of_source` is
+     exactly `"backfill"` (a frame with no such column is returned unchanged). `handler_entry`'s own G4 read loads
+     `as_of_source` and drops those rows before anything else uses the frame: a day's table is identical with and
+     without backfill-marked rows present in G4.
+  2. `gold_canonical_shape`: when it picks the G4 partition for a report date (`_g4_for`), a partition whose rows are
+     all backfill-marked is never picked (it falls back to the nearest earlier partition holding a non-backfill row),
+     and a backfill-marked row never fills GICS.
+  3. `enrichment_bloomberg` mode `market-range`: every backfill row carries `currency`. A security's currency is its
+     STORED one (the `currency` of its newest non-backfill G4 row, read through the sink); for a security with no stored
+     currency the mode makes ONE reference request for the single field `CRNCY` for exactly those securities, through
+     the client hook the mode already uses, with `bbg_budget.check_points` before and `bbg_budget.record` after (points =
+     securities asked); a security with no answer gets `None`. A dry run's plan gains `"currency_lookups"`. The plan's
+     `points` and the budget check count only the dates NOT already held, so a range is finished on a later day inside
+     that day's allowance; the ceiling and the reserve are untouched.
+  4. `gold_buying_trend.handler_entry`'s own G4 read loads `security_parsekey`.
+- Rulings at the cut (issuer): `price_series` and the chart object keep reading backfill rows (that is what they are
+  for). Nothing under `integrations/` changes and no field other than `CRNCY` is added. The daily market pull already
+  asks `CRNCY` per security, so a currently-held security takes its stored currency and costs no lookup. A reference
+  request that fails leaves the run FAILED with nothing landed, like a failed historical batch. No stage marker is
+  written. Input-census and trade-schedule readers are untouched (a backfill row's name, sector and parsekey are NULL
+  and those readers skip blanks). A held date is neither counted NOR asked: each batch's historical request is sent
+  once per contiguous run of un-held trading days, and the ledger records exactly what is asked (securities x the days
+  of that run). The stored-currency read lists G4 from the range's first day to the run date and no further back. When
+  no partition holding a non-backfill row exists at or before a report date, `_g4_for` answers as it does today when no
+  partition exists at all. The round-15 checks `bf-1.AC1.py` and `bf-1.AC2.py` pin the mode as first built (no reference
+  request; one request per batch over the whole range; a held date counted in the plan and the ledger): the cell may
+  change in those two files ONLY the figures, request shapes and the "no reference request" clause that these rulings
+  change, and nothing else.
+- **Organic trigger:** the issuer's backfill run (never a worker's), split over the days the ledger's room allows, each
+  after that day's 07:00 America/New_York vehicle run; the issuer's DELTA 0 proof on the served rankings (ruling term 1).
