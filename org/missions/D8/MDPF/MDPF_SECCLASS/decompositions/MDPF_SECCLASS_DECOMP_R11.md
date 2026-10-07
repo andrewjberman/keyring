@@ -67,7 +67,7 @@ held line, `secclass-r11-held-silver`.
 1. SC-e-59 to DEV on Andrew's word (0.0.0_AB_MSTR's push). Then e53 is rebased on it and tsc re-run, and lands with the census read
    as its condition. Then the CVO grades SC10-e59-AC2 and FWD-1 on the live page.
 2. Each held line merges behind its signed pair, every pair asked of this seat with live reads: e44 + e63 + e65 (one pair, naming
-   W44-S2's widened input), e55, e57 + e61, e56 + e62 (through IRPT_BCKEND), e48, e49, e32/e50 (S55's re-plan first), e60, e66.
+   W44-S2's widened input), e55, e57 + e61, e56 + e62 (through IRPT_BCKEND), e48, e49, e32/e50 (S58's re-plan first), e60, e66.
 3. The TO-DEPLOY-e42 L2 read at 2026-10-08T12:45Z and its close (~S flips). The TO-DEPLOY-e21 flip (~S).
 4. FWD-5: the E_18 deploy, then the producer's live canonical count; then SC-e-45.
 5. FWD-12: the sector writer's apply on a laptop cloud-operations seat, then the sector write; then SC-e-46.
