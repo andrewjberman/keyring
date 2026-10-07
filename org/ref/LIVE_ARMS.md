@@ -19,6 +19,15 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
+  4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
+  to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
+  `2.0.0_SA_COO~M1` (MDPF_SECCLASS), `2.0.0_SA_COO~H1` (MDPF_SECHIST). He named no stop: his stand-down. Landed by 1.0.0_SA_CTO.
+- dell2's fabric manager `/govern` DIRECTED (Andrew-direct ~07:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "dell1 and dell2 are live, i have put them both on loops governing. i will bring their CTOs online now."). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_DELLS_LIVE_GOVERN_LOOPS_DELL_CTOS_COMING.md`.
+  Its cadence and its serial are not read by this seat: no bus message from dell2 had arrived when this row landed. Stop: his stand-down.
+  Landed by 1.0.0_SA_CTO.
+
 - `2.0.0_SA_COO~C` on NFRA_CTLPLN ONLY (Andrew-direct ~06:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "bring COO~C on for
   this purpose. COO~C should only be focused on this work, not cottonwood backfill project."). Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md`. He named no
