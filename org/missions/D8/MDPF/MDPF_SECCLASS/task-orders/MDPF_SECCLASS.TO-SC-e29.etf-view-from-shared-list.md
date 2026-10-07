@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~24</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -142,3 +142,8 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.12 @87ad6d2e4c (FWD-12, ADDENDUM v0.5, v0.10); DECOMP_R8 @495efa3c32.
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 9 (2.0.0_SA_COO~M1, 2026-10-07 ~10:3xZ, on 1.0.0_SA_CTO~DELL1 msg 160)
+
+`<status>` superseded: carried to round 9: its two inputs are not served -- TO-SC-e28's sector writer is built (proof VALID @fdc388f145) but not applied (dell1 holds no provider; validate and apply ride safe-apply), and the issuer's sector-row write needs its own half (NEVER_WIDEN_HALF_REQUEST_SECCLASS_SECTOR_ROWS_20261007.md, both halves UNSIGNED). No worker started this order.
+The round-8 drain-end read is `deliverables/2.0.0_SA_COO~M1/DRAIN_END_R8_20261007.md` @572829ce3b. Gate limb: none graded this modification.

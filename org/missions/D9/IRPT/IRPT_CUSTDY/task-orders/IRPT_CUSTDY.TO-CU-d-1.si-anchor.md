@@ -70,13 +70,41 @@ rule 1 `since inception <date>`; rule 2 `since <date>, the first date Opal holds
 `CU10-AC2` -- the seam against its REAL neighbour: the chosen advisor's real accounts, Schwab silver and returns gold on dell2. The per-rule
 counts are reported, not graded.
 
-<expected_criteria>CU10-AC1,CU10-AC2</expected_criteria>
+<criterion id="CU10-AC3" cell_refs="CU-d-1"><invocation>python data/assets/scripts/gold/irpt_custody/tests/run_suite_check.py</invocation><expect>failed=0 errors=0</expect></criterion>
+`CU10-AC3` (AMENDMENT 1) -- the whole `irpt_custody` suite on your branch, after merging CLOUD, reads 0 failed and 0 errors: retiring the
+2024 floor must not leave `test_hop3_real_run.py` or `hop3_real_run.py --self-test` red (row W9-S3).
+
+<expected_criteria>CU10-AC1,CU10-AC2,CU10-AC3</expected_criteria>
+
+### AMENDMENT 1 (issuer, 2026-10-07 ~11:2xZ) -- disarms row IRPT_CUSTDY-W9-S3
+
+Your first pass (e25f6f33ab, criteria AC1 and AC2 PASS) retired the 2024 floor, which leaves two tests in `tests/test_hop3_real_run.py`
+(`test_file_shape`, `test_si_held_for_a_pre_2024_inception`) and the `held_ok` flag of `hop3_real_run.py --self-test` red: their fixture
+is a 2019 first-data date, now on the calendar. Those two files are added to your grant. FIRST merge CLOUD into your branch
+(`git merge CLOUD`; CLOUD carries round 4's other two cells -- `hop3_real_run.py` was changed by CU-d-2 @7361085932 and the suite
+runner `tests/run_suite_check.py` landed @e05799d167). Resolve a conflict in the channel file by keeping BOTH sides' rows in order, and in
+this order file by taking CLOUD's version. Then re-express the two tests and the self-test flag under the new rule (a 2019 anchor now
+computes or reports by rules 1-3; nothing is `HELD_CALENDAR_FIX`), keep their intent, and do not skip or xfail. Then AC3.
+
+### AMENDMENT 2 (issuer, 2026-10-07 ~11:3xZ) -- the CTO's ruling on row W9-S2 (msg 423), verbatim branches
+
+Rule 1 now splits by whether Opal holds the opening date; print, per account, which branch it took (`branch=a|b|c|rule2|rule3|none`):
+- **(a)** Opal's data covers the open date, and the days from opening to first funding show ZERO holdings (measure it: read the holdings
+  between the open date and the first funded day): SI runs from first funding and IS since inception; label it
+  `since inception (first funded <date>)`.
+- **(b)** the open date precedes Opal's first partition: rule 1 yields to rule 2, label `since <date>, the first date Opal holds`, never
+  "inception".
+- **(c)** holdings exist before Opal's first partition: rule 2, as (b).
+Real data (round-4 probe): 12 of the chosen advisor's 14 accounts are expected under (a), 2 (opened 2022) under (b) -- reported, not graded.
+Tests (in `tests/test_si_anchor.py`): one per branch; the (a) label only when the zero-holdings read is confirmed; a (b)/(c) account is
+never labelled "inception". The probe's per-account line adds `branch=`; its `labels_ok` also checks (b)/(c) carry no "inception".
 
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
 - **AWS: read only** (Schwab silver, the returns gold, the ownership map via `legacy_address`). No write; never `--apply`.
-- **Never print a full account number.** Never edit `hop3_real_run.py` or another cell's or project's file.
+- **Never print a full account number.** Edit `hop3_real_run.py` and `tests/test_hop3_real_run.py` only as AMENDMENT 1 says; never edit
+  another cell's or project's file.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row (id
   `IRPT_CUSTDY-W9-S<k>`; `disposition` one of UNDER_INVESTIGATION | GRADUATED | DISMISSED_WITH_REASON | DECOMP_INVALIDATING), and do
   not weaken the test.
@@ -87,6 +115,8 @@ data/assets/scripts/gold/irpt_custody/si_anchor_probe.py
 data/assets/scripts/gold/irpt_custody/tests/test_si_anchor.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_figures.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_held_si.py
+data/assets/scripts/gold/irpt_custody/hop3_real_run.py
+data/assets/scripts/gold/irpt_custody/tests/test_hop3_real_run.py
 org/missions/D9/IRPT/IRPT_CUSTDY/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -98,8 +128,8 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: CU10-AC1, CU10-AC2. Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~9/IRPT_CUSTDY.TO-CU-d-1.si-anchor.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> CU10-AC1,CU10-AC2` BEFORE the flip.
+Criterion ids: CU10-AC1, CU10-AC2, CU10-AC3. Instance at `org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/0.9.0_WK_IRPT_CUSTDY~9/IRPT_CUSTDY.TO-CU-d-1.si-anchor.proof_of_spec.json`,
+validated with `python .tools/proof-of-spec-check.py <instance> CU10-AC1,CU10-AC2,CU10-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the real `SI-ANCHOR` line with the per-rule counts, where rule 1's date comes from (file, column), the test list, rows, commits.
