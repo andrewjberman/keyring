@@ -10058,3 +10058,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "Nothing to disarm in this release: the pre-check stops a cache miss before the install, and no cache write occurred. Only a network-side measure (a packet or proxy log, outside this order) would decide the metadata question."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S67",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T22:30Z",
+  "one_line": "The r28 deploy's restart at 21:49Z revoked the scoped concierge's whole gateway session (reason refresh_token_reuse); another identity refreshing in the same minute stayed signed in. r26 and r27 revoked no session.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 22:2xZ, read-only scan of gateway-access-state-table RUNTIME#refresh (519 records, 29 families, 4 identities; statuses, reasons and times only): the scoped concierge has 1 family, created 2026-10-06T23:12Z, status revoked, revoked_reason refresh_token_reuse, revoked_at 2026-10-07T21:49Z, last_used_at 2026-10-07T21:49Z.",
+      "RUN same scan: families revoked in the hour of r26 (14:03Z) 0; of r27 (16:57Z) 0; of r28 (21:49Z) 1. Another identity's family reads last_used_at 21:49Z and status active.",
+      "RUN 22:2xZ: the opal-gateway-bbg connection's whoami refuses with 'needs you to sign in again'; the opalgateway connection's whoami answers. r28's deploy record: wrapper time 21:49:10Z, service MainPID 782527 -> 791928.",
+      "FILE infra/aws/ec2/opal-gateway/app/oauth_as.py:910-914: when a presented refresh token is not the family's current generation but equals an earlier issued one, revoke_family(family_id, 'refresh_token_reuse') runs. There is no grace for a second presentation of the token that was just rotated."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Release form and the r28 never-widen ask: the deploy's blast radius is the one lake key movement; 'unchanged: every route, tool, identity and grant'. No release since r23 named a signed-in session as something a deploy can end.",
+  "world_is": "A gateway deploy restarts the service. A client whose token refresh straddles the restart can have its rotation committed on the server and the answer lost; its retry presents the just-rotated token, the reuse rule fires, and the whole family is revoked. That client must sign in again by hand. It happened once in three deploys today, to the one identity the 07:00 America/New_York Bloomberg send depends on. INFERRED, not observed: that the lost answer is the trigger; the records show the revocation, its reason and its minute, not the two requests.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "ARMED: any gateway deploy can sign out any connected client, by timing. Done here: the release form now names the re-authentication a deploy can cost and bars a deploy inside the 12 hours before the send without it named (CTO msg 31439). Not done: no code change. A remedy is a short grace in oauth_as for the immediately previous generation (accept or re-issue within seconds, same client), or a drain of in-flight refreshes before the restart; either is a change to the token rules and goes to the CTO before any cell. The concierge's sign-in is Andrew's act."
+}
+```
