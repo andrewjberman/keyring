@@ -1645,3 +1645,56 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Unblock: run the committed script from a seat whose identity can read the 49financial bucket (round 17 evidently did), or grant read."
 }
 ```
+
+## IRPT_DASHBD-W13-S2 -- W13-S1 resolved: 3.0.0_SA_CVO ran tieout_e2_gross.py unchanged on the 
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:46:55Z",
+  "one_line": "W13-S1 resolved: 3.0.0_SA_CVO ran tieout_e2_gross.py unchanged on the laptop @e6ed5380e6 and the record is copied byte-exact (4,196,573 bytes, sha256 febe370fbed76497).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "W13-S1: the GROSS record cannot be produced on dell2 because its identity is denied on s3://opal-data-49financial.",
+  "world_is": "The record exists: git show e6ed5380e6:org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_DASHBD_W13/TIEOUT_49F_BD_POPULATION_E2_GROSS.json redirected into the worker folder; 4196573 bytes, sha256 febe370fbed7649795ed75b80198f09250a88f5ca061a650c0ee514b8752d83c. This worker made no AWS call and did not re-run the script.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sha256sum and wc -c on the copied file, dell2 2026-10-07: febe370fbed76497..., 4196573",
+      "issuer ruling from 2.0.0_SA_COO~D2 under 1.0.0_SA_CTO~DELL2's standing rule (fenced firm-bucket read runs on the laptop, returns as a file)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "The fence is real but the record was produced by the laptop run @e6ed5380e6 by 3.0.0_SA_CVO and delivered as a file, so the tie-out no longer needs a dell2 read.",
+  "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2."
+}
+```
+
+## IRPT_DASHBD-W13-S3 -- DB18-1-AC2 FAILs on the laptop record: 1 of 9,078 graded rows has bd_f
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T09:46:55Z",
+  "one_line": "DB18-1-AC2 FAILs on the laptop record: 1 of 9,078 graded rows has bd_fees_reported -52.99 (non-zero) but a null bd_fee_addback.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "p18_gross.py DB18-1-AC2: bd_fee_addback is null exactly when bd_fees_reported is null or zero; the order allows a null add-back also when the average value is not positive.",
+  "world_is": "Record at e6ed5380e6: one segment 2026-06-17..2026-07-21, verdict OUTSIDE, reason UNEXPLAINED, bd_fees_reported -52.99, bd_fee_addback null, bd_gross_return equal to bd_return. The checker's nullness rule does not admit the order's own non-positive-average (or negative-fee) null, so either the checker or the record's one row is the defect; the script's counts are unaffected by either reading (that row is OUTSIDE and stays UNEXPLAINED).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python p18_gross.py . DB18-1-AC2 -> 'FAIL: 1 rows where bd_fee_addback's nullness disagrees with bd_fees_reported' then 'DB18-1-AC2 FAIL'",
+      "python read of the record's segments: exactly 1 row with (fees in None/0) != (addback is None)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not fixed here: the record is not to be edited and the script is not to be re-run. Needs the issuer to amend AC2 (admit a null add-back on a non-positive average or negative fee) or to order a re-run."
+}
+```
