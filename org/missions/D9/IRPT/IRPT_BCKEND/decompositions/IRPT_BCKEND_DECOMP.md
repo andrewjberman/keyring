@@ -1923,3 +1923,62 @@ why each is absent. Read-only; the firm-bucket fence now admits dell2 on 49finan
 | `IB-pr-342` | directory-coverage census of the NOT_IN_DIRECTORY granted accounts, reason per account | FWD-1/FWD-7 directory coverage; IRPT_CUSTDY S8(b) | SERVED (read-only against served data) | none | P64-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one measurement cell. Slot 0.9.0_WK_IRPT_BCKEND~144.
+
+## 58. ROUND 65, WORKSTREAM ~P (2026-10-07 ~11:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on 1.0.0_SA_CTO~DELL2 PRIORITY msg 439, PRD v0.30 @f20371eb03 items 33-36)
+
+Row W142-S4 is ARMED: export reads FAIL OPEN (`export/entry.py` `_covered` admits any holder of an export id when the receipt names no
+account). The CTO orders three items ahead of every other round-65 cell. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r65/p65_cells.py`,
+dry-run at base 31b26bff2d.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-343` | (1) receipt names covered_account_ids at freeze; `_covered` REFUSES an empty list; both schema copies require it | FWD-2 | WORLD (floor: infra/) | none | P65-a |
+| `IB-pr-344` | (2) back-fill tool + DRY-RUN census (read / filled / unfillable); the apply is the issuer's under a never-widen pair | FWD-2 | WORLD (floor: infra/) | IB-pr-343 | P65-a |
+| `IB-pr-345` | (3) exposure: read-log census of cross-scope export reads while the branch was served | FWD-2 | SERVED (read-only) | none | P65-b |
+
+fanout: 2 of 2 chains, cap 8, reason: (1) then (2) share the field and its derivation (one worker's queue); (3) is independent. Slots 0.9.0_WK_IRPT_BCKEND~145 (343 then 344) and ~146.
+
+## 59. ROUND 66, WORKSTREAM ~P (2026-10-07 ~12:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO review msg 403 and the dell2 portal toolchain going live, msg 472)
+
+The PrintEntry custody-report candidate (@cdda4378, IB-pr-336's portal half) was reviewed LAND-WITH-NOTE: typecheck + eslint + one 0-request
+refusal test before DEV, and readReportKind must refuse an unknown kind. Both are one file on the page, so one cell. Row S365 disarms when
+it lands. Check: `deliverables/2.0.0_SA_COO~P2/checks/r66/p66_cells.py`, dry-run at base fd0c709235 (AC1 FAIL; AC2 is a control, PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-346` | print page refuses an unknown kind; the custody-report candidate's typecheck, eslint, refusal test | FWD-8/FWD-4; IRPT_CUSTDY hop 5 | WORLD (a portal product file) | IB-pr-336 (drained) | P66-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one page file. Slot 0.9.0_WK_IRPT_BCKEND~147; portal_ref: cdda4378 (branch wk-IRPT_BCKEND-138-portal).
+
+## 60. ROUND 67, WORKSTREAM ~P (2026-10-07 ~12:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 525 and the IRPT_CUSTDY round-4 analysis @16d9b128c0, msg 512)
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-347` | who can reach the fail-open export read NOW (non-Opal principals with a firm grant on the export routes); decides kit-wait vs an emergency apply | FWD-2 (W142-S4 / W146-S1) | SERVED (read-only) | none | P67-a |
+| `IB-pr-348` | E-P8 criterion 4: the seam guard treats every spelling of none/nan/null as unmapped | FWD-1/FWD-2 coverage | WORLD (floor: infra/) | IB-pr-339 (drained) | P67-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Slots 0.9.0_WK_IRPT_BCKEND~148, ~149. Check: `deliverables/2.0.0_SA_COO~P2/checks/r67/p67_cells.py`, dry-run at base 8d7577866e.
+
+## 61. ROUND 68, WORKSTREAM ~P (2026-10-07 ~13:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 590 / half amendment 1 @4493cf1800 and MSTR ruling 106243, msg 589)
+
+IB-pr-347 measured non_opal_reach = 7, so under the CTO's msg 525 this is a security exception: a laptop applier releases IB-pr-343 BY HASH.
+The source map staged export/entry.py at 0642c9d004, so a build at 34f71024a1 omitted the fix (COO half refused @477f0faa28). The re-pin
+is @b921635dad, whose census is exactly nine members; both halves are signed against it. Check: `deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-349` | EMERGENCY release of irpt-export-render at pin b921635dad (fail-closed export read + admitted-read log), laptop applier, with after-reads | FWD-2 (W142-S4 / W146-S1 / W148-S1) | WORLD (a deploy) | IB-pr-343 (drained), IB-pr-347 (drained) | P68-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one function, one release. Applier 0.7.0_AE_CloudOps~I (laptop seat, MSTR ruling 106243), not a worker slot.
+
+## 62. ROUND 69, WORKSTREAM ~P (2026-10-07 ~13:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO half of IB-pr-343's emergency release, msg 576)
+
+IB-pr-349 makes every receipt that names no account unreadable. The back-fill (PRD v0.30 item 35) fills the receipts written before
+IB-pr-343. IB-pr-344's dry run listed 1 receipt, which dell2 could not decrypt (W145-S5), so the census and the apply run on the laptop
+applier under their own pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r69/p69_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-350` | back-fill covered_account_ids into pre-343 receipts: pass 1 census + packet (stop at halves), pass 2 apply + after-reads | FWD-2 | WORLD (an S3 write) | IB-pr-349, IB-pr-344 (drained) | P68-a (queued after IB-pr-349) |
+
+fanout: 1 of 1 chains, cap 8, reason: one write set, queued behind IB-pr-349 on the same applier.

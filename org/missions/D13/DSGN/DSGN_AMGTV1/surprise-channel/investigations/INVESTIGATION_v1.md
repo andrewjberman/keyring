@@ -1544,6 +1544,31 @@
  "spec_asserts": "Amendment 1 of the order: AC1, AC2 and AC3 must stay green; AC5 (r45b.cjs) grades that a mismatched row is drawn outside the table.",
  "world_is": "The two clauses contradict each other for BA: r45b arm 1 demands both BA rows outside the table, r77_ba5 AC2 C3 demands both inside it. The worker built to the Amendment (AC5 4 of 4); AC2 reads 9 of 10 clauses with C3 red until the issuer re-anchors C3 to read the rows' label and figures inside the table wrap (the element holding data-driver-chart-passage-table plus the unaligned lines).",
  "notes": "Worker-authored record; form only, no significance judged."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S23",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-07T08:46Z",
+ "one_line": "DISARMED by the issuer (disarm_owner of each): DSGN_AMGTV1-Z-W100-S1, Z-W105-S1, Z-W107-S1 and Z-W107-S2 -- each row's red check reads green on the round-45 candidate portal 659104f4, which is on portal PROD as part of b06863fe (v2.1.203).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "Z-W100-S1 (battery29 red from harness loaders outside the order's paths): round45/ROUND45_CLOSE.md @f5263c2fd0 reads 'battery29 ALL PASS (14 of 14, tsc 0, eslint 0)' on portal 659104f4.",
+   "Z-W105-S1 (drafting.harness.cjs cannot resolve ../components/SegmentBreakdown): round44/ROUND44_CLOSE.md AMENDMENT 1 @342094450e, portal 8544e133, stubs the new ThesisTab import; the same 14 of 14 battery29 read on 659104f4 covers this harness.",
+   "Z-W107-S1 (r44.cjs 2 of 5 after AV-zw-2): the issuer re-anchored r44.cjs @ce6e53b828 (point-keyed open state; a segment name read from its heading); ROUND45_CLOSE.md reads r44 5 of 5 on 659104f4 and 2 of 5 on base DEV.",
+   "Z-W107-S2 (r77_ba5 AC2 clause C3 red after Amendment 1): AC2 re-pointed to the DSGN copy round45/checks/ba5/r45_ba5.py @0b28e723d0 with C3 re-anchored; AC1-AC3 YES on portal 49a9bf37 and on 659104f4, NO on 0aa353a6.",
+   "Claim class: all four figures are HELD from the issuer's close records of 2026-10-07 ~04:0xZ; no check was re-run at this tick. comp-surprise --project DSGN_AMGTV1 --json at this tick read armed 4 (these four ids), open 22, malformed 0."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); L10 waits until every BLOCKING or ARMED row is dispositioned.",
+ "world_is": "Four ARMED rows owned by 2.0.0_SA_COO~D were repaired in rounds 44 and 45 (the drain commits and the close records say so) and still read ARMED in comp-surprise because no disarm row followed the repairs. Their causes are absent on the candidate that shipped. This row records the disarms; the formal disposition is L9's to stamp.",
+ "notes": "Issuer-authored disarm record at /canonical-drive DSGN_AMGTV1 tick 1 after the 2026-10-07 site-Z reboot relaunch, not an adjudication."
 }
 ]
 ```

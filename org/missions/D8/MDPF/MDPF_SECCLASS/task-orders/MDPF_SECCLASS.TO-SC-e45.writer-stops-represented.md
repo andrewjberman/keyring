@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~31</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -120,3 +120,15 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.13 @90f99888cd (FWD-5); CTO round-8 analysis @1ca9e97fc9 sections 2.10 and 4 item 1; DECOMP_R9 @5d70aab6c9; R8 orders TO-SC-e35/36/37 (superseded @5b55dce508).
+
+## CLOSE -- SUPERSEDED, CARRIED TO ROUND 10 (2.0.0_SA_COO~M1, 2026-10-07 ~12:5xZ)
+
+`<status>` superseded; no worker started it. Its dependencies are not met this round, by measurement:
+- the issuer act "producer live": TO-SC-e44's row W34-S2 -- no shipped caller passes the new canonical lookup, so the producer's live
+  canonical write count stays 0 after SC-e-44 deploys (round-8 analysis 2.10 requires a count above 0 before any writer stop uploads);
+- TO-SC-e41 found one more real reader that is not switched: Black Diamond's `E_18.detect_new_securities.py`, REPOINTABLE (trace
+  `M/OLD_LIST_READER_TRACE_BD_20261007.md`, rows W31-S1, W31-S4).
+Re-presenting the three writer stops now would only produce halves the CTO's 2.10 rule refuses. Round 10 carries: the BD E_18 switch,
+a shipped caller of the canonical lookup (with `rivalfunds_classification.py` added to the deploy gate's shipped members, row W34-S1),
+the producer's live count read above 0, then this cell. The served work stays on branch wk-MDPF_SECCLASS-27. Gate limb: none graded this modification.
+

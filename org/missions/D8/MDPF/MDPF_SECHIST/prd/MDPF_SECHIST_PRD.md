@@ -5,7 +5,7 @@
  "project": "MDPF_SECHIST",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/securities-database-ingestion-maintenance-brief-20261006.md@901edd46a2",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9"],
@@ -151,3 +151,18 @@ Round 1 on dell1, a dell1 COO lane seated by the dell1 MSTR. The pull leg is sit
 | PART VII, not claimed | per-security vs per-position, settled; instrument types without total return | C-SERIES; a round-1 read |
 
 -- 1.0.0_SA_CTO
+
+## ADDENDUM v0.2 (1.0.0_SA_CTO~DELL1, 2026-10-07) -- contract note only: Yahoo Finance admitted as a second price source
+
+**Word:** Andrew-direct ~13:2xZ at the `1.0.0_SA_CTO~DELL1` terminal, VERBATIM: "(also you have egress for yfinance yahoo)". Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_13xxZ_EGRESS_YFINANCE_YAHOO_DELL1.md`. The ENDPOINT section is not edited.
+
+- **C-PULL, widened by one source.** Bloomberg stays at site Z in its daily vehicle. Yahoo Finance, read through the `yfinance`
+  package already installed on dell1 (1.7.0; no package download), is admitted from dell1 for the Yahoo-sourced share of ADVI_COTBKF's
+  price-need file (`org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.csv` @50a35d3ada:
+  3,226 securities, 5,773,776 security-days). Any other use of Yahoo is surfaced to Andrew, not assumed.
+- **C-SERIES and C-GAP bind the Yahoo rows** exactly as the Bloomberg rows: one series per security, a missing day is blank, and a
+  security with no price is listed (2,914 in the file), never estimated. Every row carries its source.
+- **C-BUDGET does not reach Yahoo.** That ledger is Bloomberg's capacity. A Yahoo pull is paced to the vendor's own limits, and a
+  refusal from the vendor leaves the day blank and is listed, never retried in a loop.
+- Pre-2010 dates raise under the calendar fix. This load is FWD-2 work (enrichment item 2), placed in round 2 by `2.0.0_SA_COO~H1`.

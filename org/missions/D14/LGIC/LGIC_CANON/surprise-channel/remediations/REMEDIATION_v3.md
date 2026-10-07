@@ -24,16 +24,16 @@ Author: 3.0.0_SA_CVO, 2026-10-01 ~09:1xZ. Trigger: 1.0.0_SA_CTO 103630 and 10365
     "owner": "4.0.0_SA_CRO",
     "round": "v3",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "4.0.0_SA_CRO",
       "round": "v3"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "4.0.0_SA_CRO",
-      "at": null
+      "at": "2026-10-07T15:08Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

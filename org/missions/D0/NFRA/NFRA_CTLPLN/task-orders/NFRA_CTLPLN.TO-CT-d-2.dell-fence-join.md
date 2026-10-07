@@ -62,7 +62,7 @@ nothing derived by you, is what you join.
 `CT4d2-AC1` -- no Dell user is admitted to a bucket outside its confirmed list. The same line must read `other_lines_changed=0`,
 `negative_arm=denied` and `ok=True`, stated in the proof row; the `joined` and `evaluator_allowed` counts equal the pair count.
 
-<expected_criteria>CT4d2-AC1</expected_criteria>
+<expected_criteria>CT4d2-AC1,CT4d2-AC2,CT4d2-AC3</expected_criteria>
 
 ## BOUNDS
 
@@ -80,7 +80,14 @@ infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf
 infra/aws/terraform/shared-infra/s3-49financial.tf
 infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py
 infra/aws/terraform/shared-infra/tests/dell_fence_join_pairs.json
-infra/logic/registry/exemptions.json
+infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py
+infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py
+infra/aws/terraform/modules/opal_name/main.tf
+infra/aws/terraform/modules/opal_name/outputs.tf
+infra/aws/terraform/modules/opal_name/generated_locals.tf
+infra/aws/terraform/modules/opal_name/tests/
+lib/opal_naming.py
+lib/tests/test_opal_naming_scoped_exemptions.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -197,3 +204,162 @@ reads `rows=3/3`, `other_rows_changed=0`, `validator=ok`, `negative_arm=denied` 
 Write a NEW proof instance over the old one at the same path, validate it, and flip `<status>` back to `complete` only when it passes.
 In files outside `tests/` and outside the registry and the two `.tf` files, do not type a firm bucket's name: the registry is where
 these names already live.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-07 ~11:3xZ) -- REOPENED: dell1's READ-ONLY, PREFIX-SCOPED join; first, whether a registry row can carry it
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and the earlier commits
+are inherited state (merged to the trunk @526a1a27ac; two of the three dell2 fences are APPLIED and live). Authority:
+`1.0.0_SA_CTO` msg 106185, verbatim: "cloudops-dell1-agent-user reads irpt/<firm>/platinum/holdings/ in the 49financial, cottonwood
+and inflection buckets, s3:GetObject and s3:ListBucket only. Taken: it is narrower than dell2's join and names its need ... For
+2.0.0_SA_COO~C, a cell beside CT-d-2: admission alone is not read-only, since dell1's own policy allows put on opal-*. The join
+carries, per bucket, a refusal for that user of everything but get under that prefix and list of that prefix, rendered from the
+registry, never typed. Its first read: can an exemptions.json row carry an action set and a prefix; if not, send me the row shape
+needed. Read-back arms: a get under the prefix succeeds; a get outside it and a put are refused. I sign on the plan."
+Gate limb: none graded this modification. The dell2 work above is done and stays; AMENDMENT 3 is the whole of this pass.
+
+**THIS PASS IS A READ AND A PROPOSAL. IT EDITS NO REGISTRY FILE, NO MODULE AND NO `.tf` FILE.** The registry and the naming module
+belong to another lane (the three dell2 rows were landed by `4.0.0_SA_CRO`); a new row SHAPE is that lane's to land, on the CTO's
+ruling of your proposal.
+
+1. `infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py` -- THE FIRST READ, as a script whose output is the evidence:
+   - The registry row's shape today: read `infra/logic/registry/exemptions.json` `_about` and every existing row; print the set of
+     keys rows carry and the count of rows per key set. Does any row carry an action set or a prefix? (Expected from the issuer's
+     reading of `_about`: no -- `row_fields` names `principal`, `arn`, `reason`, `signoff_ref` -- but measure it.)
+   - Every reader of that file: search tracked files for `exemptions.json` and for `fence_exemption_arns`; for each reader print
+     `path:line` and what it does with a row (the Terraform module `infra/aws/terraform/modules/opal_name/` at the lines that build
+     `fence_exemption_arns`; `lib/opal_naming.py` `validate()` and any generator that writes `generated_locals.tf`; tests). State, per
+     reader, whether an EXTRA key on a row would be ignored, refused, or mis-read (for the validator: try it on a scratch copy of the
+     registry outside the repo tree and print its verdict; do not edit the real file).
+   - How each of the three fences consumes the list: quote the `DenyForeignFirmPrincipals` statement's construction in
+     `s3-49financial.tf` and `s3-lgic-firm-buckets.tf` (file:line), and say what a principal in the admitted list gains: everything
+     the fence denied, on the whole bucket.
+   - dell1's own reach on these buckets once admitted, read from the Dell policies in `infra/aws/terraform/nfra-ctlpln-identity/`
+     (`s3:GetObject`, `s3:PutObject`, `s3:ListBucket` and the rest on `opal-*`; the Deny on deletes): so plain admission would give
+     dell1 read, list AND put on all three buckets, which the ruling refuses.
+   - Whether the prefix exists as the ruling names it: `irpt/<firm>/platinum/holdings/` -- read the repository for where that path is
+     written (search for `platinum/holdings`), print the `<firm>` token each of the three buckets uses in it, and say plainly if the
+     repository does not show the prefix for a bucket. Do NOT list or read any object in any firm bucket.
+   - LAST line `FENCE-ROW-SHAPE rows=<n> key_sets=<k> rows_with_actions=<a> rows_with_prefix=<p> readers=<r> extra_key_ignored=<i> extra_key_refused=<f> can_carry_today=<True|False> ok=<True|False>`
+     (`ok=True` when every reader was read and the scratch validator run completed).
+2. THE PROPOSAL, in your deliverables folder as `PROPOSAL_FENCE_ROW_SHAPE_READ_ONLY_PREFIX.md`, in standard technical English, for
+   the CTO to rule and the registry's lane to land. If `can_carry_today` is False (expected), it states the row shape NEEDED: the
+   new optional fields (for example `actions`: a list of S3 actions the exemption is limited to; `prefix`: the key prefix it is
+   limited to), their defaults (absent = today's meaning, whole bucket, all actions, so every existing row is unchanged), the
+   validator rule for them, and EXACTLY what each fence must render for a scoped row so the result is read-only and prefix-scoped
+   even though the user's own policy allows put: the user stays OUT of nothing-denied admission and instead (a) is added to the
+   fence's admitted list AND (b) a second Deny statement, rendered per scoped row, refuses that principal every S3 action except
+   `s3:GetObject` on `arn:aws:s3:::<bucket>/<prefix>*` and `s3:ListBucket` on the bucket with an `s3:prefix` condition for that
+   prefix (write the two statements out in full as JSON for one bucket, with `NotAction` / `NotResource` or the two-statement
+   form, and say which you chose and why; note that `s3:ListBucket` is a bucket-level action scoped by the `s3:prefix` condition key,
+   not by an object ARN). Prove the two statements with the simulator on a SCRATCH policy document built from one bucket's saved
+   live policy (`tests/dell_fence_census.json` holds it): dell1 `s3:GetObject` under the prefix -> allowed; `s3:GetObject` outside it
+   -> denied; `s3:PutObject` under the prefix -> denied; `s3:ListBucket` with the prefix condition -> allowed and without it ->
+   denied; dell2 (an unscoped row) unchanged. Print the five arms. Then the three rows as they would be written, the module lines
+   that would change (file:line, by reading), and what the plan for each bucket would then show.
+   The proposal proposes; it changes no file outside your deliverables folder and `tests/`.
+
+**ACCEPTANCE.** CT4d2-AC1 is unchanged and must still pass (the dell2 rows). One criterion is ADDED:
+
+<criterion id="CT4d2-AC2" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py</invocation><expect>FENCE-ROW-SHAPE rows=</expect></criterion>
+`CT4d2-AC2` -- the registry row's shape and every reader of it were read; the same line must read `ok=True`, stated in the proof row,
+with `can_carry_today` reported as measured.
+
+**BOUNDS for this pass.** Read-only AWS: `iam simulate-custom-policy` / `simulate-principal-policy`, `sts get-caller-identity`. No
+object or bucket listing in any firm bucket, no apply, no plan against the backend, no edit to the registry, the module, a `.tf`
+file or `lib/opal_naming.py`. Firm bucket names only in files under `tests/`, in your proposal and in your report. Write a NEW
+proof instance over the old one covering both ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CT4d2-AC1,CT4d2-AC2`, and flip `<status>` back to `complete` only when both pass.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~12:5xZ) -- REOPENED: build the scoped-exemption RENDERER and the fail-closed readers; NO registry row
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and every earlier commit
+is inherited state on the trunk (the read and the proposal merged @cef4ce2f39). Authority: `1.0.0_SA_CTO` msg 106230, verbatim:
+"shape as proposed, actions and prefix, both or neither. Order is the condition: the renderer and the two .tf edits land first, and
+a reader meeting a key it does not know REFUSES, never ignores; only then does 4.0.0_SA_CRO write the three rows (send it the
+proposal). GetBucketLocation: yes, admitted. GetObjectVersion: no. Then send the plan for my half." Gate limb: none graded this
+modification. THE WORK below is the whole of this amendment. `infra/logic/registry/exemptions.json` is REMOVED from the grant:
+YOU WRITE NO REGISTRY ROW AND EDIT NO REGISTRY FILE. The three rows are another lane's act after this build lands.
+
+Read first, on the trunk in your worktree: `deliverables/0.9.0_WK_NFRA_CTLPLN~6/PROPOSAL_FENCE_ROW_SHAPE_READ_ONLY_PREFIX.md` (the
+ruled shape, the three rendered statements, the lines that change) and row `NFRA_CTLPLN-W6-S5` (the hazard this order of work closes).
+
+1. **The readers refuse an unknown key (the CTO's condition; today an extra key is ignored and rendered as FULL admission).**
+   - `lib/opal_naming.py` `validate()`, the exemptions block near :529-540: a row's key set must be a subset of the closed set
+     {`principal`, `arn`, `reason`, `signoff_ref`, `actions`, `prefix`}; any other key REFUSES naming the bucket, row index and key.
+     `actions` and `prefix` come together or not at all. `actions`: a non-empty list, each entry in the CLOSED read set
+     {`s3:GetObject`, `s3:ListBucket`, `s3:GetBucketLocation`} (the CTO admitted `GetBucketLocation` and refused
+     `GetObjectVersion`; `ListBucketVersions` is NOT in the set either, since versions were refused). `prefix`: a literal string
+     ending in `/`, no wildcard characters, no leading `/`, its second path segment equal to the bucket's firm token (the rule the
+     proposal prototyped; read `scopes.json` through the existing registry loader for the token, never type a firm name). A scoped
+     row names exactly one principal by exact ARN (no `*`, no `?`). At most one row per principal per bucket.
+   - `infra/aws/terraform/modules/opal_name/main.tf` near :89-101: the module must REFUSE a row carrying a key outside the closed
+     set (a `precondition` or a `check` that fails the plan; say which and why it fails closed at plan time), keep
+     `fence_exemption_arns` byte-identical for today's 29 rows, and add an output `fence_scoped_statements` (a map keyed like
+     `fence_exemption_arns`, each value a list of statement objects) rendering, per scoped row, the Deny statements below. A scoped
+     row's ARN stays in `fence_exemption_arns` (the principal must be admitted through the fence for the scoped Deny to be the only
+     bound), exactly as the proposal states.
+   - Any generator in `lib/opal_naming.py` that writes `generated_locals.tf`, `vectors.json` or the tftest file: if the new fields
+     must pass through it, make that change and regenerate with the generator's own command; do not hand-edit a generated file. Row
+     `NFRA_CTLPLN-W6-S4` says the generated marks are already stale since the dell2 rows: run the generator's CHECK first and report
+     what it says BEFORE your change, so a stale mark you inherit is not counted as yours. If regenerating would change bytes for a
+     reason other than your edit, STOP on that file, report the diff, and leave it (it is the registry lane's restamp).
+2. **The statements a scoped row renders** (per bucket; `<n>` is a stable index so two scoped rows do not collide):
+   - `DenyScopedExemption<n>AnyOtherAction`: Deny, `NotAction` = the row's `actions`, on the bucket and its objects, for that
+     principal ARN.
+   - `DenyScopedExemption<n>ObjectsOutsidePrefix`: Deny `s3:GetObject` with `NotResource` = `arn:aws:s3:::<bucket>/<prefix>*`.
+   - `DenyScopedExemption<n>ListingOutsidePrefix`: Deny `s3:ListBucket` on the bucket with `StringNotLike` `s3:prefix` =
+     `<prefix>*` (an absent `s3:prefix` must also be refused: say how the rendered condition achieves that and prove it by an arm).
+   - `s3:GetBucketLocation`, when in `actions`, is a bucket-level action with no prefix: it is simply not denied.
+3. **The two fence files consume the new output** and nothing else changes in them:
+   `infra/aws/terraform/shared-infra/s3-49financial.tf` (the `Statement` list near :127-177) and `s3-lgic-firm-buckets.tf` (the
+   `concat(` near :149-170) gain `module.opal_name.fence_scoped_statements[...]`. WITH TODAY'S REGISTRY (no scoped row) EVERY
+   RENDERED BUCKET POLICY MUST BE BYTE-IDENTICAL TO BEFORE: prove it by rendering the module standalone (a temporary root outside
+   the repository, `terraform init -backend=false`, `terraform console`, no provider, no AWS call, `CHECKPOINT_DISABLE=1`) before
+   and after your change and comparing. You run NO plan against the backend and NO apply.
+   NOTE: `tests/check_dell_fence_join.py` pins these two `.tf` files to commit `3ec42c56bf`, and an apply order
+   (`NFRA_CTLPLN.TO-APPLY-5`) that depends on that pin is OPEN. Do not edit the pin or that check; your branch is merged by the
+   issuer only after that apply closes, and the issuer moves the pin at the merge. CT4d2-AC1 will therefore FAIL in your worktree
+   once you edit a `.tf` file: record its output as it reads and say so in the proof row's reason; that is expected and is the
+   issuer's to re-grade at the merge. (Your proof instance records AC1's output truthfully; do not flip the order to `complete`
+   if the proof checker will not validate with AC1 as it reads -- leave it `in_progress` and report.)
+4. `infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py` -- the criterion, all on SCRATCH copies outside the repo:
+   - a scratch registry with the three dell1 rows as the CTO ruled them (`actions`: `s3:GetObject`, `s3:ListBucket`,
+     `s3:GetBucketLocation`; `prefix`: `irpt/<firm token>/platinum/holdings/`): the validator accepts; the module renders three
+     statements per bucket; the simulator, on each bucket's saved policy from `tests/dell_fence_census.json` plus the rendered
+     statements, with dell1's live attached policies as the identity side, reads: get under the prefix allowed; get outside
+     refused; put under the prefix refused; list with the prefix allowed; list with no prefix refused; `GetBucketLocation` allowed;
+     `GetObjectVersion` under the prefix refused; dell2 (unscoped) get outside the prefix unchanged.
+   - the refusals, each on its own scratch registry: an unknown key (validator refuses AND the module's plan-time check refuses);
+     `actions` without `prefix`; `prefix` without `/`; an action outside the closed set; a prefix whose firm segment is another
+     firm's; a wildcard principal on a scoped row; two rows for one principal in one bucket.
+   - today's registry: 29 of 29 rows accepted, `fence_exemption_arns` unchanged, zero scoped statements, every bucket's rendered
+     statement list byte-identical before and after.
+   LAST line `FENCE-SCOPED rows_today=<n> unchanged_today=<True|False> scoped_rendered=<k>/9 sim_ok=<a>/<b> refusals_ok=<r>/7 unknown_key_refused_by=<validator+module|validator|module|none> ok=<True|False>`.
+5. In your deliverables folder, `PLAN_NOTE_FENCE_SCOPED_ROWS.md`: the three rows exactly as `4.0.0_SA_CRO` would write them (JSON),
+   what the plan for each of the three buckets would show once they land (by reading the standalone render; no plan run), and the
+   landing order the CTO ruled.
+
+**ACCEPTANCE.** One criterion is ADDED:
+
+<criterion id="CT4d2-AC3" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/check_fence_scoped_rows.py</invocation><expect>unknown_key_refused_by=validator\+module</expect></criterion>
+`CT4d2-AC3` -- the same line must read `ok=True` with `unchanged_today=True`.
+
+**BOUNDS.** Read-only AWS: `iam simulate-custom-policy` / `simulate-principal-policy`, `sts get-caller-identity`. No object or bucket
+listing in any firm bucket, no apply, no plan against the backend, no registry edit, no network download (every Terraform call
+sets `CHECKPOINT_DISABLE=1` and uses a root with no provider). Firm bucket names only in files under `tests/`, in your deliverables
+and in your report; none typed into a `.tf` file, the module or `lib/opal_naming.py`.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~15:0xZ) -- two issuer repairs at the merge; no new work
+
+1. `CT4d2-AC3`'s expectation is read as a regular expression by the proof checker, so the `+` in `validator+module` was a quantifier
+   and could not match the line it described (row `NFRA_CTLPLN-W6-S10`). The expectation now escapes it. The criterion is unchanged.
+2. `tests/check_dell_fence_join.py` compared the two fence files with commit `3ec42c56bf`; AMENDMENT 4 changed both files by
+   design, and the apply that depended on that pin is closed (order `NFRA_CTLPLN.TO-APPLY-5`, complete). The issuer adds a separate
+   `TF_PIN` at the build commit `cc0c2b4b5c`; the registry baseline stays at the old pin.
+Gate limb: none graded this modification. CORRECTED THE SAME HOUR: the lane gate refuses the issuer on the check file and on the
+worker's proof instance, so item 2 and the proof are the WORKER's: add `TF_PIN = "cc0c2b4b5c"` beside `PIN` in
+`tests/check_dell_fence_join.py` and use it ONLY for the two fence files' byte comparison (the registry baseline and its diff stay
+on `PIN`); change nothing else in that check. Then re-run the three criteria, rewrite the proof instance's rows from those runs
+(AC3's `expect` is now `unknown_key_refused_by=validator\+module`), validate it, and flip the order to `complete` when all three
+pass and the instance is VALID. Item 1 is done by this commit.
+

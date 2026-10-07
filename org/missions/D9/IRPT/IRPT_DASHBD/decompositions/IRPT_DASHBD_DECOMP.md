@@ -467,3 +467,47 @@ a flow-totals guard.
 | (split BD pull) | BD's own figures either side of 2025-01-09 for the 2,299 closure segments | WORLD (vendor call) | Andrew's per-use word | not cut |
 
 fanout: 2 of 2 chains, cap 8, reason: E1 and E2 read disjoint segment sets (226 and 754) of the merged round-19 record. Workers 0.9.0_WK_IRPT_DASHBD~16 and ~17, each in its own worktree.
+
+## 21. ROUND 21, WORKSTREAM B (2026-10-07 ~11:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-20 analysis @58f3ed0501, msg 421)
+
+Round 20 is closed: DB-b-31 @8e4c07ce7e, DB-b-32 @00d950283a. The CVO's read is taken: the Modified Dietz rule does not discriminate
+(measured 22, midpoint control 19, overlap 3), so the 22 are not counted and UNEXPLAINED stays 3,279 of 9,078. FWD-8's thread is HELD on
+Andrew's per-use word for the split BD pull (2,299 accounts, 2,299 calls, 4,598 ranges); no further no-vendor cell is cut against it.
+The E3 gate has opened: `_shared/etf_classification.py` carries the six-class values (@63fa1a2e32).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-33` | E1: `account_class_daily` and its contract for 49F, built beside the served producer and run locally over 50 accounts x 5 trading days; classes sum to the account within 1e-9; unclassified its own class; six classes plus unclassified only | SERVED (gold producer; no S3 write in this cell) | the six-class values (open) | B21 |
+| (release) | upload of the producer, its first gold write and schedule under rule 13 | SERVED | DB-b-33 merged; never-widen halves | cut after B21 drains |
+| (FWD-8) | the split BD pull | WORLD (vendor call) | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; its release follows it. Worker 0.9.0_WK_IRPT_DASHBD~18 in its own worktree.
+
+## 22. ROUND 22, WORKSTREAM B (2026-10-07 ~12:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-21 analysis @214a0ef324, msg 448)
+
+Round 21 is closed: DB-b-33 @75717e8580 (account_class_daily built and run locally; REMEDIATION_v7 @d116b31dba). W18-S2 RULED: release
+as is, the unclassified share of value shown beside the class breakdown with its reason; single-stock and money-market coverage is ASKED
+of MDPF_SECCLASS through the laptop, then the table is re-run. The release is the smallest change: the existing reporting-gold function
+also emits account_class_daily; its role writes one more prefix; the schedule is unchanged.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-34` | E1 prep: handler + bundle + role + declaration (W18-S1) + tests; local release run (returns DELTA=0, class identity, unclassified share); the never-widen packet | SERVED (source only; no apply) | DB-b-33 (merged) | B22 |
+| (apply) | safe-apply of the reporting-gold root, the first fire, the after-read (CTO criteria 2-3) | SERVED | DB-b-34 merged; both halves signed; the dell2 terraform kit | the issuer's act |
+| (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one prep cell; the apply follows it. Worker 0.9.0_WK_IRPT_DASHBD~19 in its own worktree.
+
+## 23. ROUND 23, WORKSTREAM B (2026-10-07 ~13:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7, msg 615)
+
+Round 22 is closed: DB-b-34 @d48052d79b (the account_class_daily release prepared; REMEDIATION_v8 @372500963a). Both never-widen halves
+are given (CTO @9816b17511, COO @13363d403b); the apply waits only on the dell2 terraform kit, and this seat sets the source-map pins at
+the apply (ruling msg 600). FWD-8 stays held on Andrew's split-pull word. The analysis takes PRD backlog B2 (FWD-4).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-35` | E1: account_activity_daily, account_lot_realized, account_lot_unrealized_daily for 49F, built and run locally; one account-window ties to the cent; each realized lot ties to its closing transaction; builder names | LOCAL (no S3 write) | none | B23 |
+| (class release apply) | safe-apply of reporting-gold with the pins | WORLD | the terraform kit | the issuer's act |
+| (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell. Worker 0.9.0_WK_IRPT_DASHBD~20 in its own worktree.

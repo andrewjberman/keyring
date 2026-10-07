@@ -531,13 +531,56 @@ def validate(reg_dir=None, systems_file=None):
     if not re.match(r"^[0-9]{12}$", str(ex.get("account_id", ""))):
         refuse("exemptions.json", "account_id", "a twelve-digit account id")
     firm_buckets = set(_buckets_of_firms(reg))
+    # A row's key set is CLOSED (NFRA_CTLPLN CT-d-2 AMENDMENT 4; CTO msg 106230): a reader meeting a key it does not know
+    # REFUSES, never ignores, because the fence renders an ignored key as a FULL admission. `actions` and `prefix` are
+    # the optional pair that scopes an exemption to those S3 actions under that key prefix (read set only: no write
+    # action, no GetObjectVersion, no ListBucketVersions). The firm token a prefix must carry is read from scopes.json.
+    row_keys = ("principal", "arn", "reason", "signoff_ref", "actions", "prefix")
+    scoped_actions = ("s3:GetObject", "s3:ListBucket", "s3:GetBucketLocation")
+    bucket_firm = {}
+    for s in scopes:
+        if s.get("class") == "FIRM":
+            bucket_firm[s.get("bucket")] = s.get("long")
+            for a in s.get("aliases", []):
+                if "bucket" in a.get("planes", []):
+                    bucket_firm[a["spelling"]] = s.get("long")
     for bucket, rows in (ex.get("exemptions") or {}).items():
         if bucket not in firm_buckets:
             refuse("exemptions.json exemptions", bucket, "not a provisioned bucket of a FIRM scope in scopes.json")
+        seen_principals = set()
         for j, r in enumerate(rows if isinstance(rows, list) else [None]):
+            rwhere = "exemptions.json exemptions.%s[%d]" % (bucket, j)
             for f in ("principal", "reason", "signoff_ref"):
                 if not isinstance(r, dict) or not isinstance(r.get(f), str) or not r.get(f):
-                    refuse("exemptions.json exemptions.%s[%d]" % (bucket, j), f, "missing or empty")
+                    refuse(rwhere, f, "missing or empty")
+            if not isinstance(r, dict):
+                continue
+            for k in sorted(r):
+                if k not in row_keys:
+                    refuse(rwhere, k, "not a key an exemptions row carries (closed set: %s); an unknown key is refused, never"
+                           " ignored, since a reader that ignored it would render the row as a FULL admission" % ", ".join(row_keys))
+            raw_who = r.get("arn") if isinstance(r.get("arn"), str) and r.get("arn") else r.get("principal")
+            who = raw_who
+            if isinstance(who, str) and who:
+                if not who.startswith("arn:"):
+                    who = "arn:aws:iam::%s:role/%s" % (ex.get("account_id"), who)
+                if who in seen_principals:
+                    refuse(rwhere, "principal", "%r already has a row under this bucket: at most one row per principal per bucket" % who)
+                seen_principals.add(who)
+            if "actions" not in r and "prefix" not in r:
+                continue
+            if ("actions" in r) != ("prefix" in r):
+                refuse(rwhere, "actions" if "actions" in r else "prefix", "actions and prefix come together or not at all")
+                continue
+            acts, pre = r["actions"], r["prefix"]
+            if not (isinstance(acts, list) and acts and all(isinstance(a, str) and a in scoped_actions for a in acts)):
+                refuse(rwhere, "actions", "a non-empty list drawn from the closed read set %s" % ", ".join(scoped_actions))
+            if not (isinstance(pre, str) and pre.endswith("/") and not pre.startswith("/") and not re.search(r"[*?]", pre)):
+                refuse(rwhere, "prefix", "a literal key prefix ending in /, no leading / and no * or ?")
+            elif len(pre.split("/")) < 3 or pre.split("/")[1] != bucket_firm.get(bucket):
+                refuse(rwhere, "prefix", "its second path segment must be the firm token of this bucket (%r)" % bucket_firm.get(bucket))
+            if not (isinstance(raw_who, str) and raw_who.startswith("arn:") and not re.search(r"[*?]", raw_who)):
+                refuse(rwhere, "arn", "a scoped row names exactly one principal by its exact ARN (no * or ?)")
 
     # remediations.json
     known_buckets = firm_buckets | standing_shared | {s.get("bucket") for s in scopes}
@@ -1200,8 +1243,11 @@ class _Vocab:
         self.bd_vendor = _BD_VENDOR
         refused = reg["systems"].get("refused_keys", {})
         self.cadences = set(schema["cadence"]["values"])
+        self.cadence_token = re.compile(schema["cadence"]["interval_form"]["token_regex"])  # P2: {N}min / {N}h
         self.v3 = {m for ms in refused.values() if isinstance(ms, list) for m in ms}
         self.v3 |= self.cadences | set(self.scope) | {"bd"}
+        pw = refused.get("purpose_word", [])
+        self.purpose = set(pw) if isinstance(pw, list) else set()  # group A of NO-SYSTEM-ASKED (R1.d)
         self.vocab = self.v1 | self.v2 | self.v3
         self.tiers = list(schema["key"]["tier"])
         self.kinds_by_type = dict(schema["kind"]["by_type"])
@@ -1327,8 +1373,14 @@ def _alias_spell(toks, v, form):
     return out
 
 
+_NO_SYSTEM_ASKED = "NO-SYSTEM-ASKED"
+_PASCAL_POLICY = re.compile(r"^[A-Z][A-Za-z0-9]*[a-z][A-Za-z0-9]*$")  # one PascalCase token, no hyphen
+
+
 def _slots(nm, toks, typ, v, first_of_segment=None):
     """R1-R4 over a token list: (system, removed indices, scope long or None, placeholder).
+    placeholder is False, True (a blank is owed) or "NO-SYSTEM-ASKED" (the system slot is empty by ruling,
+    sysv is ""): grade() reads the third as the fourth verdict, never as a blank.
     first_of_segment: the indices R1.d may read (a secret's segment heads, S2); None reads every token.
     nm: the name grade() received, exactly as passed -- the resources.json lookup key (EN-r-4). A row fills
     the {system} placeholder, AND a row whose system DIFFERS from the one the tokens resolve OVERRIDES it
@@ -1367,6 +1419,11 @@ def _slots(nm, toks, typ, v, first_of_segment=None):
             row_system = v.resources.get((nm, typ))
             if row_system:
                 sysv, placeholder = row_system, False
+        if placeholder and (t1 in v.purpose or typ == "LAMBDA_LAYER"
+                            or (typ == "IAM_POLICY" and nm is not None and _PASCAL_POLICY.match(nm))):
+            # NO-SYSTEM-ASKED (C-VERDICT, BF-t-2): an AWS service name, an inline policy name or a library layer
+            # is never a system, and no later token or row resolved one. The system slot is empty, not blank.
+            sysv, placeholder = "", _NO_SYSTEM_ASKED
     else:
         raise RaiseDefect("R1.f: %r is in no vocabulary; no registry row resolves it" % t1)
     if nm is not None and not placeholder:
@@ -1394,10 +1451,10 @@ def _cadence_slot(func, v):
         k = func.index("on")
         if k < len(func) - 1:
             return func[:k], "-".join(func[k:]), False
-    if func and func[-1] in v.cadences:
+    if func and (func[-1] in v.cadences or v.cadence_token.match(func[-1])):
         return func[:-1], func[-1], False
     for k in range(len(func) - 1, -1, -1):
-        if func[k] in v.cadences:
+        if func[k] in v.cadences or v.cadence_token.match(func[k]):
             return func[:k] + func[k + 1:], func[k], False
     return func, "{cadence}", True
 
@@ -1449,12 +1506,12 @@ def _grade_resource(nm, typ, v):
     func = [_r3_spell(toks, i, v) for i in range(len(toks)) if i not in out]  # R3: bd spelled in every slot
     if typ in ("EVENT_RULE", "SCHEDULE"):
         func, last, ph2 = _cadence_slot(func, v)  # R7
-        placeholder = placeholder or ph2
+        placeholder = ph2 or placeholder  # a {cadence} blank (True) outranks NO-SYSTEM-ASKED
     else:
         kinds = v.kinds_by_type[typ]
         last = func.pop() if func and func[-1] in kinds else kinds[0]  # R6
     func = _fn1d(func, sysv, scope_long, typ, v)  # R5: the one subtraction (FN1d)
-    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + func + [last]
+    parts = ([sysv] if sysv else []) + ([v.short[scope_long]] if scope_long else []) + func + [last]
     aliased = "-".join(_alias_spell(body.split("-"), v, "short")) + affix
     return "-".join(parts) + affix, placeholder, aliased  # R9
 
@@ -1479,7 +1536,7 @@ def _grade_secret(nm, v):
         if i not in out:
             purpose.setdefault(where[i], []).append(_r3_spell(flat, i, v))  # R3: bd spelled in every slot
     # S4: the purpose is every remaining segment, each lowercase kebab, joined by /.
-    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
+    parts = ([sysv] if sysv else []) + ([v.short[scope_long]] if scope_long else [])         + ["-".join(purpose[k]) for k in sorted(purpose)]
     raw = [seg.split("-") for seg in nm.split("/")]
     spelled = _alias_spell([t for seg in raw for t in seg], v, "short")
     rebuilt, k = [], 0
@@ -1721,7 +1778,7 @@ _GRAMMARS = {"R": _grade_resource, "S": lambda n, t, v: _grade_secret(n, v), "L"
 def grade(name, type):
     """(verdict, canonical_form) for a name of a node type, by LGIC_NAMING's GRADING_RULE.md.
 
-    The verdict is CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
+    The verdict is NO-SYSTEM-ASKED, CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
     for a type outside the grade's domain (G1.2) or a name NAMING_SCHEMA.json aws_fixed puts outside it
     (G2.1 by name, read from the schema at run time; G2.2 by ARN is the caller's job -- grade(name, type)
     never receives an ARN). A name the rule cannot place raises RaiseDefect, naming the step. The canonical
@@ -1744,6 +1801,8 @@ def grade(name, type):
         raise RaiseDefect("G1.3: %r takes no grammar in GRADING_RULE.md" % type)
     canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
                                                                       # grammar of the type
+    if placeholder == _NO_SYSTEM_ASKED:
+        return _NO_SYSTEM_ASKED, canon  # no system is asked of this kind of name (C-VERDICT); no remedy owed
     if placeholder:
         return "OUT-OF-PATTERN", canon  # G6; V-2
     if canon == name:
@@ -2868,8 +2927,8 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         "",
         "## Totals by type (judged rows)",
         "",
-        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NOT-GRADED |",
-        "|---|---|---|---|---|---|",
+        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NO-SYSTEM-ASKED | NOT-GRADED |",
+        "|---|---|---|---|---|---|---|",
     ]
     by = {}
     for r in rows:
@@ -2877,8 +2936,9 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         by.setdefault(k, {}).setdefault(r["verdict"], 0)
         by[k][r["verdict"]] += 1
     for (t, p), c in sorted(by.items()):
-        lines.append("| %s | %s | %d | %d | %d | %d |" % (t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0),
-                                                           c.get("OUT-OF-PATTERN", 0), c.get("NOT-GRADED", 0)))
+        lines.append("| %s | %s | %d | %d | %d | %d | %d |" % (
+            t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0), c.get("OUT-OF-PATTERN", 0),
+            c.get("NO-SYSTEM-ASKED", 0), c.get("NOT-GRADED", 0)))
     lines += ["", "The comparison against LGIC_NAMING's hand gradings is EN-s-2's and is not made here."]
     return "\n".join(lines)
 
@@ -2904,6 +2964,8 @@ def main(argv=None):
     c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
     c.add_argument("--not-judged", help="JSON file: a list of {name, plane, card} names CARDED rather than "
                                          "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
+    c.add_argument("--root", help="one Terraform root folder: one line per name of that root (LGIC_BLANKFIX FWD-1)")
+    c.add_argument("--map", help="with --root: the root map file (default: the registry's root_map.json)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -2944,6 +3006,9 @@ def main(argv=None):
     if a.cmd == "targets":
         return cmd_targets(a.extra_target)
     if a.cmd == "census":
+        if a.root:
+            import opal_naming_rootcheck  # the root check composes this module; imported only on this path
+            return opal_naming_rootcheck.check_root(a.root, a.map or os.path.join(REGISTRY_DIR, "root_map.json"))
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
             live = repo = True

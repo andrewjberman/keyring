@@ -75,8 +75,24 @@ on record (VINTAGEDIGEST proof) is history, not the live read. Code-level rollba
 
 ## Both halves UNSIGNED
 
-**COO half (`2.0.0_SA_COO~M1`):** UNSIGNED. Reads: the act (one key, safe-deploy, after the CTO half); the blast radius (164 keys, $35.67M 49F / $34.59M Cottonwood / $2.95M Inflection re-bucketed on the next a07 run, inferred held set);
-the rollback key's VersionId read by the deploying seat before the act; the parity set difference above.
-**CTO half (`1.0.0_SA_CTO`):** UNSIGNED. Reads: that SC-e-42 is the a07 row of FWD-5; that the stale parity control and the vintage gap are rows, not blockers of this switch.
+**COO half (`2.0.0_SA_COO~M1`): SIGNED, 2026-10-07 ~12:5xZ.**
+- Scope signed, nothing wider: the one key `s3://opal-data-49financial/_code/a07_dim_asset_classification.py`, its body from candidate
+  commit `88c7018366` and no other commit, through `.tools/safe-deploy.sh` by a seat whose principal that bucket admits (dell1's does not,
+  W25-S1/W32-S4: a laptop cloud-operations seat). No table, trigger, IAM or Terraform change; IAM read at the cut (`bd-securities-access`
+  already allows Scan on `etf-classifications`).
+- Writers of the moved property (the Advisor Intelligence dim's class column): one, a07; its own rule after the act is read in the request
+  (canonical row first by ticker, `CUSIP:`, agreeing `BBG:`; else the old-list maps; else a07's existing fallback; six classes only).
+- Both branches: lands -- the next scheduled chain run rebuilds `dim_asset_classification` and `alias_key_expansion`, and the d06/d08 mixes
+  re-bucket 164 keys (49F $35.67M, Cottonwood $34.59M, Inflection $2.95M; inferred held set) exactly as `A07_SWITCH_BEFORE_AFTER_20261007.json`
+  lists; served bytes do not move at the upload itself. Rolls back -- the deploying seat copies the IsLatest VersionId it read BEFORE the
+  upload back over the key and re-runs a07 for the affected date; `--no-canonical` is the code-level off switch; `git revert 88c7018366`.
+- Conditions: the request's (1)-(4), plus (5) the act does not proceed on an unread rollback VersionId, and (6) the first post-upload chain
+  run's dim census and both mix totals are read and attached to the ledger before it closes.
+
+**CTO half: SIGNED** -- `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e42_A07_CANONICAL_FIRST_20261007.md` @b3092be6d2
+(1.0.0_SA_CTO~DELL1, msg 241). The six COO conditions stand, plus (7) the post-run read compares the dim's moves against
+`A07_SWITCH_BEFORE_AFTER_20261007.json` and any move it does not list is a rollback, and (8) no upload inside a chain run's window.
+Noted by the CTO: `CASH` reads fixed_income/UltraShortDuration (legacy), not cash; a round-10 cell corrects that row under C-BOUND.
+
 **Conditions to propose:** (1) a change-management ledger entry opens before the upload and names the one key and its VersionId; (2) the upload runs under `.tools/safe-deploy.sh`, never a bare copy; (3) branch `wk-MDPF_SECCLASS-32`'s code commit reaches a pushed
 range only after both halves sign; (4) the first chain run after the upload is read for the dim's `A5-A07-SOURCE-CENSUS` line (canonical-* labels present) and the d06/d08 mix totals still sum to the firm's value.

@@ -416,3 +416,318 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "On the chosen advisor the gap is not a directory gap alone: the 4 accounts have no Schwab key at all (absent from the custodian key seam, so no silver or returns gold can be read for them), so no report can be built whatever the directory holds. They stay uncovered, now under NO_SCHWAB_KEY, still counted (not_in_directory=4 of=18). all_reported=True holds because no granted account WITH Schwab data lacks a document. Whether these 4 accounts exist at Schwab under another key (a seam coverage gap) is not measured here and is the open question for the next cut."
 }
 ```
+
+## IRPT_CUSTDY-W9-S1 -- the Schwab silver has no dim_account; the custodian's account open date is fact_acc.date_opened
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:02Z",
+  "one_line": "the order names Schwab silver dim_account for rule 1's custodian date; the silver has no such table, the account record is fact_acc and its open date is the column date_opened",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 2026-10-07 ~10:5xZ: client_report_figures.py --coverage --master 08335338 --master 08242234 --as-of 2026-09-30 -> 20 and 19 silver tables, no dim_account; fact_acc present, 566 partitions to 2026-10-06",
+      "fact_acc at date=2026-10-06 (master 08335338): 7601 rows, columns include date_opened (0 nulls in the 7601), date_of_birth, account_status; date_opened sample values are ISO dates"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1 THE CELL: Schwab silver `dim_account` under opal-data-assets/schwab/<master>/silver/ (look for an open/inception date column -- that is rule 1's custodian date when present).",
+  "world_is": "No dim_account table. Rule 1's custodian date is read from fact_acc.date_opened at the --as-of partition (client_report_figures.custodian_open_dates), after the accounts file's 4th column. The same table is the one a01_runner.py and a06_dim_identity_crosswalk.py already read as the account universe."
+}
+```
+
+## IRPT_CUSTDY-W9-S2 -- on the real run the custodian's open date wins rule 1 for 14 of 14 accounts and SI is still NO_DATA on all 14 (the linker finds no return that early)
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:03Z",
+  "one_line": "matthew_gooch at 2026-09-30: all 14 accounts resolve a rule-1 anchor from fact_acc.date_opened, and all 14 SI figures are still NO_DATA, because the linker needs a return at or before the window's first day and the gold has none that early",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~11:1xZ: python data/assets/scripts/gold/irpt_custody/si_anchor_probe.py --accounts-from-advisor matthew_gooch --as-of 2026-09-30 -> SI-ANCHOR advisor=matthew_gooch accounts=14 rule1=14 rule2=0 rule3=0 no_anchor=0 labels_ok=True; every ACCOUNT line shows si_status=NO_DATA",
+      "linker outcome on each of the 14 SI cells (parity_period_returns.link_account_period, read with a spy on ppr.link, nothing committed): UNAVAILABLE-NO-COVERAGE 14 of 14. 2 anchors (2022-03-29, 2022-04-29) are before the returns gold's first partition 2024-07-08; for the other 12, with the linker's base value supplied as Opal's own prior-day value (0.0 on each), the account's first linkable return is 3,3,3,5,6,13,26,29,47,54,121,348 days after the window's first day (an account is opened, then funded later)",
+      "client_report_figures.py base_value() and the bd_bmvs it passes are this cell's own change: without them the linker took the anchor branch (base value unknown) and the window opened on the anchor itself; for a rule-2 anchor (first_data_dates() = the first positive-value day, whose own return is null) the first linkable return is the next day, so the base value must be supplied or a rule-2 SI could never compute (inferred, no rule-2 account in this advisor's book to measure)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1: SI is computed (status OK) for a rule-1 or rule-2 anchor on or after 2010-01-01; E1 of the round-3 analysis (SI NO_DATA on every account because no anchor resolved).",
+  "world_is": "The anchor now resolves for 14 of 14, so the first half of E1 is closed, but the SI figure is not: the CTO's order (custodian date first) puts every one of this advisor's accounts on a date earlier than the gold can link from, so SI stays NO_DATA, in place and labelled, never zero. Not weakened and not worked around here: moving the window to the first funded day would call a data-start date `since inception`, which the ruling forbids. The rule-2 path computes on fixtures (test_si_anchor.py) but no account of this advisor reaches it. The question for the issuer/CTO is whether rule 1 should yield to rule 2 when the custodian date is earlier than the gold's first linkable return."
+}
+```
+
+## IRPT_CUSTDY-W9-S3 -- retiring the 2024 floor turns two hop3 tests and the hop3 self-test red; hop3_real_run.py and test_hop3_real_run.py are outside this order's paths
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:18:04Z",
+  "one_line": "with HELD_CALENDAR_FIX retired, hop3_real_run's fixture (a 2019 first data date, expected held) now gives SI NO_DATA, so test_hop3_real_run.py::test_file_shape and ::test_si_held_for_a_pre_2024_inception fail and `hop3_real_run.py --self-test` prints held_ok=False",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-IRPT_CUSTDY-9, python -m pytest -q data/assets/scripts/gold/irpt_custody/tests -> 3 failed, 87 passed, 1 xfailed; the 3: test_advisor_projection_refused.py::test_none_source_names_the_seam_line (already row IRPT_CUSTDY-S7), test_hop3_real_run.py::test_file_shape (held_si=1 expected, held_si=0 got), test_hop3_real_run.py::test_si_held_for_a_pre_2024_inception (NO_DATA, expected the held status)",
+      "python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --self-test -> HOP3-REAL-RUN-SELFTEST file_ok=True masked_ok=True held_ok=False error_written_ok=True",
+      "hop3_real_run.py lines 226 (HELD_FIRST_DATA = 2019-03-15), 178 (_count_held reads crf.STATUS_HELD), 323-326 (held_ok); client_report_figures.py keeps STATUS_HELD as an alias of NOT_AVAILABLE only so these still import"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1: update round 2's tests (test_client_report_figures.py, test_client_report_held_si.py) only where the retired floor or the new field requires; they must pass.",
+  "world_is": "Those two files now pass (39 with test_si_anchor.py). Two more tests and one self-test, in files this order cannot write, assert the retired hold on a 2019 date, and 2019 is on the calendar now. They need HELD_FIRST_DATA moved before 2010 (rule 3 -> NOT_AVAILABLE) and the held_si count and status checks re-pointed at NOT_AVAILABLE. ARMED because the drain's test run goes red on them until a cell that owns hop3_real_run.py makes that edit."
+}
+```
+
+## IRPT_CUSTDY-W9-S4 -- AC3 cannot read green inside this order's paths: two CU-d-2 tests in tests/test_hop3_directory_gap.py assert 'today's documents carry no si_anchor', which CU-d-1 itself makes false
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S4",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:48:03Z",
+  "one_line": "CU10-AC3 reads SUITE passed=108 failed=2: tests/test_hop3_directory_gap.py::test_account_line_prints_name_source_and_absent_anchor_without_failing and ::test_a_present_si_anchor_prints_its_date_and_rule expect si_anchor=ABSENT on every account line, and every account document now carries si_anchor, so the file is outside this order's <paths> and the two tests cannot be fixed here",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~K2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worktree wk-IRPT_CUSTDY-9 after merging CLOUD and implementing amendments 1 and 2: python data/assets/scripts/gold/irpt_custody/tests/run_suite_check.py -> SUITE dir=data/assets/scripts/gold/irpt_custody/tests passed=108 failed=2 errors=0 skipped=0 xfailed=1 (rc=1)",
+      "the 2: test_hop3_directory_gap.py line 83 (`assert \"ACCOUNT ****3333 name_source=OWNERSHIP_MAP si_anchor=ABSENT\" in acct_lines`, the comment on the next line reads 'today's documents carry no si_anchor') and line 97 (the stubbed third account is built from a real document whose accounts now all carry si_anchor, so printed[2] reads si_anchor=<date> rule=<n>, not ABSENT)",
+      "hop3_real_run.py _si_anchor_text (lines 228-234) prints ABSENT only when the document lacks the field; client_report_figures.build_documents has written `si_anchor` on every account since CU-d-1's first pass (e25f6f33ab)",
+      "with the field present the ABSENT assertions are false by construction; the fix is to the two tests (build the absent case by deleting the field from a copy of a document, as the second test already stubs the present case), which belong to a cell whose grant includes test_hop3_directory_gap.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-d-1 amendment 1: after merging CLOUD the whole irpt_custody suite reads 0 failed and 0 errors (CU10-AC3); the grant names hop3_real_run.py and tests/test_hop3_real_run.py but not tests/test_hop3_directory_gap.py.",
+  "world_is": "CU10-AC3 is not met as written: failed=2, both in a file this order cannot write (CU-d-2 landed them expecting the field absent until CU-d-1 landed). Per the refusal clause the tests are not weakened, skipped or edited. ARMED because the drain's suite run goes red on them once this branch merges. Disarm: add tests/test_hop3_directory_gap.py to this order's paths (or to a successor order) so the two ABSENT assertions can be re-expressed as 'absent only when the document lacks the field'; everything else in CU10-AC1 and CU10-AC2 holds."
+}
+```
+
+## IRPT_CUSTDY-W9-S5 -- amendment 2 branch (c) as written ('holdings exist before Opal's first partition') cannot be read literally; implemented as 'holdings exist, or the zero read is unconfirmed, between the open date and the first funded day'; the real probe takes 153 s
+
+```json
+{
+  "id": "IRPT_CUSTDY-W9-S5",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~9",
+  "surfaced_at": "2026-10-07T11:48:03Z",
+  "one_line": "amendment 2 (c) says 'holdings exist before Opal's first partition' but nothing before Opal's first partition can be read; branch c is implemented as holdings present (or the zero read unconfirmed) on the silver positions days from the open date up to the first funded day, and the real probe run measured 153 s wall time",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "task order file @09f7e2ab87, AMENDMENT 2 bullets (b) 'the open date precedes Opal's first partition' and (c) 'holdings exist before Opal's first partition' -- (b) and (c) cannot both describe an open date before the first partition, and holdings before it are unreadable",
+      "client_report_figures.resolve_si_anchor_branch / _holdings_before_first: Opal's first partition = the master's earliest silver positions partition; (a) needs open >= that, first funded >= open, a positions partition for EVERY trading day in [open, first), and zero non-zero-quantity/value rows for the account on them; any holding, any missing trading-day partition, or an unreadable partition -> (c) (rule 2); an open date before the first partition, or an unknown first partition -> (b)",
+      "dell2 ~11:4xZ: python data/assets/scripts/gold/irpt_custody/si_anchor_probe.py --accounts-from-advisor matthew_gooch --as-of 2026-09-30 -> rc=0, wall 2m33s (153 s), SI-ANCHOR advisor=matthew_gooch accounts=14 rule1=12 rule2=2 rule3=0 no_anchor=0 branch_a=12 branch_b=2 branch_c=0 branch_rule2=0 branch_rule3=0 branch_none=0 labels_ok=True (12 a, 2 b: as the order expected)",
+      "the 153 s is above the 120 s bound the worker standard names for a criterion run; the cost is the positions-partition reads for the 12 branch-a accounts (one read per trading day between open and first funding, cached per master/day)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 2: branch (c) 'holdings exist before Opal's first partition' -> rule 2 as (b); CU10-AC2 runs the probe on dell2.",
+  "world_is": "(c) is read as the only measurable thing: holdings on the days between opening and first funding (or an unconfirmable read). On real data no account lands in (c), so the reading changes no reported figure; the CTO or issuer should confirm or restate it. The probe's wall time is 153 s, so a timeout 120 wrapper would record rc=124; the criterion was run under timeout 600 and its output is recorded in the proof."
+}
+```
+
+## IRPT_CUSTDY-S9 -- round 4 drained: SI OK 14/14 on the real run; W9-S3 and W9-S4 disarmed; suite 110/0
+
+```json
+{
+  "id": "IRPT_CUSTDY-S9",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T12:10:00Z",
+  "one_line": "Round 4 drained and graded on the real run: SI is OK on 14/14 accounts and 10/10 households (12 under branch (a) 'since inception (first funded <date>)', 2 under rule 2); W9-S3 and W9-S4 disarmed by CU-d-1 amendments 1 and 3; the suite reads 110 passed, 0 failed on CLOUD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: e05799d167 (CU-d-3), 7361085932 (CU-d-2), 208a3ceedf (CU-d-1, amendments 1 @2063cabae7, 1b @ce710b5144, 2 @09f7e2ab87, 3 @021117b977)",
+      "dell2 ~12:0xZ on HEAD 208a3ceedf: tests/run_suite_check.py -> SUITE ... passed=110 failed=0 errors=0 skipped=0 xfailed=1; py_compile 10/10; ruff clean",
+      "dell2 ~12:0xZ: hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 -> HOP3-REAL-RUN ... households=10 accounts=14 uncovered=4 held_si=0 not_in_directory=4 of=18 error=none; from its file (not committed: client figures): SI OK accounts 14/14, households 10/10; si_anchor rule 1 OK 12, rule 2 OK 2; labels 'since inception (first funded' 12, 'first date Opal holds' 2; uncovered NO_SCHWAB_KEY 4"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-3 analysis @ec25e39844 E1-E3 and the CTO's W9-S2 ruling (msg 423); rows W9-S3 and W9-S4 ARMED with disarm_owner 2.0.0_SA_COO~K2.",
+  "world_is": "E1: every account prints its anchor and rule, SI computes for every rule-1/rule-2 anchor on or after 2010 with the ruled labels, and a test fails on a rule-2 'inception' label. E2: the advisor's 4 NOT_IN_DIRECTORY accounts are counted with their denominator (4 of 18) but cannot be reported: they have no custodian key, so no Schwab data (W10-S1). E3: suite green on CLOUD. W9-S3 is disarmed by amendment 1 (hop3 tests re-expressed) and W9-S4 by amendment 3 (directory-gap tests re-expressed); both were seams between round-4 cells, not defects."
+}
+```
+
+## IRPT_CUSTDY-W13-S1 -- CU-e-1 on real data: all 4 unkeyed accounts of matthew_gooch classify NOT_HELD (found=0, not_held=4); no seam-
+
+```json
+{
+  "id": "IRPT_CUSTDY-W13-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~13",
+  "surfaced_at": "2026-10-07T12:47:19Z",
+  "one_line": "CU-e-1 on real data: all 4 unkeyed accounts of matthew_gooch classify NOT_HELD (found=0, not_held=4); no seam-cell candidate exists, because Schwab silver holds none of them under any identifier.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 12:47Z on branch wk-IRPT_CUSTDY-13: python data/assets/scripts/gold/irpt_custody/unkeyed_lookup.py --advisor matthew_gooch --as-of 2026-09-30 -> UNKEYED-LOOKUP advisor=matthew_gooch accounts=4 found=0 not_held=4 classified=4, rc 0; 39 silver surfaces (19 + 20 tables of masters 08242234 and 08335338, partition 2026-09-30 or the latest before it), 8 identifiers per account (raw key, digits, no-leading-zeros, pad8-12, opaque id, seam key and seam values, census row), 0 matches",
+      "census cause for each of ****9851, ****0041, ****7341, ****9421: BD_KEY_ABSENT_FROM_EVERY_BRIDGE_SOURCE in IRPT_BCKEND's IB64-1_directory_coverage.json (key in none of dim_account_xref 53 partitions, dim_advisor_fee_role 53 partitions, fact_bd_allocation@2026-08-18, fact_taxsma_report@2026-07-17)",
+      "positive control: a real silver account_id from 08335338.fact_acc prefixed with z and fed to lookup_account classed FOUND_UNDER_OTHER_KEY, naming the silver columns that hold it (so a NOT_HELD is a search that could find)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-e-1: each of the 4 accounts is classed FOUND_UNDER_OTHER_KEY (a seam-cell candidate for IRPT_BCKEND) or NOT_HELD; the split is reported, not graded.",
+  "world_is": "The split is 0 found / 4 not held. The seam holds none of the 4 and Schwab silver (both masters, every table's key columns at 2026-09-30) holds none, so no seam row can fix them: these 4 accounts have no Schwab record on dell2's reachable silver at the as-of. Search scope stated: the as-of partition per table (or the latest before it), key columns account_id, mstracct_number, custdian_id and the unlabelled col_1..col_6 of fact_fam and fact_slm; an earlier-partition holding of a since-closed account would not be seen."
+}
+```
+
+## IRPT_CUSTDY-W13-S2 -- A NOT_HELD gap account has no directory household, so its not_covered account document sits in a household doc
+
+```json
+{
+  "id": "IRPT_CUSTDY-W13-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~13",
+  "surfaced_at": "2026-10-07T12:47:19Z",
+  "one_line": "A NOT_HELD gap account has no directory household, so its not_covered account document sits in a household document of its own that carries no household_returns or lineage; the document is added in run(), not build_file().",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py validate_document @CLOUD 9ca7469fc3 requires ACCOUNT_KEYS (returns, market_value, holdings, activity, fees, si_anchor) on every account and TOP_KEYS (household_returns, lineage) on every document; that file is outside this order's paths, so a not_covered account cannot be a validate_document-conforming document",
+      "data/assets/scripts/gold/irpt_custody/si_anchor_probe.py reads acct['si_anchor'] and acct['returns']['SI'] on every account build_file returns; check_directory_gap.py counts reported + uncovered == granted, so a NOT_HELD account is counted once, in the data and not in uncovered (tests/test_unkeyed_lookup.py test_a_not_held_account_is_in_the_report_data_as_not_covered_with_its_reason_and_no_figures asserts it is not in uncovered)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CU-e-1 item 2: a NOT_HELD account renders in its client's report DATA (the account document, under its household) as \"not_covered\": {\"reason\": ...} with no figures.",
+  "world_is": "A gap account's household is its own singleton (ownership-map or account-only name), so its household document holds that one account document {account, not_covered}. hop3_real_run.run() appends these documents after build_file() (so si_anchor_probe, which iterates build_file's documents, is unaffected) and the summary line gains not_covered=<n> only when n>0. A consumer that iterates every account of the file expecting returns (a portal render of the file) must skip an account carrying not_covered; none exists in this repo's irpt_custody tree."
+}
+```
+
+## IRPT_CUSTDY-S10 -- drain red: the none_source tracer test fails again after IRPT_BCKEND made the seam guard case-insensitive
+
+```json
+{
+  "id": "IRPT_CUSTDY-S10",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T12:58:00Z",
+  "one_line": "Drain red on CLOUD after 5b85219599: test_none_source_names_the_seam_line fails again because IRPT_BCKEND IB-pr-348 (11ba48fdc7) made the seam guard case-insensitive, so the round-4 re-pointed fixture value 'none' no longer refuses; no refusing spelling remains to re-point onto.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~12:5xZ on HEAD 5b85219599: tests/run_suite_check.py -> SUITE ... passed=125 failed=1 errors=0; FAILED tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line (line 117)",
+      "git log infra/aws/lambda/investor-reporting/_ids/ids.py: 11ba48fdc7 0.9.0_WK_IRPT_BCKEND~149 fix(IRPT_BCKEND IB-pr-348): seam guard treats every spelling of none/nan/null as unmapped (after CU-d-3's re-point @e05799d167)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 4 E3 (CU-d-3): the irpt_custody suite reads 0 failed on CLOUD; the tracer fixture re-pointed to a value the fixed ids.py still refuses.",
+  "world_is": "The upstream guard now covers every null-like spelling, which is what the tracer was built to find; the tracer test has nothing left to provoke. Repair for the next round's batch: retire the refusal-tracing test (keep none_source.py as a historical tool) -- re-pointing again is not possible."
+}
+```
+
+## IRPT_CUSTDY-W12-S1 -- hop3_real_run.py for the real render's input takes longer than the 120 s criterion bound on dell2 (rc=124 twice, then rc=0 under a 1500 s bound)
+
+```json
+{
+  "id": "IRPT_CUSTDY-W12-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~12",
+  "surfaced_at": "2026-10-07T12:49:47Z",
+  "one_line": "hop3_real_run.py for the real render's input takes longer than the 120 s criterion bound on dell2 (rc=124 twice, then rc=0 under a 1500 s bound)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2, worktree wk-IRPT_CUSTDY-12: `timeout 120 python data/assets/scripts/gold/irpt_custody/hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 --out .scratch/hop3.json` -> rc=124, no file written; the same again -> rc=124",
+      "faulthandler dump at 40 s: the process is inside botocore ListObjectsV2 via client_report_figures.py:308 read <- :710 _holdings_before_first <- :754 resolve_account_anchors <- :861 build_documents (the CU-d-1 anchor probe; ownership map and directory reads had already succeeded, so dell2 is NOT denied)",
+      "same command run detached under timeout 1500 -> `HOP3-REAL-RUN advisor=matthew_gooch as_of=2026-09-30 households=10 accounts=14 uncovered=4 held_si=0 not_in_directory=4 of=18 error=none`, rc=0; the file (kept under .scratch/, uncommitted) was then rendered by CU15-AC2",
+      "row IRPT_CUSTDY-W9-S5 measured the same probe at 153 s"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's AC2 text says to run hop3_real_run.py first and names no bound; the worker rule bounds every criterion invocation at 120 s with one retry.",
+  "world_is": "The prerequisite run exceeds 120 s on this device (it reads S3 partitions one by one). I retried it once under the 120 s bound as the rule says, then ran it a third time detached under 1500 s because AC2 cannot exist without its file; the AC2 invocation itself (the bun render) ran under timeout 120 and passed. The issuer should state a longer bound for this prerequisite in any order that names it."
+}
+```
+
+## IRPT_CUSTDY-W12-S2 -- the order's input shape lists `name_source` on each account, but client_report_figures.py's ACCOUNT_KEYS (and the real hop3 documents) do not carry it
+
+```json
+{
+  "id": "IRPT_CUSTDY-W12-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~12",
+  "surfaced_at": "2026-10-07T12:49:47Z",
+  "one_line": "the order's input shape lists `name_source` on each account, but client_report_figures.py's ACCOUNT_KEYS (and the real hop3 documents) do not carry it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "client_report_figures.py ACCOUNT_KEYS = [account, registration, returns, market_value, holdings, activity, fees, si_anchor]; validate_document refuses any other key set (line 957-958)",
+      "hop3_real_run.py FILE_KEYS carries `name_sources` ({masked account: source}) at the FILE level, not per account",
+      "portal types.ts types `name_source?` as optional on the account; the fixture carries it per the order face; the renderer never reads it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-e-2 worker face: accounts: {account, registration, name_source, returns, si_anchor, market_value, holdings, activity, fees}.",
+  "world_is": "A real document has no per-account name_source, so any consumer that requires it would refuse every real document. The template does not use it and types it optional; whoever wires the client-report kind (IRPT_BCKEND) should read name_sources from the run file or drop the field from the contract text."
+}
+```
+
+## IRPT_CUSTDY-S11 -- round 5 drained: 18 of 18 accounts in the report data (14 SI OK, 4 not covered); template rendered a real household
+
+```json
+{
+  "id": "IRPT_CUSTDY-S11",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T13:10:00Z",
+  "one_line": "Round 5 drained and graded on the real run: all 18 granted accounts of the chosen advisor are in the report data -- 14 covered with SI OK, 4 not covered with the reason NOT_HELD; the 49F template rendered a real household; the portal candidate passed CTO review with one note.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains: 5b85219599 (CU-e-1), 8029bc6635 (CU-e-2 workspace side); portal 99addd80 on wk-IRPT_CUSTDY-12-portal",
+      "dell2 ~13:0xZ on HEAD f16e89faa9+: hop3_real_run.py --advisor matthew_gooch --as-of 2026-09-30 -> HOP3-REAL-RUN ... households=10 accounts=14 uncovered=0 held_si=0 not_in_directory=4 of=18 not_covered=4 error=none; from its file (not committed): 18 account documents, 14 with SI OK, 4 with not_covered reason 'NOT_HELD: no Schwab record under any identifier of this account'",
+      "CU-e-1 real: UNKEYED-LOOKUP advisor=matthew_gooch accounts=4 found=0 not_held=4 classified=4 (39 silver tables, 8 identifiers, positive control fired); CU-e-2 real: REAL-RENDER households=1 accounts=2 periods=4 si_labels=2 not_ok_noted=30 bd_field_names=0",
+      "1.0.0_SA_CTO~DELL2 msg 581: review of 99addd80 PASS; note -- the template renders no not_covered account yet; DEV landing waits on Andrew (106221)"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Round-4 analysis @16d9b128c0 E1 (each unkeyed account measured, classed, not-covered rendered in the data) and E2 (the 49F template on a real client; C-SHAPE; typecheck, eslint and test).",
+  "world_is": "E1 holds on real data. E2 holds for its mechanical criteria (C-SHAPE is the CVO's judgment). Carried to the next round, not rows: the template's not_covered rendering (CTO note), the tracer test retirement (S10), and the 30 'not described' holdings in the real render (class and sector null until the issuer's describe() join)."
+}
+```

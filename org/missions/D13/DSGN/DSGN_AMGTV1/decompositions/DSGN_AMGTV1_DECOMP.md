@@ -2004,3 +2004,123 @@ DEV 34803ef6, 5 of 5 on scratch reference components. Its item arm PLANTS two it
 the cut. `AV-zw-2` is graded by `2.0.0_SA_COO~Z`'s `round77/checks/r77_ba5.py` (@7daf7c5677): AC1, AC2 and AC3 read NO at base, controls passing.
 **Fan-out:** 2 of 2 (`fanout: 2`). **Risk:** LOCAL. **Then:** battery29 on the combined candidate, a :5174 walk, CTO review from the
 renders, and ONE DEV push on Andrew's word.
+
+## v46 -- ROUND 46 (issuer, 2026-10-07 ~09:3xZ) -- ONE ISSUER ACT: THE COMPLETION GRADING WALK ON DEV 8ddfe409
+
+**Rectangle:** the CTO's ruling msg 30749 (2026-10-07 09:22Z, answering msg 30748): no round-46 list exists; the newest is
+`ledger/CTO_LIST_ROUND41.md`, and rounds 42 to 45 moved grades nobody has re-measured. Round 46 is ONE issuer act, the completion
+grading walk over FWD-1..27 on portal DEV, round-41 pattern. `3.0.0_SA_CVO~Z` grades it; the CTO countersigns as in
+`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND41.md` and cuts the round-47 list from every FWD that does not grade REALIZED.
+**Base:** portal DEV 8ddfe409 (ls-remote read 09:2xZ; PROD b06863fe = v2.1.203).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zx-G` GRADING WALK (issuer act, no product file) | FWD-1..27 | `deliverables/2.0.0_SA_COO~D/round46/` and the `read-<stamp>/` folders the instruments write beside themselves | 2.0.0_SA_COO~D |
+
+**Instruments, unchanged:** `round35/walk/closewalk35.mjs --no-officer "ASML NA" --names "BA US,VLO US,AMD US,MSFT US"`;
+`round37/walk/reads37.mjs --names "BA US,AMD US"`; `round42/walk/reads42.mjs` (the sidebar read); `round44/walk/reads44.mjs` and
+`round45/walk/reads45.mjs` (FWD-18, FWD-1 segments, the top band, input provenance); `round35/checks/instrument/instrument35.cjs`.
+Live: localhost:5174 = `C:/tmp/wk-dsgn-amgtv1-92/portal` detached at 8ddfe409 (`dev:live`, live API). Walker ARM and DISARMED
+through MSTR~Z.
+**Output:** `round46/COMPLETION_GRADES.round46.json` carrying the issuer's READINGS per FWD (what each instrument printed); the
+verdict column is the CVO's to grade.
+**Fan-out:** 0 worker chains (no product change). **Risk:** SERVED read (no write).
+
+## v47 -- ROUND 47 (issuer, 2026-10-07 ~10:5xZ) -- ONE BATCHED REPAIR CELL ON THE MODEL TAB; ONE ISSUER READ; ONE CELL HELD
+
+**Rectangle:** `ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` @43d2e5eb3c, ROUND 47 items 1-4 (msg 30797). **Base:** portal DEV
+8ddfe409 (= PROD b06863fe content).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zy-1` BATCHED REPAIR (items 1 and 2) | FWD-20 (10 px text), FWD-27 (the Model tab's foot) | `tabs/ModelTab.tsx`, `modelSheet.ts`, the `__harness__/` files that assert the changed words | ~108 (worker-light) |
+| `AV-zy-R` READ (item 4, no build) | FWD-21 | `deliverables/2.0.0_SA_COO~D/round47/FWD21_READ.md` | 2.0.0_SA_COO~D |
+| `AV-zy-I` INSTRUMENT CLAUSE (item 3) | FWD-18, FWD-20 | `portal/scripts/ui-contract-check.mjs` and its fixtures | NOT CUT -- waits on PRD v0.16's ratified-text half |
+
+**Item 2, read first as the list orders:** all three foot lines are PAGE text. "Company short name" is `modelSheet.ts`
+`V3_HEADER_LABELS.SHORT_NAME`; "N of M inputs have run." is `ModelTab.tsx` (`data-input-ledger-count`); "a source this page has no
+name for yet" is `ModelTab.tsx` `ledgerSourceWords`' fallback. The news class's source is SERVED as "harvested news (the overlay feed,
+gold article_security_mention)" (`lib/research/api/scoped_amgt.py`); the page has no word for it. Named for AMGT_RESAPP in the close:
+that served string carries storage words.
+**Check:** `round47/checks/r47/r47.cjs`, the REAL `ModelTab.tsx` rendered on round-11 fixtures. At base 8ddfe409 it reads 1 of 4 (34
+rendered 10 px nodes; the short-name line; the ledger wording); PLANTED passes. Green 4 of 4 on scratch reference edits of the two files.
+`round11/checks/ledger.cjs` reads 2 of 3 at the base and after (its re-run sentence arm, stale since round 45); it is not in battery29.
+**Item 4:** read from the round-46 walk, 10 of 10 (`round47/FWD21_READ.md`); hover only, focus not read.
+**Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. **Gate:** `.tools/to-pipeline-gate.py` LIMB 6 refuses a new order while
+`prd-signoff status` reads WITHHELD (CTO msg 30802); the order is added the tick it reads ADMITTED.
+**Then:** battery29 on the candidate, the render instrument's Model state, CTO review from the render, and ONE DEV push on Andrew's word.
+
+**v47 ADDENDUM (issuer, 2026-10-07 ~11:0xZ) -- item 5 added before the issuance; TWO cells go out in ONE issuance.** The CTO's CORRECTION
+(`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` @50e71b5b8d, msg 30810): MSFT US is not a covered name, FWD-4 returns to REALIZED
+(board 21 / 4 / 1 / 1), and round 47 gains item 5.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zy-2` (item 5) | FWD-4, FWD-27 (an uncovered name says so once) | `components/HeaderCards.tsx`, the `__harness__/` files that assert seven tiles for an all-absent row | ~109 (worker-light) |
+
+**Item 5, read first:** MSFT US draws 7 tiles, each reading "We hold no stored company data for this name yet."; the served payload carries
+no coverage marker, so the page rule is keyed on the served shape (no figure with a value, one reason shared by all). The marker is a
+producer item, named in the close. **Check:** `round47/checks/r47b/r47b.cjs`: 2 of 3 at base 8ddfe409, 3 of 3 on a scratch reference
+edit, with `round42/checks/r42/r42.cjs` still 5 of 5.
+**Chains:** 2, with no shared product file (`AV-zy-1`: `tabs/ModelTab.tsx`, `modelSheet.ts`; `AV-zy-2`: `components/HeaderCards.tsx`), so
+both run at once. **Fan-out:** 2 of 2 (`fanout: 2`). PRD v0.17 @8730d6c042 reads ADMITTED. `AV-zy-I` stays NOT CUT: its clause text is
+the CTO's to send (msg 30797: "I send its hash"). **The round-47 grading walk** reads FWD-4, 7 and 8 on covered names and one uncovered
+name only for its designed state.
+
+## v48 -- ROUND 48 (issuer, 2026-10-07 ~11:3xZ) -- ONE CELL: THE RENDER CHECK'S PURPLE-FILL CLAUSE
+
+**Rectangle:** round 47's item 3 (`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` ruling 3), named `AV-zy-I` in v47 and held there
+for the PRD addendum. Cut now on the CTO's word (msg 30831: "cut AV-zy-I now, PRD v0.17 @8730d6c042 is ADMITTED"). It is its own round
+because the issuance gate admits ONE issuance per round and round 47's is @de235b1e7c; the cell is renamed `AV-zz-1` to fit the cell-id
+grammar. **Base:** portal ec9f9a0e, the round-47 candidate, APPROVED for DEV @07ff6ebe34 (the push is Andrew's word).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zz-1` | FWD-18 (the amended DONE WHEN), FWD-20 (the render check passes) | `portal/scripts/ui-contract-check.mjs` | ~110 (worker-light) |
+
+**Check:** `round47/checks/r47i/r47i.cjs` lifts the `purpleFills` predicate and `gradeFwd18` out of the script's text and evaluates them:
+1 of 4 at base ec9f9a0e, 4 of 4 on a scratch reference edit. The order also runs the instrument once and reads 0 FAIL cells in its
+candidate grades (10 today, all this clause). The candidate becomes ec9f9a0e + 1 commit touching no product file.
+**Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
+
+## v49 -- ROUND 49 (issuer, 2026-10-07 ~12:2xZ) -- TWO CELLS: THE MODEL FOOT'S MONEY FORMAT; A PLANTED PAIR FOR EVERY RENDER-CHECK CLAUSE
+
+**Rectangle:** the CTO's rulings msg 30859 (FWD-20: "each clause" means every clause) and msg 30869 (FWD-27: three grounds; the
+money format is a page cell), on `3.0.0_SA_CVO~Z`'s files `DSGN_AMGTV1_ROUND48_FWD18_FWD20_REGRADE_20261007.md` @4a94e19089 and
+`DSGN_AMGTV1_FWD20_CLAUSE_COUNT_AND_FWD27_REGRADE_20261007.md` @7ca923a956. Board 21 / 4 / 1 / 1 (FWD-7, 8, 20, 27 NOT_REALIZED).
+**Base:** portal 97598dc3 (the round-48 candidate; ONE DEV push on Andrew's word, CTO msg 30851).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zza-1` | FWD-27 (one money format on the Model foot) | `tabs/ModelTab.tsx` | ~111 (worker-light) |
+| `AV-zza-2` PLANTS (issuer act, test files only, no product file) | FWD-20 (the check FAILS a planted page on each clause, beside a clean control) | `deliverables/2.0.0_SA_COO~D/round49/checks/plants49/` | 2.0.0_SA_COO~D |
+
+**`AV-zza-1`, read first as the CVO asked:** both foot figures are PAGE-formatted (`ModelTab.tsx` `v3FactValue`); the header's short form
+is `components/StatTile.tsx` `formatStatValue`. **Check:** `round49/checks/r49/r49.cjs` computes its expected strings by calling that
+formatter, so it grades "the foot uses the header's formatter": 2 of 3 at base 97598dc3 ("USD 152,320 million" against "USD 152B"),
+3 of 3 on a scratch reference edit, `r47.cjs` still 4 of 4.
+**`AV-zza-2`:** `plants49.cjs` plants one violation per clause on the Thesis state beside one clean control, and runs the portal's own
+`scripts/ui-contract-check.mjs`. It covers the five the CVO counted as lacking a pair (fonts, weights, radii, shadows, the designed
+states) and four more it plants anyway so no clause rests on history (sizes, lowContrastChars, purpleFills, tabPanelsWhite). The
+designed-states pair is two FULL sweep runs: a page whose error-state marker is stripped, and an untouched control.
+**Chains:** 2, no shared file. **Fan-out:** 1 of 1 worker chain (`fanout: 1`); the second cell is the issuer's. **Risk:** LOCAL.
+**Not this round:** the country's capitals and the Filings ledger row (the producer's, routed to `2.0.0_SA_COO~Z` by msg 30869); the
+What-changed row labelled in the vendor's words (not read; named in the close); row Z-S21.
+
+## v50 -- ROUND 50 (issuer, 2026-10-07 ~13:0xZ) -- ONE CELL: THE RENDER CHECK REQUIRES THREE DESIGNED STATES, NOT FOUR
+
+**Rectangle:** CTO msg 30918 ("the four-against-three count in the instrument is one script-only cell for the next issuance, whatever
+the grade"), on the finding in `round49/ROUND49_CLOSE.md` @5e36b6ca82. PRD v0.17 FWD-19 names three designed states and FWD-20 reads
+"the three states of FWD-19 present"; `portal/scripts/ui-contract-check.mjs` still requires a no-permission state in its run cell and
+the standalone no-permission capture in `gradeFwd19`. **Base:** portal b3440392 (CTO-APPROVED for the one DEV push @add38b2768).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzb-1` | FWD-19, FWD-20 (the check grades the amended text) | `portal/scripts/ui-contract-check.mjs` | ~112 (worker-light) |
+
+**Check:** `round50/checks/r50/r50.cjs` lifts `gradeFwd19` and the run-cell block out of the script's text and evaluates them with
+planted inputs: 2 of 4 at base b3440392 (both cells FAIL on a missing no-permission), 4 of 4 on a scratch reference edit, `r47i.cjs`
+still 4 of 4. The order's third criterion is the real run: the designed-states pair of `round49/checks/plants49/plants49.cjs` on the
+edited instrument (an untouched full sweep still PASSES; the stripped-error page still FAILS).
+**Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. The candidate becomes b3440392 + 1 commit touching no product file.
+**Not this round:** renaming the `fourStates` key (other files read it); removing the standalone capture itself.

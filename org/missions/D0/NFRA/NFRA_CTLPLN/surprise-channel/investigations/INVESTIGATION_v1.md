@@ -1511,3 +1511,788 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "One code file outside the grant still decides on the old two-fabric grammar. It is the IRPT_YCDGEN stop-row filer (prints a channel section for a runner stop row); a Dell-fabric stop row cannot be filed through it. Not edited here (path outside the order's grant); old_grammar_left carries 1, so CT4d6-AC1 reads old_grammar_left=1 ok=False until the issuer brings the file to the gate's grammar (or rules it out of scope) and the sweep reads zero."
 }
 ```
+
+## NFRA_CTLPLN-W14-S1 -- TO-CT-a-1: no declared SSM command document is RESIDENT-FIXED (0 of 16); dell2's policy carries no send statement
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T10:21:13Z",
+  "one_line": "TO-CT-a-1 read: 0 of 16 declared SSM command documents classify RESIDENT-FIXED; both resident documents take a free-text parameter that is interpolated into a shell command line, so dell2's policy is built with no send statement.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check, last line: SSM-DOCS declared=16 unresolved=0 resident_fixed=0 resident_free_text=2 export_render=1 other=13 unsure_params=2 in_policy=0 ok=True; census cross-check 16 uncommented 'resource \"aws_ssm_document\"' over 544 .tf files = 16 parsed, MATCH",
+      "irpt-ycharts-deploy (investor-reporting/ycharts:aws_ssm_document.deploy, ssm.tf:19): parameter ArtifactPrefix (String, default the artifact prefix, no allowedValues, no allowedPattern) -> FREE-TEXT-COMMAND at infra/aws/terraform/investor-reporting/ycharts/ssm.tf:43: \"aws s3 cp {{ArtifactPrefix}} $APP_DIR/ --recursive --exclude 'secret-ids.env'\" (a caller value is substituted into the shell line, and what it fetches is then run: chmod +x run-ycharts-session.sh, npm install, npx playwright install)",
+      "irpt-ycharts-run (aws_ssm_document.run, ssm.tf:56): parameter Task CONSTRAINED by allowedValues=['probe'] (ssm.tf:84 export YC_TASK='{{Task}}'); parameter MaxReacquisitions (String, default '1', no allowedValues, no allowedPattern) -> FREE-TEXT-COMMAND at ssm.tf:85: \"export YC_MAX_REACQUISITIONS='{{MaxReacquisitions}}'\" (a value containing a single quote closes the literal and the rest runs as shell)",
+      "classifier control run on every --check: 5 synthetic blocks (free-text parameter, allowedValues, tight date allowedPattern, loose allowedPattern '^.*$', no parameters) classify as expected, so the 0 is not a broken classifier; the date allowedPattern on the unrelated advi chain document classifies CONSTRAINED through the same code",
+      "the build per the order's bound: dell2_ssm_policy.json carries ReadCommandResults and DenyShellDocuments (the seven AWS shell and session document ARNs plus irpt-export-render-run, irpt-ycharts-deploy, irpt-ycharts-run by name) and NO send statement and NO DenyRewriteOfGrantedDocuments (an IAM statement cannot have an empty Resource list); simulate_policy.py: ssm_ok=12/12, allowed send arms 0",
+      "not read: the live documents in the account were not compared to the repository text"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1: the dell2 user gets ssm:SendCommand on the instance and on the RESIDENT-FIXED documents (at most three arms expected); 'if NO document classifies RESIDENT-FIXED, do not widen the rule: write the policy with the read statement and the Deny statements only, file a BLOCKING row with the table'.",
+  "world_is": "The two resident documents are the only ones declared under investor-reporting/ycharts/, and each has one unconstrained parameter used inside a shell command line, so neither is fixed text; the grant is empty as the order's bound provides. What would change the classification is a text change by the document's owner, not by this cell: an allowedPattern on MaxReacquisitions (ssm.tf:71-75) and allowedValues on ArtifactPrefix (ssm.tf:28-32); irpt-ycharts-run is in addition a live vendor call that its own header says needs Andrew's per-use word, so whether it is ever granted to a Dell is a ruling, not a classification. The one document sent to the instance by code today is irpt-export-render-run (export/dispatch.py, to render_host_id), classified EXPORT-RENDER and denied by name."
+}
+```
+
+## NFRA_CTLPLN-W14-S2 -- TO-CT-a-1: both Dells can rewrite a command document and the objects it runs, through the group policies
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T10:21:13Z",
+  "one_line": "Both Dells can rewrite a command document and the objects it downloads and runs, through the group policies; the same code-injection path the free-text read closes for SendCommand stays open, for dell1 as well and with no SendCommand grant at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_create_policy.json statement CreateUpdateTagCompute allows ssm:CreateDocument, ssm:UpdateDocument and ssm:UpdateDocumentDefaultVersion on Resource *; it is a GROUP policy, so dell1 and dell2 both hold it. simulate_policy.py SSM-PROBE lines (iam:SimulateCustomPolicy, read-only): 'dell2 ssm:UpdateDocument on irpt-ycharts-deploy -> allowed' and 'dell1 ssm:UpdateDocument on irpt-ycharts-deploy -> allowed'",
+      "the export controller sends irpt-export-render-run to i-0167fd745ad906a66 by itself (infra/aws/lambda/investor-reporting/export/dispatch.py RENDER_DOCUMENT; export/main.tf:84 render_host_id), under its own role: a Dell that rewrites that document's text, or makes another version its default, has its text run on the host's role at the next dispatch, with no SendCommand of its own",
+      "run-time fetches of the documents read (derive_ssm_documents.py FETCH lines): irpt-ycharts-deploy ssm.tf:43 copies s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-ycharts/ (its default prefix) to /opt/investor-reporting-ycharts, then ssm.tf:44-46 chmod +x run-ycharts-session.sh, npm install, npx playwright install, and irpt-ycharts-run ssm.tf:86 runs bash /opt/investor-reporting-ycharts/run-ycharts-session.sh; irpt-export-render-run export/ssm.tf:55 copies s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-export/ and export/ssm.tf:91 runs bash /opt/investor-reporting-export/run-export-render.sh on every render",
+      "who can write those two prefixes: dell_deploy_policy.json statement S3ObjectsOnOpalBuckets allows s3:PutObject on arn:aws:s3:::opal-*/*, which matches the artifacts bucket; no Deny in the five Dell policy files matches s3:PutObject there (DenyS3DeletesOnProductionData is opal-data-* only). Static match in derive_ssm_documents.py: dell_put_allowed_by=['dell_deploy_policy.json:S3ObjectsOnOpalBuckets'] dell_put_denied_by=none on both prefixes; simulator SSM-PROBE: 'dell2 s3:PutObject on the ycharts runner artifact prefix -> allowed', same for dell1",
+      "the new policy's DenyRewriteOfGrantedDocuments covers only RESIDENT-FIXED documents (0 today), and it is attached to dell2 only, so it closes none of the above; whether the create policy has been applied was not read (no account call beyond the simulator)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO with 2.0.0_SA_COO~C: rule whether a Dell keeps ssm:UpdateDocument, ssm:UpdateDocumentDefaultVersion and ssm:CreateDocument on documents the estate sends to a host and s3:PutObject on the ec2/ artifact prefixes those documents download from, before dell_create_policy.json and dell_deploy_policy.json are applied; a Deny on those documents and prefixes in the group policies is a new cell, not this order's paths",
+  "spec_asserts": "TO-CT-a-1: a Dell that can rewrite a resident document's text can run anything through the grant; add DenyRewriteOfGrantedDocuments on the RESIDENT-FIXED documents to the new policy and file ONE row saying the same hole is open for dell1 through the group's create policy and for both Dells on the instance's other inputs, naming any script a fixed document fetches at run time and whether a Dell can write it.",
+  "world_is": "No document is RESIDENT-FIXED, so the Deny statement has no resource and is not in the policy. The hole is wider than the order stated: it does not need the SendCommand grant, because the render document and the runner scripts are executed by the estate's own controller and operators on the host's role, and the artifact prefixes they fetch are writable by both Dells under the group deploy policy. No fixed document exists, so the 'run-time script a granted document fetches' is reported for the documents that would have been in scope: the two resident documents and the export render document."
+}
+```
+
+## NFRA_CTLPLN-W14-S3 -- TO-CT-a-1: the naming limb refuses the rendered targeted Deny; stopped after the census
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T11:25:00Z",
+  "one_line": "The commit gate's naming limb refuses the rendered targeted Deny (29 strings across the two new group policies name pipeline-owned functions, documents and S3 prefixes); the worker did not override, kept the census committed, and stopped before steps 2 to 4 landed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh on the step-2 commit: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'; '[naming-gate] NAMING-GATE: REFUSE 29 graded'; 17 refused lines in the documents-and-prefixes policy file and 12 in the functions policy file, each a lookup of a pipeline-owner name on an ARN that names a function, a command document or an S3 prefix the census reached.",
+      "the render itself succeeded and is reproducible: derive_reached_roles.py --from-file tests/reached_roles_census.json --render check|write printed 'ROUTES-DENY functions=31 (already in DenyProtectedFunctions: 2) task_definitions=0 documents=12 prefixes=5 policies=2 sizes=[5219, 1445] limit=6144', so two additional policies suffice and the more-than-two stop did not fire; the files were deleted from the worktree after the refusal and regenerate with --render write.",
+      "the census (commit d6aed4ab85, tests/reached_roles_census.json) read 175 of 175 distinct roles, unread 0: 10 roles read YES (1 on IAM, 0 on the audit trail, 9 on production-data delete) and 165 read NO; the resident host's role reads NO. W14-S2's routes therefore stay open until the Deny lands."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO: rule how a policy that must name a pipeline-owned function, document or prefix passes the naming limb (an R20 register entry Andrew acknowledges, or a role-owning-project prefix form); then 2.0.0_SA_COO~C recuts steps 2 to 4 of the order.",
+  "spec_asserts": "TO-CT-a-1 amendment 1 step 2: render the Deny for the YES roles' routes into group policy files; 'If the commit gate refuses a firm-name string in a policy file, do NOT use any override: file a BLOCKING row, keep step 1 committed, and stop.'",
+  "world_is": "The gate refuses 29 strings in the rendered files, so no Deny, no dell2 command grant and no sixth or seventh simulation block were committed; step 1 and its census are. The order stays in_progress."
+}
+```
+
+## NFRA_CTLPLN-W14-S4 -- TO-CT-a-1: the naming limb reads a reference to an existing resource as a minted name (for the LGIC_BLANKFIX project)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T12:03:41Z",
+  "one_line": "The commit gate's naming limb read 29 lines that REFER to resources that already exist (functions, command documents, S3 prefixes) as if they were newly minted names and refused them; the form that passed holds no such name in any policy file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row NFRA_CTLPLN-W14-S3 in this file (commit 6704cbeb93): safe-commit.sh refused the rendered Deny with '[naming-gate] NAMING-GATE: REFUSE 29 graded' (17 refused lines in the documents-and-prefixes policy file, 12 in the functions policy file); every one of the 29 strings named a function, a command document or an S3 object prefix that exists in the account and is owned by another pipeline, not a name this cell mints",
+      "the ruled form (CTO msg 106190, form b) keeps those names in one file under tests/ (the census) and lets Terraform build the statements from it at plan time; the commit that landed it (0c212eff57) passed the same gate with '[naming-gate] NAMING-GATE: PASS 2 graded' (the two policy names this cell does mint, both CONFORMANT)",
+      "counts only, by design: the census holds 233 functions, 33 hosts and 175 roles; the module's route set is 33 function routes (31 not already in the name-based protected list), 12 command documents and 5 artifact prefixes; no name appears in this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 2 step 9 (the CTO's ask): 'File the gate's blindness (a reference read as a minted name) as a row for LGIC_BLANKFIX'; class OBSERVATION, INERT.",
+  "world_is": "The naming limb grades a string in a declaration-tree file by its shape and cannot tell a reference to an existing resource from a declaration of a new one, so any policy that must name an existing function, document or prefix is refused unless the names live outside the graded domain. Owner: the COO of the LGIC_BLANKFIX project, which is the project that would give the limb a way to tell the two apart. Nothing is harmed by leaving it: the workaround holds, at the cost that a policy cannot state its own resources in the file that applies it."
+}
+```
+
+## NFRA_CTLPLN-W14-S5 -- TO-CT-a-1: CTa1-AC1's equality with RESIDENT-FIXED cannot hold under ruling D; the rule compares the policy with the granted set
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T12:03:41Z",
+  "one_line": "The face's CTa1-AC1 rule (the policy names exactly the RESIDENT-FIXED documents) cannot hold under ruling D, which grants the two resident documents that classify RESIDENT-FREE-TEXT (0 fixed, 2 free-text); derive_ssm_documents.py's ok rule now compares the policy with the granted set, and the face's rewrite Deny was not rendered.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check, last line: SSM-DOCS declared=16 unresolved=0 resident_fixed=0 resident_free_text=2 export_render=1 other=13 unsure_params=2 in_policy=2 ok=True; with the face's rule (k == resident_fixed) the same read would be ok=False by construction (k=2, a=0)",
+      "the change is in derive_ssm_documents.py (commit 109a410fe7): granted_documents() returns the resident documents (RESIDENT-FIXED and RESIDENT-FREE-TEXT) only while the census reads NO for the resident host's role (read from tests/reached_roles_census.json, header taken_at 2026-10-07T11:05:41Z), and ok requires the policy's send statement to name exactly that set; the classification itself and its 16 of 16 resolved read are unchanged and still printed; unresolved=0 remains a condition",
+      "the face's DenyRewriteOfGrantedDocuments (a Deny on rewriting the RESIDENT-FIXED documents) was never emitted (0 fixed documents) and is not in the amendment's three statements; amendment 1 point C rules no blanket Deny on document writes where the role at the end reads NO. Row NFRA_CTLPLN-W14-S2 (INVESTIGATION_v1.md) already records that both Dells can rewrite a document through the group create policy; that stays open and is now relevant to two granted documents whose host role reads NO"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 face: CTa1-AC1 'ok=True only when ... the policy of step 2 names EXACTLY the RESIDENT-FIXED documents (k == a)'; amendment 2 step 6: the policy names the two resident documents, and 'the classification stays a record, it no longer decides the grant'.",
+  "world_is": "The two instructions cannot both be met: the two resident documents are free-text, so k == a was false the moment ruling D granted them. The ok rule was changed so that the recorded line stays a faithful check of the policy against what the ruling says the policy names; the expected value text in CTa1-AC1 (unresolved=0) is unchanged and the line still reports resident_fixed, resident_free_text and unsure_params so a reader can see the classification beside the grant."
+}
+```
+
+## NFRA_CTLPLN-W6-S4 -- AMENDMENT 3: the generated marks over exemptions.json went stale at the dell2 registry rows, and every row landed there moves them again
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T12:04:47Z",
+  "one_line": "The mark in modules/opal_name/generated_locals.tf (and vectors.json, opal_name.tftest.hcl) is a hash over exemptions.json + scopes.json; it no longer matches since the dell2 rows landed, so the next row landed there (the scoped dell1 rows) needs the restamp the dell2 rows already need.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output at this worktree: registry_hash(only=[exemptions.json, scopes.json]) = 9641c8676ad38b19 now; generated_locals.tf:1 carries registry@7cf7580cda2303a3 over exemptions.json,scopes.json",
+      "the same hash computed from git show at commit e7ac51a04c^ is 7cf7580cda2303a3 and at e7ac51a04c is 9641c8676ad38b19: the mark was current before the dell2 rows commit and stale after it",
+      "lib/opal_naming.py:134-136 TARGET_REGISTRY_KEYS: generated_locals.tf reads scopes+exemptions, vectors.json and opal_name.tftest.hcl read four files including exemptions; registry_hash(only=...) :173-184 feeds whole file bytes, so any row moves it although _gen_locals :1003-1029 uses only account_id"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 asks only whether a row can carry an action set and a prefix and for the shape to land; it names no restamp of generated files.",
+  "world_is": "Landing any exemptions.json row changes the hash the three generated carriers declare; the dell2 rows were landed without the restamp, so the carriers already declare an old hash. The content of generated_locals.tf does not depend on the rows (only account_id), so nothing renders wrongly today; a freshness reader that compares the mark to the registry would read the module as stale. The proposal's landing steps include the restamp."
+}
+```
+
+## NFRA_CTLPLN-W6-S5 -- AMENDMENT 3: a row carrying the new action and prefix fields is rendered by today's module as a FULL admission, so landing the row before the module learns the fields fails open
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T12:04:47Z",
+  "one_line": "Measured on a scratch copy outside the repository: a row with extra actions and prefix keys passes the validator and is rendered by modules/opal_name/main.tf:91-95 into the fence's admitted list as an ordinary admission, so the scoped dell1 row, if landed before the module and fence changes, would admit that user to the whole bucket with its own put.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output: validator refusals 0 for three dell1 rows carrying actions+prefix (and 0 with a string and an integer in those keys); control with reason removed gives 3 refusals, so the scratch directory was the one read",
+      "terraform console on a scratch copy of the module reading the scratch registry: local.fence_exemption_arns holds the dell1 ARN under 3 of 3 buckets (modules/opal_name/main.tf:91-95 reads r.arn / r.principal only)",
+      "the simulator on plain admission (saved policy + the user in the admitted list): PutObject allowed, because dell_deploy_policy.json stmt S3ObjectsOnOpalBuckets allows s3:PutObject on opal-* and the fence's Deny no longer applies"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 expects absent fields to keep today's meaning and a new row to carry the scope; the order treats the shape as an addition.",
+  "world_is": "No reader refuses an unknown key and the one reader that renders admission ignores it, so a new field is silent for every reader that was not changed in the same landing. INERT now because no such row exists and this pass lands none; it arms if the rows land before the module and the two fence files render the statements. The proposal states the landing order and an alternative shape (a sibling key) that fails closed."
+}
+```
+
+## NFRA_CTLPLN-W13-S7 -- CT-k-2 AMENDMENT 4: a Terraform root holding only locals and an output does not plan to exit 0 on a fresh local backend; it reads 2
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T12:04:45Z",
+  "one_line": "The order's premise that `plan -detailed-exitcode` reads 0 on a temporary local-backend root with only locals and outputs is false for a FRESH root: a new output is a change and the plan exits 2; the test seeds a hand-written state holding the output to reach 0, and keeps the fresh root as the exit-2 control.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform 1.15.8 on this box, readback on a fresh root (backend local, locals a, output o): 'Changes to Outputs: + o = \"x\"' then TF-READBACK version=1.15.8 init=ok plan_exit=2 ok=True",
+      "the same root with a terraform.tfstate (version 4, serial 1, outputs.o = x, no resources): 'no differences' then TF-READBACK version=1.15.8 init=ok plan_exit=0 ok=True; test_kit_terraform_providers.py case 10 asserts both lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 4 item 2: readback on a temporary root with a local backend and only locals and outputs reads init=ok plan_exit=0.",
+  "world_is": "A fresh root reads plan_exit=2 (output additions count as changes under -detailed-exitcode). Case 10 therefore writes the state file by hand (no apply, no network) and reads 0, and also asserts the fresh root reads 2 loudly, which doubles as the control for the 0/2 distinction. Nothing was weakened: the expected line init=ok plan_exit=0 is asserted verbatim."
+}
+```
+
+## NFRA_CTLPLN-W13-S8 -- CT-k-2 AMENDMENT 4: `terraform version` makes a version-check network call unless CHECKPOINT_DISABLE=1, so every terraform run in the kit sets it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T12:04:45Z",
+  "one_line": "A bare `terraform version` and `terraform init` consult Hashicorp's checkpoint service by default (a network call) unless CHECKPOINT_DISABLE is set, which the order's no-network rule does not mention; the kit sets CHECKPOINT_DISABLE=1 in the environment of every terraform it runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_terraform_providers.py terraform_run_env() sets CHECKPOINT_DISABLE=1 and TF_IN_AUTOMATION=1 and drops TF_CLI_ARGS*, TF_LOG and TF_DATA_DIR; run_version, readback and the binary verb all run through it",
+      "the checkpoint behaviour is Terraform's documented default (the CHECKPOINT_DISABLE environment variable switches it off); not exercised against a network here, by the rule"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 4: THE NO-NETWORK RULE STANDS; nothing is downloaded.",
+  "world_is": "The order did not name the checkpoint call. The kit closes it in the environment it builds. The earlier seam probe (test case 5) built its own environment without the variable; it now sets CHECKPOINT_DISABLE=1 too (one added line in terraform_env, the case's expectations unchanged)."
+}
+```
+
+## NFRA_CTLPLN-S13 -- bun auto-installs from the public registry on a run outside a node_modules tree: egress on dell2, the laptop unmeasured
+
+```json
+{
+  "id": "NFRA_CTLPLN-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:24:20Z",
+  "one_line": "bun installs a missing package from the public registry when it runs a file outside a node_modules tree; two such fetches happened on dell2, and the user-level setting meant to stop it was measured ineffective there on bun 1.4.2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C: cell CT-k-2 AMENDMENT 5 measures each candidate form against a loopback listener and the kit carries the form that passes; until then the CTO's interim rule (msg 106214) is the control on all three boxes",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "Relay file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_BUS_RELAYS_FOR_CTO_20261007_1215Z.md, bus id 857091e4, from 0.0.0_AB_MSTR~DELL2: a seat's bun run fetched react and react-dom 19.3.0; the dell2 manager's own probe with ~/.bunfig.toml [install] auto = \"disable\" fetched left-pad (cache 506 -> 509)",
+      "Finding file named there as CRO_FINDING_BUN_AUTO_INSTALL_EGRESS_DELL2_20261007.md @fd0c709235; that commit is NOT on the laptop trunk at this row's filing (git cat-file: not a valid object; positive control 414eb87094 is an ancestor), so this row rests on the relay, not on the finding's bytes",
+      "1.0.0_SA_CTO msg 106214: the interim rule and the cell's control (a loopback listener that logs requests)",
+      "The laptop (bun 1.3.9) is UNMEASURED: no bun run was made by this seat for this row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD C-KIT and the no-egress rule every order of this project carries: nothing a seat or worker runs on a box reaches a public package index without Andrew's per-use word; the portal kit (CT-k-2) was built so that a Dell needs no install.",
+  "world_is": "The kit delivers node_modules for the portal tree only. bun, the runtime the kit names, has an auto-install behaviour that fetches from the public registry whenever an import does not resolve from a node_modules tree, so a bun run of a scratch file egresses silently. The one disarm tried on dell2 did not work. A fetch failure and a disabled install print the same error, so a dead-proxy probe cannot tell them apart; the cell's control is a listener that counts requests.",
+  "notes": "Interim (CTO msg 106214), laptop and both Dells: bun runs only inside a portal tree that holds node_modules; no bun run of a file outside one; no probe that can reach the public registry. Disarms when the cell's measured form is in the kit and each box has read it back."
+}
+```
+
+## NFRA_CTLPLN-S14 -- the dell2 command grant's read actions are on every command in the account; whether any command output holds a secret is unmeasured
+
+```json
+{
+  "id": "NFRA_CTLPLN-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Once the dell2 command grant is applied, dell2 can read the result of any command sent in the account, not only its own; nobody has measured whether an existing command prints a secret to its output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json statement ReadCommandResults: ssm:GetCommandInvocation, ListCommandInvocations, ListCommands, DescribeInstanceInformation on Resource *",
+      "CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL_DENIES_AND_DELL2_GRANT_20261007.md @eb74cfb2d2, 'Two things this half adds': accepted and named; not measured by that seat; asks this row",
+      "The grant is NOT applied at this row's filing (order NFRA_CTLPLN.TO-APPLY-6 pending)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO's ruling for CT-a-1: dell2 gets the read actions that return a command's result.",
+  "world_is": "The service offers no narrower resource for those four actions, so the grant reads every command's result. A command whose output prints a secret would be a defect in that command, and dell2 could read it. No read of existing command outputs for secrets has been made by any seat. Open: a bounded read of recent command invocations' output for secret-shaped strings, by a laptop seat, or an explicit acceptance."
+}
+```
+
+## NFRA_CTLPLN-S15 -- the portal tree pack was unpacked on both Dells outside the kit's own verify step: bun 1.4.2 against the manifest's 1.3.9, and dell2 at a different portal commit
+
+```json
+{
+  "id": "NFRA_CTLPLN-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Both Dells unpacked the portal dependency pack and passed the typecheck, but two of the conditions written for the unpack were not the ones met: their bun is 1.4.2 where the manifest names 1.3.9, and dell2 ran at portal commit 8ddfe40994 where the carrier named 481b3bcc5f.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 106209, relaying each Dell's read-back: 41,860 files each, typecheck rc=0 and 0 error lines each; both note bun 1.4.2 against the manifest's 1.3.9; dell2 typecheck at portal DEV 8ddfe40994; lockfile sha256 equal on both",
+      "1.0.0_SA_CTO msg 106199, the unpack condition: lockfile sha256 equal AND portal HEAD 481b3bcc5f on DEV; a mismatch is a row, never an unpack",
+      "org/devices/kit_portal_tree.py verify refuses a bun version difference by design (CT-k-2 AMENDMENT 3); the Dells' reports do not say that step was run",
+      "Not read by this seat: either Dell's tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 3: the pack installs only where lockfile, bun version and platform equal the manifest's; the carrier's relay added the portal commit.",
+  "world_is": "The lockfile matched on both boxes and the typecheck passed, which is the evidence the tree works there. The bun version rule was not enforced at the unpack, and dell2's portal commit differs from the one named while its lockfile hash is equal. Open for the CTO: whether the kit's bun check is exact or tolerates a minor version, and whether the commit condition is the lockfile hash alone."
+}
+```
+
+## NFRA_CTLPLN-S16 -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they answer for the laptop only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "The sequence check counts the laptop broker's lanes only, so its capacity and next-slot lines flag a project seated on a Dell as needing a slot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106077, verbatim: 'sequence-check reads MDPF_SECHIST NEEDS-SLOT because it counts the laptop broker's lanes only and the tree row's coo_lane is empty ... a row for NFRA_CTLPLN's backlog -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they must read each box's lanes or say which box they read.'",
+      "Not re-run by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN: four devices, each with its own broker; a fabric reader either reads every box or says which box it read.",
+  "world_is": "A backlog item for a later round's enrichment list: the check reads each box's lanes, or prints the box it read beside the number. Until then a NEEDS-SLOT flag on a Dell-seated project is not a finding against that Dell."
+}
+```
+
+## NFRA_CTLPLN-W13-S9 -- the provisioning script's default mode was already link (none only where the main tree holds no node_modules)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the provisioning script's default mode was already link (none only where the main tree holds no node_modules); the order's 'default becomes link' therefore changes no behaviour, and the install mode was the only live registry path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-k-2.dell-python-kit.md AMENDMENT 5 item 3 and CTO msg 106220: 'the default becomes link'",
+      ".tools/wk-provision.sh at 69288c8ca0, cmd_portal: with no --node-modules the mode was link when <main>/portal/node_modules exists, else none; install was reachable only by naming it",
+      ".tools/tests/test_wk_provision_no_registry.py check D-default: a default provision on a scratch repository prints NODE_MODULES: link; check G: the pre-change script and the new script print identical lines for default, none and link"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 3: the DEFAULT mode becomes link; link and none behave exactly as before.",
+  "world_is": "The default was already link wherever a main-tree node_modules exists, and none where it does not (a link to a missing target would fail after the nested worktree is created, a half-landed state). The script now states the default in a comment and its usage text and keeps the none fallback; the only behavioural change is the install-mode refusal, raised before any worktree is created."
+}
+```
+
+## NFRA_CTLPLN-W13-S10 -- the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of two runs; the loopback proxy listener caught every one (CONNECT registry.npmjs.org:443, answered 502) and the arm was replaced by one that needs no network",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_bun_no_egress.py first full run printed 'BUN-NO-EGRESS ... positive_requests=6 ... leaked_public=6 ... ok=False' with arm 'control:user-bunfig-registry-is-read' at registry=0 proxy=6; a second measure run with the file written to both HOME and XDG_CONFIG_HOME printed the same, proxy lines 'CONNECT registry.npmjs.org:443 HTTP/1.1' x6 (kept in the worktree scratch measure2.json, uncommitted)",
+      "cause: the control gave a user-level bunfig a registry= line expecting bun run to read it from the temporary HOME; bun 1.3.9 does not read the user-level file for bun run (see row W13-S11), so bun used its default registry, and the second redirect (the proxy) kept the request on this machine: cache_files=0 in both arms, rc=1 with bun's resolution error",
+      "fix: org/devices/kit_bun_no_egress.py arm control:user-bunfig-is-read-by-run now uses a MALFORMED user-level file and the --no-install flag, so it makes no request by construction; the final measure reads leaked_public=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with two independent redirects; a candidate is judged by counting requests on the two listeners.",
+  "world_is": "A control arm of the worker's own design could reach the public host if the redirect it relied on was not read. The proxy listener is what held it: both runs show the request on the proxy listener, none on any other path that this seat can see. What stays unproven is a request that bypassed BOTH listeners; bounded by cache_files=0 and bun's own resolution error text in those arms."
+}
+```
+
+## NFRA_CTLPLN-W13-S11 -- bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary HOME and in XDG_CONFIG_HOME is ignored), so `[install] auto = \"disable\"` there cannot stop the runtime auto-install; this is the measured reason the other machine's user-level setting failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py measure, arm control:user-bunfig-is-read-by-run: user-level file '[install]' + 'auto = ' (a TOML syntax error) in %HOME% and %XDG_CONFIG_HOME%, run as 'bun --no-install run probe.js': registry=0 proxy=0 rc=1 and bun reported the probe's resolution error, not a config error, so the file was never read",
+      "arm user-bunfig (the valid file with auto = \"disable\"): registry=0 proxy=6 rc=1, verdict FAIL, the same count as the positive arm",
+      "NOT measured: whether bun install / bunx read the user-level file (no install is run by this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 1(c): the same setting in a user-level bunfig inside the temporary home, to reproduce the other machine's reading on this version.",
+  "world_is": "The reading reproduces (6 requests), and the control shows why: for `bun run` the user-level bunfig is not consulted at all, so the setting is inert rather than ignored-in-part. A project bunfig and the --no-install flag do pass."
+}
+```
+
+## NFRA_CTLPLN-W13-S12 -- an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, to establish that this bun's HTTP client honours the proxy before any arm that could fetch from the registry",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py run_order_of_proof: arm proxy-honor-check, 'bun run fetchcheck.js' whose only URL is the loopback registry listener: registry=0 proxy=1 (the request line GET http://127.0.0.1:<port>/proxy-honor-check arrived on the proxy listener, answered 502, bun printed fetch-status 502)",
+      "the order of proof in the task order names steps 0, 1 and 2 only; step 0b runs after step 0 and before step 1, makes no request that can leave the machine by construction (the URL is loopback), and gates the single-form trials of Redirect A on its result"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 ORDER OF PROOF: (0) bun --version, (1) proxy proof with --no-install, (2) the positive arm; step 1 'cannot prove the proxy works'.",
+  "world_is": "The proxy was proven honoured by this bun before the positive arm, so the single-form trials of Redirect A ran with a proven second net. Step 1 stays as ordered and still reads zero requests."
+}
+```
+
+## NFRA_CTLPLN-W13-S13 -- the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:03:41Z",
+  "one_line": "the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no-install typecheck` once in a synthetic portal under the system temporary directory, outside the loopback harness; the script is `echo typecheck-ok`, so nothing is resolved or fetched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_portal_tree.py line 91 builds the synthetic package.json with scripts.typecheck = 'echo typecheck-ok'; case 7 calls kit_portal_tree.typecheck, which builds argv ['bun','run','--silent','--no-install','typecheck'] (org/devices/kit_portal_tree.py line 782) and runs it in the synthetic portal; the case printed PORTAL-TYPECHECK ... exit=0 last_line=typecheck-ok",
+      "this order told the worker that kit_portal_tree.py describe runs bun for its version only (true); it also required running the AC5 test, whose case 7 is a further bun process. It was run once, by this seat, in the earlier-criteria pass, and its zero-request status was not counted by a listener",
+      "the form it carries, --no-install, is the form this cell measured as passing on this bun (flag:--no-install: registry=0 proxy=0 against a positive arm of 6)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with loopback redirects; the only unharnessed bun is a bare bun --version.",
+  "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
+}
+```
+
+## NFRA_CTLPLN-S17 -- disarm record for NFRA_CTLPLN-S13: --no-install measured on bun 1.3.9 and 1.4.2; dell2 covered by Andrew's word; a bare run still fetches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T14:23:01Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-S13: the flag --no-install stops bun's registry fetch on bun 1.3.9 (laptop) and bun 1.4.2 (dell1), measured by request count; dell2 is not measured, on Andrew's word that dell1's read stands for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Laptop, issuer's own run at 3b95b7c3aa: BUN-NO-EGRESS bun=1.3.9 positive_requests=6 candidates=9 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell1, bus c1d80ce3 (file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md), behind an outbound firewall block on bun.exe that Andrew added in an elevated shell: BUN-LISTENER-SELFCHECK ok=True; BUN-NO-EGRESS bun=1.4.2 positive_requests=6 candidates=12 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell2: NOT measured. Andrew-direct at the dell2 terminal ~14:0xZ as relayed by 0.0.0_AB_MSTR msg 106292, verbatim: 'we dont need to test the bun firewall process here because we've already proved it on dell1.' dell2 runs bun 1.4.2 by its own earlier report (msg 106209)",
+      "Merged @e131723efb: org/devices/kit_bun_no_egress.py wrap carries the flag and refuses install-class commands; .tools/wk-provision.sh refuses its install mode without a non-public registry redirect (CTk2-AC8 7/7, CTk2-AC9 ok)",
+      "Not read at this filing: dell1's confirmation that the firewall rule was removed; dell1's full result file (kept on dell1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-S13 (ARMED): bun fetches from the public registry on a run outside a node_modules tree; disarm when the measured form is in the kit and each box has read it back.",
+  "world_is": "The measured form is in the kit and two of three boxes read it back; the third is covered by Andrew's word, not by a measurement. What the disarm is: a wrapper and a flag a seat must USE. A bare `bun run` of a file outside a node_modules tree still fetches on every box; nothing mechanical stops a seat from typing it. The CTO's interim rule (msgs 106214, 106220: bun only inside a portal tree that holds node_modules; no bun install) therefore remains the standing control, and S13 is disarmed only for a seat that follows it or uses the wrapper. Whether a mechanical stop is wanted (a PATH shim, a standing firewall rule) is an open question for the CTO and Andrew, not built here."
+}
+```
+
+## NFRA_CTLPLN-W8-S3 -- TO-CT-d-5 amendment: dell_respol_policy.json has no generator and the script has no --check
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The amendment says dell_respol_policy.json is produced by tests/derive_respol_actions.py and names a --check and a regenerate command; the script is a read-only checker that takes no argument and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py main(): reads the four policy documents and the Deny statement, prints, returns; no write call and no argparse",
+      "git log --follow dell_respol_policy.json: one commit, ce05f0e838, the file created by hand with the build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: add sqs:SetQueueAttributes by the file's own generator (tests/derive_respol_actions.py), regenerate with the generator's own command, run its --check.",
+  "world_is": "The JSON (hand-wrapped, one Deny statement, sorted actions) was edited by inserting one sorted entry in place; derive_respol_actions.py was changed to carry the action as RULED-IN (removed from RULED_ALLOWED) and its single run is the check: RESPOL-DERIVED ... actions=75 covered=75/75 ruled_allowed_caught=0 ok=True. No --check flag exists and none was added."
+}
+```
+
+## NFRA_CTLPLN-W8-S4 -- TO-CT-d-5 amendment: the simulation block count 13 needs one arm the amendment did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The existing respol block already held sqs:SetQueueAttributes -> allowed, so adding the two named arms to a block of 11 cannot read 13: that arm has to flip, giving 12; a neighbouring-action control (sqs:TagQueue -> allowed) was added to reach the ordered respol_ok=13/13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py RESPOL list before this pass: 11 arms including (sqs:SetQueueAttributes, allowed)",
+      "last line of the simulation after the edit: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: extend the block by two arms (SetQueueAttributes -> explicitDeny; CreateQueue -> allowed); the block then reads 13 of 13.",
+  "world_is": "Block is now 9 explicitDeny arms + sqs:SetQueueAttributes explicitDeny + sqs:CreateQueue allowed + sqs:TagQueue allowed + sns:SetTopicAttributes allowed = 13; the old SetQueueAttributes-allowed arm was changed, not kept. TagQueue is the unnamed addition: it shows the Deny does not catch the neighbouring queue action the create policy allows."
+}
+```
+
+## NFRA_CTLPLN-W8-S5 -- TO-CT-d-5 amendment: the Deny leaves a dead Allow, and a read-only derivation still lists SetQueueAttributes as a queue update need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "dell_create_policy.json still Allows sqs:SetQueueAttributes and tests/derive_resource_kinds.py still lists it as an update action of aws_sqs_queue; the explicit Deny now overrides both, so a Dell can no longer update a queue, and six roots that declare a separate queue policy cannot be applied from a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/queue_attribute_writers.json declared.by_root and the native Grep over infra/aws/terraform for the four resource kinds: 23 aws_sqs_queue, 9 aws_sqs_queue_policy, 0 redrive_policy, 0 redrive_allow_policy",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json line 36 and tests/derive_resource_kinds.py line 80 at b062620452"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT: deny sqs:SetQueueAttributes for the Dell group; a later change goes by write-in; say which roots declare a separate policy resource and whether any is Dell-placed.",
+  "world_is": "Read-only files are unchanged (dell_create_policy.json line 36, derive_resource_kinds.py line 80); check_identity.py still reads ok=True. Roots declaring a separate aws_sqs_queue_policy: globgrph, inf-pipeline, nfra-agentbus, nfra-agentbus-alyssa01, opal-gateway, partner-etl-ops-alerts (9 resources). No project row in org/projects carries a Dell fabric (392 rows: 38 laptop, 16 site-z, 338 unset), and the root-to-project mapping was not read, so no root is shown Dell-placed or not."
+}
+```
+
+## NFRA_CTLPLN-W13-S14 -- ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 bu
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 but is neither pure Python nor stable-ABI; the order's classes do not name it, so it is classed ABI3-INSTALLED with fit_kind no-abi-platform",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json requirements[name=ruff]: class ABI3-INSTALLED, tags [py3-none-win_amd64], fit_kind no-abi-platform, evidence <site-packages:3.12>/ruff-0.15.11.dist-info",
+      "packaging.tags.compatible_tags(python_version=(3,14), interpreter='cp314', platforms=['win_amd64']) yields py3-none-win_amd64, so the target installs it; the order defines PURE-INSTALLED as Root-Is-Purelib true with py*-none-any and ABI3-INSTALLED as cp3X-abi3-win_amd64 only",
+      "the other ABI3-INSTALLED rows are true stable-ABI builds (bcrypt cp39, curl_cffi cp39, psutil cp37, PyMuPDF cp310, cryptography cp311, safetensors cp38, tokenizers cp39); the tool also reserves fit_kind native-target for an installed cp314 build, which no copy on this machine is"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: an installed distribution is PURE-INSTALLED (py3-none-any, Root-Is-Purelib true), ABI3-INSTALLED (cp3X-abi3-win_amd64, X <= 14), or does not fit (cp312-cp312-win_amd64); no class for a platform-specific, ABI-free build.",
+  "world_is": "ruff 0.15.11 is a py3-none-win_amd64 wheel: it fits 3.14 on win_amd64 and has no Python-version binding, but its files include a platform binary and a Scripts entry, so a re-pack from RECORD must keep the platform tag. The tool classed it ABI3-INSTALLED and says why in fit_kind; the issuer may rename or split the class."
+}
+```
+
+## NFRA_CTLPLN-W13-S15 -- this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL-ON-DISK: every non-compiled-for-3.12 package depends on an offline re-pack from installed files, and the 3.14 stand-in folder is empty",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json sources: pip cache present, entries 0, bytes 0; kit pack output (3 directories under the temporary root), Downloads (45597 directories walked), this worktree and the base checkout: 0 wheels identified (the only .whl file under the repository is a 0-byte numpy-1.26.4-cp312 file under infra/aws/lambda/layers/pyiceberg-nessie-deps/python, counted not_a_wheel)",
+      "interpreters: py -0p lists one (3.12.10 under the user's Programs\\Python\\Python312); a Program Files Python314 folder has Doc, Lib/site-packages (empty) and Scripts but no python.exe; HKLM PythonCore 3.14 has no InstallPath; HKCU PythonCore 3.12 names an anaconda3 folder that does not exist",
+      "pip cache list prints 'No locally built wheels cached.'; the kit's own pack tool (a) 'wheel already in pip's local cache' therefore finds nothing on this machine"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: sources to read include the pip HTTP and wheel caches, kit pack output, Downloads and the repository for wheel files, and the installed distributions of every interpreter py -0p lists.",
+  "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
+}
+```
+
+## NFRA_CTLPLN-S18 -- requirements.txt omits 73 dependencies of the 67 packages it lists; 12 are compiled for Python 3.12 only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T15:28:38Z",
+  "one_line": "The regenerated root requirements.txt lists 67 packages and omits 73 that those packages themselves require; 12 of the 73 are compiled for Python 3.12 only, so an install from the file alone would not be complete on any box and cannot be on a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's re-run on the merged tool: PY-REQ lines=67 parsed=67 unparsed=0 in_both=20 only_requirements=47 only_census=0 ok=True; PY-WHEELS target=cp314-win_amd64 requirements=67 wheel_on_disk=0 pure_installed=41 abi3_installed=8 needs_fetch=18 not_applicable=0 unparsed=0 undeclared_deps=73 ok=True",
+      "Decision file org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md (merged @bd489b912b): the 73 names with the requirement that needs each; in a secondary read of the installed copies 59 are pure, 12 compiled for cp312 only (aiohttp, cffi, charset-normalizer, click, contourpy, coverage, fonttools, greenlet, jiter, kiwisolver, mmh3, regex), 2 fit",
+      "requirements.txt @bc10584676 (3.0.0_SA_CVO, on Andrew's word); the file's own caveat: a clean-start resolve is not verified",
+      "1.0.0_SA_CTO msg 106317 item 3: 'The 73 omitted dependencies are a defect in requirements.txt; file it for 3.0.0_SA_CVO, who wrote the file.'",
+      "How the 73 were counted: the Requires-Dist of each found installed copy, markers evaluated for Python 3.14 on 64-bit Windows; a dependency needed only under another marker is not counted; a package with no installed copy here contributes none"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The record for the regenerated file: requirements.txt holds all actual dependencies.",
+  "world_is": "The file holds the packages the firm's code imports directly. Their own dependencies are not listed, so the list is complete for an index-backed install (pip resolves the rest) and incomplete for an offline one, which is the only kind a Dell may make. The Python kit therefore installs with no dependency resolution and reports an import that fails for a missing dependency as its own class. Owner of the file: 3.0.0_SA_CVO. Whether the file should pin the full closure, or a second generated file should, is for that owner and the package-intake design (PRD v0.16, C-INTAKE)."
+}
+```
+
+## NFRA_CTLPLN-W6-S6 -- AMENDMENT 4: check_dell_fence_join.py is still a reader that ignores an unknown row key, and it is outside the grant and pinned
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "After the validator and the module refuse an unknown key, tests/check_dell_fence_join.py (render_arns, registry_diff) still ignores one: measured by derive_fence_row_shape.py, a scratch row with an unknown key renders the dell1 ARN into 3 of 3 buckets there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output (AC2 after the build): validator refusals 3 for rows plus an unknown key; terraform plan in a scratch module rc=1 (precondition); join check renderer: dell1 ARN in the rendered list of 3/3 buckets; FENCE-ROW-SHAPE ... extra_key_ignored=1 extra_key_refused=2",
+      "infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py render_arns() reads r.get('arn') / r['principal'] only; the check is not in this amendment's write grant and the order says not to touch it or its pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4: every reader of the file must refuse an unknown key, never ignore it.",
+  "world_is": "Two of the three row-parsing readers now refuse (the validator, and the module at plan time). The third is a test that renders nothing into any policy, so the hazard is INERT: it can only mis-grade, not admit. It is left as it is by the order; the issuer re-grades it at the merge when it moves the pin."
+}
+```
+
+## NFRA_CTLPLN-W6-S7 -- AMENDMENT 4: derive_fence_row_shape.py (AC2) did not finish in 120 s at the start of this pass, and its probe had to change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "CT4d2-AC2's script read rc=124 after 120 s on this worktree before any edit; the order did not say it would need changes, but the amendment's closed key set makes its actions+prefix probe a valid row, and its scratch module copy collided with the landed output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py before any edit: real 2m0.7s, rc=124 (check_dell_fence_join.py in the same worktree: 1m9s, rc=0)",
+      "after the edit: real 42 s, rc=0, last line FENCE-ROW-SHAPE rows=29 key_sets=1 rows_with_actions=0 rows_with_prefix=0 readers=16 extra_key_ignored=1 extra_key_refused=2 can_carry_today=False ok=True",
+      "changes: sim_call caches results in a temporary directory outside the repository (key = the whole request incl. the document bytes, TTL 3600 s, an ERROR never cached); 6 workers instead of 2; the extra-key probe is now an UNKNOWN key (actions and prefix are known keys); the scratch module copy no longer writes the proposed HCL (it is the module now)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 criterion CT4d2-AC2 and AMENDMENT 4's rule that every invocation finish under timeout 120.",
+  "world_is": "The simulator shim runs about 3 s a call; the old script made ~38 calls with 2 workers. The script's meaning is kept (rows, readers, can_carry_today as measured) and its three-reader count now reads 1 ignored, 2 refused."
+}
+```
+
+## NFRA_CTLPLN-W6-S8 -- AMENDMENT 4: lib/tests/test_opal_naming.py reads 6 failed / 87 passed on the pinned base, not the 2 / 91 its docstring states
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "Before any edit of lib/opal_naming.py (the base file written over the worktree copy, then restored) pytest on test_opal_naming.py gives 6 failed, 87 passed; after the edit the same 6 ids fail and 87 pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/tests/test_opal_naming.py with the file at 06c783b92b: 6 failed, 87 passed; failing ids: test_grade_agrees_with_every_worked_case for inf-silver-chain|LAMBDA, Inflection-SilverChain-DimConversionFailure|CW_ALARM, inf/otp-relay/token|SECRET, opal-portal-data-proxy-api|API_GW, wsb-49f-model-aua-pull-daily|SCHEDULE; and test_lambda_plane_consumers_is_import_aware_not_a_bare_substring (8 == 7)",
+      "the same pytest after the edit: the identical six ids, 6 failed, 87 passed; run as a script (python lib/tests/test_opal_naming.py) the file prints nothing and exits 0 both before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the test file's docstring: the baseline is 2 failed / 91 passed.",
+  "world_is": "The baseline has moved since the docstring was written; the identical failing set before and after is the control, so this build changes none. Not adjudicated here."
+}
+```
+
+## NFRA_CTLPLN-W6-S9 -- AMENDMENT 4: the module also refuses a half-scoped or malformed scoped row, which the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "The order asked the module to refuse an unknown key; main.tf also refuses a row with only one of actions/prefix, an action outside the closed set, a prefix not ending in /, and a wildcard or non-ARN principal on a scoped row, because the module renders from rows the validator may not have graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fence_scoped_rows.py: module plan in a scratch root refuses cases 1,2,3,4,6 (unknown key, actions without prefix, prefix without /, PutObject in actions, wildcard ARN); cases 5 (other firm's prefix) and 7 (duplicate principal) are validator-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 item 1: the module must refuse a key outside the closed set.",
+  "world_is": "Without the extra rules, a row with actions but no prefix would pass the module's key check and render as a full admission. Each extra rule is one more precondition on the same two outputs; fence_exemption_arns' value is unchanged for today's rows."
+}
+```
+
+## NFRA_CTLPLN-W6-S10 -- AMENDMENT 4: CT4d2-AC3's expect carries an unescaped + that the checker reads as a quantifier
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:44:38Z",
+  "one_line": "CT4d2-AC3's <expect> unknown_key_refused_by=validator+module is read by the proof checker as a regex, where + is a quantifier, so the criterion's own correct output line can never match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c re.search('unknown_key_refused_by=validator+module', <the check's last line>, re.S) returns None; re.search(r'unknown_key_refused_by=validator\\+module', same line, re.S) matches (the last line reads unknown_key_refused_by=validator+module)",
+      "python .tools/proof-of-spec-check.py on the instance with AC3 status PASS: VIOLATION acceptance[CT4d2-AC3]: status=PASS but output_evidence does NOT match expect 'unknown_key_refused_by=validator+module' -- INVALID",
+      "the order's own last-line format names the token validator+module as one of four values (validator+module|validator|module|none), so the output cannot be changed to satisfy the pattern"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 CT4d2-AC3: <expect>unknown_key_refused_by=validator+module</expect>, graded by the checker as a regex match on the output.",
+  "world_is": "The expectation is a literal string that contains a regex metacharacter. The criterion is met by its words (the line reads validator+module with ok=True and unchanged_today=True), but a mechanical PASS row cannot be written. The worker did not amend the expectation (the issuer's to amend, with the gate limb stated); the proof row records AC3 as UNVERIFIABLE-BY-INSTRUMENT with the verbatim line, and the order stays in_progress.",
+  "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
+}
+```

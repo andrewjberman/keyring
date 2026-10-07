@@ -1416,3 +1416,220 @@ round.** Never edit an existing row.
   "notes": "Two need figures exist and are not the same quantity: 9,388,961 (the census, every security-day in the window) and 3,421,735 (PRICE_NEED @c907766ef4, held security-days by asset type, the figure ADDENDUM 2 cites). The gap above is on the census's basis; a pull would be sized on the held basis."
 }
 ```
+
+## ADVI_COTBKF-S20 -- MEASURED ABSENCE ACROSS BOTH PREFIXES: mdpf/cottonwood/ listed to its leaves (7 objects, 7 prefixes, 57,860 B) holds 0 price stores; with irpt/cottonwood/ (S19, 0 of 725) the Cottonwood bucket holds no per-security daily price store
+
+```json
+{
+  "id": "ADVI_COTBKF-S20",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T12:05Z",
+  "one_line": "MEASURED ABSENCE ACROSS BOTH PREFIXES: mdpf/cottonwood/ listed to its leaves (7 objects, 7 prefixes, 57,860 B) holds 0 price stores; with irpt/cottonwood/ (S19, 0 of 725) the Cottonwood bucket holds no per-security daily price store",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "laptop 1.0.0_SA_CTO ran commonwealth_price_store_scan.py --prefix mdpf/cottonwood/ (@d97b008a7c) ~12:02Z; result JSON 214 B (Taildrop C:/Users/Test/Downloads/price_store_scan_mdpf, sha256 cc698e0a...): status=LISTED objects=7 prefixes=7 bytes=57860 candidates=[] security_days_possible=0 need=9388961",
+      "dell2 probe of the same prefix at 11:49Z: status=DENIED (rc 3)",
+      "S19: irpt/cottonwood/ status=LISTED objects=725 candidates=[]; S15: the bucket's top level holds only irpt/ and mdpf/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB4d1-AC3: the census is complete -- no unnamed store holding a per-security daily price in a USABLE bucket.",
+  "world_is": "Both Cottonwood prefixes are listed to their leaves and hold no price store. CB4d1-AC3 can grade on a measured absence across the whole firm bucket. FWD-3's gap stays as S19 sized it (2,914 securities; 8,091,310 security-days), pending any internal non-firm store not yet in the census.",
+  "notes": "The registry's marketdata system lists historical-prices-daily / historical-prices-yfinance resources not among the census's six legacy stores; whether their output sits in a USABLE (non-firm) bucket is unmeasured. Other firms' stores (49F, INF) stay BARRED: CTO ruling 1 and the CLAUDE.md NEVER on another firm's data."
+}
+```
+
+## ADVI_COTBKF-D2-W26-S1 -- The registry's marketdata LAMBDA historical-prices-yfinance does not exist live; the one live function is historical-prices-scheduler, which launches an EC2 that runs fetch_historical_prices_yfinance.py
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W26-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~26",
+  "surfaced_at": "2026-10-07T12:25Z",
+  "one_line": "The registry's marketdata LAMBDA historical-prices-yfinance does not exist live; the one live function is historical-prices-scheduler, which launches an EC2 that runs fetch_historical_prices_yfinance.py",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 default identity, us-east-1, 2026-10-07: lambda get-function-configuration historical-prices-yfinance -> ResourceNotFoundException; lambda list-functions filtered on 'istorical' or 'yfinance' in us-east-1, us-east-2, us-west-2, eu-west-1 -> 1 function, historical-prices-scheduler (no environment variables)",
+      "infra/logic/registry/resources.json: the yfinance row's evidence is a census row '/aws/lambda/historical-prices-yfinance' (a log group name), not a function",
+      "infra/aws/lambda/historical-prices-scheduler/lambda_function.py:33,58-60: the user-data downloads fetch_historical_prices_yfinance.py from the launcher's bucket and runs it on an ephemeral EC2 tagged historical-prices-fetcher; EventBridge rule historical-prices-daily cron(0 14 * * ? *) ENABLED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-j-1: a Lambda historical-prices-yfinance exists, and its configuration names where it writes.",
+  "world_is": "No such function is live. The script located the writer through the scheduler's repo source (infra/aws/lambda/historical-prices-scheduler) and the script it hands over to (data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py: S3_BUCKET = os.environ.get('BD_S3_BUCKET', <default>) at line 43, HISTORICAL_PRICES_KEY at line 47, uploaded at lines 431, 549, 783). The MARKETDATA-PRICES line names writer=historical-prices-scheduler; the real writer is the EC2 the scheduler launches. BLIND: the EC2 instance's own environment (it could set BD_S3_BUCKET; the scheduler's user-data does not).",
+  "notes": "Surfaced building TO CB-j-1."
+}
+```
+
+## ADVI_COTBKF-D2-W26-S2 -- MEASURED: marketdata's historical-prices output (silver/historical_prices.parquet) is in opal-data-bd, a bucket alias of the 49financial FIRM scope -- BARRED; it adds 0 securities and 0 security-days to the FWD-3 need, with 0 calls under it
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W26-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~26",
+  "surfaced_at": "2026-10-07T12:26Z",
+  "one_line": "MEASURED: marketdata's historical-prices output (silver/historical_prices.parquet) is in opal-data-bd, a bucket alias of the 49financial FIRM scope -- BARRED; it adds 0 securities and 0 security-days to the FWD-3 need, with 0 calls under it",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_marketdata_prices.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~26 -> MARKETDATA-PRICES writer=historical-prices-scheduler bucket=opal-data-bd prefix=silver/historical_prices.parquet grade=BARRED barred_read=0 securities=0 security_days=0 gain_securities=0 gain_security_days=0 need=9388961 (rc 0; S3 calls by bucket: none)",
+      "infra/logic/registry/scopes.json: scope 49financial (class FIRM) lists alias opal-data-bd with planes [bucket]; grade_buckets (commonwealth_price_census.py:128) grades it BARRED, firm 49financial, plane alias",
+      "data/black_diamond/scripts/silver/fetch_historical_prices_yfinance.py:43,47 (bucket default and key)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-j-1 / FWD-3: marketdata's output may sit in a USABLE non-firm bucket and add to the six stores.",
+  "world_is": "It sits in a BARRED firm bucket (CTO ruling 1 and the CLAUDE.md NEVER on another firm's data), so it was not listed, headed or read and the gain is 0 by the grade, not by a measured empty store. FWD-3's gap is unchanged from S19: 2,914 of 4,634 securities and 8,091,310 of 9,388,961 security-days unpriced from Opal's usable stores. The registry names the same price tables as 49F's (round 4's PRICE_TABLES_NAMED) -- whether Commonwealth may use a 49financial-held price table (prices are not client positions) is a ruling, not a measurement.",
+  "notes": "Surfaced running TO CB-j-1 AC2. The number of securities in that table is not known: it was never read."
+}
+```
+
+## ADVI_COTBKF-D2-W27-S1 -- MEASURED: 2,914 securities and 8,091,310 security-days are two different sets; the cell's rows number 4,545 and sums_ok is False
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W27-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~27",
+  "surfaced_at": "2026-10-07T12:50Z",
+  "one_line": "MEASURED: 2,914 securities and 8,091,310 security-days do not describe the same set -- 2,914 is the never-priced securities (6,259,410 days); 8,091,310 also holds the gap days of 1,631 priced-but-not-fully-covered securities (1,831,900 days); the rows the cell describes number 4,545",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_price_need_file.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27 -> PRICE-NEED-FILE securities=4545 security_days=8091310 yahoo_securities=3226 yahoo_days=5773776 bloomberg_securities=1319 bloomberg_days=2317534 sums_ok=False fetched=0 (rc 1); census line it reconciles to: universe=4634 priced_any=1720 security_days_covered=1297651 security_days_needed=9388961 (cache-served, 0 barred calls)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.json row_split: never_priced_securities=2914 never_priced_days=6259410; gap_only_securities=1631 gap_only_days=1831900; 2914+1631=4545 and 6259410+1831900=8091310",
+      "data/assets/scripts/analysis/commonwealth_price_census.py:235-276 coverage(): priced_any counts a security once ANY store prices it on any day; security_days_covered counts only the days inside its needed window, so a partly priced security is in priced_any and still owes uncovered days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-k-1 cell text and CB11k1-AC2: for every security with any uncovered day one row is written, the totals are securities=2914 security_days=8091310, and sums_ok is True when the totals equal universe - priced_any and security_days_needed - security_days_covered. AC1's stub (2 fully priced, 1 equity partly covered, 1 bond uncovered) writes 2 rows with sums_ok=True.",
+  "world_is": "Days reconcile to the census exactly (8,091,310 = 9,388,961 - 1,297,651). Securities do not: a row for every security with any uncovered day is 4,545, not universe - priced_any = 2,914, because 1,631 of the 1,720 priced securities are priced on only some of their needed days. sums_ok=False is therefore the correct reading of the order's own definition, and AC2's expected prefix securities=2914 cannot be printed without writing rows only for the never-priced securities (then security_days=6259410, not 8091310) or without changing the sums_ok definition. The same contradiction hits AC1's stub: with C partly covered the stub writes 2 rows but universe - priced_any is 1, so sums_ok=False; the tests assert that (test_partly_priced_security_...) and also assert sums_ok=True on a stub whose rows are all never-priced. The refusal clause applied: nothing weakened, the file is written as the cell describes (4,545 rows, source YAHOO 3,226 / BLOOMBERG_SITE_Z 1,319), AC2 is FAIL. Which set MDPF_SECHIST should pull (the 4,545 including gaps, or the 2,914 never-priced alone) is the COO/CTO's ruling; the file carries both splits. Round 10's S19 and D2-W26-S2 state '2,914 securities and 8,091,310 security-days unpriced' as one set; it is two.",
+  "notes": "Surfaced building TO CB-k-1. BLIND: whether a vendor prices the gap days of a partly priced security (MDPF_SECHIST's to measure)."
+}
+```
+
+## ADVI_COTBKF-D2-S21 -- CORRECTS S19's wording: 2,914 securities and 8,091,310 security-days are two different sets. 2,914 are never priced (6,259,410 days); the 8,091,310 uncovered days span 4,545 securities (2,914 + 1,631 partly priced with 1,831,900 gap days)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S21",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T12:55Z",
+  "one_line": "CORRECTS S19's wording: 2,914 securities and 8,091,310 security-days are two different sets. 2,914 are never priced (6,259,410 days); the 8,091,310 uncovered days span 4,545 securities (2,914 + 1,631 partly priced with 1,831,900 gap days)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "worker ~27 (branch wk-ADVI_COTBKF-27 @8d3c0fe34f), commonwealth_price_need_file.py on the census basis: PRICE-NEED-FILE securities=4545 security_days=8091310 yahoo_securities=3226 yahoo_days=5773776 bloomberg_securities=1319 bloomberg_days=2317534 fetched=0; row_split 2,914 never-priced / 6,259,410 days + 1,631 gapped / 1,831,900 days",
+      "row D2-W27-S1 (BLOCKING, INERT): AC2 as first cut could not be met"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S19 world_is: 'The gap: 4,634 - 1,720 = 2,914 securities and 9,388,961 - 1,297,651 = 8,091,310 security-days', read as one set; TO CB-k-1 as cut expected securities=2914 security_days=8091310.",
+  "world_is": "The day total is right; the security count beside it described a different, smaller set. An issuer's error, carried into S19, the round-10 packet, the round-10 analysis's E1 and CB-k-1. Ruled by the issuer (amendment 1 to CB-k-1): MDPF_SECHIST pulls every uncovered day, so the FILE has 4,545 rows and carries both splits.",
+  "notes": "Resolves D2-W27-S1 once CB-k-1's AC2 passes under the amendment."
+}
+```
+
+## ADVI_COTBKF-D2-S22 -- FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S22",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:17Z",
+  "one_line": "FWD-1 THREAD RE-TRACED on dell2 after rounds 4-11's applies: both 2026-10-06 traces reproduce (0 rows missing, 0 changed); D49141617 carries 5 more rows, each a C-SILVER-restored repeat; every trace still resolves to its delivered line with sha256_ok=True line_match=True",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_account_history.py --account D49141617 --trace 1 (rc 0, 12 s): HISTORY rows=3537 first=2016-01-25 last=2026-06-22; TRACE row=1 line=159882 sha256_ok=True line_match=True",
+      "same, --account cv46440182 --trace 25 (rc 0, 6 s): HISTORY rows=56 first=2013-04-29 last=2013-09-10; TRACE row=25 line=410952 sha256_ok=True line_match=True",
+      "vs deliverables/2.0.0_SA_COO~C/FWD1_REAL_RUN_D49141617_20261006.txt (rows=3532, pre-C-SILVER silver): 3,532 of 3,532 old rows present and unchanged; 5 extra rows, source_lines 161765, 161767, 161773, 161780, 161784 (2022-12-15 SBR sales), each an exact repeat of an earlier row; cv46440182: 56 of 56 equal",
+      "the same two accounts through the applied tables: account_links cvD49141617 -> D49141617 LINKED, cv46440182 NOT_LINKED; crosswalk 2 + 1 rows NOT_MATCHED; documents D49141617 29 (CLNT 14, STMT 12, TXRP 3), cv46440182 0",
+      "outputs kept at deliverables/2.0.0_SA_COO~C2/fwd1_retrace_20261007/"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Spine v3.16 drain: re-run the live thread trace once per round and keep its artifact; FWD-1 REALIZED (round 4 analysis).",
+  "world_is": "The thread holds on today's applied data. The only movement since 2026-10-06 is the C-SILVER rebuild restoring exact repeats, which FWD-1's account history now shows as the delivery recorded them. Rounds 4-11 skipped this re-trace; this row discharges it.",
+  "notes": "FWD-1 stays REALIZED."
+}
+```
+
+## ADVI_COTBKF-D2-S23 -- CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S23",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T14:22Z",
+  "one_line": "CLOSES W6-S5: round 4's CB-d-1 replaced the round-2 census, which read store addresses from a record file because the naming gate refused typed ones, with commonwealth_price_census.py, which reads every legacy store through lib/opal_naming.legacy_address() and deleted the --stores record read",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W6-S5: the round-2 census kept its store addresses in a record file the script read, after the naming gate refused 41 typed literals",
+      "TO CB-d-1 (round 4): the new script reads stores only via legacy_address(<key>) over the six registry rows (@4991b8b11b); the --stores read of PRICE_COVERAGE_STORES_20261006.json is REMOVED; commonwealth_price_coverage.py deleted (drain @642222e85f)",
+      "the census has run on dell2 three times since (07:53Z, 10:1xZ census_e2, round 11's need FILE) with barred_read=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W6-S5 (OPEN since round 2): the store census is kept as a record file the script reads.",
+  "world_is": "No script reads that record file any more; the addresses come from the registry builder. Nothing in W6-S5 remains to act on.",
+  "notes": "Carried unchanged in the round-6 analysis; closed by its owner (this seat)."
+}
+```
+
+## ADVI_COTBKF-D2-W28-S1 -- The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W28-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~28",
+  "surfaced_at": "2026-10-07T13:10Z",
+  "one_line": "The order's snapshot_pairs is not defined for a security the rebuild holds and the snapshot lacks; the script counts the union (394 pairs, 13 differences) and also records the crosswalk's REBUILD-CHECK basis (381 of 381 equal)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/silver/commonwealth_daily_holdings.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~28 -> DAILY-HOLDINGS accounts=1533 account_days=1691729 holding_rows=23226716 snapshot_accounts=83 snapshot_pairs=394 snapshot_equal=381 snapshot_diffs=13 (rc 0)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~28/daily_holdings.md: REBUILD-CHECK basis pairs=381 equal=381; 13 differences over 3 accounts, all fractional quantities (0.09 to 1.014) the rebuild holds and the snapshot does not list",
+      "data/assets/scripts/silver/commonwealth_crosswalk.py:209-219 rebuild_check iterates only the snapshot's own pairs, so it cannot see a rebuilt-open security absent from the snapshot"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-l-1 cell text step 2: compare each snapshot account's rebuilt quantity with the snapshot, non-cash only, write EVERY difference; the final line carries snapshot_pairs, snapshot_equal, snapshot_diffs. The crosswalk's rebuild_check, which the cell says already does this comparison, counts only pairs the snapshot lists.",
+  "world_is": "Taking the snapshot's own pairs, the rebuild matches 381 of 381. Taking every non-cash (account, cusip) either side holds for the 83 snapshot accounts, there are 394 pairs and 13 differ: the 13 are securities the transactions leave open in small fractional quantities that the snapshot does not list. The script uses the second reading so that every difference is a row, and the md carries the first reading beside it. Two further rules were chosen where the order is silent: a transaction on a non-trading day takes effect on the next trading day (220 of 3,537 distinct trade dates are non-trading), and an account's span runs to that day when its last transaction is on a non-trading day; a running quantity within 1e-6 of zero is not stored. The last daily state of all 1,533 accounts equals the full rebuild.",
+  "notes": "Whether the 13 fractional residues are unrecorded corporate actions (the order's BLIND) or a snapshot that omits fractional lots is not measured here."
+}
+```

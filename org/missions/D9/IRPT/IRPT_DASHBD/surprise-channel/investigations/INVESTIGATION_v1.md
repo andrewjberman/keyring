@@ -1843,3 +1843,252 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Resolves W14-S1: the fence it named opened by the fence-join apply, and the read ran on this box; no fence was widened by this lane."
 }
 ```
+
+## IRPT_DASHBD-W18-S1 -- the Schwab trade-leg tokens the class split reads (tr_cd TR, trade_typcd BUY/SELL) have no home in sources.json, which this cell cannot edit, so account_class_daily.py carries them in one declared block
+
+```json
+{
+  "id": "IRPT_DASHBD-W18-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~18",
+  "surfaced_at": "2026-10-07T11:49:00Z",
+  "one_line": "TO-DB-b-33: the class split needs trade legs (tr_cd TR, trade_typcd BUY/SELL, ticker_symbol) that sources.json does not declare; the file is outside this order's paths, so the tokens sit in TRADE_LEG_DECLARATION in account_class_daily.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-ADAPTERS (account_return_daily.py docstring, sources.json doc): Schwab codes are allowed to exist only inside the adapter's sources.json, and the producer types no bucket, prefix or column of its own.",
+  "world_is": "sources.json (data/assets/scripts/gold/irpt_reporting/sources.json) declares the cash code FC and the in-kind code IC but no trade code or trade direction column. NF_c needs buys minus sells, so account_class_daily.py names tr_cd TR, trade_typcd {BUY, SELL} and the identifier columns in a single module-level TRADE_LEG_DECLARATION block. Measured on the window 2026-09-28..2026-10-05: 26,400 TR rows, trade_typcd BUY 24,810 (debit_credit DEBIT) and SELL 1,590 (CREDIT), none other; trade_date equals the partition date on every row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json (no trade key)",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py TRADE_LEG_DECLARATION",
+      "fact_trn partitions 2026-09-28..2026-10-05 read from s3 (read-only), 6 of 6 partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy for the release cell: add trade_code_value, trade_direction_column and trade_direction_map to the declaration (its paths), and have the producer read them. One edit, no behaviour change."
+}
+```
+
+## IRPT_DASHBD-W18-S2 -- most single-stock holdings are not named by the classification module, so they land in `unclassified`, which is a large class in the local run
+
+```json
+{
+  "id": "IRPT_DASHBD-W18-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~18",
+  "surfaced_at": "2026-10-07T11:49:30Z",
+  "one_line": "TO-DB-b-33: etf_classification.py @63fa1a2e32 names 197 tickers (ETFs and funds); individual stocks and money-market funds are not among them, so they are `unclassified`: 45 of the 78 distinct holdings in the local run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-CLASSES: each holding maps through the classification source; 'No row means UNCLASSIFIED; nothing is guessed'. The cell treats unclassified as the exception.",
+  "world_is": "The module's ETF_CLASSIFICATIONS holds 197 tickers: equity 87, fixed_income 81, structured 13, commodities 11, alternatives 5. On dim_position date=2026-10-01 (all accounts) 2,175 distinct tickers are not named and 236 position rows carry no ticker; by market value about 16.0 percent of all position value falls to `unclassified`. Single stocks (for example large-cap names) and the money-market funds SWVXX, SNVXX and SWGXX are unnamed. In the 61-account local run, 45 of 78 distinct holdings are `unclassified` and 30 of 992 class rows carry that class. The producer sends them to `unclassified` as ordered; the class is therefore large and its return is real, but the six-class split of those accounts is partial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification.py @63fa1a2e32, ETF_CLASSIFICATIONS counted: 197",
+      "dim_position date=2026-10-01 read from s3 (read-only): 107,633 rows, 2,175 unnamed tickers",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~18/CLASS_DAILY_LOCAL_RUN.json holding_map: 78 holdings, 45 unclassified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of this cell. For the served release and the frontend (C-HONESTY): whether single stocks need a source that names them is MDPF_SECCLASS's question, not this producer's."
+}
+```
+
+## IRPT_DASHBD-W19-S1 -- `ETFClassifier.get_classification` returns None on a DynamoDB error, which a reader cannot tell from a ticker the table does not hold
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34: the shared client swallows ClientError/BotoCoreError and returns None, so an AccessDenied on etf-classifications reads as 'ticker not held' and every holding would land in `unclassified`; the class producer reads the client's table handle directly instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 0: read each holding's class through ETFClassifier, one GetItem per ticker, 'A ticker the table does not hold is unclassified'.",
+  "world_is": "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py get_classification() catches (BotoCoreError, ClientError), logs, and returns None; the same None is returned for a ticker with no item. Through that method a role that lacks dynamodb:GetItem would make the whole day `unclassified` and the day would still be written and served as if measured. account_class_daily.ClassTable therefore calls `ETFClassifier(...).table.get_item(Key={'ticker': t})` itself (same client, same table, same single-item read) and raises ClassTableUnreadable on an error, so the day is refused by name. Other callers of get_classification/get_asset_class were not examined by this cell, so the hazard for them is unassessed here.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classifications_dynamodb.py lines 71-84 @a96e00c279: except (BotoCoreError, ClientError) -> return None",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py ClassTable.get and tests/test_account_class_daily.py::test_a_table_read_failure_is_not_an_absence"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The client file is outside this cell's grant and is not edited. Whether the shared client should distinguish an error from an absence is the toolchain owner's question."
+}
+```
+
+## IRPT_DASHBD-W19-S2 -- the reporting-gold bundle is pinned in lambda-source-map.json, not in lambda.tf; the source map is outside this cell's grant, so the packaging half of item 2 is not done
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34 item 2 says lambda.tf pins the bundle; the pins (`staged_from`: repo_path, commit pin, sha256, packaged_as) live in infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda, which this order's paths do not include, so account_class_daily.py and etf_classifications_dynamodb.py are NOT yet bundle members.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 2: 'infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf: the bundle gains account_class_daily.py and _shared/etf_classifications_dynamodb.py (read how the current bundle pins account_return_daily.py, and pin the same way)'.",
+  "world_is": "lambda.tf declares only the function, its artifact_key and the layer; its header says the bundle is built through infra/aws/lambda/ci/lambda-source-map.json + build-and-upload.sh. In that file the entry irpt-reporting-gold-lambda (line ~6048) lists the members and a `staged_from` array of pinned blobs, each with a commit `pin` and a `sha256`. A pin is a commit, so the two new members can only be pinned AFTER the commit that carries their final bytes. lambda.tf gained a comment naming the two members; nothing else in the packaging could be done inside the grant. Consequence if the apply ran on today's artifact: the handler's guarded import of account_class_daily fails, the class stage logs `CLASS_SKIPPED <day> account_class_daily not importable`, and the returns table is written unchanged. The class table would never be written until the pins land.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json entry irpt-reporting-gold-lambda (artifact_s3_key investor-reporting/irpt-reporting-gold-lambda.zip, last_deployed_commit 829e46ed7f) @4c34d86104",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf header comment and the module block: no staged_from"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Owner of the missing step: the issuer, who adds the two pins to the source map (commit-pinned, sha256-verified) and rebuilds the artifact before the apply. The never-widen packet lists this as a precondition, not as part of the signed act."
+}
+```
+
+## IRPT_DASHBD-W19-S3 -- the order says the handler lists the class prefix for the newest landed day; the handler does not, so the class-prefix read grant is wider than any use
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S3",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34 item 3 grants read on the class prefix 'the handler lists it for the newest landed day'; the handler lists only the returns prefix (day selection is the returns table's), so the class-prefix List/Get is granted and unused.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 3: 'Read access to the class prefix (the handler lists it for the newest landed day)'.",
+  "world_is": "handler.run() and run_backfill() call newest_landed_day() on the returns prefix only, and emit_classes() emits the same days the returns path emitted; nothing lists or reads account_class_daily. The grant was made as ordered (the same prefix the role writes, ListBucket by prefix pattern and GetObject, no other bucket); it is a read of one more prefix of the same firm bucket that the code does not exercise.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py run(), run_backfill(), emit_classes() @ this cell's commit",
+      "infra/aws/terraform/investor-reporting/reporting-gold/locals.tf irpt_rg_gold_read_prefixes (three prefixes)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If a later cell makes the class table's own newest day matter (a class-only catch-up), the grant is already there; if not, dropping it is a one-line change to irpt_rg_gold_read_prefixes."
+}
+```
+
+## IRPT_DASHBD-W19-S4 -- a class day skipped on a scheduled fire is not retried by the next fire
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S4",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:30:52Z",
+  "one_line": "TO-DB-b-34: the scheduled path selects days AFTER the newest landed returns day, and the returns day is written first, so a class day that was skipped (named in the log) stays a gap in account_class_daily until a backfill event rewrites it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-34 item 1: 'A day the class producer cannot emit is logged by name and does not stop the returns table.'",
+  "world_is": "select_days(newest_landed, today) takes the returns table's newest landed date= partition as its floor, so after a fire that wrote the returns day and skipped the class day the next fire starts from the day after. Nothing in the scheduled path compares the two tables. The gap is visible in the fire's log (`CLASS_SKIPPED <day> <reason>`) and in the returned `class_failed`, and it is closable by the existing backfill event (a backfill object with start and end, accounts set to population), which now rewrites both tables for landed days; no mechanism makes either happen on its own. The never-widen packet names this under Branch B.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py select_days() and run() @ this cell's commit",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_table_emission.py::test_a_class_failure_leaves_the_returns_table_written_and_is_logged_by_name"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Armed only once the apply lands and only on a day the class stage fails. Disarm: the issuer reads the first fire's log in the after-read and runs the backfill event for any skipped day; a standing class-gap check is not built here (monitor moratorium)."
+}
+```
+
+## IRPT_DASHBD-W19-S5 -- the recorded "about 16 percent unclassified" is an all-account figure; on the 61-account sample the module gives 1.8 percent and the table 0.15 percent, so the sample cannot confirm the all-account share
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S5",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:33:44Z",
+  "one_line": "TO-DB-b-34: the order asks for the table-based unclassified share against 'round 21's module-based share'; the 16 percent (W18-S2) is every account on dim_position 2026-10-01, while round 21's 61-account sample re-measures at 1.804 percent on 2026-10-05 under the module and 0.153 percent under the table.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 item 0: 'Re-run the round-21 sample's 61 accounts and print the unclassified share against round 21's module-based share'; row W18-S2: about 16 percent of value unclassified.",
+  "world_is": "Round 21's own record carries no market values, so its module-based share on the sample was not recorded; this cell re-measured it on identical positions by classifying the same rows from the module dictionary (that pass reproduces round 21's 992 class rows and 30 unclassified rows exactly). Sample, 2026-10-05: module 1.804 percent, table 0.153 percent; holdings not in the source 45 of 78 under the module, 9 of 78 under the table. The 16 percent is the all-account share under the module on 2026-10-01 and is not reproducible from a 61-account sample. The table-based all-account share is unmeasured: it is the apply's after-read A3.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~19/RELEASE_LOCAL_RUN.md section B",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~19/class_share_61_driver.py (the driver that produced both columns)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect. The release figure the CTO's criterion 3 wants is the served partition's, read at the apply."
+}
+```
+
+## IRPT_DASHBD-W19-S6 -- the class catch-up from the class table's own newest partition disarms W19-S4 and uses the class-prefix read grant W19-S3 named unused
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:49:00Z",
+  "one_line": "TO-DB-b-34 amendment 1: the scheduled fire now catches the class table up from its own newest landed partition, which disarms W19-S4 and gives the class-prefix read grant named unused in W19-S3 its use.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 amendment 1 @e765698322: 'The handler computes the class table from ITS OWN newest landed partition: on each scheduled fire it lists the class prefix, and emits every trading day after its newest class day through the newest returns day just written (bounded by MAX_DAYS_PER_FIRE), so a class day skipped on one fire is retried on the next.'",
+  "world_is": "handler.catch_up_classes() lists the class prefix (the list grant ListExactlyTheThreeGoldPrefixes already covers it), takes class_owed_days(newest class day, days written this fire) and emits those days oldest first, at most MAX_DAYS_PER_FIRE (10); a day older than this fire's returns days is recomputed through compute() as a read and nothing is written to the returns table for it. A day that still fails is logged `CLASS_SKIPPED <day> <reason>`; a failed class listing is logged `CLASS_CATCHUP_LIST_FAILED` and owes only this fire's days; the returns table is never held. No class day is written beyond max(written returns days). The W19-S4 gap (a skipped class day stays a gap until a backfill) is closed in code, and the read grant W19-S3 named unused is now exercised by the listing. Nothing is deployed: the hazard stays inert until the apply, and the apply's packet names the retry under Branch B.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py catch_up_classes() and class_owed_days()",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::CatchUpTests::test_a_skipped_day_is_retried_on_the_next_fire",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::CatchUpTests::test_the_catch_up_never_writes_a_day_beyond_the_newest_returns_day",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::OwedDaysTests (bound, weekend, holiday, no class partition)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the amendment-1 code fix: the next scheduled fire retries a skipped class day, proven by the two named tests; nothing is deployed, so there is no live hazard left to investigate.",
+  "notes": "Disarms IRPT_DASHBD-W19-S4 (disarm owner 2.0.0_SA_COO~D2 named a backfill; the code now does it on the next fire) and uses the class-prefix read grant named unused in IRPT_DASHBD-W19-S3."
+}
+```
+
+## IRPT_DASHBD-S29 -- round 22's rows resolved at the drain
+
+```json
+{
+  "id": "IRPT_DASHBD-S29",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T12:57:04Z",
+  "one_line": "Round 22's rows resolved at its drain @d48052d79b: W19-S2 ruled a release precondition, W19-S3 and W19-S4 closed by the class catch-up (amendment 1 @e765698322), W18-S1 closed by the trade-leg tokens moving into sources.json.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W19-S2",
+    "IRPT_DASHBD-W19-S3",
+    "IRPT_DASHBD-W19-S4",
+    "IRPT_DASHBD-W18-S1"
+  ],
+  "spec_asserts": "W19-S2: the bundle pins sit outside the grant; W19-S3: the class-prefix read grant is unused; W19-S4 (ARMED, disarm owner this seat): a class day skipped on a fire is never retried; W18-S1: the trade-leg tokens sit in the producer, not the declaration.",
+  "world_is": "W19-S2: the source map's staged_from pins are written at deploy time against the commit that carries the files; the never-widen packet now names them as an apply precondition (three entries, pinned to the drain commit with sha256), and the map is unedited (0-line diff). W19-S3 and W19-S4: handler.py's catch_up_classes() lists the class prefix and emits every trading day after the newest class day through the newest returns day (at most 10 per fire); tests test_a_skipped_day_is_retried_on_the_next_fire and test_the_catch_up_never_writes_a_day_beyond_the_newest_returns_day pass (96 passed across both test folders at the drain). Nothing is deployed, so the hazard was never live. W18-S1: sources.json carries the trade-leg tokens and the producer reads them there; returns DELTA=0 against the base handler AND base sources.json (sha256 11453fc7... both sides).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e765698322 (amendment 1)",
+      "bae1e8bd8b, 1a9f68b833 (worker)",
+      "d48052d79b (drain)",
+      "issuer re-run: DB22-1-AC1..AC3 PASS, proof VALID; pytest 96 passed"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Each named row's condition is resolved at HEAD by the drained code and packet; W19-S4 disarms by the catch-up before any deploy."
+}
+```

@@ -110,6 +110,14 @@ org/devices/test_kit_terraform_providers.py
 org/devices/kit_terraform_required.json
 org/devices/kit_portal_tree.py
 org/devices/test_kit_portal_tree.py
+org/devices/kit_bun_no_egress.py
+org/devices/kit_python_wheels.py
+org/devices/test_kit_python_wheels.py
+org/devices/kit_python_wheels_cp314.json
+requirements.txt
+org/devices/test_kit_bun_no_egress.py
+.tools/wk-provision.sh
+.tools/tests/test_wk_provision_no_registry.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -191,11 +199,11 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC3` -- every Dell-placed root's provider lock was read; the same line must read `ok=True`, stated in the proof row, with the
 `no_lock` count reported.
 
-<criterion id="CTk2-AC4" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_terraform_providers.py</invocation><expect>TF-KIT-TEST cases=6/6</expect></criterion>
+<criterion id="CTk2-AC4" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_terraform_providers.py</invocation><expect>TF-KIT-TEST cases=10/10</expect></criterion>
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -268,3 +276,259 @@ Write a NEW proof instance over the old one covering all five ids, validate it w
 only when all five pass. In your report: the real tree's line, the bun and node versions here, the lockfile kind, the count of
 platform-specific packages, the estimated archive size, the portal's typecheck command as its `package.json` names it, and the exact
 commands a Dell and the laptop run for one delivery.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-07 ~10:5xZ) -- REOPENED: bring the laptop's portal tree to the DEV lockfile, then cut the pack
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and the earlier commits
+are inherited state (merged to the trunk @e0a3cb15fc). Authority: `1.0.0_SA_CTO` msg 106162, verbatim: "the seat is the kit cell's
+worker, under 2.0.0_SA_COO~C. `bun install` in portal/ on the laptop is the workspace's own documented portal command (CLAUDE.md,
+Portal: \"bun install && bun run dev --port 5174\"); run with the frozen lockfile it changes no lockfile and brings six packages to the
+versions DEV already locks. It is the laptop doing what the laptop already does, not a Dell reaching the registry. Two reads first,
+each a stop if it fails: nothing is listening on port 5174 (a dev server reading that tree mid-install), and git -C portal status
+shows no lockfile change afterwards. Then describe must read ok=True before the pack is cut. The Dells still fetch nothing: they
+receive the pack over the tailnet." Gate limb: none graded this modification.
+
+**THIS AMENDMENT LIFTS, FOR ONE COMMAND ONLY, two rules of the amendments above:** you MAY run exactly one install,
+`bun install --frozen-lockfile`, and you MAY write to the base checkout's `portal/node_modules` through that command. Nothing else in
+the base checkout is written by you; no other install, add or update command is run; no dev server is started.
+
+**THE WORK, in this order; each numbered read is a STOP if it fails (report, file a row, leave the order `in_progress`):**
+
+1. `<base>` is the first entry of `git worktree list --porcelain`; `<portal>` is `<base>/portal`. Record BEFORE: the portal's HEAD and
+   branch; `git -C <portal> status --porcelain` in full (other seats' uncommitted portal work may be present: record it, do not touch
+   it); the SHA-256 of `<portal>/bun.lock` and of `<portal>/package.json`; `bun --version`; and the `describe` last line (expected:
+   `absent=6 ok=False`).
+2. READ 1, a stop: nothing is listening on TCP port 5174 on this box. Measure it two independent ways (for example a Python socket
+   connect to 127.0.0.1:5174 that is refused, and the operating system's listener table read for `:5174`) and print both. If
+   anything listens, STOP: do not kill it.
+3. Also a stop: no process is running from the portal tree that would hold its files open mid-install (look for a `bun` or `node`
+   process whose command line names `<portal>`; print what you find). If one is found, STOP and report it.
+4. Run ONCE, in `<portal>`: `bun install --frozen-lockfile`. Bound it (`timeout 600`), capture all output and its exit code. If it
+   exits non-zero, or reports that the lockfile would change, STOP and report the output; do not retry with another flag.
+5. READ 2, a stop: `git -C <portal> status --porcelain` AFTER equals the BEFORE listing for every tracked file (in particular
+   `bun.lock` and `package.json` are not modified: compare their SHA-256 to step 1's), and the portal's HEAD is unchanged.
+6. `python org/devices/kit_portal_tree.py describe` must read `absent=0 ok=True`. If it does not, STOP and report the differing
+   packages.
+7. Cut the pack: `python org/devices/kit_portal_tree.py pack --out <dir>` where `<dir>` is a NEW directory OUTSIDE every git tree,
+   `C:/tmp/kit-portal-pack-<UTC date>` (derive the drive prefix; do not put it under the workspace). Then run
+   `python org/devices/kit_portal_tree.py verify --from <dir> --portal <portal>` WITHOUT `--extract` on this same box as the
+   self-check (the lockfile, bun, node and platform must all read ok). Record the archive's SHA-256, size and file count from the
+   manifest. Do NOT send it anywhere and do NOT commit it.
+8. Do NOT run the portal's typecheck in the base checkout (other seats work there); the read-back typecheck is each Dell's.
+9. Write `KIT_PORTAL_PACK_RECORD.md` in your deliverables folder: the BEFORE and AFTER lines, both port reads, the install's exit
+   code and last lines, the six packages and their versions before and after, the pack's path, SHA-256, size, file count, the bun
+   and node versions, and the exact commands a Dell runs to verify, extract and typecheck.
+
+**ACCEPTANCE, one criterion ADDED to the five above (which are unchanged and must still pass):**
+
+<criterion id="CTk2-AC6" cell_refs="CT-k-2"><invocation>python org/devices/kit_portal_tree.py describe</invocation><expect>absent=0</expect></criterion>
+`CTk2-AC6` -- after the frozen-lockfile install the laptop's tree is the DEV lockfile's tree. The same line must read `equals_dev=True`
+and `ok=True`, stated in the proof row. (Run it with `AGENTBUS_DEVICE=laptop` exported if the tool asks for a device.)
+
+Write a NEW proof instance over the old one covering all six ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6`, and flip `<status>` back to
+`complete` only when all six pass. If you stopped at a read, do NOT flip.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~11:5xZ) -- REOPENED: the kit carries the Terraform binary beside the provider cache
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and the earlier commits are inherited state
+(merged to the trunk @786ca6d8e4). Authority: `1.0.0_SA_CTO` msg 106172, verbatim: "Kit: dell2 has no terraform binary (row
+IRPT_BCKEND-S364). The kit cell carries the laptop's binary beside the provider cache, to both Dells, read back by terraform
+version and one no-op plan." Gate limb: none graded this modification. The three kits above are done and stay; THE WORK below is
+the whole of this amendment. THE NO-NETWORK RULE STANDS: nothing is downloaded; the binary carried is the one already on this box.
+
+1. `org/devices/kit_terraform_providers.py` gains the binary:
+   - `binary`: locates the Terraform binary this box's `safe-apply.sh` would run -- read `.tools/safe-apply.sh` for its resolution
+     order (the `SAFE_APPLY_TERRAFORM` override, the sibling `.tools/terraform.exe`, then PATH) and resolve it the SAME way; print the
+     path, the size, the SHA-256, and `terraform version -json` parsed (version, platform). If the three sources disagree (a sibling
+     and a PATH binary of different versions), print both and say which the wrapper would run. LAST line
+     `TF-BINARY found=<True|False> version=<v> platform=<os_arch> sha256=<12 hex> bytes=<b> source=<override|sibling|path> ok=<True|False>`.
+   - `pack --out <dir>` now ALSO places the binary at `<dir>/bin/terraform.exe` (a copy, or a hard link on the same volume) and
+     records it in `MANIFEST.json` (path, SHA-256, size, version, platform) beside the providers. `--no-binary` omits it.
+   - `verify --from <dir>` checks the binary against the manifest like every other file, and with `--run-binary` executes
+     `<dir>/bin/terraform.exe version -json` and compares the reported version and platform to the manifest's (a mismatch refuses).
+     On success it prints, besides the CLI-config snippet, the one line that tells a Dell where to put the binary so that
+     `.tools/safe-apply.sh` finds it WITHOUT a baked path: by the wrapper's own resolution order (the sibling location or PATH; say
+     which the wrapper prefers on a box that has neither today) -- and a `--install-binary <target>` flag that copies it there and
+     re-verifies the copy's SHA-256.
+   - `readback --root <dir>`: the Dell's read-back, in two parts, each printed: (a) `terraform version` through the SAME resolution
+     the wrapper uses; (b) "one no-op plan": `terraform -chdir=<root> init -input=false` with the mirror config, then
+     `terraform -chdir=<root> plan -input=false -lock=false -detailed-exitcode`, reporting the exit code (0 = no changes; 2 = changes,
+     which is NOT a failure of the kit but is reported loudly; 1 = error). It needs the Dell's own AWS identity and the state backend,
+     so YOU DO NOT RUN PART (b) against a real root: the test runs it against a root with a LOCAL backend and no provider resources.
+     LAST line `TF-READBACK version=<v> init=<ok|fail> plan_exit=<0|1|2> ok=<True|False>`.
+2. `org/devices/test_kit_terraform_providers.py` gains four cases (ten in all): the binary is located by the wrapper's own order;
+   `pack` includes it and `verify --run-binary` passes; one byte of the packed binary flipped -> `verify` refuses BEFORE running it
+   (the test asserts the tampered file was never executed); `readback` on a temporary root with a local backend and only locals and
+   outputs reads `init=ok plan_exit=0`. LAST line `TF-KIT-TEST cases=<k>/10 skipped=<s> ok=<True|False>`.
+3. Cut the REAL provider-and-binary pack once, outside every git tree, to `C:/tmp/kit-terraform-pack-<UTC date>` (derive the drive
+   prefix), with `--include-unlocked` as the earlier pass built it, run `verify --from <dir> --run-binary` on it as the self-check,
+   and record the manifest's totals. Do not send it anywhere and do not commit it. Add its record to your deliverables folder as
+   `KIT_TERRAFORM_PACK_RECORD.md`: path, total bytes, each provider and version, the binary's version and SHA-256, and the exact
+   commands a Dell runs (verify, install the binary, write the CLI config, read back).
+
+**ACCEPTANCE.** CTk2-AC4's expectation becomes `TF-KIT-TEST cases=10/10` (same invocation; the line must read `ok=True`). One
+criterion is ADDED; the other five are unchanged and must still pass:
+
+<criterion id="CTk2-AC7" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py binary</invocation><expect>TF-BINARY found=True</expect></criterion>
+`CTk2-AC7` -- the binary this box's apply wrapper runs is located, hashed and versioned. The same line must read `ok=True`.
+
+Write a NEW proof instance over the old one covering all seven ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7`, and flip `<status>`
+back to `complete` only when all seven pass.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~12:3xZ) -- REOPENED: the bun egress disarm, measured against a loopback listener
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and every earlier commit is
+inherited state on the trunk. Row `NFRA_CTLPLN-S13` (ARMED, disarm owner the issuer). Authority: `1.0.0_SA_CTO` msg 106214, verbatim:
+"cut one cell. Its control: point bun's registry at a loopback listener that logs requests. Positive arm, no disarm: the listener
+logs a request. Each candidate (--no-install, a project bunfig, an environment variable): zero requests. Measure bun 1.3.9 on the
+laptop and 1.4.2 on a Dell. The kit carries the form that passes." And msg 106220, verbatim: "(1) The script: on a box with no
+registry redirect, the install mode refuses with a line naming link or none; the default becomes link. Its control: the same
+loopback listener, zero requests from a provision. (2) The interim rule now also forbids bun install on all three boxes."
+Gate limb: none graded this modification. The kits above are done and stay; THE WORK below is the whole of this amendment.
+
+**THE HAZARD.** bun, run on a file whose import does not resolve from a `node_modules` tree, fetches the package from the public
+registry without asking. Two such fetches happened on another machine; a user-level `bunfig.toml` with `[install] auto = "disable"`
+was measured NOT to stop it there (bun 1.4.2). A fetch failure and a disabled install print the same error, so only a listener
+that counts requests can tell them apart.
+
+**THE ONE RULE THAT GOVERNS EVERYTHING YOU RUN: NO REQUEST MAY LEAVE THIS MACHINE.** The test that proves the disarm must not itself
+be the egress. So EVERY bun process this amendment starts runs inside a harness with TWO independent redirects to loopback, and you
+prove both BEFORE any arm that could fetch:
+- **Redirect A, the registry:** bun's registry set to `http://127.0.0.1:<port>/` (a listener you start in Python's standard library
+  on an ephemeral port, which logs method and path of every request and answers 404).
+- **Redirect B, the proxy:** `HTTP_PROXY`, `HTTPS_PROXY`, `http_proxy`, `https_proxy` all set to a SECOND loopback listener that logs
+  every request line (including `CONNECT host:443`) and answers 502, with `NO_PROXY`/`no_proxy` set to empty so even loopback goes
+  through it if bun chooses. Whatever host bun tries, the request lands on one of your two listeners.
+- **The package name** every probe imports is one that cannot exist: a scoped name with a random suffix generated per run
+  (for example `@opal-no-such-scope-<16 hex>/probe`), so that even a leak would retrieve nothing.
+- **Isolation:** each run uses a fresh temporary directory OUTSIDE every git tree and every `node_modules` ancestor, a temporary
+  `BUN_INSTALL_CACHE_DIR`, and a temporary `HOME`/`USERPROFILE`/`XDG_CONFIG_HOME` so no user-level bunfig is read or written. You
+  never write `~/.bunfig.toml`.
+- **ORDER OF PROOF, and you stop at the first failure with a BLOCKING row and no further bun run:**
+  (0) `bun --version` only (no script) -- with both listeners up; record any request (a version check that phones home is a finding).
+  (1) THE PROXY PROOF: with Redirect B alone set and the registry left at its default, run the probe WITH the strongest disarm you
+      have (`bun --no-install run probe.js`). Expect zero requests. This arm cannot prove the proxy works; it is only the safest
+      first run.
+  (2) THE REGISTRY-REDIRECT PROOF, the positive arm: Redirect A AND Redirect B both set, no disarm, the nonexistent package.
+      Expect one or more requests ON A LOOPBACK LISTENER. If ZERO requests arrive on both listeners and bun reports anything other
+      than a resolution error that names the loopback registry, you CANNOT tell where it went: STOP, file the BLOCKING row, run
+      nothing further. If requests arrive only on the proxy listener naming the public registry host, Redirect A is ineffective in
+      the form you set it: record that, and try the next form of Redirect A (an environment variable such as
+      `BUN_CONFIG_REGISTRY` or `NPM_CONFIG_REGISTRY`; a project `bunfig.toml` `[install] registry = ...` beside the probe) -- the
+      proxy is what kept it on the machine.
+  Only after (2) shows the positive arm landing on loopback do you run the candidates.
+
+1. `org/devices/kit_bun_no_egress.py`:
+   - `measure`: runs the harness above, then each CANDIDATE disarm as its own arm, each from a fresh directory, each reported with
+     the number of requests each listener logged and bun's exit code and first error line: (a) the command-line flag `--no-install`;
+     (b) a PROJECT `bunfig.toml` beside the probe with `[install] auto = "disable"`; (c) the same setting in a user-level bunfig
+     inside the temporary home (to reproduce the other machine's reading on this version); (d) each environment variable bun
+     documents or its binary names for this (search the binary's strings and `bun --help` output for `auto`, `install` and
+     `BUN_CONFIG_`; list what you found and tried); (e) the structural form: the probe file placed inside a directory that HAS a
+     `node_modules` folder (empty) and a `package.json`. A candidate PASSES only with zero requests on both listeners AND the
+     positive arm of the same run non-zero. Print one line per arm and LAST
+     `BUN-NO-EGRESS bun=<version> positive_requests=<n> candidates=<k> passing=<p> leaked_public=<0|n> form=<the passing form the kit carries, or NONE> ok=<True|False>`
+     (`ok=True` needs `positive_requests>0`, `leaked_public=0`, and at least one passing candidate). It writes its full result as
+     JSON to a path given by `--out` (default: none). It is the SAME script a Dell runs for bun 1.4.2; it bakes no path and no
+     version.
+   - `wrap -- <bun args>`: runs bun with the passing form applied (and refuses, naming the reason, a bare `bun install`, `bun add`,
+     `bun x`/`bunx`, `bun create` or `bun update` unless `--allow-registry <reason>` is given, which it prints loudly). This is the
+     form the kit carries.
+2. `org/devices/test_kit_bun_no_egress.py`: the listener logs a request made by Python itself (the listener works); `measure` on
+   this machine reads `ok=True`; `wrap` refuses `install` and passes `--version`; a planted regression (the harness told to treat a
+   candidate that DID make a request as passing) is caught. LAST line `BUN-KIT-TEST cases=<k>/<n> ok=<True|False>`.
+3. `.tools/wk-provision.sh`, the CTO's addition: read it whole first. Its `--node-modules install` mode runs
+   `bun install --frozen-lockfile` (near line 151), which is a registry path. Change: the DEFAULT mode becomes `link`; the `install`
+   mode REFUSES, before running bun, unless a registry redirect is present in the environment the script can verify (a registry
+   variable or project bunfig pointing at a non-public host), with one line naming `link` and `none` as the modes to use. Change
+   nothing else in the script. `.tools/tests/test_wk_provision_no_registry.py`: with both listeners up and the harness environment,
+   a provision in `install` mode on a scratch repository makes ZERO requests and exits non-zero with the refusal line; `link` and
+   `none` are unaffected (or, where a full provision cannot run in a scratch repository, the test exercises the mode-selection
+   function directly and says so). LAST line `WK-PROVISION-REGISTRY install_refused=<True|False> requests=<n> default=<mode> ok=<True|False>`.
+   You do NOT run a real provision with `install`.
+4. A record in your deliverables folder, `BUN_NO_EGRESS_RECORD.md`: every arm's line for this machine's bun version, the passing
+   form, the exact commands another machine runs to measure its own version, and what stays unproven. State also, for row
+   `NFRA_CTLPLN-S13`, what the earlier pass of this order fetched: the frozen-lockfile install run on this machine at about 10:55Z
+   (ruled at the time; the same registry path) -- read `KIT_PORTAL_PACK_RECORD.md` in this folder on the trunk for the package count
+   and say it. Do not re-run it.
+
+**YOU RUN NO `bun install`, `bun add`, `bunx` OR `bun create` AT ALL**, in any directory, redirected or not. The interim rule forbids
+it on this machine until this cell lands.
+
+**ACCEPTANCE.** Two criteria are ADDED; the other seven are unchanged and must still pass:
+
+<criterion id="CTk2-AC8" cell_refs="CT-k-2"><invocation>python org/devices/test_kit_bun_no_egress.py</invocation><expect>BUN-KIT-TEST cases=</expect></criterion>
+<criterion id="CTk2-AC9" cell_refs="CT-k-2"><invocation>python .tools/tests/test_wk_provision_no_registry.py</invocation><expect>WK-PROVISION-REGISTRY install_refused=True requests=0</expect></criterion>
+`CTk2-AC8` -- the same line must read `ok=True` with every case passing. `CTk2-AC9` -- the same line must read `ok=True`.
+
+If `measure` finds NO passing candidate, that is a result, not a failure to hide: `wrap` then carries only the structural refusal,
+AC8's line reads `ok=False`, you file a BLOCKING row with the arms, leave the order `in_progress`, and report.
+
+Write a NEW proof instance over the old one covering all nine ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9`, and
+flip `<status>` back to `complete` only when all nine pass.
+
+## AMENDMENT 6 (2.0.0_SA_COO~C, 2026-10-07 ~14:0xZ) -- REOPENED: the Python kit against the regenerated requirements.txt, and which packages have a wheel for the Dells' Python
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state on the trunk. Authority: `1.0.0_SA_CTO` msg 106278, verbatim: "that file is now the list the Python kit is built
+against, in place of whatever list the cell derived itself. The Dells run Python 3.14 and the laptop 3.12, so a wheel set built
+here does not fit there (the PyMuPDF case); the cell states per package whether a 3.14 win_amd64 wheel exists on the laptop
+without a fetch, and lists the ones that do not as a file for me." The file: the repository root `requirements.txt` @bc10584676
+(67 installable lines, regenerated from an import census on Andrew's word; record
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261007_133xZ_REQUIREMENTS_TXT_ALL_ACTUAL_DEPENDENCIES.md`; its own
+caveat: a clean-start resolve is NOT verified). Gate limb: none graded this modification. `requirements.txt` is in the grant to be
+READ; YOU DO NOT EDIT IT. THE NO-NETWORK RULE STANDS: no `pip install`, no `pip download`, no `pip index`, no `pip wheel` of a
+remote package, no request to any package index. Every pip call you make carries `--no-index` or is one of `pip --version`,
+`pip list`, `pip show`, `pip cache dir`, `pip cache list`, `pip inspect`, `pip config list` (which make no request).
+
+1. `org/devices/kit_python_wheels.py`, three verbs:
+   - `required`: parse the root `requirements.txt` (names, specifiers, markers, extras; a line it cannot parse is printed and
+     counted, never skipped silently) and compare it with the list this cell derived itself (`org/devices/kit_python_required.json`,
+     20 distributions): print the names only in one, only in the other, and in both. LAST line
+     `PY-REQ lines=<n> parsed=<p> unparsed=<u> in_both=<b> only_requirements=<r> only_census=<c> ok=<True|False>`.
+   - `wheels --python-tag cp314 --platform win_amd64`: for EACH requirement, state whether a wheel that Python 3.14 on 64-bit
+     Windows can install exists ON THIS MACHINE WITHOUT A FETCH, and where. Sources to read, each counted: the pip HTTP and wheel
+     caches (`pip cache dir`; the wheel cache holds locally built wheels by name; the HTTP cache holds downloaded files under
+     hashed names whose bodies are zip archives with a `*.dist-info/WHEEL` member: identify a cached wheel by reading that member
+     and `METADATA`, never by a file name alone); any wheel files already on disk in the kit's own earlier pack output, in
+     `C:/tmp/kit-*`, in the user's Downloads folder and under the repository (search for `*.whl`; derive every path, bake none);
+     and the installed distributions of every Python interpreter on this machine (`py -0p` lists them: an installed pure-Python
+     distribution whose `WHEEL` file reads `Root-Is-Purelib: true` and tag `py3-none-any` (or `py2.py3-none-any`) can be re-packed
+     into a wheel offline and fits 3.14; an installed distribution tagged `cp312-cp312-win_amd64` does NOT fit, and one tagged
+     `cp3X-abi3-win_amd64` with X <= 14 does fit).
+     Classify each requirement as exactly one of: `WHEEL-ON-DISK` (a file that fits, with its path and tags), `PURE-INSTALLED` (no
+     file, but an installed pure-Python copy that can be re-packed offline; say at which version and whether that version
+     satisfies the specifier), `ABI3-INSTALLED` (an installed stable-ABI build that fits), `NEEDS-FETCH` (compiled for another
+     Python only, or absent), `UNPARSED`. A requirement whose marker excludes Python 3.14 or Windows is `NOT-APPLICABLE` with the
+     marker printed. Compatibility is decided by the `packaging` library's tag logic if it is installed here
+     (`packaging.tags`), computed for the TARGET (3.14, win_amd64), not for the running interpreter; if `packaging` is not
+     installed, implement the three rules above and say so.
+     It does NOT follow dependencies of the listed packages (the file is stated to be the full list; its caveat is a clean-start
+     resolve is unverified): say that in the output, and, for each `WHEEL-ON-DISK` or installed copy, print the `Requires-Dist`
+     names that are NOT themselves lines of `requirements.txt`, as a count and a list, so the gap is visible.
+     Writes `org/devices/kit_python_wheels_cp314.json` (per requirement: name, specifier, class, evidence path or installed
+     version, tags) and LAST line
+     `PY-WHEELS target=cp314-win_amd64 requirements=<n> wheel_on_disk=<a> pure_installed=<b> abi3_installed=<c> needs_fetch=<d> not_applicable=<e> unparsed=<u> undeclared_deps=<k> ok=<True|False>`
+     (`ok=True` when every requirement got exactly one class and `unparsed=0`).
+   - `--from-file <json>` re-prints the last line from the saved file (the criterion's bounded form).
+2. `org/devices/test_kit_python_wheels.py`: on synthetic fixtures in a temporary directory (tiny hand-made wheel archives and
+   `dist-info` folders, no real package): a `py3-none-any` wheel fits; a `cp312-cp312-win_amd64` wheel does not; a
+   `cp39-abi3-win_amd64` wheel fits; a `cp314-cp314-win_amd64` wheel fits; a `cp314-cp314-manylinux` wheel does not; a
+   requirement with a marker excluding Windows is NOT-APPLICABLE; an unparseable line is counted. LAST line
+   `PY-WHEELS-TEST cases=<k>/7 ok=<True|False>`.
+3. THE FILE FOR THE CTO, in your deliverables folder: `PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md` -- the `NEEDS-FETCH` list (name,
+   specifier, why: compiled for 3.12 only, or absent), the `PURE-INSTALLED` list with any version that does not satisfy its
+   specifier, the undeclared dependencies, PyMuPDF's line by name (it is the case that prompted this), which Python
+   interpreters this machine holds, and what stays unread. Standard technical English; it is a decision document.
+
+**ACCEPTANCE.** One criterion is ADDED; the other nine are unchanged and must still pass:
+
+<criterion id="CTk2-AC10" cell_refs="CT-k-2"><invocation>python org/devices/kit_python_wheels.py wheels --from-file org/devices/kit_python_wheels_cp314.json</invocation><expect>PY-WHEELS target=cp314-win_amd64 requirements=</expect></criterion>
+`CTk2-AC10` -- every requirement classified; the same line must read `ok=True`.
+
+Write a NEW proof instance over the old one covering all ten ids, validate it with `python .tools/proof-of-spec-check.py <instance>
+CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10`, and flip `<status>` back to `complete`
+only when all ten pass.
