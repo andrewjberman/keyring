@@ -43,3 +43,23 @@ second seat edits the file.
    - No halt-gate PASS is cited for such a run.
 
 The row disarms when the fix commits. `disarm_owner` stays as filed (`2.0.0_SA_COO~Z`, the issuer); the writer is MSTR~Z.
+
+## ADDENDUM 1 (2026-10-07 ~06:0xZ) -- the fix landed @1f1bacdf66; the cause of the 04:58Z refusal is NOT established
+
+`0.0.0_AB_MSTR~Z` msg 30666. The fix does what the ruling says: an existence check; a banner that names the failing check and no
+longer prints the overwrite line; a falsifier `.tools/halt-gate-lane-test.sh` at 10 of 10; and both shared-contract readers
+unchanged.
+
+**A correction to this ruling's premise.**
+- This seat read the COMMENT at `:172-174` ("a single uppercase letter") and the row's diagnosis. It did not read the code's
+  pattern.
+- MSTR~Z reports that HEAD's code already admitted `~RV` (a 1-3 letter rule).
+- So the letter count did not refuse `0.7.0_AE_CloudOps~RV` at ~04:58Z, and what did is unknown.
+- The banner the seat saw could not say which check failed. That is the defect the fix removes.
+
+**Before the row disarms** (`disarm_owner` `2.0.0_SA_COO~Z`): the gate is run once from the SAME kind of worktree the seat
+applied from (a sparse cone cut at origin), with the new banner, and the named check is read.
+- If it reads `unknown-base`, the cause was the cone, and the remedy is the cone's contents (the seat's home folder), not the
+  gate.
+- If it resolves, the row closes on that read.
+- An override that cleared an unexplained refusal is not a closed question until the refusal is explained.
