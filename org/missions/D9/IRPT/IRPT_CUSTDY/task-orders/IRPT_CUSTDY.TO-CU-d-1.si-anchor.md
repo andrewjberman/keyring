@@ -99,6 +99,14 @@ Real data (round-4 probe): 12 of the chosen advisor's 14 accounts are expected u
 Tests (in `tests/test_si_anchor.py`): one per branch; the (a) label only when the zero-holdings read is confirmed; a (b)/(c) account is
 never labelled "inception". The probe's per-account line adds `branch=`; its `labels_ok` also checks (b)/(c) carry no "inception".
 
+### AMENDMENT 3 (issuer, 2026-10-07 ~11:5xZ) -- disarms row IRPT_CUSTDY-W9-S4
+
+CU10-AC3 reads failed=2 at your e42bb49ae9: `tests/test_hop3_directory_gap.py` (CU-d-2's file, merged @7361085932) asserts
+`si_anchor=ABSENT` in `test_account_line_prints_name_source_and_absent_anchor_without_failing` and
+`test_a_present_si_anchor_prints_its_date_and_rule`, which is false now that every document carries `si_anchor`. That file is added to your
+grant. Re-express the two assertions to their intent: `ABSENT` prints only when a document truly lacks the field (build that document
+in the test), and a present anchor prints its date, rule and branch. Keep both tests; no skip or xfail. Then AC3, then the flip.
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`, uncommitted.
@@ -117,6 +125,7 @@ data/assets/scripts/gold/irpt_custody/tests/test_client_report_figures.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_held_si.py
 data/assets/scripts/gold/irpt_custody/hop3_real_run.py
 data/assets/scripts/gold/irpt_custody/tests/test_hop3_real_run.py
+data/assets/scripts/gold/irpt_custody/tests/test_hop3_directory_gap.py
 org/missions/D9/IRPT/IRPT_CUSTDY/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
