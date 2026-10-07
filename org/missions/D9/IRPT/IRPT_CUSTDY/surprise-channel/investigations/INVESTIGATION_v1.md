@@ -731,3 +731,55 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E1 holds on real data. E2 holds for its mechanical criteria (C-SHAPE is the CVO's judgment). Carried to the next round, not rows: the template's not_covered rendering (CTO note), the tracer test retirement (S10), and the 30 'not described' holdings in the real render (class and sector null until the issuer's describe() join)."
 }
 ```
+
+## IRPT_CUSTDY-W14-S1 -- the order asks for a not-covered account added to render/fixtures/clientreport.firm-a.json, but the existing client-report-document test is coupled to that fixture and cannot pass with it; the not-covered document is built inline in the new test instead
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T13:39:52Z",
+  "one_line": "the order asks for a not-covered account added to render/fixtures/clientreport.firm-a.json, but the existing client-report-document test is coupled to that fixture and cannot pass with it; the not-covered document is built inline in the new test instead",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "measured in worktree: appending {account: ****9999, not_covered: {reason}} to the fixture's accounts and running `bun --no-install test .../client-report-document.test.tsx` gave 10 of 10 tests failing (a mixed household with one not-covered account crashes the covered render path); the fixture was restored byte-for-byte from a backup before any commit",
+      "client-report-document.test.tsx asserts `1 + FIXTURE.accounts.length` returns tables (a), the exact three SI-row list (b) and the literal `5 / 5` page counter (i); a third account that prints no returns table and its own page cannot satisfy those even if the mixed render were supported (reasoned from the assertions, not run)",
+      "the producer never emits a mixed household: validate_document admits a not-covered account only in a household whose accounts are ALL not-covered, so a mixed fixture is also not a shape the contract produces",
+      "portal e355d193 on wk-IRPT_CUSTDY-14-portal: ClientReportDocument branches on isNotCoveredReport; not-covered.test.tsx holds the synthetic not-covered household inline (6 pass); the existing test file is unchanged (16 pass over the clientreport directory)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-f-1 build step 4: add one not-covered account to render/fixtures/clientreport.firm-a.json (synthetic); the existing test must still pass.",
+  "world_is": "The two clauses cannot both hold: the fixture is one covered household that the existing test counts account by account, and the order's paths do not include that test. The fixture file is unchanged. If the CTO wants the not-covered account in a fixture FILE, it is a second fixture (a separate not-covered household document) read by the new test, which needs that path in a later order's grant."
+}
+```
+
+## IRPT_CUSTDY-W14-S2 -- data/assets/scripts/gold/irpt_custody/tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line fails on the CLOUD checkout independent of this order
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T13:39:52Z",
+  "one_line": "data/assets/scripts/gold/irpt_custody/tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line fails on the CLOUD checkout independent of this order",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`python -m pytest -q data/assets/scripts/gold/irpt_custody/tests` in the worktree at fed55f91cc plus CU-f-1: 138 passed, 1 failed, 1 xfailed; the one failure is test_advisor_projection_refused.py:117 (assert False)",
+      "the same single test run from C:/dev/ajb_workspace (the CLOUD checkout without my changes): `-k none_source_names` -> 1 failed, 5 deselected, same line 117, so the failure predates CU-f-1; the file is outside this order's paths and was not touched"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Repo-wide hygiene runs at the drain (round 6 order CU-f-1): the irpt_custody suite is expected green.",
+  "world_is": "One test in a neighbouring file is red on base; it is not caused by validate_document or hop3_real_run. Whoever owns advisor_client_list / its seam message should read it."
+}
+```
