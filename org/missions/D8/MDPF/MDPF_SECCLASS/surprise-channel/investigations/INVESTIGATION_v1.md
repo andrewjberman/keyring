@@ -4648,3 +4648,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. FWD-1's firm view PASSes (CVO grade @a03020a049); only the client page remains."
 }
 ```
+
+## MDPF_SECCLASS-S62 -- clean_name() writes non-ASCII to AWS (e48 landed it on 2 rows), and S58 counted 3 of 316 fixed_income/Cash rows
+
+```json
+{
+  "id": "MDPF_SECCLASS-S62",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T18:45Z",
+  "one_line": "Two defects found at the e32/e50 V3 rebuild. (a) clean_name() passes U+00AE/U+2122 through: the e48 write (ledger closed @194ed263a8) landed a non-ASCII name on VWUAX (custody row, no name before) and CUSIP:025083882 (already non-ASCII before), and the old-list set carries 40 such names. (b) Row S58 named 3 out-of-bound fixed_income/Cash rows, but the V2 set holds 316: old_list_held_census_check.py prints problems[:3], so the count was a truncated page.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CLEAN_NAME_WRITE_V2_SNAPSHOT_20261007.json: clean[VWUAX] carries U+2122 (custody, no prior name); clean[CUSIP:025083882] carries U+00AE (prior live name also carried it)",
+      "R12_CHECKS/old_list_set_v3.py at 63ba9af3fb's parent: V2 and V3 sets each carry 40 non-ASCII clean_name values (37 U+00AE, 3 U+2122)",
+      "same script before the re-plan rule: 313 DIRECT fixed_income/Cash rows outside contract 0.8.0's bound besides S58's 3 (CSHI, FIGXX, FISXX); R11_CHECKS/old_list_held_census_check.py prints problems[:3]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md: no non-ASCII in production code, logs or AWS. PRD v0.14 ruling 2.4: Cash is a sub-class of cash only, and the contract bound covers every placed row.",
+  "world_is": "(a) clean_name's output is not ASCII-only, and 2 live etf-classifications names carry a trademark sign. (b) 316 old-list DIRECT rows were planned fixed_income/Cash, not 3.",
+  "notes": "Remedies: (a) TO-SC-e47 amendment R12c (@63ba9af3fb, slot ~56) makes clean_name ASCII-only; then the issuer rewrites the 2 live names as a literal two-key act. (b) The V3 set re-plans the other 313 rows to cash/Cash, the same rule as the SC-e-49 condition, with S58's 3 kept as placed; its half request shows them for signing. A checker that prints a slice of its problems also prints n_problems."
+}
+```
