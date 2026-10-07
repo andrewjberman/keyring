@@ -2,7 +2,7 @@
 
 <to_id>NFRA_CTLPLN.TO-CT-d-1</to_id>
 <project>NFRA_CTLPLN</project>
-<issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
+<issued_to>0.9.0_WK_NFRA_CTLPLN~8</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>in_progress</status>
