@@ -92,12 +92,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
-- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` DIRECTED (Andrew-direct 2026-10-02 ~05:0xZ, typed at this seat): 
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`.
-  Chooser Andrew; landed by 1.0.0_SA_CTO. "You have adjudication ability on all open calls. Make sure the underlying COOs on this
-  device keep their work flowing." The 2026-10-01 record's other terms stand (IRPT first, `/closer-drive` under FAST, `4.0.0_SA_CRO~X`
-  the research partner, the RESERVED law lines). Paired with the RELAUNCH COO rows above. Stop: DONE read from the register,
-  HELD-AT-STOP, or his stand-down.
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` DIRECTED (Andrew-direct 2026-10-07 ~07:1xZ, typed at this seat as the invocation, VERBATIM:
+  "[60m] <Run the laptop fabric as the control plane of the cluster. Manage and adjudicate requests as needed.>"). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`. Chooser Andrew;
+  landed by 1.0.0_SA_CTO. Solo: no COO loop is armed by it. Stop: DONE read from the register, HELD-AT-STOP, or his stand-down.
 - `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
   wind-down, resume authority:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
@@ -108,6 +106,10 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` (record `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`):
+  struck 2026-10-07 by 1.0.0_SA_CTO. Chooser Andrew: his 2026-10-07 ~07:1xZ invocation re-arms the same scope with new terms (the row above). A
+  successor does not re-arm the 2026-10-02 row.
 
 - `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md`
   @45b266dcdb): struck 2026-10-07 by 1.0.0_SA_CTO. Chooser Andrew: "COO~C should only be focused on this work, not cottonwood backfill

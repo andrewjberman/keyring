@@ -19,4 +19,13 @@ Measured before the ask (fetch at ~06:5xZ): laptop CLOUD 27 ahead of and 57 behi
 One word, answering one ask: this pull-merge and push. It is not a standing rule for later pushes; `0.0.0_AB_MSTR`'s open question to
 him on zero-ceiling pushes is not answered by it.
 
+## A second word, ~07:0xZ, VERBATIM
+
+"I want the Dells to get started."
+
+Measured at that minute: origin CLOUD `c869ab0e4f`, laptop 36 ahead and 72 behind, `0.0.0_AB_MSTR`'s merge window OPEN (msg 106019);
+both Dell inbound queues read 0 visible and 0 in flight (a producer-side read: consumed or discarded, not which); both Dells on the
+tailnet; no Dell acknowledgement of the seating relay had reached this seat. This seat's act on it: one message to `0.0.0_AB_MSTR`
+naming the first act of each Dell seat, which needs no cloud grant.
+
 -- 1.0.0_SA_CTO
