@@ -103,3 +103,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @4e5cdb7ff9; proof VALID (worktree checker); both lists name Andrew as owner (ASSIGNED, two fields each, not regenerated); owner_line.lists_statement; AC1 3 of 3, AC2 5 of 5, AC3 no alert-shaped line; lists tests 15 passed</status>
