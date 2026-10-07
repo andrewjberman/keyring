@@ -63,10 +63,10 @@ issuer's route, and the access keys are created after it, outside Terraform.
 
 ### ACCEPTANCE
 
-<criterion id="CT2b1-AC1" cell_refs="CT-b-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>no_access_key=True names_from_builder=4/4 ok=True</expect></criterion>
+<criterion id="CT2b1-AC1" cell_refs="CT-b-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>no_access_key=True names_from_builder=6/6 ok=True</expect></criterion>
 `CT2b1-AC1` -- the root validates, carries no access key, and every name is the builder's.
 
-<criterion id="CT2b1-AC2" cell_refs="CT-b-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=5/5 denied_ok=9/9 all_ok=True</expect></criterion>
+<criterion id="CT2b1-AC2" cell_refs="CT-b-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=8/8 denied_ok=11/11 all_ok=True</expect></criterion>
 `CT2b1-AC2` -- the cloud's own evaluator allows the five deploy actions and denies the nine access, audit and production-delete actions.
 
 <expected_criteria>CT2b1-AC1,CT2b1-AC2</expected_criteria>
@@ -85,6 +85,8 @@ issuer's route, and the access keys are created after it, outside Terraform.
 infra/aws/terraform/nfra-ctlpln-identity/main.tf
 infra/aws/terraform/nfra-ctlpln-identity/iam.tf
 infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell1_bus_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell2_bus_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/.terraform.lock.hcl
 infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
@@ -117,3 +119,25 @@ lane: the <paths> block IS the grant (worker RULING 1).
 </preflight>
 
 Source: PRD v0.6 @0bab4b7532 C-IDENTITY, FWD-10; CTO msgs 105913, 105915, 105920, 105929; decomposition round 2.
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~02:5xZ) -- a Dell's fabric manager uses the bus: send to every box, receive only its own
+
+Andrew asked, relayed by `1.0.0_SA_CTO` (msg 105931): a Dell MSTR needs the agentbus. The order's "SQS send/receive on agentbus-* queues" is
+too wide: a Dell must NOT read another box's inbound queue. The issuer amends its own order (CLAUDE.md rule 27, L6); gate limb: none graded
+this modification (LIMB 6 grades new orders only; the order declares no `<placeholders>`). CT2b1-AC1 and CT2b1-AC2 expectations change as below.
+1. **The group's deploy policy** (`dell_deploy_policy.json`): REMOVE the agentbus receive; ALLOW `sqs:SendMessage`, `sqs:GetQueueUrl`,
+   `sqs:GetQueueAttributes` on the four boxes' inbound queues only: `arn:aws:sqs:us-east-1:313476888478:agentbus-ajbdev-sitez-to-laptop.fifo`
+   (laptop's, ARN read live), `arn:aws:sqs:us-east-1:313476888478:agentbus-ajbdev-laptop-to-sitez.fifo` (site Z's), and the Dells' by prefix
+   `arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell1-queue*` and `...agentbus-global-dell2-queue*` (their FIFO names land with CT-b-3;
+   the prefix covers the builder's final form).
+2. **One per-user bus policy each**, names builder output: `cloudops-dell1-agent-bus-policy`, `cloudops-dell2-agent-bus-policy`
+   (`name('cloudops', None, 'dell1-agent-bus', 'policy')`), files `dell1_bus_policy.json` / `dell2_bus_policy.json`, attached with
+   `aws_iam_user_policy_attachment` to that Dell's user only, tagged DisplayName=DellBoxes: ALLOW `sqs:ReceiveMessage`, `sqs:DeleteMessage`,
+   `sqs:ChangeMessageVisibility`, `sqs:GetQueueAttributes` on that Dell's own queue prefix only.
+3. **The check** now compares SIX names to the builder (group, two users, deploy policy, two bus policies): last-line expectation
+   `no_access_key=True names_from_builder=6/6 ok=True`.
+4. **The simulation** evaluates dell1's effective set (the group policy + `dell1_bus_policy.json` together in one
+   `simulate_custom_policy` call). ALLOWED (8): the four non-SQS deploy actions of the original matrix (`s3:PutObject` data, `lambda:UpdateFunctionCode`,
+   `ecs:RegisterTaskDefinition`, `s3:GetObject` state) plus `sqs:SendMessage` to the laptop's, site Z's and dell2's inbound queues and
+   `sqs:ReceiveMessage` on dell1's own. DENIED (11): the original nine plus `sqs:ReceiveMessage` on the laptop's inbound queue and on dell2's.
+   Last-line expectation `POLICY-SIM allowed_ok=8/8 denied_ok=11/11 all_ok=True`.
