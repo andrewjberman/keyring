@@ -4462,3 +4462,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Fix for the issuer: re-stage the three paths from 4e73b996d0 (git restore --source=4e73b996d0 --staged --worktree) and add d00_census_out.json to this order's <paths> and the staged set, then re-issue slot ~53."
 }
 ```
+
+## MDPF_SECCLASS-W53-S2 -- W53-S1 resolved by amendment 3: the four staged blobs equal 4e73b996d0's and the e55 port is committed
+
+```json
+{
+  "id": "MDPF_SECCLASS-W53-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~53",
+  "surfaced_at": "2026-10-07T16:48:00Z",
+  "one_line": "AMENDMENT 3 (b2144dedb1) re-staged all four files from 4e73b996d0 and added d00_census_out.json to <paths>; the re-seated slot ~53 confirmed blob equality and committed the port at b359a829d7. W53-S1 is resolved by citation.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git rev-parse :<path> == git rev-parse 4e73b996d0:<path> for all four: d06_firm_mix_summary.py 355b2b98; test_d06_unclassified_line.py 7141c932; d00_census_out.json 66c09de8; half request a99fba4a",
+      "committed on secclass-r12-rel-e55 at b359a829d7 (LOCAL, not pushed)",
+      "SC9-e55-AC1 PYTEST-OK rc=0 (6 passed); SC9-e55-AC3 HALF-READY rc=0; AC2 WITHDRAWN (amendment 1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3: the four staged files are 4e73b996d0's blobs and d00_census_out.json is in <paths>.",
+  "world_is": "Matches the amendment. W53-S1's armed hazard (wrong blobs, missing census) is disarmed: the committed set equals the amendment-1 build.",
+  "notes": "Resolves MDPF_SECCLASS-W53-S1 by amendment 3 b2144dedb1; S1 is not edited. The shared-home files stay off every pushed range until both halves sign."
+}
+```
