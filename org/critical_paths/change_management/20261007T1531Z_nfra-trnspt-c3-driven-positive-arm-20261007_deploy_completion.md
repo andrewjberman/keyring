@@ -12,8 +12,8 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| L1 | activation | aws_lambda_function.mail_pull APPLY 1 (code VGIq..., WINDOW_DAYS 60) | safe-apply plan 0/1/0 + rc |  | OPEN |
-| L2 | verify | get-function-configuration | CodeSha256 VGIq85Xxm5KVLCnv16BASS63RsPMHScMEwZJP5SuMNY= and WINDOW_DAYS 60 |  | OPEN |
+| L1 | activation | aws_lambda_function.mail_pull APPLY 1 (code VGIq..., WINDOW_DAYS 60) | safe-apply plan 0/1/0 + rc | safe-apply rc=0 from clean worktree at 8f82af6281 applying saved plan c3-apply1.tfplan: Plan 0 to add, 1 to change, 0 to destroy (source_code_hash teSt...->VGIq..., WINDOW_DAYS 7->60); 2026-10-07T15:34:46Z | CLOSED 20261007T153721Z |
+| L2 | verify | get-function-configuration | CodeSha256 VGIq85Xxm5KVLCnv16BASS63RsPMHScMEwZJP5SuMNY= and WINDOW_DAYS 60 | aws lambda get-function-configuration outlook-global-transcripts-pull-lambda read from dell2 after apply: CodeSha256 VGIq85Xxm5KVLCnv16BASS63RsPMHScMEwZJP5SuMNY=, CodeSize 478258, WINDOW_DAYS 60, LastModified 2026-10-07T15:34:46Z, LastUpdateStatus Successful | CLOSED 20261007T153721Z |
 | L3 | verify | 2026-10-07T23:30Z scheduled fire | MAIL-PULL-FIRE line landed>=1 + EventBridge invocation; laptop fenced-read FILE |  | OPEN |
 | L4 | activation | aws_lambda_function.mail_pull APPLY 2 (WINDOW_DAYS 7) | safe-apply plan 0/1/0 + rc |  | OPEN |
 | L5 | verify | get-function-configuration + 2026-10-08T23:30Z fire line | WINDOW_DAYS 7 and window_days=7 |  | OPEN |
@@ -21,3 +21,5 @@
 ## Log
 
 - 20261007T153114Z OPENED by 2.0.0_SA_COO~T2 with 5 leg(s)
+- 20261007T153721Z LEG L1 closed: safe-apply rc=0 from clean worktree at 8f82af6281 applying saved plan c3-apply1.tfplan: Plan 0 to add, 1 to change, 0 to
+- 20261007T153721Z LEG L2 closed: aws lambda get-function-configuration outlook-global-transcripts-pull-lambda read from dell2 after apply: CodeSha256 VGI
