@@ -2384,3 +2384,56 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "The sample holds 14 in-kind legs; the bound is measured on a window with 1 lagged leg. A longer history would tighten it. The producer lists a leg past the bound and never bends it."
 }
 ```
+
+## IRPT_DASHBD-W22-S2 -- A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sal
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S2",
+  "one_line": "A realized lot names the open lot it closed by its opening event id, and that id repeats within an account when a wash sale re-dates a lot, so the sale linked to no single lot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2: change the activity or lot rule so every account with the same pattern is handled. The producer links a realized row to the prior day's open lot by close_open_event_id and security alone.",
+  "world_is": "In the 91-account window one sale of 0.94 shares was listed SALE_NOT_LINKED_TO_ONE_LOT: its opening event id is shared by a second, smaller lot (acquired a different day), so two open lots matched. The realized row carries its acquired_date; adding it to break a tie links the sale to exactly one lot (0 unlinked sales in the re-run, from 1). This is a linking rule, not a figure: no sale is linked that was not already unique on event id, and a tie still unresolved stays unlinked and listed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py _sold_lot",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/WINDOWS_E1.json rule_audit.unmatched (empty)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json inkind.unmatched (round 24: 1 listing)"
+    ]
+  },
+  "notes": "Round 24 left that sale unlinked and its basis at the custodian's figure; with the wash-sale rule it had to be linked or it would have opened a new cent-sized gap."
+}
+```
+
+## IRPT_DASHBD-W22-S3 -- The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under 
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~22",
+  "surfaced_at": "2026-10-07T18:48:59Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W22-S3",
+  "one_line": "The wash-sale rule adds a basis_source member (WASH_SALE_EXCLUDED_BASIS) and the method and schema versions move (3 and 1.2); the lot contracts under org/standards do not list basis_source.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "DB-b-39 item 2 names a rule change in the activity or lot rule; it does not name a schema member.",
+  "world_is": "Measuring a lot from the cash paid needs the custodian's figure and the identity's figure to differ with a stated reason, which basis_source already carries for in-kind lots. The axis stays one-intent (which cost the lot is measured from) with three members in a stated precedence (IN_KIND over WASH_SALE over CUSTODIAN). org/standards/IRPT_DASHBD_ACCOUNT_LOT_*_CONTRACT.json do not mention basis_source (round 24 added it without a contract line), and are outside this order's paths, so they were not edited. METHOD_VERSION 2 to 3 and SCHEMA_VERSION 1.1 to 1.2 mark the change; no table is written to S3, so no served consumer reads either.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py BASIS_SOURCES, METHOD_VERSION, SCHEMA_VERSION",
+      "org/standards/IRPT_DASHBD_ACCOUNT_LOT_UNREALIZED_DAILY_CONTRACT.json (no basis_source column)"
+    ]
+  },
+  "notes": "For the CTO's next analysis: the two lot contracts need a basis_source and custodian_cost_basis line before any table is served."
+}
+```
