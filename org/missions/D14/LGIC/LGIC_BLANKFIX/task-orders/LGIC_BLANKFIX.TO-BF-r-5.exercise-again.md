@@ -78,6 +78,8 @@ every assertion behind it held and `ok=False` otherwise.
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not block.
 
 <paths>
+lib/opal_naming_keyfill.py
+lib/tests/test_opal_naming_keyfill.py
 lib/opal_naming_rootcheck.py
 lib/tests/test_opal_naming_rootcheck.py
 lib/opal_naming.py
@@ -159,6 +161,34 @@ prints it. The card file is not edited and nothing reads these answers yet.
 4. Extend `lib/tests/test_opal_naming_rootcheck.py`: one case per branch, and the DIFFERENCE CONTROL: the same key matches a row
    of its own bucket and does not match the same row under another bucket. `ROOTCHECK-TEST ok=True` still.
 Report what each of the four keys printed before and prints now.
+
+### AMENDMENT 3 (2.0.0_SA_COO~G, 2026-10-07) -- STEP 0c: the bucket of a key held in a constant; then the run again
+
+Steps 0 and 0b are merged (commits 736a8f8a06, ed3415a197). `BR5-AC3` passes and stands. `BR5-AC1` read `hole=2`: the run is
+`items=140 right=9 fix=114 not_asked=10 pattern=3 carded=0 refused=2 hole=2`. The two holes are `daily/49financial` and
+`config/etf_universe.json` at lines 65 and 66 of
+`infra/aws/lambda/bd-pipeline/bd-49f-etf-ownership-daily/backfill_49f_daily_from_monolith_rps.py`. The registry answers both
+(`infra/logic/registry/key_rulings.json`, bucket `opal-data-etfs`), but `opal_naming_keyfill.bucket_of` could not read their
+bucket: each key is a module-level constant, the bucket is another constant (line 64), and the file has two bucket candidates
+(row `LGIC_BLANKFIX-W1-S9`).
+
+**STEP 0c, build in `lib/opal_naming_keyfill.py`** (added to your grant; do NOT edit `lib/opal_naming_rootcheck.py` or
+`lib/opal_naming.py` in this step: another worker holds the root check now):
+1. When the key's own statement names no bucket and the key literal is assigned to a NAME (a constant or variable), follow that
+   name to its USE sites in the same file. If every use site that also names a bucket (a bucket literal, or a name assigned a
+   bucket literal in the same file) names the SAME bucket, that is the key's bucket, and `basis` says which line decided it. If
+   the use sites name different buckets, or no use site names one, return `None` as today with a basis that lists what was
+   seen. Never guess from a name's spelling (`ETFS_BUCKET` is evidence only through the literal assigned to it).
+2. Extend `lib/tests/test_opal_naming_keyfill.py`: on small source texts, a key constant used once with a bucket constant reads
+   that bucket; the DIFFERENCE CONTROL: the same key constant used with two different buckets reads `None`; a key constant never
+   used reads `None`. And on the real file: lines 65 and 66 read the bucket their use sites name. `KEYFILL-TEST ok=True` still.
+3. Then re-run steps 1 and 2 of the cell (overwrite the saved trace with the new live run) and re-run `check_trace_round3.py`.
+If the two keys read a bucket OTHER than the one their registry rows name, they will not match and will stay `HOLE`: report that
+whole, with the use-site lines; do not force a match. Extend your proof-of-spec instance and re-validate it.
+Your rows continue at `LGIC_BLANKFIX-W1-S11`.
+
+Row `LGIC_BLANKFIX-W1-S10` (a wider typing of function-name literals would add 40 Lambda names, one of them in this root) is noted
+and NOT asked for: keep step 0 as built.
 
 ---
 
