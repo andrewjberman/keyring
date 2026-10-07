@@ -94,7 +94,13 @@ commit `42239a4f2a` and no other commit; no table, trigger, IAM or Terraform cha
 `wk-MDPF_SECCLASS-27`'s code commit reaches a pushed range only after both halves are signed; (4) the first post-upload run's dispatch log
 is read for `B_01b` absent and E_18 exit status, and that read closes the ledger's verify leg.
 
-## CTO half -- UNSIGNED
+## CTO half -- REFUSED (as written)
 
-Awaiting `1.0.0_SA_CTO~DELL1` (CTO never-widen halves for this box's projects, laptop CTO ruling 106047 section 1).
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e35_BD_OLD_LIST_WRITERS_20261007.md` @a92652a41a, by `1.0.0_SA_CTO~DELL1`: the BD-tree act is sound; the half does not name the old list's readers outside the BD
+tree (46-file census; IRPT Holdings falls back to `bd-securities`; E_18's canonical path has written 0 rows). It re-signs on (A) each
+reader bounded, or (B) the upload ordered after a widened SC-e-38.
+
+**Issuer's choice: (B).** TO-SC-e38 amendment 1 widens the trace to the full census, with each reader's missing-row rule, its served
+result for a newly held security, and its canonical producer. This act (and the SC-e-36/37 uploads) waits for SC-e-38 to drain; the
+half is then re-presented with the trace linked. No upload before then; the 23:00Z BD run runs as today.
 

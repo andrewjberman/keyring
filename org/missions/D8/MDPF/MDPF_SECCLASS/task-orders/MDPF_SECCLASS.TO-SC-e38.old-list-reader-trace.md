@@ -105,3 +105,26 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.12 @87ad6d2e4c (FWD-5, surfaces S06, S17, S18, S21, S22, S25); DECOMP_R8 @495efa3c32.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~09:0xZ) -- the trace covers EVERY reader of the old list, not three
+
+Cause: `1.0.0_SA_CTO~DELL1` REFUSED the SC-e-35 half (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e35_BD_OLD_LIST_WRITERS_20261007.md` @a92652a41a) because the old list's readers outside the Black Diamond
+tree were never named; IRPT Holdings falls back to `bd-securities` for a ticker the canonical table lacks, and E_18's canonical path
+has written 0 rows. The issuer chose the CTO's option (B): the SC-e-35/36/37 uploads are ORDERED AFTER this cell drains.
+
+1. **Denominator.** The census is `git grep -l -E "bd-securities|BD_SECURITIES_TABLE" -- '*.py' '*.ts' '*.tsx' '*.tf' '*.json'`, minus
+   `data/black_diamond/**`, `org/**` and test files: 46 files at b07521c5dd (code readers, IAM and Terraform grants, registry and census
+   JSON, schema files). Write one `## READER: <repo path> ...` section per file (heading contains the path), plus the three readers the
+   face already names. A grant, a schema or a census JSON is `VERDICT: NOT-A-READER` with its EVIDENCE line.
+2. **Each real reader** (any other verdict) carries exactly one each of:
+   - `MISSING-ROW:` its own rule for a ticker with no `bd-securities` row, `path:line`, read from the code;
+   - `SERVED-NEW:` what its served output shows for a security FIRST HELD after the old-list writers stop (classified from the canonical
+     table / unclassified / dropped / an error), read from that rule, never predicted;
+   - `CANONICAL-PRODUCER:` the producer that gives such a security an `etf-classifications` row before this reader runs, with its
+     measured live write count (a read-only scan of `updated_by`), or `NONE`.
+3. `SC8-e38-AC1`'s check now computes that census itself and fails on any uncovered file or missing line; its expectation
+   `SC-E38-TRACE ok=True` is unchanged. Issuer controls: a synthetic full trace read `ok=True readers=48 census=46`; the same with one
+   section removed read `ok=False uncovered=1`; base FAIL as expected (no trace file).
+4. Bounds unchanged: read-only; no table write, no deploy, no code edit to any reader.
+Gate limb: none graded this modification (no new order; no `<placeholders>`).
+
