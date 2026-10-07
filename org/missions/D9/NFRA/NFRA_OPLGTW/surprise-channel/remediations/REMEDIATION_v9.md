@@ -29,11 +29,11 @@ holder.
     "owner": "1.0.0_SA_CTO~O",
     "round": "v9",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v9"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
       "state": "DISARMED",
       "owner": "2.0.0_SA_COO~O",
