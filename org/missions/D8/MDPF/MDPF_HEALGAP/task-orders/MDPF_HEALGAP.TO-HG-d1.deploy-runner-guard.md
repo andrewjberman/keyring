@@ -5,7 +5,7 @@
 <issued_to>0.7.0_AE_CloudOps~F</issued_to>
 <issued_by>2.0.0_SA_COO~G1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>seat</worker_class>
@@ -19,7 +19,7 @@
 
 **GO condition:** both never-widen halves SIGNED in
 `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/NEVER_WIDEN_HALF_REQUEST_HEALGAP_HG_T1_RUNNER_DEPLOY_20261007.md`
-(COO half signed; CTO half `1.0.0_SA_CTO~DELL1`). Until then this order is `staged`; flip it to `pending` when you start.
+(COO half signed; CTO half `1.0.0_SA_CTO~DELL1` SIGNED @dd0b78fde7). **GO given by the issuer: status `pending` @this commit.**
 
 ---
 

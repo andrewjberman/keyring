@@ -5,7 +5,7 @@
  "project": "IRPT_BCKEND",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.28",
+ "prd_version": "v0.29",
  "step": 4,
  "brief_ref": "docs/briefs/investor-reporting-ir-bk-brief-20260910.md@2acf23d8fd",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"],
@@ -159,7 +159,7 @@ Source: brief II.3, eleven contracts, proposed canonical, versioned. BK owns ide
 | `AnalysisReport` | BCKEND B9/B10 | FNTEND | B9, B10 | request/attempt + vendor artifact hash; effective inputs/settings; typed sections with units/dates/source coordinates; disclosures; extraction validation; released revision + protected PDF reference **(contract v2, ADDENDUM v0.28)** a `provider` member, `YCHARTS` or `OPAL_ENGINE`; under `OPAL_ENGINE`: Opal artifact hash + run record reference in place of the vendor artifact hash; effective inputs/settings with the as-of date of each input and no vendor read-back; typed sections with units/dates and, per section, status, reason, method and coverage in place of source coordinates; computation validation in place of extraction validation |
 | `HoldingsSnapshot` | BCKEND B12 | FNTEND | B12 | scope + source-set revision; business/as-of clocks; unique custody totals; node hierarchy; namespaced model/security ids; observed/assigned/target basis; amount + denominator; parent/total percentages; provenance; coverage/remainders; drill refs |
 | `NarrativePacket` | BCKEND B13 | FNTEND, B14 | B13 | performance revision; event policy/version; dated peak/trough/recovery/movement events; cited historical evidence with cutoffs; validated prose; coverage; generation/model/prompt versions |
-| `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export (exactly one, never null; ADDENDUM v0.24); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
+| `ExportBundle` | BCKEND B14 | B14 render; FNTEND F8 (preview -- a preview never calls the vendor again) | B14 | immutable authorized report revisions + selected sections; a narrative packet for a client report, or the retained Analysis report revision for an Analysis export, or the custody report revision for a custody-report export (exactly one, never null; ADDENDUMS v0.24, v0.29); approved asset hashes; template/renderer/disclosure versions; render options; no live vendor request during render |
 | `ExportReceipt` | BCKEND B14 | FNTEND | B14 | export/bundle hash; artifact hash/location server-side; page/validation facts; created/released timestamps; job state; authorized download route; no vendor signed URL in FE |
 | `StatusEnvelope` | BCKEND B16 | FNTEND | B16 | operation + revision; queued/running/ready/partial/stale/unavailable/needs-correction/uncertain/failed; source dates -- the business date is REQUIRED on an ANSWER-BEARING state (ready, partial, stale, needs-correction, uncertain) and MAY BE ABSENT, never null, on a NO-ANSWER state (queued, running, unavailable, failed) where no source read has occurred; safe retry/recovery actions; public reason code; internal correlation id |
 | `RenderPackage` | FNTEND | BCKEND B14 | B14 (consumer) | supported contract/template versions; deterministic screen/print components; fonts/assets requirements; print entry point; visual fixtures -- BK packages and executes the compatible version |
@@ -680,3 +680,25 @@ PRD's header); the design `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_DESIGN_A
 31. **The `YCHARTS` branch of v2 is removed** in the release that removes the YCharts producer (IRPT_YCDGEN FWD-11).
 
 ENDPOINT is not edited.
+
+## ADDENDUM v0.29 -- an export can freeze an IRPT_CUSTDY custody report (L4; CONTRACTS changed: the ratified-text half re-opens)
+
+**Source.** `1.0.0_SA_CTO~DELL2`'s IRPT_CUSTDY round-1 analysis @822468e309 (W4-S1 ruled (a), on `4.0.0_SA_CRO~DELL2`'s research
+@14fe71e545) and IRPT_BCKEND round-61 analysis @aae1ed7781 E-P9. `2.0.0_SA_COO~P2` msg 336 (row W138-S2: IB-pr-336 cannot freeze the
+document without this row). Written by `1.0.0_SA_CTO~DELL2` under NFRA_CTLPLN ADDENDUM v0.12 C-ROLES, 2026-10-07 ~10:2xZ.
+
+32. **The `ExportBundle` row gains a third pinned-document case, the custody report.** This follows v0.24's precedent for the
+    Analysis report. A bundle carries exactly one of these: a narrative packet (for the existing client-report export), the retained
+    Analysis report revision (Analysis export), or the custody report revision (custody-report export, IRPT_CUSTDY hop 5). None is
+    null. A bundle with two, or with none and no `narrative_state` (v0.27), is refused.
+    - **The name is `custody_report_ref`, with kind `CUSTODY_REPORT`, not "client report".** This row already uses "client report"
+      for the Performance export's narrative packet. One word for two document kinds would make the existing row ambiguous (TAXONOMY
+      LAW (iii), one axis, one intent).
+    - The reference names the custody report's id, its revision and the sha256 of the frozen document, so the bundle stays
+      reproducible.
+    - Every existing bundle kind is validated exactly as before. The render host dispatches `CUSTODY_REPORT` to its template and
+      REFUSES an unknown template name (E-P9 criterion 2).
+    - **Who writes what:** `ExportBundle.schema.json` (docs/contracts and the `_contracts` copy), `reports/repository.py` KINDS and
+      `submit_installed._validate` are `2.0.0_SA_COO~P2`'s cell (E-P9); the order's grant widens to them. The template is IRPT_CUSTDY's
+      (C-TEMPLATE); the print package's kind is the page half.
+    - No other CONTRACTS row changes. ENDPOINT is not edited.

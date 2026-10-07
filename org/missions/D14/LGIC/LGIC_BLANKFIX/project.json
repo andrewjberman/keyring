@@ -24,13 +24,18 @@
   "prds": [
     {
       "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md",
-      "version": "v0.1",
+      "version": "v0.2",
       "status": "RATIFIED"
     }
   ],
   "prd_lineage": [
     {
       "version": "v0.1",
+      "date": "2026-10-07",
+      "author": "1.0.0_SA_CTO"
+    },
+    {
+      "version": "v0.2",
       "date": "2026-10-07",
       "author": "1.0.0_SA_CTO"
     }

@@ -73,13 +73,16 @@ for _old in "$_OLD_STATE_DIR/${SERIAL}".*; do
 done
 
 # The id pattern is the SCHEMA's own (investigation_item.schema.json "id"):
-#   ^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z,
+#   ^[A-Z0-9_]+-(<machine>-)?(W[0-9]+-|C-)?S[0-9]+$   -- {PROJECT}-S{n} laptop, {PROJECT}-Z-S{n} site Z, {PROJECT}-D1-S{n} a Dell,
 #                                                 {PROJECT}-W{n}-S{k} a worker worktree's row, {PROJECT}-C-S{k} a CVO row
 #                                                 in adjudications/ (the allocator coordinates).
 # Anchoring the count to it is what makes this a ROW count and not a `"id"` substring count --
 # evidence strings in these files routinely contain quoted fragments, and a naive grep for '"id"'
 # scores them. Counting is a MEASUREMENT (Rule 21 non-application limb i), not a search.
-ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+"'
+# The machine coordinate (CTO msg 106069) is one capital letter, optional digits, a hyphen (Z-, D1-, D2-), and is never
+# W<n>- or C- (those keep their meaning). The gate's ID_RE says that with a lookahead; POSIX ERE has none, so it is
+# spelled by alternation: any capital but C and W with optional digits, or C with at least one digit (W never).
+ID_RE='^[[:space:]]*"id":[[:space:]]*"[A-Z0-9_]+-(([A-BD-VX-Z][0-9]*|C[0-9]+)-)?(W[0-9]+-|C-)?S[0-9]+"'
 
 # ---------------------------------------------------------------------------------------------
 # ID/HASH WATERMARK -- RC2, the watcher half (CVO~A re-grade @0dbf12ebb3).
