@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -112,3 +112,33 @@ lane: the <paths> block IS the grant (worker RULING 1).
 
 Source: CTO msg 106061 (b); CLAUDE.md hard stop "NEVER reference another firm's data from a pipeline tree" (the cross-firm law);
 decomposition round 4 "Open at the CTO" item 2. Base dry-run at the cut: CT4d2-AC1 base FAIL as expected (the check does not exist).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~09:0xZ) -- THE CONFIRMED ADMISSIONS; the order is handed (staged -> pending)
+
+Authority: CT-d-1's census, merged @7cb0a2f3ab (24 of 24 data buckets read; 3 fenced; the evaluator agrees on 48 of 48 calls), and
+`1.0.0_SA_CTO` msg 106089: "the principals admitted per bucket by placement (dell2: the three firms' data its five projects read;
+dell1: what MDPF_SECHIST and MDPF_SECCLASS read)". Gate limb: none graded this modification.
+
+**THE PAIRS (three, and only these):**
+
+| Dell user | bucket | fence declared at | citing files of dell2-placed projects |
+|---|---|---|---|
+| `cloudops-dell2-agent-user` | `opal-data-49financial` | `infra/aws/terraform/shared-infra/s3-49financial.tf:122` | 17 |
+| `cloudops-dell2-agent-user` | `opal-data-cottonwood` | `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:142` (a `for_each` over the scopes registry) | 22 |
+| `cloudops-dell2-agent-user` | `opal-data-inflection` | `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:142` (the same `for_each`) | 14 |
+
+**dell1 is joined to NO fence.** Its placed projects' buckets (the census's union for dell1) meet no fence today: `gap_dell1=0`. Do not
+add `cloudops-dell1-agent-user` anywhere. The cross-firm arm of your check must show dell1 absent from all three fences and dell2
+present in exactly these three.
+
+**The shared construct.** Two of the three fences are ONE `for_each` resource over a registry, so the admitted list is very likely one
+expression serving every firm bucket that resource builds. Adding dell2 there admits it to exactly the buckets that resource fences;
+the census says that resource fences these two and no third. CONFIRM that from the Terraform before you edit (how many buckets does
+the `for_each` produce, and is each one in the pairs?). If it produces a bucket that is NOT in the pairs, do not widen it: give the
+listed buckets their own extension, as the face says, and say how. If the admitted list is read from a registry file (for example
+`infra/logic/registry/scopes.json`) rather than typed in the `.tf`, that file is NOT in your grant: stop, file ONE BLOCKING row naming
+the file and the key, and report -- the issuer amends the grant.
+
+**The pairs file** `tests/dell_fence_join_pairs.json` holds exactly the three pairs above.
+
+The saved census `tests/dell_fence_census.json` and its script are in your worktree after the merge of the trunk into your branch.
