@@ -19271,3 +19271,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The reader handles the plain list and breaks on the envelope; it does not consume the live route, only a file handed to --directory. Recorded FAIL, not fixed. INERT: nothing feeds it a search envelope today."
 }
 ```
+
+## IRPT_BCKEND-S362 -- S352 and S356 disarmed: E-M1 graded on the second laptop read, every arm exercised
+
+```json
+{
+  "id": "IRPT_BCKEND-S362",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T10:24:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S352 (BLOCKING, ARMED) is disarmed by its own route (a): a principal permitted on the firm buckets ran the read and delivered it as a FILE; TO-IB-m30-301 graded that FILE (C1-TIES, C2-TIES 29 of 29, C3-RECONCILES 3 of 3 firms x 3 arms) and drained @1758606f46. S356 (the first read not gradable) is superseded by the same second read. The dell2 identity remains refused on the firm buckets until the NFRA_CTLPLN fence apply (TO-APPLY-4); that residual is not this row's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_M/R30M_FWD5_REPLAY_READ_2.json @8b83fd1d6f, sha256 afa19a65eb338c6adc72be8684e81c51f9f4c2347fea7d5584e78b3cbe884c52 (reader d6a3e7b04b; identity arn:aws:iam::313476888478:user/Andrew_Berman; publications 2026-10-05)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~152/IRPT_BCKEND.TO-IB-m30-301.fwd5-replay-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 1758606f46 (safe-merge: 3 files needed, 0 dropped, 0 foreign; index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S352 disarm condition (a): a principal permitted on the three firm buckets runs the read (a laptop seat delivers a FILE; 2.0.0_SA_COO~M2 files the row).",
+  "world_is": "Condition (a) met and graded. S352 DISARMED, S356 superseded. E-M1 (cell IB-mr-301) complete for round 30 ~M."
+}
+```
