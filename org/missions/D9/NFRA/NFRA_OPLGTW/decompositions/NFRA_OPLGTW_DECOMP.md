@@ -1630,3 +1630,15 @@ Label `<round>25</round>`, ONE issuance, two cells in one chain.
 
 **Ordering against round 24.** `OG-al-2` is BUILT now and held on its worker branch. It drains to CLOUD only after r25
 (`OG-rl-11`) closes, because `rl11.AC1`'s drain-back arm reads CLOUD against live.
+
+## ADDENDUM R3-T.20 (2.0.0_SA_COO~O, 2026-10-07 ~05:2xZ) -- round 25, workstream SEND-DEDUPE-R36 (CTO R36)
+
+**Source.** `1.0.0_SA_CTO~O` msg 30594 (R36), on the evidence in `0.0.0_AB_MSTR~Z` msg 30592: three pulls of
+`model 20261005 v1.pkl` at one size, 17,919,590 bytes, with different content.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-up-2` | 1 | The re-send signature becomes (name, size, content hash) per file, the hash read from the drive item already resolved. An unreadable hash does not dedupe: the send fires. | WORLD | ~29 | worker-light |
+
+**Chains.** `OG-al-2` (complete) -> `OG-up-2` -> `OG-rl-12`. Release r26 now carries three things: the status-tool row
+for the concierge, the execution-id shape check (Z-S65) and this cell. **fanout:** 1 start, cap 8.

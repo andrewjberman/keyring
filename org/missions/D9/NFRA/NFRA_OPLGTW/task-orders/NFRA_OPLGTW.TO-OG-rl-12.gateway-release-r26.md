@@ -34,6 +34,11 @@ deploy identity and the manifest commit. Reuse the `r25_*` tooling in
   lines; it ships to the host), `app/integrations/opal_portal/integration.py` (the execution-id shape check of row
   Z-S65; it ships), and two source-only tests, `tests/test_identity_scope_status_row.py` and
   `tests/test_opal_portal_status_id_shape.py`.
+  - **AMENDED A2 (CTO R36):** the set also carries `OG-up-2`, the content-keyed re-send dedupe, in the same
+    `app/integrations/opal_portal/integration.py`, with its source-only `tests/test_opal_portal_dedupe_content.py` and
+    any send-split or id-shape test fake that cell changed. Handed only after `OG-up-2` is drained too.
+  - The dedupe cannot be exercised live without a real send, which this project never runs. The ANNOUNCE says so: it
+    rests on the offline tests, and the first corrected same-date re-send is its first live exercise.
   - If CLOUD carries any OTHER gateway difference, STOP before the release commit and report its files and commits.
     Another seat's change needs its own release request and halves; do not carry it silently.
 - **Served output WIDENS, by Andrew's word.** The ANNOUNCE names it:
@@ -113,6 +118,7 @@ once per phase.
 - `rl12.AC1` pins the live sha to r25's release sha `240ac2fe5a`, the value the manifest will carry once r25 deploys.
   Should r25 roll back or re-cut, the issuer amends the pin before the hand-off.
 - AMENDMENT 1 (04:4xZ, issuer, before any hand-off): the release set gains OG-al-2's item 4 (row Z-S65, CTO msg 30563).
+- AMENDMENT 2 (05:2xZ, issuer, before any hand-off): the release set gains OG-up-2 (CTO R36, msg 30594).
 - Pre-cut 04:3xZ: `rl12.AC1` FAIL (r25 is not live yet; no ledger). `rl12.AC2` FAIL (the record is absent).
 
 <status>pending</status>
