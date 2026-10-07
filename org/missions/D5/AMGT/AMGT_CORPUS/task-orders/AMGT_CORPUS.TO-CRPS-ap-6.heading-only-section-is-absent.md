@@ -160,3 +160,4 @@ tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 <fabric>site-z</fabric>
 <status>complete</status>
 <status>in_progress</status>
+<status>complete</status>
