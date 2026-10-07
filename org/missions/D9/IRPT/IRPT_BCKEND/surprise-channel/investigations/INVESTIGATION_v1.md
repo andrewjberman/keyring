@@ -19875,3 +19875,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The legacy keys still count as naming accounts. Narrowing to covered_account_ids alone would fail test_export_receipt_live_route.py fixtures that are outside the grant."
 }
 ```
+
+## IRPT_BCKEND-W145-S4 -- the submit side already recorded the covered accounts in pending.json; AMENDMENT 1 item 1 needed only the two finalizers
+
+```json
+{
+  "id": "IRPT_BCKEND-W145-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~145",
+  "surfaced_at": "2026-10-07T12:18:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Amendment 1 item 1 says the submission records the covered accounts in pending.json; it already does (finalize_on_read.write_pending stores account_ids=stamped[account_ids] at both submit_service call sites), so submit_async.py and dispatch.py were not edited and only handler.finalize_export and finalize_on_read.finalize were wired.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_service.py:111-112 and :164-165 write_pending(account_ids=stamped[\"account_ids\"])",
+      "infra/aws/lambda/investor-reporting/export/tests/test_retained_finalize_names_accounts.py (submit -> pending.account_ids -> finalize -> receipt names both accounts)"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-343 AMENDMENT 1 item 1: the submission (submit_async.py / dispatch.py, which write pending.json) records the export's covered accounts in pending.json.",
+  "world_is": "pending.json is written by submit_service.write_pending (not submit_async/dispatch) and already carries account_ids; the missing half was only the finalizers passing them to receipt.build."
+}
+```
