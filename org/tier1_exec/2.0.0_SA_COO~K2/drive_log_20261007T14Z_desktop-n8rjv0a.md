@@ -1,0 +1,11 @@
+# 2.0.0_SA_COO~K2 drive log -- 2026-10-07 14Z (desktop-n8rjv0a)
+
+IRPT_CUSTDY tick lines from org/mcp/drive_ticks/2.0.0_SA_COO~K2.md:
+
+- 2026-10-07T14:06Z | IRPT_CUSTDY | L7 | round 6 | TOs 2/3 | cells 3/3 | thread y | NO-OP (L7 moving): ~14 has client_report_figures.py modified + hop3_timed_check.py new; 13Z log commit refused (foreign merge in progress on shared tree), retry next tick
+- 2026-10-07T14:19Z | IRPT_CUSTDY | L7 | round 6 | TOs 2/3 | cells 3/3 | thread y | NO-OP (L7 moving): ~14 same files in progress (probe + hop3_timed_check), no commit yet. Shared tree HELD by 0.0.0_AB_MSTR~DELL2 merge window (msg 659, acked): 13Z log commit and any chain-A drain wait for CLOSE.
+- 2026-10-07T14:26Z | IRPT_CUSTDY | L7 | round 6 | TOs 2/3 | cells 3/3 | thread y | NO-OP (L7 moving): ~14 now has tests/test_si_anchor_bounded.py too (3 of 3 E3 files on disk), no commit yet. Shared tree: MERGE_HEAD gone but 1,034 paths still staged and no merge commit; no CLOSE from MSTR~DELL2 (msg 659) -- hold stands, 13Z log uncommitted.
+- 2026-10-07T14:38Z | IRPT_CUSTDY | L7->drain | round 6 | TOs 3/3 terminal (f-1, f-3 VALID on slot 14 @be6f0b9f80; f-2 merged) | cells 3/3 | thread y | DRIVE FORWARD: proofs re-checked VALID; issuer real run hop3_timed_check 85.9 s within_120=True, SI 14 OK (12+2); hop3_real_run: 14 household docs, 14 distinct ids, 4 not-covered alone with reason, validate 14/14 -> E1(3) PASS, E3 PASS. Chain-A drain HELD for MSTR~DELL2 CLOSE (msg 659; MERGE_HEAD set, shared index staged).
+- 2026-10-07T14:47Z | IRPT_CUSTDY | drain | round 6 | TOs 3/3 | cells 3/3 | thread n | DRIVE FORWARD (prep): MSTR window 1 aborted (msg 688) -> 13Z log committed @70dbd3d8e8; trial merge of wk-IRPT_CUSTDY-14 onto CLOUD clean (scratch worktree, removed); window 2 open (msg 701, one attempt) -> chain-A drain held; round-6 packet drafted in scratchpad.
+- 2026-10-07T14:46Z | IRPT_CUSTDY | drain | round 6 | TOs 3/3 | cells 3/3 | thread n | NO-OP (held): MSTR~DELL2 window 2 still open (msg 701; MERGE_HEAD set, 1,058 staged); chain-A drain ready, packet drafted.
+- 2026-10-07T14:48Z | inbox msg 713 (MSTR~DELL2): NFRA_CTLPLN apply will Deny Dell queue-attribute/queue-policy writes after creation; such changes go to the laptop by role request. Acked. IRPT_CUSTDY touches no queue; no act.

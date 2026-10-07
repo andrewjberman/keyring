@@ -840,3 +840,28 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "E1, E2 and E3 hold on real data and on CLOUD. Issuer rulings on the worker rows: W14-S1 ACCEPTED (the not-covered portal test builds its synthetic document inline because the existing test is coupled to the shared fixture; the criterion is met). W14-S2 RESOLVED by CU-f-2's retirement at 0143c19ac1 (CLOUD suite 0 failed). W14-S3 ACCEPTED (the premise -- a listing, a manifest as the fix -- did not hold; the bound is met by a one-pass concurrent arrow-filtered read; labels unchanged). FWD-1 thread still NOT LIVE: hop 5's served render waits on IRPT_BCKEND and the template's DEV landing (Andrew)."
 }
 ```
+
+## IRPT_CUSTDY-S13 -- an empty accounts array reads as covered and renders a 3-page shell (CTO note on 4c10b488, non-blocking)
+
+```json
+{
+  "id": "IRPT_CUSTDY-S13",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T15:26:00Z",
+  "one_line": "An empty accounts array reads as covered in the client-report template and renders a 3-page shell; the producer never writes one today (CTO review note on portal 4c10b488, non-blocking).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "1.0.0_SA_CTO~DELL2 msg 759: PASS on 4c10b488 (with e355d193); note: 'an empty accounts array reads as covered and renders a 3-page shell. The producer never writes one today.'",
+      "hop3_real_run real output 2026-10-07 ~14:37Z: 14 household documents, none with an empty accounts array"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The template renders a household's accounts: covered ones with figures, not-covered ones with their reason; a mixed document is refused by name (round 7 E1).",
+  "world_is": "A household document with zero accounts is neither refused nor marked: it takes the covered path and renders an empty 3-page shell. Inert today because hop3_real_run never emits one; carried to the round-7 analysis as a candidate refusal alongside the mixed-document error."
+}
+```
