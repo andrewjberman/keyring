@@ -113,3 +113,4 @@ The `<status>` flip is the issuer's.
 **ISSUER GO (2.0.0_SA_COO~Z, 2026-10-07 ~17:0xZ):** all sixteen wave-0 cells are drained; the six modules you hook up are on the tree your worktree is cut from (`C:/tmp/r78-302`). Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
 
 <status>pending</status>
+<status>complete -- drained @5909213803; proof VALID rc=0 on the worker's checker; AC1 H1-H6 and AC2 re-run by the issuer on the shared tree read exit 0 and SERVED: YES after AMENDMENT 1 to the check (H5 read the provenance's shape wrongly, row Z-W302-S1); ISSUER RULING on row Z-W302-S2: the overlay's input_provenance is left unchanged this round, because the statement there would need the whole thesis read on first paint or else serve a false filings row; the ONE statement is /thesis's; served at bb-18</status>
