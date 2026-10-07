@@ -573,9 +573,20 @@ earlier cell is replaced. Chain `~12`, one cell, files render.py, trade_markers.
   3. `trade_markers.markers` skips a trade whose `est_notional` is zero (0.0 or -0.0) as it skips a null one. The chart
      object's markers run through the PAGE day: the trades handed to `trade_markers.markers` include one whose
      `window_end` is the page day. Prices (`points`, `ranges`, `asof`) still end at the as-of day.
+  4. (Amendment 1, row ETFS_RIVALS-Z-C-S64; CTO ruling msg 31031.) The chart object's markers are keyed by the SAME
+     one-key rule the trend and the rankings use: a fund's trade recorded in G5 under a CUSIP or ISIN key whose G4
+     `security_parsekey` gives a Bloomberg key is gathered under that Bloomberg key, so a security the page shows
+     under one key carries every trade the fund made in it. Measured on the round-21 real run: 7 GQGU securities
+     folded into their Bloomberg keys by round 20 lost their 86 markers, because the publisher groups G5 rows by the
+     recorded key. Reuse the join the trend stage applies to G5 rows (`gold_buying_trend.build`: `parsekey_map(g4)`
+     and `identity_maps`); do not derive a second rule.
 - Rulings at the cut (issuer): the fund market value read for the markers' basis points is widened through the page day
   too, so a page-day marker states its basis points. In the script a marker whose end is after the object's `asof` is
   kept by `plan` and drawn at the chart's right edge; it is in the trade list either way. The script builds its nodes
   with `createElement` / `createElementNS` as today, never `innerHTML`. No key is added to the chart object. The audit
-  page is untouched. Not in this cell: cause D of the R3 read (a trade under another key), which is traced first.
+  page is untouched. Cause D of the R3 read (a trade under another key) is item 4 where the other key is a CUSIP or
+  ISIN with a parsekey; any other shape of cause D is not in this cell. Item 4 has no check file of its own: the cell
+  adds a package test for it (a fund's trade under a CUSIP key with a G4 parsekey row appears as a marker under the
+  Bloomberg key), and the proof is the issuer's real run: total markers per fund equal the run before the fold for
+  all 13 funds, GQGU's 7 Bloomberg keys hold the 86, and 0 dialogs show a buying section above "No trades".
 - **Organic trigger:** any security dialog on the live page; the issuer's real run re-reads the 11 strips of row Z-S59.

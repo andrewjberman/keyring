@@ -1,4 +1,4 @@
-# ETFS_RIVALS task order -- `RIV-pm-1` -- ROUND 22: A PART MONTH IS MARKED, NO CURVE IS DRAWN WHERE THERE IS NONE, AND THE MARKERS ARE HONEST
+# ETFS_RIVALS task order -- `RIV-pm-1` -- ROUND 22: A PART MONTH IS MARKED, NO CURVE IS DRAWN WHERE THERE IS NONE, AND THE MARKERS ARE HONEST AND KEYED AS THE PAGE IS
 
 <!-- ===================== WORKER FACE -- this is the WHOLE of the worker's context ===================== -->
 
@@ -41,11 +41,22 @@ comp-adversary: DECLARED-NOT-APPLICABLE the validator-context composer profiles 
   3. `trade_markers.markers` skips a trade whose `est_notional` is zero (0.0 or -0.0) as it skips a null one. The chart
      object's markers run through the PAGE day: the trades handed to `trade_markers.markers` include one whose
      `window_end` is the page day. Prices (`points`, `ranges`, `asof`) still end at the as-of day.
+  4. (Amendment 1, row ETFS_RIVALS-Z-C-S64; CTO ruling msg 31031.) The chart object's markers are keyed by the SAME
+     one-key rule the trend and the rankings use: a fund's trade recorded in G5 under a CUSIP or ISIN key whose G4
+     `security_parsekey` gives a Bloomberg key is gathered under that Bloomberg key, so a security the page shows
+     under one key carries every trade the fund made in it. Measured on the round-21 real run: 7 GQGU securities
+     folded into their Bloomberg keys by round 20 lost their 86 markers, because the publisher groups G5 rows by the
+     recorded key. Reuse the join the trend stage applies to G5 rows (`gold_buying_trend.build`: `parsekey_map(g4)`
+     and `identity_maps`); do not derive a second rule.
 - Rulings at the cut (issuer): the fund market value read for the markers' basis points is widened through the page day
   too, so a page-day marker states its basis points. In the script a marker whose end is after the object's `asof` is
   kept by `plan` and drawn at the chart's right edge; it is in the trade list either way. The script builds its nodes
   with `createElement` / `createElementNS` as today, never `innerHTML`. No key is added to the chart object. The audit
-  page is untouched. Not in this cell: cause D of the R3 read (a trade under another key), which is traced first.
+  page is untouched. Cause D of the R3 read (a trade under another key) is item 4 where the other key is a CUSIP or
+  ISIN with a parsekey; any other shape of cause D is not in this cell. Item 4 has no check file of its own: the cell
+  adds a package test for it (a fund's trade under a CUSIP key with a G4 parsekey row appears as a marker under the
+  Bloomberg key), and the proof is the issuer's real run: total markers per fund equal the run before the fold for
+  all 13 funds, GQGU's 7 Bloomberg keys hold the 86, and 0 dialogs show a buying section above "No trades".
 - **Organic trigger:** any security dialog on the live page; the issuer's real run re-reads the 11 strips of row Z-S59.
 
 ## 2. WHAT YOU NEED TO KNOW (measured at the cut, base CLOUD 6d7cd1fe3c or later)
@@ -76,7 +87,7 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 - **AC1** -- the strip's first cell carries `data-part` when the window starts inside that month, and only then; the words mark it; the stylesheet shows it; pl-1.AC1, ml-1.AC1 and pd-2.AC1 still PASS; control: the round-21 strip holds (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pm-1.AC1.py`)
 - **AC2** -- `nohist` for a stored-currency security with no priced point; `curve` for one, two and no priced points; each sentence once in the script; the script's own draw makes no svg where there is no curve; nc-1.AC1, tl-1.AC1 and md-1.AC2 still PASS; control: node runs the script (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pm-1.AC2.py`)
 - **AC3** -- a zero-dollar trade makes no marker; the chart object lists a marker for a trade ending on the page day while its prices still end at the as-of day; co-1.AC1, co-1.AC2 and tl-1.AC1 still PASS; control: the fixture's G5 holds the page-day trade (`org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pm-1.AC3.py`)
-- **J1** (judgment, graded by 3.0.0_SA_CVO~RV on the issuer's real run, never by you): a reader can tell the strip's first month is partial; a dialog with no curve says why and still lists its trades; no marker is a zero-dollar trade; a page-day trade is on the list and at the chart's right edge.
+- **J1** (judgment, graded by 3.0.0_SA_CVO~RV on the issuer's real run, never by you): a reader can tell the strip's first month is partial; a security shown under one key lists every trade the fund made in it; a dialog with no curve says why and still lists its trades; no marker is a zero-dollar trade; a page-day trade is on the list and at the chart's right edge.
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="RIV-pm-1"><invocation>python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pm-1.AC1.py</invocation><expect>AC1 RESULT: PASS 0 failures</expect></criterion>
@@ -87,11 +98,11 @@ org/missions/D5/ETFS/ETFS_RIVALS/surprise-channel/investigations/INVESTIGATION_v
 
 ## 5. WHEN YOU ARE DONE
 
-Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~12/ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers`. Report once: each mechanical criterion's verdict line with the output above it; the judgment criterion left UNVERIFIABLE-BY-INSTRUMENT for the CVO; files written; each call site and the value it now passes as `start`; where in the script the no-curve branch sits and how a marker after `asof` is placed; how the publisher's reads were widened to the page day (trades and fund market value); every existing test assertion changed and why; the suite's final line; rows filed (id + one line); anything the issuer must do at the merge. Leave the `<status>` flip to the issuer.
+Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ETFS_RIVALS~12/ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers.proof_of_spec.json` with `to_id` `ETFS_RIVALS.TO-RIV-pm-1.a-part-month-is-marked-no-curve-where-there-is-none-honest-markers`. Report once: each mechanical criterion's verdict line with the output above it; the judgment criterion left UNVERIFIABLE-BY-INSTRUMENT for the CVO; files written; each call site and the value it now passes as `start`; where in the script the no-curve branch sits and how a marker after `asof` is placed; how the publisher's reads were widened to the page day (trades and fund market value); how item 4 keys the G5 rows, which function of the trend stage it reuses, and the name of the test that pins it; every existing test assertion changed and why; the suite's final line; rows filed (id + one line); anything the issuer must do at the merge. Leave the `<status>` flip to the issuer.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
-**ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** PRD v0.18 @6e245cbebe (ADMITTED: ratified half signed by 3.0.0_SA_CVO~RV); decomposition v1.12 (round 22 appended). Source: ROUND_ANALYSIS.round20 @c9a9e27770 rulings R2 (items 2 and 4) and R3, and the R3 read @ad9f13a0bb (causes A and C); R2 items 1 and 3 were built in round 21. No ENDPOINT text changes. Not cut here: cause D of the R3 read (a trade under another key), traced first. Chain `~12`, slot `~12`, position 1 of 1. Check files drafted by a helper under the issuer's brief in the round-21 worktree and re-run by the issuer at base 6d7cd1fe3c: pm-1.AC1 FAIL 5, pm-1.AC2 FAIL 4, pm-1.AC3 FAIL 2 on the build arms; every control PASSES.
+**ISSUER NOTES (L5/L6, 2.0.0_SA_COO~RV):** PRD v0.18 @6e245cbebe (ADMITTED: ratified half signed by 3.0.0_SA_CVO~RV); decomposition v1.12 (round 22 appended). Source: ROUND_ANALYSIS.round20 @c9a9e27770 rulings R2 (items 2 and 4) and R3, and the R3 read @ad9f13a0bb (causes A and C); R2 items 1 and 3 were built in round 21. No ENDPOINT text changes. Not cut here: cause D of the R3 read (a trade under another key), traced first. Chain `~12`, slot `~12`, position 1 of 1. Check files drafted by a helper under the issuer's brief in the round-21 worktree and re-run by the issuer at base 6d7cd1fe3c: pm-1.AC1 FAIL 5, pm-1.AC2 FAIL 4, pm-1.AC3 FAIL 2 on the build arms; every control PASSES. AMENDMENT 1 (before any worker was spawned): interface item 4, the marker one-key rule, on the CTO's ruling msg 31031 of row ETFS_RIVALS-Z-C-S64 (BLOCKING: the Lambda deploy waits on it). No criterion added; its proof is the issuer's real run as that ruling words it.
 
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
