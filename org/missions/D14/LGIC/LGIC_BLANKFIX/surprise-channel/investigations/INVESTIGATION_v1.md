@@ -796,3 +796,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "bd-pipeline reads 142 (fix 118): the rule adds every function-name literal with no kind token under the root, and the root holds two. No criterion depends on the count (BQ4-AC2 is the line checks, which pass); the rule was not narrowed to reach 141. Both added names grade without raising."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S11 -- the face's REFUSED expectation for the two cot_bronze_ingest.py lines is overtaken by a key ruling
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T22:05:30Z",
+  "one_line": "TO BF-q-3 says the two bd-pipeline lines for code/bronze/cot_bronze_ingest.py must still print REFUSED after the build; the root check prints FIX for them because a registry key ruling for (opal-data-bd, that key) has landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/key_rulings.json@cab8510cc3 line 45: a row with key 'code/bronze/cot_bronze_ingest.py'.",
+      "python lib/opal_naming.py census --root infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json (run in the worktree after the build): 'FIX S3Key code/bronze/cot_bronze_ingest.py -> blackdiamond/49financial/code/bronze/bronze_ingest.py' at lambda_function.py:43 and :59; last line 'ROOTCHECK ok=True ... fix=116 ... refused=0 hole=0'.",
+      "opal_naming_keyfill.fill_keys(items, root_map['bd-pipeline']) after the build (measured): both rows class REFUSED-CROSS-FIRM, basis \"conflict: path token 'cot' names firm 'cottonwood', the root entry's scope is '49financial'\" -- the same text as before the build; the module does not read key rulings."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-3 WORKER FACE last sentence: the two bd-pipeline lines for code/bronze/cot_bronze_ingest.py must still print REFUSED after the build.",
+  "world_is": "The root check prints FIX for both lines: the root check answers a key the registry rules on first (lib/opal_naming_rootcheck.py module docstring, line 9), so fill_keys' REFUSED-CROSS-FIRM class is no longer what the line shows. What this build holds is the class: fill_keys still classes both REFUSED-CROSS-FIRM (the key's path word 'cot' names Cottonwood in 49 Financial's bucket opal-data-bd), and crossfirm prints them as REFUSED. The build did not change either."
+}
+```
