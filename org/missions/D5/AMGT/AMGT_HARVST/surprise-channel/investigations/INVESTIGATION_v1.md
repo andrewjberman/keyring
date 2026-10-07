@@ -7193,6 +7193,28 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S92",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T01:57:04Z",
+      "one_line": "The merged ax-1 slug matcher loses 33 of 3,279 previously accepted bbg article URLs (1.0%; Amazon.com 17 of 17), and the same replay shows a pre-existing gap: the full legal name as the query under-collects multi-word names under BOTH rules (Meta Platforms 2 candidates where 118 wsj slugs carry `meta`).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "spec_asserts": "Order HVST-ax-1 (issuer 2.0.0_SA_COO~H): the whole-token matcher keeps every accepted article; its control was three wsj names (Netflix, Visa, BP), all one-word queries. CTO msg 30475 added a bbg read to the close run: a drop is a row.",
+      "world_is": "bbg, all 131 finished jobs with an accept: 3,279 accepted URLs, all admitted by the old substring rule; the merged rule keeps 3,246 and loses 33 (AMZN 17 of 17, ICICIBC 4, LLY 2, IBN 2, JNJ 1, 7 with no ticker). The Amazon loss is the joined query `amazoncom`; the old rule admitted those slugs only because `com` is a substring of `commerce`, `companies`, `custom`. wsj, all 68 jobs with an accept: 566 of 566 kept by every rule tried. Selectivity in the 26,907 stored wsj URLs: AT&T 8,758 -> 11, SSE 501 -> 0 (the ax-1 outcome holds). Pre-existing, under old and merged alike: Meta Platforms 2 candidates, General Motors 7, Amazon.com 7 old and 1 merged, where a first-word match finds 118, 89 and 94; but that same first-word rule gives Bank of America 400 against 11. The live bbg leg was listing on the merged rule from its job after 00:40Z; one pair concluded on it (OMAB US Equity, security-7f05ac6ae2894d23, no_new_articles).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round51/ax-1.bbg_matcher_control.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round51/ax-1.matcher_rules_eval.out (five rules: recall on bbg and wsj accepted URLs, candidates for 15 names in the stored wsj sitemaps)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "notes": "DISARMED same turn by the issuer: `.runtime/harvest-backfill/R46_STOP_BBG` written 01:53Z, so the bbg leg ends after its current job and marks no further name done on the merged rule; sa does not use the sitemap matcher; wsj is stopped and loses nothing under the merged rule. Not measured: how many of bbg's remaining names are multi-word. Carried to the CTO: resume bbg on the merged rule (about 1% of accepted URLs at stake, re-runnable with --names), or change the rule first; and whether the query for a multi-word company should be a brand word, which no slug rule decides on its own."
     }
   ]
 ```
