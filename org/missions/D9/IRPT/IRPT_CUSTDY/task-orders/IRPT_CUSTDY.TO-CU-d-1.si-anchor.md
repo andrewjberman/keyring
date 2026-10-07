@@ -70,7 +70,21 @@ rule 1 `since inception <date>`; rule 2 `since <date>, the first date Opal holds
 `CU10-AC2` -- the seam against its REAL neighbour: the chosen advisor's real accounts, Schwab silver and returns gold on dell2. The per-rule
 counts are reported, not graded.
 
-<expected_criteria>CU10-AC1,CU10-AC2</expected_criteria>
+<criterion id="CU10-AC3" cell_refs="CU-d-1"><invocation>python data/assets/scripts/gold/irpt_custody/tests/run_suite_check.py</invocation><expect>failed=0 errors=0</expect></criterion>
+`CU10-AC3` (AMENDMENT 1) -- the whole `irpt_custody` suite on your branch, after merging CLOUD, reads 0 failed and 0 errors: retiring the
+2024 floor must not leave `test_hop3_real_run.py` or `hop3_real_run.py --self-test` red (row W9-S3).
+
+<expected_criteria>CU10-AC1,CU10-AC2,CU10-AC3</expected_criteria>
+
+### AMENDMENT 1 (issuer, 2026-10-07 ~11:2xZ) -- disarms row IRPT_CUSTDY-W9-S3
+
+Your first pass (e25f6f33ab, criteria AC1 and AC2 PASS) retired the 2024 floor, which leaves two tests in `tests/test_hop3_real_run.py`
+(`test_file_shape`, `test_si_held_for_a_pre_2024_inception`) and the `held_ok` flag of `hop3_real_run.py --self-test` red: their fixture
+is a 2019 first-data date, now on the calendar. Those two files are added to your grant. FIRST merge CLOUD into your branch
+(`git merge CLOUD`; CLOUD carries round 4's other two cells -- `hop3_real_run.py` was changed by CU-d-2 @7361085932 and the suite
+runner `tests/run_suite_check.py` landed @e05799d167). Resolve a conflict in the channel file by keeping BOTH sides' rows in order, and in
+this order file by taking CLOUD's version. Then re-express the two tests and the self-test flag under the new rule (a 2019 anchor now
+computes or reports by rules 1-3; nothing is `HELD_CALENDAR_FIX`), keep their intent, and do not skip or xfail. Then AC3.
 
 ## BOUNDS
 
@@ -87,6 +101,8 @@ data/assets/scripts/gold/irpt_custody/si_anchor_probe.py
 data/assets/scripts/gold/irpt_custody/tests/test_si_anchor.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_figures.py
 data/assets/scripts/gold/irpt_custody/tests/test_client_report_held_si.py
+data/assets/scripts/gold/irpt_custody/hop3_real_run.py
+data/assets/scripts/gold/irpt_custody/tests/test_hop3_real_run.py
 org/missions/D9/IRPT/IRPT_CUSTDY/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
