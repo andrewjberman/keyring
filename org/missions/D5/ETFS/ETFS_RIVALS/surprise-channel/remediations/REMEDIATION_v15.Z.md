@@ -21,11 +21,11 @@ OPEN until round 23 is served: Z-S65, Z-S66, C-S67 (and Z-S57 in REMEDIATION_v12
     "owner": "2.0.0_SA_COO~RV",
     "round": "v15",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v15"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-S66",
@@ -42,11 +42,11 @@ OPEN until round 23 is served: Z-S65, Z-S66, C-S67 (and Z-S57 in REMEDIATION_v12
     "owner": "2.0.0_SA_COO~RV",
     "round": "v15",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v15"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-C-S67",
@@ -62,11 +62,11 @@ OPEN until round 23 is served: Z-S65, Z-S66, C-S67 (and Z-S57 in REMEDIATION_v12
     "owner": "2.0.0_SA_COO~RV",
     "round": "v15",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v15"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-S63",
