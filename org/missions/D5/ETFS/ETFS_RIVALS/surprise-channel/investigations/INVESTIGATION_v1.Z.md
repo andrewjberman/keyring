@@ -4228,6 +4228,30 @@
     "spec_asserts": "au-1 AC1 (a) and AC2 (a), round 12: the main page carries no audit link 'yet'; the RIV-lk-1 order: render.render_page carries exactly one <a href=\"/rivalfunds/<day>/audit\">.",
     "world_is": "The two round-12 checks still grade the superseded state; running them on a tree that carries lk-1 fails their (a) arms. The one existing unit assertion of the same state (test_r12au1_audit_page, main page has no /rivalfunds/<day>/audit) was changed in this cell to assert the one link.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A drain-time or regression run of the round-12 au-1 checks after lk-1 merges reads FAIL; amend arm (a) of each check (issuer's own authority) or retire them as superseded by lk-1.AC1. Nothing in the worker's tree depends on the choice."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S54",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T03:13:44Z",
+    "one_line": "On the served 2026-10-06 page the AI accounts quote figures of an EARLIER build of the tables than the panels beside them: 22 of 26 accounts carry at least one figure that differs from the rankings on the same page (149 of 197 cited contribution figures moved), each under a 'Grounded' badge. Andrew's example: IDVZ direction verdict says Petrobras +0.47% over thirty days; the rankings panel says +0.93%.",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "gold/research_hypotheses date=2026-10-06: one object, written 13:00:20Z, 26 accounts over 13 funds; all 197 holding_contribution cited rows carry revision 20261006T110357Z-9717671d0d45",
+        "gold/holding_contribution date=2026-10-06 has two revisions: 11:03:57Z (IDVZ R30: PBR +0.47, TSM +0.38, ASML +0.16) and 13:05:56Z (PBR +0.93, TSM +0.47, BBSEY +0.26); the page serves the 13:05Z one; buying_trend likewise 11:04Z -> 13:06Z",
+        "census by this seat: 149 of 197 cited figures differ from the newest table by more than 0.005 percentage points; 0 cited keys are gone; accounts with a moved figure 22 of 26 (11 funds x 2)",
+        "the served page carries 13 'Written against earlier tables' lines (one per fund) stating both build times; the badge on each account still reads 'Grounded'",
+        "Andrew-direct record cooRV_ANDREW_DIRECT_20261007_031xZ_RIVALFUNDS_AI_NUMBERS_VS_PANEL_NUMBERS_VARIANCE.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "An AI account graded 'Grounded' states figures a reader can find in the panels of the same page (the grounding gate matches every figure to a cited row).",
+    "world_is": "The grade is true against the cited revision, not against the page. On 2026-10-06 the 13:00Z sweep ran the AI step at 13:00:20Z and THEN rebuilt the contribution and trend tables at 13:05-13:06Z (newer inputs had landed from the 12:3xZ Bloomberg re-run after the Terminal outage), and an account is never rewritten once written. The earlier tables were built at 11:03Z while that morning's Bloomberg data was missing, which is why the figures moved this much. The disclosure exists but sits in a small line under the card, below a green 'Grounded'.",
+    "notes": "disarm_owner (n/a, INERT): 1.0.0_SA_CTO~Z for the ruling. Options measured, not chosen: (A) the sweep refreshes the tables BEFORE the AI step, so an account is written against the build the page serves (no extra vendor call); (B) when a table an account cites is rebuilt after it, the account is re-run once (one more OpenAI run per rebuild: a cost and vendor-egress call, Andrew's); (C) the badge says so on its face ('Grounded on an earlier build') whenever the cited revision is not the served one. For round 14."
   }
 ]
 ```
