@@ -175,9 +175,25 @@ If `build_release.py` lists the package's files, add the two new modules there.
   Z-W108-S1 (msg 31054 said the registry row lands with this cell); the change-management entry; `--write` of the one-time
   emit; the switch flipped in its own commit; one live job seen writing its record.
 
+**COMPLETE 2026-10-07 ~16:3xZ (issuer): THE RECORDS ARE WRITTEN, THE SWITCH IS ON, THE LEDGER IS CLOSED:**
+- `1.0.0_SA_CTO~Z` msg 31122: no registry row (the register's grain is the resource; the builder printed the address
+  unrefused); msg 31054's registry sentence withdrawn; proceed.
+- Ledger `harvst-sa-job-record-m-20261007`, opened @635aec99a6, four legs, CLOSED:
+  L1 the merge @23d65887ca; L2 the one-time emit, 59 puts (`deliverables/2.0.0_SA_COO_H/round59/emit_write.out`), read back
+  by a paginated list and a GET of each: 59 objects over 58 partitions, 0 schema-invalid, BABA 616, BA 1,992, COST 45, C 9
+  equal to the dry run; L3 the switch @a4542de7f9 (the worker's plant that pinned the shipped switch to false now pins true);
+  L4 a live job: `job_record_persisted` for ENB_US_Equity at 16:15:38Z, its key read back (new_articles, stored 10), and a
+  second for ENEL_IM_Equity at 16:25Z.
+- The security with two records is AAPL_US_Equity (2026-10-05 03:55Z new_articles 37, 08:03Z no_acceptable_new_articles 0);
+  reader rule 1 takes the 08:03Z job, rule 2 reads last read 2026-10-05T03:35:48Z.
+- State at close: 61 objects over 60 partitions; the emitter re-run planned 61 and sent 0 puts (every key exists), so no
+  finished job lacks a record. The issuer expected a one-job gap at the flip and measured none.
+- Nothing is served from these records until `AMGT-bb-16` deploys (ruling C2).
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>59</round>
 <slot>~108</slot>
 <fabric>site-z</fabric>
