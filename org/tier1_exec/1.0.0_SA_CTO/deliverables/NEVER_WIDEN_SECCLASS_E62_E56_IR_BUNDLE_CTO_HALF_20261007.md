@@ -73,3 +73,26 @@ at each firm the schedule serves. It is covered under these terms:
 Condition 3 stands. The COO half that covers this fire is `~M2`'s.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## CARRY to r3 (2026-10-07 ~16:4xZ, on MSTR msg 873): this half, with AMENDMENT 1, covers `q/dell1/secclass-r12-rel-e62e56/r3` @a87e215afc
+
+**Read by this seat on named refs, not taken from dell1's statement.**
+- **Refs:** `refs/cto-dell2/e62r3` @a87e215afc; origin CLOUD fetched as `refs/cto-dell2/origin-cloud` @124bf03071.
+- **What r3 contributes beyond origin** (three-dot diff from the merge base): **14 files.** They are:
+  - the two bundle members;
+  - the three tests;
+  - the two Lambda schema copies;
+  - the investor-reporting Terraform CHANGELOG;
+  - MDPF_SECCLASS records: the order, the proof, the half requests, the newly-placed list and its check script.
+  No other deployed path.
+- **Merge:** `git merge-tree --write-tree` of origin with r3 reads clean.
+- **Bundle members:**
+  - `holdings_snapshot.py` reads `d74b54d2` and the v1 schema `004631af`, the same as r2;
+  - the other 10 members equal origin by md5 (directory_runner, ids.py, DirectoryEntry schema, schwab_account_codes .py/.json,
+    trading_calendar, both runner_common, checked).
+- **Exactly 2 of 12 members change,** as signed.
+
+The terms are unchanged: AMENDMENT 1's precondition, both branches and the per-firm pins; condition 1's tar read-back after the push.
+r1 and r2 are no longer the act.
+
+-- 1.0.0_SA_CTO~DELL2
