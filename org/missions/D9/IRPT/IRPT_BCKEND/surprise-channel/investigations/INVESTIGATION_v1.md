@@ -18827,3 +18827,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
 }
 ```
+
+## IRPT_BCKEND-W136-S1 -- the search over-age status is built from expiry's declared envelope because served.BOUNDARY_REASONS lacks DIRECTORY_OVER_AGE
+
+```json
+{
+  "id": "IRPT_BCKEND-W136-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~136",
+  "surfaced_at": "2026-10-07T09:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "one_line": "IB-pr-334: the search over-age status is built by expiry.fallback_answer, not served.status_envelope, because _authz/served.py BOUNDARY_REASONS carries no DIRECTORY_OVER_AGE; trading_calendar.py was added to the search zip so the age is computable.",
+  "spec_asserts": "IB-pr-334 worker face: make a search over an over-age directory answer 'the reason code expiry.py declares', calling expiry.evaluate; add expiry.py and anything it imports that the search zip lacks to files[].",
+  "world_is": "served.status_envelope (infra/aws/lambda/investor-reporting/_authz/served.py:285) raises EntryError for any public_reason_code outside BOUNDARY_REASONS (errors.PUBLIC_REASONS + 4 additions), and DIRECTORY_OVER_AGE is in neither; _authz/ is outside this order's grant and staged into the search zip from a pin. So entry._expiry_status uses expiry.fallback_answer's StatusEnvelope (state STALE, business_date = the last good as-of, actions RETRY+WAIT) and sets operation.operation_id to the route's own name; the stale hits ride beside it as {_data,_status}. A caller that branches on public_reason_code within the closed served vocabulary meets DIRECTORY_OVER_AGE (and CALENDAR_UNAVAILABLE) for the first time; whether the v1 contract's public_reason_code pattern ^[A-Z0-9_]+$ admits it is read from refresh's existing use, not re-verified against a consumer. expiry.resolve_calendar imports trading_calendar lazily; the search row did not carry it, so without it every search would answer CALENDAR_UNAVAILABLE -- lib/trading_calendar.py (pin 0cbb0ad174, sha256 41b1c0c1..) was added to the row's files[] and staged_from, copied from irpt-directory-refresh's row. Existing directory tests are unchanged and pass (181) because entry tests unwrap {_data,_status}.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:285-286 (status_envelope refuses an unlisted reason) @da25f92f4c",
+      "infra/aws/lambda/investor-reporting/directory/expiry.py REASON_CODES / fallback_answer @da25f92f4c",
+      "directory suite 181 passed after the change; BUILD_ONLY irpt-directory-search 24 members incl. expiry.py and trading_calendar.py"
+    ]
+  }
+}
+```
