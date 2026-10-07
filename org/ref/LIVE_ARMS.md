@@ -23,17 +23,25 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
   to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
   `2.0.0_SA_COO~M1` (MDPF_SECCLASS), `2.0.0_SA_COO~H1` (MDPF_SECHIST). He named no stop: his stand-down. Landed by 1.0.0_SA_CTO.
-- `0.0.0_AB_MSTR~DELL2` `/govern 60m` DIRECTED (Andrew-direct ~07:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "dell1 and dell2 are live,
-  i have put them both on loops governing. i will bring their CTOs online now."; record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_DELLS_LIVE_GOVERN_LOOPS_DELL_CTOS_COMING.md`; cadence and serial from that
-  seat's own bus message 079ed2d0). Stop: his stand-down. Landed by 1.0.0_SA_CTO.
-- `0.0.0_AB_MSTR~DELL2` fast-forward `/git-pull` every 15m, and its Taildrop receive monitor: AUTHORITY-UNVERIFIED (transient). That seat reports
-  both were armed "from Andrew's handoff pasted at this terminal at session start" (bus 079ed2d0); no record of that text is committed
-  where this seat can read it. Re-class when it is. Landed by 1.0.0_SA_CTO.
-- `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over IRPT_CUSTDY, IRPT_BCKEND, ADVI_COTBKF, IRPT_YCDGEN, IRPT_DASHBD, DIRECTED via the
-  `0.0.0_AB_MSTR~DELL2` relay (bus 2f5f6cf4). Arming record
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_072xZ_SELF_DRIVE_60M_DELL2_IRPT_CUSTDY_IRPT_BCKEND_ADVI_COTBKF.md` @66a57498d9, on
-  dell2 only until its branch is published. No COO arms. Stop: all five complete, HELD-AT-STOP, or his stand-down. Landed by 1.0.0_SA_CTO.
+- DELL2, all rows from one record written by `0.0.0_AB_MSTR~DELL2`: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261007_071xZ_DELL2_SEATING_CTO_SELF_DRIVE_COO_CANONICAL_DRIVE_MSTR_ARMS.md`
+  @aed4552f74 (on origin CLOUD bd7cd8fb0a by `0.0.0_AB_MSTR` msg 106054). Landed by 1.0.0_SA_CTO; chooser Andrew except where said.
+  - `0.0.0_AB_MSTR~DELL2` `/govern 60m` DIRECTED. His words at the dell1 terminal ~07:10Z, relayed on bus 900b6ce0, VERBATIM: "Also tell DELL2 to
+    run the same /govern loop that you are running, with verbatim text and same 60m interval." Stop: his stand-down.
+  - `0.0.0_AB_MSTR~DELL2` fast-forward `/git-pull` every 15m, and the Taildrop receive monitor: DIRECTED (was AUTHORITY-UNVERIFIED). The record's
+    section 1 quotes the handoff he pasted as that session's first message: "Taildrop monitor is a standing arm at launch on this box." Both
+    are session Monitors. Stop: his stand-down.
+  - `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over IRPT_CUSTDY, IRPT_BCKEND, ADVI_COTBKF, IRPT_YCDGEN, IRPT_DASHBD, DIRECTED. VERBATIM: "Bring on a CTO
+    with instructions to /self-drive the projects of the COOs you spawn, 60m interval, with instruction to manage adjudications for open
+    calls." Its own arming record is `ANDREW_DIRECT_20261007_072xZ_SELF_DRIVE_60M_DELL2_IRPT_CUSTDY_IRPT_BCKEND_ADVI_COTBKF.md` @66a57498d9. Stop:
+    all five complete, HELD-AT-STOP, or his stand-down.
+  - `/canonical-drive <own project>`, CHOSEN: each seat accepts Andrew's recommendation, VERBATIM: "I also recommend that when you bring on the
+    COOs, they should have /canonical-drive on their respective projects." He named no interval and no stop; "recommend" is his word and
+    this row does not convert it into an order. Seven seats: `2.0.0_SA_COO~K2` IRPT_CUSTDY; `2.0.0_SA_COO~C2` ADVI_COTBKF;
+    `2.0.0_SA_COO~P2`, `2.0.0_SA_COO~Y2`, `2.0.0_SA_COO~M2` IRPT_BCKEND (workstreams P, Y, M); `2.0.0_SA_COO~G2` IRPT_YCDGEN;
+    `2.0.0_SA_COO~D2` IRPT_DASHBD. Cadence is each seat's to state in its own first tick; stop when its project reads complete, at
+    HELD-AT-STOP, or on his stand-down.
+  - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
+
 
 - `2.0.0_SA_COO~C` on NFRA_CTLPLN ONLY (Andrew-direct ~06:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "bring COO~C on for
   this purpose. COO~C should only be focused on this work, not cottonwood backfill project."). Record

@@ -654,6 +654,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W4-S11 -- CT-c-5: the /apikeys simulator arm cannot discriminate the Deny
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:42:11Z",
+  "one_line": "CT-c-5 AMENDMENT 3's denied arm on the bare ARN /apikeys cannot discriminate the new Deny: iam:SimulateCustomPolicy matches no statement at all for it and returns implicitDeny, so the arm is graded implicitDeny and the Deny is shown on /apikeys/<id>.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "SimulateCustomPolicy, apigateway:GET on arn:aws:apigateway:us-east-1::/apikeys with the three real policy documents: implicitDeny, MatchedStatements empty; the same with DenyApiKeyReads removed from the deploy policy: implicitDeny, MatchedStatements empty (the Allow on * matches /apis and /apikeys/abc but not /apikeys)",
+      "same call on /apikeys/abc: explicitDeny with the Deny (matched PolicyInputList.1), allowed without it (matched PolicyInputList.2)",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py: the arm is kept at the order's resource with required decision implicitDeny (the file's own rule counts either deny decision as denied), and an uncounted APIKEY-ITEM-PROBE line prints the /apikeys/x decision (explicitDeny)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-5 AMENDMENT 3 item 4: the first simulation block gains one DENIED arm, apigateway:GET on arn:aws:apigateway:us-east-1::/apikeys, as evidence that the typed DenyApiKeyReads statement denies the key read.",
+  "world_is": "The simulator treats the bare collection ARN as matching no statement, Allow or Deny, so the arm returns implicitDeny with or without the Deny statement and proves nothing about it; the statement does deny the item ARN /apikeys/<id> (explicitDeny). Whether real IAM evaluates the list call GET /apikeys against the bare ARN (the statement lists it, so it would match) is carried from the policy text, not exercised: no AWS call that lists API keys was made. The count 19/19 holds as ordered; the issuer may prefer the arm on /apikeys/<id> with explicitDeny."
+}
+```
+
 ## NFRA_CTLPLN-S7 -- dell2 box user cannot read the graph token; comp-blast dead on dell2
 
 ```json
