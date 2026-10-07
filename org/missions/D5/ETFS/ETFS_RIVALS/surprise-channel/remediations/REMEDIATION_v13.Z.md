@@ -41,11 +41,11 @@ Still OPEN from REMEDIATION_v12: Z-S60, Z-S57 / Z-S61, Z-S59 / C-S60, C-S55. Owe
     "owner": "2.0.0_SA_COO~RV",
     "round": "v13",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v13"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
