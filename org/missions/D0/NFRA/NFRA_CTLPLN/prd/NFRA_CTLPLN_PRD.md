@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.12",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -430,5 +430,57 @@ On `3.0.0_SA_CVO`'s verdict UPHELD (msg 106050; `org/tier1_exec/3.0.0_SA_CVO/del
   the same box, and the task-order gate's LIMB 6 reads SIGNED there without a hop to the laptop. The laptop's `3.0.0_SA_CVO` signs
   for laptop-written PRDs only. UNMEASURED: that `prd-signoff.py` accepts the same base serial from a second box without a clash in
   the sign-off file; the first Dell sign is the read, and a refusal there comes back to this seat as a row.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.13 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING: every new resource, on any box, is builder-named and registered. Contract only
+
+Andrew-direct ~08:1xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "ALso make sure that everyone is being very diligence with LGIC_NAMING for any new resource creation, everything should be registered as well, i believe there is some index we have for this ecxact purpose."
+Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`.
+
+- **C-NAMING (new contract; owner this project for the four-box rule; the vocabulary and builders stay LGIC_NAMING's and LGIC_ENFORCE's).**
+  On the laptop, site Z, dell1 and dell2 alike: (1) a new AWS resource is created only by `.tools/safe-apply.sh` of a Terraform root,
+  never by a CLI or SDK create call; (2) its name is `lib/opal_naming.py` `name()` output and every S3 address is `address()` output;
+  (3) its row lands in `infra/logic/registry/resources.json` in the same commit as its Terraform; (4) a builder refusal is answered by
+  the missing registry row, and on a Dell that row is asked of the laptop CTO when the scope or system does not exist yet.
+- **What enforces it today:** `.tools/naming-apply-gate.py` inside `safe-apply.sh` refuses a badly named resource being ADDED (its plan
+  mode). Clause (1) and clause (3) have no gate: the Dell create grant permits a create outside Terraform at the cloud, and no gate
+  refuses an apply for a missing registry row.
+- **Next issuance, two cells:** (a) one read at each round's close, by the round's COO: every resource the round created, against
+  `resources.json`, N of N printed, a missing row filed as a row (a read at the drain, not a standing checker); (b) the missing-row
+  refusal in the apply path, proposed to LGIC_ENFORCE as its owner, since it is that project's gate.
+- **UNMEASURED:** that both naming gates fire on dell1 and dell2. Each Dell's fabric manager runs one known-bad name through
+  `naming-apply-gate.py` and reports the refusal line.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.14 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING CORRECTED: what "registered" is; and the Dell Python environment. Contract only
+
+**A correction of this seat's own v0.13.** v0.13 clause (3) said a new resource's row lands in
+`infra/logic/registry/resources.json`. That file is not a list of resources. MEASURED by `0.9.0_WK_NFRA_CTLPLN~11`
+(`org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~11/PROPOSAL_MISSING_ROW_REFUSAL_FOR_LGIC_ENFORCE.md` @0a8a337aac,
+rows NFRA_CTLPLN-W11-S1 and W11-S2) and READ by this seat in the file's own `_about`: each of its 465 rows fills a `{system}`
+placeholder for a name whose own tokens resolve no system; 0 of 465 names grade CONFORMANT; and `lib/opal_naming.validate()` REFUSES a
+row for a conformant name as redundant. That is the design of LGIC_ENFORCE ruling 97177, not a defect: a conformant name carries its
+own registration in its tokens, checked against `systems.json`, `scopes.json` and `tiers.json`.
+
+- **C-NAMING clause (3), replaced:** a new resource is REGISTERED when (i) it is declared in a Terraform root in the repository, in
+  the commit that creates it; (ii) its name is builder output and grades CONFORMANT, so its system, scope and tier are rows of the
+  registry; and (iii) it reads as declared, not drifted, in the cloud graph (`comp-find --corpus aws`, the `drift_class` of its node).
+  A `resources.json` row is added ONLY for a name whose tokens resolve no system, and only if `validate()` accepts it.
+- **The index Andrew's word points at is therefore two things the estate already has:** the registry's vocabulary files for WHAT a
+  name may be, and the cloud graph for WHAT EXISTS and whether Terraform declares it. No third list is built.
+- **The missing-row refusal of v0.13 is WITHDRAWN** as a proposal to LGIC_ENFORCE. A badly formed name is already refused at apply
+  (the proposal's case C, measured). A well-formed, undeclared, running resource is found by clause (iii).
+- **Round 4's cells, amended by their issuer:** CT-d-7 adds a `resources.json` row for a Dell resource name only where `validate()`
+  accepts it and prints the validator's count; the round-close read (v0.13 cell a) reads each created resource's graph node and
+  `drift_class` instead of a row.
+
+**C-KIT-PYTHON (new contract).** A Dell's Python environment equals the laptop's for the packages the repository's tools and
+shared modules import. Two measured gaps on 2026-10-07, both reported from the Dells: `pandas_market_calendars` is absent on both
+(so `lib/trading_calendar.py` miscounts before 2024), and `ruff` was absent on dell1, where a worker installed it from PyPI with no
+word of Andrew's (row MDPF_SECCLASS-S49). The kit carries the packages FROM THE LAPTOP over the tailnet, as files already on Opal's
+own boxes; nothing is fetched from PyPI by a Dell. Cell for round 4: the list of third-party imports of `.tools/` and `lib/` against
+each Dell's installed set, N of N printed, and the transfer of what is missing.
 
 A contract change under the ENDPOINT hash.

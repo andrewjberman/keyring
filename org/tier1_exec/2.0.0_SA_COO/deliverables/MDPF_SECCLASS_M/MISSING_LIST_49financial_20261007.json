@@ -1,0 +1,2718 @@
+{
+ "firm": "49financial",
+ "as_of": "2026-10-05",
+ "source": "local producer build as-of 2026-10-05 @4b258de305, inferred (not the served bytes)",
+ "claim": "inferred",
+ "source_detail": "holdings_snapshot.py run without --upload for this firm only; parquet .scratch\\hb_49financial\\opal-data-49financial\\irpt\\49financial\\gold\\holdings\\date=2026-10-05\\9510b011ced86eea5ec1fb6c50ac84ecd61e2a5c988e7f4ea4e8168dbbfcbc2d.parquet; served opal-data-<firm> bucket not readable by this device's principal",
+ "excluded": "0 cash-line SECURITY node(s) (ticker CASH, description CASH) and all non-SECURITY nodes",
+ "held_count": 1843,
+ "missing_amount_usd": 8434973.35,
+ "missing": [
+  {
+   "key": "AAOI",
+   "name": "AAOI",
+   "cusip": "03823U102",
+   "amount": 17262.94
+  },
+  {
+   "key": "ACERX",
+   "name": "ACERX",
+   "cusip": "00142J453",
+   "amount": 3800.09
+  },
+  {
+   "key": "ACSDX",
+   "name": "ACSDX",
+   "cusip": "00143M661",
+   "amount": 50247.79
+  },
+  {
+   "key": "ADC",
+   "name": "ADC",
+   "cusip": "008492100",
+   "amount": -53906.76
+  },
+  {
+   "key": "AEIS",
+   "name": "AEIS",
+   "cusip": "007973100",
+   "amount": 6540.38
+  },
+  {
+   "key": "AG",
+   "name": "AG",
+   "cusip": "32076V103",
+   "amount": 26.38
+  },
+  {
+   "key": "AGCO",
+   "name": "AGCO",
+   "cusip": "001084102",
+   "amount": 1161.9
+  },
+  {
+   "key": "AGI",
+   "name": "AGI",
+   "cusip": "011532108",
+   "amount": 40.5
+  },
+  {
+   "key": "AGNC",
+   "name": "AGNC",
+   "cusip": "00123Q104",
+   "amount": -47358.75
+  },
+  {
+   "key": "AHR",
+   "name": "AHR",
+   "cusip": "398182303",
+   "amount": -3028.2
+  },
+  {
+   "key": "AIIEX",
+   "name": "AIIEX",
+   "cusip": "008882102",
+   "amount": 649.36
+  },
+  {
+   "key": "AIT",
+   "name": "AIT",
+   "cusip": "03820C105",
+   "amount": 98550.15
+  },
+  {
+   "key": "AKTS",
+   "name": "AKTS",
+   "cusip": "01021M104",
+   "amount": 11112.0
+  },
+  {
+   "key": "ALDX",
+   "name": "ALDX",
+   "cusip": "01438T106",
+   "amount": 0.92
+  },
+  {
+   "key": "ALEC",
+   "name": "ALEC",
+   "cusip": "014442107",
+   "amount": 11.94
+  },
+  {
+   "key": "ALM",
+   "name": "ALM",
+   "cusip": "020398707",
+   "amount": -6827.6
+  },
+  {
+   "key": "AM",
+   "name": "AM",
+   "cusip": "03676B102",
+   "amount": -96076.88
+  },
+  {
+   "key": "AMFCX",
+   "name": "AMFCX",
+   "cusip": "027681303",
+   "amount": 8369.15
+  },
+  {
+   "key": "AOA",
+   "name": "AOA",
+   "cusip": "464289859",
+   "amount": 4609.29
+  },
+  {
+   "key": "AOUT",
+   "name": "AOUT",
+   "cusip": "02875D109",
+   "amount": 83.0
+  },
+  {
+   "key": "APDKX",
+   "name": "APDKX",
+   "cusip": "04314H667",
+   "amount": 4957.53
+  },
+  {
+   "key": "APDPX",
+   "name": "APDPX",
+   "cusip": "04314H337",
+   "amount": 9.53
+  },
+  {
+   "key": "APDTX",
+   "name": "APDTX",
+   "cusip": "04314H519",
+   "amount": 3275.78
+  },
+  {
+   "key": "APLD",
+   "name": "APLD",
+   "cusip": "038169207",
+   "amount": -17635.8
+  },
+  {
+   "key": "APT",
+   "name": "APT",
+   "cusip": "020772109",
+   "amount": 8711.25
+  },
+  {
+   "key": "ARE",
+   "name": "ARE",
+   "cusip": "015271109",
+   "amount": 7570.2
+  },
+  {
+   "key": "ARKB",
+   "name": "ARKB",
+   "cusip": "040919102",
+   "amount": 5682.0
+  },
+  {
+   "key": "ARWR",
+   "name": "ARWR",
+   "cusip": "04280A100",
+   "amount": -4800.95
+  },
+  {
+   "key": "ASBAX",
+   "name": "ASBAX",
+   "cusip": "82524A102",
+   "amount": 29982.17
+  },
+  {
+   "key": "ASFYX",
+   "name": "ASFYX",
+   "cusip": "92835M422",
+   "amount": 902.83
+  },
+  {
+   "key": "ATDRF",
+   "name": "ATDRF",
+   "cusip": "G06708104",
+   "amount": 773.62
+  },
+  {
+   "key": "ATI",
+   "name": "ATI",
+   "cusip": "01741R102",
+   "amount": 48079.41
+  },
+  {
+   "key": "AUSF",
+   "name": "AUSF",
+   "cusip": "37954Y574",
+   "amount": 27626.41
+  },
+  {
+   "key": "AVLN",
+   "name": "AVLN",
+   "cusip": "05348Y105",
+   "amount": 8514.45
+  },
+  {
+   "key": "AVXL",
+   "name": "AVXL",
+   "cusip": "032797300",
+   "amount": 6464.85
+  },
+  {
+   "key": "AVY",
+   "name": "AVY",
+   "cusip": "053611109",
+   "amount": 11900.0
+  },
+  {
+   "key": "AXTA",
+   "name": "AXTA",
+   "cusip": "G0750C108",
+   "amount": -10098.12
+  },
+  {
+   "key": "AYA",
+   "name": "AYA",
+   "cusip": "05466C109",
+   "amount": 7027.8
+  },
+  {
+   "key": "BALCX",
+   "name": "BALCX",
+   "cusip": "024071300",
+   "amount": 1027.83
+  },
+  {
+   "key": "BBAX",
+   "name": "BBAX",
+   "cusip": "46641Q233",
+   "amount": 4373.6
+  },
+  {
+   "key": "BCD",
+   "name": "BCD",
+   "cusip": "003261203",
+   "amount": 28277.16
+  },
+  {
+   "key": "BFAM",
+   "name": "BFAM",
+   "cusip": "109194100",
+   "amount": 43341.75
+  },
+  {
+   "key": "BFB",
+   "name": "BFB",
+   "cusip": "115637209",
+   "amount": -77312.61
+  },
+  {
+   "key": "BFFAX",
+   "name": "BFFAX",
+   "cusip": "097873772",
+   "amount": 45725.39
+  },
+  {
+   "key": "BFWFX",
+   "name": "BFWFX",
+   "cusip": "140541822",
+   "amount": 1050.88
+  },
+  {
+   "key": "BGEIX",
+   "name": "BGEIX",
+   "cusip": "02507M105",
+   "amount": 22062.87
+  },
+  {
+   "key": "BGESX",
+   "name": "BGESX",
+   "cusip": "056823412",
+   "amount": 6725.29
+  },
+  {
+   "key": "BGRN",
+   "name": "BGRN",
+   "cusip": "46435U440",
+   "amount": 773.16
+  },
+  {
+   "key": "BICSX",
+   "name": "BICSX",
+   "cusip": "091936666",
+   "amount": 905.78
+  },
+  {
+   "key": "BINC",
+   "name": "BINC",
+   "cusip": "092528603",
+   "amount": 1264.75
+  },
+  {
+   "key": "BIO",
+   "name": "BIO",
+   "cusip": "090572207",
+   "amount": 6456.94
+  },
+  {
+   "key": "BITO",
+   "name": "BITO",
+   "cusip": "74347G440",
+   "amount": 11440.0
+  },
+  {
+   "key": "BLDR",
+   "name": "BLDR",
+   "cusip": "12008R107",
+   "amount": 6953.75
+  },
+  {
+   "key": "BOC",
+   "name": "BOC",
+   "cusip": "101044105",
+   "amount": 105.76
+  },
+  {
+   "key": "BOXX",
+   "name": "BOXX",
+   "cusip": "02072L565",
+   "amount": 1184.6
+  },
+  {
+   "key": "BPOP",
+   "name": "BPOP",
+   "cusip": "733174700",
+   "amount": 1111.74
+  },
+  {
+   "key": "BSCS",
+   "name": "BSCS",
+   "cusip": "46138J643",
+   "amount": 10077.5
+  },
+  {
+   "key": "BTG",
+   "name": "BTG",
+   "cusip": "11777Q209",
+   "amount": 34.47
+  },
+  {
+   "key": "BTSG",
+   "name": "BTSG",
+   "cusip": "10950A106",
+   "amount": 1302.0
+  },
+  {
+   "key": "BUFHX",
+   "name": "BUFHX",
+   "cusip": "119539104",
+   "amount": 48003.16
+  },
+  {
+   "key": "BUIDX",
+   "name": "BUIDX",
+   "cusip": "119530806",
+   "amount": 43030.61
+  },
+  {
+   "key": "CART",
+   "name": "CART",
+   "cusip": "565394103",
+   "amount": 73574.37
+  },
+  {
+   "key": "CBC",
+   "name": "CBC",
+   "cusip": "152413100",
+   "amount": 1947.73
+  },
+  {
+   "key": "CBFVX",
+   "name": "CBFVX",
+   "cusip": "46637K547",
+   "amount": 656.42
+  },
+  {
+   "key": "CBHIX",
+   "name": "CBHIX",
+   "cusip": "92647P654",
+   "amount": 4008.15
+  },
+  {
+   "key": "CDE",
+   "name": "CDE",
+   "cusip": "192108504",
+   "amount": -37194.28
+  },
+  {
+   "key": "CEWCF",
+   "name": "CEWCF",
+   "cusip": "D1499B107",
+   "amount": 1838.59
+  },
+  {
+   "key": "CGCP",
+   "name": "CGCP",
+   "cusip": "14020Y102",
+   "amount": 41411.7
+  },
+  {
+   "key": "CGDG",
+   "name": "CGDG",
+   "cusip": "14021L109",
+   "amount": 2903.16
+  },
+  {
+   "key": "CGGE",
+   "name": "CGGE",
+   "cusip": "14020R107",
+   "amount": 9455.04
+  },
+  {
+   "key": "CGHM",
+   "name": "CGHM",
+   "cusip": "14020Y805",
+   "amount": 5402.88
+  },
+  {
+   "key": "CGMM",
+   "name": "CGMM",
+   "cusip": "14022A102",
+   "amount": 5095.65
+  },
+  {
+   "key": "CGNG",
+   "name": "CGNG",
+   "cusip": "14021N105",
+   "amount": 1953.64
+  },
+  {
+   "key": "CGSD",
+   "name": "CGSD",
+   "cusip": "14020Y409",
+   "amount": 8876.79
+  },
+  {
+   "key": "CHRD",
+   "name": "CHRD",
+   "cusip": "674215207",
+   "amount": 834.66
+  },
+  {
+   "key": "CHYM",
+   "name": "CHYM",
+   "cusip": "16935C109",
+   "amount": 23169.51
+  },
+  {
+   "key": "CIBFX",
+   "name": "CIBFX",
+   "cusip": "140193400",
+   "amount": 15157.43
+  },
+  {
+   "key": "CING",
+   "name": "CING",
+   "cusip": "17248W303",
+   "amount": 888.25
+  },
+  {
+   "key": "CLREX",
+   "name": "CLREX",
+   "cusip": "19766D444",
+   "amount": 9789.39
+  },
+  {
+   "key": "CMNIX",
+   "name": "CMNIX",
+   "cusip": "128119880",
+   "amount": 3763.38
+  },
+  {
+   "key": "CMPX",
+   "name": "CMPX",
+   "cusip": "20454B104",
+   "amount": 5676.19
+  },
+  {
+   "key": "CNH",
+   "name": "CNH",
+   "cusip": "N20944109",
+   "amount": 7315.0
+  },
+  {
+   "key": "COLM",
+   "name": "COLM",
+   "cusip": "198516106",
+   "amount": 91258.79
+  },
+  {
+   "key": "COPX",
+   "name": "COPX",
+   "cusip": "37954Y830",
+   "amount": 13817.25
+  },
+  {
+   "key": "CORZZ",
+   "name": "CORZZ",
+   "cusip": "21874A130",
+   "amount": 4147.5
+  },
+  {
+   "key": "COWG",
+   "name": "COWG",
+   "cusip": "69374H360",
+   "amount": 11670.68
+  },
+  {
+   "key": "CPAY",
+   "name": "CPAY",
+   "cusip": "219948106",
+   "amount": 32941.04
+  },
+  {
+   "key": "CRK",
+   "name": "CRK",
+   "cusip": "205768302",
+   "amount": 5224.0
+  },
+  {
+   "key": "CRMZ",
+   "name": "CRMZ",
+   "cusip": "225426105",
+   "amount": 718.2
+  },
+  {
+   "key": "CRSOX",
+   "name": "CRSOX",
+   "cusip": "22544R305",
+   "amount": 2115.09
+  },
+  {
+   "key": "CRVS",
+   "name": "CRVS",
+   "cusip": "221015100",
+   "amount": 30609.0
+  },
+  {
+   "key": "CRWV",
+   "name": "CRWV",
+   "cusip": "21873S108",
+   "amount": -18526.68
+  },
+  {
+   "key": "CSRIX",
+   "name": "CSRIX",
+   "cusip": "19247U106",
+   "amount": 1208.44
+  },
+  {
+   "key": "CURI",
+   "name": "CURI",
+   "cusip": "23130Q107",
+   "amount": 2.92
+  },
+  {
+   "key": "CUSIP:00973N102",
+   "name": "AKOUSTIS TECHNOLOGIESXXX BANKRUPTCY",
+   "cusip": "00973N102",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:021ESC017",
+   "name": "ALTABA INC XXX ESC PEND POSS FUTR DISTR",
+   "cusip": "021ESC017",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:038ESC026",
+   "name": "ARADIGM CORP XXX ESC PEND POSS FUTR DISTR",
+   "cusip": "038ESC026",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:046CVR015",
+   "name": "ATAIBECKLEY INC",
+   "cusip": "046CVR015",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:134991272",
+   "name": "CANNABIST CO HLDG 27 WTF WARRANTS EXP 05/29/27",
+   "cusip": "134991272",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:196623AD4",
+   "name": "COLORADO SPRINGS 3.15%45 MULT HSG DUE 12/01/45",
+   "cusip": "196623AD4",
+   "amount": 29108.4
+  },
+  {
+   "key": "CUSIP:46658MYL7",
+   "name": "JPMORGAN CHASE BANK 0%27 CD FDIC INS DUE 11/30/27",
+   "cusip": "46658MYL7",
+   "amount": 95940.0
+  },
+  {
+   "key": "CUSIP:48134ABL8",
+   "name": "JPMORGAN CHASE FINL 0%27 DUE 03/04/27",
+   "cusip": "48134ABL8",
+   "amount": 1784200.0
+  },
+  {
+   "key": "CUSIP:48134WGU5",
+   "name": "JPMORGAN CHASE FINL 0%29 DUE 02/14/29",
+   "cusip": "48134WGU5",
+   "amount": 1852680.0
+  },
+  {
+   "key": "CUSIP:559CVR022",
+   "name": "MAGENTA THERAPE +",
+   "cusip": "559CVR022",
+   "amount": 0.0
+  },
+  {
+   "key": "CUSIP:69120V309",
+   "name": "BLUE OWL CREDIT INCOME C ORP CLASS I",
+   "cusip": "69120V309",
+   "amount": 271610.92
+  },
+  {
+   "key": "CUSIP:G0447S102",
+   "name": "ARBUTHNOT BANKING ORDF",
+   "cusip": "G0447S102",
+   "amount": 2522.15
+  },
+  {
+   "key": "CUSIP:G45655100",
+   "name": "HOLLYWOOD BOWL GRO ORDF",
+   "cusip": "G45655100",
+   "amount": 1132.53
+  },
+  {
+   "key": "CUSIP:M26CNT069",
+   "name": "CYBERARK SOFTWARE LTD CORP ACT",
+   "cusip": "M26CNT069",
+   "amount": 11520.0
+  },
+  {
+   "key": "CUSIP:N96425421",
+   "name": "WOLTERS KLUWER NV ORDF",
+   "cusip": "N96425421",
+   "amount": 0.0
+  },
+  {
+   "key": "CWEN",
+   "name": "CWEN",
+   "cusip": "18539C204",
+   "amount": -93814.56
+  },
+  {
+   "key": "DAADX",
+   "name": "DAADX",
+   "cusip": "25239Y287",
+   "amount": 38247.47
+  },
+  {
+   "key": "DCBO",
+   "name": "DCBO",
+   "cusip": "25609L105",
+   "amount": 47.36
+  },
+  {
+   "key": "DDD",
+   "name": "DDD",
+   "cusip": "88554D205",
+   "amount": 534.0
+  },
+  {
+   "key": "DEOPX",
+   "name": "DEOPX",
+   "cusip": "969557776",
+   "amount": 2341.82
+  },
+  {
+   "key": "DFAX",
+   "name": "DFAX",
+   "cusip": "25434V880",
+   "amount": 48685.0
+  },
+  {
+   "key": "DFNM",
+   "name": "DFNM",
+   "cusip": "25434V849",
+   "amount": 3603.6
+  },
+  {
+   "key": "DFREX",
+   "name": "DFREX",
+   "cusip": "233203835",
+   "amount": 976.9
+  },
+  {
+   "key": "DFTEX",
+   "name": "DFTEX",
+   "cusip": "23320G513",
+   "amount": 1529.79
+  },
+  {
+   "key": "DFTIX",
+   "name": "DFTIX",
+   "cusip": "23320G315",
+   "amount": 14411.11
+  },
+  {
+   "key": "DHLRX",
+   "name": "DHLRX",
+   "cusip": "25264S841",
+   "amount": 3060.86
+  },
+  {
+   "key": "DLDRX",
+   "name": "DLDRX",
+   "cusip": "05587A859",
+   "amount": 712.64
+  },
+  {
+   "key": "DNN",
+   "name": "DNN",
+   "cusip": "248356107",
+   "amount": 702.21
+  },
+  {
+   "key": "DNUT",
+   "name": "DNUT",
+   "cusip": "50101L106",
+   "amount": 1011.5
+  },
+  {
+   "key": "DPC",
+   "name": "DPC",
+   "cusip": "G2R11M108",
+   "amount": 825.2
+  },
+  {
+   "key": "DRK",
+   "name": "DRK",
+   "cusip": "236918108",
+   "amount": 16.14
+  },
+  {
+   "key": "DRTGF",
+   "name": "DRTGF",
+   "cusip": "G5112P101",
+   "amount": 1483.59
+  },
+  {
+   "key": "DSEEX",
+   "name": "DSEEX",
+   "cusip": "258620822",
+   "amount": 32428.65
+  },
+  {
+   "key": "DSI",
+   "name": "DSI",
+   "cusip": "464288570",
+   "amount": 79811.64
+  },
+  {
+   "key": "DSSMX",
+   "name": "DSSMX",
+   "cusip": "25239Y345",
+   "amount": 3566.98
+  },
+  {
+   "key": "DTCR",
+   "name": "DTCR",
+   "cusip": "37954Y236",
+   "amount": 13075.28
+  },
+  {
+   "key": "DTM",
+   "name": "DTM",
+   "cusip": "23345M107",
+   "amount": -100138.4
+  },
+  {
+   "key": "DWUSX",
+   "name": "DWUSX",
+   "cusip": "25239Y618",
+   "amount": 1340.49
+  },
+  {
+   "key": "DXIV",
+   "name": "DXIV",
+   "cusip": "25434V542",
+   "amount": 4099.63
+  },
+  {
+   "key": "DXUV",
+   "name": "DXUV",
+   "cusip": "25239Y154",
+   "amount": 3342.29
+  },
+  {
+   "key": "EDIT",
+   "name": "EDIT",
+   "cusip": "28106W103",
+   "amount": 2.79
+  },
+  {
+   "key": "EEFT",
+   "name": "EEFT",
+   "cusip": "298736109",
+   "amount": 11114.39
+  },
+  {
+   "key": "EGHT",
+   "name": "EGHT",
+   "cusip": "282914100",
+   "amount": 672.0
+  },
+  {
+   "key": "EHSTX",
+   "name": "EHSTX",
+   "cusip": "277905808",
+   "amount": 8164.34
+  },
+  {
+   "key": "EMEAX",
+   "name": "EMEAX",
+   "cusip": "044820777",
+   "amount": 8202.4
+  },
+  {
+   "key": "ENFR",
+   "name": "ENFR",
+   "cusip": "00162Q676",
+   "amount": 5409.69
+  },
+  {
+   "key": "ENVX",
+   "name": "ENVX",
+   "cusip": "293594107",
+   "amount": 18.69
+  },
+  {
+   "key": "EQH",
+   "name": "EQH",
+   "cusip": "29452E101",
+   "amount": 88398.0
+  },
+  {
+   "key": "ESAB",
+   "name": "ESAB",
+   "cusip": "29605J106",
+   "amount": -84894.48
+  },
+  {
+   "key": "ESGU",
+   "name": "ESGU",
+   "cusip": "46435G425",
+   "amount": 21198.13
+  },
+  {
+   "key": "ESI",
+   "name": "ESI",
+   "cusip": "28618M106",
+   "amount": -47225.32
+  },
+  {
+   "key": "ETIMX",
+   "name": "ETIMX",
+   "cusip": "62827P303",
+   "amount": 39716.41
+  },
+  {
+   "key": "EXK",
+   "name": "EXK",
+   "cusip": "29258Y103",
+   "amount": 12.4
+  },
+  {
+   "key": "EXLS",
+   "name": "EXLS",
+   "cusip": "302081104",
+   "amount": 47890.6
+  },
+  {
+   "key": "EXP",
+   "name": "EXP",
+   "cusip": "26969P108",
+   "amount": -49587.44
+  },
+  {
+   "key": "FAGCX",
+   "name": "FAGCX",
+   "cusip": "315807883",
+   "amount": 5742.06
+  },
+  {
+   "key": "FBFRX",
+   "name": "FBFRX",
+   "cusip": "353612575",
+   "amount": 4771.35
+  },
+  {
+   "key": "FBIN",
+   "name": "FBIN",
+   "cusip": "34964C106",
+   "amount": -657.22
+  },
+  {
+   "key": "FDTX",
+   "name": "FDTX",
+   "cusip": "316092139",
+   "amount": 4753.71
+  },
+  {
+   "key": "FDXF",
+   "name": "FDXF",
+   "cusip": "314352105",
+   "amount": -3347.4
+  },
+  {
+   "key": "FE",
+   "name": "FE",
+   "cusip": "337932107",
+   "amount": 2923.88
+  },
+  {
+   "key": "FEGE",
+   "name": "FEGE",
+   "cusip": "75526L886",
+   "amount": 54448.75
+  },
+  {
+   "key": "FENI",
+   "name": "FENI",
+   "cusip": "31609A404",
+   "amount": 4046.06
+  },
+  {
+   "key": "FESM",
+   "name": "FESM",
+   "cusip": "31609A206",
+   "amount": 20516.0
+  },
+  {
+   "key": "FFAI",
+   "name": "FFAI",
+   "cusip": "307359869",
+   "amount": 1.17
+  },
+  {
+   "key": "FFDF",
+   "name": "FFDF",
+   "cusip": "30243C107",
+   "amount": 1608.75
+  },
+  {
+   "key": "FGIJX",
+   "name": "FGIJX",
+   "cusip": "31638A805",
+   "amount": 157.96
+  },
+  {
+   "key": "FGKNX",
+   "name": "FGKNX",
+   "cusip": "354713323",
+   "amount": 3274.4
+  },
+  {
+   "key": "FIFRX",
+   "name": "FIFRX",
+   "cusip": "353496649",
+   "amount": 4511.22
+  },
+  {
+   "key": "FIG",
+   "name": "FIG",
+   "cusip": "316841105",
+   "amount": -5216.37
+  },
+  {
+   "key": "FIKQX",
+   "name": "FIKQX",
+   "cusip": "31635T807",
+   "amount": 12515.19
+  },
+  {
+   "key": "FLMNY",
+   "name": "FLMNY",
+   "cusip": "31660D107",
+   "amount": 368.55
+  },
+  {
+   "key": "FLUT",
+   "name": "FLUT",
+   "cusip": "G3643J108",
+   "amount": -15979.03
+  },
+  {
+   "key": "FMHI",
+   "name": "FMHI",
+   "cusip": "33739P301",
+   "amount": 3187.9
+  },
+  {
+   "key": "FNDX",
+   "name": "FNDX",
+   "cusip": "808524771",
+   "amount": 32953.84
+  },
+  {
+   "key": "FPEI",
+   "name": "FPEI",
+   "cusip": "33739P855",
+   "amount": 2818.26
+  },
+  {
+   "key": "FPFIX",
+   "name": "FPFIX",
+   "cusip": "30254T718",
+   "amount": 3547.74
+  },
+  {
+   "key": "FPS",
+   "name": "FPS",
+   "cusip": "34631F102",
+   "amount": -23498.91
+  },
+  {
+   "key": "FQNCX",
+   "name": "FQNCX",
+   "cusip": "354726788",
+   "amount": 17730.68
+  },
+  {
+   "key": "FR",
+   "name": "FR",
+   "cusip": "32054K103",
+   "amount": 44118.9
+  },
+  {
+   "key": "FRSTX",
+   "name": "FRSTX",
+   "cusip": "354713505",
+   "amount": 2973.65
+  },
+  {
+   "key": "FRVO",
+   "name": "FRVO",
+   "cusip": "31556C106",
+   "amount": 4387.96
+  },
+  {
+   "key": "FSM",
+   "name": "FSM",
+   "cusip": "349942102",
+   "amount": 69.73
+  },
+  {
+   "key": "FSMB",
+   "name": "FSMB",
+   "cusip": "33739P830",
+   "amount": 3513.6
+  },
+  {
+   "key": "FSS",
+   "name": "FSS",
+   "cusip": "313855108",
+   "amount": 1164.3
+  },
+  {
+   "key": "FSTUX",
+   "name": "FSTUX",
+   "cusip": "00142F543",
+   "amount": 3676.19
+  },
+  {
+   "key": "FTC",
+   "name": "FTC",
+   "cusip": "33735K108",
+   "amount": 725.75
+  },
+  {
+   "key": "FTMIX",
+   "name": "FTMIX",
+   "cusip": "46141T679",
+   "amount": 55749.06
+  },
+  {
+   "key": "FUMB",
+   "name": "FUMB",
+   "cusip": "33740J104",
+   "amount": 1274.88
+  },
+  {
+   "key": "FWONA",
+   "name": "FWONA",
+   "cusip": "531229771",
+   "amount": -100963.46
+  },
+  {
+   "key": "FWONK",
+   "name": "FWONK",
+   "cusip": "531229755",
+   "amount": -44935.0
+  },
+  {
+   "key": "FZACX",
+   "name": "FZACX",
+   "cusip": "316127844",
+   "amount": 16750.35
+  },
+  {
+   "key": "GAB",
+   "name": "GAB",
+   "cusip": "362397101",
+   "amount": 16835.0
+  },
+  {
+   "key": "GBOSX",
+   "name": "GBOSX",
+   "cusip": "46637K687",
+   "amount": 6559.39
+  },
+  {
+   "key": "GDMZX",
+   "name": "GDMZX",
+   "cusip": "40171W181",
+   "amount": 3518.11
+  },
+  {
+   "key": "GECC",
+   "name": "GECC",
+   "cusip": "390320703",
+   "amount": 3038.24
+  },
+  {
+   "key": "GFIRX",
+   "name": "GFIRX",
+   "cusip": "38145C380",
+   "amount": 911.35
+  },
+  {
+   "key": "GLAS",
+   "name": "GLAS",
+   "cusip": "377130406",
+   "amount": 171.2
+  },
+  {
+   "key": "GLFOX",
+   "name": "GLFOX",
+   "cusip": "52106N442",
+   "amount": 10967.26
+  },
+  {
+   "key": "GLXY",
+   "name": "GLXY",
+   "cusip": "36317J209",
+   "amount": -13386.15
+  },
+  {
+   "key": "GNTX",
+   "name": "GNTX",
+   "cusip": "371901109",
+   "amount": 7208.39
+  },
+  {
+   "key": "GOLY",
+   "name": "GOLY",
+   "cusip": "86280R878",
+   "amount": 914.28
+  },
+  {
+   "key": "GROZ",
+   "name": "GROZ",
+   "cusip": "98888G808",
+   "amount": 13796.0
+  },
+  {
+   "key": "GSFTX",
+   "name": "GSFTX",
+   "cusip": "19765N245",
+   "amount": 31527.61
+  },
+  {
+   "key": "GSRTX",
+   "name": "GSRTX",
+   "cusip": "38145N113",
+   "amount": 1111.91
+  },
+  {
+   "key": "GTES",
+   "name": "GTES",
+   "cusip": "G39104107",
+   "amount": -30730.05
+  },
+  {
+   "key": "GUNR",
+   "name": "GUNR",
+   "cusip": "33939L407",
+   "amount": 2084.55
+  },
+  {
+   "key": "GVIP",
+   "name": "GVIP",
+   "cusip": "381430545",
+   "amount": 10432.64
+  },
+  {
+   "key": "HILYX",
+   "name": "HILYX",
+   "cusip": "41664M649",
+   "amount": 17975.61
+  },
+  {
+   "key": "HLTFF",
+   "name": "HLTFF",
+   "cusip": "G4586W106",
+   "amount": 1808.05
+  },
+  {
+   "key": "HMY",
+   "name": "HMY",
+   "cusip": "413216300",
+   "amount": 32.11
+  },
+  {
+   "key": "HOBIX",
+   "name": "HOBIX",
+   "cusip": "90213U230",
+   "amount": 11788.67
+  },
+  {
+   "key": "HOVR",
+   "name": "HOVR",
+   "cusip": "64550A107",
+   "amount": 1727.8
+  },
+  {
+   "key": "HTHIF",
+   "name": "HTHIF",
+   "cusip": "J20454112",
+   "amount": 103299.68
+  },
+  {
+   "key": "HTZWW",
+   "name": "HTZWW",
+   "cusip": "42806J148",
+   "amount": 28.8
+  },
+  {
+   "key": "IAUTX",
+   "name": "IAUTX",
+   "cusip": "00142F535",
+   "amount": 1116.1
+  },
+  {
+   "key": "IBIT",
+   "name": "IBIT",
+   "cusip": "46438F101",
+   "amount": 22337.6
+  },
+  {
+   "key": "ICHR",
+   "name": "ICHR",
+   "cusip": "G4740B105",
+   "amount": 1393.26
+  },
+  {
+   "key": "IGIC",
+   "name": "IGIC",
+   "cusip": "G4809J106",
+   "amount": 99.2
+  },
+  {
+   "key": "IMDX",
+   "name": "IMDX",
+   "cusip": "68235C206",
+   "amount": 40.37
+  },
+  {
+   "key": "INGM",
+   "name": "INGM",
+   "cusip": "457152106",
+   "amount": 13569.36
+  },
+  {
+   "key": "INTT",
+   "name": "INTT",
+   "cusip": "461147100",
+   "amount": 15.04
+  },
+  {
+   "key": "INTZ",
+   "name": "INTZ",
+   "cusip": "46121E304",
+   "amount": 0.69
+  },
+  {
+   "key": "IRD",
+   "name": "IRD",
+   "cusip": "67577R102",
+   "amount": 87.6
+  },
+  {
+   "key": "IREN",
+   "name": "IREN",
+   "cusip": "Q4982L109",
+   "amount": -19470.88
+  },
+  {
+   "key": "IRTC",
+   "name": "IRTC",
+   "cusip": "450056106",
+   "amount": 45490.53
+  },
+  {
+   "key": "IVOO",
+   "name": "IVOO",
+   "cusip": "921932885",
+   "amount": 498.96
+  },
+  {
+   "key": "IVVD",
+   "name": "IVVD",
+   "cusip": "00534A102",
+   "amount": 51526.88
+  },
+  {
+   "key": "IWMI",
+   "name": "IWMI",
+   "cusip": "78433H634",
+   "amount": 8589.15
+  },
+  {
+   "key": "IZEA",
+   "name": "IZEA",
+   "cusip": "46604H204",
+   "amount": 4.86
+  },
+  {
+   "key": "IZRL",
+   "name": "IZRL",
+   "cusip": "00214Q609",
+   "amount": 9013.87
+  },
+  {
+   "key": "JACTX",
+   "name": "JACTX",
+   "cusip": "47103A625",
+   "amount": 54731.34
+  },
+  {
+   "key": "JAN",
+   "name": "JAN",
+   "cusip": "471024109",
+   "amount": -14720.0
+  },
+  {
+   "key": "JAVA",
+   "name": "JAVA",
+   "cusip": "46641Q167",
+   "amount": 24362.34
+  },
+  {
+   "key": "JBND",
+   "name": "JBND",
+   "cusip": "46654Q716",
+   "amount": 14740.7
+  },
+  {
+   "key": "JBS",
+   "name": "JBS",
+   "cusip": "N4732M103",
+   "amount": -95060.55
+  },
+  {
+   "key": "JGRO",
+   "name": "JGRO",
+   "cusip": "46654Q609",
+   "amount": 23058.36
+  },
+  {
+   "key": "JHX",
+   "name": "JHX",
+   "cusip": "G4253H101",
+   "amount": -1083.6
+  },
+  {
+   "key": "JMHSF",
+   "name": "JMHSF",
+   "cusip": "G4253G129",
+   "amount": 1455.52
+  },
+  {
+   "key": "JMOM",
+   "name": "JMOM",
+   "cusip": "46641Q779",
+   "amount": 52391.85
+  },
+  {
+   "key": "JMUIX",
+   "name": "JMUIX",
+   "cusip": "47103D512",
+   "amount": 10937.29
+  },
+  {
+   "key": "JULT",
+   "name": "JULT",
+   "cusip": "00888H307",
+   "amount": 15064.35
+  },
+  {
+   "key": "JULW",
+   "name": "JULW",
+   "cusip": "00888H406",
+   "amount": 44265.81
+  },
+  {
+   "key": "KLRA",
+   "name": "KLRA",
+   "cusip": "482931102",
+   "amount": 104389.2
+  },
+  {
+   "key": "KRMN",
+   "name": "KRMN",
+   "cusip": "485924104",
+   "amount": -23047.96
+  },
+  {
+   "key": "KRT",
+   "name": "KRT",
+   "cusip": "48563L101",
+   "amount": 1421.68
+  },
+  {
+   "key": "KXI",
+   "name": "KXI",
+   "cusip": "464288737",
+   "amount": 2481.4
+  },
+  {
+   "key": "LAMAX",
+   "name": "LAMAX",
+   "cusip": "543913859",
+   "amount": 19676.87
+  },
+  {
+   "key": "LB",
+   "name": "LB",
+   "cusip": "514952100",
+   "amount": 251.56
+  },
+  {
+   "key": "LENZ",
+   "name": "LENZ",
+   "cusip": "52635N103",
+   "amount": 15616.5
+  },
+  {
+   "key": "LGCYX",
+   "name": "LGCYX",
+   "cusip": "54400A621",
+   "amount": 35619.51
+  },
+  {
+   "key": "LGRYX",
+   "name": "LGRYX",
+   "cusip": "54401T371",
+   "amount": 9204.16
+  },
+  {
+   "key": "LII",
+   "name": "LII",
+   "cusip": "526107107",
+   "amount": -9028.75
+  },
+  {
+   "key": "LLYVA",
+   "name": "LLYVA",
+   "cusip": "530909100",
+   "amount": -100305.31
+  },
+  {
+   "key": "LLYVK",
+   "name": "LLYVK",
+   "cusip": "530909308",
+   "amount": -99660.96
+  },
+  {
+   "key": "LMND",
+   "name": "LMND",
+   "cusip": "52567D107",
+   "amount": 1026.74
+  },
+  {
+   "key": "LOAR",
+   "name": "LOAR",
+   "cusip": "53947R105",
+   "amount": -61040.65
+  },
+  {
+   "key": "LOEV",
+   "name": "LOEV",
+   "cusip": "412295636",
+   "amount": 20802.99
+  },
+  {
+   "key": "LPXIX",
+   "name": "LPXIX",
+   "cusip": "19249L302",
+   "amount": 21661.05
+  },
+  {
+   "key": "LQDA",
+   "name": "LQDA",
+   "cusip": "53635D202",
+   "amount": 193.48
+  },
+  {
+   "key": "LRGF",
+   "name": "LRGF",
+   "cusip": "46434V282",
+   "amount": 792.6
+  },
+  {
+   "key": "LSYIX",
+   "name": "LSYIX",
+   "cusip": "54401T504",
+   "amount": 13667.44
+  },
+  {
+   "key": "LTCH",
+   "name": "LTCH",
+   "cusip": "51818V106",
+   "amount": 0.76
+  },
+  {
+   "key": "MAGWX",
+   "name": "MAGWX",
+   "cusip": "55273G736",
+   "amount": 35820.69
+  },
+  {
+   "key": "MARW",
+   "name": "MARW",
+   "cusip": "00888H778",
+   "amount": 46675.92
+  },
+  {
+   "key": "MBGL",
+   "name": "MBGL",
+   "cusip": "60744M106",
+   "amount": -62479.68
+  },
+  {
+   "key": "MBHPF",
+   "name": "MBHPF",
+   "cusip": "D3234N107",
+   "amount": 1688.18
+  },
+  {
+   "key": "MBXIX",
+   "name": "MBXIX",
+   "cusip": "62827P816",
+   "amount": 57990.54
+  },
+  {
+   "key": "MCFT",
+   "name": "MCFT",
+   "cusip": "57637H103",
+   "amount": 1182.6
+  },
+  {
+   "key": "MCVIX",
+   "name": "MCVIX",
+   "cusip": "55272P596",
+   "amount": 873.31
+  },
+  {
+   "key": "MDGL",
+   "name": "MDGL",
+   "cusip": "558868105",
+   "amount": -987.24
+  },
+  {
+   "key": "MDLN",
+   "name": "MDLN",
+   "cusip": "58507V107",
+   "amount": -23162.6
+  },
+  {
+   "key": "MFP",
+   "name": "MFP",
+   "cusip": "59739R104",
+   "amount": 6338.46
+  },
+  {
+   "key": "MFSG",
+   "name": "MFSG",
+   "cusip": "55286W207",
+   "amount": 49829.6
+  },
+  {
+   "key": "MGRDX",
+   "name": "MGRDX",
+   "cusip": "552746356",
+   "amount": 5156.58
+  },
+  {
+   "key": "MHIKX",
+   "name": "MHIKX",
+   "cusip": "552984684",
+   "amount": 22608.6
+  },
+  {
+   "key": "MITK",
+   "name": "MITK",
+   "cusip": "606710200",
+   "amount": 35.4
+  },
+  {
+   "key": "MKSI",
+   "name": "MKSI",
+   "cusip": "55306N104",
+   "amount": -12061.5
+  },
+  {
+   "key": "MLPTX",
+   "name": "MLPTX",
+   "cusip": "00143K251",
+   "amount": 19820.27
+  },
+  {
+   "key": "MLPZX",
+   "name": "MLPZX",
+   "cusip": "00143K327",
+   "amount": 24245.55
+  },
+  {
+   "key": "MODD",
+   "name": "MODD",
+   "cusip": "60785L306",
+   "amount": 25.3
+  },
+  {
+   "key": "MPLT",
+   "name": "MPLT",
+   "cusip": "56565P103",
+   "amount": 1762.25
+  },
+  {
+   "key": "MPT",
+   "name": "MPT",
+   "cusip": "58463J304",
+   "amount": 5858.7
+  },
+  {
+   "key": "MRBKX",
+   "name": "MRBKX",
+   "cusip": "55274K603",
+   "amount": 5541.0
+  },
+  {
+   "key": "MRP",
+   "name": "MRP",
+   "cusip": "601137102",
+   "amount": -18728.32
+  },
+  {
+   "key": "MRSKX",
+   "name": "MRSKX",
+   "cusip": "55273H361",
+   "amount": 4541.88
+  },
+  {
+   "key": "MS+O",
+   "name": "MS+O",
+   "cusip": "61762V861",
+   "amount": 3038.0
+  },
+  {
+   "key": "MTSI",
+   "name": "MTSI",
+   "cusip": "55405Y100",
+   "amount": -1969.8
+  },
+  {
+   "key": "MVCKX",
+   "name": "MVCKX",
+   "cusip": "55273W475",
+   "amount": 1743.97
+  },
+  {
+   "key": "NASA",
+   "name": "NASA",
+   "cusip": "87975E776",
+   "amount": 1273.34
+  },
+  {
+   "key": "NBOS",
+   "name": "NBOS",
+   "cusip": "64135A705",
+   "amount": 81910.19
+  },
+  {
+   "key": "NCDL",
+   "name": "NCDL",
+   "cusip": "67090S108",
+   "amount": 59338.56
+  },
+  {
+   "key": "NESR",
+   "name": "NESR",
+   "cusip": "G6375R107",
+   "amount": 890.96
+  },
+  {
+   "key": "NIQ",
+   "name": "NIQ",
+   "cusip": "G63755105",
+   "amount": 6339.12
+  },
+  {
+   "key": "NLY",
+   "name": "NLY",
+   "cusip": "035710839",
+   "amount": 2582.16
+  },
+  {
+   "key": "NOVZ",
+   "name": "NOVZ",
+   "cusip": "210322772",
+   "amount": 10012.32
+  },
+  {
+   "key": "NTOIY",
+   "name": "NTOIY",
+   "cusip": "64104Y106",
+   "amount": 1039.11
+  },
+  {
+   "key": "NUGY",
+   "name": "NUGY",
+   "cusip": "38747R181",
+   "amount": 1763.9
+  },
+  {
+   "key": "NVII",
+   "name": "NVII",
+   "cusip": "761562305",
+   "amount": 1711.54
+  },
+  {
+   "key": "NVR",
+   "name": "NVR",
+   "cusip": "62944T105",
+   "amount": 17910.63
+  },
+  {
+   "key": "O",
+   "name": "O",
+   "cusip": "756109104",
+   "amount": -93828.65
+  },
+  {
+   "key": "OEGAX",
+   "name": "OEGAX",
+   "cusip": "00143W842",
+   "amount": 2033.64
+  },
+  {
+   "key": "OLLI",
+   "name": "OLLI",
+   "cusip": "681116109",
+   "amount": -14156.55
+  },
+  {
+   "key": "OPTAX",
+   "name": "OPTAX",
+   "cusip": "001419217",
+   "amount": 4293.31
+  },
+  {
+   "key": "OSCR",
+   "name": "OSCR",
+   "cusip": "687793109",
+   "amount": 1037.44
+  },
+  {
+   "key": "OSMYX",
+   "name": "OSMYX",
+   "cusip": "00900W530",
+   "amount": 2903.33
+  },
+  {
+   "key": "OSTIX",
+   "name": "OSTIX",
+   "cusip": "742935489",
+   "amount": 2487.65
+  },
+  {
+   "key": "OTCKX",
+   "name": "OTCKX",
+   "cusip": "552987554",
+   "amount": 7701.09
+  },
+  {
+   "key": "OUNZ",
+   "name": "OUNZ",
+   "cusip": "921078101",
+   "amount": 3818.88
+  },
+  {
+   "key": "OUSM",
+   "name": "OUSM",
+   "cusip": "00162Q395",
+   "amount": 15531.09
+  },
+  {
+   "key": "OUST",
+   "name": "OUST",
+   "cusip": "68989M202",
+   "amount": 88.24
+  },
+  {
+   "key": "OXYWS",
+   "name": "OXYWS",
+   "cusip": "674599162",
+   "amount": 1598.08
+  },
+  {
+   "key": "OZK",
+   "name": "OZK",
+   "cusip": "06417N103",
+   "amount": -24226.8
+  },
+  {
+   "key": "PAAS",
+   "name": "PAAS",
+   "cusip": "697900108",
+   "amount": 8610.8
+  },
+  {
+   "key": "PACS",
+   "name": "PACS",
+   "cusip": "69380Q107",
+   "amount": 1281.3
+  },
+  {
+   "key": "PAG",
+   "name": "PAG",
+   "cusip": "70959W103",
+   "amount": -20259.59
+  },
+  {
+   "key": "PALPX",
+   "name": "PALPX",
+   "cusip": "72201M867",
+   "amount": 3619.63
+  },
+  {
+   "key": "PARR",
+   "name": "PARR",
+   "cusip": "69888T207",
+   "amount": 1575.36
+  },
+  {
+   "key": "PAYO",
+   "name": "PAYO",
+   "cusip": "70451X104",
+   "amount": 28.6
+  },
+  {
+   "key": "PBRA",
+   "name": "PBRA",
+   "cusip": "71654V101",
+   "amount": 1769.6
+  },
+  {
+   "key": "PDER",
+   "name": "PDER",
+   "cusip": "699437109",
+   "amount": 1188.0
+  },
+  {
+   "key": "PDP",
+   "name": "PDP",
+   "cusip": "46137V837",
+   "amount": 423.67
+  },
+  {
+   "key": "PENG",
+   "name": "PENG",
+   "cusip": "706915105",
+   "amount": 1396.33
+  },
+  {
+   "key": "PENNX",
+   "name": "PENNX",
+   "cusip": "780905840",
+   "amount": 486.48
+  },
+  {
+   "key": "PFL",
+   "name": "PFL",
+   "cusip": "72201H108",
+   "amount": 3487.34
+  },
+  {
+   "key": "PFPFX",
+   "name": "PFPFX",
+   "cusip": "00768D814",
+   "amount": 25418.82
+  },
+  {
+   "key": "PHDG",
+   "name": "PHDG",
+   "cusip": "46090A705",
+   "amount": 40487.8
+  },
+  {
+   "key": "PIREX",
+   "name": "PIREX",
+   "cusip": "74253Q580",
+   "amount": 16406.54
+  },
+  {
+   "key": "PL",
+   "name": "PL",
+   "cusip": "72703X106",
+   "amount": -989.52
+  },
+  {
+   "key": "PLSFX",
+   "name": "PLSFX",
+   "cusip": "04045F634",
+   "amount": 10092.77
+  },
+  {
+   "key": "PLTM",
+   "name": "PLTM",
+   "cusip": "38748T103",
+   "amount": 330.4
+  },
+  {
+   "key": "PMFLX",
+   "name": "PMFLX",
+   "cusip": "72203E103",
+   "amount": 3104.22
+  },
+  {
+   "key": "PMYYX",
+   "name": "PMYYX",
+   "cusip": "74676P839",
+   "amount": 33421.4
+  },
+  {
+   "key": "PPLI",
+   "name": "PPLI",
+   "cusip": "44891N208",
+   "amount": 6551.61
+  },
+  {
+   "key": "PQTIX",
+   "name": "PQTIX",
+   "cusip": "72201U455",
+   "amount": 2507.99
+  },
+  {
+   "key": "PRKA",
+   "name": "PRKA",
+   "cusip": "701455206",
+   "amount": 1525.29
+  },
+  {
+   "key": "PRMB",
+   "name": "PRMB",
+   "cusip": "741623102",
+   "amount": -1610.28
+  },
+  {
+   "key": "PSA",
+   "name": "PSA",
+   "cusip": "74460D109",
+   "amount": -95201.08
+  },
+  {
+   "key": "PSFE",
+   "name": "PSFE",
+   "cusip": "G6964L206",
+   "amount": 5.63
+  },
+  {
+   "key": "PTIAX",
+   "name": "PTIAX",
+   "cusip": "89833W394",
+   "amount": 7881.58
+  },
+  {
+   "key": "PTLAX",
+   "name": "PTLAX",
+   "cusip": "693390411",
+   "amount": 5990.46
+  },
+  {
+   "key": "PTTPX",
+   "name": "PTTPX",
+   "cusip": "72201M552",
+   "amount": 9526.11
+  },
+  {
+   "key": "PUCZX",
+   "name": "PUCZX",
+   "cusip": "74440K652",
+   "amount": 9991.85
+  },
+  {
+   "key": "PWJZX",
+   "name": "PWJZX",
+   "cusip": "743969651",
+   "amount": 15061.18
+  },
+  {
+   "key": "PZIEX",
+   "name": "PZIEX",
+   "cusip": "00770X675",
+   "amount": 1126.24
+  },
+  {
+   "key": "PZISX",
+   "name": "PZISX",
+   "cusip": "00770X394",
+   "amount": 834.19
+  },
+  {
+   "key": "PZZA",
+   "name": "PZZA",
+   "cusip": "698813102",
+   "amount": 3908.0
+  },
+  {
+   "key": "QUIK",
+   "name": "QUIK",
+   "cusip": "74837P405",
+   "amount": 46.6
+  },
+  {
+   "key": "QWLD",
+   "name": "QWLD",
+   "cusip": "78463X418",
+   "amount": 7779.47
+  },
+  {
+   "key": "QXO.PR.B",
+   "name": "QXO, Inc. Depositary Shares, each representing a 1/20th interest in a share of 5.50% Series B Mandatory Convertible Preferred Stock",
+   "amount": 395155.54
+  },
+  {
+   "key": "RAL",
+   "name": "RAL",
+   "cusip": "750940108",
+   "amount": 7248.08
+  },
+  {
+   "key": "RBA",
+   "name": "RBA",
+   "cusip": "74935Q107",
+   "amount": -90200.8
+  },
+  {
+   "key": "RBRK",
+   "name": "RBRK",
+   "cusip": "781154109",
+   "amount": -43674.08
+  },
+  {
+   "key": "RCIRX",
+   "name": "RCIRX",
+   "cusip": "00777X579",
+   "amount": 12.65
+  },
+  {
+   "key": "RDW",
+   "name": "RDW",
+   "cusip": "75776W103",
+   "amount": 41.72
+  },
+  {
+   "key": "RMCO",
+   "name": "RMCO",
+   "cusip": "02369M102",
+   "amount": 29606.58
+  },
+  {
+   "key": "RNST",
+   "name": "RNST",
+   "cusip": "75970E107",
+   "amount": 37142.68
+  },
+  {
+   "key": "ROII",
+   "name": "ROII",
+   "cusip": "27888N406",
+   "amount": 0.04
+  },
+  {
+   "key": "ROIV",
+   "name": "ROIV",
+   "cusip": "G76279101",
+   "amount": -1037.62
+  },
+  {
+   "key": "RRC",
+   "name": "RRC",
+   "cusip": "75281A109",
+   "amount": -39482.07
+  },
+  {
+   "key": "RTMVF",
+   "name": "RTMVF",
+   "cusip": "G7565D106",
+   "amount": 891.53
+  },
+  {
+   "key": "RVMD",
+   "name": "RVMD",
+   "cusip": "76155X100",
+   "amount": 8307.2
+  },
+  {
+   "key": "RYAN",
+   "name": "RYAN",
+   "cusip": "78351F107",
+   "amount": -12609.36
+  },
+  {
+   "key": "RYLG",
+   "name": "RYLG",
+   "cusip": "37960A776",
+   "amount": 37907.41
+  },
+  {
+   "key": "RYVYX",
+   "name": "RYVYX",
+   "cusip": "783554413",
+   "amount": 7030.84
+  },
+  {
+   "key": "SCFZX",
+   "name": "SCFZX",
+   "cusip": "74441F876",
+   "amount": 12238.82
+  },
+  {
+   "key": "SCGC1",
+   "name": "SCGC1",
+   "cusip": "808516843",
+   "amount": 33749.4
+  },
+  {
+   "key": "SCGG1",
+   "name": "SCGG1",
+   "cusip": "808516207",
+   "amount": 85510.49
+  },
+  {
+   "key": "SCGI1",
+   "name": "SCGI1",
+   "cusip": "808516405",
+   "amount": 4960.95
+  },
+  {
+   "key": "SCGK1",
+   "name": "SCGK1",
+   "cusip": "808516819",
+   "amount": 10147.04
+  },
+  {
+   "key": "SCGL1",
+   "name": "SCGL1",
+   "cusip": "808516868",
+   "amount": 5365.15
+  },
+  {
+   "key": "SCGM1",
+   "name": "SCGM1",
+   "cusip": "808516603",
+   "amount": 470419.17
+  },
+  {
+   "key": "SCGS1",
+   "name": "SCGS1",
+   "cusip": "808516876",
+   "amount": 30054.67
+  },
+  {
+   "key": "SCGT1",
+   "name": "SCGT1",
+   "cusip": "808516884",
+   "amount": 15855.95
+  },
+  {
+   "key": "SCII1",
+   "name": "SCII1",
+   "cusip": "808516827",
+   "amount": 35115.54
+  },
+  {
+   "key": "SCSI1",
+   "name": "SCSI1",
+   "cusip": "808516835",
+   "amount": 59054.07
+  },
+  {
+   "key": "SCVNX",
+   "name": "SCVNX",
+   "cusip": "94975P421",
+   "amount": 646.14
+  },
+  {
+   "key": "SEB",
+   "name": "SEB",
+   "cusip": "811543107",
+   "amount": 83553.54
+  },
+  {
+   "key": "SEIC",
+   "name": "SEIC",
+   "cusip": "784117103",
+   "amount": 7124.94
+  },
+  {
+   "key": "SENCX",
+   "name": "SENCX",
+   "cusip": "89154Q299",
+   "amount": 10005.29
+  },
+  {
+   "key": "SGENX",
+   "name": "SGENX",
+   "cusip": "32008F507",
+   "amount": 17598.07
+  },
+  {
+   "key": "SGOIX",
+   "name": "SGOIX",
+   "cusip": "32008F200",
+   "amount": 3297.74
+  },
+  {
+   "key": "SHC",
+   "name": "SHC",
+   "cusip": "83601L102",
+   "amount": -74.2
+  },
+  {
+   "key": "SITM",
+   "name": "SITM",
+   "cusip": "82982T106",
+   "amount": -710.04
+  },
+  {
+   "key": "SIXF",
+   "name": "SIXF",
+   "cusip": "00888H679",
+   "amount": 55637.37
+  },
+  {
+   "key": "SLGN",
+   "name": "SLGN",
+   "cusip": "827048109",
+   "amount": -31036.13
+  },
+  {
+   "key": "SLQD",
+   "name": "SLQD",
+   "cusip": "46434V100",
+   "amount": 110327.73
+  },
+  {
+   "key": "SMID",
+   "name": "SMID",
+   "cusip": "832156103",
+   "amount": 285.35
+  },
+  {
+   "key": "SMIN",
+   "name": "SMIN",
+   "cusip": "46429B614",
+   "amount": 1489.59
+  },
+  {
+   "key": "SMIZ",
+   "name": "SMIZ",
+   "cusip": "98888G204",
+   "amount": 168.48
+  },
+  {
+   "key": "SNEX",
+   "name": "SNEX",
+   "cusip": "861896108",
+   "amount": 1348.6
+  },
+  {
+   "key": "SOC",
+   "name": "SOC",
+   "cusip": "78574H104",
+   "amount": 24.29
+  },
+  {
+   "key": "SPRO",
+   "name": "SPRO",
+   "cusip": "84833T103",
+   "amount": 8.12
+  },
+  {
+   "key": "STAG",
+   "name": "STAG",
+   "cusip": "85254J102",
+   "amount": -36879.15
+  },
+  {
+   "key": "STWD",
+   "name": "STWD",
+   "cusip": "85571B105",
+   "amount": -20845.88
+  },
+  {
+   "key": "SUI",
+   "name": "SUI",
+   "cusip": "866674104",
+   "amount": -28631.04
+  },
+  {
+   "key": "SUNB",
+   "name": "SUNB",
+   "cusip": "866966104",
+   "amount": -59899.86
+  },
+  {
+   "key": "SWBGX",
+   "name": "SWBGX",
+   "cusip": "808509400",
+   "amount": 14350.68
+  },
+  {
+   "key": "TAOP",
+   "name": "TAOP",
+   "cusip": "G8675V135",
+   "amount": 80.2
+  },
+  {
+   "key": "TCIEX",
+   "name": "TCIEX",
+   "cusip": "87244W516",
+   "amount": 11742.34
+  },
+  {
+   "key": "TDSC",
+   "name": "TDSC",
+   "cusip": "30151E715",
+   "amount": 17.28
+  },
+  {
+   "key": "TEDIX",
+   "name": "TEDIX",
+   "cusip": "628380859",
+   "amount": 16684.73
+  },
+  {
+   "key": "TEM",
+   "name": "TEM",
+   "cusip": "88023B103",
+   "amount": -29493.15
+  },
+  {
+   "key": "TEQAX",
+   "name": "TEQAX",
+   "cusip": "89154X302",
+   "amount": 10893.97
+  },
+  {
+   "key": "TGNOF",
+   "name": "TGNOF",
+   "cusip": "F93488108",
+   "amount": 1000.22
+  },
+  {
+   "key": "THFWF",
+   "name": "THFWF",
+   "cusip": "G88462117",
+   "amount": 660.35
+  },
+  {
+   "key": "THG",
+   "name": "THG",
+   "cusip": "410867105",
+   "amount": 59067.2
+  },
+  {
+   "key": "THRV",
+   "name": "THRV",
+   "cusip": "88588B100",
+   "amount": 841719.75
+  },
+  {
+   "key": "TIBIX",
+   "name": "TIBIX",
+   "cusip": "885215467",
+   "amount": 27559.43
+  },
+  {
+   "key": "TIGO",
+   "name": "TIGO",
+   "cusip": "L6388F110",
+   "amount": -11487.42
+  },
+  {
+   "key": "TKO",
+   "name": "TKO",
+   "cusip": "87256C101",
+   "amount": -48863.04
+  },
+  {
+   "key": "TMCPX",
+   "name": "TMCPX",
+   "cusip": "89155H793",
+   "amount": 25415.8
+  },
+  {
+   "key": "TMFC",
+   "name": "TMFC",
+   "cusip": "74933W601",
+   "amount": 1302.72
+  },
+  {
+   "key": "TPL",
+   "name": "TPL",
+   "cusip": "88262P102",
+   "amount": -18267.51
+  },
+  {
+   "key": "TREX",
+   "name": "TREX",
+   "cusip": "89531P105",
+   "amount": -25818.64
+  },
+  {
+   "key": "TRLV",
+   "name": "TRLV",
+   "cusip": "89790E106",
+   "amount": 10694.56
+  },
+  {
+   "key": "TRPCF",
+   "name": "TRPCF",
+   "cusip": "G9066F101",
+   "amount": 35478.27
+  },
+  {
+   "key": "TSEMX",
+   "name": "TSEMX",
+   "cusip": "89154Q570",
+   "amount": 1100.36
+  },
+  {
+   "key": "TSPA",
+   "name": "TSPA",
+   "cusip": "87283Q503",
+   "amount": 34061.52
+  },
+  {
+   "key": "TTMI",
+   "name": "TTMI",
+   "cusip": "87305R109",
+   "amount": 19305.3
+  },
+  {
+   "key": "TW",
+   "name": "TW",
+   "cusip": "892672106",
+   "amount": 13067.42
+  },
+  {
+   "key": "UI",
+   "name": "UI",
+   "cusip": "90353W103",
+   "amount": -21934.44
+  },
+  {
+   "key": "URA",
+   "name": "URA",
+   "cusip": "37954Y871",
+   "amount": 22104.5
+  },
+  {
+   "key": "URNM",
+   "name": "URNM",
+   "cusip": "85208P303",
+   "amount": 10446.56
+  },
+  {
+   "key": "USAR",
+   "name": "USAR",
+   "cusip": "91733P107",
+   "amount": 1378.65
+  },
+  {
+   "key": "USIG",
+   "name": "USIG",
+   "cusip": "464288620",
+   "amount": 3503.13
+  },
+  {
+   "key": "UUP",
+   "name": "UUP",
+   "cusip": "46141D203",
+   "amount": 2203.24
+  },
+  {
+   "key": "VAW",
+   "name": "VAW",
+   "cusip": "92204A801",
+   "amount": 4462.76
+  },
+  {
+   "key": "VCR",
+   "name": "VCR",
+   "cusip": "92204A108",
+   "amount": 1113.72
+  },
+  {
+   "key": "VFLO",
+   "name": "VFLO",
+   "cusip": "92647X830",
+   "amount": 13473.18
+  },
+  {
+   "key": "VFMV",
+   "name": "VFMV",
+   "cusip": "921935409",
+   "amount": 65310.7
+  },
+  {
+   "key": "VICR",
+   "name": "VICR",
+   "cusip": "925815102",
+   "amount": 14058.06
+  },
+  {
+   "key": "VIK",
+   "name": "VIK",
+   "cusip": "G93A5A101",
+   "amount": 9237.42
+  },
+  {
+   "key": "VMRK",
+   "name": "VMRK",
+   "cusip": "29476L107",
+   "amount": -66219.18
+  },
+  {
+   "key": "VNJTX",
+   "name": "VNJTX",
+   "cusip": "92204F206",
+   "amount": 2693.13
+  },
+  {
+   "key": "VNO+L",
+   "name": "VNO+L",
+   "cusip": "929042844",
+   "amount": 8425.0
+  },
+  {
+   "key": "VPMAX",
+   "name": "VPMAX",
+   "cusip": "921936209",
+   "amount": 52579.6
+  },
+  {
+   "key": "VSCAX",
+   "name": "VSCAX",
+   "cusip": "00143M539",
+   "amount": 2589.17
+  },
+  {
+   "key": "VSXY",
+   "name": "VSXY",
+   "cusip": "926400102",
+   "amount": 1341.15
+  },
+  {
+   "key": "VVOIX",
+   "name": "VVOIX",
+   "cusip": "00143M364",
+   "amount": 8167.81
+  },
+  {
+   "key": "VVV",
+   "name": "VVV",
+   "cusip": "92047W101",
+   "amount": -5309.5
+  },
+  {
+   "key": "VWITX",
+   "name": "VWITX",
+   "cusip": "922907209",
+   "amount": 170.56
+  },
+  {
+   "key": "VWNAX",
+   "name": "VWNAX",
+   "cusip": "922018304",
+   "amount": 212721.05
+  },
+  {
+   "key": "WAAEX",
+   "name": "WAAEX",
+   "cusip": "936772102",
+   "amount": 323.15
+  },
+  {
+   "key": "WEFIX",
+   "name": "WEFIX",
+   "cusip": "94904P302",
+   "amount": 6705.49
+  },
+  {
+   "key": "WFBFX",
+   "name": "WFBFX",
+   "cusip": "140541111",
+   "amount": 7300.33
+  },
+  {
+   "key": "WH",
+   "name": "WH",
+   "cusip": "98311A105",
+   "amount": -77701.02
+  },
+  {
+   "key": "WIPIX",
+   "name": "WIPIX",
+   "cusip": "94984B694",
+   "amount": 9592.02
+  },
+  {
+   "key": "WOLTF",
+   "name": "WOLTF",
+   "cusip": "N9643A197",
+   "amount": 1687.1
+  },
+  {
+   "key": "WSHCX",
+   "name": "WSHCX",
+   "cusip": "939330304",
+   "amount": 25747.54
+  },
+  {
+   "key": "WULF",
+   "name": "WULF",
+   "cusip": "88080T104",
+   "amount": -857.82
+  },
+  {
+   "key": "XBIT",
+   "name": "XBIT",
+   "cusip": "98400H102",
+   "amount": 15151.0
+  },
+  {
+   "key": "XMVM",
+   "name": "XMVM",
+   "cusip": "46137V456",
+   "amount": 19695.5
+  },
+  {
+   "key": "XOVR",
+   "name": "XOVR",
+   "cusip": "293828877",
+   "amount": 5490.82
+  },
+  {
+   "key": "XVV",
+   "name": "XVV",
+   "cusip": "46436E569",
+   "amount": 9450.35
+  },
+  {
+   "key": "XYLG",
+   "name": "XYLG",
+   "cusip": "37954Y277",
+   "amount": 89102.25
+  },
+  {
+   "key": "ZG",
+   "name": "ZG",
+   "cusip": "98954M101",
+   "amount": -2025.36
+  }
+ ],
+ "total": 451
+}

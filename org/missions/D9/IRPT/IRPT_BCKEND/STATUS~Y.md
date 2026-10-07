@@ -80,6 +80,18 @@ FWD-11 retires it.
    this workstream.
 4. Y stays open until IRPT_YCDGEN FWD-11, then closes with the removal of the YCharts path.
 
+**Round 61 (~Y) CLOSED 2026-10-07 ~09:0xZ:** E-Y1 @ad59d08617 (row S353), E-Y2 drained @1ade2e9989 (owner table: 14 fixtures/har
+REMOVE, templates.json KEEP, lane IRPT_COMPLETION_Y), E-Y3 = the release390 hand-over. S339 disarmed (row S351).
+
+**Next Y cell, ruled by `1.0.0_SA_CTO~DELL2` msg 233, PARKED:** drop the 14 `fixtures/har/*` from `irpt-ycharts-generate`'s
+`files[]`. Its criteria:
+(1) an import/open trace over the package at the pin shows no runtime reader;
+(2) the built package has no fixtures/har member, and the tests that read them still pass from the repo;
+(3) a planted runtime open is caught by the trace.
+It rides the function's next release (if that is `~G2`'s resident build, it rides `~G2`'s).
+Owner: this seat. It un-parks when that next release is scheduled AND a host with PyMuPDF (`fitz`) can run criterion (2)'s tests.
+dell2 has no `fitz`, so an order cut now would carry a criterion no dell2 worker can meet.
+
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
 - **Submit-to-READY is mostly a fixed wait.**
   - Y-6 runs 1-3 each spend 15m07s in `READ_BACK_LEASE_TTL_S = 900` (`ycharts/generate/recipe.py:688`, CTO batch 97

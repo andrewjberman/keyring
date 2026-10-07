@@ -1861,3 +1861,40 @@ builds and the applies follow under the CTO half; for `irpt-directory-search` an
 | `IB-pr-328` | the served.py and loaders.py staged_from pins of reporting-read, export-render, directory-search, holdings -> d8d8e7d868 | WORLD (the source map is the build input of four served functions; the order applies nothing) | IB-pr-327 (drained) | P60 |
 
 fanout: 1 of 1 chains, cap 8, reason: one source-map edit, eight members. Worker 0.9.0_WK_IRPT_BCKEND~131 in its own worktree.
+
+## 54. ROUND 61, WORKSTREAM ~P (2026-10-07 ~09:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round analysis @e363a194ed section 5)
+
+The rectangle is the analysis's ENRICHMENT LIST for ~P, E-P1..E-P7, one cell per item. Rounds 47-60 were repair and release rounds and
+moved no outcome; these cells aim at FWD-2, FWD-3 (INF export, via the adapter build) and FWD-7, plus the four record/tooling rows.
+Write sets are disjoint per cell: only IB-pr-334 edits `lambda-source-map.json` (the irpt-directory-search row); IB-pr-329 changes the
+builder only; IB-pr-332 moves the adapter's three build-only modules out of the scanned top level and does not touch the map.
+Checks: `deliverables/2.0.0_SA_COO~P2/checks/r61/p61_cells.py`, every one dry-run at base 6e462d3499.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-329` | E-P1 one S3 key per function (S343) | the builder uploads to the map's artifact_s3_key | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-a |
+| `IB-pr-330` | E-P2 the deploy recorder stages only its own paths (S344) | release records | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-b |
+| `IB-pr-331` | E-P3 the release census is the issuer's own build against live (S337 census half) | release tooling | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-c |
+| `IB-pr-332` | E-P4 the adapter builds (W127-S1) | FWD-3 (INF export needs an adapter build) | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-d |
+| `IB-pr-333` | E-P5 the refresh manifest records the fire that ran (S348) | FWD-7 | WORLD (floor: infra/ path; analysis class SERVED; the release and the driven fire are the issuer's under its half) | none | P61-e |
+| `IB-pr-334` | E-P6 FWD-7 on current bytes: the search serves the over-age branch | FWD-7 | WORLD (code + the map row; release, the five-arm live drive and both halves are the issuer's) | IB-pr-333 (one release packet) | P61-e |
+| `IB-pr-335` | E-P7 FWD-2 replay on current bytes | FWD-2 | SERVED (read-only replay against the live API) | none | P61-f |
+
+fanout: 6 of 6 chains, cap 8, reason: five independent cells plus the E-P5 -> E-P6 queue that ships as one directory release packet. Slots 0.9.0_WK_IRPT_BCKEND~132..137, one worktree each; ~136 holds IB-pr-333 then IB-pr-334.
+
+## 55. ROUND 62, WORKSTREAM ~P (2026-10-07 ~10:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round-61 analysis @aae1ed7781 section 3 and the r61 directory release CTO half @74e91285b4)
+
+The rectangle is the analysis's ENRICHMENT LIST for ~P (E-P8, E-P9, E-P10; E-P11 is the issuer's own disarm row, filed in this
+issuance, not a cell) plus the two preconditions the r61 directory release's CTO half sets (the handler.py pin; the two-instrument consumer
+census). Write sets are disjoint: only IB-pr-337 edits lambda-source-map.json; IB-pr-336 owns export/ and the render host; IB-pr-338 adds
+tests only; IB-pr-339 owns _ids/. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r62/p62_cells.py`, every one dry-run at base bc794d2770.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-336` | E-P9 the export takes a client report (a1 submit, a3 render host + unknown-template refusal, a4 print package) | IRPT_CUSTDY hop 5; export integrity | WORLD (floor: infra/; analysis class LOCAL) | none | P62-a |
+| `IB-pr-337` | r61 release precondition: refresh stages handler.py from the running blob (S357) | FWD-7 (the directory release) | WORLD (floor: infra/) | none | P62-b |
+| `IB-pr-338` | r61 release precondition P1: every reader of the search response passes on plain and over-age (W136-S1) | FWD-7 (the directory release) | WORLD (floor: an infra/ test path) | none | P62-c |
+| `IB-pr-339` | E-P8 the seam holds no 'None'; ids.py treats 'None'/'nan' as unmapped; the writer named (IRPT_CUSTDY W5-S1) | FWD-1/FWD-2 coverage; IRPT_CUSTDY E1 gate | WORLD (floor: infra/; analysis class LOCAL) | none | P62-d |
+| `IB-pr-340` | E-P10 one fixture per gated route (W137-S1) | FWD-2 | SERVED | none | P62-e |
+
+fanout: 5 of 5 chains, cap 8, reason: five independent cells; the analysis's "fan-out 3" counts E-P8..E-P10, and the two release preconditions are this issuer's addition under the CTO half. Slots 0.9.0_WK_IRPT_BCKEND~138..142; portal_ref: 8ddfe409 (portal DEV at the cut) for ~138 and ~140.

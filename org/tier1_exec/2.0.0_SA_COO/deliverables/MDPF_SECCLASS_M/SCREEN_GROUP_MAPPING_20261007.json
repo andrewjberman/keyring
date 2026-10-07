@@ -1,0 +1,1000 @@
+{
+  "denominator": {
+    "files_scanned": 637,
+    "how": "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/screen_group_census.py --write: portal/src .ts/.tsx/.js/.jsx minus tests (627 files) + 10 producer files; 70 files carry a class-list vocabulary or the words 'asset class', 44 are a screen's file, 26 are excluded with a reason, 0 unaccounted"
+  },
+  "six_classes": [
+    "cash",
+    "fixed_income",
+    "equity",
+    "structured",
+    "alternatives",
+    "commodities"
+  ],
+  "screens": [
+    {
+      "screen": "Positioning > Holdings (treemap, legend and table)",
+      "files": [
+        "portal/src/components/holdings/HoldingsTreemapChart.tsx",
+        "portal/src/components/holdings/HoldingsBreakdownTable.tsx",
+        "portal/src/pages/Positioning/tabs/HoldingsTab.tsx",
+        "portal/src/pages/Positioning/constants/etf-categories.ts",
+        "portal/src/pages/Positioning/shared/etfAdapter.ts",
+        "portal/src/pages/Positioning/shared/satelliteAdapter.ts",
+        "portal/src/pages/Positioning/shared/satelliteSet.ts",
+        "portal/src/pages/Positioning/shared/bookSet.ts",
+        "portal/src/api/portal-proxy.ts"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Alternatives",
+        "Commodities"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "HoldingsTab.tsx: 'Cash' FOLDS TO 'Fixed Income'; legendClassesFor(foldCash=true)",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Five groups; Cash folds into Fixed Income (stated in code). Multi-Asset, Hedge, Other, Unclassified are not drawn here."
+    },
+    {
+      "screen": "Positioning > Summary (allocation by class rows)",
+      "files": [
+        "portal/src/pages/Positioning/panels/PositioningSummary.tsx"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Commodities",
+        "Alternatives"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "PositioningSummary.tsx ASSET_CLASSES: Fixed Income row served: ['fixed_income','cash'], blurb 'Bonds & Cash'",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Five groups; Cash is summed into the Fixed Income row (stated in code)."
+    },
+    {
+      "screen": "Investor Reporting > Holdings (treemap and legend)",
+      "files": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/HoldingsTreemap.tsx",
+        "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts",
+        "portal/src/components/holdings/HoldingsTreemapChart.tsx",
+        "portal/src/pages/InvestorReporting/contracts/adapt.ts",
+        "portal/src/pages/InvestorReporting/contracts/index.ts",
+        "portal/src/pages/InvestorReporting/contracts/wire/HoldingsSnapshot.ts"
+      ],
+      "producers": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Alternatives",
+        "Commodities",
+        "Multi-Asset",
+        "Other",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Nine groups, the six one-to-one plus Multi-Asset, Other, Unclassified. Multi-Asset is a group this screen shows today; cell SC-e-23 removes it."
+    },
+    {
+      "screen": "Investor Reporting > Holdings (class-mix bar in the drill tree)",
+      "files": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/DrillTree.tsx",
+        "portal/src/components/CategoryViewTree.tsx",
+        "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts"
+      ],
+      "producers": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Alternatives",
+        "Commodities",
+        "Multi-Asset",
+        "Other",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "CLASS_BAR_ORDER is the key set of ASSET_CLASS_COLOR in rank order: the same nine groups as the treemap. Multi-Asset: SC-e-23 removes it."
+    },
+    {
+      "screen": "Investor Reporting > Holdings (securities table grouped by class)",
+      "files": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/SecurityList.tsx",
+        "portal/src/components/holdings/HoldingsBreakdownTable.tsx",
+        "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts"
+      ],
+      "producers": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Alternatives",
+        "Commodities",
+        "Multi-Asset",
+        "Other",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "HoldingsBreakdownTable.tsx: displayClass 'Cash' -> 'Fixed Income' (PRD s.3 class 1)",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "ASSET_CLASS_ORDER (five) plus extraClasses Multi-Asset, Other, Unclassified. A cash row sits under Fixed Income in this table while the treemap and class bar draw Cash as its own group. Multi-Asset: SC-e-23 removes it."
+    },
+    {
+      "screen": "Investor Reporting > Holdings (held positions by asset class totals)",
+      "files": [
+        "portal/src/pages/InvestorReporting/tabs/holdings/classTotals.ts",
+        "portal/src/pages/InvestorReporting/tabs/holdings/assetClass.ts"
+      ],
+      "producers": [
+        "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Structured",
+        "Alternatives",
+        "Commodities",
+        "Multi-Asset",
+        "Other",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "One line per served class in the page's class order (Cash first): the nine groups of the class-mix bar. Multi-Asset: SC-e-23 removes it."
+    },
+    {
+      "screen": "Attribution > Holdings",
+      "files": [
+        "portal/src/pages/Attribution/constants/etf-categories.ts",
+        "portal/src/pages/Attribution/constants/holdings-shared.tsx",
+        "portal/src/pages/Attribution/components/HoldingsCustomTreemapContent.tsx",
+        "portal/src/pages/Attribution/tabs/SelectionTab.tsx"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-holdings-attribution/lambda_function.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Equity",
+        "alternatives": "Equity",
+        "commodities": "Equity"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "producer funnel: fixed_income and cash -> Fixed Income",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "producer funnel: every other class -> Equity",
+        "alternatives": "producer funnel: every other class -> Equity",
+        "commodities": "producer funnel: every other class -> Equity"
+      },
+      "basis": "measured",
+      "note": "Two groups by Andrew-direct 2026-10-06 (attribution funnel); source_asset_class keeps the registry class. S23: etf-categories.ts still carries a static Cash / Fixed Income / Equity / Hedge category list (surface for the later round)."
+    },
+    {
+      "screen": "Attribution > Asset Allocation Summary",
+      "files": [
+        "portal/src/pages/Attribution/components/AssetAllocationSummary.tsx",
+        "portal/src/pages/Attribution/constants/holdings-shared.tsx",
+        "portal/src/pages/Attribution/Attribution.tsx"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-allocation-summary/lambda_function.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Equity",
+        "alternatives": "Equity",
+        "commodities": "Equity"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "producer funnel: fixed_income and cash -> Fixed Income",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "producer funnel: every other class -> Equity",
+        "alternatives": "producer funnel: every other class -> Equity",
+        "commodities": "producer funnel: every other class -> Equity"
+      },
+      "basis": "measured",
+      "note": "Two groups (Fixed Income, Equity); the producer's benchmark table also carries Structured, Commodities, Alternatives at 0.0 'no benchmark'."
+    },
+    {
+      "screen": "Attribution > Style vs Policy comparison",
+      "files": [
+        "portal/src/pages/Attribution/components/StylePolicyComparison.tsx",
+        "portal/src/pages/Attribution/constants/holdings-shared.tsx"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-allocation-summary/lambda_function.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Equity",
+        "alternatives": "Equity",
+        "commodities": "Equity"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "producer funnel: fixed_income and cash -> Fixed Income",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "producer funnel: every other class -> Equity",
+        "alternatives": "producer funnel: every other class -> Equity",
+        "commodities": "producer funnel: every other class -> Equity"
+      },
+      "basis": "measured",
+      "note": "Same two groups and producer as the Asset Allocation Summary."
+    },
+    {
+      "screen": "Capital Market Assumptions > Expectations (columns grouped by class)",
+      "files": [
+        "portal/src/pages/CapitalMarketAssumptions/tabs/ExpectationsTab.tsx",
+        "portal/src/pages/CapitalMarketAssumptions/types.ts"
+      ],
+      "producers": [
+        "infra/aws/lambda/v2_portal/yang_pipeline/cma/yang-generate-cma/lambda_function.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equities",
+        "Alternatives",
+        "Commodities"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equities",
+        "structured": "Equities",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "inferred",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "category 'Fixed Income'",
+        "equity": "category 'Equities'",
+        "structured": "no Structured category; proposed Equities, the side the attribution funnel (Andrew-direct 2026-10-06) puts structured on",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "inferred",
+      "note": "Groups expected return and volatility by class: a class grouping, not a weight mix. Five categories, no Structured."
+    },
+    {
+      "screen": "Advisor Intelligence > Partner Analytics > AUA mix (49 Financial and Demo)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_partners/49financial/layout.ts",
+        "portal/src/pages/AdvisorIntelligence/_partners/demo/layout.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/types/TenantLayoutConfig.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/hooks/useTenantLayout.ts"
+      ],
+      "producers": [
+        "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py"
+      ],
+      "groups": [
+        "Fixed Income",
+        "Equity",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "inferred",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "cash is not drawn here today; proposed to fold into Fixed Income, the fold Positioning states (HoldingsTab.tsx)",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "inferred",
+      "note": "includesCash false: the cash slice is filtered out today. Multi-Asset is shown today; SC-e-23 removes it. Demo's `ordered` list is the same."
+    },
+    {
+      "screen": "Advisor Intelligence > Partner Analytics > AUA mix (Inflection)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_partners/inflection/layout.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx"
+      ],
+      "producers": [
+        "data/inf/scripts/gold/INF_D_03.composition_artifacts.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Seven groups; the six one-to-one plus Multi-Asset (SC-e-23 removes it)."
+    },
+    {
+      "screen": "Advisor Intelligence > Partner Analytics > AUA mix (Cottonwood)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_partners/cottonwood/layout.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/components/PartnerAnalytics.tsx"
+      ],
+      "producers": [
+        "data/cot/scripts/gold/C_06.client_mix_timeseries.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset",
+        "Unclassified",
+        "Other"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Nine groups; the six one-to-one plus Multi-Asset (SC-e-23 removes it), Unclassified, Other."
+    },
+    {
+      "screen": "Advisor Intelligence > Books, Advisor book and Profile mix donut (49 Financial and Demo)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx"
+      ],
+      "producers": [
+        "data/black_diamond/scripts/gold/D_03.composition_artifacts.py"
+      ],
+      "groups": [
+        "Equity",
+        "Fixed Income",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Fixed Income",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "inferred",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "cash is not drawn here today; proposed to fold into Fixed Income, the fold Positioning states (HoldingsTab.tsx)",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "inferred",
+      "note": "normalizeMixTo4Class without includeCash: a cash row is dropped from the donut today. Multi-Asset is shown today; SC-e-23 removes it."
+    },
+    {
+      "screen": "Advisor Intelligence > Books, Advisor book and Profile mix donut (Inflection)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx"
+      ],
+      "producers": [
+        "data/inf/scripts/gold/INF_D_03.composition_artifacts.py"
+      ],
+      "groups": [
+        "Cash",
+        "Equity",
+        "Fixed Income",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset",
+        "Unclassified"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "includeCash true: eight groups, the six one-to-one plus Multi-Asset (SC-e-23 removes it) and Unclassified."
+    },
+    {
+      "screen": "Advisor Intelligence > Books, Advisor book and Profile mix donut (Cottonwood)",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_shared/lib/composition.ts",
+        "portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/panels/CanonicalBookView.tsx",
+        "portal/src/pages/AdvisorIntelligence/_shared/AdvisorBookClientDetail.tsx"
+      ],
+      "producers": [
+        "data/cot/scripts/gold/D_03.composition_artifacts.py"
+      ],
+      "groups": [
+        "Cash",
+        "Equity",
+        "Fixed Income",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset",
+        "Unclassified",
+        "Other"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "includeCash and includeOther true: nine groups, the six one-to-one plus Multi-Asset (SC-e-23 removes it), Unclassified, Other."
+    },
+    {
+      "screen": "Advisor Intelligence > Advisor Analytics > AUA mix bars",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_shared/components/AdvisorAnalytics.tsx"
+      ],
+      "producers": [
+        "data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py"
+      ],
+      "groups": [
+        "Cash",
+        "Fixed Income",
+        "Equity",
+        "Alternatives",
+        "Structured",
+        "Commodities",
+        "Multi-Asset",
+        "Unclassified",
+        "Other"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Structured",
+        "alternatives": "Alternatives",
+        "commodities": "Commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "one-to-one: the screen carries a group of the same name",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "one-to-one: the screen carries a group of the same name"
+      },
+      "basis": "measured",
+      "note": "Draws every class a served mix carries (nine possible groups, a class absent from every bar draws nothing). Multi-Asset: SC-e-23 removes it."
+    },
+    {
+      "screen": "Advisor Intelligence > Performance reporting > Allocation card",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_shared/perfrp/PerfrpAllocation.tsx"
+      ],
+      "producers": [],
+      "groups": [
+        "Equity",
+        "Fixed Income",
+        "Alternatives",
+        "Cash",
+        "structured",
+        "commodities"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "structured",
+        "alternatives": "Alternatives",
+        "commodities": "commodities"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "measured",
+        "alternatives": "measured",
+        "commodities": "measured"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "classLabel(): an unlabelled class renders the producer's token verbatim",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "classLabel(): an unlabelled class renders the producer's token verbatim"
+      },
+      "basis": "measured",
+      "note": "Four classes carry a label; Structured and Commodities render as the raw lower-case token, a group named differently from the shared list."
+    },
+    {
+      "screen": "Advisor Intelligence > Inflection Insights > basket tile legend",
+      "files": [
+        "portal/src/pages/AdvisorIntelligence/_partners/inflection/InflectionInsightsPanel.tsx"
+      ],
+      "producers": [],
+      "groups": [
+        "Equity",
+        "Fixed Income",
+        "Alternatives",
+        "Cash"
+      ],
+      "mapping": {
+        "cash": "Cash",
+        "fixed_income": "Fixed Income",
+        "equity": "Equity",
+        "structured": "Alternatives",
+        "alternatives": "Alternatives",
+        "commodities": "Alternatives"
+      },
+      "mapping_basis": {
+        "cash": "measured",
+        "fixed_income": "measured",
+        "equity": "measured",
+        "structured": "inferred",
+        "alternatives": "measured",
+        "commodities": "inferred"
+      },
+      "mapping_why": {
+        "cash": "one-to-one: the screen carries a group of the same name",
+        "fixed_income": "one-to-one: the screen carries a group of the same name",
+        "equity": "one-to-one: the screen carries a group of the same name",
+        "structured": "legend has no Structured entry; MIX_PIE once shared one colour between structured_notes and alternatives",
+        "alternatives": "one-to-one: the screen carries a group of the same name",
+        "commodities": "legend has no Commodities entry; the old `hedge` colour was Alternatives' orange"
+      },
+      "basis": "inferred",
+      "note": "Tiles are coloured by the served class through mixPieColor, but the legend lists four. A structured or commodities tile wears its own colour with no legend entry."
+    }
+  ],
+  "geography": {
+    "source": "infra/aws/lambda/v2_portal/yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:95",
+    "values": [
+      "Emerging",
+      "Global",
+      "International",
+      "US"
+    ],
+    "tickers": 92,
+    "default_for_unlisted": "Other",
+    "placed": "PROPOSED, not decided (the CTO decides): a new field `geography` on the shared list (the etf-classifications table), one of the four values above, 'Other' where a row has none. Not an existing field: sub_asset_class carries a different grain (US Large Cap, Developed, International, EM ... for equity only; none of its fixed-income values is a region) and the list holds 3,493 rows against this dict's tickers. OPEN: which of the listed tickers have a row today, and who fills the field for the rest, is the placing round's act."
+  },
+  "excluded": [
+    {
+      "file": "portal/src/api/endpoints/advisor-intelligence.ts",
+      "reason": "API client for AI payloads: types and fetch, draws no group"
+    },
+    {
+      "file": "portal/src/api/endpoints/aum.ts",
+      "reason": "AUM by model asset-class code (UST, INT, LT ...), a different axis"
+    },
+    {
+      "file": "portal/src/api/endpoints/market.ts",
+      "reason": "market data client, not a mix"
+    },
+    {
+      "file": "portal/src/components/market-performance/ExecutiveSummary.tsx",
+      "reason": "Market Performance tab: instrument heat maps and RSI by instrument class, not a mix"
+    },
+    {
+      "file": "portal/src/components/market-performance/MarketRegimeModal.tsx",
+      "reason": "Market Performance tab: instrument heat maps and RSI by instrument class, not a mix"
+    },
+    {
+      "file": "portal/src/components/market-performance/RSIBars.tsx",
+      "reason": "Market Performance tab: instrument heat maps and RSI by instrument class, not a mix"
+    },
+    {
+      "file": "portal/src/components/market-performance/RSIModal.tsx",
+      "reason": "Market Performance tab: instrument heat maps and RSI by instrument class, not a mix"
+    },
+    {
+      "file": "portal/src/components/PerformanceHeatMap.tsx",
+      "reason": "market heat map, not a mix"
+    },
+    {
+      "file": "portal/src/hooks/useRSIValues.ts",
+      "reason": "market RSI hook, not a mix"
+    },
+    {
+      "file": "portal/src/lib/chartColors.ts",
+      "reason": "colour registry (ASSET_CLASS, MIX_PIE): colours only, the groups come from each caller"
+    },
+    {
+      "file": "portal/src/lib/dataLoader.ts",
+      "reason": "market-instrument grouping for performance heat maps, not a mix by class of a book"
+    },
+    {
+      "file": "portal/src/lib/periodResolution.ts",
+      "reason": "period maths, names asset class in a comment"
+    },
+    {
+      "file": "portal/src/lib/tickerRegistry.ts",
+      "reason": "market-instrument registry, not a mix"
+    },
+    {
+      "file": "portal/src/pages/AdvisorIntelligence/_shared/perfrp/contract.ts",
+      "reason": "perfrp data contract (dim_asset_classification partitions): a dimension name, draws no group"
+    },
+    {
+      "file": "portal/src/pages/AdvisorIntelligence/_shared/types.ts",
+      "reason": "AI payload types, draws no group"
+    },
+    {
+      "file": "portal/src/pages/CapitalMarketAssumptions/components/PhilosophyPillars.tsx",
+      "reason": "prose, no class list"
+    },
+    {
+      "file": "portal/src/pages/CapitalMarketAssumptions/tabs/OpalViewsTab.tsx",
+      "reason": "allocation views by pair/class position (-2..+2), not a mix by class"
+    },
+    {
+      "file": "portal/src/pages/Correlation/components/CorrelationMatrix.tsx",
+      "reason": "correlation matrix of instruments, not a mix"
+    },
+    {
+      "file": "portal/src/pages/Correlation/constants.ts",
+      "reason": "correlation matrix of instruments, not a mix"
+    },
+    {
+      "file": "portal/src/pages/InvestorReporting/tabs/holdings/AllocationBars.tsx",
+      "reason": "bars coloured by model code, not by class"
+    },
+    {
+      "file": "portal/src/pages/InvestorReporting/tabs/holdings/palette.ts",
+      "reason": "colour picker, no class list drawn"
+    },
+    {
+      "file": "portal/src/pages/SecurityAnalysis/components/ChatterBubbles.tsx",
+      "reason": "security ranking and chatter, not a mix"
+    },
+    {
+      "file": "portal/src/pages/SecurityAnalysis/components/PriceBars.tsx",
+      "reason": "security ranking and chatter, not a mix"
+    },
+    {
+      "file": "portal/src/pages/SecurityAnalysis/components/RankedList.tsx",
+      "reason": "security ranking and chatter, not a mix"
+    },
+    {
+      "file": "portal/src/pages/SecurityAnalysis/types.ts",
+      "reason": "security ranking and chatter, not a mix"
+    },
+    {
+      "file": "portal/src/pages/SecurityScanner/types.ts",
+      "reason": "scanner types, not a mix"
+    }
+  ]
+}
