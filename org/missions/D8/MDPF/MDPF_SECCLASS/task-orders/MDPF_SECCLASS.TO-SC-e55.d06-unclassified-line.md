@@ -50,6 +50,14 @@ top-level mix sums to 1.0. That matches FWD-13's rule that a security the list d
 **Shipped file:** `data/assets/scripts/gold/` is a shared home the pre-push deploy gate ships (`.tools/safe_deploy_core.py`
 `shared_repo_homes`): your branch stays OFF every pushed range until both halves sign.
 
+### AMENDMENT 3 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~16:5xZ; on row W53-S1)
+
+W53-S1 is right. The issuer's cherry-pick stopped after 46bda757e1 (the pick of 4e73b996d0 conflicted on the channel and did not
+apply), so the staged blobs were the pre-amendment build, and `d00_census_out.json` was missing. The issuer re-staged all FOUR files
+from 4e73b996d0. Each blob is now EQUAL to 4e73b996d0's (measured), and the 49F suite reads 148 passed plus 1 failure that pre-exists
+at the base. `data/assets/scripts/gold/runners_49f/d00_census_out.json` joins `<paths>`. Re-run AMENDMENT 2's steps over four files,
+and file a row resolving W53-S1 by this amendment.
+
 ### AMENDMENT 2 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~16:4xZ; release mode, CTO round-11 analysis @fc96f7c48c section 2 item 2)
 
 **The release port.** e55 (46bda757e1 + amendment-1 build 4e73b996d0, ~38) is complete and VALID on the held-38 line. Its three files
@@ -92,6 +100,7 @@ Dry-run at the base (5d70aab6c9, 2026-10-07): SC9-e55-AC1 FAIL as expected (PYTE
 <paths>
 data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py
 data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py
+data/assets/scripts/gold/runners_49f/d00_census_out.json
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_D06_UNCLASSIFIED_20261007.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
