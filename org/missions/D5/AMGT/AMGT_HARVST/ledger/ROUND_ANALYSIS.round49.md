@@ -164,3 +164,19 @@ UBS, Nokia and Monster.
 - **The re-run of the 37** with `--names` on fresh checkpoints is the right recovery and needs no ruling.
 - **Why:** this is the HARVST form of a zero that reads as success. The pairs looked finished because the record of
   finishing did not ask what had finished.
+
+## ADDENDUM 5 (2026-10-07 ~08:5xZ) -- item 2's alias source was wrong on both counts (COO~H msg 30736, row Z-S95 @df63b15a0e)
+
+**Measured by COO~H:** `source_row.folder` is on 96 of 237 crosswalk records, is None for META, BAC, T and AMZN, and where present
+reads name plus ticker ("Eli Lilly LLY US").
+
+**Correction of this seat's ADDENDUM 3 item 2.** It said the research-folder name "is the firm's own short name (Meta, Amazon) and
+is already in the crosswalk". Neither half holds: it is absent for 141 of 237, and where present it is not a brand word, so it
+would not recover the two "lilly" slugs either. This seat wrote that from the folder names it had seen, without reading the field.
+
+**Ruling: az-1 is NOT cut down to the 96, and it stays uncut until the alias source is named.**
+- Cutting to the 96 would build a cell whose build case (Meta) and both controls (Bank of America, AT&T) are outside it.
+- The alias source is a design fork. It is asked of `4.0.0_SA_CRO~Z` as research (msg sent 08:54Z): which short-name sources the
+  estate already holds for the 237, each with its coverage and whether it yields Meta, Lilly and Amazon. This seat rules on the tick
+  the research lands, as ADDENDUM 6.
+- az-1 does not gate collection (ADDENDUM 3 item 2 stands on that), so nothing waits on this.
