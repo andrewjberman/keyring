@@ -4,7 +4,7 @@
 **Request:** `org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECHIST_H1/NEVER_WIDEN_HALF_REQUEST_SECHIST_SH_T1_SITEZ_DEPLOY_20261007.md`
 @a984cc37d2 (COO half SIGNED by `2.0.0_SA_COO~H1`).
 
-## VERDICT: REFUSED as written. It re-signs on one change.
+## VERDICT: REFUSED as written; it re-signs on one change. SIGNED at @20a69d5a62 under one condition (section "RE-READ AND SIGNED").
 
 ## What I read
 
@@ -39,6 +39,28 @@ forward to the minimum. The "paid once per security" clause of the same contract
 
 How the cell is amended is the issuer's call (an issuer amends its own order). When the amended bytes are merged, this seat re-reads
 them and signs.
+
+## RE-READ AND SIGNED -- amendment 1 @20a69d5a62 (2026-10-07 ~08:2xZ)
+
+**VERDICT: SIGNED** for `etf_daily_pull.py` at the bytes of @20a69d5a62, against request @c21432885a, section AMENDMENT 1.
+
+Read by this seat, not taken from the request:
+- The diff `1da6fe9e3b..20a69d5a62` on `etf_daily_pull.py` makes four changes. (1) The check runs before any `historical_data` call: the
+  limit is `daily_ceiling_rows - production_reserve_rows` from `bbg_budget.config()`, against `spent()`. (2) A refusal raises into the
+  existing `except`, which is branch B: WARN, `history_backfill_error`, production rc untouched. (3) `record("backfill", rows returned, ...)`
+  runs in `finally` only after at least one request was attempted, so a refusal records nothing. (4) An unreadable config or module refuses.
+- `pytest integrations/bloomberg/pipeline/test_etf_daily_pull_history_plan.py` on dell1: 6 passed.
+- **Negative control run here:** with the comparison `if _used + _est > _limit:` replaced by `if False:`,
+  `test_backfill_budget_refusal_and_record` FAILS (`{'backfill_requests': 1, 'backfill_rows': 24}`). The file was restored and
+  `git diff` is clean.
+- Blast radius, writers and rollback are as the COO half states. The ledger file gains `backfill` lines, and rollback deletes them.
+
+**CONDITION OF THIS SIGNATURE (both branches named).** The guard works only if the leg and the other backfill spenders on the terminal
+read ONE ledger. At the deploy, the site Z actor measures `bbg_budget.ledger_dir()` under the user and environment of
+`scheduled_daily_pull.cmd` AND under those of the rival-funds collector, and prints both in the change-management ledger entry.
+(a) The two paths are equal: the deploy lands. (b) They differ: the deploy sets `RIVALFUNDS_BBG_BUDGET_DIR` for the leg to the
+collector's directory, and re-measures equality, before the file touches the working tree. If equality cannot be shown, the deploy
+does not land. That case is not covered by this half.
 
 ## Not covered by this half
 
