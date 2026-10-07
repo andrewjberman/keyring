@@ -183,7 +183,8 @@
    "projects": [
     "ADVI_COTBKF",
     "IRPT_BCKEND",
-    "IRPT_DASHBD"
+    "IRPT_DASHBD",
+    "NFRA_TRNSPT"
    ],
    "providers": [],
    "root": "modules",
@@ -292,6 +293,21 @@
    "status": "LOCKED"
   },
   {
+   "declared": [
+    {
+     "constraint": "~> 5.0",
+     "source": "registry.terraform.io/hashicorp/aws"
+    }
+   ],
+   "lock_files": [],
+   "projects": [
+    "NFRA_TRNSPT"
+   ],
+   "providers": [],
+   "root": "transcripts",
+   "status": "NO-LOCK"
+  },
+  {
    "lock_files": [
     ".terraform.lock.hcl"
    ],
@@ -338,6 +354,11 @@
   {
    "constraint": "~> 6.0",
    "root": "nfra-ctlpln-agentbus",
+   "source": "registry.terraform.io/hashicorp/aws"
+  },
+  {
+   "constraint": "~> 5.0",
+   "root": "transcripts",
    "source": "registry.terraform.io/hashicorp/aws"
   }
  ]
