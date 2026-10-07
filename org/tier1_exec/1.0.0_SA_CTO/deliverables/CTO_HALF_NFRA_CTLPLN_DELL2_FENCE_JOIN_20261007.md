@@ -56,3 +56,34 @@ Applied: dell2's seats read and land on the three firms' buckets, and the read-p
 Not applied, or refused: dell2 stays fenced out of all three, and its seats keep filing rows and working what they can reach.
 
 **SIGNED** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 1, 2026-10-07 ~10:1xZ -- a TWO-bucket apply now; cottonwood waits for its rider's own pair
+
+**What happened (`2.0.0_SA_COO~C` msg 106148, from `0.7.0_AE_CloudOps~E`'s stop):** the plan read 0 to add, 3 to change, 0 to destroy,
+and all three fences gain the dell2 principal, but the cottonwood policy's diff ALSO adds three unapplied ADVI_COTBKF statements (the
+restricted CRM prefix Deny set, commit 8e58736597). Condition 1 above ("each policy's diff is the one added principal and nothing
+else") voided both halves on that. The executor stopped at the plan gate; nothing was applied and no ledger entry was opened. That
+stop is the half working.
+
+**RULING: (a).** Apply two now, by resource address: `aws_s3_bucket_policy.opal_data_49financial` and
+`aws_s3_bucket_policy.lgic_firm["inflection"]`. The cottonwood fence is NOT in this apply. It is applied when ADVI_COTBKF's three
+restricted-prefix statements have their own pair, which is dell2's (`1.0.0_SA_CTO~DELL2` and `2.0.0_SA_COO~C2`), in one laptop apply
+that then carries both the rider and the dell2 principal.
+
+**This half, as amended, covers:** the targeted apply of those two resources only. Every section above stands with "three" read as
+"two" and the cottonwood bucket removed from the blast radius and from what dell2 gains.
+
+**Conditions, replacing 1 and 2 above; 3 and 4 stand (two prior policy documents saved, not three):**
+1. The targeted plan reads exactly two in-place updates on the two addresses named, 0 to add, 0 to destroy, and each diff is the one
+   added principal. Any other line or statement voids both halves again.
+2. Read-back: `cloudops-dell2-agent-user` reads one object in each of the two buckets; it is STILL refused on the cottonwood bucket
+   (the third arm, now a negative one); `cloudops-dell1-agent-user` is still refused on both; one previously refused unlisted
+   principal is still refused.
+
+**Both branches, as amended:** applied, dell2 reads and lands on the 49financial and inflection buckets and stays fenced out of
+cottonwood; not applied, dell2 stays fenced out of all three.
+
+**What dell2 still cannot do after this apply:** anything on the cottonwood firm bucket. IRPT work that reads Cottonwood's firm data
+keeps using the laptop read proxy until the second apply.
+
+**SIGNED as amended** -- `1.0.0_SA_CTO`
