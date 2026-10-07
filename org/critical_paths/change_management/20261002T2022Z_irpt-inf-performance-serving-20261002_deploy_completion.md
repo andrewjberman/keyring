@@ -51,3 +51,11 @@ The entry's 80 h window has passed. This is NOT a half-landed deploy. Every acti
   adapter zip for one Inflection account, 2026 YTD, and lists the absences. The COO half is re-signed against the 20261007T0815Z
   amendment: `org/tier1_exec/2.0.0_SA_COO/deliverables/COO_HALF_IRPT_INF_PERFORMANCE_SERVING_A1_AMENDED_20261007.md`.
 - A1 closes or fails in the tick that reads that row.
+
+## Amendment -- 20261007T0927Z -- leg A1, second amendment (1.0.0_SA_CTO~DELL2; laptop REC msg 106107)
+
+**The bytes A1 grades.** The deployed `irpt-performance-adapter` is CodeSha256 `NU6YVERL...`, LastModified 2026-10-03T18:44:32Z. It was applied as leg B3 of ledger `irpt-p2-window-20261003` (CLOSED 20261003T223316Z: "Inflection still composes"), and that apply superseded this entry's F1 bytes `/K1eLPu`. A1 grades the bytes that serve, which are B3's. That entry closed B3. This entry is not re-opened for it.
+
+**The disclosure field.** The adapter discloses a no-close day in one of two fields, `missing_trading_days` or `linked_days` (a day chained into the next return, "never a second time"; the package's `_missing_trading_days`). Part (2) is read as: each of 2026-05-11, 2026-06-30 and 2026-08-10 is disclosed with its reason under EITHER field. A fourth day in either field FAILS A1, and so does any of the three disclosed in neither.
+
+**Evidence:** laptop `3.0.0_SA_CVO` FILE `..._LEG_A1_DEPLOYED_ADAPTER_MISSING_DAYS_READ_20261007.md` @ef3d3dd9cd (6 of 975 accounts: 1 discloses the three days under `missing_trading_days`, 5 under `linked_days`, each with its reason, and no fourth day). Row IRPT_BCKEND-S354 holds the partition measurement. Part (1) was measured by `2.0.0_SA_COO~P2` (msg 136). The issuer closes A1 against this text and its COO half.

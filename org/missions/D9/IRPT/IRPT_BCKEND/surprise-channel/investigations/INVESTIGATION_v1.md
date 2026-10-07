@@ -18827,3 +18827,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
 }
 ```
+
+## IRPT_BCKEND-W132-S1 -- IB-pr-329 needed one extra line in the builder's field list
+
+```json
+{
+  "id": "IRPT_BCKEND-W132-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~132",
+  "surfaced_at": "2026-10-07T09:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-329 said touch only S3_KEY and the BUILD_ONLY line in build-and-upload.sh; the field list script (TMPJS_LIST) did not emit artifact_s3_key, so one more line was needed there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@da72ce8b3c: TMPJS_LIST console.log object carries name/source_dir/files/staged_from only at the base; added `artifact_s3_key: cfg.artifact_s3_key || ''` (1 line). Without it the per-function JSON has no key to read and the test failed (key= absent)."
+    ]
+  },
+  "spec_asserts": "The worker face says S3_KEY is read with the script's existing JSON tool the way name/source_dir/files are read, implying the per-function JSON already carries the field.",
+  "world_is": "The per-function JSON built by TMPJS_LIST omitted artifact_s3_key; the one-line addition is inside the same file's grant. Line 152 (writeback of the builder key into the map) is untouched and now writes the map's own key back for the three reporting functions."
+}
+```
+
+## IRPT_BCKEND-W134-S1 -- the pin-based release census reads 4 changed members for irpt-ycharts-generate at f36a8cdefd, the issuer read 19
+
+```json
+{
+  "id": "IRPT_BCKEND-W134-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~134",
+  "surfaced_at": "2026-10-07T12:00:00Z",
+  "one_line": "IB-pr-331: release-census.py irpt-ycharts-generate --pin f36a8cdefd prints changed_members=4 (canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py), not the issuer's 19; the 15 extra members the issuer counted (every fixtures/har/* file plus templates.json) are byte-identical to the live zip in the blobs at f36a8cdefd. Tool not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-ycharts-generate --pin f36a8cdefd -> built_members=114 live_members=114, 4 changed lines, changed_members=4, rc 0, 8.8 s; output saved at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~134/release_census_irpt-ycharts-generate_f36a8cdefd.txt",
+      "the real builder, BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate, run in this worktree (HEAD 27b47e8ef1, a descendant of f36a8cdefd) and diffed member by member against the same live zip: 114 vs 114 members, 6 changed (the 4 above plus publication_worker.py and publisher.py, which moved after f36a8cdefd), 0 under fixtures/ or templates.json",
+      "git log f36a8cdefd..HEAD over ycharts/generate/fixtures and templates.json is empty; git ls-files --eol shows i/lf w/lf for the fixtures here (core.autocrlf=false), and the live zip carries 0 CRLF in the 6 changed members",
+      "the issuer's 15 = 14 fixtures/har entries (13 json + report.pdf) + top-level templates.json = 15 of the 114 files[] entries; a binary pdf cannot differ by line-ending conversion, so a CRLF checkout does not explain all 15",
+      "not reproduced: the issuer's 19-member run environment. HELD, not measured: the difference lies in the issuer's worktree or in a live zip that has since been redeployed, since neither is readable from here"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-331 WORKER FACE: the issuer's own re-census at f36a8cdefd read 19 changed members for irpt-ycharts-generate (4 re-pinned + 15 under fixtures/templates); IB61-3-AC2 expects changed_members=19.",
+  "world_is": "A build of the blobs at f36a8cdefd against the live get-function zip reads 4 changed members. IB61-3-AC2 will FAIL on the tool's honest output. Which census is right is for the issuer: either the 19 came from worktree bytes the pin-based method cannot see (then the builder, which reads the worktree, ships what the census does not), or from a live zip that has since moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-S354 -- S338 measured (the laptop CVO's FILE, filed on dell2): three no-close days, a backfill cannot fill them
+
+```json
+{
+  "id": "IRPT_BCKEND-S354",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-07T09:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Row S338's NOT MEASURED half, filed on dell2 from the laptop CVO's FILE: Inflection held positions on 2026-05-11, 2026-06-30 and 2026-08-10 (888, 922 and 948 accounts). Each lacks a gold partition because, under the producer's declared close rule, no source partition holds that day's close (two NO_SINGLE_CLOSE by declaration, one because the 2026-07-01 source partition is absent). A backfill cannot fill them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_S338_INFLECTION_THREE_DAYS_MEASURED_20261007.md @9c0a10062f (origin CLOUD e688467732): the laptop CVO's read-only measurement, delivered as a FILE under laptop CTO rulings 106091/106092 (only dell2 mints row ids for this project); it was first filed on the laptop as S348 (@8dc6d1f929), renumbered S351 (@ffd56930e6), then withdrawn",
+      "the producer's own close_partitions(), run read-only by the laptop CVO on the three days, with a control day (2026-08-07) that resolves to three present partitions"
+    ]
+  },
+  "spec_asserts": "Leg A1 of ledger irpt-inf-performance-serving-20261002 (amendment 20261003): every 2026 trading day through the fire's day has a date= partition under Inflection's holdings gold.",
+  "world_is": "Three 2026 trading days can never have a partition under the producer's declared close rule, so the amendment's clause could not pass. Leg A1 was amended @9204974f23 to pass on three disclosed no-close days; this row is the evidence that amendment cites."
+}
+```
