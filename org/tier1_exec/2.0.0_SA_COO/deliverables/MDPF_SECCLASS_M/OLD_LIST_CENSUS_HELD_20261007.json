@@ -1,0 +1,191 @@
+{
+ "as_of": "2026-10-05",
+ "as_of_by_firm": {
+  "49financial": "2026-10-05",
+  "cottonwood": "2026-10-05",
+  "inflection": "2026-10-02"
+ },
+ "claim": "inferred",
+ "claim_basis": "the held sets are local runs of the Holdings producer (holdings_snapshot.py, no --upload) at as-of per firm {'49financial': '2026-10-05', 'cottonwood': '2026-10-05', 'inflection': '2026-10-02'}; the firm buckets opal-data-<firm> deny this device's principal; the three parquet files were copied from a sibling worker's scratch (byte-identical in two siblings, same names as per_firm_detail.parquet_name) rather than rebuilt; repo HEAD at this run 92a734f2ce",
+ "denominator": 10965,
+ "held": 2655,
+ "held_definition": "'Held' means present with a non-zero market value in the latest served holdings partition of any of the three firms on the census as-of. Read here as: the sum of a security's SECURITY nodes' amount.value (USD) is non-zero (|sum| >= 0.005) on each firm's newest as-of the local producer build reaches; an old key is held when it equals a held security's symbol, CUSIP:<cusip> or NAME::<80-char slug of its description>.",
+ "not_held": 8310,
+ "per_firm": {
+  "49financial": 1484,
+  "cottonwood": 1749,
+  "inflection": 266
+ },
+ "per_firm_detail": {
+  "49financial": {
+   "custody_as_of": "2026-10-05",
+   "custody_as_of_counts": {
+    "2026-10-05": 122147
+   },
+   "distinct_securities": 1843,
+   "parquet_name": "548cbcc4c73a834fcc6faf4ecba1e98a5ed8bcfe393a48bcb20d2c1f71ad417e.parquet",
+   "securities_non_zero_value": 1836,
+   "securities_nonzero_node_but_net_zero": 0,
+   "securities_zero_value": 7,
+   "security_nodes": 122147
+  },
+  "cottonwood": {
+   "custody_as_of": "2026-10-05",
+   "custody_as_of_counts": {
+    "2026-10-05": 15555
+   },
+   "distinct_securities": 1265,
+   "parquet_name": "1dbea6efeef6cd0faa2ed412cec1318931a112340cdfa54c5db53fe512a7c78a.parquet",
+   "securities_non_zero_value": 1258,
+   "securities_nonzero_node_but_net_zero": 0,
+   "securities_zero_value": 7,
+   "security_nodes": 15555
+  },
+  "inflection": {
+   "custody_as_of": "2026-10-02",
+   "custody_as_of_counts": {
+    "2026-10-02": 33679
+   },
+   "distinct_securities": 1601,
+   "parquet_name": "27a975ea82663e5a961480e526b0e5ce25eb439bbe01bead50e6724432c7a1c8.parquet",
+   "securities_non_zero_value": 247,
+   "securities_nonzero_node_but_net_zero": 0,
+   "securities_zero_value": 1354,
+   "security_nodes": 33679
+  }
+ },
+ "round_8_for_comparison": {
+  "definition": "any SECURITY node, zero value included (OLD_LIST_CENSUS_20261007.json)",
+  "old_rows_held_today": 3152
+ },
+ "ruling": "CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_8_20261007.md 2.4 (whole old list, held or not), 2.9 (dell1 grades inferred)",
+ "scanned_at": "2026-10-07T12:14:26.444775+00:00",
+ "served_read": "NOT DONE HERE. The grade that needs the served holdings partition (latest served platinum object per firm) is a laptop seat's act, filed as a row (ruling 2.9); this census does not stand in for it.",
+ "set_v2": {
+  "bound": "every DIRECT row's sub_asset_class is a member of contract fields.sub_asset_class.values_by_class[asset_class]; AI rows carry no class or sub-class here (decided by the model at the write act)",
+  "by_route": {
+   "AI": 2770,
+   "DIRECT": 5811,
+   "PRESENT": 2381,
+   "UNPLACED-KEY": 3
+  },
+  "by_route_held": {
+   "AI|held=false": 2595,
+   "AI|held=true": 175,
+   "DIRECT|held=false": 4825,
+   "DIRECT|held=true": 986,
+   "PRESENT|held=false": 887,
+   "PRESENT|held=true": 1494,
+   "UNPLACED-KEY|held=false": 3
+  },
+  "cash_rows_planned": [
+   {
+    "held": "true",
+    "old_key": "FCASH",
+    "shared_key": "FCASH",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::CUSTODIAL CASH",
+    "shared_key": "NAME::CUSTODIAL CASH",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::FIDELITY CASH FUND",
+    "shared_key": "NAME::FIDELITY CASH FUND",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::FIRST FINL BANK CD 3 65 10 30 2026",
+    "shared_key": "NAME::FIRST FINL BANK CD 3 65 10 30 2026",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::M Y SAFRA BANK FSB NY CD 3 65 10 16 2026",
+    "shared_key": "NAME::M Y SAFRA BANK FSB NY CD 3 65 10 16 2026",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::SAFRA NTNL BANK 3 80 3 23 2027",
+    "shared_key": "NAME::SAFRA NTNL BANK 3 80 3 23 2027",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::WELLS FARGO BANK 3 90 4 7 2027",
+    "shared_key": "NAME::WELLS FARGO BANK 3 90 4 7 2027",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::WELLS FARGO BANK NATIONAL ASSN CD 3 95 4 20 2027",
+    "shared_key": "NAME::WELLS FARGO BANK NATIONAL ASSN CD 3 95 4 20 2027",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "NAME::WELLS FARGO BK N A SIOUX FALLS S D CTF DEP 3 75 12 18 2026",
+    "shared_key": "NAME::WELLS FARGO BK N A SIOUX FALLS S D CTF DEP 3 75 12 18 2026",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "true",
+    "old_key": "PCOXX",
+    "shared_key": "PCOXX",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "false",
+    "old_key": "BUPXX",
+    "shared_key": "BUPXX",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "false",
+    "old_key": "FGTXX",
+    "shared_key": "FGTXX",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "false",
+    "old_key": "FZDXX",
+    "shared_key": "FZDXX",
+    "sub_asset_class": "Money Market"
+   },
+   {
+    "held": "false",
+    "old_key": "NAME::WA FED BANK SEATTLE CD 4 00 5 15 2026",
+    "shared_key": "NAME::WA FED BANK SEATTLE CD 4 00 5 15 2026",
+    "sub_asset_class": "T-Bill"
+   },
+   {
+    "held": "false",
+    "old_key": "NAME::WELLS FARGO BANK 3 75 9 30 2026",
+    "shared_key": "NAME::WELLS FARGO BANK 3 75 9 30 2026",
+    "sub_asset_class": "T-Bill"
+   }
+  ],
+  "class_without_sub_class_planned_ai": 0,
+  "direct_by_class": {
+   "alternatives": 37,
+   "cash": 15,
+   "equity": 3820,
+   "fixed_income": 1939
+  },
+  "old_rows_with_class_cash": 15,
+  "round_8_for_comparison": {
+   "ai": 2785,
+   "direct": 5796,
+   "present": 2381,
+   "unplaced_key": 3
+  },
+  "rows": 10965
+ },
+ "shared_rows": 3507,
+ "table": "bd-securities"
+}

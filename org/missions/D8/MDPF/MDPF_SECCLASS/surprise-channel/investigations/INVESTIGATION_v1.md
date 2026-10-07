@@ -3943,3 +3943,161 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "INERT today (the table exists); it becomes load-bearing at the table-removal act. The deployed gold_dispatch.sh on the runner is UNREAD (firm bucket denied, row W25-S1)."
 }
 ```
+## MDPF_SECCLASS-W36-S1 -- The round-8 issuer check issuer_check_sc_e27.py now prints SC-E27-CONTRACT ok=False agains
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T11:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S1",
+  "one_line": "The round-8 issuer check issuer_check_sc_e27.py now prints SC-E27-CONTRACT ok=False against contract 0.6.0: it pins the contract to exactly two new fields and to the 10 measured sectors and 23 vendor spellings, all of which TO-SC-e54 changes by ruling.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/issuer_check_sc_e27.py -> SC-E27-CONTRACT ok=False expected 2 new fields, found 3: ['gics_industry_group', 'gics_sector', 'sub_asset_class'] (run 2026-10-07 on branch wk-MDPF_SECCLASS-36)",
+      "its docstring: value sets equal SC-e-25's measured sets; neither new field named sub_asset_class"
+    ]
+  },
+  "spec_asserts": "TO-SC-e54 names only SC-e-54's check (issuer_check_sc_e54.py) as the contract's acceptance; the round-8 check for 0.5.0 is not named as a drain check for this cell.",
+  "world_is": "The 0.5.0 check cannot pass the 0.6.0 contract by construction (11 sectors, 25 full names and a sub_asset_class field are the rulings). It is a superseded round-8 check, read-only to the worker, not edited or weakened; the issuer decides whether it retires at the drain.",
+  "notes": "No criterion of this order depends on it."
+}
+```
+
+## MDPF_SECCLASS-W36-S2 -- Cash has no live sub-classes (0 table rows), so the contract's cash list was declared from
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T11:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S2",
+  "one_line": "Cash has no live sub-classes (0 table rows), so the contract's cash list was declared from the W26-S6 evidence (Money Market, T-Bill) plus Cash; and four existing sector-writer test assertions that pinned the old behaviour were moved with the contract.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "read-only scan of etf-classifications 2026-10-07 (3,507 rows): asset_class cash 0 rows; fixed_income/Cash 17 rows",
+      "row MDPF_SECCLASS-W26-S6 evidence: old (cash, T-Bill) 8 and (cash, Money Market) 7",
+      "infra/aws/lambda/mdpf-secclass/sector-writer/tests/test_sector_writer.py: Real Estate as the out-of-list example, 10/23 list lengths, and 'Made Up Group' as an out-of-list group no longer hold at 0.6.0; edited in place, all 20 tests pass"
+    ]
+  },
+  "spec_asserts": "TO-SC-e54 build 1: 'name the source of each cash value'; build 3: 'The existing writer tests keep passing'.",
+  "world_is": "The cash list [Cash, Money Market, T-Bill] is the worker's declaration from the two sources above, recorded in fields.sub_asset_class.source_by_class.cash; whether the CTO wants Cash in the cash list (it also sits in fixed_income, 17 rows) is not ruled. Real Estate admitted and an unknown group now reading NO-DECODE make four assertions of the old writer tests false by design; they were retargeted (Ultra Short Duration and an invented sector as the out-of-list examples, counts 11/25 plus 23 decode pairs), not weakened. W24-S6 (the seed dicts the writer reads do not exist) sits in seed_held(), a function this cell does not edit: NOT ridden.",
+  "notes": "Read-only AWS: one scan of etf-classifications and 33 in-memory reads of bbg characteristics.parquet; nothing written, no package or download."
+}
+```
+
+## MDPF_SECCLASS-W36-S3 -- FWD-15 not at zero after the AI run: 99 unplaced-key missing keys; 150 AI keys overlap SC-e-32's set
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:06:57Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S3",
+  "one_line": "FWD-15 is not at zero after the AI run: 99 of the 1,565 missing held keys fit no declared key form (UNPLACED-KEY, cottonwood 87 holding USD 76.84M, internal ids like 4175_VOYA), and 150 of the 1,165 AI entries are also in SC-e-32's old-list AI set.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/fwd15_ai_plan.py: entries=1565 direct=301 ai=1165 unplaced_key=99 present=0 model_calls=0 (bd-securities 10,965 rows, etf-classifications 3,507 rows, contract 0.6.0)",
+      "FWD15_AI_PLAN_cottonwood_20261007.json route_amount_usd UNPLACED-KEY 76843740.63; plan field ai_entries_also_in_old_list 46/45/59 for 49financial/cottonwood/inflection",
+      "claim inferred: held sets are local producer builds as-of 2026-10-05 (W25-S1)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e49 cell SC-e-49 and ruling 2.3: the FWD-11 runner over FWD-15's missing list places what it can; the contract's key forms (identifier_namespace TICKER, CUSIP, BLOOMBERG, NAME) are the only keys a row may carry.",
+  "world_is": "The planner routes a key fitting no declared form to UNPLACED-KEY and the runner is never given it; those 99 stay missing and the cell cannot reach FWD-15 at zero by this run. The two act sets (SC-e-32 old list, SC-e-49 missing list) overlap by up to 150 AI keys: a conditional put lets one win and the other's model call is spent for nothing (at most 300 calls with retry). Both are stated in the half request; neither is fixed here.",
+  "notes": "Read-only AWS scans of bd-securities and etf-classifications; no table write, no model call, no package or download."
+}
+```
+
+## MDPF_SECCLASS-W36-S4 -- SC9-e50-AC2 cannot pass as written: the issuer check grades every AI row's sub_asset_class against the contrac
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S4",
+  "one_line": "SC9-e50-AC2 cannot pass as written: the issuer check grades every AI row's sub_asset_class against the contract list, but an AI row carries no verdict until the model runs (2,770 of 10,965 rows)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/old_list_held_census_check.py set -> OLD-LIST-SET-V2 ok=False rows=10965 live=10965 cash_planned=15 problems=['bound:ADC', 'bound:AG', 'bound:AGI'] (rc=1)",
+      "OLD_LIST_RECLASSIFY_SET_V2_20261007.tsv graded by the check's own rule: the only rows outside the bound are ('AI', '', '') x 2770; DIRECT 5,811 rows all inside values_by_class (cash 15: T-Bill 8, Money Market 7)",
+      "old_list_held_census_check.py rset(): `if r['route'] in ('DIRECT','AI'): if r['sub_asset_class'] not in bound.get(r['asset_class'], [])` -- a blank AI row reads bound.get('', []) = [] and fails; round 8's set carries AI rows blank by design (old_list_reclassify_set.py docstring: 'class and sub-class BLANK here, decided by SC-e-31's path at the write act')"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 SC9-e50-AC2: 'every placed verdict inside the contract's bound for its class'; build 2: 'every DIRECT or AI row's sub_asset_class is a member of values_by_class[asset_class]'.",
+  "world_is": "Every DIRECT row (5,811) is inside the bound and all 15 cash rows are planned; the 2,770 AI rows have no class or sub-class because the only way to give them one is a model call, which this order bars. The check can pass only with a model call, a fabricated verdict, or a changed test; the worker did none of them and did not rename the route. AC2 is left FAIL and the order open. Two ways the issuer can close it: amend the check to grade only rows whose asset_class is non-blank, or run the AI path under its half and re-run it over the filled set.",
+  "notes": "No criterion was weakened. AC1 PASSES (OLD-LIST-HELD-CENSUS ok=True live=10965 held=2655)."
+}
+```
+
+## MDPF_SECCLASS-W36-S5 -- The V2 set TSV carries non-ASCII in 101 bytes (registered and trademark marks in 40 clean_name values and a fe
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S5",
+  "one_line": "The V2 set TSV carries non-ASCII in 101 bytes (registered and trademark marks in 40 clean_name values and a few old_key values), against the order's ASCII-only line, because an old_key is the exact DynamoDB key",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round 8's OLD_LIST_RECLASSIFY_SET_20261007.tsv carries 101 bytes above 127 (read as bytes); V2 reproduces the same keys and names",
+      "first V2 attempt wrote ASCII with backslash escapes: old_key NAME::SCHWAB\u00ae... would no longer equal the table key the writer looks up; reverted to UTF-8 for the TSV only (the census JSON is ASCII)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 build 3: 'ASCII only.'",
+  "world_is": "The set is UTF-8 with the old list's own characters; every other file this order writes (script, census JSON) is ASCII. The checker reads the TSV with encoding utf-8 and passes the count test.",
+  "notes": "Not a criterion of this order."
+}
+```
+
+## MDPF_SECCLASS-W36-S6 -- The three held parquet builds for TO-SC-e50 were copied from a sibling worker's scratch (wk-secclass-r9-35/.sc
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S6",
+  "one_line": "The three held parquet builds for TO-SC-e50 were copied from a sibling worker's scratch (wk-secclass-r9-35/.scratch/hb_*) instead of rebuilt; inflection's build reaches 2026-10-02 only",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-secclass-r9-33 and wk-secclass-r9-35 hold byte-identical parquet files per firm (sha256 prefixes 3f3efad32effc8d0 49financial, 4218fee1cb062339 cottonwood, 612a50da2c198beb inflection), produced 2026-10-07 about 07:57-08:02 local",
+      "custody_as_of on the nodes: 49financial 2026-10-05, cottonwood 2026-10-05, inflection 2026-10-02 (the producer was asked for 2026-10-05; inflection's data reaches only 10-02)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 build 1: held set 'as a LOCAL producer build ... via old_list_census.py build_firm(), as-of the newest date the builds reach'.",
+  "world_is": "The census reads each firm at its own newest as-of (inflection 10-02 vs the others 10-05), claim inferred, producer code at the sibling's repo HEAD not re-measured here; rebuilding would take 4-15 minutes per firm and was judged not to change the count. The served-bytes grade stays a laptop seat's act (ruling 2.9).",
+  "notes": "Read-only copy of scratch files; no upload, no firm bucket read."
+}
+```
