@@ -7322,6 +7322,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S97",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T10:59:30Z",
+      "one_line": "An upload-harvest that holds any row on SilverRowError exits rc=2 while uploading the rest; the driver prints the rc and carries on, and the held rows cleared on a second attempt in 5 of the 9 cases read (4 still pending at attempt 1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/opal_data_harvest/backfill_driver.py prints `UPLOAD <pub> <key> cap=<n> rc=<rc>` after a job that left something pending; a reader takes rc=0 as uploaded and a non-zero rc as an upload that failed.",
+      "world_is": "Round-54 close run: `UPLOAD wsj security-5589c162c9b5837b cap=126 rc=2` and `UPLOAD bbg security-5589c162c9b5837b cap=190 rc=2`. Read from progress.sqlite3 afterwards: wsj harvest_raw_outbox 574 uploaded 0 pending (the next job printed `cap=4 rc=0`, so 122 of 126 went up on the rc=2 call and 4 on the next); bbg 2,656 uploaded, 4 pending (TJOPTAKJH6V400, THLFSMKGCTFW00, TEDXG1KGIFSB00, TEBG85KIJHAI00), each attempts 1, error_code SilverRowError. bbg:TKM1JNR24U8600, pending on SilverRowError at the 06:30Z wind-down, reads uploaded with attempts 2. Not read: why a row raises SilverRowError on its first attempt and not its second; whether any row stays held past its second attempt.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round54/r54_wsj_az1.out and r54_bbg_az1.out (the UPLOAD lines)",
+          "sqlite read-only: SELECT status,count(*) FROM harvest_raw_outbox GROUP BY status on .runtime/opal-data-harvest-wsj and -bbg, 2026-10-07 ~10:58Z",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round54/ROUND54_CLOSE_RUN.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
