@@ -112,6 +112,21 @@ validated with `python .tools/proof-of-spec-check.py <instance> BE8-AC1,BE8-AC2,
 
 **REPORT:** both last lines whole; the saved trace's path; every `HOLE`, `REFUSED` and `CARDED` line whole; the two formerly `-daily` rules' lines; what `openpyxl-layer` prints; commits.
 
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the state you start from, measured after the three merges
+
+- The three cells are merged, and the registry moved under them: eleven service words are now `purpose_word`, the
+  `openpyxl-layer` row is gone, and ruled event rules live in `infra/logic/registry/event_rules.json`. The run on the trunk at
+  hand time: `ROOTCHECK ok=True root=infra/aws/terraform/bd-pipeline items=140 right=9 fix=109 not_asked=9 pattern=1 carded=6
+  hole=6`. The cadence holes are already gone, because the grader itself now reads the interval forms; rule 2 above still
+  stands (wire `verdict_for`, so the run and the reader are one reader, and use its `canonical` for a ruled event rule).
+- The six lines still `HOLE`: four inline policies no service word leads (`pipeline-chain` twice, `runner-shared-read`,
+  `gold-layer-trigger`), which rule 1 fills from the role; and the two Cottonwood-path keys, which rule 3 prints as `REFUSED`.
+- Row `LGIC_BLANKFIX-W3-S3`: today the run prints those two keys with a generic reason. A `REFUSED` line prints the key row's
+  own `basis` and `bucket`.
+- `opal_naming_cadence.verdict_for(row)` returns `word`, `carried`, `agrees` and `canonical`; under the ratified rules a
+  Monday-to-Friday daily rule reads `agrees=True`. Your test's contradicted case must therefore use a real contradiction (a
+  name carrying `daily` on `rate(15 minutes)`).
+
 ---
 
 ## RECORD FACE

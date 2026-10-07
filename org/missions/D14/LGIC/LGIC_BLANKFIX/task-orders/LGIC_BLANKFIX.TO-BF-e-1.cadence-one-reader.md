@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -124,6 +124,14 @@ validated with `python .tools/proof-of-spec-check.py <instance> BE1-AC1,BE1-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines and the `CADENCE-ROOT` and `CADENCE-ESTATE` lines whole; every row of the root still undecided, with its basis; every contradicted row; commits.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-07) -- the ruled event rows live in the registry; the issuer re-points the path and closes the order
+
+Row `LGIC_BLANKFIX-W1-S6` (BLOCKING): the naming commit limb refused `lib/opal_naming_event_rules.json`, the data file AMENDMENT 1
+put under `lib/`. That placement was the issuer's defect: ruled names are registry content. `4.0.0_SA_CRO` landed the row at
+`infra/logic/registry/event_rules.json` @d85328ec6c. The issuer re-pointed the reader's one path constant to it in the commit that
+carries this amendment (a path re-point, no logic), re-ran both criteria on the trunk, and flips the order: the worker's proof
+instance is VALID and its two criteria pass on the registry's file. `lib/opal_naming_event_rules.json` is not created.
 
 ---
 
