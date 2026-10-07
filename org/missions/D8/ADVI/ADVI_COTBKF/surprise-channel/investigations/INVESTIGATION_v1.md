@@ -305,3 +305,30 @@ round.** Never edit an existing row.
   "notes": "Whether the census record or a registry row per legacy store is the right carrier is for the CTO; the migration project (rule 30, R19) removes the legacy locations. A later round that writes to any of these stores must use the builders."
 }
 ```
+
+## ADVI_COTBKF-S4 -- W6-S4's hazard disarmed by its owner: the primed price cache now sits in the shared tree, and AC2 re-runs in 8 s there
+
+```json
+{
+  "id": "ADVI_COTBKF-S4",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T00:04Z",
+  "one_line": "Disarm act for ADVI_COTBKF-W6-S4 (ARMED, disarm_owner 2.0.0_SA_COO~C): the price-coverage read's primed cache (.scratch/price_cache, 7.3 MB) was copied from the worker's worktree into the shared tree before the worktree's removal, and CB2b3-AC2 re-run there under timeout 120 passes in 8.4 s with the identical line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cp -r C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-6/.scratch/price_cache .scratch/ (7.3M) in the shared tree, 2026-10-07 ~00:0xZ, after the merge of the CB-b-3 branch @382f450319",
+      "timeout 120 python data/assets/scripts/analysis/commonwealth_price_coverage.py in the shared tree: rc 0, real 8.356 s, last line PRICE-COVERAGE universe=4634 stores_checked=22 stores_with_prices=7 priced_any=1506 security_days_covered=2090953 security_days_needed=9388961 (identical to the worker's AC2 output)",
+      "the script's default --cache-dir is <repo>/.scratch/price_cache (commonwealth_price_coverage.py:415), so a re-run in the shared tree reads the copy with no flag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-b-3 BOUNDS: CB2b3-AC2 runs within 120 seconds; row W6-S4 (ARMED): a re-run in a clean tree ends rc 124 unless run once without the timeout or given --cache-dir.",
+  "world_is": "The cache that makes AC2 meet its bound now lives where a grader runs (the shared tree's untracked .scratch/, device-local, never committed). A clean tree on another device still needs one cold run (5-19 minutes) first; that residue is stated, not hidden. W6-S4's own disposition is the CVO's at L9.",
+  "notes": "The cache is a local accelerator, not a store: it is never committed and nothing reads it but this script."
+}
+```
