@@ -1,5 +1,7 @@
 {
  "project_code": "MDPF_HEALGAP",
+ "placement": "DELL1",
+ "placement_ruling": "Placed on dell1 by 1.0.0_SA_CTO 2026-10-07 (/self-drive tick 2, after the park-or-close second pass left it unparked), on the YES of 1.0.0_SA_CTO~DELL1 (bus 93115c00, relayed by 0.0.0_AB_MSTR msg 106052) and its three conditions, all accepted: its own COO lane (2.0.0_SA_COO~G1); its first cell shares no file with an open MDPF_SECCLASS cell; it re-enters FULL from DECOMP. It is securities-data work, inside Andrew's Dell focus of 2026-10-07 ('securities database build and classification'). The fabric field is unchanged until NFRA_CTLPLN's readers know four boxes (row NFRA_CTLPLN-S5).",
  "macro_code": "MDPF",
  "name": "The self-healing chain that leaves a permanent hole -- a transient vendor-auth gap converts into a permanent bronze hole because nothing re-runs after the heal, and every downstream instrument then reads a healthy chain",
  "status": "active",
