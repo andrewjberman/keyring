@@ -1,0 +1,208 @@
+{
+ "function": "irpt-performance-adapter",
+ "code_sha256": "NU6YVERLJ0i6qmazBYWUF+1xVDPGHwdMKqQ5vgjmVc4=",
+ "accounts": [
+  {
+   "opaque_account": "acc_b9214eea68029f46743397f2",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "inferred",
+   "evidence_missing_trading_days": [
+    "2026-05-11",
+    "2026-06-30",
+    "2026-08-10"
+   ],
+   "gap_absences": [
+    {
+     "fact": "excluded_rows",
+     "reason": "122 of 187 observed days were non-OK (price-missing or excluded, ruling 4) and skipped from the chain",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "missing_trading_days",
+     "reason": "3 trading days inside the window have no source partition (2026-05-11, 2026-06-30, 2026-08-10): the days either side are chained across them without their market move, so the figure is partial, not measured",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "excluded_rows",
+    "missing_trading_days"
+   ]
+  },
+  {
+   "opaque_account": "acc_4779c00968dd88b8afe275be",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "measured",
+   "evidence_missing_trading_days": null,
+   "gap_absences": [
+    {
+     "fact": "linked_days",
+     "reason": "2026-05-11, 2026-05-12 are linked as ONE return dated 2026-05-12, from the close of 2026-05-08: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-06-30, 2026-07-01 are linked as ONE return dated 2026-07-01, from the close of 2026-06-29: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-08-10, 2026-08-11 are linked as ONE return dated 2026-08-11, from the close of 2026-08-07: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "linked_days",
+    "linked_days",
+    "linked_days"
+   ]
+  },
+  {
+   "opaque_account": "acc_bc8ebaa70036c73a8cab7109",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "measured",
+   "evidence_missing_trading_days": null,
+   "gap_absences": [
+    {
+     "fact": "linked_days",
+     "reason": "2026-05-11, 2026-05-12 are linked as ONE return dated 2026-05-12, from the close of 2026-05-08: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-06-30, 2026-07-01 are linked as ONE return dated 2026-07-01, from the close of 2026-06-29: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-08-10, 2026-08-11 are linked as ONE return dated 2026-08-11, from the close of 2026-08-07: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "linked_days",
+    "linked_days",
+    "linked_days"
+   ]
+  },
+  {
+   "opaque_account": "acc_6c4a82d36358ab2742eb734a",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "measured",
+   "evidence_missing_trading_days": null,
+   "gap_absences": [
+    {
+     "fact": "linked_days",
+     "reason": "2026-05-11, 2026-05-12 are linked as ONE return dated 2026-05-12, from the close of 2026-05-08: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-06-30, 2026-07-01 are linked as ONE return dated 2026-07-01, from the close of 2026-06-29: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-08-10, 2026-08-11 are linked as ONE return dated 2026-08-11, from the close of 2026-08-07: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "linked_days",
+    "linked_days",
+    "linked_days"
+   ]
+  },
+  {
+   "opaque_account": "acc_32aad402c6683afe209bfd74",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "measured",
+   "evidence_missing_trading_days": null,
+   "gap_absences": [
+    {
+     "fact": "linked_days",
+     "reason": "2026-05-11, 2026-05-12 are linked as ONE return dated 2026-05-12, from the close of 2026-05-08: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-06-30, 2026-07-01 are linked as ONE return dated 2026-07-01, from the close of 2026-06-29: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-08-10, 2026-08-11 are linked as ONE return dated 2026-08-11, from the close of 2026-08-07: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "linked_days",
+    "linked_days",
+    "linked_days"
+   ]
+  },
+  {
+   "opaque_account": "acc_0b50f9a65337cd0966e9c05f",
+   "window": [
+    "2026-01-01",
+    "2026-10-05"
+   ],
+   "claim": "measured",
+   "evidence_missing_trading_days": null,
+   "gap_absences": [
+    {
+     "fact": "linked_days",
+     "reason": "2026-05-11, 2026-05-12 are linked as ONE return dated 2026-05-12, from the close of 2026-05-08: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-06-30, 2026-07-01 are linked as ONE return dated 2026-07-01, from the close of 2026-06-29: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    },
+    {
+     "fact": "linked_days",
+     "reason": "2026-08-10, 2026-08-11 are linked as ONE return dated 2026-08-11, from the close of 2026-08-07: a close in between is in no source partition, so the return is whole and its daily resolution is missing",
+     "status": "PARTIAL"
+    }
+   ],
+   "all_absence_facts": [
+    "accrual_basis",
+    "fees_and_income",
+    "money_weighted_return",
+    "linked_days",
+    "linked_days",
+    "linked_days"
+   ]
+  }
+ ]
+}
