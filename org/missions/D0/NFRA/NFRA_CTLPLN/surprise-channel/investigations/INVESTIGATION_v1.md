@@ -1092,3 +1092,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The gate's id-to-fabric derivation now reads the register and admits D1-/D2- ids, but the row schemas it validates every new row against (outside this order's paths) still carry the two-value fabric enum and the (Z-)? id pattern, so a real Dell row is refused at the schema limb until both files change. The ID_RE grammar in the gate is widened; the two schema patterns are a third copy of that grammar. Not fixed here (not in the grant); the issuer or the CTO owns the schema edit."
 }
 ```
+
+## NFRA_CTLPLN-W9-S2 -- adjudicates and disarms item patterns still carry the old id grammar
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T09:24:00Z",
+  "one_line": "Two more copies of the old id pattern remain in the row schemas: adjudicates items (investigation) and disarms items (remediation) still refuse a Dell id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/surprise_channel/schemas/investigation_item.schema.json properties.adjudicates.items.pattern and remediation_row.schema.json properties.disarms.items.pattern, after the CT-d-6 AMENDMENT 2 edit, still read '^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$'",
+      "CT-d-6 worktree, 2026-10-07: Draft7Validator on each items subschema: 'X_PRJ-S1' ADMIT and 'X_PRJ-D1-S1' REFUSE, for adjudicates and for disarms"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 2: change the fabric enum and the id pattern in both schemas and nothing else, so a Dell row is admitted by the schema limb.",
+  "world_is": "The id property is widened, but a row that cites a Dell id in `adjudicates` (an adjudication row) or in `disarms` (a remediation row) is still refused by the schema limb, because those two item patterns are separate copies of the old grammar and are outside the order's stated change. Not edited here. A Dell's plain row is unaffected; a Dell row that disarms or adjudicates another Dell row is not admitted until the two patterns follow."
+}
+```

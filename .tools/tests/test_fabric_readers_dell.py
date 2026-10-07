@@ -6,11 +6,16 @@ ID arm (9): the surprise-row gate's id-to-fabric derivation (`_fabric_of_id` / `
 and one case with the register path pointing nowhere:
   bare -> laptop | Z- -> site-z | D1- -> dell1 | D2- -> dell2 | D1-W3-S2 -> dell1 | -D3- -> refused (unregistered
   coordinate) | a D1- id whose row says dell2 -> refused | a bare id whose row says dell1 -> refused | no register -> refused.
+Row-schema arm (8): whole row objects through the gate's OWN schema limb (`_check_row`, which runs the Draft-07 validator and the
+closed-enum walk) against the two row schemas in org/surprise_channel/schemas/: investigation D1/dell1, D2-W3/dell2, Z/site-z,
+bare/laptop and W9/laptop admitted; fabric dell3 refused; a lower-case coordinate id refused; a remediation row with a D1- id
+admitted. A verdict reads only the complaints the schema limb raises (schema violation / ratified enum), because the gate's other
+limbs (register agreement, owner, worker suffix) are graded by the id arm and by the gate's own --self-test.
 Schema arm (5): one PRD header instance per fabric value validated against org/standards/PRD_HEADER.schema.json
 (4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals FABRIC_ENUM read from the source of
 .tools/to-pipeline-gate.py. Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
 
-LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>
+LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/8 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>
 """
 import ast
 import importlib.util
@@ -26,6 +31,7 @@ GATE = os.path.join(ROOT, ".tools", "surprise-row-gate.py")
 TOGATE = os.path.join(ROOT, ".tools", "to-pipeline-gate.py")
 REGISTER = os.path.join(ROOT, "org", "devices", "DEVICES.json")
 SCHEMA = os.path.join(ROOT, "org", "standards", "PRD_HEADER.schema.json")
+ROW_SCHEMAS = os.path.join(ROOT, "org", "surprise_channel", "schemas")
 
 
 def load_gate():
@@ -89,6 +95,48 @@ def schema_cases(enum):
     return out, schema["properties"]["fabric"]["enum"]
 
 
+def rowschema_cases(gate):
+    """Eight whole-row cases through gate._check_row; only the schema limb's complaints decide each verdict."""
+    def load(name):
+        with open(os.path.join(ROW_SCHEMAS, name), encoding="utf-8") as fh:
+            return json.load(fh)
+    inv, rem = load("investigation_item.schema.json"), load("remediation_row.schema.json")
+
+    def inv_row(rid, fabric):
+        return {"id": rid, "project": "X_PRJ", "fabric": fabric, "surfaced_by": "0.9.0_WK_X_PRJ~3",
+                "surfaced_at": "2026-10-07T09:30:00Z", "one_line": "a well-formed test row for the schema arm",
+                "class": "OBSERVATION", "hazard_standing": "INERT", "grounding": {"status": "INFERRED", "evidence": ["test evidence line"]},
+                "disposition": "UNDER_INVESTIGATION", "spec_asserts": "the spec asserts a thing", "world_is": "the world is another thing"}
+
+    def rem_row(rid, fabric):
+        return {"id": rid, "project": "X_PRJ", "fabric": fabric, "class": "OBSERVATION", "hazard_standing": "INERT",
+                "mechanism": "a well-formed test mechanism", "evidence": ["test evidence line"], "remedy": "a test remedy",
+                "owner": "1.0.0_SA_CTO", "round": "v1", "remediation": {"state": "OPEN", "owner": "1.0.0_SA_CTO", "round": "v1"}}
+
+    def schema_complaints(row, kind, schema):
+        out = gate._check_row(row, kind, schema)
+        return [c for c in out if "schema violation" in c or "ratified enum" in c]
+
+    out = []
+    for label, row, kind, schema, admit, where in [
+        ("investigation X_PRJ-D1-S1 / dell1", inv_row("X_PRJ-D1-S1", "dell1"), "INVESTIGATION", inv, True, None),
+        ("investigation X_PRJ-D2-W3-S2 / dell2", inv_row("X_PRJ-D2-W3-S2", "dell2"), "INVESTIGATION", inv, True, None),
+        ("investigation X_PRJ-Z-S4 / site-z", inv_row("X_PRJ-Z-S4", "site-z"), "INVESTIGATION", inv, True, None),
+        ("investigation X_PRJ-S5 / laptop", inv_row("X_PRJ-S5", "laptop"), "INVESTIGATION", inv, True, None),
+        ("investigation X_PRJ-W9-S1 / laptop (worker form)", inv_row("X_PRJ-W9-S1", "laptop"), "INVESTIGATION", inv, True, None),
+        ("investigation fabric dell3 refused", inv_row("X_PRJ-D1-S1", "dell3"), "INVESTIGATION", inv, False, "fabric"),
+        ("investigation X_PRJ-d1-S1 (lower case) refused", inv_row("X_PRJ-d1-S1", "dell1"), "INVESTIGATION", inv, False, "id"),
+        ("remediation X_PRJ-D1-S1 / dell1", rem_row("X_PRJ-D1-S1", "dell1"), "REMEDIATION", rem, True, None),
+    ]:
+        got = schema_complaints(row, kind, schema)
+        if admit:
+            good = not got
+        else:   # a refusal must be the named field alone: a refusal for some other reason proves nothing
+            good = bool(got) and all(("/" + where) in c or ("%s=" % where) in c for c in got)
+        out.append((label, good, "ADMITTED" if not got else "REFUSED " + got[0][:150]))
+    return out
+
+
 def main():
     gate = load_gate()
     enum = enum_from_source()
@@ -106,6 +154,9 @@ def main():
     sch, sch_enum = schema_cases(enum)
     for label, ok, detail in sch:
         print("%s  schema: %s | %s" % ("PASS" if ok else "FAIL", label, detail))
+    rows = rowschema_cases(gate)
+    for label, ok, detail in rows:
+        print("%s  rowschema: %s | %s" % ("PASS" if ok else "FAIL", label, detail))
     enum_equal = enum is not None and sch_enum == enum
     print("schema enum %r == FABRIC_ENUM %r -> %s" % (sch_enum, enum, enum_equal))
     cp = subprocess.run([sys.executable, GATE, "--self-test"], cwd=ROOT, capture_output=True, text=True, timeout=110,
@@ -115,8 +166,10 @@ def main():
     print("surprise-row-gate --self-test -> %s | rc=%d %s" % (selftest, cp.returncode, line[-1] if line else "(no result line)"))
     a = sum(1 for _l, ok, _d in ids if ok)
     b = sum(1 for _l, ok, _d in sch if ok)
-    ok = a == 9 and b == 5 and enum_equal and selftest == "ok"
-    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 enum_equal=%s gate_selftest=%s ok=%s" % (a, b, enum_equal, selftest, ok))
+    c = sum(1 for _l, ok, _d in rows if ok)
+    ok = a == 9 and b == 5 and c == 8 and enum_equal and selftest == "ok"
+    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/8 enum_equal=%s gate_selftest=%s ok=%s"
+          % (a, b, c, enum_equal, selftest, ok))
     return 0 if ok else 1
 
 
