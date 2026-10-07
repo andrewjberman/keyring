@@ -149,6 +149,26 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     },
     "spec_asserts": "An LGIC_ENFORCE naming BLOCK from safe-apply means a resource name is out of pattern.",
     "world_is": "The gate's script path was rewritten to C:/c/Users/.../.tools/naming-apply-gate.py and Python could not open it; the verdict line still read as a naming block, and rc=2 from that limb does not separate 'a name is wrong' from 'the gate could not run'. It failed closed (nothing planned or applied). The variable is banned for safe-apply by CLAUDE.md, so the act was operator error; the defect is the diagnostic. Outside this project's surface, so it reaches 1.0.0_SA_CTO in the slug."
+  },
+  {
+    "id": "MDPF_HEALGAP-S8",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-07T13:00:00Z",
+    "one_line": "This project's terraform calls on dell1 ran without CHECKPOINT_DISABLE=1 before the rule existed: the issuer's `terraform version` and failed `plan` (~09:0xZ), the HG1-t2-AC1 check's `terraform fmt` at the base dry-run, and slot 2's AC1 runs; the check now sets the variable.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~DELL1 msg 251 relaying laptop 1.0.0_SA_CTO msg 106231 (row NFRA_CTLPLN-W13-S8): a bare terraform call on a Dell contacts its vendor; no call without CHECKPOINT_DISABLE=1",
+        "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R1_CHECKS/hg_t2_tf_check.py now passes env CHECKPOINT_DISABLE=1 to its fmt call (base re-run: TF-BAD no file, as before)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "No terraform call on a Dell reaches its vendor (CLAUDE.md: no egress off Opal infrastructure without Andrew's word).",
+    "world_is": "Before 106231, this seat and worker slot 2 ran terraform on dell1 with the default checkpoint on, so each call may have contacted checkpoint-api.hashicorp.com (version check only; no data sent beyond the binary's version/platform). Whether the box's egress allowed it is unread. Future calls from this project's checks set the variable; the drain's re-run of HG1-t2-AC1 uses the amended check."
   }
 ]
 ```
