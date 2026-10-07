@@ -10,7 +10,7 @@ all-caps removed; one function with a test table, never a model output. Precisel
   1. None or a blank string -> None.
   2. Whitespace is collapsed to single spaces and stripped.
   3. A name that already carries a lowercase letter is the source's own writing: returned after step 2 only.
-  4. An all-capitals name: a trailing vendor suffix token (COM, SHS) is dropped; then every word is capitalized
+  4. An all-capitals name: EVERY trailing vendor suffix token (COM, SHS) is dropped, repeatedly, so the function is idempotent; then every word is capitalized
      (first letter upper, rest lower), each hyphen-separated part separately, EXCEPT:
        - a token holding a digit or '%' or '/' is kept exactly (3.7%, 02/28/2027, 5%27, 10+ is kept by the digit rule);
        - a one-letter token is kept upper (share-class letters: F, Z, A; and the N A of a bank name);
@@ -51,6 +51,8 @@ TABLE = [
     ("WMT", "WMT"),
     ("BANK OF AMERICA CORP", "Bank of America Corp"),
     ("WELLS FARGO BANK NA 4.1% 2029", "Wells Fargo Bank NA 4.1% 2029"),
+    # round 9 amendment 1 (row W35-S1): trailing vendor suffixes drop repeatedly, so a second pass changes nothing
+    ("ETF SHS COM", "ETF"),
     # controls: already written by the source (carry lowercase) -> unchanged
     ("Monolithic Power Systems Inc", "Monolithic Power Systems Inc"),
     ("iShares Ultra Short Duration Bond Active ETF", "iShares Ultra Short Duration Bond Active ETF"),

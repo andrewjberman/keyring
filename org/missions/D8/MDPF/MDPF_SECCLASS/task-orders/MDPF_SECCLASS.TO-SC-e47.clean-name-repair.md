@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~35</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -102,3 +102,12 @@ lane: the <paths> block IS the grant. security_name.py is not a shipped lib/_sha
 </preflight>
 
 Source: PRD v0.13 FWD-14 @90f99888cd; round-8 analysis ruling 2.2 @1ca9e97fc9; DECOMP_R9 @5d70aab6c9; row W28-S5.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~12:0xZ) -- ruling on row W35-S1: trailing vendor suffixes drop repeatedly
+
+The worker applied the issuer's round-9 rule exactly and found it not idempotent: `SHS` is a no-vowel 3-letter token, so `ETF SHS COM`
+cleans to `ETF SHS` and a second pass to `ETF`. RULING: step 4 drops EVERY trailing vendor-suffix token (`VENDOR_SUFFIXES`), repeatedly,
+before any casing rule, so `clean_name(clean_name(x)) == clean_name(x)` for every input. The issuer's table gains `("ETF SHS COM", "ETF")`
+(base at the worker's head fcadb7a348: 1 mismatch). Move `ETF SHS COM` back into the idempotence test. `<status>` re-opened to
+in_progress; criteria unchanged. Gate limb: none graded this modification (no new order; no `<placeholders>`).
+
