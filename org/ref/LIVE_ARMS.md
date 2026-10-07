@@ -112,6 +112,22 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
     `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261004_194xZ_SELF_DRIVE_60M_AMGT_FRIDAY_RESTART_AFTER_SENTINELONE_CRASH.md`.
     Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z. The terms above carry unchanged. Each paired seat re-arms
     its own loop (MSTR~Z relays). `2.0.0_SA_COO~RV` stays on `/canonical-drive` FULL.
+  - RELAUNCH 2026-10-07 after the site-Z reboot. THESE TERMS ARE CURRENT and replace the terms above where they differ.
+    Andrew-direct ~08:2xZ at the `0.0.0_AB_MSTR~Z` terminal, VERBATIM: "CTO should have a self-drive loop on the fabric
+    as a whole running  on the hourly basis. Research needs should go to CRO as needed for additional clarity. all COOs
+    should have /canonical-drive running on their respective projects." Source record
+    `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261007_082xZ_SITEZ_RELAUNCH_CTO_Z_AMGT_FABRIC_RV_SELF_DRIVE_HOURLY_CANONICAL_DRIVE.md`
+    @8bd783d51f; relay MSTR~Z msg 30718. Arming record
+    `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_082xZ_SELF_DRIVE_60M_SITEZ_FABRIC_RELAUNCH_AFTER_REBOOT.md`
+    @d97558efe8. Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~Z.
+    - `1.0.0_SA_CTO~Z` `/self-drive 60m`. The selector is spelled as the same five projects; the row does not decide
+      whether "the fabric as a whole" is wider (the arming record names the wider spelling).
+    - `2.0.0_SA_COO~X` / `~H` / `~Z` / `~D` / `~RV` `/canonical-drive <own project>`. He named no cadence; each COO arms
+      its own loop.
+    - `3.0.0_SA_CVO~RV` is the ETFS_RIVALS validator; `3.0.0_SA_CVO~Z` and `4.0.0_SA_CRO~Z` are general fabric
+      resources. `4.0.0_SA_CRO~RV` was not relaunched, so the driver rules ETFS_RIVALS calls until he says otherwise.
+    - The "Friday demo" goal text is not in his word of today and is not carried.
+    - Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
 - DELL1 (Andrew-direct ~07:15Z 2026-10-07 at the `0.0.0_AB_MSTR~DELL1` terminal, relayed as msg 1, VERBATIM: "Bring CTO online
   with instructions to run /self-drive on the underlying COOs projects with a 60m interval. Furthermore, the COOs should be running
   /canonical-drive on their projects."). Record

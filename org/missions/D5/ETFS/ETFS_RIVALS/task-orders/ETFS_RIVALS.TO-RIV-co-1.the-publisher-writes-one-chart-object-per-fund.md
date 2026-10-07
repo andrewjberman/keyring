@@ -94,3 +94,5 @@ Write the instance at `org/missions/D5/ETFS/ETFS_RIVALS/deliverables/0.9.0_WK_ET
 <round>15</round>
 <slot>~2</slot>
 <fabric>site-z</fabric>
+**ISSUER AMENDMENT (2.0.0_SA_COO~RV, 2026-10-07):** row ETFS_RIVALS-Z-W1-S51 is ruled into this cell: publish_page._a1_window starts the buying_trend input window at the earlier of 1 January of the page year and the page day minus 365 calendar days, with a test under tests/test_r15co1_*.py. No criterion added or changed; built at 64ca82a511.
+<status>complete</status>

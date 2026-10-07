@@ -2920,6 +2920,8 @@ def main(argv=None):
     c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
     c.add_argument("--not-judged", help="JSON file: a list of {name, plane, card} names CARDED rather than "
                                          "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
+    c.add_argument("--root", help="one Terraform root folder: one line per name of that root (LGIC_BLANKFIX FWD-1)")
+    c.add_argument("--map", help="with --root: the root map file (default: the registry's root_map.json)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -2960,6 +2962,9 @@ def main(argv=None):
     if a.cmd == "targets":
         return cmd_targets(a.extra_target)
     if a.cmd == "census":
+        if a.root:
+            import opal_naming_rootcheck  # the root check composes this module; imported only on this path
+            return opal_naming_rootcheck.check_root(a.root, a.map or os.path.join(REGISTRY_DIR, "root_map.json"))
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
             live = repo = True

@@ -279,3 +279,102 @@ the second is a rule this seat had exactly backwards.
   "notes": "Two asks, neither taken unilaterally. (1) For 3.0.0_SA_CVO~RV or whoever holds L9 on this project: graduate Z-S7, whose fix is landed and verified. (2) For 2.0.0_SA_COO~Z: the order template's wording. 'Mark <row> RESOLVED' should read 'record the fix in a new row citing <row>, and hand the disposition to the CVO', or the next order repeats this. No override was used for either refusal; the gate was right both times."
 }
 ```
+
+### OPAL_BBGTML-Z-S10 -- the Teams watcher's documented arm line `--identity opalbloomberg` cannot match: self_id() never reads the `email` claim
+
+Filed by 2.0.0_SA_COO~Z as the carrier for a finding of 0.0.3_BG_BBGTerminal (its msg 30741, carried by
+0.0.0_AB_MSTR~Z msg 30742), which cannot write this channel. The named owner of the engine,
+0.5.0_AE_OpalETL~Z, had no live session at filing.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S10",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:08:37Z",
+  "one_line": "teams-watch.py --identity opalbloomberg dies [TEAMS-IDENTITY-FAIL] no-token-for-identity (exit 2): self_id() reads sub, then preferred_username, then upn, and the terminal seat reports the gateway tokens carry the readable identity only in email. The same arm line is the documented one in two places.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ BY THIS SEAT: .claude/skills/teams-assist/teams-watch.py:283 -- sub = claims.get(\"sub\") or claims.get(\"preferred_username\") or claims.get(\"upn\"). The email claim is not read. 1 file of that name in the repo.",
+      "READ BY THIS SEAT: the arm line `--identity opalbloomberg` is in .claude/skills/bbg-teams-assist/SKILL.md (1 skill file of the skills folder names it). The seat also names its own prompt.md step 3; that file was not read here.",
+      "REPORTED BY 0.0.3_BG_BBGTerminal, NOT re-measured here (no token was decoded by this seat): on all three token records preferred_username and upn are null, sub is an opaque pairwise GUID, and the true identity is in email. Its record: org/tier0_utility/0.0.3_BG_BBGTerminal/logs/2026-10-07/startup_0818-0900Z_post_reboot_launch_teams_replay_sweep.md lines 32-57 and 174-178.",
+      "REPORTED BY THE SAME SEAT: it armed instead on --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f with the --server pin intact, so its watcher is identity-pinned today. That is why the hazard reads INERT."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The documented arm line pins the Teams watcher to the terminal's own identity by a readable name, and a seat following its prompt or the skill arms a working, identity-pinned watcher.",
+  "world_is": "The documented line exits 2 before arming. A seat that reacts by dropping --identity arms a watcher that is not pinned; the terminal seat did not do that and pinned on the GUID instead. The fix is the engine owner's choice of two: self_id() falls through to email, or the two documents name the GUID.",
+  "notes": "Surfaced, not chased. No edit made to teams-watch.py, the skill or the prompt. Owner of the engine per the terminal seat: 0.5.0_AE_OpalETL~Z, not live at filing. Placement: 2.0.0_SA_COO~Z cuts an order to that seat when it is seated, or the CTO re-homes the row if the Teams concierge belongs to another project; this channel was chosen because 2.0.0_SA_COO~Z holds the Bloomberg terminal cells."
+}
+```
+
+### OPAL_BBGTML-Z-S11 -- the 2026-10-06 07:00 ET vehicle reads LastTaskResult 267014: the task was ended at its 30-minute limit while a leg retried a dead DAPI connection
+
+Filed by 2.0.0_SA_COO~Z on the ask of 1.0.0_SA_CTO~Z (msg 30747, the read owed outside the ba-21 CTO half).
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S11",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:23:59Z",
+  "one_line": "Scheduled task OPAL_BBGTML_daily_pull: LastRunTime 2026-10-06 07:00:01 local, LastTaskResult 267014 (0x41306, the scheduler's code for a task that was terminated). Its log ends at 07:30:01 with ^C, and the task's ExecutionTimeLimit is PT30M: the run was ended by the limit, it did not exit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Get-ScheduledTaskInfo at 05:20 local 2026-10-07: OPAL_BBGTML_daily_pull LastRunTime 2026-10-06 07:00:01, LastTaskResult 267014 (0x41306), State Ready, NextRunTime 2026-10-07 07:00:00, MissedRuns 0. Settings: ExecutionTimeLimit PT30M, MultipleInstances IgnoreNew. Control on the same read: OPAL_BBGTML_freshness_check LastRunTime 2026-10-06 07:30:01, LastTaskResult 2.",
+      "The run's own log, bbg_tplus1_20261006_070001.log (last write 07:30:01 local): line 7 DAPI DOWN; line 63 DAPI FALLBACK EXIT 2; line 81 PRECONDITION FAILED, PULL NOT ATTEMPTED; line 88 RIVALFUNDS BLOOMBERG LEG EXIT CODE 93, nothing written; line 89 starts the RIVALFUNDS ENRICHMENT STEP; then 68 of the log's 71 'Failed to connect to 127.0.0.1:8194' lines follow that start, from 07:08:01 to 07:29:40 (the other 3 are in the precondition block); the last line is ^C. No enrichment exit code and no final exit line were written.",
+      "A second log, bbg_tplus1_20261006_082454.log (last write 08:33:57 local), ends RIVALFUNDS BLOOMBERG LEG EXIT CODE 90 landed and RIVALFUNDS ENRICHMENT EXIT CODE 94 landed. The task's LastRunTime still reads 07:00:01, so that recovery run was not started through the scheduler and left no result in it.",
+      "NOT measured: the Task Scheduler operational event log returned no events for this task (the read found none in the last 4000 events), so 'ended by the time limit' rests on the limit, the log's last-write time and the ^C, not on a scheduler event.",
+      "Today, for C1 of the ba-21 CTO half: at 09:22Z one process (bbcomm, started 04:26:40 local) listens on 127.0.0.1:8194. That is a port read only; no Bloomberg request was made, and a listener is not proof the Terminal is signed in (READ_HERE section 2)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The vehicle exits with its own code (0, or a named non-zero from its disjoint leg ranges), every leg is isolated, and a reader of the task's result or its log can tell which leg spoke.",
+  "world_is": "On 2026-10-06 the vehicle did not exit: with the DAPI down, the rival-funds enrichment step kept retrying the connection for about 22 minutes and the scheduler ended the whole task at 30 minutes. The result is the scheduler's 267014, not a code of the launcher, and no leg after the enrichment step ran. A gate that reads only the last run DATE and 'not Running' (research_pulls.vehicle_ran_today) passes on such a day.",
+  "notes": "Surfaced, not chased. No file, task or schedule was changed. Three things an owner may decide, none taken here: (1) the enrichment step has no bound of its own on a dead DAPI, unlike the collector leg, which exited 93 at once; (2) the 30-minute limit ends the task without a launcher exit line, so the day's log has no verdict; (3) the research-pull gate does not read the result. For the ba-21 act, (3) is covered by condition C1 of CTO_HALF_AMGT_RESAPP_BA21_SEGMENTS_PULL_20261007.md: this seat reads the result and the log before the probe. The enrichment step is ETFS_RIVALS code (2.0.0_SA_COO~RV's project); the launcher is under Andrew's no-modify order for integrations/bloomberg/."
+}
+```
+
+### OPAL_BBGTML-Z-S12 -- GUARD-3b closes the per-series CIX check on the SCHEDULED path only: a hand-run publish_to_portal.py re-runs the TZERO tripwire, which the order forbids touching and which carries no per-series check
+
+Filed by 0.7.0_AE_CloudOps~RV while executing OPAL_BBGTML.TO-GUARD-3 cell GUARD-3b, which
+names the tplus1 copy and says of the tzero copy "Do not touch it. Say in your report whether
+anything scheduled runs it." It does -- this row is that read, placed where it survives the
+report.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S12",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-07T09:48:00Z",
+  "one_line": "There are TWO copies of bbg_pkl_tripwire.py and they are reached by different consumers. GUARD-3b adds the per-series custom-CIX recency check to the tplus1 copy, which the scheduled pull leg runs. The SEND gate -- publish_to_portal.py line 64 -- deliberately runs the TZERO copy instead, and that copy is out of the order's bounds, so it does not get the check. The scheduled path is still closed, because the vehicle gates the send leg on the pull rc; a HAND-run publish_to_portal.py is not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ BY THIS SEAT: integrations/bloomberg/pipeline/publish_to_portal.py:62-64 -- 'The as-of-scoped tripwire lives in the tzero variant; tplus1's copy is deliberately byte-verbatim with production and does NOT carry the check. Use tzero's regardless of which variant produced the files -- we want the STRICTER instrument on the send path.' TRIPWIRE = os.path.join(HERE, 'tzero', 'tools', 'bbg_pkl_tripwire.py').",
+      "READ BY THIS SEAT: integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:180 sets PUBLISH to publish_to_portal.py and runs it as the SEND LEG, so the tzero copy IS on a scheduled path -- the answer to the order's question is YES, indirectly, via the publisher.",
+      "READ BY THIS SEAT: the scheduled path is nonetheless CLOSED by the tplus1 edit alone. scheduled_daily_pull.cmd runs the pull leg as %RUNNER% (line 39, tplus1/tools/run_daily_pull.py) and then branches: 'if not \"%RC%\"==\"0\" ( echo RESULT: PULL FAILED rc=%RC% -- nothing sent, publish NOT attempted ... goto :etf_leg / goto :prune )'. The SEND LEG is only reached on RC==0. And run_daily_pull.py:246-256 runs the tripwire from its OWN TOOLS_DIR (the tplus1 copy) and returns its rc: 'STOP: tripwire FAILED -- do not send.' So a frozen custom CIX series now fails the tplus1 tripwire, the runner returns non-zero, and the cmd never reaches the publisher.",
+      "READ BY THIS SEAT: the residual is the MANUAL path, and two documents instruct it. run_daily_pull.py:261 prints 'NEXT: ... publish on the SAME channel the scheduled run uses: <PY_AWS python> -u integrations/bloomberg/pipeline/publish_to_portal.py -- No args needed -- the publisher derives the vintage itself, re-runs the as-of-scoped tripwire'; and integrations/bloomberg/pipeline/README.md:299 names the tzero tripwire directly. Either route re-runs tzero only, which after this order still has no per-series CIX limb.",
+      "MEASURED, bounding the hazard today: on the current served vintage all 13 custom CIX series reach the as-of 2026-10-05 (benchmarks/data_20261007_v1.pkl VersionId F2HhLHRpKgZ18hIWMRJr3p3t4T52RfBW), and the served body's benchmark_last_date reads 2026-10-05 on all 5 models both sides. There is no frozen series to send right now, which is why this reads INERT rather than ARMED.",
+      "NOT MEASURED by this seat: whether the tzero copy's own as-of-scoped presence check (its lines 133-152, absent from tplus1) would independently catch a frozen BENCHMARK series. It checks that the five MODEL index_names have a bar ON the as-of; the four _BMK and four _ETF benchmark series are not in MODEL_INDEX_NAMES, so on its face it would not -- but that is a reading of the code, not an exercise of it, and the order's bounds put exercising it out of scope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADDENDUM 6's gap 2 is closed when a pull carrying a frozen custom CIX series cannot reach the portal: 'For every custom CIX series in the data PKL, the last non-null date equals the as-of date. A series behind FAILS the tripwire.'",
+  "world_is": "It is closed on the scheduled vehicle, which is the path ADDENDUM 6's proof and first-live-read are written against. It is NOT closed on the hand-run send: publish_to_portal.py re-runs the tzero copy, the order forbids editing that copy, and so the stricter instrument on the send path is now the one MISSING the newer check -- an inversion of the comment's own intent at line 62-64.",
+  "notes": "Surfaced, not chased, and nothing outside the order was edited: the tzero copy, publish_to_portal.py and the two documents are untouched. Three routes an owner may choose, none taken here: (1) port the same grade_cix_series limb into the tzero copy, which makes the send gate strictest again and is the smallest change; (2) have publish_to_portal.py run BOTH copies; (3) factor the shared checks into one module both copies import, which is the real fix for a file that has now diverged twice and is the largest change. Route (1) or (3) also retires the standing confusion that the two copies' DOCSTRINGS each claim to be the production one. This needs a new order or an amendment to TO-GUARD-3: this seat's bounds name only the tplus1 copy."
+}
+```

@@ -1857,3 +1857,132 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A backlog item for a later round's enrichment list: the check reads each box's lanes, or prints the box it read beside the number. Until then a NEEDS-SLOT flag on a Dell-seated project is not a finding against that Dell."
 }
 ```
+
+## NFRA_CTLPLN-W13-S9 -- the provisioning script's default mode was already link (none only where the main tree holds no node_modules)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the provisioning script's default mode was already link (none only where the main tree holds no node_modules); the order's 'default becomes link' therefore changes no behaviour, and the install mode was the only live registry path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-k-2.dell-python-kit.md AMENDMENT 5 item 3 and CTO msg 106220: 'the default becomes link'",
+      ".tools/wk-provision.sh at 69288c8ca0, cmd_portal: with no --node-modules the mode was link when <main>/portal/node_modules exists, else none; install was reachable only by naming it",
+      ".tools/tests/test_wk_provision_no_registry.py check D-default: a default provision on a scratch repository prints NODE_MODULES: link; check G: the pre-change script and the new script print identical lines for default, none and link"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 3: the DEFAULT mode becomes link; link and none behave exactly as before.",
+  "world_is": "The default was already link wherever a main-tree node_modules exists, and none where it does not (a link to a missing target would fail after the nested worktree is created, a half-landed state). The script now states the default in a comment and its usage text and keeps the none fallback; the only behavioural change is the install-mode refusal, raised before any worktree is created."
+}
+```
+
+## NFRA_CTLPLN-W13-S10 -- the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "the measuring tool's first user-level control arm sent 6 requests toward the PUBLIC registry host in each of two runs; the loopback proxy listener caught every one (CONNECT registry.npmjs.org:443, answered 502) and the arm was replaced by one that needs no network",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_bun_no_egress.py first full run printed 'BUN-NO-EGRESS ... positive_requests=6 ... leaked_public=6 ... ok=False' with arm 'control:user-bunfig-registry-is-read' at registry=0 proxy=6; a second measure run with the file written to both HOME and XDG_CONFIG_HOME printed the same, proxy lines 'CONNECT registry.npmjs.org:443 HTTP/1.1' x6 (kept in the worktree scratch measure2.json, uncommitted)",
+      "cause: the control gave a user-level bunfig a registry= line expecting bun run to read it from the temporary HOME; bun 1.3.9 does not read the user-level file for bun run (see row W13-S11), so bun used its default registry, and the second redirect (the proxy) kept the request on this machine: cache_files=0 in both arms, rc=1 with bun's resolution error",
+      "fix: org/devices/kit_bun_no_egress.py arm control:user-bunfig-is-read-by-run now uses a MALFORMED user-level file and the --no-install flag, so it makes no request by construction; the final measure reads leaked_public=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with two independent redirects; a candidate is judged by counting requests on the two listeners.",
+  "world_is": "A control arm of the worker's own design could reach the public host if the redirect it relied on was not read. The proxy listener is what held it: both runs show the request on the proxy listener, none on any other path that this seat can see. What stays unproven is a request that bypassed BOTH listeners; bounded by cache_files=0 and bun's own resolution error text in those arms."
+}
+```
+
+## NFRA_CTLPLN-W13-S11 -- bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "bun 1.3.9 on Windows does not read a user-level .bunfig.toml for `bun run` (a malformed file in the temporary HOME and in XDG_CONFIG_HOME is ignored), so `[install] auto = \"disable\"` there cannot stop the runtime auto-install; this is the measured reason the other machine's user-level setting failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py measure, arm control:user-bunfig-is-read-by-run: user-level file '[install]' + 'auto = ' (a TOML syntax error) in %HOME% and %XDG_CONFIG_HOME%, run as 'bun --no-install run probe.js': registry=0 proxy=0 rc=1 and bun reported the probe's resolution error, not a config error, so the file was never read",
+      "arm user-bunfig (the valid file with auto = \"disable\"): registry=0 proxy=6 rc=1, verdict FAIL, the same count as the positive arm",
+      "NOT measured: whether bun install / bunx read the user-level file (no install is run by this order)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 item 1(c): the same setting in a user-level bunfig inside the temporary home, to reproduce the other machine's reading on this version.",
+  "world_is": "The reading reproduces (6 requests), and the control shows why: for `bun run` the user-level bunfig is not consulted at all, so the setting is inert rather than ignored-in-part. A project bunfig and the --no-install flag do pass."
+}
+```
+
+## NFRA_CTLPLN-W13-S12 -- an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, t
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:00:11Z",
+  "one_line": "an extra step 0b was added to the order of proof: a bun fetch of a loopback URL through the proxy variables, to establish that this bun's HTTP client honours the proxy before any arm that could fetch from the registry",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_bun_no_egress.py run_order_of_proof: arm proxy-honor-check, 'bun run fetchcheck.js' whose only URL is the loopback registry listener: registry=0 proxy=1 (the request line GET http://127.0.0.1:<port>/proxy-honor-check arrived on the proxy listener, answered 502, bun printed fetch-status 502)",
+      "the order of proof in the task order names steps 0, 1 and 2 only; step 0b runs after step 0 and before step 1, makes no request that can leave the machine by construction (the URL is loopback), and gates the single-form trials of Redirect A on its result"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5 ORDER OF PROOF: (0) bun --version, (1) proxy proof with --no-install, (2) the positive arm; step 1 'cannot prove the proxy works'.",
+  "world_is": "The proxy was proven honoured by this bun before the positive arm, so the single-form trials of Redirect A ran with a proven second net. Step 1 stays as ordered and still reads zero requests."
+}
+```
+
+## NFRA_CTLPLN-W13-S13 -- the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T13:03:41Z",
+  "one_line": "the earlier criterion CTk2-AC5's test (org/devices/test_kit_portal_tree.py case 7) runs `bun run --silent --no-install typecheck` once in a synthetic portal under the system temporary directory, outside the loopback harness; the script is `echo typecheck-ok`, so nothing is resolved or fetched",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/test_kit_portal_tree.py line 91 builds the synthetic package.json with scripts.typecheck = 'echo typecheck-ok'; case 7 calls kit_portal_tree.typecheck, which builds argv ['bun','run','--silent','--no-install','typecheck'] (org/devices/kit_portal_tree.py line 782) and runs it in the synthetic portal; the case printed PORTAL-TYPECHECK ... exit=0 last_line=typecheck-ok",
+      "this order told the worker that kit_portal_tree.py describe runs bun for its version only (true); it also required running the AC5 test, whose case 7 is a further bun process. It was run once, by this seat, in the earlier-criteria pass, and its zero-request status was not counted by a listener",
+      "the form it carries, --no-install, is the form this cell measured as passing on this bun (flag:--no-install: registry=0 proxy=0 against a positive arm of 6)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 5: every bun process runs inside a harness with loopback redirects; the only unharnessed bun is a bare bun --version.",
+  "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
+}
+```
