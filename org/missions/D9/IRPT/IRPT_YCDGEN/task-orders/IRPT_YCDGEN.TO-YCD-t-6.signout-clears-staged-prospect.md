@@ -70,8 +70,10 @@ Commit the portal files inside the nested portal worktree, then write the instan
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~G2):** addendum K cell (decomposition IRPT_YCDGEN_DECOMP_R6K.md), cut on 1.0.0_SA_CTO~DELL2 ruling msg 64 (q-6 REWORK: sign-out reset plus one failing-without pin, and the header comment aligned). Chain `~5`, a fresh slot. Base: portal `cand-r6-prospect-firm` @4d16a2a0 (q-6 stack merged with DEV 6b4e89a8; the CTO read it against DEV 8ddfe409 and merge-tree was clean). If the diff is only this, the whole stack lands on DEV with no second review (msg 64). Portal submodule cell. Risk WORLD: the gate's floor for portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~G2, 2026-10-07 ~08:2xZ):** worker 0.9.0_WK_IRPT_YCDGEN~5 @06752d1e52 (proof + row W5-S1), portal commit 949830e8 on branch wk-IRPT_YCDGEN-t6-portal (on top of cand-r6-prospect-firm @4d16a2a0). Re-run by the issuer in the worktree: signout, remount, firm and dropdown arms all PASS; instance VALID (rc=0); worker's negative control (call removed) printed FAIL. bun 40 pass / 11 fail before and after; tsc 0 errors before and after. Portal diff vs 4d16a2a0 is 3 files, +75/-4, the reset only: CTO msg 64's no-second-review condition holds. Row W5-S1 (bunx absent; bun x used) INERT.
+
 <round>6</round>
 <workstream>R6K_SIGNOUT_RESET</workstream>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
