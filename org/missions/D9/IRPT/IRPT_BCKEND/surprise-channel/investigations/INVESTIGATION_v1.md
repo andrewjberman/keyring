@@ -19795,3 +19795,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No dell2 principal can read Cottonwood. Disarms when the laptop FILE is delivered and graded, or when Cottonwood admits the dell2 identity read-only. This row widens no policy."
 }
 ```
+
+## IRPT_BCKEND-S369 -- this workstream ran plain bun test four times before the egress hazard was known; linked node_modules, fetch not measured
+
+```json
+{
+  "id": "IRPT_BCKEND-S369",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T12:17:37Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Before the bun egress hazard was known (1.0.0_SA_CTO~DELL2 msg 501, ARMED), this workstream ran plain `bun test` (without --no-install) four times on dell2: workers ~140 (IB-pr-338) and ~143 (IB-pr-341) and the issuer's AC2 re-run in worktree 143, each from a nested portal worktree whose node_modules was a junction to a populated tree. Imports should have resolved from the linked node_modules, so no fetch is expected, but whether bun fetched anything was NOT measured.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "worker ~140 report: 'linked another worker's node_modules into it with a junction to run bun' (IB-pr-338)",
+      "worker ~143 report: junctioned portal/node_modules from C:/dev/wk-ycdgen-6-t5/portal/node_modules (row W143-S1)",
+      "issuer: p63_cells.py IB63-1-AC2 run at ~10:5xZ in C:/dev/wk-irpt-bckend-143 (bun test ... ir-62-overage/, 10 pass)",
+      "msgs 495/501: an unresolvable import makes bun fetch from npm silently; a linked node_modules is the admitted mode"
+    ]
+  },
+  "spec_asserts": "No seat or worker causes egress off Opal infrastructure.",
+  "world_is": "Every bun run in this workstream used a linked node_modules (the admitted mode), so no fetch is expected; not measured. From round 66 every face and check runs `bun --no-install`."
+}
+```

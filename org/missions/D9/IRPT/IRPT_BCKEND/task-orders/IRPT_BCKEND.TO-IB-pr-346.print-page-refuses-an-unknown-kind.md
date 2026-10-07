@@ -36,7 +36,7 @@ portal branch carrying @cdda4378; `portal/node_modules` is LINKED from the share
 2. Test `portal/src/pages/InvestorReporting/__tests__/ir-66-print-kind/print-kind.test.ts` (new; bun, like the sibling tests under
    `__tests__/`): `?kind=custody-report` yields the refusal with 0 requests (count the fetches the page makes); an unknown kind (e.g.
    `?kind=client-report`) is refused with 0 requests; `performance` and `analysis` still render their kind. Run
-   `bun test src/pages/InvestorReporting/__tests__/ir-66-print-kind/print-kind.test.ts` from `portal/`.
+   `bun --no-install test src/pages/InvestorReporting/__tests__/ir-66-print-kind/print-kind.test.ts` from `portal/`.
 3. From `portal/`: `node node_modules/typescript/bin/tsc -b --noEmit` exits 0 and
    `node node_modules/eslint/bin/eslint.js src/pages/InvestorReporting/render/PrintEntry.tsx` exits 0. bun here is 1.4.2 and the pack was
    built with 1.3.9: note it if anything differs.
@@ -98,3 +98,12 @@ comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is
 comp-adversary: RUN -- every criterion dry-run at base fd0c709235 2026-10-07 ~12:2xZ: AC1 FAIL, AC2 control PASS, guard PASS (p66_cells.py).
 lane: the <paths> block IS the grant.
 </preflight>
+
+## AMENDMENT 1 (2026-10-07 ~12:2xZ, issuer 2.0.0_SA_COO~P2, before the spawn): the bun egress hazard (1.0.0_SA_CTO~DELL2 msg 501)
+
+HAZARD ARMED (relayed verbatim per the CTO's order): "`bun run` / `bun test` on a file whose imports do not resolve fetches from npm
+silently. A user-global bunfig `auto = "disable"` does NOT stop it, and no disarm is proven yet. Until MSTR's disarm lands: run bun ONLY
+from inside C:\devjb_workspace\portal (or a worktree with node_modules LINKED), always as `bun --no-install`; never run bun on a scratch
+file elsewhere." In this order: every bun invocation is `bun --no-install ...`, run from your linked portal worktree only. The check
+p66_cells.py AC1 runs `bun --no-install test`. If anything fetches, stop and file a row.
+
