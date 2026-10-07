@@ -111,3 +111,4 @@ Checks dry-run at base: AC1, AC2, AC3 FAIL as expected (the module is absent); a
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @c6d6c9eb7c; proof VALID (worktree checker); table_class.py: the share-capital and one-label refusal; AC1 16 of 16, AC2 8 of 8, AC3 on deployed OVpDhfwD 95 of 95 read, driver refused 1 of 2 (ASML NA), segments refused 2 of 12 (ASML NA, PBR)</status>
