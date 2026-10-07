@@ -544,3 +544,38 @@ RIV-md-1's surfaces. No earlier cell is replaced. Chain `~11`, one cell, file re
   (its arm (a), and arm (e)'s "12 months at most"); the cell may change those two arms to this cell's rule and nothing
   else in that file. Items 1 and 2 are checked mechanically; item 3 is the CVO's to grade in a browser.
 - **Organic trigger:** any security dialog on the live page; the issuer's real run.
+
+## ROUND 22 (main workstream) -- APPENDED 2026-10-07, revision 1.12 of this file
+
+One cell, the second display cell of ROUND_ANALYSIS.round20 @c9a9e27770 (rulings R2 items 2 and 4, R3) and of the R3 read
+(`deliverables/2.0.0_SA_COO~RV/round21/READ_R3_S59_CAUSE.md` @ad9f13a0bb, causes A and C). Author 2.0.0_SA_COO~RV. No
+earlier cell is replaced. Chain `~12`, one cell, files render.py, trade_markers.py, publish_page.py, risk SERVED.
+
+### `RIV-pm-1` -- the oldest strip cell is marked as a part month; no curve is drawn where there is none; the markers run through the page day and a zero-dollar trade is not one (FWD-22, FWD-23; analysis R2, R3; row Z-S59)
+- Measured: the 365-day window begins inside October 2025, so the 180 thirteen-cell strips' first cell is a part month,
+  and a 90-day strip's first cell is July from the 8th (cause B: 3 strips read as disagreeing with their markers). One
+  fund-security has a stored currency, 4 markers and 0 prices and draws nothing (BIDD 6475395Z GR); CGIC 2454 TT has 2
+  prices and 126 markers riding the top edge. Two strips show an October trade whose window ends on the page day and has
+  no marker (cause A); two securities carry trims at -0.0 dollars drawn as markers (cause C).
+- Interface:
+  1. `render._month_chart(mark, end=None, start=None)` and `render._month_words(mark, end=None, start=None)` take the
+     trend row's `window_start`. When `start` is given, its day of month is after the 1st, and the strip's first cell is
+     `start`'s own calendar month (same year and month), the FIRST cell carries the attribute `data-part` and no other
+     cell does; `render.MONTH_CSS` gains a rule on `[data-part]` that shows the reader the month is partial;
+     `_month_words` appends " (part month)" to that month. Otherwise no cell carries it. Both call sites pass the row's
+     `window_start`. Everything round 21 built stays.
+  2. In the page's one script: `nohist(s)` returns the no-history sentence also for a security with a stored currency and
+     not one priced point (the plain sentence; the object's `source_words` only when the currency is null); a new pure
+     function `window.rfChart.curve(pl)` answers true only when the range's plan holds two or more priced points, and for
+     a range where it is false the script draws no svg and prints "Fewer than two prices on file in this range." when the
+     range holds exactly one priced point (a range with none keeps "No price on file in this range."). Each sentence
+     appears once in the script.
+  3. `trade_markers.markers` skips a trade whose `est_notional` is zero (0.0 or -0.0) as it skips a null one. The chart
+     object's markers run through the PAGE day: the trades handed to `trade_markers.markers` include one whose
+     `window_end` is the page day. Prices (`points`, `ranges`, `asof`) still end at the as-of day.
+- Rulings at the cut (issuer): the fund market value read for the markers' basis points is widened through the page day
+  too, so a page-day marker states its basis points. In the script a marker whose end is after the object's `asof` is
+  kept by `plan` and drawn at the chart's right edge; it is in the trade list either way. The script builds its nodes
+  with `createElement` / `createElementNS` as today, never `innerHTML`. No key is added to the chart object. The audit
+  page is untouched. Not in this cell: cause D of the R3 read (a trade under another key), which is traced first.
+- **Organic trigger:** any security dialog on the live page; the issuer's real run re-reads the 11 strips of row Z-S59.
