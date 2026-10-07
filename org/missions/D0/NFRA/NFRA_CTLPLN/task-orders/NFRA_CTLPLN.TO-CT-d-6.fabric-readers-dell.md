@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~9</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -53,7 +53,7 @@ what the gate does with a bare id filed from a Dell-fabric project. Build exactl
 
 ### ACCEPTANCE
 
-<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
+<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 readers_ok=6/6 old_grammar_left=0 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
 `CT4d6-AC1` -- both readers handle the four fabrics, refuse a fifth, and agree with the gate's enum; the mismatch and `dell3` arms are
 the controls.
 
@@ -82,6 +82,8 @@ org/standards/PRD_HEADER.schema.json
 org/devices/DEVICES.json
 org/surprise_channel/schemas/investigation_item.schema.json
 org/surprise_channel/schemas/remediation_row.schema.json
+.tools/proof-of-spec-check.py
+org/surprise_channel/surprise-watch.sh
 .tools/tests/test_fabric_readers_dell.py
 .tools/tests/fabric_value_census.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -213,3 +215,48 @@ inherited state. Still not merged to the trunk. Gate limb: none graded this modi
 `FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 enum_equal=True gate_selftest=ok ok=True`. CT4d6-AC2 unchanged.
 
 Write a NEW proof instance over the old one, validate it, flip `<status>` back to `complete` only when both pass.
+
+## AMENDMENT 4 (2.0.0_SA_COO~C, 2026-10-07 ~10:2xZ) -- REOPENED: the last two id readers, and a whole-repo sweep (row NFRA_CTLPLN-W9-S3, ARMED)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits 58657730e2 and 1033e21244 are
+inherited state. Still not merged to the trunk: three passes have each found one more reader, so this pass ends with a SWEEP whose
+zero is the landing condition. Gate limb: none graded this modification.
+
+**What row W9-S3 found:** `.tools/proof-of-spec-check.py:1198` `SURPRISE_ID_RE` and `org/surprise_channel/surprise-watch.sh:82` `ID_RE`
+hold the old id grammar. With the gate landed, a Dell worker that files a row `X-D1-W3-S2` and cites it in its proof's `surprises`
+is refused by the proof checker and cannot flip its order; the watcher does not count Dell rows.
+
+**THE WORK:**
+
+1. `.tools/proof-of-spec-check.py`: `SURPRISE_ID_RE` takes the id grammar the gate's `ID_RE` now has (the coordinate-shaped infix;
+   `W<n>-` and `C-` keep their meaning). The smallest edit; no other limb changes; no non-ASCII added. Run its `--self-test` if it
+   has one, before and after, and report both result lines; run `python -m py_compile` on it.
+2. `org/surprise_channel/surprise-watch.sh`: its `ID_RE` takes the same grammar in the regex dialect that script uses (read which
+   tool evaluates it: `grep -E`, `sed -E`, bash `=~` or awk; a lookahead is NOT available in POSIX ERE, so express the same language
+   without one, for example by alternation, and SHOW with the six cases below that it accepts and refuses the same ids). `bash -n`
+   on it after the edit. Git Bash 3.x safe; ASCII only.
+3. THE SWEEP. Search EVERY tracked file (`git ls-files`, skip binaries and files over 2 MB) for the OLD id grammar's signature --
+   the literal text `(Z-)?` -- and for any regex that matches a surprise-row id by a hand-written pattern containing `S[0-9]+` or
+   `S\d+` beside `W[0-9]+` or `W\d+`. Print every hit as `path:line` with a class: `FIXED-HERE` (you changed it in this order),
+   `GATE-DERIVED` (reads the gate's or the register's grammar, nothing to change), `RECORD` (a document, log, deliverable, task order
+   or archived file that quotes the old pattern as history: never edited), `LIVE-READER-OUTSIDE-GRANT` (code that still decides on
+   the old grammar and is not in your paths). LAST line of the sweep:
+   `ID-GRAMMAR-SWEEP files_scanned=<f> hits=<h> fixed_here=<a> gate_derived=<b> record=<c> live_outside_grant=<d> ok=<True|False>`,
+   `ok=True` only when `d == 0`. Put the sweep in `.tools/tests/test_fabric_readers_dell.py` as a function and print its last line
+   before the test's own. If `d > 0`, do NOT edit those files: list them, file ONE row, and the test's `old_grammar_left` carries `d`.
+4. `.tools/tests/test_fabric_readers_dell.py` gains a readers arm, six cases, through the two readers' OWN code (import the checker's
+   compiled regex; run the watcher's regex through the same tool the script uses): `X_PRJ-D1-S1`, `X_PRJ-D2-W3-S2`, `X_PRJ-Z-S4`,
+   `X_PRJ-W9-S1` accepted by both; `X_PRJ-d1-S1` and `X_PRJ-W-S1` refused by both. LAST line
+   `FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 readers_ok=<r>/6 old_grammar_left=<d> enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>`.
+5. THE END-TO-END CONTROL, in your report, nothing committed: a proof-of-spec instance (a temporary copy of one that exists) whose
+   `surprises` cites a `D1-W<n>-S<k>` row id is run through `python .tools/proof-of-spec-check.py`: before your edit (the file from
+   `git show HEAD:.tools/proof-of-spec-check.py` in a temporary directory) it is refused on the id; after, the id is accepted (the
+   instance may still be refused for other reasons a temporary copy has: quote the lines that show the id is no longer the reason).
+
+**ACCEPTANCE, replacing CT4d6-AC1's expectation (same id, same invocation):**
+`FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 readers_ok=6/6 old_grammar_left=0 enum_equal=True gate_selftest=ok ok=True`.
+CT4d6-AC2 unchanged (`unclassified=0 ok=True`; classify any new census hit your edits create).
+
+`.tools/proof-of-spec-check.py` grades every order's completion on four boxes: after your edit run the proof check on THREE existing
+instances of this project (for example the ones under `deliverables/0.9.0_WK_NFRA_CTLPLN~5/`, `~6/` and `~7/`) and report that each
+still reads VALID. Write a NEW proof instance over the old one, validate it, flip `<status>` back to `complete` only when both pass.
