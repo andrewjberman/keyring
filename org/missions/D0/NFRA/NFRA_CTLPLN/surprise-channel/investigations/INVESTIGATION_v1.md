@@ -2456,3 +2456,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
 }
 ```
+
+## NFRA_CTLPLN-W8-S6 -- receipt imports entries carry two keys beyond THE SEAM
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T18:52:54Z",
+  "one_line": "THE SEAM's receipt record has no per-import class, but install must tell import_missing_dep from a real import failure, so intake_receive.py adds two keys to each imports entry.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/intake/intake_receive.py run_import writes class (imported | import_missing_dep | failed) and, for a missing dependency, missing_dep into each imports entry; receipt_gate reads class",
+      "task order NFRA_CTLPLN.TO-CT-e-4 THE SEAM RECEIPT line lists imports entries as module, rc, first_error_line only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM: RECEIPT imports per top-level module carry module, rc, first_error_line; install is refused unless each receipt reads installed_imported or installed_import_failed with only import_missing_dep causes.",
+  "world_is": "A cause cannot be read back reliably from first_error_line alone (the package's own module names are not in the receipt), so the receipt carries the tool's classification in two additional keys; any reader that rejects unknown keys in an imports entry must be aligned, and a reader that ignores them loses nothing. Also resolved without a row: a pack-level defect (manifest, stray, non-wheel file) refuses every wheel while a wheel-level defect refuses only that wheel; INTAKE-PROVE failed= counts install failures only."
+}
+```
