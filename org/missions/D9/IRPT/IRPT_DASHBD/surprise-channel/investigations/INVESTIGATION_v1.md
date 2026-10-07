@@ -1843,3 +1843,57 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Resolves W14-S1: the fence it named opened by the fence-join apply, and the read ran on this box; no fence was widened by this lane."
 }
 ```
+
+## IRPT_DASHBD-W18-S1 -- the Schwab trade-leg tokens the class split reads (tr_cd TR, trade_typcd BUY/SELL) have no home in sources.json, which this cell cannot edit, so account_class_daily.py carries them in one declared block
+
+```json
+{
+  "id": "IRPT_DASHBD-W18-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~18",
+  "surfaced_at": "2026-10-07T11:49:00Z",
+  "one_line": "TO-DB-b-33: the class split needs trade legs (tr_cd TR, trade_typcd BUY/SELL, ticker_symbol) that sources.json does not declare; the file is outside this order's paths, so the tokens sit in TRADE_LEG_DECLARATION in account_class_daily.py.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "C-ADAPTERS (account_return_daily.py docstring, sources.json doc): Schwab codes are allowed to exist only inside the adapter's sources.json, and the producer types no bucket, prefix or column of its own.",
+  "world_is": "sources.json (data/assets/scripts/gold/irpt_reporting/sources.json) declares the cash code FC and the in-kind code IC but no trade code or trade direction column. NF_c needs buys minus sells, so account_class_daily.py names tr_cd TR, trade_typcd {BUY, SELL} and the identifier columns in a single module-level TRADE_LEG_DECLARATION block. Measured on the window 2026-09-28..2026-10-05: 26,400 TR rows, trade_typcd BUY 24,810 (debit_credit DEBIT) and SELL 1,590 (CREDIT), none other; trade_date equals the partition date on every row.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/irpt_reporting/sources.json (no trade key)",
+      "data/assets/scripts/gold/irpt_reporting/account_class_daily.py TRADE_LEG_DECLARATION",
+      "fact_trn partitions 2026-09-28..2026-10-05 read from s3 (read-only), 6 of 6 partitions"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Remedy for the release cell: add trade_code_value, trade_direction_column and trade_direction_map to the declaration (its paths), and have the producer read them. One edit, no behaviour change."
+}
+```
+
+## IRPT_DASHBD-W18-S2 -- most single-stock holdings are not named by the classification module, so they land in `unclassified`, which is a large class in the local run
+
+```json
+{
+  "id": "IRPT_DASHBD-W18-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~18",
+  "surfaced_at": "2026-10-07T11:49:30Z",
+  "one_line": "TO-DB-b-33: etf_classification.py @63fa1a2e32 names 197 tickers (ETFs and funds); individual stocks and money-market funds are not among them, so they are `unclassified`: 45 of the 78 distinct holdings in the local run.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "PRD C-CLASSES: each holding maps through the classification source; 'No row means UNCLASSIFIED; nothing is guessed'. The cell treats unclassified as the exception.",
+  "world_is": "The module's ETF_CLASSIFICATIONS holds 197 tickers: equity 87, fixed_income 81, structured 13, commodities 11, alternatives 5. On dim_position date=2026-10-01 (all accounts) 2,175 distinct tickers are not named and 236 position rows carry no ticker; by market value about 16.0 percent of all position value falls to `unclassified`. Single stocks (for example large-cap names) and the money-market funds SWVXX, SNVXX and SWGXX are unnamed. In the 61-account local run, 45 of 78 distinct holdings are `unclassified` and 30 of 992 class rows carry that class. The producer sends them to `unclassified` as ordered; the class is therefore large and its return is real, but the six-class split of those accounts is partial.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification.py @63fa1a2e32, ETF_CLASSIFICATIONS counted: 197",
+      "dim_position date=2026-10-01 read from s3 (read-only): 107,633 rows, 2,175 unnamed tickers",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~18/CLASS_DAILY_LOCAL_RUN.json holding_map: 78 holdings, 45 unclassified"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Not a defect of this cell. For the served release and the frontend (C-HONESTY): whether single stocks need a source that names them is MDPF_SECCLASS's question, not this producer's."
+}
+```
