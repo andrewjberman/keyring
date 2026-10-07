@@ -5,10 +5,10 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.8",
+ "prd_version": "v0.9",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
- "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16"],
+ "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
  "status": "RATIFIED"
 }
 ```
@@ -166,6 +166,53 @@ cloud". Inputs:
                     rest. Whatever is accepted has a row in Opal's table, in the
                     same shape as every other security there
          SOURCE     Andrew, 2026-10-05 ~20:4xZ ("typo" check 1 and "swap" check 2)
+
+  FWD-17 When Opal suggests what a flagged ticker probably meant, the advisor can tell from the suggestion
+         alone whether it is right
+         DONE WHEN  EXERCISED -- one file with a mistyped ticker, the suggestion read on the page by an advisor
+         ACCEPT     beside the suggested ticker the advisor sees the security's full name, what kind of
+                    security it is, and a short reason it was suggested, and can judge it without opening
+                    another site or tool
+         SOURCE     check/swap brief O1, R1; Andrew-direct 2026-10-07 ~08:0xZ
+
+  FWD-18 An advisor clears every flagged row of a file quickly
+         DONE WHEN  EXERCISED -- one file with three or more flagged rows cleared on the page
+         ACCEPT     accepting one suggestion is a single action that takes effect straight away, and
+                    one action accepts every suggestion on the file at once; nothing is accepted
+                    unless the advisor chose it
+         SOURCE     check/swap brief O2, O4, R2
+
+  FWD-19 An advisor picks a stand-in for a fund Opal cannot price from a short list, instead of
+         recalling a ticker
+         DONE WHEN  EXERCISED -- one file with an unpriceable fund, a stand-in picked from the list
+         ACCEPT     where no stand-in is suggested, the advisor can search by name or ticker among the
+                    funds Opal already knows, and sees each fund's name and kind before picking it
+         SOURCE     check/swap brief O3, R5
+
+  FWD-20 Someone reading the report can tell a corrected typo from a stand-in
+         DONE WHEN  EXERCISED -- one report read that carries one of each
+         ACCEPT     the page and the report say "ticker corrected" for a fixed typo and "stand-in" for
+                    a substitute security, and never call a typo fix a stand-in
+         SOURCE     check/swap brief O5, R6, R9
+
+  FWD-21 An advisor whose ticker matches several securities picks the one they meant
+         DONE WHEN  EXERCISED -- one file with an ambiguous ticker taken through to a report
+         ACCEPT     the advisor is shown the possible matches by name and picks one on the page,
+                    without editing the file
+         SOURCE     check/swap brief O6, R4
+
+  FWD-22 When the check could not run, the advisor is told so plainly and is not told their file
+         is wrong
+         DONE WHEN  EXERCISED -- one upload where the check is made to fail, read on the page
+         ACCEPT     the page says in plain words that the check did not run and that nothing is
+                    wrong with the file, and offers to try again; it never shows a raw code
+         SOURCE     check/swap brief O7, R3
+
+  FWD-23 There is one place, not two, where an advisor substitutes a security
+         DONE WHEN  APPLIED -- the second place is routed into the first or removed
+         ACCEPT     every substitution an advisor makes goes through the same suggested and checked
+                    path; no screen offers a free-text box that bypasses the checks
+         SOURCE     check/swap brief Part VIII, R12
 ```
 
 ## PROVENANCE (outside the ratified section)
@@ -179,6 +226,11 @@ cloud". Inputs:
   YCharts answers all stay. v0.2 changes where the figures come from, not what the page is.
 - C-CLASSIFY's reading of the sector pages (Yahoo's sector names there only; names, asset class and sub asset class from the
   table) was confirmed by Andrew at 21:49Z (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261005_2149Z_FIVE_CALLS_ALL_OF_BD_SECURITIES_SIX_ASSET_CLASSES_INDUSTRY_GROUP_ONTO_TABLE.md`, call 4).
+- v0.9 (`1.0.0_SA_CTO~DELL2`, 2026-10-07, under NFRA_CTLPLN ADDENDUM v0.12 C-ROLES): FWD-17 to FWD-23 added from the L2 run
+  on `docs/briefs/irpt-check-swap-ai-autosuggest-ux-brief-20261007.md` @c16f0f8ddd (`4.0.0_SA_CRO~DELL2`, on Andrew-direct ~08:0xZ,
+  record @1ea0796be2: "AI functionalities for autosuggesting swaps of unrecognized securities and associated frontend ops").
+  FWD-1 to FWD-16 are unchanged. The seven are emitted by this seat and are NOT YET CONFIRMED by Andrew; the ratified-text half
+  re-opens on the ENDPOINT change. Y-5 packet 2 (the web-search swap) is superseded by S32 (msg 120).
 - A word of his that amends an FWD becomes an addendum under the next unused id (FWD-16), or an in-place amendment. It is never
   a cell's choice.
 
@@ -247,6 +299,9 @@ round 1 needs that does not exist yet: the Opal form of C-REPORT and the C-SWITC
 2. The trace followed back by an analyst (FWD-9).
 3. A security the table did not know, through the table's own mechanism, onto a report (FWD-15).
 3a. The typo and swap checks verified against Opal's data, with swaps drawn first from the table's ETFs (FWD-16).
+3b. The check/swap page made easy to use (FWD-17 to FWD-23). FWD-22, FWD-18 and FWD-17 come first: they work on today's
+    check and need no new data. FWD-19 reuses the fund list the page already loads. FWD-21 and FWD-20 come next. FWD-23 is
+    a product cut decided in the cell (route the second box into the checked path, or remove it).
 4. Sector and bond-quality pages from fund look-through, after MDPF_SECCLASS states the sector vocabulary (FWD-13).
 5. DEFERRED by C-V1, on Andrew's word only: the price table, returns and risk, dividends (FWD-10), long windows.
 6. Comparison and Multi (FWD-4), then a timed second run of one portfolio (FWD-12).
@@ -324,8 +379,15 @@ and S05 are not used by an in-house run.
 | S30 | FWD-1..FWD-16 | the journey test across the thread, reading served artifacts | unmeasured | the ACCEPT lines | verification | verify | S19 | reads the store |
 | S31 | FWD-16 | the check gate's verification moved from YCharts' `securities_info` to Opal's data | measured (file headers: `upload_suggestions.py:1-10`, `security_resolution.py:1-22`) | C-RESOLVE | ~Y, through IRPT_BCKEND's release | wire | S22, S23 | advisory until accepted |
 | S32 | FWD-16 | swap candidates from `etf-classifications` by asset class and sub asset class, ETFs first | measured (`resolution_kimi.py:1-22`: swap refuses today) | C-RESOLVE | ~Y | wire | S15, S31 | the table first, the model second |
+| S33 | FWD-17 | the verified suggestion keeps the security's name, kind and the model's reason (`intake/upload_suggestions.py`; the provider row requires `security_name`, `security_resolution.py:44-49`) and the review card shows them (`tabs/analysis/ProspectComposer.tsx`) | measured (brief Part VIII 8.1) | check/swap brief R1 | ~G2 (intake), page lane | wire | S31 | no numeric confidence until calibrated |
+| S34 | FWD-18 | one-action accept and accept-all on the review card; the re-post already takes 1-20 corrections (`prospect.ts:74`) | measured (brief 4.4) | R2 | page lane | wire | -- | explicit choice only |
+| S35 | FWD-19 | a typeahead over the `etf-classifications` list the page already fetches (`comparisonCatalogue.ts`; pattern `TradeSubmission/components/TickerAutocompleteInput.tsx`) | measured (brief 4.3) | R5 | page lane | wire | -- | no new route |
+| S36 | FWD-20 | the correction records its origin (corrected vs stand-in) on the wire and in the disclosure; the check returns a kind (`resolution_kimi.py`) | unmeasured (wire owned by the P lineage) | R6, R9 | ~G2 + P lineage | amend | S33 | wording on page and report |
+| S37 | FWD-21 | an AMBIGUOUS finding carries the provider's candidates and the select action the resolver computes (`portfolio.py:444`) | measured (brief 4.2 step 5d) | R4 | ~G2, page lane | wire | -- | -- |
+| S38 | FWD-22 | words and a retry action for `TICKER_CHECK_UNAVAILABLE` (`uploads.py:40-53`) | measured (brief 4.2 step 5e) | R3 | ~G2, page lane | amend | -- | locked copy test |
+| S39 | FWD-23 | the free-text substitution box in `tabs/analysis/InputReview.tsx` (mounted at `AnalysisTab.tsx:418`) routed or removed | measured (brief Part VIII 8.2) | R12 | page lane | amend | S34 | one path |
 
-MECE check: every one of the 15 live outcomes has a row (FWD-3 and FWD-5 ride S26/S30 and v0.1's built maps and S10).
+MECE check: every one of the 22 live outcomes has a row (FWD-3 and FWD-5 ride S26/S30 and v0.1's built maps and S10).
 
 ## 8. BRIEF COVERAGE -- content carried, not just cited
 
@@ -344,3 +406,4 @@ MECE check: every one of the 15 live outcomes has a row (FWD-3 and FWD-5 ride S2
 | Addendum 3 (sector names) | Yahoo's names match YCharts' scheme | superseded by Andrew's call 2: C-CLASSIFY |
 | Addendum 4 (what Yahoo lacks) | fund countries; top 25; maturity buckets; style box; loads; history of snapshots | C-COVERAGE ("not available"); C-METHOD; FWD-14 |
 | Addendum 5 (conditions) | unofficial reader; fetch on a schedule; source's own as-of date; one portfolio; fix the price columns first | C-VENDOR; C-SCHEDULE; C-MART; C-PRICES |
+| Check/swap brief (2026-10-07, Parts I, IV, VIII) | O1-O7 and R1-R12; packet 2 superseded by S32; external patterns not researched (egress) | ENDPOINT FWD-17 to FWD-23; backlog 3b; S33-S39 |

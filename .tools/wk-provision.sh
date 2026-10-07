@@ -25,11 +25,15 @@ refuse() {
 usage() {
   cat >&2 <<'EOF'
 usage:
-  wk-provision.sh provision <CODE> <n> --path <abs-path> [--portal-ref <commit-ish>] [--node-modules link|install|none]
+  wk-provision.sh provision <CODE> <n> --path <abs-path> [--portal-ref <commit-ish>] [--node-modules link|none|install]
                                         [--nested <path>=<ref> ...]
-  wk-provision.sh portal <worktree-path> [--portal-ref <commit-ish>] [--node-modules link|install|none]
+  wk-provision.sh portal <worktree-path> [--portal-ref <commit-ish>] [--node-modules link|none|install]
   wk-provision.sh remove <worktree-path> [--portal-only]
   wk-provision.sh --self-test
+
+--node-modules: the DEFAULT is link. install is REFUSED (rc 2, before anything is created) unless a registry redirect to a
+non-public host is present in the environment (BUN_CONFIG_REGISTRY / NPM_CONFIG_REGISTRY / npm_config_registry) or in the
+portal's bunfig.toml: bun install contacts the package registry, and no request may leave this machine.
 
 --nested <path>=<ref> (repeatable): provision a nested worktree for ANY path .gitmodules
 maps, the same way portal's own nested worktree is provisioned (branch
@@ -41,6 +45,40 @@ EOF
 
 main_worktree() {
   git worktree list --porcelain | head -1 | sed 's/^worktree //'
+}
+
+# registry_redirect_ok <dir-with-bunfig> -- rc 0 only when at least one registry redirect is present (BUN_CONFIG_REGISTRY,
+# NPM_CONFIG_REGISTRY, npm_config_registry, or a registry = "..." line in <dir>/bunfig.toml) AND EVERY one present names a
+# non-public host (localhost, loopback, or a private range). Anything else, including no redirect at all, is rc 1.
+registry_redirect_ok() {
+  local dir="${1:-}" url host seen=0 bad=0 urls=()
+  [ -n "${BUN_CONFIG_REGISTRY:-}" ] && urls+=("$BUN_CONFIG_REGISTRY")
+  [ -n "${NPM_CONFIG_REGISTRY:-}" ] && urls+=("$NPM_CONFIG_REGISTRY")
+  [ -n "${npm_config_registry:-}" ] && urls+=("$npm_config_registry")
+  if [ -n "$dir" ] && [ -f "$dir/bunfig.toml" ]; then
+    url="$(sed -n 's/^[[:space:]]*registry[[:space:]]*=[[:space:]]*"\([^"]*\)".*/\1/p' "$dir/bunfig.toml" | head -1)"
+    [ -n "$url" ] && urls+=("$url")
+  fi
+  for url in "${urls[@]+"${urls[@]}"}"; do
+    seen=$((seen + 1))
+    host="${url#*://}"; host="${host%%/*}"; host="${host##*@}"
+    case "$host" in
+      \[*) host="${host%%]*}]" ;;
+      *) host="${host%%:*}" ;;
+    esac
+    case "$host" in
+      localhost|127.*|"[::1]"|10.*|192.168.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*) ;;
+      *) bad=$((bad + 1)) ;;
+    esac
+  done
+  [ "$seen" -gt 0 ] && [ "$bad" -eq 0 ]
+}
+
+# guard_install_mode <mode> <dir-with-bunfig> -- refuses rc 2 for the install mode unless registry_redirect_ok.
+guard_install_mode() {
+  [ "$1" = "install" ] || return 0
+  registry_redirect_ok "${2:-}" && return 0
+  refuse 2 "--node-modules install runs bun install, which contacts the package registry, and no request may leave this machine; use --node-modules link (the default) or --node-modules none"
 }
 
 require_nested_repo() {
@@ -83,6 +121,7 @@ cmd_portal() {
   main="$(main_worktree)"
   nested="$main/portal"
   require_nested_repo "$nested"
+  guard_install_mode "$node_modules_mode" "$nested"
 
   local gitlink_line gitlink_sha
   gitlink_line="$(git -C "$worktree" ls-tree HEAD portal)"
@@ -122,6 +161,7 @@ cmd_portal() {
   echo "PORTAL: $portal_dir branch=$portal_branch"
 
   if [ -z "$node_modules_mode" ]; then
+    # DEFAULT MODE: link (none only where the main tree holds no node_modules to link to).
     if [ -d "$nested/node_modules" ]; then
       node_modules_mode="link"
     else
@@ -147,6 +187,7 @@ cmd_portal() {
       echo "NODE_MODULES: link -> $nested/node_modules"
       ;;
     install)
+      guard_install_mode install "$portal_dir"
       command -v bun >/dev/null 2>&1 || refuse 2 "bun not found on PATH; --node-modules install requires PATH-resolved bun"
       ( cd "$portal_dir" && bun install --frozen-lockfile ) || die 1 "bun install failed in $portal_dir"
       echo "NODE_MODULES: install"
@@ -251,6 +292,7 @@ cmd_provision() {
   done
 
   [ -n "$path" ] || die 2 "provision: --path <abs-path> is required"
+  guard_install_mode "$node_modules_mode" "$(main_worktree)/portal"
 
   # Validate EVERY --nested spec against the MAIN tree BEFORE anything is created (super
   # worktree included) -- OA-w-1 AC3: the refusal names the path and creates nothing.

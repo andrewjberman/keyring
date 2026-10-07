@@ -416,3 +416,84 @@ act @98d439936a. E2 is now cut: the tie-out, which is ledger leg G1.
 | `DB-b-26` | FWD-8 / P-5: the 0.35 pp tie-out over 9,082 segments, reasons from C-TIEOUT's classes or UNEXPLAINED, counts only | LOCAL (no vendor call) | E1 (complete) | B17 |
 
 fanout: 1 of 1 chains, cap 8, reason: one grade over landed data. Worker 0.9.0_WK_IRPT_DASHBD~12 in its own worktree.
+
+## 18. ROUND 18, WORKSTREAM B (2026-10-07 ~08:5xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-15..17 analysis @e363a194ed, msg 157)
+
+Rounds 15-17 are closed: DB-b-23..26 terminal and VALID, ledger irpt-dashbd-e3-bd-population-pull-20261004 CLOSED, CVO compile
+@88435e28a1 (ARMED 0). W12-S1 is RULED: the E2 tie-out compares on ONE gross basis, BD's own reported fee added back per segment; no
+FEES reason; tolerance 0.35 pp and the closed set unchanged. The enrichment list is E1-E3:
+- **E1** and **E2** are one chain: E2 reads E1's record.
+- **E3** (`account_class_daily`, backlog B1, FWD-3) WAITS and is not cut: the CTO cuts it only once
+  `infra/aws/lambda/v2_portal/_shared/etf_classification.py` carries the six-class values. Measured at 3dd25927f2: it still carries
+  'fixed_income', 'equity', 'other' (last change 96f17cdbe9). Workstream F waits on E3's served table.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-27` | E1 / W12-S1: re-grade E2 on the gross basis; `bd_fee_addback` and `bd_gross_return` per segment; no net-of-fee Opal figure | LOCAL (no vendor call) | DB-b-26 (merged) | B18 |
+| `DB-b-28` | E2: the residue -- UNEXPLAINED after E1, the +1-day segments over 2025-01-09, their overlap, each against the closed set | LOCAL | DB-b-27 | B18 |
+| (E3) | `account_class_daily` and class contribution for 49F | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 consumes E1's record, so one worker queue; E3 waits on its named condition. Worker 0.9.0_WK_IRPT_DASHBD~13 in its own worktree.
+
+## 19. ROUND 19, WORKSTREAM B (2026-10-07 ~10:2xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-18 analysis @62026ca511 as ruled in msg 308)
+
+Round 18 is closed: DB-b-27 and DB-b-28 merged @0f304c6405; CVO compile ADJUDICATION_v6 @01ab2f9950, ARMED 0. On the gross basis 3,279 of
+9,078 graded segments are UNEXPLAINED; 2,299 of them span the 2025-01-09 closure and 980 do not. The analysis's E1 asked for BD's
+closure-day contribution from BD's own record; the landed pull holds only segment ranges (no daily data), so the issuer handed it back
+(msg 307). The CTO ruled (msg 308): E2 is cut now over the 980; E1 is REPLACED by E1', an Opal-side test of BD's day count, no BD pull.
+If E1' leaves most of the 2,299 unexplained, the split-range BD pull goes on Andrew's list as a per-use vendor act.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-29` | E1': the 2,299 closure segments recomputed on Opal's side with 2025-01-09 held (accrual, zero price return); count within 0.35 pp; the served figure unchanged | LOCAL (no vendor call; the gold read runs on the laptop under the standing rule) | DB-b-27 (merged) | B19a |
+| `DB-b-30` | E2: the 980 non-closure UNEXPLAINED segments against the closed set with named evidence; final UNEXPLAINED and its share of 9,078 | LOCAL | DB-b-27 (merged) | B19b |
+| (E3) | `account_class_daily` | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+
+fanout: 2 of 2 chains, cap 8, reason: E1' and E2 read disjoint segment sets of the merged GROSS record. Workers 0.9.0_WK_IRPT_DASHBD~14 and ~15, each in its own worktree.
+
+## 20. ROUND 20, WORKSTREAM B (2026-10-07 ~11:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-19 analysis @b402b7b2e3 and its E1 method ruling msg 400)
+
+Round 19 is closed: DB-b-29 @33949e002d (E1' refuted the day-count hypothesis: 0 of 2,299) and DB-b-30 @5831f348b8; CVO compile
+ADJUDICATION_v7 @e475d95687, ARMED 0. The split-at-2025-01-09 BD pull is listed for Andrew (2,299 accounts, 2,299 calls, 4,598 ranges)
+and is NOT in this issuance. E1 asked for BD's booking dates, which the landed pull does not hold; the issuer handed it back (msg 399)
+and the CTO ruled the method (msg 400): a Modified Dietz of Opal's dated flows over BD's own totals, with a midpoint negative control and
+a flow-totals guard.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-31` | E1: measure the 226 inferred FLOW_TIMING segments (Dietz over BD's bmv/emv/netAdditions with Opal's dated flows; midpoint control; flows_match guard); the UNEXPLAINED count on a measured basis | LOCAL (S3 reads only) | DB-b-30 (merged) | B20a |
+| `DB-b-32` | E2: the 754 non-closure UNEXPLAINED segments re-read with Opal's served series (readable since the fence join) against the closed set | LOCAL (S3 reads only) | DB-b-30 (merged) | B20b |
+| (E3) | `account_class_daily` | SERVED | six-class values in `_shared/etf_classification.py` | waiting, not cut |
+| (split BD pull) | BD's own figures either side of 2025-01-09 for the 2,299 closure segments | WORLD (vendor call) | Andrew's per-use word | not cut |
+
+fanout: 2 of 2 chains, cap 8, reason: E1 and E2 read disjoint segment sets (226 and 754) of the merged round-19 record. Workers 0.9.0_WK_IRPT_DASHBD~16 and ~17, each in its own worktree.
+
+## 21. ROUND 21, WORKSTREAM B (2026-10-07 ~11:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-20 analysis @58f3ed0501, msg 421)
+
+Round 20 is closed: DB-b-31 @8e4c07ce7e, DB-b-32 @00d950283a. The CVO's read is taken: the Modified Dietz rule does not discriminate
+(measured 22, midpoint control 19, overlap 3), so the 22 are not counted and UNEXPLAINED stays 3,279 of 9,078. FWD-8's thread is HELD on
+Andrew's per-use word for the split BD pull (2,299 accounts, 2,299 calls, 4,598 ranges); no further no-vendor cell is cut against it.
+The E3 gate has opened: `_shared/etf_classification.py` carries the six-class values (@63fa1a2e32).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-33` | E1: `account_class_daily` and its contract for 49F, built beside the served producer and run locally over 50 accounts x 5 trading days; classes sum to the account within 1e-9; unclassified its own class; six classes plus unclassified only | SERVED (gold producer; no S3 write in this cell) | the six-class values (open) | B21 |
+| (release) | upload of the producer, its first gold write and schedule under rule 13 | SERVED | DB-b-33 merged; never-widen halves | cut after B21 drains |
+| (FWD-8) | the split BD pull | WORLD (vendor call) | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell; its release follows it. Worker 0.9.0_WK_IRPT_DASHBD~18 in its own worktree.
+
+## 22. ROUND 22, WORKSTREAM B (2026-10-07 ~12:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-21 analysis @214a0ef324, msg 448)
+
+Round 21 is closed: DB-b-33 @75717e8580 (account_class_daily built and run locally; REMEDIATION_v7 @d116b31dba). W18-S2 RULED: release
+as is, the unclassified share of value shown beside the class breakdown with its reason; single-stock and money-market coverage is ASKED
+of MDPF_SECCLASS through the laptop, then the table is re-run. The release is the smallest change: the existing reporting-gold function
+also emits account_class_daily; its role writes one more prefix; the schedule is unchanged.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-34` | E1 prep: handler + bundle + role + declaration (W18-S1) + tests; local release run (returns DELTA=0, class identity, unclassified share); the never-widen packet | SERVED (source only; no apply) | DB-b-33 (merged) | B22 |
+| (apply) | safe-apply of the reporting-gold root, the first fire, the after-read (CTO criteria 2-3) | SERVED | DB-b-34 merged; both halves signed; the dell2 terraform kit | the issuer's act |
+| (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one prep cell; the apply follows it. Worker 0.9.0_WK_IRPT_DASHBD~19 in its own worktree.

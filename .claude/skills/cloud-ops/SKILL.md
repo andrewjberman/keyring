@@ -140,6 +140,18 @@ aws iam simulate-principal-policy --policy-source-arn <role> --action-names <act
    subject of an IAM audit -- where it reads as a correct negative. Modes 1-3's mitigations were all
    in force and none prevents it.
 
+⛔ **AND ONE FALSE-ALLOW MODE: IT MATCHES THE ARN AGAINST THE POLICY'S `Resource` PATTERNS AND NEVER
+ASKS WHETHER THE ARN NAMES ANYTHING.** It returns `allowed` for a resource nothing has created. The
+four modes above all fail toward DENY, which trains a reader to trust an `allowed`; for a
+not-yet-created resource that is the unsafe direction. Measured 2026-10-07 (NFRA_CTLPLN-TO-DELL-1,
+`0.7.0_AE_CloudOps~RV`): both Dell principals simulated 10 of 10 `allowed` against
+`agentbus-global-dellN-queue.fifo` while ZERO `agentbus-global*` queues existed (`list-queues` empty,
+denominator printed). **So an `allowed` proves the PATTERN matches the string you typed -- it does not
+prove the resource exists, or that its real name is the one you typed.** Pair every simulation of a
+new resource with an existence read of that exact ARN (`get-queue-url`, `head-bucket`,
+`describe-table`), and run the simulation AFTER the resource is created, never as its pre-apply proof.
+Cost: one read per resource. Non-application: a resource whose existence the same run already printed.
+
 **THEREFORE: ONE `--resource-arns` PER CALL - run the positive control as a SEPARATE INVOCATION -
 pass `--context-entries` for any conditioned statement - pass the resource ARN AT THE GRAIN THE
 ACTION IS AUTHORIZED ON (`log-group` for `logs:GetLogEvents`, `task-definition` for `ecs:RunTask`)

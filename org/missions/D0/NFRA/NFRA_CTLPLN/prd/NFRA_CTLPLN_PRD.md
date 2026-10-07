@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.6",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -60,12 +60,13 @@
                     per lane
          SOURCE     brief O3; Andrew's confirmation (headline wording)
 
-  FWD-5  Publishing work from any box never puts anything into production; only site Z's push of
-         the shared trunk does
+  FWD-5  Publishing work from any box never puts anything into production; only a deploy a box names
+         as its own act, or the push of the shared trunk, does
          DONE WHEN  EXERCISED -- a round carrying a pipeline script published, and nothing deployed
          ACCEPT     a published round that contains a pipeline script changes nothing in production
-                    until site Z pushes the shared trunk
-         SOURCE     brief O4
+                    until a box deploys it as a named act or the shared trunk is pushed
+         SOURCE     brief O4; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
+                    shared-branch wait for the dells"
 
   FWD-6  Site Z pushes a routine round on its own, and waits for Andrew on any round that would put
          something into production
@@ -95,15 +96,17 @@
                     down releases what it held
          SOURCE     brief O8
 
-  FWD-10 The record shows which box did each act; a Dell can deploy, but only what is already on the
-         shared trunk, and can never change who has access
-         DONE WHEN  EXERCISED -- one deploy from a Dell of trunk code that succeeds, and one attempt to
-                    change access or deploy code not on the trunk, refused
+  FWD-10 The record shows which box did each act; a Dell can deploy its own committed work without
+         waiting on another box, and can never change who has access
+         DONE WHEN  EXERCISED -- one deploy from a Dell of a committed candidate it names, succeeding
+                    before any other box has merged that work, and one attempt to change access, refused
          ACCEPT     every act in the record names its box; a Dell puts code or data live only through the
-                    deploy tools and only from what is already on the shared trunk; its attempts to change
-                    access, the audit trail or to delete production data are refused
+                    deploy tools, from a commit it names in its own record of the deploy, and waits on no
+                    other box to do so; its attempts to change access, the audit trail or to delete
+                    production data are refused
          SOURCE     brief O9; Andrew's card 5; Andrew-direct 2026-10-07 ~00:5xZ, "they should have deploy
-                    ability"
+                    ability"; Andrew-direct 2026-10-07 ~07:0xZ, "Definitely drop one lane cap and
+                    shared-branch wait for the dells"
 
   FWD-11 A box can restart in the middle of a round and nothing is lost
          DONE WHEN  EXERCISED -- one box restarted mid-round, and the round finished
@@ -155,7 +158,7 @@
 
 | Contract | Direction / owner | Binding agreement |
 |---|---|---|
-| C-ROLES: what each box is | Andrew's six cards; proposal 3 | **laptop:** the control plane. It alone writes the registers, receives Andrew's word, orders the merge queue and runs the planning seats (CTO, CRO, CVO); at most one execution lane. **sitez:** the integrator and the deploy box; it alone pushes the trunk and deploys; it keeps the Bloomberg jobs. **dell1, dell2:** execution only; they never push the trunk, deploy, call a vendor or write a register. Site Z's planning lanes retire as their projects close, never mid-project (card 3). |
+| C-ROLES: what each box is | Andrew's six cards; proposal 3 | **laptop:** the control plane. It writes the cross-box registers (placement, the sequence, the live-arms register), orders the merge queue, creates roles and administers access for the Dells, and runs its own planning seats (CTO, CRO, CVO); at most one execution lane. It is no longer the only box with planning seats (v0.12: each Dell runs a CTO lane and a CVO for the projects placed on it). **sitez:** the integrator; it merges the boxes' rounds, pushes the trunk and keeps the Bloomberg jobs. It is no longer the only box that deploys (v0.9: a Dell deploys its own committed work as a named act). **dell1, dell2:** the workhorses (v0.9): they run every project placed on them with no lane cap set here, deploy their own committed work as a named act, and create non-IAM resources; they never push the trunk, change access, call a vendor without Andrew's per-use word, or write a register. Site Z's planning lanes retire as their projects close, never mid-project (card 3). |
 | C-TRUNK-DEPLOY: a publish never deploys (FWD-5) | this project; `.tools/git-hooks/pre-push-safe-deploy.sh` | MEASURED at L4 (`pre-push-safe-deploy.sh:41-70`): the hook runs `safe-deploy.sh --commit-range` for EVERY pushed ref that is not a tag or a delete, so pushing any branch uploads the pipeline scripts in its range. After this contract: the deploy gate runs only when the pushed REMOTE ref is `refs/heads/CLOUD`. Every other branch push prints one line saying no deploy ran and why, and exits 0 for the deploy gate (the HALTGT checkpoint above it is unchanged). This lands BEFORE any round branch is published (brief PART V). |
 | C-QUEUE: publish and integrate (FWD-4) | this project; `/integrate` split in two (proposal 5.2) | A box publishes ONE branch per finished round, `q/<device>/<PROJECT>/r<N>`, and sends one bus line to the laptop. The laptop holds the ordered queue (SEQUENCE, then arrival). Site Z takes the head, merges in its own worktree (the commit hooks grade once, there), pushes the trunk, announces the new head, and deletes the queue branch. Every box pulls the trunk at its next round start. A same-line conflict at integration is a PLACEMENT finding routed to the laptop, never resolved silently at the merge. This is not the retired two-branch model: a queue branch lives one round and flows one way. |
 | C-PUSH-RULE: the standing push rule (FWD-6) | Andrew; the locked law files | The rule lives in `org/XXX.md` Step 1b and is enforced by `.tools/hooks/never-rules-gate.sh` gate 5. It changes only by an `ANDREW_LAW_EDIT_ORDER` naming a record in which Andrew approved the EXACT text. **The text is APPROVED** (Andrew ~15:1xZ 2026-10-06, "Yes, agreed with this"; record `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261006_150xZ_PUSH_RULE_LAW_TEXT_APPROVED.md` @7b5782d0c6, the `ANDREW_LAW_EDIT_ORDER`). It lands TOGETHER WITH the publish-and-integrate flow (C-QUEUE) and the trunk-only deploy gate (C-TRUNK-DEPLOY), never before them; gate 5 and `CLAUDE.md`'s Git section carry the same rule in the same change. Until then the current rule stands: only the fabric managers push, on his word at that terminal. |
@@ -164,7 +167,7 @@
 | C-PLACEMENT: one project, one box (FWD-7) | the laptop; `org/missions/DIRECTIVES.yaml`, `org/missions/SEQUENCE.yaml` | A project's row names its box (`fabric`: `laptop`, `site-z`, `dell1`, `dell2`). A project is never split. Two projects go to different boxes only if their write surfaces do not overlap, checked as `.tools/owned-paths-validate.py` checks a worker, one level up. Andrew's first allocation (card 6) is the starting point; each move is his when it happens, and nothing moves until a Dell is standing. |
 | C-ONE-WRITER: files (FWD-8) | this project | Registers (`DIRECTIVES.yaml`, `SEQUENCE.yaml`, `LIVE_ARMS.md`, project rows, missions-tree carriers, the law files): the laptop only. A project's own tree: its box only. Append-only files (surprise channels, audit logs, session logs): one file per box, `<name>.<device>.md`, the pattern `org/surprise_channel/ETFS_INGEST/INVESTIGATION_v1.Z.md` already uses. The surprise-row gate and the readers that compile a channel learn to read every per-box file of a channel. |
 | C-LEASE: scarce accounts (FWD-9) | this project; the laptop holds the register | One lease register on the laptop: resource, holder box, expiry. Covered: the walker account, the YCharts session, the portal `DEV` push, the Bloomberg daily quota. A lease expires by itself; a dead box's leases lapse. The Dells take no vendor lease (vendor pulls stay scheduled on their existing homes). |
-| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys only commits already on origin CLOUD, never a round branch (C-TRUNK-DEPLOY's trunk-only rule holds); DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
+| C-IDENTITY: per-box cloud identity (FWD-10) | this project; cloud IAM (IAM-creating applies at site Z only) | Andrew-direct ~00:5xZ 2026-10-07 (relayed by `0.0.0_AB_MSTR` msg 105876): "I am cool with this but they should have deploy ability" -- one IAM group and one IAM user per Dell, never `Andrew_Berman`'s keys. **Scope (this seat's ruling):** ALLOW code and data deploys through `.tools/safe-deploy.sh` and `safe-apply` for non-IAM resources, each with the box's own ledger entry; a Dell deploys a commit it names in its own ledger entry, from its own committed work, and waits on no other box's merge or push (v0.9, Andrew-direct ~07:0xZ; v0.6's "only commits already on origin CLOUD" is withdrawn); C-TRUNK-DEPLOY still holds for a PUBLISH, which deploys nothing; DENY IAM user, key, role and policy changes, CloudTrail changes and production data deletes, by policy, so the cloud refuses them. **v0.7 (Andrew-direct ~06:3xZ 2026-10-07, 'they should be allowed to create resources though'):** the policy GRANTS create, update and tag on the non-IAM resource kinds the Dell-placed projects' Terraform declares, so `safe-apply` of a non-IAM resource succeeds from a Dell and waits on no other box; the IAM deny is unchanged. Never-widen halves still bind every served move. Keys live in each Dell's own credential store and are rotated by site Z. **Names** (builder output, shared resources so scope None; NAMING_SCHEMA v1.13 @01c56eda2b added kinds `user` and `group`): users `cloudops-dell1-agent-user` and `cloudops-dell2-agent-user`; group `cloudops-dell-agents-group`, tagged DisplayName=DellBoxes (Andrew's name for it); policy `cloudops-dell-agent-deploy-policy`. The IAM traps in `/cloud-ops` apply. |
 | C-RESTART: rounds survive a box restart (FWD-11) | this project | A lane on any box publishes its work-in-progress branch at each cell close, so a disk loss loses at most one cell. The round's state is read from the published branches and the ledger, never from one box's memory. Proposal 5.9 lists the cases (a Dell, site Z or the laptop down; a box whose bus consumer is not running). |
 | C-ATTENTION: one decision list (FWD-12) | this project | A box records each decision it needs from Andrew as a file on its own tree plus one bus line to the laptop; the laptop shows one list of every box's open decisions; his answer is recorded on the laptop and reaches the asking box as a file and one bus line. No lane on an unattended box blocks on a prompt at that box. |
 | C-SERIALS: one fabric manager per box | Andrew, "agreed on all points go ahead" | `0.0.0_AB_MSTR` (laptop), `0.0.0_AB_MSTR~SITEZ`, `0.0.0_AB_MSTR~DELL1`, `0.0.0_AB_MSTR~DELL2`, each with its own tier-0 folder. Site Z's `~Z` stays as an ALIAS in the device register so every past record still resolves; the rename lands at a site-Z restart. Only these seats talk across boxes (FWD-3). |
@@ -320,3 +323,164 @@ Andrew-direct ~00:5xZ at the `0.0.0_AB_MSTR` terminal: "I am cool with this but 
 anything into production" is reversed by his word and amended in place (id unchanged): a Dell deploys trunk code through the deploy tools and
 never changes access. C-IDENTITY carries the scope ruled here. Section 5's "Dells execute, site Z deploys" now reads "site Z integrates and
 holds every IAM-creating apply; any box deploys trunk code". The ratified-text half re-opens for `3.0.0_SA_CVO`.
+
+## ADDENDUM v0.7 (1.0.0_SA_CTO, 2026-10-07) -- Dells create non-IAM resources; no Dell deploy waits on site Z. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:3xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "Regarding DELLs, they shouldnt need to create or touch IAMs, they should be
+allowed to create resources though. I do not like the idea of gating deploys on sitez, because sitez will bottleneck as it has a lot of work
+via opalgateway projects and all of asset management workstreams." Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_063xZ_DELLS_CREATE_RESOURCES_NO_IAM_DEPLOYS_NOT_GATED_ON_SITEZ.md`.
+
+- **Measured gap.** `infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json` grants update of existing Lambda code, ECS task
+  registration, EventBridge rules and S3 and DynamoDB data writes, and NO create action for a function, table, bucket, queue, schedule,
+  secret or route. C-IDENTITY v0.6 already allowed `safe-apply` for non-IAM resources; the applied policy did not deliver it.
+- **C-IDENTITY amended in place** (the v0.7 sentence). FWD-10's text is unchanged: a Dell deploys, and never changes access.
+- **Round 3, first cell:** the policy grants create, update and tag for the non-IAM resource kinds declared under the Terraform roots of
+  the projects placed on a Dell (derive the list from those roots, never from memory), with the four Deny statements kept. Done when one
+  `safe-apply` from a Dell creates a non-IAM resource and one IAM write from the same Dell is refused. The Lambda narrowing follows it.
+- **Section 7, S06:** "applied by site Z" binds the IAM-creating apply of this policy only; it is not a rule for Dell deploys.
+- **Open at Andrew, not ruled here:** (1) who creates the role a new function or task needs, and whether a Dell may pass an existing
+  named role (row NFRA_CTLPLN-W1-S1); (2) C-TRUNK-DEPLOY's wait on site Z as the one box that merges Dell rounds and pushes the trunk;
+  (3) whether a bucket policy, a key policy and a Lambda permission count as resources or as access.
+
+A contract change under the ENDPOINT hash: no half re-opens (CLAUDE.md rule 27, proportionate sign-off).
+
+## ADDENDUM v0.8 (1.0.0_SA_CTO, 2026-10-07) -- C-ROLE-REQUEST: the laptop creates roles, a Dell writes in for one. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:4xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "ok i like the laptop for creating roles, we can manage that for now, and the DELLS write in for that purpose". Record: the 063xZ record named in v0.7, third word.
+It closes v0.7's open question (1).
+
+- **C-ROLE-REQUEST (new contract; owner this project; counterpart the laptop's IAM-holding seat).** A Dell never creates, edits or
+  attaches policy to a role. When work placed on a Dell needs a role, the Dell WRITES IN: one request naming the project, the resource
+  the role is for, the service that assumes it and the permissions asked, each permission tied to the code line that needs it. The laptop
+  reads the request, writes the role in that project's Terraform root and applies it. Site Z is not in this path.
+- **Passing a role (this seat's reading, flagged in the record).** The Dell policy allows `iam:PassRole` only on roles the laptop has
+  made for Dell-placed work, named in the policy, with the `iam:PassedToService` condition. Every other IAM action stays denied. This
+  disarms row NFRA_CTLPLN-W1-S1 once applied.
+- **Round 3 cells this adds, after v0.7's first cell:** (a) the request's carrier and shape, on the bus the Dells already have; (b) the
+  PassRole statement and its named-role list, derived from the roles the laptop has made, never from a wildcard; (c) one exercised
+  round trip: a Dell writes in, the laptop applies, the Dell creates a function with that role, and a pass of an unnamed role is refused.
+- **C-IDENTITY's header** "IAM-creating applies at site Z only" now reads "IAM-creating applies at the laptop" for roles Dell-placed
+  work needs. The two Dell users, the group and their policy were applied at site Z; where their later changes apply is not ruled here.
+- **Still open at Andrew:** v0.7's questions (2) the trunk wait on site Z and (3) access-granting resource policies.
+- **INTERIM, on his word seconds later, VERBATIM:** "i think ultimately this should change, but its ok for now". C-ROLE-REQUEST is the
+  arrangement until he names its replacement; ENRICHMENT BACKLOG gains one line: "replace the laptop-made role request (C-ROLE-REQUEST)
+  with the end state Andrew names". No end state and no date are ruled here.
+
+A contract change under the ENDPOINT hash: no half re-opens.
+
+## ADDENDUM v0.9 (1.0.0_SA_CTO, 2026-10-07) -- an ENDPOINT change on Andrew's word: FWD-5 and FWD-10 amended; the Dells wait on no other box
+
+Andrew-direct ~07:0xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "THe entire point of the Dells is that they are workhorses, they should be
+flying. I am ok with your move of the IRPT pair back to Dell2. Definitely drop one lane cap and shared-branch wait for the dells. Yes i
+recommend seating the three lanes successors directly on the dells." Record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md`.
+It closes v0.7's open question (2).
+
+- **FWD-10 amended in place** (id unchanged): a Dell deploys a committed candidate it names, before any other box merges it. The refusal
+  arm keeps the access change and drops "code not on the trunk".
+- **FWD-5 amended in place** (id unchanged): its headline no longer says only site Z's push puts work live. Its DONE WHEN is unchanged,
+  so the round-1 grade (a publish deploys nothing) still reads on the amended text.
+- **C-IDENTITY, C-ROLES amended in place.** C-TRUNK-DEPLOY is unchanged: it governs a publish, not a deploy.
+- **This seat's contract for HOW (he approved dropping the wait, not a mechanism):** the deploy names its commit by full hash in the
+  box's own ledger entry, opened at the start and closed at completion; the commit is on a branch the Dell has published, so any box can
+  read the deployed bytes; the trunk merge follows and is never a precondition. Never-widen halves still bind every served move.
+- **Round 3 cells this adds:** (a) `.tools/safe-deploy.sh` and `safe-apply` accept a named commit off the trunk from a Dell, and say so
+  in the ledger entry; where either refuses today, the refusal's line is the cell's first read; (b) one exercised deploy from a Dell of
+  a commit no other box has merged, with the deployed bytes read back against that commit.
+- **Lane cap:** none is set for a Dell (`org/missions/SEQUENCE.yaml` v6). `org/devices/DEVICES.json` already carries no Dell limit.
+- **Still open at Andrew:** v0.7's question (3), access-granting resource policies.
+
+An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. The brief half is accepted (the CRO wrote the brief).
+
+## ADDENDUM v0.10 (1.0.0_SA_CTO, 2026-10-07) -- two open questions closed on Andrew's word. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:5xZ at the `1.0.0_SA_CTO` terminal, answering four cards, VERBATIM: "1.) Yes. 2.) For now, laptop should admin. 3.) Stay.
+4.) Yes." Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md`.
+
+- **Passing a role (card 1, Yes).** v0.8's clause stands as his word, no longer this seat's reading: a Dell may `iam:PassRole` only the
+  named roles the laptop made for Dell-placed work, with the `iam:PassedToService` condition; every other IAM action stays denied.
+- **Access-granting resource policies (card 2, "For now, laptop should admin").** A bucket policy, a key policy and a Lambda permission
+  are administered by the laptop through C-ROLE-REQUEST's write-in, the same request shape with the resource policy as its subject. The
+  Dell policy denies the actions that write them. INTERIM on his own "For now"; it joins the v0.8 backlog line. This closes v0.7's
+  open question (3); none of v0.7's three questions remains open.
+- **Next issuance:** the Deny statements for those actions, listed from the resource-policy actions of the services the Dell policy
+  already allows (derived, never from memory), and one exercised refusal.
+
+A contract change under the ENDPOINT hash: it re-opens nothing beyond what v0.9 already re-opened.
+
+## v0.11 wording (1.0.0_SA_CTO, 2026-10-07) -- on `3.0.0_SA_CVO`'s review @18d52b19cf (msg 106015)
+
+Two findings, both taken. FWD-5's SOURCE cited brief O4 alone, which says the opposite of the v0.9 headline: it now also cites the
+word that amended it. C-ROLES still said site Z alone deploys: it now says site Z integrates and is not the only box that deploys.
+The SOURCE line is inside the ENDPOINT section, so the ratified-text half re-opens for `3.0.0_SA_CVO`; no outcome's DONE WHEN or
+ACCEPT changed.
+
+## ADDENDUM v0.12 (1.0.0_SA_CTO, 2026-10-07) -- C-ROLES: each Dell has a CTO lane and a CVO; who signs a Dell-written PRD. Contract only
+
+On `3.0.0_SA_CVO`'s verdict UPHELD (msg 106050; `org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_VERDICT_DELL_CTO_WRITES_L4_L10_20261007.md`
+@72e87b0e39) of this seat's ruling `CTO_RULINGS_FOR_THE_DELLS_20261007_0740Z.md` section 1. The verdict named two things owed; both land here.
+
+- **C-ROLES amended in place.** For the projects placed on its box, a Dell's CTO lane (`1.0.0_SA_CTO~DELL1`, `1.0.0_SA_CTO~DELL2`) writes
+  L2 to L4 and the L10 answers and signs the CTO never-widen halves. The laptop keeps what spans boxes or grants access: placement,
+  `org/missions/SEQUENCE.yaml`, `org/ref/LIVE_ARMS.md`, roles and resource policies (C-ROLE-REQUEST), and any half that changes IAM.
+- **The ratified-text half of a Dell-written PRD is signed by the CVO seated on that Dell.** Each Dell runs a `3.0.0_SA_CVO` session
+  (reported by each Dell's fabric manager, relays 106033 and 106035). `python .tools/prd-signoff.py sign` on that box writes the
+  sign-off file beside the PRD; both travel to the trunk on the Dell's published branch. So an ENDPOINT bump on a Dell is re-signed on
+  the same box, and the task-order gate's LIMB 6 reads SIGNED there without a hop to the laptop. The laptop's `3.0.0_SA_CVO` signs
+  for laptop-written PRDs only. UNMEASURED: that `prd-signoff.py` accepts the same base serial from a second box without a clash in
+  the sign-off file; the first Dell sign is the read, and a refusal there comes back to this seat as a row.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.13 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING: every new resource, on any box, is builder-named and registered. Contract only
+
+Andrew-direct ~08:1xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "ALso make sure that everyone is being very diligence with LGIC_NAMING for any new resource creation, everything should be registered as well, i believe there is some index we have for this ecxact purpose."
+Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`.
+
+- **C-NAMING (new contract; owner this project for the four-box rule; the vocabulary and builders stay LGIC_NAMING's and LGIC_ENFORCE's).**
+  On the laptop, site Z, dell1 and dell2 alike: (1) a new AWS resource is created only by `.tools/safe-apply.sh` of a Terraform root,
+  never by a CLI or SDK create call; (2) its name is `lib/opal_naming.py` `name()` output and every S3 address is `address()` output;
+  (3) its row lands in `infra/logic/registry/resources.json` in the same commit as its Terraform; (4) a builder refusal is answered by
+  the missing registry row, and on a Dell that row is asked of the laptop CTO when the scope or system does not exist yet.
+- **What enforces it today:** `.tools/naming-apply-gate.py` inside `safe-apply.sh` refuses a badly named resource being ADDED (its plan
+  mode). Clause (1) and clause (3) have no gate: the Dell create grant permits a create outside Terraform at the cloud, and no gate
+  refuses an apply for a missing registry row.
+- **Next issuance, two cells:** (a) one read at each round's close, by the round's COO: every resource the round created, against
+  `resources.json`, N of N printed, a missing row filed as a row (a read at the drain, not a standing checker); (b) the missing-row
+  refusal in the apply path, proposed to LGIC_ENFORCE as its owner, since it is that project's gate.
+- **UNMEASURED:** that both naming gates fire on dell1 and dell2. Each Dell's fabric manager runs one known-bad name through
+  `naming-apply-gate.py` and reports the refusal line.
+
+A contract change under the ENDPOINT hash.
+
+## ADDENDUM v0.14 (1.0.0_SA_CTO, 2026-10-07) -- C-NAMING CORRECTED: what "registered" is; and the Dell Python environment. Contract only
+
+**A correction of this seat's own v0.13.** v0.13 clause (3) said a new resource's row lands in
+`infra/logic/registry/resources.json`. That file is not a list of resources. MEASURED by `0.9.0_WK_NFRA_CTLPLN~11`
+(`org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~11/PROPOSAL_MISSING_ROW_REFUSAL_FOR_LGIC_ENFORCE.md` @0a8a337aac,
+rows NFRA_CTLPLN-W11-S1 and W11-S2) and READ by this seat in the file's own `_about`: each of its 465 rows fills a `{system}`
+placeholder for a name whose own tokens resolve no system; 0 of 465 names grade CONFORMANT; and `lib/opal_naming.validate()` REFUSES a
+row for a conformant name as redundant. That is the design of LGIC_ENFORCE ruling 97177, not a defect: a conformant name carries its
+own registration in its tokens, checked against `systems.json`, `scopes.json` and `tiers.json`.
+
+- **C-NAMING clause (3), replaced:** a new resource is REGISTERED when (i) it is declared in a Terraform root in the repository, in
+  the commit that creates it; (ii) its name is builder output and grades CONFORMANT, so its system, scope and tier are rows of the
+  registry; and (iii) it reads as declared, not drifted, in the cloud graph (`comp-find --corpus aws`, the `drift_class` of its node).
+  A `resources.json` row is added ONLY for a name whose tokens resolve no system, and only if `validate()` accepts it.
+- **The index Andrew's word points at is therefore two things the estate already has:** the registry's vocabulary files for WHAT a
+  name may be, and the cloud graph for WHAT EXISTS and whether Terraform declares it. No third list is built.
+- **The missing-row refusal of v0.13 is WITHDRAWN** as a proposal to LGIC_ENFORCE. A badly formed name is already refused at apply
+  (the proposal's case C, measured). A well-formed, undeclared, running resource is found by clause (iii).
+- **Round 4's cells, amended by their issuer:** CT-d-7 adds a `resources.json` row for a Dell resource name only where `validate()`
+  accepts it and prints the validator's count; the round-close read (v0.13 cell a) reads each created resource's graph node and
+  `drift_class` instead of a row.
+
+**C-KIT-PYTHON (new contract).** A Dell's Python environment equals the laptop's for the packages the repository's tools and
+shared modules import. Two measured gaps on 2026-10-07, both reported from the Dells: `pandas_market_calendars` is absent on both
+(so `lib/trading_calendar.py` miscounts before 2024), and `ruff` was absent on dell1, where a worker installed it from PyPI with no
+word of Andrew's (row MDPF_SECCLASS-S49). The kit carries the packages FROM THE LAPTOP over the tailnet, as files already on Opal's
+own boxes; nothing is fetched from PyPI by a Dell. Cell for round 4: the list of third-party imports of `.tools/` and `lib/` against
+each Dell's installed set, N of N printed, and the transfer of what is missing.
+
+A contract change under the ENDPOINT hash.

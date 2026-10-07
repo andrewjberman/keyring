@@ -17,7 +17,8 @@
  "chains": 2,
  "join_cells": 0,
  "frozen": true,
- "revision": "1.4",
+ "revision": "1.5",
+ "revision_1_5": "2026-10-07 ~06:2xZ: round 15 (main workstream) cells APPENDED below (pd-1, pd-2, pd-3, ps-1, tm-1, co-1, bf-1, rt-1, md-1); no earlier cell is replaced.",
  "revision_1_4": "2026-10-07 ~03:3xZ: round 14 (main workstream) cells APPENDED below (ab-1, as-1); no earlier cell is replaced.",
  "revision_1_3": "2026-10-06 ~19:4xZ: round 13 (main workstream) cells APPENDED below; no earlier cell is replaced (round-11 analysis ruling 4: an issued order's cells stay readable).",
  "revision_1_2": "2026-10-06 ~19:1xZ, issuer amendment on ADDENDUM 5 @a8fb9c1df1 (CTO~Z msg 30204/30218): RIV-al-1 is cut as ROUND 13 of workstream BBGLEG (round 12 BBGLEG already issued; ONE ISSUER PER ROUND per (round, workstream)). The main workstream's round 13 (ADDENDUM 4 step 3 + the Z-S50 rule) waits on J1.",
@@ -192,3 +193,354 @@ cut now. Edges: none of data. ab-1 and as-1 both write `render.py` and `publish_
   `audit_trades_left_out` (0 when none) and, when it is > 0, the stage prints a line starting `FAIL: audit page over cap` (the
   day still publishes). The gateway never refuses the audit page silently.
 - **Organic trigger:** the 07:00 ET marker publish.
+
+---
+
+## ROUND 15 (main workstream) -- APPENDED
+
+Source: PRD v0.18 `FWD-22`, `FWD-23`, ADDENDUM F (F.1-F.7) @6e245cbebe; five Andrew-direct records of 2026-10-07 04:5xZ-05:2xZ
+(modal @ad78eef973, periods @82bb78106e, backfill/page-only/MTD @96d0ab2f4b, calendar days @69c7f24b44, script @efc0acb127);
+scoping facts `deliverables/2.0.0_SA_COO~RV/round15_prep/MODAL_PRICE_SERIES_AND_PERIODS_SCOPING_FACTS.md` @d773ddba61. Author
+2.0.0_SA_COO~RV; frozen; revision 1.5 of this file. Every interface below is PRESCRIBED so that a consuming cell builds against
+the interface with a fixture and never against a sibling's branch: the edges are of interface, not of files.
+
+Shared vocabulary (binding on every cell):
+- **Periods:** `R30`, `R90`, `R365` -- calendar days. `asof = prev_trading_day(page_day)` (the existing CALL 3 rule); a window's
+  first day is `asof - N calendar days`, its last day `asof`. `MTD`, `QTD`, `YTD` keep computing and are never displayed.
+- **Chart object:** one JSON per fund per page day at `homes.page(<day>, "charts/<FUND>.json")` (opal_naming output), shape
+  `{"fund", "asof", "generated_at", "ranges": {"R30": <first day>, "R90": ..., "R365": ...}, "securities": {<security_key>:
+  {"name", "source_words", "points": [[<YYYY-MM-DD>, <price>|null, <source code>], ...], "gaps": [{"start", "end", "reason"}],
+  "markers": [{"side": "buy"|"sell", "start", "end", "span": bool, "usd", "bps", "r", "n_trades"}]}}}`. Source codes:
+  `m` market close, `i` holding-implied. `points` ascend by date and cover `asof - 365d .. asof`.
+- **Route:** `GET /rivalfunds/<YYYY-MM-DD>/chart/<FUND>` on the gateway, JSON, behind the same identity wall.
+
+Chains (M = 5; file sets disjoint across chains):
+
+| chain | cells in order | files | risk |
+|---|---|---|---|
+| ~1 | RIV-pd-1, RIV-pd-2, RIV-md-1 | gold_holding_contribution.py, gold_buying_trend.py; then render.py | SERVED |
+| ~2 | RIV-ps-1, RIV-tm-1, RIV-co-1 | price_series.py (new), trade_markers.py (new); then publish_page.py | SERVED |
+| ~3 | RIV-bf-1 | enrichment_bloomberg.py, bbg_budget.py | WORLD |
+| ~4 | RIV-rt-1 | infra/aws/ec2/opal-gateway/app/rivalfunds_view.py, server.py, their tests | WORLD |
+| ~5 | RIV-pd-3 | ai_accounts.py | SERVED |
+
+### `RIV-pd-1` -- the gold tables compute 30d / 90d / 365d as calendar days (FWD-23; F.2, F.6)
+- Today `gold_holding_contribution.PERIODS = ("MTD","QTD","YTD","R30")` with R30 = the 30th NYSE trading day ending on the day
+  (`period_start`, :120-128); `gold_buying_trend.PERIODS = ("YTD","R30","MTD","QTD")`, R30 likewise (`_period_starts`, :123-136).
+- Interface: both modules' `PERIODS` gain `R90` and `R365` and keep `MTD`, `QTD`, `YTD`. `gold_holding_contribution.period_start(p,
+  day)` and `gold_buying_trend._period_starts(day)[p]` return, for `R30` / `R90` / `R365`, `date(day) - 30 / 90 / 365` calendar
+  days (`day` here is the as-of the stage already passes). `earliest_start` follows. A fund whose history starts after the window's
+  first day keeps the existing partial rule (`period_clipped`, `price_coverage`). Each table's stage detail states, for one fund,
+  the old and the new R30 window (`r30_window_was`, `r30_window_is`).
+- Rulings at the cut (issuer): ONE anchor for both tables. The pure functions stay pure on the day they are handed
+  (`period_start(p, d)` and `_period_starts(d)[p]` return `d - N` calendar days); `gold_buying_trend.build` hands the three
+  rolling periods `gold_holding_contribution.as_of(<event day>)`, exactly as holding_contribution already does, so both tables'
+  R30 / R90 / R365 start on the same day. MTD / QTD / YTD keep their present anchors and starts. `r30_window_was` and
+  `r30_window_is` sit in each stage's result `detail`, each `{"fund": <id>, "start": <ISO>, "end": <ISO>}` for the first fund
+  built.
+- **Organic trigger:** the 07:00 ET marker publish's stale-table rebuild (`publish_page.produce_a1`).
+
+### `RIV-pd-2` -- every switch on the page offers 30d | 90d 365d and opens on 30d; no QTD, YTD or MTD is displayed (FWD-23)
+- Today `render.PERIODS = ("R30","QTD","YTD")`, `PERIOD_LABEL` names them, `_dialog_keys` covers R30 and YTD (:753), the trend
+  sentence says "this year" for YTD (:1750), `_sec_dialogs` prefers the YTD trend row (:1776).
+- Interface: `render.PERIODS = ("R30","R90","R365")`; `PERIOD_LABEL = {"R30": "Last 30 days", "R90": "Last 90 days", "R365":
+  "Last 365 days"}`; the switch reads 30d, the dividing line, then 90d and 365d, and opens on R30. No element of the rendered
+  main page or audit page carries the visible text QTD, YTD, MTD, "Quarter to date", "Year to date" or "Month to date". The
+  dialog keys cover R30 and R365; the security dialog's trend row prefers R365. A period that ranks nothing for the fund greys
+  and says why (unchanged rule). Rows of MTD / QTD / YTD in the context are ignored, not an error.
+- Rulings at the cut (issuer): the switch's own words are short -- `render.PERIOD_SHORT = {"R30": "30d", "R90": "90d", "R365":
+  "365d"}` is what each period radio's label prints (Andrew: "30d, then | 90d and 365d"); `PERIOD_LABEL` (the long names) is
+  for table headings and dialog rows. The clause "the dialog keys cover R30 and R365" is WITHDRAWN (`_dialog_keys` has no
+  caller); the dialog lists the three periods and its buying line is the R365 trend row.
+- **Organic trigger:** the 07:00 ET marker publish.
+
+### `RIV-pd-3` -- the AI accounts are written on the same three periods (FWD-23; F.2 last bullet)
+- Today `ai_accounts` builds its facts from `("R30",5),("MTD",3),("QTD",3),("YTD",3)` (:165) and the YTD trend rows (:176-183).
+- Interface: the fact pack is built from `("R30",5),("R90",3),("R365",3)` and the R365 trend rows; fact keys read
+  `<fund>|R90|<bucket>` / `<fund>|R365|<bucket>`; no fact label names MTD, QTD or YTD; the prompt text names the three periods
+  in plain words (last 30 / 90 / 365 days). `ai_accounts.PACK_PERIODS = ("R30","R90","R365")` is the one constant.
+  The "not shown as current" rule for an older account is render's (round 14's badge) and is not this cell's.
+- Rulings at the cut (issuer): a "fact label" is the fact's id and its text. Periods are named to the model in words or digits
+  ("last thirty days" / "last 30 days"), consistently with the SYSTEM prompt's own number rule. `P_DIRECTION`'s "the year's
+  trend" becomes "the 365-day trend".
+- **Organic trigger:** the 09:00 ET sweep's AI step.
+
+### `RIV-ps-1` -- one price series per security: market close first, holding-implied second, a gap with its reason third (FWD-22; C-MODAL-PRICE-SOURCE)
+- Measured: `gold/security_market` holds 4 day partitions; `trade_schedule` 504. No module assembles a per-security daily series.
+- Interface: new `rivalfunds/price_series.py`. `series(g4: DataFrame, g1: DataFrame, keys, start: date, end: date) -> {key:
+  {"points": [(date, price|None, "m"|"i"|None)], "gaps": [{"start","end","reason"}], "source_words": str}}`. For each NYSE
+  trading day in `[start, end]`: the G4 `px_close` of that date when present and positive (`m`); else the price implied by any
+  universe fund's G1 report of that date, `market_value / quantity` with quantity > 0 (`i`; when several funds report, the
+  median); else `None`. Consecutive `None` days form one gap with reason `"no market close on file and no fund reported the
+  holding"`. `source_words` names in plain words which sources the series uses. No vendor call, no S3 call: pure over frames.
+  `load(s, keys, start, end)` reads the two tables through the sink for the publisher.
+- Rulings at the cut (issuer): a G1 row maps to a key through `gold_holding_contribution.row_keys` (the page's own key rule,
+  raw-identifier alias included), never `security_id` alone. Several lots of one security in one fund's report are summed
+  (market value and quantity) before the ratio. A key in neither frame returns all-None points and one gap over the range.
+  Point dates are ISO strings. `load(s, keys, start, end)` returns the same dict `series` returns.
+- **Organic trigger:** the publisher's chart object (RIV-co-1).
+
+### `RIV-tm-1` -- a fund's trades in a security as sized markers (FWD-22; C-TRADE-MARKER)
+- Measured: `trade_schedule` (G5) carries `action`, `window_start`, `window_end`, `window_trading_days`, `est_notional`; no
+  share-of-fund column for the trade itself.
+- Interface: new `rivalfunds/trade_markers.py`. `markers(g5_rows, fund_mv_by_date: {date: float}) -> [{"side", "start", "end",
+  "span", "usd", "bps", "r", "n_trades"}]` per (fund, security): `side` = `buy` for entry / add, `sell` for trim / exit; `usd`
+  = abs(`est_notional`); `bps` = `usd / fund_mv_by_date[window_end] * 10000` (the fund's total reported market value on the
+  window end; absent -> `bps` None and `r` = R_MIN); `r` = the marker radius: `R_MIN` (3.0) at 20 bps or less, `R_MAX` (12.0) at
+  500 bps or more, linear in bps between; `span` = `window_trading_days > 1`; trades of one side sharing one window are ONE
+  marker with `n_trades` counted and `usd` / `bps` summed. A REFUSED window yields no marker. `words(marker) -> str` reads
+  "Bought" / "Sold", the date or "between <start> and <end>", the dollar value, the basis points of the fund, and the count.
+- Rulings at the cut (issuer): `g5_rows` is a list of row dicts (or a DataFrame, converted); `fund_mv_by_date` is keyed by
+  `datetime.date`. The fund's total reported market value includes its cash lines (it is the report's total). A refused window
+  has no G5 rows, so "no marker" is: empty rows in, `[]` out. `words()` prints dollars as `$26,000` and dates as ISO.
+- **Organic trigger:** the publisher's chart object (RIV-co-1).
+
+### `RIV-co-1` -- the publisher writes one chart object per fund beside the page, with its size line (FWD-22; F.5 items 1 and 4)
+- Interface: `publish_page` writes `homes.page(day, "charts/<FUND>.json")` for every fund of the page, in the shape of the shared
+  vocabulary, covering exactly the securities whose dialog on the rendered page carries that fund's section
+  (`publish_page.dialog_fund_keys(html) -> {fund: [security_key, ...]}`, exported by THIS cell from a regex over the rendered HTML:
+  `data-sec-dialog="<key>"` blocks and their `<section data-fund=...>` children; no render.py edit). Built from
+  `price_series.load` and `trade_markers.markers`. `CHART_MAX_BYTES = 1_900_000` per object: over it, the 365-day points are
+  thinned to weekly (and the object says `"thinned": true`); still over -> the object is not written and the stage prints `FAIL:
+  chart object over cap for <FUND>`. The manifest gains `charts: {<FUND>: {"uri", "bytes", "securities", "markers",
+  "thinned"}}`. The day's page publishes whether or not a chart object fails. Write once per revision, like audit.html.
+- Rulings at the cut (issuer): `dialog_fund_keys(html)` and `CHART_MAX_BYTES` live in `publish_page` (this cell's file) and the
+  cap is read at call time. A fund of the page with no dialog section gets NO object and no manifest entry. In the manifest
+  `securities` and `markers` are counts. Thinning keeps the last trading day of each ISO week and every day that carries a
+  marker's start or end. A fund whose object is refused has the manifest entry `{"uri": null, "bytes": <over-cap bytes>,
+  "refused": true}`. `fund_mv_by_date` is the sum of `market_value` over the fund's G1 report of that date.
+- **Organic trigger:** the 07:00 ET marker publish.
+
+### `RIV-bf-1` -- an ad hoc Bloomberg close-price backfill over a date range, on the existing market route, under a row budget (FWD-22; F.5 card 2 answer; WORLD)
+- Andrew-direct @96d0ab2f4b: "Yes for the rivalfunds funds only ... an ad hoc backfill for the selected funds that uses the
+  existing BBG route"; @69c7f24b44: about 365 calendar days. Existing route: `enrichment_bloomberg` mode `market` already sends a
+  one-day `HistoricalDataRequest` for a past date (`_market_pull`, `_blp_historical_data`).
+- Interface: new mode `market-range` of stage `pull-enrichment`: event `{"mode": "market-range", "start", "end", "securities":
+  [...], "batch_id", "sink", "max_points": int, "dry_run": bool}`. It plans `len(securities) x trading days in [start, end]`
+  points; `dry_run` returns the plan and spends nothing; if the plan exceeds `max_points`, or exceeds `bbg_budget`'s
+  `ceiling - reserve - spent(today)`, it REFUSES before any request, naming the points left. Otherwise ONE historical request
+  per batch of 50 securities over `[start, end]` for `px_close`'s field only; it writes one `gold/security_market/date=<D>`
+  object per date that has rows (never overwriting an existing object of that date: a date already holding a `market-*.parquet`
+  is skipped and counted), each row `as_of_source = "backfill"`; it records the points in the `bbg_budget` ledger with mode
+  `market-range`; a tripped session stops the run with what landed stated. No file under `integrations/` changes. The live
+  run is the ISSUER's act under a never-widen pair, after the day's 07:00 ET vehicle run; the worker makes NO Bloomberg call.
+- Rulings at the cut (issuer): a refusal is `status == "REFUSED"` (the module's own word). The result carries `plan: {"points",
+  "securities", "trading_days", "batches"}`; a refusal's detail names the planned points and the points left, where "left" is
+  the smaller of `max_points` and the budget remainder. Skipped dates are returned as `skipped_dates` (a list). The ledger
+  records the points REQUESTED (securities x trading days of the range), since that is what the vendor was asked for. The
+  budget read is a new `bbg_budget.check_points(points, today=None) -> None | detail` beside `check_backfill` (unchanged).
+  A tripped session returns `FAILED` naming the dates that landed.
+- **Organic trigger:** none (ad hoc by Andrew's word); the negative arm is the daily `market` mode, unchanged.
+
+### `RIV-rt-1` -- the gateway serves a fund's chart object (FWD-22; F.5 item 2; WORLD, released by NFRA_OPLGTW)
+- Today `rivalfunds_view` serves `/rivalfunds/<day>` and `/rivalfunds/<day>/audit` (2 MB cap, audit log, identity wall).
+- Interface: `rivalfunds_view.chart_key(day, fund)` (the page prefix + `date=<day>/charts/<FUND>.json`; `fund` must match
+  `^[A-Z0-9]{1,8}$`) and handler `rivalfunds_chart` for `/rivalfunds/{day}/chart/{fund}`: 200 `application/json` with the
+  object's bytes; bad day or bad fund -> 400; no object -> 404 JSON `{"error": "no chart for this fund and day"}`; over the cap
+  -> the page's own over-cap refusal; every call audit-logged with `{"day", "fund", "route": "chart"}`. The route is declared
+  in `ROUTE_CLASS` as `access-layer` and mounted in `server.py` by this cell.
+- Rulings at the cut (issuer): CORRECTION -- the over-cap refusal is the page's own (502, `rivalfunds_view.py` `_serve_day`),
+  not a 413. No viewer -> 401 as the other routes. The 200 and the 404 are audit-logged; a 400 and a 401 are not, as today.
+  The `server.py` Route and the `ROUTE_CLASS` line are THIS cell's (the lane refuses the issuer's commit there: round 13
+  AMENDMENT 1), so both files are in its paths.
+- **Organic trigger:** a signed-in click on a security modal after RIV-md-1 is served.
+
+### `RIV-md-1` -- the security modal draws the price curve with the fund's trade markers, by the page's ONE script (FWD-22; F.7)
+- Interface: each `<section data-fund=...>` of a security dialog gains a chart frame `<div class=rf-chart data-chart-fund="<FUND>"
+  data-chart-key="<security_key>">` holding a three-way range switch (30d first, then 90d, 365d), a words line (`data-chart-status`)
+  and the fund's trade list in words (from the context's trades; present with or without the script). The page carries EXACTLY
+  ONE inline `<script>` block with no `src`; `_BAD_CONSTRUCTS` admits that one block and still refuses every other script,
+  `src=`, `<link`, `@import`, `url(`; `render.script_count(html) -> int`. The script: on a dialog opening, fetches
+  `/rivalfunds/<page day>/chart/<FUND>` (same origin, once per fund, cached), draws an inline-SVG curve of the chosen range
+  from `points`, breaks the line at gaps and prints each gap's reason, draws each marker as a hollow circle of radius `r` at
+  its end date (green buy, red sell; a `span` marker also draws a bar over its window), shows price + date on pointing at any
+  part of the curve and the marker's words on a marker, prints `source_words`. On a failed or missing object the status line
+  reads "Chart could not load" and the trade list stays. `data-history=none` and HISTORY_NONE leave the dialog.
+  The script lands on the SERVED page only after the chart route serves (issuer's sequencing at the deploy).
+- Rulings at the cut (issuer): the script is emitted unconditionally by `render_page`; the route-before-script order is the
+  issuer's deploy sequence, not a flag. The AUDIT page gets no chart frame and no script, and `validate_audit` /
+  `validate_fund` still refuse any script. `data-chart-fund` carries the fund ticker exactly as the route takes it. The range
+  switch is three buttons `<button data-chart-range="R30|R90|R365">` reading 30d, 90d, 365d, R30 marked current. The trade
+  list is one line per trade from `trade_markers.words` when that module is importable, else the page's own trade words; a
+  fund with no trade in the security lists none and says "No trades in the last 365 days".
+- **Organic trigger:** opening a security modal from a fund's section on the live page.
+
+## ROUND 16 (main workstream; the repair of round 15) -- APPENDED 2026-10-07, revision 1.6 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S55 (the issuer's real run of round 15, record
+`deliverables/2.0.0_SA_COO~RV/round15/real_run_2026-10-06.json`) and the ruling of 1.0.0_SA_CTO~Z msg 30787 (shape (a), four
+terms). Author 2.0.0_SA_COO~RV. No earlier cell is replaced; RIV-ps-1, RIV-co-1 and RIV-md-1 stay for the orders that cite
+them. Chain `~6`, one cell, files price_series.py, publish_page.py, render.py, risk SERVED.
+
+### `RIV-pc-1` -- a holding-implied price is drawn only for a listing quoted in US dollars; the chart says the currency (FWD-22; row Z-S55; CTO ruling 30787)
+- Measured (real run, day 2026-10-06, 13 chart objects, 695 fund-securities): 598 carry both source codes; the first market
+  close over the last holding-implied price before it is above 3 or below 1/3 for 152 of 598 (JP 43/43, LN 54/54, HK 11/11,
+  KS 9/9; US 0/238). The funds' holding reports are in US dollars; a Bloomberg close is in the listing's quote currency.
+  G4 `security_market.currency` (Bloomberg `CRNCY`) is stored per security: on 2026-10-05, 0 of 578 priced rows carry none;
+  values include `USD` 193, `EUR` 92, `JPY` 78, `GBp` 35 (London quotes in pence; 1 London listing is `USD`).
+- Interface: `price_series.series` reads each key's quote currency from the G4 frame it is handed: the `currency` of the
+  key's NEWEST G4 row that carries one (a row with no `px_close` still counts). The value is READ, never inferred from the
+  exchange code. Exactly `"USD"` -> the series is built as today (`m`, then `i`, then a gap). Anything else, and a key
+  with no stored currency, -> market closes only: a day with no positive close is `None` whatever the funds report, and
+  its gap reason is `"no market close on file (the funds' holding reports are in US dollars and this listing is not quoted
+  in US dollars)"`. Each key's result gains `"currency": <the stored string> | None`. `source_words` says in plain words
+  which sources the series uses and, for a non-dollar listing, that the prices are in the listing's currency.
+  The chart object's `securities[<key>]` gains `"currency"`. The page's one script shows the currency beside the price
+  axis and in the hover's price words (`null` -> "currency not on file"). A trade marker is placed by its DATE on the
+  curve and never by a dollar price; on a day with no price it keeps its date marker.
+- Rulings at the cut (issuer): `load` reads G4 as it does today (the same window), so a key whose only G4 rows fall outside
+  the window has no stored currency and is treated as non-dollar. The currency comparison is exact and case-sensitive
+  (`GBp`, `ZAr`, `ILs`, `KWd` are not dollars). No new Bloomberg field is requested and nothing under `integrations/`
+  changes. The fixtures of `round15/checks/co-1.AC1.py`, `co-1.AC2.py`, `md-1.AC1.py` and `md-1.AC2.py` hold no G4
+  currency; the cell may plant G4 rows carrying `currency` `USD` (no `px_close`) for those fixtures' securities and add
+  `"currency"` to an exact key set those checks compare, and may change nothing else in them.
+- **Organic trigger:** opening a non-US security's modal on the live page; the issuer's real run re-measures the 598.
+
+## ROUND 17 (main workstream) -- APPENDED 2026-10-07, revision 1.7 of this file
+
+One cell, on the ruling of 1.0.0_SA_CTO~Z msg 30817 term 2 (answering the round-16 measurement,
+`deliverables/2.0.0_SA_COO~RV/round16/currency_measure_2026-10-06.json`). Author 2.0.0_SA_COO~RV. No earlier cell is
+replaced. Chain `~7`, one cell, files price_series.py and render.py, risk SERVED. Term 1 of that ruling (the backfill's
+security list includes formerly-held keys, inside the existing Bloomberg budget ledger) is the issuer's act at the
+backfill run and is not a cell.
+
+### `RIV-nc-1` -- a holding with no stored currency draws no curve and says why (FWD-22; CTO ruling 30817 term 2)
+- Measured (round-16 real run, day 2026-10-06): 96 of 695 fund-securities carry `"currency": null` in their chart object
+  (no G4 row in the 365-day window); the script draws their frame as an empty chart with a shaded gap.
+- Interface: `price_series.NO_HISTORY = "No price history is stored for this holding yet."`. For a key with no stored
+  currency, `series` returns `source_words` equal to `NO_HISTORY` exactly (its points stay all `None`, its `currency`
+  `None`, its gaps as today). The page's one script, for a security whose `currency` is `null`: draws NO chart (no
+  `<svg>` in the frame, no axis, no shaded gap, no gap-reason list), sets the frame's status line to the object's
+  `source_words` (so the sentence comes from the object, and the same sentence is in the script as its fallback when
+  `source_words` is absent), and changes nothing else: the range buttons may stay, and the static trade list stays.
+  A security WITH a stored currency is drawn exactly as today, whatever its number of priced points.
+- Rulings at the cut (issuer): the test is `currency == null` in the object, never "no priced point" (a non-dollar listing
+  with 0 closes in a range but a stored currency still draws its frame and gap reason). No change to the chart object's
+  keys or to `publish_page.py`. The sentence is not shown on the audit page (it carries no script).
+- **Organic trigger:** opening the dialog of a holding that left the funds before the market table began; the issuer's
+  real run reads the 96 in a browser.
+
+## ROUND 18 (main workstream) -- APPENDED 2026-10-07, revision 1.8 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S56 (the issuer's round-17 real run, packet
+`deliverables/2.0.0_SA_COO~RV/round17/DRAIN_END_PACKET.round17.md`). Author 2.0.0_SA_COO~RV; the issuer rules it inside
+cell RIV-md-1's surface. No earlier cell is replaced. Chain `~8`, one cell, file render.py, risk SERVED.
+
+### `RIV-tl-1` -- the dialog's trade list never says "No trades in the last 365 days" about a window it has not read (FWD-22, F.7; row Z-S56)
+- Measured (round-17 real run, day 2026-10-06): 618 chart frames carry the static words "No trades in the last 365 days";
+  542 of them belong to a fund-security whose chart object holds one or more markers; 77 more list fewer trades than the
+  object holds markers. The static list is built from the trades in the page context; the markers from the fund's trades
+  over 365 days.
+- Interface: `render._trade_list(trades)` with no trade in the page context returns `<p data-chart-trades>` holding exactly
+  `"The fund's trades over the last 365 days load with the chart."`; with context trades it lists them as today. The
+  static page no longer prints "No trades in the last 365 days" anywhere. The page's one script gains a pure function
+  `tradelines(markers)`, exposed as `window.rfChart.tradelines`: no marker -> `["No trades in the last 365 days"]`;
+  otherwise one `words(m)` line per marker, NEWEST first by `end` (ties by `start`, newest first), at most 20 lines, and
+  when there are more a last line `"and <N> earlier trades in the last 365 days."` (`"trade"` when N is 1). When a chart
+  object loads, the script replaces the content of the frame's `[data-chart-trades]` element with those lines built from
+  ALL of the security's markers in the object (not the chosen range), for a holding with or without a stored currency
+  (so before the `nohist` return). On a failed or missing object the static element stays as rendered.
+- Rulings at the cut (issuer): the list is written once per object load and is not redrawn on a range click. A line is
+  text (`textContent`), never markup. The AUDIT page is untouched. `round15/checks/md-1.AC1.py` pins the static words
+  "No trades in the last 365 days" for the fixture's IDVZ Apple frame; the cell may change that one expected sentence to
+  the new static sentence (and the docstring line that quotes it), and nothing else in that file.
+- **Organic trigger:** opening any security dialog on the live page; the issuer's real run re-measures the 618.
+
+## ROUND 19 (main workstream) -- APPENDED 2026-10-07, revision 1.9 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S58 (the issuer's round-18 real run, packet
+`deliverables/2.0.0_SA_COO~RV/round18/DRAIN_END_PACKET.round18.md`). Author 2.0.0_SA_COO~RV; the issuer rules it inside
+cell RIV-pd-2's surface. No earlier cell is replaced. Chain `~9`, one cell, file render.py, risk SERVED.
+
+### `RIV-ml-1` -- the month-by-month buying strip labels each cell with the month it is (FWD-23; row Z-S58)
+- Measured (round-18 real run, day 2026-10-06): the page holds 393 month strips, every one labelled January to December
+  by cell position; gold buying_trend's `trend_mark` months run from the window start's month, oldest first, through the
+  page day's month. 248 of 349 R365 rows carry 13 month tokens (the strip draws the first 12 and drops the newest); the
+  R30 and R90 strips (2 and 4 cells) read "Jan, Feb" for September and October.
+- Interface: `render._month_chart(mark, end=None)` and `render._month_words(mark, end=None)`. `end` is the trend row's
+  `window_end` (ISO string or date). With `end`: the LAST token is `end`'s month and each earlier token one month before;
+  at most the last 12 tokens are drawn or named; every cell carries its month as `data-m=<Jan..Dec>`. With `end` None:
+  tokens are labelled from January, as before, and each cell still carries `data-m`. `render.MONTH_CSS` prints the label
+  from the cell (`content:attr(data-m)`); the twelve positional rules go. Every call site passes the trend row's
+  `window_end` (the dialog's buying section and the sector tag's hover words).
+- Rulings at the cut (issuer): the month is counted back from `window_end`, never forward from `window_start` (a clipped
+  window's start is not its mark's first month on every row). A row with no `window_end` gets the legacy labels. No
+  year is printed: at most 12 cells, so a month name is unique in a strip. The audit page is untouched unless it draws
+  the same strip through the same function.
+- **Organic trigger:** any fund panel's trend and any security dialog on the live page; the issuer's real run reads the
+  strips against the listed trades.
+
+## ROUND 20 (main workstream) -- APPENDED 2026-10-07, revision 1.10 of this file
+
+One repair cell, on rows ETFS_RIVALS-Z-S60 and ETFS_RIVALS-Z-S61 and the ruling of 1.0.0_SA_CTO~Z msg 30897 (shapes (a),
+(b), (c), four terms). Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Chain `~10`, one cell, files
+gold_holding_contribution.py, gold_canonical_shape.py, enrichment_bloomberg.py, gold_buying_trend.py, risk WORLD (it
+changes a Bloomberg-calling mode; no worker makes a call).
+
+### `RIV-bk-1` -- backfill rows feed the price curve only, carry their currency, and a range can be finished on a later day; the trend's parsekey join reads its column (rows Z-S60, Z-S61; CTO ruling 30897)
+- Measured (backfill preparation, read-only, `deliverables/2.0.0_SA_COO~RV/backfill_prep/`): 863 securities x 252 trading
+  days = 217,476 points against a 120,000-point daily allowance. Read in code: `gold_holding_contribution._daily` prices
+  a holding-day from two consecutive G4 closes before the holding-implied return, and a newer G4 object makes the next
+  publish rebuild that table, so backfilled closes would move every fund's served rankings; `_market_range` writes rows
+  with `px_close` only (currency NULL), marked `as_of_source == "backfill"`, and no reader filters on that mark;
+  `gold_buying_trend.handler_entry` reads G4 as `("security_id", "date", "security_name")`, so `parsekey_map(g4)` is
+  always `{}` there (morning pass 2026-10-07: holding_contribution MERGED 13, buying_trend SPLIT 7).
+- Interface:
+  1. `gold_holding_contribution.drop_backfill(g4) -> DataFrame` returns the frame without rows whose `as_of_source` is
+     exactly `"backfill"` (a frame with no such column is returned unchanged). `handler_entry`'s own G4 read loads
+     `as_of_source` and drops those rows before anything else uses the frame: a day's table is identical with and
+     without backfill-marked rows present in G4.
+  2. `gold_canonical_shape`: when it picks the G4 partition for a report date (`_g4_for`), a partition whose rows are
+     all backfill-marked is never picked (it falls back to the nearest earlier partition holding a non-backfill row),
+     and a backfill-marked row never fills GICS.
+  3. `enrichment_bloomberg` mode `market-range`: every backfill row carries `currency`. A security's currency is its
+     STORED one (the `currency` of its newest non-backfill G4 row, read through the sink); for a security with no stored
+     currency the mode makes ONE reference request for the single field `CRNCY` for exactly those securities, through
+     the client hook the mode already uses, with `bbg_budget.check_points` before and `bbg_budget.record` after (points =
+     securities asked); a security with no answer gets `None`. A dry run's plan gains `"currency_lookups"`. The plan's
+     `points` and the budget check count only the dates NOT already held, so a range is finished on a later day inside
+     that day's allowance; the ceiling and the reserve are untouched.
+  4. `gold_buying_trend.handler_entry`'s own G4 read loads `security_parsekey`.
+- Rulings at the cut (issuer): `price_series` and the chart object keep reading backfill rows (that is what they are
+  for). Nothing under `integrations/` changes and no field other than `CRNCY` is added. The daily market pull already
+  asks `CRNCY` per security, so a currently-held security takes its stored currency and costs no lookup. A reference
+  request that fails leaves the run FAILED with nothing landed, like a failed historical batch. No stage marker is
+  written. Input-census and trade-schedule readers are untouched (a backfill row's name, sector and parsekey are NULL
+  and those readers skip blanks). A held date is neither counted NOR asked: each batch's historical request is sent
+  once per contiguous run of un-held trading days, and the ledger records exactly what is asked (securities x the days
+  of that run). The stored-currency read lists G4 from the range's first day to the run date and no further back. When
+  no partition holding a non-backfill row exists at or before a report date, `_g4_for` answers as it does today when no
+  partition exists at all. The round-15 checks `bf-1.AC1.py` and `bf-1.AC2.py` pin the mode as first built (no reference
+  request; one request per batch over the whole range; a held date counted in the plan and the ledger): the cell may
+  change in those two files ONLY the figures, request shapes and the "no reference request" clause that these rulings
+  change, and nothing else.
+- **Organic trigger:** the issuer's backfill run (never a worker's), split over the days the ledger's room allows, each
+  after that day's 07:00 America/New_York vehicle run; the issuer's DELTA 0 proof on the served rankings (ruling term 1).
+
+## ROUND 21 (main workstream) -- APPENDED 2026-10-07, revision 1.11 of this file
+
+One cell, on the L9 grades of 3.0.0_SA_CVO~RV for rounds 15 to 19 (`surprise-channel/adjudications/ADJUDICATION_v20.Z.md`
+row ETFS_RIVALS-Z-C-S60 @0c69a8829e). Author 2.0.0_SA_COO~RV; the issuer rules these inside cells RIV-ml-1, RIV-tl-1 and
+RIV-md-1's surfaces. No earlier cell is replaced. Chain `~11`, one cell, file render.py, risk SERVED.
+
+### `RIV-pl-1` -- the month strip shows every month of its window, the trade list is headed by its window, and the chart's currency label clears the axis (FWD-22, FWD-23; CVO row Z-C-S60)
+- Measured by the CVO on the round-19 real run: 56 of the 252 year strips have one or more markers in October 2025,
+  inside the 365-day trade list and outside the 12-cell strip, whose first cell is November 2025; in 141 dialogs a
+  30-day or 90-day buying section sits above the 365-day trade list, and the list carries no heading of its own; the
+  "Price in <currency>" label is printed over the axis's top figure when that figure is long (TWD); the drawing uses
+  about two thirds of the frame's width.
+- Interface:
+  1. `render._month_chart(mark, end)` draws EVERY token of the mark, at most 13. When the first and the last cell are
+     the same calendar month (a 13-token mark), those two cells carry the month and a two-digit year (`data-m="Oct 25"`,
+     `data-m="Oct 26"`); every other cell carries the bare month. A mark of 12 tokens or fewer is drawn as round 19
+     drew it. `render._month_words(mark, end)` names the same months the same way.
+  2. `render._trade_list(trades)` puts, immediately before the `[data-chart-trades]` element, the caption element
+     `<p data-chart-trades-head>` holding exactly `Trades in the last 365 days`, with or without a context trade. The
+     script leaves the caption alone when it rewrites the list.
+  3. In the page's one script the "Price in <currency>" label is drawn where it cannot overlap an axis figure (right
+     aligned at the plot's top right edge), and the chart is as wide as its frame.
+- Rulings at the cut (issuer): the stylesheet's month cells must stay readable at 13 cells (the two year-carrying
+  labels are five characters). `round15/checks/ml-1.AC1.py` pins round 19's rule that a 13-token mark draws 12 cells
+  (its arm (a), and arm (e)'s "12 months at most"); the cell may change those two arms to this cell's rule and nothing
+  else in that file. Items 1 and 2 are checked mechanically; item 3 is the CVO's to grade in a browser.
+- **Organic trigger:** any security dialog on the live page; the issuer's real run.

@@ -1438,11 +1438,15 @@ The CTO owns the addendum and the COO owns the recut. No worker is contacted or 
   "owner": "2.0.0_SA_COO~W",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~W",
-   "round": "v11"
+   "round": "v11",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 1: no social source now; a later word of his admits one"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-W22-S3",
@@ -1460,11 +1464,15 @@ The CTO owns the addendum and the COO owns the recut. No worker is contacted or 
   "owner": "2.0.0_SA_COO~W",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~W",
-   "round": "v11"
+   "round": "v11",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 1: no social source now; a later word of his admits one"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-W22-S4",
@@ -1526,11 +1534,15 @@ The CTO owns the addendum and the COO owns the recut. No worker is contacted or 
   "owner": "2.0.0_SA_COO~W",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~W",
-   "round": "v11"
+   "round": "v11",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 1: no social source now; a later word of his admits one"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-W22-S7",
@@ -1548,11 +1560,15 @@ The CTO owns the addendum and the COO owns the recut. No worker is contacted or 
   "owner": "1.0.0_SA_CTO~W",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~W",
-   "round": "v11"
+   "round": "v11",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 1: no social source now; a later word of his admits one"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-W22-S8",
@@ -1570,11 +1586,15 @@ The CTO owns the addendum and the COO owns the recut. No worker is contacted or 
   "owner": "2.0.0_SA_COO~W",
   "round": "v11",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~W",
-   "round": "v11"
+   "round": "v11",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_054xZ_ALL_RECS_APPROVED_CTOZ_THREE_CARRIED_CARDS.md@08618af88b ruling 1: no social source now; a later word of his admits one"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-S107",

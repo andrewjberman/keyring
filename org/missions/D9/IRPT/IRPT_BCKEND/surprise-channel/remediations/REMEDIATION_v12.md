@@ -50,7 +50,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 2's L9 (ADJUDICATION_v16.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v23",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v23"
     },
@@ -59,7 +59,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 2's L9 (ADJUDICATION_v16.md
       "owner": "2.0.0_SA_COO~P",
       "at": "2026-09-29T11:06:10Z"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

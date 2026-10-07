@@ -1,0 +1,497 @@
+{
+ "kind": "COMPLETION_REPORT",
+ "schema_version": "1.0",
+ "project": "LGIC_LGCTFM",
+ "round": 10,
+ "written_by": "2.0.0_SA_COO~G",
+ "written_utc": "2026-10-07T09:17Z",
+ "decomposition_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/decompositions/LGIC_LGCTFM_DECOMP.md@75ae38afb8",
+ "denominators": {
+  "fwd_in_prd_header": 10,
+  "cells_in_decomposition": 30,
+  "task_orders": 32,
+  "task_orders_terminal_with_valid_proof": 31
+ },
+ "outcomes": [
+  {
+   "fwd_id": "FWD-1",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- run on the first real subject and read by the person opening that subject's migration",
+   "cells": [
+    {
+     "cell_id": "LT-e-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-1-r1.walk.proof_of_spec.json@f64d815ef5"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-4",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-4-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-e-4-r1.untypeable-opt-in.proof_of_spec.json@b33eaf9840"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-5",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-5-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-5-r3.discovery-by-design.proof_of_spec.json@69bd51d49b"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-6",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-6-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-6-r4.repoint-and-declare.proof_of_spec.json@5b65010f7b"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-7",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-7-r6",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-7-r6.one-repair-or-two.proof_of_spec.json@2d7c6c509b"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-m-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-m-1-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-m-1-r4.canonical-inventory-entry.proof_of_spec.json@f25d5ff2f5"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-m-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-m-2-r5",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-m-2-r5.which-producer-writes-a-bucketless-key.proof_of_spec.json@a2b05d19c1"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-r-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-r-2-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-r-2-r3.no-bare-none.proof_of_spec.json@d0352788cf"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-s-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-s-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-s-1-r1.contract-schema.proof_of_spec.json@a8fa9e1f8d"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-s-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-s-2-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-s-2-r1.receiving-check.proof_of_spec.json@07cf1aca7a"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.proof_of_spec.json@fc273d0bc0"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-x-5",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-5-r4",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-x-5-r4.coverage-run-on-the-repaired-engine.proof_of_spec.json@243c1efd39"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound. One further order named this outcome and is NOT listed because it holds no proof instance: LGIC_LGCTFM.TO-LT-x-4-r3, status superseded. That is the 1 of 32 the valid-proof denominator lacks. COVERED is the coverage axis only: the register (project.json, 1.0.0_SA_CTO, 2026-09-20) reads 8 of 10 outcomes REALIZED; this report does not say which two are not, and the grades are the CTO's."
+  },
+  {
+   "fwd_id": "FWD-2",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the first run over a subject that carries known forks",
+   "cells": [
+    {
+     "cell_id": "LT-e-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-2-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-2-r1.desired-and-forks.proof_of_spec.json@a565fbdf4a"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-g-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-g-1-r7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-g-1-r7.gate-scope.proof_of_spec.json@2e265b8b07"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-l-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-l-1-r8",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-l-1-r8.routed-row-liveness.proof_of_spec.json@992f3a9282"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-n-3",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-n-3-r7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-n-3-r7.node-type-population.proof_of_spec.json@0d3dacd282"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-r-3",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-r-3-r7",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-r-3-r7.remediation-route.proof_of_spec.json@acf65699b4"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-3",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a reviewer who is not the author has reproduced desired strings from the rules",
+   "cells": [
+    {
+     "cell_id": "LT-a-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-a-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-a-2-r2.re-derivation-record.proof_of_spec.json@cd58e124b7"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-2-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-2-r1.desired-and-forks.proof_of_spec.json@a565fbdf4a"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-n-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-n-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-n-2-r2.number-pins.proof_of_spec.json@797a1c4026"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-s-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-s-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-s-1-r1.contract-schema.proof_of_spec.json@a8fa9e1f8d"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-v-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-v-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-v-1-r1.reviewer-reproduction.proof_of_spec.json@2ba4c3d4ad"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-4",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- Andrew has read the list for one subject",
+   "cells": [
+    {
+     "cell_id": "LT-c-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-c-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-c-2-r2.card-names-its-subject.proof_of_spec.json@64450fcdcc"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-3",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-3-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-e-3-r1.tensions.proof_of_spec.json@4bc03940c1"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-e-4",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-e-4-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-e-4-r1.untypeable-opt-in.proof_of_spec.json@b33eaf9840"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-v-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-v-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-v-1-r1.reviewer-reproduction.proof_of_spec.json@2ba4c3d4ad"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-5",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- the contract has been edited and the picture regenerated",
+   "cells": [
+    {
+     "cell_id": "LT-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-r-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-r-1-r1.renderer.proof_of_spec.json@105fea6b5b"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-6",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a real migration's decomposition has been cut from it",
+   "cells": [
+    {
+     "cell_id": "LT-m-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-m-1-r9",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-m-1-r9.remedy-and-disposition.proof_of_spec.json@1c9b926841"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-p-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-p-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-p-1-r1.plan.proof_of_spec.json@f88d0f9c39"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-p-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-p-2-r3",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-p-2-r3.step-dependencies.proof_of_spec.json@492e73bd89"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-r-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-r-1-r10",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-r-1-r10.split-and-reroute.proof_of_spec.json@a1d048eb84"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-s-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-s-2-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-s-2-r1.receiving-check.proof_of_spec.json@07cf1aca7a"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-7",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- a planted change has been refused",
+   "cells": [
+    {
+     "cell_id": "LT-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.proof_of_spec.json@fc273d0bc0"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-x-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-2-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-x-2-r1.planted-refusal.proof_of_spec.json@1b45fb4d55"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-8",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- two runs on one subject have been compared",
+   "cells": [
+    {
+     "cell_id": "LT-h-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-h-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-h-1-r1.run-home-diff.proof_of_spec.json@0406a6fa71"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-x-3",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-3-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-x-3-r1.second-run-diff.proof_of_spec.json@aa18cf366e"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-9",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- with its own negative control fired",
+   "cells": [
+    {
+     "cell_id": "LT-a-2",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-a-2-r2",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~1/LGIC_LGCTFM.TO-LT-a-2-r2.re-derivation-record.proof_of_spec.json@cd58e124b7"
+      }
+     ]
+    },
+    {
+     "cell_id": "LT-d-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-d-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~3/LGIC_LGCTFM.TO-LT-d-1-r1.determinism.proof_of_spec.json@cd058652cd"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  },
+  {
+   "fwd_id": "FWD-10",
+   "done_when_state": "EXERCISED",
+   "done_when_text": "EXERCISED -- measured after the first real run",
+   "cells": [
+    {
+     "cell_id": "LT-x-1",
+     "task_orders": [
+      {
+       "id": "LGIC_LGCTFM.TO-LT-x-1-r1",
+       "status": "complete",
+       "proof_of_spec_ref": "org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/LGIC_LGCTFM.TO-LT-x-1-r1.first-run-and-mark.proof_of_spec.json@fc273d0bc0"
+      }
+     ]
+    }
+   ],
+   "claim": "COVERED",
+   "note": "Cells and orders are listed by each order's own declared outcome; an order naming several outcomes appears under each. Proof instances were validated at HEAD e688467732 with the governing order bound."
+  }
+ ]
+}

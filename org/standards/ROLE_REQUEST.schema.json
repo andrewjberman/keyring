@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "org/standards/ROLE_REQUEST.schema.json",
+  "title": "ROLE_REQUEST: a Dell writes in for a role (NFRA_CTLPLN PRD v0.8 C-ROLE-REQUEST (a)), and the laptop's separate answer",
+  "description": "Two documents, two writers, two files. The REQUEST is written by the Dell that needs a role, at org/devices/role_requests/<device>/<request_id>.json (a per-box directory: only that box writes there). The ANSWER is written by the laptop, later, at org/devices/role_requests/<laptop device>/answers/<request_id>.json; the laptop never edits a Dell's record. A request's EFFECTIVE status is its answer's `status` when an answer file exists, else `requested`: `status` is the field a reader rejects on. A Dell never creates, edits or attaches policy to a role; it asks, and each permission it asks for is tied to the code line that needs it. Writer, validator and lister: org/devices/role_request.py. The verbs that write an answer (mark-applied, mark-refused) are the laptop's, in the same file; they refuse unless AGENTBUS_DEVICE names the control-plane box. The round trip a Dell runs: org/devices/role_roundtrip_check.py.",
+  "$defs": {
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "device", "tailnet_name", "requested_by", "requested_at", "project", "terraform_root",
+                   "resource", "assuming_service", "permissions", "status"],
+      "properties": {
+        "request_id": {"type": "string", "pattern": "^[A-Za-z0-9_]+-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{4}$",
+                       "description": "<device>-<UTC compact YYYYMMDDTHHMMSSZ>-<4 hex>"},
+        "device": {"type": "string", "minLength": 1, "description": "the register name of the box writing in (its AGENTBUS_DEVICE)"},
+        "tailnet_name": {"type": "string", "minLength": 1, "description": "that box's tailnet name, from the register"},
+        "requested_by": {"type": "string", "pattern": "^\\S+$", "description": "the serial of the seat that wrote the request"},
+        "requested_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$", "description": "UTC"},
+        "project": {"type": "string", "pattern": "^[A-Z0-9_]+$", "description": "the project code the work is placed under"},
+        "terraform_root": {"type": "string", "pattern": "^infra/aws/terraform/[A-Za-z0-9._/-]+$",
+                           "description": "a directory under infra/aws/terraform/ where the laptop writes the role"},
+        "resource": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "name"],
+          "properties": {
+            "kind": {"type": "string", "pattern": "^[a-z][a-z0-9_]*$", "description": "for example aws_lambda_function"},
+            "name": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"}
+          }
+        },
+        "assuming_service": {"type": "string", "pattern": "^[a-z0-9-]+(\\.[a-z0-9-]+)+$", "description": "for example lambda.amazonaws.com"},
+        "permissions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["action", "resource_arn", "code_ref"],
+            "properties": {
+              "action": {"type": "string", "pattern": "^[A-Za-z0-9-]+:[A-Za-z0-9*]+$",
+                         "description": "never an iam: action, never a bare *; the writer and the validator refuse both"},
+              "resource_arn": {"type": "string", "pattern": "^(arn:\\S+|\\*)$"},
+              "code_ref": {"type": "string", "pattern": "^[^:\\s]+:[1-9][0-9]*$",
+                           "description": "<repo path>:<line> of the code line that needs this permission; the file and the line must exist"}
+            }
+          }
+        },
+        "status": {"const": "requested", "description": "always requested in the Dell's record; the effective status comes from the answer file"}
+      }
+    },
+    "answer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_id", "status"],
+      "properties": {
+        "request_id": {"type": "string", "pattern": "^[A-Za-z0-9_]+-[0-9]{8}T[0-9]{6}Z-[0-9a-f]{4}$"},
+        "status": {"enum": ["applied", "refused"]},
+        "role_name": {"type": "string", "minLength": 1},
+        "role_arn": {"type": "string", "pattern": "^arn:\\S+$"},
+        "applied_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"},
+        "applied_by": {"type": "string", "pattern": "^\\S+$"},
+        "commit": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+        "reason": {"type": "string", "minLength": 1}
+      },
+      "allOf": [
+        {"if": {"properties": {"status": {"const": "applied"}}},
+         "then": {"required": ["role_name", "role_arn", "applied_at", "applied_by", "commit"]}},
+        {"if": {"properties": {"status": {"const": "refused"}}},
+         "then": {"required": ["reason"]}}
+      ]
+    }
+  },
+  "oneOf": [
+    {"$ref": "#/$defs/request"},
+    {"$ref": "#/$defs/answer"}
+  ]
+}

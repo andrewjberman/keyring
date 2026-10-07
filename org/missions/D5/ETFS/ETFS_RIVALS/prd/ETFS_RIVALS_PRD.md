@@ -422,10 +422,11 @@ approved it.
                     and date, as Market Overview does. Andrew asked for it;
                     it is part of this outcome, and FWD-22 is NOT REALIZED
                     without it.
-         RESERVED   One point is Andrew's (ADDENDUM F.3): whether the page
-                    may carry ONE script, which that hover needs on a page
-                    whose rule is no script. The Bloomberg backfill is
-                    answered YES (F.5).
+         SCRIPT     The page may carry ONE script, for this modal's chart
+                    and its any-day hover only (Andrew-direct 2026-10-07
+                    ~05:2xZ: "Yes it can have script"; ADDENDUM F.7). Every
+                    other part of the page still works with no script. The
+                    Bloomberg backfill is answered YES (F.5).
 
   FWD-23 (NEW, v0.18) Every period on the page is 30d, 90d or 365d rolling
          DONE WHEN  EXERCISED -- every ranking, trend, account and modal on
@@ -435,12 +436,12 @@ approved it.
          ACCEPT     90d sits where QTD sat and 365d where YTD sat. A period a
                     fund's history does not reach reads partial with its
                     reason. The AI accounts name the same three periods.
-         UNIT       ONE unit serves all three periods and the curve's ranges.
-                    Whether it is calendar days or NYSE trading days is
-                    RESERVED to Andrew: his 2026-10-04 word set the 30-day
-                    period as "the last 30 trading days", and a 365-trading-
-                    day period is about 17 months. No 90d or 365d cell is cut
-                    until his answer is recorded here.
+         UNIT       CALENDAR DAYS, for all three periods and the curve's
+                    ranges (Andrew-direct 2026-10-07 ~05:2xZ: "let's make it
+                    calendar days, we dont need that much lookback time").
+                    30d, 90d and 365d each end on the page's as-of date and
+                    reach back that many calendar days. This REPLACES the
+                    2026-10-04 "last 30 trading days" for the 30-day period.
          AMENDS     FWD-14 and FWD-19 where they name the displayed periods
                     (30 trading days, quarter to date, year to date): the
                     displayed set is this outcome's. Nothing else in either
@@ -1130,3 +1131,43 @@ dialog do not fit the main page.**
    - the route's handler, for NFRA_OPLGTW's release.
 
    The modal's last step, and the 90d / 365d window lengths, are cut when Andrew's two answers are recorded.
+
+### F.6 (2026-10-07 ~05:3xZ) -- the unit is CALENDAR DAYS (Andrew-direct)
+
+Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PERIODS_ARE_CALENDAR_DAYS.md`
+@69c7f24b44. Verbatim: "let's make it calendar days, we dont need that much lookback time".
+
+- **`FWD-23`'s UNIT line carries it.** 30d, 90d and 365d are calendar days ending on the page's as-of date
+  (`asof = prev_trading_day(page_day)`, the existing CALL 3 rule). A window's first day is `asof` minus N calendar days.
+  The first and last TRADING days inside it are printed on each table, as FWD-14's ACCEPT already asks.
+- **The existing 30-day period moves** from 30 NYSE trading days to 30 calendar days. That is about 21 trading days, so every
+  30-day figure on the page changes on the first run. It is the ruled change. The run's record states the old and the new
+  window for one fund.
+- **The Bloomberg backfill is bounded at about 365 calendar days** before the as-of date ("we dont need that much lookback
+  time").
+- **The 90d and 365d cells are no longer waiting.** F.5 item 4's hold on the window lengths ends. Only the modal's last step
+  still waits, on F.3 card 1 (the script).
+
+### F.7 (2026-10-07 ~05:3xZ) -- F.3 card 1 is ANSWERED YES: one script, for the modal's chart (Andrew-direct)
+
+Record: `org/tier1_exec/2.0.0_SA_COO/deliverables/cooRV_ANDREW_DIRECT_20261007_052xZ_RIVALFUNDS_PAGE_MAY_CARRY_A_SCRIPT_FOR_THE_HOVER.md`
+@efc0acb127. Verbatim: "Yes it can have script". The question as put to him: one small script, for the any-day hover on the
+price curve. It is applied at that reach, not as a general lift.
+
+**`C-NO-SCRIPT` is AMENDED, narrowly (it replaces F.1's "stands for v1" and the first branch of F.5 item 3 is the one built):**
+- **The page carries exactly ONE inline script block.** It has no external source, and it makes no network call except to
+  this product's own chart route on the same origin. `render.py`'s refusal (`_BAD_CONSTRUCTS`) admits that one block and
+  still refuses every other script, `src=`, `<link`, `@import` and `url(`. The render check counts the script blocks and
+  fails on any number but one.
+- **What the script does, and only this:** when a security modal opens from a fund's section, it reads that fund's chart
+  object (F.5 item 1) through the gateway route (F.5 item 2). It draws the price curve for the chosen range, places the
+  trade markers (`C-TRADE-MARKER`), and shows the price and date on pointing at any part of the curve and the trade's detail
+  on a marker.
+- **Everything else on the page still works with the script absent or failed:** the fund and period switches, the tables,
+  the modals' trade lists, the audit link. A modal whose chart cannot load says so in words and shows its trade list. It is
+  never an empty frame.
+- **`FWD-21`'s ACCEPT clause "the page's no-script rule stands" and the ENDPOINT's CTO ruling of the same words are AMENDED
+  by this line:** the rule stands for everything but this one script.
+
+**Nothing on FWD-22 or FWD-23 is waiting on Andrew now.** Round 15 cuts all of it. The chart route is released by NFRA_OPLGTW,
+and the page's script lands only after that route serves, as the audit link did.

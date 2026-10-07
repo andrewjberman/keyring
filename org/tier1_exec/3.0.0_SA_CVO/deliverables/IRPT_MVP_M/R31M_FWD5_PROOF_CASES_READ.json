@@ -1,0 +1,312 @@
+{
+ "cell": "IB-mr-311",
+ "publications": {
+  "49financial": {
+   "business_date": "2026-10-05",
+   "revision": "94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/49financial/platinum/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.manifest.json",
+   "manifest_version": "f.bUxIIWnCDdw5BuJZEu8slD4eOu13fU",
+   "gold_key": "irpt/49financial/gold/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.parquet",
+   "gold_version": "VTQBCqWVzZs39BTV6FBhIQ02idQotn1x",
+   "gold_sha256": "5257424d5baab677e550cbf16ec636b40db1fad5e4ccc4f650c595f6eb4c82b6",
+   "header_key": "irpt/49financial/platinum/holdings/date=2026-10-05/94ad27048e21ef3beb2100e7c0ec47892cab2b87d7919e907882999c1ce1b2cd.header.json",
+   "header_sha256_checked": true
+  },
+  "inflection": {
+   "business_date": "2026-10-05",
+   "revision": "74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/inflection/platinum/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.manifest.json",
+   "manifest_version": "b491FhwZUmugLMrItLS0G1i0_ZyLLO84",
+   "gold_key": "irpt/inflection/gold/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.parquet",
+   "gold_version": "NEVQSzLmdbN0Vc9teRPZV_X9YpKh48of",
+   "gold_sha256": "ddcdb8fee2f10c93a42c2c45707f1fb025b0300fc790dec5e619bf02ff84d381",
+   "header_key": "irpt/inflection/platinum/holdings/date=2026-10-05/74b5389fc8270a8117969cb1f1b7f945ec05a539dd9a98259cab991ab99c9177.header.json",
+   "header_sha256_checked": true
+  },
+  "cottonwood": {
+   "business_date": "2026-10-05",
+   "revision": "bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/cottonwood/platinum/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.manifest.json",
+   "manifest_version": "CmX27kWdouqIZqj6.mArQYvCrLZcKmfn",
+   "gold_key": "irpt/cottonwood/gold/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.parquet",
+   "gold_version": "ocUU9fz9k91sHP4jblz71LlCTDjOdt0n",
+   "gold_sha256": "4eebe391648106d2a6f755fff666235c5dabc4656e027071f516f87ec3f25f2f",
+   "header_key": "irpt/cottonwood/platinum/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.header.json",
+   "header_sha256_checked": true
+  }
+ },
+ "firms": {
+  "49financial": {
+   "census": {
+    "accounts": 7597,
+    "node_kinds": {
+     "ACCOUNT": 7597,
+     "CATEGORY": 7597,
+     "CASH": 9177,
+     "MODEL_LEAF": 7532,
+     "SECURITY": 122173
+    },
+    "fact_vocabulary": {
+     "company": 115213,
+     "asset in the model at SmartX overlay clock 2026-10-06; smart": 115149,
+     "49F custody": 7597,
+     "model_name": 7532,
+     "smartx_allocation_value": 7532,
+     "cash held in the model at SmartX overlay clock 2026-10-06": 7532,
+     "l_s": 7024,
+     "ticker": 6937,
+     "SmartX is the model authority": 5945,
+     "INFERRED": 2893,
+     "Known custody in Client; no open SmartX allocation and no Ta": 1645,
+     "custody cash remainder": 1645,
+     "DRILL WITHHELD": 7,
+     "Traded": 7,
+     "overlay clock for this sleeve": 7,
+     "SmartX allocation(s) present but not open": 2
+    },
+    "coverage": {
+     "nodes_resolved": 5952,
+     "nodes_attempted": 7597,
+     "unmatched": 1645,
+     "remainder": {
+      "amount": 168525497.37,
+      "reason": "1645 of 7597 custody account(s) carried in Client with membership unattributed",
+      "units": "USD"
+     }
+    },
+    "assigned_without_custody": {
+     "account_count": 19,
+     "denominator": "17 SmartX-mapped and 2 Tax-traded account(s) absent from custody"
+    },
+    "unassigned_block": {
+     "account_count": 1645,
+     "value": {
+      "currency": "USD",
+      "value": 168525497.37
+     }
+    },
+    "unassigned_ids_listed": 1645,
+    "unassigned_ids_present_as_accounts": 1645
+   },
+   "found_counts": {
+    "unassigned": 1645,
+    "unmatched_join": 1,
+    "blended_model": 0,
+    "multi_membership": 1306
+   }
+  },
+  "inflection": {
+   "census": {
+    "accounts": 858,
+    "node_kinds": {
+     "ACCOUNT": 858,
+     "CATEGORY": 935,
+     "MODEL_LEAF": 627,
+     "SECURITY": 33695
+    },
+    "fact_vocabulary": {
+     "ticker": 33695,
+     "Native Orion product identity; no inferred price": 33695,
+     "company": 33695,
+     "part": 4167,
+     "INF custody": 858,
+     "model_name": 627,
+     "is_opal": 627,
+     "PART NOT STATED BY THE FEED": 154,
+     "Known custody in Client; Eclipse portfolio carries no model": 147,
+     "Known custody in Client; no Eclipse portfolio for this accou": 30,
+     "Eclipse portfolio 356 -> model 6 (Opal Intermediate Growth) ": 2,
+     "Eclipse portfolio 393 -> model 28 (50/50 Opal Intermediate/O": 1,
+     "Known custody in Client; Eclipse portfolio 394 names model 7": 1,
+     "Eclipse portfolio 395 -> model 28 (50/50 Opal Intermediate/O": 1,
+     "Eclipse portfolio 396 -> model 5 (Opal Ultra Long Term); exc": 1,
+     "Eclipse portfolio 397 -> model 5 (Opal Ultra Long Term); exc": 1,
+     "Eclipse portfolio 398 -> model 3 (Opal Long Term); excluded_": 1,
+     "Known custody in Client; Eclipse portfolio 399 names model 6": 1,
+     "Eclipse portfolio 400 managed part": 1,
+     "Eclipse portfolio 400 excluded part in Client": 1,
+     "Eclipse portfolio 401 -> model 3 (Opal Long Term); excluded_": 1,
+     "Eclipse portfolio 403 managed part": 1,
+     "Eclipse portfolio 403 excluded part in Client": 1,
+     "Known custody in Client; Eclipse portfolio 404 names model 1": 1,
+     "Eclipse portfolio 405 -> model 28 (50/50 Opal Intermediate/O": 1
+    },
+    "coverage": {
+     "nodes_resolved": 627,
+     "nodes_attempted": 858,
+     "unmatched": 231,
+     "remainder": {
+      "amount": 40952571.87,
+      "reason": "231 of 858 custody account(s) carried in Client with membership unattributed",
+      "units": "USD"
+     }
+    },
+    "assigned_without_custody": {
+     "account_count": 35,
+     "denominator": "35 Eclipse-mapped account(s) absent from accounts_v2"
+    },
+    "unassigned_block": {
+     "account_count": 231,
+     "value": {
+      "currency": "USD",
+      "value": 40952571.87
+     }
+    },
+    "unassigned_ids_listed": 231,
+    "unassigned_ids_present_as_accounts": 231
+   },
+   "found_counts": {
+    "unassigned": 231,
+    "unmatched_join": 1,
+    "blended_model": 0,
+    "multi_membership": 0
+   }
+  },
+  "cottonwood": {
+   "census": {
+    "accounts": 860,
+    "node_kinds": {
+     "ACCOUNT": 860,
+     "CATEGORY": 864,
+     "SECURITY": 15555,
+     "MODEL_LEAF": 553,
+     "SLEEVE": 112
+    },
+    "fact_vocabulary": {
+     "component_weight": 11653,
+     "component_name": 11653,
+     "observed custody position for this asset": 11228,
+     "Security identifier is custody-sourced; membership is the ac": 3902,
+     "rebalance_model_type": 920,
+     "is_opal": 920,
+     "model_name": 553,
+     "qualifier": 553,
+     "blend_weight": 553,
+     "category": 479,
+     "strategy_name": 479,
+     "no observed custody position for this asset in fact_holdings": 425,
+     "Known custody in Client; position model/SMA membership not e": 385,
+     "Model targets are separate and are not actual position amoun": 385,
+     "provider": 367,
+     "residual of the strategy assignment": 112,
+     "observed positions outside the strategy definition": 112,
+     "Rebalancer strategy Opal Satellite 50 (fact_model_assignment": 90,
+     "Rebalancer strategy Opal Satellite 60 (fact_model_assignment": 86,
+     "non-Opal constituent Sleeve - Core Money Market (blend weigh": 81,
+     "Rebalancer strategy Opal Satellite 80 (fact_model_assignment": 72,
+     "Rebalancer strategy Opal Satellite 70 (fact_model_assignment": 46,
+     "Rebalancer strategy Opal Satellite 40 (fact_model_assignment": 26,
+     "non-Opal constituent Sleeve - Equity (blend weight 0.5) land": 18,
+     "non-Opal constituent Sleeve - Bond (blend weight 0.48) lands": 16
+    },
+    "coverage": {
+     "nodes_resolved": 475,
+     "nodes_attempted": 860,
+     "unmatched": 385,
+     "remainder": {
+      "amount": 352662621.54,
+      "reason": "475 of 860 custody account(s) carry an assigned Rebalancer strategy; 193157099.69 USD sits in constituent model leaves (ASSIGNED = account value x blend weight), the rest is Client (the plug, 86258136.92 USD across assigned accounts) or unassigned custody",
+      "units": "USD"
+     }
+    },
+    "assigned_without_custody": {
+     "account_count": 0,
+     "denominator": "0 of 860 overlay account(s) absent from custody"
+    },
+    "unassigned_block": {
+     "account_count": 0,
+     "value": {
+      "currency": "USD",
+      "value": 0
+     }
+    },
+    "unassigned_ids_listed": 0,
+    "unassigned_ids_present_as_accounts": 0
+   },
+   "found_counts": {
+    "unassigned": 0,
+    "unmatched_join": 1,
+    "blended_model": 366,
+    "multi_membership": 181
+   }
+  }
+ },
+ "cases": {
+  "unassigned": {
+   "found": true,
+   "firm": "49financial",
+   "instance": "acc_8edbf9b2d53df56d206d2717",
+   "instances_total": 1876,
+   "check": {
+    "account_node_id": "acc_8edbf9b2d53df56d206d2717",
+    "account_value": 0.0,
+    "ties": true,
+    "partitions": 2,
+    "partitions_unbalanced": [],
+    "non_target_children": 1,
+    "residual_visible": false
+   }
+  },
+  "unmatched_join": {
+   "found": true,
+   "firm": "49financial",
+   "instance": "firm",
+   "instances_total": 3,
+   "check": {
+    "reconciles": true,
+    "arms": {
+     "partitions_balance": "PASS",
+     "account_sum_equals_custody_total": "PASS",
+     "served_reconcile_reads_reconciled": "PASS"
+    },
+    "remainder": {
+     "amount": 168525497.37,
+     "reason": "1645 of 7597 custody account(s) carried in Client with membership unattributed",
+     "units": "USD"
+    }
+   }
+  },
+  "blended_model": {
+   "found": true,
+   "firm": "cottonwood",
+   "instance": "acc_000c147a49a4d234b37dab66",
+   "instances_total": 366,
+   "check": {
+    "account_node_id": "acc_000c147a49a4d234b37dab66",
+    "account_value": 187724.63,
+    "ties": true,
+    "partitions": 3,
+    "partitions_unbalanced": []
+   }
+  },
+  "multi_membership": {
+   "found": true,
+   "firm": "49financial",
+   "instance": "acc_1c312e69da7efca76d0f17d3",
+   "instances_total": 1487,
+   "check": {
+    "account_node_id": "acc_1c312e69da7efca76d0f17d3",
+    "account_value": 2855280.7,
+    "ties": true,
+    "partitions": 2,
+    "partitions_unbalanced": []
+   }
+  }
+ },
+ "criteria": {
+  "e1": "PASS",
+  "e2": "FAIL",
+  "e3": "PASS",
+  "cases_found": [
+   "unassigned",
+   "unmatched_join",
+   "blended_model",
+   "multi_membership"
+  ],
+  "cases_absent_at_all_three": []
+ },
+ "reader_identity": "arn:aws:iam::313476888478:user/Andrew_Berman"
+}

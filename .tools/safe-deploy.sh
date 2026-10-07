@@ -39,6 +39,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PYTHON="python"
 command -v python3 >/dev/null 2>&1 && PYTHON="python3"
 
+# --- NFRA_CTLPLN CT-d-3 -- a named commit off the trunk (opt-in; DEPLOY_COMMIT unset = no change at all) ---
+if [ -n "${DEPLOY_COMMIT:-}" ]; then
+    NC_RC=0
+    NC_OUT="$("$PYTHON" "$SCRIPT_DIR/named_commit_check.py" check --commit "$DEPLOY_COMMIT" --record 2>&1)" || NC_RC=$?
+    printf '%s\n' "$NC_OUT" >&2
+    [ "$NC_RC" -eq 0 ] || { echo "safe-deploy: BLOCKED by the named-commit check (rc=$NC_RC). Nothing was deployed." >&2; exit 1; }
+    [ "${SAFE_NAMED_COMMIT_CHECK_ONLY:-}" = "1" ] && exit 0
+fi
+
 # --- ADHC_HALTGT.002 -- HALTGT deploy-time checkpoint ---
 # Source the .001 checkpoint library and gate before the S3 deploy: a STOP-class
 # inbox message hard-blocks; a routine message surfaces + needs HALT_ACK=1; an

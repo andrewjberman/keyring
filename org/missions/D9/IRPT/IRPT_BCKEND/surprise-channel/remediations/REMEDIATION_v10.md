@@ -127,15 +127,15 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated from INVESTIGATION_v1.md at round 19
     "owner": "2.0.0_SA_COO~P",
     "round": "v19",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v19"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P",
-      "at": null
+      "at": "2026-10-04T23:19:00Z"
     }
   },
   {

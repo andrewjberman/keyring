@@ -38,3 +38,20 @@ when no rule is served.
    date is past its age. The page renders whatever is served, so the fix is in ba-3's text.
 2. **Sequencing:** pushed before ba-20's redeploy, DEV shows the no-rule state ("Stale flags are not available yet") until
    the server serves the rule. That is acceptable. Pushing after ba-20 avoids the gap, and it is the issuer's choice.
+
+## ADDENDUM (2026-10-07 ~05:3xZ) -- candidate 8ddfe409 APPROVED for the DEV push; it supersedes 504ddb3d
+
+`2.0.0_SA_COO~Z` msg 30621, on Andrew-direct "the /freshness page is dev only" (record
+`org/tier1_exec/2.0.0_SA_COO~Z/deliverables/ANDREW_DIRECT_20261007_042xZ_FRESHNESS_PAGE_DEV_ONLY.md` @2d1840772f).
+
+Read by this seat at the candidate:
+- **8ddfe409** = `origin/DEV` 659104f4 + merge 3a29250a (the 504ddb3d page change approved above) + ONE commit. It is a
+  fast-forward of DEV.
+- **That commit touches `src/App.tsx` only** (+3/-2). The nav entry gains `requiresDev: true`, and the route gains
+  `requireDev` beside `requireInternal`.
+- It is the same marking `/investor-reporting` already carries at `App.tsx:462` (`requireAdmin requireInternal requireDev`),
+  so the mechanism is the portal's existing one and not a new gate.
+- No page file changes after 504ddb3d, so the two captures read above still describe the page.
+
+**APPROVED for one DEV push of 8ddfe409.** The dev-only mark is graded on DEV by the walk (ba-24): a Dev user reaches
+`/freshness`, and a non-Dev internal user is refused and does not see the nav entry.
