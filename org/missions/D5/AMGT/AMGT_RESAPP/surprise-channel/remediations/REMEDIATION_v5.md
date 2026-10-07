@@ -35,15 +35,15 @@ The physical contract is route-free, as the current gate and spine require. Some
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v5"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-06T21:23:00Z"
   }
  },
  {
@@ -362,15 +362,19 @@ The physical contract is route-free, as the current gate and spine require. Some
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v5"
+   "round": "v5",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: the name-based fixture exclusion stands"
+   }
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   }
  },
  {
@@ -530,15 +534,19 @@ The physical contract is route-free, as the current gate and spine require. Some
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v5"
+   "round": "v5",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: a law proposal, not a RESAPP defect"
+   }
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   }
  },
  {

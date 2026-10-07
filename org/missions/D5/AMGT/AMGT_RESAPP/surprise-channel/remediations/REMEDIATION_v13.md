@@ -413,11 +413,11 @@ advanced in REMEDIATION_v12.
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v13",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v13"
   },
-  "closed": false,
+  "closed": true,
   "disarm": {
    "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",

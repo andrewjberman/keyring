@@ -950,16 +950,20 @@ the project, the repo-wide `lib/__init__.py` fix carried to the laptop CTO).
   "owner": "2.0.0_SA_COO~Z",
   "round": "v80",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~Z",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "2.0.0_SA_COO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "CARRIED_BY",
+    "pointer": "AMGT_RESAPP-Z-W3-S1 and the other children, per org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round76/COO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@fb9ca91ad5 section E"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-C-S324",
@@ -1011,11 +1015,15 @@ the project, the repo-wide `lib/__init__.py` fix carried to the laptop CTO).
    "at": "2026-09-21T23:29Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: the namespace-package convention stands"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-C-S412",
@@ -1573,16 +1581,20 @@ the project, the repo-wide `lib/__init__.py` fix carried to the laptop CTO).
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v80",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-06T22:04:38Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "CLOSED_UNREMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
-   "round": "v80"
+   "round": "v80",
+   "closure": {
+    "reason": "NOT_A_DEFECT",
+    "pointer": "org/missions/D5/AMGT/AMGT_RESAPP/ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md@4a89bef967 section E: a law proposal, not a RESAPP defect"
+   }
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-C-S52",
@@ -1907,16 +1919,16 @@ the project, the repo-wide `lib/__init__.py` fix carried to the laptop CTO).
   "owner": "1.0.0_SA_CTO~Z",
   "round": "v80",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "1.0.0_SA_CTO~Z",
-   "at": null
+   "at": "2026-10-06T21:23:00Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~Z",
    "round": "v80"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_RESAPP-Z-C-S32",
