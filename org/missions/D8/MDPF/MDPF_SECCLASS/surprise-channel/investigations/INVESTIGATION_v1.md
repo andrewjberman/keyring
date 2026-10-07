@@ -2690,3 +2690,82 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by the worker; no consumer was changed."
 }
 ```
+
+## MDPF_SECCLASS-W26-S2 -- test_model_classifier.py pinned `contract_version == "0.3.0"`; the contract is past it and moves again in SC-e-27
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:30Z",
+  "one_line": "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py test_contract_version_is_0_3_0 asserted contract_version == '0.3.0' while the contract reads 0.4.0 (1 failed, 17 passed at the base); replaced by a check that classified_by.values carries model and the two model fields are declared, no version literal. A second, exact-set pin on classified_by.values remains.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py @ base 7ab55c330b: pytest -q reads '1 failed, 17 passed' (0.4.0 == 0.3.0)",
+      "infra/aws/lambda/v2_portal/_shared/tests/test_model_classifier.py test_contract_classified_by_gains_model asserts set(values) == {seed, scheduled, constituents, legacy, model}; it passes today and breaks the day a cell adds a writer value"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e31 Build 4: replace the stale version pin with a check that the contract's classified_by.values carries model and declares classification_confidence and low_confidence, with no version literal.",
+  "world_is": "Done as written. The sibling test test_contract_classified_by_gains_model pins the EXACT value set of classified_by, the same failure shape as the version pin; the order did not ask for it to change and it was left as it is.",
+  "notes": "Not widened. SC-e-27 moves the contract this round; if it adds a classified_by value that test fails and is the issuer's to relax."
+}
+```
+
+## MDPF_SECCLASS-W26-S3 -- the dry run's firm input is a point-in-time residual file, not a live held reader
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:30Z",
+  "one_line": "TO-SC-e31 asks for one real firm's held (ticker, name) input readable without a write; the tree holds no per-firm live held reader that needs no typed S3 address, so ai_classifier_dry_run.py reads Inflection's 47 ticker-carrying entries of R2_UNRESOLVED_REVIEW_20260930.json (a 2026-09-30 residual, not today's held set).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R2_UNRESOLVED_REVIEW_20260930.json @ 7ab55c330b: inflection 76 entries (47 with ticker, 29 without), bd 207 and 49financial 601 all without ticker (python Counter over entries, 884 total)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R7_CHECKS/r7_fwd10_dry_run.py: the one other held-input read types a bucket (SILVER_BUCKET), which TO-SC-e31 amendment 1 bound 2 forbids a worker to do"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e31 Build 5: runs the runner in dry run against one real firm's held input you can read without a write (state which one and why).",
+  "world_is": "Run 2026-10-07: AI-DRY-RUN held=47 present=16 direct=0 to_model=31 would_land=0 model_calls=0. direct=0 because no bd/gics/schwab lookup is wired live (the scheduled classifier wires only an optional legacy-fork lookup, which Inflection has none of), so this run shows the model path's reach, not the plan's. Most names in this input equal their ticker, so a landing row for them would carry no name (the name-equals-ticker rule of the earlier model-row writer).",
+  "notes": "The runner takes any [[ticker, name], ...] JSON via --held; the first real run's input is the issuer's choice."
+}
+```
+
+## MDPF_SECCLASS-W26-S4 -- the commit gate's pinned ruff 0.15.11 is not the ruff on this box (0.16.10)
+
+```json
+{
+  "id": "MDPF_SECCLASS-W26-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~26",
+  "surfaced_at": "2026-10-07T09:50Z",
+  "one_line": "The commit gate's ruff is pinned to 0.15.11 (.tools/commit-gate.sh:46) but this box runs ruff 0.16.10, whose default rule set adds UP/C4 families; every edit to a pre-existing py39-era file (etf_classification_model.py 24 errors, etf_classification_scheduled.py 95) is refused for lint the pinned ruff does not raise.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m ruff --version -> ruff 0.16.10 (site-packages of the Python314 on PATH); .tools/commit_gate_runner.py:146 runs sys.executable -m ruff check --target-version py39 --extend-select FA",
+      "ruff 0.15.11 (pip install into .scratch/venv15, a --system-site-packages venv put first on PATH for the commit only): 'All checks passed!' on the six files of TO-SC-e31; ruff 0.16.10 on the same six: 110 errors, mostly UP006/UP031/UP045 in code this cell did not write",
+      "safe-commit.sh first attempt on this cell's files: 'BLOCKED: ruff check failed on infra/aws/lambda/mdpf-secclass/ai-index/index_writer.py' (Found 15 errors)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 14 and .tools/commit-gate.sh:46: every .py edit passes commit-gate with ruff pinned to 0.15.11.",
+  "world_is": "The gate fails closed under 0.16.10 for any file carrying typing.Optional/List/Dict or percent formatting, so the worker before this one (row MDPF_SECCLASS-W26-S1) wrote str | None in a new file to pass it. This cell committed under a pinned 0.15.11 ruff in a throwaway venv (.scratch, uncommitted); no gate was bypassed and no code was changed to suit the newer ruff.",
+  "notes": "The box's ruff version is a device matter; other seats on this device see the same refusal on any old shared file. Not widened."
+}
+```
