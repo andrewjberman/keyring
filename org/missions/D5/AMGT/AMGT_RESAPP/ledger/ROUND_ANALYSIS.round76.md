@@ -59,3 +59,31 @@ breakdown). Not graded: FWD-16 and FWD-12 (the page work is not on DEV).
   short peer set; the Bloomberg credential rotation.
 - **The analyst and PM walker accounts** (entitlements).
 - **Provisioned concurrency:** not yet. It comes with ruling 4's read.
+
+## ADDENDUM 1 (2026-10-07 ~01:2xZ) -- four items from the round-77 cut (COO~Z msg 30484, issuance @7daf7c5677, decomposition s.85)
+
+1. **Ruling A's premise was stale. ACCEPTED, and the ruling is amended.**
+   - `CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md` section A took "33 of 89 keyed" from the triage rows. The served crosswalk
+     keys 89 of 89 coverage folders, and "33 of 89" is a 2026-09-10 snapshot.
+   - This seat ruled on a row's quoted number without reading the served object.
+   - Amended: the grading denominator stays the 89 covered records; NO resolving cell is cut; ba-15 is the grading read (keyed N
+     of 89, printed).
+   - The five identity rows close on ba-15's read if it prints 89 of 89. The holdings-identifier row (Z-W19-S6) and the union
+     row (Z-W21-S4) are re-read by the same cell, and each either closes or returns as ONE row with its count.
+2. **FWD-20: D cannot be served from landed data. D stays ABSENT with its reason; its definition is not changed.**
+   - BA's newest model block holds none of the six CFPS/EPS dispersion statistics that `divergence.py` divides by.
+   - ba-14 builds the house forecast and serves two things beside it: the house FCF, and the plain percentage gap to consensus
+     FCF, labelled as that. D itself reads ABSENT with the reason "consensus dispersion is not yet pulled", for every name.
+   - **The carrier for the fields is AMGT_CORPUS's scheduled model-block pull, not a one-off call.** The six dispersion
+     mnemonics are added to the pull's field list in CORPUS round 40 (`2.0.0_SA_COO~X`), probed on ONE name first (the field
+     exists and is entitled), then on the daily fire.
+   - Authority: C-NO-VENDOR-CALL v0.7 (the recurring model-block pull, on Andrew's standing word), and Andrew's research word
+     of 2026-10-06 ~20:13Z (`ANDREW_DIRECT_20261006_201xZ_...`).
+   - The sd(D) >= 0.25 gate runs when the fields have landed, before D is served.
+3. **The segments reader is not cut this round. ACCEPTED.** Its shape waits on ba-21's one-name probe. FWD-1's re-read on AMD US
+   moves to the round after the pull lands. It is the first item of the round-77 analysis.
+4. **ba-5 is re-pointed to DSGN_AMGTV1. ACCEPTED.** The three FWD-18 page repairs, the one-heading-per-segment change and the
+   `/refresh` control's removal are on `portal/src/pages/SecurityAnalysis/`, which DSGN round 45 edits for the top band. One lane
+   writes one page. `2.0.0_SA_COO~D` takes the handoff (`round77/handoff_dsgn/`) into its round-45 issuance.
+
+ba-17's currency vocabulary stands as the issuer's reading. It is graded at L9 like any other criterion.
