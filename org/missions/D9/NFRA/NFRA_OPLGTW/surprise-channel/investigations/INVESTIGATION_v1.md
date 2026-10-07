@@ -9287,3 +9287,32 @@ name the one known failure instead of silently inheriting it.
   "notes": "No action taken beyond the hand edit; the release worktree was left as is (uncommitted manifest edit) for the issuer to remove at drain."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S62",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T00:16Z",
+  "adjudicates": [
+    "NFRA_OPLGTW-Z-W28-S7"
+  ],
+  "one_line": "Z-W28-S7 admission path found and EXERCISED: a worker deploy from a release tree resolves the ISSUER's serial when the shared session file exists and OPAL_AGENT_SERIAL is unset; r24 (OG-rl-10) deployed that way. The gate's worker-order lookup still cannot admit a slot whose first order postdates the release base.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN issuer dry run in /c/tmp/og-rel17, 2026-10-06 ~22:15Z: halt_gate_resolve_serial printed 2.0.0_SA_COO~O; halt_gate_validate_serial rc=0, after org/mcp/sessions/<session>.serial was written in the shared tree (org/XXX.md step A.1, skipped at this seat's relaunch).",
+      "RUN worker ~28, 2026-10-06T23:59:57Z: safe-ec2-deploy.sh rc=0 for 9d3e2eb3fc with OPAL_AGENT_SERIAL unset, AGENT_NAME set, HALT_ACK=1 (deliverables/0.9.0_WK_NFRA_OPLGTW~28/ANNOUNCE_OG-rl-10.md and the r24 deploy output).",
+      "FILE .tools/halt-gate-check.sh halt_gate_worker_issuer reads `git show HEAD:<order>` under HALT_GATE_REPO_ROOT, the release tree. At 2c27f3a795 that tree holds 15 non-terminal-reading orders, 0 issued to ~28; slot ~15 passed earlier releases only because the first-match <status> parse reads its stale `staged` tags."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "RELEASE_ORDER_FORM step 10: a worker deploys the release tree through safe-ec2-deploy.sh.",
+  "world_is": "The form does not say which identity the deploy presents. Two routes exist: the worker's own serial (needs a non-terminal order for that slot in the release tree's HEAD, impossible for a new slot) and the issuer's session serial (works, and a [STOP] to the issuer halts the deploy).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Issuer act: the release form gains the issuer-serial route as a standing step at the next form edit. The gate's order lookup (read the order from the shared root, and read the LAST status tag) is the gate owner's, routed to 1.0.0_SA_CTO~O in the round slug."
+}
+```
