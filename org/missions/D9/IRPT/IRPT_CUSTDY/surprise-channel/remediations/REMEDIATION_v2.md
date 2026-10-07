@@ -66,11 +66,11 @@ v3. W5-S1 is IRPT_BCKEND's seam file and goes to the CTO; S4 is a laptop read ow
   "owner": "0.0.0_AB_MSTR~DELL2",
   "round": "v3",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "0.0.0_AB_MSTR~DELL2",
    "round": "v3"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

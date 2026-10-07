@@ -2033,3 +2033,30 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Inert now: no host act is due before Andrew's F1 click. Per 1.0.0_SA_CTO~DELL2 standing rule msg 218 the read goes to the laptop as a FILE through 0.0.0_AB_MSTR~DELL2; no fence is widened from dell2. Whether dell2 should hold ssm:SendCommand on this host is NFRA_CTLPLN's question, not this project's."
 }
 ```
+
+## IRPT_YCDGEN-S15 -- the t-6 worker fetched portal packages from the npm registry (egress off Opal) on the issuer's instruction
+
+```json
+{
+  "id": "IRPT_YCDGEN-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T12:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the issuer's spawn line for worker 0.9.0_WK_IRPT_YCDGEN~5 (cell t-6, ~07:58Z) told it to run bun install in C:/dev/wk-ycdgen-6-t5/portal; that is one npm-registry fetch, egress off Opal infrastructure",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "No seat makes egress off Opal infrastructure; a dell2 portal worktree links or copies the shared lockfile-matched portal/node_modules and never runs npm or bun install (CLAUDE.md Agent Autonomy; 1.0.0_SA_CTO~DELL2 msg 473).",
+  "world_is": "One registry fetch at ~08:0xZ 2026-10-07, 244 top-level packages placed in C:/dev/wk-ycdgen-6-t5/portal/node_modules only (untracked); bun.lock restored by the worker; nothing built from those packages was committed or shipped. The error is the issuer's instruction, not the worker's. Re-proof on the shared node_modules (laptop pack, lockfile-matched), worktree C:/dev/wk-g2-pageproof with a junction to C:/dev/ajb_workspace/portal/node_modules: at 949830e8 typecheck rc=0; exercise arms signout, remount, firm, dropdown all PASS; bun test fe-s-13 + tabs/analysis 32 pass / 16 fail / 1 error over 48 tests, identical at base 4d16a2a0 (standalone-worktree path artifact, docs/ unresolved), so t-6 changes no test count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls C:/dev/wk-ycdgen-6-t5/portal/node_modules: 244 entries; git status in that portal worktree clean",
+      "1.0.0_SA_CTO~DELL2 msgs 473 and 481 (ruling: file the row, leave the directory, re-prove on the shared node_modules)",
+      "re-proof transcript in the issuer's session 2026-10-07 ~12:1xZ (commands and outputs above)"
+    ]
+  },
+  "notes": "Per CTO msg 481 the directory is NOT deleted (a recursive delete would need Andrew's word); it goes when that worktree is retired. The t-6 proof of record is the re-proof above, not the worker's run."
+}
+```
