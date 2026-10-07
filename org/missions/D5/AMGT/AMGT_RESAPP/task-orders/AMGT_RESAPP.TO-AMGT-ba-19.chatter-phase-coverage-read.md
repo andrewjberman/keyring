@@ -95,3 +95,4 @@ goes to Andrew only after this read, on the CTO's card.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @1a257a33d1; proof VALID (worktree checker); the chatter phase-coverage read on OVpDhfwD: 6 of 6 cold invokes sum to the Duration within 1 ms; outside-every-phase 758-1,004 ms sits before the first phase line (the request-time import chain); three free cuts named, none validated; card inputs 18.92 USD a month allocation for one 1769 MB instance; row Z-W285-S1</status>
