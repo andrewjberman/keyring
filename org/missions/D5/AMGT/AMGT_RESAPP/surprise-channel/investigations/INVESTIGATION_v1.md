@@ -21316,6 +21316,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~266/data/fwd18/ASML_click.json"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-S362",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-07T01:29:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "45 OTHER tracked files carry CR in their index blob while their own eol attribute reads lf -- the same state row Z-S242 named for etf-classifications.tf, measured across the whole repo and NOT normalised here.",
+  "spec_asserts": "AMGT-ba-26 section 1 item 3: answer the row's unmeasured question as a NUMBER, without fixing what is found -- how many OTHER tracked files carry CR in their blob while their eol attribute reads lf, from one pass over `git ls-files --eol`. Row AMGT_RESAPP-Z-S242 established the class on one file: its blob carried 82 CR while `git check-attr eol` read lf, so `git status` called it MODIFIED in 1 worktree and CLEAN in 14 on identical bytes.",
+  "world_is": "ONE pass over `git ls-files --eol`, denominator PRINTED: 59555 tracked files listed; 11619 carry eol=lf in their attribute (this is the POSITIVE CONTROL that the probe discriminates -- see the trap below); index-marker distribution across that set is i/lf 11490, i/none 78, i/crlf 45, i/-text 6. So the answer is 45 OTHER files with i/crlf under attr eol=lf, after this order's own file was renormalised out of the set (verified: it now reads i/lf and is absent from the list). No i/mixed appeared. First 10 paths: data/smartx/API/test_api_connectivity.py, data/smartx/API/test_token_generation.py, data/smartx/scripts/aggregate_smartx_to_daily.py, data/smartx/scripts/aggregate_smartx_to_timeseries.py, data/smartx/scripts/check_packages.py, data/smartx/scripts/config.py, data/smartx/scripts/consolidate_smartx_to_parquet.py, data/smartx/scripts/lambda_smartx_query.py, data/smartx/scripts/organize_smartx_csvs.py, data/smartx/scripts/pipeline_monitor.py. The set is concentrated rather than scattered -- top-level distribution infra/aws 32, data/smartx 13 -- which suggests a few historical imports added before the attribute was in force, not continuing drift. EACH behaves exactly as Z-S242 described: `git status` reports MODIFIED or CLEAN by the stat cache rather than by content, so the same bytes read dirty in one worktree and clean in another. NOT normalised here: the order says more than zero is one row naming the count and is not this order's to fix. A TRAP worth recording for whoever does normalise them: `git ls-files --eol` prints the attribute field as 'attr/text eol=lf' WITH A SPACE, so a parse that captures it with a non-whitespace class (\\S*) grabs only 'text' and reports 0 of 59555 files as eol=lf -- a clean, plausible, wholly false ZERO. That is how this census first read, and the only reason it was caught is that the file being committed was known to carry eol=lf, so a 0 was impossible. Split on the TAB, then test the whole marker string.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "`git ls-files --eol` over the whole index, 2026-10-07, denominator 59555 printed with the eol=lf subset 11619 as the positive control",
+      "org/missions/D5/AMGT/AMGT_RESAPP/task-orders/AMGT_RESAPP.TO-AMGT-ba-26.etf-classifications-lf-recommit.md section 1 item 3",
+      "row AMGT_RESAPP-Z-S242 and 1.0.0_SA_CTO~Z's adjudication ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md section F"
+    ]
+  }
 }
 ]
 ```
