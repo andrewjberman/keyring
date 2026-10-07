@@ -81,7 +81,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **AC3 reads a device-local scratch folder** that `instrument35.cjs` itself writes (`C:/tmp/r35-scratch-c`); the path is the instrument's, not a new one.
 - **Round 48, not round 47:** the cell was held out of round 47 for the PRD addendum and the CTO's word; `.tools/to-pipeline-gate.py` admits one issuance per round, so it is its own round. The check stays at `round47/checks/r47i/`.
 
-<status>pending</status>
+<status>complete</status>
 <round>48</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
