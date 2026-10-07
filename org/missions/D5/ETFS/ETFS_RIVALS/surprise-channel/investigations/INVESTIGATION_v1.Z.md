@@ -4832,6 +4832,48 @@
     "spec_asserts": "A row's world_is states what was measured",
     "world_is": "Row Z-S69 said 413 closes reach no stage and that the fault shows as a break in a chart's curve. Measured: 430 closes (413 of securities only in the ignored object, 17 of securities in both, null in the picked one); the day is drawn, from a valuation-implied price. Z-S69's class, standing and disarm stand. Still not measured: whether any served ranking figure moves; the readers' cell's never-widen pair carries that before and after",
     "notes": "Cites ETFS_RIVALS-Z-S69. The rule the repair states for this date: the live pull's close for every security it prices, GICS from the live pull where it has one and from the import where only the import has one (round 25 cell RIV-rg-1)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W15-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~15",
+    "surfaced_at": "2026-10-07T22:55:00Z",
+    "one_line": "Neighbouring check bk-1.AC3 pins the buying trend's G4 read to the module's own _read(s, uris, columns); a union reader that bypassed it failed that check, so g4_window takes the stage's reader as an argument",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/bk-1.AC3.py lines 85-100 wrap gold_buying_trend._read and require a security_market read through it whose column tuple names security_parsekey or is None; with the union reader calling hc._read the run printed '_read calls: 3 | security_market reads and their columns: []' and 'AC3 RESULT: FAIL 2 failures' (rg-1.AC3 arm bk-1.AC3 failed with it)",
+        "After the change gold_buying_trend.handler_entry calls hc.g4_window(..., read=_read): bk-1.AC3 prints 'security_market reads and their columns: [None]' and 'AC3 RESULT: PASS 0 failures'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Interface item 2 moves the trend's G4 read to the one shared function; AC3 requires bk-1.AC3 to still pass unchanged",
+    "world_is": "The two cannot both hold if the shared function reads objects itself; the function takes `read` (default hc._read) and the trend passes its module's _read, called once per object with no column filter, columns applied after the union. No check or order text was edited",
+    "notes": "Files: data/etfs/scripts/rivalfunds/gold_holding_contribution.py (g4_window), gold_buying_trend.py (the call)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W15-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~15",
+    "surfaced_at": "2026-10-07T22:56:00Z",
+    "one_line": "By the stated rule a security whose live row has no close and whose backfill row has one merges to a backfill-marked row, so drop_backfill and _g4_for then drop the security's live GICS and parsekey as well",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order RIV-rg-1 interface item 1: the price group (including as_of_source) travels whole from the first row in the order whose px_close is not null; (a) ranks a backfill row after a non-backfill row but a non-backfill row with a null close is skipped for the price group; item 3: drop_backfill runs AFTER the union. Read in gold_holding_contribution._g4_merge",
+        "Not exercised by any check (rg-1.AC2 arm a plants K1 live 100.0 against backfill 90.0, and K2 backfill-only). The writer market-range writes only dates holding no market-* object (READER_CENSUS_SECURITY_MARKET_20261007.md section Writer), so a mixed partition does not arise from the writer today"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A non-backfill row before a backfill row; backfill rows handled after the union exactly as today",
+    "world_is": "Built exactly as the order states. In a partition that mixes a live object and a backfill object, a security with a live row without a close would be priced from the backfill row and then dropped by the rankings and the G1 join, losing its live descriptive fields. Today no partition mixes them",
+    "notes": "Raised for the round-N analysis; no change made."
   }
 ]
 ```
