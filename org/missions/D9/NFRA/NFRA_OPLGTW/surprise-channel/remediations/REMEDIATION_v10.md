@@ -31,11 +31,11 @@ complete; r23 @7d65a28db0 is live, and this seat re-ran q8.AC1-AC2 and rl9.AC1-A
     "owner": "1.0.0_SA_CTO~O",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-S61",
@@ -75,11 +75,11 @@ complete; r23 @7d65a28db0 is live, and this seat re-ran q8.AC1-AC2 and rl9.AC1-A
     "owner": "1.0.0_SA_CTO~O",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO~O",
       "round": "v10"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "NFRA_OPLGTW-Z-W28-S9",
