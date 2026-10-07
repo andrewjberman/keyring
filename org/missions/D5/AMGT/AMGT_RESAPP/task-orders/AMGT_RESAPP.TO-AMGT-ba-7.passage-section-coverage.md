@@ -122,3 +122,4 @@ short on 8.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>complete -- drained @595ed697e6; proof VALID (worktree checker); section_coverage.py: each name's covered and not-covered filing sections; AC1 12 of 12 source objects, AC2 95 of 95 served (12 with a filing read, 3 with a section not covered, 8 cut short), AC3 2 of 2 forms</status>
