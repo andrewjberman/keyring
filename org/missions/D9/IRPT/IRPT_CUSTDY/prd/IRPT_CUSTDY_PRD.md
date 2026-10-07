@@ -5,7 +5,7 @@
  "project": "IRPT_CUSTDY",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/q1-custodial-investor-reporting-programme-brief-20261006.md@b714dd81b1",
  "endpoint_outcomes": [
@@ -112,9 +112,101 @@ wrote the brief. **COO:** UNSEATED at registration; seating is `0.0.0_AB_MSTR`'s
 | C-NO-SHADOW / C-MORATORIUM | law | Opal's reports replace Black Diamond's; nothing runs beside it after the switch; no alert or monitor. |
 | C-NAMES / C-FIRM | law | Every new address and name is builder output; every key is under one firm's scope. |
 
-## THREAD -- FWD-1, round 1
+## 1. The arc
 
-FWD-1 as written above is round 1's one journey, every hop real; the other outcomes are the enrichment
-backlog in their numbered order.
+**Start.** Black Diamond produces every quarter-end client report for 49 Financial and Cottonwood. Opal already holds 49
+Financial's Schwab records (brief F1), computes 49 Financial performance on its own method (F4), and serves holdings and an
+export from IRPT_BCKEND; it has no per-firm template (F6) and no report an advisor would send. **End.** On 2027-01-01 every
+client report of both firms comes from Opal on the firm's own template, built from the custodian's shape, with the two
+dated comparisons written and the switch-off view read.
+
+## 2. THREAD -- FWD-1, round 1
+
+FWD-1 is round 1's one journey: one named 49 Financial advisor's quarter-end reports for 2026-09-30, every hop real.
+
+1. **The advisor and the client list.** One 49 Financial advisor is named; that advisor's accounts and households are read
+   from the identity registry (`infra/logic/registry/scopes.json`, masters `08242234` and `08335338`) and the IRPT_BCKEND
+   directory (`data/assets/scripts/gold/investor_reporting/directory_runner.py`, served by `irpt-directory-search`). Output:
+   the account and household list the run covers, its count printed.
+2. **Schwab's records for those accounts.** Positions, balances, transactions and realized lots for the quarter are read
+   from Schwab silver under `opal-data-assets/schwab/<master>/` (producer `data/assets/scripts/silver/schwab_conversion.py`),
+   never from Black Diamond. Output: per account, the custodian rows for 2025-09-30 to 2026-09-30 (the longest standard period
+   the quarter report shows is read at L5 from the 49 Financial template).
+3. **The figures.** Returns per account and household over the standard periods, holdings, activity and fees, computed by
+   Opal: returns and holdings from the holdings-based gold (IRPT_DASHBD `account_return_daily` and IRPT_BCKEND
+   `data/assets/scripts/gold/investor_reporting/holdings_49f.py`); activity from the transaction rows of hop 2. Fees: the
+   source is not measured (brief PART V, Q-2); round 1 reads the fee rows Schwab's transactions carry and names every
+   account where that is not the billed fee.
+4. **The securities.** Every holding takes its class, sector and history from Opal's securities record: the one classification
+   table (MDPF_SECCLASS; reader `infra/aws/lambda/v2_portal/_shared/etf_classification.py`) and MDPF_SECHIST. A holding Opal
+   cannot describe is shown as such (FWD-6 starts here, on one advisor's holdings only).
+5. **The report.** Hops 3 and 4 are laid into the 49 Financial template and rendered per client on the IRPT_BCKEND export path
+   (`infra/aws/terraform/investor-reporting/export/b2_render.tf`, function `irpt-export-render`). The template is new (F6):
+   round 1 builds the 49 Financial one only, from the custodian-shaped model (C-SHAPE, C-TEMPLATE).
+6. **The read.** The advisor's firm reads every report of the run and says whether it would send it as it is. A report it would
+   not send is listed with the reason. Nothing reaches a client (C-TEMPLATE: Andrew's word).
+
+Round 1 does not touch Cottonwood, Inflection, the comparison or the switch-off view.
+
+## 3. ENRICHMENT BACKLOG (ordered)
+
+1. FWD-9: the field map for one Black Diamond client report (feeds every later template and the comparison).
+2. FWD-5, first comparison: the 2026-09-30 quarter-end, written once, ADVI_BDPARITY's classes reused.
+3. FWD-6 widened: every holding in every 49 Financial report from the securities record.
+4. FWD-3: the Cottonwood template; one report read in each firm's template.
+5. FWD-4: the Cottonwood consolidation over ADVI_COTBKF's history and the Black Diamond `z09` daily feed (ADVI_STITCH and
+   ADVI_COTKEY fold in here).
+6. FWD-7: the per-firm switch-off view.
+7. FWD-2 dry run, then FWD-5 second comparison at 2026-12-31, then FWD-2 itself (the year-end run, both firms).
+8. FWD-8: Inflection from Orion, after both firms are switched.
+
+## 4. WORKSTREAMS AND OWNERS
+
+- One workstream in round 1; COO lane `2.0.0_SA_COO~K2` (seated by `0.0.0_AB_MSTR~DELL2`; placement dell2).
+- Gold and silver scripts are DS-lane work under rule 13; Lambda and Terraform changes are DT/AE work through `safe-apply`.
+- IRPT_BCKEND, IRPT_DASHBD, ADVI_PERFRP, ADVI_49F, MDPF_SECCLASS, MDPF_SECHIST and ADVI_COTBKF keep their PRDs; a hop that
+  needs their change is a CONSUME against their served artifact, or a request to their COO, never a write into their paths.
+- **fabric:** the header keeps `"fabric": "laptop"`; the box is carried by `placement` (control-plane brief section 3: two
+  readers know only two fabrics).
+
+## 5. Rulings closed at L4
+
+1. Round 1 is one 49 Financial advisor at the 2026-09-30 quarter-end (FWD-1), the only real quarter-end before the switch.
+2. Fees in round 1 come from Schwab's transaction rows, labelled as such, until billing (Q-2) names the fee source.
+3. Every new address and name is `lib/opal_naming.py` output; none is typed here (builder output owed at L5).
+4. Black Diamond is read only for the field map and the two comparisons; no hop reads it to make a figure.
+
+## 6. SURFACE MANIFEST (step 4 -> step 5)
+
+| id | outcome_ref | surface | claim | verb | depends_on | bound |
+|---|---|---|---|---|---|---|
+| S01 | FWD-1 | the advisor's account and household list: `infra/logic/registry/scopes.json` + `directory_runner.py` / `irpt-directory-search` | held (brief F1) | consume | -- | one advisor, count printed |
+| S02 | FWD-1 | Schwab silver for those accounts under `opal-data-assets/schwab/<master>/` (`schwab_conversion.py`) | held (brief F1) | consume | S01 | custodian rows only |
+| S03 | FWD-1 | holdings-based returns: IRPT_DASHBD gold `account_return_daily`; IRPT_BCKEND `holdings_49f.py` | unmeasured (served state per those projects) | consume | S02 | standard periods |
+| S04 | FWD-1 | fee rows from Schwab transactions, labelled; the billed-fee source (Q-2) | unmeasured | measure | S02 | every unmatched account named |
+| S05 | FWD-1, FWD-6 | securities record: `infra/aws/lambda/v2_portal/_shared/etf_classification.py` (MDPF_SECCLASS) and MDPF_SECHIST | held | consume | -- | six classes only |
+| S06 | FWD-1, FWD-3 | the per-firm template model (NEW; address and name builder output owed at L5) | unmeasured (brief F6: none exists) | build | S03, S04, S05 | custodian-shaped |
+| S07 | FWD-1 | the render on the IRPT_BCKEND export path (`export/b2_render.tf`, `irpt-export-render`) | held | wire | S06 | one report per client |
+| S08 | FWD-1 | the advisor firm's read of every report, written down | unmeasured | measure | S07 | nothing to a client |
+| S09 | FWD-9 | the Black Diamond field map (NEW; builder output owed at L5) | unmeasured | build | -- | every field of one report |
+| S10 | FWD-5 | the two dated comparisons (ADVI_BDPARITY classes) | unmeasured | measure | S07, S09 | written once each |
+| S11 | FWD-4 | the Cottonwood consolidation over ADVI_COTBKF silver and `opal-data-assets/blackdiamond/cottonwood/` | held (brief F2) | build | ADVI_COTBKF | no gap, no double count |
+| S12 | FWD-7 | the switch-off view (NEW; builder output owed at L5) | unmeasured | build | S07 | per firm |
+| S13 | FWD-8 | Inflection from `opal-data-assets/orion/inflection/` | held (brief F3) | consume | FWD-2 | after the switch |
+
+## 7. BRIEF COVERAGE
+
+| Brief heading | Carried | Consuming sections |
+|---|---|---|
+| PART I, thread and O1-O7 | the thread; seven outcomes plus FWD-9 | ENDPOINT; section 2 |
+| PART II, boundary | owns templates, consolidation, comparison, switch-off view; relies on eight projects | C-PROGRAMME; section 4 |
+| PART III, bar | sent without question; no Black Diamond login; no seam; reasons written first; readiness any day | FWD-1, FWD-2, FWD-4, FWD-5, FWD-7 |
+| PART IV, F1-F6 | Schwab data held; Cottonwood via Black Diamond; Orion; Opal's method; securities rebuild; no template | sections 2 and 6 |
+| PART V, must be true | the date; Cottonwood's custodian (unmeasured); fees (Q-2); the cold projects; capacity; no shadow | FWD-2, S04, S11, C-PROGRAMME, C-NO-SHADOW |
 
 -- 1.0.0_SA_CTO
+
+## v0.2 (1.0.0_SA_CTO~DELL2, 2026-10-07) -- L4 surfaces on `2.0.0_SA_COO~K2`'s hand-back (msg 4)
+
+Added sections 1-7: the THREAD's six hops, the ENRICHMENT BACKLOG, owners, the L4 rulings, the SURFACE MANIFEST and BRIEF
+COVERAGE. The ENDPOINT and CONTRACTS are not edited, so the ratified-text half does not re-open.
