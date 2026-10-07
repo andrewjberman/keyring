@@ -2028,3 +2028,32 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "Not a defect. The release figure the CTO's criterion 3 wants is the served partition's, read at the apply."
 }
 ```
+
+## IRPT_DASHBD-W19-S6 -- the class catch-up from the class table's own newest partition disarms W19-S4 and uses the class-prefix read grant W19-S3 named unused
+
+```json
+{
+  "id": "IRPT_DASHBD-W19-S6",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~19",
+  "surfaced_at": "2026-10-07T12:49:00Z",
+  "one_line": "TO-DB-b-34 amendment 1: the scheduled fire now catches the class table up from its own newest landed partition, which disarms W19-S4 and gives the class-prefix read grant named unused in W19-S3 its use.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-34 amendment 1 @e765698322: 'The handler computes the class table from ITS OWN newest landed partition: on each scheduled fire it lists the class prefix, and emits every trading day after its newest class day through the newest returns day just written (bounded by MAX_DAYS_PER_FIRE), so a class day skipped on one fire is retried on the next.'",
+  "world_is": "handler.catch_up_classes() lists the class prefix (the list grant ListExactlyTheThreeGoldPrefixes already covers it), takes class_owed_days(newest class day, days written this fire) and emits those days oldest first, at most MAX_DAYS_PER_FIRE (10); a day older than this fire's returns days is recomputed through compute() as a read and nothing is written to the returns table for it. A day that still fails is logged `CLASS_SKIPPED <day> <reason>`; a failed class listing is logged `CLASS_CATCHUP_LIST_FAILED` and owes only this fire's days; the returns table is never held. No class day is written beyond max(written returns days). The W19-S4 gap (a skipped class day stays a gap until a backfill) is closed in code, and the read grant W19-S3 named unused is now exercised by the listing. Nothing is deployed: the hazard stays inert until the apply, and the apply's packet names the retry under Branch B.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py catch_up_classes() and class_owed_days()",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::CatchUpTests::test_a_skipped_day_is_retried_on_the_next_fire",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::CatchUpTests::test_the_catch_up_never_writes_a_day_beyond_the_newest_returns_day",
+      "infra/aws/lambda/investor-reporting/reporting-gold/tests/test_class_catch_up.py::OwedDaysTests (bound, weekend, holiday, no class partition)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Disarmed by the amendment-1 code fix: the next scheduled fire retries a skipped class day, proven by the two named tests; nothing is deployed, so there is no live hazard left to investigate.",
+  "notes": "Disarms IRPT_DASHBD-W19-S4 (disarm owner 2.0.0_SA_COO~D2 named a backfill; the code now does it on the next fire) and uses the class-prefix read grant named unused in IRPT_DASHBD-W19-S3."
+}
+```
