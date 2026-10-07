@@ -77,7 +77,7 @@ Read-only: the whole repository, in particular `lib/research/corpus/extract.py`,
 ## 4. PROOF OF SPEC (literal; timeout 120)
 
 <proof_of_spec>
-  <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 4/4 control 2/2$</expect></criterion>
+  <criterion id="AC1" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap6_check.py"</invocation><expect>(?m)^ap6 build 6/6 control 3/3$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-6"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python -m pytest lib/research/corpus/tests/test_dossier.py lib/research/corpus/tests/test_dossier_case_body.py lib/research/corpus/tests/test_dossier_method_bump.py lib/research/corpus/tests/test_dossier_heading_only_round40.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^[0-9]+ passed(, [0-9]+ warnings?)? in [0-9.]+s$</expect></criterion>
 </proof_of_spec>
 
@@ -150,6 +150,35 @@ With the build as landed these two would read "heading carries no text under it"
 invocations in section 4. Then section 5 again: the proof instance updated, the checker after your final commit, and the status
 tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 
+## 8. AMENDMENT 3 (2026-10-07, the issuer's own; the after-census)
+
+AMENDMENT 2 is merged and is your INHERITED STATE (in your worktree's HEAD): the item directly after a section's lead no longer
+ends the block, the two absent reasons exist, and `--section-recompose-census` exists. The issuer ran that census on the served
+dossiers (`org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/evidence/
+r40_ap10_section_recompose_census_20261007.txt`, read it whole): 95 names, 950 fields, 51 changed; of the 49 served bare
+headings it counts 41 as gaining prose. 17 of those 41 are NOT prose: ten `special_items` read "Special items: 4_30_2026 5
+Supporting documentation: Business model" (a page header, a page number and the next unnamed headings), and seven
+`comparison_set` read "COMMON STOCK COMPARISON 6/23/2026" or "... P/E" (a table's date or column header). Your row
+`AMGT_CORPUS-Z-W2-S23` named this class. The other 24 are real (positives, negatives, two management, one special items).
+
+**The issuer's rule, and only this:**
+1. A section block is served as a passage only when its items AFTER the lead line carry prose: at least one item with more than
+   `extract._HEADING_WORD_CAP` words, OR 25 or more words in all across those items (so a section of short bullet lines is still
+   served). An inline remainder on the lead line that is itself prose (the existing `_is_prose` test) still serves, as today.
+   Count words on the item text as extracted; do not strip bullets or punctuation first.
+2. A block that fails that test reads absent with the reasons AMENDMENT 2 made (table, or no prose). Class B is still tried after
+   a class A that fails it.
+3. `--section-recompose-census` also prints, for the served values under 40 characters, the three counts as now, and for every
+   changed field that is NOT one of those 49 a line marked `OTHER-CHANGE` (one exists today: CLX company description), so a
+   change outside the bare headings cannot hide in the total.
+4. Tests in `test_dossier_heading_only_round40.py`: the page-furniture pdf case and the date-only docx case read absent; a
+   section of six short bullet lines (none over the cap, 25 or more words in all) is served; the two cases of AMENDMENT 2 still
+   pass. `METHOD_VERSION` stays `/6`.
+
+**Prove** AC1 (now `ap6 build 6/6 control 3/3`: b5 the page-furniture case, b6 the date-only case, c3 the bullets control) and AC2
+by their invocations in section 4. Then section 5 again: the proof instance updated, the checker after your final commit, and the
+status tag reading complete appended at the END of this file only if AC1 and AC2 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 9 + s.4 item 3; row Z-S89. Base: ap6 build 0/2 control 2/2; the three existing files 25 passed. The served census and the dossier re-write are the issuer's CRPS-ap-10.
@@ -161,3 +190,4 @@ tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>
+<status>in_progress</status>
