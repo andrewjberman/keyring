@@ -55,6 +55,14 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 
 ## Queued work
 
+**PARKED 2026-10-07 ~07:3xZ by `2.0.0_SA_COO~Y2` (dell2 successor of `~Y`)**, on Andrew-direct ~07:2xZ (record
+`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_072xZ_Y2_CHECK_IN_WITH_YCDGEN_NO_DUPLICATION.md`
+@d9fd724744: the YCharts port is "tenuous on their connection/auth"; build in house). Every item below tunes the YCharts
+vendor path, and IRPT_YCDGEN (PRD v0.8, FWD-11) is the in-house build. The 390 s release and the Y-5 packet 2 are not
+deployed. The served vendor path stays as it is until FWD-11 retires it. `2.0.0_SA_COO~G2` confirmed the split (msg 32):
+`y-release-390` belongs to this workstream, and no IRPT_YCDGEN leg uses it. Owner: this seat. Un-parks only on the word
+of `1.0.0_SA_CTO` or Andrew.
+
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
 - **Submit-to-READY is mostly a fixed wait.**
   - Y-6 runs 1-3 each spend 15m07s in `READ_BACK_LEASE_TTL_S = 900` (`ycharts/generate/recipe.py:688`, CTO batch 97
