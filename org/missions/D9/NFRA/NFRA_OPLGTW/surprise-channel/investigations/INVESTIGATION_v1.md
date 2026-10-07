@@ -9419,3 +9419,80 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not fixed here. Candidate: admit rivalfunds_view's day and route to the R8-PRIV args allowlist and pass bytes_returned. That widens what the audit lake stores, so it is the CTO's call; routed in the round-24 slug."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S11",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-rl-11 Phase A rehearsal: the scoped identity's silent acquire asked Entra for the 9 narrowed scopes and was GRANTED its full previously consented set; the narrowing takes hold at the identity's next /login consent, not at the release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:40Z, host rehearsal of the staged release bytes (installed tree untouched), the scoped identity's cache COPIED to a host scratch dir so nothing live was written: R25_ACQUIRE_CALL requested 9 scopes (Channel.ReadBasic.All, ChannelMessage.Read.All, ChannelMessage.Send, Chat.ReadWrite, ChatMessage.Send, Files.ReadWrite.All, Sites.Read.All, Team.ReadBasic.All, User.Read) and ok=True; the granted scope names of that token and of a forced refresh-token exchange for the same 9 are 17 consented Graph scopes plus CallTranscripts.Read.All and the OIDC scopes (Mail.Read, Mail.ReadWrite, Mail.Send, Calendars.ReadWrite, Notes.ReadWrite.All, OnlineMeetings.ReadWrite included). Scope names only; no token printed. (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_scopes.out)",
+      "RUN the consent leg, same run: token_broker.build_consent_url for the scoped identity carries 9 scopes, for an unscoped probe email 17 (R25_SCOPED[0], R25_UNSCOPED). Live code BEFORE: 17 and 17 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_before_scopes.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-11 / OA-f-14: the scoped identity's /login consent and silent acquire narrow from 17 Graph scopes to 8, or 9 under a Tax binding.",
+  "world_is": "The consent URL and the silent-acquire REQUEST narrow to 9 (measured). The ACCESS TOKEN Entra returns from the existing refresh token still lists the full consent already granted to that refresh token, so the identity's effective Graph scopes stay 17+ until it signs in through /login again under the narrowed consent. All 9 read probes answered 200 on that token.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not a hazard the release creates (the identity's reach is unchanged by the release); it bounds what 'narrowed' means on the day of the release. Whether to re-consent the concierge through /login after the release is the issuer's and Andrew's call; nothing in Phase A depends on it."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S12",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-rl-11 pre-GO identity-key read: the host .env carries TAXSMA_WORKBOOK_IDENTITY, not OG_TAXSMA_WORKBOOK_IDENTITY; that key names the scoped concierge (true), so the release's consent is 9 scopes not 8; MS_INGEST_IDENTITY and OTP_MAILBOX name no scoped identity (false).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:3xZ, live code, read in-process on the host (.env parsed as text, never sourced; only booleans printed): R25_ENV_KEY_NAMED_OG_TAXSMA_WORKBOOK_IDENTITY_PRESENT_IN_ENV False; R25_IDENTITY_KEY OG_TAXSMA_WORKBOOK_IDENTITY scoped=True (the value is a tid/oid binding compared in-process with the scoped identity's cached account), MS_INGEST_IDENTITY scoped=False, OTP_MAILBOX scoped=False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_before_scopes.out).",
+      "FILE infra/aws/ec2/opal-gateway/app/config.py:280 reads TAXSMA_WORKBOOK_IDENTITY; infra/aws/ec2/opal-gateway/deploy-to-ec2.sh:174 says the OG_TAXSMA_WORKBOOK_IDENTITY variable is a deploy-shell input that is 'not read at all'.",
+      "RUN the staged release bytes: consent_scopes for the scoped identity = 9 (Files.ReadWrite.All is the Tax caller's scope); R25_IDENTITY_KEY_COVERED OG_TAXSMA_WORKBOOK_IDENTITY covered_by_consent=True (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_scopes.out)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-11: read whether each of OG_TAXSMA_WORKBOOK_IDENTITY, MS_INGEST_IDENTITY and OTP_MAILBOX names a scoped identity; a true key whose caller scopes the release's consent_scopes does not cover is a STOP before GO.",
+  "world_is": "The Tax key is true and IS covered (the A1 caller table unions its Files.ReadWrite.All), so no STOP. The first key is read under its host name TAXSMA_WORKBOOK_IDENTITY, reported under the order's name in the record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The order's '8, or 9 under a Tax binding' resolves to 9 on this host. RL11_SCOPES.json's identity_keys_scoped keeps the order's three key names."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S13",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T03:52Z",
+  "one_line": "OG-up-1: opal_data_refresh_status returns displayed_date null for the live served manifest (its date-key list matches none of the manifest's five top-level keys), and as a tool of the mutating opal_portal spec it is gated at min_tier standard like the upload.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 ~03:50Z, host, staged release bytes, one portal login POST and one GET of the served manifest: R25_MANIFEST_KEYS generated_at:str, pipeline_execution_id:str, pipeline_started_at:str, source_count:int, sources:dict; R25_MANIFEST_DATE_FOUND_BY_TOOL False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_manifest_keys.out); the status tool's own answer: status SUCCEEDED, terminal True, displayed_date_present False (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r25_after_stage_send.out).",
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/opal_portal/integration.py:152-160 @240ac2fe5a: _manifest_date looks for displayed_date, date, as_of, asof, vintage, latest_date, data_date, updated; none is a key of the served manifest. The text field still carries str(body)[:300].",
+      "FILE integration.py:104 (SPEC min_tier=\"standard\") and app/integrations/base.py:163 (guard.enforce_min_tier(tool, tier, spec.min_tier)): the floor is per integration spec, so the read-only status tool is refused to a read_only-tier caller as the upload is. The rehearsal called the registered tool through its wrapper with the tier gate, the entitlement lookup and the audit sink stubbed (a caller tier needs a real principal); the tool's own code (portal login, status GET, manifest GET) was the real one."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-up-1: the status tool returns the status and the served manifest's displayed date and text; it is read-only.",
+  "world_is": "Status and text are returned; the structured displayed_date field is null against today's manifest (the date is readable inside displayed, as generated_at). The through-the-wrapper path with a real principal was not exercised in Phase A.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Not fixed here (the cell is drained). The caller texts already say 'or the portal's displayed date if that tool is not available to your identity'. Nothing in AC2 depends on displayed_date."
+}
+```
