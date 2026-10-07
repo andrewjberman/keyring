@@ -21422,6 +21422,90 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "integrations/bloomberg/research/field_map.json"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Hookup 1's premise that the caller's news read fetches one day is not true at the base: it already reads the name's whole stored history, so no widening was made.",
+  "spec_asserts": "AMENDMENT 1, hookup 1: 'the caller's read fetches one day today, so widen that read to the window, or the rule cannot find an older day.'",
+  "world_is": "_overlay_top_band at lib/research/api/scoped_amgt.py reads _timeline_snapshot_rows('article_security_mention') with no day filter and filters only on security_key; top_band.news_items did the one-day cut inside itself. The rows passed to news_items_newest(rows, day) therefore already span every stored day. Result on 95 covered names: 57 with items, 38 'No news in the last 30 days', 0 failed reads, 0 bad (r77_ba11 AC1 C4 PASS).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (_overlay_top_band, _timeline_snapshot_rows)",
+      ".scratch/ac1.txt in worktree C:/tmp/r77-277 (r77_ba11 AC1 output)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Hookup 3 merged verbatim on the description header would blank every translation: a sentence from read_drafted_sections already carries the three served keys but not the stored translation block.",
+  "spec_asserts": "AMENDMENT 1, hookup 3: the description header (read_description) takes **translated_text.served_translation(sentence).",
+  "world_is": "read_description's `sentence` is a served sentence from read_drafted_sections (already merged with the three keys by the sections builder); served_translation() reads the stored `translation` block, which the served shape does not carry, so on that input it returns translated False and text_translated None. The header therefore copies the three keys when the sentence already carries them and projects with served_translation() only on a raw stored sentence. Both sites serve the three keys; the original text is untouched.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (read_description; sections builder in read_drafted_sections)",
+      "lib/research/api/translated_text.py (served_translation)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "GET /freshness?view=page on the local adapter is 66,350 B with 95 rows and 3 stale, not the 22,855 B ba-2 measured on the module alone; the owner line reads both lists as having no readable owner.",
+  "spec_asserts": "AMENDMENT 1: 'ba-2 measured 22,855 B and 95 rows on the module alone; ba-1 measured 3 stale of 95' (a deployed-shape check to report).",
+  "world_is": "Measured 2026-10-06 on the local adapter (live stores, snapshot generated 2026-10-06T20:18Z, age 6.65 h): status 200, body 66,350 bytes, 95 rows, 3 stale (92 not), keys rows/generated_at/snapshot/denominators/lists. lists.owner_line = 'The publisher list has no owner that could be read; The social account list has no owner that could be read.'; both list entries carry owner null, reviewed null, due null. The plain GET /freshness body is 2,889,557 bytes with 302 rows (not the page view). The size difference from ba-2 is the rows carrying per_input detail; the unreadable owners come from read_list_register() on this device.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/api/scoped_amgt.py (handler, /freshness view=page)",
+      "lib/research/lists/owner_line.py (lists_statement)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W277-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~277",
+  "surfaced_at": "2026-10-07T03:04:29Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Skipping the print text step saves 0.9 to 1.5 s per name on this device, against the 0.22 to 0.40 s the order states.",
+  "spec_asserts": "Order section 1(c): the text step costs 0.22-0.40 s that the served route throws away.",
+  "world_is": "Median of 4 build_pack calls per mode after one warm call, from the same landed block: BA_US_Equity 3.77 s with the text step, 2.84 s without (saved 0.93); AMD_US_Equity 4.32 / 2.82 (1.50); ASML_NA_Equity 4.16 / 2.78 (1.38). Whole print route (handler, one call each, first call cold): before 7.24 / 5.30 / 5.72 s, after 4.16 / 3.72 / 3.65 s. The three PDFs are equal in page count (22/24/24) and extracted text, and equal in size.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/print_equal.py",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/capture_print.py"
+    ]
+  }
 }
 ]
 ```
