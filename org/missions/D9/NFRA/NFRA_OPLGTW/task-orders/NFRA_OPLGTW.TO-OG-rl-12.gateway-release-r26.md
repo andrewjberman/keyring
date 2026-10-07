@@ -30,8 +30,10 @@ deploy identity and the manifest commit. Reuse the `r25_*` tooling in
 - **Release branch** `rel-nfra-oplgtw-r26`, a NEW worktree `/c/tmp/og-rel21` at the live sha. **Rollback tree:** a NEW
   `/c/tmp/og-rb20` at the live sha, proven against the live S3 artifact.
 - **The release set:** every gateway difference between live and CLOUD at the hand-off, except the CLOUD-only
-  `runbooks/SCHWAB_PILOT_RUNBOOK.md`. Expected: `identity_tool_allowlist.txt` (one added row and its comment lines;
-  it ships to the host) and `tests/test_identity_scope_status_row.py` (source-only).
+  `runbooks/SCHWAB_PILOT_RUNBOOK.md`. Expected (AMENDED A1): `identity_tool_allowlist.txt` (one added row and its comment
+  lines; it ships to the host), `app/integrations/opal_portal/integration.py` (the execution-id shape check of row
+  Z-S65; it ships), and two source-only tests, `tests/test_identity_scope_status_row.py` and
+  `tests/test_opal_portal_status_id_shape.py`.
   - If CLOUD carries any OTHER gateway difference, STOP before the release commit and report its files and commits.
     Another seat's change needs its own release request and halves; do not carry it silently.
 - **Served output WIDENS, by Andrew's word.** The ANNOUNCE names it:
@@ -39,6 +41,10 @@ deploy identity and the manifest commit. Reuse the `r25_*` tooling in
   - its Graph consent does not change (the tool maps to no scope);
   - every other identity and every other tool is unchanged.
   - Rollback per key: redeploying live `240ac2fe5a` removes the row.
+- **One property NARROWS (A1):** `opal_data_refresh_status` refuses a malformed `execution_id` before any request.
+  The REHEARSAL and the post-deploy read each show one refused id (for example one containing `/`) and one accepted
+  id, the known 2026-10-07 ~01:26Z execution. Record both in `W/RL12_FLOOR.json` as `status_id_refused` and
+  `status_id_accepted`.
 
 **BEFORE and REHEARSAL (form step 5), host runs one at a time, each in its own scratch directory.**
 - BEFORE, on the installed code: the scoped identity is DENIED `opal_data_refresh_status`; the overlay's row count.
@@ -106,6 +112,7 @@ once per phase.
 - Round 25 (R3-T.19, item 2), after `OG-al-2` and after r25 closes. Halves: CTO + COO + CVO (CTO msg 30555).
 - `rl12.AC1` pins the live sha to r25's release sha `240ac2fe5a`, the value the manifest will carry once r25 deploys.
   Should r25 roll back or re-cut, the issuer amends the pin before the hand-off.
+- AMENDMENT 1 (04:4xZ, issuer, before any hand-off): the release set gains OG-al-2's item 4 (row Z-S65, CTO msg 30563).
 - Pre-cut 04:3xZ: `rl12.AC1` FAIL (r25 is not live yet; no ledger). `rl12.AC2` FAIL (the record is absent).
 
 <status>pending</status>
