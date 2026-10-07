@@ -8,7 +8,8 @@ Contract: org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002
 cpu/memory usage gets the job").
 
     python .tools/remote-job.py bid J042                                   # availability + CPU/memory -> job.bid
-    python .tools/remote-job.py accept J042 --coo 2.0.0_SA_COO~R           # lock this device -> job.accepted
+    python .tools/remote-job.py accept J042 --coo 2.0.0_SA_COO~R --brief-file PATH   # lock this device -> job.accepted
+    python .tools/remote-job.py grade J042 --as 3.0.0_SA_CVO --verdict PASS|FAIL --record PATH   # the reviewer's grade
     python .tools/remote-job.py complete J042 --summary TEXT [--deployed] [--evidence TEXT] [--attempt N]
     python .tools/remote-job.py fail J042 --reason TEXT                    # job.failed, lock cleared
     python .tools/remote-job.py close J042                                 # lock cleared (after the bus CLOSE + reap)
@@ -22,12 +23,14 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import hashlib
 import json
 import os
 import re
 import subprocess
 import sys
 import tempfile
+import time
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.normpath(os.path.join(HERE, ".."))
@@ -45,6 +48,10 @@ def device_names() -> tuple:
     spec.loader.exec_module(devices)
     return tuple(devices.names())
 JOB_RE = re.compile(r"^J\d{3}$")
+COO_RE = re.compile(r"^2\.0\.0_SA_COO~[A-Za-z0-9_]+$")
+REVIEWER_RE = re.compile(r"^3\.0\.0_SA_CVO(~[A-Za-z0-9_]+)?$")
+LIVE_SECONDS = 120   # the estate reads a seat as live when it was seen within this many seconds
+LIVENESS = os.path.join(ROOT, "org", "mcp", "liveness.json")   # per box, gitignored; OPAL_LIVENESS_FILE overrides
 JSON_PREFIX = "REMOTE-JOB-JSON"
 
 
@@ -116,6 +123,36 @@ def clear_lock(job: str, path: str = None) -> bool:
     return True
 
 
+def live_reviewer(path: str = None, now: float = None):
+    """The reviewer seat (3.0.0_SA_CVO, with or without ~lane) seen most recently within LIVE_SECONDS on this box
+    according to the liveness file (serial -> entry with last_seen_epoch / last_seen), or None."""
+    path = path or os.environ.get("OPAL_LIVENESS_FILE") or LIVENESS
+    now = time.time() if now is None else now
+    try:
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except (OSError, ValueError):
+        return None
+    best, best_seen = None, None
+    for serial, entry in (doc.items() if isinstance(doc, dict) else ()):
+        if not REVIEWER_RE.match(str(serial)) or not isinstance(entry, dict):
+            continue
+        seen = entry.get("last_seen_epoch")
+        if not isinstance(seen, (int, float)):
+            try:
+                seen = datetime.datetime.fromisoformat(str(entry.get("last_seen"))).timestamp()
+            except ValueError:
+                continue
+        if 0 <= now - seen <= LIVE_SECONDS and (best_seen is None or seen > best_seen):
+            best, best_seen = serial, seen
+    return best
+
+
+def sha256_file(path: str) -> str:
+    with open(path, "rb") as fh:
+        return hashlib.sha256(fh.read()).hexdigest()
+
+
 # -- sending to LDO-001 ------------------------------------------------------------------------------------------------
 def make_runtime():
     """An LDO runtime aimed at LDO-001's mailbox. Queue and table names are NAMES.json's (name() output)."""
@@ -152,40 +189,83 @@ def cmd_bid(args) -> int:
     j = job_id(args.job)
     dev, serial = who(args)
     lock = read_lock()
+    reviewer = live_reviewer()
     cpu, mem = measure()
-    payload = {"device": dev, "serial": serial, "available": lock is None, "cpu_pct": cpu, "mem_pct": mem,
-               "at": now_iso()}
+    payload = {"device": dev, "serial": serial, "available": lock is None and reviewer is not None,
+               "reviewer": reviewer, "cpu_pct": cpu, "mem_pct": mem, "at": now_iso()}
     if lock is not None:
+        payload["unavailable_reason"] = "job_open"
         out("WARN: this device already runs %s, so the bid says available=false" % lock.get("job"))
+    elif reviewer is None:
+        payload["unavailable_reason"] = "no_reviewer"
+        out("WARN: no reviewer seat (3.0.0_SA_CVO) is live on this device, so the bid says available=false")
     emit(j, "job.bid", payload, "bid-%s-%s" % (j, dev), args.dry_run)
     return 0
 
 
 def cmd_accept(args) -> int:
     j = job_id(args.job)
+    if not COO_RE.match(args.coo or ""):
+        out("ERROR: --coo %r is not a 2.0.0_SA_COO~<lane> serial; %s not accepted" % (args.coo, j))
+        return 2
+    brief = args.brief_file
+    if not brief or not os.path.isfile(brief) or os.path.getsize(brief) == 0:
+        out("ERROR: --brief-file %r is not an existing, non-empty file; %s not accepted" % (brief, j))
+        return 2
     dev, serial = who(args)
     lock = read_lock()
     if lock is not None and lock.get("job") != j:
         out("ERROR: this device already runs %s; %s not accepted" % (lock.get("job"), j))
         return 2
-    payload = {"device": dev, "serial": serial, "coo": args.coo}
+    digest = sha256_file(brief)
+    payload = {"device": dev, "serial": serial, "coo": args.coo, "brief_sha256": digest}
     if args.dry_run:
         emit(j, "job.accepted", payload, "accept-%s" % j, True)
         return 0
     write_lock({"job": j, "coo": args.coo, "accepted_at": now_iso(), "device": dev, "serial": serial,
-                "brief": args.brief_file})
+                "brief": brief, "brief_sha256": digest})
     emit(j, "job.accepted", payload, "accept-%s" % j, False)
+    return 0
+
+
+def cmd_grade(args) -> int:
+    """The reviewer's grade, written into the lock. Sends nothing."""
+    j = job_id(args.job)
+    reviewer = args.as_serial
+    lock = read_lock()
+    env_serial = os.environ.get("OPAL_AGENT_SERIAL")
+    record = args.record
+    why = None
+    if not REVIEWER_RE.match(reviewer or ""):
+        why = "%r is not a reviewer serial (3.0.0_SA_CVO, with or without ~lane)" % reviewer
+    elif not lock or lock.get("job") != j:
+        why = "this device's lock does not name %s" % j
+    elif reviewer == lock.get("coo"):
+        why = "the seat that did the work cannot grade it"
+    elif env_serial and env_serial != reviewer:
+        why = "OPAL_AGENT_SERIAL is %r, not %r" % (env_serial, reviewer)
+    elif not record or not (os.path.isfile(record) or os.path.isfile(os.path.join(ROOT, record))):
+        why = "--record %r is not an existing file" % record
+    if why:
+        out("ERROR: %s not graded: %s" % (j, why))
+        return 2
+    lock["grade"] = {"by": reviewer, "verdict": args.verdict, "record": record, "at": now_iso()}
+    write_lock(lock)
+    out("OK: %s graded %s by %s" % (j, args.verdict, reviewer))
     return 0
 
 
 def cmd_complete(args) -> int:
     j = job_id(args.job)
-    dev, serial = who(args)
     lock = read_lock()
-    if not lock or lock.get("job") != j:
-        out("WARN: this device's lock does not name %s; sending the completion anyway" % j)
+    grade = (lock or {}).get("grade") or {}
+    if (not lock or lock.get("job") != j or grade.get("verdict") != "PASS" or not grade.get("by")
+            or grade.get("by") == lock.get("coo")):
+        out("ERROR: %s has no passing reviewer grade on this box; nothing sent" % j)
+        return 2
+    dev, serial = who(args)
     payload = {"device": dev, "serial": serial, "summary": args.summary, "deployed": bool(args.deployed),
-               "evidence": args.evidence or ""}
+               "evidence": args.evidence or "", "coo": lock.get("coo"), "grade": grade}
     emit(j, "job.complete", payload, "complete-%s-%d" % (j, args.attempt), args.dry_run)
     return 0
 
@@ -264,7 +344,11 @@ def main(argv=None) -> int:
     add("bid", cmd_bid)
     p = add("accept", cmd_accept)
     p.add_argument("--coo", required=True, help="the 2.0.0_SA_COO~<N> serial spawned for the job")
-    p.add_argument("--brief-file", default=None, help="where `show` wrote the brief (kept in the lock)")
+    p.add_argument("--brief-file", default=None, help="REQUIRED: the existing, non-empty file `show` wrote (kept in the lock)")
+    p = add("grade", cmd_grade, send=False)
+    p.add_argument("--as", dest="as_serial", required=True, help="the reviewer's serial (3.0.0_SA_CVO[~lane])")
+    p.add_argument("--verdict", required=True, choices=("PASS", "FAIL"))
+    p.add_argument("--record", required=True, help="repo path of the reviewer's grade record (must exist)")
     p = add("complete", cmd_complete)
     p.add_argument("--summary", required=True)
     p.add_argument("--deployed", action="store_true")
