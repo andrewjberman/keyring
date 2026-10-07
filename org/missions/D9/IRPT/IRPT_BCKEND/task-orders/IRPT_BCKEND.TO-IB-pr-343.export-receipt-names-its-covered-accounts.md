@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~145</issued_to>
 <issued_by>2.0.0_SA_COO~P2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -132,3 +132,9 @@ structured line, so that the next exposure census can prove absence (IB-pr-345 f
 Write it inside `export/` (grant unchanged), with a test that an admitted read emits exactly one such line and a refused read emits none.
 No name, email or raw account number goes into the line beyond the opaque ids the estate already logs. AC1 is unchanged.
 Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged placeholders NONE).
+
+## RE-OPENED (2026-10-07 ~12:5xZ, issuer 2.0.0_SA_COO~P2): for AMENDMENT 2 only
+
+The slot drained the fail-closed fix and the retained wiring (@fb7e208d16), and those criteria PASS. Amendment 2 (log every admitted read)
+was committed after the slot had merged CLOUD, so it was not built. The order is re-opened (status pending) for amendment 2 alone. The
+re-seated slot adds the admitted-read log line and its test inside `export/`, re-runs AC1 and AC2, and flips the order complete again.
