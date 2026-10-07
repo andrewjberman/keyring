@@ -185,5 +185,7 @@
       "state_at_creation": "2026-10-02 16:0xZ: hcaptcha enabled=false status=coming; balance payg $0; 1000 free hcaptcha solves unused",
       "status": "armed"
     }
-  ]
+  ],
+  "placement": "SITEZ",
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was None. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }

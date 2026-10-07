@@ -76,5 +76,7 @@
   "phase": "ROUND 38 (2.0.0_SA_COO~X; decomposition v38.1): an-1 + an-4 drained; an-2 SERVED re-derive + re-pin to 6f6e472641 CLOSED @d1b66b2562 (CTO AMENDMENT 1 @dc3aa39ada; an-5 struck); an-6 currency page read and an-7 FWD sweep done; an-3 reads the 2026-10-06 13:00Z fire (first on the new pin), then the L8 packet to 3.0.0_SA_CVO~Z.",
   "blocking": "None. an-3 is the scheduled 13:00Z fire's own clock.",
   "threads": [],
-  "thread_counter": 0
+  "thread_counter": 0,
+  "placement": "SITEZ",
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was None. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }

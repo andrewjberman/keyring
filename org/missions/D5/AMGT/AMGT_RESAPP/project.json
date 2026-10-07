@@ -52,5 +52,7 @@
   "phase": "ROUND 45 EXECUTING, tt-2 IN FLIGHT (checkpoint deliverables/2.0.0_SA_COO~Z/CHECKPOINT_20260926_COO_Z.md): tt-1 (export carries both posture forms; the OK predicate counts a dropped absence) drained @00ffce7fbf; tt-3 (AC4 sample, fresh fixtures; rendered on 5174 18 of 18 states) drained @c8e0b03ee0; tt-4 (22 rows measured) drained @f7e8a62fdd; tt-2 the redeploy with 0.7.0_AE_CloudOps~A, NEVER-2 entry opened @ee87bf1506, both halves committed (COO @52128e2a19, CTO @392fee249c). 2.0.0_SA_COO~Z wound down on Andrew's word.",
   "blocking": "tt-2's report (a file in inbox 2.0.0_SA_COO/~Z) -> the issuer's served sweep, packet, CVO handoff. Portal DEV 4e29386e unpublished: 0.0.0_AB_MSTR~Z publishes, then the issuer moves the gitlink. Round 46 carries a full FWD-1..31 pass (CTO ask). Carried: FWD-24; the portal promote.",
   "threads": [],
-  "thread_counter": 0
+  "thread_counter": 0,
+  "placement": "SITEZ",
+  "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was None. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }
