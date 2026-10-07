@@ -4740,6 +4740,52 @@
     "spec_asserts": "A row's world_is states what was measured",
     "world_is": "The cause of row Z-S65 is not traced: which stage emits a dialog shell under the CUSIP key, and why the account text's name links to it and not to the Bloomberg-keyed dialog. The fault, its count of 4 and the repair being one cell of the next round stand",
     "notes": "Cites ETFS_RIVALS-Z-S65. The COO never-widen half for the deploy carries the same correction."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S67",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-10-07T19:35Z",
+    "one_line": "bbg_budget's two budget checks price the SAME 3,750-point day 150 times apart -- check_points treats 1 point as 1 row while check_backfill prices points through estimate() at 24-2,198 rows each; and mode market-range records points REQUESTED into the same rows field the other modes fill with records RETURNED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "One ceiling in one unit: bbg_budget.json daily_ceiling_rows with production_reserve_rows, and record()/spent() summing a single rows field that gates every backfill.",
+    "world_is": "Exercised against the live module 2026-10-07, not read off the source: remaining(today)=119,245 rows. For ONE day of 3,750 points, check_points(3750) returns ALLOWED while check_backfill of the identical plan returns 'refused before any fetch: estimate 562,500 rows > 119,245 rows remaining' -- a 150x divergence at the default 150 rows per fund-date (per-fund range 24 for PFOE to 2,198 for ACWI). check_points' own refusal text re-labels the same 120,000 as 'the 120000-point backfill budget', so one number carries two unit names. Separately the rows field is not one unit across modes: collector_bloomberg.py:630 records max(len(cap['rows'])-1,0), records RETURNED; security_names.py:14 records the names RETURNED; enrichment_bloomberg.py:75/836/855 records the points REQUESTED (len(lookups), len(batch)*len(run)) under mode market-range. Today's spent()=755 is coherent (749+6, both returned) ONLY because no market-range line landed. record() carries no unit field and spent() sums rows blindly, so a mixed-unit day is unlabelled and undetectable after the fact.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live exercise of bbg_budget.check_points(3750) -> ALLOWED and bbg_budget.check_backfill({'2026-10-08': 3750 default-estimate funds}) -> REFUSED 562,500 rows > 119,245, same process, same config (this seat, 2026-10-07 ~19:25Z)",
+        "bbg_budget.py:112-121 remaining() returns ceiling-reserve-spent in ROWS; :124-136 check_points compares a raw point count against it; :87-91 estimate() prices fund-dates through est_rows_per_fund_date",
+        "Record sites read verbatim: collector_bloomberg.py:630 (rows returned), security_names.py:14-15 (names returned), enrichment_bloomberg.py:75 and :836/:855 (points requested)",
+        "Negative/scoping control: MDPF_SECHIST's own card-A draw calls NEITHER check -- it prices in returned-record units and compares against config directly (2.0.0_SA_COO~H1 msg 598, etf_daily_pull.py:560 at fad25b1527, line printed and it reads 'Same rule as bbg_budget.check_backfill, priced per ticker-weekday. BEFORE any request'), so this hazard does NOT reach the 2026-10-08 draw"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed at the direction of 1.0.0_SA_CTO~Z ruling 31309; composed by 0.0.3_BG_BBGTerminal, which cannot write under org/missions or commit (concierge fence; no OWNPATHS lane) -- the writer is the issuer. The LIVE caller of check_points is enrichment_bloomberg.py:817, which is why hazard_standing is ARMED rather than INERT despite the card-A draw being unaffected. NOT a request to edit integrations/bloomberg: the no-modify order stands (ruling 31309). Related: ESTATE_GOVERNANCE-S27 (same file's as-of frontier), a separate row with its own owner."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S68",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T19:42:31Z",
+    "one_line": "Disarm statement for row ETFS_RIVALS-Z-S67: the price-history backfill's guard is check_points, and its unit is one requested price point, which returns at most one record",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py lines 815 to 817 (mode market-range): remaining = bbg_budget.remaining(); over_budget = bbg_budget.check_points(need), where need is the plan's count of security-days; an over-budget plan is refused before any request",
+        "data/etfs/scripts/rivalfunds/bbg_budget.py lines 87 to 136, read: check_backfill(plan) takes {date: [funds]} and prices each FUND-DATE of a holdings pull through est_rows_per_fund_date (default 150 returned rows for one fund on one date); check_points(points) compares a count taken directly. The two functions price different draws, so 3,750 handed to both is 3,750 fund-dates in one and 3,750 price points in the other",
+        "enrichment_bloomberg.py lines 836 to 861: every request sent records its points, including a request that fails. One price point is one security on one day; a history request returns at most one record for it (none on a non-trading day or for an unknown key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S67 and 1.0.0_SA_CTO~Z ruling msg 31309: before backfill day 1 the disarm owner states which check the backfill's guard uses and that its unit matches what the ledger records",
+    "world_is": "The guard is check_points. Its unit, points requested, is an upper bound on records returned, so against a ceiling kept in returned records it refuses early and never late: 3,750 points draw at most 3,750 records. The mixed unit in the ledger's rows field stands as row Z-S67 says: after a backfill day the day's spent() is returned records plus requested points, an over-count. Not exercised: no market-range request has been sent, so 'at most one record per point' is read from the request's shape, not measured; day 1's log gives the measured ratio and this seat reports it",
+    "notes": "Cites ETFS_RIVALS-Z-S67 (surfaced by 0.0.3_BG_BBGTerminal, filed by this seat at its ask, msgs 31332 and 31333). The hazard cannot fire before a backfill runs, and none runs before the deployed-stage read and a never-widen pair. No file under integrations/bloomberg is touched."
   }
 ]
 ```
