@@ -2169,3 +2169,130 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The file holds the packages the firm's code imports directly. Their own dependencies are not listed, so the list is complete for an index-backed install (pip resolves the rest) and incomplete for an offline one, which is the only kind a Dell may make. The Python kit therefore installs with no dependency resolution and reports an import that fails for a missing dependency as its own class. Owner of the file: 3.0.0_SA_CVO. Whether the file should pin the full closure, or a second generated file should, is for that owner and the package-intake design (PRD v0.16, C-INTAKE)."
 }
 ```
+
+## NFRA_CTLPLN-W6-S6 -- AMENDMENT 4: check_dell_fence_join.py is still a reader that ignores an unknown row key, and it is outside the grant and pinned
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "After the validator and the module refuse an unknown key, tests/check_dell_fence_join.py (render_arns, registry_diff) still ignores one: measured by derive_fence_row_shape.py, a scratch row with an unknown key renders the dell1 ARN into 3 of 3 buckets there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output (AC2 after the build): validator refusals 3 for rows plus an unknown key; terraform plan in a scratch module rc=1 (precondition); join check renderer: dell1 ARN in the rendered list of 3/3 buckets; FENCE-ROW-SHAPE ... extra_key_ignored=1 extra_key_refused=2",
+      "infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py render_arns() reads r.get('arn') / r['principal'] only; the check is not in this amendment's write grant and the order says not to touch it or its pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4: every reader of the file must refuse an unknown key, never ignore it.",
+  "world_is": "Two of the three row-parsing readers now refuse (the validator, and the module at plan time). The third is a test that renders nothing into any policy, so the hazard is INERT: it can only mis-grade, not admit. It is left as it is by the order; the issuer re-grades it at the merge when it moves the pin."
+}
+```
+
+## NFRA_CTLPLN-W6-S7 -- AMENDMENT 4: derive_fence_row_shape.py (AC2) did not finish in 120 s at the start of this pass, and its probe had to change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "CT4d2-AC2's script read rc=124 after 120 s on this worktree before any edit; the order did not say it would need changes, but the amendment's closed key set makes its actions+prefix probe a valid row, and its scratch module copy collided with the landed output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py before any edit: real 2m0.7s, rc=124 (check_dell_fence_join.py in the same worktree: 1m9s, rc=0)",
+      "after the edit: real 42 s, rc=0, last line FENCE-ROW-SHAPE rows=29 key_sets=1 rows_with_actions=0 rows_with_prefix=0 readers=16 extra_key_ignored=1 extra_key_refused=2 can_carry_today=False ok=True",
+      "changes: sim_call caches results in a temporary directory outside the repository (key = the whole request incl. the document bytes, TTL 3600 s, an ERROR never cached); 6 workers instead of 2; the extra-key probe is now an UNKNOWN key (actions and prefix are known keys); the scratch module copy no longer writes the proposed HCL (it is the module now)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 criterion CT4d2-AC2 and AMENDMENT 4's rule that every invocation finish under timeout 120.",
+  "world_is": "The simulator shim runs about 3 s a call; the old script made ~38 calls with 2 workers. The script's meaning is kept (rows, readers, can_carry_today as measured) and its three-reader count now reads 1 ignored, 2 refused."
+}
+```
+
+## NFRA_CTLPLN-W6-S8 -- AMENDMENT 4: lib/tests/test_opal_naming.py reads 6 failed / 87 passed on the pinned base, not the 2 / 91 its docstring states
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "Before any edit of lib/opal_naming.py (the base file written over the worktree copy, then restored) pytest on test_opal_naming.py gives 6 failed, 87 passed; after the edit the same 6 ids fail and 87 pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/tests/test_opal_naming.py with the file at 06c783b92b: 6 failed, 87 passed; failing ids: test_grade_agrees_with_every_worked_case for inf-silver-chain|LAMBDA, Inflection-SilverChain-DimConversionFailure|CW_ALARM, inf/otp-relay/token|SECRET, opal-portal-data-proxy-api|API_GW, wsb-49f-model-aua-pull-daily|SCHEDULE; and test_lambda_plane_consumers_is_import_aware_not_a_bare_substring (8 == 7)",
+      "the same pytest after the edit: the identical six ids, 6 failed, 87 passed; run as a script (python lib/tests/test_opal_naming.py) the file prints nothing and exits 0 both before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the test file's docstring: the baseline is 2 failed / 91 passed.",
+  "world_is": "The baseline has moved since the docstring was written; the identical failing set before and after is the control, so this build changes none. Not adjudicated here."
+}
+```
+
+## NFRA_CTLPLN-W6-S9 -- AMENDMENT 4: the module also refuses a half-scoped or malformed scoped row, which the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "The order asked the module to refuse an unknown key; main.tf also refuses a row with only one of actions/prefix, an action outside the closed set, a prefix not ending in /, and a wildcard or non-ARN principal on a scoped row, because the module renders from rows the validator may not have graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fence_scoped_rows.py: module plan in a scratch root refuses cases 1,2,3,4,6 (unknown key, actions without prefix, prefix without /, PutObject in actions, wildcard ARN); cases 5 (other firm's prefix) and 7 (duplicate principal) are validator-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 item 1: the module must refuse a key outside the closed set.",
+  "world_is": "Without the extra rules, a row with actions but no prefix would pass the module's key check and render as a full admission. Each extra rule is one more precondition on the same two outputs; fence_exemption_arns' value is unchanged for today's rows."
+}
+```
+
+## NFRA_CTLPLN-W6-S10 -- AMENDMENT 4: CT4d2-AC3's expect carries an unescaped + that the checker reads as a quantifier
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:44:38Z",
+  "one_line": "CT4d2-AC3's <expect> unknown_key_refused_by=validator+module is read by the proof checker as a regex, where + is a quantifier, so the criterion's own correct output line can never match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c re.search('unknown_key_refused_by=validator+module', <the check's last line>, re.S) returns None; re.search(r'unknown_key_refused_by=validator\\+module', same line, re.S) matches (the last line reads unknown_key_refused_by=validator+module)",
+      "python .tools/proof-of-spec-check.py on the instance with AC3 status PASS: VIOLATION acceptance[CT4d2-AC3]: status=PASS but output_evidence does NOT match expect 'unknown_key_refused_by=validator+module' -- INVALID",
+      "the order's own last-line format names the token validator+module as one of four values (validator+module|validator|module|none), so the output cannot be changed to satisfy the pattern"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 CT4d2-AC3: <expect>unknown_key_refused_by=validator+module</expect>, graded by the checker as a regex match on the output.",
+  "world_is": "The expectation is a literal string that contains a regex metacharacter. The criterion is met by its words (the line reads validator+module with ok=True and unchanged_today=True), but a mechanical PASS row cannot be written. The worker did not amend the expectation (the issuer's to amend, with the gate limb stated); the proof row records AC3 as UNVERIFIABLE-BY-INSTRUMENT with the verbatim line, and the order stays in_progress.",
+  "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
+}
+```
