@@ -142,6 +142,29 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "The submit response carries data.identity.request_id (+ revision), which the page passes to the report-reference route.",
     "world_is": "The client the page imports hands back the adapted view, not the wire envelope; the same two values are read from it. The revision is IRPT's integer, stringified by the adapter; the page converts it back to a number for the report route when it parses."
+  },
+  {
+    "id": "TCKT_VNEXT-D2-S2",
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-07T19:05:00Z",
+    "one_line": "Disarm record for rows D2-W1-S4 and D2-W1-S1 at the round-1 drain: every ticket_center suite run by the issuer this round ran with invalid AWS keys so no SES send can succeed; the invented advisory_fee default 1.0 was set to None at da43155418.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disarm_owner": "2.0.0_SA_COO~V2 (the procedure); the standing fix for S4 (stub SES in the pre-existing ticket_center tests) is carried to the CTO in the round-1 slug",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "AWS_ACCESS_KEY_ID=AKIAINVALIDTCKT AWS_SECRET_ACCESS_KEY=invalid python -m pytest infra/aws/lambda/ticket_center/tests -q at CLOUD da43155418: 89 passed, 43 subtests passed",
+        "infra/aws/lambda/ticket_center/lambda_function.py at da43155418: advisory_fee definition default None, comment cites D2-W1-S1",
+        "docs/briefs/d7-ticket-center-request-types-analysis-request-first-brief-20261007.md:28 says 'the default fee' and names no value; comp-find for a default fee constant: 2 hits / 61,952 files, neither a fee"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A test run sends no mail, and the service states no fee value nobody ruled.",
+    "world_is": "The pre-existing tests still construct a real SES client; only the run procedure keeps them from sending. The fee default is None until someone names the default.",
+    "notes": "Which value 'the default fee' is stays open (Alyssa or Andrew); FWD-1's run leaves the fee blank."
   }
 ]
 ```
