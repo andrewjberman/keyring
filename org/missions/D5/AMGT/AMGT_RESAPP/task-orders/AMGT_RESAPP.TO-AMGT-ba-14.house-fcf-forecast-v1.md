@@ -62,8 +62,14 @@ The CTO's ruling (round-75 analysis ADDENDUM 1 @68c5b56369, FWD-20; ADDENDUM 2 s
 3. **The dispersion gap, stated and not worked around.** `score_divergence` needs the CFPS or EPS dispersion statistics.
    The landed model block carries none (measured on BA, above). Where they are missing, D is ABSENT through the module's
    own existing guard, on every name. Do NOT pull them, do NOT substitute another denominator, and do NOT serve U or
-   Delta in D's place. Print how many of the keyed names carry them, and file ONE row with that count: the fields are a
-   vendor pull, and that is Andrew's word.
+   Delta in D's place. Print how many of the keyed names carry them.
+   **AMENDMENT 1 (issuer, on the CTO's round-76 ADDENDUM 1 @a7b2c3e0ba, before the spawn):** where the dispersion
+   statistics are missing, D is ABSENT with exactly the reason `consensus dispersion is not yet pulled`. The record still
+   serves the house forecast, and it gains `gap_vs_consensus_pct`: the plain percent gap of the house FY1 FCF against the
+   consensus FY1 FCF (`(house - consensus) / abs(consensus) * 100`, null with a plain reason when either is missing or
+   consensus is zero), with `gap_label` exactly `house FCF against consensus FY1, percent`. It is a labelled plain gap,
+   never D, U or Delta. File NO row for the missing fields: they ride AMGT_CORPUS's scheduled pull (its round 40). Add
+   plant tests for the gap (a positive gap, a negative consensus, a zero consensus, a missing side).
 4. **Plant tests** in `lib/research/scores/tests/test_house_fcf.py`: the median rule at three, four and five changes; a
    negative-FCF history; a zero revenue; the consensus-blind control; the reference with and without an annual row; the
    gate at 0.24 and 0.25.
