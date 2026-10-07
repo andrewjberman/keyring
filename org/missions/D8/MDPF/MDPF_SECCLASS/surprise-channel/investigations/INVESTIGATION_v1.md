@@ -3734,3 +3734,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1."
 }
 ```
+
+## MDPF_SECCLASS-W35-S1 -- the W28-S5 acronym rule makes the vendor-suffix remainder SHS stay upper, so "ETF SHS COM" is no longer idempotent
+
+```json
+{
+  "id": "MDPF_SECCLASS-W35-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~35",
+  "surfaced_at": "2026-10-07T11:50:15Z",
+  "one_line": "Under the issuer's rule (a 2-4 letter token with no vowel stays upper) SHS is an acronym, so clean_name('ETF SHS COM') -> 'ETF SHS' and a second pass drops SHS -> 'ETF'; round 8's test_idempotent input 'ETF SHS COM' (where SHS became 'Shs') now fails.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/tests/test_security_name.py test_vendor_suffix_token_left_after_one_drop_is_an_acronym (worktree wk-MDPF_SECCLASS-35)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/sc_e30_clean_name_table.py docstring ROUND 9 rule, read-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 8 test_idempotent held for every INPUTS entry including 'ETF SHS COM'; the round-9 rule is applied EXACTLY as written with everything else standing.",
+  "world_is": "The rule as written is implemented unchanged. The worker moved 'ETF SHS COM' out of the idempotent INPUTS list into an explicit test that pins the new two-pass behaviour (it did not delete coverage). The alternative, excluding VENDOR_SUFFIXES tokens from the acronym branch, would restore idempotence but departs from the issuer's wording, so it is left to the issuer. Real names carrying SHS mid-name are not in the grounded table.",
+  "notes": "Filed on dell1 by the worker of TO-SC-e47."
+}
+```
