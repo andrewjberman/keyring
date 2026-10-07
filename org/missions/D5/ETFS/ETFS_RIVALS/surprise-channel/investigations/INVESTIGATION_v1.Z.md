@@ -4429,6 +4429,28 @@
     "spec_asserts": "FWD-22 (PRD v0.18, ADDENDUM F): the security dialog draws one price curve per security, market close where Bloomberg has one and the holding-implied price on other days, as one series a reader can read as the price",
     "world_is": "For a security not quoted in US dollars the two sources are in different currencies, so the one series is not one price. Today only the last 2 or 3 days are market closes, so the curve spikes at its end; after the 365-day Bloomberg backfill the curve would be market closes with implied dollars on every gap day. The static dialog, the periods, the trade markers and the script itself work in a browser (30d screenshot beside the record)",
     "notes": "disarm_owner (n/a, INERT: nothing of round 15 is deployed or served): 2.0.0_SA_COO~RV. The round-15 Lambda deploy does not go out with this open. Not caught by any round-15 check: every fixture prices both sources in one currency. A repair needs a ruling on the shape (implied only for US-dollar listings; or convert with a rate; or never join the two sources in one line), which is an ENDPOINT matter for 1.0.0_SA_CTO~Z. Also seen on the same run, lesser: the chart's y axis pads below zero, and the drawing uses about two thirds of the frame width."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W6-S3",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~6",
+    "surfaced_at": "2026-10-07T10:37:57Z",
+    "one_line": "RIV-pc-1: a key with no stored currency gets the non-dollar gap reason in pc-1.AC1 but a key in neither frame must keep the plain reason in ps-1.AC1 (e); the cell's rule alone cannot satisfy both checks.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pc-1.AC1.py: NNN_US_Equity (no G4 row, G1 reports on all 4 days) expects REASON_NON_USD on its one gap",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/ps-1.AC1.py (e): BBB_US_Equity (in neither frame) expects ONE gap 09-01..09-15 with the plain reason 'no market close on file and no fund reported the holding'; pc-1.AC2 (c) requires ps-1.AC1 to end PASS and ps-1.AC1 is not in this order's paths",
+        "data/etfs/scripts/rivalfunds/price_series.py series(): with the literal cell rule BBB read the non-dollar reason and ps-1.AC1 (e) FAILED (run before the refinement); after it both end PASS 0 failures"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-pc-1: a key with no stored currency gets market closes only and the gap reason 'no market close on file (the funds' holding reports are in US dollars and this listing is not quoted in US dollars)'.",
+    "world_is": "Applied literally to a key that no fund reported either, the non-dollar reason says the funds' reports were set aside when there were none. Built: a non-dollar or unknown key gets the non-dollar reason only when a fund's report implies a price for it on at least one day of the window; a key with no report in the window keeps the plain reason. pc-1.AC1 (every non-dollar fixture key has reports) and ps-1.AC1 (e) both pass.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. If the issuer wants the literal rule, ps-1.AC1 (e) must change to the non-dollar reason; that file is outside this order's paths."
   }
 ]
 ```
