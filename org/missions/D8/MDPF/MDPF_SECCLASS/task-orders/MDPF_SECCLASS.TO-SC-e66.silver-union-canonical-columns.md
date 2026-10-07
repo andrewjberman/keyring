@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e66</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~48</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~55</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -53,6 +53,20 @@
    - the 22:11Z nightly as the timing input.
    Read-only reads of opal-data-bd are allowed (row W41-S1).
 
+### AMENDMENT 1 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~17:2xZ; release mode, CTO round-11 analysis @fc96f7c48c section 2 item 2)
+
+**The release port.** e66 (build 9f533072d4, proof 0859b56dbf, ~48) is VALID on `secclass-r11-held-silver`, whose base still carries
+the old S55. Its three files are re-staged onto the round head bba789b60b (S58-S61, origin-merged). Each is blob-equal to 0859b56dbf's,
+and the round head left the builder and its tests unchanged since e66's base. BD silver passes 36.
+
+Slot ~55 on branch `secclass-r12-rel-e66` commits that port. The issuer's lane refuses these paths.
+
+**Your work:** the three files are ALREADY STAGED. Do not rebuild.
+1. Confirm each blob equals 0859b56dbf's.
+2. Commit them.
+3. Run AC1, AC2 and AC3.
+4. Write and validate the proof instance (slot ~55), flip status to complete, and commit.
+
 ### ACCEPTANCE
 
 <criterion id="SC11-e66-AC1" cell_refs="SC-e-66"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/r10_pytest_ok.py data/black_diamond/scripts/silver/tests</invocation><expect>PYTEST-OK</expect></criterion>
@@ -80,7 +94,7 @@ Dry-run at the base (cecc5f9013, 2026-10-07): SC11-e66-AC1 PASS as expected (con
 - No upload, no S3 write, no SSM change, no deploy, no run of the builder without `--dry-run`. This is a shipped BD silver file, held
   off CLOUD until its half signs. Never push.
 - **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `MDPF_SECCLASS-W48-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
+  (id `MDPF_SECCLASS-W55-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
 
 <paths>
 data/black_diamond/scripts/silver/build_bd_assets_dim.py
@@ -97,7 +111,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC11-e66-AC1, SC11-e66-AC2, SC11-e66-AC3. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~48/MDPF_SECCLASS.TO-SC-e66.silver-union-canonical-columns.proof_of_spec.json`,
+Criterion ids: SC11-e66-AC1, SC11-e66-AC2, SC11-e66-AC3. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~55/MDPF_SECCLASS.TO-SC-e66.silver-union-canonical-columns.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> SC11-e66-AC1,SC11-e66-AC2,SC11-e66-AC3` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>
