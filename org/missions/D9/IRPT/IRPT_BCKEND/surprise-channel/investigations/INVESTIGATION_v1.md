@@ -19981,3 +19981,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The bucket is readable for LIST and HEAD but its objects are KMS-encrypted under a key this identity cannot decrypt, so the census reconciles only vacuously (0 = 0 + 0). Whether the one receipt is FILLED or UNFILLABLE is unmeasured. Before the issuer applies, the dry run must be re-run under an identity with kms:Decrypt on that key (the tool is --dry-run by default: python infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py --census-out <file>). The tool runs unchanged; nothing is widened here."
 }
 ```
+
+## IRPT_BCKEND-W148-S1 -- TO-IB-pr-347: 7 of 30 non-Opal principals (6 49financial FIRM_ADVISOR, 1 cottonwood FIRM_OPERATIONS admin) of 
+
+```json
+{
+  "id": "IRPT_BCKEND-W148-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~148",
+  "surfaced_at": "2026-10-07T12:50:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-347: 7 of 30 non-Opal principals (6 49financial FIRM_ADVISOR, 1 cottonwood FIRM_OPERATIONS admin) of 52 read in opal-users-v2 hold a firm grant that reaches the fail-open irpt-export-render read today, and the API is directly callable by any of them because the admin/dev gate is the page only.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~148/IB67-1_export_reach.json: principals_read 52 (22 opal-capital/Dev, 30 non-Opal all active), non_opal_reach 7, split 6 FIRM_ADVISOR + 1 FIRM_OPERATIONS; opaque ids and per-principal permitted-account counts (403, 5, 457, 989, 377, 276 for 49financial; 862 for cottonwood)",
+      "infra/aws/lambda/investor-reporting/_scope/resolve.py classify_principal/resolve/advisor_grant run over the live opal-users-v2 PROFILE rows, opal-partner-* rows, ownership_map.json (49financial 190 advisors; cottonwood 0; inflection absent) and directory.json (as_of 2026-10-05/05/06), headers reconstructed offline",
+      "live edge read-only: API GW 7k3ed8px20 routes GET export/{exportId}, GET export/{exportId}/download, POST export -> integration 61aupci -> irpt-export-render, authorizer naqxlm portal-jwt-authorizer (any valid human JWT admitted); CloudFront EVTSA9VEHNZVH /api/scoped/investor-reporting/* viewer-request auth-validator-edge:22; WAF no path rule",
+      "infra/aws/lambda/investor-reporting/export/entry.py _covered: `if not named: return True, 0, 0` (fail-open) live in irpt-export-render CodeSha256 exDoi/uo5e..., LastModified 2026-10-06T01:35:28Z; portal/src/App.tsx :107/:462 page gate is client-side only"
+    ]
+  },
+  "spec_asserts": "CTO ruling msg 525: zero non-Opal principals reach the export read -> the fix waits for the terraform kit; non-zero -> a security exception and a laptop emergency apply.",
+  "world_is": "Non-zero: 7 non-Opal principals can call the export read now (6 limited-grant 49financial advisors for whom the fail-open branch widens same-firm reads of receipts naming no account; 1 cottonwood firm admin whose scope is the whole firm). Whether any receipt names no account was not read, and no unauthorized read is shown to have occurred (the function logs no admitted read, row W146-S1). Measured at 2026-10-07T12:3xZ-12:5xZ; the count moves with the ownership maps and the profile rows."
+}
+```
+
+## IRPT_BCKEND-W148-S2 -- TO-IB-pr-347 bound says firm buckets deny this box's identity (row S347); this identity (cloudops-dell2-agent-
+
+```json
+{
+  "id": "IRPT_BCKEND-W148-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~148",
+  "surfaced_at": "2026-10-07T12:50:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-347 bound says firm buckets deny this box's identity (row S347); this identity (cloudops-dell2-agent-user) read the ownership maps of opal-data-bd and opal-data-cot and the directory objects of opal-data-bd, opal-data-cot and opal-data-inf, and HeadObject on opal-data-inf's ownership map answered 404.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3api get-object s3://opal-data-bd/platinum/49financial/ownership_map.json -> 472,562 bytes; s3://opal-data-cot/platinum/cottonwood/ownership_map.json -> 107 bytes; investor-reporting/directory/latest.json and the directory.json it names read from opal-data-bd, opal-data-cot, opal-data-inf (7,768,167 / 539,903 / 565,951 bytes); head-object platinum/inflection/ownership_map.json on opal-data-inf -> 404 Not Found",
+      "sts get-caller-identity: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user; the bytes were processed into counts in a scratch directory and are not in any committed file; only the ownership-map and directory objects the _authz loaders read were touched, nothing under firms/, receipts or any other prefix"
+    ]
+  },
+  "spec_asserts": "The TO bounds: firm buckets deny this box's identity (row S347); a firm-bucket read is a row and a stop on that criterion.",
+  "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
+}
+```
