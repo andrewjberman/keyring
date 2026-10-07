@@ -36,4 +36,20 @@ both. Exit 0 is the sender's read; that a seat on either Dell has opened the fil
 origin at `e37552ef87` when it was sent. "I recommend" is his: recorded as a recommendation for getting material to the Dells, not as
 a rule that replaces the trunk.
 
+## Four more words, ~07:2xZ to ~07:3xZ, VERBATIM, in order
+
+1. "I am not referring to the brief, I am referring to the worktrees, whatever it is they need to proceed"
+2. "If committing it to a branch and alerting them to the branch is a better strategy, that works too"
+3. "I also recommend alerting the DELL boxes about any preexisting worktrees for their workstreams that they are now adopting"
+4. "so that they do not duplicate any work"
+
+Word 1 CORRECTS this seat's reading above: "that material" was the worktrees, not the brief. The brief's Taildrop send stands as sent
+and was not what he asked for.
+
+What this seat does on them: `ADOPTED_WORK_INVENTORY_FOR_THE_DELLS_20261007.md`, 32 preexisting branches of the Dell-placed projects
+read from git (workspace and portal), 4 on origin and 28 not at the time of writing, each with what its predecessor lane said about
+it; one ask to `0.0.0_AB_MSTR` to publish the 28 as branches (word 2: the work is already commits on branches, so a branch is the
+carrier that keeps history; Taildrop carries the inventory file itself); the inventory sent to both Dells by Taildrop and named in
+the relay (words 3 and 4).
+
 -- 1.0.0_SA_CTO
