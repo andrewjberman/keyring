@@ -21743,6 +21743,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Surfaced, not chased; nothing minted. ba-23 is BLOCKED on a ruling, not on a build: either (a) the CTO signs a half whose blast radius is the whole rebuild (the 5 names, the 158 raw_identifier changes, the moved sources), or (b) the pool is first re-minted as its own act under its own pair so that ba-23's put differs by one record, or (c) ba-23 lands the identity bronze and the registration row without --write-pool and the pool waits. This seat recommends (b): it keeps the never-covered company a one-record change. The same rider rides the next mint by ANY seat (AMGT_CORPUS registers through the same step), which is why the row is filed before the half. No COO half for ba-23 is signed."
+},
+{
+  "id": "AMGT_RESAPP-Z-S364",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T10:36:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "MSFT US serving 0 of 7 header figures on PROD is ONE NAME among the covered set, not a class: 0 of 95 covered names read that way on the deployed function. MSFT_US_Equity is NOT a covered name. It is a pool record sourced from the ETF holdings universe, with no research folder and no stored company record, and the adapter serves such a name seven reasoned nulls by design.",
+  "spec_asserts": "The DSGN_AMGTV1 round-46 completion grade (FWD-4, 3.0.0_SA_CVO~Z @c38d200016) read MSFT US on the live page with every header tile saying 'We hold no stored company data for this name yet', against a 2026-10-05 census of 95 of 95 covered names accounted for; the question from 1.0.0_SA_CTO~Z (msg 30798) is whether that is one name or a class.",
+  "world_is": "Deployed opal-amgt-scoped-api, CodeSha256 MkM9Kf37nmI+thEmZR+ij8ybbxGrHxqtsonjyI7N5eg= (LastModified 2026-10-07T04:40:17Z), read by GET-shaped direct invokes at 10:3xZ. (1) /security/MSFT_US_Equity/overlay: status 200; 7 header figures, each value null with reason and currency_caveat 'We hold no stored company data for this name yet.'; identity MEASURED from crosswalk/v1/2026-09-29.json, bloomberg 'MSFT US', name 'Microsoft Corp'. (2) The census over covered_security_keys(): 95 names, status 200 on 95, the blockless reason present on 0 of 95. Control: AMD_US_Equity (covered) carries the reason on 0 fields. (3) MSFT_US_Equity is in covered_security_keys(): False. Its pool record reads bloomberg 'MSFT US', source_row.folder None, provenance 's3://opal-data-harvest/universe/v1/2026-09-16.json :: names[]'. (4) The reason is the adapter's own constant BLOCKLESS_HEADER_REASON (lib/research/api/scoped_amgt.py:2521), served by _blockless_header_figures, built in round 72 cell AMGT-av-1 for DSGN FWD-4: 'a name with no stored company record serves the seven header figures, each value null with a plain reason'. So the 10-05 census and this read do not contradict: the census counted the 95 covered names, and MSFT is outside them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_blockless_census.py: `--one MSFT_US_Equity` reads 14 paths carrying the reason (reason and currency_caveat on the header figures); `--one AMD_US_Equity` reads 0; the full run prints 'DENOMINATOR: 95 covered names; status 200 on 95; non-200 on 0' and 'BLOCKLESS: 0'.",
+      "NOT measured: how many of the pool's non-covered records (237 pool records against 95 covered names) read blockless. By the same rule every pool name with no stored company record does; that count was not taken. The gateway route was not exercised: these are direct invokes of the function.",
+      "NOT measured: the identity line's 'sector and country are not in this security's data' on the page; this read took the header figures and the identity block only."
+    ]
+  },
+  "notes": "Surfaced, not chased. Nothing is broken in the served contract: an uncovered pool name reads as built. Whether the page should OFFER an uncovered ETF-held name as if it were a covered pack, or mark it as outside coverage before the tiles, is a page call for DSGN_AMGTV1 and an FWD-2 question for this project (the first pull of a never-covered company, issuer act ba-23, is the act that would give such a name a stored record). No order is cut on this row."
 }
 ]
 ```
