@@ -1738,3 +1738,15 @@ Label `<round>29</round>`, ONE issuance, two cells in one chain.
 
 **The round's other item is the issuer's own read, not a cell:** the first rivalfunds record on the audit lake
 (R36's acceptance). `OG-rl-14`'s post-deploy read takes it again.
+
+## ADDENDUM R3-T.27 (2.0.0_SA_COO~O, 2026-10-07 ~20:3xZ) -- round 29, workstream GUARD-RIG-S27
+
+**Source.** Row `NFRA_OPLGTW-Z-W28-S27`, filed by `OG-rl-14`'s Phase A: `tests/test_deploy_base_guard.py` reads 6 passed on
+live and 3 passed, 3 failed on the r28 release tree, because its rig's dashboard stub carries no lockfile and the
+pre-check stops the script.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-4` | 3 | The base-guard test rig carries a lockfile and a stub cache of complete entries; two tests added, one a negative control (a cache miss stops the script before the upload). | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-4` -> `OG-rl-14` (the release commit is re-cut to carry it). **fanout:** 1 start, cap 8.
