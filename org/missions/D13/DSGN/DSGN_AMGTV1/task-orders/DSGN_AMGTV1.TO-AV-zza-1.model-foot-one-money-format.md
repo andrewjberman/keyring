@@ -102,7 +102,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 - **AMENDMENT 1:** CTO review msg 30881 of portal 8e4dad8f (the outcome is right; one amendment). r49.cjs gained arm 3 and reads 3 of 4 at base 8e4dad8f; a reference edit for the new arm was NOT run. No gate limb graded this modification.
 - **The round's second cell,** `AV-zza-2` (planted fail-and-clean pairs for the render check), is an issuer act with no order file.
 
-<status>pending</status>
+<status>complete</status>
 <round>49</round>
 <slot>~111</slot>
 <fabric>site-z</fabric>
