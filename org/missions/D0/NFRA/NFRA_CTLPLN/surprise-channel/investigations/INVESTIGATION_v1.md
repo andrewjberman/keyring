@@ -1348,6 +1348,66 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S12 -- shared-infra's .terraform pointed at a deleted Desktop tree belonging to another root
+
+```json
+{
+  "id": "NFRA_CTLPLN-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-07T10:12Z",
+  "one_line": "The shared tree's shared-infra Terraform root carried a .terraform/plugin_path pointing at a DELETED directory on the Desktop belonging to a DIFFERENT root, which is why its .terraform/providers was empty and why a plan of it could not run without an init.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "Already corrected as a side effect of a required act, not left for anyone: the TO-APPLY-4 init (-plugin-dir=C:/Users/AndrewBerman/.terraform.d/plugin-cache) rewrote plugin_path to the local cache. No owner is owed an act for THIS root. Named here because the CAUSE -- a -plugin-dir init in one session persisting an absolute foreign path into a shared-tree root's untracked metadata -- is not specific to this root and has no owner.",
+  "spec_asserts": "The order's context says a read-only plan from the issuer's session 'stopped at \"Backend initialization required\"' and makes the executor's first read 'whether terraform init of this root needs a provider that is not already on this box', with a provider FETCH from the registry as a STOP. That framing treats the root's local state as merely un-initialised.",
+  "world_is": "It was not merely un-initialised; it was initialised AGAINST A FOREIGN TREE. infra/aws/terraform/shared-infra/.terraform/plugin_path (dated 2026-09-25) contained exactly [\"C:/Users/AndrewBerman/Desktop/irpt-smoke-p-backend-20260923/infra/aws/terraform/investor-reporting/performance/.terraform/providers\"] -- a path that (a) is outside this workspace, (b) belongs to the investor-reporting/performance root rather than shared-infra, and (c) NO LONGER EXISTS on disk. So .terraform/providers was empty and the provider had to come from somewhere. The STOP did NOT fire: the lock pins hashicorp/aws 5.100.0 and the local plugin cache holds exactly that version (terraform-provider-aws_v5.100.0_x5.exe), so init was run with registry installation DISABLED via -plugin-dir and reported 'Using hashicorp/aws v5.100.0 from the shared cache directory', rc=0, with no fetch. Separately, the 'Backend initialization required' message was a STRUCTURE mismatch, not a wrong backend: the on-disk record's bucket/key/region (opal-313476888478-terraform-state / shared-infra/tfstate / us-east-1) are identical to the declared block at main.tf:11-15, so -reconfigure re-pointed at the SAME state, and the control on that was `state list` returning 252 resources including all three fence policies. Census after the fix: 1 plugin_path file exists across infra/aws/terraform (denominator printed), and 0 now carry a foreign Desktop path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cat infra/aws/terraform/shared-infra/.terraform/plugin_path BEFORE the init, 2026-10-07 ~10:0xZ: the single foreign entry quoted in world_is; file mtime 2026-09-25 19:37",
+      "test -d on that path: ABSENT -- the Desktop tree irpt-smoke-p-backend-20260923 no longer exists, so the pointer was dangling",
+      "ls infra/aws/terraform/shared-infra/.terraform/ BEFORE: modules, plugin_path, terraform.tfstate -- NO providers directory; find .../.terraform/providers returned nothing",
+      "infra/aws/terraform/shared-infra/.terraform.lock.hcl: hashicorp/aws version 5.100.0, constraints ~> 5.0",
+      "ls C:/Users/AndrewBerman/.terraform.d/plugin-cache/registry.terraform.io/hashicorp/aws/5.100.0/windows_amd64/: terraform-provider-aws_v5.100.0_x5.exe present (718820352 B); cache also holds 6.67.0",
+      "terraform -chdir=infra/aws/terraform/shared-infra init -input=false -no-color -reconfigure -plugin-dir=C:/Users/AndrewBerman/.terraform.d/plugin-cache -> 'Successfully configured the backend \"s3\"!', 'Reusing previous version of hashicorp/aws from the dependency lock file', 'Using hashicorp/aws v5.100.0 from the shared cache directory', rc=0",
+      "cat plugin_path AFTER the init: [\"C:/Users/AndrewBerman/.terraform.d/plugin-cache\"]; ls .terraform/ now also shows providers",
+      "terraform state list after the init: 252 resources, including aws_s3_bucket_policy.opal_data_49financial, aws_s3_bucket_policy.lgic_firm[\"cottonwood\"] and aws_s3_bucket_policy.lgic_firm[\"inflection\"] -- the control proving -reconfigure did not re-point the state",
+      "python -c over infra/aws/terraform: 1 plugin_path file scanned, 0 carrying a foreign Desktop path, after the fix"
+    ]
+  },
+  "notes": "Filed under CLAUDE.md section 2 (append a row and keep working, do not halt to investigate). It is NOT the reason TO-APPLY-4 stopped -- that was the cottonwood rider, reported to 2.0.0_SA_COO~C at ~10:0xZ and recorded at commit 54295756ad. Checked against the channel before filing: existing rows discuss the plugin CACHE and a provider kit for the Dells (around lines 128, 154, 1322, 1342), but none names a dangling foreign plugin_path in a shared-tree root, so this is not a re-file of an owned class. Disposition left UNDER_INVESTIGATION because terminating a row is the CVO's act, not this seat's.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## NFRA_CTLPLN-W13-S6 -- CT-k-2: The laptop's portal node_modules is an older install than the DEV lockfile (absent=6, extra=103), so the kit has no correct tree to carry yet
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T10:27:42Z",
+  "one_line": "The laptop's portal node_modules does NOT match the DEV lockfile: 6 locked packages are on disk at other versions and 103 packages on disk are in no lock entry, so describe reads absent=6 ok=False and pack refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_portal_tree.py describe (read-only, 1-2 s): PORTAL-TREE head=481b3bcc5f22 lockfile=bun.lock lock_sha256=b32cb20e3d31 equals_dev=True bun=1.3.9 node=v26.10.0 packages=487 present=409 absent=6 files=41952 bytes=447989421 ok=False, on branch wk-NFRA_CTLPLN-13 (base 16b9fd1ba8 + this commit)",
+      "PORTAL-ABSENT lines: @types/d3-array lock=3.2.2 disk=3.0.3; @types/d3-interpolate lock=3.0.4 disk=3.0.1; baseline-browser-mapping lock=2.10.0 disk=2.11.22; caniuse-lite lock=1.0.30001775 disk=1.0.30001810; d3-format lock=3.1.0 disk=1.4.5; d3-time-format lock=4.1.0 disk=3.0.0; PORTAL-CLASSES extra_on_disk=103 (for example @nivo/*, @puppeteer/browsers, @react-spring/animated)",
+      "the working bun.lock equals git show origin/DEV:bun.lock after folding CRLF to LF (equals_dev=True; raw SHA-256 differs only by line endings); node_modules has no .package-lock.json and mtime Feb 20 2026 (react/package.json Mar 2 2026), older than the lockfile, so the tree was installed from an earlier lockfile"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 2 and CTO msg 106138: the bring-up kit carries the laptop's portal dependency tree at the DEV lockfile.",
+  "world_is": "The laptop's tree is NOT at the DEV lockfile: it is an older install. The lockfile equals DEV, the tree does not equal the lockfile (absent=6 of 487, extra=103). The tool's pack therefore refuses (pack on the real tree was not run; no archive exists). The tree must be brought to the lockfile by an install on a box that may reach the registry, which this order forbids this worker to do; until then there is nothing correct to carry. The test cases and the tool's refusal arm are proven on stand-ins."
+}
+```
+
 ## NFRA_CTLPLN-W9-S1 -- the row schemas still refuse a Dell id and a dell fabric value
 
 ```json
