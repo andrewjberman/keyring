@@ -342,3 +342,39 @@ Filed by 2.0.0_SA_COO~Z on the ask of 1.0.0_SA_CTO~Z (msg 30747, the read owed o
   "notes": "Surfaced, not chased. No file, task or schedule was changed. Three things an owner may decide, none taken here: (1) the enrichment step has no bound of its own on a dead DAPI, unlike the collector leg, which exited 93 at once; (2) the 30-minute limit ends the task without a launcher exit line, so the day's log has no verdict; (3) the research-pull gate does not read the result. For the ba-21 act, (3) is covered by condition C1 of CTO_HALF_AMGT_RESAPP_BA21_SEGMENTS_PULL_20261007.md: this seat reads the result and the log before the probe. The enrichment step is ETFS_RIVALS code (2.0.0_SA_COO~RV's project); the launcher is under Andrew's no-modify order for integrations/bloomberg/."
 }
 ```
+
+### OPAL_BBGTML-Z-S12 -- GUARD-3b closes the per-series CIX check on the SCHEDULED path only: a hand-run publish_to_portal.py re-runs the TZERO tripwire, which the order forbids touching and which carries no per-series check
+
+Filed by 0.7.0_AE_CloudOps~RV while executing OPAL_BBGTML.TO-GUARD-3 cell GUARD-3b, which
+names the tplus1 copy and says of the tzero copy "Do not touch it. Say in your report whether
+anything scheduled runs it." It does -- this row is that read, placed where it survives the
+report.
+
+```json
+{
+  "id": "OPAL_BBGTML-Z-S12",
+  "project": "OPAL_BBGTML",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~RV",
+  "surfaced_at": "2026-10-07T09:48:00Z",
+  "one_line": "There are TWO copies of bbg_pkl_tripwire.py and they are reached by different consumers. GUARD-3b adds the per-series custom-CIX recency check to the tplus1 copy, which the scheduled pull leg runs. The SEND gate -- publish_to_portal.py line 64 -- deliberately runs the TZERO copy instead, and that copy is out of the order's bounds, so it does not get the check. The scheduled path is still closed, because the vehicle gates the send leg on the pull rc; a HAND-run publish_to_portal.py is not.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "READ BY THIS SEAT: integrations/bloomberg/pipeline/publish_to_portal.py:62-64 -- 'The as-of-scoped tripwire lives in the tzero variant; tplus1's copy is deliberately byte-verbatim with production and does NOT carry the check. Use tzero's regardless of which variant produced the files -- we want the STRICTER instrument on the send path.' TRIPWIRE = os.path.join(HERE, 'tzero', 'tools', 'bbg_pkl_tripwire.py').",
+      "READ BY THIS SEAT: integrations/bloomberg/pipeline/scheduled_daily_pull.cmd:180 sets PUBLISH to publish_to_portal.py and runs it as the SEND LEG, so the tzero copy IS on a scheduled path -- the answer to the order's question is YES, indirectly, via the publisher.",
+      "READ BY THIS SEAT: the scheduled path is nonetheless CLOSED by the tplus1 edit alone. scheduled_daily_pull.cmd runs the pull leg as %RUNNER% (line 39, tplus1/tools/run_daily_pull.py) and then branches: 'if not \"%RC%\"==\"0\" ( echo RESULT: PULL FAILED rc=%RC% -- nothing sent, publish NOT attempted ... goto :etf_leg / goto :prune )'. The SEND LEG is only reached on RC==0. And run_daily_pull.py:246-256 runs the tripwire from its OWN TOOLS_DIR (the tplus1 copy) and returns its rc: 'STOP: tripwire FAILED -- do not send.' So a frozen custom CIX series now fails the tplus1 tripwire, the runner returns non-zero, and the cmd never reaches the publisher.",
+      "READ BY THIS SEAT: the residual is the MANUAL path, and two documents instruct it. run_daily_pull.py:261 prints 'NEXT: ... publish on the SAME channel the scheduled run uses: <PY_AWS python> -u integrations/bloomberg/pipeline/publish_to_portal.py -- No args needed -- the publisher derives the vintage itself, re-runs the as-of-scoped tripwire'; and integrations/bloomberg/pipeline/README.md:299 names the tzero tripwire directly. Either route re-runs tzero only, which after this order still has no per-series CIX limb.",
+      "MEASURED, bounding the hazard today: on the current served vintage all 13 custom CIX series reach the as-of 2026-10-05 (benchmarks/data_20261007_v1.pkl VersionId F2HhLHRpKgZ18hIWMRJr3p3t4T52RfBW), and the served body's benchmark_last_date reads 2026-10-05 on all 5 models both sides. There is no frozen series to send right now, which is why this reads INERT rather than ARMED.",
+      "NOT MEASURED by this seat: whether the tzero copy's own as-of-scoped presence check (its lines 133-152, absent from tplus1) would independently catch a frozen BENCHMARK series. It checks that the five MODEL index_names have a bar ON the as-of; the four _BMK and four _ETF benchmark series are not in MODEL_INDEX_NAMES, so on its face it would not -- but that is a reading of the code, not an exercise of it, and the order's bounds put exercising it out of scope."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADDENDUM 6's gap 2 is closed when a pull carrying a frozen custom CIX series cannot reach the portal: 'For every custom CIX series in the data PKL, the last non-null date equals the as-of date. A series behind FAILS the tripwire.'",
+  "world_is": "It is closed on the scheduled vehicle, which is the path ADDENDUM 6's proof and first-live-read are written against. It is NOT closed on the hand-run send: publish_to_portal.py re-runs the tzero copy, the order forbids editing that copy, and so the stricter instrument on the send path is now the one MISSING the newer check -- an inversion of the comment's own intent at line 62-64.",
+  "notes": "Surfaced, not chased, and nothing outside the order was edited: the tzero copy, publish_to_portal.py and the two documents are untouched. Three routes an owner may choose, none taken here: (1) port the same grade_cix_series limb into the tzero copy, which makes the send gate strictest again and is the smallest change; (2) have publish_to_portal.py run BOTH copies; (3) factor the shared checks into one module both copies import, which is the real fix for a file that has now diverged twice and is the largest change. Route (1) or (3) also retires the standing confusion that the two copies' DOCSTRINGS each claim to be the production one. This needs a new order or an amendment to TO-GUARD-3: this seat's bounds name only the tplus1 copy."
+}
+```
