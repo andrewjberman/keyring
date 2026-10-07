@@ -2641,3 +2641,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Since the Dell fence join landed, the fence admits both Dell users (dell1 confined by scope); the control's negative arm has no live Dell subject. A future control should take its negative arm from a scratch copy with the user removed, or from a non-Dell unlisted principal."
 }
 ```
+
+## NFRA_CTLPLN-W31-S1 -- TO-CT-i-1: two existing tests in test_teams_chat_jobs.py fail because the offer now goes to the four boxes of 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: two existing tests in test_teams_chat_jobs.py fail because the offer now goes to the four boxes of the register, not two",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: a task order whose <paths> carry data/transcripts/scripts/tests/test_teams_chat_jobs.py updates the two tests to the four-box offer (or to a stand-in bus_devices) before or in the drain; the worker of CT-i-1 may not edit them",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "before the change: pytest of test_teams_chat_jobs.py, test_teams_chat_tenant.py, test_teams_chat_assist.py, test_teams_chat_natural.py in data/transcripts/scripts/tests = 87 passed",
+      "after: test_open_offers_to_every_device_and_sets_the_award_alarm and test_both_bids_award_at_once_to_the_lighter_box fail; the first asserts sorted offer targets == ['laptop','sitez'] and 2 bus sends, the second awards after two bids; assist.DEVICES now reads NAMES['bus_devices'], 4 boxes from org/devices/DEVICES.json",
+      "full run of the 7 teams-chat/eod test files after the change: 3 failed, 124 passed (the third is row W31-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-i-1 build step 2: assist.DEVICES is read from NAMES['bus_devices']; the offer goes to every box of the register; and RULES: existing test files are not the worker's to edit, a failure caused by the change is a surprise row.",
+  "world_is": "The existing job tests were written for a two-box DEVICES typed in assist.py; with the register's four boxes they fail by design of the change, and they stay failing on the branch until another order edits them."
+}
+```
+
+## NFRA_CTLPLN-W31-S2 -- TO-CT-i-1: test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat fails because its job.comp
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat fails because its job.complete carries no grade",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R: a task order whose <paths> carry data/transcripts/scripts/tests/test_teams_chat_jobs.py gives that test's job.complete payload a good grade (by 3.0.0_SA_CVO, verdict PASS, a coo distinct from by)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/transcripts/scripts/tests/test_teams_chat_jobs.py::test_complete_texts_a_draft_for_the_requester_and_1_sends_it_to_the_chat sends job.complete {device, summary, deployed} with no coo and no grade; on_job_complete now returns 'refused' (seam rule 4), the test expects 'verify'",
+      "the refusal is the order's own rule: a job.complete with no grade is NOT complete; the status stays working"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-i-1 build step 3: apply the seam's fourth rule; a job.complete with no grade is refused. RULES: existing test files are not the worker's to edit.",
+  "world_is": "The pre-existing completion test predates the grade and fails under the new rule; the new test_inbound_cloud.py covers the good-grade path (graded_completion_reaches_verify_and_keeps_the_grade)."
+}
+```
+
+## NFRA_CTLPLN-W31-S3 -- TO-CT-i-1: the seam's additions to REMOTE_JOBS_PROTOCOL_20261002.md (bid reviewer/unavailable_reason, accepted
+
+```json
+{
+  "id": "NFRA_CTLPLN-W31-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~31",
+  "surfaced_at": "2026-10-07T22:43Z",
+  "one_line": "TO-CT-i-1: the seam's additions to REMOTE_JOBS_PROTOCOL_20261002.md (bid reviewer/unavailable_reason, accepted brief_sha256, complete coo/grade) are not in the protocol file and the file is outside this order's paths",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "grep -c 'brief_sha256|unavailable_reason' org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md = 0 at the worktree base 544c5c0cd6",
+      "the order's <paths> list six files, none of them the protocol; the seam text reads as the contract, with the box half another worker's"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM: 'Additions to REMOTE_JOBS_PROTOCOL_20261002.md; nothing in it is removed.'",
+  "world_is": "The cloud half implements the seam from the order text; the protocol document does not yet record it. Not edited here (outside <paths>); the box-half worker or the COO owns the document edit."
+}
+```
