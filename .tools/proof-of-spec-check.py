@@ -1195,7 +1195,8 @@ def alignment_check(inst: dict) -> tuple[list, list]:
 # boundary -- one carrier of the grammar would be better; until the two files share a module this is a
 # COPY and is named as one (a change there is a change here).
 # The allocator coordinate (RULING 2 @9ef9a40aae, annex v3.2): W<n> for a worker's row, C- for the CVO's, Z- nests first.
-SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:Z-)?(?:W[0-9]+-|C-)?S[0-9]+)\b")
+# The machine coordinate (CTO msg 106069): one capital letter then optional digits then a hyphen (Z-, D1-, D2-), never W<n>- or C-.
+SURPRISE_ID_RE = re.compile(r"^\s*([A-Z0-9_]+-(?:(?!W[0-9]*-|C-)[A-Z][0-9]*-)?(?:W[0-9]+-|C-)?S[0-9]+)\b")
 _TREE_TO_RE = re.compile(r"(^|/)org/missions/D(?:0|[1-9][0-9]?)/[^/]+/[^/]+/task-orders/[^/]+\.md$")
 _FENCE_RE = re.compile(r"```json\s*(.*?)```", re.S)
 
