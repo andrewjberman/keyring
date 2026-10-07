@@ -783,3 +783,32 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "One test in a neighbouring file is red on base; it is not caused by validate_document or hop3_real_run. Whoever owns advisor_client_list / its seam message should read it."
 }
 ```
+
+## IRPT_CUSTDY-W14-S3 -- CU-f-3: the SI probe cost was a sequential per-day read of silver positions, not a listing a manifest can replace; no manifest holds silver holdings, so the probe now reads the needed days once, concurrently, row-filtered in arrow
+
+```json
+{
+  "id": "IRPT_CUSTDY-W14-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~14",
+  "surfaced_at": "2026-10-07T14:29:19Z",
+  "one_line": "CU-f-3: the SI probe cost was a sequential per-day read of silver positions, not a listing a manifest can replace; no manifest holds silver holdings, so the probe now reads the needed days once, concurrently, row-filtered in arrow",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "baseline on dell2 (hop3_timed_check, before any change): HOP3-TIMED advisor=matthew_gooch seconds=148.2 within_120=False households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2",
+      "per-call timing of S3Store reads in that run: 851 reads, of which 309 are silver dim_position day reads (84 s, sequential, 0.27 s each = day-prefix list 0.05 + get 0.15 + pandas decode 0.13) from _holdings_before_first, 434 are account_return_daily reads (threaded, ~10 s wall), 65 fact_trn reads; the day-prefix list inside S3Store.read (the faulthandler site, ~line 308) is one narrowed list per day, 0.05 s, not the cost",
+      "the returns gold manifest at 2026-09-30 carries table, asof, rows, day_quality_census, return_basis_census, carried_days, first_data_date (6863 accounts), method, thresholds, address, landed -- no field about silver holdings, so the zero-holdings read cannot come from it",
+      "more workers alone did not help (60 days: 4 workers 11.6 s, 16 workers 13.9 s, 32 workers 13.1 s) because the pandas conversion of ~83k rows per day dominates; the fix cuts each day to the probe accounts in pyarrow (is_in over the distinct ids) before to_pandas",
+      "after: HOP3-TIMED advisor=matthew_gooch seconds=62.2 within_120=True households=10 accounts=14 si_ok=14 si_labels_rule1=12 si_labels_rule2=2; the prefetch phase measured 6.9 s in an instrumented run (total 68.2 s, of which unkeyed_lookup.build_context 29.6 s and the returns load 14.1 s are outside this order's paths)",
+      "data/assets/scripts/gold/irpt_custody/client_report_figures.py: _prefetch_probe_days, _account_filter, _probe_span; S3Store/LocalStore.read take an optional `keep`; tests/test_si_anchor_bounded.py 9 passed; full irpt_custody tests 147 passed, 1 xfailed, 1 failed (the inherited test_none_source_names_the_seam_line, W14-S2)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CU-f-3 / ruling W12-S1: the time is in the SI anchor probe's S3 listing; the probe should read a manifest or a narrowed prefix instead of listing S3.",
+  "world_is": "The listing is already narrowed per day and costs 0.05 s; the time is 309 sequential day reads (list + get + pandas decode) of silver positions, and no manifest holds that data. The probe now reads the union of the [open, first funded) days once with 16 workers and cuts each day to its accounts in arrow, which is the 'narrowed read' the ruling asks for in effect. Two costs outside this order's paths remain in the 62 s: unkeyed_lookup.build_context (~25-30 s, hop3_real_run's not-covered lookup) and the returns load (~14-22 s). Run-to-run time moves with the network (the unchanged code measured 148, 133 and 194 s on dell2; the final code 62.2 and 68.2 s)."
+}
+```
