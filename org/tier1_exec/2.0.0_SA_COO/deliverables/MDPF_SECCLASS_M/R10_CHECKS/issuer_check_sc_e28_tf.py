@@ -6,7 +6,10 @@ no registry egress; the home directory is DERIVED, never typed) and then `terraf
 infra/aws/terraform/mdpf-secclass/sector-writer/. Never plans and never applies. Prints SC-E28-TF ok=True|False.
 Run from the repo root; `terraform` must be on PATH.
 """
+import glob
+import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -32,7 +35,33 @@ def main():
         return 1
     v = subprocess.run([tf, "-chdir=" + ROOT, "validate", "-no-color"], capture_output=True, text=True, timeout=25, check=False)
     ok = v.returncode == 0 and "The configuration is valid" in v.stdout
-    print("SC-E28-TF ok={} {}".format(ok, (v.stdout or v.stderr).strip().splitlines()[-1:] if not ok else "The configuration is valid"))
+    if not ok:
+        print(f"SC-E28-TF ok=False {(v.stdout or v.stderr).strip().splitlines()[-1:]}")
+        return 1
+    return registry_check()
+
+
+NAME_ATTR = re.compile(r'^\s*(function_name|name|role_name)\s*=\s*"([^"$]+)"', re.MULTILINE)
+BLOCK = re.compile(r'^resource\s+"(aws_[a-z0-9_]+)"\s+"[^"]+"\s*\{(.*?)^\}', re.MULTILINE | re.DOTALL)
+
+
+def registry_check():
+    with open(os.path.join("infra", "logic", "registry", "resources.json"), encoding="utf-8") as fh:
+        reg = json.load(fh)
+    rows = reg.get("resources", reg) if isinstance(reg, dict) else reg
+    known = {str(r.get("name", "")) for r in rows if isinstance(r, dict)}
+    names = []
+    for f in sorted(glob.glob(os.path.join(ROOT, "*.tf"))):
+        with open(f, encoding="utf-8") as fh:
+            text = fh.read()
+        for kind, body in BLOCK.findall(text):
+            if kind == "aws_cloudwatch_log_group":
+                continue
+            for _attr, val in NAME_ATTR.findall(body):
+                names.append(val)
+    missing = [n for n in names if n not in known]
+    ok = bool(names) and not missing
+    print(f"SC-E28-TF ok={ok} The configuration is valid; registry rows {len(names) - len(missing)} of {len(names)} declared names; missing={missing}")
     return 0 if ok else 1
 
 

@@ -152,3 +152,19 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: PRD v0.12 @87ad6d2e4c (FWD-12, ADDENDUM v0.5 C-SECTOR/C-WRITER/C-NOCHAR, v0.10); DECOMP_R8 @495efa3c32.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~08:4xZ) -- Andrew-direct ~08:1xZ: LGIC naming and registration for every new resource
+
+Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`
+(origin 4cea56993a), relayed by 1.0.0_SA_CTO~DELL1 msg 49. Verbatim: "everyone is being very diligence with LGIC_NAMING for any new
+resource creation, everything should be registered as well".
+
+1. Every resource the root declares takes its name from `lib/opal_naming.py name()` and every S3 address from `address()`.
+2. Every declared resource name gets a row in `infra/logic/registry/resources.json` (already in your `<paths>`). It lands IN THE SAME COMMIT
+   as the Terraform that declares it, not only on a builder refusal; the row's `evidence` names the `.tf` file and line.
+3. Nothing is created by a CLI or SDK call. No gate sees such a create, so you make none. The issuer's apply runs through `safe-apply` only.
+4. `SC8-e28-AC3` now also grades point 2. `issuer_check_sc_e28_tf.py` reads every literal `function_name` / `name` / `role_name` on an
+   `aws_*` resource (log groups excluded), and prints `ok=True` only when each one has a registry row and at least one name is found.
+   The expectation `SC-E28-TF ok=True` is unchanged. Exercised by the issuer: positive control (a registered name) ok=True, negative
+   control (one unregistered name) ok=False `missing=['not-a-registered-name']`, base FAIL as expected (no root).
+Gate limb: none graded this modification (LIMB 6 fires on new orders only; no `<placeholders>`).

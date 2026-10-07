@@ -176,3 +176,16 @@ lane: the <paths> block IS the grant. etf_classification_model.py is added to R8
 </preflight>
 
 Source: PRD v0.12 FWD-11, addenda v0.4 and v0.11 @87ad6d2e4c; R8 @495efa3c32; Andrew-direct six classes (record above).
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~08:4xZ) -- Andrew-direct ~08:1xZ: LGIC naming and registration for every new resource
+
+Source: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_081xZ_LGIC_NAMING_DILIGENCE_AND_REGISTRATION_FOR_EVERY_NEW_RESOURCE.md`
+(origin 4cea56993a), relayed by 1.0.0_SA_CTO~DELL1 msg 49. Verbatim: "everyone is being very diligence with LGIC_NAMING for any new
+resource creation, everything should be registered as well".
+
+This cell declares no Terraform and creates no resource; it writes code, tests and a dry run, and its index listing lands at an S3
+ADDRESS under an existing bucket, which is `address()` output (already required above). The rule binds the cell by these bounds:
+1. Create no resource of any kind, by Terraform, CLI or SDK. If the in-service runner needs a function, role or schedule, name it in your
+   report with the `name()` output it would take; the issuer cuts it later with its Terraform and its `resources.json` row in one commit.
+2. Hand-type no resource name or S3 address in code or tests; a builder refusal is a surprise row naming the missing registry row.
+Criteria unchanged. Gate limb: none graded this modification (no new order; no `<placeholders>`).
