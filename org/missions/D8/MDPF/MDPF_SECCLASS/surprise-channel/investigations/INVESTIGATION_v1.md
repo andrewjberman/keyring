@@ -3286,3 +3286,106 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Recorded so the half request does not read as closing FWD-15; the half names the 1,046."
 }
 ```
+## MDPF_SECCLASS-W25-S3 -- comp-find --corpus aws is BLOCKED for this principal, so the order's live-plane census was read directly with boto3 instead
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "comp-find --corpus aws 'bd-securities' prints BLOCKED (served-graph pull failed: secretsmanager:GetSecretValue on opal/mcp/graph-read-token denied to cloudops-dell1-agent-user), so SC-e-38's build item 1 live-plane step could not use the served graph; the trace's 'aws nodes' figure is UNREAD and a direct read-only IAM, Lambda and DynamoDB scan stands in.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-find --corpus aws 'bd-securities' run 2026-10-07 ~09:0xZ: 'BLOCKED: served-graph pull failed (ProjectionClientError: could not read the capability bearer from opal/mcp/graph-read-token (aws rc=254 ... AccessDeniedException ... no identity-based policy allows the secretsmanager:GetSecretValue action)) -- NO MEASUREMENT, not a zero.'",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/old_list_reader_trace.py prints the BLOCKED line and the direct read: 290 roles, 43 customer-managed policies, 232 functions, etf-classifications 3,507 rows"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e38 build item 1: 'the live plane: comp-find --corpus aws bd-securities for the IAM policies and functions that can read it. It prints DENOMINATOR: <files> files, <hits> hits; aws nodes <n>'.",
+  "world_is": "The served graph is unreachable from this device and identity, so there is no node count; the DENOMINATOR line reads 'aws nodes UNREAD (...)'. The direct read covers customer-managed and role-inline IAM policies and Lambda environments; it does NOT cover AWS-managed policies other than a name match for DynamoDB (one hit: opal-news-lambda-role / AmazonDynamoDBFullAccess), resource-based table policies, or permission boundaries.",
+  "notes": "The issuer's check does not read the aws figure. A seat with the graph bearer can re-run the one comp-find line to add the node count."
+}
+```
+## MDPF_SECCLASS-W25-S4 -- PRD surface S22 (semantic-news-layer3-curation) is a reader in code only: its schedules are deleted, it has no trigger and no log stream; the live news curation function does not read the table
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S4",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "The deployed semantic-news-layer3-curation Lambda (the PRD's S22) has no EventBridge rule, no resource policy, no event-source mapping and a log group that stores 0 bytes; news-pipeline/eventbridge.tf:11-17 records both of its schedules DELETED. The live curation function, opal-news-layer3-curation, names no securities table in its code but its role carries AmazonDynamoDBFullAccess.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/news-pipeline/eventbridge.tf:11-17: '2 semantic layer3 -> semantic-news-layer3-curation (DELETED) ... Lambda functions are retained; only their EventBridge schedules are removed.'",
+      "boto3 2026-10-07: get_function_configuration semantic-news-layer3-curation env=None, LastModified 2026-04-09; get_policy ResourceNotFoundException; list_event_source_mappings []; list_rule_names_by_target []; describe_log_groups storedBytes 0 retention 14d",
+      "opal-news-layer3-curation: rule layer3-gpt-curation-daily DISABLED (chain-invoked by infra/aws/lambda/news_trending_analysis/lambda_function.py:2078); infra/aws/lambda/news_layer3_curation/lambda_function.py has no 'securit' reference; role opal-news-lambda-role carries AWS-managed AmazonDynamoDBFullAccess (iam list_attached_role_policies)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.12 surface S22: infra/aws/lambda/semantic-news-layer3-curation/lambda_function.py is 'a reader of the old list'; the order face lists it as a reader whose deployed config reads the table.",
+  "world_is": "By code it is a reader (cold-start scan, SECURITIES_TABLE default bd-securities) and the live function has no environment variable, so a run would read the old list. By behaviour nothing runs it, so the trace verdict is DEAD-READ with the unmeasured residue named (a manual invoke). The role gap is separate: opal-news-lambda-role could read the table through its blanket grant, and no code in the census names the table for it.",
+  "notes": "Switching or deleting the old list does not change any served news output. Whether to retire the dormant function and its layer3-bd-securities-read grant is outside this cell."
+}
+```
+## MDPF_SECCLASS-W25-S5 -- the census command misses readers that spell the table at run time, readers in data/black_diamond, and roles with a blanket DynamoDB grant
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "The 46-file census command finds bd_securities_fallback.py (the IRPT Holdings reader) only through its docstrings because the code assembles the table name at run time ('%s-securities' from the naming registry); it excludes the 16 data/black_diamond files that name the table; and it cannot see opal-news-lambda-role's AmazonDynamoDBFullAccess.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/gold/investor_reporting/bd_securities_fallback.py:35-46 builds LEGACY_TABLE = '%s-securities' % slot; holdings_snapshot.py:851 builds the served label the same way; the census hits both only on docstring and comment text",
+      "git grep -l -E \"bd-securities|BD_SECURITIES_TABLE\" -- data/black_diamond returns 16 files (classify_bd_securities.py, seed_bd_securities.py, seed_canonical_securities.py, backfill_name_aliases.py, resolve_tickers.py, B_01.holdings_lots.py, B_01b, E_18, build_canonical_prices_v2.py, lib/etf_classifier.py, lib/s3_layout.py, build_bd_assets_dim.py, gold_dispatch.sh and tests); only resolve_tickers.py was named by the order",
+      "boto3 iam list_attached_role_policies over 290 roles: one AWS-managed DynamoDB or admin policy, opal-news-lambda-role / AmazonDynamoDBFullAccess"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 1: 'The census is git grep -l -E \"bd-securities|BD_SECURITIES_TABLE\" ... minus data/black_diamond/**, org/** and test files: 46 files'.",
+  "world_is": "The 46-file census covers every reader outside the Black Diamond tree whose code spells the table literally; the IRPT fallback is in it by accident of its docstrings. The Black Diamond tree's other readers (BD E_18, B_01b, etf_classifier.py, build_bd_assets_dim.py, classify_bd_securities.py, seed scripts) were not traced; they are the old list's writers' tree (SC-e-35..37) and were out of this cell by its own bounds.",
+  "notes": "A reader that builds the name from the registry elsewhere would escape the census too; the live IAM scan in the trace (five role-inline grants and one managed policy on two roles) is the cross-check, and it names no role the code census did not already cover."
+}
+```
+## MDPF_SECCLASS-W25-S6 -- no producer can give a security first held after the old-list writers stop a canonical row: the canonical producer's only wired input is the old list, and the Cottonwood detection path cannot read it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W25-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~25",
+  "surfaced_at": "2026-10-07T09:20Z",
+  "one_line": "etf_classification_scheduled.py wires bd-securities as its only live classification input (GICS and Schwab lookups default to None), the Cottonwood E_18 scans bd-securities before reaching it on a host role that has no grant on it, and etf-classifications holds 0 rows stamped 'e18-scheduled'; so after SC-e-35 stops the old-list writers every reader that falls back (IRPT Holdings, the Advisor mix via a07) classifies a newly held security by name and ticker shape alone.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py:43-46, 371-388, 473-474, 526-541",
+      "data/cot/scripts/gold/E_18.detect_new_securities.py:244-245 (unguarded scan) and :317-323 (updated_by 'e18-scheduled'); iam inline policies cot-exporter-ec2-role/cot-exporter-policy (dynamodb only on etf-classifications) and cot-gold-layer-ec2-role/s3-scoped-cot (none); data/cot/scripts/gold/lib/etf_classifier.py:13-16",
+      "etf-classifications scan 2026-10-07: 3,507 rows; updated_by 'e18-scheduled' 0; 'mdpf-secclass-scheduled' 348, all CUSIP-keyed, last_updated 2026-09-30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 item 2: each real reader carries CANONICAL-PRODUCER, 'the producer that gives such a security an etf-classifications row before this reader runs, with its measured live write count'; the CTO's refusal text says E_18's canonical path has written 0 rows.",
+  "world_is": "Measured: the live write count of the E_18 canonical path is 0, and a read of the code and the host role says why it cannot be otherwise today (denied old-list scan; no other wired input). Every real reader's CANONICAL-PRODUCER line is therefore NONE, and each SERVED-NEW line reads the heuristic its code applies, not a canonical class. The gate this bears on is the issuer's, not this cell's.",
+  "notes": "Becomes load-bearing when SC-e-35 executes; INERT today because the old list still receives writes. No remedy proposed here."
+}
+```
