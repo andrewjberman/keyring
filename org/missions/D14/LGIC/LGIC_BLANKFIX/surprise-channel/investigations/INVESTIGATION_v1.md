@@ -822,3 +822,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The root check prints FIX for both lines: the root check answers a key the registry rules on first (lib/opal_naming_rootcheck.py module docstring, line 9), so fill_keys' REFUSED-CROSS-FIRM class is no longer what the line shows. What this build holds is the class: fill_keys still classes both REFUSED-CROSS-FIRM (the key's path word 'cot' names Cottonwood in 49 Financial's bucket opal-data-bd), and crossfirm prints them as REFUSED. The build did not change either."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S12 -- the face's existing no-brace rule for key-ruling lines and the lines command did not exist
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T22:50:50Z",
+  "one_line": "TO BF-q-2 AMENDMENT 1 speaks of the lines command's existing no-brace rule; the lines command held none, so the brace rule was added in both the line decision and the lines command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py@807831814c lines_check (before the build): it checked rule codes, NOT-ASKED wording, FIX target collisions, REFUSED wording and the count line; no check of a brace in a FIX detail. decide() kept 'if \"{\" not in form' only for the {system}/{cadence} fill path, and the key-ruling branch returned the registry canonical with no brace test.",
+      "After the build: decide() turns a FIX from a key ruling that carries any brace other than {scope}-on-a-per-firm-row into HOLE, and lines_check fails the run on a FIX line with such a brace (tests in lib/tests/test_opal_naming_rootcheck.py: 'the same {scope} on a row that is not per-firm is refused' and 'the lines command refuses {scope} on a FIX line whose row is not per-firm')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-2 AMENDMENT 1: the check's own no-brace rule and the lines command must admit exactly {scope} on a line whose row is per-firm and refuse every other brace as today.",
+  "world_is": "No brace rule existed on a key-ruling line or in the lines command before this build, so 'as today' described the {system}/{cadence} fill path only. The build adds the rule for key-ruling FIX lines and the lines command; the bd-pipeline count line is unchanged by it (ROOTCHECK ok=True items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0 before and after)."
+}
+```

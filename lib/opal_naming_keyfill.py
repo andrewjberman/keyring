@@ -228,7 +228,73 @@ def _bucket_of_py(tree, line, key, v):
         len(allb), ", ".join("%s (line %d)" % (b, n) for b, n in sorted(allb.items())), seen)
 
 
+_PER_FIRM_VAR_RE = re.compile(r"^[A-Z][A-Z0-9_]*_BUCKET_MAP$")
+
+
+def _item_text(item, text=None):
+    """(path, source text or None) of the file an item's `where` names; `text` stands in for the file when given."""
+    path, _line = _split_where(item.get("where"))
+    if path is None:
+        return None, None
+    if text is not None:
+        return path, text
+    try:
+        return path, opal_naming._read_text(os.path.join(opal_naming.REPO, *path.split("/")))
+    except (OSError, UnicodeDecodeError, ValueError):
+        return path, None
+
+
+def _string_constants(path, text):
+    """[(value, line)] of the string constants of a source file (a Python docstring is not one)."""
+    if path.endswith(".py"):
+        try:
+            tree = ast.parse(text)
+        except (SyntaxError, ValueError):
+            return []
+        docs = set()
+        for node in ast.walk(tree):
+            body = getattr(node, "body", None)
+            if isinstance(body, list) and body and isinstance(body[0], ast.Expr)                     and isinstance(body[0].value, ast.Constant):
+                docs.add(id(body[0].value))
+        return [(n.value, getattr(n, "lineno", 0)) for n in ast.walk(tree)
+                if isinstance(n, ast.Constant) and isinstance(n.value, str) and id(n) not in docs]
+    if path.endswith(opal_naming.CENSUS_SOURCE_EXT):
+        return [(val, n) for val, _c, n in opal_naming._js_literals(text)]
+    return []
+
+
+def runtime_bucket(item, text=None, names=()):
+    """([variable names], basis): the per-firm run-time bucket variables the item's source file shows. A variable shows
+    as a string constant of the file that is an upper-case name ending _BUCKET_MAP (one bucket per firm), or is one of
+    `names` (the variables a registry row asks for). The basis says which line of which file shows each. ([], "") when
+    the file is unreadable or shows none."""
+    path, src = _item_text(item, text)
+    if path is None or src is None:
+        return [], ""
+    found = {}
+    for val, ln in _string_constants(path, src):
+        if _PER_FIRM_VAR_RE.match(val) or val in names:
+            found.setdefault(val, ln)
+    if not found:
+        return [], ""
+    basis = "the bucket is chosen at run time: " + "; ".join(
+        "line %d of %s holds the name %s, an environment variable that gives one bucket per firm" % (
+            ln, path.rsplit("/", 1)[-1], name) for name, ln in sorted(found.items()))
+    return sorted(found), basis
+
+
 def bucket_of(item, text=None):
+    """(bucket or None, basis): as _bucket_of_read(); a bucket that is not read, in a file that shows a per-firm run-time
+    bucket variable (runtime_bucket), also says so in the basis."""
+    b, why = _bucket_of_read(item, text)
+    if b is None and not item.get("bucket"):
+        names, rb = runtime_bucket(item, text)
+        if names:
+            why = "%s; %s" % (why, rb)
+    return b, why
+
+
+def _bucket_of_read(item, text=None):
     """(bucket or None, basis): the bucket the key at item["where"] is used with, read from the SAME source file
     (`text` stands in for the file when given). A bucket the item already carries comes first. Never read from the
     folder name. None comes with the reason, or the candidates when the file has several and the key picks none."""
