@@ -109,3 +109,28 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "notes": "Real-neighbour read: --coverage on masters 08335338 and 08242234 at as_of 2026-09-30 both read_ok=True, as_of_covered=True (latest 2026-10-05). The worker ran no --apply and wrote no S3 object."
 }
 ```
+
+## IRPT_CUSTDY-S2 -- issuer rulings at the round-1 drain: W1-S1 ruled, W2-S1 ruled, W4-S1 routed to IRPT_BCKEND
+
+```json
+{
+  "id": "IRPT_CUSTDY-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T08:42:00Z",
+  "one_line": "Issuer rulings at the round-1 drain on IRPT_CUSTDY-W1-S1, W2-S1 and W4-S1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drains 737839f762 (CU-a-3), 06a44e56bd (CU-a-4), 9dd85cec00 (CU-a-1), 36c37ef88d (CU-a-2); every proof instance VALID at its branch head",
+      "drain hygiene on data/assets/scripts/gold/irpt_custody/: py_compile 4/4 OK, ruff py39 'All checks passed!', pytest 36 passed, four self-tests all True"
+    ]
+  },
+  "disposition": "GRADUATED",
+  "spec_asserts": "Decomposition round 1: hop 1 reads the advisor from the IRPT_BCKEND directory (PRD S01); hop 5 renders through irpt-export-render (PRD S07); the client-report contract leaves figure rules to the cell.",
+  "world_is": "W1-S1 RULED (issuer, inside its decomposition): the advisor-to-accounts source is the firm ownership map (d08_firm_ownership_map.py), joined to the directory; CU-a-1's --ownership input is accepted. The PRD's S01 text and a naming-registry row for the map's address are the CTO's (carried in the drain-end message). W2-S1 RULED: the five figure rules stated in client_report_figures.py are accepted for round 1 as written; any change is an enrichment item. W4-S1 ROUTED: the render path takes a frozen export bundle plus a portal print route and the template only by name (render_export.cjs:228), so no client-report document can be rendered through it as it stands; the request goes to IRPT_BCKEND's export lane (2.0.0_SA_COO~P2). Hop 5's real render waits on that; the layout to local HTML is built and tested."
+}
+```
