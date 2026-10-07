@@ -19718,3 +19718,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "All 7,022 granted accounts are 49financial (ownership map in opal-data-bd). Inflection has no ownership_map object; cottonwood's map (opal-data-cot) holds 0 advisors, so zero cottonwood accounts needed the fence reason; FENCE_COTTONWOOD_BUCKET_DENIED is declared with count 0."
 }
 ```
+
+## IRPT_BCKEND-S366 -- E-M2's e2 FAIL is an instrument defect: the unassigned rule could not hold in the L0 category shape; re-checked over all 1,876 instances
+
+```json
+{
+  "id": "IRPT_BCKEND-S366",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T11:47:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The laptop E-M2 read (@471da6f0b0) failed e2 on ONE unassigned account (49F acc_8edbf9b2d53df56d206d2717, value 0.0, one non-TARGET child) because the reader required 'no non-TARGET child', while every served ACCOUNT carries a CATEGORY child (49F: 7,597 accounts, 7,597 CATEGORY nodes), so the rule fails by construction. Issuer ruling: the residual is visible and not redistributed when the unassigned account is served as an ACCOUNT, its subtree ties, and no MODEL_LEAF / MODEL_WRAPPER / SLEEVE sits under it; checked over EVERY listed instance. Re-run from dell2 (49F and INF readable since the fence join) on the same 2026-10-05 publication: 1,876 of 1,876 pass (49F 1,645 incl. 888 zero-value; INF 231 incl. 56 zero-value). COT lists 0 unassigned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_M/R31M_FWD5_PROOF_CASES_READ.json @471da6f0b0 (sha256 2b61c5a833c7...): e1 PASS, e2 FAIL (unassigned check residual_visible false), e3 PASS; 49financial node_kinds ACCOUNT 7597 / CATEGORY 7597",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R31M_UNASSIGNED_RECHECK_20261007.json, committed with this row: run on dell2 as cloudops-dell2-agent-user, --date 2026-10-05; e2_unassigned PASS 1876 of 1876; reader --self-test 3 arms OK (a model-leaf redistribution FAILs, a dropped account FAILs)"
+    ]
+  },
+  "spec_asserts": "Reader r31m_fwd5_proof_cases_read.py @229b82df18: an unassigned instance passes only with no non-TARGET child, and one instance is tested.",
+  "world_is": "IB-mr-311 AMENDMENT 1 (issuer, inside its own unissued decomposition): e2's unassigned case is graded on r31m_unassigned_recheck.py over every instance; the other three cases stay on the laptop FILE. E-M2 is issued on both files."
+}
+```

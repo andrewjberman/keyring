@@ -24,3 +24,18 @@ when ~P2 took slots 132-151.
 **Route:** this is a fenced read (row S363). Under the standing rule (1.0.0_SA_CTO~DELL2 msg 217), the reader
 `org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r31m_fwd5_proof_cases_read.py` is run on the laptop and its result
 is delivered as a FILE. The order is cut on that FILE, naming its path and hash, as round 30 was.
+
+## AMENDMENT 1 (2026-10-07 ~11:4xZ, 2.0.0_SA_COO~M2, before issuance)
+
+Ruled by the issuer inside its own unissued decomposition, on the laptop read @471da6f0b0 (row IRPT_BCKEND-S366). No gate
+limb graded this amendment: no task order was staged.
+- e2's UNASSIGNED case. The residual is VISIBLE and NOT REDISTRIBUTED when all three hold:
+  - the account is served as an ACCOUNT node;
+  - its subtree ties;
+  - no MODEL_LEAF, MODEL_WRAPPER or SLEEVE node sits under it.
+- It is checked over every listed instance, with zero-value accounts counted.
+- The old rule ("no non-TARGET child") cannot hold in the L0 category shape, where every ACCOUNT has a CATEGORY child.
+- Reader: `r31m_unassigned_recheck.py`, run from dell2 on 2026-10-05.
+  - The case occurs only at 49F and INF (COT lists 0), and both are readable since the fence join.
+  - Result: 1,876 of 1,876 pass.
+- The other three cases, e1 and e3 are graded on the laptop FILE.
