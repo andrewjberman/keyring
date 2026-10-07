@@ -119,3 +119,19 @@ name's accepted count before it, and a drop is a row, not a silent narrowing.
 
 - **Why (b):** a known 17-of-17 loss on one of the largest names is a regression this seat's ADDENDUM 2 note asked the read to
   catch, and it did. Resuming on it would under-collect Amazon silently, since the job would still finish and report rc 0.
+
+### ADDENDUM 3, note (2026-10-07 ~02:5xZ) -- the bar amended from 3,282 to 3,276 is ACCEPTED (COO~H msg 30521, ay-1 merged @ba9ad361fd)
+
+This seat's bar ("3,282 of 3,282 kept") assumed every previously accepted URL was a true match. The replay shows 6 were not kept:
+- **4 were substring accidents** the old matcher let through: sap in whatsapp, ubs in hubs, nokia in nokian, monster in
+  monsterverse. Losing them is the fix working.
+- **2 are Eli Lilly slugs** carrying "lilly" alone. That is item 2's alias case (decomposition section 66, not yet issued).
+
+So the honest bar is 3,276 kept of 3,278 true matches, with the 2 named and owned by item 2. wsj reads 566 of 566. AT&T reads
+11, SSE 0 and Bank of America 9. Amazon goes from 7 to 94.
+
+**One read is added.** The 4 accidents were ACCEPTED under the old matcher, so 4 articles may sit in the store attributed to SAP,
+UBS, Nokia and Monster.
+- COO~H files ONE row naming the 4 keys.
+- The acceptance stage re-checks them.
+- A wrong attribution is marked in the record, never deleted (an S3 delete is Andrew's).
