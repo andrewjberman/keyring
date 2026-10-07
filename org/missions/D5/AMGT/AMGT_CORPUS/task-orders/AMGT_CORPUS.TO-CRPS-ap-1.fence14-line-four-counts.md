@@ -91,3 +91,4 @@ Read-only: the whole repository, in particular the issuer's check `org/missions/
 <round>40</round>
 <slot>~1</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
