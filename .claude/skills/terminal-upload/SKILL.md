@@ -166,8 +166,11 @@ drops near 120 s, so the run is read in a second call.
 
 **After a real send, read `opal_data_refresh_status(execution_id=<the returned id>)`** until
 the status is terminal (SUCCEEDED / FAILED / TIMED_OUT / ABORTED); it returns the run's status and
-the LIVE portal manifest's displayed date and text. If `opal_data_refresh_status` is not
-available to your identity, read the portal's displayed date instead.
+the LIVE portal manifest's displayed date and text. Its `displayed_date` field can read null
+while the run is fine (row NFRA_OPLGTW-Z-W28-S13: the manifest carries none of the date keys the
+tool looks for), so take the date from the returned manifest TEXT or from the served file in
+Step 4, never from that one field. If `opal_data_refresh_status` is not available to your
+identity, read the portal's displayed date instead.
 
 Never re-send on a dropped transport.
 
