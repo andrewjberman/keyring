@@ -2718,3 +2718,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). Unblock: run the commit from a box with ruff 0.15.11, or the issuer's ruling to commit with the pinned ruff in a scratch environment."
 }
 ```
+
+## MDPF_SECCLASS-W21-S3 -- the 4 test-file gate errors under W21-S2 are RUF100/UP031, not annotation rules; fixed as comment and string-format equivalents
+
+```json
+{
+  "id": "MDPF_SECCLASS-W21-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~21",
+  "surfaced_at": "2026-10-07T08:35:28Z",
+  "one_line": "AMENDMENT 1 (ruling on W21-S2) reads the 4 test_seed_fields.py gate errors as annotation rules; the gate's own command prints them as RUF100 (unused noqa E402 comment) and three UP031 (percent-format strings), none an annotation, so the annotations-only fix covered etf_classification.py (22) and the test file's 4 took the comment and string-format equivalents.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m ruff check --target-version py39 --extend-select FA <both files> at base state of the edits -> 26 errors: 22 on etf_classification.py (I001, UP035 x2, UP006 x17, UP045 x4) and on test_seed_fields.py 32:34 RUF100, 66:21 / 83:17 / 86:57 UP031",
+      "same command after the fix -> 'All checks passed!' rc=0; pytest test_seed_fields.py 22 passed; AC1 '3 passed, 19 deselected'; AC2 'SEED-SIX-CLASS ok=True ... conflicts=0 off_vocab=0 remap_keys_moved=0 multi_asset_tokens=0'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: the 26 gate errors in the two owned .py files are annotation rules, fixable annotations-only with no runtime change.",
+  "world_is": "22 are annotation/import rules (typing.Dict/Set/Optional -> dict/set/X | None, unused typing import removed, import block sorted). The 4 on the test file are not: one noqa comment removed, three assertion messages moved from %-format to f-strings (identical message text, no assertion or value changed). Nothing outside the two owned files was touched.",
+  "notes": "Filed on dell1. The worker took the minimal equivalent so the gate passes without a bypass; the issuer may re-grade this if the ruling meant to exclude the 4."
+}
+```
