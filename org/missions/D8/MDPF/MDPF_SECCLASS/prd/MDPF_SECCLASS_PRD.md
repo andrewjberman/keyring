@@ -5,7 +5,7 @@
  "project": "MDPF_SECCLASS",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.13",
+ "prd_version": "v0.14",
  "step": 4,
  "brief_ref": "docs/briefs/canonical-security-table-brief-20260929.md@87ad6973f3",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17"],
@@ -679,3 +679,13 @@ NFRA_CTLPLN v0.12 addendum (a Dell CTO writes L4 and L10 for its box's projects)
   `.../yang_pipeline/positioning/yang-generate-positioning/lambda_function.py:95`.
 
 **Sign-off:** an ENDPOINT wording change on FWD-12, so the ratified-text half re-opens for `3.0.0_SA_CVO` (dell1).
+
+## ADDENDUM v0.14 (1.0.0_SA_CTO~DELL1, 2026-10-07) -- contract note only: Cash is a sub-class of cash alone
+
+**Analysis:** `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_MDPF_SECCLASS_ROUND_9_20261007.md` (same commit), on
+`3.0.0_SA_CVO`'s slug msg 247. The ENDPOINT section is not edited.
+
+- **C-BOUND, row W36-S2.** Under the six classes, the sub-class `Cash` belongs to `cash` only; `fixed_income` carries no `Cash`
+  sub-class. A screen that shows cash inside fixed income states that fold as its FWD-16 mapping; the list itself never folds.
+  The canonical `CASH` row (`fixed_income` / `UltraShortDuration`, `classified_by: legacy`, read 2026-10-07 12:5xZ) is corrected
+  to `cash` through the seed source by its own pair.
