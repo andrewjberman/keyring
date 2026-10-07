@@ -78,3 +78,4 @@ CloudOps set), `2.0.0_SA_COO~Z` REFUSED as the negative control.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
+<status>complete -- AE~A @02a7be55d5: etf-classifications.tf 82 CR -> 0 CR, CR-stripped bytes equal, nothing applied; proof VALID @f54839e7d8; issuer read at HEAD: 0 CR; row Z-S362 (45 other tracked files carry CR under eol=lf)</status>
