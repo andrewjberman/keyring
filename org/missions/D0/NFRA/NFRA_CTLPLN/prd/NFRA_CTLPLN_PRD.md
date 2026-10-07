@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -391,3 +391,19 @@ It closes v0.7's open question (2).
 - **Still open at Andrew:** v0.7's question (3), access-granting resource policies.
 
 An ENDPOINT change: the ratified-text half re-opens for `3.0.0_SA_CVO`. The brief half is accepted (the CRO wrote the brief).
+
+## ADDENDUM v0.10 (1.0.0_SA_CTO, 2026-10-07) -- two open questions closed on Andrew's word. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:5xZ at the `1.0.0_SA_CTO` terminal, answering four cards, VERBATIM: "1.) Yes. 2.) For now, laptop should admin. 3.) Stay.
+4.) Yes." Record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md`.
+
+- **Passing a role (card 1, Yes).** v0.8's clause stands as his word, no longer this seat's reading: a Dell may `iam:PassRole` only the
+  named roles the laptop made for Dell-placed work, with the `iam:PassedToService` condition; every other IAM action stays denied.
+- **Access-granting resource policies (card 2, "For now, laptop should admin").** A bucket policy, a key policy and a Lambda permission
+  are administered by the laptop through C-ROLE-REQUEST's write-in, the same request shape with the resource policy as its subject. The
+  Dell policy denies the actions that write them. INTERIM on his own "For now"; it joins the v0.8 backlog line. This closes v0.7's
+  open question (3); none of v0.7's three questions remains open.
+- **Next issuance:** the Deny statements for those actions, listed from the resource-policy actions of the services the Dell policy
+  already allows (derived, never from memory), and one exercised refusal.
+
+A contract change under the ENDPOINT hash: it re-opens nothing beyond what v0.9 already re-opened.
