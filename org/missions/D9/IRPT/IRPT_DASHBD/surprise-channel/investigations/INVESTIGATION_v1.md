@@ -1758,3 +1758,30 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Resolves W13-S1 (the read was made where the fence allows it) and W13-S3 (a checker defect, fixed in the issuer's own check); DB-b-27 is complete with a VALID instance."
 }
 ```
+
+## IRPT_DASHBD-W14-S1 -- closure_align_e1p needs a laptop run (gold bucket fenced here)
+
+```json
+{
+  "id": "IRPT_DASHBD-W14-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~14",
+  "surfaced_at": "2026-10-07T10:20:39Z",
+  "one_line": "closure_align_e1p.py reads the served 49F gold series, which this box's identity is denied on; the E1' record needs a laptop run, then the file handed back.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-29 worker face: Opal's side is read from s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/; phase 2 needs CLOSURE_ALIGN_E1P.json.",
+  "world_is": "Script and 4 offline tests (4 passed) are committed; the closure set re-derives to 2,299 from the GROSS record. The gold read is fenced on this box (see W13-S1). Run on the laptop from the repo root: python \"org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~14/closure_align_e1p.py\" . -- it writes org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~14/CLOSURE_ALIGN_E1P.json beside the script. Return that file for phase 2.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest on tests/test_closure_align_e1p.py: 4 passed",
+      "closure_set() over the GROSS record: 2299 segments",
+      "IRPT_DASHBD-W13-S1: same identity denied on opal-data-49financial"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Accrual choice for the closure day: mean income_return over the segment's linked days (judgment recorded in the script docstring)."
+}
+```
