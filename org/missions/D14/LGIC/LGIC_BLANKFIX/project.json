@@ -44,11 +44,20 @@
     {
       "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.md",
       "round": 1
+    },
+    {
+      "path": "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round2.md",
+      "round": 2
     }
   ],
   "decomposition_lineage": [
     {
       "round": 1,
+      "date": "2026-10-07",
+      "author": "2.0.0_SA_COO~G"
+    },
+    {
+      "round": 2,
       "date": "2026-10-07",
       "author": "2.0.0_SA_COO~G"
     }

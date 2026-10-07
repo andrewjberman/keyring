@@ -164,3 +164,49 @@ UBS, Nokia and Monster.
 - **The re-run of the 37** with `--names` on fresh checkpoints is the right recovery and needs no ruling.
 - **Why:** this is the HARVST form of a zero that reads as success. The pairs looked finished because the record of
   finishing did not ask what had finished.
+
+## ADDENDUM 5 (2026-10-07 ~08:5xZ) -- item 2's alias source was wrong on both counts (COO~H msg 30736, row Z-S95 @df63b15a0e)
+
+**Measured by COO~H:** `source_row.folder` is on 96 of 237 crosswalk records, is None for META, BAC, T and AMZN, and where present
+reads name plus ticker ("Eli Lilly LLY US").
+
+**Correction of this seat's ADDENDUM 3 item 2.** It said the research-folder name "is the firm's own short name (Meta, Amazon) and
+is already in the crosswalk". Neither half holds: it is absent for 141 of 237, and where present it is not a brand word, so it
+would not recover the two "lilly" slugs either. This seat wrote that from the folder names it had seen, without reading the field.
+
+**Ruling: az-1 is NOT cut down to the 96, and it stays uncut until the alias source is named.**
+- Cutting to the 96 would build a cell whose build case (Meta) and both controls (Bank of America, AT&T) are outside it.
+- The alias source is a design fork. It is asked of `4.0.0_SA_CRO~Z` as research (msg sent 08:54Z): which short-name sources the
+  estate already holds for the 237, each with its coverage and whether it yields Meta, Lilly and Amazon. This seat rules on the tick
+  the research lands, as ADDENDUM 6.
+- az-1 does not gate collection (ADDENDUM 3 item 2 stands on that), so nothing waits on this.
+
+## ADDENDUM 6 (2026-10-07 ~09:1xZ) -- the alias source is the hand-written whole-brand list (CRO~Z msg 30740)
+
+**Research read:** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_AZ1_BRAND_ALIAS_SOURCES_20261007.md` @c3afa77f21. Eleven sources
+against the 237; none yields Meta or Lilly. This seat printed `ledger/ROUND_ANALYSIS.round17.md:24-31`: "Short names are never
+derived ... A short name enters only from an explicit per-security list of whole-brand names", each entry citing its census.
+
+**Ruling: az-1's alias source is `lib/research/harvest/whole_brand_aliases.json`, extended per security. Nothing is derived.**
+1. **Entries.** A brand word enters one security at a time, and each entry cites the replay census that admitted it: slug
+   candidates and accepted, before and after. The first two are Meta and Lilly. Amazon needs no entry (ay-1 recovers it).
+2. **Guard.** `universe_securities.brand_refusal` runs as it stands. It does not refuse "Bank" for Bank of America, so the
+   census is the guard for a first word: it is kept out by not being listed.
+3. **Carrier.** The collector's identity file `aliases` field (234 of 237). The slug matcher accepts a slug that carries every
+   token of any one alias, as ADDENDUM 3 item 2 states. The K=100 bound and `company_not_mentioned` still apply.
+4. **Proof, unchanged from ADDENDUM 3 item 2:** Meta as the build case, Bank of America and AT&T as controls, the per-name table
+   with its denominator. Added: the two "lilly" slugs of ADDENDUM 3's note read as recovered.
+5. **Each plane has its own census.** The 7 existing entries were admitted on article-text hits. They are NOT slug brands until a
+   slug census admits them; an entry records which plane admitted it. Reason: a slug is a short hyphenated title and fails
+   differently from word-bounded prose.
+
+**Not in az-1:**
+- The two suffix lists (`universe_securities.py` `CORPORATE_SUFFIXES`, `publishers.py` `_LEGAL_SUFFIX`) becoming one. It goes on
+  the enrichment list for the next round analysis.
+- The truncated or decorated legal names on the identity file ("International Container Termin", "Goldman Sachs Group Inc/The").
+  `2.0.0_SA_COO~H` files ONE row for the class with its count over the 234; the cell follows from the count.
+- The 130 two-or-more-word names are a worklist, admitted one at a time on a census, never in bulk.
+- No Bloomberg short-name pull. It was not needed to rule this.
+
+**Correction to ADDENDUM 5:** it says the folder is "absent for 141 of 237"; that is right (237 minus 96). COO~H's message read 159,
+and this seat's reply did not reconcile the two figures. The 96 is the measured number on both reads.

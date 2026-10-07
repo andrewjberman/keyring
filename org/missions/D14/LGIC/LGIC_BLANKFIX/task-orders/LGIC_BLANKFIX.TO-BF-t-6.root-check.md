@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~1</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -63,7 +63,9 @@ exactly ONE line `KIND type current -> detail  [where]`, the kind decided by the
 4. `RIGHT`: verdict `CONFORMANT`. Detail: the name.
 5. `NOT-ASKED`: the fourth verdict. Detail: "this kind of name is not asked to carry a system" and the canonical.
 6. Otherwise the name is wrong (`ALIAS` or `OUT-OF-PATTERN`). Complete the canonical: replace `{system}` from `resolve()`'s
-   `system`; replace `{cadence}` from the `cadences()` row with the same `where` when its `word` is not `None`; for a key, take
+   `system` -- EXCEPT for a name of type `IAM_POLICY` whose `basis` is `root-default` (AMENDMENT 1: an inline policy follows its
+   role, so the root's default does not decide it; leave its `{system}` unfilled and it prints as `HOLE` with the detail "an
+   inline policy takes its role's system; the root map does not decide it"); replace `{cadence}` from the `cadences()` row with the same `where` when its `word` is not `None`; for a key, take
    `fill_keys`'s `canonical` when its class is `ADDRESS`, and print kind `RIGHT` with detail "legacy store, keeps its address" when
    its class is `LEGACY`. If the completed form carries no `{`: `FIX`, detail the complete correct name. If a `{` remains: `HOLE`,
    detail the partial form and, in plain words, what could not be filled and why (the cadence row's `basis`, the key row's `basis`,
@@ -86,7 +88,7 @@ Do not suppress them and do not invent a word: print them. Report every `HOLE` l
 <criterion id="BF6-AC1" cell_refs="BF-t-6"><invocation>python lib/tests/test_opal_naming_rootcheck.py</invocation><expect>ROOTCHECK-TEST ok=True</expect></criterion>
 `BF6-AC1` -- every kind is reachable, no FIX line carries a blank, and an unfillable part is what makes the run fail.
 
-<criterion id="BF6-AC2" cell_refs="BF-t-6"><invocation>python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/ROOT_MAP_PROPOSED.json --report-only</invocation><expect>ROOTCHECK ok=True</expect></criterion>
+<criterion id="BF6-AC2" cell_refs="BF-t-6"><invocation>python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only</invocation><expect>ROOTCHECK ok=True</expect></criterion>
 `BF6-AC2` -- the real root, through the five real modules: one line per name, the counts summing to the scope's own count.
 
 <expected_criteria>BF6-AC1,BF6-AC2</expected_criteria>
@@ -109,7 +111,7 @@ lib/tests/test_opal_naming_rootcheck.py
 org/missions/D14/LGIC/LGIC_BLANKFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
-The block is your WRITE grant. You READ and never edit: `lib/opal_naming.py`, `lib/tests/test_opal_naming.py`, `org/standards/NAMING_SCHEMA.json`, every file under `infra/logic/registry/`, every file under `infra/aws/terraform/bd-pipeline/` and `infra/aws/lambda/bd-pipeline/`, `infra/aws/lambda/ci/lambda-source-map.json`, `org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.md`. You also read `lib/opal_naming_scope.py`, `lib/opal_naming_rootmap.py`, `lib/opal_naming_cadence.py`, `lib/opal_naming_keyfill.py` and `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/ROOT_MAP_PROPOSED.json`.
+The block is your WRITE grant. You READ and never edit: `lib/opal_naming.py`, `lib/tests/test_opal_naming.py`, `org/standards/NAMING_SCHEMA.json`, every file under `infra/logic/registry/`, every file under `infra/aws/terraform/bd-pipeline/` and `infra/aws/lambda/bd-pipeline/`, `infra/aws/lambda/ci/lambda-source-map.json`, `org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.md`. You also read `infra/logic/registry/root_map.json`, `lib/opal_naming_scope.py`, `lib/opal_naming_rootmap.py`, `lib/opal_naming_cadence.py`, `lib/opal_naming_keyfill.py` and `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/ROOT_MAP_PROPOSED.json`.
 
 <decomp_ref>
 <decomp_doc>org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.md</decomp_doc> (round 1), cell `BF-t-6`.
@@ -123,6 +125,17 @@ validated with `python .tools/proof-of-spec-check.py <instance> BF6-AC1,BF6-AC2`
 </proof_of_spec>
 
 **REPORT:** both last lines whole; every `HOLE` and every `CARDED` line whole; the count per kind; any module whose behaviour did not match this face; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the landed map, and the registry owner's condition
+
+- The root map is LANDED: `infra/logic/registry/root_map.json` @650452aae2 (`4.0.0_SA_CRO`, msg 106224). `BF6-AC2` runs on it, not on
+  the proposal. Read its `_about.not_decided`.
+- That seat's condition, made mechanical in rule 6 above: the root default supplies no system for an `IAM_POLICY` name. Such a name
+  prints `NOT-ASKED` when the grader returns `NO-SYSTEM-ASKED`, and `HOLE` otherwise.
+- The scope gives this root TWO source folders (`infra/aws/lambda/bd-pipeline` and `infra/aws/lambda/historical-prices-scheduler`),
+  140 names at the last read. Use `stats["source_dirs"]`; type no folder.
+- `fill_keys` also returns rows of class `UNDECIDED` (a `cot` key under this root): print them as `HOLE` with the row's `basis`.
+- A name `grade()` raises on is a `HOLE` (rule 3); six such keys exist in this root's source folder.
 
 ---
 

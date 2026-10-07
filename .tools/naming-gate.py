@@ -10,6 +10,7 @@ Grades the ADDED lines of a unified diff with lib/opal_naming.py's grade(), and 
       and OUT-OF-PATTERN                                                 REFUSE (unless the diff removes it)
     EXISTING anywhere else and OUT-OF-PATTERN                            WARN
     CONFORMANT                                                           pass
+    NO-SYSTEM-ASKED (no system is asked of this kind of name; C-VERDICT)  pass (never refused for lacking a system)
     a hand edit to a GENERATED file (bytes differ from the generator's
       output), or the mark on a file the generator does not produce      REFUSE
     RAISE                                                                printed as a rule or registry defect
@@ -1695,6 +1696,15 @@ def judge(nm, path, lit, pre_text, waivers=None):
         return "RAISE", "(rule or registry defect)", why + carr_txt, "WARN"
     if verdict == "NOT-GRADED":
         return "NOT-GRADED", "-", "%s is outside the grade's domain (G1.2)" % typ, "PASS"
+    if verdict == "NO-SYSTEM-ASKED":
+        # The fourth verdict (LGIC_BLANKFIX BF-t-2): no system is asked of this kind of name, so no remedy is owed and
+        # nothing here refuses it for lacking one. The hand-kept-carrier context rule is a different question and
+        # still binds, exactly as for CONFORMANT.
+        if new and carr:
+            return "REFUSE", canon, "NO-SYSTEM-ASKED as %s, but a NEW%s" % (typ, carr_txt[1:]), "REFUSE"
+        if carr:
+            return verdict, canon, "NO-SYSTEM-ASKED as %s; EXISTING%s: WARN" % (typ, carr_txt[1:]), "WARN"
+        return verdict, canon, "NO-SYSTEM-ASKED as %s: no system is asked of this kind of name" % typ, "PASS"
     rem = nm.remediation_of(typ, graded_as) if verdict == "OUT-OF-PATTERN" and not new else None
     if new and verdict in ("OUT-OF-PATTERN", "ALIAS"):
         return "REFUSE", canon, "NEW and %s as %s: REFUSE%s%s" % (verdict, typ, carr_txt, new_deny_txt), "REFUSE"
@@ -1896,12 +1906,31 @@ def run(args):
     return rows, domain_meta(files)
 
 
+def self_test():
+    """--self-test: judge() on a NEW group-A name takes the fourth verdict and passes, and (the difference control) a NEW
+    group-B name is still refused. Reads no diff, writes no log. Returns 0 when both arms hold."""
+    nm = Naming(load_opal())
+    ok = True
+    for name, typ, want_verdict, want_counts in (("s3-access", "IAM_POLICY", "NO-SYSTEM-ASKED", "PASS"),
+                                                  ("pipeline-chain", "IAM_POLICY", "REFUSE", "REFUSE")):
+        got = judge(nm, "selftest.tf", Lit(name, name, 1, typ), None)
+        arm = got is not None and got[0] == want_verdict and got[3] == want_counts
+        ok = ok and arm
+        print("SELF-TEST arm %s %s -> %s %s: %s" % (name, typ, got[0] if got else None, got[3] if got else None,
+                                                    "ok" if arm else "FAIL"))
+    print("NAMING-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="naming-gate.py", description="the naming commit limb (LGIC_ENFORCE DEC-6)")
+    ap.add_argument("--self-test", action="store_true", help="run the gate's own arms (the fourth verdict and its control)")
     ap.add_argument("--diff", help="a unified diff; its ADDED lines are graded")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
     ap.add_argument("--post-from-index", action="store_true", help="read each post-image from the index (safe-commit.sh)")
     args = ap.parse_args(argv)
+    if args.self_test:
+        return self_test()
     enforce = enforcing(args.enforce)
     mode = "ENFORCE" if enforce else "WARN"
     try:

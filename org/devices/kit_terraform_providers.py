@@ -8,8 +8,15 @@ constructs names a registry address or a downloading verb (a test asserts it).
 
     python org/devices/kit_terraform_providers.py required [--out <json>]
     python org/devices/kit_terraform_providers.py located  [--search <dir> ...] [--platform windows_amd64]
-    python org/devices/kit_terraform_providers.py pack --out <dir> [--search <dir> ...] [--only <ns/type[@ver]> ...] [--include-unlocked]
-    python org/devices/kit_terraform_providers.py verify --from <dir> [--write-config <file>]
+    python org/devices/kit_terraform_providers.py binary   [--tools-dir <dir>]
+    python org/devices/kit_terraform_providers.py pack --out <dir> [--search <dir> ...] [--only <ns/type[@ver]> ...] [--include-unlocked] [--no-binary]
+    python org/devices/kit_terraform_providers.py verify --from <dir> [--write-config <file>] [--run-binary] [--install-binary <target>]
+    python org/devices/kit_terraform_providers.py readback --root <dir> [--from <pack dir> | --config <file>] [--timeout <s>]
+
+AMENDMENT 4: the pack also carries the Terraform BINARY this box's .tools/safe-apply.sh would run, resolved by the wrapper's own order
+(SAFE_APPLY_TERRAFORM override, then the sibling terraform.exe beside the wrapper in the base checkout's .tools/, then PATH). The binary
+is hashed against the manifest BEFORE it is ever executed; every terraform run here sets CHECKPOINT_DISABLE=1 so even `version` makes no
+network call.
 
 The roots are derived by importing placed_projects() and cited_roots() from
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py (the method is not written twice), plus this project's own
@@ -32,6 +39,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 
 HERE = pathlib.Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
@@ -44,6 +52,8 @@ PLATFORM = "windows_amd64"
 MANIFEST = "MANIFEST.json"
 SNIPPET_NAME = "terraform.rc.snippet"
 LOCK_NAME = ".terraform.lock.hcl"
+BIN_REL = "bin/terraform.exe"
+OVERRIDE_ENV = "SAFE_APPLY_TERRAFORM"
 
 
 # ---------------------------------------------------------------- the hash
@@ -421,6 +431,124 @@ def cmd_located(args):
     return 0 if ok else 1
 
 
+# ---------------------------------------------------------------- the Terraform binary (AMENDMENT 4)
+
+
+def wrapper_tools_dir(tools_dir=None):
+    """The directory .tools/safe-apply.sh calls SCRIPT_DIR when a seat runs it from the BASE checkout (first worktree entry)."""
+    if tools_dir:
+        return pathlib.Path(tools_dir)
+    wts = worktrees()
+    return (wts[0] if wts else ROOT) / ".tools"
+
+
+def terraform_run_env(extra=None):
+    env = dict(os.environ)
+    for k in ("TF_CLI_ARGS", "TF_CLI_ARGS_init", "TF_CLI_ARGS_plan", "TF_LOG", "TF_DATA_DIR"):
+        env.pop(k, None)
+    env["CHECKPOINT_DISABLE"] = "1"  # no version-check call to any server
+    env["TF_IN_AUTOMATION"] = "1"
+    if extra:
+        env.update(extra)
+    return env
+
+
+def run_version(path, timeout=120):
+    """-> (rc, stdout+stderr) of `<path> version -json`."""
+    try:
+        p = subprocess.run([str(path), "version", "-json"], capture_output=True, text=True, timeout=timeout, env=terraform_run_env())
+        return p.returncode, p.stdout + p.stderr
+    except (OSError, subprocess.SubprocessError) as exc:
+        return 1, "RUN-FAILED %s" % exc
+
+
+def parse_version(text):
+    try:
+        data = json.loads(text)
+        return data.get("terraform_version"), data.get("platform")
+    except ValueError:
+        return None, None
+
+
+def path_lookup(env_path=None):
+    """The first PATH entry holding terraform or terraform.exe, in PATH order, as bash `command -v terraform` finds it."""
+    for d in (env_path if env_path is not None else os.environ.get("PATH", "")).split(os.pathsep):
+        if not d:
+            continue
+        for name in ("terraform", "terraform.exe"):
+            c = pathlib.Path(d) / name
+            if c.is_file():
+                return c
+    return None
+
+
+def resolve_binary(tools_dir=None, env=None, env_path=None):
+    """Resolve exactly as .tools/safe-apply.sh does: override, sibling, PATH. -> dict(sources, winner, path, source)."""
+    env = os.environ if env is None else env
+    sibling = wrapper_tools_dir(tools_dir) / "terraform.exe"
+    sources = []
+    ov = env.get(OVERRIDE_ENV, "")
+    sources.append({"source": "override", "path": pathlib.Path(ov) if ov else None, "set": bool(ov), "exists": bool(ov) and pathlib.Path(ov).is_file()})
+    sources.append({"source": "sibling", "path": sibling, "set": True, "exists": sibling.is_file()})
+    pth = path_lookup(env_path)
+    sources.append({"source": "path", "path": pth, "set": pth is not None, "exists": pth is not None})
+    winner = None
+    if ov:
+        winner = sources[0]  # the wrapper takes a non-empty override as given and never falls through
+    elif sibling.is_file():
+        winner = sources[1]
+    elif pth is not None:
+        winner = sources[2]
+    return {"sources": sources, "winner": winner, "path": winner["path"] if winner else None, "source": winner["source"] if winner else None}
+
+
+def describe_binary(path, source=None):
+    """-> dict(path, source, size, sha256, version, platform, rc) or None when path is not a file."""
+    path = pathlib.Path(path)
+    if not path.is_file():
+        return None
+    rc, out = run_version(path)
+    ver, plat = parse_version(out) if rc == 0 else (None, None)
+    return {"path": path, "source": source, "size": path.stat().st_size, "sha256": sha256_file(path), "version": ver, "platform": plat, "rc": rc}
+
+
+def cmd_binary(args):
+    res = resolve_binary(args.tools_dir)
+    print("wrapper order (.tools/safe-apply.sh): $%s, then <base>/.tools/terraform.exe (the sibling), then PATH" % OVERRIDE_ENV)
+    own = ROOT / ".tools" / "terraform.exe"
+    base_tools = wrapper_tools_dir(args.tools_dir)
+    print("sibling directory resolved as the base checkout's .tools: %s" % str(base_tools).replace("\\", "/"))
+    if os.path.normcase(str(own.parent)) != os.path.normcase(str(base_tools)):
+        print("this worktree's own .tools/terraform.exe: %s" % ("PRESENT" if own.is_file() else "ABSENT"))
+    infos = {}
+    for src in res["sources"]:
+        label = src["source"]
+        if src["path"] is None:
+            print("  %-8s not set" % label)
+            continue
+        if not src["exists"]:
+            print("  %-8s %s  ABSENT" % (label, str(src["path"]).replace("\\", "/")))
+            continue
+        info = describe_binary(src["path"], label)
+        infos[label] = info
+        print("  %-8s %s  size=%d sha256=%s version=%s platform=%s" % (label, str(info["path"]).replace("\\", "/"), info["size"], info["sha256"][:12], info["version"], info["platform"]))
+    distinct = {(i["version"], i["sha256"]) for i in infos.values()}
+    if len(infos) > 1 and len(distinct) > 1:
+        print("SOURCES-DISAGREE: %s" % "; ".join("%s=%s" % (k, v["version"]) for k, v in infos.items()))
+    if res["winner"] is None:
+        print("the wrapper would run: NOTHING (it exits 5, no terraform binary found)")
+        print("TF-BINARY found=False version=none platform=none sha256=none bytes=0 source=none ok=False")
+        return 1
+    print("the wrapper would run: %s (source=%s)" % (str(res["path"]).replace("\\", "/"), res["source"]))
+    win = infos.get(res["source"])
+    if win is None:
+        print("TF-BINARY found=False version=none platform=none sha256=none bytes=0 source=%s ok=False" % res["source"])
+        return 1
+    ok = win["rc"] == 0 and win["version"] is not None
+    print("TF-BINARY found=True version=%s platform=%s sha256=%s bytes=%d source=%s ok=%s" % (win["version"], win["platform"], win["sha256"][:12], win["size"], res["source"], ok))
+    return 0 if ok else 1
+
+
 # ---------------------------------------------------------------- the CLI config and the commands this tool builds
 
 
@@ -443,9 +571,18 @@ def terraform_init_command():
     return ["terraform", "init", "-backend=false", "-input=false", "-no-color"]
 
 
+def readback_init_command(root):
+    return ["terraform", "-chdir=%s" % root, "init", "-input=false", "-no-color"]
+
+
+def readback_plan_command(root):
+    return ["terraform", "-chdir=%s" % root, "plan", "-input=false", "-lock=false", "-detailed-exitcode", "-no-color"]
+
+
 def constructed_commands():
     """Every command string this tool constructs, for the no-registry-address assertion."""
-    return [" ".join(terraform_init_command()), "git worktree list --porcelain", config_snippet("mirror")]
+    return [" ".join(terraform_init_command()), "git worktree list --porcelain", config_snippet("mirror"),
+            " ".join(["terraform", "version", "-json"]), " ".join(readback_init_command("root")), " ".join(readback_plan_command("root"))]
 
 
 # ---------------------------------------------------------------- pack and verify
@@ -463,8 +600,8 @@ def place(src, dst):
         return "copy"
 
 
-def pack(targets, search_dirs, out_dir, platform=PLATFORM):
-    """targets: [{source, version, h1:[...]}]. -> (summary dict, manifest dict)."""
+def pack(targets, search_dirs, out_dir, platform=PLATFORM, binary=None):
+    """targets: [{source, version, h1:[...]}]; binary: a describe_binary() dict or None. -> (summary dict, manifest dict)."""
     out_dir = pathlib.Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
     entries, missing, linked, copied, h1_rows = [], [], 0, 0, []
@@ -490,13 +627,23 @@ def pack(targets, search_dirs, out_dir, platform=PLATFORM):
             })
         h1_rows.append({"provider": prov["source"], "version": prov["version"], "h1": rec["h1"], "matches_lock": rec["h1_match"]})
     manifest = {"kind": "terraform-filesystem-mirror", "platform": platform, "files": entries, "providers": h1_rows}
+    bin_bytes = 0
+    if binary is not None:
+        dest_bin = out_dir / BIN_REL
+        how = place(pathlib.Path(os.path.realpath(str(binary["path"]))), dest_bin)
+        linked += how == "link"
+        copied += how == "copy"
+        manifest["binary"] = {"path": BIN_REL, "sha256": sha256_file(dest_bin), "size": dest_bin.stat().st_size,
+                              "version": binary["version"], "platform": binary["platform"], "resolved_by": binary.get("source")}
+        bin_bytes = dest_bin.stat().st_size
     (out_dir / MANIFEST).write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     (out_dir / SNIPPET_NAME).write_text(
         "# Put this block in the Terraform CLI config file (%APPDATA%/terraform.rc on Windows), with path set to the\n"
         "# absolute path of the mirror directory on THIS box. 'verify --from <dir> --write-config <file>' writes it filled in.\n"
         + config_snippet("<ABSOLUTE-PATH-OF-THE-MIRROR-DIRECTORY>"), encoding="utf-8")
     summary = {"providers": len(h1_rows), "files": len(entries), "bytes": sum(e["size"] for e in entries), "linked": linked,
-               "copied": copied, "not_on_box": missing, "h1_mismatch": [r for r in h1_rows if r["matches_lock"] is False]}
+               "copied": copied, "not_on_box": missing, "h1_mismatch": [r for r in h1_rows if r["matches_lock"] is False],
+               "binary": manifest.get("binary"), "binary_bytes": bin_bytes}
     return summary, manifest
 
 
@@ -519,24 +666,39 @@ def cmd_pack(args):
             if u["best"] and not any(t["source"] == u["source"] and t["version"] == u["best"] for t in targets):
                 targets.append({"source": u["source"], "version": u["best"], "h1": []})
                 print("INCLUDE-UNLOCKED %s %s (root %s constraint %s)" % (u["source"], u["best"], u["root"], u["constraint"]))
-    summary, _m = pack(targets, search, args.out, args.platform)
+    binary = None
+    if not args.no_binary:
+        res = resolve_binary()
+        binary = describe_binary(res["path"], res["source"]) if res["path"] is not None else None
+        if binary is None or binary["rc"] != 0:
+            print("ERROR: no usable terraform binary by the wrapper resolution order (use --no-binary to pack providers alone)")
+            return 1
+        print("BINARY %s (source=%s) version=%s platform=%s sha256=%s" % (str(binary["path"]).replace("\\", "/"), binary["source"], binary["version"], binary["platform"], binary["sha256"][:12]))
+    summary, _m = pack(targets, search, args.out, args.platform, binary)
     for r in _m["providers"]:
         print("PACKED %s %s  h1=%s (%s)" % (r["provider"], r["version"], r["h1"], {True: "MATCHES-LOCK", False: "DOES-NOT-MATCH-LOCK", None: "UNLOCKED-NO-HASH-TO-CHECK"}[r["matches_lock"]]))
     for m in summary["not_on_box"]:
         print("NOT-ON-THIS-BOX %s" % m)
     ok = not summary["not_on_box"] and summary["providers"] > 0
-    print("TF-PACK out=%s providers=%d files=%d bytes=%d linked=%d copied=%d not_on_box=%d h1_mismatch=%d ok=%s"
-          % (pathlib.Path(args.out).name, summary["providers"], summary["files"], summary["bytes"], summary["linked"],
+    print("TF-PACK out=%s providers=%d files=%d bytes=%d binary=%s binary_bytes=%d linked=%d copied=%d not_on_box=%d h1_mismatch=%d ok=%s"
+          % (pathlib.Path(args.out).name, summary["providers"], summary["files"], summary["bytes"],
+             summary["binary"]["version"] if summary["binary"] else "none", summary["binary_bytes"], summary["linked"],
              summary["copied"], len(summary["not_on_box"]), len(summary["h1_mismatch"]), ok))
     return 0 if ok else 1
 
 
-def verify(directory):
-    """-> dict(files, verified, mismatched, missing, unlisted, problems)"""
+def verify(directory, run_binary=False, runner=None):
+    """-> dict(files, verified, mismatched, missing, unlisted, problems, binary, binary_run).
+
+    The binary is hashed against the manifest FIRST; it is executed (`version -json`, only with run_binary) only when the whole pack
+    verified with no problem at all. runner(path) -> (rc, text) is the execution seam (default run_version)."""
     directory = pathlib.Path(directory)
     mf = directory / MANIFEST
+    res = {"files": 0, "verified": 0, "mismatched": 0, "missing": 0, "unlisted": 0, "problems": [], "binary": "absent",
+           "binary_run": "not-requested", "binary_version": None, "has_binary": False, "binary_entry": None}
     if not mf.is_file():
-        return {"files": 0, "verified": 0, "mismatched": 0, "missing": 0, "unlisted": 0, "problems": ["no %s" % MANIFEST]}
+        res["problems"].append("no %s" % MANIFEST)
+        return res
     manifest = json.loads(mf.read_text(encoding="utf-8"))
     problems, verified, mism, miss = [], 0, 0, 0
     listed = set()
@@ -558,25 +720,169 @@ def verify(directory):
             if rel not in listed:
                 unlisted += 1
                 problems.append("UNLISTED %s" % rel)
-    return {"files": len(manifest["files"]), "verified": verified, "mismatched": mism, "missing": miss, "unlisted": unlisted, "problems": problems}
+    mb = manifest.get("binary")
+    if mb is not None:
+        listed.add(mb["path"])
+        bf = directory / mb["path"]
+        if not bf.is_file():
+            res["binary"] = "missing"
+            problems.append("MISSING %s" % mb["path"])
+        elif bf.stat().st_size != mb["size"] or sha256_file(bf) != mb["sha256"]:
+            res["binary"] = "mismatch"
+            problems.append("MISMATCH %s" % mb["path"])
+        else:
+            res["binary"] = "ok"
+    if (directory / "bin").is_dir():
+        for dirpath, _dirs, files in os.walk(directory / "bin"):
+            for fn in files:
+                rel = (pathlib.Path(dirpath) / fn).relative_to(directory).as_posix()
+                if rel not in listed:
+                    unlisted += 1
+                    problems.append("UNLISTED %s" % rel)
+    if run_binary:
+        if mb is None:
+            res["binary_run"] = "refused-no-binary-in-manifest"
+            problems.append("--run-binary asked but the manifest carries no binary")
+        elif problems:
+            res["binary_run"] = "refused-before-run"
+        else:
+            rc, text = (runner or run_version)(directory / mb["path"])
+            ver, plat = parse_version(text) if rc == 0 else (None, None)
+            res["binary_version"] = ver
+            if rc == 0 and ver == mb["version"] and plat == mb["platform"]:
+                res["binary_run"] = "ok"
+            else:
+                res["binary_run"] = "mismatch"
+                problems.append("BINARY-RUN reported version=%s platform=%s rc=%d; the manifest says version=%s platform=%s" % (ver, plat, rc, mb["version"], mb["platform"]))
+    res.update({"files": len(manifest["files"]), "verified": verified, "mismatched": mism, "missing": miss, "unlisted": unlisted,
+                "problems": problems, "has_binary": mb is not None, "binary_entry": mb})
+    return res
+
+
+def install_binary(directory, target, mb):
+    """Copy the verified packed binary to target (a file path, or a directory -> terraform.exe in it); never clobber a different file.
+    -> (ok, message, final path)."""
+    target = pathlib.Path(target)
+    if target.is_dir():
+        target = target / "terraform.exe"
+    src = pathlib.Path(directory) / mb["path"]
+    shown = str(target).replace("\\", "/")
+    if target.exists():
+        if sha256_file(target) == mb["sha256"]:
+            return True, "INSTALLED %s already holds the identical binary (sha256 %s)" % (shown, mb["sha256"][:12]), target
+        return False, "REFUSED to overwrite %s: it holds a different file; move it aside first" % shown, target
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(str(src), str(target))
+    if target.stat().st_size != mb["size"] or sha256_file(target) != mb["sha256"]:
+        return False, "INSTALL-FAILED the copy at %s does not match the manifest" % shown, target
+    return True, "INSTALLED %s sha256=%s re-verified against the manifest" % (shown, mb["sha256"][:12]), target
 
 
 def cmd_verify(args):
-    res = verify(args.from_dir)
-    for p in res["problems"]:
-        print(p)
-    ok = not res["problems"] and res["files"] > 0
+    res = verify(args.from_dir, run_binary=args.run_binary)
+    for pr in res["problems"]:
+        print(pr)
+    ok = not res["problems"] and (res["files"] > 0 or res["has_binary"])
+    installed = "-"
     if ok:
+        if args.run_binary:
+            print("BINARY-RUN version=%s matches the manifest (platform %s)" % (res["binary_version"], res["binary_entry"]["platform"]))
         snippet = config_snippet(args.from_dir)
         print("CLI config block (merge into the Terraform CLI config file):")
         print(snippet)
         if args.write_config:
             pathlib.Path(args.write_config).write_text(snippet, encoding="utf-8")
             print("wrote %s" % args.write_config)
+        if res["has_binary"]:
+            tools = wrapper_tools_dir()
+            print("BINARY-PLACEMENT .tools/safe-apply.sh resolves terraform in this order: $%s, then <base checkout>/.tools/terraform.exe (the sibling), then PATH." % OVERRIDE_ENV)
+            print("BINARY-PLACEMENT on a box with none of the three the wrapper takes the sibling first: install to %s (gitignored; no path is baked into any file), or put a directory holding terraform.exe on PATH."
+                  % str(tools / "terraform.exe").replace("\\", "/"))
+            if args.install_binary:
+                iok, msg, _final = install_binary(args.from_dir, args.install_binary, res["binary_entry"])
+                print(msg)
+                installed = "yes" if iok else "no"
+                ok = ok and iok
+        elif args.install_binary:
+            print("REFUSED: --install-binary asked but the pack carries no binary")
+            installed = "no"
+            ok = False
     else:
-        print("REFUSED: the pack does not match its manifest; do not use it")
-    print("TF-VERIFY from=%s files=%d verified=%d/%d mismatched=%d missing=%d unlisted=%d ok=%s"
-          % (pathlib.Path(args.from_dir).name, res["files"], res["verified"], res["files"], res["mismatched"], res["missing"], res["unlisted"], ok))
+        print("REFUSED: the pack does not match its manifest; do not use it" + (" (the binary was not executed)" if args.run_binary else ""))
+        if args.install_binary:
+            installed = "no"
+    print("TF-VERIFY from=%s files=%d verified=%d/%d mismatched=%d missing=%d unlisted=%d binary=%s run=%s installed=%s ok=%s"
+          % (pathlib.Path(args.from_dir).name, res["files"], res["verified"], res["files"], res["mismatched"], res["missing"], res["unlisted"],
+             res["binary"], res["binary_run"], installed, ok))
+    return 0 if ok else 1
+
+
+def run_tf(argv, cwd, env, timeout):
+    """Run one terraform command; -> (rc, text). rc 124 is a timeout."""
+    try:
+        p = subprocess.run(argv, cwd=cwd, env=env, capture_output=True, text=True, timeout=timeout)
+        return p.returncode, p.stdout + p.stderr
+    except subprocess.TimeoutExpired:
+        return 124, "TIMEOUT after %ds" % timeout
+    except OSError as exc:
+        return 1, "RUN-FAILED %s" % exc
+
+
+def cmd_readback(args):
+    """The Dell read-back: (a) terraform version through the wrapper resolution; (b) init with the mirror config, then one no-op plan."""
+    res = resolve_binary(args.tools_dir)
+    if res["path"] is None or not pathlib.Path(res["path"]).is_file():
+        print("ERROR: the wrapper resolution finds no terraform binary (override, sibling, PATH)")
+        print("TF-READBACK version=none init=fail plan_exit=- ok=False")
+        return 1
+    tf = str(res["path"])
+    print("(a) terraform resolved by the wrapper order: %s (source=%s)" % (tf.replace("\\", "/"), res["source"]))
+    rc, out = run_version(tf)
+    ver, plat = parse_version(out) if rc == 0 else (None, None)
+    print("(a) terraform version -json rc=%d version=%s platform=%s" % (rc, ver, plat))
+    if rc != 0:
+        print("TF-READBACK version=none init=fail plan_exit=- ok=False")
+        return 1
+    extra = {}
+    cfg_path = None
+    if args.config:
+        extra["TF_CLI_CONFIG_FILE"] = str(pathlib.Path(args.config).resolve())
+    elif args.from_dir:
+        fd, cfg_path = tempfile.mkstemp(suffix=".rc")
+        with os.fdopen(fd, "w", encoding="utf-8") as fh:
+            fh.write(config_snippet(args.from_dir))
+        extra["TF_CLI_CONFIG_FILE"] = cfg_path
+        print("(b) CLI config: the pack mirror at %s, registry excluded" % pathlib.Path(args.from_dir).resolve().as_posix())
+    else:
+        print("(b) CLI config: none given (--from or --config); this box own Terraform CLI config applies")
+    env = terraform_run_env(extra)
+    root = str(pathlib.Path(args.root).resolve())
+    prc = 1
+    try:
+        irc, iout = run_tf([tf] + readback_init_command(root)[1:], None, env, args.timeout)
+        print("(b) init rc=%d" % irc)
+        for ln in iout.strip().splitlines()[-6:]:
+            print("    init> %s" % ln.strip())
+        if irc != 0:
+            print("TF-READBACK version=%s init=fail plan_exit=- ok=False" % ver)
+            return 1
+        prc, pout = run_tf([tf] + readback_plan_command(root)[1:], None, env, args.timeout)
+        for ln in pout.strip().splitlines()[-6:]:
+            print("    plan> %s" % ln.strip())
+    finally:
+        if cfg_path is not None:
+            try:
+                os.unlink(cfg_path)
+            except OSError:
+                pass
+    if prc == 2:
+        print("!!! PLAN EXIT 2: CHANGES ARE PRESENT in %s. This is not a failure of the kit; it is a finding about the root." % root.replace("\\", "/"))
+    elif prc == 0:
+        print("(b) plan exit 0: no changes")
+    else:
+        print("(b) plan exit %d: ERROR" % prc)
+    ok = prc in (0, 2)
+    print("TF-READBACK version=%s init=ok plan_exit=%d ok=%s" % (ver, prc, ok))
     return 0 if ok else 1
 
 
@@ -594,11 +900,23 @@ def main(argv=None):
     p.add_argument("--platform", default=PLATFORM)
     p.add_argument("--only", action="append")
     p.add_argument("--include-unlocked", action="store_true")
+    p.add_argument("--no-binary", action="store_true")
     p = sub.add_parser("verify")
     p.add_argument("--from", dest="from_dir", required=True)
     p.add_argument("--write-config")
+    p.add_argument("--run-binary", action="store_true")
+    p.add_argument("--install-binary")
+    p = sub.add_parser("binary")
+    p.add_argument("--tools-dir")
+    p = sub.add_parser("readback")
+    p.add_argument("--root", required=True)
+    p.add_argument("--from", dest="from_dir")
+    p.add_argument("--config")
+    p.add_argument("--tools-dir")
+    p.add_argument("--timeout", type=int, default=600)
     args = ap.parse_args(argv)
-    return {"required": cmd_required, "located": cmd_located, "pack": cmd_pack, "verify": cmd_verify}[args.cmd](args)
+    return {"required": cmd_required, "located": cmd_located, "pack": cmd_pack, "verify": cmd_verify, "binary": cmd_binary,
+            "readback": cmd_readback}[args.cmd](args)
 
 
 if __name__ == "__main__":
