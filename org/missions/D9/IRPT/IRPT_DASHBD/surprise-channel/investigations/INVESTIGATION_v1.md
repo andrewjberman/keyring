@@ -1585,3 +1585,37 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-S26 -- W9-S1, W9-S2, W9-S3 disarmed at HEAD by re-measure
+
+```json
+{
+  "id": "IRPT_DASHBD-S26",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T07:36:00Z",
+  "one_line": "Rows W9-S1, W9-S2 and W9-S3 re-measured at CLOUD 71556f1a8d: the two reporting routes are ROUTED_ELSEWHERE, the census and _contracts suites pass, and the api root skips non-DECLARED rows, so all three hazards are disarmed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W9-S1",
+    "IRPT_DASHBD-W9-S2",
+    "IRPT_DASHBD-W9-S3"
+  ],
+  "spec_asserts": "W9-S1/S2/S3 (disarm_owner 2.0.0_SA_COO~P, whose IRPT_DASHBD successor lane on dell2 is 2.0.0_SA_COO~D2): declaring the reporting routes in routes.json reds the census, the seam test and two _denominator identities, and two DECLARED rows with an unmapped handler would break the api root's next plan.",
+  "world_is": "routes.json at 71556f1a8d: 21 rows, 19 DECLARED and 2 ROUTED_ELSEWHERE (both reporting routes); _denominator no_handler_at_head 0. pytest -q _contracts in infra/aws/lambda/investor-reporting: 190 passed. pytest -q _authz/tests/test_unguarded_census.py: 9 passed. infra/aws/terraform/investor-reporting/api/routes.tf:40-43 builds irpt_routes only from rows with status DECLARED, so the two ROUTED_ELSEWHERE rows never reach function_key_by_name and create no duplicate of reporting-read/api.tf's routes. Fixed by DB-b-23 amendments 1 and 2 (@a414382a19, @bf68fca0ed).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of docs/contracts/investor-reporting/v1/routes.json at 71556f1a8d: Counter DECLARED 19, ROUTED_ELSEWHERE 2",
+      "pytest -q _contracts -> 190 passed; pytest -q _authz/tests/test_unguarded_census.py -> 9 passed (dell2, 2026-10-07 ~07:3xZ)",
+      "infra/aws/terraform/investor-reporting/api/routes.tf lines 40-43 at 71556f1a8d: `if r.status == \"DECLARED\"`; no terraform plan run (none needed: the filter is read from source, INFERRED for the plan itself)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "notes": "fabric reads laptop because the ratified enum is laptop | site-z; the seat runs on dell2, a box the enum does not yet name.",
+  "dismissal_reason": "Disarms IRPT_DASHBD-W9-S1, W9-S2 and W9-S3: each hazard's condition is absent at HEAD, measured by the tests and the source line each row named."
+}
+```
