@@ -101,3 +101,33 @@ in bloomberg terminal."
   applies to every model's WTD/MTD/QTD, not only INT's, so the null count is graded from the window lengths, not assumed
   to be 3.
 - `benchmark_last_date` = `data_as_of` on every model. This seat grades it on the first served write after a new PKL.
+
+### ADDENDUM 4 (2026-10-07 ~00:3xZ) -- track 3 graded on the served key: the INDEX half is FIXED; the ETF half is not
+
+**The served object, read by this seat:** `json/benchmarks/model_portfolio_benchmarks.json`, LastModified 2026-10-07T00:18:28Z,
+VersionId `bUr0E3UA...`, `data_as_of` 2026-10-05. It was sent through the gateway by MSTR~Z (msg 30468), and the function running
+is the guard's.
+
+| field (50 cells each: 5 models x 10 periods) | numbers | null | read |
+|---|---|---|---|
+| `model` | 50 | 0 | unchanged |
+| `index_benchmark` | **50** | **0** | FIXED (was 0 of 50 after the guard) |
+| `index_spread` | 50 | 0 | FIXED |
+| `index_benchmark_volatility` | 35 | 15 | The 15 are WTD/MTD/QTD on all 5 models, which is `min_points=5` on windows of 5 trading days or fewer. This is the count ADDENDUM 3's proof said to grade from the window lengths. Not a defect. |
+| `etf_benchmark`, `etf_spread` | 10 | 40 | The 40 are UST, ST, LT and ULT on all 10 periods, which is the guard. INT's 10 are numbers. |
+| `etf_benchmark_volatility` | 7 | 43 | The 40 above, plus INT's WTD/MTD/QTD (`min_points`). |
+
+`benchmark_last_date`: index 2026-10-05 on all 5 models (equal to `data_as_of`). etf 2026-09-29 on UST, ST, LT and ULT, and
+2026-10-05 on INT.
+
+**Grade:**
+- **The index benchmark is fixed and proven on the served key.** The four `*_BMK` CIX definitions were re-saved, and the guard
+  let them through with no code change, as designed.
+- **The ETF benchmark is NOT fixed.** `.UST_ETF`, `.ST_ETF` and `.LT_ETF` still stop at 2026-09-29 (CRO~Z trace `:17-22, :39`; ULT
+  reuses the LT pair). The guard serves those four models' ETF cells null with the date, instead of numbers compounded only
+  through 09-29. Yang had said the ETF view was not affected; before the guard, those cells showed plausible wrong numbers.
+- **What closes it:** Yang re-saves the three ETF definitions, then one more pull and send. Andrew is sending Yang that message
+  himself (MSTR~Z msg 30423, record @263e300118). No seat contacts Yang.
+
+**Track 3 stays OPEN on the ETF half.** Its proof is `etf_benchmark` at 50 of 50 numbers, with etf `benchmark_last_date` =
+`data_as_of` on all 5 models.

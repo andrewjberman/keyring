@@ -136,9 +136,23 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - The close run is the issuer's: after Andrew's wsj sign-in, the leg resumes from `r46_wsj_checkpoint.json`
   (`--clear-stop wsj`) and the T US Equity pair re-runs under the new rule.
 
+**COMPLETE 2026-10-07 ~00:5xZ (issuer):**
+- **Built:** worker ~101 @d19b06f397 + @5dcce98469; merged @a02b56aaa5 (12 files, dropped 0, foreign 0).
+- **AC1 PASS:** 21 of 21. **AC2 PASS:** REPLAY OK over 18 stored wsj sitemap files (26,907 unique URLs): T US Equity old 8,758
+  new 11; SSE LN old 501 new 0; controls Netflix 65/65, Visa 25/25, BP 23/23. **AC3 PASS:** 693 passed on the branch; issuer
+  re-run on merged CLOUD 695 passed, 1 skipped.
+- **K = 100** (`contracts.json` wsj `unselective_after`): 260 run records read, 68 with an accept (55 by fetch order, 13 by
+  total fetched); the maximum was 93 (AAPL US Equity).
+- **Existing tests changed:** none.
+- **Rows:** AMGT_HARVST-Z-W101-S1 (OBSERVATION, INERT): the run record carries no company or query, so the replay read each
+  control's query from `progress.sqlite3` `harvest_listing_outbox`; K counted the 1-based position of the first accept.
+- **Close run:** OWED. It needs Andrew's sign-in in the wsj profile; then the leg resumes from `r46_wsj_checkpoint.json`
+  (`--clear-stop wsj`) and the T US Equity pair re-runs under the new rule. bbg's next job lists on the new matcher.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>51</round>
 <slot>~101</slot>
 <fabric>site-z</fabric>
