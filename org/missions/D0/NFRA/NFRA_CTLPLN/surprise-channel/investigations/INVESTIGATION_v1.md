@@ -2615,3 +2615,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: amend CTa1-AC5 so the live comparison accepts the applied state (live equals the after-render) or drop it from ok, then re-run; no other criterion is affected."
 }
 ```
+
+## NFRA_CTLPLN-W14-S10 -- TO-CT-a-1 amendment 5: CTa1-AC2's contiguous expectation cannot match a line that gains vendor_ok= before all_ok
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:45:52Z",
+  "one_line": "CTa1-AC2's expectation 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is a contiguous pattern, and amendment 5 makes the same line gain vendor_ok= before all_ok, so the line now reads 'routes_ok=5/5 vendor_ok=19/19 all_ok=True' and the pattern no longer matches although every token it names is present",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py (rc 0, 13 s) LAST line: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True",
+      "the proof checker decides a mechanical row by re.search(expect, output_evidence): 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is not a substring of that line (vendor_ok=19/19 sits between routes_ok=5/5 and all_ok=True)",
+      "amendment 5 says 'CTa1-AC2's line gains vendor_ok=' and the worker order says 'gains vendor_ok=<a>/<n> before all_ok'; neither fixes a position that keeps the old pattern contiguous, and the issuer did not restate the expectation as amendment 4 did"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: CTa1-AC2 expects 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' and its line gains vendor_ok=.",
+  "world_is": "Both cannot hold as a literal pattern. I placed vendor_ok immediately before all_ok and did not move it to make the pattern match; the proof row records CTa1-AC2 FAIL with the reason, and every named token (ssm_ok=9/9, routes_ok=5/5, all_ok=True) is present on the line.",
+  "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
+}
+```
