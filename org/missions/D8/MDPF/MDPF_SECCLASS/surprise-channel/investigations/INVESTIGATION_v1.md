@@ -2273,3 +2273,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Observed by worker 0.9.0_WK_MDPF_SECCLASS~20 in SC-e-20 amendment 2 (its working id was MDPF_SECCLASS-W20-S8); adopted as a seat row by 2.0.0_SA_COO~M. Needed from the issuer: grant comp-constants.config.yaml (canonical_value and both site values and lines) to this lane, or edit it, then commit the C_06 edit, the mix_views edit and the new test file with it. The Cottonwood lists are not registered, which is why pass 1 and 2 did not meet this gate."
 }
 ```
+
+
+## MDPF_SECCLASS-S35 -- the S29 gold fix is live in S3 ahead of its never-widen pair; the served move is the next scheduled run
+
+```json
+{
+  "id": "MDPF_SECCLASS-S35",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T00:12Z",
+  "one_line": "The S29 gold fix is already LIVE in S3 before its never-widen pair is signed: MSTR's push deploy gates uploaded the Cottonwood files at 2026-10-06 16:20-16:21Z (D_03 18:53Z) and the Black Diamond files at 23:47Z, so the served move happens at the next scheduled gold runs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 head and body read 2026-10-07 00:1xZ: opal-data-cot code/gold/{C_06,lib/mix_views,D_04,B_01b} LastModified 10-06 16:20-16:21Z, D_03 18:53Z; opal-data-bd code/gold/{D_03,C_06,lib/mix_views} 23:47Z; every body equals the repo file at CLOUD and carries multi_asset",
+      "MSTR msgs 105640 (push 66b1b42a71, 'Deploy gate: 6 data/cot ... deployed and verified') and 105817 (push ae7d9991a0, 'Deploy gate: 5 deployed and verified, 6 first-mints skipped'): the pre-push deploy gate deploys changed gold scripts",
+      "last served runs read: Black Diamond firm_composition generated 2026-10-06T05:25:49Z; Cottonwood platinum/firm/mix_summary.json generated 2026-10-06T11:38:30Z (so the next scheduled runs are about 05:25Z and 11:36Z on 10-07, INFERRED from those stamps)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md section 5: never move served output without never-widen sign-off (CTO+COO); the S29 act is a served move, to ride its pair (CTO msg 105624: 'send the pair with the four clients before and after').",
+  "world_is": "The deploy half of the act landed through the push gate (code only, no gold run, no write by this seat). The served move is the next scheduled run of each firm. Disarm: the CTO half of the pair signed before the first run, or a rollback of the eight objects by copy-object of the prior VersionId (listed in ledger secclass-s29-class-lists-m-20261006).",
+  "notes": "Not a defect of the push gate: deploying changed scripts is its job; the gap is that a served-output script rides a push before its pair is signed. Rollback decision rule in the pair: no CTO half by 04:45Z -> roll Black Diamond back; by 11:00Z -> roll Cottonwood back."
+}
+```
