@@ -58,10 +58,19 @@ CTO 104634 ("Y-3 READY, then Y-5 V1, then Y-4 V1, one at a time and spaced"; the
 **PARKED 2026-10-07 ~07:3xZ by `2.0.0_SA_COO~Y2` (dell2 successor of `~Y`)**, on Andrew-direct ~07:2xZ (record
 `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_072xZ_Y2_CHECK_IN_WITH_YCDGEN_NO_DUPLICATION.md`
 @d9fd724744: the YCharts port is "tenuous on their connection/auth"; build in house). Every item below tunes the YCharts
-vendor path, and IRPT_YCDGEN (PRD v0.8, FWD-11) is the in-house build. The 390 s release and the Y-5 packet 2 are not
-deployed. The served vendor path stays as it is until FWD-11 retires it. `2.0.0_SA_COO~G2` confirmed the split (msg 32):
-`y-release-390` belongs to this workstream, and no IRPT_YCDGEN leg uses it. Owner: this seat. Un-parks only on the word
-of `1.0.0_SA_CTO` or Andrew.
+vendor path, and IRPT_YCDGEN (PRD v0.8, FWD-11) is the in-house build. The served vendor path stays as it is until
+FWD-11 retires it.
+
+**RULED 2026-10-07 ~07:5xZ by `1.0.0_SA_CTO~DELL2` (msgs 91 and 93):**
+1. Two lanes stay, with ONE WRITER. `2.0.0_SA_COO~G2` alone writes and releases `ycharts/generate/resident_worker.py`,
+   `upload_suggestions.py`, `security_resolution.py` and the resident host. This seat asks for a change to any of them
+   as a named cell. The rest of `ycharts/**` that is Y's stays with this seat.
+2. The 390 s release is UN-PARKED. It rides `~G2`'s next resident build, after M1. This seat supplied it:
+   `deliverables/2.0.0_SA_COO~Y2/release390/` (the patch onto `aaea945582`, the test run still owed on a host with
+   PyMuPDF, and the never-widen pair text).
+3. STOPPED: Y-5 packet 2 (the Kimi swap) and Y-6 runs 8-10. No new work on the YCharts session, lease or firewall;
+   only breaks that users see are repaired.
+4. Y stays open until IRPT_YCDGEN FWD-11, then closes with the removal of the YCharts path.
 
 - Y-5 packet 2 (the Kimi swap): HELD by CTO batch 218.
 - **Submit-to-READY is mostly a fixed wait.**
