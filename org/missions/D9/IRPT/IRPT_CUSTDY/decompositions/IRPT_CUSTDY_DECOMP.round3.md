@@ -64,3 +64,26 @@ items have opened; each later opening appends its cell here in its own issuance 
 
 **Write set:** `data/assets/scripts/gold/irpt_custody/pick_reread.py` (new), `data/assets/scripts/gold/irpt_custody/tests/test_pick_reread.py`
 (new). Disjoint from CU-c-1's. `fanout: 1 of 1 newly opened chain (CU-c-1 already in flight on slot ~7; E3 gated closed), cap 8`.
+
+## E3 -- gate opened 2026-10-07 ~12:07Z (cut in its own issuance commit, workstream ~K2-E3)
+
+**Gate evidence:** dell2 `portal/node_modules` placed from the laptop pack, `bun run typecheck` rc 0 at portal DEV 8ddfe40994
+(`0.0.0_AB_MSTR~DELL2` msg 467; `1.0.0_SA_CTO~DELL2` msg 471 un-parks IRPT_CUSTDY E3). Bun egress hazard (msgs 492/500): a linked portal
+worktree with node_modules LINKED, bun only as `bun --no-install`, is ADMITTED on three conditions (msg 508), carried verbatim on the face.
+
+**Measured constraints.**
+1. The render package: `portal/src/pages/InvestorReporting/render/` -- a template is a React document chosen by `reportKind`
+   (`manifest.ts` `templateFor`, `PrintEntry.tsx`; `performance/PerformanceDocument.tsx` is the pattern). Adding the client-report KIND to
+   `manifest.ts` / the print route / the host is IRPT_BCKEND's a1-a4 (`~P2`, CTO ruling (a)); E3 builds the template only (a5) and exports it.
+2. Tests are `bun:test` (`import ... from 'bun:test'`), e.g. `__tests__/dsgn-irptv1/*.test.tsx`.
+3. The input is this project's client-report contract (round 1) with round 4's `si_anchor` and per-figure `source`; the fixture carries
+   that SHAPE with SYNTHETIC values -- never a real client's figures in the portal repo.
+4. A new component is a portal PRODUCT file: it lands on DEV only after `1.0.0_SA_CTO~DELL2` reviews the candidate (CLAUDE.md, Portal).
+
+| cell | what | serves | status | placement | risk | chain / slot |
+|---|---|---|---|---|---|---|
+| `CU-c-3` (E3) | the 49 Financial `ClientReportDocument`: a React print document laying out one client-report document (cover, household returns over the document's periods, per account returns / market value / holdings with class and sector or 'not described' / activity / fees with their source label / SI with its anchor label, a data-status note for any non-OK figure), branding as slots, from a synthetic fixture of the real shape | FWD-1, FWD-3 | NOT-EVALUATED | dell2 | LOCAL | C, `0.9.0_WK_IRPT_CUSTDY~12` |
+
+**Write set (portal repo):** `portal/src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx`,
+`.../render/clientreport/types.ts`, `.../render/fixtures/clientreport.firm-a.json`,
+`portal/src/pages/InvestorReporting/__tests__/clientreport/client-report-document.test.tsx`. `fanout: 1 of 1 newly opened chain, cap 8`.

@@ -1779,3 +1779,81 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Interim (CTO msg 106214), laptop and both Dells: bun runs only inside a portal tree that holds node_modules; no bun run of a file outside one; no probe that can reach the public registry. Disarms when the cell's measured form is in the kit and each box has read it back."
 }
 ```
+
+## NFRA_CTLPLN-S14 -- the dell2 command grant's read actions are on every command in the account; whether any command output holds a secret is unmeasured
+
+```json
+{
+  "id": "NFRA_CTLPLN-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Once the dell2 command grant is applied, dell2 can read the result of any command sent in the account, not only its own; nobody has measured whether an existing command prints a secret to its output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json statement ReadCommandResults: ssm:GetCommandInvocation, ListCommandInvocations, ListCommands, DescribeInstanceInformation on Resource *",
+      "CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL_DENIES_AND_DELL2_GRANT_20261007.md @eb74cfb2d2, 'Two things this half adds': accepted and named; not measured by that seat; asks this row",
+      "The grant is NOT applied at this row's filing (order NFRA_CTLPLN.TO-APPLY-6 pending)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO's ruling for CT-a-1: dell2 gets the read actions that return a command's result.",
+  "world_is": "The service offers no narrower resource for those four actions, so the grant reads every command's result. A command whose output prints a secret would be a defect in that command, and dell2 could read it. No read of existing command outputs for secrets has been made by any seat. Open: a bounded read of recent command invocations' output for secret-shaped strings, by a laptop seat, or an explicit acceptance."
+}
+```
+
+## NFRA_CTLPLN-S15 -- the portal tree pack was unpacked on both Dells outside the kit's own verify step: bun 1.4.2 against the manifest's 1.3.9, and dell2 at a different portal commit
+
+```json
+{
+  "id": "NFRA_CTLPLN-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "Both Dells unpacked the portal dependency pack and passed the typecheck, but two of the conditions written for the unpack were not the ones met: their bun is 1.4.2 where the manifest names 1.3.9, and dell2 ran at portal commit 8ddfe40994 where the carrier named 481b3bcc5f.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "0.0.0_AB_MSTR msg 106209, relaying each Dell's read-back: 41,860 files each, typecheck rc=0 and 0 error lines each; both note bun 1.4.2 against the manifest's 1.3.9; dell2 typecheck at portal DEV 8ddfe40994; lockfile sha256 equal on both",
+      "1.0.0_SA_CTO msg 106199, the unpack condition: lockfile sha256 equal AND portal HEAD 481b3bcc5f on DEV; a mismatch is a row, never an unpack",
+      "org/devices/kit_portal_tree.py verify refuses a bun version difference by design (CT-k-2 AMENDMENT 3); the Dells' reports do not say that step was run",
+      "Not read by this seat: either Dell's tree"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 3: the pack installs only where lockfile, bun version and platform equal the manifest's; the carrier's relay added the portal commit.",
+  "world_is": "The lockfile matched on both boxes and the typecheck passed, which is the evidence the tree works there. The bun version rule was not enforced at the unpack, and dell2's portal commit differs from the one named while its lockfile hash is equal. Open for the CTO: whether the kit's bun check is exact or tolerates a minor version, and whether the commit condition is the lockfile hash alone."
+}
+```
+
+## NFRA_CTLPLN-S16 -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they answer for the laptop only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S16",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T12:52:47Z",
+  "one_line": "The sequence check counts the laptop broker's lanes only, so its capacity and next-slot lines flag a project seated on a Dell as needing a slot.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106077, verbatim: 'sequence-check reads MDPF_SECHIST NEEDS-SLOT because it counts the laptop broker's lanes only and the tree row's coo_lane is empty ... a row for NFRA_CTLPLN's backlog -- sequence-check's capacity and NEXT COO SLOT lines read one box's liveness; with four boxes they must read each box's lanes or say which box they read.'",
+      "Not re-run by this seat"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD NFRA_CTLPLN: four devices, each with its own broker; a fabric reader either reads every box or says which box it read.",
+  "world_is": "A backlog item for a later round's enrichment list: the check reads each box's lanes, or prints the box it read beside the number. Until then a NEEDS-SLOT flag on a Dell-seated project is not a finding against that Dell."
+}
+```

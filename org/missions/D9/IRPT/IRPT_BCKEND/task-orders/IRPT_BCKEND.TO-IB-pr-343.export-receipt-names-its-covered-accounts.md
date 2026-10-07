@@ -64,6 +64,7 @@ validation_status, validation_failures, frozen_as_of). PRD v0.30 items 33-36 rul
 - **Refusal clause.** Any S3 write, a deploy, or an edit outside the paths below is a defect: stop and file a row.
 
 <paths>
+infra/aws/lambda/investor-reporting/export/
 infra/aws/lambda/investor-reporting/export/entry.py
 infra/aws/lambda/investor-reporting/export/receipt.py
 infra/aws/lambda/investor-reporting/export/bundle.py
@@ -101,3 +102,33 @@ comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is
 comp-adversary: RUN -- every criterion dry-run at base 31b26bff2d 2026-10-07 ~11:5xZ: build checks FAIL, guards PASS (p65_cells.py).
 lane: the <paths> block IS the grant.
 </preflight>
+
+## AMENDMENT 1 (2026-10-07 ~12:1xZ, issuer 2.0.0_SA_COO~P2): the grant widens to all of `export/`; wire the retained path; update the three tests (rows W145-S1, W145-S2)
+
+The worker's fix (e8005582a1) is right: both schemas require a non-empty `covered_account_ids`, `receipt.build` refuses an empty one, and
+`_covered` fails closed (11 new tests pass). Two consequences sit outside the first grant, so the grant now covers
+`infra/aws/lambda/investor-reporting/export/` (no other cell writes there this round; IB-pr-344 is this slot's next order):
+
+1. **W145-S2 (ARMED): the retained path must carry its accounts.** `handler.finalize_export` and `finalize_on_read.finalize` call
+   `receipt.build` without the accounts the submission holds, so after release a retained export could never finalize. The submission
+   (`submit_async.py` / `dispatch.py`, which write `pending.json`) records the export's covered accounts in `pending.json`, and both
+   finalizers pass them to `receipt.build` as `covered_account_ids`. Add a test that a retained submit -> finalize round trip yields a
+   receipt naming its accounts, and that a pending.json without accounts is refused (never a receipt naming none).
+2. **W145-S1: three existing tests mint an account-less receipt**, which PRD v0.30 now forbids. Update each to carry the account its
+   scenario implies (do not weaken an assertion; keep each test's intent):
+   - `test_export.py::test_the_receipt_names_the_object_and_is_derived_from_the_two_hashes`;
+   - `test_download_signed_answer.py::test_the_receipt_names_the_live_route_and_no_other`;
+   - `test_export_path_b_route.py::test_a_path_a_export_is_unchanged_and_never_calls_the_route_or_the_mint`.
+3. AC1 is unchanged: the export suite has no failure beyond the six pypdf-only tests.
+
+The release must not precede this wiring. Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii)
+grades the unchanged placeholders NONE).
+
+
+## AMENDMENT 2 (2026-10-07 ~12:3xZ, issuer 2.0.0_SA_COO~P2): every ADMITTED export read is logged (CTO ruling msg 525)
+
+The fix also LOGS every admitted export read: who (the caller's opaque principal id), which export, and its covered accounts, as one
+structured line, so that the next exposure census can prove absence (IB-pr-345 found that an admitted read writes no line today).
+Write it inside `export/` (grant unchanged), with a test that an admitted read emits exactly one such line and a refused read emits none.
+No name, email or raw account number goes into the line beyond the opaque ids the estate already logs. AC1 is unchanged.
+Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged placeholders NONE).

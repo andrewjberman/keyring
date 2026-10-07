@@ -86,11 +86,11 @@ Not moved: W6-S5 (its ruling is not recorded).
   "owner": "2.0.0_SA_COO~C2",
   "round": "v5",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~C2",
    "round": "v5"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "ADVI_COTBKF-W12-S4",
