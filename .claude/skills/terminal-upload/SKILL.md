@@ -175,9 +175,11 @@ A dropped reply does not mean the send failed: the send landed. A `confirm=True`
 two files inside 30 minutes returns the first `execution_id` with `already_triggered: true` and
 fires nothing (the record is in the gateway process and a gateway restart clears it).
 
-**Read all three confirmations: uploaded / pipeline / displayed.** Any missing leg = the tool
-says which; report it, do not improvise a manual S3 path (the uploads/ + manifest.json trigger
-contract is the pipeline owner's surface, not this skill's).
+**Read the send's TWO legs: uploaded (both files) and triggered (`execution_id`).** Since gateway
+r25 the response carries NO `displayed` field, so its absence is not a failed leg: the displayed
+date is read in the second call above, or from the served file in Step 4. A missing uploaded file
+or a missing `execution_id` = the tool says which; report it, do not improvise a manual S3 path
+(the uploads/ + manifest.json trigger contract is the pipeline owner's surface, not this skill's).
 
 ## Step 4 — Independent verify (do not end on the tool's self-report)
 
@@ -187,7 +189,7 @@ contract is the pipeline owner's surface, not this skill's).
    definition). `generated_at` fresh.
 2. Sanity glance at the ST row (informational, not a gate): 1D within ~±1%, model_volatility
    ~2-4. The 2026-08-03 garbage read +2.22/vol 20.79 — that shape means STOP + escalate even
-   with three green confirmations.
+   with every confirmation green.
 
 ## Report
 
@@ -197,7 +199,8 @@ contract is the pipeline owner's surface, not this skill's).
   PREFLIGHT: terminal OK (bbcomm :8194) | cma <path> | project OK
   PULL:      OK in <N>s | SKIPPED (send-only) | BLOCKED (tzero-vintage guard) | FAILED: <verbatim>
   TRIPWIRE:  PASS | FAIL -> STOPPED, nothing sent: <reasons>
-  UPLOAD:    uploaded OK / pipeline OK / displayed OK | dry-run -> pending/ only | <failed leg>
+  UPLOAD:    uploaded OK / triggered OK (execution_id <id>) | already_triggered (did NOT fire) | dry-run -> pending/ only | <failed leg>
+  DISPLAYED: <date> read via opal_data_refresh_status or the served file (not in the send's response since r25)
   SERVED:    data_as_of <date> == expected <date> | MISMATCH -> <detail>
 ```
 
