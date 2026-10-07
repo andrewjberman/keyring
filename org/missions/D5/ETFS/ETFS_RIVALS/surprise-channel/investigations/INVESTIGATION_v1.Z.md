@@ -4406,6 +4406,29 @@
     "spec_asserts": "RIV-md-1 face section 1: data-history=none and HISTORY_NONE leave the dialog; the audit page gets no chart frame and no script.",
     "world_is": "The note now reads on the audit page's dialogs while the main page draws the history, so the audit page's note is no longer a true statement about the day. The words are the only thing left; no figure depends on them.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Removing the note from the audit dialogs is a one-line change in render._sec_dialogs; it was left because the face's ruling names the main page's dialog and a broader removal would also drop the audit page's only history wording."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S55",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T10:12:14Z",
+    "one_line": "Round 15 real run: a non-US security's price curve mixes Bloomberg closes in the listing currency with holding-implied prices in US dollars, so the line jumps by the exchange rate",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/real_run_2026-10-06.json: the issuer's real run of day 2026-10-06 at CLOUD 370ae7a279 (live inputs read, local writes only) wrote 13 chart objects holding 695 fund-securities; 598 carry both source codes m and i, 97 carry i only, 0 carry m only",
+        "Measured on those 13 objects: the ratio of the first market close to the last holding-implied price before it is above 3 or below 1/3 for 152 of 598; by exchange code JP 43/43, LN 54/54, HK 11/11, KS 9/9, TT 5/5, IN 5/5, BZ 4/4, SS 4/4 and US 0/238. The ratios are exchange rates: 000660_KS 1413, 2914_JP 154, 2454_TT 32. Euro listings (FP 0/50, GR 0/33) sit under the 3x threshold and were not measured for a smaller mismatch",
+        "CGIC 2454_TT_Equity: 2 points coded m at 4920 to 4950 and 248 points coded i between 36.5 and 167.2; the rendered 365d chart is flat and then spikes on the last two days, with a y axis from -209.14 to 5195.67 (screenshot r15_realrun_modal_365d_markers.png beside the record)",
+        "data/etfs/scripts/rivalfunds/price_series.py (cell RIV-ps-1): the implied price is market_value over quantity from the funds' holding reports, which are in US dollars; the market close is the Bloomberg PX_LAST in the listing currency"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "FWD-22 (PRD v0.18, ADDENDUM F): the security dialog draws one price curve per security, market close where Bloomberg has one and the holding-implied price on other days, as one series a reader can read as the price",
+    "world_is": "For a security not quoted in US dollars the two sources are in different currencies, so the one series is not one price. Today only the last 2 or 3 days are market closes, so the curve spikes at its end; after the 365-day Bloomberg backfill the curve would be market closes with implied dollars on every gap day. The static dialog, the periods, the trade markers and the script itself work in a browser (30d screenshot beside the record)",
+    "notes": "disarm_owner (n/a, INERT: nothing of round 15 is deployed or served): 2.0.0_SA_COO~RV. The round-15 Lambda deploy does not go out with this open. Not caught by any round-15 check: every fixture prices both sources in one currency. A repair needs a ruling on the shape (implied only for US-dollar listings; or convert with a rate; or never join the two sources in one line), which is an ENDPOINT matter for 1.0.0_SA_CTO~Z. Also seen on the same run, lesser: the chart's y axis pads below zero, and the drawing uses about two thirds of the frame width."
   }
 ]
 ```
