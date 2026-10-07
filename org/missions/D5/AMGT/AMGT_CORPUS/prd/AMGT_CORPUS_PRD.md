@@ -445,8 +445,15 @@ its one essential wait is expressly qualified: Andrew's standing word for the re
                     the same sheet rule. The read prints, per name, the
                     workbook and the sheet it was compared with; the three
                     classes (own workbook on `Model NEW VERSION` / own workbook
-                    on `Model` / master) sum to the served names. The rest of
-                    the v0.7 text stands.
+                    on `Model` / master) sum to the served names. THE CHOICE OF
+                    `Model NEW VERSION` IS INFERRED from the workbooks' shape;
+                    nobody on the research team has stated it. So for every
+                    workbook that holds both sheets, the read prints the rows
+                    of `Model` beside the rows of `Model NEW VERSION`; a read
+                    that compares one sheet alone for such a workbook does not
+                    meet this DONE WHEN. The grade is on `Model NEW VERSION`;
+                    the `Model` rows are reported. The rest of the v0.7 text
+                    stands.
   FWD-13 Every folded field is CITED or ABSENT with a readable reason
          DONE WHEN  EXERCISED -- a census over the dossier's fields prints zero
                     fields that are neither cited nor reason-bearing, with the
