@@ -7280,6 +7280,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S95",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T09:05:00Z",
+      "one_line": "The alias cell HVST-az-1 takes the research-folder name from the crosswalk, but the crosswalk carries a folder on 96 of 237 records and on none of the cell's build or control names (Meta, Bank of America, AT&T) nor Amazon.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "ledger/ROUND_ANALYSIS.round49.md ADDENDUM 3 item 2 (lines 113-114): each name's alias set is the legal name without its corporate form plus the team's research-folder name, which 'is the firm's own short name (Meta, Amazon) and is already in the crosswalk'.",
+      "world_is": "Crosswalk s3://opal-data-harvest/crosswalk/v1/2026-09-29.json read through lib.research.identity.crosswalk.load_crosswalk(): 237 records, source_row.folder present on 96 (denominators.folders_in_records 96). META_US_Equity, BAC_US_Equity, T_US_Equity and AMZN_US_Equity each resolve to 1 record whose source_row.folder is None. LLY_US_Equity carries folder 'Eli Lilly LLY US' (a folder name is the company name plus ticker, not a bare short name). The harvest library has 0 references to a folder field (comp-find, 126 files scanned). As written, the cell's build case has no second alias to add.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python: crosswalk.load_crosswalk() records=237, with source_row.folder=96, per-ticker read of META/BAC/T/AMZN/LLY, 2026-10-07 ~09:0xZ",
+          "comp-find -i 'research.folder|research_folder|folder_name' lib/opal_data_harvest: 0 hits across 126 files",
+          "org/missions/D5/AMGT/AMGT_HARVST/decompositions/AMGT_HARVST_DECOMP.md section 66"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
