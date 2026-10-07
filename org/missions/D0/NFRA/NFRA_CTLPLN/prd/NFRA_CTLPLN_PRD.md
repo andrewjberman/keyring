@@ -5,7 +5,7 @@
  "project": "NFRA_CTLPLN",
  "directive": "D0",
  "fabric": "laptop",
- "prd_version": "v0.7",
+ "prd_version": "v0.8",
  "step": 4,
  "brief_ref": "docs/briefs/four-device-control-plane-brief-20261006.md@a77b65337e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14"],
@@ -341,3 +341,27 @@ via opalgateway projects and all of asset management workstreams." Record
   (3) whether a bucket policy, a key policy and a Lambda permission count as resources or as access.
 
 A contract change under the ENDPOINT hash: no half re-opens (CLAUDE.md rule 27, proportionate sign-off).
+
+## ADDENDUM v0.8 (1.0.0_SA_CTO, 2026-10-07) -- C-ROLE-REQUEST: the laptop creates roles, a Dell writes in for one. Contract only, no ENDPOINT change
+
+Andrew-direct ~06:4xZ at the `1.0.0_SA_CTO` terminal, VERBATIM: "ok i like the laptop for creating roles, we can manage that for now, and the DELLS write in for that purpose". Record: the 063xZ record named in v0.7, third word.
+It closes v0.7's open question (1).
+
+- **C-ROLE-REQUEST (new contract; owner this project; counterpart the laptop's IAM-holding seat).** A Dell never creates, edits or
+  attaches policy to a role. When work placed on a Dell needs a role, the Dell WRITES IN: one request naming the project, the resource
+  the role is for, the service that assumes it and the permissions asked, each permission tied to the code line that needs it. The laptop
+  reads the request, writes the role in that project's Terraform root and applies it. Site Z is not in this path.
+- **Passing a role (this seat's reading, flagged in the record).** The Dell policy allows `iam:PassRole` only on roles the laptop has
+  made for Dell-placed work, named in the policy, with the `iam:PassedToService` condition. Every other IAM action stays denied. This
+  disarms row NFRA_CTLPLN-W1-S1 once applied.
+- **Round 3 cells this adds, after v0.7's first cell:** (a) the request's carrier and shape, on the bus the Dells already have; (b) the
+  PassRole statement and its named-role list, derived from the roles the laptop has made, never from a wildcard; (c) one exercised
+  round trip: a Dell writes in, the laptop applies, the Dell creates a function with that role, and a pass of an unnamed role is refused.
+- **C-IDENTITY's header** "IAM-creating applies at site Z only" now reads "IAM-creating applies at the laptop" for roles Dell-placed
+  work needs. The two Dell users, the group and their policy were applied at site Z; where their later changes apply is not ruled here.
+- **Still open at Andrew:** v0.7's questions (2) the trunk wait on site Z and (3) access-granting resource policies.
+- **INTERIM, on his word seconds later, VERBATIM:** "i think ultimately this should change, but its ok for now". C-ROLE-REQUEST is the
+  arrangement until he names its replacement; ENRICHMENT BACKLOG gains one line: "replace the laptop-made role request (C-ROLE-REQUEST)
+  with the end state Andrew names". No end state and no date are ruled here.
+
+A contract change under the ENDPOINT hash: no half re-opens.

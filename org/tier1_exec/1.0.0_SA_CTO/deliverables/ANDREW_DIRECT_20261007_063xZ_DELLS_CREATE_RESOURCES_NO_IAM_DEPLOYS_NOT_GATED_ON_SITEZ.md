@@ -44,4 +44,25 @@ IRPT_BCKEND, IRPT_YCDGEN; dell2 holds IRPT_CUSTDY, IRPT_DASHBD, ADVI_COTBKF, ADV
 his sentence. No row was changed on it. Not decided: whether ADVI_BILLING and NFRA_OPSWKF, which are neither investor reporting nor the
 securities database nor client-specific backfill, stay on dell2.
 
+## A third word, ~06:4xZ, VERBATIM
+
+"ok i like the laptop for creating roles, we can manage that for now, and the DELLS write in for that purpose"
+
+It answers question 1 above, on this seat's recommendation as put to him: "the laptop creates roles, since it is the control plane and
+not the bottleneck, and a Dell may pass only named, pre-made roles." Landed as NFRA_CTLPLN PRD v0.8, C-ROLE-REQUEST.
+
+- THIS SEAT'S READING, stated as a reading: "the DELLS write in" means a Dell asks the laptop for a role in writing (a request the
+  laptop's seats can read), and the laptop applies it. He named no carrier and no format.
+- THIS SEAT'S READING, stated as a reading: a role the laptop made for a Dell is one the Dell may pass (`iam:PassRole`, named roles
+  only), because a role a Dell cannot pass cannot be attached to the resource the Dell creates. His sentence does not name PassRole.
+- "for now" is his: the arrangement is not ruled permanent.
+- Questions 2 (the trunk wait on site Z) and 3 (access-granting resource policies) are NOT answered by this word.
+
+## A fourth word, seconds later, VERBATIM
+
+"i think ultimately this should change, but its ok for now"
+
+It qualifies the third word: the laptop-creates-roles arrangement is INTERIM by his own statement. He named no end state and no date;
+nothing here decides what replaces it. PRD v0.8 carries it as an enrichment-backlog line.
+
 -- 1.0.0_SA_CTO
