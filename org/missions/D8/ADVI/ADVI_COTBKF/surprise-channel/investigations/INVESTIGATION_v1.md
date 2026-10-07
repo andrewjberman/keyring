@@ -522,3 +522,29 @@ round.** Never edit an existing row.
   "notes": "Whether a registry row per legacy store or this record is the right carrier is for the CTO; the migration project (rule 30, R19) removes the legacy locations."
 }
 ```
+
+## ADVI_COTBKF-S5 -- W10-S3's hazard disarmed by its owner: the crosswalk's cache now sits in the shared tree, and AC2 re-runs in 6.3 s there
+
+```json
+{
+  "id": "ADVI_COTBKF-S5",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T02:07Z",
+  "one_line": "Disarm act for ADVI_COTBKF-W10-S3 (ARMED, disarm_owner 2.0.0_SA_COO~C): the crosswalk's read cache (.scratch/advi_cotbkf/cache, 19 MB) was copied from the worker's worktree into the shared tree before the worktree's removal, and CB3c3-AC2 re-run there under timeout 120 passes in 6.3 s with the identical line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cp -r C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-10/.scratch/advi_cotbkf/cache .scratch/advi_cotbkf/ (19M) in the shared tree, 2026-10-07 ~02:0xZ, after the merge of the CB-c-3 branch @384efdf29c",
+      "timeout 120 python data/assets/scripts/silver/commonwealth_crosswalk.py --out .scratch/advi_cotbkf/crosswalk in the shared tree: real 6.275 s, last line CROSSWALK commonwealth_accounts=1533 every_account_listed=True matched=439 not_matched=1094 ambiguous=36 by_rule=R2-in-kind-transfer:439 (identical to the worker's AC2 output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-3 BOUNDS: CB3c3-AC2 runs within 120 seconds; row W10-S3 (ARMED): the bound holds only against the worker's cache; a cold read takes about 8 minutes.",
+  "world_is": "The cache that makes AC2 meet its bound lives where a grader runs (the shared tree's untracked .scratch/, device-local, never committed). A clean tree on another device still needs one cold run first; that residue is stated. W10-S3's own disposition is the CVO's at L9.",
+  "notes": "Same disarm shape as row S4 (W6-S4)."
+}
+```
