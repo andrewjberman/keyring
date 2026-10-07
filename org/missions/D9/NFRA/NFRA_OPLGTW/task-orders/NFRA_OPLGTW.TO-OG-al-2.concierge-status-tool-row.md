@@ -105,7 +105,7 @@ Rows: id `NFRA_OPLGTW-Z-W29-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
   (the test file is absent).
 - Pre-cut 04:3xZ: `al2.AC1` FAIL (the test file is absent). `al2.AC2` FAIL (0 rows added; guard files 2 of 2).
 
-<status>pending</status>
+<status>complete</status>
 <round>25</round>
 <slot>~29</slot>
 <fabric>site-z</fabric>
