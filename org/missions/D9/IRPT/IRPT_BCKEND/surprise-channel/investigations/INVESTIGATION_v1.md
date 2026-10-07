@@ -18532,3 +18532,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the change is present in the running irpt-export-render bytes (content read above). NOT MEASURED: any run of the A1 behaviour on the deployed function. The owed proof is one live exercise of the A1 wording on a real or QA export. It is NOT scheduled: starting an export is a write and may reach a vendor render path, which needs Andrew's per-use word, so the behaviour is unexercised, not proven, until a named export is run."
 }
 ```
+
+## IRPT_BCKEND-S343 -- build-and-upload.sh uploads irpt-49f-reporting-read-lambda under its function name, not the key Terraform reads
+
+```json
+{
+  "id": "IRPT_BCKEND-S343",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T07:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/lambda/ci/build-and-upload.sh:354 sets S3_KEY=\"$PIPELINE/$FN_NAME.zip\", so irpt-49f-reporting-read-lambda uploads to investor-reporting/irpt-49f-reporting-read-lambda.zip while lambda-source-map.json:6278 and reporting-read/main.tf read investor-reporting/irpt-reporting-read-lambda.zip; r57 and r58 each needed a server-side copy-object before apply (predecessor 2.0.0_SA_COO~P, unrowed gap (a)).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED at HEAD c59c5420ca: comp-read build-and-upload.sh --enumerate: line 354 S3_KEY=\"$PIPELINE/$FN_NAME.zip\"; line 152 writes that key back into the map's artifact_s3_key",
+      "MEASURED: comp-find over infra: lambda-source-map.json:6278 artifact_s3_key investor-reporting/irpt-reporting-read-lambda.zip; reporting-read/main.tf:10 names the same key; 5 hits across 7320 files",
+      "HELD (not re-measured): the r57/r58 copy-object steps, from org/tier1_exec/2.0.0_SA_COO/logs/2026-10-06/session_close_1945-2135Z_andrew_p.md Gaps (a)"
+    ]
+  },
+  "spec_asserts": "A build-and-upload of a function writes the artifact to the source map's artifact_s3_key, the key its Terraform root reads.",
+  "world_is": "For any function whose deployed name differs from its artifact key (irpt-49f-reporting-read-lambda), the upload lands at the function-name key; the apply then reads an older object at the Terraform key unless a copy-object is done by hand. Remedy owner: the build script's lane; 2.0.0_SA_COO~P2 owns the row."
+}
+```
+
+## IRPT_BCKEND-S344 -- record-terraform-deploy.sh sweeps a dirty audit file into its commit, is lane-refused, and duplicates CHANGELOG entries on each retry
+
+```json
+{
+  "id": "IRPT_BCKEND-S344",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T07:40:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/lambda/ci/record-terraform-deploy.sh includes the already-dirty source-map-reconcile-audit.jsonl in its own commit, the lane gate refuses that commit, and each retry appends another CHANGELOG.json entry (r57: 4 duplicates of irpt-holdings, 1 stray); it also left irpt-holdings artifact_sha256 stale (predecessor 2.0.0_SA_COO~P, unrowed gap (b)).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "HELD (not re-measured this session): org/tier1_exec/2.0.0_SA_COO/logs/2026-10-06/session_close_1945-2135Z_andrew_p.md Gaps (b), three lane refusals at r57",
+      "MEASURED: a later fix 8be38c9dec (0.7.0_AE_CloudOps~RV, 2026-10-06) touches quoting and node resolution only by its message; whether it changes the commit set is not read"
+    ]
+  },
+  "spec_asserts": "A deploy recorder commits only its own outputs, once, and the CHANGELOG gets one entry per deploy.",
+  "world_is": "Per the predecessor's log: the recorder's commit takes a dirty unrelated file, is refused, and each retry adds a duplicate CHANGELOG entry. The next release on this workstream is the exercise: run the recorder with source-map-reconcile-audit.jsonl dirty and count CHANGELOG entries. Remedy owner: the recorder's lane; 2.0.0_SA_COO~P2 owns the row."
+}
+```

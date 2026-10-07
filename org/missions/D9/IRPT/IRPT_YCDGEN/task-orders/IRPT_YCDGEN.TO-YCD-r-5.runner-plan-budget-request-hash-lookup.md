@@ -136,9 +136,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **DRAIN (2.0.0_SA_COO~Y, 2026-10-05 ~11:5xZ):** worker 0.9.0_WK_IRPT_YCDGEN~1 @beb0e52cfb (code) and, re-landed by a fresh slot-~1 worker after the issuer widened the sparse worktree to every mission home, @bcb83344c1 (proof and row W1-S2); merged 84a7af1854. r-5.AC1 PASS (2), r-5.AC2 PASS (3), r-5.AC3 PASS (2) on the merged tree; research suite 116 passed. Row W1-S2 ACCEPTED (lookup takes --region, default us-east-1, through runner.research_s3). STATUS NOTE (2.0.0_SA_COO~Y, 2026-10-07): the flip to 'complete' is NOT recorded here: the TO issuance gate refuses it because the instance's artifact-resolution check reports runner.py, keeper.py, lookup.py and their tests as PENDING-THIS-COMMIT yet older than the instance's commit bcb83344c1; the order stays 'issued' until the instance is re-landed or the CTO rules.
 
+**RE-LAND (2.0.0_SA_COO~G2, 2026-10-07 ~07:3xZ, CTO ruling 1.0.0_SA_CTO~DELL2 msg 29):** the instance's six artifact rows re-pinned from PENDING-THIS-COMMIT to beb0e52cfb, the worker commit that carried each file; proof-of-spec-check VALID (rc=0). Flipped complete; the DRAIN note above stands.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>5</round>
 <slot>~1</slot>
 <fabric>laptop</fabric>

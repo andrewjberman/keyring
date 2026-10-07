@@ -13,7 +13,7 @@ T="$(mktemp -d -t halt-gate-lane-XXXXXX)"
 trap 'rm -rf "$T"' EXIT
 mkdir -p "$T/org/tier2_senior/0.7.0_AE_CloudOps" "$T/org/tier0_exec/0.0.0_AB_MSTR" \
          "$T/org/mcp/inbox/0.7.0_AE_CloudOps/~RV" "$T/org/mcp/inbox/0.7.0_AE_CloudOps/~A" \
-         "$T/org/mcp/inbox/0.0.0_AB_MSTR/~Z" "$T/org/mcp/sessions"
+         "$T/org/mcp/inbox/0.0.0_AB_MSTR/~Z" "$T/org/mcp/inbox/0.0.0_AB_MSTR/~DELL2"          "$T/org/mcp/inbox/0.7.0_AE_CloudOps/~K2" "$T/org/mcp/sessions"
 
 pass=0; n=0
 # validate <serial> -> prints "<rc> <reason>"
@@ -33,6 +33,10 @@ case_v() { # <name> <serial> <want_rc> <want_reason>
 case_v "a multi-letter lane with an inbox resolves"          "0.7.0_AE_CloudOps~RV" 0 ""
 case_v "the corruption shape is refused as malformed"        "0.0.0_AB_MSTR~Zn"     1 "malformed-lane"
 case_v "an uppercase lane nobody seated is refused"          "0.7.0_AE_CloudOps~QQ" 1 "lane-no-inbox"
+case_v "a Dell lane with a box digit resolves"             "0.7.0_AE_CloudOps~K2" 0 ""
+case_v "a Dell fabric-manager lane resolves"               "0.0.0_AB_MSTR~DELL2"  0 ""
+case_v "a digit-led lane is refused as malformed"          "0.7.0_AE_CloudOps~2K" 1 "malformed-lane"
+case_v "a digit lane nobody seated is refused"             "0.7.0_AE_CloudOps~Q9" 1 "lane-no-inbox"
 case_v "a single-letter lane behaves as before"              "0.7.0_AE_CloudOps~A"  0 ""
 case_v "a base serial behaves as before"                     "0.7.0_AE_CloudOps"    0 ""
 case_v "an unknown base is refused and named"                "9.9.9_XX_Nobody~A"    1 "unknown-base"

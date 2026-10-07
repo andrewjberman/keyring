@@ -1901,3 +1901,83 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Inert for FWD-1: the thread is the Prospect portfolio upload (PRD v0.8 FWD-1 and s2 step 1; input_id, snapshot_id null). CTO ruling msgs 105681 and 105683: one definition, the server's; no cell now; for the CTO's round analysis."
 }
 ```
+
+## IRPT_YCDGEN-W3-S19 -- the Prospect card cannot read the firm catalogue through any prop the order's paths reach, so the page header publishes it to a module-level holder the card reads
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S19",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:12:00Z",
+  "one_line": "HeaderSelection (header/HeaderSelectionContext.ts) and TabShell.tsx carry no firm catalogue and are outside YCD-q-6's paths, so index.tsx publishes the catalogue to stagedProspect.ts and AnalysisTab reads it from there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6 R18 (a): the card shows a firm choice 'from the same catalogue the Firm dropdown uses'; the paths named are ProspectComposer, AnalysisTab, stagedProspect.ts (new), FirmDropdown and index.tsx.",
+  "world_is": "AnalysisTab receives only api, scope, firmId and selectedScopeRef from TabShell; the catalogue (index.tsx catalogueQuery) lives above TabShell and the only carrier between them is HeaderSelectionContext, whose HeaderSelection type is in a file outside the order's paths. A useQuery in AnalysisTab would throw in the existing static-render tests (no QueryClientProvider). So index.tsx calls publishFirmCatalogue({internal, firms}) in an effect (withdrawn on unmount) and AnalysisTab reads useFirmCatalogue() (useSyncExternalStore) from stagedProspect.ts. Memory only; one workspace per page, so one holder. A later cell holding HeaderSelectionContext.ts and TabShell.tsx could replace the holder with a context field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_YCDGEN-82-portal src/pages/InvestorReporting/header/HeaderSelectionContext.ts:15-50 (HeaderSelection fields)",
+      "portal src/pages/InvestorReporting/tabs/TabShell.tsx:164-172 (AnalysisTab props)",
+      "bun portal/scripts/prospect-firm-exercise.mjs firm and dropdown (render the real components through the holder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO's round analysis: the holder is a second carrier of the catalogue beside the page's own prop; both are fed from the one catalogueQuery."
+}
+```
+
+## IRPT_YCDGEN-W3-S20 -- the portal has no DOM library, so no button handler or effect can run in a bun exercise; YCD-q-6's exercise grades the card by static render, the real send helpers and source-wiring checks
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S20",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:13:00Z",
+  "one_line": "No happy-dom, jsdom or testing-library is installed under portal/node_modules, so prospect-firm-exercise.mjs cannot press Review or Generate or run the write-through effect; the send decision lives in exported helpers it drives directly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6: 'firm drives the Prospect card ... the upload request and the submit request both carry cottonwood'; 'remount stages a file and a review result, remounts the composer as a client pick or tab switch does'.",
+  "world_is": "ls portal/node_modules finds no happy-dom, jsdom, @testing-library or react-test-renderer; react-dom/server runs neither handlers nor effects. The exercise therefore (1) drives sendProspectUpload / sendProspectSubmit / prospectFirmDecision (exported from stagedProspect.ts and the only code the composer sends through) against a recording stub, (2) static-renders the real ProspectComposer and AnalysisTab for what a fresh mount shows (a fresh mount reads the staged slot exactly as a remount does), and (3) checks by source regex that the composer writes through to the slot (holdStaged in an effect) and clears on a new file or firm. What is NOT executed: the click on Review portfolio, the useEffect write-through and the file input's change handler. Precedent: portal/scripts/global-tenant-exercise.mjs (p-6) grades the same way; src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx drives handlers by wrapping the JSX runtime.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/node_modules directory listing (no DOM library present)",
+      "portal/scripts/prospect-firm-exercise.mjs remount arm (the three source-wiring checks)",
+      "portal src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx:28-50"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer's live close shows a file lost across a client pick, the effect write-through is the first thing to read (ProspectComposer.tsx holdStaged effect)."
+}
+```
+
+## IRPT_YCDGEN-W3-S21 -- running the whole InvestorReporting bun suite rewrites four tracked wire files (AnalysisReport.ts, ExportBundle.ts, index.ts, responses.ts) in the worktree
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S21",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:14:00Z",
+  "one_line": "bun test src/pages/InvestorReporting leaves contracts/wire/{AnalysisReport,ExportBundle,index,responses}.ts modified (120 changed lines, 56 deleted from AnalysisReport.ts) in the portal worktree; the IVE17-AC2 regenerated-wire test is the likely writer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6 section 3: the baseline is bun test over fe-s-13 and tabs/analysis (40 pass, 11 fail); the order names only that narrower run, not the whole suite.",
+  "world_is": "Running the wider bun test src/pages/InvestorReporting (to check no other test read the four files I edited) ended with git diff --stat showing those four tracked wire files changed outside every order's paths (twice: after the base-source run and after mine). The failing-test list names 'IVE17-AC2 -- the regenerated wire carries every landed ask'. I restored the four from HEAD with git show and committed none of them. The narrower baseline run (fe-s-13 + tabs/analysis) did not touch them.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "git diff --stat in the portal worktree after bun test src/pages/InvestorReporting (AnalysisReport.ts 56, ExportBundle.ts 6, index.ts 8, responses.ts 30 changed lines)",
+      "bun test output: IVE17-AC2 line in the failing list of the base-source run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this order (nothing committed). A worker or drain that runs the whole suite and commits with a broad path set would carry the rewritten wire files; the writer was inferred from the test name, not read."
+}
+```
