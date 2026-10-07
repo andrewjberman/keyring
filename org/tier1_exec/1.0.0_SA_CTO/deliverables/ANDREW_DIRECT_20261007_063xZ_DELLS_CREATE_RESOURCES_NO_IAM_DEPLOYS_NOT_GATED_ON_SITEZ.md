@@ -65,4 +65,14 @@ not the bottleneck, and a Dell may pass only named, pre-made roles." Landed as N
 It qualifies the third word: the laptop-creates-roles arrangement is INTERIM by his own statement. He named no end state and no date;
 nothing here decides what replaces it. PRD v0.8 carries it as an enrichment-backlog line.
 
+## A fifth word, ~06:5xZ, VERBATIM
+
+"What is the actual reason we are hampering the dells so much? they are on prem devices, is there a basis to be holding them like this?
+we also need to look over whatever COO~P COO~Y COO~M were working on on this fabric and make sure that is properly spread out across the
+dell boxes. I think those two boxes are going to be workhorses."
+
+Two questions and one direction (look over the three lanes' work and its spread). Answered to him at the terminal from the brief
+(`docs/briefs/four-device-control-plane-brief-20261006.md` O9), the applied policy and the three lanes' last handoffs
+(@0d44093fe1, @217963b67d, @2c281b9f29). No row, policy or seat was changed on this word; the changes it points at are his to order.
+
 -- 1.0.0_SA_CTO
