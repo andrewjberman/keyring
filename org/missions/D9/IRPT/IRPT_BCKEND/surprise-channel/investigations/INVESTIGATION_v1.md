@@ -18743,3 +18743,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "S338 is measured (S348). S347 is disarmed; the dell2 identity is still denied on the bucket until NFRA_CTLPLN round 4 applies."
 }
 ```
+
+## IRPT_BCKEND-S351 -- DISARM of IRPT_BCKEND-S339: a resident build carries a named member list (st24 read against its census)
+
+```json
+{
+  "id": "IRPT_BCKEND-S351",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-07T08:39:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S339 (ARMED, disarm owner 2.0.0_SA_COO~Y2): one resident build was read against its list. Root 409e3066d1-st24 has a package census naming 267 members, its delta against the previous root enumerated (11 added, 3 changed, 0 removed), 16 pinned members, and gates G1-G4 true. The builder no longer ships an unnamed tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/PACKAGE_CENSUS_409e3066d1-st24.json: keys members (267), added (11: ycharts/research/*), changed (3: reporting_policies.json, reports/resident_bindings.json, ycharts/generate/resident_worker.py), removed (0), pinned_members (16), gates {G1..G4: true}",
+      "the remedy commits named in REMEDIATION_v20: c1dd9ada9c (TO-YCD-n-6, members_added gate) and 2b5f4f00e1 (TO-YCD-m-6, a named file list)",
+      "read from the committed census, not from the host: the resident host is 2.0.0_SA_COO~G2's to write and release (1.0.0_SA_CTO~DELL2 msg 91)"
+    ]
+  },
+  "dismissal_reason": "The disarm condition in REMEDIATION_v20 (a resident build carries a named member list; read one build against its list) is met by st24. Future builds are 2.0.0_SA_COO~G2's, under the same builder.",
+  "spec_asserts": "IRPT_BCKEND-S339 (ARMED): build_resident_package.py packages the whole tree at its --pin, so a resident build ships every merged-but-unreleased change.",
+  "world_is": "The st24 build names its 267 members and gates the 11-member addition. S339 is disarmed."
+}
+```
