@@ -20392,3 +20392,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The only callable the Entry can invoke is (request, scope, event, ctx); reportId comes from event.pathParameters and revision from event.queryStringParameters. The routes.json row omits response_schema and consumer_operation because the custody read has no schema file yet. Owed to the issuer, if wanted: a response schema file for custody-report-read and the consumer_operation name when IB-pr-356 lands."
 }
 ```
+
+## IRPT_BCKEND-W164-S3 -- IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, 
+
+```json
+{
+  "id": "IRPT_BCKEND-W164-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~164",
+  "surfaced_at": "2026-10-07T20:04:57Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB72-1-AC2's checker slices entry.py ROUTES at the FIRST '}' , which is the brace inside the first route key, so no route key containing {param} can ever be found in the slice; the criterion cannot pass on any correct entry.py.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r72/p72_cells.py: block = entry[entry.index('ROUTES = {'):entry.index('}', entry.index('ROUTES = {'))]; then 'ROUTE not in block' fails",
+      "measured on worktree HEAD cf6839fe38: block ends ...'ROUTES = {\n    \"GET /api/scoped/investor-reporting/export/{exportId' ; the EXISTING route key 'GET /api/scoped/investor-reporting/export/{exportId}' is also not in the slice (False), as is the new key (False) and the operation name (False)",
+      "substance holds elsewhere: export/tests/test_custody_read.py asserts entry.ROUTES['GET /api/scoped/investor-reporting/custody-report/{reportId}'] == 'custody-report-read' and passes; _authz/tests/test_unguarded_census.py (pins ROUTES against routes.json) 9 passed; routes.json half of AC2 passes the checker's own routes.json test"
+    ]
+  },
+  "spec_asserts": "IB72-1-AC2: export/entry.py ROUTES maps the route key to custody-report-read, graded by p72_cells.py IB72-1-AC2 expecting 'IB72-1-AC2 PASS'.",
+  "world_is": "The checker cannot be satisfied by any entry.py whose ROUTES keys carry a path parameter brace. The entry.py edit is correct and tested; AC2 is left FAIL by its own invocation. Owed to the issuer (the checker is outside this grant): slice to the matching closing brace of the dict (e.g. the first '\n}' after 'ROUTES = {'), then re-grade IB72-1-AC2."
+}
+```
