@@ -7172,6 +7172,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
       "disposition": "UNDER_INVESTIGATION",
       "disarm_owner": "2.0.0_SA_COO~H",
       "notes": "Not measured: which matcher admitted the 431 (the candidate rule for wsj), and how many of the remaining wsj names are short tickers. Issuer act: wsj is not resumed until Andrew signs in inside the wsj profile; the resume is from r46_wsj_checkpoint.json with --clear-stop wsj. Carried to the round-50 analysis: a cell that bounds or tightens the wsj candidate set before the leg reaches the next short ticker."
+    },
+    {
+      "id": "AMGT_HARVST-Z-W101-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~101",
+      "surfaced_at": "2026-10-07T00:29:20Z",
+      "one_line": "HVST-ax-1 replay: a wsj run record does not carry the company query, so the three control names' queries were recovered from the harvest_listing_outbox table, and K was taken as the first-accept POSITION.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order section 1 item 5: the controls are the three finished wsj jobs with the most accepted articles, printed as `<name>: accepted <a>, still admitted <b>`; the NEW rule needs a query per control. Item 2: K = articles fetched BEFORE the first accepted one 'if the record's order gives it'.",
+      "world_is": "A wsj run record (runs/*.json) holds ticker (None for 3 of the top 6), security_key, fetched_keys and fetch_outcomes but no company or query. The ax-1.replay.py derives each control's query from progress.sqlite3 table harvest_listing_outbox (column query, 'sitemap:<Company>', rows whose fetched_at lies inside the job's started_at..finished_at): Netflix (65 accepted), Visa (25), BP (23, the tie among three 23-accepted jobs broken by job id). All three had exactly one query. For K the script counts the 1-based position of the first accepted article in fetched_keys (fetch n needs K >= n); 55 of 68 jobs give an order, 13 fall back to total fetched; max 93 (AAPL, total 116), so K = 100 under either reading (the 'before' count 92 also rounds to 100).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~101/ax-1.replay.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~101/ax-1.k_derivation.out",
+          "C:/Users/Opal Bloomberg/Desktop/ajb_workspace/.runtime/opal-data-harvest-wsj/progress.sqlite3 (harvest_listing_outbox)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
