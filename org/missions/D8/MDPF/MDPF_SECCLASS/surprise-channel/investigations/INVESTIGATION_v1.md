@@ -3654,3 +3654,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1. The worker took the minimal equivalent so the gate passes without a bypass; the issuer may re-grade this if the ruling meant to exclude the 4."
 }
 ```
+
+## MDPF_SECCLASS-S51 -- S50's disarm evidence: both shipped etf_classification.py keys equal the trunk; nothing unsigned moved
+
+```json
+{
+  "id": "MDPF_SECCLASS-S51",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T10:50Z",
+  "one_line": "Read-back after 0.7.0_AE_CloudOps~S's explicit safe-deploy (TO-DEPLOY-e21, ~10:39-10:40Z): code/gold/lib/_shared/etf_classification.py in opal-data-bd and opal-data-cot reads ETag 3a033c04678f1c96d116b641545b17bb = md5 of the trunk file, so trunk and S3 agree (row S50's disarm condition); the two carriers and the two unchanged members were re-uploaded (new VersionIds) at ETags equal to their trunk md5, so no other body changed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "e21_shipped_etag_check.py: E21-SHIPPED ok=True trunk=3a033c04... bd=3a033c04... cot=3a033c04... control=MATCH",
+      "moved: opal-data-bd VersionId X3S7SQQU2MhuDJicmfqZnsb_Hwj7NBHW 10:39:50Z; opal-data-cot VersionId Oq0iJYUOGycBSWKJmN1DEdFKgXXcQjE_ 10:40:11Z; rollback VersionIds 9abtPgnVDEDVovysMOqLo_cIw3fSZ6hQ and HCv30DsdLF9wgJGrAu4H78zeGKGcgNd6",
+      "re-uploaded, content unchanged (ETag = git show origin/CLOUD md5): bd E_18 a7820a20..., cot A_00 cb10e3cd..., etf_classifications_dynamodb.py 4cc11d3e... in both, etf_classification_scheduled.py cfe898d1... in both"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row S50: disarm when both keys read ETag 3a033c04 after the explicit deploy (COO condition 2 of the SC-e-21 half).",
+  "world_is": "Met. COO condition 3 (the next E_18 run read for an off-vocabulary refusal) stays with 2.0.0_SA_COO~M1; the next BD gold run is bd-gold-nightly-fallback 23:00Z.",
+  "notes": "Filed on dell1. The disarm clock on S50 is the CVO's to write; this row is its evidence."
+}
+```
