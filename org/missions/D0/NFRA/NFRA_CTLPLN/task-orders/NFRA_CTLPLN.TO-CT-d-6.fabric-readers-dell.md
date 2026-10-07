@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~9</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -53,7 +53,7 @@ what the gate does with a bare id filed from a Dell-fabric project. Build exactl
 
 ### ACCEPTANCE
 
-<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=8/8 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
+<criterion id="CT4d6-AC1" cell_refs="CT-d-6"><invocation>python .tools/tests/test_fabric_readers_dell.py</invocation><expect>FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 enum_equal=True gate_selftest=ok ok=True</expect></criterion>
 `CT4d6-AC1` -- both readers handle the four fabrics, refuse a fifth, and agree with the gate's enum; the mismatch and `dell3` arms are
 the controls.
 
@@ -186,3 +186,30 @@ Gate limb: none graded this modification.
 (`unclassified=0 ok=True`).
 
 Write a NEW proof instance over the old one at the same path, validate it, and flip `<status>` back to `complete` only when both pass.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-07 ~09:4xZ) -- REOPENED: the two reference patterns (row NFRA_CTLPLN-W9-S2, ARMED)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits a792433281 and 642cca9fb7 are
+inherited state. Still not merged to the trunk. Gate limb: none graded this modification.
+
+**What row W9-S2 found:** the `adjudicates` items of `investigation_item.schema.json` and the `disarms` items of
+`remediation_row.schema.json` hold two more copies of the OLD id pattern. A Dell row that disarms or adjudicates another Dell row
+(`X_PRJ-D1-S1`) is refused there. Landing the cell without them would let a Dell file a row and not let it disarm one.
+
+**THE WORK (this is the whole of it):**
+1. Search BOTH schema files for EVERY occurrence of an id-shaped pattern (any `pattern` whose text matches `S[0-9]+` or carries
+   `(Z-)?`), print the JSON path of each, and bring every one that is a row-id reference to the same pattern the `id` property now
+   has. Print the count found and the count changed; an id-shaped pattern you deliberately leave is listed with its reason.
+2. Four more row-schema cases in `.tools/tests/test_fabric_readers_dell.py`, through the gate's own schema function: an
+   investigation row whose `adjudicates` names `X_PRJ-D1-S1` -> admitted; one naming `X_PRJ-d1-S1` -> refused; a remediation row
+   whose `disarms` names `X_PRJ-D2-W3-S2` -> admitted; one naming a malformed id -> refused. The row-schema arm becomes 12 cases:
+   `rowschema_ok=<c>/12`.
+3. Re-run the gate's `--self-test`, `py_compile`, the census and `python org/devices/test_readers.py`; all four in your report.
+4. The end-to-end control again, on a temporary copy, never committed: a `D1-` row that disarms another `D1-` row is admitted by
+   the gate run as the commit hook runs it (use the process serial the previous holder's report says the non-worker form needs, and
+   say so).
+
+**ACCEPTANCE, replacing CT4d6-AC1's expectation (same id, same invocation):**
+`FABRIC-READERS ids_ok=9/9 schema_ok=5/5 rowschema_ok=12/12 enum_equal=True gate_selftest=ok ok=True`. CT4d6-AC2 unchanged.
+
+Write a NEW proof instance over the old one, validate it, flip `<status>` back to `complete` only when both pass.
