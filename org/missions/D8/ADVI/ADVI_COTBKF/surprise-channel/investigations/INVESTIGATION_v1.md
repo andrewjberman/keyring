@@ -1662,3 +1662,78 @@ round.** Never edit an existing row.
  "notes": "INERT (no served output). Remedy: SIGN gains leu -1.0 (read ileu's one quantity row to decide it), daily holdings rebuilt with 0 snapshot differences, the account re-read, and the crosswalk re-scored on the fixed rule. Filed by the round-12 compile, which grades CB12l1-AC3 NOT MET on it."
 }
 ```
+
+## ADVI_COTBKF-D2-W29-S1 -- One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S1",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:28Z",
+ "one_line": "One vendor Transaction_Type is 'csltfee ' with a trailing space, so the ONE signing table has to key it exactly as delivered",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_tx_types.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> types=61; the type reads 'csltfee ' (7 characters plus a space), 164 rows, no quantity on a non-cash CUSIP",
+   "a first draft of NO_SHARE_MOVEMENT keyed 'csltfee' and the census listed 'csltfee ' as the one type neither signed nor named (set difference of the 61 delivered types against the table)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 step 2: every Transaction_Type is decided in the one table, signed or named in NO_SHARE_MOVEMENT.",
+ "world_is": "The silver transactions carry the type with a trailing space (164 rows). commonwealth_signs.NO_SHARE_MOVEMENT keys it as 'csltfee ' on purpose. The type moves no shares, so no output depends on it, but a consumer that strips type names would miss the key."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S2 -- One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S2",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:29Z",
+ "one_line": "One existing assertion in test_commonwealth_daily_holdings.py ended the DAILY-HOLDINGS line at snapshot_diffs=1; the order puts two fields after it, so that one assertion line was extended",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "data/assets/scripts/silver/tests/test_commonwealth_daily_holdings.py test_snapshot_with_one_mismatched_pair_writes_that_row: assert line.splitlines()[-1].endswith(\"snapshot_pairs=2 snapshot_equal=1 snapshot_diffs=1\") at 65ce59b838",
+   "python -m pytest data/assets/scripts/silver/tests -q -k commonwealth -> 122 passed with that one assertion now ending with 'snapshot_diffs=1 fractional_residuals=0 fractional_accounts=0'"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-1 tests: every existing test of the three scripts keeps passing; the last line gains fractional_residuals and fractional_accounts after the existing fields.",
+ "world_is": "Both cannot hold for that one assertion: an endswith on the old last field fails once fields follow it. The test file is in the order's paths; every other existing assertion of the file is unchanged. No test was weakened: the new assertion checks the whole tail of the line."
+}
+```
+
+## ADVI_COTBKF-D2-W29-S3 -- The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts
+
+```json
+{
+ "id": "ADVI_COTBKF-D2-W29-S3",
+ "project": "ADVI_COTBKF",
+ "fabric": "dell2",
+ "surfaced_by": "0.9.0_WK_ADVI_COTBKF~29",
+ "surfaced_at": "2026-10-07T15:39Z",
+ "one_line": "The account_links rule change moves 52 rows' reason (51 'no in-kind receiver' rows mostly become 'closed to cash') that the order's compared fields (status, new_account) do not count; the diff reports them beside the counts",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "python data/assets/scripts/analysis/commonwealth_rule_change_diff.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~29 -> account_links_changed=2 while CLASS lines read 'closed to cash: 495 -> 544' and 'no in-kind receiver: 51 -> 2' and INFO 'account_links reason differs on 52 rows'",
+   "control: both scripts re-run with the OLD tables (crosswalk SIGN and HOLDING_SIGN as at 65ce59b838) give crosswalk_changed=0 account_links_changed=0 against the applied tables (439 matched, 212 linked), so every difference is the rule change and none is input drift (scratch run, .scratch/rcd_control.py, uncommitted)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "TO CB-m-2 step 3: account links are compared by old_account on status and new_account; the last line counts those changes.",
+ "world_is": "Those two fields moved on 2 rows (one gained link, one lost). The reason text, end_positions and score moved on 52, 87 and 52 rows with status unchanged, because the one table adds `ci` (Contribution to Income) to the link rebuild: the old links table with `ci` added gives account_links_changed=2 (the same 2 rows), with `12b1` added 0 (scratch ablation). The diff keeps the order's counts and adds an INFO line per extra field (reason_code, positions_compared, positions_matched, holdings_basis for the crosswalk; reason, end_positions, matched, score for the links) so a reason shift is not read as no change."
+}
+```
