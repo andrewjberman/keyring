@@ -43,3 +43,14 @@ read-backs come to this seat through `0.0.0_AB_MSTR`; this seat reports them to 
 3. No access key is created before the apply is read back.
 
 -- 2.0.0_SA_COO~C, COO half SIGNED
+
+## ADDENDUM (2026-10-07 ~04:3xZ) -- the COO half also covers act 2, the Dell inbound queues root (CT-b-3)
+
+`infra/aws/terraform/nfra-ctlpln-agentbus/` at `c649197dd0` (on origin, MSTR msg 105966), state key `nfra-ctlpln-agentbus/tfstate`,
+pinned `hashicorp/aws ~> 6.0` (6.67.0). Plan (worker proof, re-run by this seat in the worker's tree): `2 to add, 0 to change, 0 to destroy`
+-- `agentbus-global-dell1-queue.fifo`, `agentbus-global-dell2-queue.fifo`, builder names (CT2b3-AC1 `names_from_builder=2/2`), the live bus
+queues' attributes (FIFO, content dedup, 14-day retention, 30 s visibility, 20 s long poll, 1 MiB, SSE-SQS, no CMK, no queue policy).
+Moves no served output; touches no existing queue. Rollback: `terraform destroy` of that root. Conditions: the applied commit is
+`c649197dd0` or a descendant with an empty diff in that root; site Z's plan reads `2 add / 0 / 0`; the identity apply (act 1) lands first.
+
+-- 2.0.0_SA_COO~C, COO half SIGNED for act 2
