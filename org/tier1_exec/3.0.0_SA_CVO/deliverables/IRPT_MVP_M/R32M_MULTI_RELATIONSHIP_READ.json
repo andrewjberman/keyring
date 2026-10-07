@@ -1,0 +1,56 @@
+{
+ "cell": "IB-mr-321",
+ "relationship_evidence_present": true,
+ "accounts_with_relationship_rows": 860,
+ "accounts_in_more_than_one_relationship": 3,
+ "relationship_rows_collapsed": 35,
+ "m1": {
+  "verdict": "PASS",
+  "found": true,
+  "account_node_id": "acc_0f1e215e521798954f80f291",
+  "relationships": [
+   "z09305591",
+   "z09326136"
+  ],
+  "instances_total": 3
+ },
+ "m2": {
+  "verdict": "PASS",
+  "subtree_ties": true,
+  "partitions": 4,
+  "partitions_unbalanced": [],
+  "rebuilt_value": 462857.7422,
+  "served_value": 462857.7422,
+  "matches_served": true,
+  "raw_rows": 58,
+  "unique_positions": 29,
+  "duplicate_relationship_rows_collapsed": 29
+ },
+ "m3": {
+  "verdict": "PASS",
+  "overlap": {
+   "multi_model_and_multi_relationship": 1,
+   "multi_model_only": 180,
+   "multi_relationship_only": 2,
+   "neither": 677,
+   "accounts": 860
+  }
+ },
+ "producer": "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py",
+ "producer_sha256": "55a5ac985aa2170b6d2170637497cfdbb61f24db13492bfe44057265cb75a2aa",
+ "repo_head": "5f131dfa8b",
+ "build_date": "2026-10-05",
+ "served_publication": {
+  "business_date": "2026-10-05",
+  "revision": "bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e",
+  "schema_version": "irpt-holdings-manifest-v2",
+  "manifest_key": "irpt/cottonwood/platinum/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.manifest.json",
+  "manifest_version": "CmX27kWdouqIZqj6.mArQYvCrLZcKmfn",
+  "gold_key": "irpt/cottonwood/gold/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.parquet",
+  "gold_version": "ocUU9fz9k91sHP4jblz71LlCTDjOdt0n",
+  "gold_sha256": "4eebe391648106d2a6f755fff666235c5dabc4656e027071f516f87ec3f25f2f",
+  "header_key": "irpt/cottonwood/platinum/holdings/date=2026-10-05/bb51912332f6caace89f25e5666b355208d2cfd701b443e86510880f12852b7e.header.json",
+  "header_sha256_checked": true
+ },
+ "reader_identity": "arn:aws:iam::313476888478:user/Andrew_Berman"
+}

@@ -1202,6 +1202,8 @@ class _Vocab:
         self.cadences = set(schema["cadence"]["values"])
         self.v3 = {m for ms in refused.values() if isinstance(ms, list) for m in ms}
         self.v3 |= self.cadences | set(self.scope) | {"bd"}
+        pw = refused.get("purpose_word", [])
+        self.purpose = set(pw) if isinstance(pw, list) else set()  # group A of NO-SYSTEM-ASKED (R1.d)
         self.vocab = self.v1 | self.v2 | self.v3
         self.tiers = list(schema["key"]["tier"])
         self.kinds_by_type = dict(schema["kind"]["by_type"])
@@ -1327,8 +1329,14 @@ def _alias_spell(toks, v, form):
     return out
 
 
+_NO_SYSTEM_ASKED = "NO-SYSTEM-ASKED"
+_PASCAL_POLICY = re.compile(r"^[A-Z][A-Za-z0-9]*[a-z][A-Za-z0-9]*$")  # one PascalCase token, no hyphen
+
+
 def _slots(nm, toks, typ, v, first_of_segment=None):
     """R1-R4 over a token list: (system, removed indices, scope long or None, placeholder).
+    placeholder is False, True (a blank is owed) or "NO-SYSTEM-ASKED" (the system slot is empty by ruling,
+    sysv is ""): grade() reads the third as the fourth verdict, never as a blank.
     first_of_segment: the indices R1.d may read (a secret's segment heads, S2); None reads every token.
     nm: the name grade() received, exactly as passed -- the resources.json lookup key (EN-r-4). A row fills
     the {system} placeholder, AND a row whose system DIFFERS from the one the tokens resolve OVERRIDES it
@@ -1367,6 +1375,11 @@ def _slots(nm, toks, typ, v, first_of_segment=None):
             row_system = v.resources.get((nm, typ))
             if row_system:
                 sysv, placeholder = row_system, False
+        if placeholder and (t1 in v.purpose or typ == "LAMBDA_LAYER"
+                            or (typ == "IAM_POLICY" and nm is not None and _PASCAL_POLICY.match(nm))):
+            # NO-SYSTEM-ASKED (C-VERDICT, BF-t-2): an AWS service name, an inline policy name or a library layer
+            # is never a system, and no later token or row resolved one. The system slot is empty, not blank.
+            sysv, placeholder = "", _NO_SYSTEM_ASKED
     else:
         raise RaiseDefect("R1.f: %r is in no vocabulary; no registry row resolves it" % t1)
     if nm is not None and not placeholder:
@@ -1449,12 +1462,12 @@ def _grade_resource(nm, typ, v):
     func = [_r3_spell(toks, i, v) for i in range(len(toks)) if i not in out]  # R3: bd spelled in every slot
     if typ in ("EVENT_RULE", "SCHEDULE"):
         func, last, ph2 = _cadence_slot(func, v)  # R7
-        placeholder = placeholder or ph2
+        placeholder = ph2 or placeholder  # a {cadence} blank (True) outranks NO-SYSTEM-ASKED
     else:
         kinds = v.kinds_by_type[typ]
         last = func.pop() if func and func[-1] in kinds else kinds[0]  # R6
     func = _fn1d(func, sysv, scope_long, typ, v)  # R5: the one subtraction (FN1d)
-    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + func + [last]
+    parts = ([sysv] if sysv else []) + ([v.short[scope_long]] if scope_long else []) + func + [last]
     aliased = "-".join(_alias_spell(body.split("-"), v, "short")) + affix
     return "-".join(parts) + affix, placeholder, aliased  # R9
 
@@ -1479,7 +1492,7 @@ def _grade_secret(nm, v):
         if i not in out:
             purpose.setdefault(where[i], []).append(_r3_spell(flat, i, v))  # R3: bd spelled in every slot
     # S4: the purpose is every remaining segment, each lowercase kebab, joined by /.
-    parts = [sysv] + ([v.short[scope_long]] if scope_long else []) + ["-".join(purpose[k]) for k in sorted(purpose)]
+    parts = ([sysv] if sysv else []) + ([v.short[scope_long]] if scope_long else [])         + ["-".join(purpose[k]) for k in sorted(purpose)]
     raw = [seg.split("-") for seg in nm.split("/")]
     spelled = _alias_spell([t for seg in raw for t in seg], v, "short")
     rebuilt, k = [], 0
@@ -1721,7 +1734,7 @@ _GRAMMARS = {"R": _grade_resource, "S": lambda n, t, v: _grade_secret(n, v), "L"
 def grade(name, type):
     """(verdict, canonical_form) for a name of a node type, by LGIC_NAMING's GRADING_RULE.md.
 
-    The verdict is CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
+    The verdict is NO-SYSTEM-ASKED, CONFORMANT, ALIAS or OUT-OF-PATTERN, with the canonical form; NOT-GRADED (canonical None)
     for a type outside the grade's domain (G1.2) or a name NAMING_SCHEMA.json aws_fixed puts outside it
     (G2.1 by name, read from the schema at run time; G2.2 by ARN is the caller's job -- grade(name, type)
     never receives an ARN). A name the rule cannot place raises RaiseDefect, naming the step. The canonical
@@ -1744,6 +1757,8 @@ def grade(name, type):
         raise RaiseDefect("G1.3: %r takes no grammar in GRADING_RULE.md" % type)
     canon, placeholder, aliased = _GRAMMARS[grammar](name, type, v)  # V-1: the canonical form, by the
                                                                       # grammar of the type
+    if placeholder == _NO_SYSTEM_ASKED:
+        return _NO_SYSTEM_ASKED, canon  # no system is asked of this kind of name (C-VERDICT); no remedy owed
     if placeholder:
         return "OUT-OF-PATTERN", canon  # G6; V-2
     if canon == name:
@@ -2868,8 +2883,8 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         "",
         "## Totals by type (judged rows)",
         "",
-        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NOT-GRADED |",
-        "|---|---|---|---|---|---|",
+        "| type | plane | CONFORMANT | ALIAS | OUT-OF-PATTERN | NO-SYSTEM-ASKED | NOT-GRADED |",
+        "|---|---|---|---|---|---|---|",
     ]
     by = {}
     for r in rows:
@@ -2877,8 +2892,9 @@ def _census_prose(doc, stats, ng_counts, fixed_counts):
         by.setdefault(k, {}).setdefault(r["verdict"], 0)
         by[k][r["verdict"]] += 1
     for (t, p), c in sorted(by.items()):
-        lines.append("| %s | %s | %d | %d | %d | %d |" % (t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0),
-                                                           c.get("OUT-OF-PATTERN", 0), c.get("NOT-GRADED", 0)))
+        lines.append("| %s | %s | %d | %d | %d | %d | %d |" % (
+            t, p, c.get("CONFORMANT", 0), c.get("ALIAS", 0), c.get("OUT-OF-PATTERN", 0),
+            c.get("NO-SYSTEM-ASKED", 0), c.get("NOT-GRADED", 0)))
     lines += ["", "The comparison against LGIC_NAMING's hand gradings is EN-s-2's and is not made here."]
     return "\n".join(lines)
 
@@ -2904,6 +2920,8 @@ def main(argv=None):
     c.add_argument("--budget", type=int, default=600, help="seconds for the live pull (comp-find --budget)")
     c.add_argument("--not-judged", help="JSON file: a list of {name, plane, card} names CARDED rather than "
                                          "graded (R-29, AMENDMENT 1) -- a RAISE on one of these does not stop the run")
+    c.add_argument("--root", help="one Terraform root folder: one line per name of that root (LGIC_BLANKFIX FWD-1)")
+    c.add_argument("--map", help="with --root: the root map file (default: the registry's root_map.json)")
     a = ap.parse_args(argv)
 
     if a.cmd == "validate":
@@ -2944,6 +2962,9 @@ def main(argv=None):
     if a.cmd == "targets":
         return cmd_targets(a.extra_target)
     if a.cmd == "census":
+        if a.root:
+            import opal_naming_rootcheck  # the root check composes this module; imported only on this path
+            return opal_naming_rootcheck.check_root(a.root, a.map or os.path.join(REGISTRY_DIR, "root_map.json"))
         live, repo = a.live, a.repo
         if not (a.names or live or repo):
             live = repo = True

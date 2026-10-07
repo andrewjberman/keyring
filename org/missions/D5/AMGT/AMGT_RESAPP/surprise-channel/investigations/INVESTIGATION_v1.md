@@ -21590,6 +21590,227 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~277/capture_print.py"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "coverage_pass.py source (iii) listed a worker folder's coverage_items_*.json; it now lists a directory only when --coverage-items-dir is given, so a bare run reports none.",
+  "spec_asserts": "AMGT-ba-13 order s.1 rule 1/2: every moved read returns the same object; a line that cannot move without changing behaviour is a row.",
+  "world_is": "lib/research/identity/coverage_pass.py coverage_universe_source_check() os.listdir()-ed the AMGT_RESAPP deliverables folder of worker ~3 for coverage_items_<key>.json to fill source_iii.found_files_keyed_on. Those files are run_reader's OUTPUT (a record, not a data file), which the order forbids the code to name; the directory is now the optional command-line argument --coverage-items-dir (repeatable), and the identity pass writes found_files_keyed_on=[] when it is omitted. The universe.json it writes is unaffected (source (iii) adds 0 resolutions by its own assertion); only the stored coverage_pass.source_iii_coverage_universe.found_files_keyed_on list differs on a bare re-run. No test covers the module. Equality (equal_reads.py) is unaffected.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/coverage_pass.py (coverage_universe_source_check, main)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "freshness/build_view.py still reads a worker folder by glob (deliverables/**/rot_signal.json); the census names no such line because the glob carries no worker serial.",
+  "spec_asserts": "AMGT-ba-13 order s.1: production code under lib/ no longer reads a worker's deliverables folder (the census lists 19 files naming a worker serial).",
+  "world_is": "lib/research/freshness/build_view.py ROT_SIGNAL_GLOB = 'org/missions/D5/AMGT/AMGT_RESAPP/deliverables/**/rot_signal.json' reads every worker folder's rot_signal.json at run time and carries no 0.9.0_WK_AMGT_RESAPP~ string, so r77_ba13.py C1 does not count it and this cell did not move it (it is outside the census, and a rot signal is a computed output whose home the list module owns). AC1 reads 0 files naming a worker folder while this one glob remains. Left in place; the order's census is the grant, and a move would change what the freshness view reports as the rot line.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/freshness/build_view.py (ROT_SIGNAL_GLOB, build())"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Four moved lines change a stored or served provenance STRING (not an object): the posture pack's model-block source label, the crosswalk's coverage_source and two key_conventions measured_on texts, and the lists' added_by on regeneration.",
+  "spec_asserts": "AMGT-ba-13 order s.1 rule 3: a stored provenance VALUE that other code compares against is a READ; and AC2/bound 3: no served value changes.",
+  "world_is": "Compared-against check, printed: the only comparison of a coverage_source value is lib/research/identity/add_security.py:510, which compares two records of ONE in-memory build (both carry the new label), and no code compares key_conventions text, added_by or generated_by (the one schema entry is type string). So none is a READ and the objects are hash-equal (equal_reads.py EQUAL 17 of 17). What DOES change: posture/packs.py load_model_block() returns os.path.relpath(path, repo) as the pack's source label, now lib/research/posture/data/model_block/model_block_<key>.json; the next crosswalk MINT writes coverage_source 'lib/research/identity/data/universe.json' and the reworded measured_on prose into the served document; build_lists.py regenerated would write a new added_by (the committed publishers.json keeps the old string); social collect's generated_by is reworded, and social collect's security 'source' label now names the pool object (s3://opal-data-harvest/universe/v1/2026-09-15.json, read through peers.engine.load_union_universe; its sha256 equals the old worker-folder file's) where it named the worker-folder file. test_crosswalk_enrich_coverage's byte-identical-to-pinned arm needed the SAME explicit coverage_source label passed to both sides and the key_conventions prose set aside (convention names and forms still asserted equal); test_slash_safe_key_sites' run_drafting arm and test_collect's cap arm were updated to the new argument form.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/posture/packs.py (load_model_block)",
+      "lib/research/identity/crosswalk.py (COVERAGE_PATH_DEFAULT, KEY_CONVENTIONS)",
+      "lib/research/identity/add_security.py (same_source, line 510)",
+      "lib/research/identity/tests/test_crosswalk_enrich_coverage.py (NoEnrichRowsByteIdentical)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W279-S4",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~279",
+  "surfaced_at": "2026-10-07T05:54:04Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Data files under lib/ still spell a worker folder as a string inside their own JSON (the three rules/data files); no code opens that string.",
+  "spec_asserts": "AMGT-ba-13 AC1 C1 counts production .py files only; the order says the copies are byte-equal to the originals.",
+  "world_is": "lib/research/rules/data/REPO_RELATIVE_CENSUS.json, peer_overlap.json (source_path) and figure_units.json (source_path) name worker folders ~1, ~2, ~4 (the census), ~8 and ~24 (the two distribution files) as record text. None is a .py file, so C1 does not count them; none is opened as a path by code (the REPO_RELATIVE_CENSUS entries are documentation of line numbers in files the cell has now changed, so that census is stale against the new lines). Left as shipped because byte-equality is the order's bound and the census file is a prior cell's record.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/rules/data/REPO_RELATIVE_CENSUS.json",
+      "lib/research/rules/data/peer_overlap.json (source_path)"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W286-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~286",
+  "surfaced_at": "2026-10-07T06:16:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The SecurityAnalysis page carries no Refresh control; the only 'refresh' on it is the sidebar link 'Data Refresh' (/data-refresh). My first pass pressed that link by mistake and left the page, so the walk was re-run twice.",
+  "spec_asserts": "AMENDMENT 1 REFRESH: 'the page may still draw the Refresh control ... press it ONCE on BA and record exactly what the page shows ... If the control is not on the page, say so.'",
+  "world_is": "Measured 2026-10-07 on portal 8ddfe409, role admin userType Dev. On BA (and AMD, ASML_NA), buttons/links whose text, aria-label or title match /refresh/i: 1 per page, tag A, text 'Data Refresh', href /data-refresh, inside the sidebar nav (in_nav true); 0 outside the nav. Run 1 (stamp 20261007T060222Z) matched it with no nav exclusion and pressed it: the walker navigated to /data-refresh (a GET, 0 guard aborts, 0 POST), which ended the BA flow, so the model tab on BA was skipped. Runs 2 and 3 excluded the nav; 3 walker arms in all, each disarmed (REFUSED login after each). Final record is run 3 (stamp 20261007T061041Z). The retired Refresh button is not drawn.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/misc/refresh_control.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/captures/021-refresh-ba-no-control-on-page.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/captures/041-refresh-ba-nav-link-pressed-run1.png"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-W286-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~286",
+  "surfaced_at": "2026-10-07T06:16:23Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The Model tab's 'Where each input came from' ledger (6 classes) was read on AMD and ASML_NA but on BA 0 of 3 runs, and it lists 6 input classes where the top-of-page provenance lists 4.",
+  "spec_asserts": "FWD-12 DONE WHEN (PRD v0.41, line 611): 'on a real name, each input's source, last-run time and run result are read on the page and agree with /freshness.'",
+  "world_is": "Measured 2026-10-07 on portal 8ddfe409, 3.5 s after pressing the Model tab: BA [data-ledger-class] count 0 in runs 1 (not reached), 2 and 3; AMD 0 in run 2 and 6 in run 3; ASML_NA 6 in runs 2 and 3. Top-of-page [data-input-provenance] is present with 4 rows on all three names and agrees with /freshness on BA (Bloomberg 2026-10-06, Seeking Alpha 2026-09-11, pack 2026-10-06; web search not collected) and on AMD/ASML_NA (Seeking Alpha not read = 'Not collected'). The Model ledger reads six classes (market data, filings, news, social, web, Seeking Alpha) and 'News ... last ran October 1st' has no counterpart on /freshness.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd12/BA_model_ledger.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd12/AMD_model_ledger.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~286/data/fwd16/BA_top.json"
+    ]
+  }
+},
+{
+  "id": "AMGT_RESAPP-Z-S363",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T09:40:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "BLOCKING",
+  "one_line": "ba-23 cannot be bounded to one company: ANY pool crosswalk mint today is a rebuild that differs from the served object before a single name is added. An in-memory build with NO new row reads 242 records against the served 237, with provenance changed on 231 of 237 records, source_row on 191 and raw_identifier on 158.",
+  "spec_asserts": "Issuer act AMGT-ba-23 (decomposition s.85b) is the first pull of ONE never-covered company: one reference_data call, one identity bronze object, one registrations.json row, and ONE pool crosswalk put whose difference from the served object is that company's record (add_security.py: 'ONE POOL PUT PER RUN').",
+  "world_is": "The pool put is a full rebuild from today's inputs (add_security._build_document: coverage list + registrations.json + the retained universe/v1 input). Read at 09:4xZ with no Bloomberg call and no write, against the served s3://opal-data-harvest/crosswalk/v1/2026-09-29.json (the newest of 6 keys): (1) the identity universe input moved from universe/v1/2026-09-16.json to universe/v1/2026-10-06.json (universe_names 250 -> 302, universe_existing 33 -> 79), adding 5 records the served object lacks: BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity; (2) coverage_source moved from the worker folder deliverables/0.9.0_WK_AMGT_RESAPP~4/universe.json to lib/research/identity/data/universe.json, which is consistent with cell ba-13's move drained today @14a683c310 (not traced to its commit here); replacing only that path makes 73 of the 231 changed records identical, so 158 change for another reason; (3) raw_identifier changes on 158 records, e.g. 2602335D_US_Equity '2602335D US Equity' -> '2602335D US'; (4) registrations.json holds 71 rows today against 'registered 49' in the served denominators. No served key is removed (0 keys only in served). So the first seat to mint the pool, for ABNB or for anything else, ships all of that in the one put, and a dated pool key cannot be withdrawn the same UTC day without an S3 delete (the reader serves sorted(keys)[-1]).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The rebuild: add_security._identity_universe() and add_security._build_document(<today UTC>, <the 71 rows of lib/research/identity/registrations.json at HEAD>, ...) run in-process by this seat; denominators and a per-record JSON comparison against crosswalk._read_pool_latest(). Nothing was written and no Bloomberg call was made.",
+      "Fields changed across the 237 served records: provenance 231, source_row 191, raw_identifier 158. Records whose whole body is equal after replacing only the moved coverage path: 73 of 231.",
+      "Denominators served -> rebuilt: records 237 -> 242, MEASURED 237 -> 242, universe_names 250 -> 302, universe_registered 158 -> 163, universe_existing 33 -> 79, universe_refused 59 -> 60, research_folders_live 96 -> 97.",
+      "NOT measured: whether any reader keys on raw_identifier, source_row or provenance; which rule changed raw_identifier on 158 records; whether the 5 added names are wanted in the pool. The page and the Lambda packages were not read for this row.",
+      "The name for ba-23 under CTO ruling msg 30758 (first of PLTR, SHOP, ABNB absent from the crosswalk, registrations.json and the identity bronze; positive control AMD present on all three: 1 pool record, 5 registration mentions, 1 identity bronze object): PLTR is PRESENT in the pool (PLTR_US_Equity, MEASURED, from universe/v1); 'SHOP US' is absent by key but the COMPANY is covered as SHOP_CN_Equity (registration folder 'Shopify SHOP CA'), so it is not a never-covered company; ABNB is ABSENT on all three and by company name (0 pool records, 0 mentions of Airbnb or ABNB, 0 registrations, 0 identity bronze objects). The name is ABNB US Equity."
+    ]
+  },
+  "notes": "Surfaced, not chased; nothing minted. ba-23 is BLOCKED on a ruling, not on a build: either (a) the CTO signs a half whose blast radius is the whole rebuild (the 5 names, the 158 raw_identifier changes, the moved sources), or (b) the pool is first re-minted as its own act under its own pair so that ba-23's put differs by one record, or (c) ba-23 lands the identity bronze and the registration row without --write-pool and the pool waits. This seat recommends (b): it keeps the never-covered company a one-record change. The same rider rides the next mint by ANY seat (AMGT_CORPUS registers through the same step), which is why the row is filed before the half. No COO half for ba-23 is signed."
+},
+{
+  "id": "AMGT_RESAPP-Z-S364",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T10:36:49Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "MSFT US serving 0 of 7 header figures on PROD is ONE NAME among the covered set, not a class: 0 of 95 covered names read that way on the deployed function. MSFT_US_Equity is NOT a covered name. It is a pool record sourced from the ETF holdings universe, with no research folder and no stored company record, and the adapter serves such a name seven reasoned nulls by design.",
+  "spec_asserts": "The DSGN_AMGTV1 round-46 completion grade (FWD-4, 3.0.0_SA_CVO~Z @c38d200016) read MSFT US on the live page with every header tile saying 'We hold no stored company data for this name yet', against a 2026-10-05 census of 95 of 95 covered names accounted for; the question from 1.0.0_SA_CTO~Z (msg 30798) is whether that is one name or a class.",
+  "world_is": "Deployed opal-amgt-scoped-api, CodeSha256 MkM9Kf37nmI+thEmZR+ij8ybbxGrHxqtsonjyI7N5eg= (LastModified 2026-10-07T04:40:17Z), read by GET-shaped direct invokes at 10:3xZ. (1) /security/MSFT_US_Equity/overlay: status 200; 7 header figures, each value null with reason and currency_caveat 'We hold no stored company data for this name yet.'; identity MEASURED from crosswalk/v1/2026-09-29.json, bloomberg 'MSFT US', name 'Microsoft Corp'. (2) The census over covered_security_keys(): 95 names, status 200 on 95, the blockless reason present on 0 of 95. Control: AMD_US_Equity (covered) carries the reason on 0 fields. (3) MSFT_US_Equity is in covered_security_keys(): False. Its pool record reads bloomberg 'MSFT US', source_row.folder None, provenance 's3://opal-data-harvest/universe/v1/2026-09-16.json :: names[]'. (4) The reason is the adapter's own constant BLOCKLESS_HEADER_REASON (lib/research/api/scoped_amgt.py:2521), served by _blockless_header_figures, built in round 72 cell AMGT-av-1 for DSGN FWD-4: 'a name with no stored company record serves the seven header figures, each value null with a plain reason'. So the 10-05 census and this read do not contradict: the census counted the 95 covered names, and MSFT is outside them.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_blockless_census.py: `--one MSFT_US_Equity` reads 14 paths carrying the reason (reason and currency_caveat on the header figures); `--one AMD_US_Equity` reads 0; the full run prints 'DENOMINATOR: 95 covered names; status 200 on 95; non-200 on 0' and 'BLOCKLESS: 0'.",
+      "NOT measured: how many of the pool's non-covered records (237 pool records against 95 covered names) read blockless. By the same rule every pool name with no stored company record does; that count was not taken. The gateway route was not exercised: these are direct invokes of the function.",
+      "NOT measured: the identity line's 'sector and country are not in this security's data' on the page; this read took the header figures and the identity block only."
+    ]
+  },
+  "notes": "Surfaced, not chased. Nothing is broken in the served contract: an uncovered pool name reads as built. Whether the page should OFFER an uncovered ETF-held name as if it were a covered pack, or mark it as outside coverage before the tiles, is a page call for DSGN_AMGTV1 and an FWD-2 question for this project (the first pull of a never-covered company, issuer act ba-23, is the act that would give such a name a stored record). No order is cut on this row."
+},
+{
+  "id": "AMGT_RESAPP-Z-S365",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T11:41:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The stored Bloomberg officer list is written under a slash-safe partition and read under a raw-slash one, so a name whose key carries a slash is stored and never served: after the ba-22 pull BP/ LN Equity and NG/ LN Equity each hold a good object and the page still says no list is stored. 2 of 86.",
+  "spec_asserts": "Issuer act ba-22 (pair COO @8536310333, CTO @4f79c10223): after an object lands for a name, exec_roster_chain's Bloomberg leg serves that list on the next request, and the name leaves the plan's population.",
+  "world_is": "Writer: hbloom.bronze_write partitions by store.entity_partition, which encodes the slash: s3://opal-data-harvest/bloomberg/harvest/bronze/exec_officers/security_key=BP-SLASH-_LN_Equity/20261007T113610Z.json (811 B, NAME BP PLC, 10 officer entries, no field errors) and .../security_key=NG-SLASH-_LN_Equity/20261007T113644Z.json (701 B, NATIONAL GRID PLC, 9 entries). Reader: bloomberg_fallback.StoredBloombergInput.newest_key lists the prefix security_key=<bloomberg_fallback.security_key(security)>/ and that function is security.replace(' ', '_'), giving BP/_LN_Equity with the raw slash. newest_key('BP/ LN Equity') and newest_key('NG/ LN Equity') return None; the control newest_key('AMD US Equity') returns today's object. Of 91 partitions under exec_officers/, 2 carry -SLASH-, these two, so the reader's rule had never met a slash name. The plan still names both as needing a pull (names 2 calls 2 after the run), so every later officers run would spend two calls and land two more objects the reader cannot see.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/BA22_OFFICERS_ACT_RECORD_20261007.md: the partition of the committed 86 names through run_chain reads A 84, landed-not-read 2, B 0, D 0; 86 of 86 names have a stored object.",
+      "Read by this seat at 11:4xZ: both objects' bodies, the reader's key function source (one line), newest_key on the two names and on the control, and the prefix listing (91 partitions, 2 with -SLASH-).",
+      "NOT measured: whether another reader of exec_officers (the freshness view, fwd7_plan) applies the same raw-slash rule; whether other bronze channels have a reader with it. The officers pull was not re-run."
+    ]
+  },
+  "notes": "Surfaced, not chased. No code edited, no second pull. The remedy is a repair of the reader's key function in lib/research/management/bloomberg_fallback.py (use the store's slash-safe partition), with a test on a slash name, and it reaches the page only with the next Lambda redeploy. Until then the two names read as before the pull. This seat cuts it as a cell at the next recut or as an amendment once the CTO has the round's read."
+},
+{
+  "id": "AMGT_RESAPP-Z-S366",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T11:41:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "research_pulls.py reports TERMINAL_DOWN (exit 5, 0 calls) when the interpreter it runs under has no blpapi: a missing library and a signed-out Terminal read identically, and the driver names no interpreter.",
+  "spec_asserts": "Cell AMGT-ba-25: health() false stops TERMINAL_DOWN with no call and no sign-in attempt, meaning the Terminal is not answering.",
+  "world_is": "At 11:31:05Z this seat ran `python integrations/bloomberg/research/research_pulls.py run segments --probe \"AMD US Equity\"` under the shell's default interpreter, Python 3.14.7, where `import blpapi` raises ModuleNotFoundError. terminal_healthy() catches every exception and returns False, so the run printed `pulled 0 failed 0 calls 0 stopped TERMINAL_DOWN`, exit 5, two seconds after the scheduled vehicle had completed against a live Terminal (LastTaskResult 0; PRECONDITION PASS). The same command under the vehicle's interpreter (Python 3.11.9, blpapi 3.26.4.2, boto3 1.43.46) made the call at 11:32:01Z. No call was spent by the first run. The plan subcommand needs boto3 only and runs under either interpreter, so `plan` succeeding says nothing about whether `run` can reach Bloomberg.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The two runs' output lines and exit codes, and `import blpapi` exercised under both interpreters by this seat; integrations/bloomberg/research/research_pulls.py terminal_healthy(): `except Exception: return False`.",
+      "NOT measured: whether any other caller of this driver runs it under the default interpreter. The driver was not edited."
+    ]
+  },
+  "notes": "Surfaced, not chased. A seat reading TERMINAL_DOWN from this driver may wait for a sign-in that is not needed, or report the Terminal down. Two repairs an owner may pick, neither taken: the driver distinguishes an import failure (its own exit word) from a failed health call; or the act's invocation names the interpreter the way scheduled_daily_pull.cmd does (PY_AWS). Until then: run the driver under ...\\Programs\\Python\\Python311\\python.exe."
 }
 ]
 ```

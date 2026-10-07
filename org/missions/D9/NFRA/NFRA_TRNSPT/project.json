@@ -34,14 +34,14 @@
     "cvo": "3.0.0_SA_CVO",
     "cro": "4.0.0_SA_CRO"
   },
-  "coo_lane": "2.0.0_SA_COO~T",
+  "coo_lane": "2.0.0_SA_COO~T2",
   "workstreams": {
     "transcripts": "FWD-1..FWD-5 (Teams meeting transcripts); write surface: the transcripts source, silver and gold tables, and the pull job",
     "communications": "FWD-6..FWD-11 (market updates, investment feedback, the commentary drafter and its ticket); write surface: the market_update and analysis_commentary tables and the commentary Lambda"
   },
   "blocking": "2026-10-01T11:15Z (1.0.0_SA_CTO, rulings batch 82): UN-PARKED. Site Z reports the gateway mail route live since 10:43:56Z (relay 0.0.0_AB_MSTR 103704; not exercised on the laptop). The ONE round of the round-2 analysis is owed, taken by 2.0.0_SA_COO~D in FAST mode while its Investor Reporting items wait on other lanes; 2.0.0_SA_COO~T is dark. First read of the round: whether site Z's 582,728-byte PDF is the admitted message this row names at 585,757 bytes. || EARLIER: Round 2 EXECUTING. FWD-7's real row needs a byte-exact recording of one admitted message (identified: Manav 2026-08-11, PDF 585,757 bytes); FWD-1 hops 1-2 wait on site Z (transcript tools + headless route, accepted 103276); the slicer's real replay waits on IRPT_BCKEND's READY hook (S18).",
   "fabric_ruling": "laptop: Andrew-direct 2026-09-30 (\"This fabric will own TRNSPT\"); D9 is LAPTOP as a whole since 2026-09-10 (DIRECTIVES.yaml), so no per-project exception exists or is needed. The gateway project NFRA_OPLGTW stays on site Z as a dependency.",
-  "phase": "Round 2 ISSUED 2026-09-30 by 2.0.0_SA_COO~T from 1.0.0_SA_CTO's round-1 analysis @acd1033e60: TR-f-2 (S9+S10), TR-d-2 (precision scan), TR-w-2 (two planted wipe classes), TR-v-2 (silver for every held transcript), TR-x-2 (batched repair S6/S7/S8, deployed layout); 5 cells, 3 chains, cap 8. Decomposition decompositions/NFRA_TRNSPT_DECOMP_R2.md. Round 1 closed 12/12 @2b7372f583; L9 TR1-t4-AC3 PASS.",
-  "last_updated": "2026-09-30",
+  "phase": "Round 4 ISSUED 2026-10-07 by 2.0.0_SA_COO~T2 (dell2) from 1.0.0_SA_CTO~DELL2's round-3 analysis org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ROUND_ANALYSIS_NFRA_TRNSPT_ROUND_3_20261007.md @c2b5eb89a4: TR-w-4 (C1, window to 120 days by spans), TR-l-4 (C2, one counts-only MAIL-PULL-FIRE line), TR-r-4 (T1, transcripts route + G-TEAMS-TX record); TR-p-4 (C3, the driven positive arm of FWD-7) is the issuer's served act after chain A drains. 3 orders, 2 chains, cap 8. Decomposition decompositions/NFRA_TRNSPT_DECOMP_R4.md. Round 3 was the FAST round (2.0.0_SA_COO~D, STATUS.md).",
+  "last_updated": "2026-10-07",
   "placement_ruling": "Four-box layout approved by Andrew 2026-10-07 ~01:0xZ ('i like this layout lets persist it'); record org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md. Was LAPTOP. A live project moves between rounds, never mid-round (NFRA_CTLPLN FWD-13)."
 }

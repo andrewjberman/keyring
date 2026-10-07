@@ -2,10 +2,10 @@
   "claim": "measured: static ast read of tracked .py under .tools/ and lib/; versions are those installed on the box that ran it",
   "counts": {
     "distributions": 20,
-    "local": 48,
-    "modules": 136,
+    "local": 50,
+    "modules": 139,
     "not_installed_here": 1,
-    "stdlib": 67,
+    "stdlib": 68,
     "third_party": 21
   },
   "distributions": [
@@ -278,9 +278,9 @@
       "class": "THIRD-PARTY",
       "distribution": "jsonschema",
       "hard_importers": 3,
-      "importers": 26,
+      "importers": 27,
       "module": "jsonschema",
-      "optional_importers": 23,
+      "optional_importers": 24,
       "other_distributions": [],
       "status_here": "INSTALLED",
       "usage": "HARD",
@@ -455,7 +455,7 @@
     "python_version": "3.12.10"
   },
   "scan": {
-    "files": 748,
+    "files": 754,
     "pathspecs": [
       ".tools/*.py",
       "lib/*.py"

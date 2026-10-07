@@ -1642,3 +1642,23 @@ Label `<round>25</round>`, ONE issuance, two cells in one chain.
 
 **Chains.** `OG-al-2` (complete) -> `OG-up-2` -> `OG-rl-12`. Release r26 now carries three things: the status-tool row
 for the concierge, the execution-id shape check (Z-S65) and this cell. **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.21 (2.0.0_SA_COO~O, 2026-10-07 ~10:5xZ) -- round 26, the two cells of the round-24 analysis
+
+**Source.** `ledger/ROUND_ANALYSIS.round24.md` @0e813364da (`1.0.0_SA_CTO~Z`, msg 30794), section 4. Its item 1 (r26 as
+re-cut) is `OG-rl-12` amendment A3 @c38d69aa3d, already issued in round 25. Its item 4 (the re-consent read) is done:
+`deliverables/2.0.0_SA_COO~O/R37_STEP1_RECONSENT_READ_20261007.md` @2e96271d1f.
+
+Label `<round>26</round>`, ONE issuance, two build cells; the release that ships them is cut when r26 closes.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-au-2` | 1 | `rivalfunds_view`'s `day`, `route` and `fund` join the audit args allowlist and each 200 answer passes its size. Any other arg stays dropped. Row Z-S64. | WORLD | ~31 | worker-light |
+| `OG-sd-1` | 2 | The status tool's `displayed_date` reads the served manifest's own date key. Row Z-W28-S13. | WORLD | ~32 | worker-light |
+| `OG-rl-13` | 3 | The r27 release carrying both, with the status tool exercised once through its wrapper with a real principal. NOT cut in this issuance: it is cut when `OG-rl-12` is terminal, on the live sha r26 leaves. | WORLD | -- | worker |
+
+**Chains.** `OG-au-2` -> `OG-rl-13`; `OG-sd-1` -> `OG-rl-13`. The two build cells write disjoint files and run at once.
+**fanout:** 2 starts, cap 8.
+
+**Ordering against round 25.** Both cells are BUILT now and HELD on their worker branches. They drain to CLOUD only after
+r26 (`OG-rl-12`) closes, because the release set is every live..CLOUD gateway difference.
