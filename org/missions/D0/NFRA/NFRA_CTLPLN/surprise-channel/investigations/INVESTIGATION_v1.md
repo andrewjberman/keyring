@@ -519,3 +519,53 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The pairing of role to service is lost in the single statement: with N applied roles over M services, every role may be passed to every one of the M services. It is inert today (zero applied records, no Allow statement is written) and the one-fixture simulation cannot show it. A per-role statement (one Allow per applied record, its own Resource and its own service) would hold the pairing and costs one statement per role against the 6,144 limit. Not changed: the order specifies the single statement. Exercised only by the scratch run named in the evidence, not against the cloud's evaluator."
 }
 ```
+
+## NFRA_CTLPLN-W4-S9 -- BOUNDS section truncated in the order file
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:27:50Z",
+  "one_line": "The BOUNDS section of NFRA_CTLPLN.TO-CT-c-5 is truncated in the committed order file: it ends at 'Grant. The `<paths>' and carries no no-apply clause, no allowed-AWS-calls clause and no refusal clause; the worker acted on the dispatching message's statement of the bounds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-c-5.lambda-scope-narrowing.md lines 82-94 at HEAD 119586d184: the BOUNDS bullet 'Grant.' is cut after the opening of the paths tag, the paths block follows directly, and no later bullet exists; CT-c-1 and CT-c-3 carry four full bullets"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-5 BOUNDS (per the dispatching message): read-only AWS inspection calls (function, authorizer, distribution and region listings) are allowed and nothing else; no apply; refusal clause as in the sibling orders.",
+  "world_is": "The order file as committed states none of that. The worker made only list/get/describe calls through .tools/aws (ec2 describe-regions; lambda list-functions, apigatewayv2 get-apis and get-authorizers, apigateway get-rest-apis and get-authorizers per region; cloudfront list-distributions), no write call and no apply, and wrote only the paths the order's paths block names. The cause (the paths tag inside the bullet text swallowed the rest of the section when the order was cut) is carried from the file's shape, not exercised. Repair of the order file is the issuer's."
+}
+```
+
+## NFRA_CTLPLN-W4-S10 -- CT-c-5 blocked at commit by the naming limb
+
+```json
+{
+  "id": "NFRA_CTLPLN-W4-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~4",
+  "surfaced_at": "2026-10-07T07:27:50Z",
+  "one_line": "CT-c-5 passes its three criteria in the worktree but cannot be committed: the commit's naming limb (LGIC_ENFORCE DEC-6, ENFORCE) refuses every NEW hand-kept firm-token function name in dell_deploy_policy.json, protected_functions.json and protected_functions_listing.json, and the order's grant carries no registry path to read them through; the order is left pending.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh run on HEAD 119586d184 with the five CT-c-5 paths: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)', NAMING-GATE: REFUSE 153 graded, 136 NAMING REFUSE lines; recorded in org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~4/NFRA_CTLPLN.TO-CT-c-5.blocked_attempt.outputs.txt",
+      ".tools/naming-gate.py lines 21-26: a firm or product token is permitted only in infra/logic/registry/*.json, a generated block or file, the arguments of key()/address()/name()/lookup(), or an opal_name module call; anywhere else a NEW string carrying one is refused",
+      "the whole attempt (script, rendered statement, saved census, simulation block) is preserved as org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~4/NFRA_CTLPLN.TO-CT-c-5.blocked_attempt.patch"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-c-5: the protected list is derived by census and the Deny statement is rendered from protected_functions.json into dell_deploy_policy.json, each protected function ARN and the same ARN with :*; the census is saved beside the policies for the bounded run.",
+  "world_is": "Two of the 15 protected functions have names that carry firm tokens (a bd and a cot name), and the saved census lists all 233 function names, 100 or more of them with a firm token. The rendered policy needs the literal ARN of a function, and a policy file cannot call lookup(). Without a waiver the gate refuses the commit of the three data files, so the criteria cannot hold at any committed HEAD. In the worktree, uncommitted, the three criteria printed: CT3c5-AC1 'PROTECTED-CENSUS functions=233 regions=17 refused_regions=0 protected=15 by_authorizer=1 by_edge=5 name_only=9 in_sync=True ok=True'; CT3c5-AC2 'POLICY-SIM allowed_ok=21/21 denied_ok=18/18 passrole_ok=5/5 protected_ok=8/8 all_ok=True'; CT3c5-AC3 'IDENTITY-STATIC ... names_from_builder=7/7 policy_size_ok=True ok=True' (deploy policy 5532 of 6144). The worker did not weaken a criterion, did not touch org/mcp/naming-gate.enforce and did not use any override. Ways forward that are not the worker's to take: an R20 declared exception or a NAMING_LEGACY_READS entry for the literals (org/standards and the register are outside the grant), a registry row that lets the renderer read the names through lookup() (infra/logic/registry is outside the grant), or an order that moves the saved census under a tests/ path (the gate does not grade strings under */tests/*) while the two firm-token ARNs in the policy remain a CTO or issuer ruling."
+}
+```
