@@ -4676,3 +4676,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Remedies: (a) TO-SC-e47 amendment R12c (@63ba9af3fb, slot ~56) makes clean_name ASCII-only; then the issuer rewrites the 2 live names as a literal two-key act. (b) The V3 set re-plans the other 313 rows to cash/Cash, the same rule as the SC-e-49 condition, with S58's 3 kept as placed; its half request shows them for signing. A checker that prints a slice of its problems also prints n_problems."
 }
 ```
+
+## MDPF_SECCLASS-S63 -- the live cash-token rule (SC-e-65) places a NAME:: key as cash when any word of the name is CASH
+
+```json
+{
+  "id": "MDPF_SECCLASS-S63",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T18:52Z",
+  "one_line": "cash_token_match() (etf_classification_scheduled.py, live since e65) splits the TICKER on every non-alphanumeric run and matches a piece equal to CASH. A NAME:: key carries the name in its key, so a name-keyed security with the word CASH anywhere ('NAME::FT UNIT 9273 INT RATE HEDGE PORT SER 135 MONTHLY CASH', 'NAME::VICTORYSHARES SMALL CAP FREE CASH FLOW ETF') is placed cash/Cash by the ticker leg. That bypasses the contract 0.8.0 rule that only a WHOLE-name phrase places cash.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "etf_classification_scheduled.py @16092a4806 cash_token_match: `for piece in _TICKER_SPLIT_RE.split(ticker.upper()): if _CASH_TICKER_RE.match(piece)` with _TICKER_SPLIT_RE = [^A-Za-z0-9]+; contract fields.classified_by.cash_token_name_phrases.rule: 'any other name containing the word cash is not placed by the name leg'",
+      "census over OLD_LIST_RECLASSIFY_SET_V3 (10,965 rows): 12 NAME:: keys match the ticker leg and not the name leg; 1 is an AI row (the FT UNIT trust), so the runner's direct step takes it and its write path never puts it: old_list_reclassify_write.py dry run reads to_model=2290 != ai_keys=2291",
+      "census over the three MISSING_LIST_<firm>_20261007.json (1,565 held entries with no shared row): 0 leaks; so tonight's E_18 exposure reads ~0 (claim inferred: the lists are local builds)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Contract 0.8.0 / PRD v0.16 C-CASH-TOKEN: the ticker leg places cash when the TICKER carries CASH as a whole token; the name leg only on a whole-name phrase; any other name containing cash is not placed.",
+  "world_is": "A NAME:: key is a name, not a ticker, and the ticker leg reads it as one, so the name rule is bypassed for every name-keyed security.",
+  "notes": "Remedy (SERVED code, CTO's): the ticker leg skips a key that starts with NAME:: (and reads only the part after CUSIP: as nothing). Pin the two names above as NOT cash in tests/test_cash_token.py. It ships as a lib/_shared explicit deploy like e65. Until then, the e32 V3 act's dry run refuses on this one key by its own check."
+}
+```
