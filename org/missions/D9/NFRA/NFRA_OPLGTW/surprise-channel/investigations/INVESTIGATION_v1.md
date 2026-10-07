@@ -9677,3 +9677,30 @@ name the one known failure instead of silently inheriting it.
   "notes": "A fix is either a length guard in .tools/naming-gate.py `_resolves_to_tracked` (a value over a few hundred characters is not a path) or the form's step 12 telling the worker to trim the chain. Neither is in this order's paths."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-S66",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~O",
+  "surfaced_at": "2026-10-07T14:47Z",
+  "one_line": "Two safe-merge runs raced in the shared tree: commit 9f146f853a carries 2.0.0_SA_COO~X's subject and branch parent, 2.0.0_SA_COO~O as author, and the tree of OG-au-2; the AMGT_CORPUS branch reads merged with none of its 4 files at HEAD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN bash .tools/safe-merge.sh wk-NFRA_OPLGTW-27-31 at ~14:43Z, started on an index with 0 staged paths and no MERGE_HEAD -> exit 5: `tree check 9f146f853a: branch needed 4 file(s), dropped 4, foreign 6`; the 4 needed files it names are lib/research/corpus/ and AMGT_CORPUS paths, the 6 foreign files are OG-au-2's.",
+      "RUN git log -1 --format='%p %an' 9f146f853a -> parents 8386c5e72e 9dd2220f79, author 2.0.0_SA_COO~O; subject `drain(AMGT_CORPUS.TO-CRPS-ap-1, 2.0.0_SA_COO~X): ...`. `git diff --name-only 9f146f853a^1 9f146f853a` lists the 6 OG-au-2 files and no AMGT_CORPUS file.",
+      "RUN at 14:45Z, per file: the 6 OG-au-2 files read HEAD blob = branch tip 3153a1c764 blob = working tree, index different (3 staged as deletions). lib/research/corpus/backlog.py and its test read HEAD != 9dd2220f79 and index = 9dd2220f79. `git merge-base --is-ancestor 3153a1c764 HEAD` false; `--is-ancestor 9dd2220f79 HEAD` true.",
+      "RUN at 14:47Z `git reset -q HEAD -- <the 6 OG-au-2 paths>` (index only, this seat's own paths): those 6 read clean; 4 AMGT_CORPUS paths remain staged at the branch's blobs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-merge.sh: the merge is committed `from the index snapshot taken right after the merge; a peer's later staging cannot enter it`, and exit 0 means the named branch's content and parent landed.",
+  "world_is": "With two drains inside one window, one commit took one seat's message and branch parent and the other seat's tree. The script detected it after the commit (exit 5) and printed the repair to the seat whose content DID land, not to the seat whose content did not. OG-au-2's content is at HEAD byte-equal to its branch, but its branch is not an ancestor. ARMED: any two COOs draining in the shared tree at once can repeat it, and a whole-index commit while the stale entries stood would have deleted three OG-au-2 files.",
+  "disarm_owner": "2.0.0_SA_COO",
+  "notes": "Done here: this seat's 6 index paths reset to HEAD; 2.0.0_SA_COO~X and 1.0.0_SA_CTO~Z told (msgs 31039, 31040) that the 4 AMGT_CORPUS files are staged and uncommitted. Not done: no change to safe-merge.sh (lane .tools, owner 2.0.0_SA_COO base); a lock taken before `git merge --no-commit` and held to the commit would close the window. The wk-NFRA_OPLGTW-27-31 branch can be recorded as merged by a later no-content safe-merge."
+}
+```
