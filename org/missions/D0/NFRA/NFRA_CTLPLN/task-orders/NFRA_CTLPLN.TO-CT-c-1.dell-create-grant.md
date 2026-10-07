@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~4</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -80,14 +80,14 @@ users, managed policy `cloudops-dell-agent-deploy-policy` from `dell_deploy_poli
 
 ### ACCEPTANCE
 
-<criterion id="CT3c1-AC1" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py</invocation><expect>uncovered=0 ok=True</expect></criterion>
+<criterion id="CT3c1-AC1" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py</invocation><expect>read_only=True unread=0 uncovered=0 ok=True</expect></criterion>
 `CT3c1-AC1` -- every derived non-IAM, non-access kind has its create action allowed, and the four classes sum to the kinds found.
 
-<criterion id="CT3c1-AC2" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=17/17 denied_ok=17/17 all_ok=True</expect></criterion>
+<criterion id="CT3c1-AC2" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=21/21 denied_ok=18/18 all_ok=True</expect></criterion>
 `CT3c1-AC2` -- the cloud's own evaluator allows the creates and still denies every IAM write, the pass, the access-granting actions and
 the production deletes. The denied arm is the control: it must hold with the new Allow statements present.
 
-<criterion id="CT3c1-AC3" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=7/7 policy_size_ok=True ok=True</expect></criterion>
+<criterion id="CT3c1-AC3" cell_refs="CT-c-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>policy_size_ok=True ok=True</expect></criterion>
 `CT3c1-AC3` -- the root validates, every name is the builder's, and each policy document fits the managed-policy limit.
 
 <expected_criteria>CT3c1-AC1,CT3c1-AC2,CT3c1-AC3</expected_criteria>
@@ -107,6 +107,7 @@ infra/aws/terraform/nfra-ctlpln-identity/iam.tf
 infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_create_*.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_read_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/.terraform.lock.hcl
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
@@ -146,3 +147,46 @@ Source: PRD v0.8 @6df8d231f4 ADDENDUM v0.7 (round 3's first cell), C-IDENTITY; A
 `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_063xZ_DELLS_CREATE_RESOURCES_NO_IAM_DEPLOYS_NOT_GATED_ON_SITEZ.md`; CTO
 msgs 105997, 105999; decomposition round 3. Base dry-run at the cut: CT3c1-AC1 base FAIL as expected (the script does not exist);
 CT3c1-AC2 base FAIL as expected (prints 8/8 and 11/11); CT3c1-AC3 base FAIL as expected (prints 6/6 and no `policy_size_ok`).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~07:0xZ) -- REOPENED: the read actions the derived kinds need (row NFRA_CTLPLN-W4-S4)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and the prior commits d452dcffe5 and 12ec042dce
+are inherited state. Authority: `1.0.0_SA_CTO` ruling on row W4-S4,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_CT_c_1_DELL_CREATE_GRANT_20261007.md` @bb0e587e22: "The read actions the
+derived kinds need are added BEFORE the apply, in the same policy file, read-only actions only." Gate limb: none graded this
+modification (LIMB 6 grades new orders only; the order declares no `<placeholders>`).
+
+**THE WORK (this is the whole of it; everything above is done and stays):**
+
+1. Row W4-S4 found that a `terraform plan` or apply from a Dell would fail at refresh: the read-only statement has no read actions for
+   apigateway, cloudfront, codebuild, cur, route53, scheduler, secretsmanager, ses, ssm and wafv2, and s3 lacks
+   `GetEncryptionConfiguration` and `GetLifecycleConfiguration`. Add ONE statement `ReadForDerivedKinds` to `dell_create_policy.json`:
+   Effect Allow, Resource `*`, and ONLY actions whose name begins `Get`, `List`, `Describe` or `BatchGet` after the service prefix
+   (for apigateway the read verb is `apigateway:GET`). Prefer service-level patterns (`route53:Get*`, `route53:List*`). No other
+   statement changes. `dell_deploy_policy.json` is NOT edited: its four Deny statements stay byte-identical.
+   `secretsmanager:GetSecretValue` reads a secret's VALUE and is not needed to refresh a secret resource (`DescribeSecret` and
+   `GetResourcePolicy` are): do NOT grant `secretsmanager:Get*`; grant `secretsmanager:DescribeSecret`,
+   `secretsmanager:GetResourcePolicy`, `secretsmanager:List*`. Apply the same care to any other read that returns secret material
+   (`ssm:GetParameter*` returns parameter values: grant `ssm:DescribeParameters`, `ssm:DescribeDocument*`, `ssm:GetDocument`,
+   `ssm:ListTagsForResource`, and file ONE row saying a refresh of an `aws_ssm_parameter` needs `ssm:GetParameter` and is therefore
+   left to the laptop).
+2. `tests/derive_resource_kinds.py`: the table gains, per `GRANT` kind, the read actions a refresh of that kind makes; the script
+   reports as `unread` every `GRANT` kind with no read action covered by any Allow statement in the Dell policies (kinds deliberately
+   left unread under step 1 are listed in a named exception set inside the script and printed as `READ-HELD <kind> <reason>`; they do
+   not count as unread). It also asserts that statement `ReadForDerivedKinds` holds read-only action names and prints
+   `read_only=<True|False>`. New LAST line:
+   `KINDS-DERIVED projects=<p> roots=<r> kinds=<k> grant=<g> iam=<i> held_access=<h> not_aws=<n> read_held=<x> read_only=<True|False> unread=<y> uncovered=<u> ok=<True|False>`.
+3. `tests/simulate_policy.py`: four more ALLOWED arms -- `route53:ListResourceRecordSets`, `scheduler:GetSchedule`,
+   `secretsmanager:DescribeSecret`, `s3:GetEncryptionConfiguration` on `arn:aws:s3:::opal-x-test` -- and one more DENIED arm,
+   `secretsmanager:GetSecretValue` (implicit deny). LAST line `POLICY-SIM allowed_ok=<a>/21 denied_ok=<d>/18 all_ok=<True|False>`.
+4. `tests/check_identity.py` is unchanged unless the policy passes the size limit; if it does, split the read statement into
+   `dell_read_policy.json`, name from `lib/opal_naming.name('cloudops', None, 'dell-agent-read', 'policy')`, attached to the group, and
+   the names count becomes 8/8 -- say so.
+
+**ACCEPTANCE, replacing the three expectations above (same ids, same invocations):**
+- `CT3c1-AC1` expects `read_only=True unread=0 uncovered=0 ok=True`.
+- `CT3c1-AC2` expects `POLICY-SIM allowed_ok=21/21 denied_ok=18/18 all_ok=True`.
+- `CT3c1-AC3` expects `policy_size_ok=True ok=True` (the names count is 7/7, or 8/8 if you split).
+
+Write a NEW proof instance over the old one at the same path with the three new outputs, validate it, and flip `<status>` back to
+`complete` only when all three pass.

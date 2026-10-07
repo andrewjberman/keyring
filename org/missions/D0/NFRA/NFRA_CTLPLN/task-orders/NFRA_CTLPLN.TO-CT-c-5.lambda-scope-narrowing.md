@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~4</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -62,7 +62,7 @@ and simulation. You APPLY NOTHING.
    where the census has one; say which rules had none) -> denied, 6 arms; `lambda:UpdateFunctionCode` on a function that is NOT
    protected, read from the census -> allowed, 1 arm; `lambda:CreateFunction` on a new name -> allowed, 1 arm. The first two blocks
    stay and must still hold. LAST line
-   `POLICY-SIM allowed_ok=17/17 denied_ok=17/17 passrole_ok=5/5 protected_ok=8/8 all_ok=<True|False>`.
+   `POLICY-SIM allowed_ok=21/21 denied_ok=18/18 passrole_ok=5/5 protected_ok=8/8 all_ok=<True|False>`.
 
 ### ACCEPTANCE
 
@@ -121,3 +121,8 @@ lane: the <paths> block IS the grant (worker RULING 1).
 </preflight>
 
 Source: CTO msg 106008 (the ruling: the explicit Deny alone; supersedes msg 105969's named-ARN scope), msg 105973, PRD v0.8 ADDENDUM v0.7; decomposition round 3 "Open at the CTO" item 1. Base dry-run at the cut: CT3c5-AC1 base FAIL as expected (no file); CT3c5-AC2 base FAIL as expected (no `protected_ok`); CT3c5-AC3 base FAIL as expected (no `policy_size_ok` before CT-c-1).
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~07:0xZ) -- the matrix counts after CT-c-1's reopen
+
+CT-c-1 AMENDMENT 2 (row W4-S4, the CTO's ruling @bb0e587e22) takes the first simulation block to 21 allowed and 18 denied. Every
+`17/17` on this face now reads `allowed_ok=21/21 denied_ok=18/18`; nothing else changes. Gate limb: none graded this modification.

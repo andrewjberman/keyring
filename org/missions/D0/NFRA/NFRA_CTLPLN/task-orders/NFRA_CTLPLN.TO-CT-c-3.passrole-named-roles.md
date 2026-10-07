@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~4</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>pending</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -28,7 +28,7 @@ the roles the laptop has made, never from a wildcard. You build the renderer and
 
 **What exists after CT-c-1 and CT-c-2:** `infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json`, whose statement
 `DenyEveryIamWrite` lists `iam:PassRole` among its denied actions on `Resource: "*"` (an explicit Deny overrides every Allow);
-`dell_create_policy.json`; `tests/simulate_policy.py` (17 allowed, 17 denied); the request records
+`dell_create_policy.json`; `tests/simulate_policy.py` (21 allowed, 18 denied); the request records
 `org/devices/role_requests/<device>/<request_id>.json` (each with `assuming_service`) and the laptop's answers
 `org/devices/role_requests/<laptop device>/answers/<request_id>.json` (each with `status` `applied` or `refused` and, when applied,
 `role_arn`); a request with no answer file is `requested`; `org/devices/role_request.py list` prints the effective status.
@@ -54,15 +54,15 @@ the roles the laptop has made, never from a wildcard. You build the renderer and
    into a temporary copy of the policy, never the real file): `iam:PassRole` on the fixture role with context
    `iam:PassedToService=lambda.amazonaws.com` -> allowed; the same role with `iam:PassedToService=ec2.amazonaws.com` -> denied;
    `iam:PassRole` on `arn:aws:iam::313476888478:role/some-other-role` -> denied; `iam:CreateRole` -> denied; `iam:PutRolePolicy` on the
-   fixture role -> denied. The existing first block (the real files: 17 allowed, 17 denied) stays and must still hold. LAST line
-   `POLICY-SIM allowed_ok=17/17 denied_ok=17/17 passrole_ok=5/5 all_ok=<True|False>`.
+   fixture role -> denied. The existing first block (the real files: 21 allowed, 18 denied) stays and must still hold. LAST line
+   `POLICY-SIM allowed_ok=21/21 denied_ok=18/18 passrole_ok=5/5 all_ok=<True|False>`.
 
 ### ACCEPTANCE
 
 <criterion id="CT3c3-AC1" cell_refs="CT-c-3"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/render_passrole.py --check</invocation><expect>wildcard=0 in_sync=True ok=True</expect></criterion>
 `CT3c3-AC1` -- the committed policy is exactly what the renderer produces from the live records, and it names no wildcard.
 
-<criterion id="CT3c3-AC2" cell_refs="CT-c-3"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=17/17 denied_ok=17/17 passrole_ok=5/5 all_ok=True</expect></criterion>
+<criterion id="CT3c3-AC2" cell_refs="CT-c-3"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>POLICY-SIM allowed_ok=21/21 denied_ok=18/18 passrole_ok=5/5 all_ok=True</expect></criterion>
 `CT3c3-AC2` -- the cloud's evaluator passes the named role to its service only, refuses an unnamed role and a wrong service, and still
 refuses every other IAM write. The refusals are the control arm of the allow.
 
@@ -115,3 +115,8 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: PRD v0.8 @6df8d231f4 ADDENDUM v0.8 C-ROLE-REQUEST (b); surprise row NFRA_CTLPLN-W1-S1 (ARMED; this cell's apply disarms it);
 CTO msg 105999; decomposition round 3. Base dry-run at the cut: CT3c3-AC1 base FAIL as expected (no renderer); CT3c3-AC2 base FAIL as
 expected (no `passrole_ok`).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~07:0xZ) -- the matrix counts after CT-c-1's reopen
+
+CT-c-1 AMENDMENT 1 (row W4-S4, the CTO's ruling @bb0e587e22) takes the first simulation block to 21 allowed and 18 denied. Every
+`17/17` on this face now reads `allowed_ok=21/21 denied_ok=18/18`; nothing else changes. Gate limb: none graded this modification.
