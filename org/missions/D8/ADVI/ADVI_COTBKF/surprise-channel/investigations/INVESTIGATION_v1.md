@@ -908,3 +908,32 @@ round.** Never edit an existing row.
   "notes": "Candidate for lint on a device with ruff at the drain."
 }
 ```
+
+## ADVI_COTBKF-S9 -- the account links differ between the laptop and dell2
+
+```json
+{
+ "id": "ADVI_COTBKF-S9",
+ "project": "ADVI_COTBKF",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-07T08:45Z",
+ "one_line": "The account-links script gives different answers on the laptop and on dell2 over the same silver table: 3 of 1,450 rows differ (laptop 212 LINKED, dell2 211). Two links whose evidence holds on the transactions (0QF879348 -> B3S606523, B3S780328 -> B3S782287) read NOT_LINKED 'closed to cash' on dell2, and cv0QF879185 is AMBIGUOUS on the laptop and LINKED on dell2.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (the laptop worker's run, committed): LINKED 212, NOT_LINKED 1,238 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   ".scratch/advi_cotbkf/account_links_r4/account_links.csv (the issuer's dell2 real run, untracked): LINKED 211, NOT_LINKED 1,239; row-by-row against the laptop file, 3 rows differ (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "transactions (.scratch/advi_cotbkf/tx_cache, 1,416,497 rows): 0QF879348's and B3S780328's printed in-kind receipts are present at the printed quantities and dates (part of the 123 of 123 items in the round-4 L9 grade) (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError (row W12-S1: lib/trading_calendar falls back to a 2024-2027 holiday list); the exits that differ are dated 2023-02-14 and 2023-12-22 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-d-2: 'Never guess a link' and the same rule over the same table gives one answer; the issuer's --apply writes the silver account_links table the analyst reads.",
+ "world_is": "The result depends on the box that runs it. The dell2 run is the wrong one on the two links checked, and an --apply run on dell2 would write it. The cause is not measured; the calendar fallback is the leading candidate, since both differing exits fall before 2024, where the fallback counts holidays as trading days.",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "notes": "ARMED for the apply. Disarms when the cause is named and the run that is applied reproduces the committed laptop deliverable row for row (or the deliverable is shown wrong on those 3 rows). Do not --apply from dell2 before then. Filed by the round-4 compile, not compiled in it."
+}
+```
