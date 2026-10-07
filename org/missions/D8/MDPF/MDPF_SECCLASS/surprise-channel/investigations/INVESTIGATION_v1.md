@@ -4508,3 +4508,56 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Surfaced before the merge rather than after, because the merge is 0.0.0_AB_MSTR's next act on this branch. No upload was made for this row."
 }
 ```
+
+## MDPF_SECCLASS-W49-S1 -- the SC-e-65 order's <paths> block does not parse, so the lane gate grants ~49 nothing
+
+```json
+{
+  "id": "MDPF_SECCLASS-W49-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~49",
+  "surfaced_at": "2026-10-07T15:12:00Z",
+  "one_line": "SC-e-65: the order's <paths> block is not on its own line, so the lane gate reads 0 granted paths and refuses every build commit of ~49",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/owned-paths-validate.py:151 _TO_PATHS_RE requires the <paths> tag alone on its line (^[ \t]*<paths>[ \t]*\r?\n); the order MDPF_SECCLASS.TO-SC-e65 @42730b6f02 line 126 reads '- **Grant.** The `<paths>' with the entries after it",
+      "measured: _paths_block_entries(git show HEAD:<the order>) == [] ; _worker_orders(root, 'MDPF_SECCLASS') lists the order issued_to ~49 with 0 entries; safe-commit of the 4 build paths refused rc=1 with 'WORKER: no NON-TERMINAL task order at HEAD issued_to this serial names this path in its <paths> block' for all 4",
+      "contrast: MDPF_SECCLASS.TO-SC-e64 @42730b6f02 lines 70-76 carries <paths> and </paths> each alone on its line and parses"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's BOUNDS block states the <paths> block IS the worker's write grant, naming five paths.",
+  "world_is": "The grant parses to zero entries, so no commit of the five named paths can land from ~49 without an audited override, which the worker rules forbid. The build is complete and verified in the worktree wk-secclass-49 (uncommitted: etf_classification_scheduled.py, tests/test_cash_token.py, tests/test_classified_by_v2.py, MDPF_SECCLASS_CONTRACT.json): AC1 'SC-E65 ok=True', AC2 'PYTEST-OK ... 229 passed'. Issuer fix: re-cut the order's BOUNDS so <paths> and </paths> each stand alone on a line, then re-dispatch or authorize the commit.",
+  "notes": "Order left in_progress; not flipped. No override used."
+}
+```
+
+## MDPF_SECCLASS-W49-S2 -- W49-S1 resolved by the issuer's repair 4f0b68c9ce
+
+```json
+{
+  "id": "MDPF_SECCLASS-W49-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~49",
+  "surfaced_at": "2026-10-07T16:00:00Z",
+  "one_line": "SC-e-65: W49-S1 resolved -- the issuer's repair 4f0b68c9ce makes the <paths> block parse; the four build files committed at 16092a4806",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "4f0b68c9ce repaired the order's <paths> block (lines 134-140 of MDPF_SECCLASS.TO-SC-e65, tag alone on its line, five entries)",
+      "safe-commit of the four build paths rc=0 at 16092a4806 on wk-MDPF_SECCLASS-49 (LOCAL); AC1 'SC-E65 ok=True', AC2 'PYTEST-OK rc=0 ... 229 passed'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row MDPF_SECCLASS-W49-S1 (BLOCKING): the order's <paths> block did not parse, so the lane gate granted ~49 nothing.",
+  "world_is": "The issuer's repair 4f0b68c9ce makes the block parse; the lane gate admitted all four build paths and the build is committed at 16092a4806. W49-S1's block no longer stands. No override was used.",
+  "notes": "S1 is not edited (append-only); this row resolves it by reference."
+}
+```
