@@ -100,3 +100,31 @@ condition was a row that reads stale beside one that does not, with the stale on
 grade on the board.
 
 **Ruling 10 is closed:** the answer was the collector's to give and it has given it. The defect is AMGT_RESAPP's view.
+
+## ADDENDUM 2 (2026-10-07 ~14:4xZ) -- FWD-7 is NOT REALIZED; the board reads 20 of 30 (CVO~Z msg 31036, `ADJUDICATION_v95.md` @94b13244ed)
+
+**The re-grade, countersigned.** `3.0.0_SA_CVO~Z` states its own v94 grade "confirmed the page against the page", and re-read the
+collector's 44 run records itself: BA, BABA and COST were collected on 2026-10-06/07 (1,992, 616 and 45 stored); BP/ LN, ASML NA and
+AMD US, which the page calls never collected, hold 658, 78 and 1. The Seeking Alpha column is false in both directions on 6 of the
+10 covered names the collector has reached.
+
+**The cause** (`2.0.0_SA_COO~Z` msg 31033, row AMGT_RESAPP-Z-S367 @450b5c1d99, BLOCKING for FWD-7): the view keys on per-security
+tables under `seeking-alpha/harvest/bronze/<table>/security_key=<key>/` (`build_view.py:156-170`). That root holds 14,962
+partitions, of which 3 are `security_key=` (BABA, BA, COST, all 2026-09-11) and 14,951 are `article_hash=` through today. The
+collector no longer writes the tables the view reads.
+
+**Section 2 of this analysis is corrected: REALIZED 20 of 30.** FWD-7 was never realized this round. Section 1's first bullet
+describes what the page showed, not what was true.
+
+**Two of this seat's own rulings rested on the same blind view:**
+- Round-76 ruling 1 ("a never-collected input reads Not collected and never stale") is sound as a rule, but its premise, that
+  "not collected" on the page meant not collected, was not checked against the collector.
+- Ruling 10 above asked the collector why three names were unread. The right first question was what the page reads.
+
+**The round-78 reader cell** (msg 31034 to `2.0.0_SA_COO~Z`), three terms: the Seeking Alpha date is the security's newest stored
+article, joined through the collector's own record of which article belongs to which security; "not collected" is read from a
+finished job for that name, never from an empty partition; and before the cut the same read is made for EVERY input column
+(Bloomberg, web search, the research pack), the table the view reads against the table its collector writes today.
+
+**What closes FWD-7 after the cell:** round-76 ruling 2's exercise, on the corrected view, with the CVO grading the page against
+the collector's run records and not against the page.
