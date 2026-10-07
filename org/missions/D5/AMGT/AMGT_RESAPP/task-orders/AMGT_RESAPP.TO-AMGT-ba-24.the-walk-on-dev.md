@@ -48,6 +48,14 @@ with its reason.
 - **FWD-16 and FWD-12** (only if DSGN round 45's page work is on the ref; the GO says): the top band (the company line, the newest
   news day within 30 days with its date, or "No news in the last 30 days"), and each input's source, last run and result, read
   against /freshness on one name. No control on the page claims to re-run an input.
+- **AMENDMENT 1 (issuer, on the CTO's ba-20 half @90de9b291b, conditions 4 and 5, before the spawn). Two further acts:**
+  - **REFRESH:** the server's `POST /refresh` route is retired this round, but the page may still draw the Refresh control
+    (the SecurityAnalysis page; its removal is DSGN round 45's). If the control is on the page, press it ONCE on BA and record
+    exactly what the page shows: nothing, an error banner, a toast, or a spinner that never ends. Capture it. An error the reader
+    can see is a row (it is not yours to fix). If the control is not on the page, say so.
+  - **RESOLVE THROUGH THE GATEWAY:** the name search route `GET /api/scoped/amgt/resolve?q=` was only ever exercised by a direct
+    invoke of the function. From the signed-in dev build, read `/api/scoped/amgt/resolve?q=Lenovo` through the page's own API
+    client or address bar, and record the status and whether the answer lists `992_HK_Equity`. A 404 or a 403 here is a row.
 - Companies: BA, AMD and ASML_NA unless the GO names others. Then disarm.
 
 **Stamp any surprise row's `surfaced_at` with `date -u +%FT%TZ` at filing.** Rows: id form `AMGT_RESAPP-Z-W286-S<k>`, `disarm_owner` `2.0.0_SA_COO~Z`.
