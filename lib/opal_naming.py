@@ -2346,6 +2346,8 @@ _KIND_NAME_RE = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)+$")
 _KEY_CTX_RE = re.compile(r"(key|prefix)s?$|(^|_)(key|prefix)s?(_|$)", re.I)
 _SECRET_CTX_RE = re.compile(r"secret_?(name|id|arn|path)?$", re.I)
 FUNCTION_LITERAL_RULE = True  # module-level switch: a test flips it to measure what the rule retypes
+FUNCTION_LITERAL_WIDE = True  # second switch (acts only while FUNCTION_LITERAL_RULE is on): a function-name literal the
+#                               last-token rule gives no type is a Lambda's name too
 _TEST_FILE_RE = re.compile(r"^(test_.*|.*_test\.py|conftest\.py|.*\.(test|spec)\.[cm]?[jt]s)$")
 _JS_LIT_RE = re.compile(r"""(?:([A-Za-z_$][A-Za-z0-9_$]*)["']?\s*[:=]\s*)?(['"`])((?:(?!\2)[^\\\n]|\\.)*)\2""")
 _JS_ENV_RE = re.compile(r"""process\.env(?:\.|\[["'])([A-Za-z_][A-Za-z0-9_]*)["']?\]?\s*(?:\|\||\?\?)\s*$""")
@@ -2584,6 +2586,11 @@ def _census_classify(value, ctx, v, kinds):
         return [("S3Key", value)]
     if _KIND_NAME_RE.match(value):
         t = kinds.get(value.rsplit("-", 1)[-1])
+        if not t and FUNCTION_LITERAL_RULE and FUNCTION_LITERAL_WIDE and _function_ctx(ctx):
+            # BF-q-4: a name the code uses as a function name is typed as one wherever the reader meets it, whether or
+            # not its last token is a kind. The kebab-name test above is the shape test; an ARN, a URL, a path, an
+            # empty string, a name with a space and a literal with a variable part never reach it.
+            return [("LAMBDA", value)]
         if t:
             # A literal the last-token rule types, held under a function-name context, is a Lambda's name. Only a
             # RETYPE: a literal that rule leaves untyped stays untyped (the rule adds no item to the census).
