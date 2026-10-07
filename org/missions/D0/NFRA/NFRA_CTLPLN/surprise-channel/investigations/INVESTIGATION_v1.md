@@ -703,3 +703,55 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell2 the graph query is refused at the secret read, so every dell2 seat's rule-20 check is a coverage limitation, not a result. Not exercised on dell1. The grant (or a different bearer path for the Dells) is this project's to decide; 2.0.0_SA_COO~K2 recorded the gap in its IRPT_CUSTDY decomposition and kept working."
 }
 ```
+
+## NFRA_CTLPLN-W8-S1 -- TO-CT-d-5 four denied arms change required decision
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:30Z",
+  "one_line": "TO-CT-d-5 says the four existing denied arms 'keep passing', but they require implicitDeny and the new explicit Deny turns each into explicitDeny, so as written they fail 4 of 19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py DENIED list at 208c5d85ee: s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy, secretsmanager:PutResourcePolicy each carry required decision implicitDeny",
+      "after DenyResourcePolicyWrites, SimulateCustomPolicy returns explicitDeny for all four (RESPOL arms in the same run); the arms were changed to required explicitDeny in the worker branch, an edit inside the order's paths, so denied_ok=19/19 holds with the same four actions still denied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5 build step 3: 'the existing denied arms for s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy and secretsmanager:PutResourcePolicy keep passing' with denied_ok=19/19 unchanged.",
+  "world_is": "Those arms pass only if their required decision is changed from implicitDeny to explicitDeny, because the whole point of the cell is that the refusal is now explicit. The expected value 19/19 is met; the four required values moved, the actions did not. The issuer may want the order text to say so."
+}
+```
+
+## NFRA_CTLPLN-W8-S2 -- TO-CT-d-5 apigateway UNSURE, no policy-write Deny
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:40Z",
+  "one_line": "apigateway is the one UNSURE service of CT-d-5: a REST API resource policy is written through apigateway:PATCH/PUT/POST, which the create policy allows, and no deny names it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO: read the UNSURE list printed by tests/derive_respol_actions.py and rule on apigateway (a Deny on a documented dedicated action, a resource-path Deny, or accept the residual like the six ruled calls)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json at 208c5d85ee: CreateUpdateTagEdgeAndDns allows apigateway:POST, apigateway:PUT, apigateway:PATCH",
+      "installed botocore 1.43.0 apigateway and apigatewayv2 models list no IAM-only action name; SimulateCustomPolicy returned explicitDeny for apigateway:BogusZzz against a Deny naming it, so the simulator cannot confirm a name either; nothing was guessed into the Deny",
+      "tests/derive_respol_actions.py line 'UNSURE apigateway', counted unsure=1 in the RESPOL-DERIVED line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5: the Deny lists the resource-policy actions of every Dell-allowed service, derived; a service that cannot be settled is UNSURE, counted and listed for a senior read.",
+  "world_is": "apigateway cannot be settled from derived sources, so no apigateway action is in the Deny and a Dell holding the allowed PATCH/PUT/POST can still set a REST API resource policy. The same mixed-call shape is printed (not counted) for ec2 CreateVpcEndpoint/ModifyVpcEndpoint and kms ReplicateKey, which are not allowed to a Dell today."
+}
+```
