@@ -529,3 +529,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "RULED by 1.0.0_SA_CTO (org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_CT_c_1_DELL_CREATE_GRANT_20261007.md @bb0e587e22). W4-S1: sqs:SetQueueAttributes and sns:SetTopicAttributes STAY ALLOWED; IAM has no condition separating the Policy attribute. W4-S2: the four create actions (key, queue, topic, bucket) STAY ALLOWED, policy parameter included; the reach is a resource the Dell is itself creating. For these six actions no cloud refusal backs the laptop-administers rule: the rule on a Dell is the write-in, and the mechanism is stated by the CTO as absent. W4-S3: the CloudTrail and opal-data lifecycle Deny statements STAND; those two acts go through the laptop write-in. W4-S4: the read actions the derived kinds need are added before the apply, read-only only; this is condition 2 of the CTO half and the issuer has reopened CT-c-1 for it. This row replaces the apply condition stated in NFRA_CTLPLN-S5 for W4-S1 and W4-S2: the apply now waits on the three conditions of the CTO half and the issuer's own half, nothing else."
 }
 ```
+
+
+## NFRA_CTLPLN-S7 -- dell1 came up with one of the repo's git hooks; every seat's commit there ran ungated until 07:3xZ
+
+```json
+{
+  "id": "NFRA_CTLPLN-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-07T07:35Z",
+  "one_line": "The new-device bring-up left dell1 with only the owned-paths pre-commit hook: no pre-push deploy gate, no law lock, no to-pipeline gate, no surprise-row gate. dell1's fabric manager ran .tools/install-all-git-hooks.sh at ~07:3xZ.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 2026-10-07 ~07:3xZ: git rev-parse --git-path hooks = .git/hooks, holding pre-commit only (non-sample files)",
+      "a push of q/dell1/ARMS/r1 at ~07:3xZ printed no pre-push line at all",
+      "after bash .tools/install-all-git-hooks.sh on dell1: commit-msg, post-commit, pre-commit, pre-push live; HOOK BODIES 20 total / 19 wired / 1 ORPHANED (prd-header-notify-post-commit.sh, no installer references the body)",
+      "the kit's README_NEW_DEVICE.md (Opal_New_Device_Kit_20261007) names no hook install step; the dell1 handoff reports the owned-paths hook alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "install-all-git-hooks.sh header (LD-0343): RUN THIS ON EVERY FRESH CLONE; a clone starts with zero hooks and the ungated site is the one that succeeds.",
+  "world_is": "dell1's seats (1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~M1, 2.0.0_SA_COO~H1) committed between ~07:15Z and the install with only the owned-paths gate, so their local commits before it (incl. 78756a9b74, ea7b1706a9, a35cc608fe) were not graded by the law lock, to-pipeline gate or surprise-row gate; the trunk merge at site Z grades them on the merged index. dell2 is unmeasured from here. The kit has no hook step, so every future box repeats it. The prd-header-notify orphan is repo-wide, not dell1's."
+}
+```
