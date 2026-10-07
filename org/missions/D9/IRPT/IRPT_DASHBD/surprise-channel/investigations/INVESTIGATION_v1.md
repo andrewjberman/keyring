@@ -2279,3 +2279,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "The hazard is not live on the served gold (pandas 2.2.3 measured); its local effect is handled by DB-b-37 amendment 1; the latent pandas-3 hardening is named for the served producer's next release."
 }
 ```
+
+## IRPT_DASHBD-W21-S4 -- after the three fixes one in-kind account still misses: the custodian re-selects the relieved lots the day after an in-kind departure
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S4",
+  "one_line": "One of the 91 windows still fails after amendment 1's three rules, because the custodian re-selects which lots an in-kind departure relieved on the next trading day, moving cost basis with the share count, the flow and the value all unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rules 1-3 name the causes of the in-kind windows (dropped conditional rows, in-kind transfers at transfer-date value, unmapped value movers) and expect the re-grade to close them.",
+  "world_is": "After the rules, 55 of 91 windows tie within one cent and 36 do not: 32 ROUNDING, 3 MISSING-TERM (a basis above the cash paid, unchanged from DB-b-36) and 1 OTHER. The OTHER window carries two signatures: a lot table that trails the balance by one trading day on an in-kind departure (two day gaps that net to zero over the two days), and a single day on which the custodian re-selects the lots relieved by the departure of the day before (the lots' share count is the same before and after, no flow, no sale, and the day's gap equals the change in the custodian's summed cost basis to the cent). The second is a restatement of basis that moves no value; no rule in the order maps it, and a term built from the lot table's own basis change would zero the gap by construction, so it is carried as a gap.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json regrade.failures (the class OTHER row carries both signatures and its day gaps)",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/identity_regrade_e2.py classify_failure"
+    ]
+  },
+  "notes": "For the round-24 analysis: either the identity states a restatement term (a decision about what unrealized_change means when basis moves with no value) or the window stays a listed failure. Not plugged here."
+}
+```
+
+## IRPT_DASHBD-W21-S5 -- the lot table trails the balance on an in-kind departure, so the leg is matched to the lots on the day they post (a choice the order did not state)
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S5",
+  "one_line": "On one in-kind departure the custodian's unrealized lots still carry the position on the leg's day and drop it on the next trading day, so an in-kind leg waits up to 3 trading days for its lots; the 3 is a chosen bound, not a measured one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rule 2: an in-kind departure is a WITHDRAWAL at its market value on the transfer date, and the lots that left are measured from it; the order states no timing between the leg and the lot table.",
+  "world_is": "Of the 4 in-kind departures matched in the window, 3 post on the leg's own day and 1 posts one trading day later (the balance has already dropped the position, the lot table has not). The producer keeps the flow on the leg's day and books the departure gain on the day the lots post, so the two days carry equal and opposite gaps (each stays GAP_ABOVE_ALLOWANCE) and the window over both ties. The bound LEG_LAG_DAYS = 3 is a choice: one lagged departure is the only sample, and a leg not posted within the bound is listed unmatched, never bent.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json inkind.matched_departures (leg_day, lag_trading_days)",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py LEG_LAG_DAYS and _one_security"
+    ]
+  },
+  "notes": "A longer history of in-kind departures would measure the lag; until then the bound is the producer's, stated here."
+}
+```
+
+## IRPT_DASHBD-W21-S6 -- pandas' option context is process-global: the served runtime must wrap the whole flow prefetch, not one call
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~21",
+  "surfaced_at": "2026-10-07T16:46:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W21-S6",
+  "one_line": "Amendment 1 rule 1 says to run the served call under pd.option_context(\"future.infer_string\", False); the context is global to the process, so a context entered per call inside the producer's thread pool restores the option under a sibling thread still classifying.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "Amendment 1 rule 1: run the call under pd.option_context(\"future.infer_string\", False) where the option exists, and assert that the CONDITIONAL rows resolved.",
+  "world_is": "pandas options are process-wide state, not thread-local, and compute_local classifies the flow days on a ThreadPoolExecutor of 12. The context is therefore held around the whole pool, and ServedFlowCache.get refuses to classify a day when the option is not in force (a test covers the refusal). Because the producer needs each day's own transaction frame for its in-kind and income supplements, ServedFlowCache reproduces FlowCache.get call for call; a control reads three days with both and finds the returned tuples equal on 3 of 3, and the same served call on pandas' default string behaviour differs on the conditional-bearing days (2 of 2 sampled).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~21/IDENTITY_REGRADE_E2.json controls",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py served_runtime, ServedFlowCache, compute_local"
+    ]
+  },
+  "notes": "If the served producer is ever hardened (a pd.isna test in classify_and_sum, named in S30), this wrapper becomes redundant and its refusal can go with it."
+}
+```
