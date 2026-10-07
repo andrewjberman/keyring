@@ -79,6 +79,16 @@ earlier notes moves, whole and unedited, into the r27 ledger entry under a headi
 EC2_MANIFEST.json at r27)`, and the manifest's note ends with one sentence naming that entry file. Do not trim the
 chain and do not touch `.tools/naming-gate.py`.
 
+**AMENDED A2 (rows Z-W28-S21 and Z-W28-S20).**
+- **The page reads are taken in the deploy window.** In Phase B, read each rivalfunds page's status, size, digest AND
+  its S3 object's `LastModified` immediately BEFORE the deploy and again immediately AFTER it. A difference in size or
+  digest is a rollback trigger ONLY if `LastModified` did not move between the two reads. If it moved, the page was
+  republished: record both reads, say so, and re-take the pair once.
+- **The principal for the wrapper exercise.** Phase A read the concierge's principal key from the gateway's encrypted
+  sign-in cache on the host, decrypted in memory (row Z-W28-S20). Phase B repeats that read ONLY if the issuer's GO
+  says the CTO half allows it. If the GO says it does not, skip the wrapper arm and report; the issuer amends `AC2`
+  before the GO in that case. Never read, print, save or use a token from that cache.
+
 **THE TIMING RULE.** This release touches the send path's file. Its Phase B closes by 09:30Z, or it starts only after
 that day's Bloomberg send is confirmed served. The issuer states which at the GO.
 
@@ -142,6 +152,10 @@ once per phase.
 - AMENDMENT 1 (15:3xZ, issuer, during Phase A and before any GO): the manifest note holds the current release only and
   the chain moves to the ledger entry, as `ROUND_ANALYSIS.round26.md` @c474e2d3f3 rules for row Z-W28-S19. It replaces
   the trim. No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
+- AMENDMENT 2 (16:2xZ, issuer, after Phase A and before any GO): the page BEFORE and AFTER reads move into the deploy
+  window with the object's `LastModified` as the discriminator (row Z-W28-S21, ARMED: disarmed by this for r27); the
+  wrapper exercise's principal source is conditioned on the CTO half (row Z-W28-S20, never-widen ask section 4 (a)).
+  No criterion changed. Gate: LIMB 6 does not grade a modification; GATE (viii) reads placeholders NONE.
 - Pre-cut 15:0xZ: see the issuance commit.
 
 <status>pending</status>
