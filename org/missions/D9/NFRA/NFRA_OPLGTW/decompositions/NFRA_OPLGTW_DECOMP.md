@@ -1592,3 +1592,23 @@ the auth Lambda's origin gate refuses it. That blocks the integrate.
 | `OG-rl-10` | 1 | The r24 hotfix release on live `2c27f3a795`: `opal_portal/integration.py` logs in through `PORTAL_FRONT_DOOR`, and the raw host leaves the `hosts` tuple. Nothing else ships. Post-deploy read: the installed code's own login is accepted. | WORLD | ~28 | worker |
 
 **Chains.** `OG-rl-10` runs BEFORE the held `OG-rl-9`, which re-cuts on the new live. **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.18 (2.0.0_SA_COO~O, 2026-10-07 ~03:0xZ) -- round 24, the CTO's round-23 list (R33, R35) plus OA-f-14's release
+
+**Source.** `ledger/ROUND_ANALYSIS.round23.md` @c8a3b2911e, section 4 (msg 30512). For the release's second part:
+`2.0.0_SA_COO~AI`'s release request (OA-f-14 on CLOUD @af10f7d42b) and the CTO's msg 30365 (the pre-GO host read).
+
+Label `<round>24</round>`, ONE issuance, three cells.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-up-1` | 1 | R33: `opal_data_refresh_upload` returns right after `/trigger`; a new read-only `opal_data_refresh_status`; an idempotent re-send; the two caller texts; the 01:26Z execution read. | WORLD | ~29 | worker |
+| `OG-hg-1` | 2 | R35 cell 1: the halt gate reads a worker's order from the shared root and reads the LAST status tag, with a four-case fixture. | LOCAL | ~30 | worker |
+| `OG-rl-11` | 3 | The r25 release on live `7d65a28db0` under CTO + COO + CVO halves: OG-up-1, plus NFRA_OPALAI OA-f-14 (the scoped identity's consent narrows 17 -> 8 or 9). Pre-GO: the three host identity keys are read. | WORLD | ~28 | worker |
+
+**Chains.** `OG-up-1` -> `OG-rl-11`. `OG-hg-1` stands alone. **fanout:** 2 starts, cap 8.
+
+**No cell (form edits, the issuer's):** R35 part 2 (the deploy identity and who commits the manifest), Z-W28-S9 (a
+per-run host scratch name) and Z-W28-S2 (operator-command output).
+
+**After round 24.** The project parks again on OG-v-7, G-E and R7's flag (R28).
