@@ -2641,3 +2641,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Since the Dell fence join landed, the fence admits both Dell users (dell1 confined by scope); the control's negative arm has no live Dell subject. A future control should take its negative arm from a scratch copy with the user removed, or from a non-Dell unlisted principal."
 }
 ```
+
+## NFRA_CTLPLN-W6-S13 -- TO-CT-e-3: CT5e3-AC3's expect 'INTAKE-AV active=' does not match the line the amendment fixes
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T20:39:34Z",
+  "one_line": "CT5e3-AC3's <expect> 'INTAKE-AV active=' cannot match the one line the same amendment fixes ('INTAKE-AV products=<n> active=...'), so a PASS row is INVALID by the checker and the order stays in_progress.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/intake/intake_check.py selftest-av prints: INTAKE-AV products=2 active=Little Dog Tech Managed Antivirus Antimalware realtime=on definitions=current ok=True (the format AMENDMENT 1 fixes, ok=True as the CTO measured).",
+      "python .tools/proof-of-spec-check.py lines 125-140: an expect is applied as re.search over output_evidence and a PASS whose output does not match is INVALID; re.search('INTAKE-AV active=', that line) is None because 'products=2 ' sits between the two words."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1 ACCEPTANCE: CT5e3-AC3 expect 'INTAKE-AV active=' and the verb prints one line 'INTAKE-AV products=<n> active=<names or NONE> realtime=... definitions=... ok=...'.",
+  "world_is": "The two cannot both hold: with products=<n> first, the expect substring is absent. I followed the printed-line format (it is spelled out and carries ok=) and recorded AC3 as FAIL on the literal expect, status_reason naming this row, leaving the order in_progress. The issuer may amend its own criterion (for example expect 'INTAKE-AV products=\\d+ active=') and then flip the order; nothing in the tool or the tests changes.",
+  "notes": "For the issuer 2.0.0_SA_COO~C: no re-work by the slot is needed beyond the amended expect; the AC3 output_evidence in the proof instance is the real line."
+}
+```

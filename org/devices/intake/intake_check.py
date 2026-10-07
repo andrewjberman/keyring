@@ -2,21 +2,26 @@
 
 NOTHING FROM A PACKAGE FILE IS EVER INSTALLED, IMPORTED OR EXECUTED. A wheel is opened with `zipfile`, its member names are
 listed and its bytes are compared; no member is extracted to disk and no member is run. No request leaves this machine from
-this tool: it makes none. The only process it starts is the platform's malware scanner on the ONE held file (check 7) and,
-for information only, `git log` on the signature file (check 8).
+this tool: it makes none. The only processes it starts are a read-only PowerShell query of the Windows Security Center's
+antivirus registrations (check 7; it changes no security setting) and, for information only, `git log` on the signature
+file (check 8). Check 7 never runs a scanner: it reads which antivirus product is active, writes a copy of the held file
+beside it (`<file name>.scan-copy`, always removed afterwards) so the active product's on-access scanning sees it, waits,
+and records whether the file and the copy are still present and unchanged.
 
 Verbs:
   check   --batch <id> --file <file name> [--approved-by <path>] [--signed-by <path>]
-          [--min-release-age-days 14] [--min-earlier-releases 3]
+          [--min-release-age-days 14] [--min-earlier-releases 3] [--scan-wait-seconds 20]
   release --batch <id> --file <file name>
   pack    --batch <id> --out <dir>
   selftest-unsigned
+  selftest-av   (reads the REAL Security Center, prints one INTAKE-AV line, writes no file)
 
 Records are JSON, ASCII only, under <records>/<batch>/ (see records_dir). The FETCH record is read; the CHECK record is
 written. Paths:
   holding root  OPAL_INTAKE_ROOT, else <drive of the workspace root>/opal-intake  (holding/<batch>/, release/<batch>/)
   records       OPAL_INTAKE_RECORDS (a base; records live in <base>/<batch>/), else org/devices/intake/records/<batch>/
-  scanner       OPAL_INTAKE_SCANNER (test stub), else the newest MpCmdRun.exe under the Defender platform directory
+  AV answer     OPAL_INTAKE_AV_JSON (tests: a path to a JSON file standing in for the Security Center answer), else the
+                real query (root/SecurityCenter2, class AntiVirusProduct)
   site-packages OPAL_INTAKE_SITE (os.pathsep list), else this interpreter's site-packages
   signer dir    OPAL_INTAKE_SIGNER_DIR (tests), else org/tier1_exec/1.0.0_SA_CTO/deliverables under the repository root
 The ONLY producer of the overall verdict "checked" is compute_verdict().
@@ -39,12 +44,15 @@ import site
 import subprocess
 import sys
 import tempfile
+import time
 import zipfile
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parents[3]
 DEFAULT_SIGNER_REL = "org/tier1_exec/1.0.0_SA_CTO/deliverables"
 COMPILED_SUFFIXES = (".pyd", ".dll", ".so", ".exe")
-SCANNER_TIMEOUT = 90
+AV_QUERY_TIMEOUT = 30
+DEFAULT_SCAN_WAIT = 20
+SCAN_COPY_SUFFIX = ".scan-copy"
 MAX_PY_BYTES = 50 * 1024 * 1024
 PRINT_CAP = 10
 
@@ -84,6 +92,18 @@ DELIVERY_SENTENCE = (
     "They do not close it."
 )
 VERDICTS = ("passed", "failed", "not_applicable", "unsigned")
+# Check 7's limit, in the words the CTO ruled (msg 106549). It travels in the check record beside check 7 and in the delivery
+# text. The brief's own "Leaves" text for check 7 (CHECK_TABLE) stays as it is, beside it.
+LIMIT_SENTENCE = (
+    "No test-virus file was planted as a control, because it would raise the managed product's alarm; so this check shows "
+    "that an enabled, current product did not remove or alter the file within the wait, and does not show that the product "
+    "inspected it."
+)
+DECODING_NOTE = (
+    "productState is read as six hex digits 0xAABBCC: BB is real-time protection (0x10 or 0x11 on; 0x00 or 0x01 off; any "
+    "other byte unknown); CC is the definitions (0x00 current; 0x10 out of date; any other byte unknown); unknown is never "
+    "treated as on or current. Worked examples: 393472 = 0x060100 -> off; 266240 = 0x041000 -> on, definitions current."
+)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -100,12 +120,13 @@ def derive_drive_prefix() -> pathlib.Path:
 
 
 class Cfg:
-    def __init__(self, root=None, records=None, scanner=None, sites=None, signer_dir=None):
+    def __init__(self, root=None, records=None, av_json=None, sites=None, signer_dir=None):
         env = os.environ
         self.root = pathlib.Path(root or env.get("OPAL_INTAKE_ROOT") or (derive_drive_prefix() / "opal-intake"))
         self.records_base = pathlib.Path(
             records or env.get("OPAL_INTAKE_RECORDS") or (REPO_ROOT / "org" / "devices" / "intake" / "records"))
-        self.scanner = scanner if scanner is not None else env.get("OPAL_INTAKE_SCANNER")
+        # a path to a JSON file standing in for the Security Center answer; "" or None-with-no-env means the REAL query
+        self.av_json = av_json if av_json is not None else env.get("OPAL_INTAKE_AV_JSON")
         if sites is not None:
             self.sites = [pathlib.Path(s) for s in sites]
         elif env.get("OPAL_INTAKE_SITE"):
@@ -515,50 +536,168 @@ def check_6(ctx):
                **detail)
 
 
-def find_scanner(cfg):
-    if cfg.scanner:
-        return cfg.scanner if os.path.isfile(cfg.scanner) else None
-    env = os.environ
-    pd = env.get("ProgramData") or env.get("PROGRAMDATA")
-    if pd:
-        base = pathlib.Path(pd) / "Microsoft" / "Windows Defender" / "Platform"
-        if base.is_dir():
-            dirs = [d for d in base.iterdir() if d.is_dir() and (d / "MpCmdRun.exe").is_file()]
-            dirs.sort(key=lambda d: [int(x) for x in re.findall(r"\d+", d.name)], reverse=True)
-            if dirs:
-                return str(dirs[0] / "MpCmdRun.exe")
-    pf = env.get("ProgramFiles") or env.get("PROGRAMFILES")
-    if pf:
-        cand = pathlib.Path(pf) / "Windows Defender" / "MpCmdRun.exe"
-        if cand.is_file():
-            return str(cand)
-    return None
+def _ascii_name(text):
+    """A display name reduced to printable ASCII: every other character becomes '?'. Returns (clean, replaced?)."""
+    clean = "".join(ch if 32 <= ord(ch) < 127 else "?" for ch in str(text))
+    return clean, clean != str(text)
+
+
+def decode_state(state):
+    """Decode a Security Center productState by its documented bytes. Returns a dict: state, hex, realtime (on|off|unknown),
+    definitions (current|out_of_date|unknown). A byte value outside those known decodes to 'unknown', never on or current."""
+    s = int(state)
+    if not 0 <= s <= 0xFFFFFF:
+        return {"state": s, "hex": "0x%X" % s, "realtime": "unknown", "definitions": "unknown"}
+    mid, last = (s >> 8) & 0xFF, s & 0xFF
+    rt = "on" if mid in (0x10, 0x11) else "off" if mid in (0x00, 0x01) else "unknown"
+    df = "current" if last == 0x00 else "out_of_date" if last == 0x10 else "unknown"
+    return {"state": s, "hex": "0x%06X" % s, "realtime": rt, "definitions": df}
+
+
+def parse_av_answer(text):
+    """The JSON the Security Center query prints: one object, a list of objects, or nothing. Returns a list of product dicts."""
+    text = (text or "").strip()
+    if not text:
+        return []
+    data = json.loads(text)
+    if isinstance(data, dict):
+        data = [data]
+    if not isinstance(data, list):
+        raise ValueError("the answer is neither an object nor a list")
+    out = []
+    for item in data:
+        if not isinstance(item, dict) or "displayName" not in item or "productState" not in item:
+            raise ValueError("an entry lacks displayName or productState: %r" % (item,))
+        ps = item["productState"]
+        if isinstance(ps, bool) or not isinstance(ps, (int, str)):
+            raise ValueError("productState is not a number: %r" % (ps,))
+        name, replaced = _ascii_name(item["displayName"])
+        row = {"display_name": name, "name_non_ascii_replaced": replaced}
+        row.update(decode_state(ps))
+        out.append(row)
+    return out
+
+
+def read_security_center(cfg):
+    """Read the antivirus registrations. Returns (products, error): error is '' when the read worked (products may be empty).
+    READ-ONLY: a PowerShell query of root/SecurityCenter2 AntiVirusProduct, 30-second bound, or the file OPAL_INTAKE_AV_JSON."""
+    if cfg.av_json:
+        try:
+            with open(cfg.av_json, "r", encoding="utf-8-sig") as fh:
+                return parse_av_answer(fh.read()), ""
+        except (OSError, ValueError) as exc:
+            return [], "the stand-in answer %s is unreadable: %s: %s" % (os.path.basename(str(cfg.av_json)), type(exc).__name__, exc)
+    ps = shutil.which("powershell") or shutil.which("powershell.exe") or shutil.which("pwsh")
+    if not ps:
+        return [], "powershell was not found on this machine"
+    cmd = ("Get-CimInstance -Namespace root/SecurityCenter2 -ClassName AntiVirusProduct -ErrorAction Stop | "
+           "Select-Object displayName, productState | ConvertTo-Json -Compress")
+    try:
+        proc = subprocess.run([ps, "-NoProfile", "-NonInteractive", "-Command", cmd], capture_output=True,
+                              timeout=AV_QUERY_TIMEOUT, stdin=subprocess.DEVNULL)
+    except subprocess.TimeoutExpired:
+        return [], "the Security Center query did not finish within %d seconds" % AV_QUERY_TIMEOUT
+    except OSError as exc:
+        return [], "the Security Center query could not start: %s" % exc
+    out = (proc.stdout or b"").decode("utf-8", "replace")
+    if proc.returncode != 0:
+        err = (proc.stderr or b"").decode("utf-8", "replace").strip().splitlines()
+        return [], "the Security Center query exited %d: %s" % (proc.returncode, ascii_clean(err[0][:200]) if err else "no message")
+    try:
+        return parse_av_answer(out), ""
+    except (ValueError, TypeError) as exc:
+        return [], "the Security Center answer could not be parsed: %s: %s" % (type(exc).__name__, exc)
+
+
+def is_scan_copy(file_name):
+    return str(file_name).endswith(SCAN_COPY_SUFFIX)
+
+
+def _file_state(path, want_sha):
+    """'unchanged' | 'changed' | 'missing' | 'unreadable: ...' for one file against the expected SHA-256."""
+    try:
+        if not os.path.isfile(path):
+            return "missing"
+        return "unchanged" if sha256_file(path) == want_sha else "changed"
+    except OSError as exc:
+        return "unreadable: %s" % exc
+
+
+def on_access_read(path, wait, hook=None):
+    """Write a copy of the held file beside it, read the copy back fully, wait, then re-read BOTH and compare each with the held
+    file's hash from before. The copy is ALWAYS removed in the finally. `hook(path, copy)` is called at the start of the wait
+    (tests use it to change a file or remove the copy). Returns a dict of what was seen; never raises for a file problem."""
+    path = pathlib.Path(path)
+    copy = path.with_name(path.name + SCAN_COPY_SUFFIX)
+    r = {"copy_name": copy.name, "stale_copy_removed": False, "problems": [], "held_after": None, "copy_after": None,
+         "copy_cleanup": None}
+    try:
+        if copy.exists():
+            copy.unlink()
+            r["stale_copy_removed"] = True
+        before = sha256_file(path)
+        r["held_sha256_before"] = before
+        with open(path, "rb") as src, open(copy, "xb") as dst:
+            shutil.copyfileobj(src, dst, 1 << 20)
+            dst.flush()
+            os.fsync(dst.fileno())
+        r["copy_sha256_readback"] = sha256_file(copy)
+        if r["copy_sha256_readback"] != before:
+            r["problems"].append("the copy read back differently from the held file")
+        if hook is not None:
+            hook(path, copy)
+        if wait > 0:
+            time.sleep(wait)
+        r["held_after"] = _file_state(path, before)
+        r["copy_after"] = _file_state(copy, before)
+    except Exception as exc:  # the read could not be made: a failed check, never a pass
+        r["problems"].append("the on-access read could not be made: %s: %s" % (type(exc).__name__, exc))
+    finally:
+        try:
+            if copy.exists():
+                copy.unlink()
+                r["copy_cleanup"] = "removed"
+            else:
+                r["copy_cleanup"] = "already gone before cleanup"
+        except OSError as exc:
+            r["copy_cleanup"] = "REMOVAL REFUSED: %s" % exc
+    return r
 
 
 def check_7(ctx):
-    scanner = find_scanner(ctx["cfg"])
-    if not scanner:
-        return rec("failed", "the platform's command-line scanner was not found (or OPAL_INTAKE_SCANNER names a missing file)")
-    cmd = [scanner, "-Scan", "-ScanType", "3", "-File", str(ctx["path"]), "-DisableRemediation"]
-    try:
-        proc = subprocess.run(cmd, capture_output=True, timeout=SCANNER_TIMEOUT, stdin=subprocess.DEVNULL)
-    except subprocess.TimeoutExpired:
-        return rec("failed", "the scanner did not finish within %d seconds" % SCANNER_TIMEOUT, scanner=os.path.basename(scanner))
-    except OSError as exc:
-        return rec("failed", "the scanner refused to run: %s" % exc, scanner=os.path.basename(scanner))
-    text = (proc.stdout or b"").decode("utf-8", "replace") + (proc.stderr or b"").decode("utf-8", "replace")
-    last = [ascii_clean(x.strip()) for x in text.splitlines() if x.strip()][-6:]
-    detail = {"scanner": os.path.basename(scanner), "exit_code": proc.returncode, "last_lines": last}
-    if proc.returncode == 0:
-        return rec("passed", "scanner exit code 0: no threat found", **detail)
-    if proc.returncode == 2:
-        refused = any(re.search(r"\[Failed\]|Product/Feature disabled|hr = 0x8", ln) for ln in last)
-        detail["scanner_output_shows_an_error"] = refused
-        if refused:
-            return rec("failed", "scanner exit code 2 with an error in its output (it refused or did not scan); "
-                       "not a clean result, and not shown to be a threat", **detail)
-        return rec("failed", "scanner exit code 2: a threat was found", **detail)
-    return rec("failed", "scanner exit code %d (neither 0 nor 2)" % proc.returncode, **detail)
+    cfg = ctx["cfg"]
+    wait = int(ctx.get("scan_wait", DEFAULT_SCAN_WAIT))
+    products, err = read_security_center(cfg)
+    base = {"decoding": DECODING_NOTE, "scan_wait_seconds": wait, "limit": LIMIT_SENTENCE}
+    if err:
+        return rec("failed", "the Security Center antivirus registrations could not be read: %s" % err, query_failed=True, **base)
+    base["products"] = products
+    base["products_count"] = len(products)
+    active = [p for p in products if p["realtime"] == "on"]
+    base["active"] = [p["display_name"] for p in active]
+    if not active:
+        return rec("failed", "no antivirus product is registered as on (%d registered: %s)" % (
+            len(products), "; ".join("%s %s realtime=%s" % (p["display_name"], p["hex"], p["realtime"]) for p in products) or "none"),
+            **base)
+    stale = [p for p in active if p["definitions"] != "current"]
+    if stale:
+        return rec("failed", "active product(s) whose definitions are not current: %s" % "; ".join(
+            "%s %s definitions=%s" % (p["display_name"], p["hex"], p["definitions"]) for p in stale), **base)
+    got = on_access_read(ctx["path"], wait, ctx.get("wait_hook"))
+    base.update(got)
+    bad = list(got["problems"])
+    if got["held_after"] not in (None, "unchanged"):
+        bad.append("the held file is %s after the wait" % got["held_after"])
+    if got["copy_after"] not in (None, "unchanged"):
+        bad.append("the scan copy is %s after the wait%s" % (
+            got["copy_after"], " (a product that removed it has given a verdict)" if got["copy_after"] == "missing" else ""))
+    if str(got["copy_cleanup"]).startswith("REMOVAL REFUSED"):
+        bad.append("the scan copy could not be removed afterwards: %s" % got["copy_cleanup"])
+    if bad:
+        return rec("failed", "; ".join(bad), **base)
+    names = "; ".join(p["display_name"] for p in active)
+    return rec("passed", "on-access scan by %s, state enabled and current; file present and unchanged after %d s; "
+               "no on-demand verdict available" % (names, wait), **base)
 
 
 def _git_author(path):
@@ -650,15 +789,18 @@ def held_path_ok(fetch, batch, file_name):
     return hp in ("holding/%s/%s" % (batch, file_name), "%s/%s" % (batch, file_name))
 
 
-def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=14.0, min_earlier=3, out=None):
+def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=14.0, min_earlier=3, out=None,
+              scan_wait=DEFAULT_SCAN_WAIT, wait_hook=None):
     out = out or sys.stdout
     path = cfg.holding(batch) / file_name
     fetch, fpath = read_fetch_record(cfg, batch, file_name)
     ctx = {"cfg": cfg, "batch": batch, "file_name": file_name, "path": path, "fetch": fetch or {},
-           "approved_by": approved_by, "signed_by": signed_by, "min_age": min_age, "min_earlier": min_earlier}
+           "approved_by": approved_by, "signed_by": signed_by, "min_age": min_age, "min_earlier": min_earlier,
+           "scan_wait": scan_wait, "wait_hook": wait_hook}
     held_sha = None
     checks = []
-    print("INTAKE-CHECK thresholds: min_release_age_days=%s min_earlier_releases=%s" % (min_age, min_earlier), file=out)
+    print("INTAKE-CHECK thresholds: min_release_age_days=%s min_earlier_releases=%s scan_wait_seconds=%s" % (
+        min_age, min_earlier, scan_wait), file=out)
     for fn, row in zip(CHECKS, CHECK_TABLE):
         if fetch is None:
             verdict, ev = rec("failed", "no fetch record <%s.fetch.json> found for this file" % file_name)
@@ -672,9 +814,17 @@ def run_check(cfg, batch, file_name, approved_by=None, signed_by=None, min_age=1
             except Exception as exc:  # a check that could not run is a failed check, never a pass
                 verdict, ev = rec("failed", "the check could not run: %s: %s" % (type(exc).__name__, exc))
         assert verdict in VERDICTS
+        if row["n"] == 7:
+            ev["limit"] = LIMIT_SENTENCE   # the limit travels beside check 7 whatever its verdict
         checks.append({"n": row["n"], "name": row["name"], "verdict": verdict, "evidence": ev,
                        "rules_out": row["rules_out"], "leaves": row["leaves"]})
         print("c%d %-14s %s" % (row["n"], verdict, ev.get("summary", "")), file=out)
+        if row["n"] == 7:
+            for pr in ev.get("products", []):
+                print("c7 product %s state=%d hex=%s realtime=%s definitions=%s" % (
+                    pr["display_name"], pr["state"], pr["hex"], pr["realtime"], pr["definitions"]), file=out)
+            print("c7 decoding: %s" % ev.get("decoding", ""), file=out)
+            print("c7 limit: %s" % LIMIT_SENTENCE, file=out)
     if path.is_file():
         held_sha = sha256_file(path)
     record = {"schema": "intake-check/1", "batch": batch, "file_name": file_name, "held_sha256": held_sha,
@@ -696,6 +846,8 @@ def delivery_text(record, sha):
         if c["verdict"] == "not_applicable":
             row += " (not applicable: %s)" % (c.get("evidence") or {}).get("reason", "")
         lines.append(row)
+        if c["n"] == 7:
+            lines.append("   LIMIT OF CHECK 7: %s" % LIMIT_SENTENCE)
     lines += ["", DELIVERY_SENTENCE, ""]
     return ascii_clean("\n".join(lines))
 
@@ -721,6 +873,10 @@ def record_is_checked(record, batch, file_name):
 
 def run_release(cfg, batch, file_name, out=None):
     out = out or sys.stdout
+    if is_scan_copy(file_name):
+        print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=a %s file is a check-7 scan copy, never a held or released file" % (
+            batch, file_name, SCAN_COPY_SUFFIX), file=out)
+        return 1
     record, why = load_check_record(cfg, batch, file_name)
     if record is None:
         print("INTAKE-RELEASE REFUSED batch=%s file=%s reason=%s" % (batch, file_name, why), file=out)
@@ -768,12 +924,16 @@ def run_pack(cfg, batch, outdir, out=None):
     if hold.is_dir():
         left = sorted(p.name for p in hold.iterdir() if p.is_file())
         if left:
-            problems.append("files remain in holding/%s/: %s" % (batch, ", ".join(left)))
+            problems.append("files remain in holding/%s/: %s" % (batch, ", ".join(
+                n + (" (a leftover check-7 scan copy, never packable)" if is_scan_copy(n) else "") for n in left)))
     files = sorted(p for p in rel.iterdir() if p.is_file() and not p.name.endswith(".delivery.txt")) if rel.is_dir() else []
     if not files:
         problems.append("release/%s/ holds no files" % batch)
     entries = []
     for f in files:
+        if is_scan_copy(f.name):
+            problems.append("%s: a check-7 scan copy is never a released file" % f.name)
+            continue
         record, why = load_check_record(cfg, batch, f.name)
         if record is None:
             problems.append("%s: %s" % (f.name, why))
@@ -877,18 +1037,6 @@ def write_fetch_record(cfg, batch, wheel_path, name=SYN_NAME, version=SYN_VERSIO
     return rec_
 
 
-def write_stub_scanner(directory, exit_code=0, line="stub scan finished"):
-    directory = pathlib.Path(directory)
-    if os.name == "nt":
-        p = directory / ("stub_scanner_%d.cmd" % exit_code)
-        p.write_bytes(("@echo off\r\necho %s\r\nexit /b %d\r\n" % (line, exit_code)).encode("ascii"))
-    else:
-        p = directory / ("stub_scanner_%d.sh" % exit_code)
-        p.write_bytes(("#!/bin/sh\necho '%s'\nexit %d\n" % (line, exit_code)).encode("ascii"))
-        p.chmod(0o755)
-    return str(p)
-
-
 def selftest_unsigned(out=None):
     out = out or sys.stdout
     tmp = pathlib.Path(tempfile.mkdtemp(prefix="intake_selftest_"))
@@ -896,8 +1044,9 @@ def selftest_unsigned(out=None):
         site_dir = tmp / "site"
         site_dir.mkdir()
         build_installed_fixture(site_dir)
-        cfg = Cfg(root=tmp / "root", records=tmp / "records", scanner=write_stub_scanner(tmp), sites=[site_dir],
-                  signer_dir=tmp / "signer")
+        av = tmp / "av.json"
+        av.write_text(json.dumps([{"displayName": "Synthetic Antivirus (stand-in)", "productState": 266240}]), encoding="ascii")
+        cfg = Cfg(root=tmp / "root", records=tmp / "records", av_json=str(av), sites=[site_dir], signer_dir=tmp / "signer")
         batch = "selftest-batch"
         hold = cfg.holding(batch)
         hold.mkdir(parents=True)
@@ -905,10 +1054,40 @@ def selftest_unsigned(out=None):
         write_fetch_record(cfg, batch, wheel)
         approved = tmp / "approved.txt"
         approved.write_text("%s==%s\n" % (SYN_NAME, SYN_VERSION), encoding="ascii")
-        record, line = run_check(cfg, batch, wheel.name, approved_by=str(approved), signed_by=None, out=out)
+        record, line = run_check(cfg, batch, wheel.name, approved_by=str(approved), signed_by=None, out=out, scan_wait=0)
         return 0 if "c8=unsigned verdict=not_checked" in line and record["verdict"] == "not_checked" else 1
     finally:
         shutil.rmtree(str(tmp), ignore_errors=True)
+
+
+def summarize_av(products):
+    """(active names or NONE, realtime on|off, definitions current|out_of_date|unknown, ok). ok = at least one product is on and
+    current. unknown is never treated as on or current."""
+    active = [p for p in products if p["realtime"] == "on"]
+    names = "; ".join(p["display_name"] for p in active) if active else "NONE"
+    defs = {p["definitions"] for p in active}
+    if not active:
+        d = "unknown"
+    elif "out_of_date" in defs:
+        d = "out_of_date"
+    elif defs == {"current"}:
+        d = "current"
+    else:
+        d = "unknown"
+    ok = any(p["realtime"] == "on" and p["definitions"] == "current" for p in products)
+    return names, "on" if active else "off", d, ok
+
+
+def selftest_av(cfg=None, out=None):
+    """Read the Security Center (the REAL one unless a Cfg with a stand-in is given) and print ONE line. Writes no file."""
+    out = out or sys.stdout
+    cfg = cfg or Cfg(av_json="")
+    products, err = read_security_center(cfg)
+    if err:
+        print("INTAKE-AV query failed: %s" % err, file=sys.stderr)
+    names, rt, df, ok = summarize_av(products)
+    print("INTAKE-AV products=%d active=%s realtime=%s definitions=%s ok=%s" % (len(products), names, rt, df, ok), file=out)
+    return 0 if ok else 1
 
 
 def main(argv=None):
@@ -921,6 +1100,7 @@ def main(argv=None):
     c.add_argument("--signed-by")
     c.add_argument("--min-release-age-days", type=float, default=14)
     c.add_argument("--min-earlier-releases", type=int, default=3)
+    c.add_argument("--scan-wait-seconds", type=int, default=DEFAULT_SCAN_WAIT)
     r = sub.add_parser("release")
     r.add_argument("--batch", required=True)
     r.add_argument("--file", required=True)
@@ -928,12 +1108,23 @@ def main(argv=None):
     p.add_argument("--batch", required=True)
     p.add_argument("--out", required=True)
     sub.add_parser("selftest-unsigned")
+    sub.add_parser("selftest-av")
     a = ap.parse_args(argv)
     if a.verb == "selftest-unsigned":
         return selftest_unsigned()
+    if a.verb == "selftest-av":
+        return selftest_av()
     cfg = Cfg()
     if a.verb == "check":
-        run_check(cfg, a.batch, a.file, a.approved_by, a.signed_by, a.min_release_age_days, a.min_earlier_releases)
+        if is_scan_copy(a.file):
+            print("INTAKE-CHECK REFUSED batch=%s file=%s reason=a %s file is a check-7 scan copy, never a held file" % (
+                a.batch, a.file, SCAN_COPY_SUFFIX))
+            return 1
+        if a.scan_wait_seconds < 0:
+            print("INTAKE-CHECK REFUSED reason=--scan-wait-seconds must not be negative")
+            return 1
+        run_check(cfg, a.batch, a.file, a.approved_by, a.signed_by, a.min_release_age_days, a.min_earlier_releases,
+                  scan_wait=a.scan_wait_seconds)
         return 0
     if a.verb == "release":
         return run_release(cfg, a.batch, a.file)
