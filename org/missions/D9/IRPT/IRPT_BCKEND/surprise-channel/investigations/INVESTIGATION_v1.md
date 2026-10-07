@@ -18634,3 +18634,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "MEASURED: the change runs. NOT MEASURED: any render that exercised a RENDER_DELEGATE reading only the grant-pinned selection. Today's form: the same single export as S345 exercises both; it waits on Andrew's per-use word."
 }
 ```
+
+## IRPT_BCKEND-S347 -- the dell2 identity is denied on opal-data-inflection, so S338 and the INF serving ledger cannot be measured from dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-S347",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T07:55:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 agent identity (cloudops-dell2-agent-user) is refused s3:ListBucket on opal-data-inflection by an explicit deny in the bucket policy, so the dell2 successor of workstream P cannot measure row S338 (whether Inflection held positions on 2026-05-11, 06-30, 08-10) or close leg A1 of ledger irpt-inf-performance-serving-20261002 from this box.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~08:1xZ: .tools/aws s3api list-objects-v2 --bucket opal-data-inflection --prefix irpt/inflection/gold/ : AccessDenied, User arn:aws:iam::313476888478:user/cloudops-dell2-agent-user not authorized to perform s3:ListBucket ... with an explicit deny in a resource-based policy; same on five date= probes including two control days (2026-05-08, 2026-05-12)",
+      "the predecessor 2.0.0_SA_COO~P listed the same prefix from the laptop on 2026-10-06 (row S338: 1615 partitions), so the deny is per identity, not per bucket state"
+    ]
+  },
+  "spec_asserts": "The seat that inherits workstream P (SEQUENCE v6, IRPT_BCKEND on dell2) can read the firm buckets its open ledgers are graded against.",
+  "world_is": "The dell2 identity is denied on the Inflection bucket. The ledger stays OPEN, parked. It un-parks when either (a) a principal permitted on opal-data-inflection reads the three gap days and their upstream positions, or (b) 1.0.0_SA_CTO~DELL2 or the bucket policy's owner admits the dell2 identity read-only. This row does not widen any policy (CLAUDE.md cross-firm guard; never-widen)."
+}
+```
