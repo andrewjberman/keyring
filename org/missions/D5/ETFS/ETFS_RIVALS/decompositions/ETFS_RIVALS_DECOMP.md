@@ -445,3 +445,27 @@ cell RIV-md-1's surface. No earlier cell is replaced. Chain `~8`, one cell, file
   "No trades in the last 365 days" for the fixture's IDVZ Apple frame; the cell may change that one expected sentence to
   the new static sentence (and the docstring line that quotes it), and nothing else in that file.
 - **Organic trigger:** opening any security dialog on the live page; the issuer's real run re-measures the 618.
+
+## ROUND 19 (main workstream) -- APPENDED 2026-10-07, revision 1.9 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S58 (the issuer's round-18 real run, packet
+`deliverables/2.0.0_SA_COO~RV/round18/DRAIN_END_PACKET.round18.md`). Author 2.0.0_SA_COO~RV; the issuer rules it inside
+cell RIV-pd-2's surface. No earlier cell is replaced. Chain `~9`, one cell, file render.py, risk SERVED.
+
+### `RIV-ml-1` -- the month-by-month buying strip labels each cell with the month it is (FWD-23; row Z-S58)
+- Measured (round-18 real run, day 2026-10-06): the page holds 393 month strips, every one labelled January to December
+  by cell position; gold buying_trend's `trend_mark` months run from the window start's month, oldest first, through the
+  page day's month. 248 of 349 R365 rows carry 13 month tokens (the strip draws the first 12 and drops the newest); the
+  R30 and R90 strips (2 and 4 cells) read "Jan, Feb" for September and October.
+- Interface: `render._month_chart(mark, end=None)` and `render._month_words(mark, end=None)`. `end` is the trend row's
+  `window_end` (ISO string or date). With `end`: the LAST token is `end`'s month and each earlier token one month before;
+  at most the last 12 tokens are drawn or named; every cell carries its month as `data-m=<Jan..Dec>`. With `end` None:
+  tokens are labelled from January, as before, and each cell still carries `data-m`. `render.MONTH_CSS` prints the label
+  from the cell (`content:attr(data-m)`); the twelve positional rules go. Every call site passes the trend row's
+  `window_end` (the dialog's buying section and the sector tag's hover words).
+- Rulings at the cut (issuer): the month is counted back from `window_end`, never forward from `window_start` (a clipped
+  window's start is not its mark's first month on every row). A row with no `window_end` gets the legacy labels. No
+  year is printed: at most 12 cells, so a month name is unique in a strip. The audit page is untouched unless it draws
+  the same strip through the same function.
+- **Organic trigger:** any fund panel's trend and any security dialog on the live page; the issuer's real run reads the
+  strips against the listed trades.
