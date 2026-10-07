@@ -9880,3 +9880,105 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not investigated; the object was not opened. It sorts first in a key-ordered listing."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S27",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T20:10Z",
+  "one_line": "tests/test_deploy_base_guard.py goes from 6 passed on live r27 to 3 passed and 3 failed on the r28 release tree: the new bun pre-check in deploy-to-ec2.sh stops the test rig before its upload step.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_tests_release.out vs r28_tests_baseline_full.out: release tree 419297b525 (83 files) 647 passed 10 failed; live tree 510c8cfed2 at /c/tmp/og-rb22 (79 files) 633 passed 7 failed. The 7 failing ids are identical on both trees. The 3 extra: test_live_ref_moves_between_the_early_read_and_the_upload_read, test_no_metadata_falls_back_to_the_single_sha_key_that_shares_latests_object, test_positive_control_declared_equals_live_reaches_the_upload_step.",
+      "RUN python -m pytest tests/test_deploy_base_guard.py -x on the release tree: the third test's assertion p.returncode == 0 fails with the script's own text 'ERROR: bun cache miss -- ... Missing from bun's cache (or unreadable lockfile)'.",
+      "FILE tests/test_deploy_base_guard.py lines 79-80 and 94: the rig's stub mcportal holds a package.json only, no bun.lock; deploy-to-ec2.sh lines 208-211 (release tree) run ops/bun_cache_precheck.py bun.lock before `bun install` and exit 1 when it cannot read the lockfile."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14 step 3 (form): tests on the release tree, each named file in its own process, the baseline failures named. The release set adds the pre-check to the deploy script; no cell lists test_deploy_base_guard.py.",
+  "world_is": "The release tree fails 3 tests that pass on live. The deploy script itself is correct (it refuses an unreadable lockfile, which is its job); the rig that tests the stale-base guard (DEPLOY_BASE_REF) no longer reaches the guard's upload step, so those 3 guard regression tests are red until the rig gives its stub mcportal a lockfile and a cache. The file is source-only (not on the host, not in the tarball). Nothing was edited: the file is outside this order's paths.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A halves reader who counts 'failing ids that are baseline on live' will find 3 that are not. They are not caused by the shipped host file (app/audit.py)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S28",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T20:10Z",
+  "one_line": "rl14.AC1.sh counts deploy-to-ec2.sh and ops/bun_cache_precheck.py as host files; neither reaches the host, so its expected-PASS form prints '1 of 3', does not match the order's <expect>, and exits 1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_rl14.AC1_expected_pass_form.out (scratch clone x28, stand-in host answering md5sum with the host's real files only): 'host shipped files equal the release bytes: 1 of 3' ... 'RESULT: FAIL' exit=1. org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_expect_match.out: re.search(<expect>) NO MATCH on that output.",
+      "FILE deploy-to-ec2.sh lines 219-223 (release tree): the tarball is `app deploy requirements.txt identity_tool_allowlist.txt` plus the dashboard bundle; run on the release tree it lists 97 gateway files = the 97-line host md5 list, with 0 entries under ops/ or tests/ and deploy-to-ec2.sh absent (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_reaches_host.out).",
+      "RUN a scratch copy of rl14.AC1.sh with ONE line changed (line 12, the filter: keep only ^(app|deploy)/ and the two root files the tar ships): expected-PASS form prints '1 of 1', RESULT: PASS, exit=0, and re.search(<expect>) MATCHES (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_rl14.AC1_proposed_filter.out). The issuer's script was not edited."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14 issuer notes: rl14.AC1 counts host files as every release file outside runbooks/ and tests/; if deploy-to-ec2.sh or ops/bun_cache_precheck.py does not reach the host the check's `eq of n` will not match and the issuer amends the filter BEFORE the GO (form step 7).",
+  "world_is": "Neither file reaches the host (deploy tarball and host md5 list agree). AC1 as written reads 1 of 3 after a correct deploy. Phase B would fail AC1 on a correct release unless the filter is amended before the GO.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The issuer anticipated this; filed because form step 7 says a check whose output cannot match its expect is fixed BEFORE GO. The one-line proposal is evidence only."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S29",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T20:10Z",
+  "one_line": "The order names the real holder on both paths as a floor read and also says no principal identifier is needed and none is to be read; the real-holder program reads the issuer's off-repo holder file.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE task order OG-rl-14 section 1: 'No principal identifier is needed by this order. Do not read one.' (the BEFORE/REHEARSAL paragraph) and, three paragraphs later, the standing floor includes 'the real holder on both paths'.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_ssm.py (from r27_ssm.py) kind 'real': reads %LOCALAPPDATA%/opal/og-salt/ga1/holder_pks.json (a tenant and object id) and sends them only inside the SSM parameters; the output is redacted of them. Phase A did not run it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14: no principal identifier is read by this order; the floor re-reads the real holder on both paths.",
+  "world_is": "The Phase B floor read cannot run without the holder file. Phase A ran the portal login and the status arms on staged bytes and left the real-holder rehearsal undone, so no principal identifier was read in Phase A. Which reading binds in Phase B is not stated.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The GO should say whether the 'do not read one' sentence covers only the BEFORE/REHEARSAL (as r28_postdeploy.sh assumes) or the whole order."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S30",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T20:10Z",
+  "one_line": "The audit-lake read (first rivalfunds_view record after 2026-10-07T16:57:30Z) read 426 objects one at a time and took 1087 seconds; its first run under a 250 second bound timed out (rc 124).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN timeout 250 python r28_lake_read.py 2026-10-07T16:57:30Z ... -> rc 124 (19:4xZ).",
+      "RUN the same read once more with timeout 1200 in the background: rc=0 elapsed=1087s; objects_after_deploy=561, objects_read=426 (it stops at the first match), first_rivalfunds_view_record={arg_names: [day, route], bytes_present: true, object_write_time 2026-10-07T18:55:34Z}; other_args_kept=0 (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r28_lake_read.out). Read-only list and get; nothing written."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14: the Phase B floor includes the audit-lake read as `lake_record`; every criterion invocation runs under a bound (timeout 120).",
+  "world_is": "The read grows with the day's object count (53 objects at the r27 run, 561 now) and cannot finish inside a foreground bound. Run in Phase B inside r28_postdeploy.sh, a foreground call dies at the 600 second tool limit before it writes lake_record.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "The Phase A value (a record already exists after the r27 deploy, with kept arg names day and route and bytes present) is stated in the ANNOUNCE. Phase B should start r28_postdeploy.sh in the background."
+}
+```
