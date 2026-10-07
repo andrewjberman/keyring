@@ -2004,3 +2004,24 @@ DEV 34803ef6, 5 of 5 on scratch reference components. Its item arm PLANTS two it
 the cut. `AV-zw-2` is graded by `2.0.0_SA_COO~Z`'s `round77/checks/r77_ba5.py` (@7daf7c5677): AC1, AC2 and AC3 read NO at base, controls passing.
 **Fan-out:** 2 of 2 (`fanout: 2`). **Risk:** LOCAL. **Then:** battery29 on the combined candidate, a :5174 walk, CTO review from the
 renders, and ONE DEV push on Andrew's word.
+
+## v46 -- ROUND 46 (issuer, 2026-10-07 ~09:3xZ) -- ONE ISSUER ACT: THE COMPLETION GRADING WALK ON DEV 8ddfe409
+
+**Rectangle:** the CTO's ruling msg 30749 (2026-10-07 09:22Z, answering msg 30748): no round-46 list exists; the newest is
+`ledger/CTO_LIST_ROUND41.md`, and rounds 42 to 45 moved grades nobody has re-measured. Round 46 is ONE issuer act, the completion
+grading walk over FWD-1..27 on portal DEV, round-41 pattern. `3.0.0_SA_CVO~Z` grades it; the CTO countersigns as in
+`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND41.md` and cuts the round-47 list from every FWD that does not grade REALIZED.
+**Base:** portal DEV 8ddfe409 (ls-remote read 09:2xZ; PROD b06863fe = v2.1.203).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zx-G` GRADING WALK (issuer act, no product file) | FWD-1..27 | `deliverables/2.0.0_SA_COO~D/round46/` and the `read-<stamp>/` folders the instruments write beside themselves | 2.0.0_SA_COO~D |
+
+**Instruments, unchanged:** `round35/walk/closewalk35.mjs --no-officer "ASML NA" --names "BA US,VLO US,AMD US,MSFT US"`;
+`round37/walk/reads37.mjs --names "BA US,AMD US"`; `round42/walk/reads42.mjs` (the sidebar read); `round44/walk/reads44.mjs` and
+`round45/walk/reads45.mjs` (FWD-18, FWD-1 segments, the top band, input provenance); `round35/checks/instrument/instrument35.cjs`.
+Live: localhost:5174 = `C:/tmp/wk-dsgn-amgtv1-92/portal` detached at 8ddfe409 (`dev:live`, live API). Walker ARM and DISARMED
+through MSTR~Z.
+**Output:** `round46/COMPLETION_GRADES.round46.json` carrying the issuer's READINGS per FWD (what each instrument printed); the
+verdict column is the CVO's to grade.
+**Fan-out:** 0 worker chains (no product change). **Risk:** SERVED read (no write).
