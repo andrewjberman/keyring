@@ -7383,6 +7383,46 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:19:25Z",
+      "one_line": "build() has no switch to turn the legal-name join off, so the census BEFORE list is the same pool document run through securities_from_universe without the map, not a build() call.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bc-1 item 3: BEFORE = build() with the join off; AFTER = build() with it on. Item 1 gives build() one new keyword, legal_names_path, whose None reads the configured file.",
+      "world_is": "build(legal_names_path=None) joins the configured identity record, as item 1 requires, and the order names no off value. bc1_census.py builds BEFORE as securities_from_universe(document, rule=load_alias_rule()) on the document _read_universe() returned (the call build() makes, minus the map) and AFTER as build(); it prints a control that build() equals securities_from_universe(document, legal_names=load_legal_names()) and the control held (no CENSUS FAIL line).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.py (main(), the before_secs / after_secs / control_secs lines)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.out (CENSUS OK, no control failure)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W106-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~106",
+      "surfaced_at": "2026-10-07T12:19:25Z",
+      "one_line": "The census counts 137 of 242 alias sets that are exactly [security_key] before the join, not 138, and 18,634 silver articles, not the 18,619 of round 55; 138 securities take a name from the identity record and 3 stay key-only.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order section 0: for 138 of 242 securities the alias set is exactly [security_key]; section 0 also cites 18,619 silver articles from round 55.",
+      "world_is": "bc1_census.out at the pool universe/v1/2026-10-06.json: KEY-ONLY ALIAS SETS before 137 of 242, after 3 of 242 (6861_JP_Equity, CAT_US_Equity, CSL_AU_Equity: no pool name and no identity record); 141 securities have no pool name, 138 of them are in the identity record, and DELL, MU, TJX and ASML_US carry [security_key, whole brand] so they are not exactly [key]; DENOMINATOR silver articles 18634 (the silver corpus grew by 15 since round 55's 18,619).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~106/bc1_census.out (DENOMINATOR, KEY-ONLY ALIAS SETS, SUMMARY company_name_absent lines)",
+          "python: aliases != [security_key] among the identity-joined securities at the base list: DELL_US, MU_US, TJX_US, ASML_US_Equity, 2026-10-07"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
