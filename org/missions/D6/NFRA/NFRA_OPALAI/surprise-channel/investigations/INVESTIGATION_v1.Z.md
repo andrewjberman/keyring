@@ -2375,6 +2375,28 @@ every new row. The CVO's adjudication rows live in `adjudications/`, never here.
     "spec_asserts": "Row Z-S57's disarm (a): the map names every non-tool caller of a scoped identity's token with its measured scopes.",
     "world_is": "Met on the branch, not on CLOUD and not on any host. STILL OPEN, by ruling 30365 item (5): before GO, the release order reads on the live host whether OG_TAXSMA_WORKBOOK_IDENTITY (and MS_INGEST_IDENTITY, OTP_MAILBOX) is a scoped identity. Under a <tid>/<oid> Tax binding the concierge's consent is 9 scopes, the 8 plus Files.ReadWrite.All.",
     "notes": "Z-S57 itself is not edited (append-only). Remedy standing is the CVO's."
+  },
+  {
+    "id": "NFRA_OPALAI-Z-S60",
+    "project": "NFRA_OPALAI",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~AI",
+    "surfaced_at": "2026-10-07T04:58Z",
+    "one_line": "Cites NFRA_OPALAI-Z-S57 and Z-S59: the release-side disarm condition is met. NFRA_OPLGTW OG-rl-11 (gateway r25, live 240ac2fe5a since 2026-10-07T04:33:31Z) read the three identity keys on the live host before GO and exercised the narrowed consent. Z-S57 is DISARMED by its disarm_owner.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/NFRA_OPLGTW.TO-OG-rl-11.gateway-release-r25.proof_of_spec.json:151 (AC3 denominator, the releasing lane's measurement, read by this seat and not re-run): 'unscoped 17, scoped 9 (subset of 17), silent acquire OK, probes 9 of 9 200, sharepoint site resolve 200, identity keys read (Tax true, MS_INGEST false, OTP_MAILBOX false)'.",
+        "Content check by this seat (the release ref is not a descendant of the drain, so ancestry is not the instrument): git rev-parse of app/identity_scope.py, app/token_broker.py and tests/test_scoped_consent_r253.py at 240ac2fe5a equals the blob at the OA-f-14 drain af10f7d42b, 3 of 3, and differs from the prior live 7d65a28db0 where the file existed (negative control). app/graph_scope_map.py differs from the drain by one added entry, opal_data_refresh_status -> empty set (NFRA_OPLGTW OG-up-1, a357b3bdf6).",
+        "2.0.0_SA_COO~O msg 30584: 'the concierge's consent is 9 scopes, taking hold at its next /login'."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row Z-S57's release-side condition (1.0.0_SA_CTO~O msg 30365 item 5): before GO, read on the live host whether OG_TAXSMA_WORKBOOK_IDENTITY, MS_INGEST_IDENTITY and OTP_MAILBOX name a scoped identity.",
+    "world_is": "Read and covered: the Tax workbook binding IS the scoped identity, and the A1 caller table unions its Files.ReadWrite.All, the ninth scope; the other two keys are not scoped. STILL TRUE AND NOT A DEFECT OF THIS CELL (NFRA_OPLGTW row Z-W28-S11): the concierge's refresh token still carries its full earlier consent, so its effective Graph reach narrows only at its next /login; until then only the REQUEST is narrow.",
+    "notes": "Z-S57 itself is not edited (append-only). The next concierge /login is a planned act outside a send window, per msg 30584; it is not this lane's to schedule."
   }
 ]
 ```
