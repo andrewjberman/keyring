@@ -1,0 +1,5902 @@
+{
+ "claim": "measured: a read of the installed copies' METADATA on this machine; no request to any index was made; no package code was executed",
+ "conflicts": [
+  {
+   "child": "botocore",
+   "installed_version": "1.43.0",
+   "parent": "awscli",
+   "specifier": "==1.42.54"
+  },
+  {
+   "child": "botocore",
+   "installed_version": "1.43.0",
+   "parent": "boto3",
+   "specifier": "<1.43.0,>=1.42.54"
+  }
+ ],
+ "counts": {
+  "COMPILED-OTHER-PYTHON": 0,
+  "FITS": 47,
+  "NO-METADATA": 1,
+  "PURE": 114,
+  "UNKNOWN-NOT-INSTALLED": 0
+ },
+ "fixed_point": true,
+ "generated_utc": "2026-10-07T20:18:16Z",
+ "installed_sources": [
+  {
+   "distributions_read": 7,
+   "root": "<user-site-packages:3.12>",
+   "unreadable": 0
+  },
+  {
+   "distributions_read": 307,
+   "root": "<site-packages:3.12>",
+   "unreadable": 0
+  }
+ ],
+ "last_line": "INTAKE-CLOSURE target=cp312-win_amd64 lines=67 closure=162 dependencies_added=95 pure=114 fits=47 needs_fetch=1 unknown_not_installed=0 specifier_conflicts=2 fixed_point=True ok=True",
+ "members": [
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "s3fs",
+     "specifier": "<4.0.0,>=2.19.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/aiobotocore-3.7.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "aiobotocore",
+   "norm": "aiobotocore",
+   "other_copies": [],
+   "parents": [
+    "s3fs"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.7.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": ">=2.5.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/aiohappyeyeballs-2.6.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "aiohappyeyeballs",
+   "norm": "aiohappyeyeballs",
+   "other_copies": [],
+   "parents": [
+    "aiohttp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.6.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<4.0.0,>=3.12.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "s3fs",
+     "specifier": "!=4.0.0a0,!=4.0.0a1,>=3.9.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/aiohttp-3.14.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "aiohttp",
+   "norm": "aiohttp",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore",
+    "s3fs"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.14.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<1.0.0,>=0.5.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/aioitertools-0.13.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "aioitertools",
+   "norm": "aioitertools",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.13.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": ">=1.4.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/aiosignal-1.4.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "aiosignal",
+   "norm": "aiosignal",
+   "other_copies": [],
+   "parents": [
+    "aiohttp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.4.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "typer",
+     "specifier": ">=0.0.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/annotated_doc-0.0.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "annotated-doc",
+   "norm": "annotated-doc",
+   "other_copies": [],
+   "parents": [
+    "typer"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.0.4"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic",
+     "specifier": ">=0.6.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/annotated_types-0.7.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "annotated-types",
+   "norm": "annotated-types",
+   "other_copies": [],
+   "parents": [
+    "pydantic"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.7.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.84.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/anthropic-0.84.0.dist-info",
+   "kind": "line",
+   "line": "anthropic==0.84.0",
+   "line_specifier": "==0.84.0",
+   "name": "anthropic",
+   "norm": "anthropic",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.84.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<5,>=3.5.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpx",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=4.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<5,>=3.5.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==4.12.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sse-starlette",
+     "specifier": ">=4.7.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "starlette",
+     "specifier": "<5,>=3.6.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/anyio-4.12.1.dist-info",
+   "kind": "line",
+   "line": "anyio==4.12.1",
+   "line_specifier": "==4.12.1",
+   "name": "anyio",
+   "norm": "anyio",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "httpx",
+    "mcp",
+    "openai",
+    "sse-starlette",
+    "starlette"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.12.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": ">=17.3.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jsonschema",
+     "specifier": ">=22.2.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "referencing",
+     "specifier": ">=22.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/attrs-26.1.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "attrs",
+   "norm": "attrs",
+   "other_copies": [],
+   "parents": [
+    "aiohttp",
+    "jsonschema",
+    "referencing"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "26.1.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.44.44"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/awscli-1.44.44.dist-info",
+   "kind": "line",
+   "line": "awscli==1.44.44",
+   "line_specifier": "==1.44.44",
+   "name": "awscli",
+   "norm": "awscli",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.44.44"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==3.11.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/awswrangler-3.11.0.dist-info",
+   "kind": "line",
+   "line": "awswrangler==3.11.0",
+   "line_specifier": "==3.11.0",
+   "name": "awswrangler",
+   "norm": "awswrangler",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.11.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==5.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/bcrypt-5.0.0.dist-info",
+   "kind": "line",
+   "line": "bcrypt==5.0.0",
+   "line_specifier": "==5.0.0",
+   "name": "bcrypt",
+   "norm": "bcrypt",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp39-abi3-win_amd64"
+   ],
+   "version": "5.0.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==4.14.3"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=4.11.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/beautifulsoup4-4.14.3.dist-info",
+   "kind": "line",
+   "line": "beautifulsoup4==4.14.3",
+   "line_specifier": "==4.14.3",
+   "name": "beautifulsoup4",
+   "norm": "beautifulsoup4",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.14.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awswrangler",
+     "specifier": "<2.0.0,>=1.20.32"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.42.54"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/boto3-1.42.54.dist-info",
+   "kind": "line",
+   "line": "boto3==1.42.54",
+   "line_specifier": "==1.42.54",
+   "name": "boto3",
+   "norm": "boto3",
+   "other_copies": [],
+   "parents": [
+    "awswrangler"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.42.54"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<1.43.1,>=1.42.90"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "==1.42.54"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awswrangler",
+     "specifier": "<2.0.0,>=1.23.32"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "boto3",
+     "specifier": "<1.43.0,>=1.42.54"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "s3transfer",
+     "specifier": "<2.0a.0,>=1.37.4"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/botocore-1.43.0.dist-info",
+   "kind": "line",
+   "line": "botocore",
+   "line_specifier": "",
+   "name": "botocore",
+   "norm": "botocore",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore",
+    "awscli",
+    "awswrangler",
+    "boto3",
+    "s3transfer"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [
+    {
+     "installed_version": "1.43.0",
+     "parent": "awscli",
+     "specifier": "==1.42.54"
+    },
+    {
+     "installed_version": "1.43.0",
+     "parent": "boto3",
+     "specifier": "<1.43.0,>=1.42.54"
+    }
+   ],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.43.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<6.0.0,>=5.5.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/cachetools-5.5.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "cachetools",
+   "norm": "cachetools",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "5.5.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.2.10"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/catboost-1.2.10.dist-info",
+   "kind": "line",
+   "line": "catboost==1.2.10",
+   "line_specifier": "==1.2.10",
+   "name": "catboost",
+   "norm": "catboost",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.2.10"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "curl-cffi",
+     "specifier": ">=2024.2.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpcore",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpx",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": ">=2017.4.17"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/certifi-2026.1.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "certifi",
+   "norm": "certifi",
+   "other_copies": [],
+   "parents": [
+    "curl-cffi",
+    "httpcore",
+    "httpx",
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2026.1.4"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "platform_python_implementation != \"PyPy\"",
+     "parent": "cryptography",
+     "specifier": ">=2.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "curl-cffi",
+     "specifier": ">=1.12.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/cffi-2.0.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "cffi",
+   "norm": "cffi",
+   "other_copies": [],
+   "parents": [
+    "cryptography",
+    "curl-cffi"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.0.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pdfminer-six",
+     "specifier": ">=2.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<4,>=2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/charset_normalizer-3.4.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "charset-normalizer",
+   "norm": "charset-normalizer",
+   "other_copies": [],
+   "parents": [
+    "pdfminer-six",
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.4.4"
+  },
+  {
+   "class": "NO-METADATA",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<9.0.0,>=7.1.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "typer",
+     "specifier": ">=8.2.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "uvicorn",
+     "specifier": ">=7.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/click-8.3.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "click",
+   "norm": "click",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg",
+    "typer",
+    "uvicorn"
+   ],
+   "reason": "editable install (no wheel can be re-packed from it)",
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "8.3.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "<0.4.7,>=0.2.5"
+    },
+    {
+     "extras": [],
+     "marker": "platform_system == \"Windows\"",
+     "parent": "click",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": "sys_platform == \"win32\"",
+     "parent": "pytest",
+     "specifier": ">=0.4"
+    },
+    {
+     "extras": [],
+     "marker": "platform_system == \"Windows\"",
+     "parent": "tqdm",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/colorama-0.4.6.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "colorama",
+   "norm": "colorama",
+   "other_copies": [],
+   "parents": [
+    "awscli",
+    "click",
+    "pytest",
+    "tqdm"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "0.4.6"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=1.0.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/contourpy-1.3.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "contourpy",
+   "norm": "contourpy",
+   "other_copies": [],
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.3.3"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [
+      "toml"
+     ],
+     "marker": null,
+     "parent": "pytest-cov",
+     "specifier": ">=7.10.6"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/coverage-7.13.5.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "coverage",
+   "norm": "coverage",
+   "other_copies": [],
+   "parents": [
+    "pytest-cov"
+   ],
+   "reason": null,
+   "requested_extras": [
+    "toml"
+   ],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "7.13.5"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "msal",
+     "specifier": "<51,>=2.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pdfminer-six",
+     "specifier": ">=36.0.0"
+    },
+    {
+     "extras": [],
+     "marker": "extra == \"crypto\"",
+     "parent": "pyjwt",
+     "specifier": ">=3.4.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==48.0.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/cryptography-48.0.1.dist-info",
+   "kind": "line",
+   "line": "cryptography==48.0.1",
+   "line_specifier": "==48.0.1",
+   "name": "cryptography",
+   "norm": "cryptography",
+   "other_copies": [],
+   "parents": [
+    "msal",
+    "pdfminer-six",
+    "pyjwt"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp311-abi3-win_amd64"
+   ],
+   "version": "48.0.1"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.13.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": "<0.14,>=0.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/curl_cffi-0.13.0.dist-info",
+   "kind": "line",
+   "line": "curl_cffi==0.13.0",
+   "line_specifier": "==0.13.0",
+   "name": "curl_cffi",
+   "norm": "curl-cffi",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp39-abi3-win_amd64"
+   ],
+   "version": "0.13.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=0.10"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/cycler-0.12.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "cycler",
+   "norm": "cycler",
+   "other_copies": [],
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.12.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<2,>=1.7.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<2,>=1.7.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/distro-1.9.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "distro",
+   "norm": "distro",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "openai"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.9.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<1,>=0.15"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/docstring_parser-0.17.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "docstring_parser",
+   "norm": "docstring-parser",
+   "other_copies": [],
+   "parents": [
+    "anthropic"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.17.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "<=0.19,>=0.18.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/docutils-0.18.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "docutils",
+   "norm": "docutils",
+   "other_copies": [],
+   "parents": [
+    "awscli"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "0.18.1"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.5.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/duckdb-1.5.0.dist-info",
+   "kind": "line",
+   "line": "duckdb==1.5.0",
+   "line_specifier": "==1.5.0",
+   "name": "duckdb",
+   "norm": "duckdb",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.5.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-jose",
+     "specifier": "!=0.15"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/ecdsa-0.19.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "ecdsa",
+   "norm": "ecdsa",
+   "other_copies": [],
+   "parents": [
+    "python-jose"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "0.19.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openpyxl",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/et_xmlfile-2.0.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "et_xmlfile",
+   "norm": "et-xmlfile",
+   "other_copies": [],
+   "parents": [
+    "openpyxl"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.0.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas-market-calendars",
+     "specifier": ">=3.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/exchange_calendars-4.13.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "exchange_calendars",
+   "norm": "exchange-calendars",
+   "other_copies": [],
+   "parents": [
+    "pandas-market-calendars"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.13.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==6.0.12"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/feedparser-6.0.12.dist-info",
+   "kind": "line",
+   "line": "feedparser==6.0.12",
+   "line_specifier": "==6.0.12",
+   "name": "feedparser",
+   "norm": "feedparser",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "6.0.12"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=3.10.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/filelock-3.25.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "filelock",
+   "norm": "filelock",
+   "other_copies": [],
+   "parents": [
+    "huggingface-hub",
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.25.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=4.28.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/fonttools-4.63.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "fonttools",
+   "norm": "fonttools",
+   "other_copies": [],
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "4.63.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.3.4"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/frozendict-2.4.7.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "frozendict",
+   "norm": "frozendict",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.4.7"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": ">=1.1.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiosignal",
+     "specifier": ">=1.1.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/frozenlist-1.8.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "frozenlist",
+   "norm": "frozenlist",
+   "other_copies": [],
+   "parents": [
+    "aiohttp",
+    "aiosignal"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.8.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=2023.5.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": ">=2023.1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "s3fs",
+     "specifier": "<2026.6.1,>=2026.6.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ">=0.8.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/fsspec-2026.6.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "fsspec",
+   "norm": "fsspec",
+   "other_copies": [],
+   "parents": [
+    "huggingface-hub",
+    "pyiceberg",
+    "s3fs",
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2026.6.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/graphviz-0.21.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "graphviz",
+   "norm": "graphviz",
+   "other_copies": [],
+   "parents": [
+    "catboost"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.21"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "playwright",
+     "specifier": "<4.0.0,>=3.1.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/greenlet-3.3.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "greenlet",
+   "norm": "greenlet",
+   "other_copies": [],
+   "parents": [
+    "playwright"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.3.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpcore",
+     "specifier": ">=0.16"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "uvicorn",
+     "specifier": ">=0.8"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/h11-0.16.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "h11",
+   "norm": "h11",
+   "other_copies": [],
+   "parents": [
+    "httpcore",
+    "uvicorn"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.16.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.8.41"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/hdbscan-0.8.41.dist-info",
+   "kind": "line",
+   "line": "hdbscan==0.8.41",
+   "line_specifier": "==0.8.41",
+   "name": "hdbscan",
+   "norm": "hdbscan",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.8.41"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "platform_machine == \"x86_64\" or platform_machine == \"amd64\" or platform_machine == \"AMD64\" or platform_machine == \"arm64\" or platform_machine == \"aarch64\"",
+     "parent": "huggingface-hub",
+     "specifier": "<2.0.0,>=1.3.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/hf_xet-1.4.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "hf-xet",
+   "norm": "hf-xet",
+   "other_copies": [],
+   "parents": [
+    "huggingface-hub"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp37-abi3-win_amd64"
+   ],
+   "version": "1.4.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpx",
+     "specifier": "==1.*"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/httpcore-1.0.9.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "httpcore",
+   "norm": "httpcore",
+   "other_copies": [],
+   "parents": [
+    "httpx"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.0.9"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<1,>=0.25.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": "<1,>=0.23.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=0.27.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<1,>=0.23.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.28.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/httpx-0.28.1.dist-info",
+   "kind": "line",
+   "line": "httpx==0.28.1",
+   "line_specifier": "==0.28.1",
+   "name": "httpx",
+   "norm": "httpx",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "huggingface-hub",
+    "mcp",
+    "openai"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.28.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=0.4"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/httpx_sse-0.4.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "httpx-sse",
+   "norm": "httpx-sse",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.4.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ">=0.20.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "tokenizers",
+     "specifier": "<2.0,>=0.16.4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": "<2.0,>=1.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/huggingface_hub-1.6.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "huggingface_hub",
+   "norm": "huggingface-hub",
+   "other_copies": [],
+   "parents": [
+    "sentence-transformers",
+    "tokenizers",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.6.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anyio",
+     "specifier": ">=2.8"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "httpx",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<4,>=2.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yarl",
+     "specifier": ">=2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/idna-3.11.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "idna",
+   "norm": "idna",
+   "other_copies": [],
+   "parents": [
+    "anyio",
+    "httpx",
+    "requests",
+    "yarl"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.11"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest",
+     "specifier": ">=1.0.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/iniconfig-2.3.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "iniconfig",
+   "norm": "iniconfig",
+   "other_copies": [],
+   "parents": [
+    "pytest"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/jinja2-3.1.6.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "Jinja2",
+   "norm": "jinja2",
+   "other_copies": [],
+   "parents": [
+    "model2vec",
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.1.6"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<1,>=0.4.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<1,>=0.10.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/jiter-0.13.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "jiter",
+   "norm": "jiter",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "openai"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.13.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<2.0.0,>=0.7.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "boto3",
+     "specifier": "<2.0.0,>=0.7.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "botocore",
+     "specifier": "<2.0.0,>=0.7.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/jmespath-1.1.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "jmespath",
+   "norm": "jmespath",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore",
+    "boto3",
+    "botocore"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.1.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "hdbscan",
+     "specifier": ">=1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "scikit-learn",
+     "specifier": ">=1.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/joblib-1.5.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "joblib",
+   "norm": "joblib",
+   "other_copies": [],
+   "parents": [
+    "hdbscan",
+    "model2vec",
+    "scikit-learn"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.5.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=4.20.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==4.26.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/jsonschema-4.26.0.dist-info",
+   "kind": "line",
+   "line": "jsonschema==4.26.0",
+   "line_specifier": "==4.26.0",
+   "name": "jsonschema",
+   "norm": "jsonschema",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.26.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jsonschema",
+     "specifier": ">=2023.03.6"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/jsonschema_specifications-2025.9.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "jsonschema-specifications",
+   "norm": "jsonschema-specifications",
+   "other_copies": [],
+   "parents": [
+    "jsonschema"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2025.9.1"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=1.3.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/kiwisolver-1.5.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "kiwisolver",
+   "norm": "kiwisolver",
+   "other_copies": [],
+   "parents": [
+    "matplotlib"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.5.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=0.3.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/korean_lunar_calendar-0.4.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "korean_lunar_calendar",
+   "norm": "korean-lunar-calendar",
+   "other_copies": [],
+   "parents": [
+    "exchange-calendars"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.4.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.11.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/kuzu-0.11.3.dist-info",
+   "kind": "line",
+   "line": "kuzu==0.11.3",
+   "line_specifier": "==0.11.3",
+   "name": "kuzu",
+   "norm": "kuzu",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.11.3"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-docx",
+     "specifier": ">=3.1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-pptx",
+     "specifier": ">=3.1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==6.0.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/lxml-6.0.2.dist-info",
+   "kind": "line",
+   "line": "lxml==6.0.2",
+   "line_specifier": "==6.0.2",
+   "name": "lxml",
+   "norm": "lxml",
+   "other_copies": [],
+   "parents": [
+    "python-docx",
+    "python-pptx"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "6.0.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "rich",
+     "specifier": ">=2.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/markdown_it_py-4.0.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "markdown-it-py",
+   "norm": "markdown-it-py",
+   "other_copies": [],
+   "parents": [
+    "rich"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.0.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jinja2",
+     "specifier": ">=2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/markupsafe-3.0.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "MarkupSafe",
+   "norm": "markupsafe",
+   "other_copies": [],
+   "parents": [
+    "jinja2"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.0.3"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==3.11.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/matplotlib-3.11.1.dist-info",
+   "kind": "line",
+   "line": "matplotlib==3.11.1",
+   "line_specifier": "==3.11.1",
+   "name": "matplotlib",
+   "norm": "matplotlib",
+   "other_copies": [],
+   "parents": [
+    "catboost"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "3.11.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.26.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/mcp-1.26.0.dist-info",
+   "kind": "line",
+   "line": "mcp==1.26.0",
+   "line_specifier": "==1.26.0",
+   "name": "mcp",
+   "norm": "mcp",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.26.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 3,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "markdown-it-py",
+     "specifier": "~=0.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/mdurl-0.1.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "mdurl",
+   "norm": "mdurl",
+   "other_copies": [],
+   "parents": [
+    "markdown-it-py"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.1.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<6.0.0,>=4.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/mmh3-5.2.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "mmh3",
+   "norm": "mmh3",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "5.2.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.8.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/model2vec-0.8.2.dist-info",
+   "kind": "line",
+   "line": "model2vec==0.8.2",
+   "line_specifier": "==0.8.2",
+   "name": "model2vec",
+   "norm": "model2vec",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.8.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sympy",
+     "specifier": "<1.4,>=1.1.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/mpmath-1.3.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "mpmath",
+   "norm": "mpmath",
+   "other_copies": [],
+   "parents": [
+    "sympy"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.39.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/msal-1.39.0.dist-info",
+   "kind": "line",
+   "line": "msal==1.39.0",
+   "line_specifier": "==1.39.0",
+   "name": "msal",
+   "norm": "msal",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.39.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<7.0.0,>=6.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": "<7.0,>=4.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yarl",
+     "specifier": ">=4.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/multidict-6.7.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "multidict",
+   "norm": "multidict",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore",
+    "aiohttp",
+    "yarl"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "6.7.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=0.0.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/multitasking-0.0.12.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "multitasking",
+   "norm": "multitasking",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.0.12"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "plotly",
+     "specifier": ">=1.15.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/narwhals-2.24.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "narwhals",
+   "norm": "narwhals",
+   "other_copies": [],
+   "parents": [
+    "plotly"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.24.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ">=2.5.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/networkx-3.6.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "networkx",
+   "norm": "networkx",
+   "other_copies": [],
+   "parents": [
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.6.1"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "python_version >= \"3.10\"",
+     "parent": "awswrangler",
+     "specifier": "<3.0,>=1.26"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": "<3.0,>=1.16.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "contourpy",
+     "specifier": ">=1.25"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=1.26.4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "hdbscan",
+     "specifier": "<3,>=1.20"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=1.25"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": "python_version >= \"3.12\"",
+     "parent": "pandas",
+     "specifier": ">=1.26.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.4.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "scikit-learn",
+     "specifier": ">=1.24.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "scipy",
+     "specifier": "<2.7,>=1.26.4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ">=1.17"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=1.16.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/numpy-2.4.2.dist-info",
+   "kind": "line",
+   "line": "numpy==2.4.2",
+   "line_specifier": "==2.4.2",
+   "name": "numpy",
+   "norm": "numpy",
+   "other_copies": [],
+   "parents": [
+    "awswrangler",
+    "catboost",
+    "contourpy",
+    "exchange-calendars",
+    "hdbscan",
+    "matplotlib",
+    "model2vec",
+    "pandas",
+    "scikit-learn",
+    "scipy",
+    "sentence-transformers",
+    "transformers",
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.4.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.24.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/openai-2.24.0.dist-info",
+   "kind": "line",
+   "line": "openai==2.24.0",
+   "line_specifier": "==2.24.0",
+   "name": "openai",
+   "norm": "openai",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.24.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==3.1.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/openpyxl-3.1.5.dist-info",
+   "kind": "line",
+   "line": "openpyxl==3.1.5",
+   "line_specifier": "==3.1.5",
+   "name": "openpyxl",
+   "norm": "openpyxl",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "3.1.5"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awswrangler",
+     "specifier": "<25.0,>=21.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=20.9"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=20.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "plotly",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest",
+     "specifier": ">=22"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==24.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ">=20.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/packaging-24.2.dist-info",
+   "kind": "line",
+   "line": "packaging==24.2",
+   "line_specifier": "==24.2",
+   "name": "packaging",
+   "norm": "packaging",
+   "other_copies": [],
+   "parents": [
+    "awswrangler",
+    "huggingface-hub",
+    "matplotlib",
+    "plotly",
+    "pytest",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "24.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awswrangler",
+     "specifier": "<3.0.0,>=1.2.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": "<4.0,>=0.24"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=1.5.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas-market-calendars",
+     "specifier": ">=1.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.3.3"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=1.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pandas-2.3.3.dist-info",
+   "kind": "line",
+   "line": "pandas==2.3.3",
+   "line_specifier": "==2.3.3",
+   "name": "pandas",
+   "norm": "pandas",
+   "other_copies": [],
+   "parents": [
+    "awswrangler",
+    "catboost",
+    "exchange-calendars",
+    "pandas-market-calendars",
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.3.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==5.4.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pandas_market_calendars-5.4.0.dist-info",
+   "kind": "line",
+   "line": "pandas_market_calendars==5.4.0",
+   "line_specifier": "==5.4.0",
+   "name": "pandas_market_calendars",
+   "norm": "pandas-market-calendars",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "5.4.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pdfplumber",
+     "specifier": "==20251230"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==20251230"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pdfminer_six-20251230.dist-info",
+   "kind": "line",
+   "line": "pdfminer.six==20251230",
+   "line_specifier": "==20251230",
+   "name": "pdfminer.six",
+   "norm": "pdfminer-six",
+   "other_copies": [],
+   "parents": [
+    "pdfplumber"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "20251230"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.11.9"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pdfplumber-0.11.9.dist-info",
+   "kind": "line",
+   "line": "pdfplumber==0.11.9",
+   "line_specifier": "==0.11.9",
+   "name": "pdfplumber",
+   "norm": "pdfplumber",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.11.9"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=3.16.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/peewee-4.0.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "peewee",
+   "norm": "peewee",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.0.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=9"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pdfplumber",
+     "specifier": ">=9.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-pptx",
+     "specifier": ">=3.3.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==12.1.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pillow-12.1.1.dist-info",
+   "kind": "line",
+   "line": "pillow==12.1.1",
+   "line_specifier": "==12.1.1",
+   "name": "pillow",
+   "norm": "pillow",
+   "other_copies": [],
+   "parents": [
+    "matplotlib",
+    "pdfplumber",
+    "python-pptx"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "12.1.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/platformdirs-4.9.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "platformdirs",
+   "norm": "platformdirs",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.9.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.58.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/playwright-1.58.0.dist-info",
+   "kind": "line",
+   "line": "playwright==1.58.0",
+   "line_specifier": "==1.58.0",
+   "name": "playwright",
+   "norm": "playwright",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.58.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/plotly-6.9.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "plotly",
+   "norm": "plotly",
+   "other_copies": [],
+   "parents": [
+    "catboost"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "6.9.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest",
+     "specifier": "<2,>=1.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest-cov",
+     "specifier": ">=1.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pluggy-1.6.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pluggy",
+   "norm": "pluggy",
+   "other_copies": [],
+   "parents": [
+    "pytest",
+    "pytest-cov"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.6.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": ">=0.2.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yarl",
+     "specifier": ">=0.2.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/propcache-0.5.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "propcache",
+   "norm": "propcache",
+   "other_copies": [],
+   "parents": [
+    "aiohttp",
+    "yarl"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.5.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=3.19.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/protobuf-6.33.5.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "protobuf",
+   "norm": "protobuf",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp310-abi3-win_amd64"
+   ],
+   "version": "6.33.5"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==7.2.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/psutil-7.2.2.dist-info",
+   "kind": "line",
+   "line": "psutil==7.2.2",
+   "line_specifier": "==7.2.2",
+   "name": "psutil",
+   "norm": "psutil",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp37-abi3-win_amd64"
+   ],
+   "version": "7.2.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "awswrangler",
+     "specifier": "<19.0.0,>=8.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==18.1.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyarrow-18.1.0.dist-info",
+   "kind": "line",
+   "line": "pyarrow==18.1.0",
+   "line_specifier": "==18.1.0",
+   "name": "pyarrow",
+   "norm": "pyarrow",
+   "other_copies": [],
+   "parents": [
+    "awswrangler"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "18.1.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-jose",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "rsa",
+     "specifier": ">=0.1.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyasn1-0.6.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pyasn1",
+   "norm": "pyasn1",
+   "other_copies": [],
+   "parents": [
+    "python-jose",
+    "rsa"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.6.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "implementation_name != \"PyPy\"",
+     "parent": "cffi",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pycparser-3.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pycparser",
+   "norm": "pycparser",
+   "other_copies": [],
+   "parents": [
+    "cffi"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<3,>=1.9.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": "<3.0.0,>=2.11.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<3,>=1.9.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic-settings",
+     "specifier": ">=2.7.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "!=2.4.0,!=2.4.1,<3.0,>=2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pydantic-2.12.5.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pydantic",
+   "norm": "pydantic",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "mcp",
+    "openai",
+    "pydantic-settings",
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.12.5"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic",
+     "specifier": "==2.41.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pydantic_core-2.41.5.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pydantic_core",
+   "norm": "pydantic-core",
+   "other_copies": [],
+   "parents": [
+    "pydantic"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.41.5"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=2.5.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pydantic_settings-2.13.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pydantic-settings",
+   "norm": "pydantic-settings",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.13.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "playwright",
+     "specifier": "<14,>=13"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyee-13.0.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pyee",
+   "norm": "pyee",
+   "other_copies": [],
+   "parents": [
+    "playwright"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "13.0.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest",
+     "specifier": ">=2.7.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "rich",
+     "specifier": "<3.0.0,>=2.13.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pygments-2.19.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "Pygments",
+   "norm": "pygments",
+   "other_copies": [],
+   "parents": [
+    "pytest",
+    "rich"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.19.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.9.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyiceberg-0.9.1.dist-info",
+   "kind": "line",
+   "line": "pyiceberg==0.9.1",
+   "line_specifier": "==0.9.1",
+   "name": "pyiceberg",
+   "norm": "pyiceberg",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.9.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [
+      "crypto"
+     ],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=2.10.1"
+    },
+    {
+     "extras": [
+      "crypto"
+     ],
+     "marker": null,
+     "parent": "msal",
+     "specifier": "<3,>=1.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.11.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyjwt-2.11.0.dist-info",
+   "kind": "line",
+   "line": "PyJWT==2.11.0",
+   "line_specifier": "==2.11.0",
+   "name": "PyJWT",
+   "norm": "pyjwt",
+   "other_copies": [],
+   "parents": [
+    "mcp",
+    "msal"
+   ],
+   "reason": null,
+   "requested_extras": [
+    "crypto"
+   ],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.11.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=2.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyluach-2.3.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pyluach",
+   "norm": "pyluach",
+   "other_copies": [],
+   "parents": [
+    "exchange-calendars"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.3.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.27.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pymupdf-1.27.1.dist-info",
+   "kind": "line",
+   "line": "PyMuPDF==1.27.1",
+   "line_specifier": "==1.27.1",
+   "name": "PyMuPDF",
+   "norm": "pymupdf",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp310-abi3-win_amd64"
+   ],
+   "version": "1.27.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=3"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<4.0.0,>=3.1.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyparsing-3.3.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pyparsing",
+   "norm": "pyparsing",
+   "other_copies": [],
+   "parents": [
+    "matplotlib",
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.3.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==6.12.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pypdf-6.12.2.dist-info",
+   "kind": "line",
+   "line": "pypdf==6.12.2",
+   "line_specifier": "==6.12.2",
+   "name": "pypdf",
+   "norm": "pypdf",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "6.12.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pdfplumber",
+     "specifier": ">=4.18.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pypdfium2-5.7.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "pypdfium2",
+   "norm": "pypdfium2",
+   "other_copies": [],
+   "parents": [
+    "pdfplumber"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-win_amd64"
+   ],
+   "version": "5.7.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pytest-cov",
+     "specifier": ">=7"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==9.0.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pytest-9.0.2.dist-info",
+   "kind": "line",
+   "line": "pytest==9.0.2",
+   "line_specifier": "==9.0.2",
+   "name": "pytest",
+   "norm": "pytest",
+   "other_copies": [],
+   "parents": [
+    "pytest-cov"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "9.0.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==7.1.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pytest_cov-7.1.0.dist-info",
+   "kind": "line",
+   "line": "pytest-cov==7.1.0",
+   "line_specifier": "==7.1.0",
+   "name": "pytest-cov",
+   "norm": "pytest-cov",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "7.1.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<3.0.0,>=2.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "botocore",
+     "specifier": "<3.0.0,>=2.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "matplotlib",
+     "specifier": ">=2.7"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2.8.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-whois",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.9.0.post0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "strictyaml",
+     "specifier": ">=2.6.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_dateutil-2.9.0.post0.dist-info",
+   "kind": "line",
+   "line": "python-dateutil==2.9.0.post0",
+   "line_specifier": "==2.9.0.post0",
+   "name": "python-dateutil",
+   "norm": "python-dateutil",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore",
+    "botocore",
+    "matplotlib",
+    "pandas",
+    "python-whois",
+    "strictyaml"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2.9.0.post0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_docx-1.2.0.dist-info",
+   "kind": "line",
+   "line": "python-docx==1.2.0",
+   "line_specifier": "==1.2.0",
+   "name": "python-docx",
+   "norm": "python-docx",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.2.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic-settings",
+     "specifier": ">=0.21.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.2.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_dotenv-1.2.2.dist-info",
+   "kind": "line",
+   "line": "python-dotenv==1.2.2",
+   "line_specifier": "==1.2.2",
+   "name": "python-dotenv",
+   "norm": "python-dotenv",
+   "other_copies": [],
+   "parents": [
+    "pydantic-settings"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.2.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==3.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_jose-3.3.0.dist-info",
+   "kind": "line",
+   "line": "python-jose==3.3.0",
+   "line_specifier": "==3.3.0",
+   "name": "python-jose",
+   "norm": "python-jose",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "3.3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=0.0.9"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_multipart-0.0.22.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "python-multipart",
+   "norm": "python-multipart",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.0.22"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.0.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_pptx-1.0.2.dist-info",
+   "kind": "line",
+   "line": "python-pptx==1.0.2",
+   "line_specifier": "==1.0.2",
+   "name": "python-pptx",
+   "norm": "python-pptx",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.0.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.9.6"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/python_whois-0.9.6.dist-info",
+   "kind": "line",
+   "line": "python-whois==0.9.6",
+   "line_specifier": "==0.9.6",
+   "name": "python-whois",
+   "norm": "python-whois",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.9.6"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2020.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2025.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2022.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pytz-2025.2.dist-info",
+   "kind": "line",
+   "line": "pytz==2025.2",
+   "line_specifier": "==2025.2",
+   "name": "pytz",
+   "norm": "pytz",
+   "other_copies": [],
+   "parents": [
+    "pandas",
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2025.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "sys_platform == \"win32\"",
+     "parent": "mcp",
+     "specifier": ">=310"
+    },
+    {
+     "extras": [],
+     "marker": "sys_platform == \"win32\"",
+     "parent": "requirements.txt",
+     "specifier": "==311"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pywin32-311.dist-info",
+   "kind": "line",
+   "line": "pywin32==311; sys_platform == \"win32\"",
+   "line_specifier": "==311",
+   "name": "pywin32",
+   "norm": "pywin32",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "311"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "<6.1,>=3.10"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=5.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==6.0.3"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ">=5.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/pyyaml-6.0.3.dist-info",
+   "kind": "line",
+   "line": "PyYAML==6.0.3",
+   "line_specifier": "==6.0.3",
+   "name": "PyYAML",
+   "norm": "pyyaml",
+   "other_copies": [],
+   "parents": [
+    "awscli",
+    "huggingface-hub",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "6.0.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jsonschema",
+     "specifier": ">=0.28.4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jsonschema-specifications",
+     "specifier": ">=0.31.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.37.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/referencing-0.37.0.dist-info",
+   "kind": "line",
+   "line": "referencing==0.37.0",
+   "line_specifier": "==0.37.0",
+   "name": "referencing",
+   "norm": "referencing",
+   "other_copies": [],
+   "parents": [
+    "jsonschema",
+    "jsonschema-specifications"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.37.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": "!=2019.12.17"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/regex-2026.2.28.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "regex",
+   "norm": "regex",
+   "other_copies": [],
+   "parents": [
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2026.2.28"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "msal",
+     "specifier": "<3,>=2.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<3.0.0,>=2.20.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests-aws4auth",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.32.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=2.31"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/requests-2.32.5.dist-info",
+   "kind": "line",
+   "line": "requests==2.32.5",
+   "line_specifier": "==2.32.5",
+   "name": "requests",
+   "norm": "requests",
+   "other_copies": [],
+   "parents": [
+    "msal",
+    "pyiceberg",
+    "requests-aws4auth",
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.32.5"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.3.2"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/requests_aws4auth-1.3.2.dist-info",
+   "kind": "line",
+   "line": "requests-aws4auth==1.3.2",
+   "line_specifier": "==1.3.2",
+   "name": "requests-aws4auth",
+   "norm": "requests-aws4auth",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.3.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<14.0.0,>=10.11.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "typer",
+     "specifier": ">=12.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/rich-13.9.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "rich",
+   "norm": "rich",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg",
+    "typer"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "13.9.4"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "jsonschema",
+     "specifier": ">=0.25.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "referencing",
+     "specifier": ">=0.7.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.30.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/rpds_py-0.30.0.dist-info",
+   "kind": "line",
+   "line": "rpds-py==0.30.0",
+   "line_specifier": "==0.30.0",
+   "name": "rpds-py",
+   "norm": "rpds-py",
+   "other_copies": [],
+   "parents": [
+    "jsonschema",
+    "referencing"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "0.30.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "<4.8,>=3.1.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-jose",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/rsa-4.7.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "rsa",
+   "norm": "rsa",
+   "other_copies": [],
+   "parents": [
+    "awscli",
+    "python-jose"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.7.2"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.15.11"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/ruff-0.15.11.dist-info",
+   "kind": "line",
+   "line": "ruff==0.15.11",
+   "line_specifier": "==0.15.11",
+   "name": "ruff",
+   "norm": "ruff",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-win_amd64"
+   ],
+   "version": "0.15.11"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/s3fs-2026.6.0.dist-info",
+   "kind": "line",
+   "line": "s3fs",
+   "line_specifier": "",
+   "name": "s3fs",
+   "norm": "s3fs",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2026.6.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awscli",
+     "specifier": "<0.17.0,>=0.16.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "boto3",
+     "specifier": "<0.17.0,>=0.16.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/s3transfer-0.16.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "s3transfer",
+   "norm": "s3transfer",
+   "other_copies": [],
+   "parents": [
+    "awscli",
+    "boto3"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.16.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.7.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ">=0.4.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/safetensors-0.7.0.dist-info",
+   "kind": "line",
+   "line": "safetensors==0.7.0",
+   "line_specifier": "==0.7.0",
+   "name": "safetensors",
+   "norm": "safetensors",
+   "other_copies": [],
+   "parents": [
+    "model2vec",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp38-abi3-win_amd64"
+   ],
+   "version": "0.7.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "hdbscan",
+     "specifier": ">=1.6"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.8.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/scikit_learn-1.8.0.dist-info",
+   "kind": "line",
+   "line": "scikit-learn==1.8.0",
+   "line_specifier": "==1.8.0",
+   "name": "scikit-learn",
+   "norm": "scikit-learn",
+   "other_copies": [],
+   "parents": [
+    "hdbscan",
+    "sentence-transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.8.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "hdbscan",
+     "specifier": ">=1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.17.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "scikit-learn",
+     "specifier": ">=1.10.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/scipy-1.17.1.dist-info",
+   "kind": "line",
+   "line": "scipy==1.17.1",
+   "line_specifier": "==1.17.1",
+   "name": "scipy",
+   "norm": "scipy",
+   "other_copies": [],
+   "parents": [
+    "catboost",
+    "hdbscan",
+    "scikit-learn",
+    "sentence-transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.17.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==5.2.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sentence_transformers-5.2.3.dist-info",
+   "kind": "line",
+   "line": "sentence-transformers==5.2.3",
+   "line_specifier": "==5.2.3",
+   "name": "sentence-transformers",
+   "norm": "sentence-transformers",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "5.2.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "python_version >= \"3.12\"",
+     "parent": "awswrangler",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": "python_version >= \"3.12\"",
+     "parent": "torch",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/setuptools-82.0.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "setuptools",
+   "norm": "setuptools",
+   "other_copies": [],
+   "parents": [
+    "awswrangler",
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "82.0.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "feedparser",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sgmllib3k-1.0.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "sgmllib3k",
+   "norm": "sgmllib3k",
+   "other_copies": [],
+   "parents": [
+    "feedparser"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.0.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "typer",
+     "specifier": ">=1.3.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/shellingham-1.5.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "shellingham",
+   "norm": "shellingham",
+   "other_copies": [],
+   "parents": [
+    "typer"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "1.5.4"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "catboost",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "ecdsa",
+     "specifier": ">=1.9.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-dateutil",
+     "specifier": ">=1.5"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/six-1.17.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "six",
+   "norm": "six",
+   "other_copies": [],
+   "parents": [
+    "catboost",
+    "ecdsa",
+    "python-dateutil"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "1.17.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sniffio-1.3.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "sniffio",
+   "norm": "sniffio",
+   "other_copies": [],
+   "parents": [
+    "anthropic",
+    "openai"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.3.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "==2.4.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sortedcontainers-2.4.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "sortedcontainers",
+   "norm": "sortedcontainers",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2.4.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "beautifulsoup4",
+     "specifier": ">=1.6.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/soupsieve-2.8.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "soupsieve",
+   "norm": "soupsieve",
+   "other_copies": [],
+   "parents": [
+    "beautifulsoup4"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.8.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=1.6.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sse_starlette-3.3.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "sse-starlette",
+   "norm": "sse-starlette",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.3.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=0.27"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.52.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sse-starlette",
+     "specifier": ">=0.49.1"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/starlette-0.52.1.dist-info",
+   "kind": "line",
+   "line": "starlette==0.52.1",
+   "line_specifier": "==0.52.1",
+   "name": "starlette",
+   "norm": "starlette",
+   "other_copies": [],
+   "parents": [
+    "mcp",
+    "sse-starlette"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.52.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<2.0.0,>=1.7.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/strictyaml-1.7.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "strictyaml",
+   "norm": "strictyaml",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.7.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ">=1.13.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/sympy-1.14.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "sympy",
+   "norm": "sympy",
+   "other_copies": [],
+   "parents": [
+    "torch"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.14.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyiceberg",
+     "specifier": "<10.0.0,>=8.2.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/tenacity-9.1.4.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "tenacity",
+   "norm": "tenacity",
+   "other_copies": [],
+   "parents": [
+    "pyiceberg"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "9.1.4"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "scikit-learn",
+     "specifier": ">=3.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/threadpoolctl-3.6.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "threadpoolctl",
+   "norm": "threadpoolctl",
+   "other_copies": [],
+   "parents": [
+    "scikit-learn"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.6.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ">=0.20"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.22.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": "<=0.23.0,>=0.22.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/tokenizers-0.22.2.dist-info",
+   "kind": "line",
+   "line": "tokenizers==0.22.2",
+   "line_specifier": "==0.22.2",
+   "name": "tokenizers",
+   "norm": "tokenizers",
+   "other_copies": [],
+   "parents": [
+    "model2vec",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp39-abi3-win_amd64"
+   ],
+   "version": "0.22.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=1.0.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/toolz-1.1.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "toolz",
+   "norm": "toolz",
+   "other_copies": [],
+   "parents": [
+    "exchange-calendars"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "1.1.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.10.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ">=1.11.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/torch-2.10.0.dist-info",
+   "kind": "line",
+   "line": "torch==2.10.0",
+   "line_specifier": "==2.10.0",
+   "name": "torch",
+   "norm": "torch",
+   "other_copies": [],
+   "parents": [
+    "sentence-transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.10.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=4.42.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "model2vec",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": ">4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ">=4.27"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/tqdm-4.67.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "tqdm",
+   "norm": "tqdm",
+   "other_copies": [],
+   "parents": [
+    "huggingface-hub",
+    "model2vec",
+    "openai",
+    "sentence-transformers",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.67.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==5.3.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": "<6.0.0,>=4.41.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/transformers-5.3.0.dist-info",
+   "kind": "line",
+   "line": "transformers==5.3.0",
+   "line_specifier": "==5.3.0",
+   "name": "transformers",
+   "norm": "transformers",
+   "other_copies": [],
+   "parents": [
+    "sentence-transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "5.3.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "transformers",
+     "specifier": ""
+    }
+   ],
+   "evidence": "<site-packages:3.12>/typer-0.24.1.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "typer",
+   "norm": "typer",
+   "other_copies": [],
+   "parents": [
+    "huggingface-hub",
+    "transformers"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.24.1"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "aiohttp",
+     "specifier": ">=4.4"
+    },
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "aiosignal",
+     "specifier": ">=4.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "anthropic",
+     "specifier": "<5,>=4.10"
+    },
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "anyio",
+     "specifier": ">=4.5"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "awswrangler",
+     "specifier": "<5.0.0,>=4.4.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "beautifulsoup4",
+     "specifier": ">=4.0.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "huggingface-hub",
+     "specifier": ">=4.1.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=4.9.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "openai",
+     "specifier": "<5,>=4.11"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic",
+     "specifier": ">=4.14.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic-core",
+     "specifier": ">=4.14.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pyee",
+     "specifier": ""
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-docx",
+     "specifier": ">=4.9.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-pptx",
+     "specifier": ">=4.9.0"
+    },
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "referencing",
+     "specifier": ">=4.4.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "sentence-transformers",
+     "specifier": ">=4.5.0"
+    },
+    {
+     "extras": [],
+     "marker": "python_version < \"3.13\"",
+     "parent": "starlette",
+     "specifier": ">=4.10.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "torch",
+     "specifier": ">=4.10.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "typing-inspection",
+     "specifier": ">=4.12.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/typing_extensions-4.16.0.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "typing_extensions",
+   "norm": "typing-extensions",
+   "other_copies": [],
+   "parents": [
+    "aiohttp",
+    "aiosignal",
+    "anthropic",
+    "anyio",
+    "awswrangler",
+    "beautifulsoup4",
+    "huggingface-hub",
+    "mcp",
+    "openai",
+    "pydantic",
+    "pydantic-core",
+    "pyee",
+    "python-docx",
+    "python-pptx",
+    "referencing",
+    "sentence-transformers",
+    "starlette",
+    "torch",
+    "typing-inspection"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "4.16.0"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "mcp",
+     "specifier": ">=0.4.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic",
+     "specifier": ">=0.4.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pydantic-settings",
+     "specifier": ">=0.4.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/typing_inspection-0.4.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "typing-inspection",
+   "norm": "typing-inspection",
+   "other_copies": [],
+   "parents": [
+    "mcp",
+    "pydantic",
+    "pydantic-settings"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.4.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "exchange-calendars",
+     "specifier": ">=2025.2"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "pandas",
+     "specifier": ">=2022.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/tzdata-2025.3.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "tzdata",
+   "norm": "tzdata",
+   "other_copies": [],
+   "parents": [
+    "exchange-calendars",
+    "pandas"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "2025.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "botocore",
+     "specifier": "!=2.2.0,<3,>=1.25.4"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requests",
+     "specifier": "<3,>=1.21.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==2.6.3"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/urllib3-2.6.3.dist-info",
+   "kind": "line",
+   "line": "urllib3==2.6.3",
+   "line_specifier": "==2.6.3",
+   "name": "urllib3",
+   "norm": "urllib3",
+   "other_copies": [],
+   "parents": [
+    "botocore",
+    "requests"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "2.6.3"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": "sys_platform != \"emscripten\"",
+     "parent": "mcp",
+     "specifier": ">=0.31.1"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==0.42.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/uvicorn-0.42.0.dist-info",
+   "kind": "line",
+   "line": "uvicorn==0.42.0",
+   "line_specifier": "==0.42.0",
+   "name": "uvicorn",
+   "norm": "uvicorn",
+   "other_copies": [],
+   "parents": [
+    "mcp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "0.42.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==16.0"
+    },
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "yfinance",
+     "specifier": ">=13.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/websockets-16.0.dist-info",
+   "kind": "line",
+   "line": "websockets==16.0",
+   "line_specifier": "==16.0",
+   "name": "websockets",
+   "norm": "websockets",
+   "other_copies": [],
+   "parents": [
+    "yfinance"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "16.0"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiobotocore",
+     "specifier": "<3.0.0,>=1.10.10"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/wrapt-2.2.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "wrapt",
+   "norm": "wrapt",
+   "other_copies": [],
+   "parents": [
+    "aiobotocore"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "2.2.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 1,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "python-pptx",
+     "specifier": ">=0.5.7"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/xlsxwriter-3.2.9.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "xlsxwriter",
+   "norm": "xlsxwriter",
+   "other_copies": [],
+   "parents": [
+    "python-pptx"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py3-none-any"
+   ],
+   "version": "3.2.9"
+  },
+  {
+   "class": "FITS",
+   "depth": 2,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "aiohttp",
+     "specifier": "<2.0,>=1.17.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/yarl-1.24.2.dist-info",
+   "kind": "dependency",
+   "line": null,
+   "line_specifier": null,
+   "name": "yarl",
+   "norm": "yarl",
+   "other_copies": [],
+   "parents": [
+    "aiohttp"
+   ],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "cp312-cp312-win_amd64"
+   ],
+   "version": "1.24.2"
+  },
+  {
+   "class": "PURE",
+   "depth": 0,
+   "edges": [
+    {
+     "extras": [],
+     "marker": null,
+     "parent": "requirements.txt",
+     "specifier": "==1.2.0"
+    }
+   ],
+   "evidence": "<site-packages:3.12>/yfinance-1.2.0.dist-info",
+   "kind": "line",
+   "line": "yfinance==1.2.0",
+   "line_specifier": "==1.2.0",
+   "name": "yfinance",
+   "norm": "yfinance",
+   "other_copies": [],
+   "parents": [],
+   "reason": null,
+   "requested_extras": [],
+   "specifier_conflicts": [],
+   "tags": [
+    "py2-none-any",
+    "py3-none-any"
+   ],
+   "version": "1.2.0"
+  }
+ ],
+ "not_applicable_lines": [],
+ "passes": 163,
+ "requirements_file": {
+  "installable_lines": 67,
+  "name": "requirements.txt",
+  "option_lines": 0,
+  "physical_lines": 98,
+  "sha256": "7635687a9a31bb12884ef5242ea4148d87deebc039aa1bddfdd13491a184c17d"
+ },
+ "running_python": "3.12.10",
+ "schema": "intake-closure/1",
+ "target": {
+  "label": "cp312-win_amd64",
+  "marker_environment": {
+   "implementation_name": "cpython",
+   "implementation_version": "3.12.0",
+   "os_name": "nt",
+   "platform_machine": "AMD64",
+   "platform_python_implementation": "CPython",
+   "platform_system": "Windows",
+   "python_full_version": "3.12.0",
+   "python_version": "3.12",
+   "sys_platform": "win32"
+  },
+  "platform": "win_amd64",
+  "python_tag": "cp312",
+  "supported_tag_count": 42,
+  "tag_logic": "packaging.tags 24.2"
+ },
+ "unknown_not_installed": [],
+ "unparsed": []
+}

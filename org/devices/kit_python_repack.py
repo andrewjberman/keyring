@@ -19,6 +19,18 @@ Verbs:
         pip install --no-index --no-deps --find-links <dir> -r <dir>/requirements-kit.txt --target <scratch>, then one import
         of each distribution's top-level module in its own subprocess (60 s bound), scratch first on the path.
         LAST line PY-KIT-INSTALL ...  (stdlib only: runs on a Dell)
+  install-check --from <dir> --with-deps-from-kit [--scratch <dir>] [--import-bound S] [--jobs N]
+        ONE install of the WHOLE kit into <scratch>/all, then one import per top-level module of each REQUIREMENT line, each
+        in its own subprocess run `python -I` whose sys.path is REPLACED by the scratch target and the standard library only
+        (no site-packages entry), with a scrubbed environment; a module that loads from any other site-packages is reported
+        as borrowed. Failures are classified missing_dep, dll_or_native or other.
+        LAST line PY-KIT-INSTALL-ALL ...  (stdlib only: runs on a Dell)
+  estimate --closure <json>
+        Sum the installed sizes (RECORD) of the selected members and print the disk estimate; no file is written.
+
+repack --closure <json> (AMENDMENT 8): the set is every member of an intake_closure.py result whose class is PURE or FITS (the
+classes that can be rebuilt from the installed copy for the closure's target); the target is read from the closure file and
+every built wheel's tags are checked to fit it; the manifest also lists what the kit does NOT carry and why.
 
 Files outside site-packages named by RECORD (paths starting ../):
   - a Scripts/ file that is a LAUNCHER pip regenerates at install from entry_points.txt is NOT packed and does NOT make the
@@ -36,6 +48,7 @@ from __future__ import annotations
 
 import argparse
 import base64
+import concurrent.futures
 import configparser
 import csv
 import datetime
@@ -47,8 +60,10 @@ import os
 import pathlib
 import re
 import shutil
+import site
 import subprocess
 import sys
+import sysconfig
 import tempfile
 import zipfile
 
@@ -57,6 +72,7 @@ REPO = HERE.parent.parent
 DEFAULT_CLASSIFICATION = HERE / "kit_python_wheels_cp314.json"
 SCHEMA = "kit_python_repack/1"
 SELECTED_CLASSES = ("PURE-INSTALLED", "ABI3-INSTALLED")
+CLOSURE_CLASSES = ("PURE", "FITS")
 FIXED_DATE = (1980, 1, 1, 0, 0, 0)
 CHUNK = 1 << 20
 ZIP64_LIMIT = (1 << 31) - 1
@@ -569,10 +585,164 @@ def resolve_roots(labels, overrides):
     return mapping
 
 
+# ------------------------------------------------------------------------------------------------ closure (AMENDMENT 8)
+
+def closure_selection(cdata):
+    """From an intake_closure.py result: (selected, not_carried_members). A selected member is a dict shaped like the 3.14
+    classification's requirement rows (name, class, evidence, found_version, line, kind, tags)."""
+    selected, rest = [], []
+    for m in cdata["members"]:
+        if m.get("class") in CLOSURE_CLASSES:
+            selected.append({"name": m["name"], "class": m["class"], "evidence": m["evidence"],
+                             "found_version": m["version"], "line": m.get("line"), "kind": m.get("kind"),
+                             "tags": m.get("tags") or []})
+        else:
+            rest.append(m)
+    return selected, rest
+
+
+def closure_site_roots():
+    """Map the closure's evidence labels to the RUNNING interpreter's site-packages and user site (the closure was read there)."""
+    ver = "%d.%d" % sys.version_info[:2]
+    roots = {}
+    paths = sysconfig.get_paths()
+    for key in ("purelib", "platlib"):
+        p = pathlib.Path(paths[key])
+        if p.is_dir():
+            roots.setdefault("<site-packages:%s>" % ver, str(p))
+    try:
+        us = pathlib.Path(site.getusersitepackages())
+        if us.is_dir():
+            roots["<user-site-packages:%s>" % ver] = str(us)
+    except (OSError, AttributeError):
+        pass
+    return roots
+
+
+def record_total_bytes(dist_info_dir):
+    """Sum of the sizes RECORD states for the files a wheel would carry (no .pyc)."""
+    di = pathlib.Path(dist_info_dir)
+    entries, _conf = read_record(pathlib.Path(di, "RECORD").read_bytes().decode("utf-8", "replace"))
+    total = 0
+    for path, _alg, _digest, size_text in entries:
+        segs = path.split("/")
+        if path.endswith(".pyc") or "__pycache__" in segs:
+            continue
+        if size_text.isdigit():
+            total += int(size_text)
+    return total
+
+
+def estimate_closure(selected, mapping, out_parent, floor_gb):
+    """Print the disk estimate from the RECORD sizes. Returns (stored_bytes, free, remain after kit plus scratch, ok)."""
+    total = 0
+    unresolved = 0
+    for req in selected:
+        label, _slash, rel = req["evidence"].partition("/")
+        site_dir = mapping.get(label)
+        if not site_dir or not pathlib.Path(site_dir, rel).is_dir():
+            unresolved += 1
+            continue
+        try:
+            total += record_total_bytes(pathlib.Path(site_dir, rel))
+        except OSError:
+            unresolved += 1
+    parent = out_parent if out_parent.exists() else pathlib.Path(out_parent.anchor or ".")
+    free = shutil.disk_usage(parent).free
+    remain = free - 2 * total
+    ok = remain >= floor_gb * 1e9
+    print("estimate: %d selected packages (%d unresolved); installed size by RECORD %.3f GB; the kit is at most that "
+          "(zip, deflated) and the whole-kit scratch install is that again; free %.2f GB; worst case %.2f GB would "
+          "remain after kit plus scratch (floor %s GB) -> %s"
+          % (len(selected), unresolved, total / 1e9, free / 1e9, remain / 1e9, floor_gb, "OK" if ok else "STOP"))
+    return total, free, remain, ok
+
+
+def requirement_order(req_path, members):
+    """Names of the members that carry a requirement line, in the requirements file's order. Returns (names, unmatched)."""
+    sys.path.insert(0, str(HERE))
+    try:
+        import kit_python_wheels as kpw  # noqa: PLC0415
+    finally:
+        sys.path.pop(0)
+    lines, _opts, _phys = kpw.read_requirement_lines(req_path)
+    by_line = {}
+    for m in members:
+        if m.get("line"):
+            by_line[m["line"]] = m["name"]
+    order, unmatched = [], []
+    for _no, text in lines:
+        if text in by_line:
+            if by_line[text] not in order:
+                order.append(by_line[text])
+        else:
+            unmatched.append(text)
+    return order, unmatched
+
+
+def order_closure_wheels(wheels, line_order):
+    """Requirement lines first in the requirements file's order, then the dependencies sorted by name."""
+    pos = {n: i for i, n in enumerate(line_order)}
+    firsts = sorted((w for w in wheels if w["name"] in pos), key=lambda w: pos[w["name"]])
+    deps = sorted((w for w in wheels if w["name"] not in pos), key=lambda w: (w["name"].lower(), w["name"]))
+    return firsts, deps
+
+
+def closure_requirements_text(firsts, deps, req_name):
+    out = ["# --- 1. the %d requirement lines of %s, in its order, at the versions installed on the machine that cut this kit"
+           % (len(firsts), req_name)]
+    out += ["%s==%s" % (w["name"], w["version"]) for w in firsts]
+    out.append("# --- 2. the %d dependencies those lines pull in, sorted by name, at the versions installed" % len(deps))
+    out += ["%s==%s" % (w["name"], w["version"]) for w in deps]
+    return "\n".join(out) + "\n"
+
+
+def not_carried_rows(rest_members, left_out, conflicts, members):
+    """The manifest's 'not carried' section: members that cannot be rebuilt here, packages left out (MODIFIED or failed), and
+    the specifier conflicts (the kit carries what the machine runs, not a consistent resolution)."""
+    rows = []
+    for m in rest_members:
+        rows.append({"kind": m.get("class"), "name": m["name"], "version": m.get("version"),
+                     "reason": "%s; needs the checked route (a file fetched and assessed)"
+                               % (m.get("reason") or "class %s" % m.get("class"))})
+    for r in left_out:
+        rows.append({"kind": r.get("status"), "name": r["name"], "version": r.get("version"),
+                     "reason": "; ".join(r.get("problems") or [])})
+    ver = {m["name"].lower(): m["version"] for m in members}
+    for c in conflicts:
+        rows.append({"kind": "SPECIFIER-CONFLICT", "child": c["child"], "installed_version": c["installed_version"],
+                     "parent": c["parent"], "parent_installed_version": ver.get(str(c["parent"]).lower()),
+                     "specifier": c["specifier"],
+                     "reason": "%s %s is installed here (and carried); %s %s requires %s %s: the kit is not a consistent "
+                               "resolution for %s, it carries what this machine runs"
+                               % (c["child"], c["installed_version"], c["parent"], ver.get(str(c["parent"]).lower(), "?"),
+                                  c["child"], c["specifier"], c["parent"])})
+    return rows
+
+
+def cmd_estimate(args):
+    cdata = json.loads(pathlib.Path(args.closure).read_text(encoding="utf-8"))
+    selected, _rest = closure_selection(cdata)
+    mapping = closure_site_roots()
+    for spec in args.root or []:
+        lab, _eq, directory = spec.partition("=")
+        mapping[lab] = directory
+    out = pathlib.Path(args.out) if args.out else pathlib.Path(tempfile.gettempdir())
+    total, free, remain, ok = estimate_closure(selected, mapping, out, args.min_free_gb)
+    print("KIT-ESTIMATE selected=%d record_bytes=%d free_bytes=%d remain_after_kit_plus_scratch=%d ok=%s"
+          % (len(selected), total, free, remain, ok))
+    return 0 if ok else 1
+
+
 def cmd_repack(args):
-    cls_path = pathlib.Path(args.from_file)
+    closure = bool(getattr(args, "closure", None))
+    cls_path = pathlib.Path(args.closure if closure else args.from_file)
     data = json.loads(cls_path.read_text(encoding="utf-8"))
-    selected = [r for r in data["requirements"] if r.get("class") in SELECTED_CLASSES]
+    if closure:
+        selected, rest_members = closure_selection(data)
+    else:
+        selected = [r for r in data["requirements"] if r.get("class") in SELECTED_CLASSES]
+        rest_members = []
     out = pathlib.Path(args.out)
     tree = inside_git_tree(out.parent if not out.exists() else out)
     if tree:
@@ -586,12 +756,26 @@ def cmd_repack(args):
         lab, _eq, directory = spec.partition("=")
         overrides[lab] = directory
     labels = sorted({r["evidence"].split("/", 1)[0] for r in selected})
-    mapping = resolve_roots(labels, overrides)
+    if closure:
+        mapping = dict(closure_site_roots())
+        mapping.update(overrides)
+    else:
+        mapping = resolve_roots(labels, overrides)
     tgt = data.get("target") or {}
     kpw, target, supported = tag_support(tgt.get("python_tag", "cp314"), tgt.get("platform", "win_amd64"))
     target_label = "%s-%s" % (target["python_tag"], target["platform"])
-    print("kit_python_repack: %d requirements in %s; %d selected (%s); target %s; claim: measured, offline, no fetch"
-          % (len(data["requirements"]), cls_path.name, len(selected), "/".join(SELECTED_CLASSES), target_label))
+    if closure:
+        print("kit_python_repack: %d closure members in %s; %d selected (%s); target %s (read from the closure file); "
+              "claim: measured, offline, no fetch"
+              % (len(data["members"]), cls_path.name, len(selected), "/".join(CLOSURE_CLASSES), target_label))
+        _s, _f, _r, est_ok = estimate_closure(selected, mapping, out.parent, args.min_free_gb)
+        if not est_ok:
+            print("ERROR: fewer than %s GB would remain after the kit and the whole-kit scratch install; stopping before "
+                  "reading or writing anything" % args.min_free_gb)
+            return 2
+    else:
+        print("kit_python_repack: %d requirements in %s; %d selected (%s); target %s; claim: measured, offline, no fetch"
+              % (len(data["requirements"]), cls_path.name, len(selected), "/".join(SELECTED_CLASSES), target_label))
     plans = []
     failed = []
     for req in selected:
@@ -675,13 +859,15 @@ def cmd_repack(args):
             "launchers_skipped": plan["launchers_skipped"], "scripts_placed": plan["scripts_placed"],
             "shebangs_restored": plan["shebangs_restored"], "unverified_files": len(plan["unverified"]),
             "pyc_skipped": plan["pyc_skipped"], "top_level": facts.get("top_level", [])})
+        if closure:
+            wheels[-1]["kind"] = req.get("kind")
         print("BUILT %s -> %s %d bytes class=%s files=%d%s%s%s" % (
             tag, fname, size, req["class"], len(plan["items"]) + 1,
             " PARTIAL(%d paths)" % len(plan["partial_paths"]) if is_partial else "",
             " launchers_skipped=%d" % len(plan["launchers_skipped"]) if plan["launchers_skipped"] else "",
             " unverified=%d" % len(plan["unverified"]) if plan["unverified"] else ""))
     req_file = data.get("requirements_file") or {}
-    rf_path = REPO / "requirements.txt"
+    rf_path = pathlib.Path(getattr(args, "requirements", None) or (REPO / "requirements.txt"))
     rf_sha = hashlib.sha256(rf_path.read_bytes()).hexdigest() if rf_path.is_file() else None
     manifest = {
         "schema": SCHEMA,
@@ -698,10 +884,28 @@ def cmd_repack(args):
         "wheels": wheels,
         "left_out": left_out,
     }
+    if closure:
+        line_order, unmatched = requirement_order(rf_path, data["members"])
+        firsts, deps = order_closure_wheels(wheels, line_order)
+        manifest["wheels"] = firsts + deps
+        manifest["closure_file"] = {"name": cls_path.name, "sha256": hashlib.sha256(cls_path.read_bytes()).hexdigest(),
+                                    "last_line": data.get("last_line")}
+        in_kit = {w["name"] for w in wheels}
+        manifest["requirement_lines"] = [{"name": n, "line": next((m["line"] for m in data["members"] if m["name"] == n), None),
+                                          "in_kit": n in in_kit} for n in line_order]
+        manifest["requirement_lines_unmatched"] = unmatched
+        manifest["not_carried"] = not_carried_rows(rest_members, left_out, data.get("conflicts") or [], data["members"])
+        manifest["counts"]["not_carried"] = len(manifest["not_carried"])
     (out / "MANIFEST.json").write_text(json.dumps(manifest, indent=1, sort_keys=True) + "\n", encoding="utf-8")
-    kept = {w["name"]: w for w in wheels}
-    lines = ["%s==%s" % (r["name"], kept[r["name"]]["version"]) for r in selected if r["name"] in kept]
-    (out / "requirements-kit.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    if closure:
+        text = closure_requirements_text(firsts, deps, rf_path.name)
+    else:
+        kept = {w["name"]: w for w in wheels}
+        text = "\n".join("%s==%s" % (r["name"], kept[r["name"]]["version"]) for r in selected if r["name"] in kept) + "\n"
+    (out / "requirements-kit.txt").write_text(text, encoding="utf-8")
+    if closure:
+        for row in manifest["not_carried"]:
+            print("NOT CARRIED %s %s: %s" % (row["kind"], row.get("name") or row.get("child"), asc(row["reason"])[:230]))
     nfailed = manifest["counts"]["failed"]
     ok = built == verified and nfailed == 0
     print("PY-REPACK target=%s selected=%d built=%d verified=%d partial=%d modified=%d failed=%d bytes=%d ok=%s"
@@ -741,16 +945,25 @@ def verify_folder(folder):
             rows.append((w["file"], True, "ok"))
     expected = ["%s==%s" % (w["name"], w["version"]) for w in manifest.get("wheels", [])]
     rq = folder / "requirements-kit.txt"
-    if not rq.is_file() or [ln.strip() for ln in rq.read_text(encoding="utf-8").splitlines() if ln.strip()] != expected:
+    if not rq.is_file() or [ln.strip() for ln in rq.read_text(encoding="utf-8").splitlines()
+                            if ln.strip() and not ln.strip().startswith("#")] != expected:
         rows.append(("requirements-kit.txt", False, "absent or differs from the manifest's wheel list"))
     stray = sorted(n for n in os.listdir(folder) if n not in listed)
     n = len(manifest.get("wheels", []))
     return rows, stray, n, sum(1 for r in rows if r[1] and r[0].endswith(".whl"))
 
 
-def dell_commands(folder):
+def dell_commands(folder, closure=False):
     folder = str(pathlib.Path(folder))
     me = "python org/devices/kit_python_repack.py"
+    if closure:
+        return [
+            "%s verify --from %s" % (me, folder),
+            "%s install-check --from %s --with-deps-from-kit --scratch <a NEW scratch folder>   (the whole kit into one "
+            "scratch target, then each requirement line imported in an isolated process)" % (me, folder),
+            "(the real install, on the Dell's own decision) python -m pip install --no-index --no-deps --find-links %s "
+            "-r %s --user" % (folder, str(pathlib.Path(folder, "requirements-kit.txt"))),
+        ]
     return [
         "%s verify --from %s" % (me, folder),
         "%s install-check --from %s --scratch <a NEW scratch folder>" % (me, folder),
@@ -769,7 +982,8 @@ def cmd_verify(args):
         print("FAIL: stray file the manifest does not list: " + name)
     ok = bool(rows) and all(r[1] for r in rows) and not stray and n > 0
     print("commands a Dell runs, in order:")
-    for i, cmd in enumerate(dell_commands(args.from_), 1):
+    manifest = load_manifest(args.from_) or {}
+    for i, cmd in enumerate(dell_commands(args.from_, closure="requirement_lines" in manifest), 1):
         print("  %d. %s" % (i, cmd))
     print("PY-KIT-VERIFY wheels=%d verified=%d stray=%d ok=%s" % (n, n_ok, len(stray), ok))
     return 0 if ok else 1
@@ -824,12 +1038,176 @@ def import_one(scratch_dirs, module):
     return "failed", last[:200]
 
 
+ISOLATED_SNIPPET = """
+import importlib
+import os
+import sys
+import sysconfig
+
+target, module = sys.argv[1], sys.argv[2]
+orig = list(sys.path)
+paths = sysconfig.get_paths()
+keep = []
+for entry in (paths["stdlib"], paths["platstdlib"], os.path.join(sys.base_prefix, "DLLs")):
+    if entry and entry not in keep:
+        keep.append(entry)
+for entry in orig:
+    if entry.lower().endswith(".zip") and "site-packages" not in entry.lower() and entry not in keep:
+        keep.append(entry)
+assert not [e for e in keep if "site-packages" in e.lower().replace(chr(92), "/")], keep
+sys.path[:] = [target] + keep
+# a real install honours the .pth files of its site-packages directory (pywin32 needs it): process the TARGET's only, then
+# refuse any path they put on sys.path that lies outside the target and the standard library
+import site
+site.addsitedir(target)
+root = os.path.normcase(os.path.abspath(target))
+foreign = [e for e in sys.path if e not in keep and not os.path.normcase(os.path.abspath(e)).startswith(root)]
+if foreign:
+    sys.stderr.write("ForeignPathError: a .pth file in the target put a path outside it on sys.path: %s" % foreign[:3])
+    sys.exit(4)
+sys.path_importer_cache.clear()
+importlib.invalidate_caches()
+before = set(sys.modules)
+importlib.import_module(module)
+real = [os.path.normcase(os.path.abspath(e)) + os.sep for e in orig if "site-packages" in e.lower().replace(chr(92), "/")]
+bad = []
+for name in set(sys.modules) - before:
+    f = getattr(sys.modules[name], "__file__", None)
+    if f and any(os.path.normcase(os.path.abspath(f)).startswith(r) for r in real):
+        bad.append(name)
+if bad:
+    sys.stderr.write("BorrowedModuleError: loaded from a site-packages that is not the scratch target: %s" % ", ".join(sorted(bad)[:5]))
+    sys.exit(3)
+"""
+
+
+def isolated_env():
+    """A scrubbed environment: only what Windows needs to start a process and find its system DLLs."""
+    # USERNAME and the profile directories are kept because getpass.getuser() (torch's cache directory) needs them; none of
+    # them can put a module on the path (PYTHON* variables are dropped, and -I ignores them anyway)
+    keep = ("SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "TEMP", "TMP", "PATHEXT", "USERNAME", "USERPROFILE",
+            "LOCALAPPDATA", "APPDATA")
+    env = {k: v for k, v in os.environ.items() if k.upper() in keep}
+    root = env.get("SYSTEMROOT") or env.get("WINDIR")
+    if root:
+        env["PATH"] = os.pathsep.join([os.path.join(root, "System32"), root])
+    env["PYTHONIOENCODING"] = "utf-8"
+    env["NO_COLOR"] = "1"
+    return env
+
+
+def classify_import_failure(message):
+    """missing_dep (names a module), dll_or_native (a DLL or shared object that will not load) or other."""
+    if re.search(r"ModuleNotFoundError: No module named '", message):
+        return "missing_dep"
+    if re.search(r"DLL load failed|cannot open shared object|dlopen|WinError 126|WinError 193|could not be found", message):
+        return "dll_or_native"
+    return "other"
+
+
+def import_isolated(target, module, bound=IMPORT_BOUND):
+    """One import in its own `python -I` subprocess whose sys.path holds ONLY the target and the standard library.
+    Returns ('ok', '', '') | ('missing', module, first line) | ('failed', first line, class)."""
+    cmd = [sys.executable, "-I", "-c", ISOLATED_SNIPPET, str(target), module]
+    try:
+        r = subprocess.run(cmd, capture_output=True, timeout=bound, cwd=str(target), env=isolated_env())
+    except subprocess.TimeoutExpired:
+        return "failed", "timeout after %d s" % bound, "other"
+    except OSError as exc:
+        return "failed", asc(exc), "other"
+    if r.returncode == 0:
+        return "ok", "", ""
+    lines = [ANSI_ESCAPE.sub("", ln) for ln in r.stderr.decode("utf-8", "replace").splitlines() if ln.strip()]
+    last = asc(lines[-1]) if lines else "exit %d with no message" % r.returncode
+    m = re.search(r"ModuleNotFoundError: No module named '([^']+)'", last)
+    if m:
+        return "missing", m.group(1), last[:200]
+    return "failed", last[:200], classify_import_failure(last)
+
+
+def cmd_install_check_all(args, folder, manifest):
+    """AMENDMENT 8: the whole kit into ONE scratch target, then every requirement line imported in an isolated process."""
+    scratch = pathlib.Path(args.scratch) if args.scratch else pathlib.Path(tempfile.mkdtemp(prefix="kit-py-scratch-"))
+    if scratch.exists() and any(scratch.iterdir()):
+        print("ERROR: --scratch exists and is not empty; use a NEW folder: " + str(scratch))
+        return 2
+    target = scratch / "all"
+    target.mkdir(parents=True, exist_ok=True)
+    wheels = manifest.get("wheels", [])
+    cmd = pip_install_cmd(folder, target)
+    print("RUN: " + " ".join(cmd))
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
+    tails = (r.stdout or "").strip().splitlines()[-1:] + (r.stderr or "").strip().splitlines()[-3:]
+    print("pip rc=%d: %s" % (r.returncode, asc(" | ".join(tails))))
+    present = set(os.listdir(target))
+    installed = set()
+    for w in wheels:
+        with zipfile.ZipFile(folder / w["file"]) as zf:
+            dis = {n.split("/")[0] for n in zf.namelist() if n.split("/")[0].endswith(".dist-info")}
+        if r.returncode == 0 and dis and dis <= present:
+            installed.add(w["name"])
+    lines = [w for w in wheels if w.get("kind") == "line"]
+    jobs = []
+    for w in lines:
+        with zipfile.ZipFile(folder / w["file"]) as zf:
+            tops = top_levels(zf)
+        jobs.append((w, tops))
+    work = [(w["name"], t) for w, tops in jobs if w["name"] in installed for t in tops]
+    results = {}
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max(1, args.jobs)) as pool:
+        futs = {pool.submit(import_isolated, target, t, args.import_bound): (n, t) for n, t in work}
+        for fut in concurrent.futures.as_completed(futs):
+            results[futs[fut]] = fut.result()
+    n_imported = n_missing = n_nomod = n_failed_import = 0
+    for w, tops in jobs:
+        tag = "%s==%s" % (w["name"], w["version"])
+        if w["name"] not in installed:
+            print("%s not_installed" % tag)
+            continue
+        if not tops:
+            n_nomod += 1
+            print("%s installed no_module (a namespace or data-only distribution; nothing to import)" % tag)
+            continue
+        statuses = [(t,) + results[(w["name"], t)] for t in tops]
+        statuses = [(s[0], "failed", "own module missing: " + s[2], "other")
+                    if s[1] == "missing" and s[2].split(".")[0] in tops else s for s in statuses]
+        failed = [s for s in statuses if s[1] == "failed"]
+        missing = [s for s in statuses if s[1] == "missing"]
+        if failed:
+            n_failed_import += 1
+            kind = failed[0][3] or "other"
+            print("%s installed import_failed[%s]: %s: %s  (imported %d of %d modules; not imported: %s)"
+                  % (tag, kind, failed[0][0], failed[0][2], len(tops) - len(failed) - len(missing), len(tops),
+                     ",".join("%s[%s]" % (s[0], (s[3] or "other") if s[1] == "failed" else "missing_dep") for s in failed + missing)))
+        elif missing:
+            n_missing += 1
+            print("%s installed import_missing_dep: missing %s (importing %s)  (imported %d of %d modules; not imported: %s)"
+                  % (tag, missing[0][2], missing[0][0], len(tops) - len(missing), len(tops), ",".join(s[0] for s in missing)))
+        else:
+            n_imported += 1
+            print("%s installed imported [%s]" % (tag, ",".join(tops)))
+    n_failed = (len(wheels) - len(installed)) + n_failed_import
+    ok = len(installed) == len(wheels)
+    print("accounting: wheels=%d = installed %d + not installed %d; requirement lines=%d = imported %d + import_missing_dep %d "
+          "+ no_module %d + import_failed %d + not installed %d"
+          % (len(wheels), len(installed), len(wheels) - len(installed), len(lines), n_imported, n_missing, n_nomod,
+             n_failed_import, sum(1 for w in lines if w["name"] not in installed)))
+    print("scratch target: %s (the machine's real environment was not touched; each import ran python -I with sys.path = "
+          "the target plus the standard library)" % target)
+    print("PY-KIT-INSTALL-ALL python=%s wheels=%d installed=%d requirement_lines=%d imported=%d import_missing_dep=%d "
+          "failed=%d ok=%s" % ("%d.%d.%d" % sys.version_info[:3], len(wheels), len(installed), len(lines), n_imported,
+                               n_missing, n_failed, ok))
+    return 0 if ok else 1
+
+
 def cmd_install_check(args):
     folder = pathlib.Path(args.from_)
     manifest = load_manifest(folder)
     if manifest is None:
         print("ERROR: no MANIFEST.json in " + str(folder))
         return 2
+    if getattr(args, "with_deps_from_kit", False):
+        return cmd_install_check_all(args, folder, manifest)
     scratch = pathlib.Path(args.scratch) if args.scratch else pathlib.Path(tempfile.mkdtemp(prefix="kit-py-scratch-"))
     if scratch.exists() and any(scratch.iterdir()):
         print("ERROR: --scratch exists and is not empty; use a NEW folder: " + str(scratch))
@@ -837,7 +1215,7 @@ def cmd_install_check(args):
     scratch.mkdir(parents=True, exist_ok=True)
     wheels = manifest.get("wheels", [])
     reqs = [ln.strip() for ln in pathlib.Path(folder, "requirements-kit.txt").read_text(encoding="utf-8").splitlines()
-            if ln.strip()]
+            if ln.strip() and not ln.strip().startswith("#")]
     cmd = pip_install_cmd(folder, scratch)
     print("RUN: " + " ".join(cmd))
     r = subprocess.run(cmd, capture_output=True, text=True, timeout=1800)
@@ -910,13 +1288,24 @@ def main(argv=None):
     rp.add_argument("--from-file", default=str(DEFAULT_CLASSIFICATION))
     rp.add_argument("--root", action="append", help="LABEL=DIR, overrides where an evidence label resolves")
     rp.add_argument("--min-free-gb", type=float, default=10.0)
+    rp.add_argument("--closure", help="an intake_closure.py result: re-pack every PURE and FITS member for its target")
+    rp.add_argument("--requirements", help="the requirements file whose order the kit keeps (default requirements.txt)")
+    ep = sub.add_parser("estimate")
+    ep.add_argument("--closure", required=True)
+    ep.add_argument("--out", help="the directory whose drive is measured (default the temp directory)")
+    ep.add_argument("--root", action="append")
+    ep.add_argument("--min-free-gb", type=float, default=10.0)
     vp = sub.add_parser("verify")
     vp.add_argument("--from", dest="from_", required=True)
     ip = sub.add_parser("install-check")
     ip.add_argument("--from", dest="from_", required=True)
     ip.add_argument("--scratch")
+    ip.add_argument("--with-deps-from-kit", action="store_true")
+    ip.add_argument("--import-bound", type=int, default=IMPORT_BOUND)
+    ip.add_argument("--jobs", type=int, default=4)
     args = ap.parse_args(argv)
-    return {"repack": cmd_repack, "verify": cmd_verify, "install-check": cmd_install_check}[args.verb](args)
+    return {"repack": cmd_repack, "verify": cmd_verify, "install-check": cmd_install_check,
+            "estimate": cmd_estimate}[args.verb](args)
 
 
 if __name__ == "__main__":
