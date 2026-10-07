@@ -731,11 +731,11 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
-## NFRA_CTLPLN-S9 -- a Dell's Git for Windows sets core.autocrlf=true system-wide; every Dell commit rewrites the CRLF files it touches
+## NFRA_CTLPLN-S11 -- a Dell's Git for Windows sets core.autocrlf=true system-wide; every Dell commit rewrites the CRLF files it touches
 
 ```json
 {
-  "id": "NFRA_CTLPLN-S9",
+  "id": "NFRA_CTLPLN-S11",
   "project": "NFRA_CTLPLN",
   "fabric": "laptop",
   "surfaced_by": "0.0.0_AB_MSTR~DELL1",
