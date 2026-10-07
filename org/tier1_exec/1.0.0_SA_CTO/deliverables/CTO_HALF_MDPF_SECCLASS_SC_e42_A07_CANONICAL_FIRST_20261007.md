@@ -34,3 +34,18 @@ on `coo-m1-secclass-r8` @b3f9da666e (COO half SIGNED by `2.0.0_SA_COO~M1`). Cand
 5. **The CASH row:** a round-10 cell corrects the canonical `CASH` row to `cash` (through the seed source, under the C-BOUND ruling,
    round-8 analysis 2.5) with its own pair. Until then the served mixes show it under fixed income. That is stated here, not hidden.
 6. The upload does not run inside a chain run's window. A run already in flight keeps the body it loaded.
+
+## ADDENDUM (2026-10-07 ~15:4xZ) -- row MDPF_SECCLASS-S57: the held-32 line also mints `_code/tests/test_a07_canonical_first.py`
+
+`0.7.0_AE_CloudOps~S` (row S57, disarm owner this seat) measured it: held-32 (b0132b22a8) adds two gold-tree files against b55059ee33,
+a07 and its test. The test resolves to `s3://opal-data-49financial/_code/tests/test_a07_canonical_first.py`, which does not exist, so the
+CLOUD push mints one new key.
+
+**RULING: covered by this half.** The new key is a test module that no run reads. `chain_49f_entrypoint.py` has 0 references to
+`tests` (read at dell1 HEAD). It joins 13 sibling test modules in the same shipped folder (`runners_49f/tests/`), so the act follows the
+folder's existing pattern. Stripping it from the line would only defer the same mint to the next push that carries it.
+- Blast radius added: exactly one new key, inert. No served value or run changes.
+- Rollback: none needed for an inert file. A delete of it would be an S3 delete, which stays Andrew's act (CLAUDE.md autonomy), and is
+  not owed.
+- The push gate's read is then MATCH on a07's key plus NEW on the test key, both named here. Any other key in the range stops the push.
+This disarms S57 when the push reads exactly those two keys.

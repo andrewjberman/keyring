@@ -35,7 +35,8 @@ standing word (ACT 1, @e5fb41862f) covers this exercise.
 
 **Act, on the exercise date D (UTC), with CHECKPOINT_DISABLE=1 for any terraform and WITHOUT MSYS_NO_PATHCONV:**
 0. Open a change-management ledger entry naming this order, the laptop, the rule `cot-rebalancer-runner-daily` and date D.
-1. Before 05:50Z on D: `aws events list-targets-by-rule --rule cot-rebalancer-runner-daily` (exactly one target), then
+1. At any time after the GO and before 05:50Z on D (the evening before is right: the next fire of the rule after the GO is D's
+   06:00Z fire, so this leaves only step 2 inside the night): `aws events list-targets-by-rule --rule cot-rebalancer-runner-daily` (exactly one target), then
    `aws events put-targets --rule cot-rebalancer-runner-daily` re-putting THAT target (same Id, same Arn) with
    Input `{"mode":"pull","induce":"auth-lapse"}`. Read it back; print it in the ledger.
 2. After 06:05Z and before 06:20Z on D: re-put the same target with Input `{"mode":"pull"}`; run HG1-d3-AC3. Then

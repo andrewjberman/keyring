@@ -19852,30 +19852,64 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-S370 -- a change to irpt-ycharts-runner-role also changes what the dell2 box user can do (NFRA_CTLPLN dell2 command grant, CTO condition 7)
+## IRPT_BCKEND-S381 -- an unregistered operator script in export/ refuses the signed emergency build; the override is the only in-lane route
 
 ```json
 {
-  "id": "IRPT_BCKEND-S370",
+  "id": "IRPT_BCKEND-S381",
   "project": "IRPT_BCKEND",
   "fabric": "laptop",
-  "surfaced_by": "2.0.0_SA_COO~C",
-  "surfaced_at": "2026-10-07T12:55:32Z",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T14:03:00Z",
   "disposition": "UNDER_INVESTIGATION",
-  "one_line": "A change to irpt-ycharts-runner-role now has a second blast radius: under NFRA_CTLPLN's dell2 command grant, whatever that role may do, the dell2 box user may do by sending a command to the resident host.",
+  "one_line": "build-and-upload.sh refused the TO-IB-pr-349 emergency build at pin b921635dad: ADHC_DRIFTD.002 (disk -> manifest) flagged backfill_covered_account_ids.py present in infra/aws/lambda/investor-reporting/export/ but absent from lambda-source-map.json files[]. The file was added by TO-IB-pr-344 (@802216e2e0), a different cell, and is the PRD v0.30 item 35 back-fill tool that both never-widen halves name as the NEXT act under its own pair. Registering it would make the package 64 members and widen the signed set, which both halves stop the release for and the TO's source-map bound forbids; editing the script ignore list is out of this lane. BAU_PARITY_SKIP=1 was taken: it disables ONLY the disk->manifest extras limb, leaving the manifest->disk existence check and every member sha256 verification in force, and it produces exactly the 63-member / 9-changed package both halves signed.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL_DENIES_AND_DELL2_GRANT_20261007.md @eb74cfb2d2, condition 7, verbatim: 'Any later change to irpt-ycharts-runner-role (an attached or inline policy, its boundary, its trust) is a never-widen act that names this route in its blast radius ... after the apply, the owner of that role's Terraform carries it.'",
-      "infra/aws/terraform/nfra-ctlpln-identity/dell2_ssm_policy.json: ssm:SendCommand to instance i-0167fd745ad906a66 with documents irpt-ycharts-deploy and irpt-ycharts-run, both taking a free-text parameter",
-      "The role is declared in infra/aws/terraform/investor-reporting/ycharts/iam.tf; NFRA_CTLPLN's role census read it NO on IAM writes, audit-trail writes and production-data deletes at 2026-10-07T11:05:41Z",
-      "The grant is signed and NOT applied at this row's filing (order NFRA_CTLPLN.TO-APPLY-6 pending)"
+      "build refusal, first run with no override: 'ERROR: ADHC_DRIFTD.002 parity check failed - Files present in source_dir but NOT in lambda-source-map.json files[]: + backfill_covered_account_ids.py'; PARTIAL - 0 built, 1 failed",
+      "git ls-tree: the file is present at BOTH b921635dad and d1abea06f8, so building AT the pin does not avoid the limb; positive control entry.py present at both",
+      "git log --diff-filter=A: introduced by 802216e2e0, TO-IB-pr-344, 0.9.0_WK_IRPT_BCKEND~145 (dry-run default, --apply never run)",
+      "import census over the export source dir: 45 .py files scanned, 1 reference to backfill_covered_account_ids and it is tests/test_backfill_covered_account_ids.py:22 -- a path the parity limb itself excludes (test_*.py) and the build never packages; positive control 13 imports of 'bundle' proves the scanner works, so the zero over packaged members is a true absence",
+      "build-and-upload.sh:399-411 the manifest->disk existence check runs BEFORE the limb and passed; :431 the override guards only the extras loop; staging printed 'sha256 verified' for all members incl. entry.py@34f71024a1",
+      "the script's own docstring: '--apply ... is the issuer's act under a never-widen pair and is NOT run by the worker that built it'"
     ]
   },
-  "spec_asserts": "The role's permissions were set for the resident host's own pipeline work, with the host as the only caller.",
-  "world_is": "Once NFRA_CTLPLN's apply lands, the role has a second caller. A later widening of the role (a new attached or inline policy, a changed boundary or trust) widens what dell2 can do without any change to dell2's own policies, and no gate joins the two. The control today is by reading: the seat that changes this role names the dell2 route in its never-widen sign-off. The census check that would show it is infra/aws/terraform/nfra-ctlpln-identity/tests/derive_reached_roles.py --check-fresh."
+  "spec_asserts": "TO-IB-pr-349 step 3: the build runs from a tree at b921635dad or a descendant whose census is unchanged; both halves: exactly nine changed members of 63, one member more or fewer stops the release.",
+  "world_is": "The id is BARE and deliberately gapped to S381: the device register holds coordinates 'D1', 'D2', 'Z' and NONE for the laptop, so a laptop seat can only mint a bare id and races dell2's bare sequence (dell2 r4 is at bare max S370). That race already forced the S370 withdrawal @3f56b516ee. The gap leaves S371-S380 for dell2 near-term mints; it narrows the window, it does not close it, and the id space itself is the gate owner's to fix. The build refuses at the pin and at its descendant for a reason neither half anticipated: a sibling cell left an operator script in the shared source dir unregistered. The ImportError failure mode the limb exists to catch cannot occur here -- no packaged member imports the file. The signed member set is unchanged by the override. What is owed, and is NOT this cell's: register backfill_covered_account_ids.py in files[] (or the script ignore list) under TO-IB-pr-344's own pair, so the next build of this function does not need an override.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
+## IRPT_BCKEND-S382 -- IB-pr-349's live positive-control arm is unexercisable under its own bounds; the release is LANDED and NOT rolled back
+
+```json
+{
+  "id": "IRPT_BCKEND-S382",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T14:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-349 is RELEASED and verified on every axis this cell may measure, but criterion IB68-1-AC1 reads FAIL on new_export_ready=None. After-reads 4 and 5 require submitting a NEW export as an authenticated Opal principal. There is no such principal this cell may obtain: minting one is a write to DynamoDB opal-users-v2, the production auth plane, which this order's BOUNDS forbid verbatim (\"No write to the auth plane\"), and deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md records the mint path as HUMAN-GATED with signing a token directly forbidden by the same record. Per the order's own refusal clause a needed-but-ungranted path is a BLOCKING row, never an override, so this is the row. NOT rolled back: Branch B fires on a FAILURE of after-read 1 or 4; after-read 1 PASSED and after-read 4 was never run, which is not a failure, and the COO half admits rollback only on a failure other than reads of un-back-filled exports because rollback REOPENS the hole for the 7 principals.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py . IB68-1-AC1 -> 'FAIL: new_export_ready is None' / 'IB68-1-AC1 FAIL'",
+      "the order's BOUNDS, verbatim: 'No IAM, route, authorizer, table, bucket or other function changes. No write to the auth plane. No token minted for a non-Opal principal.'",
+      "RT2_test_principal_human_gated.md: the mint path exists and is named, and a seat may not walk it -- out of paths, a write to the production auth plane, and signing with opal/auth/jwt-private-key is worse; the record's verdict is HUMAN-GATED",
+      "WHAT IS PROVEN INSTEAD, all measured: deployed CodeSha256 aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= equals the built sha; re-plan 'No changes'; the live zip's entry.py is sha256 fc241d806ecc (the fail-closed fix is in the RUNNING bytes) across 63 members; on those DEPLOYED bytes an existing un-back-filled receipt is REFUSED for an admin principal AND for a reconstructed non-Opal principal (opaque ids, no token minted), while the POSITIVE CONTROL -- an in-scope Opal read -- is ADMITTED, and a second control lands on the DISTINCT counts branch, so the refusal is the fail-closed branch and not a blanket deny",
+      "49 offline tests pass at the pin, including the fix's own tests/test_covered_account_ids.py and tests/test_admitted_read_logged.py and the analysis, custody and retained branches that after-read 5 concerns",
+      "apply blast radius: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' -- only module.irpt_export_render.aws_lambda_function.this, in place",
+      "ledger org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md CLOSED, all 4 legs proven, sentinel removed; rollback source objver MteawDsTqojjkhh4e8Xfp_u6T7F8NxX3 re-read after the release and still retrievable"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 after-reads 4 and 5: a NEW export, and a performance and an analysis export, submitted by an admitted Opal principal, reach READY with one irpt_export_read_admitted line; IB68-1-AC1 grades them.",
+  "world_is": "The decision layer this release changed is proven correct on the running bytes, both directions, with controls. The end-to-end submit-to-READY arm is not reachable by any act inside this order's grant. What is owed is the issuer's: either widen a successor order to a seat that may exercise the auth plane under its own never-widen pair, or grade IB68-1-AC1 on the decision-layer controls and the offline battery and say so on the record. This cell did NOT flip the order to complete.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```
 
@@ -20059,5 +20093,83 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "The TO bounds: firm buckets deny this box's identity (row S347); a firm-bucket read is a row and a stop on that criterion.",
   "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
+}
+```
+
+## IRPT_BCKEND-S370 -- S368 disarmed: E-M3 graded on the delivered laptop read and drained
+
+```json
+{
+  "id": "IRPT_BCKEND-S370",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T13:11:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S368 (BLOCKING, ARMED) is disarmed on its own condition: the laptop FILE (R32M_MULTI_RELATIONSHIP_READ.json @09e0d7c89c, sha256 e2606081349e...) was delivered and graded. TO-IB-m32-321: M1-MULTI-RELATIONSHIP-NAMED (acc_0f1e215e521798954f80f291 in relationships z09305591 and z09326136; 3 of 860 Cottonwood accounts), M2-RECONCILES (58 raw rows -> 29 unique positions; ties over 4 partitions; rebuilt 462,857.7422 = served 2026-10-05), M3-OVERLAP-MEASURED (both 1, multi-model only 180, multi-relationship only 2, neither 677); proof VALID; drained @3daee801f3. Cottonwood remains refused to the dell2 identity (13:02Z); that residual is the fence apply's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~154/IRPT_BCKEND.TO-IB-m32-321.multi-relationship-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 3daee801f3 (safe-merge index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S368 disarm condition: the laptop FILE is delivered and graded, or Cottonwood admits the dell2 identity read-only.",
+  "world_is": "First condition met and graded. S368 DISARMED. E-M3 (cell IB-mr-321) complete for round 32 ~M."
+}
+```
+
+## IRPT_BCKEND-S371 -- W148-S2 dispositioned: the fence is intact; this issuer's face bound ("firm buckets deny this box", S347) was wider than the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-S371",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:15:03Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruling 106244: the reads were inside dell2's grant (legacy unfenced buckets); no fence failed. The defect is the issuer's face wording, corrected from round 68.",
+  "one_line": "Disposition of IRPT_BCKEND-W148-S2 per laptop 1.0.0_SA_CTO ruling 106244 (relayed by 0.0.0_AB_MSTR~DELL2, msg 589 series): the objects worker ~148 read are in opal-data-bd / -cot / -inf, the legacy firm channels that were never fenced; the fence covers opal-data-49financial / -cottonwood / -inflection, and of those only opal-data-cottonwood denies dell2 today. No fence failed; the face bound was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-W148-S2 (worker ~148, IB-pr-347): bd and cot ownership maps and bd/cot/inf directories readable; inflection map 404",
+      "ruling 106244: bucket census @7cb0a2f3ab, 24 data buckets, 3 fenced; dell2 reaches 21 of 24 plus 2 of the 3 fenced since 10:1xZ",
+      "IB-pr-347 face BOUNDS line: 'Firm buckets deny this box's identity (row S347)'"
+    ]
+  },
+  "spec_asserts": "Every face of this issuer since S347 bounds a worker with: firm buckets deny this box's identity.",
+  "world_is": "Only opal-data-cottonwood denies dell2. From round 68 the issuer's faces read: only opal-data-cottonwood denies dell2; the legacy opal-data-bd/-cot/-inf are inside dell2's grant; a read is never a fence widening."
+}
+```
+
+## IRPT_BCKEND-S372 -- S365 resolved: the PrintEntry custody-report refusal and the unknown-kind refusal are on portal DEV @ba391aff8f
+
+```json
+{
+  "id": "IRPT_BCKEND-S372",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:57:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S365: IB-pr-346 met both CTO msg 403 conditions (drained @39b7d4dbce; CTO PASSED) and, on Andrew-direct ~13:4xZ ('Recs approved for 1 and 2', MSTR msg 626), landed on portal DEV with IB-pr-341.",
+  "one_line": "Portal origin DEV moved 4b167888 -> ba391aff8f (ls-remote read by laptop 0.0.0_AB_MSTR, relayed msg 630). The merges include wk-IRPT_BCKEND-147-portal @3715f732 (readReportKind refuses an unknown kind; custody-report refused with 0 requests) and -143-portal @5c726cf4. Combined tsc rc 0; PROD untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 630: portal DEV 4b167888 -> ba391aff8f, three no-ff merges, combined tsc rc=0",
+      "drain @39b7d4dbce (IB-pr-346): IB66-1-AC1 and AC2 PASS, proof VALID"
+    ]
+  },
+  "spec_asserts": "S365: the reviewed PrintEntry candidate lands on DEV once its checks run; readReportKind refuses an unknown kind.",
+  "world_is": "Both are on portal DEV @ba391aff8f. PROD is untouched."
 }
 ```
