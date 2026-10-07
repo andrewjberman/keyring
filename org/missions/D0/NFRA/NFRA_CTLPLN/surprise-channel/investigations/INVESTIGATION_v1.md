@@ -1297,3 +1297,61 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The two statements cannot both hold under a substring match. The order of the other fields was changed (graph_unread moved up two places and past none of the named values); the expectation and every value are unchanged. A consumer that reads the line by field name is unaffected; one that reads it by position would see the move."
 }
 ```
+
+## NFRA_CTLPLN-W14-S1 -- TO-CT-a-1: no declared SSM command document is RESIDENT-FIXED (0 of 16); dell2's policy carries no send statement
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T10:21:13Z",
+  "one_line": "TO-CT-a-1 read: 0 of 16 declared SSM command documents classify RESIDENT-FIXED; both resident documents take a free-text parameter that is interpolated into a shell command line, so dell2's policy is built with no send statement.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check, last line: SSM-DOCS declared=16 unresolved=0 resident_fixed=0 resident_free_text=2 export_render=1 other=13 unsure_params=2 in_policy=0 ok=True; census cross-check 16 uncommented 'resource \"aws_ssm_document\"' over 544 .tf files = 16 parsed, MATCH",
+      "irpt-ycharts-deploy (investor-reporting/ycharts:aws_ssm_document.deploy, ssm.tf:19): parameter ArtifactPrefix (String, default the artifact prefix, no allowedValues, no allowedPattern) -> FREE-TEXT-COMMAND at infra/aws/terraform/investor-reporting/ycharts/ssm.tf:43: \"aws s3 cp {{ArtifactPrefix}} $APP_DIR/ --recursive --exclude 'secret-ids.env'\" (a caller value is substituted into the shell line, and what it fetches is then run: chmod +x run-ycharts-session.sh, npm install, npx playwright install)",
+      "irpt-ycharts-run (aws_ssm_document.run, ssm.tf:56): parameter Task CONSTRAINED by allowedValues=['probe'] (ssm.tf:84 export YC_TASK='{{Task}}'); parameter MaxReacquisitions (String, default '1', no allowedValues, no allowedPattern) -> FREE-TEXT-COMMAND at ssm.tf:85: \"export YC_MAX_REACQUISITIONS='{{MaxReacquisitions}}'\" (a value containing a single quote closes the literal and the rest runs as shell)",
+      "classifier control run on every --check: 5 synthetic blocks (free-text parameter, allowedValues, tight date allowedPattern, loose allowedPattern '^.*$', no parameters) classify as expected, so the 0 is not a broken classifier; the date allowedPattern on the unrelated advi chain document classifies CONSTRAINED through the same code",
+      "the build per the order's bound: dell2_ssm_policy.json carries ReadCommandResults and DenyShellDocuments (the seven AWS shell and session document ARNs plus irpt-export-render-run, irpt-ycharts-deploy, irpt-ycharts-run by name) and NO send statement and NO DenyRewriteOfGrantedDocuments (an IAM statement cannot have an empty Resource list); simulate_policy.py: ssm_ok=12/12, allowed send arms 0",
+      "not read: the live documents in the account were not compared to the repository text"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1: the dell2 user gets ssm:SendCommand on the instance and on the RESIDENT-FIXED documents (at most three arms expected); 'if NO document classifies RESIDENT-FIXED, do not widen the rule: write the policy with the read statement and the Deny statements only, file a BLOCKING row with the table'.",
+  "world_is": "The two resident documents are the only ones declared under investor-reporting/ycharts/, and each has one unconstrained parameter used inside a shell command line, so neither is fixed text; the grant is empty as the order's bound provides. What would change the classification is a text change by the document's owner, not by this cell: an allowedPattern on MaxReacquisitions (ssm.tf:71-75) and allowedValues on ArtifactPrefix (ssm.tf:28-32); irpt-ycharts-run is in addition a live vendor call that its own header says needs Andrew's per-use word, so whether it is ever granted to a Dell is a ruling, not a classification. The one document sent to the instance by code today is irpt-export-render-run (export/dispatch.py, to render_host_id), classified EXPORT-RENDER and denied by name."
+}
+```
+
+## NFRA_CTLPLN-W14-S2 -- TO-CT-a-1: both Dells can rewrite a command document and the objects it runs, through the group policies
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T10:21:13Z",
+  "one_line": "Both Dells can rewrite a command document and the objects it downloads and runs, through the group policies; the same code-injection path the free-text read closes for SendCommand stays open, for dell1 as well and with no SendCommand grant at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_create_policy.json statement CreateUpdateTagCompute allows ssm:CreateDocument, ssm:UpdateDocument and ssm:UpdateDocumentDefaultVersion on Resource *; it is a GROUP policy, so dell1 and dell2 both hold it. simulate_policy.py SSM-PROBE lines (iam:SimulateCustomPolicy, read-only): 'dell2 ssm:UpdateDocument on irpt-ycharts-deploy -> allowed' and 'dell1 ssm:UpdateDocument on irpt-ycharts-deploy -> allowed'",
+      "the export controller sends irpt-export-render-run to i-0167fd745ad906a66 by itself (infra/aws/lambda/investor-reporting/export/dispatch.py RENDER_DOCUMENT; export/main.tf:84 render_host_id), under its own role: a Dell that rewrites that document's text, or makes another version its default, has its text run on the host's role at the next dispatch, with no SendCommand of its own",
+      "run-time fetches of the documents read (derive_ssm_documents.py FETCH lines): irpt-ycharts-deploy ssm.tf:43 copies s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-ycharts/ (its default prefix) to /opt/investor-reporting-ycharts, then ssm.tf:44-46 chmod +x run-ycharts-session.sh, npm install, npx playwright install, and irpt-ycharts-run ssm.tf:86 runs bash /opt/investor-reporting-ycharts/run-ycharts-session.sh; irpt-export-render-run export/ssm.tf:55 copies s3://opal-313476888478-lambda-artifacts/ec2/investor-reporting-export/ and export/ssm.tf:91 runs bash /opt/investor-reporting-export/run-export-render.sh on every render",
+      "who can write those two prefixes: dell_deploy_policy.json statement S3ObjectsOnOpalBuckets allows s3:PutObject on arn:aws:s3:::opal-*/*, which matches the artifacts bucket; no Deny in the five Dell policy files matches s3:PutObject there (DenyS3DeletesOnProductionData is opal-data-* only). Static match in derive_ssm_documents.py: dell_put_allowed_by=['dell_deploy_policy.json:S3ObjectsOnOpalBuckets'] dell_put_denied_by=none on both prefixes; simulator SSM-PROBE: 'dell2 s3:PutObject on the ycharts runner artifact prefix -> allowed', same for dell1",
+      "the new policy's DenyRewriteOfGrantedDocuments covers only RESIDENT-FIXED documents (0 today), and it is attached to dell2 only, so it closes none of the above; whether the create policy has been applied was not read (no account call beyond the simulator)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO with 2.0.0_SA_COO~C: rule whether a Dell keeps ssm:UpdateDocument, ssm:UpdateDocumentDefaultVersion and ssm:CreateDocument on documents the estate sends to a host and s3:PutObject on the ec2/ artifact prefixes those documents download from, before dell_create_policy.json and dell_deploy_policy.json are applied; a Deny on those documents and prefixes in the group policies is a new cell, not this order's paths",
+  "spec_asserts": "TO-CT-a-1: a Dell that can rewrite a resident document's text can run anything through the grant; add DenyRewriteOfGrantedDocuments on the RESIDENT-FIXED documents to the new policy and file ONE row saying the same hole is open for dell1 through the group's create policy and for both Dells on the instance's other inputs, naming any script a fixed document fetches at run time and whether a Dell can write it.",
+  "world_is": "No document is RESIDENT-FIXED, so the Deny statement has no resource and is not in the policy. The hole is wider than the order stated: it does not need the SendCommand grant, because the render document and the runner scripts are executed by the estate's own controller and operators on the host's role, and the artifact prefixes they fetch are writable by both Dells under the group deploy policy. No fixed document exists, so the 'run-time script a granted document fetches' is reported for the documents that would have been in scope: the two resident documents and the export render document."
+}
+```
