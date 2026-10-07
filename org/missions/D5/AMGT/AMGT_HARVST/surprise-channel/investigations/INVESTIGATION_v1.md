@@ -7362,6 +7362,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S98",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T11:49:43Z",
+      "one_line": "The gold text matcher's securities list carries NO company name for 138 of 242 securities: the only alias is the security key itself (AAPL_US_Equity, AMZN_US_Equity, JPM_US_Equity, META_US_Equity, MSFT_US_Equity, NVDA_US_Equity among them), so those names can be counted in article text only by exact ticker.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/research/harvest/universe_securities.py builds, from the pool universe, the `securities` list every publication_gold builder takes, each security carrying the alias set the word-bounded matcher counts as mentions of that company.",
+      "world_is": "universe_securities.build() run 2026-10-07 ~11:5xZ against pool universe/v1/2026-10-06.json (fallback_reason None): 242 securities; for 138 the alias set is exactly [security_key] (e.g. AAPL_US_Equity aliases ['AAPL_US_Equity'], exact ['AAPL']). The pool universe carries a `name` only on its coverage-sourced rows (96 of 237 in the crosswalk read of row Z-S95), and build() falls back to the key. Worker row AMGT_HARVST-Z-W105-S1 found it on META_US_Equity during the bb-1 census, where it makes Meta's 672 NEW pairs include articles that say Meta Platforms. The collector is NOT affected: it reads company names from its own identity file (234 records). NOT measured: whether the served gold was built from this same list or from another securities input; how many mention rows the 138 lose.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python: universe_securities.build() -> 242 securities, 138 whose aliases are only the security key, 2026-10-07",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~105/bb1_census.out (BASELINE META_US_Equity aliases=[\"META_US_Equity\"] exact=[\"META\"])",
+          "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_AZ1_BRAND_ALIAS_SOURCES_20261007.md (rows 1 and 4: 141 of 237 have no name on the pool plane; build() falls back to the security key)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

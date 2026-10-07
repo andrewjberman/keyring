@@ -118,9 +118,24 @@ You READ, and never write: `lib/research/harvest/publication_gold.py`, `lib/rese
 - The close run is the census itself (AC1's output, read by the issuer); the packet to `3.0.0_SA_CVO~Z` is the two sample
   files.
 
+**COMPLETE (mechanical) 2026-10-07 ~11:5xZ (issuer); AC3 OPEN at `3.0.0_SA_CVO~Z`:**
+- **Built:** worker ~105 @2cfcff5500 + @9d2be4abef; merged @1b87f2b0e1 (7 paths, index check 0 of 7 differ). No product file changed.
+- **AC1 PASS:** CENSUS OK. Denominator: 242 securities (pool `universe/v1/2026-10-06.json` through `universe_securities.build()`),
+  18,619 latest silver articles. Meta: added spans in 935 articles, 672 NEW pairs, added mention count 4,398, title flips 346,
+  lead flips 391 (barrons 43, bbg 451, ft 30, sa 282, wsj 129). Lilly: 94 articles, 2 NEW pairs, 294 added, title flips 18, lead
+  flips 2 (barrons 5, bbg 26, sa 39, wsj 24). Controls add 0; agreement 40 of 40.
+- **AC2 PASS:** 5 of 5.
+- **AC3 (judgment):** the two samples (`GOLD_PLANE_CENSUS_SAMPLE.md` / `.json`, 30 added rows each; 28 of Meta's and 1 of
+  Lilly's are NEW pairs) are with `3.0.0_SA_CVO~Z`. The issuer holds no verdict.
+- **Rows:** AMGT_HARVST-Z-W105-S1 (worker) and AMGT_HARVST-Z-S98 (issuer): gold's alias set for `META_US_Equity` is the
+  security key itself, and the same holds for 138 of 242 securities, so Meta's ADDED count is measured against a baseline with no
+  company name in it. The Meta figure overstates what the brand adds beside a real legal-name alias; Lilly's baseline carries
+  `Eli Lilly` and is not affected.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>55</round>
 <slot>~105</slot>
 <fabric>site-z</fabric>
