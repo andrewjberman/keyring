@@ -1,0 +1,77 @@
+{
+  "request_id": "dell2-20261007T085711Z-7b15",
+  "device": "dell2",
+  "tailnet_name": "dell2",
+  "requested_by": "0.9.0_WK_ADVI_COTBKF~19",
+  "requested_at": "2026-10-07T08:57:11Z",
+  "project": "ADVI_COTBKF",
+  "terraform_root": "infra/aws/terraform/shared-infra",
+  "resource": {
+    "kind": "aws_iam_role",
+    "name": "cloudops-cot-restricted-breakglass-role"
+  },
+  "assuming_service": "signin.amazonaws.com",
+  "permissions": [
+    {
+      "action": "s3:GetObject",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:269"
+    },
+    {
+      "action": "s3:GetObjectVersion",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:269"
+    },
+    {
+      "action": "s3:PutObject",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:269"
+    },
+    {
+      "action": "s3:ListBucket",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:275"
+    },
+    {
+      "action": "s3:GetObject*",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:208"
+    },
+    {
+      "action": "s3:GetObjectVersion*",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:208"
+    },
+    {
+      "action": "s3:GetObjectAttributes",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:208"
+    },
+    {
+      "action": "s3:GetObjectTagging",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:208"
+    },
+    {
+      "action": "s3:ListBucket*",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:216"
+    },
+    {
+      "action": "s3:PutObject*",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:227"
+    },
+    {
+      "action": "s3:DeleteObject*",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:227"
+    },
+    {
+      "action": "s3:RestoreObject",
+      "resource_arn": "arn:aws:s3:::opal-data-cottonwood/commonwealth/cottonwood/bronze/crm/*",
+      "code_ref": "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:227"
+    }
+  ],
+  "status": "requested"
+}
