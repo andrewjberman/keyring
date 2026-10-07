@@ -69,6 +69,7 @@ whose `mnemonic` is one of the six and whose `fiscal_period` is None or "FY1".
 integrations/bloomberg/research/model_block_pull.py
 integrations/bloomberg/research/build_unit_map.py
 integrations/bloomberg/research/tests/test_dispersion_fields_round40.py
+integrations/bloomberg/research/tests/test_fire_budget_record_round40.py
 integrations/bloomberg/research/tests/test_model_block_22_fields.py
 integrations/bloomberg/research/tests/test_build_unit_map_families.py
 integrations/bloomberg/research/tests/test_build_unit_map_families_round35.py
@@ -87,6 +88,7 @@ Read-only: the whole repository, in particular `lib/research/scores/divergence.p
 <proof_of_spec>
   <criterion id="AC1" cell_refs="CRPS-ap-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap7_check.py"</invocation><expect>(?m)^ap7 build 1/1 control 2/2$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python -m pytest integrations/bloomberg/research/tests/test_model_block_22_fields.py integrations/bloomberg/research/tests/test_build_unit_map_families.py integrations/bloomberg/research/tests/test_build_unit_map_families_round35.py integrations/bloomberg/research/tests/test_currency_labels.py integrations/bloomberg/research/tests/test_stage_derive_fye.py integrations/bloomberg/research/tests/test_model_block_round34.py integrations/bloomberg/research/tests/test_dispersion_fields_round40.py -q -p no:cacheprovider --color=no</invocation><expect>(?m)^[0-9]+ passed(, [0-9]+ warnings?)? in [0-9.]+s$</expect></criterion>
+  <criterion id="AC3" cell_refs="CRPS-ap-7"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH=. python "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/ap7_budget_check.py"</invocation><expect>(?m)^ap7b build 2/2 control 2/2$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the two real modules' constants): build -- each of the six the consumer divides by is in `FORECAST_FIELDS` exactly once;
@@ -132,6 +134,38 @@ Ruled by `1.0.0_SA_CTO~Z`: pull the four that exist; the mean is `BEST_CPS` / `B
 absence of the four refused ones). Then section 5 again: the proof instance updated, the checker after your final commit, and the
 status tag reading complete appended at the END of this file only if AC1 and AC2 pass.
 
+## 7. AMENDMENT 2 (2026-10-07, the issuer's own; the CTO's rulings msg 31290 and msg 31295)
+
+The build and AMENDMENT 1 are merged and are your INHERITED STATE. A shared ledger of the Terminal's daily capacity exists:
+`data/etfs/scripts/rivalfunds/bbg_budget.py` (read it whole: `record(mode, rows, batch_id)` appends one JSON line to the day's
+file under the directory `RIVALFUNDS_BBG_BUDGET_DIR` names, returns False on a write failure and never raises; `spent(day)` sums
+`rows`). The model-block fire writes no line to it, so a backfill that checks the ledger before it draws cannot see this pull.
+Measured on the 2026-10-07 fire: 768 calls, 13,824 security-field requests, 66,879 returned figures.
+
+**Do, and only this, in `model_block_pull.py` (plus one new test file):**
+1. Add `record_fire_budget(calls, security_fields, figures, stamp)` (keyword arguments, whole numbers and the fire's stamp). It
+   loads `bbg_budget.py` BY PATH from the repository this file sits in (the way this module already loads `build_unit_map.py`:
+   `_load_build_unit_map`), and appends ONE line: `mode` = `amgt-model-block`; `rows` = `figures` (the largest of the three, the
+   CTO's ruling until the daily collector's unit is named); `batch_id` =
+   `amgt-model-block:<stamp>:calls=<c>:security_fields=<s>:figures=<f>:rows_unit=returned-figures`. It returns what `record`
+   returns. It never raises: a missing module, an unreadable path or a failed write returns False. A fire is never blocked or
+   failed by bookkeeping, and the fire's rc does not change.
+2. Call it ONCE at the end of a real (non dry-run) `cmd_refresh` and ONCE at the end of a real `cmd_admit` that pulled at least
+   one name, with: `calls` = the run's own Bloomberg call count (the number its summary line already prints);
+   `security_fields` = names pulled x (`len(HEADER_FIELDS)` + `len(HIST_FIELDS)` + `len(FORECAST_FIELDS)` x
+   `len(FORECAST_OVERRIDES)`); `figures` = the count of figures in the blocks the run derived (sum of each derived block's
+   figures; 0 when none derived). A dry run records nothing. Print one line after it: `budget_record amgt-model-block rows <n>
+   written <0|1>`.
+3. Add `integrations/bloomberg/research/tests/test_fire_budget_record_round40.py`: offline, with `RIVALFUNDS_BBG_BUDGET_DIR` set
+   to a temp directory: the helper writes the one line; an unwritable directory returns False and raises nothing; a dry-run
+   refresh over a stub writes no line; a real refresh over a stub client writes exactly one line whose three numbers equal the
+   stub's.
+
+**Prove** AC1, AC2 and AC3 by their invocations in section 4 (AC3 is `ap7_budget_check.py`: `ap7b build 2/2 control 2/2`), and
+run your new test file with pytest and report its last line. Then section 5 again: the proof instance updated (AC3 added), the
+checker after your final commit, and the status tag reading complete appended at the END of this file only if AC1, AC2 and AC3
+pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 10 + s.4 item 4; CTO msg 30490 (AMGT_RESAPP ROUND_ANALYSIS.round76 ADDENDUM 1 item 2 @a7b2c3e0ba). Base: ap7 build 0/1 control 2/2; the six files 51 passed. Calls per fire: 768 before, 768 after. A 2026-09-15 probe instrument spells `BEST_CPS_STDDEV`; the issuer's one-name scripted probe (CRPS-ap-10) settles the spelling before the re-pin.
@@ -143,3 +177,4 @@ status tag reading complete appended at the END of this file only if AC1 and AC2
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>
+<status>in_progress</status>
