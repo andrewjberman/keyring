@@ -160,3 +160,53 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "Hop 1 does not run on real data: the crosswalk maps 482 raw accounts to a value the id minter refuses, and CU-a-1 lets the refusal escape. Under the CTO's rule such an advisor is ineligible anyway, so the repair is to count a refused account as uncovered and print the count in the census. The round is frozen: this is round 2's first item. Why 482 accounts do not resolve through the custodian-key seam is not measured."
 }
 ```
+
+## IRPT_CUSTDY-S4 -- the firm bucket opal-data-49financial is fenced from dell2
+
+```json
+{
+  "id": "IRPT_CUSTDY-S4",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T09:12:00Z",
+  "one_line": "The dell2 user is explicitly denied s3:ListBucket on the firm bucket opal-data-49financial, which holds the returns gold hop 3 reads and the client_report gold and report_template state this project writes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~09:1xZ: python org/missions/D9/IRPT/IRPT_CUSTDY/deliverables/2.0.0_SA_COO~K2/read_returns_gold_partition.py --master 08335338 --day 2026-09-30 -> AccessDenied ... cloudops-dell2-agent-user is not authorized to perform: s3:ListBucket on resource: arn:aws:s3:::opal-data-49financial with an explicit deny in a resource-based policy",
+      "builder output: opal_naming.address('irpt', lookup('08335338')['firm'], 'gold', 'account_return_daily', 'date=2026-09-30') = s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=2026-09-30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decomposition round 1 constraint 5 and the issuer's acts: hop 3 reads the returns gold and --apply writes client_report gold and the report_template state under the firm's address.",
+  "world_is": "Every read and write of this project under the firm bucket is fenced from dell2. Per 1.0.0_SA_CTO~DELL2's standing rule (msg 213) the read goes to the laptop as the committed script above; the fence is never widened from dell2. Round 2 builds on fixtures; every real read or write under the firm bucket is a laptop act until NFRA_CTLPLN round 4."
+}
+```
+
+## IRPT_CUSTDY-S5 -- E3 held: no portal node_modules on dell2
+
+```json
+{
+  "id": "IRPT_CUSTDY-S5",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T09:12:30Z",
+  "one_line": "Round-2 item E3 (the ClientReportDocument template in portal/src/pages/InvestorReporting/render/) cannot be built or checked on dell2: the portal has no node_modules here and installing them is npm egress.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~09:1xZ: portal HEAD 8ddfe409 = origin/DEV; `ls portal/node_modules` -> absent; portal/package.json typecheck = 'tsc -b --noEmit'; no *.test.* under portal/src/pages/InvestorReporting/render/",
+      "1.0.0_SA_CTO round-1 analysis @822468e309 section 3 E3 criterion (3): the page lane's typecheck and the template's test pass; NFRA_CTLPLN v0.14 C-KIT-PYTHON: no Dell installs from PyPI (the kit carries python packages from the laptop)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-2 ENRICHMENT LIST E3, cut in round 2's one issuance on dell2.",
+  "world_is": "E3 is held out of round 2's issuance on dell2 (the issuer's ruling, recorded in the round-2 decomposition): its build and both its checks need the portal toolchain. It is cut when the bring-up kit carries portal node_modules to dell2, or on the CTO's placement of the cell on the laptop."
+}
+```
