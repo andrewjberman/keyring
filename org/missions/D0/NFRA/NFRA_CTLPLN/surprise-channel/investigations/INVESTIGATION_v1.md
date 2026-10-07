@@ -1439,3 +1439,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "No document is RESIDENT-FIXED, so the Deny statement has no resource and is not in the policy. The hole is wider than the order stated: it does not need the SendCommand grant, because the render document and the runner scripts are executed by the estate's own controller and operators on the host's role, and the artifact prefixes they fetch are writable by both Dells under the group deploy policy. No fixed document exists, so the 'run-time script a granted document fetches' is reported for the documents that would have been in scope: the two resident documents and the export render document."
 }
 ```
+
+## NFRA_CTLPLN-W14-S3 -- TO-CT-a-1: the naming limb refuses the rendered targeted Deny; stopped after the census
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T11:25:00Z",
+  "one_line": "The commit gate's naming limb refuses the rendered targeted Deny (29 strings across the two new group policies name pipeline-owned functions, documents and S3 prefixes); the worker did not override, kept the census committed, and stopped before steps 2 to 4 landed.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit.sh on the step-2 commit: 'ERROR: BLOCKED -- the naming limb refused (LGIC_ENFORCE DEC-6, ENFORCE mode)'; '[naming-gate] NAMING-GATE: REFUSE 29 graded'; 17 refused lines in the documents-and-prefixes policy file and 12 in the functions policy file, each a lookup of a pipeline-owner name on an ARN that names a function, a command document or an S3 prefix the census reached.",
+      "the render itself succeeded and is reproducible: derive_reached_roles.py --from-file tests/reached_roles_census.json --render check|write printed 'ROUTES-DENY functions=31 (already in DenyProtectedFunctions: 2) task_definitions=0 documents=12 prefixes=5 policies=2 sizes=[5219, 1445] limit=6144', so two additional policies suffice and the more-than-two stop did not fire; the files were deleted from the worktree after the refusal and regenerate with --render write.",
+      "the census (commit d6aed4ab85, tests/reached_roles_census.json) read 175 of 175 distinct roles, unread 0: 10 roles read YES (1 on IAM, 0 on the audit trail, 9 on production-data delete) and 165 read NO; the resident host's role reads NO. W14-S2's routes therefore stay open until the Deny lands."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "1.0.0_SA_CTO: rule how a policy that must name a pipeline-owned function, document or prefix passes the naming limb (an R20 register entry Andrew acknowledges, or a role-owning-project prefix form); then 2.0.0_SA_COO~C recuts steps 2 to 4 of the order.",
+  "spec_asserts": "TO-CT-a-1 amendment 1 step 2: render the Deny for the YES roles' routes into group policy files; 'If the commit gate refuses a firm-name string in a policy file, do NOT use any override: file a BLOCKING row, keep step 1 committed, and stop.'",
+  "world_is": "The gate refuses 29 strings in the rendered files, so no Deny, no dell2 command grant and no sixth or seventh simulation block were committed; step 1 and its census are. The order stays in_progress."
+}
+```
