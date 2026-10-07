@@ -1958,3 +1958,15 @@ fanout: 1 of 1 chains, cap 8, reason: one page file. Slot 0.9.0_WK_IRPT_BCKEND~1
 | `IB-pr-348` | E-P8 criterion 4: the seam guard treats every spelling of none/nan/null as unmapped | FWD-1/FWD-2 coverage | WORLD (floor: infra/) | IB-pr-339 (drained) | P67-b |
 
 fanout: 2 of 2 chains, cap 8, reason: two independent cells. Slots 0.9.0_WK_IRPT_BCKEND~148, ~149. Check: `deliverables/2.0.0_SA_COO~P2/checks/r67/p67_cells.py`, dry-run at base 8d7577866e.
+
+## 61. ROUND 68, WORKSTREAM ~P (2026-10-07 ~13:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 590 / half amendment 1 @4493cf1800 and MSTR ruling 106243, msg 589)
+
+IB-pr-347 measured non_opal_reach = 7, so under the CTO's msg 525 this is a security exception: a laptop applier releases IB-pr-343 BY HASH.
+The source map staged export/entry.py at 0642c9d004, so a build at 34f71024a1 omitted the fix (COO half refused @477f0faa28). The re-pin
+is @b921635dad, whose census is exactly nine members; both halves are signed against it. Check: `deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py`.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-349` | EMERGENCY release of irpt-export-render at pin b921635dad (fail-closed export read + admitted-read log), laptop applier, with after-reads | FWD-2 (W142-S4 / W146-S1 / W148-S1) | WORLD (a deploy) | IB-pr-343 (drained), IB-pr-347 (drained) | P68-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one function, one release. Applier 0.7.0_AE_CloudOps~I (laptop seat, MSTR ruling 106243), not a worker slot.
