@@ -19297,3 +19297,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Condition (a) met and graded. S352 DISARMED, S356 superseded. E-M1 (cell IB-mr-301) complete for round 30 ~M."
 }
 ```
+
+## IRPT_BCKEND-S363 -- E-M2 (round 31 ~M) is a fenced firm-bucket read: routed to the laptop as a FILE
+
+```json
+{
+  "id": "IRPT_BCKEND-S363",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T10:40:44Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E-M2 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_30_M_20261007.md @e252251fbe) reads the same three firms' served Holdings publications that S352 measured refused to the dell2 identity; under 1.0.0_SA_CTO~DELL2's standing rule (msg 217) the read is a committed read-only script run by a laptop seat and delivered as a FILE.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "IRPT_BCKEND-S352 (measured 2026-10-07 ~08:4xZ): HeadObject 403 on irpt/<firm>/platinum/holdings/current/manifest.json at all three firm buckets for arn:aws:iam::313476888478:user/cloudops-dell2-agent-user; not re-measured since; the fence fix is NFRA_CTLPLN TO-APPLY-4 (laptop 106139)",
+      "reader org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r31m_fwd5_proof_cases_read.py, committed with this row; --self-test 3 arms OK on dell2"
+    ]
+  },
+  "spec_asserts": "Round 31 ~M issues E-M2 as a SERVED read of the three firms' newest Holdings publications.",
+  "world_is": "No dell2 principal can read them. Disarms when the laptop FILE is delivered and graded, or when the fence join admits the dell2 identity read-only. This row widens no policy."
+}
+```
