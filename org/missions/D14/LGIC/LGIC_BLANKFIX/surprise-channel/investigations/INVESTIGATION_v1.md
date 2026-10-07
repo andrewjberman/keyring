@@ -182,3 +182,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The renderer does not fail on the fourth value, but it will print a four-value verdict list with no sentence saying what the fourth means, until its field tuple at line 324 gains NO-SYSTEM-ASKED. Also read, no row owed: lib/opal_lgctfm.py:251-278 records the verdict verbatim and TENSION_VERDICTS (line 1157) leaves NO-SYSTEM-ASKED out, so such a name raises no TENSION row, consistent with 'no remedy owed' (the comment at 1151-1157 does not name it); .tools/safe-apply.sh:92-94 is a comment and delegates to the two gates; infra/logic/registry/exemptions.json lines 33 and 192 mention OUT-OF-PATTERN only inside prose reasons."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S2 -- a legacy_addresses.json row matches by key path alone, and one of the root's keys matches a row whose bucket is not the key's bucket
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-07T12:34:00Z",
+  "one_line": "The key silver/prices/canonical_prices.parquet written by bd-price-update (bucket opal-data-bd, 49 Financial) classes LEGACY on the legacy_addresses.json row cottonwood-silver-canonical-prices, whose bucket is opal-data-cot; a census item carries no bucket, so the BF-t-5 match (the face's rule: the key matches an entry) cannot tell the two stores apart.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_keyfill.py dir infra/aws/lambda/bd-pipeline --root bd-pipeline --map ROOT_MAP_PROPOSED.json: LEGACY S3Key 'silver/prices/canonical_prices.parquet' where=infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:441 basis=legacy_addresses.json row cottonwood-silver-canonical-prices (bucket opal-data-cot)",
+      "infra/aws/lambda/bd-pipeline/bd-price-update/lambda_function.py:54 reads S3_BUCKET 'opal-data-bd' (census item, graded ALIAS of opal-data-49financial); :441 put_object(Bucket=S3_BUCKET, Key='silver/prices/canonical_prices.parquet')",
+      "infra/logic/registry/legacy_addresses.json row cottonwood-silver-canonical-prices: bucket opal-data-cot, template silver/prices/canonical_prices.parquet"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-t-5 worker face: LEGACY is tested after PATTERN and before ADDRESS; the key matches an entry of legacy_addresses.json (reusing _on_list/_legacy_list).",
+  "world_is": "The row is classed LEGACY with the key's own bytes as canonical and the cottonwood row (and its bucket) named in basis, as the face orders; the same key under the 49 Financial bucket would otherwise be the ADDRESS blackdiamond/49financial/silver/prices/canonical_prices.parquet. Not resolved in the classifier (an item has no bucket field and the face fixes the rule); whether bd-price-update's store is the cottonwood legacy store, a same-path store of 49 Financial, or a row that should be bucket-scoped is for the registry's owner."
+}
+```
