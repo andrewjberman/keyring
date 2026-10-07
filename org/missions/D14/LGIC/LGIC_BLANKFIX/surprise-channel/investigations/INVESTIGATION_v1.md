@@ -562,3 +562,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The key's bucket is 49 Financial's (opal-data-bd) and only its path names Cottonwood (a file called cot_bronze_ingest.py under code/bronze/). The line's opening sentence asserts another firm's store; what was measured is a Cottonwood-named code file kept in the 49 Financial bucket. A reader who did not build the check could take it as a cross-firm data reference. The run exits 0 with these two lines; whether FWD-1 reads them as actionable, and whether the wording should say 'names another firm' instead, is for BE8-AC3's grader and the CTO. Nothing was changed."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S6 -- the order's counts (1,965 names, 119 unassigned, 51 contested) and three test assertions are stale; the repository reads 1,966 / 120 / 52
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T17:25:30Z",
+  "one_line": "TO BF-r-3 states 1,965 names, 119 unassigned and 51 in contested folders; the repository at the worktree HEAD reads 1,966, 120 and 52, so three typed-total assertions of test_opal_naming_scope.py failed at the base and BR3-AC1 could not pass until they were rewritten as relations.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_scope.py table at 5b74b29963: SCOPE-TABLE roots=61 items=1966 assigned=1846 unassigned=120; contested: items=52",
+      "python lib/tests/test_opal_naming_scope.py at 5b74b29963: three FAIL lines (contested --map last line, contested --map counts, no-map line) comparing against folders=12 items=51; with the landed map table reads unassigned=68 as AMENDMENT 1 says"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-r-3 CONTEXT: the table reads 1,965 repository names, 119 unassigned, 51 in 12 contested folders; the existing scope test passes at the base.",
+  "world_is": "The repository holds one more census name in a contested folder (52), so every total is one higher. The three assertions that typed 51 were rewritten in lib/tests/test_opal_naming_scope.py to hold on relations (folders listed equal the contested rows, items equal the sum of the CONTESTED lines, assigned plus unassigned equals items, assigned with the map greater than without, assigned equal to the held folder's items)."
+}
+```

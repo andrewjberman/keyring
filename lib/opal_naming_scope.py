@@ -24,6 +24,7 @@ Commands (each takes an optional --map PATH):
   python lib/opal_naming_scope.py table
   python lib/opal_naming_scope.py pick
   python lib/opal_naming_scope.py contested
+  python lib/opal_naming_scope.py unassigned   (every name still assigned to no root, grouped by folder, with its reason)
 
 Python 3.9 syntax; stdlib only; ASCII only.
 """
@@ -506,7 +507,81 @@ def cmd_contested(map_path=None):
     return 0 if ok else 1
 
 
-_USAGE = "usage: opal_naming_scope.py items ROOT | table | pick | contested   (each takes --map PATH)"
+# The closed list of reasons a name is assigned to no root; each is one branch of the code above (BF-r-3).
+REASONS = ("map-lists-uncontested-folder", "contested-unlisted", "beside-tied-folder", "lambda-folder-no-root-claim",
+           "terraform-folder-under-no-root", "infra-aws-non-lambda", "script-folder-outside-infra-aws")
+
+
+def _reason(f, mdirs, ties, contested, smap):
+    """(reason, evidence) for an item whose file is f and that no root owns."""
+    d = f.rsplit("/", 1)[0]
+    listed, ldir = _listed_root(f, mdirs)
+    if listed and ldir not in contested:
+        return ("map-lists-uncontested-folder",
+                "the map lists %s for %s, but no two roots claim it, so the scope reads no listing there" % (ldir, listed))
+    if f.startswith(LAMBDA_ROOT):
+        under_c = sorted(c for c in contested if _under(f, c))
+        if under_c:
+            c = max(under_c, key=len)
+            return ("contested-unlisted", "%s is claimed by %d roots (%s); no map entry lists it or a folder above it"
+                    % (c, len(contested[c]), ", ".join(contested[c])))
+        over = sorted(set((r, t) for r in ties for t in ties[r] if _overlap(d, t)))
+        if over:
+            return ("beside-tied-folder", "the name sits outside the tied folder(s): %s"
+                    % "; ".join("%s tied to %s" % (t, r) for r, t in over))
+        rows = ["%s tf_file=%s" % (fn, row.get("tf_file") or "none") for fn, row in sorted(smap.items())
+                if row.get("source_dir") and _overlap(d, str(row["source_dir"]).rstrip("/"))]
+        return ("lambda-folder-no-root-claim",
+                "no tie (source-map, tf-path or artifact-key) of any of the %d roots covers or sits inside %s "
+                "(%d .tf files read); source map rows for it: %s"
+                % (len(_roots()), d, len(_tf_files()), "; ".join(rows) if rows else "none"))
+    if f.startswith(TF_ROOT):
+        return ("terraform-folder-under-no-root", "%s is under %s but under none of the %d Terraform roots"
+                % (d, TF_ROOT, len(_roots())))
+    if f.startswith("infra/aws/"):
+        return ("infra-aws-non-lambda", "%s is under infra/aws/ but not under %s or %s" % (d, TF_ROOT, LAMBDA_ROOT))
+    return ("script-folder-outside-infra-aws", "%s is a script folder outside infra/aws/, under no Terraform root" % d)
+
+
+def unassigned_rows(map_path=None):
+    """(groups, n_items, n_assigned): one dict per folder holding unassigned names: dir, items, reason, evidence."""
+    items, _ = _census()
+    asg = _assignment_with(map_path)
+    mdirs = _map_dirs(map_path)
+    ties = _ties()
+    _per, contested = _resolve()
+    smap = json.loads(_read_text(SOURCE_MAP)).get("functions", {})
+    groups = {}
+    for it, r in zip(items, asg):
+        if r is not None:
+            continue
+        f = _file_of(it)
+        reason, ev = _reason(f, mdirs, ties, contested, smap)
+        g = groups.setdefault(f.rsplit("/", 1)[0], {"dir": f.rsplit("/", 1)[0], "items": 0, "reason": reason, "evidence": ev})
+        g["items"] += 1
+        if g["reason"] != reason:
+            g["reason"] = "MIXED"
+    return [groups[k] for k in sorted(groups)], len(items), sum(1 for r in asg if r is not None)
+
+
+def cmd_unassigned(map_path=None):
+    groups, n_items, n_asg = unassigned_rows(map_path)
+    n_un = sum(g["items"] for g in groups)
+    reasoned = sum(g["items"] for g in groups if g["reason"] in REASONS)
+    for g in groups:
+        print(_safe("UNASSIGNED-GROUP %s items=%d reason=%s evidence=%s" % (g["dir"], g["items"], g["reason"], g["evidence"])))
+    by = {}
+    for g in groups:
+        by[g["reason"]] = by.get(g["reason"], 0) + g["items"]
+    for k in sorted(by):
+        print("UNASSIGNED-REASON %s items=%d" % (k, by[k]))
+    ok = (n_asg + n_un == n_items) and reasoned == n_un
+    print("SCOPE-UNASSIGNED ok=%s items=%d assigned=%d unassigned=%d reasoned=%d unreasoned=%d"
+          % (ok, n_items, n_asg, n_un, reasoned, n_un - reasoned))
+    return 0 if ok else 1
+
+
+_USAGE = "usage: opal_naming_scope.py items ROOT | table | pick | contested | unassigned   (each takes --map PATH)"
 
 
 def main(argv):
@@ -533,6 +608,8 @@ def main(argv):
             return cmd_pick(map_path)
         if len(argv) == 2 and cmd == "contested":
             return cmd_contested(map_path)
+        if len(argv) == 2 and cmd == "unassigned":
+            return cmd_unassigned(map_path)
     except (ValueError, OSError) as exc:
         print("SCOPE-%s ok=False error=%s" % (cmd.upper(), _safe(exc)))
         return 1
