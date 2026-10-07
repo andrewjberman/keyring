@@ -4340,6 +4340,72 @@
     "spec_asserts": "Face section 3: run the gateway suites before reporting: 0 failed.",
     "world_is": "The suites have 29 failures with and without this cell; rivalfunds_view.py, test_rivalfunds_view.py and the route-census tests (test_principal_cutover.py) pass 28 of 28.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. A different owner fixes the 29; this cell leaves them untouched."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S51",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T08:57:23Z",
+    "one_line": "RIV-pd-1: gold_buying_trend now reads G1 back to the R365 start (a year before the page day), but publish_page._a1_window still states its input window as 1 January of the page year, so the stale-table rebuild test ignores a G1 report dated in the previous year's tail of that window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py:257-268 _a1_window (this branch): 'buying_trend' returns ((<page year>-01-01, day), None); its docstring says buying_trend reads G1 from 1 January",
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py handler_entry (this branch): lo = min(_starts(day).values()), which is the R365 start (as-of minus 365 calendar days) after this cell",
+        "publish_page.py is outside this cell's paths (read-only), so the window is unchanged here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pd-1 face section 1 gives the organic trigger as the 07:00 ET publish's stale-table rebuild (publish_page.produce_a1); the rebuilt table reads G1 over its whole period reach.",
+    "world_is": "The producer's read now reaches about a year back; the stale test compares the table's capture time with G1 objects from 1 January of the page year only. A G1 object dated in the prior year inside the R365 reach (late-arriving or revised) would not mark the table stale. In January the two windows differ the most; later in the year the gap is the Jan 1 to R365 start span.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The fix is one line in publish_page._a1_window (the buying_trend G1 lo becomes the producer's own earliest start); it sits in another cell's surface (RIV-pd-2 or the issuer), not in pd-1's paths."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S52",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T09:43:54Z",
+    "one_line": "RIV-md-1: the dialog's trade list is to read from trade_markers.words, but the page context carries no fund market value, so each line would read 'basis points of the fund not known' while the chart object's marker carries the real bps.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "git show 80885c8626:data/etfs/scripts/rivalfunds/trade_markers.py: words(m) prints 'basis points of the fund not known' when m['bps'] is None; markers() takes fund_mv_by_date, which the renderer's ctx does not hold (publish_page._fund_view returns holdings for the latest date only)",
+        "data/etfs/scripts/rivalfunds/render.py _trade_words (this branch): builds one marker per trade with bps None and calls trade_markers.words when `from . import trade_markers` succeeds; on this branch the module is absent, so the page's own words ('Bought on <end>: $<usd>, 1 trade.') print",
+        "data/etfs/scripts/rivalfunds/tests/test_r15md1_chart_frame_and_script.py::test_trade_markers_words_are_used_when_that_module_is_importable pins the call path with a stand-in module"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-md-1 face section 1: the trade list is one line per trade from trade_markers.words when that module is importable, else the page's own trade words.",
+    "world_is": "Both branches are built and tested. Once RIV-tm-1 merges, the module becomes importable and every static trade line prints the 'not known' wording for its basis points, while the hover text the script draws from the chart object's marker prints the figure. Nothing is wrong until the merge; the two texts then disagree on one marker.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Options for the issuer: publish_page puts the fund's market value by window end into the fund view so render can pass real bps; or the list drops the bps clause. Both sit outside md-1's paths (publish_page.py is another chain's)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S53",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T09:43:54Z",
+    "one_line": "RIV-md-1: 'data-history=none and HISTORY_NONE leave the dialog' does not say whether the AUDIT page's dialogs keep the note; they keep it (no chart frame there), so the audit page still reads 'History not yet backfilled'.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/render.py _sec_dialogs(ctx, charts=False): the audit call (render._render_audit_body) keeps data-history=none and the HISTORY_NONE paragraph; the main page's call passes charts=True",
+        "face ruling at the cut: 'The AUDIT page gets no chart frame and no script'; md-1.AC1 (d) reads the main page only",
+        "data/etfs/scripts/rivalfunds/tests/test_r15md1_chart_frame_and_script.py::test_the_audit_pages_dialogs_have_no_frame_and_keep_their_note"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-md-1 face section 1: data-history=none and HISTORY_NONE leave the dialog; the audit page gets no chart frame and no script.",
+    "world_is": "The note now reads on the audit page's dialogs while the main page draws the history, so the audit page's note is no longer a true statement about the day. The words are the only thing left; no figure depends on them.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. Removing the note from the audit dialogs is a one-line change in render._sec_dialogs; it was left because the face's ruling names the main page's dialog and a broader removal would also drop the audit page's only history wording."
   }
 ]
 ```
