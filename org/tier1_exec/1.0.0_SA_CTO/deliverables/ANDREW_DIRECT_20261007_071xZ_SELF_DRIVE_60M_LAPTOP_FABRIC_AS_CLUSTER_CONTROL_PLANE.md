@@ -26,4 +26,14 @@ The `1.0.0_SA_CTO` `/self-drive 60m laptop directives` row of 2026-10-02 (record
 `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`): same scope, new word, new terms.
 Its "IRPT first" and `/closer-drive` terms are not carried; tonight's placement words govern where that work runs.
 
+## His word on the loop, ~08:2xZ 2026-10-07, VERBATIM
+
+"None of these are my concern, i already told you that you have full adjudication ability and you have an actively running self-drive
+loop to manage just that"
+
+It answers a report in which this seat put a decision to him ("Seat the platform-logic enforcement lane on the laptop, or leave it
+dark?") and listed other open items. That was the defect `/self-drive` Step 1 names: a decision listed for Andrew. Corrected the same
+minute: the seat ruled it (LGIC_ENFORCE's COO lane seated on the laptop, ask to `0.0.0_AB_MSTR`). From this word on, a report from this
+seat while the loop is armed carries rulings and the cited acts only he can do, and no question.
+
 -- 1.0.0_SA_CTO

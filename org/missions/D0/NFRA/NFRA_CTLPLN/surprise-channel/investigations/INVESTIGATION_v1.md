@@ -703,3 +703,366 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "On dell2 the graph query is refused at the secret read, so every dell2 seat's rule-20 check is a coverage limitation, not a result. Not exercised on dell1. The grant (or a different bearer path for the Dells) is this project's to decide; 2.0.0_SA_COO~K2 recorded the gap in its IRPT_CUSTDY decomposition and kept working."
 }
 ```
+
+## NFRA_CTLPLN-S8 -- dell1 came up with one of the repo's git hooks; every seat's commit there ran ungated until 07:3xZ
+
+```json
+{
+  "id": "NFRA_CTLPLN-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-07T07:35Z",
+  "one_line": "The new-device bring-up left dell1 with only the owned-paths pre-commit hook: no pre-push deploy gate, no law lock, no to-pipeline gate, no surprise-row gate. dell1's fabric manager ran .tools/install-all-git-hooks.sh at ~07:3xZ.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 2026-10-07 ~07:3xZ: git rev-parse --git-path hooks = .git/hooks, holding pre-commit only (non-sample files)",
+      "a push of q/dell1/ARMS/r1 at ~07:3xZ printed no pre-push line at all",
+      "after bash .tools/install-all-git-hooks.sh on dell1: commit-msg, post-commit, pre-commit, pre-push live; HOOK BODIES 20 total / 19 wired / 1 ORPHANED (prd-header-notify-post-commit.sh, no installer references the body)",
+      "the kit's README_NEW_DEVICE.md (Opal_New_Device_Kit_20261007) names no hook install step; the dell1 handoff reports the owned-paths hook alone"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "install-all-git-hooks.sh header (LD-0343): RUN THIS ON EVERY FRESH CLONE; a clone starts with zero hooks and the ungated site is the one that succeeds.",
+  "world_is": "dell1's seats (1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~M1, 2.0.0_SA_COO~H1) committed between ~07:15Z and the install with only the owned-paths gate, so their local commits before it (incl. 78756a9b74, ea7b1706a9, a35cc608fe) were not graded by the law lock, to-pipeline gate or surprise-row gate; the trunk merge at site Z grades them on the merged index. dell2 is unmeasured from here. The kit has no hook step, so every future box repeats it. The prd-header-notify orphan is repo-wide, not dell1's."
+}
+```
+
+## NFRA_CTLPLN-S9 -- disarm of NFRA_CTLPLN-W1-S1: the round-3 Dell policy is applied at the laptop; the named-role PassRole rule is live
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T08:32Z",
+  "one_line": "Issuer disarm of NFRA_CTLPLN-W1-S1: the round-3 Dell policy is APPLIED at the laptop (2 added, 1 changed, 0 destroyed) and the PassRole rule Andrew confirmed is live -- a Dell passes only roles the laptop names, and none is named yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~E msg 106072 and the CLOSED ledger entry org/critical_paths/change_management/20261007T0811Z_nfra-ctlpln-dell-policy-r3-laptop-20261007_deploy_completion.md (5 of 5 legs; open f381720cde, close 95b6e421cd)",
+      "Issuer's own re-plan of the identity root after the apply, 2026-10-07 ~08:3xZ: terraform plan -detailed-exitcode exit 0 (no changes)",
+      "Issuer's own comparison of the seat's saved LIVE documents to the repo files: deploy policy v2 equal, create policy v1 equal; the live deploy document carries DenyPassRoleExceptNamed on Resource * beside the four round-2 Deny statements",
+      "Both never-widen halves: COO d3ffdf3, CTO 2d27f79524; Andrew's card-1 answer 'Yes' (PRD v0.10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-S1 (round 2): iam:PassRole is denied outright, so a Dell deploy that registers a task definition or a target naming a role fails; rule a narrow allow. PRD v0.8 and v0.10: a Dell may pass only the named roles the laptop made for Dell-placed work, with the iam:PassedToService condition.",
+  "world_is": "DISARM (issuer): the ruled form is live. Passing a role is refused for every role today because no role request has been applied; the first applied request renders that role into the policy (tests/render_passrole.py) and the next laptop apply admits it. So a Dell deploy that needs a role still fails closed and loud, now with a written route (C-ROLE-REQUEST) instead of no route. NOT yet exercised: the live round trip (a Dell writes in, the laptop applies, the Dell creates with the role); it waits on a Dell publishing its branch (CTO msg 106056)."
+}
+```
+
+## NFRA_CTLPLN-S10 -- CT3c6-AC2 passed untracked and fails committed: the fabric-reader census does not classify its own files
+
+```json
+{
+  "id": "NFRA_CTLPLN-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T08:32Z",
+  "one_line": "A round-3 criterion passed in the worker's tree and fails on the trunk: CT3c6-AC2's census of fabric readers reads unclassified=5 ok=False once its own two files are committed, and the issuer did not re-run it after the merge.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker proof at 13ec2d1be4: FABRIC-CENSUS files_scanned=1692 hits=53 ... unclassified=0 ok=True",
+      "Issuer's run on the trunk, 2026-10-07 ~08:1xZ: FABRIC-CENSUS files_scanned=1700 hits=58 enum_source=5 compares=1 display=33 fixture=14 unclassified=5 ok=False; the five hits are three lines of .tools/tests/fabric_value_census.py and two of .tools/tests/test_fabric_enum_dell.py",
+      "The census scans tracked files (git ls-files); both files were untracked when the worker ran it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-c-6 CT3c6-AC2: every reader of a fabric value in the scanned tree is found and classified (unclassified=0 ok=True); its proof instance is VALID at HEAD.",
+  "world_is": "The instance is VALID and the criterion's output was true where it was run; on the trunk the same invocation fails. Cause: a check whose population (tracked files) changes when the check itself is committed. The issuer's drain re-ran CT3c6-AC1 and not AC2. Repair: cell CT-d-6 of round 4 (handed, worker ~9) repairs the census table and keeps a hit in a new test file UNCLASSIFIED until named. The general case for the drain: re-run every criterion whose invocation reads tracked files AFTER the merge, not before it."
+}
+```
+
+## NFRA_CTLPLN-W11-S1 -- CT-d-8 probe finding
+
+```json
+{
+  "id": "NFRA_CTLPLN-W11-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~11",
+  "surfaced_at": "2026-10-07T08:32:10Z",
+  "one_line": "No resources.json row names a builder-conformant resource: all 465 rows grade OUT-OF-PATTERN, so CT-d-8's case (A), 'a builder-conformant name that HAS a row', cannot be built, and the probe's registered_wellnamed key measures a registered legacy name instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/tests/probe_missing_registry_row.py, 2026-10-07 ~08:3xZ: 'registry census: resources.json holds 465 row(s); 0 of 465 row name(s) grade CONFORMANT under lib/opal_naming.grade()'",
+      "case A re-uses the first LAMBDA row, inf-gold-trigger (registry_count=1): the gate prints 'NAMING REFUSE ... inf-gold-trigger -> advi-inf-gold-trigger-lambda' and exits 1 (OUT-OF-PATTERN as LAMBDA), so a registered name is refused on its grade, not admitted",
+      "infra/logic/registry/resources.json _about and lib/opal_naming.py:605-610 @208c5d85ee: a row fills a {system} placeholder for a name whose own tokens resolve no system; the row never makes the name conformant"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-8 build item 1 (A): 'a builder-conformant name that HAS a row in infra/logic/registry/resources.json (pick an existing row and re-use its name)', and the last-line key registered_wellnamed.",
+  "world_is": "resources.json holds the system attribution of 465 legacy, non-conformant names; none of them is a registered well-named resource, and the gate refuses the one the probe tried. The probe ran case A as the order's recipe says (an existing row's name) and prints the census beside it; the key registered_wellnamed=refused therefore reads 'a registered legacy name is refused', which is a stronger statement than the key suggests. ok=True and AC1 are unaffected (they rest on case C). No test was weakened."
+}
+```
+
+## NFRA_CTLPLN-W11-S2 -- CT-d-8 probe finding
+
+```json
+{
+  "id": "NFRA_CTLPLN-W11-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~11",
+  "surfaced_at": "2026-10-07T08:32:40Z",
+  "one_line": "C-NAMING clause (3), 'its row lands in resources.json in the same commit as its Terraform', collides with lib/opal_naming.py validate(): a row for a builder-conformant name is REFUSED as redundant, so a missing-row refusal for a conformant name would demand a row the registry validator rejects.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "scratch copy of infra/logic/registry in .scratch/regcopy with one row appended {name: blackdiamond-49f-missing-row-probe-lambda, type: LAMBDA, system: blackdiamond}: lib/opal_naming.validate(reg_dir=...) returns 1 refusal: \"already resolves 'blackdiamond' from its own tokens (type 'LAMBDA'); a row naming the same system is redundant\" (baseline validate on the unmodified registry: 0 refusals)",
+      "lib/opal_naming.py:642-664 @208c5d85ee, the redundant-row check; infra/logic/registry/resources.json _about (rows exist only for names whose tokens resolve no system)",
+      "the same probe: the unregistered, builder-conformant name is ADMITTED by the apply gate (NAMING-PLAN: PASS 1 graded), so today nothing requires the row that clause (3) says must exist"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN PRD v0.13 C-NAMING clause (3) and cell (b): every new resource has a row in infra/logic/registry/resources.json, and an apply for a missing row is refused.",
+  "world_is": "For a conformant name the row resources.json can hold is a redundant one that validate() refuses, so 'the missing row' is undefined for exactly the resources C-NAMING is about; the proposal for CT-d-8 states this and offers the index question to the gate's owner rather than choosing. Whether a commit-time or CI gate runs validate() on a pushed registry was not measured by this worker; only the function's return was."
+}
+```
+
+## NFRA_CTLPLN-W7-S1 -- deploy_ledger.py has no verb that adds a field or note to an open entry; the named-commit line is carried by named_commit_check.py writing the sentinel log and the entry's Log section directly
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T08:34:25Z",
+  "one_line": "deploy_ledger.py has no verb that adds a field or note to an open entry; the named-commit line is carried by named_commit_check.py writing the sentinel log and the entry's Log section directly",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/deploy_ledger.py@208c5d85ee:_render_entry prints state['log']; no note verb in the argparse table (cmd_open, cmd_close_leg, cmd_close, cmd_hold, cmd_check, cmd_list)",
+      "worktree test: python .tools/tests/test_named_commit_deploy.py case 8 -> carried=True survives_rerender=True for both wrappers"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-3 build item 2: the wrappers pass or append named_commit=<hash> trunk=OFF-TRUNK branch=<b> device=<d> to the entry the actor opened, reading deploy_ledger.py for how a field or note is added; if the ledger tool cannot carry the field without an edit, that is a surprise row and the wrapper prints the line instead.",
+  "world_is": "deploy_ledger.py@208c5d85ee has open, close-leg, close, hold, check, list and no note or field verb. The entry is a re-rendering of the sentinel (_render_entry prints the sentinel's `log` array under `## Log`), so a line added to the sentinel's `log` survives every later close-leg re-render. named_commit_check.py --record therefore appends one line to the sentinel JSON `log` (plus a `named_commit` key) and the same line to the entry's Log section, without editing deploy_ledger.py. Proven by test case 8 including a close-leg re-render. This is a second writer of the sentinel format; a future change to the sentinel schema must read named_commit_check.py _record."
+}
+```
+
+## NFRA_CTLPLN-W7-S2 -- The named-commit check runs only when DEPLOY_COMMIT is set; with it unset the wrappers do not read HEAD's relation to the trunk at all
+
+```json
+{
+  "id": "NFRA_CTLPLN-W7-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~7",
+  "surfaced_at": "2026-10-07T08:34:25Z",
+  "one_line": "The named-commit check runs only when DEPLOY_COMMIT is set; with it unset the wrappers do not read HEAD's relation to the trunk at all",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-d-3.named-commit-deploy.md:build item 2 and BOUNDS@208c5d85ee",
+      "git diff of .tools/safe-deploy.sh and .tools/safe-apply.sh: the block is guarded by [ -n \"${DEPLOY_COMMIT:-}\" ]"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-3 build item 2: DEPLOY_COMMIT=<full hash>; when unset the wrapper uses git rev-parse HEAD and behaves as today; bounds: every existing path works unchanged when DEPLOY_COMMIT is unset.",
+  "world_is": "Read as: unset means no check and no change, because grading HEAD for a Dell on every unset deploy would newly refuse an unpublished HEAD (and a Dell with AGENTBUS_DEVICE unset) on paths that never refused before. So a Dell that deploys without naming its commit is not graded by this check, and the pre-push hook path (which does not set DEPLOY_COMMIT) is unchanged. Also: when DEPLOY_COMMIT IS set the device must resolve in the register, so an ON-TRUNK deploy from a box with AGENTBUS_DEVICE unset is refused (case 6 as written). If the issuer meant unset to grade HEAD, that is one line in each wrapper."
+}
+```
+
+## NFRA_CTLPLN-W6-S1 -- The census calls AWS through .tools/aws.cmd, the Windows twin of the .tools/aws shim, beca
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T08:39:30Z",
+  "one_line": "The census calls AWS through .tools/aws.cmd, the Windows twin of the .tools/aws shim, because a native Python subprocess cannot execute the extensionless bash shim.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python subprocess.run(['.tools/aws', ...]) from the worktree: FileNotFoundError [WinError 2] (the shim is a bash script); .tools/aws.cmd resolves the same real AWS CLI with the same default credential chain (sts get-caller-identity: user/Andrew_Berman)",
+      "infra/aws/terraform/shared-infra/tests/dell_fence_census.py, AWS constant: aws.cmd on Windows, the bash shim elsewhere",
+      "iam simulate-principal-policy takes the bucket policy as --resource-policy file://<path relative to the worktree root>; 48 evaluator calls all returned a decision, none errored"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-1 step 1: s3api list-buckets through the repo's .tools/aws shim.",
+  "world_is": "The shim is a bash script a native Python process cannot exec; the script uses its Windows twin aws.cmd (same CLI, same credentials), and passes the large resource-policy document by file. No boto3 was used."
+}
+```
+
+## NFRA_CTLPLN-W6-S2 -- The order's undeclared=<x> is ambiguous between 'a fence' and 'any live bucket policy'; th
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T08:39:40Z",
+  "one_line": "The order's undeclared=<x> is ambiguous between 'a fence' and 'any live bucket policy'; the census counts every live policy with no declaring .tf found: 2, and none of the 3 fences is among them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FENCE-CENSUS line: fenced=3 undeclared=2; the 2 undeclared are NO-FENCE policies on legacy firm buckets (CloudFront read grants), which only a data aws_s3_bucket_policy source reads under infra/aws/terraform/portal-auth/firm-bucket-cross-ref.tf:29-39 (no resource declares them)",
+      "the 3 fences are declared at shared-infra/s3-49financial.tf:122 and shared-infra/s3-lgic-firm-buckets.tf:142 (for_each over the scopes.json registry, so no firm token appears in that file)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-1 step 4 and the last-line field undeclared: the .tf file and line that declares each bucket's policy, or UNDECLARED; the report lists every UNDECLARED fence.",
+  "world_is": "Counted as: a bucket with a live policy whose declaring aws_s3_bucket_policy resource is not found by the resolver (literal bucket, a local holding the literal, a for_each over the registry, or the two registry idioms). NO-POLICY buckets read 'n/a'. UNDECLARED fences = 0; each bucket's declaring file and line are in the saved JSON under its declared field."
+}
+```
+
+## NFRA_CTLPLN-W10-S1 -- CT-d-7: lib/opal_naming.py validate REFUSES every resources.json row for this project's nine named resources, so step 3 (add the missing rows) cannot land
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T08:37:30Z",
+  "one_line": "TO-CT-d-7 step 3 asks for resources.json rows for the nine named resources of nfra-ctlpln-identity and nfra-ctlpln-agentbus, but the registry's own validator refuses each such row as redundant, because every one of the nine names already resolves its system (cloudops or agentbus) from its own tokens; no row was added.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "nine rows (system cloudops x7 for the group, two users and four policies; agentbus x2 for the two .fifo queues; systems.json carries both keys) appended to infra/logic/registry/resources.json in the worktree: `python lib/opal_naming.py validate` -> 'REFUSED resources.json[465].name: cloudops-dell-agents-group already resolves cloudops from its own tokens (type IAM_GROUP); a row naming the same system is redundant' and the same line for [466]..[473]; 'VALIDATE: REFUSED 9 refusal(s)'. Before the rows: 'VALIDATE: OK ... 465 rows'. The file was restored to its committed bytes (git diff empty).",
+      "lib/opal_naming.py lines 605-612 and 654-669 (validate): a resources.json row fills a {system} placeholder ONLY where a name's own tokens resolve none; a row naming the SAME system as the tokens is refused",
+      "lib/opal_naming.py grade() on each of the nine names returns CONFORMANT (the IAM user is NOT-GRADED by type) with no row; the opal_name module's name() gives agentbus-global-dell1-queue.fifo, equal to the module-formatted string"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 step 3 and PRD v0.13 C-NAMING clause (3): a new resource's row lands in infra/logic/registry/resources.json in the same commit as its Terraform; the read lists a name as MISSING when no row carries it.",
+  "world_is": "(no AWS call was made; Terraform was read from commits only.) resources.json is the registry's carrier for names whose own tokens cannot resolve a system (NAMING_SCHEMA grade.placeholder), not a list of every resource. The nine names of the two roots are builder-conformant, so a row for any of them cannot be admitted (validate refuses it; the commit's naming limb and the registry readers sit on that validate). The read therefore prints MISSING for nine conformant names and its ok=False cannot be cleared by a row. No row was added; no vocabulary row was missing (cloudops and agentbus are systems.json keys). What 'everything should be registered' means for a conformant name is the registry owner's call: a different carrier or flag, a validator exemption for rows that restate a conformant name, or a read that grades a name CONFORMANT-BY-TOKENS instead of MISSING. CT4d7-AC2 expects only unresolved=0, which holds (0 of 9); the last line records missing=9."
+}
+```
+
+## NFRA_CTLPLN-W10-S2 -- CT-d-7: the identity root names its resources with string literals, not through the opal_name module
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T08:37:45Z",
+  "one_line": "The order says the identity root names its resources through the opal_name module; at 208c5d85ee infra/aws/terraform/nfra-ctlpln-identity/iam.tf names all seven named resources with string literals and only the agentbus root calls modules/opal_name.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf @208c5d85ee: name = \"cloudops-dell-agents-group\" (line 16), \"cloudops-dell1-agent-user\" (20), \"cloudops-dell2-agent-user\" (25), \"cloudops-dell-agent-deploy-policy\" (36), \"cloudops-dell-agent-create-policy\" (51), \"cloudops-dell1-agent-bus-policy\" (65), \"cloudops-dell2-agent-bus-policy\" (72); the file has no module block; main.tf's header says tests/check_identity.py compares each name to the builder",
+      "infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf:19-27 @208c5d85ee: module \"queue_name\" for_each over local.inbound_boxes, source ../modules/opal_name, resolved to agentbus-global-dell1-queue.fifo and agentbus-global-dell2-queue.fifo and equal to lib/opal_naming.py name()"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 build 1: the identity root names its resources through the opal_name module.",
+  "world_is": "The read resolves the identity names as literals (7 of 7) and the agentbus names through the module with a builder cross-check (2 of 2, name() equal); for the seven literals the builder cross-check is the root's own tests/check_identity.py, not re-run here. No criterion depends on the difference."
+}
+```
+
+## NFRA_CTLPLN-S11 -- a Dell's Git for Windows sets core.autocrlf=true system-wide; every Dell commit rewrites the CRLF files it touches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.0.0_AB_MSTR~DELL1",
+  "surfaced_at": "2026-10-07T08:25Z",
+  "one_line": "dell1 and dell2 run with core.autocrlf=true from C:/Program Files/Git/etc/gitconfig and no repo-local override; the laptop's effective value is false. A Dell's checkout writes CRLF working copies and its commits normalise CRLF and mixed files to LF, so a Dell's branch rewrites line endings the trunk keeps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell1 2026-10-07 ~08:05Z: git config --show-origin --get-all core.autocrlf -> file:C:/Program Files/Git/etc/gitconfig true; no repo-local value",
+      "dell1 git ls-files --eol: 60165 tracked; 2238 i/crlf, 466 i/mixed, 53429 i/lf",
+      "dell2 (0.0.0_AB_MSTR~DELL2, bus 13e46198): same system value, no override; 41,747 i/lf w/crlf working copies",
+      "q/dell1/CLOUD/r2 a9672da2a7 refused at the laptop merge: 206 CRLF endings in this file rewritten as LF (laptop 0.0.0_AB_MSTR, bus 81673b47)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The bring-up kit (Opal_New_Device_Kit_20261007 README_NEW_DEVICE.md) sets no git config; the git-pull skill's prerequisites name core.autocrlf=false for this repo.",
+  "world_is": "Neither Dell carries the repo's expected value. A bare flip to false is not a fix on a live box: the existing CRLF working copies of LF files would then commit as whole-file CRLF rewrites. The fix is the flip plus a full re-checkout of the shared tree and every worktree, with the box's seats quiet; that act is held for Andrew on both Dells. Interim on dell1: the fabric manager merges and commits shared CRLF files only from a fresh worktree checked out with core.autocrlf=false, resolving them from origin's bytes. The kit needs a git-config step (core.autocrlf=false, core.longpaths=true) before the first checkout."
+}
+```
+
+## NFRA_CTLPLN-W8-S1 -- TO-CT-d-5 four denied arms change required decision
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:30Z",
+  "one_line": "TO-CT-d-5 says the four existing denied arms 'keep passing', but they require implicitDeny and the new explicit Deny turns each into explicitDeny, so as written they fail 4 of 19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py DENIED list at 208c5d85ee: s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy, secretsmanager:PutResourcePolicy each carry required decision implicitDeny",
+      "after DenyResourcePolicyWrites, SimulateCustomPolicy returns explicitDeny for all four (RESPOL arms in the same run); the arms were changed to required explicitDeny in the worker branch, an edit inside the order's paths, so denied_ok=19/19 holds with the same four actions still denied"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5 build step 3: 'the existing denied arms for s3:PutBucketPolicy, lambda:AddPermission, kms:PutKeyPolicy and secretsmanager:PutResourcePolicy keep passing' with denied_ok=19/19 unchanged.",
+  "world_is": "Those arms pass only if their required decision is changed from implicitDeny to explicitDeny, because the whole point of the cell is that the refusal is now explicit. The expected value 19/19 is met; the four required values moved, the actions did not. The issuer may want the order text to say so."
+}
+```
+
+## NFRA_CTLPLN-W8-S2 -- TO-CT-d-5 apigateway UNSURE, no policy-write Deny
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T08:38:40Z",
+  "one_line": "apigateway is the one UNSURE service of CT-d-5: a REST API resource policy is written through apigateway:PATCH/PUT/POST, which the create policy allows, and no deny names it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO: read the UNSURE list printed by tests/derive_respol_actions.py and rule on apigateway (a Deny on a documented dedicated action, a resource-path Deny, or accept the residual like the six ruled calls)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json at 208c5d85ee: CreateUpdateTagEdgeAndDns allows apigateway:POST, apigateway:PUT, apigateway:PATCH",
+      "installed botocore 1.43.0 apigateway and apigatewayv2 models list no IAM-only action name; SimulateCustomPolicy returned explicitDeny for apigateway:BogusZzz against a Deny naming it, so the simulator cannot confirm a name either; nothing was guessed into the Deny",
+      "tests/derive_respol_actions.py line 'UNSURE apigateway', counted unsure=1 in the RESPOL-DERIVED line"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-5: the Deny lists the resource-policy actions of every Dell-allowed service, derived; a service that cannot be settled is UNSURE, counted and listed for a senior read.",
+  "world_is": "apigateway cannot be settled from derived sources, so no apigateway action is in the Deny and a Dell holding the allowed PATCH/PUT/POST can still set a REST API resource policy. The same mixed-call shape is printed (not counted) for ec2 CreateVpcEndpoint/ModifyVpcEndpoint and kms ReplicateKey, which are not allowed to a Dell today."
+}
+```
