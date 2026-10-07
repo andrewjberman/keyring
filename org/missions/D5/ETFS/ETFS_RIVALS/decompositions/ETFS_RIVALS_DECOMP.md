@@ -364,3 +364,34 @@ Chains (M = 5; file sets disjoint across chains):
   list is one line per trade from `trade_markers.words` when that module is importable, else the page's own trade words; a
   fund with no trade in the security lists none and says "No trades in the last 365 days".
 - **Organic trigger:** opening a security modal from a fund's section on the live page.
+
+## ROUND 16 (main workstream; the repair of round 15) -- APPENDED 2026-10-07, revision 1.6 of this file
+
+One repair cell, on row ETFS_RIVALS-Z-S55 (the issuer's real run of round 15, record
+`deliverables/2.0.0_SA_COO~RV/round15/real_run_2026-10-06.json`) and the ruling of 1.0.0_SA_CTO~Z msg 30787 (shape (a), four
+terms). Author 2.0.0_SA_COO~RV. No earlier cell is replaced; RIV-ps-1, RIV-co-1 and RIV-md-1 stay for the orders that cite
+them. Chain `~6`, one cell, files price_series.py, publish_page.py, render.py, risk SERVED.
+
+### `RIV-pc-1` -- a holding-implied price is drawn only for a listing quoted in US dollars; the chart says the currency (FWD-22; row Z-S55; CTO ruling 30787)
+- Measured (real run, day 2026-10-06, 13 chart objects, 695 fund-securities): 598 carry both source codes; the first market
+  close over the last holding-implied price before it is above 3 or below 1/3 for 152 of 598 (JP 43/43, LN 54/54, HK 11/11,
+  KS 9/9; US 0/238). The funds' holding reports are in US dollars; a Bloomberg close is in the listing's quote currency.
+  G4 `security_market.currency` (Bloomberg `CRNCY`) is stored per security: on 2026-10-05, 0 of 578 priced rows carry none;
+  values include `USD` 193, `EUR` 92, `JPY` 78, `GBp` 35 (London quotes in pence; 1 London listing is `USD`).
+- Interface: `price_series.series` reads each key's quote currency from the G4 frame it is handed: the `currency` of the
+  key's NEWEST G4 row that carries one (a row with no `px_close` still counts). The value is READ, never inferred from the
+  exchange code. Exactly `"USD"` -> the series is built as today (`m`, then `i`, then a gap). Anything else, and a key
+  with no stored currency, -> market closes only: a day with no positive close is `None` whatever the funds report, and
+  its gap reason is `"no market close on file (the funds' holding reports are in US dollars and this listing is not quoted
+  in US dollars)"`. Each key's result gains `"currency": <the stored string> | None`. `source_words` says in plain words
+  which sources the series uses and, for a non-dollar listing, that the prices are in the listing's currency.
+  The chart object's `securities[<key>]` gains `"currency"`. The page's one script shows the currency beside the price
+  axis and in the hover's price words (`null` -> "currency not on file"). A trade marker is placed by its DATE on the
+  curve and never by a dollar price; on a day with no price it keeps its date marker.
+- Rulings at the cut (issuer): `load` reads G4 as it does today (the same window), so a key whose only G4 rows fall outside
+  the window has no stored currency and is treated as non-dollar. The currency comparison is exact and case-sensitive
+  (`GBp`, `ZAr`, `ILs`, `KWd` are not dollars). No new Bloomberg field is requested and nothing under `integrations/`
+  changes. The fixtures of `round15/checks/co-1.AC1.py`, `co-1.AC2.py`, `md-1.AC1.py` and `md-1.AC2.py` hold no G4
+  currency; the cell may plant G4 rows carrying `currency` `USD` (no `px_close`) for those fixtures' securities and add
+  `"currency"` to an exact key set those checks compare, and may change nothing else in them.
+- **Organic trigger:** opening a non-US security's modal on the live page; the issuer's real run re-measures the 598.
