@@ -2,10 +2,10 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e65</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.9.0_WK_MDPF_SECCLASS~47</issued_to>
+<issued_to>0.9.0_WK_MDPF_SECCLASS~49</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -52,6 +52,62 @@ cash/Cash by the direct plan, with classified_by naming the rule. A test pins BD
    the rule, CASHMERE out (not cash/Cash), and a name-only case (a ticker with no CASH whose name has the word "Cash").
 4. Do not change any other source's precedence. An existing row is never planned, as today.
 
+### AMENDMENT 2 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~15:1xZ; CTO round-11 analysis @fc96f7c48c release mode, PRD v0.16 @5f4b2f17d0)
+
+**Why:** release mode puts e65 first, "once it carries the v0.16 allowlist". As built on held-34 r3 (4ac906c5c7, commits 896d998c9c +
+ee6ef52a64), it does not, and it cannot release alone:
+- (a) v0.16 lists EIGHT phrases. It adds `cash and cash equivalents`, and normalization also collapses punctuation.
+- (b) v0.16 says "The allowlist lives in the contract file as data."
+- (c) A cherry-pick of e65 onto CLOUD conflicts in `etf_classification_scheduled.py` with e44's hunks, so its held-34 form drags e44 and
+  e63 (four shipped files).
+
+**Ruling:** port e65 onto the round branch head ae61f93efe, which is CLOUD plus round records, contract 0.7.0 and no e44 or e63. It then
+releases alone, with one shipped file.
+
+**Build (slot ~49, base ae61f93efe):**
+1. **Port the rule.** Port the CASH-token rule from held-34 r3 onto this base's
+   `infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py`. Read it with
+   `git show 4ac906c5c7:infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py` and
+   `git show 4ac906c5c7:infra/aws/lambda/v2_portal/_shared/tests/test_cash_token.py`. Port only the cash-token code, never e44's or
+   e63's.
+   - The ticker leg is unchanged: `^(BD|F)?CASH(IN|OUT)?$` on each piece.
+   - The name leg: the WHOLE name, case-folded with punctuation and spacing collapsed, equals one of the eight v0.16 phrases: `cash`,
+     `cash & cash equivalents`, `cash and cash equivalents`, `cash equivalents`, `cash balance`, `cash sweep`, `cash in`, `cash out`.
+   - It runs only after the existing-row and seed-source skips. `input` is `cash_token`; `classified_by` stays `scheduled`.
+2. **Contract.** In `org/standards/MDPF_SECCLASS_CONTRACT.json`, add the eight phrases as data: a field such as
+   `fields.classified_by.cash_token_name_phrases` (or a top-level `rules.cash_token`), citing PRD v0.16. Bump the version to 0.8.0, and
+   bump `PINNED_CONTRACT_VERSION` in `infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py` to match.
+3. **Pin.** `test_cash_token.py` pins the module constant `CASH_NAME_PHRASES` EQUAL to the contract's list, read from the contract
+   file. This is the W47-S2 drift guard.
+4. **Tests.** Keep every pin from amendment 1:
+   - "Cash Flow Dividend Fund", "Cash Cow", CASHMERE and "Acme Prime Cash Reserves" stay OUT;
+   - BDCASHIN, FCASH, "Cash & Cash Equivalents" and "Cash and Cash Equivalents" go IN;
+   - existing and seed rows are never planned.
+   Add a punctuation case, such as "Cash, Sweep" or "CASH-SWEEP".
+5. **Criteria.** AC1 and AC2 as above, plus SC11-e65-AC3: the full `_shared` suite at this base, already covered by AC2.
+
+### AMENDMENT 1 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~14:5xZ, on 1.0.0_SA_CTO~DELL1 ruling msg 346)
+
+The ruling, verbatim: "The ticker leg stands as built. The NAME leg places cash only when the WHOLE normalized name is a cash phrase
+from an allowlist in the contract: "cash", "cash & cash equivalents", "cash equivalents", "cash balance", "cash sweep", "cash in",
+"cash out". Anything else goes to research or AI. Neither leg ever overrides an existing seed or canonical row. Pin "Cash Flow Dividend
+Fund" and "Cash Cow" out in the test."
+
+**Build delta:**
+1. The name leg matches only when the whole name, normalized (lower-case, whitespace collapsed, trimmed), equals one of those seven
+   phrases. Hold them in one module constant `CASH_NAME_PHRASES`.
+   - The contract file is not edited here: the allowlist lands in PRD v0.16 and the contract on the round branch.
+   - The test pins `CASH_NAME_PHRASES` to exactly those seven strings.
+2. The ticker leg is unchanged.
+3. Confirm, with a test, that both legs run only after the existing-row and seed-source skips: a ticker in `existing_tickers` or
+   `seed_source_tickers` is never planned by the cash rule.
+4. Tests:
+   - "Cash Flow Dividend Fund" and "Cash Cow" (each under a ticker with no CASH piece) are NOT planned cash/Cash;
+   - BDCASHIN and FCASH still are;
+   - a name exactly "Cash & Cash Equivalents" under a CASH-free ticker is.
+5. Re-run AC1 and AC2, rewrite and re-validate the proof instance, flip the status back to complete, and update row W47-S1's notes
+   (or file W47-S2) with the narrowing.
+
 ### ACCEPTANCE
 
 <criterion id="SC11-e65-AC1" cell_refs="SC-e-65"><invocation>python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/sc_e65_cash_token.py</invocation><expect>SC-E65 ok=True</expect></criterion>
@@ -67,17 +123,11 @@ Dry-run at the base (cbbda93539, 2026-10-07): SC11-e65-AC1 FAIL as expected (`BD
 
 ## BOUNDS
 
-- **Grant.** The `<paths>` block below plus your deliverables folder and this order's file. Scaffolding goes under `.scratch/`,
-  uncommitted.
-- **No package install and no download of any kind** (no pip, npm, bun add, bun install, curl or tool fetch, into any environment;
-  rows S49, S54). No web search: the research of the other tickers is the issuer's act.
-- No table write, no deploy, no upload. This is a shipped `_shared` member, so your branch rides the held-34 line. Never push.
-- **Refusal clause.** If a criterion cannot be met as written, stop, write the reason in your report and a surprise row
-  (id `MDPF_SECCLASS-W47-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
-
-<paths>
+- **Grant.** The `<paths>
 infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py
 infra/aws/lambda/v2_portal/_shared/tests/test_cash_token.py
+infra/aws/lambda/v2_portal/_shared/tests/test_classified_by_v2.py
+org/standards/MDPF_SECCLASS_CONTRACT.json
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -89,7 +139,7 @@ The block is your WRITE grant. Everything else named here you READ and never edi
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: SC11-e65-AC1, SC11-e65-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~47/MDPF_SECCLASS.TO-SC-e65.cash-token-direct-plan.proof_of_spec.json`,
+Criterion ids: SC11-e65-AC1, SC11-e65-AC2. Instance at `org/missions/D8/MDPF/MDPF_SECCLASS/deliverables/0.9.0_WK_MDPF_SECCLASS~49/MDPF_SECCLASS.TO-SC-e65.cash-token-direct-plan.proof_of_spec.json`,
 validated with `python .tools/proof-of-spec-check.py <instance> SC11-e65-AC1,SC11-e65-AC2` BEFORE the flip. A judgment criterion is recorded
 `UNVERIFIABLE-BY-INSTRUMENT` with a `status_reason` naming 3.0.0_SA_CVO, never PASS or FAIL.
 </proof_of_spec>
