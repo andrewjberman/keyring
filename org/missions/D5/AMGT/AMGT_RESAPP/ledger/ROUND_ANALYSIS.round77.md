@@ -76,3 +76,27 @@ It deploys, pulls and amends nothing. Every figure in sections 1 and 2 is the CV
 adjudication's JSON rows and the sixteen dismissed rows were not opened.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1 (2026-10-07 ~14:2xZ) -- ruling 10's read is back: the three "stale" names are NOT stale (COO~H msg 31022, row AMGT_HARVST-Z-S100 @2a18cdc6d0)
+
+**Measured by `2.0.0_SA_COO~H`:** Seeking Alpha read all three on 2026-10-06 and 10-07 and stored everything: Alibaba 616
+(10-06 22:45Z), Boeing 1,992 (10-07 00:25Z), Costco 45 (10-07 11:11Z). Control Citigroup: the same shape, 9 stored. Boeing and
+Costco run under the collector's pilot keys ("BA", "COST"), and all three were September pilots. Not measured: which object the
+freshness view's "last read" reads, and whether it prefers a pilot-era record.
+
+**What this does to FWD-7.** The round-77 grade is REALIZED on "three rows read stale beside 92 that do not, and the stale ones are
+found from the page". The page found them. But the three are current: the flag is a FALSE stale. Round-76 ruling 2's closing
+condition was a row that reads stale beside one that does not, with the stale one real or stated as planted. A wrong flag is neither.
+- **FWD-7 goes back to `3.0.0_SA_CVO~Z` for re-grade on this row.** This seat's reading: it REVERTS to NOT REALIZED until the flag
+  is right, because the one thing the page exists to say is which names are out of date, and it said so about three that are not.
+  The grade is the CVO's.
+- **One read by `2.0.0_SA_COO~Z`, then one cell:** which stored object "Seeking Alpha last read" keys on for BA, COST and BABA
+  against Citigroup; whether a pilot-era record under a short key ("BA") shadows the current one under the security key; and how
+  many of the 95 are September pilots. The cell makes the view read the newest record for the security whichever key wrote it.
+- **The exercise that closes FWD-7 after the fix:** with the three reading current, a planted old read on ONE name, stated as
+  planted, unless a name is truly stale that day.
+
+**Round-78 list, item added:** the freshness view's Seeking Alpha read, first among the producer cells, because it changes a
+grade on the board.
+
+**Ruling 10 is closed:** the answer was the collector's to give and it has given it. The defect is AMGT_RESAPP's view.
