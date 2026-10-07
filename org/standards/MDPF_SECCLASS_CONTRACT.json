@@ -1,6 +1,6 @@
 {
   "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
-  "contract_version": "0.7.0",
+  "contract_version": "0.8.0",
   "project": "MDPF_SECCLASS",
   "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
   "fields": {
@@ -69,6 +69,11 @@
         "model": "written by infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-model.py (SC-e-10), which sends the Kimi K3 model a security's NAME and TICKER only, for a ticker that had NO row; the write is conditional on the row's absence (attribute_not_exists(ticker)), exactly like scheduled and constituents, so it never overwrites a seed, scheduled, constituents or already-labelled row -- and a seed row always wins over it on the same precedence rule below"
       },
       "precedence": "a seed row always wins: a correction to a scheduled, constituents or model row is made by adding the ticker to the seed source, and the next seed run replaces the row with classified_by = seed. scheduled, constituents and model each write ONLY where no row exists (attribute_not_exists(classified_by)), so none of the three overwrites another or a seed row. A row with no classified_by attribute reads as legacy until the one label update sets it; legacy therefore loses to seed and to a future scheduled/constituents/model write (attribute_not_exists still holds against a row that never received a label), and wins against nothing -- it is the read-time default for an absent attribute, not a write that competes for the row.",
+      "cash_token_name_phrases": {
+        "serves": "FWD-7, FWD-13, FWD-17 (PRD v0.16 C-CASH-TOKEN, CTO ruling msg 346; cell SC-e-65, contract 0.8.0)",
+        "phrases": ["cash", "cash & cash equivalents", "cash and cash equivalents", "cash equivalents", "cash balance", "cash sweep", "cash in", "cash out"],
+        "rule": "the scheduled producer's name leg places a security cash/Cash (classified_by stays scheduled, input = cash_token) only when its WHOLE name, case-folded with every run of characters other than letters, digits and '&' collapsed to one space and trimmed, equals one of these phrases; any other name containing the word cash is not placed by the name leg. Each phrase is stored already in that normalized form. The module constant CASH_NAME_PHRASES in infra/aws/lambda/v2_portal/_shared/etf_classification_scheduled.py is pinned equal to this list by tests/test_cash_token.py."
+      },
       "estate_note": "the estate's per-firm classifiers already write a free-text classified_by into their own tables (bd-securities: seed_from_yang, gpt-5.4-mini, gpt-4o-mini, auto-detected); those tables and their writers retire under FWD-5/FWD-4; on etf-classifications the field takes only the five values above",
       "rule24_record": {
         "domain_declared": "the writers of etf-classifications rows (and, for rows with no writer of record, the read-time label)",

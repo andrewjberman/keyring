@@ -282,6 +282,64 @@ Do not cut outcomes from this part. Measured 2026-10-07 15:15Z to 15:4xZ at the 
 
 ---
 
+## ADDENDUM 1 (2026-10-07 ~16:1xZ) -- Andrew answered the four calls of Part V; what changes above
+
+His words, verbatim and entire, are in
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261007_161xZ_SIX_OPEN_CALLS_ANSWERED_TICKET_CENTER_AND_TRNSPT_ON_DELL2.md`.
+Where this addendum and the parts above differ, this addendum is his later word and governs.
+
+### A1. Call A is answered: one type, "Analysis Request"
+
+"Analysis Request is one ticket type. It is always going to be a submission of either an Excel/Csv or potentially an
+account statement (but we will work through that if that becomes the case)."
+
+### A2. The thread (I.0) is restated in his words
+
+"The premise is that this request should go through, Alyssa accepts the ticket and runs the file through the "Investor
+Reporting" "Analysis" tab workflow. Part of that workflow is delivering not only the Opal-branded export file, but also
+including an Opal-branded PDF with the analysis commentary which is AI-Generated based on NFRA_TRNSPT."
+
+So the candidate thread reads: a requester files an Analysis Request with one Excel or CSV file attached; Alyssa accepts
+the ticket and runs that file through the Analysis tab; two things come back on the ticket, the Opal-branded export and
+an Opal-branded PDF of the AI-generated commentary. Three consequences for the outcomes above:
+- **A person runs the report.** The ticket carries the file to Alyssa; it does not start generation. O1, O3 and O4 stand.
+  Whether the file moves from the ticket into the Analysis tab without being downloaded and uploaded again by hand is
+  the design question Part V already names (finding F5).
+- **O5 is part of the thread, not an enrichment after it.** The commentary PDF is in his statement of the workflow.
+  The thread therefore depends on NFRA_TRNSPT's commentary service (its FWD-10), which is not built. Part I.0's
+  sentence "the thread must not wait on it" is withdrawn.
+- **The commentary is delivered as an Opal-branded PDF.** NFRA_TRNSPT's requirements describe a draft text on a ticket
+  for an Opal person to review. A branded PDF of that commentary is a new deliverable; which project renders it is
+  open and belongs to L4.
+
+### A3. Call B is answered: who files, and in what order
+
+"Initially it will be us water-testing the flow, just me first, then me & alyssa, and eventually the two of us and one
+49 Advisor."
+
+The first requester is Andrew, not Alyssa. O8 (an advisor files) is one named step: one 49 Financial advisor, after
+Andrew and Alyssa. No wider advisor filing is worded.
+
+### A4. Call C is answered: the second type is "Meeting Request"
+
+"Meeting Bookings is anothe request type ... this would be the "Meeting Request". I think what this should be is
+essentially we get the relevant employees on Calendly, they block time for meetings, that information is piped through
+ticket center, and advisor's can select a time through a "Meeting Request" flow. This is secondary to the "Analysis
+Request", which is the primary target."
+
+O7's second type is named. It is secondary. Calendly is an outside service: connecting it is a vendor act that needs
+his word for that use, and he has not worded it here.
+
+### A5. Call D is answered: account statements
+
+"Not in scope now, account statements are TBD at a later date." Part II.3 stands.
+
+### A6. Not changed by his answers
+
+Findings F4 (the requester-cannot-claim rule is still in the service; with Andrew filing and Alyssa accepting it does
+not block the first step, and it does block "just me first" if he also accepts) and F7 (the cross-firm check on tickets
+is not re-tested).
+
 ## REFS TO CARRY
 
 ```

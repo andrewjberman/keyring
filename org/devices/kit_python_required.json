@@ -455,7 +455,7 @@
     "python_version": "3.12.10"
   },
   "scan": {
-    "files": 763,
+    "files": 764,
     "pathspecs": [
       ".tools/*.py",
       "lib/*.py"

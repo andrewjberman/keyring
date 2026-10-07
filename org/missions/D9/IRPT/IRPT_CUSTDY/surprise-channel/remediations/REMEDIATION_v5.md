@@ -22,11 +22,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~13:2xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~K2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v6"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-W13-S2",
@@ -43,11 +43,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~13:2xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~K2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v6"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_CUSTDY-W12-S1",
@@ -64,11 +64,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~13:2xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~K2",
   "round": "v6",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~K2",
    "round": "v6"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

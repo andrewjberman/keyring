@@ -1,0 +1,1460 @@
+{
+ "token": "multi_asset",
+ "cut_utc": "2026-10-07T07:10:00+00:00",
+ "buckets": [
+  {
+   "bucket": "opal-data-bd",
+   "listed": 25259,
+   "hit_keys": [
+    {
+     "key": "platinum/accounts/z0812883321/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:19+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812883331/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:19+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812883341/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:19+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812884191/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:18+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812884401/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:19+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812884701/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:19+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812885401/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:20+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812886291/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:20+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812887141/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:20+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812889351/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812889631/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812889691/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812889721/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812890581/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812890631/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:21+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812892661/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812893831/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812893971/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812894001/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812894081/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812895041/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812895071/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812895151/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:22+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812896141/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812896541/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812897101/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812897211/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812898401/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812898431/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812905621/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0812923801/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:23+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0813217731/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:24+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0813351811/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:25+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0814291721/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:27+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0814293131/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:27+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0814300961/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:27+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0814424551/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:28+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0815095501/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:28+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0817070321/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:29+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0817386271/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:30+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0818426411/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:31+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819009571/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819009581/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819009591/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819009601/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819051241/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819322511/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0819322521/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:32+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820031051/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820060931/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820071731/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820192511/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820213221/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820342601/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:34+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820413261/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820413271/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820413301/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820413311/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820671491/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820671561/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820671641/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820685841/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0820741141/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:35+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821124161/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:36+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821124321/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:36+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821398111/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:37+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821443041/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:38+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821478901/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:38+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821841951/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821849871/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821852341/summary.json",
+     "hits": 3,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821929861/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821943921/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0821943941/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822056701/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:39+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822099551/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822204981/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822204991/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822229391/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822229401/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822289991/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:40+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822439711/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:41+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822458941/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:41+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822849801/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:42+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822909841/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:42+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0822972921/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:43+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823342261/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:44+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823472441/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:44+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823478541/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:44+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823528151/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:44+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823578281/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:44+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823611771/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823626961/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823651891/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:56:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823651951/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/accounts/z0823678961/summary.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T05:56:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/aj_lenartowicz/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:58+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/ashley_wheeler/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:58+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/ashley_wheeler/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:13+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/cole_kershner/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/cole_kershner/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:14+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/connor_bartley/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/connor_bartley/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:14+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/dean_herndon/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/drew_loewe/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:15+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/ellie_gaunt/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/erick_webb/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/grace_mccasland/positions.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/hanna_wroblewski/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/hayden_baker/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/jack_breen/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/jordan_binkley/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/jordan_binkley/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:15+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/joseph_bolling/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/mitch_roper/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/mitch_roper/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:49:16+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/nate_gabris/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/advisors/ryan_rattay/positions.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:58:59+00:00",
+     "data_as_of": null,
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08119861/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:27+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08124280/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:48+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08124280/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:40+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08124280/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:48+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08125071/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:36+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08219275/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:53+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08219275/concentration.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:52:57+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08219275/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:53+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08250779/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:45+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08250779/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:26+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08250779/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:45+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08294888/composition.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:50:50+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08294888/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:52:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08294888/summary.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:50:50+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08296293/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:03+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08296293/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:37+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08296293/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:03+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08306218/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:49+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08306218/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:52:40+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08306218/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:49+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08319161/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:53+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08319161/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:00+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08319161/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:53+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320620/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320620/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:30+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320620/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320621/composition.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320621/concentration.json",
+     "hits": 18,
+     "last_modified": "2026-10-07T05:52:28+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08320621/summary.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08325329/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:43+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08326151/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:51+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08326151/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:51+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08326151/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:51+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08326911/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:32+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08331413/composition.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08331413/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:53:42+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08331413/summary.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08348207/composition.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08348207/concentration.json",
+     "hits": 18,
+     "last_modified": "2026-10-07T05:52:35+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08348207/summary.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08361603/composition.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08361603/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:53:44+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08361603/summary.json",
+     "hits": 4,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08363966/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08363966/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:04+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367003/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:00+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367003/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:26+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367003/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:51:00+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367108/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367108/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:52:29+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08367108/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08370165/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:24+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08370405/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08370405/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:28+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08370405/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08391340/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08391340/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:27+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08391340/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:46+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08396078/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08396078/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:34+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08396078/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397108/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397108/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:30+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397108/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:47+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397885/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:49+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397885/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:41+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08397885/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:49+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08398262/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:52+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08398262/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:51+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08398262/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:52+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08399935/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:52+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08399935/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:51+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08399935/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:52+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08400054/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:57+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08400054/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:13+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08400054/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:57+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z08400735/concentration.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:53:14+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0880128/composition.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:50+00:00",
+     "data_as_of": "2026-10-02",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0880128/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:52:47+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0880128/summary.json",
+     "hits": 2,
+     "last_modified": "2026-10-07T05:50:50+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0880237/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:53:44+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0880407/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:53:07+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0884828/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:25+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0884841/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-07T05:52:28+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0884950/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:31+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    },
+    {
+     "key": "platinum/clients/z0893313/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-07T05:52:56+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": false
+    }
+   ]
+  },
+  {
+   "bucket": "opal-data-cot",
+   "listed": 1153,
+   "hit_keys": [
+    {
+     "key": "platinum/clients/z09305621/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T11:40:06+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z09305679/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-07T11:40:05+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    }
+   ]
+  }
+ ]
+}
