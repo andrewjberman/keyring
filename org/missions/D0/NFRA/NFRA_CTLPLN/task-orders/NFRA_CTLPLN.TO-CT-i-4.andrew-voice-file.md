@@ -46,8 +46,30 @@ The agent that drafts in his name is `data/transcripts/scripts/teams_chat/` (`as
   this round. You carry the old file's content into the new file's End of Day section word for word, and your test fails if
   the two differ. You do not edit `VOICE.md`, `eod_update.py`, `voice_md()` or anything under `infra/`.
 - You do NOT gather his real messages. You build the shape, the loader, the use, and the harvest tool; the issuer reads his
-  real messages through the gateway after you finish. The file you commit holds NO real message: each example block is empty
-  and says so.
+  real messages through the gateway after you finish.
+- **AMENDMENT 1 (issuer, on `1.0.0_SA_CTO` ruling msg 106615; it OVERRIDES any line below that disagrees):** "the
+  representative messages are client mail, so they are not committed to a repository whose origin is an outside host. The
+  file with its messages lives in an Opal-owned home outside git; the repository carries its location and section list."
+  So: NO message he wrote is ever written into `andrew_voice.md` or any tracked file, by you, by the harvest tool or by
+  anyone. The tracked file has NO example block and no example markers. The messages live as ONE JSON object in the Teams
+  agent's own state store: bucket `assist.BUCKET`, key `assist.state_key("andrew_voice_examples.json")` (both are the naming
+  builder's output through `assist._addr`; type neither), shape {`schema`: "andrew-voice-examples/1", `kinds`: {<kind id>:
+  [{`sent_at`, `channel`, `text`}, ...]}}. In each section of the tracked file, `### Messages he wrote` holds exactly one
+  line: `Held outside this repository: the Teams agent's state store, object andrew_voice_examples.json, key <kind id>.`
+  - `voice.examples(kind)` reads that object through `assist.get_json` (faked in every test); absent, unreadable or
+    malformed is an empty list, never an error.
+  - `voice.py harvest` takes `--out <file>` in place of `--write`: it merges the kept messages for `--kind` into that local
+    JSON file in the shape above, creating it if absent, and REFUSES (one `ERROR:` line, exit 2, nothing written) when
+    `--out` resolves inside any git working tree. It uploads nothing: the upload is the issuer's act. Its LAST line reads
+    `written=<True|False>` for that local file.
+  - `voice.py check` drops the marker test and the `examples=` count and gains `tracked_examples=<n>`: the count of lines
+    in the tracked file that begin `EXAMPLE` or sit between example markers, which must be 0 for `ok=True`. LAST line
+    `VOICE-FILE ok=<True|False> kinds=<n>/5 eod_equal=<True|False> tracked_examples=<n>`.
+  - In the test: the examples come from a faked `assist.get_json`; the harvest case asserts the local `--out` file's content
+    and that `--out` inside the worktree is refused; no case writes an example into any copy of `andrew_voice.md`.
+  - One more deliverable, `EOD_VOICE_CLIENT_TEXT_READ.md`: whether `daily_reports/eod/VOICE.md` holds client text (any
+    client's, person's or firm's name or a quoted message from one), as counts by class and line numbers, quoting nothing
+    longer than five words. You change nothing in that file.
 
 ### BUILD
 
