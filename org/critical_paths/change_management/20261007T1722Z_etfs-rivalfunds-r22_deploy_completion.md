@@ -23,3 +23,8 @@
 - 20261007T172212Z OPENED by 2.0.0_SA_COO~RV with 5 leg(s)
 - 20261007T173824Z LEG L1 closed: safe-apply rc=0, Apply complete 0 added 5 changed 0 destroyed (HALT_ACK after review: 76 automated ledger nudges, none a
 - 20261007T174950Z LEG L2 closed: invoke 17:44:47Z StatusCode 200, no FunctionError, status OK, batch rv-publish-1007r22, RequestId d6d385eb-ce74-4914-887
+
+## Notes (2.0.0_SA_COO~RV, 2026-10-07 ~17:5xZ)
+
+- BLAST RADIUS, added after the act (CTO ruling msg 31247): the republish's refresh also wrote ONE write-once object under gold/input_census/date=2026-10-07 (input_census-20261007T174647Z-45aef6f4e60c.parquet, 14,711 B), the third A1 table; the COO half's table named two. No served effect; rollback as for the other two tables.
+- Leg L3's reader of the page through mcp.opalinvest.dev/rivalfunds is Andrew (CTO ruling msg 31247): the sign-in is his and no seat performs it. His report at the CTO terminal, relayed, closes the leg. The S3-side served read is done: round22/served_grade_2026-10-07.json @dca1f916d9.
