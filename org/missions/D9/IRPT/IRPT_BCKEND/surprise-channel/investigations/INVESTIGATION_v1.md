@@ -20034,3 +20034,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
 }
 ```
+
+## IRPT_BCKEND-S370 -- S368 disarmed: E-M3 graded on the delivered laptop read and drained
+
+```json
+{
+  "id": "IRPT_BCKEND-S370",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T13:11:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S368 (BLOCKING, ARMED) is disarmed on its own condition: the laptop FILE (R32M_MULTI_RELATIONSHIP_READ.json @09e0d7c89c, sha256 e2606081349e...) was delivered and graded. TO-IB-m32-321: M1-MULTI-RELATIONSHIP-NAMED (acc_0f1e215e521798954f80f291 in relationships z09305591 and z09326136; 3 of 860 Cottonwood accounts), M2-RECONCILES (58 raw rows -> 29 unique positions; ties over 4 partitions; rebuilt 462,857.7422 = served 2026-10-05), M3-OVERLAP-MEASURED (both 1, multi-model only 180, multi-relationship only 2, neither 677); proof VALID; drained @3daee801f3. Cottonwood remains refused to the dell2 identity (13:02Z); that residual is the fence apply's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~154/IRPT_BCKEND.TO-IB-m32-321.multi-relationship-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 3daee801f3 (safe-merge index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S368 disarm condition: the laptop FILE is delivered and graded, or Cottonwood admits the dell2 identity read-only.",
+  "world_is": "First condition met and graded. S368 DISARMED. E-M3 (cell IB-mr-321) complete for round 32 ~M."
+}
+```
