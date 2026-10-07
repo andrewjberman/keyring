@@ -4520,6 +4520,28 @@
     "spec_asserts": "The month strip is 'the year's buying, month by month and LABELLED' (Andrew-direct 2026-10-02, quoted in render._month_chart), and FWD-23 (PRD v0.18) puts the trend on the last 365 calendar days",
     "world_is": "On the round-15 build every month strip is mislabelled unless the 365-day window happens to start in January, and the newest month is dropped where the window spans 13 calendar months. The served page (round 14, calendar-year trend) is correct today; the defect ships with the round-15 Lambda deploy",
     "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 18 is deployed): 2.0.0_SA_COO~RV. BLOCKING: the Lambda deploy does not go out with it open. Not caught by a check: pd-2's fixture trend starts in January. Repair inside cells RIV-pd-2 / render.py: each cell carries its own month label from the row's window start, and the strip shows the window's last 12 months."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S59",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T12:15:23Z",
+    "one_line": "Round 19 real run: 11 of 393 dialog month strips disagree with the months of the same fund-security's trade markers, and a 365-day window's oldest partial month is not on the strip",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round19/month_strips_2026-10-06.json (measure_month_strips.py on the issuer's real run of day 2026-10-06 at CLOUD 2aba59986e): 393 of 393 strips carry a label on every cell and count back from October 2026; 382 of 393 show bought or sold in exactly the year-months in which the fund's chart-object markers for the security end; 11 do not",
+        "Examples from that record: GQGU 857477103 -- the strip shows a trade in 2026-10 and no marker ends in it; TXUE BTRW_LN_Equity -- markers end in 2026-02 and 2026-03 and the strip calls both 'no trade'; BASG GOOG_US_Equity -- the strip shows 2026-05 and no marker ends in it",
+        "Screenshot org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round19/r19_realrun_modal_month_strip.png: BASG, Kla Corp -- 'net sold across 3 trades'; the list shows sales on 2025-10-08, 2025-10-10 and 2025-11-03; the strip runs Nov to Oct and shows one month sold, because the two October 2025 sales fall in the 13th, oldest month, which cell RIV-ml-1 drops by the issuer's ruling (at most 12 cells)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-ml-1 (round 19): a strip's bought and sold months are the months of the trades listed beside it",
+    "world_is": "True on 382 of 393 strips for the months the strip shows. The strip is drawn from gold buying_trend's month mark and the list from the trade markers; the two are built by different stages and the 11 differences are unread (candidates: a window ending in one month and counted in another, a refused window, a trade under the marker threshold). Separately, where the 365-day window spans 13 calendar months the oldest month's trades are in the net figure and the list but not on the strip",
+    "notes": "disarm_owner (n/a, INERT: nothing of rounds 15 to 19 is deployed): 2.0.0_SA_COO~RV. For the CVO's J1 on RIV-ml-1 and the round analysis: whether the strip should show 13 cells (with the year on the two Octobers) and what the 11 are."
   }
 ]
 ```
