@@ -332,3 +332,30 @@ round.** Never edit an existing row.
   "notes": "The cache is a local accelerator, not a store: it is never committed and nothing reads it but this script."
 }
 ```
+
+## ADVI_COTBKF-W8-S1 -- the sequential read of the 14 transactions files takes 217 s and misses the 120 s bound; a threaded fetch takes 78 s
+
+```json
+{
+  "id": "ADVI_COTBKF-W8-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~8",
+  "surfaced_at": "2026-10-07T01:02Z",
+  "one_line": "The 14-file, 29.4 MB silver transactions read took 217 s serially (about 135 KB/s) and ended CB3c1-AC2 at rc 124 under timeout 120; fetching the 14 files on 14 threads brings it to 78 s, a 42 s margin under the bound.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run of python data/assets/scripts/analysis/commonwealth_price_need.py (sequential get_object per file) under timeout 120: rc 124 after 120.5 s",
+      ".scratch/prof.py: read_transactions() sequential real 217.5 s for 1,416,497 rows in 14 parquet files; .scratch/prof2.py: one 796,687-byte file 15.5 s to download, 0.35 s to parse with the 3-column projection",
+      "after the ThreadPoolExecutor change in read_transactions(): real 1m18.3s, rc 0, last line PRICE-NEED securities=4634 security_days_total=3421735 equity=1453884 etf=331153 fund=752921 fixed_income=688679 other=195098"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-1 BOUNDS: 'Within 120 seconds for CB3c1-AC2 (column projection; round 2's full-table reads took under 60 s).'",
+  "world_is": "On this device today the S3 download dominates (parse is 0.35 s per file); sequential reads exceeded the bound. The shipped script downloads the files in parallel and passes with 42 s to spare, but the time is network-bound, so a slower link can still exceed 120 s. Nothing is cached and no test or criterion was weakened.",
+  "notes": "Column projection here is applied after the whole file is fetched (get_object then pq.read_table on bytes); ranged column reads would cut the 29.4 MB download but are not needed to meet the bound today."
+}
+```
