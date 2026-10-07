@@ -2649,3 +2649,64 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disarm_owner": "2.0.0_SA_COO~D2"
 }
 ```
+
+## IRPT_DASHBD-S31 -- W23-S2 ruled: the release apply waits on a population-scale measurement of the lots stage
+
+```json
+{
+  "id": "IRPT_DASHBD-S31",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T23:24:36Z",
+  "one_line": "W23-S2 disarmed by gating: the COO half of the activity-and-lot release packet is WITHHELD until the lots stage is measured at the 7,597-account population inside the function's 900 s and 2048 MB; the first-fire dry_run sizing in the packet is not accepted in its stead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W23-S2"
+  ],
+  "spec_asserts": "W23-S2: the lots stage is unmeasured at the 7,597-account population against the 900 s / 2048 MB function; the packet's COO half text accepts the sizing risk for the first fire with a dry_run read.",
+  "world_is": "MEASURED by the worker (RELEASE_LOCAL_RUN.json): 20 accounts, one trading day, one process -- unextended handler 34.6 s and 228 MB peak; extended 69.5 s and 992 MB, the lots stage adding about 35 s and about 764 MB. The population is 7,597 accounts (380 x the sample). Nothing measured says the stage fits; a stage that never fits would log LOTS_SKIPPED on every fire and serve nothing. The hazard is live only at the apply, and the apply needs the COO half: the issuer withholds it until a measurement at population scale (one trading day, all 7,597 accounts, wall time and peak memory printed) shows the stage fits, or the stage is split so it does. Routed to 1.0.0_SA_CTO~DELL2 in the round-26 packet as an enrichment for round 27.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~23/RELEASE_LOCAL_RUN.json: wall time and peak memory before and after",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~20/ACTIVITY_LOTS_LOCAL_RUN.json: population 7,597",
+      "infra/aws/terraform/investor-reporting/reporting-gold/lambda.tf: timeout 900, memory 2048"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S32 -- W23-S6 ruled: the account_return_daily re-pin waits on DB-b-43 (pandas 2.2.3)
+
+```json
+{
+  "id": "IRPT_DASHBD-S32",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T23:24:36Z",
+  "one_line": "W23-S6 disarmed by gating: the packet's pin 0 re-pins account_return_daily.py to the round-25 hardening, which DB-b-43 has not yet tested on the served layer's pandas 2.2.3; the COO half is WITHHELD until DB-b-43 passes there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W23-S6"
+  ],
+  "spec_asserts": "W23-S6: the deployed pin of account_return_daily.py (bc50d5711e) differs from HEAD by the round-25 classify_and_sum change (ba544b6064); the local equality run used HEAD on both sides, so it does not cover the change; the packet adds a re-pin as pin 0.",
+  "world_is": "The re-pin would ship classify_and_sum's object-dtype + isna change to the served function, which runs pandas 2.2.3. Its only evidence is the round-25 equality with string inference off on pandas 3.0.6. DB-b-43 (the None test on pandas 2.2.3) could not run on the laptop (pandas 2.3.3, MSTR msg 1136) and runs on dell2 once the approved Python 3.12 kit lands. The issuer withholds the COO half until DB-b-43 passes on 2.2.3; a byte-equality of the returns table under 2.2.3, old pin against new, is added to the after-read before the apply.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json irpt-49f-reporting-gold-lambda pin bc50d5711e",
+      "commit ba544b6064",
+      "MSTR msg 1136: laptop pandas 2.3.3",
+      "decomposition section 26a: DB-b-43"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
