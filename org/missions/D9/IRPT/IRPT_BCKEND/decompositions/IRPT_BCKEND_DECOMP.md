@@ -1996,3 +1996,16 @@ with a tool and changes no code. Check: `deliverables/2.0.0_SA_COO~P2/checks/r70
 | `IB-pr-353` | P-c3: `PrintEntry` admits custody-report and mounts `ClientReportDocument` | FWD-8 / CUSTDY hop 5 | LOCAL (portal DEV; PROD is Andrew's word, break 5) | none | P70-c |
 
 fanout: 3 of 3 chains, cap 8, reason: three disjoint write sets. Slots 0.9.0_WK_IRPT_BCKEND~160, ~161, ~162 (AMENDMENT 1: re-slotted from ~150/~151/~152, which ~Y and ~M orders already hold); portal_ref: 339851c7 (portal origin DEV).
+
+## 64. ROUND 71, WORKSTREAM ~P (2026-10-07 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 945 on 2.0.0_SA_COO~Y2 msg 942, row W152-S1)
+
+IB-yr-631 (~Y) made uploads.py admit an internal filer on behalf of a firm its allowedFirmIds names. But InteractiveAccess.current()
+carries no allowedFirmIds, and authorize_current requires principal == current(), so the admit is unreachable in production. ALL never
+admits (ruling (2)). Y's X-1 release waits on this cell; both ship under one pair. Check: `deliverables/2.0.0_SA_COO~P2/checks/r71/p71_cells.py`,
+dry-run at base 6115baf2e7.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-354` | current() carries allowedFirmIds for an OPAL_GLOBAL subject; on-behalf admitted only on an explicit firm; ALL, an unlisted firm, a non-internal principal and a missing value refused | TCKT_VNEXT FWD-1 via intake | WORLD (floor: infra/; no deploy until the shared pair) | IB-yr-631 (drained) | P71-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one file. Slot 0.9.0_WK_IRPT_BCKEND~163 (census: max used 162).
