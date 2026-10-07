@@ -89,7 +89,7 @@ live freshness run read `fresh=True` (0 verdict changes, 0 new, 0 gone, 0 route 
    (about 9 minutes, read-only) and it reads `fresh=True`.
 3. A NEVER-2 ledger entry opened at the start and closed at completion, naming the eight objects.
 4. Read-back, LIVE, each arm with its matched statement, by the simulator against the ATTACHED policies (not the repo files):
-   the seven arms of the simulation's seventh block and the nine of its sixth, and for the resource-policy Deny one refused
+   the five arms of the simulation's seventh block and the nine of its sixth, and for the resource-policy Deny one refused
    `s3:PutBucketPolicy` and one still-allowed create from the create policy as the control. The live documents equal the rendered
    ones (parsed comparison). A re-plan reads no changes.
 5. The exercised read from the box is another route's and is owed after the apply: dell2 sends `irpt-ycharts-run` once with a
