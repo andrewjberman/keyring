@@ -284,3 +284,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The fourth verdict applies only when no registry row resolves a system (BF-t-2's face, from _slots R1.e). infra/logic/registry/resources.json holds a row placing openpyxl-layer under tradeops, so the name grades OUT-OF-PATTERN with a complete fix that adds a system. Whether a row outranks the ruling for layers, or the row should go, is the registry owner's and the CTO's; nothing was changed."
 }
 ```
+
+## LGIC_BLANKFIX-W5-S1 -- the unpatched section already carries the bare token NO-SYSTEM-ASKED; the check grades the schema sentence
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W5-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~5",
+  "surfaced_at": "2026-10-07T13:50:53Z",
+  "one_line": "The unpatched renderer's section already contains the token NO-SYSTEM-ASKED (verdicts closed list), so the difference control cannot be the bare token; the check grades the schema sentence bullet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/check_canon_patch.py prints: informational: the bare token NO-SYSTEM-ASKED in the UNPATCHED section (verdicts closed list): True",
+      "infra/logic/render_naming_section.py:322-323 renders grade.verdicts as a whole; line 324 reads only ALIAS and OUT-OF-PATTERN sentences"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO LGIC_BLANKFIX.TO-BF-e-5: the check asserts the UNPATCHED renderer's output does not contain NO-SYSTEM-ASKED and its schema sentence.",
+  "world_is": "The token alone is present unpatched, through the verdicts closed list; only the sentence is absent. I read 'it' as the token plus its schema sentence (the bullet '- **NO-SYSTEM-ASKED:** <sentence>') and graded unpatched_has_verdict on that. Test not weakened: the sentence is the thing the cell names, and the patched arm shows it while the unpatched arm does not. Also measured: the committed 02_DOCTRINE.md already differs from an unpatched regeneration by 23 lines (stale stamps, row W2-S3)."
+}
+```
