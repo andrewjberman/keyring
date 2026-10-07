@@ -1619,3 +1619,29 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "Disarms IRPT_DASHBD-W9-S1, W9-S2 and W9-S3: each hazard's condition is absent at HEAD, measured by the tests and the source line each row named."
 }
 ```
+
+## IRPT_DASHBD-W13-S1 -- dell2 identity is denied on the 49financial gold bucket
+
+```json
+{
+  "id": "IRPT_DASHBD-W13-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~13",
+  "surfaced_at": "2026-10-07T08:50:00Z",
+  "one_line": "The dell2 agent identity is explicitly denied on s3://opal-data-49financial (the served 49F daily-return gold), so the GROSS tie-out record cannot be produced here; the BD bronze read in opal-data-assets succeeded.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-27 worker face: run tieout_e2_gross.py once; it reads the served 49F series (round-17 read_gold, s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/date=*/data.parquet) and writes TIEOUT_49F_BD_POPULATION_E2_GROSS.json.",
+  "world_is": "ListObjectsV2 on opal-data-49financial as arn:aws:iam::313476888478:user/cloudops-dell2-agent-user returns AccessDenied 'explicit deny in a resource-based policy'; HeadObject on date=2025-01-09, 2025-01-08 and 2026-10-02 partitions returns 403. Only the default AWS profile exists on the box. The bronze read (5,252 objects, 50 s) in opal-data-assets succeeded. No record, so DB18-1-AC1..AC3 cannot pass; script and 4 offline tests (4 passed) are committed.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python tieout_e2_gross.py . --cache .scratch/c.pkl on dell2 2026-10-07: botocore AccessDenied ListObjectsV2 opal-data-49financial",
+      "boto3 head_object x3 on gold partitions: 403 Forbidden"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Unblock: run the committed script from a seat whose identity can read the 49financial bucket (round 17 evidently did), or grant read."
+}
+```
