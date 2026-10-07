@@ -89,6 +89,10 @@ on record (VINTAGEDIGEST proof) is history, not the live read. Code-level rollba
 - Conditions: the request's (1)-(4), plus (5) the act does not proceed on an unread rollback VersionId, and (6) the first post-upload chain
   run's dim census and both mix totals are read and attached to the ledger before it closes.
 
-**CTO half (`1.0.0_SA_CTO`):** UNSIGNED. Reads: that SC-e-42 is the a07 row of FWD-5; that the stale parity control and the vintage gap are rows, not blockers of this switch.
+**CTO half: SIGNED** -- `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e42_A07_CANONICAL_FIRST_20261007.md` @b3092be6d2
+(1.0.0_SA_CTO~DELL1, msg 241). The six COO conditions stand, plus (7) the post-run read compares the dim's moves against
+`A07_SWITCH_BEFORE_AFTER_20261007.json` and any move it does not list is a rollback, and (8) no upload inside a chain run's window.
+Noted by the CTO: `CASH` reads fixed_income/UltraShortDuration (legacy), not cash; a round-10 cell corrects that row under C-BOUND.
+
 **Conditions to propose:** (1) a change-management ledger entry opens before the upload and names the one key and its VersionId; (2) the upload runs under `.tools/safe-deploy.sh`, never a bare copy; (3) branch `wk-MDPF_SECCLASS-32`'s code commit reaches a pushed
 range only after both halves sign; (4) the first chain run after the upload is read for the dim's `A5-A07-SOURCE-CENSUS` line (canonical-* labels present) and the d06/d08 mix totals still sum to the firm's value.
