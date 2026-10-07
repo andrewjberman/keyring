@@ -20086,3 +20086,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Only opal-data-cottonwood denies dell2. From round 68 the issuer's faces read: only opal-data-cottonwood denies dell2; the legacy opal-data-bd/-cot/-inf are inside dell2's grant; a read is never a fence widening."
 }
 ```
+
+## IRPT_BCKEND-S372 -- S365 resolved: the PrintEntry custody-report refusal and the unknown-kind refusal are on portal DEV @ba391aff8f
+
+```json
+{
+  "id": "IRPT_BCKEND-S372",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:57:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S365: IB-pr-346 met both CTO msg 403 conditions (drained @39b7d4dbce; CTO PASSED) and, on Andrew-direct ~13:4xZ ('Recs approved for 1 and 2', MSTR msg 626), landed on portal DEV with IB-pr-341.",
+  "one_line": "Portal origin DEV moved 4b167888 -> ba391aff8f (ls-remote read by laptop 0.0.0_AB_MSTR, relayed msg 630). The merges include wk-IRPT_BCKEND-147-portal @3715f732 (readReportKind refuses an unknown kind; custody-report refused with 0 requests) and -143-portal @5c726cf4. Combined tsc rc 0; PROD untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 630: portal DEV 4b167888 -> ba391aff8f, three no-ff merges, combined tsc rc=0",
+      "drain @39b7d4dbce (IB-pr-346): IB66-1-AC1 and AC2 PASS, proof VALID"
+    ]
+  },
+  "spec_asserts": "S365: the reviewed PrintEntry candidate lands on DEV once its checks run; readReportKind refuses an unknown kind.",
+  "world_is": "Both are on portal DEV @ba391aff8f. PROD is untouched."
+}
+```
