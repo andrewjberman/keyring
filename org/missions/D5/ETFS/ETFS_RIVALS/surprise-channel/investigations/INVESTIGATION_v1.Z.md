@@ -4296,6 +4296,28 @@
     "spec_asserts": "render_audit_page returns a document of at most AUDIT_SOFT_CAP bytes when a cut can achieve it, dropping trade trace panels oldest first (face section 1); publish_page adds audit_trades_left_out and the FAIL line (face section 2).",
     "world_is": "The cut is exact (the fewest trades that fit) and costs repeated renders only on a day that is over the cap; a day under it renders once, as before. On a real day the cut would run inside the 07:00 ET publish Lambda, whose per-render time at the served size (1,381,244 B on 2026-10-07) was not measured by this cell. Within one window end, rows are dropped last-fund-first, so a partial cut of one window end is possible; the count and the oldest window end shown are still stated.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The first real over-cap day is the measure of the render time; until then the page is 34.1% under the cap and the path does not run."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W1-S51",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~1",
+    "surfaced_at": "2026-10-07T08:57:23Z",
+    "one_line": "RIV-pd-1: gold_buying_trend now reads G1 back to the R365 start (a year before the page day), but publish_page._a1_window still states its input window as 1 January of the page year, so the stale-table rebuild test ignores a G1 report dated in the previous year's tail of that window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/publish_page.py:257-268 _a1_window (this branch): 'buying_trend' returns ((<page year>-01-01, day), None); its docstring says buying_trend reads G1 from 1 January",
+        "data/etfs/scripts/rivalfunds/gold_buying_trend.py handler_entry (this branch): lo = min(_starts(day).values()), which is the R365 start (as-of minus 365 calendar days) after this cell",
+        "publish_page.py is outside this cell's paths (read-only), so the window is unchanged here"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "RIV-pd-1 face section 1 gives the organic trigger as the 07:00 ET publish's stale-table rebuild (publish_page.produce_a1); the rebuilt table reads G1 over its whole period reach.",
+    "world_is": "The producer's read now reaches about a year back; the stale test compares the table's capture time with G1 objects from 1 January of the page year only. A G1 object dated in the prior year inside the R365 reach (late-arriving or revised) would not mark the table stale. In January the two windows differ the most; later in the year the gap is the Jan 1 to R365 start span.",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The fix is one line in publish_page._a1_window (the buying_trend G1 lo becomes the producer's own earliest start); it sits in another cell's surface (RIV-pd-2 or the issuer), not in pd-1's paths."
   }
 ]
 ```
