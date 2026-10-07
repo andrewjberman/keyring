@@ -25,11 +25,11 @@ the folder's suite (42 passed). W18-S2 gates the served release of account_class
   "owner": "1.0.0_SA_CTO~DELL2",
   "round": "v22",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "1.0.0_SA_CTO~DELL2",
    "round": "v22"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "IRPT_DASHBD-W18-S1",
@@ -47,11 +47,11 @@ the folder's suite (42 passed). W18-S2 gates the served release of account_class
   "owner": "2.0.0_SA_COO~D2",
   "round": "v22",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v22"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```

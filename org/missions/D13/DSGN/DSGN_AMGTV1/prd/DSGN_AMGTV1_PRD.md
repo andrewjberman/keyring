@@ -5,7 +5,7 @@
  "project": "DSGN_AMGTV1",
  "directive": "D13",
  "fabric": "site-z",
- "prd_version": "v0.15",
+ "prd_version": "v0.17",
  "step": 4,
  "brief_ref": "docs/briefs/dsgn-amgtv1-security-analysis-frontend-brief-20260928.md@08eefaac9d",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24", "FWD-25", "FWD-26", "FWD-27"],
@@ -60,6 +60,19 @@ shows one. Its producer is AMGT_RESAPP FWD-39 (v0.36), which serves the terms; t
 - **FWD-22:** its 90/365 limb accepts the interim branch FWD-26 v0.11 already accepts (the served "not produced yet" reason) until the
   PX_LAST history serves (Andrew's card 4, ~20:3xZ).
 - This is an ENDPOINT change, so the CVO re-signs.
+**v0.16 (2026-10-07 ~10:4xZ):** FWD-18 and FWD-19's DONE WHEN only, on this seat's round-46 countersign
+(`ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND46.md` rulings 3 and 4) of `3.0.0_SA_CVO~Z`'s slug msg 30796.
+- **FWD-18:** "== 1 (Refresh) in Security mode" cannot be met since the re-run control was retired (AMGT_RESAPP PRD v0.41, on
+  Andrew's "all recs approved" of 2026-10-06 ~21:1xZ, ruling 2). It now reads at most one purple fill per view and zero in Security
+  mode. The ACCEPT is unchanged.
+- **FWD-19:** `PanelNoPermission` is removed from the four states, on Andrew's 2026-10-05 ~16:4xZ word ("It should simply not be
+  visible if you are not permitted"; `ledger/CTO_COUNTERSIGN_COMPLETION_GRADES_ROUND41.md`). Its place is the read he named: a
+  non-Opal viewer sees no Security Analysis sidebar item. The outcome's headline says three designed states.
+- This is an ENDPOINT change, so the CVO re-signs.
+**v0.17 (2026-10-07 ~10:4xZ):** FWD-20's DONE WHEN only, on `3.0.0_SA_CVO~Z`'s REFUSE of v0.16
+(`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_DSGN_AMGTV1_v0.16_RATIFIED_TEXT_20261007_Z.md` @884009802f). The render
+check's clause still read "the four states present" against FWD-19's three. It now reads the three states of FWD-19. v0.16 missed
+it: this seat changed FWD-19 without searching the ENDPOINT for the other line that counts the states.
 
 ## ENDPOINT (step 2, /endpoint --forward)
 
@@ -269,18 +282,19 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
          DONE WHEN  EXERCISED -- Movement and Subject render as segmented
                     controls whose active state is WEIGHT AND RULE, the
                     generation and resolution lines sit in a "Source:" footer,
-                    and the rendered state reads purpleFills == 0 in Universe
-                    mode and == 1 (Refresh) in Security mode
+                    and the rendered state reads purpleFills <= 1 in every
+                    view and == 0 in Security mode (v0.16)
          ACCEPT     One purple action per view (C8).
          SOURCE     AMGT_RESAPP FWD-27
          v0.6       Movement (Trending / Breakout) renders Trending only through
                     the Friday demo (CTO~Z ruling R6: Breakout x Chatter served empty
                     16 days); the Movement control is absent, not disabled, and
                     returns when Breakout x Chatter serves. Subject stays.
-  FWD-19 Every panel renders one of the four DESIGNED states when empty
-         DONE WHEN  EXERCISED -- PanelEmpty, PanelLoading, PanelError and
-                    PanelNoPermission from src/ui/components/states each captured
-                    at least once across the six states, on every panel
+  FWD-19 Every panel renders one of the three DESIGNED states when empty
+         DONE WHEN  EXERCISED -- PanelEmpty, PanelLoading and PanelError from
+                    src/ui/components/states each captured at least once across
+                    the six states, on every panel; and a viewer who is not an
+                    Opal user sees no Security Analysis sidebar item (v0.16)
          ACCEPT     An empty panel looks designed, as /market's already does.
          SOURCE     AMGT_RESAPP FWD-28; C12
   FWD-20 The contract's render check PASSES, and CAN FAIL
@@ -290,7 +304,8 @@ Landed verbatim from `org/tier1_exec/1.0.0_SA_CTO/deliverables/DSGN_AMGTV1_ENDPO
                     fonts == {Lato}, weights within
                     {400,700}, no size below 11, radii within {2,3,4,pill},
                     shadows == 0 outside the focus ring, lowContrastChars == 0,
-                    purpleFills per FWD-18 and the four states present; the
+                    purpleFills per FWD-18 and the three states of FWD-19
+                    present (v0.17); the
                     drafting, tabs and posture harnesses green; AND the
                     same instrument FAILS a planted page on each clause (one
                     violation per clause, each beside a clean control), and

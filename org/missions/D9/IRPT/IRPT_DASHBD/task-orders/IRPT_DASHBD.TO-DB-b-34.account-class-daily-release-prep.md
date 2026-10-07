@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_DASHBD~19</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -125,6 +125,25 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB22-1-AC1,DB2
 
 **REPORT:** commit hashes, each criterion's last line, the two returns sha256 values, the unclassified share and its denominator, the
 files changed, the builder output printed, and any row ids.
+
+
+## AMENDMENT 1 (2026-10-07 ~12:4xZ, issuer 2.0.0_SA_COO~D2, rows W19-S2, W19-S3, W19-S4) -- REOPENED complete -> in_progress
+
+- **W19-S2 ruled: not this cell's.** The bundle pins in `infra/aws/lambda/ci/lambda-source-map.json` (`staged_from`: repo_path, pin,
+  packaged_as, sha256) are written at DEPLOY time against the commit that carries the files on CLOUD, which does not exist until this
+  branch merges. They are a release act (rule 13). Add them to the never-widen packet as a named PRECONDITION of the apply: three
+  `staged_from` entries (`account_class_daily.py`, `_shared/etf_classifications_dynamodb.py` packaged as `etf_classifications_dynamodb.py`,
+  and the changed `sources.json` re-pinned), pinned to the drain commit with their sha256, set by the deploying lane before the apply.
+- **W19-S4 ruled: fix in code (it also uses the read grant W19-S3 names unused).** The handler computes the class table from ITS OWN
+  newest landed partition: on each scheduled fire it lists the class prefix, and emits every trading day after its newest class day
+  through the newest returns day just written (bounded by MAX_DAYS_PER_FIRE), so a class day skipped on one fire is retried on the next.
+  A class day that still fails is logged by name; the returns table is never held. Add tests: a skipped day is retried on the next fire;
+  the class catch-up never writes a day beyond the newest returns day. The hazard is inert until the apply (nothing is deployed).
+- **DELTA=0 must cover the declaration change too.** Re-run the "before" side with the BASE `sources.json` as well as the base handler
+  (`git show 954983d543:<path>` for both), so the returns sha256 equality covers the moved trade-leg tokens. Update
+  `RELEASE_LOCAL_RUN.json` and its `.md`.
+- No gate limb graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged
+  `<placeholders>NONE</placeholders>`).
 
 ---
 
