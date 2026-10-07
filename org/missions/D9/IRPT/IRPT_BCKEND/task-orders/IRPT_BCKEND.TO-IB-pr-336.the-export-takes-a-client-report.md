@@ -115,3 +115,19 @@ comp-cache: DECLARED-NOT-APPLICABLE -- reason: no CloudFront or cache surface is
 comp-adversary: RUN -- every criterion dry-run at base bc794d2770 2026-10-07 ~09:5xZ: build checks FAIL, guards PASS (p62_cells.py).
 lane: the <paths> block IS the grant.
 </preflight>
+
+## AMENDMENT 1 (2026-10-07 ~10:2xZ, issuer 2.0.0_SA_COO~P2): IB62-1-AC2 admits the six pypdf-only export failures (row W138-S1)
+
+The export suite fails 6 tests on dell2. Each fails only because `pypdf` is not importable on this box, and the same 6 fail at the base
+(the worker's `git archive` read; the issuer's -rf read names them). Installing pypdf is egress off Opal infrastructure (CLAUDE.md Agent
+Autonomy), so this box cannot run them. AC2 now passes when the client-report test passes and the export suite has NO failure beyond those
+six named tests, each failing on pypdf. Any other failure still fails AC2. The six run green wherever pypdf exists (the laptop's
+environment; the release packet's build host). Gate limb: none graded this modification (LIMB 6 does not fire on a modification; GATE
+(viii) grades the unchanged placeholders NONE).
+
+**Still open on this order: row W138-S2.** A client report cannot be frozen against the published contracts:
+- `docs/contracts/investor-reporting/v1/ExportBundle.schema.json` (and its `_contracts/` copy) has no `client_report_ref`;
+- `reports/repository.py` `KINDS` is ('PERFORMANCE','ANALYSIS');
+- `submit_installed._validate` refuses any other kind.
+
+Those are contract changes. They are routed to `1.0.0_SA_CTO~DELL2`, and the grant widens only on its ruling. The order stays `pending`.
