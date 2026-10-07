@@ -60,4 +60,27 @@ None. A close is a measured act per project (its orders terminal, its served art
 3. The six closed rows whose dep_stage is not CLOSED: the tree check's R6 refuses the flip without the two completion documents.
 4. The three site-Z rows go to `1.0.0_SA_CTO~Z` as one line when that seat is live.
 
+## SECOND PASS, 2026-10-07 ~07:4xZ (self-drive tick 2) -- the 11 rows the first pass could not tell from a mention
+
+Instrument this time: each row's own open task orders (`to-check.py --all --project`) and its last commit whose SUBJECT is scoped to
+the project (`git log --grep '^<type>(<CODE>'`), which a mention in another project's commit cannot satisfy.
+
+| Project | Directive | Stage | Open orders | Last own commit | Disposition |
+|---|---|---|---|---|---|
+| GLOBALALARM | D8 | REGISTERED | 0 | none | PARKED: a register cut only; never started |
+| OPAL_TICKET_VNEXT | D7 | REGISTERED | 0 | none | PARKED: never started |
+| AUTH_SELFHEAL | D8 | PRD | 1 | 08-31 | PARKED: one order open since 08-31, no work on it |
+| OPAL_TAXROSTER | D9 | PRD | 0 | 08-27 | PARKED; close candidate beside MDPF_TAXSMA |
+| OPAL_TAXSMA | D9 | none | 1 | 08-27 | PARKED; close candidate: Andrew closed MDPF_TAXSMA 2026-10-07 |
+| ADVI_49F | D2 | EXECUTING | 1 | 09-03 | PARKED: D2 is off at the base COO until Andrew lifts it (LIVE_ARMS Holds) |
+| ADVI_INSURE | D2 | EXECUTING | 3 | 09-03 | PARKED: same hold |
+| MDPF_HEALGAP | D8 | DECOMP | 0 | 10-01 | NOT PARKED: its first cell was ruled 2026-10-01 (rulings batch 72) and it is securities-data work; it goes to `1.0.0_SA_CTO~DELL1` as a placement question |
+| ETFS_CANON | D4 | none | 0 | 09-29 | NOT MINE: D4 is site Z's; to `1.0.0_SA_CTO~Z` |
+| D1_CATVIEWS | D1 | EXECUTING | 1 | 08-29 | NOT MINE: D1 is site Z's; to `1.0.0_SA_CTO~Z` |
+| PLATFORM_OPS_USERMGMT | D12 | EXECUTING | 0 | none | NOT MINE: D12 is site Z's; to `1.0.0_SA_CTO~Z` |
+
+After this pass: 20 parked, 0 closed. Still owed: the five close candidates measured against their served artifacts
+(OPAL_TAXSMA, OPAL_TAXSMA_PT2, OPAL_TAXSMA_REGISTRY, OPAL_TAXROSTER, D12_PHONE_OTP_ALL_AWS), and the six closed rows whose dep_stage
+is not CLOSED.
+
 -- 1.0.0_SA_CTO
