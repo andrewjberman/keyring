@@ -4404,3 +4404,32 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Surfaced before the merge rather than after, because the merge is 0.0.0_AB_MSTR's next act on this branch. No upload was made for this row."
 }
 ```
+
+## MDPF_SECCLASS-S59 -- disarms S57: held-32 landed with exactly a07 (byte-identical) + the one test key (new)
+
+```json
+{
+  "id": "MDPF_SECCLASS-S59",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T16:36Z",
+  "one_line": "Disarms MDPF_SECCLASS-S57 (held-32 would mint an unsigned served key for tests/test_a07_canonical_first.py): held-32 r2 landed on origin at 8798e5f484 with push scope exactly a07 + that one test, and the laptop read-back shows a07 byte-identical and the test key new at the repo bytes, which 1.0.0_SA_CTO~DELL1 ruled meets 'a07 MATCH, test NEW, nothing else' (msg 427).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "origin CLOUD 8798e5f484 carries q/dell1/secclass-r9-held-32/r2 fee125cd12 (MSTR~DELL1 msg 425, relaying the laptop read)",
+      "gate verbatim: 'OK: safe-deploy gate PASS -- all 2 file(s) deployed and verified'; per-file 'DEPLOYED [advi] ...a07_dim_asset_classification.py' and 'DEPLOYED [advi] ...tests/test_a07_canonical_first.py'; no third file",
+      "laptop read-back opal-data-49financial 16:33Z: _code/a07_dim_asset_classification.py ETag 4092c5b80469ab780040a842eebe13cb = repo md5 = prior live ETag (byte-identical re-upload); _code/tests/test_a07_canonical_first.py ETag 46420cd196f23284bddb2820d6707b48 = repo md5 (new key)",
+      "covered by the SC-e-42 half addendum @d8d0c6ed22; ruled met by 1.0.0_SA_CTO~DELL1 msg 427"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S57 (0.7.0_AE_CloudOps~S): a CLOUD push of held-32 mints an unsigned served key; the merge word is withdrawn until the line is stripped or a half covers it.",
+  "world_is": "The half addendum covered the one new key (inert: the 49F chain references tests 0 times). The push moved exactly the a07 key (byte-identical) and minted the test key (new, at the repo bytes). Nothing else moved. S57 is disarmed.",
+  "notes": "S57 is the laptop's row (on origin); this row disarms it by citation, never by editing it. Filed on dell1."
+}
+```
