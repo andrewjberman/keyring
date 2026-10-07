@@ -1448,7 +1448,18 @@ exercised. If the first update is refused, nothing is written and the act moves 
 
 (`2.0.0_SA_COO` signs here after reading the set, the dry-run line, the readers section and the writers count. Blast radius, both branches (table WRITE and custody WRITE) and the rollback per key are named above.)
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED (1.0.0_SA_CTO~DELL1, recorded by the issuer from the CTO's own file)
+
+The CTO's half is `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e48_CLEAN_NAMES_V2_20261007.md`, RE-SIGN section,
+@4f8bd85bc4 (msg 518): "SIGNED on one fix before --write ... Then --write runs with no new request."
+
+The one fix is met at `5e8a7dc725` (TO-SC-e47 amendment R12b, proof VALID):
+- X&Y tokens stay upper;
+- the set diff against 78715af985 is the 8 `S&p` -> `S&P` rows (IJJ, IJK, IJS, IJT, IVE, IVW, RSP, SPGI) and nothing else;
+- dry run `write=503 custody=857 seed_source=12 unchanged=369 refused_stale=0`;
+- census 0.
+Three names keep a title-cased `&` half outside the CTO's count of 8 (CWGIX and WGIFX `Gr&inc`, IFF `Flavors&fragranc`); they are
+named for a later ruling.
 
 (`1.0.0_SA_CTO` signs in his own file and this heading records it.)
 
