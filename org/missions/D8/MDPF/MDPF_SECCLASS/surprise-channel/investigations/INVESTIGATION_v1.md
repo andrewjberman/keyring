@@ -3814,3 +3814,82 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Read-only AWS scans of bd-securities and etf-classifications; no table write, no model call, no package or download."
 }
 ```
+
+## MDPF_SECCLASS-W36-S4 -- SC9-e50-AC2 cannot pass as written: the issuer check grades every AI row's sub_asset_class against the contrac
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S4",
+  "one_line": "SC9-e50-AC2 cannot pass as written: the issuer check grades every AI row's sub_asset_class against the contract list, but an AI row carries no verdict until the model runs (2,770 of 10,965 rows)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/old_list_held_census_check.py set -> OLD-LIST-SET-V2 ok=False rows=10965 live=10965 cash_planned=15 problems=['bound:ADC', 'bound:AG', 'bound:AGI'] (rc=1)",
+      "OLD_LIST_RECLASSIFY_SET_V2_20261007.tsv graded by the check's own rule: the only rows outside the bound are ('AI', '', '') x 2770; DIRECT 5,811 rows all inside values_by_class (cash 15: T-Bill 8, Money Market 7)",
+      "old_list_held_census_check.py rset(): `if r['route'] in ('DIRECT','AI'): if r['sub_asset_class'] not in bound.get(r['asset_class'], [])` -- a blank AI row reads bound.get('', []) = [] and fails; round 8's set carries AI rows blank by design (old_list_reclassify_set.py docstring: 'class and sub-class BLANK here, decided by SC-e-31's path at the write act')"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 SC9-e50-AC2: 'every placed verdict inside the contract's bound for its class'; build 2: 'every DIRECT or AI row's sub_asset_class is a member of values_by_class[asset_class]'.",
+  "world_is": "Every DIRECT row (5,811) is inside the bound and all 15 cash rows are planned; the 2,770 AI rows have no class or sub-class because the only way to give them one is a model call, which this order bars. The check can pass only with a model call, a fabricated verdict, or a changed test; the worker did none of them and did not rename the route. AC2 is left FAIL and the order open. Two ways the issuer can close it: amend the check to grade only rows whose asset_class is non-blank, or run the AI path under its half and re-run it over the filled set.",
+  "notes": "No criterion was weakened. AC1 PASSES (OLD-LIST-HELD-CENSUS ok=True live=10965 held=2655)."
+}
+```
+
+## MDPF_SECCLASS-W36-S5 -- The V2 set TSV carries non-ASCII in 101 bytes (registered and trademark marks in 40 clean_name values and a fe
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S5",
+  "one_line": "The V2 set TSV carries non-ASCII in 101 bytes (registered and trademark marks in 40 clean_name values and a few old_key values), against the order's ASCII-only line, because an old_key is the exact DynamoDB key",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round 8's OLD_LIST_RECLASSIFY_SET_20261007.tsv carries 101 bytes above 127 (read as bytes); V2 reproduces the same keys and names",
+      "first V2 attempt wrote ASCII with backslash escapes: old_key NAME::SCHWAB\u00ae... would no longer equal the table key the writer looks up; reverted to UTF-8 for the TSV only (the census JSON is ASCII)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 build 3: 'ASCII only.'",
+  "world_is": "The set is UTF-8 with the old list's own characters; every other file this order writes (script, census JSON) is ASCII. The checker reads the TSV with encoding utf-8 and passes the count test.",
+  "notes": "Not a criterion of this order."
+}
+```
+
+## MDPF_SECCLASS-W36-S6 -- The three held parquet builds for TO-SC-e50 were copied from a sibling worker's scratch (wk-secclass-r9-35/.sc
+
+```json
+{
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~36",
+  "surfaced_at": "2026-10-07T12:15:15Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "MDPF_SECCLASS-W36-S6",
+  "one_line": "The three held parquet builds for TO-SC-e50 were copied from a sibling worker's scratch (wk-secclass-r9-35/.scratch/hb_*) instead of rebuilt; inflection's build reaches 2026-10-02 only",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "wk-secclass-r9-33 and wk-secclass-r9-35 hold byte-identical parquet files per firm (sha256 prefixes 3f3efad32effc8d0 49financial, 4218fee1cb062339 cottonwood, 612a50da2c198beb inflection), produced 2026-10-07 about 07:57-08:02 local",
+      "custody_as_of on the nodes: 49financial 2026-10-05, cottonwood 2026-10-05, inflection 2026-10-02 (the producer was asked for 2026-10-05; inflection's data reaches only 10-02)"
+    ]
+  },
+  "spec_asserts": "TO-SC-e50 build 1: held set 'as a LOCAL producer build ... via old_list_census.py build_firm(), as-of the newest date the builds reach'.",
+  "world_is": "The census reads each firm at its own newest as-of (inflection 10-02 vs the others 10-05), claim inferred, producer code at the sibling's repo HEAD not re-measured here; rebuilding would take 4-15 minutes per firm and was judged not to change the count. The served-bytes grade stays a laptop seat's act (ruling 2.9).",
+  "notes": "Read-only copy of scratch files; no upload, no firm bucket read."
+}
+```
