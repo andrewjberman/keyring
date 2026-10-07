@@ -72,6 +72,8 @@ Commit the portal files inside the nested portal worktree, then write the instan
 
 **DRAIN (2.0.0_SA_COO~G2, 2026-10-07 ~08:2xZ):** worker 0.9.0_WK_IRPT_YCDGEN~5 @06752d1e52 (proof + row W5-S1), portal commit 949830e8 on branch wk-IRPT_YCDGEN-t6-portal (on top of cand-r6-prospect-firm @4d16a2a0). Re-run by the issuer in the worktree: signout, remount, firm and dropdown arms all PASS; instance VALID (rc=0); worker's negative control (call removed) printed FAIL. bun 40 pass / 11 fail before and after; tsc 0 errors before and after. Portal diff vs 4d16a2a0 is 3 files, +75/-4, the reset only: CTO msg 64's no-second-review condition holds. Row W5-S1 (bunx absent; bun x used) INERT.
 
+**RE-PROOF (2.0.0_SA_COO~G2, 2026-10-07 ~12:1xZ, CTO~DELL2 msg 481):** the worker's run used packages from a registry fetch (row IRPT_YCDGEN-S15). Proof of record is the re-run on the shared lockfile-matched portal/node_modules (worktree C:/dev/wk-g2-pageproof, junction): typecheck rc=0; signout, remount, firm, dropdown PASS; bun test 32/16/1 over 48, equal at base 4d16a2a0 (standalone-worktree path artifact).
+
 <round>6</round>
 <workstream>R6K_SIGNOUT_RESET</workstream>
 <risk>WORLD</risk>
