@@ -13,8 +13,8 @@
 #
 # THE FOUR BOXES (v5, Andrew-direct 2026-10-07): the sequence IS the scale-in. laptop (tailnet cloud-local) = the control plane;
 # sitez = the Bloomberg terminal and the one integrator; dell1 = the securities layer; dell2 = the January 1 reporting programme.
-# STAGES ARE THE RAMP: each Dell starts its fabric manager alone, takes ONE new project, and gains a lane only after the lane
-# before it has a graded round. A row's `fabric` is one of the register's two fabric values (laptop, site-z) until NFRA_CTLPLN
+# STAGES GROUP THE WORK BY BOX AND KIND (v6): the one-lane-at-a-time ramp is dropped on Andrew's 2026-10-07 ~07:0xZ word; a Dell takes
+# every project placed on it as soon as its fabric manager is live. A row's `fabric` is one of the register's two fabric values (laptop, site-z) until NFRA_CTLPLN
 # adds dell1 and dell2 to that enum (.tools/to-pipeline-gate.py FABRIC_ENUM); a project's BOX is in its `why` and in its tree
 # row's `placement` field. A project already under way moves between rounds, never mid-round. Layout record:
 #   org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md
@@ -54,7 +54,7 @@
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 5
+version: 6
 owners:
 - 1.0.0_SA_CTO
 - 1.0.0_SA_CTO~Z
@@ -62,24 +62,22 @@ enforcement: TRACK
 capacity:
   coo_sessions:
     laptop: 3
-    dell1: 1
-    dell2: 1
-  why: 'Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): ''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' Site Z''s cap is not ruled. DELLS: one COO lane each to start, raised one lane at a time as each stage''s first round is graded (Andrew-direct 2026-10-07 ~04:3xZ, ''We will start revving them up slow on those projects''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md). The laptop''s target is one lane (NFRA_CTLPLN) once stage 4''s moves are done; its cap of 3 is his standing word and is not changed here.'
+  why: 'Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): ''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' Site Z''s cap is not ruled. DELLS: NO lane cap (Andrew-direct 2026-10-07 ~07:0xZ, ''Definitely drop one lane cap and shared-branch wait for the dells''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md), which replaces his ~04:3xZ ''We will start revving them up slow''. He named no other number. The laptop''s target is one lane (NFRA_CTLPLN) once stage 4''s moves are done; its cap of 3 is his standing word and is not changed here.'
 stages:
 - id: 0
   name: Bring-up -- the four-box control plane makes each Dell reachable
   why: 'A Dell takes no project until its AWS user, its key, its inbound queue and its fabric manager exist (NFRA_CTLPLN C-IDENTITY, C-BUS, FWD-2). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 1
-  name: First lane on each Dell -- a NEW project, nothing to migrate
+  name: New projects on the Dells -- nothing to migrate
   why: 'Start each Dell''s fabric manager alone, then give it ONE new project with nothing to migrate, so a Dell problem cannot damage running work. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 2
-  name: Second lane on each Dell -- the first moves, after the grading of the first lane's first round
+  name: Projects in flight that move to a Dell -- their lanes' successors are seated there directly
   why: 'A live project moves only between rounds (NFRA_CTLPLN FWD-13), and only after the Dell has proven itself on its first lane. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 3
-  name: Third lane on each Dell
+  name: Client work and the projects behind Andrew's inputs
   why: 'One lane at a time, so each Dell''s real load is seen before the next is added. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 4
-  name: Later moves off the laptop, leaving it the control plane
+  name: The rest of the moves off the laptop, leaving it the control plane
   why: 'The laptop ends with the planning seats and NFRA_CTLPLN only (C-ROLES). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 5
   name: Site Z -- the Bloomberg terminal and the one integrator; these stay
@@ -136,12 +134,12 @@ projects:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell1, on Andrew''s 2026-10-07 ~06:1xZ word (''IRPT_BCKEND, IRPT_YCDGEN should both be on dell1''), replacing dell2. It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting back end; its deploys go through site Z or a Dell''s trunk-only deploy.'
+    why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lanes'' successors start on the Dell directly. The reporting back end.'
   IRPT_YCDGEN:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell1, on Andrew''s 2026-10-07 ~06:1xZ word (''IRPT_BCKEND, IRPT_YCDGEN should both be on dell1''), replacing dell2. It moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The v5 reason it stayed on the laptop (his report retry needs his own sign-in at this screen) is not answered by that word.'
+    why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lane''s successor starts on the Dell directly; his report retry is then a sign-in on that box.'
   NFRA_TRNSPT:
     fabric: laptop
     stage: 4
@@ -325,25 +323,28 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'v5 placement -- ADVI_COTBKF targets dell2, the box that runs IRPT_CUSTDY, not dell1. Its stage and every other row are unchanged.'
   word: '''Ok that means that whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project.'' (Andrew-direct 2026-10-07 ~06:2xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v6 -- the ramp is dropped. IRPT_BCKEND and IRPT_YCDGEN target dell2 again (dell1 keeps the securities layer: MDPF_SECHIST, MDPF_SECCLASS). capacity loses dell1: 1 and dell2: 1 and gains no other number. Stages 1 to 4 keep their rows and lose the one-lane-at-a-time gating in their names; the fabric-manager-live gate on the two new projects stays, because it is a fact about the box and not a ramp. The successors of the laptop''s P, Y and M lanes are seated on the Dells directly.'
+  word: '''THe entire point of the Dells is that they are workhorses, they should be flying. I am ok with your move of the IRPT pair back to Dell2. Definitely drop one lane cap and shared-branch wait for the dells. Yes i recommend seating the three lanes successors directly on the dells.'' (Andrew-direct 2026-10-07 ~07:0xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-10-07T06:18:58Z",
-    "head": "340babb9a3",
-    "sequence_file_last_commit": "340babb9a3 2026-10-07T02:15:18-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-10-07T06:41:06Z",
+    "head": "d8089773b7",
+    "sequence_file_last_commit": "9f52bdd6d0 2026-10-07T02:19:35-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
       "cap": 3,
       "live_coo_lanes": [
-        "2.0.0_SA_COO~C"
+        "2.0.0_SA_COO~C",
+        "2.0.0_SA_COO~M"
       ],
-      "free": 2,
+      "free": 1,
       "next_slot_order": [
-        "NFRA_CTLPLN",
-        "MDPF_SECCLASS",
         "IRPT_DASHBD",
         "ADVI_COTBKF",
         "IRPT_BCKEND",
@@ -363,10 +364,10 @@ compiled:
     "flags": {
       "denominator": 26,
       "counts": {
-        "NEEDS-SLOT": 8,
         "UNMEASURED": 4,
         "WAITING": 4,
-        "LANE-DARK": 8,
+        "LANE-DARK": 7,
+        "NEEDS-SLOT": 7,
         "READY-IDLE": 2
       }
     },
@@ -378,14 +379,10 @@ compiled:
           "NFRA_CTLPLN": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6f240da3ca 2026-10-07T00:32:23-04:00",
-            "flags": [
-              "NEEDS-SLOT"
-            ],
-            "notes": [
-              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
-            ],
+            "prd": "v0.9 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "2abeda287a 2026-10-07T02:34:45-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
             "coo_lane": null,
             "phase": null
@@ -394,7 +391,7 @@ compiled:
       },
       {
         "id": 1,
-        "name": "First lane on each Dell -- a NEW project, nothing to migrate",
+        "name": "New projects on the Dells -- nothing to migrate",
         "projects": {
           "MDPF_SECHIST": {
             "dep_stage": "PRD",
@@ -440,19 +437,15 @@ compiled:
       },
       {
         "id": 2,
-        "name": "Second lane on each Dell -- the first moves, after the grading of the first lane's first round",
+        "name": "Projects in flight that move to a Dell -- their lanes' successors are seated there directly",
         "projects": {
           "MDPF_SECCLASS": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.12 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "63fe6e1aa8 2026-10-06T22:14:22-04:00",
-            "flags": [
-              "LANE-DARK"
-            ],
-            "notes": [
-              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~M is not live on this box, so its round waits for a COO seat"
-            ],
+            "prd": "v0.12 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "2332d9a5df 2026-10-07T02:38:16-04:00",
+            "flags": [],
+            "notes": [],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~M",
             "phase": null
@@ -476,13 +469,13 @@ compiled:
       },
       {
         "id": 3,
-        "name": "Third lane on each Dell",
+        "name": "Client work and the projects behind Andrew's inputs",
         "projects": {
           "ADVI_COTBKF": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "b699efa196 2026-10-07T00:49:21-04:00",
+            "last_activity": "9f52bdd6d0 2026-10-07T02:19:35-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -537,7 +530,7 @@ compiled:
       },
       {
         "id": 4,
-        "name": "Later moves off the laptop, leaving it the control plane",
+        "name": "The rest of the moves off the laptop, leaving it the control plane",
         "projects": {
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
