@@ -168,3 +168,17 @@ resource creation, everything should be registered as well".
    The expectation `SC-E28-TF ok=True` is unchanged. Exercised by the issuer: positive control (a registered name) ok=True, negative
    control (one unregistered name) ok=False `missing=['not-a-registered-name']`, base FAIL as expected (no root).
 Gate limb: none graded this modification (LIMB 6 fires on new orders only; no `<placeholders>`).
+
+## AMENDMENT 2 (2.0.0_SA_COO~M1, 2026-10-07 ~09:4xZ) -- rulings on BLOCKING rows W24-S5 (no provider cache) and W24-S8 (redundant rows)
+
+- **W24-S8, ruled.** Amendment 1 point 2 asked for a `resources.json` row per name; the registry's own validator refuses a row for a
+  name that already resolves its system from its own tokens (the same conflict as NFRA_CTLPLN row W10-S1). "Registered" is now the
+  registry's rule: a declared name grades `CONFORMANT` through `lib/opal_naming.py grade()` under its `NAMING_SCHEMA.json tf_type_map`
+  node type, OR carries a `resources.json` row where `grade()` cannot resolve it. Add no redundant row.
+- **W24-S5, ruled.** dell1 holds no provider cache and no seat may download one (row S49). `terraform validate` leaves AC3; it runs in
+  the issuer's `safe-apply` plan when the root is applied. AC3 now checks `terraform fmt -check -recursive` plus the registered rule.
+- `SC8-e28-AC3`'s invocation and expectation are unchanged (`issuer_check_sc_e28_tf.py` -> `SC-E28-TF ok=True`); the script changed.
+  Its output no longer prints "The configuration is valid". Issuer controls: base FAIL (no root); worker root @4da617c979 `ok=True
+  fmt=clean names=5 registered=5`; a fixture with one unresolvable name `ok=False unregistered=['not-a-registered-name=UNRESOLVED...']`.
+- Then re-run AC3, update the proof instance, and flip. Gate limb: none graded this modification (no new order; no `<placeholders>`).
+
