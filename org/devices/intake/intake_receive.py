@@ -4,8 +4,11 @@
 Standard library only; written for Python 3.12 and 3.14. Makes NO network request and offers NO flag that adds an index.
 
 A PACK is a folder holding, for each wheel, <file name>, <file name>.check.json and <file name>.delivery.txt, plus one
-MANIFEST.json listing every file in the folder except itself (name, sha256, bytes). MANIFEST.json is either that bare list
-or an object with a "files" key holding that list. receipts/ inside the pack is this tool's to create.
+MANIFEST.json listing every file in the folder except itself. PRIMARY shape (what intake_check.py pack writes): an object
+{schema, batch, created, files[]} with ONE entry per wheel: name, sha256, size, check_record, check_record_sha256, delivery,
+delivery_sha256; the wheel and both companions are verified by hash and all three count as listed. Also accepted: one entry
+per FILE (name, sha256, bytes) in an object with a "files" key or as a bare list; "bytes" and "size" are synonyms.
+receipts/ inside the pack is this tool's to create.
 
 Verbs:
   verify  --from <pack>                       read-only; LAST line INTAKE-VERIFY ...
@@ -114,8 +117,17 @@ def wheel_top_level_modules(wheel_path):
 
 # ---------------------------------------------------------------- verify
 
+def _is_int(v):
+    return isinstance(v, int) and not isinstance(v, bool)
+
+
 def _read_manifest(pack):
-    """Return (entries, defect). entries is a list of dicts; defect is None or a string."""
+    """Return (entries, defect). entries is a list of dicts name/sha256/bytes/owner; defect is None or a string.
+
+    Shapes read: (1) the check tool's pack: an object with files[], ONE entry per wheel carrying name, sha256, size, and the
+    companions check_record + check_record_sha256 and delivery + delivery_sha256 (each companion becomes a listed file whose
+    owner is the wheel); (2) an object with files[] of one entry per FILE (name, sha256, bytes); (3) a bare list of those.
+    `bytes` and `size` are synonyms."""
     mpath = os.path.join(pack, MANIFEST_NAME)
     if not os.path.isfile(mpath):
         return None, "MANIFEST.json absent"
@@ -128,11 +140,21 @@ def _read_manifest(pack):
         data = data["files"]
     if not isinstance(data, list):
         return None, "MANIFEST.json is neither a list nor an object with a files list"
+    out = []
     for e in data:
-        if not (isinstance(e, dict) and isinstance(e.get("name"), str) and isinstance(e.get("sha256"), str)
-                and isinstance(e.get("bytes"), int) and not isinstance(e.get("bytes"), bool)):
-            return None, "MANIFEST.json entry lacks name/sha256/bytes"
-    return data, None
+        if not (isinstance(e, dict) and isinstance(e.get("name"), str) and isinstance(e.get("sha256"), str)):
+            return None, "MANIFEST.json entry lacks name/sha256/size"
+        sizes = [e[k] for k in ("size", "bytes") if k in e]
+        if not sizes or not all(_is_int(v) for v in sizes) or len(set(sizes)) != 1:
+            return None, "MANIFEST.json entry lacks name/sha256/size"
+        out.append({"name": e["name"], "sha256": e["sha256"], "bytes": sizes[0], "owner": None})
+        for fkey, hkey in (("check_record", "check_record_sha256"), ("delivery", "delivery_sha256")):
+            if fkey not in e and hkey not in e:
+                continue
+            if not (isinstance(e.get(fkey), str) and isinstance(e.get(hkey), str)):
+                return None, "MANIFEST.json entry names a companion without its name and sha256"
+            out.append({"name": e[fkey], "sha256": e[hkey], "bytes": None, "owner": e["name"]})
+    return out, None
 
 
 def _record_problems(rec, wheel_name, wheel_sha):
@@ -188,11 +210,16 @@ def verify_pack(pack):
             file_bad[nm] = "manifest name is not a plain file name"
         elif not os.path.isfile(path):
             file_bad[nm] = "listed in manifest but absent"
-        elif os.path.getsize(path) != e["bytes"]:
+        elif e["bytes"] is not None and os.path.getsize(path) != e["bytes"]:
             file_bad[nm] = "size differs from manifest"
         elif sha256_file(path) != e["sha256"].lower():
             file_bad[nm] = "sha256 differs from manifest"
     wheel_related = set()
+    owned = {}
+    for nm, e in listed.items():
+        if e["owner"] is not None:
+            owned.setdefault(e["owner"], []).append(nm)
+            wheel_related.add(nm)
     for w in wheel_names:
         wheel_related.update((w, w + CHECK_SUFFIX))
     for nm, why in sorted(file_bad.items()):
@@ -212,6 +239,9 @@ def verify_pack(pack):
         else:
             info["file_ok"] = True
         info["wheel_sha256"] = sha256_file(wpath)
+        for comp in owned.get(w, []):
+            if comp in file_bad:
+                reasons.append("companion %s %s" % (comp, file_bad[comp]))
         rname = w + CHECK_SUFFIX
         rpath = os.path.join(pack, rname)
         if not os.path.isfile(rpath):

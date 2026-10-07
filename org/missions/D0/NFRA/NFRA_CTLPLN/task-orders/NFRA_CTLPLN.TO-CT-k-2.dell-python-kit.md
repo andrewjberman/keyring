@@ -116,6 +116,8 @@ org/devices/test_kit_python_wheels.py
 org/devices/kit_python_wheels_cp314.json
 org/devices/kit_python_repack.py
 org/devices/test_kit_python_repack.py
+org/devices/intake/closure_cp312_win_amd64.json
+org/devices/intake/intake_closure.py
 requirements.txt
 org/devices/test_kit_bun_no_egress.py
 .tools/wk-provision.sh
@@ -205,7 +207,7 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11,CTk2-AC12</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -599,3 +601,57 @@ proof row's evidence and in the record.
 
 Write a NEW proof instance over the old one covering all eleven ids, validate it, and flip `<status>` back to `complete` only
 when all eleven pass.
+
+## AMENDMENT 8 (2.0.0_SA_COO~C, 2026-10-07 ~20:0xZ) -- REOPENED: the Python 3.12 kit -- the WHOLE dependency closure re-packed offline for the Dells' new Python
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state on the trunk. What changed: Andrew admitted the Python 3.12 installer for the Dells (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md`
+item 2), and the CTO ruled (msgs 106375, 106537, 106549) that the Dells move to Python 3.12 so that "the kit re-pack[s] every
+compiled package offline" and one version of everything runs on every box; "With 3.12 the batch is click plus site Z's Windows
+file." The 3.14 kit (49 wheels, AMENDMENT 7) stays as built. Measured by the issuer on the trunk with cell CT-e-1's tool, no index
+asked: `INTAKE-CLOSURE target=cp312-win_amd64 lines=67 closure=162 dependencies_added=95 pure=114 fits=47 needs_fetch=1 unknown_not_installed=0 specifier_conflicts=2 fixed_point=True ok=True`
+(the one that needs a file is `click`, an editable install here with no wheel metadata; the two conflicts are `botocore` 1.43.0
+against `awscli`'s and `boto3`'s specifiers). Gate limb: none graded this modification. THE NO-NETWORK RULE STANDS exactly as in
+AMENDMENTS 6 and 7: no request to any index; you install nothing on this machine outside the test's synthetic wheels.
+
+1. Save the closure for the new target: `python org/devices/intake/intake_closure.py closure --target cp312-win_amd64 --out org/devices/intake/closure_cp312_win_amd64.json`
+   and confirm its last line equals the issuer's above (report any difference). `intake_closure.py` is in the grant ONLY so you
+   can fix a defect you hit in it; change nothing there otherwise.
+2. `org/devices/kit_python_repack.py` `repack` gains `--closure <json>`: the set to re-pack is every member of that closure
+   whose class says it can be rebuilt from the installed copy for the closure's target (the pure ones and the ones that fit),
+   in place of the 3.14 classification file; `--target` is read from the closure file and every built wheel's tags are checked
+   to fit THAT target. Everything else about `repack` is as AMENDMENT 7 built it: files checked against the copy's own `RECORD`
+   before packing; a locally modified copy is `MODIFIED` and left out with its paths; launchers regenerated from entry points
+   are not packed; reproducible bytes; the manifest and `requirements-kit.txt` (now the closure's exact `name==version` lines,
+   the 67 requirement lines first in the file's order, then the dependencies sorted by name, with a comment line saying which
+   are which).
+   The manifest ALSO lists what the kit does NOT carry and why: `click` (no wheel metadata here: it needs the checked route),
+   any `MODIFIED` or failed package, and the two specifier conflicts by name with both versions, so the receiver knows the kit
+   is not a consistent resolution for `awscli` and `boto3` (it carries what this machine runs).
+3. `install-check` gains `--with-deps-from-kit`: one install of the WHOLE kit into ONE scratch target
+   (`pip install --no-index --no-deps --target <scratch>/all <every wheel>`), then one import per top-level module of each of
+   the 67 REQUIREMENT lines with that one target on the path: with the closure present, a missing dependency should no longer
+   occur, and any that does is named. LAST line
+   `PY-KIT-INSTALL-ALL python=<version> wheels=<n> installed=<i> requirement_lines=<r> imported=<m> import_missing_dep=<d> failed=<f> ok=<True|False>`.
+   THIS machine runs Python 3.12, the kit's target: so, unlike the 3.14 kit, you CAN prove this kit here. Run
+   `install-check --with-deps-from-kit` on the real kit into a temporary scratch target (never `--user`, never this machine's
+   real environment), and report every requirement line that does not import with its first error line. A package that
+   imports here only because this machine's own site-packages is on the path would be a false pass: the import subprocess runs
+   isolated (`-I`) with ONLY the scratch target and the standard library on its path; assert it in the test.
+4. Cut the REAL 3.12 kit once, outside every git tree, to `C:/tmp/kit-python312-pack-<UTC date as YYYYMMDD>` (derive the drive
+   prefix; check free disk first: `torch` and other compiled packages are large, expect several gigabytes; stop with a report
+   if under 10 gigabytes would remain), run `verify` and the whole-kit install check on it, and write
+   `KIT_PYTHON312_PACK_RECORD.md` in your deliverables folder: path, total bytes, wheel count by class, the ten largest wheels,
+   everything left out and why, the whole-kit install check's last line and every requirement line that failed to import,
+   the commands a Dell runs in order once its Python 3.12 is installed, and what stays unproven (this machine is not a Dell;
+   a Dell's own run is the proof there). Do not send the kit anywhere and do not commit it.
+
+**ACCEPTANCE.** One criterion is ADDED; the other eleven are unchanged and must still pass (`CTk2-AC11`'s case count grows):
+
+<criterion id="CTk2-AC12" cell_refs="CT-k-2"><invocation>python org/devices/intake/intake_closure.py closure --from-file org/devices/intake/closure_cp312_win_amd64.json</invocation><expect>INTAKE-CLOSURE target=cp312-win_amd64 lines=67</expect></criterion>
+`CTk2-AC12` -- the closure for the new target is saved; the same line must read `fixed_point=True ok=True`. The real kit's
+`PY-REPACK`, `verify` and `PY-KIT-INSTALL-ALL` lines go in this row's evidence and in the record.
+
+Write a NEW proof instance over the old one covering all twelve ids, validate it, and flip `<status>` back to `complete` only
+when all twelve pass.
