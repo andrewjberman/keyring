@@ -1,12 +1,13 @@
 {
   "prd": "ETFS_RIVALS_PRD.md",
-  "prd_version": "v0.18",
-  "prd_pin": "6e245cbebecb818cb5e95b3480593a71e12c12bc",
+  "prd_version": "v0.19",
+  "prd_pin": "fc86710effaa041b8316fed1c7832ccfe97d06c8",
   "half": "ratified-text",
-  "half_hash": "0509326d462bbb8bf0cc4a1c4960ab836c585cf3d35a78104a5619846e8332ff",
-  "endpoint_hash": "fcfcb09bf389894f3853b37cbc9d23e2cd9a8cf547f7380b7bd65b1a5edd7525",
-  "verdict": "SIGNED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_RESIGN_20261007_ETFS_RIVALS_v0.18b_RV.md@c27364f6f5",
+  "half_hash": "19e619885ddfb394bf19ff48fbec3cbf910b65c537116806a4a02d8c18951f2e",
+  "endpoint_hash": "d5723da3837ed5af3e8e484af29c1f890c2b9a5c030d6cd16027e7726571971f",
+  "verdict": "REFUSED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_RATIFIED_TEXT_ETFS_RIVALS_v0.19_ADDENDUM_G_20261007_RV.md@8ab6249cfb",
   "signed_by": "3.0.0_SA_CVO~RV",
-  "signed_at": "2026-10-07T05:34:25Z"
+  "signed_at": "2026-10-07T21:05:40Z",
+  "reason": "G.2 reading 2 lets the first standing Bloomberg request go on a reading of Andrew's words; the build may proceed, the request waits on his recorded answer"
 }
