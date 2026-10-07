@@ -9262,3 +9262,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Nothing landed. The ledger nfra-oplgtw-gateway-release-r23 entry and sentinel stay committed OPEN at 45c82c948c (4 h window from 22:03Z); the fabric-wide hold (22:08Z) also stops the act. The issuer rules the admission path (e.g. a sanctioned way to place the order where the gate reads it) and re-issues GO."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S8",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T00:03Z",
+  "one_line": "OG-rl-10 PHASE B: the deploy LANDED (23:59:57Z) but safe-ec2-deploy.sh's own manifest safe-commit on the release branch was refused by the owned-paths lane gate (SHARED_CLOUD_OPS, worker not permitted for EC2_MANIFEST.json); the manifest was recorded by hand on the worker branch as the order says.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-06 23:57:43Z-00:00:13Z from /c/tmp/og-rel18 (HALT_GATE serial resolved 2.0.0_SA_COO~O, no OPAL_AGENT_SERIAL, no serial file): DEPLOY_RC=0; output lines 'ERROR: owned-paths lane violation(s) ... infra/aws/ec2/EC2_MANIFEST.json -- lane=SHARED_CLOUD_OPS ... no NON-TERMINAL task order at HEAD issued_to this serial names this path' and 'The deploy LANDED -- record manually' (org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r24_phaseB_deploy.out).",
+      "READ: the release tree HEAD (9d3e2eb3fc, cut on live 2c27f3a795) holds no order issued to ~28, the same cause as row S7 on the commit side; /c/tmp/og-rel18 carries the wrapper's EC2_MANIFEST.json edit uncommitted (deployed_commit 9d3e2eb3fc, deployed_at 2026-10-06T23:59:57Z); the worker branch carries the hand edit at cba8c1e345; manifest leg closed in ledger nfra-oplgtw-gateway-hotfix-r24 at a88b3b9d21."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ANNOUNCE_OG-rl-10 (COO act): the wrapper's own manifest commit lands on the release branch only; form step 12: record the manifest by hand.",
+  "world_is": "The wrapper's manifest commit did not land on the release branch: the lane gate refused it for the worker serial. The deploy itself and the hand-recorded manifest are unaffected; the only consequence is that /c/tmp/og-rel18 holds an uncommitted EC2_MANIFEST.json edit (not merged anywhere) and the manifest base in that tree (daa56d81ac) differs from the worker branch manifest base.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "No action taken beyond the hand edit; the release worktree was left as is (uncommitted manifest edit) for the issuer to remove at drain."
+}
+```
