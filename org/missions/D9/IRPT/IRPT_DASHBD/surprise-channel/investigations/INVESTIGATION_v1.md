@@ -2621,3 +2621,31 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "notes": "A plan that differs from the expected counts stops the apply; the packet says so."
 }
 ```
+
+## IRPT_DASHBD-W23-S6 -- The deployed bundle pins a returns producer that is not the one at HEAD, so a rebuilt artifact changes the served returns code by 4 lines the local DELTA=0 run does not cover.
+
+```json
+{
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~23",
+  "surfaced_at": "2026-10-07T22:34:50Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "IRPT_DASHBD-W23-S6",
+  "one_line": "The deployed bundle pins a returns producer that is not the one at HEAD, so a rebuilt artifact changes the served returns code by 4 lines the local DELTA=0 run does not cover.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "spec_asserts": "TO-DB-b-41: the returns output must not change by a byte (DELTA=0); the round-22 packet's precondition 1 lists three pins (account_class_daily.py, the class client, sources.json) and no re-pin of account_return_daily.py.",
+  "world_is": "The source map entry irpt-49f-reporting-gold-lambda pins data/assets/scripts/gold/irpt_reporting/account_return_daily.py at bc50d5711e with sha256 cb38fe16f002a1cf5a07ddd704f01a6992528bbec04f2486e13dca3e6b734529. The file at this branch's HEAD has sha256 9935f5c7bcd7bd9ca071ae7b7a672a49a5d96fcb0cd7d558c9fc3bc49157fc19: commit ba544b6064 (TO-DB-b-40, round 25) changed classify_and_sum (the _final column held as object and tested with isna; 4 insertions, 3 deletions). The local release run compares the round-25 handler with the extended one over the SAME returns producer (HEAD's), so it shows 0 bytes of change from this cell's handler and declaration, and says nothing about bc50d5711e versus HEAD. The round-25 record (PANDAS_ONCE_E3.md) shows equal output with string inference off, the behaviour of the layer's pandas 2.2.3, which could not be run on this box. The packet names the re-pin as precondition 1 pin 0 and puts DELTA=0 on the served returns in its after-read (A4).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json functions.irpt-49f-reporting-gold-lambda.staged_from[0]",
+      "git log bc50d5711e..HEAD -- data/assets/scripts/gold/irpt_reporting/account_return_daily.py -> ba544b6064",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~22/PANDAS_ONCE_E3.md Controls"
+    ]
+  },
+  "notes": "The deploying lane may keep the old pin (the activity producer then imports the older returns producer) or re-pin; the packet's after-read A4 reads the served T-1 against a local run of the unextended handler either way.",
+  "disarm_owner": "2.0.0_SA_COO~D2"
+}
+```
