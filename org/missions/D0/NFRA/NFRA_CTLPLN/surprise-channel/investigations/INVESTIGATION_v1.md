@@ -2667,3 +2667,128 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For the issuer 2.0.0_SA_COO~C: no re-work by the slot is needed beyond the amended expect; the AC3 output_evidence in the proof instance is the real line."
 }
 ```
+
+## NFRA_CTLPLN-W13-S20 -- TO-CT-k-2 AMENDMENT 8: the two scratch install folders could not be deleted -- the permission system denied the recursive removal
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order says to delete the whole-kit scratch folder when the check ends and report the space returned; the Bash permission system denied the recursive removal twice, so two scratch folders of 2,075 MB each were left on C: and the space returned is 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash: rm -rf /c/tmp/kit-python312-scratch-20261007 -> 'Permission to use Bash with command ... has been denied' (twice, with and without a trailing ls)",
+      "du -sm: kit-python312-scratch-20261007 2075, kit-python312-scratch2-20261007 2075, kit-repro-20261007 21; df -k /c at the end: 14611388 KB available"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 section on disk: put the scratch install target under C:/tmp in a NEW folder and DELETE it when the check has finished, reporting the space returned.",
+  "world_is": "Two scratch installs were made (the first with an isolation that was too strict, see W13-S21; the second is the one whose last line is recorded). Removing them was refused by the permission system on both attempts, so nothing was removed and nothing was routed around it. Left on disk: C:/tmp/kit-python312-scratch-20261007 (2075 MB), C:/tmp/kit-python312-scratch2-20261007 (2075 MB), C:/tmp/kit-repro-20261007 (21 MB, the byte-identity cut of one wheel) and the kit itself C:/tmp/kit-python312-pack-20261007 (502 MB, to be kept). Free space on C: was 14.6 GB at the end. Deleting the three scratch folders returns about 4.2 GB."
+}
+```
+
+## NFRA_CTLPLN-W13-S21 -- TO-CT-k-2 AMENDMENT 8: the isolated import as first written failed two requirement lines for reasons that are not the kit's
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first whole-kit run (imported=60 import_missing_dep=3 failed=4) reported mcp as missing pywintypes and sentence-transformers as failing, both caused by the check itself: a replaced sys.path does not read the target's pywin32.pth, and a scrubbed environment has no USERNAME for getpass.getuser().",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run PY-KIT-INSTALL-ALL python=3.12.10 wheels=161 installed=161 requirement_lines=67 imported=60 import_missing_dep=3 failed=4 ok=True; second run: imported=62 import_missing_dep=2 failed=3 ok=True",
+      "the traceback of sentence_transformers under the first scheme ended in getpass.getuser() inside torch/_inductor/runtime/cache_dir_utils.py; mcp under the first scheme: No module named 'pywintypes'",
+      "org/devices/test_kit_python_repack.py cases 15 and 17 (isolation control, borrowed load reported, .pth in the target honoured, .pth outside it refused)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 point 3 and the worker rules: python -I, sys.path REPLACED so that it holds only the scratch target and the standard library, no environment variables.",
+  "world_is": "Two things were added and the isolation was not otherwise loosened: (1) the TARGET's own .pth files are processed (site.addsitedir(target)), because a real install into a site-packages directory honours them (pywin32 depends on it), and any path a .pth puts on sys.path outside the target and the standard library is refused (ForeignPathError); (2) USERNAME, USERPROFILE, LOCALAPPDATA and APPDATA are kept in the otherwise scrubbed environment, because torch calls getpass.getuser() at import. After both: imported=62 import_missing_dep=2 failed=3. Both runs' logs are in the record. The module still cannot be borrowed: a load from the machine's real site-packages is reported as BorrowedModuleError, tested."
+}
+```
+
+## NFRA_CTLPLN-W13-S22 -- TO-CT-k-2 AMENDMENT 8: eighteen installed scripts carry a rewritten first line in the closure kit, not four
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order speaks of four installed scripts whose first line pip rewrote; across the 161 packages the tool put the portable first line back on 18 scripts in 5 packages.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MANIFEST.json wheels[].shebangs_restored in C:/tmp/kit-python312-pack-20261007: awscli 2, pdfminer.six 2, docutils 12, jmespath 1, xlsxwriter 1"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 worker rules: four installed scripts whose first line pip rewrote are carried with the portable first line, as the earlier pass did.",
+  "world_is": "The four belonged to the earlier 49-package pass. In the closure kit the restored scripts are awscli 2 (aws, aws_completer), pdfminer.six 2, docutils 12, jmespath 1, xlsxwriter 1 = 18, each first line put back to #!python, which the receiving pip rewrites for its own interpreter. The behaviour is the one AMENDMENT 7 built; only the count differs."
+}
+```
+
+## NFRA_CTLPLN-W13-S23 -- TO-CT-k-2 AMENDMENT 8: with the closure present two requirement lines still report a missing dependency and twenty top_level.txt names do not import, on this machine too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The whole-kit check reports 5 of 67 requirement lines that do not fully import (uvicorn, duckdb, catboost, pyarrow, pywin32); every one of the 22 modules involved fails identically with a plain import in this machine's own environment, so none comes from the kit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "for m in the 22 modules: python -c 'import <m>' on this machine -> ModuleNotFoundError (21) and ImportError MFC (dde): the same first lines the isolated check printed",
+      "C:/tmp/kit-python312-pack-20261007 whole-kit run 2: duckdb import_missing_dep: missing adbc_driver_manager; uvicorn import_missing_dep: missing click; catboost, pyarrow, pywin32 import_failed[other]"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 point 3: with the closure present, a missing dependency should no longer occur, and any that does is named.",
+  "world_is": "uvicorn needs click and click is not carried: it is an editable install whose import fails here too (python -c 'import click': No module named click). duckdb lists adbc_driver_duckdb in its top_level.txt, which needs adbc_driver_manager, installed neither here nor in the closure. The other 20 are names in a top_level.txt that are not importable top-level modules even in the source environment: catboost _catboost and _hnsw, pyarrow __dummy__, and 17 of pywin32's 59 (PyISAPI_loader, adsi, authorization, axcontrol, axdebug, axscript, bits, dde (ImportError: This must be an MFC application), directsound, exchange, ifilter, internet, mapi, perfmondata, propsys, shell, taskscheduler). The line for each package still imported its main module (catboost, pyarrow, duckdb, 42 of pywin32's modules). The check classifies a top-level name that is the package's own and not found as other, not as a missing dependency."
+}
+```
+
+## NFRA_CTLPLN-W13-S24 -- TO-CT-k-2 AMENDMENT 8: the repack test failed 11 of 17 cases when the host's free disk fell to 5 GB, through a floor the cases do not test
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "test_kit_python_repack.py passed 12 of 12, then 6 of 17, because repack's built-in floor of 10 GB free refuses to write when other work fills C:; the cases do not test the floor, so the test's repack helper now passes --min-free-gb 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/test_kit_python_repack.py before the helper change: 'FAIL case 1 ... IndexError' with repack output 'disk: free 5.12 GB, up to 0.00 GB to write, 5.12 GB would remain (floor 10.0 GB)'; after: PY-REPACK-TEST cases=17/17 ok=True",
+      "df -k /c readings in this session: 29G (df -h), 20299636 KB, 15104376 KB, 5011748 KB, 14257552 KB, 16155076 KB, 14611388 KB"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 criterion CTk2-AC11: the test's last line reads ok=True with every case passing; disk floor of 10 GB applies to cutting the real kit.",
+  "world_is": "Free space on C: moved 29 GB at the start, 20 GB at the first install, 5.0 GB at its lowest, 14.6 GB at the end, with no step of mine writing more than the kit (502 MB) and two scratch installs (2075 MB each). A test whose result depends on the host's free disk is a flake. The helper change is one argument; the floor stays in repack and is exercised by the real cut (it printed 'disk: free 30.45 GB ... floor 10.0 GB')."
+}
+```
