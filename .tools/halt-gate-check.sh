@@ -185,23 +185,33 @@ halt_gate_worker_issuer() {
   # Prints the <issued_by> of a NON-TERMINAL task order under the worker's project that is
   # issued_to the worker, read at HEAD; rc 1 when none. A `git show` that fails is a `continue`
   # (toward refusal), never an absence verdict.
-  local serial="$1" code p text issued_to status issued_by
+  # OG-hg-1 (CTO R35 cell 1; rows NFRA_OPLGTW-Z-W28-S7, Z-S62): the order is looked up in the SHARED root's HEAD first
+  # (a release tree is cut on the LIVE sha, which predates a new slot's order), then in HALT_GATE_REPO_ROOT's; and the
+  # status is the LAST line-leading <status> tag (orders APPEND their flips, so the first tag is the stale one). An order
+  # path whose issued_to matched in the shared root is DECIDED there: the repo root's older copy of it is not re-read.
+  local serial="$1" code p text issued_to status issued_by root decided=$'\n'
+  local -a roots=("$HALT_GATE_SHARED_ROOT")
   code="${serial#0.9.0_WK_}"; code="${code%%~*}"
   [ -n "$code" ] || return 1
-  while IFS= read -r p; do
-    [ -n "$p" ] || continue
-    text="$(git -C "$HALT_GATE_REPO_ROOT" show "HEAD:$p")" || continue
-    issued_to="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_to>[^<]*</issued_to>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
-    [ "$issued_to" = "$serial" ] || continue
-    status="$(printf '%s\n' "$text" | grep -m1 -oiE '<status>[[:space:]]*[A-Za-z_-]+' | sed -E 's/<status>[[:space:]]*//' | tr 'A-Z' 'a-z')"
-    case "$status" in
-      complete|completed|closed|done|superseded|cancelled|canceled|withdrawn) continue ;;
-    esac
-    issued_by="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_by>[^<]*</issued_by>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
-    [ -n "$issued_by" ] || continue
-    printf '%s\n' "$issued_by"
-    return 0
-  done < <(git -C "$HALT_GATE_REPO_ROOT" ls-files -- "org/missions/D*/*/${code}/task-orders/*.md")
+  [ "$HALT_GATE_REPO_ROOT" = "$HALT_GATE_SHARED_ROOT" ] || roots+=("$HALT_GATE_REPO_ROOT")
+  for root in "${roots[@]}"; do
+    while IFS= read -r p; do
+      [ -n "$p" ] || continue
+      case "$decided" in *$'\n'"$p"$'\n'*) continue ;; esac
+      text="$(git -C "$root" show "HEAD:$p")" || continue
+      issued_to="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_to>[^<]*</issued_to>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
+      [ "$issued_to" = "$serial" ] || continue
+      decided="${decided}${p}"$'\n'
+      status="$(printf '%s\n' "$text" | grep -oiE '^<status>[[:space:]]*[A-Za-z_-]+' | tail -n 1 | sed -E 's/<status>[[:space:]]*//' | tr 'A-Z' 'a-z')"
+      case "$status" in
+        complete|completed|closed|done|superseded|cancelled|canceled|withdrawn) continue ;;
+      esac
+      issued_by="$(printf '%s\n' "$text" | grep -m1 -oE '<issued_by>[^<]*</issued_by>' | sed -E 's/<[^>]+>//g' | tr -d ' \r')"
+      [ -n "$issued_by" ] || continue
+      printf '%s\n' "$issued_by"
+      return 0
+    done < <(git -C "$root" ls-files -- "org/missions/D*/*/${code}/task-orders/*.md")
+  done
   return 1
 }
 

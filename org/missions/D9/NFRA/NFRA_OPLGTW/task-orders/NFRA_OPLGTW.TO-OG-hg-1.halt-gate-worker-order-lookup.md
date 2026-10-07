@@ -95,7 +95,7 @@ Rows: id `NFRA_OPLGTW-Z-W30-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Pre-cut 02:5xZ: `hg1.AC1` FAIL (the fixture test is absent). `hg1.AC2`: ld0131 rc=0; recipient-scoping reads
   0 passed, 9 failed in both trees, which is the baseline the check carries.
 
-<status>pending</status>
+<status>complete</status>
 <round>24</round>
 <slot>~30</slot>
 <fabric>site-z</fabric>
