@@ -2665,3 +2665,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed on dell1 (fabric field = the project register fabric). The comp-pipescript reading was not re-measured by this seat."
 }
 ```
+
+## MDPF_SECCLASS-W24-S1 -- industry-group values are vendor-truncated at 30 characters
+
+```json
+{
+  "id": "MDPF_SECCLASS-W24-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~24",
+  "surfaced_at": "2026-10-07T09:00Z",
+  "one_line": "Bloomberg GICS_INDUSTRY_GROUP_NAME values are vendor-truncated at 30 characters (6 of 23 are exactly 30 chars, 2 more are 29: e.g. 'Commercial & Professional Serv') in the characteristics file and carried verbatim in the served holding artifact; the column exists only from bbg/2026-08-27 (27 of 32 partitions).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/SECTOR_INDUSTRY_GROUP_VALUES_20261007.json (32 partitions read; per_partition has_industry_group_col)",
+      "data/etfs/scripts/gold/etf_positioning_gold.py:153-196 (producer header: values not yet measured; truncation repair is a serving-tier act)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e25 cell text: the industry-group values are measured before they are declared; the closed list is to be declared as data by SC-e-27 for a page vocabulary that does not change.",
+  "world_is": "The measured 23-value set is identical in characteristics (newest and union) and served, but 6 values are truncated spellings, so a closed list declared from measurement carries the truncated strings; the page shows them as served today. SC-e-27 declares the strings verbatim per the record; completing the names is the serving-tier decode, outside this cell.",
+  "notes": "Filed by the worker on the record's own finding; not a premise failure of the order."
+}
+```
