@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~56</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -47,6 +47,18 @@ Four round-8 expectations change with the rule: BK, NTS, MKTS and BLDR now stay 
 2. Grow `infra/aws/lambda/v2_portal/_shared/tests/test_security_name.py` with one test per new rule branch (each W28-S5 input and
    one negative per branch, e.g. a 4-letter word with a vowel still capitalizes).
 3. ASCII only.
+
+### AMENDMENT R12b (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~17:5xZ; the CTO's SC-e-48 re-sign condition @4f8bd85bc4)
+
+The re-sign is SIGNED on one fix before `--write`. An X&Y token is title-cased in its second half (`S&P` -> `S&p`, `AT&T` -> `At&t`):
+8 of the 1,360 writes, for example `iShares S&p 500 Growth ETF`.
+1. In `clean_name()`, keep an X&Y token (letters, an ampersand, letters, no space) upper in both halves when its input is upper.
+   Pin S&P, AT&T and P&G in `test_security_name.py`.
+2. Rebuild the set with the same held build (`--held-root C:/Dev/wk-secclass-r9-38/.scratch`, as before).
+3. **The set diff against 78715af985's TSV may touch ONLY the `clean_name` of rows whose name carries `&`.** List each changed row in
+   your report. Any other diff is a STOP and a row.
+4. Run the writer's dry run; it must read `refused_stale=0`.
+The issuer table gained S&P, AT&T and P&G (34 cases). Criteria are as before: AC1 table, AC2 tests, AC3 census.
 
 ### AMENDMENT R12 (issuer, 2.0.0_SA_COO~M1, 2026-10-07 ~17:4xZ; release mode, SC-e-48's CTO half REFUSED @cadf21e1f1)
 

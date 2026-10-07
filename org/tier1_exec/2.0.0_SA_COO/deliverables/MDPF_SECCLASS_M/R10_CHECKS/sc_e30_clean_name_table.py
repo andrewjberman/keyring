@@ -67,6 +67,10 @@ TABLE = [
     ("Smith & Nephew Ltd", "Smith & Nephew LTD"),
     ("SIEMENS AG SPONSORED ADS", "Siemens AG Sponsored ADS"),
     ("Novartis Ag Adr", "Novartis AG ADR"),
+    # SC-e-48 re-sign condition (CTO @4f8bd85bc4): an X&Y token stays upper in both halves.
+    ("ISHARES S&P 500 GROWTH ETF", "iShares S&P 500 Growth ETF"),
+    ("AT&T INC", "AT&T Inc"),
+    ("P&G CO", "P&G Co"),
     # empty
     (None, None),
     ("   ", None),
