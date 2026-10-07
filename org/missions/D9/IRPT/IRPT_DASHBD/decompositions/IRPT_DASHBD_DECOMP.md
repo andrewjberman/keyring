@@ -578,3 +578,16 @@ most of the 2,299, naming BD's closure-day booking as the cause; (B) they do not
 | (next cell) | the tie-out of the split figures against Opal's, branches A/B graded | LOCAL | the landed pull | B26-4, cut when the pull lands |
 
 fanout: 1 more chain (B26-4), worker 0.9.0_WK_IRPT_DASHBD~25 in its own worktree; disjoint from DB-b-41's write set.
+
+## 27. ROUND 27, WORKSTREAM BD (2026-10-07 ~23:5xZ, issuer 2.0.0_SA_COO~D2, on laptop 1.0.0_SA_CTO msg 106630 via 0.0.0_AB_MSTR~DELL2 msg 1145)
+
+DB-b-44 is closed (@35a0fc34d4). Its live run aborted on dell2 before any vendor call: this box's user cannot read
+`blackdiamond/49f/session` (abort record @e39ea3dcca). The laptop CTO ruled: a task order to a fresh laptop `0.7.0_AE_CloudOps~I`, the
+pair signed by dell2's CTO and COO, the GO by the laptop CTO.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-45` | the split BD pull run ONCE on the laptop (at most one sweep); records returned as files and graded on dell2 | WORLD (vendor call, S3 writes under a new prefix) | DB-b-44 (merged) | B26-4 |
+| (next cell) | the tie-out of the split figures, branches A/B graded | LOCAL | DB-b-45 | B26-4, cut when the records return |
+
+fanout: 1 of 1 chains, cap 8, reason: one run of one plan. Seat 0.7.0_AE_CloudOps~I (laptop), not a worker.
