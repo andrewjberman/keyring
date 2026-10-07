@@ -33,7 +33,7 @@ Keys the act may touch: **one object, the twin** `s3://opal-data-portal-v2/plati
 **Writers counted (N printed):** twin key, N = 1 (`d_publisher_port.py` publishing `d06_firm_mix_summary.py`'s payload; read from `d_publisher_port.py` SERVE_BUCKET/SERVE_ROOT/leaf). Legacy key, N = 1 (`D_04.client_portal_summary.py` `build_firm_mix_summary`, other firms' same-named keys are in their own buckets). The twin's one writer's rule was read at signing-prep: the `mix` comprehension above, with the sums the SUM-IDENTITY guard already checks.
 
 **Readers of the served key (every reader found, `comp-find` over `portal/src` and the repo):**
-- `portal/src/api/endpoints/advisor-intelligence.ts:558` `getPlatinumFirmMixSummary` (reads `${PLATINUM_BASE}/firm/mix_summary.json` through `adviRead`, which prefers the legacy key today and the twin only when `ADVI_REPOINT.mix_summary.state` flips from `held`).
+- `portal/src/api/endpoints/advisor-intelligence.ts:558` `getPlatinumFirmMixSummary` (reads `${PLATINUM_64c186144cca44d202bcbe5b81ed1fe0}/firm/mix_summary.json` through `adviRead`, which prefers the legacy key today and the twin only when `ADVI_REPOINT.mix_summary.state` flips from `held`).
 - `portal/src/api/endpoints/adviKeyRepoint.ts:215` the twin's shape guard `hasAnyKey('mix','composition','views')`: a fourth key under `mix` does not affect it.
 - `portal/src/pages/AdvisorIntelligence/_shared/tabs/ClientsTab.tsx:203-205` (`useQuery` of the firm mix summary; typed `PlatinumFirmMixSummary`, whose `mix` is `PlatinumMixSnapshot = {[assetClass: string]: {market_value, pct}}`, an open index, so a fourth key type-checks).
 - `portal/src/contexts/AuthContext.tsx:67` (prefetch only, result discarded).
@@ -57,6 +57,33 @@ Rollback per key: the one key is the twin `.../platinum/advi/49financial/mix_sum
 2. `composition`, `mix_periods` and `concentration` read byte-equal to the pre-act snapshot except `generated_at`/`data_as_of`.
 3. `d06_mix_sum_check.py` run against the pre-upload `--out` file prints `D06-MIX-SUM ok=True` (this is the release precondition above, run BEFORE the act and not only after).
 
-## COO half -- UNSIGNED
+## ADDENDUM 1 (2.0.0_SA_COO~M1, 2026-10-07 ~17:0xZ) -- the act is the release line `q/dell1/secclass-r12-rel-e55` (release mode)
+
+**What the act is now.** The merge is of `q/dell1/secclass-r12-rel-e55` (port `b359a829d7`, proof VALID `15418eaaee`; four blobs equal
+4e73b996d0, the amended build), based on round head a6e799fa0d. It is no longer `wk-MDPF_SECCLASS-38`. It carries no e56, e57, e61 or
+e62 bytes.
+
+**The push gate's deploy scope** (`.tools/safe_deploy_core.py` `file_to_s3_target`, measured):
+- `data/assets/scripts/gold/runners_49f/d06_firm_mix_summary.py` -> `s3://opal-data-49financial/_code/d06_firm_mix_summary.py`: MOVES,
+  md5 64c186144cca44d202bcbe5b81ed1fe0 -> 52b9c843f584d265b9006c2735b37877. The before-VersionId and ETag are read by the laptop seat, because dell1 is denied 49financial (W25-S1/W32-S4).
+- `data/assets/scripts/gold/runners_49f/tests/test_d06_unclassified_line.py` -> `s3://opal-data-49financial/_code/tests/test_d06_unclassified_line.py`:
+  a NEW key, md5 1f675a00cacf639e6c16e45a8d97e675. It is inert, the same shape as S57's test key: the 49F chain entry point references tests 0 times (CTO msg 383).
+- `data/assets/scripts/gold/runners_49f/d00_census_out.json`: no S3 target (repo-only shape census).
+- Push gate expectation: d06 MOVED (new md5), the test key NEW, nothing else.
+
+**Then** the twin publish key above moves only at the next d06 publish run, per the original act and branches, after the release
+precondition.
+
+## COO half -- SIGNED (2.0.0_SA_COO~M1, 2026-10-07 ~17:0xZ)
+
+Signed for:
+- the merge of `q/dell1/secclass-r12-rel-e55`;
+- the push gate's two-key upload above (d06 moved, test NEW);
+- rollback: the d06 key's prior VersionId, read by the laptop seat before the push and copied back over the key. The test key is inert
+  and needs no rollback; a delete would be Andrew's.
+- the later twin publish, under the RELEASE PRECONDITION and both branches.
+The bucket reads are the laptop seat's.
+
+## (superseded heading) COO half -- UNSIGNED
 
 ## CTO half -- UNSIGNED
