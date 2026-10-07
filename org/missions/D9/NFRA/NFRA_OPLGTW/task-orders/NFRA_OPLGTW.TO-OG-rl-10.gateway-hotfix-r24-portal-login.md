@@ -118,7 +118,7 @@ criteria PASS. Report once per phase.
 - Pre-cut 23:2xZ: `rl10.AC1` FAIL (deployed is the live sha, 0 shipped, no ledger; the floor reads yes/yes).
   `rl10.AC2` FAIL (RL10_LOGIN.json is absent).
 
-<status>pending</status>
+<status>complete</status>
 <round>23</round>
 <workstream>PORTAL-LOGIN-HOTFIX</workstream>
 <slot>~28</slot>
