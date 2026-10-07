@@ -9624,3 +9624,56 @@ name the one known failure instead of silently inheriting it.
   "notes": "NOT done here and outside the order's paths: the older files and the earlier folders. Whether a master id counts as the bound's 'account id' is the issuer's call; a single regex pass over those files would redact them. The host body (r26_real_host.py.txt) still prints it; only the saved copy is redacted. A second carrier: the per-file pytest output (r26_tests_release.out) held the id 5 times, printed by an acceptance test, and one synthetic gateway.test download URL with a token fragment; both redacted in this session's copy. The test output of earlier releases still holds them."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S18",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T14:15Z",
+  "one_line": "safe-ec2-deploy.sh and deploy-to-ec2.sh print the artifact bucket name, which carries the 12-digit AWS account id, into the deploy output, so a worker that saves the output commits the account id the order bounds forbid.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN 2026-10-07 14:01-14:04Z the r26 deploy printed the S3 upload and download lines with the bucket name `opal-<12 digits>-lambda-artifacts` (4 occurrences in the saved r26_phaseB_deploy.out, lines 292-300).",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/r26_phaseB_deploy.out: the 4 occurrences were rewritten to `<acct>` before the commit (a byte replace; the rest of the file is the wrapper's own output).",
+      "RUN `grep -c <the 12 digits> r25_phaseB_deploy.out` in the same folder -> 4: the r25 deploy output, committed at f22aefba02, carries the same string; the ledger entries of r25 name the bucket by `<artifact bucket>` only in some legs."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's bounds: never print or commit an account id; the deploy line is `safe-ec2-deploy.sh ... deploy-to-ec2.sh`, whose output the worker records.",
+  "world_is": "The deploy script echoes the bucket name, and the bucket name embeds the account id. The saved r26 output is redacted from here on; r25 and earlier deploy outputs are not touched (outside the order's paths and the history is already committed). Whether an account id inside a bucket name counts as the bound's 'account id' is the issuer's call; the wrapper cannot be edited by a worker (release tree writes are not in the order's paths).",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Also seen: a fresh Bash call in this worker's session carried OPAL_AGENT_SERIAL=2.0.0_SA_COO~O inherited from the launching shell; every command here exported the worker serial first, and the deploy shell ran `unset OPAL_AGENT_SERIAL` as form step 10 states, so the halt gate resolved the issuer's session file (resolve rc=0, validate rc=0 in the dry run)."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S19",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T14:25Z",
+  "one_line": "The hand-recorded manifest's release_note grows one note per release; at r26 the string passed 32000 characters and the commit-time naming gate refused the commit with a WinError 206 (it runs `git cat-file -e HEAD:<the whole string>` on any slash-bearing string value).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN safe-commit of EC2_MANIFEST.json at 14:2xZ -> `ERROR: BLOCKED -- the naming limb refused ... NAMING ERROR FileNotFoundError: [WinError 206] The filename or extension is too long`; the same error on `python .tools/naming-gate.py --diff <the staged diff> --post-from-index`.",
+      "RUN a traced subprocess.run showed argv `git cat-file -e HEAD:<the release_note string>`, total length 34518 (the Windows command-line bound is 32767).",
+      "FILE .tools/naming-gate.py:811-819 `_resolves_to_tracked`: any value containing `/` is tried as a tracked path with no length guard. The r25 note (28 KB with the chain) passed; the r26 note with the chain was 34500 characters.",
+      "RUN after trimming the three oldest chain segments (OG-t-2, MX-r-6, MX-r-7; all still in git at f22aefba02 and earlier) the note is 30808 characters and the naming gate reads `NAMING-GATE: PASS 0 graded`."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The release form step 10: the worker records the manifest by hand in its own worktree and commits it with the deploy output.",
+  "world_is": "The release_note value is a cumulative chain of every release's note (19 segments before this edit). It exceeds the naming gate's usable argument length at r26, so the next release (r27) re-hits the refusal unless the chain is trimmed again or the gate guards the length. ARMED because the next manifest hand-record refuses with no change of the worker's own. Done here: the three oldest segments were dropped from the string and a TRIMMED marker names them; nothing else in the manifest changed beyond the five lines of this release.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "A fix is either a length guard in .tools/naming-gate.py `_resolves_to_tracked` (a value over a few hundred characters is not a path) or the form's step 12 telling the worker to trim the chain. Neither is in this order's paths."
+}
+```
