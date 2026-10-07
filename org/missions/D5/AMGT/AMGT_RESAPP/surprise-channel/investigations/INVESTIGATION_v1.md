@@ -21945,6 +21945,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "Left as is: the test is another cell's, and the module is another cell's."
+},
+{
+  "id": "AMGT_RESAPP-Z-S368",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T17:56:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The deployed page serves 'USD' beside a foreign-listed peer price on a small number of peer rows: the currency is taken from a United States record of the same company, not from the listing the price belongs to.",
+  "spec_asserts": "DSGN_AMGTV1 FWD-8 and AMGT-bb-8: a peer price is shown with the currency of its own listing, or with a reason and no currency.",
+  "world_is": "Measured 2026-10-07 ~18:0xZ on the deployed function opal-amgt-scoped-api (CodeSha256 MkM9Kf37), r78_bb17.py --crit AC1 --where deployed, clause H6: over five subject names (2317 TT, AMD US, BA US, ASML NA, PBR US) 60 peer rows read, 2 wrong: under 2317_TT_Equity the peer row with scanner ticker 688910 is served price_currency USD from record TSM_US_Equity, and under PBR_US_Equity the peer row with scanner ticker 268236 is served USD from record PBR_US_Equity. The drafting read of bb-8 (round78/GROUP_B_NOTES.md, cell B2) counted price_currency on 25 of 676 priced peer rows across the covered names, 3 of the 25 carrying another listing's currency (TSM twice, Petrobras once). The whole 676 were not re-read today; the sample is five names. On the shared tree the same clause reads 60 rows, 0 wrong, since the adapter cell bb-17 (@5909213803) asks price_listing.record_for_price and serves a reason with no currency for such a row. NOT measured: whether any reader acted on a wrong currency.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "r78_bb17.py --crit AC1 --where deployed, 2026-10-07: 'FAIL H6 ... rows read 60, wrong 2 [(2317_TT_Equity, 688910, TSM_US_Equity, USD), (PBR_US_Equity, 268236, PBR_US_Equity, USD)]'.",
+      "r78_bb17.py --crit AC1 --where local on the shared tree after the bb-17 merge: 'PASS H6 ... rows read 60, wrong 0'.",
+      "round78/GROUP_B_NOTES.md cell B2 and the bb-8 order's preflight line: 25 of 676 priced peer rows carry a currency, 3 of the 25 another listing's."
+    ]
+  },
+  "notes": "ARMED until the round-78 redeploy (order AMGT-bb-18, legs 1-2) carries bb-8 and bb-17: the wrong currency is on the served page today. Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong. About 650 priced peer rows carry no currency at all and stay so: the scanner's source workbook has no currency column (round78/reads/SCANNER_CURRENCY_READ.md), and a Bloomberg field for them is Andrew's word."
 }
 ]
 ```
