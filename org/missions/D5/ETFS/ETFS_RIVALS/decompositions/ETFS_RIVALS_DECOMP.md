@@ -590,3 +590,38 @@ earlier cell is replaced. Chain `~12`, one cell, files render.py, trade_markers.
   Bloomberg key), and the proof is the issuer's real run: total markers per fund equal the run before the fold for
   all 13 funds, GQGU's 7 Bloomberg keys hold the 86, and 0 dialogs show a buying section above "No trades".
 - **Organic trigger:** any security dialog on the live page; the issuer's real run re-reads the 11 strips of row Z-S59.
+
+## ROUND 23 (main workstream) -- APPENDED 2026-10-07, revision 1.13 of this file
+
+One cell, item 1 of the ENRICHMENT LIST of ROUND_ANALYSIS.round22 @f8a61834fd (rulings R1, R2). Items 2 to 4 of that list
+are the issuer's reads and acts on 2026-10-08 (the two runs' REPORT lines, row Z-S62, the AI period-word count, the
+deployed-stage read before the backfill, leg L3) and Andrew's look; they are not cells. Author 2.0.0_SA_COO~RV. No
+earlier cell is replaced. Chain `~13`, one cell, file render.py, risk SERVED.
+
+### `RIV-ks-1` -- a security named in an account's text never opens a dialog without the panel fund's section (rows Z-S65, Z-S66; analysis round 22 R1, R2)
+- Measured: the served page of 2026-10-07 (rounds 15 to 22) reads `fund_sections` 2247 buttons, 4 missing: in GQGU's
+  panel "META PLATFORMS INC" and "ASML HOLDING NV-NY REG SHS" target the dialogs `30303M102` and `N07059210`, which hold
+  a name and no section; the full dialogs are `META_US_Equity` and `ASML_US_Equity`. Reproduced by `ks-1.AC1.py` with the
+  served markup: the fund traded the security under a raw key (so `render._fund_keys` counts it), the raw key's page
+  name differs from the tabled key's only in case, the account cites the raw key, and `_panel_page` / `_name_link` let
+  the citation decide; `_sec_dialogs` builds sections from contribution and trend rows only. The count read 0 through
+  round 16, 3 from round 17, 6 from round 21 on day 2026-10-06; the publisher prints a FAIL line and publishes.
+- Interface:
+  1. On the rendered page every `data-sec` button inside a fund panel targets a dialog that carries a section for that
+     fund, or the mention is plain text. A name whose deciding key has no section for the panel's fund links to the key
+     of the same security that has one (the page's one key), else reads as plain text with the written form kept in
+     the text or a title. No dialog on the page has zero sections.
+  2. Round 13's rule stays: inside fund F's panel a name several listings carry links to the listing F holds; the cited
+     key breaks a tie between keys that each HAVE a section for F.
+  3. `publish_page` already prints `FAIL: fund sections missing` and publishes. It keeps publishing (a day's page is
+     not withheld for a link); the manifest's `fund_sections` stays the count. No change to the audit page's bytes
+     beyond what item 1 causes.
+- Rulings at the cut (issuer): the repair is in how a mention picks its key, not in adding sections for raw keys and
+  not in rewriting stored account text. Reuse the page's existing name tables (`_NAME_ALL`, `_NAME_KEYS`) and the set of
+  keys that will carry a section; do not read G4 or add a second key map to the renderer. Row Z-S57 (Meta in GQGU under
+  two keys in buying_trend) is NOT this cause as far as the issuer has read: Z-S57 is a table bucket, this is a link;
+  the worker says in its report whether its read agrees. Why the FAIL line reached no row for two rounds is the
+  issuer's answer, not the cell's: the real-run record carried the count and the issuer's packets did not read it;
+  from this round the issuer's real-run read prints `fund_sections.missing` in the packet.
+- **Organic trigger:** GQGU's panel on the live page; the issuer's real run of the served day reads `fund_sections`
+  missing 0 and 0 dialogs with no section.
