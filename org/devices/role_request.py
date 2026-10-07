@@ -9,6 +9,8 @@ the request's writer, validator and lister. Shape: org/standards/ROLE_REQUEST.sc
         --kind <k> --name <n> --service <s> --permission <action>,<arn>,<path>:<line> [--permission ...] [--dry-run]
     python org/devices/role_request.py validate <file>   # LAST line: ROLE-REQUEST-VALID <request_id> ok=<True|False>
     python org/devices/role_request.py list [--status <s>] [--records <dir>]   # LAST line: COUNT requested=N applied=N refused=N ...
+    AGENTBUS_DEVICE=laptop python org/devices/role_request.py mark-applied <record> --role-arn <arn> --commit <hash>
+    AGENTBUS_DEVICE=laptop python org/devices/role_request.py mark-refused <record> --reason <text>   # the laptop's answer verbs (CT-c-4)
 
 The Dell's record is org/devices/role_requests/<device>/<request_id>.json (a per-box directory: only that box writes there). The
 laptop's answer is a SEPARATE file, org/devices/role_requests/<laptop device>/answers/<request_id>.json (one writer per file); the
@@ -34,6 +36,8 @@ SCHEMA_PATH = ROOT / "org" / "standards" / "ROLE_REQUEST.schema.json"
 RECORDS_REL = "org/devices/role_requests"
 TF_BASE = "infra/aws/terraform/"
 ANSWER_STATUSES = ("applied", "refused")
+ACCOUNT = "313476888478"
+ROLE_ARN_RE = re.compile(r"^arn:aws:iam::%s:role/([A-Za-z0-9_+=,.@-]+)$" % ACCOUNT)   # a literal role name: no wildcard, no path
 
 
 # ----------------------------------------------------------------------------------------------------- register and project
@@ -328,14 +332,85 @@ def cmd_list(a, root: pathlib.Path) -> int:
     return 0
 
 
-# ----------------------------------------------------------------------------------------------------- THE ANSWER VERBS (NOT THIS CELL'S)
-# `mark-applied` and `mark-refused` attach HERE, as cmd_mark_applied / cmd_mark_refused plus two subparsers in main(). They are the
-# LAPTOP's verbs and write the ANSWER document ($defs/answer in ROLE_REQUEST.schema.json) to answer_path() below, one file per request;
-# they never touch a Dell's record under <records>/<device>/<request_id>.json. `list` already reads those answer files.
+# ----------------------------------------------------------------------------------------------------- THE ANSWER VERBS (CT-c-4)
+# `mark-applied` and `mark-refused` are the LAPTOP's verbs. They write the ANSWER document ($defs/answer in ROLE_REQUEST.schema.json) to
+# answer_path() below, one file per request, in the laptop's own directory; they never touch a Dell's record under
+# <records>/<device>/<request_id>.json. `list` reads those answer files.
 
 def answer_path(root: pathlib.Path, laptop_device: str, request_id: str) -> pathlib.Path:
     """Where the laptop's answer to a request lives: org/devices/role_requests/<laptop device>/answers/<request_id>.json."""
     return root / RECORDS_REL / laptop_device / "answers" / (request_id + ".json")
+
+
+def _answer_setup(a, root: pathlib.Path):
+    """(laptop device, request record) for an answer verb, or (None, message). Refuses unless AGENTBUS_DEVICE names the control-plane box."""
+    claim = os.environ.get("AGENTBUS_DEVICE", "").strip()
+    if not claim:
+        return None, "AGENTBUS_DEVICE is not set; a box's own name is its environment variable, never derived from a path"
+    dev = find_device(load_register(root), claim)
+    if dev is None:
+        return None, "AGENTBUS_DEVICE=%s is not in the device register" % claim
+    if dev.get("role") != "control-plane":
+        return None, "device %s has register role %r; only the `control-plane` box answers a role request" % (dev["name"], dev.get("role"))
+    try:
+        rec = json.loads(pathlib.Path(a.record).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        return None, "cannot read request record %s: %s" % (a.record, exc)
+    errs = shape_errors(rec, "request")
+    if errs:
+        return None, "request record %s does not hold the request shape: %s" % (a.record, "; ".join(errs[:3]))
+    if pathlib.Path(a.record).stem != rec["request_id"]:
+        return None, "request record file name %s is not its request_id %s" % (pathlib.Path(a.record).name, rec["request_id"])
+    return (dev, rec), ""
+
+
+def _write_answer(root: pathlib.Path, dev: dict, rec: dict, ans: dict) -> int:
+    errs = shape_errors(ans, "answer")
+    if errs:
+        for m in errs:
+            print("REFUSED: answer shape: " + m, file=sys.stderr)
+        return 2
+    path = answer_path(root, dev["name"], rec["request_id"])
+    path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        with open(path, "x", encoding="utf-8", newline="\n") as fh:   # 'x': one answer per request, never overwritten
+            fh.write(json.dumps(ans, indent=2) + "\n")
+    except FileExistsError:
+        print("REFUSED: request %s already has an answer at %s" % (rec["request_id"], path), file=sys.stderr)
+        return 2
+    print(json.dumps(ans, indent=2))
+    print("ROLE-REQUEST-ANSWER %s %s %s" % (rec["request_id"], ans["status"], path.relative_to(root).as_posix()))
+    return 0
+
+
+def cmd_mark_applied(a, root: pathlib.Path) -> int:
+    got, msg = _answer_setup(a, root)
+    if got is None:
+        print("REFUSED: " + msg, file=sys.stderr)
+        return 2
+    dev, rec = got
+    m = ROLE_ARN_RE.match(a.role_arn.strip())
+    if not m:
+        print("REFUSED: --role-arn %r is not arn:aws:iam::%s:role/<literal role name> (no wildcard, no path)" % (a.role_arn, ACCOUNT), file=sys.stderr)
+        return 2
+    now = datetime.datetime.now(datetime.timezone.utc)
+    ans = {"request_id": rec["request_id"], "status": "applied", "role_name": m.group(1), "role_arn": a.role_arn.strip(),
+           "applied_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+           "applied_by": os.environ.get("OPAL_AGENT_SERIAL", "").strip() or "device:" + dev["name"], "commit": a.commit.strip()}
+    return _write_answer(root, dev, rec, ans)
+
+
+def cmd_mark_refused(a, root: pathlib.Path) -> int:
+    got, msg = _answer_setup(a, root)
+    if got is None:
+        print("REFUSED: " + msg, file=sys.stderr)
+        return 2
+    dev, rec = got
+    now = datetime.datetime.now(datetime.timezone.utc)
+    ans = {"request_id": rec["request_id"], "status": "refused", "reason": a.reason.strip(),
+           "applied_at": now.strftime("%Y-%m-%dT%H:%M:%SZ"),
+           "applied_by": os.environ.get("OPAL_AGENT_SERIAL", "").strip() or "device:" + dev["name"]}
+    return _write_answer(root, dev, rec, ans)
 
 
 def main(argv=None, root: pathlib.Path = ROOT, send=bus_send) -> int:
@@ -354,12 +429,23 @@ def main(argv=None, root: pathlib.Path = ROOT, send=bus_send) -> int:
     ls = sub.add_parser("list", help="every request with its effective status")
     ls.add_argument("--status")
     ls.add_argument("--records")
+    ma = sub.add_parser("mark-applied", help="the laptop answers a request: the role is applied")
+    ma.add_argument("record")
+    ma.add_argument("--role-arn", required=True)
+    ma.add_argument("--commit", required=True)
+    mr = sub.add_parser("mark-refused", help="the laptop answers a request: refused, with the reason")
+    mr.add_argument("record")
+    mr.add_argument("--reason", required=True)
     a = p.parse_args(argv)
     root = pathlib.Path(root)
     if a.verb == "write":
         return cmd_write(a, root, send)
     if a.verb == "validate":
         return cmd_validate(a, root)
+    if a.verb == "mark-applied":
+        return cmd_mark_applied(a, root)
+    if a.verb == "mark-refused":
+        return cmd_mark_refused(a, root)
     return cmd_list(a, root)
 
 
