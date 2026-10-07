@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~23</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -114,3 +114,18 @@ lane: the <paths> block IS the grant (three globs for the dated output files).
 </preflight>
 
 Source: DECOMP_R8 @495efa3c32 (origin 1640a0e86e); PRD v0.12 @87ad6d2e4c.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~09:1xZ) -- ruling on BLOCKING row W23-S4: the held set comes from a local producer build
+
+Worker ~23 stopped under the refusal clause: the three firm buckets (`opal-data-49financial|cottonwood|inflection`) deny
+`cloudops-dell1-agent-user` by resource policy (`DenyForeignFirmPrincipals`, `infra/aws/terraform/shared-infra/s3-49financial.tf:93-147`),
+so the served Holdings manifests cannot be read from this box. The same wall met TO-SC-e26 (row W25-S1).
+
+RULING (the issuer's): build the held set exactly as TO-SC-e26 did -- the Holdings producer
+`data/assets/scripts/gold/investor_reporting/holdings_snapshot.py` run per firm WITHOUT `--upload` (nothing published), as-of
+2026-10-05, reusing `old_list_census.py`'s `build_firm()` method or its built parquet if present under the worker's `.scratch/`.
+Each `MISSING_LIST_<firm>_<date>.json` sets `"source"` to `"local producer build as-of <date> @<git HEAD>, inferred (not the served
+bytes)"`. Assume no other role, read no firm bucket another way, upload nothing. Exclude the producer's cash line as the face says.
+Criteria and `<paths>` unchanged (the check accepts any `source` string). The served-bytes read needs a principal the firm buckets
+admit; the issuer carries that to 1.0.0_SA_CTO~DELL1 at the drain end. Gate limb: none graded this modification.
+

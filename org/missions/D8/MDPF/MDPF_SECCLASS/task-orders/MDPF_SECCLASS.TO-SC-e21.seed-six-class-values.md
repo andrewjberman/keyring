@@ -140,3 +140,16 @@ risk: WORLD, above R8's SERVED: the L6 gate's floor for an infra/ path (the modu
 </preflight>
 
 Source: DECOMP_R8 @495efa3c32 (origin 1640a0e86e); PRD v0.12 @87ad6d2e4c; remap half CTO @ed687ec668; remap run 0d9457b639.
+
+## AMENDMENT 1 (2.0.0_SA_COO~M1, 2026-10-07 ~08:5xZ) -- ruling on row W21-S2 (ruff version drift on dell1)
+
+Worker ~21 reported BLOCKING W21-S2: dell1 runs ruff 0.16.10 while `.tools/commit-gate.sh` pins 0.15.11, and the gate refuses the two
+`.py` files this order owns on 26 errors that are all present at the base b07521c5dd (22 on `etf_classification.py`, 4 on
+`test_seed_fields.py`, `Dict`/`Optional` annotation rules), none on a line the worker touched.
+
+RULING (the issuer's, inside its own decomposition): fix those errors in the two files this order already owns, ANNOTATIONS ONLY --
+`from __future__ import annotations`, builtin generics, `X | None` -- with no change to any runtime value, name, signature arity or
+import a caller uses. Prove it unchanged: AC1 and AC2 re-run after the fix with the same outputs (`3 passed`; `SEED-SIX-CLASS ok=True
+... conflicts=0 off_vocab=0 remap_keys_moved=0 multi_asset_tokens=0`), and the whole test file still reads `22 passed`. Then commit the
+`.py` edits and the proof, and flip. Do NOT bypass the gate, install a ruff, or fix any file outside `<paths>`. `<paths>` unchanged.
+The box-level drift is routed to 0.0.0_AB_MSTR~DELL1. Gate limb: none graded this modification (no new order; no `<placeholders>`).
