@@ -18827,3 +18827,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
 }
 ```
+
+## IRPT_BCKEND-W134-S1 -- the pin-based release census reads 4 changed members for irpt-ycharts-generate at f36a8cdefd, the issuer read 19
+
+```json
+{
+  "id": "IRPT_BCKEND-W134-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~134",
+  "surfaced_at": "2026-10-07T12:00:00Z",
+  "one_line": "IB-pr-331: release-census.py irpt-ycharts-generate --pin f36a8cdefd prints changed_members=4 (canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py), not the issuer's 19; the 15 extra members the issuer counted (every fixtures/har/* file plus templates.json) are byte-identical to the live zip in the blobs at f36a8cdefd. Tool not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-ycharts-generate --pin f36a8cdefd -> built_members=114 live_members=114, 4 changed lines, changed_members=4, rc 0, 8.8 s; output saved at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~134/release_census_irpt-ycharts-generate_f36a8cdefd.txt",
+      "the real builder, BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate, run in this worktree (HEAD 27b47e8ef1, a descendant of f36a8cdefd) and diffed member by member against the same live zip: 114 vs 114 members, 6 changed (the 4 above plus publication_worker.py and publisher.py, which moved after f36a8cdefd), 0 under fixtures/ or templates.json",
+      "git log f36a8cdefd..HEAD over ycharts/generate/fixtures and templates.json is empty; git ls-files --eol shows i/lf w/lf for the fixtures here (core.autocrlf=false), and the live zip carries 0 CRLF in the 6 changed members",
+      "the issuer's 15 = 14 fixtures/har entries (13 json + report.pdf) + top-level templates.json = 15 of the 114 files[] entries; a binary pdf cannot differ by line-ending conversion, so a CRLF checkout does not explain all 15",
+      "not reproduced: the issuer's 19-member run environment. HELD, not measured: the difference lies in the issuer's worktree or in a live zip that has since been redeployed, since neither is readable from here"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-331 WORKER FACE: the issuer's own re-census at f36a8cdefd read 19 changed members for irpt-ycharts-generate (4 re-pinned + 15 under fixtures/templates); IB61-3-AC2 expects changed_members=19.",
+  "world_is": "A build of the blobs at f36a8cdefd against the live get-function zip reads 4 changed members. IB61-3-AC2 will FAIL on the tool's honest output. Which census is right is for the issuer: either the 19 came from worktree bytes the pin-based method cannot see (then the builder, which reads the worktree, ships what the census does not), or from a live zip that has since moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
