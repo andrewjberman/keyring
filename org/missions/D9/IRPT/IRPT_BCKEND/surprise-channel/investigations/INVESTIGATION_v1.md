@@ -19882,6 +19882,37 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
+## IRPT_BCKEND-S382 -- IB-pr-349's live positive-control arm is unexercisable under its own bounds; the release is LANDED and NOT rolled back
+
+```json
+{
+  "id": "IRPT_BCKEND-S382",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T14:58:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-349 is RELEASED and verified on every axis this cell may measure, but criterion IB68-1-AC1 reads FAIL on new_export_ready=None. After-reads 4 and 5 require submitting a NEW export as an authenticated Opal principal. There is no such principal this cell may obtain: minting one is a write to DynamoDB opal-users-v2, the production auth plane, which this order's BOUNDS forbid verbatim (\"No write to the auth plane\"), and deliverables/0.9.0_WK_IRPT_BCKEND~2/RT2_test_principal_human_gated.md records the mint path as HUMAN-GATED with signing a token directly forbidden by the same record. Per the order's own refusal clause a needed-but-ungranted path is a BLOCKING row, never an override, so this is the row. NOT rolled back: Branch B fires on a FAILURE of after-read 1 or 4; after-read 1 PASSED and after-read 4 was never run, which is not a failure, and the COO half admits rollback only on a failure other than reads of un-back-filled exports because rollback REOPENS the hole for the 7 principals.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r68/p68_cells.py . IB68-1-AC1 -> 'FAIL: new_export_ready is None' / 'IB68-1-AC1 FAIL'",
+      "the order's BOUNDS, verbatim: 'No IAM, route, authorizer, table, bucket or other function changes. No write to the auth plane. No token minted for a non-Opal principal.'",
+      "RT2_test_principal_human_gated.md: the mint path exists and is named, and a seat may not walk it -- out of paths, a write to the production auth plane, and signing with opal/auth/jwt-private-key is worse; the record's verdict is HUMAN-GATED",
+      "WHAT IS PROVEN INSTEAD, all measured: deployed CodeSha256 aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= equals the built sha; re-plan 'No changes'; the live zip's entry.py is sha256 fc241d806ecc (the fail-closed fix is in the RUNNING bytes) across 63 members; on those DEPLOYED bytes an existing un-back-filled receipt is REFUSED for an admin principal AND for a reconstructed non-Opal principal (opaque ids, no token minted), while the POSITIVE CONTROL -- an in-scope Opal read -- is ADMITTED, and a second control lands on the DISTINCT counts branch, so the refusal is the fail-closed branch and not a blanket deny",
+      "49 offline tests pass at the pin, including the fix's own tests/test_covered_account_ids.py and tests/test_admitted_read_logged.py and the analysis, custody and retained branches that after-read 5 concerns",
+      "apply blast radius: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.' -- only module.irpt_export_render.aws_lambda_function.this, in place",
+      "ledger org/critical_paths/change_management/20261007T1356Z_irpt-export-render-ib-pr-349-failclosed-20261007_deploy_completion.md CLOSED, all 4 legs proven, sentinel removed; rollback source objver MteawDsTqojjkhh4e8Xfp_u6T7F8NxX3 re-read after the release and still retrievable"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 after-reads 4 and 5: a NEW export, and a performance and an analysis export, submitted by an admitted Opal principal, reach READY with one irpt_export_read_admitted line; IB68-1-AC1 grades them.",
+  "world_is": "The decision layer this release changed is proven correct on the running bytes, both directions, with controls. The end-to-end submit-to-READY arm is not reachable by any act inside this order's grant. What is owed is the issuer's: either widen a successor order to a seat that may exercise the auth plane under its own never-widen pair, or grade IB68-1-AC1 on the decision-layer controls and the offline battery and say so on the record. This cell did NOT flip the order to complete.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
+}
+```
+
 ## IRPT_BCKEND-W145-S1 -- TO IB-pr-343 requires facts.covered_account_ids non-empty in the receipt contract, but three existing tests mi
 
 ```json
@@ -20062,5 +20093,141 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   },
   "spec_asserts": "The TO bounds: firm buckets deny this box's identity (row S347); a firm-bucket read is a row and a stop on that criterion.",
   "world_is": "The two reads the census needed (ownership map, directory) were admitted for bd and cot and inf's directory; inf's ownership map is absent (404, not AccessDenied). The census used them and did not stop. Reads under firms/ (receipts) and the evidence bucket were not attempted, so S347's denial is neither confirmed nor refuted for those prefixes."
+}
+```
+
+## IRPT_BCKEND-S370 -- S368 disarmed: E-M3 graded on the delivered laptop read and drained
+
+```json
+{
+  "id": "IRPT_BCKEND-S370",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T13:11:34Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S368 (BLOCKING, ARMED) is disarmed on its own condition: the laptop FILE (R32M_MULTI_RELATIONSHIP_READ.json @09e0d7c89c, sha256 e2606081349e...) was delivered and graded. TO-IB-m32-321: M1-MULTI-RELATIONSHIP-NAMED (acc_0f1e215e521798954f80f291 in relationships z09305591 and z09326136; 3 of 860 Cottonwood accounts), M2-RECONCILES (58 raw rows -> 29 unique positions; ties over 4 partitions; rebuilt 462,857.7422 = served 2026-10-05), M3-OVERLAP-MEASURED (both 1, multi-model only 180, multi-relationship only 2, neither 677); proof VALID; drained @3daee801f3. Cottonwood remains refused to the dell2 identity (13:02Z); that residual is the fence apply's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~154/IRPT_BCKEND.TO-IB-m32-321.multi-relationship-delivered-read.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 3daee801f3 (safe-merge index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S368 disarm condition: the laptop FILE is delivered and graded, or Cottonwood admits the dell2 identity read-only.",
+  "world_is": "First condition met and graded. S368 DISARMED. E-M3 (cell IB-mr-321) complete for round 32 ~M."
+}
+```
+
+## IRPT_BCKEND-S371 -- W148-S2 dispositioned: the fence is intact; this issuer's face bound ("firm buckets deny this box", S347) was wider than the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-S371",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:15:03Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Ruling 106244: the reads were inside dell2's grant (legacy unfenced buckets); no fence failed. The defect is the issuer's face wording, corrected from round 68.",
+  "one_line": "Disposition of IRPT_BCKEND-W148-S2 per laptop 1.0.0_SA_CTO ruling 106244 (relayed by 0.0.0_AB_MSTR~DELL2, msg 589 series): the objects worker ~148 read are in opal-data-bd / -cot / -inf, the legacy firm channels that were never fenced; the fence covers opal-data-49financial / -cottonwood / -inflection, and of those only opal-data-cottonwood denies dell2 today. No fence failed; the face bound was wrong.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row IRPT_BCKEND-W148-S2 (worker ~148, IB-pr-347): bd and cot ownership maps and bd/cot/inf directories readable; inflection map 404",
+      "ruling 106244: bucket census @7cb0a2f3ab, 24 data buckets, 3 fenced; dell2 reaches 21 of 24 plus 2 of the 3 fenced since 10:1xZ",
+      "IB-pr-347 face BOUNDS line: 'Firm buckets deny this box's identity (row S347)'"
+    ]
+  },
+  "spec_asserts": "Every face of this issuer since S347 bounds a worker with: firm buckets deny this box's identity.",
+  "world_is": "Only opal-data-cottonwood denies dell2. From round 68 the issuer's faces read: only opal-data-cottonwood denies dell2; the legacy opal-data-bd/-cot/-inf are inside dell2's grant; a read is never a fence widening."
+}
+```
+
+## IRPT_BCKEND-S372 -- S365 resolved: the PrintEntry custody-report refusal and the unknown-kind refusal are on portal DEV @ba391aff8f
+
+```json
+{
+  "id": "IRPT_BCKEND-S372",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T13:57:39Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S365: IB-pr-346 met both CTO msg 403 conditions (drained @39b7d4dbce; CTO PASSED) and, on Andrew-direct ~13:4xZ ('Recs approved for 1 and 2', MSTR msg 626), landed on portal DEV with IB-pr-341.",
+  "one_line": "Portal origin DEV moved 4b167888 -> ba391aff8f (ls-remote read by laptop 0.0.0_AB_MSTR, relayed msg 630). The merges include wk-IRPT_BCKEND-147-portal @3715f732 (readReportKind refuses an unknown kind; custody-report refused with 0 requests) and -143-portal @5c726cf4. Combined tsc rc 0; PROD untouched.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.0.0_AB_MSTR~DELL2 msg 630: portal DEV 4b167888 -> ba391aff8f, three no-ff merges, combined tsc rc=0",
+      "drain @39b7d4dbce (IB-pr-346): IB66-1-AC1 and AC2 PASS, proof VALID"
+    ]
+  },
+  "spec_asserts": "S365: the reviewed PrintEntry candidate lands on DEV once its checks run; readReportKind refuses an unknown kind.",
+  "world_is": "Both are on portal DEV @ba391aff8f. PROD is untouched."
+}
+```
+
+## IRPT_BCKEND-S383 -- the fence check asked in the dell2 relay: no read-Deny exists on opal-data-cot -- and per the CTO that is the signed round-3 Dell grant, not a gap
+
+```json
+{
+  "id": "IRPT_BCKEND-S383",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T15:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 emergency relay asked this seat to check the fence, because the dell2 identity read the cot ownership map against fence row S347, which asserts that firm buckets deny this box's identity. Checked: S347's premise is FALSE AS APPLIED for reads. cloudops-dell-agent-deploy-policy Sid S3ObjectsOnOpalBuckets allows s3:GetObject on arn:aws:s3:::opal-* and arn:aws:s3:::opal-*/* with NO Condition, attached to group cloudops-dell-agents-group, which holds BOTH dell agent users. Across the five group policies there are 21 statements and 11 Deny, and ZERO of the 11 covers s3:GetObject -- every Deny is a delete, a write, or an IAM/CloudTrail/Lambda/SSM guard, and the only opal-data-cot Denies are s3:PutObject on code prefixes. opal-data-cot's own bucket policy carries NO Deny at all, only two CloudFront Allows. So the dell2 read was PERMITTED, both dells can read every opal-* firm bucket, and CLAUDE.md's per-firm-bucket mechanism (bucket-scoped Deny) is absent on this bucket.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "comp-iam simulate arn:aws:iam::313476888478:user/cloudops-dell2-agent-user s3:GetObject arn:aws:s3:::opal-data-cot/platinum/cottonwood/ownership_map.json -> 'decision=allowed', VERDICT ALLOWED (APPLIED plane), read 2026-10-07T15:2xZ",
+      "the allow is paired with an EXISTENCE read so it is not the 22a false-allow mode: s3api head-object opal-data-cot platinum/cottonwood/ownership_map.json -> ContentLength 107, LastModified 2026-10-07T11:38:22Z",
+      "s3api get-bucket-policy opal-data-cot: two statements, AllowCloudFrontOACReadGold and AllowScopedAdvisorOAI, both Effect Allow. NO Deny statement exists on the bucket",
+      "the dell2 user holds no inline policy and two attached policies (bus, ssm); its other grants come from group cloudops-dell-agents-group, which carries five attached policies and zero inline",
+      "census over those five policy documents, denominator printed: 5 docs, 21 statements, 11 Deny, 1 Allow admitting s3:GetObject (deploy/S3ObjectsOnOpalBuckets, Resource arn:aws:s3:::opal-* and opal-*/*, Condition NONE), and 0 Deny statements covering s3:GetObject",
+      "CLAUDE.md NEVER rule: 'per-firm buckets -> bucket-scoped Deny'. opal-data-cot is a per-firm bucket and carries none"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S347: firm buckets deny this box's identity, so a firm-bucket read is a row and a stop on that criterion.",
+  "world_is": "DISPOSITIONED BY 1.0.0_SA_CTO (msg 106352, 15:40Z) BEFORE THIS ROW LANDED, and the ruling narrows it: those reads are INSIDE THE DELL GRANT as signed in round 3, which gave both Dells the laptop seats' read reach on firm data; the fence is on three OTHER buckets; and row W148-S2 is SPEC WORDING. So the measurement below stands but my framing of it as an exposure was wrong: the absence of a read-Deny on opal-data-cot is the signed design, not a gap, and nothing is owed on it. Re-filed as OBSERVATION/INERT for that reason -- the cot read was authorized, so no violation occurred. 0.7.0_AE_CloudOps~E CORROBORATED and SIZED it at msg 106355 (evidence 7a5f1c5f66, 3ebf741843), and the pair is sharper than either half: where a fence EXISTS it DOES refuse GetObject (explicitDeny measured for the dell1 user on all three of opal-data-49financial, -inflection and -cottonwood), so the mechanism works; but ~E's 15:1xZ census reads buckets=24 fenced=3 no_policy=11 no_fence=10, i.e. 21 of 24 buckets carry no fence at all. ~E also gives the composition point only ~E can give, since ~E's own applies caused it: dell2 is now admitted 24/24 (gap_dell2=0) by design under four signed halves, so with S3ObjectsOnOpalBuckets unconditioned dell2's read reach is EVERY opal-data bucket and not only the three its projects need. What remains is therefore a LEAST-PRIVILEGE residual inside an authorized grant, not an unauthorized access, and it is the CTO's to rule on; neither this seat nor ~E adjudicates a read-Deny. The measurement, unchanged: no applied control denies a firm-data READ to either dell identity. The fence that exists denies deletes bucket-wide and a handful of cot code-prefix writes. A read of any opal-* bucket by either dell user is permitted today, so prior rows that treated a successful firm read as anomalous were reading the absence of a control, not a bypass of one. Vintage matters: 0.7.0_AE_CloudOps~E and 2.0.0_SA_COO~C had NFRA_CTLPLN fence applies IN FLIGHT at this read, so this is the state at 15:23-15:35Z and not necessarily the state after those applies land. Reported to 1.0.0_SA_CTO, 0.7.0_AE_CloudOps~E and 2.0.0_SA_COO~C at msg 106346/106347/106348 so a read-Deny can ride the open applies rather than wait for a new pair."
+}
+```
+
+## IRPT_BCKEND-S384 -- the round-68 check cannot read the live CodeSha256 on a Windows laptop: it spawns bare "bash" from Python, which resolves to the WSL stub
+
+```json
+{
+  "id": "IRPT_BCKEND-S384",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~I",
+  "surfaced_at": "2026-10-07T15:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "checks/r68/p68_cells.py grades IB68-1-AC1 FAIL on this device with 'live CodeSha256 unreadable rc 1', for a reason that has nothing to do with the deliverable: at :72 it calls subprocess.run([\"bash\", aws, ...]) and on Windows a bare \"bash\" resolves to the System32 WSL stub, which answers 'execvpe(/bin/bash) failed: No such file or directory'. CLAUDE.md names this exact trap -- 'Python/PS shelling to bash -> .tools/git_bash_resolver.py' -- and the repo ships the fix, whose own docstring reads 'NEVER returns bare bash (that Windows-resolves to the System32 WSL stub)'. With ONLY that argv0 corrected via git_bash_resolver.bash_argv and the issuer's file otherwise untouched, the same check prints 'OK: pin b921635dad, 9 of 9 members, live CodeSha256 == built, exposure arms hold; open by design: [new_export_ready, performance_ready, analysis_ready]' then 'IB68-1-AC1 PASS'.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "as written, from the worktree: python .../checks/r68/p68_cells.py . IB68-1-AC1 -> 'FAIL: live CodeSha256 unreadable rc 1' / 'IB68-1-AC1 FAIL'",
+      "the shim itself is fine -- run by hand, bash <wt>/.tools/aws lambda get-function-configuration --function-name irpt-export-render --query CodeSha256 --output text returns aRCgH9B0pglos8cPiybPhmJShzjUts/Tr5R9R/AZYJw= rc=0, which EQUALS built_sha",
+      "the cause, reproduced three ways (relative, posix-absolute and windows-absolute path forms) with identical stderr 'WSL (N - Relay) ERROR: CreateProcessCommon:800: execvpe(/bin/bash) failed: No such file or directory' -- so the path form is NOT the variable, the argv0 is",
+      "shutil.which(bash) from the same interpreter returns the Git-for-Windows bash.EXE under /c/Program Files/Git/usr/bin, so which() and CreateProcess disagree; the inherited PATH is itself MSYS-mangled (its first entry is the single character C)",
+      "with only the argv0 corrected through the repo's own .tools/git_bash_resolver.py bash_argv, the UNMODIFIED issuer check prints IB68-1-AC1 PASS (harness: 1 call corrected, check exit=0)"
+    ]
+  },
+  "spec_asserts": "TO-IB-pr-349 <proof_of_spec>: validate the instance and grade IB68-1-AC1 by its stated invocation, which reads one file and one live CodeSha256.",
+  "world_is": "The criterion's substance holds -- pin, nine members, built == live, the exposure arms, the OPEN-BY-DESIGN arms and open_leg_discharge all pass. Only the check's own bash resolution fails, and it will fail the same way for any grader running it from Python on a Windows device. The check is the issuer's file and is NOT in this cell's <paths>, so this cell did not edit it. Owed, one line, to the issuer: import .tools/git_bash_resolver and call bash_argv(aws, ...) at :72, or invoke .tools/aws.cmd directly.",
+  "disarm_owner": "2.0.0_SA_COO~P2"
 }
 ```

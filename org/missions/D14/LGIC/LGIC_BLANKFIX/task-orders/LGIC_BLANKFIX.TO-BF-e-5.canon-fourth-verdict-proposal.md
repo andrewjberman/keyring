@@ -58,7 +58,10 @@ PROPOSE the change and prove it on copies; you edit neither file.
 <criterion id="BE5-AC1" cell_refs="BF-e-5"><invocation>python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/check_canon_patch.py</invocation><expect>CANON-PATCH ok=True</expect></criterion>
 `BE5-AC1` -- the patch applies to HEAD and is what makes the sentence appear (the unpatched arm does not show it).
 
-<expected_criteria>BE5-AC1</expected_criteria>
+<criterion id="BE5-AC2" cell_refs="BF-e-5"><invocation>python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/check_grading_rule.py</invocation><expect>GRADING-RULE ok=True</expect></criterion>
+`BE5-AC2` (AMENDMENT 1) -- the worked-case file itself carries the fourth verdict's case and the ratified cadence rules, and the library's suite, which loads its cases from that file, still passes whole.
+
+<expected_criteria>BE5-AC1,BE5-AC2</expected_criteria>
 
 Each invocation's LAST printed line is the line the expectation is matched against; print it exactly once, with `ok=True` only when
 every assertion behind it held and `ok=False` otherwise.
@@ -73,6 +76,7 @@ every assertion behind it held and `ok=False` otherwise.
   the expected value. A fact in this order that the repository contradicts is also one row; keep working on what it does not block.
 
 <paths>
+org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md
 
 org/missions/D14/LGIC/LGIC_BLANKFIX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
@@ -85,12 +89,45 @@ The block is your WRITE grant. You READ and never edit anything outside the bloc
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: BE5-AC1. Instance at
+Criterion ids: BE5-AC1, BE5-AC2. Instance at
 `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/LGIC_BLANKFIX.TO-BF-e-5.canon-fourth-verdict-proposal.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> BE5-AC1` BEFORE the flip.
+validated with `python .tools/proof-of-spec-check.py <instance> BE5-AC1,BE5-AC2` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** the last line whole; the patch's diff stat; the proposal's path; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- REOPENED on a ruling: you now WRITE the worked-case file
+
+The order was complete and merged (`BE5-AC1` stands; do not redo it). `1.0.0_SA_CTO` ruled (msg 106331) that the writer of
+`org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md` for this project is this cell's worker, because the registry's lane
+is refused on that file. The file is now in your grant. The renderer half of your patch is already landed by its own lane
+(`infra/logic/render_naming_section.py`, commit eb29bf7f37); do not touch it.
+
+**Build:**
+1. In `org/missions/D14/LGIC/LGIC_NAMING/deliverables/GRADING_RULE.md`, the worked case `pandas-pyarrow-layer|LAMBDA_LAYER` restated as
+   `NO-SYSTEM-ASKED`, canonical `pandas-pyarrow-layer`. The exact one-line hunk is the file
+   `org/tier1_exec/4.0.0_SA_CRO/deliverables/GRADING_RULE_WORKED_CASE_PANDAS_PYARROW_LAYER_20261007.patch`: apply it with
+   `git apply` (check first with `git apply --check`); if it no longer applies, make the same one-line change by hand and say so.
+2. In the same file, the cadence restatement that follows from
+   `org/missions/D14/LGIC/LGIC_BLANKFIX/prd/E1_CADENCE_RULES_RATIFIED.md` and `org/standards/NAMING_SCHEMA.json` block `cadence`
+   (read its current version): where the file states the cadence rule (R7) or lists cadence words, it must say what the schema
+   now says -- `daily` is at most once a calendar day on five or more days of the week and a weekday restriction is never named;
+   a fixed interval shorter than a day takes `{N}min` or `{N}h` within the schema's ranges; an event rule takes
+   `{function}-on-{event}`, decided per rule, the function never empty. Restate; do not invent a rule the two sources do not
+   carry, and change no worked case's expected answer except the one in step 1. If a worked case in the file now contradicts
+   the ratified rules, list it in your report and leave it.
+3. `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~5/check_grading_rule.py`: asserts on the real file that the
+   `pandas-pyarrow-layer` case reads `NO-SYSTEM-ASKED`; that the cadence text carries the daily definition's "five or more days",
+   one `{N}min` and one `{N}h` example the schema's `interval_form.token_regex` accepts (read the regex from the schema and test
+   your examples against it), and the `on-{event}` form; then runs
+   `python -m pytest lib/tests/test_opal_naming.py -q -p no:cacheprovider --color=no` and requires 0 failed. Last line
+   `GRADING-RULE ok=True worked_case=True cadence=True suite_failed=0 suite_passed=N`.
+
+`lib/tests/test_opal_naming.py` restates some worked cases at load time over what this file records, and it is NOT in your grant.
+If your edit makes the suite fail, that is a refusal to report with the failing ids, not a test to edit.
+
+Extend your existing proof-of-spec instance with the `BE5-AC2` row and re-validate it. Your rows continue at
+`LGIC_BLANKFIX-W5-S2`.
 
 ---
 

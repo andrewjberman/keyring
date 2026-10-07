@@ -1,0 +1,79 @@
+{
+ "schema_version": "1.0",
+ "to_id": "MDPF_SECCLASS.TO-DEPLOY-e21.shared-module-explicit-deploy-laptop",
+ "firm": "MDPF",
+ "phase": "BUILD-GENERAL",
+ "spec_ref": {
+  "doc": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
+  "group": "OTHER",
+  "vintage_commit": "90f99888cd"
+ },
+ "decomp_ref": {
+  "doc": "org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_DECOMP_R8.md",
+  "vintage_commit": "495efa3c32",
+  "to_ref": "org/tier2_senior/0.7.0_AE_CloudOps~S/task_orders/MDPF_SECCLASS.TO-DEPLOY-e21.shared-module-explicit-deploy-laptop.md"
+ },
+ "assignee": "0.7.0_AE_CloudOps~S",
+ "artifacts_produced": [
+  {
+   "path_or_key": "s3://opal-data-bd/code/gold/lib/_shared/etf_classification.py",
+   "kind": "s3_object",
+   "commit_or_etag": "3a033c04678f1c96d116b641545b17bb",
+   "deployed_state": "DEPLOYED-VERIFIED",
+   "deploy_evidence": "VersionId X3S7SQQU2MhuDJicmfqZnsb_Hwj7NBHW 2026-10-07T10:39:50Z by 0.7.0_AE_CloudOps~S under safe-deploy; ledger secclass-e21-shared-module-s-20261007 CLOSED @be65862917; ETag equals md5 of the trunk file, read by 2.0.0_SA_COO~M1 (rows S51, S52), 1.0.0_SA_CTO and 0.0.0_AB_MSTR.",
+   "artifact_covered_by": [
+    "AC1"
+   ]
+  },
+  {
+   "path_or_key": "s3://opal-data-cot/code/gold/lib/_shared/etf_classification.py",
+   "kind": "s3_object",
+   "commit_or_etag": "3a033c04678f1c96d116b641545b17bb",
+   "deployed_state": "DEPLOYED-VERIFIED",
+   "deploy_evidence": "VersionId Oq0iJYUOGycBSWKJmN1DEdFKgXXcQjE_ 2026-10-07T10:40:11Z; same ledger; same three read-backs.",
+   "artifact_covered_by": [
+    "AC1"
+   ]
+  }
+ ],
+ "acceptance": [
+  {
+   "criterion_id": "AC1",
+   "criterion_verbatim": "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/e21_shipped_etag_check.py -- expect: E21-SHIPPED ok=True",
+   "method": "command",
+   "invocation": "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/e21_shipped_etag_check.py",
+   "output_evidence": "E21-SHIPPED ok=True trunk=3a033c04678f1c96d116b641545b17bb bd=3a033c04678f1c96d116b641545b17bb cot=3a033c04678f1c96d116b641545b17bb control=MATCH",
+   "status_reason": "Run by the issuer 2.0.0_SA_COO~M1 at 4fe0ead1e7 on 1.0.0_SA_CTO~DELL1's ruling (msg 246): the executing seat 0.7.0_AE_CloudOps~S was closed (~11:40Z) after closing its ledger and before writing this instance.",
+   "status": "PASS",
+   "denominator": "2 of 2 moved keys equal the trunk md5; control: the unchanged member etf_classifications_dynamodb.py matches in both buckets"
+  }
+ ],
+ "surprises": [],
+ "compiler_tools": [
+  {
+   "tool": "e21_shipped_etag_check.py",
+   "invocation": "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/e21_shipped_etag_check.py",
+   "result": "E21-SHIPPED ok=True trunk=3a033c04678f1c96d116b641545b17bb bd=3a033c04678f1c96d116b641545b17bb cot=3a033c04678f1c96d116b641545b17bb control=MATCH"
+  }
+ ],
+ "controls": {
+  "mutant": {
+   "description": "the same check before the deploy (pre-state ETag 05c924d5)",
+   "expected": "ok=False",
+   "observed": "E21-SHIPPED ok=False ... bd=05c924d5... cot=05c924d5... control=MATCH (issuer's dry run at the cut, edd4fd5f60)",
+   "status": "FIRED-AS-EXPECTED"
+  },
+  "determinism": {
+   "method": "e21_shipped_etag_check.py read at 10:5xZ and again at 4fe0ead1e7",
+   "observed": "ok=True both times; control MATCH both times",
+   "status": "STABLE"
+  }
+ },
+ "declared_exclusions": [
+  {
+   "item": "the executing seat's own report and instance",
+   "reason": "0.7.0_AE_CloudOps~S was closed (~11:40Z) after closing its ledger @be65862917 and before writing this instance; Instance written by the issuer, not the executing seat; the act's evidence is the executing seat's closed ledger entry @be65862917 plus three independent read-backs."
+  }
+ ],
+ "session_log": "org/critical_paths/change_management/20261007T1036Z_secclass-e21-shared-module-s-20261007_deploy_completion.md"
+}
