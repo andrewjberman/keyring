@@ -84,3 +84,29 @@ It deploys, redacts and rewrites nothing. It did not open the 52 files, did not 
 identifier appears outside this project's folders.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 1 (2026-10-07 ~15:3xZ) -- R38 is WITHDRAWN: the whole-tree read changes the answer (COO~O msg 31081, census @48e547c6f9)
+
+**R38 item 4's read, by `2.0.0_SA_COO~O`, counts only:** two distinct master-id values; the row's printed shape in 92 files; a bare
+value in **1,314 of 62,041 tracked files**, of which 159 and 166 are code or config outside `org/` (Terraform, pipeline scripts,
+contracts), most often as an S3 key segment. This seat did not open the census file; the figures are the message's.
+
+**What that shows.** The identifier is not something this project leaked. It is a key the estate already uses on purpose: it is in
+production code and in stored object addresses. R38 was ruled on the worker's count of 52 files under one project's deliverables,
+and items 1 to 3 read that count as the population. The read this seat ordered in item 4 is what showed the population was 25
+times larger and a different thing.
+
+**Re-ruled:**
+1. **A Schwab MASTER account id is OUTSIDE the bound,** as R39 rules the AWS account id. It identifies the firm's own master
+   account and is an address component across the estate. The bound "never print or commit an account id" is restated in the
+   release form as: a CLIENT account identifier (an end client's account number at any custodian). That is the thing a saved run
+   output must never carry.
+2. **No redaction cell is cut.** A token at HEAD would change what 159 and 166 files of programs read and write.
+3. **No history question is put to Andrew.** The act listed for him in section 5, first bullet, is withdrawn. So is the proposal
+   of a commit-time check for this shape: a check that fired on 1,314 tracked files would be noise.
+4. **What stays from R38:** the runner redacts what it is told to. The release form's redaction list is checked against the
+   restated bound, so a CLIENT account number printed by a host run is caught there. One line in the next form edit.
+5. **Row Z-W28-S17** is closed by `3.0.0_SA_CVO~Z` on this re-ruling and the census, as not a hazard.
+
+**Not decided here, and not this project's:** whether the estate should carry master account ids in tracked files and S3 keys at
+all. That is the existing design across many pipelines. If Andrew wants it reviewed, it is a project of its own.

@@ -112,6 +112,14 @@ __headmove_audit() {
     # Resolved from THIS FILE's own location instead, which is cwd-independent by construction.
     here="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." 2>/dev/null && pwd)" || here=""
     ws="${HEADMOVE_WS:-$here}"
+    # NFRA_OPLGTW-Z-W28-S16 (2026-10-07): an agent harness defines these functions from a SHELL SNAPSHOT file, so
+    # BASH_SOURCE names the snapshot (under ~/.claude/shell-snapshots), not this file, and $here resolves to a
+    # directory with no org/. Measured on site Z: every agent shell, in the shared tree and in a linked worktree,
+    # printed NOT RECORDED. When the file-location answer fails its markers, resolve through the COMMON git dir: its
+    # parent is the main workspace for the shared tree and for every linked worktree of it.
+    if [ -z "$ws" ] || [ ! -d "$ws/org" ] || [ ! -f "$ws/.tools/git-hooks/headmove-guard.sh" ]; then
+        ws="$(cd "$(command git rev-parse --git-common-dir 2>/dev/null)/.." 2>/dev/null && pwd)" || ws=""
+    fi
     audit="${HEADMOVE_AUDIT_LOG:-$ws/org/git-author-override-audit.log}"
     # The marker binds $ws to the tree THIS FILE lives in. Belt-and-braces: the installer wires an
     # ABSOLUTE source path into ~/.bashrc, so BASH_SOURCE is absolute and $ws is already cwd-independent --
@@ -122,14 +130,14 @@ __headmove_audit() {
         # FAIL OPEN, LOUDLY -- per the CTO ruling in this file's header. The move still proceeds; what
         # is lost is the record, and a silently unrecorded override is the thing worth shouting about.
         echo "WARN: headmove-guard cannot resolve the ajb_workspace audit log -- THIS OVERRIDE IS NOT RECORDED." >&2
-        return 0
+        return 3   # not recorded; the FAILOPEN callers ignore it, the FORCE path refuses on it
     fi
     # Name the foreign tree when there is one. Same-repo lines keep their exact historical shape, so
     # nothing that reads this log has to change; a foreign override stops being indistinguishable.
     foreign=""
     [ -n "$root" ] && [ "$root" != "$ws" ] && foreign=" [repo: $root]"
     echo "$(date -u +%Y-%m-%dT%H%M%SZ) $1 $(__headmove_serial "$ws") $2$foreign" \
-        >> "$audit" || echo "WARN: headmove-guard failed to append to $audit -- override NOT recorded." >&2
+        >> "$audit" || { echo "WARN: headmove-guard failed to append to $audit -- override NOT recorded." >&2; return 3; }
 }
 
 # ---------------------------------------------------------------------------
@@ -242,7 +250,12 @@ __headmove_guard() {
     [ -z "$n" ] && n=0
 
     if [ -n "${FORCE_HEADMOVE:-${RESET_FORCE:-}}" ]; then
-        __headmove_audit "FORCE-HEADMOVE" "${old} -> ${target_desc} (${n} discarded)"
+        # An override that says it is logged and is not is worse than no override (1.0.0_SA_CTO~Z round-26 analysis
+        # R41, row NFRA_OPLGTW-Z-W28-S16): the forced move proceeds only when its audit line was written.
+        if ! __headmove_audit "FORCE-HEADMOVE" "${old} -> ${target_desc} (${n} discarded)"; then
+            echo "ABORTED: destructive ${verb} NOT performed -- FORCE_HEADMOVE was given but its audit record could not be written, and an unrecorded override is refused. Set HEADMOVE_WS to the ajb_workspace root and re-run." >&2
+            return 1
+        fi
         echo "WARN: destructive ${verb} ALLOWED via FORCE_HEADMOVE -- ${n} commit(s) discarded/rewritten; logged to org/git-author-override-audit.log" >&2
         return 0
     fi
