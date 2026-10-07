@@ -4154,3 +4154,31 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Filed by the worker; the fix stays inside the order's paths."
 }
 ```
+
+## MDPF_SECCLASS-S55 -- contract 0.7.0 puts three fixed_income/Cash rows of SC-e-50's held reclassification set outside the bound
+
+```json
+{
+  "id": "MDPF_SECCLASS-S55",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-07T13:43Z",
+  "one_line": "Contract 0.7.0 (SC-e-64, drained at 632d28efaa: Cash is a sub-class of cash only) puts 3 DIRECT rows of SC-e-50's held reclassification set OLD_LIST_RECLASSIFY_SET_V2_20261007.tsv outside the bound: CSHI, FIGXX and FISXX are planned fixed_income/Cash, so old_list_held_census_check.py set now reads ok=False (bound:CSHI, bound:FIGXX, bound:FISXX).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/old_list_held_census_check.py set at 632d28efaa: OLD-LIST-SET-V2 ok=False rows=10965 direct=5811 ai=2770 cash_planned=15 problems=['bound:CSHI', 'bound:FIGXX', 'bound:FISXX']",
+      "the set TSV rows: CSHI DIRECT fixed_income/Cash (Neos Enhanced Income 1-3 Month T-Bill ETF); FIGXX and FISXX DIRECT fixed_income/Cash (Fidelity money market funds)",
+      "the census leg of the same check still reads ok=True (live=10965 held=2655)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-50's set is graded against the contract bound (values_by_class); TO-SC-e50 was VALID at its drain under contract 0.6.0.",
+  "world_is": "The set predates the v0.14 cash ruling. Nothing is served: the reclassification write is an issuer act behind the e32/e50 pair, and neither half is signed. Ruling (issuer, inside DECOMP_R10): before that half goes to signature, the set is re-planned under contract 0.7.0. CSHI becomes cash/T-Bill, and FIGXX and FISXX become cash/Money Market. The check must then read ok=True.",
+  "notes": "A cross-cell effect of SC-e-64 on a round-9 artifact; no worker is owed an act. Filed on dell1."
+}
+```
