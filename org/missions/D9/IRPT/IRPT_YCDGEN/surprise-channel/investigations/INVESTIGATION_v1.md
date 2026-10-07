@@ -1981,3 +1981,29 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "INERT for this order (nothing committed). A worker or drain that runs the whole suite and commits with a broad path set would carry the rewritten wire files; the writer was inferred from the test name, not read."
 }
 ```
+
+## IRPT_YCDGEN-W5-S1 -- `bunx` is not on the worker shell PATH, so the order's `bunx tsc --noEmit` cannot run as written
+
+```json
+{
+  "id": "IRPT_YCDGEN-W5-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~5",
+  "surfaced_at": "2026-10-07T08:05:19Z",
+  "one_line": "bunx tsc --noEmit fails with 'bunx: No such file or directory' (rc 127) in the worktree shell where bun resolves; bun x tsc --noEmit ran instead and printed 0 errors before and after the edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-t-6 section 3: run bunx tsc --noEmit from the portal directory and state its error count before and after.",
+  "world_is": "With the bun directory from the spawn line on PATH, bun runs but bunx is absent (timeout: failed to run command 'bunx', rc 127). bun x tsc --noEmit from the portal directory exits 0 with 0 'error TS' lines both on the base source (HEAD files restored) and with the edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bunx tsc --noEmit output: failed to run command 'bunx': No such file or directory (rc 127)",
+      "bun x tsc --noEmit: rc 0, 0 error TS lines, base and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Substituted the equivalent bun x form; no criterion depends on tsc."
+}
+```
