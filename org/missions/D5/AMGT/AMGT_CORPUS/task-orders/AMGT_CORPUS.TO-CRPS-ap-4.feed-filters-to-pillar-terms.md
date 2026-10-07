@@ -58,6 +58,8 @@ under a native `<details data-feed-expand>`. A feed item carries no term field, 
 <paths>
 portal/src/pages/SecurityAnalysis/components/HeaderBrief.tsx
 portal/src/pages/SecurityAnalysis/components/SecurityOverlay.tsx
+portal/src/pages/SecurityAnalysis/tabs/ThesisTab.tsx
+portal/src/pages/SecurityAnalysis/dossierLocator.ts
 org/missions/D5/AMGT/AMGT_CORPUS/deliverables/0.9.0_WK_AMGT_CORPUS~5/AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.proof_of_spec.json
 org/missions/D5/AMGT/AMGT_CORPUS/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D5/AMGT/AMGT_CORPUS/task-orders/AMGT_CORPUS.TO-CRPS-ap-4.feed-filters-to-pillar-terms.md
@@ -71,6 +73,8 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md`, `portal/DESIG
   <criterion id="AC1" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" ap4 portal</invocation><expect>(?m)^ap4 build 1/1 control 1/1$</expect></criterion>
   <criterion id="AC2" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" ap3 portal</invocation><expect>(?m)^ap3 build 1/1 control 2/2$</expect></criterion>
   <criterion id="AC3" cell_refs="CRPS-ap-4" judgment="true"/>
+  <criterion id="AC4" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" rev portal</invocation><expect>(?m)^rev build 5/5 control 3/3$</expect></criterion>
+  <criterion id="AC5" cell_refs="CRPS-ap-4"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D5/AMGT/AMGT_CORPUS/deliverables/2.0.0_SA_COO~X/checks/round40/page_check.cjs" ap2 portal</invocation><expect>(?m)^ap2 build 1/1 control 1/1$</expect></criterion>
 </proof_of_spec>
 
 - AC1 (the real `FeedList`, rendered to static markup on four hand-built headlines and three terms): build -- one term block per
@@ -91,6 +95,41 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md`, `portal/DESIG
 4. Report ONCE: the change and why, AC1's output lines, the typecheck and harness lines, your portal and outer commit hashes, the
    portal branch name, and any row.
 
+## 6. AMENDMENT 1 (2026-10-07, the issuer's own; the CTO's review of candidate `636ce634`)
+
+The four page cells are built and merged into ONE portal candidate: branch `wk-AMGT_CORPUS-40-portal` at `636ce634` in the nested
+`portal/` repository of this worktree (ap-2 ThesisTab.tsx, ap-3 SecurityOverlay.tsx, ap-4 HeaderBrief.tsx, ap-5 ModelTab.tsx). That
+branch is your INHERITED STATE: build on top of it, on that branch. The CTO read the code and asks five amendments
+(`org/missions/D5/AMGT/AMGT_CORPUS/ledger/CTO_REVIEW_PORTAL_636ce634_ROUND40.md`, read it). `<paths>` above now also grants
+`tabs/ThesisTab.tsx` and one new file, `portal/src/pages/SecurityAnalysis/dossierLocator.ts`.
+
+**Do, and only this:**
+1. **Whole words.** `FeedList`'s term match (`HeaderBrief.tsx`, `title.toLowerCase().includes(needle)`) matches a term inside a
+   longer word: "AI" is in "raises" and "said". Match on WHOLE WORDS, case-insensitively: the term's own characters, bounded on
+   both sides by the start or end of the title or a character that is not a letter or a digit. A multi-word term ("pricing power")
+   still matches as a phrase. Escape the term before it enters any pattern.
+2. **One locator wording.** `ThesisTab.tsx` words a locator "Paragraph 12" or "Page 12"; `SecurityOverlay.tsx` prints ", locator
+   12". Make ONE helper in the new file `dossierLocator.ts`, used by both, and show the word "locator" to no reader. The producer
+   defines the locator (`lib/research/corpus/continuation.py`, lines 35-37: "paragraph index (docx) | page index (pdf) |
+   <sheet>!label[<index>] (xlsx)"): cite that line in the helper's comment. So: a report key ending `.docx` reads `Paragraph <n>`,
+   `.pdf` reads `Page <n>`, anything else reads `Location <n> in the report`. Show the served value as served (do not add one).
+   Import the helper by its relative path in both files.
+3. **The header cite sits behind a closed `<details>`.** In `DossierPositionLine`, each field's cite keeps its element with
+   `data-header-dossier-cite="<field>"`, but the passage is inside a native `<details>` that is closed at rest (summary in plain
+   words, for example "Where this comes from"), as the pillar's opener is. The passage is shown exactly as served.
+4. **One sentence.** The header line now reads "...last stated position: X. -- the research team's stated posture, not the
+   machine's." beside a "research team" badge that already says whose it is. Keep the badge, drop the trailing clause, and let the
+   sentence end once. No ". --" anywhere in the line.
+5. **The lost space.** `const PILLARS_HEADING ="The research team's thesis pillars"` in `ThesisTab.tsx`: put the space back.
+
+Everything else the four cells render stays. `PostureHeaderLine`, `ModelTab.tsx` and the no-terms feed are byte-unchanged.
+
+**Prove** AC1, AC2, AC4 and AC5 by their invocations in section 4 (AC4 is the review arm: `rev build 5/5 control 3/3`; AC5 holds
+the pillar opener). Also run `node "<the same page_check.cjs>" ap5 portal` and report its line. Then section 5 again: typecheck
+(read its exit code directly), `tabs.harness.cjs` and `posture.harness.cjs` last lines, the proof instance updated for AC4 and AC5
+(AC3 stays the judgment row), the checker after your final commit, and the status tag reading complete appended at the END of
+this file only if AC1, AC2, AC4 and AC5 pass. Report once, with the portal branch name and the full 40-character portal commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 7 + s.4 item 2. Base portal origin/DEV `ba391aff`: ap4 build 0/1 control 1/1. Queued behind ap-3 on slot ~5 (the mount line is in ap-3's file). Title match only: a feed item serves no term field. The Chatter axis half of FWD-18 is named NOT COVERED in the packet. Candidate to the CTO's render review.
@@ -100,3 +139,4 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md`, `portal/DESIG
 <slot>~5</slot>
 <fabric>site-z</fabric>
 <status>complete</status>
+<status>in_progress</status>
