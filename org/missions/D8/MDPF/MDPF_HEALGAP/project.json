@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "EXECUTING",
   "created": "2026-08-31",
   "registered_under_tree": "2026-10-07",
   "placement": "DELL1",
@@ -37,12 +37,24 @@
       "author": "1.0.0_SA_CTO~DELL1"
     }
   ],
-  "decompositions": [],
-  "decomposition_lineage": [],
+  "decompositions": [
+    {
+      "path": "org/missions/D8/MDPF/MDPF_HEALGAP/decompositions/MDPF_HEALGAP_DECOMP.md",
+      "round": 1,
+      "status": "ISSUED"
+    }
+  ],
+  "decomposition_lineage": [
+    {
+      "round": 1,
+      "date": "2026-10-07",
+      "author": "2.0.0_SA_COO~G1"
+    }
+  ],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10; laptop ruling 106047 (1))",
     "cro": "4.0.0_SA_CRO~DELL1 (L1)",
-    "coo": "2.0.0_SA_COO~G1 (dell1), awarded and held unseated by 0.0.0_AB_MSTR~DELL1 until the PRD is ADMITTED"
+    "coo": "2.0.0_SA_COO~G1 (dell1), seated by 0.0.0_AB_MSTR~DELL1 msg 29"
   },
   "placement_ruling": "Placed on dell1 by laptop 1.0.0_SA_CTO msg 106053 (org/projects/MDPF_HEALGAP.json @5e3b7edf26), on 1.0.0_SA_CTO~DELL1's YES with three conditions (own COO lane; no file shared with an open MDPF_SECCLASS cell; FULL canonical flow)."
 }
