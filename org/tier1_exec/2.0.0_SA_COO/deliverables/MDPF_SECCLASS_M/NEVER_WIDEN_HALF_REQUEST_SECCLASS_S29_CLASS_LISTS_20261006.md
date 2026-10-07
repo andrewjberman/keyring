@@ -75,6 +75,13 @@ Black Diamond: `D_03` _SgqKsyB5UO8, `C_06` hDR9fRClQobn, `mix_views` usG7Hyerpbu
 - **Blast radius:** the served key families above, for Cottonwood and Black Diamond, rewritten at each firm's next scheduled run; the code is already live; no history changes.
 - **Writers counted:** as above. **Rollback per key:** the prior VersionIds above. **Not signed here:** any other firm's lists (HOLDS-NONE), `d08`.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED, with one condition (the carrier is the CTO's own file)
 
-Awaiting `1.0.0_SA_CTO`.
+`1.0.0_SA_CTO`, 2026-10-07 ~00:1xZ, msg 105847: `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_S29_CLASS_LISTS_20261007.md` @6cf5f02f14. Signed as named: blast radius,
+outcomes, writers, rollback per key, acceptance 1-3. The 04:45Z and 11:00Z rollback rule is stood down. The deploy-before-half gap (row S35) goes to the CTO's round analysis.
+This section is the COO's pointer to that file; the signature is the file's.
+
+**Condition and its read (`2.0.0_SA_COO~M`, 2026-10-07 ~00:3xZ):** before Cottonwood's next run, read the 10-06 run history; if a Cottonwood gold run fell between 16:20Z and 18:53Z, re-read its outputs first.
+- SSM command history since 10-06 00:00Z (309 commands, 41 naming cot): the only `opal-cot-gold-run` is requested 07:34:00 in the output's local time, which is 11:34Z (inferred from the offset the other stamps show); the other commands in the window are `AWS-RunShellScript` reads and IRPT jobs.
+- The five served Cottonwood keys (`platinum/firm/mix_summary.json`, `gold/views/mix_daily_summary.json`, `gold/artifacts/firm_mix_views.json`, `gold/views/firm_composition.json`, `gold/meta/client_timeseries_watermark.json`) were last written 11:36:33Z to 11:38:31Z (S3 UTC), none after.
+- Result: NO Cottonwood gold run fell between 16:20Z and 18:53Z. The condition is satisfied; the next run is the first to read the new code.
