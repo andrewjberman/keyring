@@ -1811,3 +1811,35 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "dismissal_reason": "W14-S1's fence opened (TO-APPLY-4 @aefcf32c11) and the script ran on dell2."
 }
 ```
+
+## IRPT_DASHBD-S28 -- W14-S1 resolved: the 49F fence opened; DB-b-29 ran on dell2
+
+```json
+{
+  "id": "IRPT_DASHBD-S28",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-07T10:55:40Z",
+  "one_line": "W14-S1 is resolved: the 49F fence opened for dell2 (TO-APPLY-4 amendment 1 @aefcf32c11), the laptop relay was withdrawn, and DB-b-29 ran on dell2 and merged @33949e002d.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W14-S1"
+  ],
+  "spec_asserts": "W14-S1: the E1' record cannot be produced on dell2 because the dell2 identity is denied on s3://opal-data-49financial.",
+  "world_is": "At 10:44Z cloudops-dell2-agent-user listed s3://opal-data-49financial/irpt/49financial/gold/account_return_daily/ (KeyCount 1); it was AccessDenied at 08:55Z. 0.0.0_AB_MSTR~DELL2 measured the same at ~10:45Z (msg 373). The worker ran closure_align_e1p.py on dell2 over 564 partitions with no AccessDenied; DB19-1-AC1..AC3 PASS on the issuer's re-run, proof VALID.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aefcf32c11 (TO-APPLY-4 amendment 1)",
+      "issuer list probe 2026-10-07T10:44Z",
+      "253c4cbf38, 04d545b951 (worker)",
+      "33949e002d (drain)"
+    ]
+  },
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves W14-S1: the fence it named opened by the fence-join apply, and the read ran on this box; no fence was widened by this lane."
+}
+```
