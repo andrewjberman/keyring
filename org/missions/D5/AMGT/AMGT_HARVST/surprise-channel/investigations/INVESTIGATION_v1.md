@@ -7343,6 +7343,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W105-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~105",
+      "surfaced_at": "2026-10-07T11:43:30Z",
+      "one_line": "Today's gold securities carry META_US_Equity with the alias set [\"META_US_Equity\"] (the security_key as the company name) and exact ticker [\"META\"], so no legal-name alias such as Meta Platforms is in the served set.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Order HVST-bb-1 item 1: baseline = the security's alias set as gold has it today; it names the brand as absent from that set and reads the pair as NEW when the security had 0 mentions under the served aliases.",
+      "world_is": "bb1_census.out: BASELINE META_US_Equity aliases=[\"META_US_Equity\"] exact=[\"META\"]; BASELINE LLY_US_Equity aliases=[\"Eli Lilly\"] exact=[\"LLY\"]; securities from universe_securities.build() at pool:universe/v1/2026-10-06.json, 242 securities. So Meta's census NEW pairs (672 of 935 articles) count articles that say Meta Platforms or Facebook as NEW pairs, since the baseline cannot see those names. Not read: why the universe name for META is empty or the key.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~105/bb1_census.out (BASELINE lines)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
