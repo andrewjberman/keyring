@@ -47,6 +47,9 @@ RUNNER = ROOT / "infra/aws/lambda/v2_portal/yang_pipeline/classify-residual-mode
 COLS = ["old_key", "shared_key", "held", "route", "asset_class", "sub_asset_class", "clean_name"]
 SIX = frozenset({"cash", "fixed_income", "equity", "structured", "alternatives", "commodities"})
 ROUTES = ("PRESENT", "DIRECT", "AI", "UNPLACED-KEY")
+CONTRACT = ROOT / "org/standards/MDPF_SECCLASS_CONTRACT.json"
+# Andrew-direct 2026-10-06 00:03Z: up to 8,495 old-table rows to the model; the run refuses a larger AI key set.
+VENDOR_KEY_CEILING = 8495
 REGION = "us-east-1"
 TABLE = "etf-classifications"
 RUN_UPDATED_BY = "mdpf-secclass-old-list-reclassify"
@@ -149,6 +152,18 @@ def six_vocab(items, TableVocabulary):
     return TableVocabulary(asset_classes=ac, sub_asset_classes=subs)
 
 
+def contract_vocab(TableVocabulary):
+    """The bound (ruling 2.5, R12): the contract's closed sub_asset_class list per class, the six classes only -- not the values
+    the live table happens to hold (the table still carries legacy fixed_income/Cash rows)."""
+    c = json.loads(CONTRACT.read_text(encoding="utf-8"))
+    closed = {k: set(v) for k, v in c["fields"]["sub_asset_class"]["values_by_class"].items() if k in SIX}
+    return TableVocabulary(asset_classes=set(closed), sub_asset_classes=closed), c.get("contract_version")
+
+
+def outside(vocab, ac, sac):
+    return ac not in vocab.asset_classes or not sac or sac not in vocab.sub_asset_classes.get(ac, set())
+
+
 def plan(rows, existing, vocab):
     """Split the set into what a write would do. Returns a dict of ordered lists (held first, as the set is ordered)."""
     present = [r for r in rows if r["route"] == "PRESENT"]
@@ -165,7 +180,7 @@ def plan(rows, existing, vocab):
         dr = next((m for m in members if m["route"] == "DIRECT"), None)
         if dr is not None:
             ac, sac = dr["asset_class"], dr["sub_asset_class"]
-            if ac not in SIX or ac not in vocab.asset_classes or (sac and sac not in vocab.sub_asset_classes.get(ac, set())):
+            if ac not in SIX or outside(vocab, ac, sac):
                 off_vocab.append(key)
                 continue
             direct.append(dr)
@@ -206,7 +221,7 @@ def do_dry_run(rows, table):
     send = CountingSend()
     items = scan_live(guard)
     existing = {str(i["ticker"]) for i in items}
-    vocab = six_vocab(items, TableVocabulary)
+    vocab, cver = contract_vocab(TableVocabulary)
     p = plan(rows, existing, vocab)
     pairs = [(r["shared_key"], r["clean_name"] or None) for r in p["ai"]]
     rep = runner.run(pairs, vocab=vocab, existing=existing, table=None, s3=None, send=send, api_key=None,
@@ -214,7 +229,8 @@ def do_dry_run(rows, table):
     by = summary(rows)
     collapsed = sum(len(m) - 1 for m in p["group"].values())
     print(f"INFO set_rows={len(rows)} live_rows={len(existing)} direct_keys={len(p['direct'])} ai_keys={len(p['ai'])} "
-          f"collapsed_duplicate_keys={collapsed} now_present={len(p['now_present'])} off_vocab={len(p['off_vocab'])}")
+          f"collapsed_duplicate_keys={collapsed} now_present={len(p['now_present'])} off_vocab={len(p['off_vocab'])} "
+          f"bound=contract {cver} vendor_ceiling={VENDOR_KEY_CEILING}")
     print("INFO " + runner.summary_line(rep))
     bad = []
     if send.calls != 0 or rep["model_calls"] != 0:
@@ -223,6 +239,10 @@ def do_dry_run(rows, table):
         bad.append(f"puts={guard.write_attempts}")
     if rep["would_land"] != 0:
         bad.append(f"would_land={rep['would_land']}")
+    if p["off_vocab"]:
+        bad.append(f"off_vocab={len(p['off_vocab'])}:{p['off_vocab'][:5]}")
+    if len(p["ai"]) > VENDOR_KEY_CEILING:
+        bad.append(f"ai_keys={len(p['ai'])}>ceiling")
     if rep["to_model"] != len(p["ai"]):
         bad.append(f"to_model={rep['to_model']}!=ai_keys={len(p['ai'])}")
     if bad:
@@ -248,7 +268,10 @@ def do_write(rows, table, s3, half, snapshot, chunk, workers, send=None, api_key
     from etf_classification_scheduled import TableVocabulary, write
     items = scan_live(table)
     existing = {str(i["ticker"]) for i in items}
-    vocab = six_vocab(items, TableVocabulary)
+    vocab, _cver = contract_vocab(TableVocabulary)
+    pre = plan(rows, existing, vocab)
+    if pre["off_vocab"] or len(pre["ai"]) > VENDOR_KEY_CEILING:
+        raise SystemExit(f"BLOCKED: off_vocab={len(pre['off_vocab'])} ai_keys={len(pre['ai'])} (ceiling {VENDOR_KEY_CEILING})")
     snap.write_text(json.dumps({"taken_at": datetime.now(timezone.utc).isoformat(), "table": TABLE,
                                 "run_updated_by": [RUN_UPDATED_BY, MODEL_UPDATED_BY],
                                 "rows": len(existing), "keys": sorted(existing)}), encoding="utf-8")
@@ -278,7 +301,13 @@ def do_write(rows, table, s3, half, snapshot, chunk, workers, send=None, api_key
         tot["refused"] += rep["refused_by_put"]
         tot["calls"] += rep["model_calls"]
         existing |= {r["ticker"] for r in rep["rows"]}
-        print(f"AI chunk {i}-{i + chunk}: " + runner.summary_line(rep))
+        sent = len(pairs[i:i + chunk])
+        landed_outside = [r["ticker"] for r in rep["rows"] if outside(vocab, r.get("asset_class"), r.get("sub_asset_class"))]
+        print(f"AI chunk {i}-{i + chunk}: keys_sent={sent} model_calls={rep['model_calls']} "
+              f"landed_outside_contract={len(landed_outside)} " + runner.summary_line(rep), flush=True)
+        if landed_outside:
+            raise SystemExit(f"STOPPED: chunk {i} landed {len(landed_outside)} rows outside the contract: {landed_outside[:5]}; "
+                             f"roll back this run with --rollback")
     print(f"RECLASSIFY-WRITE direct_written={written} ai_to_model={tot['to_model']} ai_written={tot['written']} "
           f"ai_refused={tot['refused']} model_calls={tot['calls']} snapshot={snap}")
     return 0
