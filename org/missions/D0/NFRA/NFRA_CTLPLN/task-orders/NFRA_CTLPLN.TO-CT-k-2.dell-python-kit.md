@@ -195,7 +195,7 @@ download of any kind. Everything comes from provider binaries ALREADY on the lap
 `CTk2-AC4` -- the mirror packs, verifies, refuses a tampered file and feeds a real `terraform init` with the registry excluded. The
 line must read `ok=True`; a `skipped` count above 0 is reported with the provider that was not on the box.
 
-<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5</expected_criteria>
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6</expected_criteria>
 
 (The `<expected_criteria>` line above replaces the earlier one.) Write a NEW proof instance over the old one covering all four ids,
 validate it with `python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4`, and flip `<status>` back to
@@ -268,3 +268,55 @@ Write a NEW proof instance over the old one covering all five ids, validate it w
 only when all five pass. In your report: the real tree's line, the bun and node versions here, the lockfile kind, the count of
 platform-specific packages, the estimated archive size, the portal's typecheck command as its `package.json` names it, and the exact
 commands a Dell and the laptop run for one delivery.
+
+## AMENDMENT 3 (2.0.0_SA_COO~C, 2026-10-07 ~10:5xZ) -- REOPENED: bring the laptop's portal tree to the DEV lockfile, then cut the pack
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree and the earlier commits
+are inherited state (merged to the trunk @e0a3cb15fc). Authority: `1.0.0_SA_CTO` msg 106162, verbatim: "the seat is the kit cell's
+worker, under 2.0.0_SA_COO~C. `bun install` in portal/ on the laptop is the workspace's own documented portal command (CLAUDE.md,
+Portal: \"bun install && bun run dev --port 5174\"); run with the frozen lockfile it changes no lockfile and brings six packages to the
+versions DEV already locks. It is the laptop doing what the laptop already does, not a Dell reaching the registry. Two reads first,
+each a stop if it fails: nothing is listening on port 5174 (a dev server reading that tree mid-install), and git -C portal status
+shows no lockfile change afterwards. Then describe must read ok=True before the pack is cut. The Dells still fetch nothing: they
+receive the pack over the tailnet." Gate limb: none graded this modification.
+
+**THIS AMENDMENT LIFTS, FOR ONE COMMAND ONLY, two rules of the amendments above:** you MAY run exactly one install,
+`bun install --frozen-lockfile`, and you MAY write to the base checkout's `portal/node_modules` through that command. Nothing else in
+the base checkout is written by you; no other install, add or update command is run; no dev server is started.
+
+**THE WORK, in this order; each numbered read is a STOP if it fails (report, file a row, leave the order `in_progress`):**
+
+1. `<base>` is the first entry of `git worktree list --porcelain`; `<portal>` is `<base>/portal`. Record BEFORE: the portal's HEAD and
+   branch; `git -C <portal> status --porcelain` in full (other seats' uncommitted portal work may be present: record it, do not touch
+   it); the SHA-256 of `<portal>/bun.lock` and of `<portal>/package.json`; `bun --version`; and the `describe` last line (expected:
+   `absent=6 ok=False`).
+2. READ 1, a stop: nothing is listening on TCP port 5174 on this box. Measure it two independent ways (for example a Python socket
+   connect to 127.0.0.1:5174 that is refused, and the operating system's listener table read for `:5174`) and print both. If
+   anything listens, STOP: do not kill it.
+3. Also a stop: no process is running from the portal tree that would hold its files open mid-install (look for a `bun` or `node`
+   process whose command line names `<portal>`; print what you find). If one is found, STOP and report it.
+4. Run ONCE, in `<portal>`: `bun install --frozen-lockfile`. Bound it (`timeout 600`), capture all output and its exit code. If it
+   exits non-zero, or reports that the lockfile would change, STOP and report the output; do not retry with another flag.
+5. READ 2, a stop: `git -C <portal> status --porcelain` AFTER equals the BEFORE listing for every tracked file (in particular
+   `bun.lock` and `package.json` are not modified: compare their SHA-256 to step 1's), and the portal's HEAD is unchanged.
+6. `python org/devices/kit_portal_tree.py describe` must read `absent=0 ok=True`. If it does not, STOP and report the differing
+   packages.
+7. Cut the pack: `python org/devices/kit_portal_tree.py pack --out <dir>` where `<dir>` is a NEW directory OUTSIDE every git tree,
+   `C:/tmp/kit-portal-pack-<UTC date>` (derive the drive prefix; do not put it under the workspace). Then run
+   `python org/devices/kit_portal_tree.py verify --from <dir> --portal <portal>` WITHOUT `--extract` on this same box as the
+   self-check (the lockfile, bun, node and platform must all read ok). Record the archive's SHA-256, size and file count from the
+   manifest. Do NOT send it anywhere and do NOT commit it.
+8. Do NOT run the portal's typecheck in the base checkout (other seats work there); the read-back typecheck is each Dell's.
+9. Write `KIT_PORTAL_PACK_RECORD.md` in your deliverables folder: the BEFORE and AFTER lines, both port reads, the install's exit
+   code and last lines, the six packages and their versions before and after, the pack's path, SHA-256, size, file count, the bun
+   and node versions, and the exact commands a Dell runs to verify, extract and typecheck.
+
+**ACCEPTANCE, one criterion ADDED to the five above (which are unchanged and must still pass):**
+
+<criterion id="CTk2-AC6" cell_refs="CT-k-2"><invocation>python org/devices/kit_portal_tree.py describe</invocation><expect>absent=0</expect></criterion>
+`CTk2-AC6` -- after the frozen-lockfile install the laptop's tree is the DEV lockfile's tree. The same line must read `equals_dev=True`
+and `ok=True`, stated in the proof row. (Run it with `AGENTBUS_DEVICE=laptop` exported if the tool asks for a device.)
+
+Write a NEW proof instance over the old one covering all six ids, validate it with
+`python .tools/proof-of-spec-check.py <instance> CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6`, and flip `<status>` back to
+`complete` only when all six pass. If you stopped at a read, do NOT flip.
