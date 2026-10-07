@@ -63,8 +63,8 @@ CLASS_BY_PATH = {
     ".tools/tests/test_fabric_enum_dell.py:63": FIXTURE,
     ".tools/tests/test_fabric_readers_dell.py:7": DISPLAY,
     ".tools/tests/test_fabric_readers_dell.py:10": DISPLAY,
-    ".tools/tests/test_fabric_readers_dell.py:80": FIXTURE,
-    ".tools/tests/test_fabric_readers_dell.py:133": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:90": FIXTURE,
+    ".tools/tests/test_fabric_readers_dell.py:143": FIXTURE,
     # the allowed sets
     ".tools/to-pipeline-gate.py": DISPLAY,
     ".tools/to-pipeline-gate.py:93": ENUM_SOURCE,

@@ -1425,3 +1425,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Two copies of the old id grammar remain outside the grant. proof-of-spec-check.py's surprises limb would refuse a Dell worker's proof instance that cites its own D1- row (the worker could not flip its order complete); surprise-watch.sh would not count a Dell row. Neither edited here. The gate's own ID_RE and both row schemas are current."
 }
 ```
+
+## NFRA_CTLPLN-W9-S4 -- a fourth live reader of the old id grammar outside the order's grant: the IRPT_YCDGEN stop-row filer
+
+```json
+{
+  "id": "NFRA_CTLPLN-W9-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~9",
+  "surfaced_at": "2026-10-07T10:32:46Z",
+  "one_line": "The whole-repo id-grammar sweep finds a fourth live reader of the old grammar outside the order's grant: infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py ID_PATTERN refuses a Dell row id.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/research/file_stop_row.py:13 at 75b3d75714: ID_PATTERN = re.compile(r\"^[A-Z0-9_]+-(Z-)?(W[0-9]+-|C-)?S[0-9]+$\") with the comment 'investigation_item.schema.json id'; section() (line 19) raises ROW_ID_NOT_ADMITTED for any id the pattern does not match, so section(row, 'X_PRJ-D1-S1') is refused although the gate, both row schemas, the proof checker and the watcher now admit it",
+      "test_fabric_readers_dell.py sweep() at this worktree, 2026-10-07: ID-GRAMMAR-SWEEP files_scanned=57075 hits=60 fixed_here=8 gate_derived=2 record=49 live_outside_grant=1; the one live hit is the line above; a second, independent census (every non-record code file whose regex holds the project class [A-Z0-9_]+- , 6 files) found no other reader"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-6 AMENDMENT 4 item 3: the sweep's zero is the condition for landing; a LIVE-READER-OUTSIDE-GRANT is listed, not edited, and carried by old_grammar_left.",
+  "world_is": "One code file outside the grant still decides on the old two-fabric grammar. It is the IRPT_YCDGEN stop-row filer (prints a channel section for a runner stop row); a Dell-fabric stop row cannot be filed through it. Not edited here (path outside the order's grant); old_grammar_left carries 1, so CT4d6-AC1 reads old_grammar_left=1 ok=False until the issuer brings the file to the gate's grammar (or rules it out of scope) and the sweep reads zero."
+}
+```

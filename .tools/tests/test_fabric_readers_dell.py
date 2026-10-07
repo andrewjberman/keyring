@@ -13,17 +13,25 @@ admitted; then the REFERENCE positions (AMENDMENT 3): an investigation row whose
 lower-case one refused, a remediation row whose `disarms` names a D2-W3- id admitted and a malformed one refused. A verdict reads
 only the complaints the schema limb raises (schema violation / ratified enum), because the gate's other
 limbs (register agreement, owner, worker suffix) are graded by the id arm and by the gate's own --self-test.
+Readers arm (6, AMENDMENT 4): the two LAST id readers run through their OWN code -- `.tools/proof-of-spec-check.py` SURPRISE_ID_RE
+(imported as compiled) and `org/surprise_channel/surprise-watch.sh` ID_RE (the line is read out of the script and run through
+`grep -E`, the tool the script evaluates it with): X_PRJ-D1-S1, -D2-W3-S2, -Z-S4, -W9-S1 accepted by both; -d1-S1 and -W-S1 refused
+by both. A BRUTE-FORCE equivalence table (every id built from two infix slots drawn from 20 tokens) compares the checker, the
+watcher and the gate's ID_RE, and must agree on every id. Sweep (AMENDMENT 4): `ID-GRAMMAR-SWEEP` over every tracked file for the old
+grammar's signature and for a hand-written row-id pattern; `old_grammar_left` is the count of live readers outside the grant.
 Schema arm (5): one PRD header instance per fabric value validated against org/standards/PRD_HEADER.schema.json
 (4 admitted) and one with dell3 (refused). Enum arm: the schema's fabric enum equals FABRIC_ENUM read from the source of
 .tools/to-pipeline-gate.py. Gate arm: `python .tools/surprise-row-gate.py --self-test` result line.
 
-LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 enum_equal=<True|False> gate_selftest=<ok|fail> ok=<True|False>
+LAST line: FABRIC-READERS ids_ok=<a>/9 schema_ok=<b>/5 rowschema_ok=<c>/12 readers_ok=<r>/6 old_grammar_left=<d> enum_equal=<True|False>
+           gate_selftest=<ok|fail> ok=<True|False>
 """
 import ast
 import importlib.util
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -34,6 +42,8 @@ TOGATE = os.path.join(ROOT, ".tools", "to-pipeline-gate.py")
 REGISTER = os.path.join(ROOT, "org", "devices", "DEVICES.json")
 SCHEMA = os.path.join(ROOT, "org", "standards", "PRD_HEADER.schema.json")
 ROW_SCHEMAS = os.path.join(ROOT, "org", "surprise_channel", "schemas")
+CHECKER = os.path.join(ROOT, ".tools", "proof-of-spec-check.py")
+WATCHER = os.path.join(ROOT, "org", "surprise_channel", "surprise-watch.sh")
 
 
 def load_gate():
@@ -154,6 +164,129 @@ def rowschema_cases(gate):
     return out
 
 
+def load_module(name, path):
+    spec = importlib.util.spec_from_file_location(name, path)
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules[name] = mod
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def watcher_regex():
+    """The watcher's ID_RE exactly as the script assigns it (the single-quoted value), read out of the script."""
+    with open(WATCHER, encoding="utf-8") as fh:
+        for line in fh:
+            if line.startswith("ID_RE='") and line.rstrip().endswith("'"):
+                return line.rstrip()[len("ID_RE='"):-1]
+    return None
+
+
+def watcher_accepts(ids):
+    """The set of ids the watcher's ID_RE counts, run through `grep -E` (the script's own evaluator), one row line per id."""
+    grep = shutil.which("grep")
+    rx = watcher_regex()
+    if grep is None or rx is None:
+        return None
+    lines = "".join('  "id": "%s",\n' % i for i in ids)
+    with tempfile.TemporaryDirectory() as tmp:   # the pattern travels in a file: a native-Windows argv mangles its double quotes
+        pf = os.path.join(tmp, "id_re.txt")
+        with open(pf, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(rx + "\n")
+        cp = subprocess.run([grep, "-E", "-f", pf], input=lines, capture_output=True, text=True, timeout=60, encoding="utf-8")
+    return {ln.split('"')[3] for ln in cp.stdout.splitlines() if ln.count('"') >= 4}
+
+
+def readers_cases(gate):
+    """Six named cases through both readers' own code, then a brute-force equivalence of checker, watcher and the gate's ID_RE."""
+    checker = load_module("proof_of_spec_check_under_test", CHECKER)
+
+    def checker_accepts(rid):
+        m = checker.SURPRISE_ID_RE.match(rid + ": a surprise entry")
+        return bool(m) and m.group(1) == rid
+
+    named = [("X_PRJ-D1-S1", True), ("X_PRJ-D2-W3-S2", True), ("X_PRJ-Z-S4", True), ("X_PRJ-W9-S1", True),
+             ("X_PRJ-d1-S1", False), ("X_PRJ-W-S1", False)]
+    got_w = watcher_accepts([i for i, _w in named])
+    out = []
+    for rid, want in named:
+        c, w = checker_accepts(rid), (None if got_w is None else rid in got_w)
+        out.append(("%s checker=%s watcher=%s (want %s)" % (rid, c, w, want), c == want and w == want, ""))
+    # brute force: two infix slots over 20 tokens; the gate's ID_RE is the reference language
+    toks = ["", "W-", "W1-", "W12-", "C-", "C1-", "D1-", "D2-", "D-", "D12-", "Z-", "Z9-", "X-", "d1-", "WW-", "1-", "W0-", "C0-",
+            "B7-", "V-"]
+    ids = sorted({"X_PRJ-%s%sS%s" % (a, b, k) for a in toks for b in toks for k in ("1", "12", "")}
+                 | {"X_PRJ-W2S1", "X_PRJ-S1x", "X_PRJ-S5"})
+    ref = {i for i in ids if gate.ID_RE.match(i)}
+    chk = {i for i in ids if checker_accepts(i)}
+    wat = watcher_accepts(ids)
+    agree = wat is not None and ref == chk == wat
+    print("equivalence: %d ids, gate ID_RE accepts %d, checker accepts %d, watcher (grep -E) accepts %s -> %s"
+          % (len(ids), len(ref), len(chk), "UNREADABLE" if wat is None else len(wat), "AGREE" if agree else "DISAGREE"))
+    if not agree and wat is not None:
+        print("  checker differs:", sorted(ref ^ chk)[:6], "watcher differs:", sorted(ref ^ wat)[:6])
+    return out, agree
+
+
+RECORD_PREFIXES = ("org/missions/", "org/tier1_exec/", "org/tier2_senior/", "org/audit/", "daily_reports/", "docs/", "org/ref/",
+                   "org/surprise_channel/ETFS_INGEST/")
+RECORD_EXT = (".md", ".html", ".log", ".txt")
+FIXED_HERE = {
+    ".tools/proof-of-spec-check.py": "SURPRISE_ID_RE now the gate's grammar (this amendment)",
+    "org/surprise_channel/surprise-watch.sh": "ID_RE now the gate's grammar by alternation, and the comment above it (this amendment)",
+    "org/surprise_channel/schemas/investigation_item.schema.json": "id and adjudicates patterns at the gate's grammar (amendments 2-3)",
+    "org/surprise_channel/schemas/remediation_row.schema.json": "id and disarms patterns at the gate's grammar (amendments 2-3)",
+    ".tools/tests/test_fabric_readers_dell.py": "this test: its signatures are composed, so only data in it can hit",
+}
+GATE_DERIVED = {".tools/surprise-row-gate.py": "the reference grammar's own file: decides by ID_RE (line 108); a hit is prose in a "
+                                               "docstring or a refusal message"}
+
+
+def sweep():
+    """Every tracked text file (<= 2 MB) for the OLD grammar's literal signature and for a hand-written row-id regex holding the
+    seat-number pattern beside the worker-number pattern. Prints each hit with its class; returns (last line, live count)."""
+    sig_text = "(Z" + "-)" + "?"   # composed, so this file does not carry the signature on one line
+    sig_old = re.compile(re.escape(sig_text))
+    seat = re.compile(r"S(?:\[0-9\]|\\d)\+")
+    worker = re.compile(r"W(?:\[0-9\]|\\d)\+")
+    names = subprocess.run(["git", "ls-files", "-z"], cwd=ROOT, capture_output=True, timeout=110).stdout.split(b"\0")
+    scanned, hits = 0, []
+    for raw in names:
+        if not raw:
+            continue
+        rel = raw.decode("utf-8", "replace")
+        try:
+            if os.path.getsize(os.path.join(ROOT, rel)) > 2 * 1024 * 1024:
+                continue
+            with open(os.path.join(ROOT, rel), "rb") as fh:
+                data = fh.read()
+        except OSError:
+            continue
+        if b"\0" in data[:8192]:
+            continue
+        scanned += 1
+        if sig_text.encode() not in data and b"[0-9]+" not in data and b"\\d+" not in data:
+            continue   # cheap byte prefilter: no signature fragment anywhere in the file
+        for n, ln in enumerate(data.decode("utf-8", "replace").splitlines(), 1):
+            if sig_old.search(ln) or (seat.search(ln) and worker.search(ln)):
+                hits.append((rel, n))
+    cls = {"FIXED-HERE": 0, "GATE-DERIVED": 0, "RECORD": 0, "LIVE-READER-OUTSIDE-GRANT": 0}
+    for rel, n in hits:
+        if rel in FIXED_HERE:
+            c, why = "FIXED-HERE", FIXED_HERE[rel]
+        elif rel in GATE_DERIVED:
+            c, why = "GATE-DERIVED", GATE_DERIVED[rel]
+        elif rel.startswith(RECORD_PREFIXES) or rel.endswith(RECORD_EXT):
+            c, why = "RECORD", "a document, log, deliverable, task order or archived channel file quoting the pattern as history"
+        else:
+            c, why = "LIVE-READER-OUTSIDE-GRANT", "code outside the grant still deciding on the old grammar"
+        cls[c] += 1
+        print("  hit %s:%d  %s  %s" % (rel, n, c, why))
+    d = cls["LIVE-READER-OUTSIDE-GRANT"]
+    last = ("ID-GRAMMAR-SWEEP files_scanned=%d hits=%d fixed_here=%d gate_derived=%d record=%d live_outside_grant=%d ok=%s"
+            % (scanned, len(hits), cls["FIXED-HERE"], cls["GATE-DERIVED"], cls["RECORD"], d, d == 0))
+    return last, d
+
+
 def main():
     gate = load_gate()
     enum = enum_from_source()
@@ -174,6 +307,11 @@ def main():
     rows = rowschema_cases(gate)
     for label, ok, detail in rows:
         print("%s  rowschema: %s | %s" % ("PASS" if ok else "FAIL", label, detail))
+    rd, rd_agree = readers_cases(gate)
+    for label, ok, _detail in rd:
+        print("%s  readers: %s" % ("PASS" if ok else "FAIL", label))
+    sweep_last, left = sweep()
+    print(sweep_last)
     enum_equal = enum is not None and sch_enum == enum
     print("schema enum %r == FABRIC_ENUM %r -> %s" % (sch_enum, enum, enum_equal))
     cp = subprocess.run([sys.executable, GATE, "--self-test"], cwd=ROOT, capture_output=True, text=True, timeout=110,
@@ -184,9 +322,10 @@ def main():
     a = sum(1 for _l, ok, _d in ids if ok)
     b = sum(1 for _l, ok, _d in sch if ok)
     c = sum(1 for _l, ok, _d in rows if ok)
-    ok = a == 9 and b == 5 and c == 12 and enum_equal and selftest == "ok"
-    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/12 enum_equal=%s gate_selftest=%s ok=%s"
-          % (a, b, c, enum_equal, selftest, ok))
+    r = sum(1 for _l, ok, _d in rd if ok)
+    ok = a == 9 and b == 5 and c == 12 and r == 6 and rd_agree and left == 0 and enum_equal and selftest == "ok"
+    print("FABRIC-READERS ids_ok=%d/9 schema_ok=%d/5 rowschema_ok=%d/12 readers_ok=%d/6 old_grammar_left=%d enum_equal=%s "
+          "gate_selftest=%s ok=%s" % (a, b, c, r, left, enum_equal, selftest, ok))
     return 0 if ok else 1
 
 
