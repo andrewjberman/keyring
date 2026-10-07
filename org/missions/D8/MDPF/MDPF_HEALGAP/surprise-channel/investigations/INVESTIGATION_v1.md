@@ -274,6 +274,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     },
     "spec_asserts": "The FWD-1 exercise half (CTO_HALF_MDPF_HEALGAP_FWD1_EXERCISE_20261008) sizes the induced state at about 25 minutes.",
     "world_is": "The input was set at 17:40Z for a 06:00Z fire and is restored at 06:20Z, so the window is about 12.5 hours, across a whole evening of other applies on a shared root. The only guard is the laptop's time-boxed notice. Disarm: G1 restores the input at 06:20Z and reads the target back; the notice expires then."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-07T20:26:00Z",
+    "one_line": "Disarms MDPF_HEALGAP-D1-S1 (disarm owner 2.0.0_SA_COO~G1): the ~12.5h induced-input window is guarded by the laptop CTO's CROSS-BOX DEPLOY NOTICE until 06:20Z, ended by the 06:05-06:20Z restore (owner ~F at 06:03Z, this seat armed at 06:10Z), and the HG-d3 half now states the true window.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "laptop 1.0.0_SA_CTO msg 106554 (relay 0.0.0_AB_MSTR~DELL1 msg 628): no untargeted apply of infra/aws/terraform/opal-assets until 06:20Z 2026-10-08; a targeted plan must not name aws_cloudwatch_event_target.cot_rebalancer_runner_daily",
+        "half corrected @5c14dbcb51 (17:40:36Z to the 06:05-06:20Z restore, ~12.5 hours)",
+        "restore fallback owner (2): org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_HEALGAP_G1/R1_CHECKS/hg_d3_restore_fallback.py @cc6b15a7f3, one-shot armed for 06:10Z; dry run 2026-10-07T17:59Z named the exact re-put"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S1: ARMED -- an untargeted apply of opal-assets inside the window restores the input and silently voids the 06:00Z test.",
+    "world_is": "Disarmed for the window: every apply of opal-assets is held to a targeted plan that does not name the daily target until 06:20Z, and the restore owners are named and armed. Residual (not a hazard): the guard is a notice binding by reading, not a gate; the cut lesson is that an amendment moving a step's time re-reads every half bounding that step's duration."
   }
 ]
 ```
