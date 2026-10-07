@@ -7301,6 +7301,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S96",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-07T09:10:27Z",
+      "one_line": "The collector's identity file carries a decorated or cut legal name on up to 20 of 234 securities: 9 with a slash tail (Inc/The, Inc/MD), 1 with a receipt tail (ADR), and 10 that are exactly 30 characters long, 5 of them visibly cut mid-name.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/opal_data_harvest publishers.slug_query(company) yields the words a sitemap slug must carry; it assumes `company` is the name a headline uses once trailing form words are dropped.",
+      "world_is": "org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round47/rank_universe_identity_20261005.json, 234 records, field company.value. SLASH TAIL 9: BNY, EL, GS, HSY, KO, MAR, SCHW, TJX, TRV (_US_Equity) -- 'Goldman Sachs Group Inc/The' tokenizes to 'Goldman Sachs Group Inc The', so the trailing form words are no longer trailing and every one stays required. RECEIPT TAIL 1: TSM_US_Equity 'Taiwan Semiconductor Manufacturing Co Ltd ADR'. EXACTLY 30 CHARACTERS 10 (the longest clean-cut length; the file's other long names are 31, 32, 33, 42 and 45): visibly cut 5 -- AIG_US_Equity 'American International Group I', ICT_US_Equity 'International Container Termin', KCDMY_US_Equity 'Kimberly-Clark de Mexico SAB d', OMAB_US_Equity and OMAB_MM_Equity 'Grupo Aeroportuario del Centro'; cut with no lost name word 1 -- 8306_JP_Equity 'Mitsubishi UFJ Financial Group'; complete at 30 by coincidence 4 -- AEP, BBSEY, BIPC, JBHT. Bound: the cut test is length == 30 read by eye for a broken word; a name cut at a word boundary shorter than 30 is not detectable from this file alone. Not measured: how many candidates each of the 20 loses on a replay.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "python read of rank_universe_identity_20261005.json: records 234; '/' in company 9; trailing ADR 1; len(company)==30 10",
+          "org/missions/D5/AMGT/AMGT_HARVST/ledger/ROUND_ANALYSIS.round49.md ADDENDUM 6 (the act owed: one row for the class with its count over the 234)",
+          "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_AZ1_BRAND_ALIAS_SOURCES_20261007.md section 'How large the gap is'"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

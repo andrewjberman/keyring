@@ -3160,3 +3160,28 @@ the issuer reads the `PAIRS` lines and checks the 37 against `stop_status_pairs.
 **Checks dry-run at the base before the cut:**
 - `ba-1` AC1 (`pytest lib/opal_data_harvest/test_ba1_stopped_pair_is_retried.py`) base: FAIL as expected (the test is absent).
 - `ba-1` AC2 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (706 passed, 1 skipped on merged CLOUD at the round-52 drain).
+
+## 68. ROUND 54 -- the alias set per name, as ruled by the round-49 analysis ADDENDUM 6 (`ledger/ROUND_ANALYSIS.round49.md` @c1f0c8a429), 2026-10-07 ~09:2xZ
+
+Round 53's order is terminal (`ba-1` merged @296601ed65). Section 66's input was read at the relaunch: the crosswalk carries a
+research-folder name on 96 of 237 records and on none of Meta, Bank of America, AT&T or Amazon (row AMGT_HARVST-Z-S95). ADDENDUM 5
+left the cell uncut; ADDENDUM 6 names the alias source as the hand-written list `lib/research/harvest/whole_brand_aliases.json`,
+extended per security, each entry citing its census and its plane. Section 66's "plus the research-folder name" is superseded by
+that ruling; the rest of section 66 stands.
+
+Issuer `2.0.0_SA_COO~H`. Series **`az`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-az-1` | `az-1` | **A name's slug query is an alias set; a brand word enters only from the hand-written list.** The collector appends each `plane: slug` brand to the security's `aliases`; discovery admits a slug that matches any one alias, with one sitemap request per month; the 7 existing entries are marked `plane: text` and stay out of the slug plane; first slug entries Meta and Lilly. Proof on the offline replay: Meta up, the 2 Lilly slugs recovered (bbg kept >= 3,278 of 3,282), wsj 566 of 566, Bank of America and AT&T unchanged, exactly 2 of 234 names changed. | LOCAL | worker ~104 |
+
+**Not in this round (ADDENDUM 6):** one suffix list in place of two (next enrichment list); the cut or decorated legal names (row
+AMGT_HARVST-Z-S96: up to 20 of 234; the cell follows from the count); any further brand entry.
+
+**The close run (issuer, after `az-1` merges):** the META and LLY pairs re-run on wsj and bbg with `--names`.
+
+**Checks dry-run at the base before the cut:**
+- `az-1` AC1 (`pytest lib/opal_data_harvest/test_az1_alias_set.py`) base: FAIL as expected (the test is absent).
+- `az-1` AC2 (`cat .../0.9.0_WK_AMGT_HARVST~104/az-1.replay.out`) base: FAIL as expected (no such file).
+- `az-1` AC3 (`pytest lib/research/harvest/tests/test_alias_rule_round18.py lib/research/harvest/tests/test_universe_securities.py`) base: PASS as expected (40 passed).
