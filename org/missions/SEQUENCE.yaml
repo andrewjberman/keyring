@@ -11,6 +11,14 @@
 #   "the sequence will govern projects that require chronology compliance by way of dependencies/design ... it has to be
 #    writable by both the laptop cto and the sitez cto becuase there may be overlap"
 #
+# THE FOUR BOXES (v5, Andrew-direct 2026-10-07): the sequence IS the scale-in. laptop (tailnet cloud-local) = the control plane;
+# sitez = the Bloomberg terminal and the one integrator; dell1 = the securities layer; dell2 = the January 1 reporting programme.
+# STAGES ARE THE RAMP: each Dell starts its fabric manager alone, takes ONE new project, and gains a lane only after the lane
+# before it has a graded round. A row's `fabric` is one of the register's two fabric values (laptop, site-z) until NFRA_CTLPLN
+# adds dell1 and dell2 to that enum (.tools/to-pipeline-gate.py FABRIC_ENUM); a project's BOX is in its `why` and in its tree
+# row's `placement` field. A project already under way moves between rounds, never mid-round. Layout record:
+#   org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md
+#
 # WHO WRITES IT: 1.0.0_SA_CTO (laptop) and 1.0.0_SA_CTO~Z (site Z). The ORDER changes only on Andrew's word, and every
 # change adds a change_log entry quoting it. A gate or a note may be corrected by either CTO without his word when it
 # changes no order; the change_log still records it.
@@ -46,228 +54,686 @@
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 4
-owners: ["1.0.0_SA_CTO", "1.0.0_SA_CTO~Z"]
+version: 5
+owners:
+- 1.0.0_SA_CTO
+- 1.0.0_SA_CTO~Z
 enforcement: TRACK
-
 capacity:
   coo_sessions:
     laptop: 3
-  why: "Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): 'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' Site Z's cap is not ruled."
-
+    dell1: 1
+    dell2: 1
+  why: 'Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): ''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' Site Z''s cap is not ruled. DELLS: one COO lane each to start, raised one lane at a time as each stage''s first round is graded (Andrew-direct 2026-10-07 ~04:3xZ, ''We will start revving them up slow on those projects''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md). The laptop''s target is one lane (NFRA_CTLPLN) once stage 4''s moves are done; its cap of 3 is his standing word and is not changed here.'
 stages:
-  - id: 0
-    name: "Andrew's seat priority -- MDPF_CANON, then IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX"
-    why: "Andrew-direct 2026-09-17 ~19:0xZ at the 1.0.0_SA_CTO terminal, answering this seat's /open-calls card 6, VERBATIM: 'there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md). SUPERSEDES his 2026-09-15 ~12:5xZ seat order ('If push mdpf_taxsma as the next one followed by nfra_oplgtw'), which is kept in the change_log. This stage orders SEATS, not dependencies: the reader queues NEEDS-SLOT by stage, so stage 0 puts these three ahead of every other project for a COO slot, in the order he named. NARROW READ, stated: he named THREE projects, not a general re-order -- every other row keeps its place."
-  - id: 1
-    name: "Platform Logic -- the naming schema, the enforcement layer, the canon"
-    why: "Andrew-direct 2026-09-13 ~19:2xZ (relayed 4.0.0_SA_CRO~D 96400): 'I want to proceed with the Logic projects into the MDPF and so on'."
-  - id: 2
-    name: "The D8 migrations built on Platform Logic"
-    why: "The same word: the Logic projects first, then MDPF and the migrations. The new firm buckets must be minted with LGIC_ENFORCE's rebuilt fence (Andrew ~18:4xZ card 1)."
-  - id: 3
-    name: "Projects whose outcomes land in the migrated firm buckets"
-    why: "Placed after everything already ordered so that no existing order moves (Andrew-direct 2026-09-14 ~13:4xZ, 'recs + sequence approved', record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md). Moving a stage-3 project ahead of Platform Logic is a reorder, and a reorder is Andrew's word. ASKED AND ANSWERED for IRPT_BCKEND, ~14:5xZ: 'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)."
-
+- id: 0
+  name: Bring-up -- the four-box control plane makes each Dell reachable
+  why: 'A Dell takes no project until its AWS user, its key, its inbound queue and its fabric manager exist (NFRA_CTLPLN C-IDENTITY, C-BUS, FWD-2). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 1
+  name: First lane on each Dell -- a NEW project, nothing to migrate
+  why: 'Start each Dell''s fabric manager alone, then give it ONE new project with nothing to migrate, so a Dell problem cannot damage running work. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 2
+  name: Second lane on each Dell -- the first moves, after the grading of the first lane's first round
+  why: 'A live project moves only between rounds (NFRA_CTLPLN FWD-13), and only after the Dell has proven itself on its first lane. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 3
+  name: Third lane on each Dell
+  why: 'One lane at a time, so each Dell''s real load is seen before the next is added. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 4
+  name: Later moves off the laptop, leaving it the control plane
+  why: 'The laptop ends with the planning seats and NFRA_CTLPLN only (C-ROLES). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 5
+  name: Site Z -- the Bloomberg terminal and the one integrator; these stay
+  why: 'Bloomberg-bound work and the gateway and tool family stay where the terminal is; site Z merges every Dell round and pushes the trunk. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
+- id: 6
+  name: Carried from v4, order unchanged -- Platform Logic and the D8 migrations on it
+  why: These six kept their v4 gates word for word; the scale-in does not reorder them and gives them no box of their own yet.
 projects:
-  MDPF_CANON:
+  NFRA_CTLPLN:
     fabric: laptop
     stage: 0
+    waits_on: []
+    why: 'The four-box control plane itself: stays on the laptop for good. Its second round brings up the Dells, which every later stage depends on.'
+  MDPF_SECHIST:
+    fabric: laptop
+    stage: 1
+    waits_on:
+    - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+    why: 'BOX: dell1, its FIRST lane. The securities history, a new project with nothing to migrate. Andrew ~19:2xZ 2026-10-06: round 1 on dell1. It defines the one store Cottonwood''s daily prices land in.'
+  IRPT_CUSTDY:
+    fabric: laptop
+    stage: 1
+    waits_on:
+    - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+    why: 'BOX: dell2, its FIRST lane. Custodian-level investor reporting replacing Black Diamond, the January 1 date. New, nothing to migrate.'
+  MDPF_SECCLASS:
+    fabric: laptop
+    stage: 2
+    waits_on: []
+    why: 'TARGET BOX: dell1 (dell1''s SECOND lane, after the grading of MDPF_SECHIST''s first round). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It shares the classification table with MDPF_SECHIST, which is why the two sit on one box.'
+  IRPT_DASHBD:
+    fabric: laptop
+    stage: 2
+    waits_on: []
+    why: 'TARGET BOX: dell2 (dell2''s SECOND lane, after the grading of IRPT_CUSTDY''s first round). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting dashboard and its total-return gold feed the January 1 programme.'
+  ADVI_COTBKF:
+    fabric: laptop
+    stage: 3
+    waits_on: []
+    why: 'TARGET BOX: dell1 (dell1''s THIRD lane). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Cottonwood''s Commonwealth history feeds both the securities history and custodian reporting.'
+  ADVI_BILLING:
+    fabric: laptop
+    stage: 3
+    waits_on:
+    - manual: Andrew has each firm's answers on its billing system, fee terms and sign-off (Q-2 brief PART V)
+    why: 'BOX: dell2, its THIRD lane. Advisory-fee billing, buy or build. New; its first step needs the firms'' answers Andrew brings.'
+  NFRA_OPSWKF:
+    fabric: laptop
+    stage: 3
+    waits_on:
+    - manual: 'Andrew has sat with the operations lead: his day, his workbook''s layout, the custodians he calls (Q-3 brief PART V)'
+    why: 'BOX: dell2, after ADVI_BILLING. Trade submission led by the operations lead''s Excel workflow. New; it cannot be specified before that sitting.'
+  MDPF_TAXSMA:
+    fabric: laptop
+    stage: 4
+    waits_on: []
+    why: 'TARGET BOX: dell1 (after dell1''s three lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Quiet; no lane is asked for it now.'
+  IRPT_BCKEND:
+    fabric: laptop
+    stage: 4
+    waits_on: []
+    why: 'TARGET BOX: dell2 (after dell2''s first two lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting back end; its deploys go through site Z or a Dell''s trunk-only deploy.'
+  IRPT_YCDGEN:
+    fabric: laptop
+    stage: 4
+    waits_on: []
+    why: 'TARGET BOX: dell2 (once Andrew''s report retry on the laptop''s dev build has passed). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It stays on the laptop until then because that retry needs his own sign-in at this screen.'
+  NFRA_TRNSPT:
+    fabric: laptop
+    stage: 4
+    waits_on: []
+    why: 'TARGET BOX: sitez (at its next round boundary). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It works beside the gateway and tool family at site Z.'
+  ETFS_RIVALS:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: 'Stays at site Z. Rival funds: Bloomberg-bound.'
+  AMGT_RESAPP:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The research application.
+  AMGT_HARVST:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The research harvest.
+  AMGT_CORPUS:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The research corpus.
+  DSGN_AMGTV1:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The research design work beside the three AMGT projects.
+  NFRA_OPLGTW:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. Opal Gateway; the operations lead's workflow (NFRA_OPSWKF) builds on it.
+  NFRA_MCPINDEX:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The Opal tool index.
+  NFRA_OPALAI:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The Opal Analyst; its launch for the operations lead is Andrew's to review (2026-10-06 ~21:0xZ, 'I need to review this later').
+  NFRA_SPRINTWIN:
+    fabric: site-z
+    stage: 5
+    waits_on: []
+    why: Stays at site Z. The sprint window.
+  MDPF_CANON:
+    fabric: laptop
+    stage: 6
     waits_on: []
     hold:
       max_dep_stage: REGISTERED
       until:
-        - {project: LGIC_ENFORCE, prd_admitted: true}
-    why: "FIRST for a COO seat on Andrew's 2026-09-18 ~22:3xZ word, which REVERSED this seat's own rec that ADVI_FIRMBKTS take the next slot and named this project instead, as the test run for the LGIC legacy transform. Moved stage 2 -> 0 on the same precedent as IRPT_BCKEND's ~19:0xZ move: stage 0 orders SEATS, not dependencies, and the row's hold travels with it unchanged. NARROW READ, stated: he named ONE project and ONE position -- ADVI_FIRMBKTS and every other row keep their place, and this project's FWD-2/FWD-6 dependency on ADVI_FIRMBKTS's firm buckets is a gate on its EXECUTION, not on its seat. Its keys come from LGIC_NAMING's schema."
-
-  IRPT_BCKEND:
-    fabric: laptop
-    stage: 0
-    waits_on: []
-    why: "Investor Reporting's backend. Its per-firm platinum lands in the firm buckets (its row 11, which bucket serves 49 Financial, is answered by ADVI_FIRMBKTS's cutover), and IRPT_FNTEND cannot close without it. It follows Platform Logic by Andrew's word, which also binds what it becomes: its next revision is built on the patterns the Logic projects establish (~14:5xZ, 'No, we need the logic projects done first because that will establish the patterns for the new backend properly'). No hold: its row-11 dependency is a gate on that OUTCOME, added when its next PRD revision cuts the cell, not on the project."
-  MDPF_TAXSMA:
-    fabric: laptop
-    stage: 0
-    waits_on: []
-    why: "SECOND for a seat on Andrew-direct 2026-09-17 ~23:3xZ, VERBATIM: 'I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.' That SUPERSEDES his ~19:0xZ ordering of these two and nothing else -- IRPT_BCKEND is first in both. Its lane 2.0.0_SA_COO~T is named on its tree row, so the word returns a lane rather than choosing one. His 2026-09-16 hold ('No we'll wait for now before getting into TAXSMA; we are moving fast and I don't want to clog up system') is LIFTED by that word. Record: org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md"
-
-  NFRA_MCPINDEX:
-    fabric: site-z
-    stage: 0
-    waits_on: []
-    why: "THIRD for a seat, on the same ~23:3xZ word, which moved it behind MDPF_TAXSMA and left IRPT_BCKEND first. The Opal MCP tool index, registered under D9 on his 2026-09-17 word; its ten outcomes are confirmed. Whoever seats 2.0.0_SA_COO~M reads the compiled block first: L5 cannot start against a PRD both halves have not admitted, and that is a compiled fact, not a handwritten one."
-
-  NFRA_OPLGTW:
-    fabric: site-z
-    stage: 0
-    waits_on: []
-    why: "Second in Andrew's seat order, the same word."
-
+      - project: LGIC_ENFORCE
+        prd_admitted: true
+    why: 'FIRST for a COO seat on Andrew''s 2026-09-18 ~22:3xZ word, which REVERSED this seat''s own rec that ADVI_FIRMBKTS take the next slot and named this project instead, as the test run for the LGIC legacy transform. Moved stage 2 -> 0 on the same precedent as IRPT_BCKEND''s ~19:0xZ move: stage 0 orders SEATS, not dependencies, and the row''s hold travels with it unchanged. NARROW READ, stated: he named ONE project and ONE position -- ADVI_FIRMBKTS and every other row keep their place, and this project''s FWD-2/FWD-6 dependency on ADVI_FIRMBKTS''s firm buckets is a gate on its EXECUTION, not on its seat. Its keys come from LGIC_NAMING''s schema.'
   LGIC_NAMING:
     fabric: laptop
-    stage: 1
+    stage: 6
     waits_on: []
-    why: "The vocabulary every later name and storage key is minted from (org/standards/NAMING_SCHEMA.json)."
-
+    why: The vocabulary every later name and storage key is minted from (org/standards/NAMING_SCHEMA.json).
   LGIC_ENFORCE:
     fabric: laptop
-    stage: 1
+    stage: 6
     waits_on:
-      - {project: LGIC_NAMING, prd_admitted: true}
-    why: "Consumes the naming schema: its key() and name() builders and the registry-derived fence read NAMING_SCHEMA.json (LGIC_NAMING's CONTRACTS)."
-
+    - project: LGIC_NAMING
+      prd_admitted: true
+    why: 'Consumes the naming schema: its key() and name() builders and the registry-derived fence read NAMING_SCHEMA.json (LGIC_NAMING''s CONTRACTS).'
   LGIC_CANON:
     fabric: laptop
-    stage: 1
+    stage: 6
     waits_on: []
-    why: "In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate."
-
+    why: In the Platform Logic stage by Andrew's priority word. No hard dependency on the other two; its PRD is queued after LGIC_ENFORCE's as the CTO's work order, which is not a gate.
   LGIC_LGCTFM:
     fabric: laptop
-    stage: 1
+    stage: 6
     waits_on:
-      - {project: LGIC_NAMING, prd_admitted: true}
-      - {project: LGIC_ENFORCE, prd_admitted: true}
-      - {project: LGIC_CANON, prd_admitted: true}
-    why: "The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE's address()/name()/grade() against LGIC_NAMING's schema and graded against LGIC_CANON's rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. Fourth in the Platform Logic stage by Andrew's ~05:2xZ 2026-09-16 word naming the four LGIC projects together. Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): a CONSUMER relation, never a gate on this row."
-
+    - project: LGIC_NAMING
+      prd_admitted: true
+    - project: LGIC_ENFORCE
+      prd_admitted: true
+    - project: LGIC_CANON
+      prd_admitted: true
+    why: 'The Legacy Transform is the LENS the D14 canon, schema and builders are read through: its DESIRED half is computed by LGIC_ENFORCE''s address()/name()/grade() against LGIC_NAMING''s schema and graded against LGIC_CANON''s rules (brief IV.1, IV.4), so its PRD cannot be written before those three are admitted. Fourth in the Platform Logic stage by Andrew''s ~05:2xZ 2026-09-16 word naming the four LGIC projects together. Its first real subjects are stage-2 projects (ADVI_FIRMBKTS, MDPF_CANON; brief IV.15, O6): a CONSUMER relation, never a gate on this row.'
   ADVI_FIRMBKTS:
     fabric: laptop
-    stage: 2
+    stage: 6
     waits_on: []
     hold:
       max_dep_stage: DECOMP
       until:
-        - {project: LGIC_ENFORCE, prd_admitted: true}
-        - {manual: "LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from", confirmed: "1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial"}
-    why: "The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits."
-
-
+      - project: LGIC_ENFORCE
+        prd_admitted: true
+      - manual: LGIC_ENFORCE's scope-derived fence (Andrew ~18:4xZ card 1, on its three conditions) is applied on infra/aws/terraform/shared-infra/s3-49financial.tf, the template opal-data-inflection and opal-data-cottonwood are minted from
+        confirmed: 1.0.0_SA_CTO 2026-09-15 ruling 97031 -- EN-f-2 applied; its drain completed @d482e58ecf (merge c6d652a6dc landed 2 of the branch's 8 paths, row LGIC_ENFORCE-S18; the other 6 landed @5ee8e068fd, @8c77a1400a, @d482e58ecf); 4 of 4 probe arms; live policy on opal-data-49financial 1 Deny with 17 ArnNotLike values; card 1 conditions (1)-(3) met for opal-data-49financial
+    why: The legacy firm buckets (opal-data-bd, -inf, -cot) move into opal-data-49financial and the two new buckets. The new buckets must be minted with the rebuilt fence, and FWD-3 needs LGIC_ENFORCE's registry. Its PRD and decomposition may proceed; execution waits.
 parked:
   NFRA_SUBSTRATECARDING:
     fabric: laptop
-    why: "Andrew-direct 2026-09-14 ~00:0xZ: 'it is just not a priority at this time.' Not ordered; recorded so no driver takes it up ahead of the sequence."
-
+    why: 'Andrew-direct 2026-09-14 ~00:0xZ: ''it is just not a priority at this time.'' Not ordered; recorded so no driver takes it up ahead of the sequence.'
 pending_placement:
-  - subject: "the projects behind the 07-28 sequence"
-    question: "'MDPF COMPLETION', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?"
-  - subject: "the rest of both registers"
-    question: "Only projects with a dependency or design constraint are placed. The CTOs read D2, D3, D9, D11 and D0 on the laptop and site Z's directives for such constraints and bring Andrew any placement."
-
-supersedes: "org/missions/GOALS.yaml priority_sequence (Andrew-direct 2026-07-28 ~2242Z). Replaced on Andrew ~01:xxZ card 2; kept there as history, marked by 0.0.0_AB_MSTR."
-
+- subject: the projects behind the 07-28 sequence
+  question: '''MDPF COMPLETION'', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?'
+- subject: the rest of both registers
+  question: Only projects with a dependency or design constraint are placed. The CTOs read D2, D3, D9, D11 and D0 on the laptop and site Z's directives for such constraints and bring Andrew any placement.
+supersedes: org/missions/GOALS.yaml priority_sequence (Andrew-direct 2026-07-28 ~2242Z). Replaced on Andrew ~01:xxZ card 2; kept there as history, marked by 0.0.0_AB_MSTR.
 change_log:
-  - at: "2026-09-14"
-    by: "1.0.0_SA_CTO"
-    change: "v1 -- the sequence created. Stage 1 Platform Logic (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON); stage 2 the D8 migrations on it (ADVI_FIRMBKTS held at DECOMP, MDPF_CANON held at REGISTERED, until LGIC_ENFORCE's PRD is admitted and its fence is on the template). NFRA_SUBSTRATECARDING parked."
-    word: "'recs approved' and the three words that followed it (record @cc79b6191a)"
-  - at: "2026-09-14"
-    by: "1.0.0_SA_CTO"
-    change: "v2 -- capacity: at most three COO sessions on the laptop at once. The reader flags NEEDS-SLOT and names the next COO slot in this file's order. No order changed."
-    word: "'We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.' (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290)"
-  - at: "2026-09-14"
-    by: "1.0.0_SA_CTO"
-    change: "v3 -- IRPT_BCKEND placed, answering its pending_placement question: stage 3, after everything already ordered, fifth for a free COO seat. The row-11 dependency on ADVI_FIRMBKTS's cutover binds that outcome, not the project. No existing order changed."
-    word: "'recs + sequence approved' (Andrew-direct ~13:4xZ, answering 1.0.0_SA_CTO's /next-calls OPTION 1, 'place the backend in the sequence'; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md)"
-  - at: "2026-09-14"
-    by: "1.0.0_SA_CTO"
-    change: "v3 note -- Andrew answered whether IRPT_BCKEND moves ahead of Platform Logic: no. The stage-3 why and IRPT_BCKEND's why now cite his word and its reason. No order changed."
-    word: "'No, we need the logic projects done first because that will establish the patterns for the new backend properly' (Andrew-direct ~14:5xZ; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)"
-  - at: "2026-09-15"
-    by: "1.0.0_SA_CTO"
-    change: "v3 gate -- ADVI_FIRMBKTS's manual hold (the fence applied on the s3-49financial.tf template) confirmed MET on ruling 97031; carries C1 and C2 added to its notes for its L4. No order changed."
-    word: "none needed: a gate confirmation that changes no order (header: 'A gate or a note may be corrected by either CTO without his word when it changes no order')."
-  - at: "2026-09-15"
-    by: "1.0.0_SA_CTO"
-    change: "v4 -- ORDER CHANGED. New stage 0, Andrew's seat priority: MDPF_TAXSMA, then NFRA_OPLGTW. MDPF_TAXSMA now takes the next COO slot, ahead of LGIC_CANON. NFRA_OPLGTW keeps 2.0.0_SA_COO~O and is next if that lane goes dark. Resolves LD-0567's carried conflict with the 09-14 ~18:2xZ LGIC_CANON word. Stages 1-3 are unchanged."
-    word: "'If push mdpf_taxsma as the next one followed by nfra_oplgtw' (Andrew-direct ~12:5xZ at the 1.0.0_SA_CTO terminal), confirming his ~07:5xZ 'If laptop has capacity let's get mdpf_Taxsma going; then nfra_opalgt or whatever the mcp hook up new nfra project was, then IPRT_BCKND if the lgic work is in proper position and we can address backend canonically now' (LD-0567 @4524cc2466)"
-  - at: "2026-09-15"
-    by: "1.0.0_SA_CTO"
-    change: "v4 note -- IRPT_BCKEND's notes carry Andrew's backend admin wall (/open-calls card 2): before any route serves, the backend refuses a caller who is not role admin AND firm opal-capital; it lands as an IRPT_BCKEND FWD at its next PRD revision. No order changed."
-    word: "'recs approved aand all future pipelines must abide by lgic structures patterns' (Andrew-direct ~14:2xZ at the 1.0.0_SA_CTO terminal, answering /open-calls cards 1-3)"
-  - at: "2026-09-15"
-    by: "1.0.0_SA_CTO"
-    change: "v4 note -- LGIC_CANON seated on 2.0.0_SA_COO~G (coo_lane on its project row); its NEEDS-SLOT clears. No order changed, and no COO session was added."
-    word: "'Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.' (Andrew-direct ~16:1xZ at the 2.0.0_SA_COO~G terminal, record @2373f96073)"
-  - at: "2026-09-16"
-    by: "1.0.0_SA_CTO"
-    change: "v4 placement -- LGIC_LGCTFM placed in stage 1, fourth of the Platform Logic projects, waits_on the three D14 PRDs admitted (all met at placement). Answers 2.0.0_SA_COO~G's open call R-3 (97315): a register member the goal loops drive 'in the sequence's order' was unplaced. No existing order changed; stage-2 holds unchanged; last of the four for a COO seat."
-    word: "'Your goal for this session is to drive the LGIC projects to completion and validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward ... You are done when all 4 LGIC projects are completed, validated, and closed.' (Andrew-direct ~05:2xZ 2026-09-16 at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md @a6e628fb89)"
-  - at: "2026-09-17"
-    by: "1.0.0_SA_CTO"
-    change: "v4 format -- a view-time compiled `compiled:` block at the bottom of the file (nested JSON: stage -> project -> live dep_stage, status, PRD sign-off, last activity, flags, gates; plus capacity and flag counts), written only by `python .tools/sequence-check.py --compile` between marker lines and stamped compiled_at + head; a header line at the top names the command. The reader never evaluates the block. No order changed."
-    word: "'Edit it so that there is nested json which is compiled at viewtime that is tied to the underlying projects. maybe theres a line at the top that says run the script to recompile, so when agents go look at it they can see that line, get the ref to the script, run it, and get current state fast.' (Andrew-direct ~14:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)"
-  - at: "2026-09-17"
-    by: "1.0.0_SA_CTO"
-    change: "v4 format -- state is COMPILE-ONLY. A project row now carries only fabric, stage, waits_on, hold and why; `notes` is retired and every `why` stripped of state, and the validator refuses both. coo_lane and phase join the compiled block. The removed text (incl. ADVI_FIRMBKTS C1/C2 and IRPT_BCKEND's admin wall, which are those projects' next-PRD obligations) is preserved verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/SEQUENCE_HANDWRITTEN_STATE_REMOVED_20260917.md. The /sequence skill runs the recompile. No order changed."
-    word: "'let's make a skill called /sequence which runs the recompile. All state data on projects in sequence.yaml should be compile-only. the list of included projects and intended order can be handwritten because thats the nature of a human picking projects to sequence, but the rest should all be compiled.' (Andrew-direct ~15:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)"
-  - at: "2026-09-17"
-    by: "1.0.0_SA_CTO"
-    change: "v4 ORDER CHANGED -- stage 0 is now Andrew's seat order of this date: IRPT_BCKEND, then NFRA_MCPINDEX, then MDPF_TAXSMA. IRPT_BCKEND moves stage 3 -> 0; NFRA_MCPINDEX is placed (new, registered the same day); MDPF_TAXSMA stays stage 0 but third, its hold standing until its turn; NFRA_OPLGTW keeps stage 0 with its lane live. Stages 1-3 and every other row are unchanged: he named three projects, not a general re-order."
-    word: "'there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.' (Andrew-direct ~19:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal, answering /open-calls card 6; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md)"
+- at: '2026-09-14'
+  by: 1.0.0_SA_CTO
+  change: v1 -- the sequence created. Stage 1 Platform Logic (LGIC_NAMING, LGIC_ENFORCE, LGIC_CANON); stage 2 the D8 migrations on it (ADVI_FIRMBKTS held at DECOMP, MDPF_CANON held at REGISTERED, until LGIC_ENFORCE's PRD is admitted and its fence is on the template). NFRA_SUBSTRATECARDING parked.
+  word: '''recs approved'' and the three words that followed it (record @cc79b6191a)'
+- at: '2026-09-14'
+  by: 1.0.0_SA_CTO
+  change: 'v2 -- capacity: at most three COO sessions on the laptop at once. The reader flags NEEDS-SLOT and names the next COO slot in this file''s order. No order changed.'
+  word: '''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290)'
+- at: '2026-09-14'
+  by: 1.0.0_SA_CTO
+  change: 'v3 -- IRPT_BCKEND placed, answering its pending_placement question: stage 3, after everything already ordered, fifth for a free COO seat. The row-11 dependency on ADVI_FIRMBKTS''s cutover binds that outcome, not the project. No existing order changed.'
+  word: '''recs + sequence approved'' (Andrew-direct ~13:4xZ, answering 1.0.0_SA_CTO''s /next-calls OPTION 1, ''place the backend in the sequence''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_134xZ_NEXT_CALLS_RECS_AND_SEQUENCE_APPROVED.md)'
+- at: '2026-09-14'
+  by: 1.0.0_SA_CTO
+  change: 'v3 note -- Andrew answered whether IRPT_BCKEND moves ahead of Platform Logic: no. The stage-3 why and IRPT_BCKEND''s why now cite his word and its reason. No order changed.'
+  word: '''No, we need the logic projects done first because that will establish the patterns for the new backend properly'' (Andrew-direct ~14:5xZ; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_145xZ_LOGIC_FIRST_THE_BACKEND_FOLLOWS_ITS_PATTERNS.md)'
+- at: '2026-09-15'
+  by: 1.0.0_SA_CTO
+  change: v3 gate -- ADVI_FIRMBKTS's manual hold (the fence applied on the s3-49financial.tf template) confirmed MET on ruling 97031; carries C1 and C2 added to its notes for its L4. No order changed.
+  word: 'none needed: a gate confirmation that changes no order (header: ''A gate or a note may be corrected by either CTO without his word when it changes no order'').'
+- at: '2026-09-15'
+  by: 1.0.0_SA_CTO
+  change: 'v4 -- ORDER CHANGED. New stage 0, Andrew''s seat priority: MDPF_TAXSMA, then NFRA_OPLGTW. MDPF_TAXSMA now takes the next COO slot, ahead of LGIC_CANON. NFRA_OPLGTW keeps 2.0.0_SA_COO~O and is next if that lane goes dark. Resolves LD-0567''s carried conflict with the 09-14 ~18:2xZ LGIC_CANON word. Stages 1-3 are unchanged.'
+  word: '''If push mdpf_taxsma as the next one followed by nfra_oplgtw'' (Andrew-direct ~12:5xZ at the 1.0.0_SA_CTO terminal), confirming his ~07:5xZ ''If laptop has capacity let''s get mdpf_Taxsma going; then nfra_opalgt or whatever the mcp hook up new nfra project was, then IPRT_BCKND if the lgic work is in proper position and we can address backend canonically now'' (LD-0567 @4524cc2466)'
+- at: '2026-09-15'
+  by: 1.0.0_SA_CTO
+  change: 'v4 note -- IRPT_BCKEND''s notes carry Andrew''s backend admin wall (/open-calls card 2): before any route serves, the backend refuses a caller who is not role admin AND firm opal-capital; it lands as an IRPT_BCKEND FWD at its next PRD revision. No order changed.'
+  word: '''recs approved aand all future pipelines must abide by lgic structures patterns'' (Andrew-direct ~14:2xZ at the 1.0.0_SA_CTO terminal, answering /open-calls cards 1-3)'
+- at: '2026-09-15'
+  by: 1.0.0_SA_CTO
+  change: v4 note -- LGIC_CANON seated on 2.0.0_SA_COO~G (coo_lane on its project row); its NEEDS-SLOT clears. No order changed, and no COO session was added.
+  word: '''Yeah there is a lot of work to be doing here between ENFORCE and CANON and I want you parallelizing harder. Use more agents, go faster.'' (Andrew-direct ~16:1xZ at the 2.0.0_SA_COO~G terminal, record @2373f96073)'
+- at: '2026-09-16'
+  by: 1.0.0_SA_CTO
+  change: 'v4 placement -- LGIC_LGCTFM placed in stage 1, fourth of the Platform Logic projects, waits_on the three D14 PRDs admitted (all met at placement). Answers 2.0.0_SA_COO~G''s open call R-3 (97315): a register member the goal loops drive ''in the sequence''s order'' was unplaced. No existing order changed; stage-2 holds unchanged; last of the four for a COO seat.'
+  word: '''Your goal for this session is to drive the LGIC projects to completion and validation. There is one new one coming in from CRO, LGIC_LGCTFM, which you will have to /endpoint --forward ... You are done when all 4 LGIC projects are completed, validated, and closed.'' (Andrew-direct ~05:2xZ 2026-09-16 at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260916_052xZ_LGIC_GOAL_AND_30M_SELF_DRIVE_ADJUDICATE.md @a6e628fb89)'
+- at: '2026-09-17'
+  by: 1.0.0_SA_CTO
+  change: 'v4 format -- a view-time compiled `compiled:` block at the bottom of the file (nested JSON: stage -> project -> live dep_stage, status, PRD sign-off, last activity, flags, gates; plus capacity and flag counts), written only by `python .tools/sequence-check.py --compile` between marker lines and stamped compiled_at + head; a header line at the top names the command. The reader never evaluates the block. No order changed.'
+  word: '''Edit it so that there is nested json which is compiled at viewtime that is tied to the underlying projects. maybe theres a line at the top that says run the script to recompile, so when agents go look at it they can see that line, get the ref to the script, run it, and get current state fast.'' (Andrew-direct ~14:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)'
+- at: '2026-09-17'
+  by: 1.0.0_SA_CTO
+  change: v4 format -- state is COMPILE-ONLY. A project row now carries only fabric, stage, waits_on, hold and why; `notes` is retired and every `why` stripped of state, and the validator refuses both. coo_lane and phase join the compiled block. The removed text (incl. ADVI_FIRMBKTS C1/C2 and IRPT_BCKEND's admin wall, which are those projects' next-PRD obligations) is preserved verbatim at org/tier1_exec/1.0.0_SA_CTO/deliverables/SEQUENCE_HANDWRITTEN_STATE_REMOVED_20260917.md. The /sequence skill runs the recompile. No order changed.
+  word: '''let''s make a skill called /sequence which runs the recompile. All state data on projects in sequence.yaml should be compile-only. the list of included projects and intended order can be handwritten because thats the nature of a human picking projects to sequence, but the rest should all be compiled.'' (Andrew-direct ~15:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal)'
+- at: '2026-09-17'
+  by: 1.0.0_SA_CTO
+  change: 'v4 ORDER CHANGED -- stage 0 is now Andrew''s seat order of this date: IRPT_BCKEND, then NFRA_MCPINDEX, then MDPF_TAXSMA. IRPT_BCKEND moves stage 3 -> 0; NFRA_MCPINDEX is placed (new, registered the same day); MDPF_TAXSMA stays stage 0 but third, its hold standing until its turn; NFRA_OPLGTW keeps stage 0 with its lane live. Stages 1-3 and every other row are unchanged: he named three projects, not a general re-order.'
+  word: '''there should be a sequence for this, id do investor reporting backend, tool index, and tax sma in that order.'' (Andrew-direct ~19:0xZ 2026-09-17 at the 1.0.0_SA_CTO terminal, answering /open-calls card 6; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_190xZ_OPEN_CALLS_SEVEN_ANSWERED_SEAT_SEQUENCE_IRPT_MCPINDEX_TAXSMA.md)'
+- at: '2026-09-17'
+  by: 1.0.0_SA_CTO
+  change: 'stage 0 re-ordered: IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX. His ~23:3xZ word reverses the ~19:0xZ ordering of TAXSMA and MCPINDEX and touches nothing else; IRPT_BCKEND is first in both. The blocks are PHYSICALLY moved because the reader queues NEEDS-SLOT by file order. Recorded at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md. Also lifts his 2026-09-16 TAXSMA hold, which that row carried.'
+  word: '''Give each of the COO''s a 30m /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.'''
+- at: '2026-09-18'
+  by: 1.0.0_SA_CTO
+  change: 'ORDER CHANGED -- MDPF_CANON takes the NEXT COO slot. Moved stage 2 -> 0 and placed FIRST in the file, because the reader queues by stage then file order and printed NEXT COO SLOT: MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS -> MDPF_CANON immediately before this edit -- his pick was LAST of four, so the file contradicted his word. It REVERSES this seat''s own rec (/open-calls card 1 recommended ADVI_FIRMBKTS). Nothing else moves: ADVI_FIRMBKTS keeps its stage-2 place, MDPF_CANON''s hold travels with the row unchanged, and the ~23:3xZ ordering of IRPT_BCKEND / MDPF_TAXSMA / NFRA_MCPINDEX is undisturbed beneath it. Capacity read AT CAP 3/3 at the edit, so this SEATS NOTHING today -- it sets the order; seating stays 0.0.0_AB_MSTR''s. Precedent for a stage move on a seat word: the ~19:0xZ IRPT_BCKEND move, stage 3 -> 0.'
+  word: '''1.) No MDPF CANON first as test run. 2 and onward yes to all approved'' (Andrew-direct ~22:3xZ 2026-09-18 at the 1.0.0_SA_CTO terminal, answering /open-calls card 1; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_223xZ_FIVE_CARDS_MDPF_CANON_FIRST_AS_TEST_RUN.md @8a44134dab)'
+- at: '2026-09-28'
+  by: 1.0.0_SA_CTO~Z
+  change: 'ATTRIBUTE FIX, NO ORDER MOVED -- NFRA_MCPINDEX and NFRA_OPLGTW fabric laptop -> site-z, matching their register rows (project.json fabric site-z; COO~MI and COO~O seated on site Z). sequence-check read DRIFT on both. Corrected without his word under the header rule: it changes no order.'
+  word: none required (an attribute correction); raised by 1.0.0_SA_CTO~O msg 26250 from its /self-drive tick 1 (@7612f001c4)
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v5 -- REWRITTEN as the four-box scale-in. Stages are now the ramp: 0 bring-up (NFRA_CTLPLN), 1 each Dell''s first lane (MDPF_SECHIST on dell1, IRPT_CUSTDY on dell2), 2 the first moves (MDPF_SECCLASS to dell1, IRPT_DASHBD to dell2), 3 the third lanes (ADVI_COTBKF to dell1; ADVI_BILLING and NFRA_OPSWKF on dell2), 4 later moves off the laptop (MDPF_TAXSMA, IRPT_BCKEND, IRPT_YCDGEN, NFRA_TRNSPT), 5 the site-Z set, 6 the six v4 Platform Logic and D8 rows with their gates unchanged. A row''s fabric stays one of the register''s two values until NFRA_CTLPLN extends the enum; each project''s box is in its why and in its tree row''s placement field. Capacity gains dell1: 1 and dell2: 1. v4''s stage-0 seat order (MDPF_CANON, IRPT_BCKEND, MDPF_TAXSMA, NFRA_MCPINDEX, NFRA_OPLGTW) is superseded by this ramp. ADVI_PERFRP moves to dell2 with IRPT_DASHBD but has no tree row to place.'
+  word: '''I like this plan for the scale in. I want to persist it somewhere, i think the best place for this is to actually rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' (Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md)'
 
-  - at: "2026-09-17"
-    by: "1.0.0_SA_CTO"
-    change: "stage 0 re-ordered: IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX. His ~23:3xZ word reverses the ~19:0xZ ordering of TAXSMA and MCPINDEX and touches nothing else; IRPT_BCKEND is first in both. The blocks are PHYSICALLY moved because the reader queues NEEDS-SLOT by file order. Recorded at org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260917_233xZ_THREE_COO_DRIVE_LOOPS_30M_AND_SEAT_ORDER_TAXSMA_THEN_MCPINDEX.md. Also lifts his 2026-09-16 TAXSMA hold, which that row carried."
-    word: "'Give each of the COO's a 30m /drive loop for their respective project, i want to make sure that none of them stall tonight, hoping to wake up tomorrow and all of these to be done. If that is the case, I want you to bring back, in this order, COO~T for TAXSMA, then COO~M for MCPINDEX.'"
-  - at: "2026-09-18"
-    by: "1.0.0_SA_CTO"
-    change: "ORDER CHANGED -- MDPF_CANON takes the NEXT COO slot. Moved stage 2 -> 0 and placed FIRST in the file, because the reader queues by stage then file order and printed NEXT COO SLOT: MDPF_TAXSMA -> NFRA_MCPINDEX -> ADVI_FIRMBKTS -> MDPF_CANON immediately before this edit -- his pick was LAST of four, so the file contradicted his word. It REVERSES this seat's own rec (/open-calls card 1 recommended ADVI_FIRMBKTS). Nothing else moves: ADVI_FIRMBKTS keeps its stage-2 place, MDPF_CANON's hold travels with the row unchanged, and the ~23:3xZ ordering of IRPT_BCKEND / MDPF_TAXSMA / NFRA_MCPINDEX is undisturbed beneath it. Capacity read AT CAP 3/3 at the edit, so this SEATS NOTHING today -- it sets the order; seating stays 0.0.0_AB_MSTR's. Precedent for a stage move on a seat word: the ~19:0xZ IRPT_BCKEND move, stage 3 -> 0."
-    word: "'1.) No MDPF CANON first as test run. 2 and onward yes to all approved' (Andrew-direct ~22:3xZ 2026-09-18 at the 1.0.0_SA_CTO terminal, answering /open-calls card 1; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260918_223xZ_FIVE_CARDS_MDPF_CANON_FIRST_AS_TEST_RUN.md @8a44134dab)"
-  - at: "2026-09-28"
-    by: "1.0.0_SA_CTO~Z"
-    change: "ATTRIBUTE FIX, NO ORDER MOVED -- NFRA_MCPINDEX and NFRA_OPLGTW fabric laptop -> site-z, matching their register rows (project.json fabric site-z; COO~MI and COO~O seated on site Z). sequence-check read DRIFT on both. Corrected without his word under the header rule: it changes no order."
-    word: "none required (an attribute correction); raised by 1.0.0_SA_CTO~O msg 26250 from its /self-drive tick 1 (@7612f001c4)"
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-09-28T22:20:39Z",
-    "head": "a0186c364b",
-    "sequence_file_last_commit": "55903c6259 2026-09-18T18:57:07-04:00 1.0.0_SA_CTO",
+    "compiled_at": "2026-10-07T04:49:32Z",
+    "head": "0ef817adb0",
+    "sequence_file_last_commit": "2bed2ad08b 2026-09-28T18:21:42-04:00 1.0.0_SA_CTO~Z",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
-      "box_fabric": "sitez",
-      "cap": null,
+      "box_fabric": "laptop",
+      "cap": 3,
       "live_coo_lanes": [
-        "2.0.0_SA_COO~AI",
-        "2.0.0_SA_COO~H",
-        "2.0.0_SA_COO~MI",
-        "2.0.0_SA_COO~MP",
-        "2.0.0_SA_COO~O",
-        "2.0.0_SA_COO~X",
-        "2.0.0_SA_COO~Z"
+        "2.0.0_SA_COO~C"
       ],
-      "free": null,
+      "free": 2,
       "next_slot_order": [
+        "NFRA_CTLPLN",
+        "MDPF_SECCLASS",
+        "IRPT_DASHBD",
+        "ADVI_COTBKF",
+        "MDPF_TAXSMA",
+        "IRPT_BCKEND",
+        "IRPT_YCDGEN",
+        "NFRA_TRNSPT",
+        "AMGT_RESAPP",
+        "AMGT_HARVST",
+        "AMGT_CORPUS",
+        "NFRA_SPRINTWIN",
         "MDPF_CANON",
+        "LGIC_ENFORCE",
+        "LGIC_CANON",
+        "LGIC_LGCTFM",
         "ADVI_FIRMBKTS"
       ]
     },
     "flags": {
-      "denominator": 10,
+      "denominator": 27,
       "counts": {
-        "NEEDS-SLOT": 2,
-        "READY-IDLE": 5
+        "NEEDS-SLOT": 8,
+        "UNMEASURED": 4,
+        "WAITING": 4,
+        "LANE-DARK": 9,
+        "READY-IDLE": 2
       }
     },
     "stages": [
       {
         "id": 0,
-        "name": "Andrew's seat priority -- MDPF_CANON, then IRPT_BCKEND, then MDPF_TAXSMA, then NFRA_MCPINDEX",
+        "name": "Bring-up -- the four-box control plane makes each Dell reachable",
+        "projects": {
+          "NFRA_CTLPLN": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "6f240da3ca 2026-10-07T00:32:23-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 1,
+        "name": "First lane on each Dell -- a NEW project, nothing to migrate",
+        "projects": {
+          "MDPF_SECHIST": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "UNMEASURED",
+              "WAITING"
+            ],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "UNMEASURED",
+                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+              }
+            ],
+            "coo_lane": null,
+            "phase": null
+          },
+          "IRPT_CUSTDY": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "UNMEASURED",
+              "WAITING"
+            ],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "UNMEASURED",
+                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+              }
+            ],
+            "coo_lane": null,
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 2,
+        "name": "Second lane on each Dell -- the first moves, after the grading of the first lane's first round",
+        "projects": {
+          "MDPF_SECCLASS": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.12 WITHHELD (brief SIGNED, ratified-text STALE)",
+            "last_activity": "63fe6e1aa8 2026-10-06T22:14:22-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~M is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~M",
+            "phase": null
+          },
+          "IRPT_DASHBD": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~P is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~P",
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Third lane on each Dell",
+        "projects": {
+          "ADVI_COTBKF": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "97463796de 2026-10-06T23:33:46-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          },
+          "ADVI_BILLING": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "UNMEASURED",
+              "WAITING"
+            ],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "UNMEASURED",
+                "detail": "manual: Andrew has each firm's answers on its billing system, fee terms and sign-off (Q-2 brief PART V)"
+              }
+            ],
+            "coo_lane": null,
+            "phase": null
+          },
+          "NFRA_OPSWKF": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "UNMEASURED",
+              "WAITING"
+            ],
+            "notes": [],
+            "gates": [
+              {
+                "kind": "waits_on",
+                "state": "UNMEASURED",
+                "detail": "manual: Andrew has sat with the operations lead: his day, his workbook's layout, the custodians he calls (Q-3 brief PART V)"
+              }
+            ],
+            "coo_lane": null,
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 4,
+        "name": "Later moves off the laptop, leaving it the control plane",
+        "projects": {
+          "MDPF_TAXSMA": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~T",
+            "phase": null
+          },
+          "IRPT_BCKEND": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.28 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~P is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~P",
+            "phase": null
+          },
+          "IRPT_YCDGEN": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~Y is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~Y",
+            "phase": null
+          },
+          "NFRA_TRNSPT": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "LANE-DARK"
+            ],
+            "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
+            ],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~T",
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 5,
+        "name": "Site Z -- the Bloomberg terminal and the one integrator; these stay",
+        "projects": {
+          "ETFS_RIVALS": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.17 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~RV",
+            "phase": null
+          },
+          "AMGT_RESAPP": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.41 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          },
+          "AMGT_HARVST": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.18 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          },
+          "AMGT_CORPUS": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; the drain is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          },
+          "DSGN_AMGTV1": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.15 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~D",
+            "phase": null
+          },
+          "NFRA_OPLGTW": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~O",
+            "phase": null
+          },
+          "NFRA_MCPINDEX": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~MI",
+            "phase": null
+          },
+          "NFRA_OPALAI": {
+            "dep_stage": "EXECUTING",
+            "status": "active",
+            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [],
+            "notes": [],
+            "gates": [],
+            "coo_lane": "2.0.0_SA_COO~AI",
+            "phase": null
+          },
+          "NFRA_SPRINTWIN": {
+            "dep_stage": "PRD",
+            "status": "active",
+            "prd": "v0.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "flags": [
+              "NEEDS-SLOT"
+            ],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
+            "gates": [],
+            "coo_lane": null,
+            "phase": null
+          }
+        }
+      },
+      {
+        "id": 6,
+        "name": "Carried from v4, order unchanged -- Platform Logic and the D8 migrations on it",
         "projects": {
           "MDPF_CANON": {
             "dep_stage": "PRD",
             "status": "active",
-            "prd": "v2.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "881c16d426 2026-09-16T15:20:10-04:00",
+            "prd": "v2.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "ae1900ab3e 2026-10-01T05:57:12-04:00",
             "flags": [
-              "NEEDS-SLOT",
-              "READY-IDLE"
+              "NEEDS-SLOT"
             ],
             "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row",
-              "every gate met; no commit under its home for 12 days"
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
             ],
             "gates": [
               {
@@ -280,56 +746,6 @@ compiled:
             "phase": null,
             "hold_max_dep_stage": "REGISTERED"
           },
-          "IRPT_BCKEND": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v0.18 WITHHELD (brief STALE, ratified-text SIGNED)",
-            "last_activity": "89f619e28b 2026-09-28T14:47:41-04:00",
-            "flags": [],
-            "notes": [],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~P",
-            "phase": null
-          },
-          "MDPF_TAXSMA": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "c79d558edd 2026-09-24T20:59:06-04:00",
-            "flags": [],
-            "notes": [],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~T",
-            "phase": null
-          },
-          "NFRA_MCPINDEX": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "067dc14967 2026-09-28T18:17:42-04:00",
-            "flags": [],
-            "notes": [],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~O",
-            "phase": null
-          },
-          "NFRA_OPLGTW": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v1.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "fa66d9e9f2 2026-09-28T17:26:10-04:00",
-            "flags": [],
-            "notes": [],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~O",
-            "phase": null
-          }
-        }
-      },
-      {
-        "id": 1,
-        "name": "Platform Logic -- the naming schema, the enforcement layer, the canon",
-        "projects": {
           "LGIC_NAMING": {
             "dep_stage": "CLOSED",
             "status": "complete",
@@ -345,11 +761,13 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "4125630e8a 2026-09-21T16:08:08-04:00",
+            "last_activity": "e9c6e3eb0c 2026-09-29T03:50:21-04:00",
             "flags": [
+              "LANE-DARK",
               "READY-IDLE"
             ],
             "notes": [
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~G is not live on this box, so its round waits for a COO seat",
               "every gate met; no commit under its home for 7 days"
             ],
             "gates": [
@@ -366,12 +784,12 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "07ec2c9eb9 2026-09-21T12:44:37-04:00",
+            "last_activity": "0921b6059c 2026-10-01T05:19:46-04:00",
             "flags": [
-              "READY-IDLE"
+              "LANE-DARK"
             ],
             "notes": [
-              "every gate met; no commit under its home for 7 days"
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~G is not live on this box, so its round waits for a COO seat"
             ],
             "gates": [],
             "coo_lane": "2.0.0_SA_COO~G",
@@ -383,10 +801,12 @@ compiled:
             "prd": "v1.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "c35c6e7811 2026-09-20T20:49:58-04:00",
             "flags": [
+              "LANE-DARK",
               "READY-IDLE"
             ],
             "notes": [
-              "every gate met; no commit under its home for 7 days"
+              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~G is not live on this box, so its round waits for a COO seat",
+              "every gate met; no commit under its home for 16 days"
             ],
             "gates": [
               {
@@ -407,25 +827,17 @@ compiled:
             ],
             "coo_lane": "2.0.0_SA_COO~G",
             "phase": null
-          }
-        }
-      },
-      {
-        "id": 2,
-        "name": "The D8 migrations built on Platform Logic",
-        "projects": {
+          },
           "ADVI_FIRMBKTS": {
             "dep_stage": "PRD",
             "status": "active",
             "prd": "v1.3 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "f5ccff15d0 2026-09-19T17:24:14-04:00",
+            "last_activity": "9453b7a44b 2026-10-01T05:22:31-04:00",
             "flags": [
-              "NEEDS-SLOT",
-              "READY-IDLE"
+              "NEEDS-SLOT"
             ],
             "notes": [
-              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row",
-              "every gate met; no commit under its home for 9 days"
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
             ],
             "gates": [
               {
@@ -444,11 +856,6 @@ compiled:
             "hold_max_dep_stage": "DECOMP"
           }
         }
-      },
-      {
-        "id": 3,
-        "name": "Projects whose outcomes land in the migrated firm buckets",
-        "projects": {}
       }
     ],
     "parked": [
