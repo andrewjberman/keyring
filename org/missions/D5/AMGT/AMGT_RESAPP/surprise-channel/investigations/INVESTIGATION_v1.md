@@ -21338,6 +21338,28 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "row AMGT_RESAPP-Z-S242 and 1.0.0_SA_CTO~Z's adjudication ledger/CTO_ADJUDICATION_REMEDIATION_ROWS_ROUND76.md section F"
     ]
   }
+},
+{
+  "id": "AMGT_RESAPP-Z-W282-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~282",
+  "surfaced_at": "2026-10-07T02:12:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "No stored identity record carries a company-level FIGI field, so comparable.company_identifier reads company_figi (which nothing stores today) and then the LEI; the company dedupe reaches only the names whose record carries an LEI.",
+  "spec_asserts": "AMGT-ba-16 section 1 item 2: company_identifier returns the member's own identity cell when it carries one, else the served identity record for the key: the company-level FIGI, else the LEI; None when neither is stored.",
+  "world_is": "The identity object a registration record carries (lib/research/identity/registrations.json, 71 registrations; crosswalk.schema.json identity.properties) has the keys bloomberg_security, name, exchange, lei, cik, sec_id, composite_figi, figi, isin, sedol, website -- no company-level FIGI. composite_figi and figi name a listing, so they cannot join two share classes of one company and are not read. Built: company_identifier reads company_figi then lei from the member's own cell, then from crosswalk.record_for(key)['identity']. Measured on the registrations file only (no pool read): 67 of 71 carry an identity object, 65 of 71 carry an lei. A crosswalk record without an identity object, and a member the registrations do not cover, return None and are kept, never guessed. The served pool crosswalk was not read in this cell, so how many of the served peer members carry an lei is unmeasured.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/research/identity/crosswalk.schema.json identity.properties (the key list above)",
+      "lib/research/identity/registrations.json: 71 registrations, 67 with identity, 65 with lei (python count, this worktree)",
+      "lib/research/posture/comparable.py COMPANY_ID_FIELDS and company_identifier"
+    ]
+  }
 }
 ]
 ```
