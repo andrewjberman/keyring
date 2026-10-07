@@ -4291,3 +4291,30 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Fix location named in BD_PAGES_THREAD_TRACE_20261007.json hop silver_dim (fix_line 366). Not fixed here."
 }
 ```
+
+## MDPF_SECCLASS-W46-S1 -- composition.ts now carries canonical class and sub-class; the panel and types.ts hookup lines sit outside the SC-e-59 write set
+
+```json
+{
+  "id": "MDPF_SECCLASS-W46-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~46",
+  "surfaced_at": "2026-10-07T14:10:00Z",
+  "one_line": "SC-e-59: composition.ts now carries the canonical class and sub-class onto each concentration item, but the page prints only display_label ?? label, so the sub-class shows only after a one-line hookup in ConsolidatedOverviewPanel.tsx outside the write set",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-MDPF_SECCLASS-46-portal @2107b1e2: composition.ts platinumToComposition items now carry asset_class_canonical, sub_asset_class_canonical, class_source when served; bun test canonical_subclass 6 pass 0 fail; tsc --noEmit -p tsconfig.app.json rc=0",
+      "portal/src/pages/AdvisorIntelligence/_shared/panels/ConsolidatedOverviewPanel.tsx:466-468 renders {item.display_label ?? item.label} and no sub-class; :246-252 filters items by item.asset_class",
+      "portal/src/pages/AdvisorIntelligence/_shared/types.ts:1519-1530 ConcentrationItem has no sub-class field; :2317-2333 PlatinumConcentrationData.items does not declare the canonical columns"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-59 / FWD-1 ACCEPT: the Advisor Intelligence page shows GLD and PHYS as commodities (Metals) and VXX as a hedge.",
+  "world_is": "After this fix the item the page reads carries the sub-class, but the panel still renders the label only, so the page shows no sub-class until the hookup. Hookup for the issuer at the merge: (1) types.ts ConcentrationItem (:1519-1530) add optional asset_class_canonical?, sub_asset_class_canonical?, class_source? string fields, and PlatinumConcentrationData.items (:2319-2333) the same three optional fields (composition.ts exports CanonicalConcentrationItem and ServedCanonicalColumns carrying them meanwhile); (2) ConsolidatedOverviewPanel.tsx after the label span (:468) render item.sub_asset_class_canonical when present (for example a muted span beside the label). VXX is also absent from z08327149's served top-10 list, so a per-security VXX row appears only if the served concentration lists it; this fix cannot add it.",
+  "notes": "Write set limited to composition.ts and its test; neither types.ts nor the panel was edited."
+}
+```
