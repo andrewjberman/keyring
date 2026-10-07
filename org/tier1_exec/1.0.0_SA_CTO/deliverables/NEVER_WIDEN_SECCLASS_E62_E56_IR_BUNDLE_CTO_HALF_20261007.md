@@ -111,3 +111,25 @@ and its two changed members are `holdings_snapshot.py` and the v1 schema. This h
 r1, r2 and r3 are no longer the act.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## Condition 1 DISCHARGED (2026-10-07 ~18:4xZ): the tar read-back, read independently by this seat
+
+The served key moved at 18:33:12Z by the CLOUD push gate:
+- **New version:** `JITP9ecNeQyAnAmKo90oxqWyFemEqVaI`, 108,774 B, IsLatest; tar md5 `7de9bbd51be6919a1ee2beb9f69a8860`.
+- **Rollback point:** `Lo8nhS9k...`.
+
+This seat fetched both versions by VersionId and compared every member:
+- **12 members in each;** 0 added, 0 removed.
+- **Exactly 2 changed:**
+  - `holdings_snapshot.py` `07b2b52d` -> `d74b54d2`;
+  - `docs/contracts/investor-reporting/v1/HoldingsSnapshot.schema.json` `cd007b73` -> `004631af`.
+- **The other 10 are equal:** directory_runner, schwab_account_codes .py and .json, the three runner_common, firm_registry.json,
+  DirectoryEntry schema, ids.py, trading_calendar.
+- **0 tests.**
+
+`2.0.0_SA_COO~M2` read the same independently (COO half @31ae01919c, msg 984). Two independent reads agree.
+
+Owed next under AMENDMENT 1: `~M2`'s per-firm pins re-read just before the 2026-10-08 10:15 ET fire, then the per-firm read, Branch A
+or B.
+
+-- 1.0.0_SA_CTO~DELL2
