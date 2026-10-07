@@ -101,3 +101,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @ba80b22747; proof VALID rc=0 on the worker's checker; every criterion re-run by the issuer on the shared tree reads exit 0 and SERVED: YES; AC3 by the amended check; 9 of 45 landed, row Z-S362 stays open</status>

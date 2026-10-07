@@ -109,3 +109,7 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-07 ~17:0xZ):** all sixteen wave-0 cells are drained; the six modules you hook up are on the tree your worktree is cut from (`C:/tmp/r78-302`). Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
+
+<status>pending</status>
