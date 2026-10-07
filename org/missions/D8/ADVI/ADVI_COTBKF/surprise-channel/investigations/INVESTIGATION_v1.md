@@ -1497,3 +1497,30 @@ round.** Never edit an existing row.
   "notes": "Surfaced running TO CB-j-1 AC2. The number of securities in that table is not known: it was never read."
 }
 ```
+
+## ADVI_COTBKF-D2-W27-S1 -- MEASURED: 2,914 securities and 8,091,310 security-days are two different sets; the cell's rows number 4,545 and sums_ok is False
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W27-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~27",
+  "surfaced_at": "2026-10-07T12:50Z",
+  "one_line": "MEASURED: 2,914 securities and 8,091,310 security-days do not describe the same set -- 2,914 is the never-priced securities (6,259,410 days); 8,091,310 also holds the gap days of 1,631 priced-but-not-fully-covered securities (1,831,900 days); the rows the cell describes number 4,545",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python data/assets/scripts/analysis/commonwealth_price_need_file.py --out org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~27 -> PRICE-NEED-FILE securities=4545 security_days=8091310 yahoo_securities=3226 yahoo_days=5773776 bloomberg_securities=1319 bloomberg_days=2317534 sums_ok=False fetched=0 (rc 1); census line it reconciles to: universe=4634 priced_any=1720 security_days_covered=1297651 security_days_needed=9388961 (cache-served, 0 barred calls)",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~27/PRICE_NEED_FOR_SECHIST.json row_split: never_priced_securities=2914 never_priced_days=6259410; gap_only_securities=1631 gap_only_days=1831900; 2914+1631=4545 and 6259410+1831900=8091310",
+      "data/assets/scripts/analysis/commonwealth_price_census.py:235-276 coverage(): priced_any counts a security once ANY store prices it on any day; security_days_covered counts only the days inside its needed window, so a partly priced security is in priced_any and still owes uncovered days"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-k-1 cell text and CB11k1-AC2: for every security with any uncovered day one row is written, the totals are securities=2914 security_days=8091310, and sums_ok is True when the totals equal universe - priced_any and security_days_needed - security_days_covered. AC1's stub (2 fully priced, 1 equity partly covered, 1 bond uncovered) writes 2 rows with sums_ok=True.",
+  "world_is": "Days reconcile to the census exactly (8,091,310 = 9,388,961 - 1,297,651). Securities do not: a row for every security with any uncovered day is 4,545, not universe - priced_any = 2,914, because 1,631 of the 1,720 priced securities are priced on only some of their needed days. sums_ok=False is therefore the correct reading of the order's own definition, and AC2's expected prefix securities=2914 cannot be printed without writing rows only for the never-priced securities (then security_days=6259410, not 8091310) or without changing the sums_ok definition. The same contradiction hits AC1's stub: with C partly covered the stub writes 2 rows but universe - priced_any is 1, so sums_ok=False; the tests assert that (test_partly_priced_security_...) and also assert sums_ok=True on a stub whose rows are all never-priced. The refusal clause applied: nothing weakened, the file is written as the cell describes (4,545 rows, source YAHOO 3,226 / BLOOMBERG_SITE_Z 1,319), AC2 is FAIL. Which set MDPF_SECHIST should pull (the 4,545 including gaps, or the 2,914 never-priced alone) is the COO/CTO's ruling; the file carries both splits. Round 10's S19 and D2-W26-S2 state '2,914 securities and 8,091,310 security-days unpriced' as one set; it is two.",
+  "notes": "Surfaced building TO CB-k-1. BLIND: whether a vendor prices the gap days of a partly priced security (MDPF_SECHIST's to measure)."
+}
+```
