@@ -95,6 +95,7 @@ org/missions/D13/DSGN/DSGN_AMGTV1/surprise-channel/investigations/INVESTIGATION_
   <criterion id="AC2" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba5.py" --crit AC2 --where local; echo "exit=$?"</invocation><expect>BA's served table is drawn with its six column labels, both row labels and every figure; the no-table control draws none; the y axis formats a nine-digit figure in 7 characters or fewer and keeps 528 exact; an ABSENT chart shows its served plain reason; C1-C10 PASS; R77 BA5 AC2 SERVED: YES; and exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; PYTHONPATH="$(pwd)" python "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round77/checks/r77_ba5.py" --crit AC3 --where local; echo "exit=$?"</invocation><expect>BA's 11 rows sit under 3 headings in first-served order, each name alone once; the one-label and no-row controls hold; C1-C6 PASS; R77 BA5 AC3 SERVED: YES; and exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="AV-zw-2" judgment="true"/>
+  <criterion id="AC5" cell_refs="AV-zw-2"><invocation>cd "$(git rev-parse --show-toplevel)" &amp;&amp; node "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round45/checks/r45b/r45b.cjs"; echo "exit=$?"</invocation><expect>NO FIGURE SITS UNDER THE WRONG COLUMN HEADER: 4 of 4 arms -- and exit=0</expect></criterion>
 </proof_of_spec>
 
 AC4 is the CTO's judgment on the render (a portal candidate is reviewed from a render), not a fourth mechanical check.
@@ -107,6 +108,28 @@ A row id on this project carries the site-z infix: `DSGN_AMGTV1-Z-W107-S<k>`, wi
 `disarm_owner` `2.0.0_SA_COO~D`.
 Report once: the exact diff, the output lines of every criterion, the portal and outer commit hashes, the existing harnesses you
 ran and which assertions you re-anchored, and any row.
+
+## AMENDMENT 1 (2026-10-07, issuer) -- NO FIGURE SITS UNDER THE WRONG COLUMN HEADER
+
+The order's first pass is built and committed on your portal branch. The reviewer read BA's opened passage and ruled one change to
+`components/PassageTable.tsx`. BA's "Deliveries" row serves 8 figures under 6 column labels, so the page draws 26 under "Total" and
+the real total hangs past the last column. A reader of that cell sees "Total: 26".
+
+**The rule:** a row whose figure count differs from the number of column labels is NOT drawn in the header grid.
+1. Keep `<table data-driver-chart-passage-table>` and its header row, one `<th scope="col">` per served column label, so the reader
+   still sees the filing's columns.
+2. A row with EXACTLY as many figures as there are column labels is a `<tr>` in the table body, as today.
+3. Any other row is drawn OUTSIDE the table, beneath it, as its own line: an element carrying
+   `data-driver-chart-passage-row-unaligned` that holds the row's label (bold) and then every one of its figures in the served
+   order, separated by spaces. No figure is dropped, moved or worked out.
+4. The served `note` is shown once, beneath those lines.
+5. On BA neither served row matches (5 figures and 8 figures against 6 labels), so the table body is empty and both rows are lines.
+   That is the intended result.
+
+A new check grades this rule (AC5 below). On your current commit it reads 2 of 4: both mismatched-row arms fail. AC1, AC2 and AC3
+must stay green; if AC2's clauses on BA's table no longer hold because a clause expects the figures inside the grid, report the
+exact clause line and do not edit that check (it is outside your paths). Update `RENDER_ZW2.md` for BA's opened passage. Re-write
+your proof instance on the new commits with AC5 in it, and flip `<status>` to `complete` again in that commit.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -127,3 +150,6 @@ ran and which assertions you re-anchored, and any row.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 1 (issuer, 2026-10-07):** CTO render review `ledger/CTO_RENDER_REVIEW_ROUND45_0aa353a6.md` @e3d1e62b06 (msg 30533), re-opened for one change. No gate limb graded this modification.
+<status>pending</status>

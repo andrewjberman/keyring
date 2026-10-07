@@ -129,6 +129,31 @@ A row id on this project carries the site-z infix: `DSGN_AMGTV1-Z-W106-S<k>`, wi
 `disarm_owner` `2.0.0_SA_COO~D`.
 Report once: the exact diff, the output line of every criterion, the portal and outer commit hashes, and any row.
 
+## AMENDMENT 1 (2026-10-07, issuer) -- THE ONE-LINE DESCRIPTION LEADS THE PAGE
+
+The order's first pass is built and committed on your portal branch (TopBand, InputProvenance, the mounts, the re-run button gone).
+The reviewer read the page and ruled one change: the company's one-line description is the first thing a reader needs, so it moves
+up into the name header. Everything else stays where it is.
+
+1. **`components/TopBand.tsx`:** add a second export, `CompanyLine: FC<{ band?: <the same top_band block> | null }>`.
+   - No block: render nothing (null).
+   - Otherwise it renders the ONE element carrying `data-top-band-description`: the served `description_line`, or the served
+     `description_reason` when the line is empty. It draws no news item and no social line.
+   - Style it as body text in the name header: navy ink, the page's normal text size, no new colour.
+2. **`TopBand` itself no longer draws the description.** Remove the `data-top-band-description` element from it. It keeps the day's
+   items (or their reason) and the social line, exactly as built.
+3. **`components/SecurityOverlay.tsx`:** in `IdentityHeader`, mount `<CompanyLine band={top?.top_band} />` directly under the
+   identity card block (the element carrying `data-identity-card` and its row) and ABOVE `<HeaderCards bundle={bundle} />`, so it
+   sits above the key figures and above `<TimelinePanel`. Read the block as `bundle as SecurityOverlayBundle & OverlayTopFields`
+   (from `../topBandTypes`), as you did in `SecurityAnalysis.tsx`. Do not edit `types.ts`.
+4. **`SecurityAnalysis.tsx`:** unchanged. It keeps `<TopBand>` and `<InputProvenance>` above the tabs and does not mount `CompanyLine`.
+5. If a harness under `__harness__/` asserts the header's markup and your change moves it, re-anchor only that assertion and say which.
+
+The check for this order was amended to this contract (same invocation, AC1). On your current commit it reads 2 of 5: arm 1
+"does not export CompanyLine", arm 2 "TopBand still draws the description", arm 4 "SecurityOverlay.tsx does not mount <CompanyLine ...>".
+AC1 and AC2 are unchanged in text and must both be green again. Update `RENDER_ZW1.md` to show the company line and the band as they
+now render for BA and MSFT. Re-write your proof instance on the new commits, and flip `<status>` to `complete` again in that commit.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
@@ -147,3 +172,6 @@ Report once: the exact diff, the output line of every criterion, the portal and 
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**AMENDMENT 1 (issuer, 2026-10-07):** CTO render review `ledger/CTO_RENDER_REVIEW_ROUND45_0aa353a6.md` @e3d1e62b06 (msg 30533), re-opened for one change. No gate limb graded this modification.
+<status>pending</status>
