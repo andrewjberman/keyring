@@ -19504,3 +19504,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "dell2 lacks terraform; the release waits for a ruling: a laptop seat applies it, or terraform reaches dell2 by an Opal-internal route."
 }
 ```
+
+## IRPT_BCKEND-W144-S1 -- TO-IB-pr-342: the order's firm bucket names differ from the directory registry's; the cottonwood fence bucket held no granted account
+
+```json
+{
+  "id": "IRPT_BCKEND-W144-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~144",
+  "surfaced_at": "2026-10-07T11:11:41Z",
+  "one_line": "TO-IB-pr-342 names the firm buckets opal-data-49financial / opal-data-inflection / opal-data-cottonwood; the directory's own registry maps the three firms to opal-data-bd / opal-data-inf / opal-data-cot, and the ownership map and served directory live there. opal-data-cottonwood answers 403 (the named fence, not widened); opal-data-cot answers 200, so the cottonwood ownership map (advisors=0) was read there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED head/get on 2026-10-07: s3://opal-data-bd/platinum/49financial/ownership_map.json 200 (472562 bytes), s3://opal-data-bd/investor-reporting/directory/latest.json 200; s3://opal-data-inf/investor-reporting/directory/latest.json 200; s3://opal-data-inf/platinum/inflection/ownership_map.json 404; s3://opal-data-cot/platinum/cottonwood/ownership_map.json 200 (107 bytes, advisors=0); s3://opal-data-cottonwood/... 403 on both keys",
+      "data/assets/scripts/gold/investor_reporting/directory_runner.py:177-185 @94e67927f5 firm_bucket_map(): 49financial -> opal-data-bd, inflection -> opal-data-inf, cottonwood -> opal-data-cot; data/assets/scripts/gold/runners_49f/runner_common.py:34 GOLD_BUCKET = opal-data-49financial (the gold dimension plane the directory builds from, read-only here)",
+      "no fence was widened: the denied bucket opal-data-cottonwood was probed once and never read; the cot directory.json itself was not read (zero granted accounts there)",
+      "census: org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~144/IB64-1_directory_coverage.json per_firm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "opal-data-cottonwood is the denied cottonwood bucket and opal-data-49financial / opal-data-inflection are the readable firm buckets; cottonwood accounts are to be recorded under a fence reason.",
+  "world_is": "All 7,022 granted accounts are 49financial (ownership map in opal-data-bd). Inflection has no ownership_map object; cottonwood's map (opal-data-cot) holds 0 advisors, so zero cottonwood accounts needed the fence reason; FENCE_COTTONWOOD_BUCKET_DENIED is declared with count 0."
+}
+```
