@@ -30,4 +30,23 @@ NFRA_CTLPLN."
 - Whether the tripwire branch is deleted or kept. It is kept, unmerged.
 - The PROD promote of portal `4b167888`. He asked where the page is; he gave no promote word.
 
+## SECOND WORD, ~15:4xZ, same terminal -- his read of /rivalfunds
+
+### Verbatim
+
+"I just checked /rivalfunds, not really sure what I was supposed to see. There is no timeseries modal popup yet, no 30d 90d 365d
+switch, just looks like a clean version of how i remember it, maybe with added hyperlinks in the AI Analysis sections, which is
+good of course."
+
+### Applied as (verbatim scope, no wider)
+
+- It is his read of the SERVED page, which is round 14. It matches the state on record: the price-and-trades dialog (FWD-22) and
+  the 30 / 90 / 365 day switch (FWD-23) are merged in rounds 15 to 21 and NOT deployed (`ledger/ROUND_ANALYSIS.round20.md` section 2;
+  the Lambda deploy waits on the marker repair of row ETFS_RIVALS-Z-C-S64).
+- "added hyperlinks in the AI Analysis sections, which is good of course": his words on round 13's ticker links, recorded as said.
+- It is NOT recorded as the signed-in click on the audit link (round-13 ruling 1). He does not mention the audit link. FWD-5 and
+  FWD-18 stay as graded until the gateway's access record shows that read.
+- This seat's list told him to click a link and did not tell him what the page would and would not show. That is this seat's
+  omission, corrected in its reply.
+
 -- 1.0.0_SA_CTO~Z
