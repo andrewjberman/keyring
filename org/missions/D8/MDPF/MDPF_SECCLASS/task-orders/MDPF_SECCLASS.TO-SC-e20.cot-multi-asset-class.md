@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~20</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-10-06</issued_date>
-<status>pending</status>
+<status>superseded</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -202,3 +202,13 @@ the issuer re-canonized it (canonical value, both site values, C_06's line 182 t
 S32, S33 and S34 (a seat commit cannot carry a W id). AC2 is unchanged and read `BD-MIX-CHECK ok=True holders=47 after_sums_to_1=47 composition_gap_after=0.00` on the worker's tree with its held edits.
 Gate limb: none graded this modification (no new order; no `<placeholders>`).
 
+## CLOSE -- SUPERSEDED (2.0.0_SA_COO~M1, 2026-10-07, at the round-8 issuance)
+
+`<status>` superseded, not complete: no proof instance was written for amendment 2. The cell's served change (the S29 class-list
+fix for Cottonwood and Black Diamond gold) was rolled back and withdrawn: 8 S3 objects restored and read back, repo restored to
+the pre-S29 bytes @a62580ef8f, ledger `secclass-s29-class-lists-m-20261006` CLOSED as ROLLED BACK (CLOUD 3bcb2d2f5a; rows
+S35-S37). Andrew's rule B (six classes, no `multi_asset`) replaced the cell's premise: the 33 `multi_asset` rows were remapped
+@0d9457b639, and round 8 (`decompositions/MDPF_SECCLASS_DECOMP_R8.md`) carries the remaining six-class work in SC-e-21 to
+SC-e-23. Laptop 2.0.0_SA_COO~M's handoff `org/tier1_exec/2.0.0_SA_COO/handoffs/2026-10-07_0205Z.md` named this close. The worker
+branch `wk-secclass-r7-20` is graded SUPERSEDED by 3.0.0_SA_CVO (6c72e70143). Gate limb: none graded this modification (no new
+order; no `<placeholders>`).

@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~6</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -58,7 +58,7 @@ nothing derived by you, is what you join.
 
 ### ACCEPTANCE
 
-<criterion id="CT4d2-AC1" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py</invocation><expect>cross_firm_leaks=0</expect></criterion>
+<criterion id="CT4d2-AC1" cell_refs="CT-d-2"><invocation>python infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py</invocation><expect>typed_in_tf=0 cross_firm_leaks=0</expect></criterion>
 `CT4d2-AC1` -- no Dell user is admitted to a bucket outside its confirmed list. The same line must read `other_lines_changed=0`,
 `negative_arm=denied` and `ok=True`, stated in the proof row; the `joined` and `evaluator_allowed` counts equal the pair count.
 
@@ -80,6 +80,7 @@ infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf
 infra/aws/terraform/shared-infra/s3-49financial.tf
 infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py
 infra/aws/terraform/shared-infra/tests/dell_fence_join_pairs.json
+infra/logic/registry/exemptions.json
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -112,3 +113,87 @@ lane: the <paths> block IS the grant (worker RULING 1).
 
 Source: CTO msg 106061 (b); CLAUDE.md hard stop "NEVER reference another firm's data from a pipeline tree" (the cross-firm law);
 decomposition round 4 "Open at the CTO" item 2. Base dry-run at the cut: CT4d2-AC1 base FAIL as expected (the check does not exist).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-07 ~09:0xZ) -- THE CONFIRMED ADMISSIONS; the order is handed (staged -> pending)
+
+Authority: CT-d-1's census, merged @7cb0a2f3ab (24 of 24 data buckets read; 3 fenced; the evaluator agrees on 48 of 48 calls), and
+`1.0.0_SA_CTO` msg 106089: "the principals admitted per bucket by placement (dell2: the three firms' data its five projects read;
+dell1: what MDPF_SECHIST and MDPF_SECCLASS read)". Gate limb: none graded this modification.
+
+**THE PAIRS (three, and only these):**
+
+| Dell user | bucket | fence declared at | citing files of dell2-placed projects |
+|---|---|---|---|
+| `cloudops-dell2-agent-user` | `opal-data-49financial` | `infra/aws/terraform/shared-infra/s3-49financial.tf:122` | 17 |
+| `cloudops-dell2-agent-user` | `opal-data-cottonwood` | `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:142` (a `for_each` over the scopes registry) | 22 |
+| `cloudops-dell2-agent-user` | `opal-data-inflection` | `infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:142` (the same `for_each`) | 14 |
+
+**dell1 is joined to NO fence.** Its placed projects' buckets (the census's union for dell1) meet no fence today: `gap_dell1=0`. Do not
+add `cloudops-dell1-agent-user` anywhere. The cross-firm arm of your check must show dell1 absent from all three fences and dell2
+present in exactly these three.
+
+**The shared construct.** Two of the three fences are ONE `for_each` resource over a registry, so the admitted list is very likely one
+expression serving every firm bucket that resource builds. Adding dell2 there admits it to exactly the buckets that resource fences;
+the census says that resource fences these two and no third. CONFIRM that from the Terraform before you edit (how many buckets does
+the `for_each` produce, and is each one in the pairs?). If it produces a bucket that is NOT in the pairs, do not widen it: give the
+listed buckets their own extension, as the face says, and say how. If the admitted list is read from a registry file (for example
+`infra/logic/registry/scopes.json`) rather than typed in the `.tf`, that file is NOT in your grant: stop, file ONE BLOCKING row naming
+the file and the key, and report -- the issuer amends the grant.
+
+**The pairs file** `tests/dell_fence_join_pairs.json` holds exactly the three pairs above.
+
+The saved census `tests/dell_fence_census.json` and its script are in your worktree after the merge of the trunk into your branch.
+
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-07 ~09:2xZ) -- REOPENED: the admissions are REGISTRY ROWS, never typed in the Terraform
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated and commits f15a6778a0 and a8baaeb291 are
+inherited state. This branch is NOT merged to the trunk in its typed form. Gate limb: none graded this modification.
+WHERE THIS AMENDMENT AND THE FACE DIFFER, THIS AMENDMENT GOVERNS.
+
+**Why.** Your own row NFRA_CTLPLN-W6-S3 named it. The fence's doctrine, stated in `s3-49financial.tf` ("Neither list is typed here
+(DEC-4 iii)") and in `infra/logic/registry/exemptions.json` `_about` ("The policy's exemption list, service principals included, is
+generated from these rows and never typed"), and CLAUDE.md rule 30 (a pipeline's names and tenancy come from the canon and its
+builders; a hand-typed workaround is never the answer to a missing registry row), make the route a ROW per bucket in
+`exemptions.json`: `principal`, `arn`, `reason`, `signoff_ref`. The module `opal_name` already renders those rows into each fence
+(`fence_exemption_arns`). A typed term also has the defect you flagged: any future firm bucket the shared `for_each` builds would gain
+the user without anyone deciding it. A registry row is keyed by bucket and cannot leak that way.
+
+**THE WORK:**
+
+1. REVERT the two typed lines: `s3-49financial.tf` and `s3-lgic-firm-buckets.tf` return to their bytes at `3ec42c56bf` (write each
+   from `git show 3ec42c56bf:<path>`; do not use checkout or reset). After this step
+   `git diff 3ec42c56bf -- infra/aws/terraform/shared-infra/*.tf` prints nothing.
+2. Add THREE rows to `infra/logic/registry/exemptions.json` (now in your grant), one under each of the keys
+   `opal-data-49financial`, `opal-data-cottonwood`, `opal-data-inflection`, in the shape `_about.row_fields` gives and the existing
+   rows show:
+   - `principal`: `cloudops-dell2-agent-user`
+   - `arn`: `arn:aws:iam::313476888478:user/cloudops-dell2-agent-user` (an IAM user, so the ARN is written)
+   - `reason`: one sentence: the dell2 box's agent identity; dell2 is the placed box of the projects whose orders read this bucket
+     (name the projects and the citing-file count from the pairs table of AMENDMENT 1); NFRA_CTLPLN CT-d-2; CTO msg 106061 and 106089.
+   - `signoff_ref`: `org/critical_paths/change_management/` entry slug `nfra-ctlpln-dell2-fence-join-laptop-20261007` (opened at the
+     apply); COO half `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_NFRA_CTLPLN_DELL2_FENCE_JOIN_20261007.md`; CTO half
+     `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_CTLPLN_DELL2_FENCE_JOIN_20261007.md`. (Both halves are written against
+     your result; the paths are fixed here so the rows can cite them.)
+   Add rows only; change no existing row, key or field; keep the file's formatting and line endings. No row under `opal-data-bd`,
+   `opal-data-inf` or `opal-data-cot`, and none for `cloudops-dell1-agent-user` anywhere.
+3. Run `python lib/opal_naming.py validate` before and after and record both last lines. If the validator refuses a row, do not
+   weaken it or the row: record the refusal lines, file a BLOCKING row, stop.
+4. Show that the module renders the rows: read `infra/aws/terraform/modules/opal_name/` to see how `fence_exemption_arns` is built
+   from the file, then evaluate it for the three buckets (a small Python reading of the same JSON by the module's rule is acceptable
+   if `terraform console` cannot run without the backend; say which you did) and print, per bucket, that the Dell ARN is in the
+   rendered list.
+5. Update `tests/check_dell_fence_join.py`: it now reads the pairs file and `exemptions.json`. It asserts: each pair has exactly one
+   row under its bucket key; `cloudops-dell2-agent-user` appears under exactly those three keys and no other; `cloudops-dell1-agent-user`
+   appears nowhere in the file; the registry diff against `3ec42c56bf` is exactly three added rows and nothing else
+   (`other_rows_changed`); the two `.tf` files carry NO Dell user ARN and are byte-equal to `3ec42c56bf` (`typed_in_tf` counts Dell
+   ARN occurrences in them); and the evaluator arms are unchanged (each pair `allowed` on the edited document, the negative arm not
+   allowed on the live one). LAST line
+   `FENCE-JOIN pairs=<k> rows=<j>/<k> typed_in_tf=<t> cross_firm_leaks=<x> evaluator_allowed=<a>/<k> negative_arm=<denied|ALLOWED> other_rows_changed=<o> validator=<ok|refused> ok=<True|False>`,
+   `ok=True` only when `j == k`, `t == 0`, `x == 0`, `a == k`, the negative arm is `denied`, `o == 0` and the validator is `ok`.
+
+**ACCEPTANCE, replacing CT4d2-AC1's expectation (same id, same invocation):** `typed_in_tf=0 cross_firm_leaks=0`, and the same line
+reads `rows=3/3`, `other_rows_changed=0`, `validator=ok`, `negative_arm=denied` and `ok=True`, stated in the proof row.
+
+Write a NEW proof instance over the old one at the same path, validate it, and flip `<status>` back to `complete` only when it passes.
+In files outside `tests/` and outside the registry and the two `.tf` files, do not type a firm bucket's name: the registry is where
+these names already live.

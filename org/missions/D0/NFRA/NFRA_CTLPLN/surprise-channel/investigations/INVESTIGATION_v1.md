@@ -1194,6 +1194,160 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-W6-S3 -- The fence admission lists are registry-generated; the join is a typed third term in each concat(), not an exemptions.json row
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T09:08:35Z",
+  "one_line": "The fences' admitted lists are generated from two registry files (scopes.json patterns, exemptions.json named exemptions) that the order's grant excludes; the join was made as one added typed term in each fence's own concat(), the construct s3-49financial.tf already uses for its adapter role, not as an exemptions.json row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/shared-infra/s3-49financial.tf:139-143 and s3-lgic-firm-buckets.tf:160-164 @3ec42c56bf: aws:PrincipalArn = concat(module.opal_name.fence_patterns[...], exemption arns, ...) -- the first two terms are registry-generated; s3-49financial.tf already carries a third typed term (the adapter role arn)",
+      "infra/logic/registry/exemptions.json keys: every fenced bucket has a row list; no cloudops dell user is in any list (measured: 0 of 7 key lists name a dell user)",
+      "s3-49financial.tf:93-96 header: the two lists are 'never typed here (DEC-4 iii)'; the typed third term is a departure from that sentence's letter, in the same concat the adapter-role precedent uses"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-2 AMENDMENT 1: if the admitted list is read from a registry file rather than typed in the .tf, STOP and file a BLOCKING row; otherwise add the user to the construct the fence already uses.",
+  "world_is": "The concat is typed in the .tf (in grant) and its registry terms are untouched; a third typed term adds the one user without a registry write, so the stop clause was read as not triggered. The senior seat that signs may prefer the registry route (a named exemption row with its change-management sign-off); that is a later swap of the same single-user admission. The shared for_each term applies to every bucket that resource produces: today exactly 2 (both in the pairs), and a future FIRM row the registry hands to that file would gain the user too."
+}
+```
+
+## NFRA_CTLPLN-W10-S3 -- CT-d-7 amendment 1: the registry has no public single-name system resolver; the read calls validate()'s own two private steps
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T09:27:40Z",
+  "one_line": "Amendment 1 says to decide SELF-RESOLVING / REGISTERED / ROW-NEEDED by calling the registry's own reader, but lib/opal_naming.py exposes no public function that returns the system a name's own tokens resolve; grade() returns NOT-GRADED for IAM_USER, so the read calls _res_tokens and _slots, the two steps validate() itself runs on a resources.json row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming.py:642-664 (validate, resources.json limb): `rtoks = _res_tokens(body, v_res, ...)` then `_rsysv, _rout, _rscope, rph = _slots(None, rtoks, typ, v_res)`; a row is refused when `not rph and _rsysv == system`; for an SQS_QUEUE the .fifo suffix is removed from the body first (line 655-656)",
+      "lib/opal_naming.py grade('cloudops-dell1-agent-user', 'IAM_USER') -> ('NOT-GRADED', None); grade() on the other eight names -> CONFORMANT; so grade() cannot answer the question for the two Dell users",
+      "org/devices/round_created_resources.py registry_class() makes exactly those calls (private names, same module, same repo); for the ten named resources of the two roots it returns SELF-RESOLVING 10 of 10, and the validator's count line is `VALIDATE: OK 53 system row(s), 13 scope row(s), 41 warning(s) at registry@d669df6cb07575c8 over all 8 registry file(s)` (rc=0)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 amendment 1 item 1: decide by calling the registry's own reader in lib/opal_naming.py (read how validate and name resolve a system; call that, do not re-implement it).",
+  "world_is": "There is no public single-name resolver. The read depends on two underscore-private functions and on the .fifo-removal line copied from validate(); a change to either in lib/opal_naming.py changes this read with no error. The .fifo removal is the only step re-stated here (one line); everything else is a call. Whether to export a public resolver is the registry owner's call; nothing in this order's paths edits lib/opal_naming.py."
+}
+```
+
+## NFRA_CTLPLN-W10-S4 -- CT-d-7 amendment 1: eight of ten named resources read NO-NODE although the graph was built AFTER their introducing commits
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T09:27:50Z",
+  "one_line": "Over rounds 2 and 3 the cloud-graph arm finds 0 nodes for 10 named resources: 2 are labelled NO-NODE-GRAPH-OLDER (policies introduced 06:48Z and 08:40Z, after the graph's 06:16:58Z build) and 8 are plain NO-NODE (introduced 03:29Z-03:49Z, before the graph's build); a commit time says when a resource was declared, not when it was applied, so the read cannot tell 'not applied' from 'applied and not modelled'.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ROUND_2_3_CREATED_RESOURCES.txt last line: created=16 nameless=6 named=10 self_resolving=10 registered=0 row_needed=0 unresolved=0 graph_unread=0 graph_nodes=0 no_node=8 no_node_graph_older=2 graph_built=2026-10-07T06:16:58Z ok=True",
+      "comp-find --corpus aws on each name: DEFERRED 0 of 1, `0 hit(s) across 2833 aws node(s) scanned`, VINTAGE `Built from the estate as of 2026-10-07 06:16:58 UTC`; positive control through the same parser: gateway-access-state-table -> 1 node (DYNAMODB_TABLE, drift DECLARED) and `opal-gateway` -> 71 hits, 71 parsed (2 name matches, 69 properties-only)",
+      "introducing commits (committer time, UTC): a0ad635429 03:29:39Z (group, 2 users, deploy and 2 bus policies), 768fca164e 03:49:44Z (2 queues), d452dcffe5 06:48:20Z (create policy), ce05f0e838 08:40:50Z (respol policy)",
+      "the drain commit for TO-CT-d-5 says its resource-policy Deny is NOT APPLIED"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 amendment 1 item 2: a miss explained by the graph being older than the resource is labelled NO-NODE-GRAPH-OLDER by comparing the graph's built time with the introducing commit's time; every other miss is NO-NODE.",
+  "world_is": "The comparison is by commit time as ordered, so 8 misses read plain NO-NODE. Whether those eight are unapplied (declared in Terraform, never created in the account) or applied-and-absent-from-the-graph is not decided by this read, which makes no AWS call and has no apply time; the order's NO-NODE finding is carried as measured and no interpretation is added. Reading each root's Terraform state or apply ledger would decide it and is outside this order."
+}
+```
+
+## NFRA_CTLPLN-W10-S5 -- CT-d-7 amendment 1: the last-line field order and the CT4d7-AC2 expectation cannot both hold
+
+```json
+{
+  "id": "NFRA_CTLPLN-W10-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~10",
+  "surfaced_at": "2026-10-07T09:32:00Z",
+  "one_line": "Amendment 1 fixes the last-line field order with graph_nodes, no_node and no_node_graph_older between unresolved and graph_unread, but CT4d7-AC2 expects the contiguous string 'unresolved=0 graph_unread=0', which the checker matches as a substring; the read prints graph_unread directly after unresolved.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/proof-of-spec-check.py on the instance with the amendment's field order: `VIOLATION: acceptance[CT4d7-AC2]: status=PASS but output_evidence does NOT match expect 'unresolved=0 graph_unread=0'`, INVALID rc=1; the last line then read `... unresolved=0 graph_nodes=0 no_node=8 no_node_graph_older=2 graph_unread=0 ...`",
+      "after moving graph_unread beside unresolved the line reads `... row_needed=0 unresolved=0 graph_unread=0 graph_nodes=0 no_node=8 no_node_graph_older=2 graph_built=2026-10-07T06:16:58Z ok=True`; every field the amendment names is present with the same name and meaning"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-d-7 amendment 1 item 3 (last-line field order: ... unresolved=<u> graph_nodes=<k> no_node=<z> no_node_graph_older=<o> graph_unread=<w> ...) and its acceptance (CT4d7-AC2 expects `unresolved=0 graph_unread=0`).",
+  "world_is": "The two statements cannot both hold under a substring match. The order of the other fields was changed (graph_unread moved up two places and past none of the named values); the expectation and every value are unchanged. A consumer that reads the line by field name is unaffected; one that reads it by position would see the move."
+}
+```
+
+## NFRA_CTLPLN-W13-S4 -- CT-k-2: The agentbus root has no .terraform.lock.hcl, so the premise that the identity and agentbus roots lock two dif
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:55:00Z",
+  "one_line": "The agentbus root has no .terraform.lock.hcl, so the premise that the identity and agentbus roots lock two different major versions does not hold: the tree locks exactly one provider version (hashicorp/aws 5.100.0).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_terraform_providers.py required: TF-REQUIRED roots=15 locked=10 no_lock=5 providers=1 distinct_versions=1 ok=True, on branch wk-NFRA_CTLPLN-13 (base df95fb06b5); infra/aws/terraform/nfra-ctlpln-agentbus holds main.tf, sqs.tf, tests/ and no lock file (git ls-files lists 39 lock files, none there)",
+      "infra/aws/terraform/nfra-ctlpln-agentbus/main.tf required_providers: hashicorp/aws version ~> 6.0; the identity root's lock pins 5.100.0 under ~> 5.0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 1 item 5 (1): required lists hashicorp/aws and at least the two versions this project's two roots lock (the identity root and the agentbus root lock different major versions).",
+  "world_is": "Only the identity root locks a version (5.100.0). The agentbus root declares ~> 6.0 and carries no lock, so its init resolves the newest 6.x the source offers. Test case 1 asserts what is true (identity LOCKED at 5.100.0; agentbus NO-LOCK declaring ~> 6.0) rather than two locked versions. The kit carries the agentbus need through pack --include-unlocked: the highest on-box version satisfying the declared constraint (6.67.0 in the plugin cache). Whether the Dell should lock the agentbus root at 6.67.0 is the issuer's call."
+}
+```
+
+## NFRA_CTLPLN-W13-S5 -- CT-k-2: Five of the 15 derived Terraform roots (bd-49f-auto-login, estate-report, mdpf-secclass, modules, nfra-ctlpln-
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:55:30Z",
+  "one_line": "Five of the 15 derived Terraform roots (bd-49f-auto-login, estate-report, mdpf-secclass, modules, nfra-ctlpln-agentbus) have no lock file; a mirror built from locks alone would not serve them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_terraform_providers.py required prints NO-LOCK for those five roots, with declared constraints hashicorp/aws ~> 5.0 (four roots), ~> 6.0 (agentbus) and hashicorp/archive ~> 2.4 (estate-report)",
+      "python org/devices/kit_terraform_providers.py located prints UNLOCKED lines: best on-box satisfying versions aws 5.100.0, aws 6.67.0, archive 2.8.1 (plugin cache holds aws 5.100.0 and 6.67.0, archive 2.8.0 and 2.8.1, local 2.9.1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-k-2 AMENDMENT 1 item 1: a root with no lock file is NO-LOCK, counted; the pack lays out the found providers the roots LOCK.",
+  "world_is": "no_lock=5 of 15. The order's pack covers locked providers only (1 version); the five NO-LOCK roots need aws 5.x, aws 6.x and archive 2.x. This worker added an off-order flag, pack --include-unlocked, which adds the highest on-box version satisfying each declared constraint; without it the Dell cannot init those roots from the mirror. The flag is opt-in and the test suite does not depend on it."
+}
+```
+
 ## NFRA_CTLPLN-W9-S1 -- the row schemas still refuse a Dell id and a dell fabric value
 
 ```json

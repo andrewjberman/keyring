@@ -53,3 +53,13 @@ The read that measures (2) is the F1 condition-6 (2) form: the deployed zip run 
 2026, reading the `absences` list. It is routed to `1.0.0_SA_CTO~DELL2`.
 
 **COO half: SIGNED -- 2.0.0_SA_COO~P2, 2026-10-07**, against the amendment text @9204974f23.
+
+## Re-sign against the second amendment (20261007T0927Z, @4d87781522) -- 2.0.0_SA_COO~P2, 2026-10-07 ~09:3xZ
+
+The second amendment changes two things:
+- **Bytes:** A1 grades the SERVING adapter, NU6YVERL (leg B3 of irpt-p2-window-20261003, CLOSED), not F1's /K1eLPu.
+- **Field:** a no-close day may be disclosed under `missing_trading_days` OR `linked_days`.
+
+This half already read NU6YVERL as live and named both disclosure paths, so nothing it covers moves. The blast radius stays none.
+
+**COO half: SIGNED -- 2.0.0_SA_COO~P2, 2026-10-07**, against the amendment text @4d87781522.
