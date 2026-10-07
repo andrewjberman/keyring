@@ -13,8 +13,8 @@
 #
 # THE FOUR BOXES (v5, Andrew-direct 2026-10-07): the sequence IS the scale-in. laptop (tailnet cloud-local) = the control plane;
 # sitez = the Bloomberg terminal and the one integrator; dell1 = the securities layer; dell2 = the January 1 reporting programme.
-# STAGES ARE THE RAMP: each Dell starts its fabric manager alone, takes ONE new project, and gains a lane only after the lane
-# before it has a graded round. A row's `fabric` is one of the register's two fabric values (laptop, site-z) until NFRA_CTLPLN
+# STAGES GROUP THE WORK BY BOX AND KIND (v6): the one-lane-at-a-time ramp is dropped on Andrew's 2026-10-07 ~07:0xZ word; a Dell takes
+# every project placed on it as soon as its fabric manager is live. A row's `fabric` is one of the register's two fabric values (laptop, site-z) until NFRA_CTLPLN
 # adds dell1 and dell2 to that enum (.tools/to-pipeline-gate.py FABRIC_ENUM); a project's BOX is in its `why` and in its tree
 # row's `placement` field. A project already under way moves between rounds, never mid-round. Layout record:
 #   org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md
@@ -54,7 +54,7 @@
 # orders for a project whose stage is not open is approved to follow once this order has held about a week; it is
 # announced before it is armed.
 
-version: 5
+version: 6
 owners:
 - 1.0.0_SA_CTO
 - 1.0.0_SA_CTO~Z
@@ -62,24 +62,22 @@ enforcement: TRACK
 capacity:
   coo_sessions:
     laptop: 3
-    dell1: 1
-    dell2: 1
-  why: 'Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): ''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' Site Z''s cap is not ruled. DELLS: one COO lane each to start, raised one lane at a time as each stage''s first round is graded (Andrew-direct 2026-10-07 ~04:3xZ, ''We will start revving them up slow on those projects''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md). The laptop''s target is one lane (NFRA_CTLPLN) once stage 4''s moves are done; its cap of 3 is his standing word and is not changed here.'
+  why: 'Andrew-direct 2026-09-14 ~07:0xZ (org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260914_070xZ_THREE_COO_CAP_AND_PUSH_WINDOW.md @f21c5d8290): ''We can only have 3 COOs running their respective projects/subagents at any one time, otherwise it gets too overloaded on the box. This is why the sequence function is important, so that chronology is managed in line with available resources.'' Site Z''s cap is not ruled. DELLS: NO lane cap (Andrew-direct 2026-10-07 ~07:0xZ, ''Definitely drop one lane cap and shared-branch wait for the dells''; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md), which replaces his ~04:3xZ ''We will start revving them up slow''. He named no other number. The laptop''s target is one lane (NFRA_CTLPLN) once stage 4''s moves are done; its cap of 3 is his standing word and is not changed here.'
 stages:
 - id: 0
   name: Bring-up -- the four-box control plane makes each Dell reachable
   why: 'A Dell takes no project until its AWS user, its key, its inbound queue and its fabric manager exist (NFRA_CTLPLN C-IDENTITY, C-BUS, FWD-2). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 1
-  name: First lane on each Dell -- a NEW project, nothing to migrate
+  name: New projects on the Dells -- nothing to migrate
   why: 'Start each Dell''s fabric manager alone, then give it ONE new project with nothing to migrate, so a Dell problem cannot damage running work. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 2
-  name: Second lane on each Dell -- the first moves, after the grading of the first lane's first round
+  name: Projects in flight that move to a Dell -- their lanes' successors are seated there directly
   why: 'A live project moves only between rounds (NFRA_CTLPLN FWD-13), and only after the Dell has proven itself on its first lane. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 3
-  name: Third lane on each Dell
+  name: Client work and the projects behind Andrew's inputs
   why: 'One lane at a time, so each Dell''s real load is seen before the next is added. Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 4
-  name: Later moves off the laptop, leaving it the control plane
+  name: The rest of the moves off the laptop, leaving it the control plane
   why: 'The laptop ends with the planning seats and NFRA_CTLPLN only (C-ROLES). Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal: ''I like this plan for the scale in ... rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' Record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md; layout org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md.'
 - id: 5
   name: Site Z -- the Bloomberg terminal and the one integrator; these stay
@@ -98,12 +96,14 @@ projects:
     stage: 1
     waits_on:
     - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+      confirmed: '1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, ''dell1 and dell2 are live, i have put them both on loops governing''; 0.0.0_AB_MSTR~DELL1 on the bus (4db364bf, 07:10Z) reporting his /govern arm at dell1 and lanes ~M1 and ~H1 awarded there (relay msg 106029)'
     why: 'BOX: dell1, its FIRST lane. The securities history, a new project with nothing to migrate. Andrew ~19:2xZ 2026-10-06: round 1 on dell1. It defines the one store Cottonwood''s daily prices land in.'
   IRPT_CUSTDY:
     fabric: laptop
     stage: 1
     waits_on:
     - manual: 'the box''s fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)'
+      confirmed: '1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, ''dell1 and dell2 are live, i have put them both on loops governing''. His word is the evidence for dell2: no bus message from dell2''s fabric manager had reached this seat at the confirmation'
     why: 'BOX: dell2, its FIRST lane. Custodian-level investor reporting replacing Black Diamond, the January 1 date. New, nothing to migrate.'
   MDPF_SECCLASS:
     fabric: laptop
@@ -119,7 +119,7 @@ projects:
     fabric: laptop
     stage: 3
     waits_on: []
-    why: 'TARGET BOX: dell1 (dell1''s THIRD lane). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Cottonwood''s Commonwealth history feeds both the securities history and custodian reporting.'
+    why: 'TARGET BOX: dell2, the box that runs IRPT_CUSTDY, on Andrew''s 2026-10-07 ~06:2xZ word (''whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project''), replacing dell1. It moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Cottonwood''s Commonwealth history feeds both the securities history and custodian reporting.'
   ADVI_BILLING:
     fabric: laptop
     stage: 3
@@ -132,21 +132,16 @@ projects:
     waits_on:
     - manual: 'Andrew has sat with the operations lead: his day, his workbook''s layout, the custodians he calls (Q-3 brief PART V)'
     why: 'BOX: dell2, after ADVI_BILLING. Trade submission led by the operations lead''s Excel workflow. New; it cannot be specified before that sitting.'
-  MDPF_TAXSMA:
-    fabric: laptop
-    stage: 4
-    waits_on: []
-    why: 'TARGET BOX: dell1 (after dell1''s three lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. Quiet; no lane is asked for it now.'
   IRPT_BCKEND:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell2 (after dell2''s first two lanes). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. The reporting back end; its deploys go through site Z or a Dell''s trunk-only deploy.'
+    why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lanes'' successors start on the Dell directly. The reporting back end.'
   IRPT_YCDGEN:
     fabric: laptop
     stage: 4
     waits_on: []
-    why: 'TARGET BOX: dell2 (once Andrew''s report retry on the laptop''s dev build has passed). It runs on the laptop until then and moves at its next round boundary by the laptop fabric manager''s award, never mid-round. It stays on the laptop until then because that retry needs his own sign-in at this screen.'
+    why: 'TARGET BOX: dell2, on Andrew''s 2026-10-07 ~07:0xZ word (''I am ok with your move of the IRPT pair back to Dell2''). Its lane''s successor starts on the Dell directly; his report retry is then a sign-in on that box.'
   NFRA_TRNSPT:
     fabric: laptop
     stage: 4
@@ -251,6 +246,66 @@ parked:
   NFRA_SUBSTRATECARDING:
     fabric: laptop
     why: 'Andrew-direct 2026-09-14 ~00:0xZ: ''it is just not a priority at this time.'' Not ordered; recorded so no driver takes it up ahead of the sequence.'
+  MDPF_GLOBAL:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_ADVIPOINTERS:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  WSE_COTMDL:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  D12_PHONE_OTP_ALL_AWS:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_KIMIPIPELINE:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXSMA_PT2:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXSMA_REGISTRY:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  ADVI_ROSTERCOLS:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  D3_MODELOVERLAY:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  NFRA_VELOCITY_CORE:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  NFRA_VELOCITY_ESTATE:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_SQSCHAT:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  YALP_MACROS:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects). Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  GLOBALALARM:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TICKET_VNEXT:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  AUTH_SELFHEAL:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXROSTER:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  OPAL_TAXSMA:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  ADVI_49F:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
+  ADVI_INSURE:
+    fabric: laptop
+    why: 'Parked by 1.0.0_SA_CTO 2026-10-07 on Andrew''s yes to /open-calls card 4 (park or close the quiet and cold projects), second pass. Not ordered; recorded so no driver takes it up ahead of the sequence. Evidence and the reverse path: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_ADJUDICATION_PARK_OR_CLOSE_FIRST_PASS_20261007.md.'
 pending_placement:
 - subject: the projects behind the 07-28 sequence
   question: '''MDPF COMPLETION'', then the ETF and EventBridge scheduling fixes (org/missions/GOALS.yaml, replaced). Which projects carry those today, and do any have an ordering constraint?'
@@ -322,14 +377,38 @@ change_log:
   by: 1.0.0_SA_CTO
   change: 'v5 -- REWRITTEN as the four-box scale-in. Stages are now the ramp: 0 bring-up (NFRA_CTLPLN), 1 each Dell''s first lane (MDPF_SECHIST on dell1, IRPT_CUSTDY on dell2), 2 the first moves (MDPF_SECCLASS to dell1, IRPT_DASHBD to dell2), 3 the third lanes (ADVI_COTBKF to dell1; ADVI_BILLING and NFRA_OPSWKF on dell2), 4 later moves off the laptop (MDPF_TAXSMA, IRPT_BCKEND, IRPT_YCDGEN, NFRA_TRNSPT), 5 the site-Z set, 6 the six v4 Platform Logic and D8 rows with their gates unchanged. A row''s fabric stays one of the register''s two values until NFRA_CTLPLN extends the enum; each project''s box is in its why and in its tree row''s placement field. Capacity gains dell1: 1 and dell2: 1. v4''s stage-0 seat order (MDPF_CANON, IRPT_BCKEND, MDPF_TAXSMA, NFRA_MCPINDEX, NFRA_OPLGTW) is superseded by this ramp. ADVI_PERFRP moves to dell2 with IRPT_DASHBD but has no tree row to place.'
   word: '''I like this plan for the scale in. I want to persist it somewhere, i think the best place for this is to actually rewrite the sequence.yaml, instead putting on this flow including the breakdowns youve already persisted about what work goes on each of the four boxes.'' (Andrew-direct 2026-10-07 ~04:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_045xZ_SEQUENCE_REWRITTEN_AS_THE_FOUR_BOX_SCALE_IN.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v5 placement -- IRPT_BCKEND and IRPT_YCDGEN target dell1, not dell2 (each row''s why and its tree row''s placement field). MDPF_TAXSMA leaves the sequence: Andrew closed it, and a closed project that gates nothing has no order to keep. Stages and every other row are unchanged; dell2''s set is now IRPT_CUSTDY, IRPT_DASHBD, ADVI_BILLING, NFRA_OPSWKF.'
+  word: '''MDPF_TAXSMA is done at this point, should be closed. IRPT_BCKEND, IRPT_YCDGEN should both be on dell1'' (Andrew-direct 2026-10-07 ~06:1xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v5 placement -- ADVI_COTBKF targets dell2, the box that runs IRPT_CUSTDY, not dell1. Its stage and every other row are unchanged.'
+  word: '''Ok that means that whatever box is doing IRPT_CUSTDY should also be working on the COTBKF project.'' (Andrew-direct 2026-10-07 ~06:2xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'v6 -- the ramp is dropped. IRPT_BCKEND and IRPT_YCDGEN target dell2 again (dell1 keeps the securities layer: MDPF_SECHIST, MDPF_SECCLASS). capacity loses dell1: 1 and dell2: 1 and gains no other number. Stages 1 to 4 keep their rows and lose the one-lane-at-a-time gating in their names; the fabric-manager-live gate on the two new projects stays, because it is a fact about the box and not a ramp. The successors of the laptop''s P, Y and M lanes are seated on the Dells directly.'
+  word: '''THe entire point of the Dells is that they are workhorses, they should be flying. I am ok with your move of the IRPT pair back to Dell2. Definitely drop one lane cap and shared-branch wait for the dells. Yes i recommend seating the three lanes successors directly on the dells.'' (Andrew-direct 2026-10-07 ~07:0xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_070xZ_DELLS_ARE_WORKHORSES_IRPT_PAIR_DELL2_NO_LANE_CAP_NO_TRUNK_WAIT_SEAT_ON_DELLS.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'parked -- 13 flat-register projects join the parked list (first pass of the park-or-close adjudication). No order changed; no project closed by this entry.'
+  word: '''4.) Yes.'' answering the card ''May this seat park or close the quiet and cold projects itself?'' (Andrew-direct 2026-10-07 ~06:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'gate -- the manual fabric-manager-live gates on MDPF_SECHIST (dell1) and IRPT_CUSTDY (dell2) confirmed MET. No order changed.'
+  word: '''dell1 and dell2 are live, i have put them both on loops governing. i will bring their CTOs online now.'' (Andrew-direct 2026-10-07 ~07:1xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_DELLS_LIVE_GOVERN_LOOPS_DELL_CTOS_COMING.md)'
+- at: '2026-10-07'
+  by: 1.0.0_SA_CTO
+  change: 'parked -- 7 more flat-register projects join the parked list (second pass of the park-or-close adjudication); 20 are now parked on that word. No order changed; no project closed by this entry.'
+  word: '''4.) Yes.'' answering the card ''May this seat park or close the quiet and cold projects itself?'' (Andrew-direct 2026-10-07 ~06:5xZ at the 1.0.0_SA_CTO terminal; record org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_065xZ_OPEN_CALLS_FOUR_ANSWERED_PASSROLE_YES_LAPTOP_ADMINS_STAY_CTO_PARKS_AND_CLOSES.md)'
 
 # >>> COMPILED STATE -- written by `python .tools/sequence-check.py --compile`. NEVER hand-edit. A SNAPSHOT,
 # stale the moment it is written: trust it only as of its compiled_at + head, and recompile before acting on it.
 compiled:
   {
-    "compiled_at": "2026-10-07T04:49:32Z",
-    "head": "0ef817adb0",
-    "sequence_file_last_commit": "2bed2ad08b 2026-09-28T18:21:42-04:00 1.0.0_SA_CTO~Z",
+    "compiled_at": "2026-10-07T07:41:47Z",
+    "head": "72e87b0e39",
+    "sequence_file_last_commit": "9b1121219b 2026-10-07T03:15:25-04:00 1.0.0_SA_CTO",
     "recompile": "python .tools/sequence-check.py --compile",
     "capacity": {
       "box_fabric": "laptop",
@@ -340,10 +419,11 @@ compiled:
       "free": 2,
       "next_slot_order": [
         "NFRA_CTLPLN",
+        "MDPF_SECHIST",
+        "IRPT_CUSTDY",
         "MDPF_SECCLASS",
         "IRPT_DASHBD",
         "ADVI_COTBKF",
-        "MDPF_TAXSMA",
         "IRPT_BCKEND",
         "IRPT_YCDGEN",
         "NFRA_TRNSPT",
@@ -359,12 +439,12 @@ compiled:
       ]
     },
     "flags": {
-      "denominator": 27,
+      "denominator": 26,
       "counts": {
-        "NEEDS-SLOT": 8,
-        "UNMEASURED": 4,
-        "WAITING": 4,
-        "LANE-DARK": 9,
+        "NEEDS-SLOT": 10,
+        "LANE-DARK": 8,
+        "UNMEASURED": 2,
+        "WAITING": 2,
         "READY-IDLE": 2
       }
     },
@@ -376,8 +456,8 @@ compiled:
           "NFRA_CTLPLN": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "6f240da3ca 2026-10-07T00:32:23-04:00",
+            "prd": "v0.12 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "48910c0e33 2026-10-07T03:34:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -392,7 +472,7 @@ compiled:
       },
       {
         "id": 1,
-        "name": "First lane on each Dell -- a NEW project, nothing to migrate",
+        "name": "New projects on the Dells -- nothing to migrate",
         "projects": {
           "MDPF_SECHIST": {
             "dep_stage": "PRD",
@@ -400,15 +480,16 @@ compiled:
             "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
             "flags": [
-              "UNMEASURED",
-              "WAITING"
+              "NEEDS-SLOT"
             ],
-            "notes": [],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
-                "state": "UNMEASURED",
-                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+                "state": "MET",
+                "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, 'dell1 and dell2 are live, i have put them both on loops governing'; 0.0.0_AB_MSTR~DELL1 on the bus (4db364bf, 07:10Z) reporting his /govern arm at dell1 and lanes ~M1 and ~H1 awarded there (relay msg 106029)"
               }
             ],
             "coo_lane": null,
@@ -420,15 +501,16 @@ compiled:
             "prd": "v0.1 ADMITTED (brief SIGNED, ratified-text SIGNED)",
             "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
             "flags": [
-              "UNMEASURED",
-              "WAITING"
+              "NEEDS-SLOT"
             ],
-            "notes": [],
+            "notes": [
+              "PRD admitted; L5 is next and is a COO's; no coo_lane on the tree row"
+            ],
             "gates": [
               {
                 "kind": "waits_on",
-                "state": "UNMEASURED",
-                "detail": "manual: the box's fabric manager is live on its own inbound queue (NFRA_CTLPLN round 2: the AWS user, the key picked up by Andrew, the queue, AGENTBUS_DEVICE set)"
+                "state": "MET",
+                "detail": "manual, CONFIRMED: 1.0.0_SA_CTO 2026-10-07 -- Andrew-direct ~07:1xZ, 'dell1 and dell2 are live, i have put them both on loops governing'. His word is the evidence for dell2: no bus message from dell2's fabric manager had reached this seat at the confirmation"
               }
             ],
             "coo_lane": null,
@@ -438,13 +520,13 @@ compiled:
       },
       {
         "id": 2,
-        "name": "Second lane on each Dell -- the first moves, after the grading of the first lane's first round",
+        "name": "Projects in flight that move to a Dell -- their lanes' successors are seated there directly",
         "projects": {
           "MDPF_SECCLASS": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.12 WITHHELD (brief SIGNED, ratified-text STALE)",
-            "last_activity": "63fe6e1aa8 2026-10-06T22:14:22-04:00",
+            "prd": "v0.12 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "495efa3c32 2026-10-07T03:23:06-04:00",
             "flags": [
               "LANE-DARK"
             ],
@@ -459,7 +541,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "83d5e34919 2026-10-07T03:32:34-04:00",
             "flags": [
               "LANE-DARK"
             ],
@@ -474,13 +556,13 @@ compiled:
       },
       {
         "id": 3,
-        "name": "Third lane on each Dell",
+        "name": "Client work and the projects behind Andrew's inputs",
         "projects": {
           "ADVI_COTBKF": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.4 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "97463796de 2026-10-06T23:33:46-04:00",
+            "last_activity": "9f52bdd6d0 2026-10-07T02:19:35-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -535,28 +617,13 @@ compiled:
       },
       {
         "id": 4,
-        "name": "Later moves off the laptop, leaving it the control plane",
+        "name": "The rest of the moves off the laptop, leaving it the control plane",
         "projects": {
-          "MDPF_TAXSMA": {
-            "dep_stage": "EXECUTING",
-            "status": "active",
-            "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
-            "flags": [
-              "LANE-DARK"
-            ],
-            "notes": [
-              "in flight at EXECUTING; its coo_lane 2.0.0_SA_COO~T is not live on this box, so its round waits for a COO seat"
-            ],
-            "gates": [],
-            "coo_lane": "2.0.0_SA_COO~T",
-            "phase": null
-          },
           "IRPT_BCKEND": {
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.28 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "85c7ee8c99 2026-10-07T02:42:56-04:00",
             "flags": [
               "LANE-DARK"
             ],
@@ -571,7 +638,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "85c7ee8c99 2026-10-07T02:42:56-04:00",
             "flags": [
               "LANE-DARK"
             ],
@@ -606,8 +673,8 @@ compiled:
           "ETFS_RIVALS": {
             "dep_stage": "EXECUTING",
             "status": "active",
-            "prd": "v0.17 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "prd": "v0.18 ADMITTED (brief SIGNED, ratified-text SIGNED)",
+            "last_activity": "d06e19f939 2026-10-07T02:04:44-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -618,7 +685,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.41 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "a24e2ac7f2 2026-10-07T02:07:21-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -633,7 +700,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.18 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -648,7 +715,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.8 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [
               "NEEDS-SLOT"
             ],
@@ -663,7 +730,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.15 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -674,7 +741,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v1.7 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "2076c8a21a 2026-10-07T01:24:17-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -685,7 +752,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.6 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -696,7 +763,7 @@ compiled:
             "dep_stage": "EXECUTING",
             "status": "active",
             "prd": "v0.5 ADMITTED (brief SIGNED, ratified-text SIGNED)",
-            "last_activity": "d693439d70 2026-10-06T20:57:00-04:00",
+            "last_activity": "6b1927409f 2026-10-07T01:05:54-04:00",
             "flags": [],
             "notes": [],
             "gates": [],
@@ -859,7 +926,27 @@ compiled:
       }
     ],
     "parked": [
-      "NFRA_SUBSTRATECARDING"
+      "ADVI_49F",
+      "ADVI_INSURE",
+      "ADVI_ROSTERCOLS",
+      "AUTH_SELFHEAL",
+      "D12_PHONE_OTP_ALL_AWS",
+      "D3_MODELOVERLAY",
+      "GLOBALALARM",
+      "MDPF_GLOBAL",
+      "NFRA_SUBSTRATECARDING",
+      "NFRA_VELOCITY_CORE",
+      "NFRA_VELOCITY_ESTATE",
+      "OPAL_ADVIPOINTERS",
+      "OPAL_KIMIPIPELINE",
+      "OPAL_SQSCHAT",
+      "OPAL_TAXROSTER",
+      "OPAL_TAXSMA",
+      "OPAL_TAXSMA_PT2",
+      "OPAL_TAXSMA_REGISTRY",
+      "OPAL_TICKET_VNEXT",
+      "WSE_COTMDL",
+      "YALP_MACROS"
     ],
     "pending_placement": 2
   }

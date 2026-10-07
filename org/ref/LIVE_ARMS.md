@@ -19,12 +19,34 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
-- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` DIRECTED (Andrew-direct ~20:1xZ 2026-10-06 at the `2.0.0_SA_COO~C` terminal, VERBATIM:
-  "I think you should run these task orders /canonical-drive ADVI_COTBKF style. There is too much work on your plate with fielding
-  CTLPLN and COTBKF at the same time to be solo driving."). Record
-  `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md` @45b266dcdb. He named no cadence
-  and no stop: event-driven, no cron; stop when every ADVI_COTBKF FWD grades REALIZED (read from the register), at HELD-AT-STOP, or on
-  his stand-down. NFRA_CTLPLN stays with ~C outside this drive. Landed by 1.0.0_SA_CTO.
+- `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
+  4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
+  to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
+  `2.0.0_SA_COO~M1` (MDPF_SECCLASS), `2.0.0_SA_COO~H1` (MDPF_SECHIST). He named no stop: his stand-down. Landed by 1.0.0_SA_CTO.
+- DELL2, all rows from one record written by `0.0.0_AB_MSTR~DELL2`: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261007_071xZ_DELL2_SEATING_CTO_SELF_DRIVE_COO_CANONICAL_DRIVE_MSTR_ARMS.md`
+  @aed4552f74 (on origin CLOUD bd7cd8fb0a by `0.0.0_AB_MSTR` msg 106054). Landed by 1.0.0_SA_CTO; chooser Andrew except where said.
+  - `0.0.0_AB_MSTR~DELL2` `/govern 60m` DIRECTED. His words at the dell1 terminal ~07:10Z, relayed on bus 900b6ce0, VERBATIM: "Also tell DELL2 to
+    run the same /govern loop that you are running, with verbatim text and same 60m interval." Stop: his stand-down.
+  - `0.0.0_AB_MSTR~DELL2` fast-forward `/git-pull` every 15m, and the Taildrop receive monitor: DIRECTED (was AUTHORITY-UNVERIFIED). The record's
+    section 1 quotes the handoff he pasted as that session's first message: "Taildrop monitor is a standing arm at launch on this box." Both
+    are session Monitors. Stop: his stand-down.
+  - `1.0.0_SA_CTO~DELL2` `/self-drive 60m` over IRPT_CUSTDY, IRPT_BCKEND, ADVI_COTBKF, IRPT_YCDGEN, IRPT_DASHBD, DIRECTED. VERBATIM: "Bring on a CTO
+    with instructions to /self-drive the projects of the COOs you spawn, 60m interval, with instruction to manage adjudications for open
+    calls." Its own arming record is `ANDREW_DIRECT_20261007_072xZ_SELF_DRIVE_60M_DELL2_IRPT_CUSTDY_IRPT_BCKEND_ADVI_COTBKF.md` @66a57498d9. Stop:
+    all five complete, HELD-AT-STOP, or his stand-down.
+  - `/canonical-drive <own project>`, CHOSEN: each seat accepts Andrew's recommendation, VERBATIM: "I also recommend that when you bring on the
+    COOs, they should have /canonical-drive on their respective projects." He named no interval and no stop; "recommend" is his word and
+    this row does not convert it into an order. Seven seats: `2.0.0_SA_COO~K2` IRPT_CUSTDY; `2.0.0_SA_COO~C2` ADVI_COTBKF;
+    `2.0.0_SA_COO~P2`, `2.0.0_SA_COO~Y2`, `2.0.0_SA_COO~M2` IRPT_BCKEND (workstreams P, Y, M); `2.0.0_SA_COO~G2` IRPT_YCDGEN;
+    `2.0.0_SA_COO~D2` IRPT_DASHBD. Cadence is each seat's to state in its own first tick; stop when its project reads complete, at
+    HELD-AT-STOP, or on his stand-down.
+  - No row: the Microsoft Defender CPU sampling Monitor (record section 5). He asked that seat to "keep an eye"; it is a watch, not a loop.
+
+
+- `2.0.0_SA_COO~C` on NFRA_CTLPLN ONLY (Andrew-direct ~06:1xZ 2026-10-07 at the `1.0.0_SA_CTO` terminal, VERBATIM: "bring COO~C on for
+  this purpose. COO~C should only be focused on this work, not cottonwood backfill project."). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md`. He named no
+  loop and no cadence: event-driven, NO cron. Landed by 1.0.0_SA_CTO.
 
 - RELAUNCH 2026-09-28 (Andrew-direct ~17:3xZ, record
   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20260928_173xZ_RELAUNCH_CTO_COO_DYPM_CANONICAL_DRIVE_D_CLOSER_CRO_UIWALK.md`;
@@ -106,16 +128,29 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
       resources. `4.0.0_SA_CRO~RV` was not relaunched, so the driver rules ETFS_RIVALS calls until he says otherwise.
     - The "Friday demo" goal text is not in his word of today and is not carried.
     - Stop: DONE read from the register, HELD-AT-STOP (never for AMGT_HARVST), or Andrew's stand-down.
+- DELL1 (Andrew-direct ~07:15Z 2026-10-07 at the `0.0.0_AB_MSTR~DELL1` terminal, relayed as msg 1, VERBATIM: "Bring CTO online
+  with instructions to run /self-drive on the underlying COOs projects with a 60m interval. Furthermore, the COOs should be running
+  /canonical-drive on their projects."). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md`.
+  Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~DELL1. Stop: both projects `status: complete`, HELD-AT-STOP, or his stand-down.
+  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST.
+  - EXTENSION asked by `1.0.0_SA_CTO~DELL1` (bus d60577bf, relayed by `0.0.0_AB_MSTR` msg 106074), landed by 1.0.0_SA_CTO 2026-10-07 ~08:4xZ as
+    AUTHORITY-UNVERIFIED (transient): MDPF_HEALGAP joins that `/self-drive 60m`, paired with `2.0.0_SA_COO~G1` `/canonical-drive 10m`. The
+    asking seat calls it DIRECTED on a record @7cf0be6c7d that is on dell1 only; this seat has not read it. Andrew held `~G1` at dell1 ~07:52Z
+    until the project's L1 (relay 106059), so the record must show his release. Re-class to DIRECTED when it is on origin and read.
+  - `2.0.0_SA_COO~M1` `/canonical-drive MDPF_SECCLASS` and `2.0.0_SA_COO~H1` `/canonical-drive MDPF_SECHIST`. He named no cadence,
+    so each uses the skill's 10m DIRECTED own-project default.
+  - The `/govern` arms of the two fabric managers are the two DIRECTED rows at the top of this section.
+  - Re-classes the AUTHORITY-UNVERIFIED row that 1.0.0_SA_CTO landed @e37552ef87, which is folded into this row.
+  - `3.0.0_SA_CVO` (base, dell1) runs these seats' surprise channels ad hoc, with NO cron.
 - `2.0.0_SA_COO~A` `/drive` NFRA_CLDGRPH to CLOSED:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260910_171xZ_CLDGRPH_HOLDS_OFF_WRAP_IT_UP.md`.
 - `2.0.0_SA_COO~X` `/drive` NFRA_C3MATERIALIZE:
   `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20260828_050xZ_COOX_DRIVE_LOOP_NFRA_C3MATERIALIZE.md`.
-- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` DIRECTED (Andrew-direct 2026-10-02 ~05:0xZ, typed at this seat): 
-  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`.
-  Chooser Andrew; landed by 1.0.0_SA_CTO. "You have adjudication ability on all open calls. Make sure the underlying COOs on this
-  device keep their work flowing." The 2026-10-01 record's other terms stand (IRPT first, `/closer-drive` under FAST, `4.0.0_SA_CRO~X`
-  the research partner, the RESERVED law lines). Paired with the RELAUNCH COO rows above. Stop: DONE read from the register,
-  HELD-AT-STOP, or his stand-down.
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` DIRECTED (Andrew-direct 2026-10-07 ~07:1xZ, typed at this seat as the invocation, VERBATIM:
+  "[60m] <Run the laptop fabric as the control plane of the cluster. Manage and adjudicate requests as needed.>"). Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`. Chooser Andrew;
+  landed by 1.0.0_SA_CTO. Solo: no COO loop is armed by it. Stop: DONE read from the register, HELD-AT-STOP, or his stand-down.
 - `1.0.0_SA_CTO` `/self-drive MDPF_TAXSMA,NFRA_OPLGTW,LGIC_NAMING,LGIC_ENFORCE,LGIC_CANON` -- PAUSED by the managed
   wind-down, resume authority:
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260915_193xZ_COO_GOALS_AND_CTO_SELF_DRIVE_ADJUDICATES.md`.
@@ -126,6 +161,15 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   mechanism and cadence RESERVED to Andrew).
 
 ## Struck
+
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` (record `ANDREW_DIRECT_20261002_050xZ_SELF_DRIVE_60M_LAPTOP_DIRECTIVES_ADJUDICATE_ALL_KEEP_COOS_FLOWING.md`):
+  struck 2026-10-07 by 1.0.0_SA_CTO. Chooser Andrew: his 2026-10-07 ~07:1xZ invocation re-arms the same scope with new terms (the row above). A
+  successor does not re-arm the 2026-10-02 row.
+
+- `2.0.0_SA_COO~C` `/canonical-drive ADVI_COTBKF` (record `org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261006_201xZ_ADVI_COTBKF_CANONICAL_DRIVE.md`
+  @45b266dcdb): struck 2026-10-07 by 1.0.0_SA_CTO. Chooser Andrew: "COO~C should only be focused on this work, not cottonwood backfill
+  project." (record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_061xZ_PROCEED_NFRA_CTLPLN_COO_C_ON_IT_ONLY_NOT_COTBKF.md`).
+  He named no successor seat for ADVI_COTBKF; nothing here decides one. A successor does not re-arm this row.
 
 - `2.0.0_SA_COO~C` `/closer-drive` over NFRA_CTLPLN (record `ANDREW_DIRECT_20261006_144xZ_SEAT_COO_C_NFRA_CTLPLN_CLOSER_DRIVE.md`):
   struck 2026-10-06 by 1.0.0_SA_CTO on its own stop condition, "round 1 graded by the CVO": FWD-5, FWD-2, FWD-8 and FWD-7 all PASS

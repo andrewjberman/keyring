@@ -36,7 +36,7 @@ WHAT IT GRADES, AND WHY (read from org/missions/D14/LGIC/LGIC_ENFORCE/deliverabl
 THE MATRIX, PRE-PLAN (DIR mode). Every graded name is read as the tree states it, since addition status is unknown here:
     OUT-OF-PATTERN, ALIAS or RAISE     WARN, canonical printed (the module would not produce this name; this stage
                                         cannot tell an addition from an existing resource, so it never refuses)
-    CONFORMANT, NOT-GRADED             pass
+    CONFORMANT, NO-SYSTEM-ASKED, NOT-GRADED   pass (NO-SYSTEM-ASKED: no system is asked of this kind of name)
 An expression (a reference, a function call, a template with ${...}) has its value only in a plan and is listed on
 an `unresolved` line, never graded; the summary line states how many are deferred to plan.
 
@@ -45,7 +45,7 @@ it directly (an action including `create`, or an `update` whose own-name attribu
     ADDITION, and OUT-OF-PATTERN, ALIAS or RAISE     REFUSE, canonical printed (the module would not produce this
                                                       name; DEC-6's RAISE row: a rule or registry defect refuses like
                                                       any other refusal once enforcing)
-    ADDITION, and CONFORMANT or NOT-GRADED           pass
+    ADDITION, and CONFORMANT, NO-SYSTEM-ASKED or NOT-GRADED   pass
     NOT an addition (no-op, a name-keeping update, a delete)     WARN if the grade would otherwise refuse, else pass
                                                                   -- it already exists; this limb never blocks it
 
@@ -250,6 +250,8 @@ def judge(mod, node_type, s):
         return ("REFUSE", canon,
                 "%s as %s: the module would not produce this name; an apply has no diff and runs this stage before any"
                 " plan, so the name is read as the tree states it" % (verdict, node_type), True)
+    if verdict == "NO-SYSTEM-ASKED":
+        return verdict, canon, "NO-SYSTEM-ASKED as %s: no system is asked of this kind of name, nothing refused" % node_type, False
     return "CONFORMANT", canon, "CONFORMANT as %s" % node_type, False
 
 
@@ -374,13 +376,30 @@ def run_plan(path):
     return graded
 
 
+def self_test():
+    """--self-test: judge() on a group-A name takes the fourth verdict and does not refuse, and (the difference
+    control) a group-B name is still refused. Reads no tree, writes no log. Returns 0 when both arms hold."""
+    mod = _load(OPAL_PATH, "opal_naming_for_apply_selftest")
+    ok = True
+    for name, want_verdict, want_refuses in (("s3-access", "NO-SYSTEM-ASKED", False), ("pipeline-chain", "REFUSE", True)):
+        got = judge(mod, "IAM_POLICY", name)
+        arm = got[0] == want_verdict and got[3] is want_refuses
+        ok = ok and arm
+        print("SELF-TEST arm %s IAM_POLICY -> %s refuses=%s: %s" % (name, got[0], got[3], "ok" if arm else "FAIL"))
+    print("NAMING-APPLY-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="naming-apply-gate.py", description="the naming safe-apply limb (LGIC_ENFORCE EN-t-2, DEC-6)")
+    ap.add_argument("--self-test", action="store_true", help="run the gate's own arms (the fourth verdict and its control)")
     ap.add_argument("dir", nargs="?", help="the Terraform root safe-apply is about to plan (its -chdir, or .) -- pre-plan mode")
     ap.add_argument("--plan-json", dest="plan_json", metavar="FILE",
                      help="a rendered `terraform show -json` document to grade -- plan mode (EN-t-2 round 2)")
     ap.add_argument("--enforce", action="store_true", help="a REFUSE exits 1 (also NAMING_GATE_ENFORCE=1 or org/mcp/naming-gate.enforce)")
     args = ap.parse_args(argv)
+    if args.self_test:
+        return self_test()
     if bool(args.dir) == bool(args.plan_json):
         ap.error("give exactly one of DIR or --plan-json")
     enforce = enforcing(args.enforce)

@@ -1,0 +1,467 @@
+{
+  "claim": "measured: static ast read of tracked .py under .tools/ and lib/; versions are those installed on the box that ran it",
+  "counts": {
+    "distributions": 20,
+    "local": 50,
+    "modules": 139,
+    "not_installed_here": 1,
+    "stdlib": 68,
+    "third_party": 21
+  },
+  "distributions": [
+    {
+      "distribution": "anthropic",
+      "kind": "import",
+      "modules": [
+        "anthropic"
+      ],
+      "usage": "OPTIONAL",
+      "version_here": "0.84.0"
+    },
+    {
+      "distribution": "beautifulsoup4",
+      "kind": "import",
+      "modules": [
+        "bs4"
+      ],
+      "usage": "HARD",
+      "version_here": "4.14.3"
+    },
+    {
+      "distribution": "boto3",
+      "kind": "import",
+      "modules": [
+        "boto3"
+      ],
+      "usage": "HARD",
+      "version_here": "1.42.54"
+    },
+    {
+      "distribution": "botocore",
+      "kind": "import",
+      "modules": [
+        "botocore"
+      ],
+      "usage": "HARD",
+      "version_here": "1.43.0"
+    },
+    {
+      "distribution": "curl-cffi",
+      "kind": "import",
+      "modules": [
+        "curl_cffi"
+      ],
+      "usage": "HARD",
+      "version_here": "0.13.0"
+    },
+    {
+      "distribution": "jsonschema",
+      "kind": "import",
+      "modules": [
+        "jsonschema"
+      ],
+      "usage": "HARD",
+      "version_here": "4.26.0"
+    },
+    {
+      "distribution": "lxml",
+      "kind": "import",
+      "modules": [
+        "lxml"
+      ],
+      "usage": "HARD",
+      "version_here": "6.0.2"
+    },
+    {
+      "distribution": "matplotlib",
+      "kind": "import",
+      "modules": [
+        "matplotlib"
+      ],
+      "usage": "OPTIONAL",
+      "version_here": "3.11.1"
+    },
+    {
+      "distribution": "openpyxl",
+      "kind": "import",
+      "modules": [
+        "openpyxl"
+      ],
+      "usage": "HARD",
+      "version_here": "3.1.5"
+    },
+    {
+      "distribution": "pandas",
+      "kind": "import",
+      "modules": [
+        "pandas"
+      ],
+      "usage": "HARD",
+      "version_here": "2.3.3"
+    },
+    {
+      "distribution": "pandas-market-calendars",
+      "kind": "import",
+      "modules": [
+        "pandas_market_calendars"
+      ],
+      "usage": "OPTIONAL",
+      "version_here": "5.4.0"
+    },
+    {
+      "distribution": "playwright",
+      "kind": "import",
+      "modules": [
+        "playwright"
+      ],
+      "usage": "HARD",
+      "version_here": "1.58.0"
+    },
+    {
+      "distribution": "psutil",
+      "kind": "import",
+      "modules": [
+        "psutil"
+      ],
+      "usage": "HARD",
+      "version_here": "7.2.2"
+    },
+    {
+      "distribution": "pyarrow",
+      "kind": "import",
+      "modules": [
+        "pyarrow"
+      ],
+      "usage": "HARD",
+      "version_here": "18.1.0"
+    },
+    {
+      "distribution": "pymupdf",
+      "kind": "import",
+      "modules": [
+        "fitz",
+        "pymupdf"
+      ],
+      "usage": "HARD",
+      "version_here": "1.27.1"
+    },
+    {
+      "distribution": "pypdf",
+      "kind": "import",
+      "modules": [
+        "pypdf"
+      ],
+      "usage": "OPTIONAL",
+      "version_here": "6.12.2"
+    },
+    {
+      "distribution": "pytest",
+      "kind": "import",
+      "modules": [
+        "pytest"
+      ],
+      "usage": "HARD",
+      "version_here": "9.0.2"
+    },
+    {
+      "distribution": "pyyaml",
+      "kind": "import",
+      "modules": [
+        "yaml"
+      ],
+      "usage": "HARD",
+      "version_here": "6.0.3"
+    },
+    {
+      "distribution": "requests",
+      "kind": "import",
+      "modules": [
+        "requests"
+      ],
+      "usage": "OPTIONAL",
+      "version_here": "2.32.5"
+    },
+    {
+      "distribution": "ruff",
+      "kind": "tool",
+      "modules": [],
+      "usage": "TOOL",
+      "version_here": "0.15.11"
+    }
+  ],
+  "modules": [
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "anthropic",
+      "hard_importers": 0,
+      "importers": 2,
+      "module": "anthropic",
+      "optional_importers": 2,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "0.84.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": null,
+      "hard_importers": 0,
+      "importers": 1,
+      "module": "blpapi",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "NOT-INSTALLED-HERE",
+      "usage": "OPTIONAL",
+      "version_here": null
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "boto3",
+      "hard_importers": 13,
+      "importers": 79,
+      "module": "boto3",
+      "optional_importers": 66,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "1.42.54"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "botocore",
+      "hard_importers": 33,
+      "importers": 57,
+      "module": "botocore",
+      "optional_importers": 24,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "1.43.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "beautifulsoup4",
+      "hard_importers": 5,
+      "importers": 6,
+      "module": "bs4",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "4.14.3"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "curl-cffi",
+      "hard_importers": 2,
+      "importers": 4,
+      "module": "curl_cffi",
+      "optional_importers": 2,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "0.13.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pymupdf",
+      "hard_importers": 6,
+      "importers": 7,
+      "module": "fitz",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "1.27.1"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "jsonschema",
+      "hard_importers": 3,
+      "importers": 27,
+      "module": "jsonschema",
+      "optional_importers": 24,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "4.26.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "lxml",
+      "hard_importers": 1,
+      "importers": 1,
+      "module": "lxml",
+      "optional_importers": 0,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "6.0.2"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "matplotlib",
+      "hard_importers": 0,
+      "importers": 1,
+      "module": "matplotlib",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "3.11.1"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "openpyxl",
+      "hard_importers": 4,
+      "importers": 4,
+      "module": "openpyxl",
+      "optional_importers": 0,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "3.1.5"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pandas",
+      "hard_importers": 10,
+      "importers": 10,
+      "module": "pandas",
+      "optional_importers": 0,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "2.3.3"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pandas-market-calendars",
+      "hard_importers": 0,
+      "importers": 3,
+      "module": "pandas_market_calendars",
+      "optional_importers": 3,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "5.4.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "playwright",
+      "hard_importers": 2,
+      "importers": 6,
+      "module": "playwright",
+      "optional_importers": 4,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "1.58.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "psutil",
+      "hard_importers": 1,
+      "importers": 2,
+      "module": "psutil",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "7.2.2"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pyarrow",
+      "hard_importers": 29,
+      "importers": 39,
+      "module": "pyarrow",
+      "optional_importers": 11,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "18.1.0"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pymupdf",
+      "hard_importers": 0,
+      "importers": 1,
+      "module": "pymupdf",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "1.27.1"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pypdf",
+      "hard_importers": 0,
+      "importers": 3,
+      "module": "pypdf",
+      "optional_importers": 3,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "6.12.2"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pytest",
+      "hard_importers": 153,
+      "importers": 155,
+      "module": "pytest",
+      "optional_importers": 2,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "9.0.2"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "requests",
+      "hard_importers": 0,
+      "importers": 1,
+      "module": "requests",
+      "optional_importers": 1,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "OPTIONAL",
+      "version_here": "2.32.5"
+    },
+    {
+      "class": "THIRD-PARTY",
+      "distribution": "pyyaml",
+      "hard_importers": 5,
+      "importers": 15,
+      "module": "yaml",
+      "optional_importers": 10,
+      "other_distributions": [],
+      "status_here": "INSTALLED",
+      "usage": "HARD",
+      "version_here": "6.0.3"
+    }
+  ],
+  "not_installed_modules": [
+    {
+      "importers": 1,
+      "module": "blpapi",
+      "usage": "OPTIONAL"
+    }
+  ],
+  "read_on": {
+    "platform_tag": "win_amd64",
+    "python_version": "3.12.10"
+  },
+  "scan": {
+    "files": 754,
+    "pathspecs": [
+      ".tools/*.py",
+      "lib/*.py"
+    ],
+    "relative_imports": 329,
+    "unparsed": []
+  },
+  "schema": "kit_python_required/1"
+}

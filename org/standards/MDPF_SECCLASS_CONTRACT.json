@@ -1,6 +1,6 @@
 {
   "_what": "MDPF_SECCLASS data contract: the two enumerations the PRD closes as data (PRD CONTRACTS C-FIELD and C-WRITER). The canonical table is DynamoDB etf-classifications; its existing columns (ticker, asset_class, sub_asset_class, sector, name, management_style) are POSN_ASTTAX's and are not restated here.",
-  "contract_version": "0.4.0",
+  "contract_version": "0.6.0",
   "project": "MDPF_SECCLASS",
   "prd": "org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md",
   "fields": {
@@ -27,12 +27,24 @@
     "identifier_namespace": {
       "serves": "FWD-2, FWD-7 (E9, CTO RULING 103140); FWD-9, FWD-10 (CTO RULINGS batch 257 Q1)",
       "type": "string",
-      "values": ["TICKER", "CUSIP", "BLOOMBERG"],
+      "values": ["TICKER", "CUSIP", "BLOOMBERG", "NAME"],
       "domain": "every row of etf-classifications, one row per ticker",
       "definitions": {
         "TICKER": "the row's ticker column holds an ordinary exchange ticker symbol -- the pre-existing shape of every row before E9, and the default reading for any row where identifier_namespace is absent",
         "CUSIP": "the row's ticker column holds a CUSIP-prefixed key, `\"CUSIP:<9 chars>\"` (the literal 9-character CUSIP), for a security with no exchange ticker (e.g. a bond); the table gains no new column -- the existing ticker attribute carries the prefixed string",
-        "BLOOMBERG": "the row's ticker attribute holds 'BBG:<ticker>:<exch>' (CTO RULINGS batch 257 Q1): the input's Bloomberg security id with its trailing ' Equity' dropped and its space replaced by ':', no whitespace anywhere in the key (e.g. 'REL LN Equity' -> 'BBG:REL:LN'), for a listing with no ISIN, no CUSIP and no US exchange ticker; the verbatim Bloomberg id is carried in security_bloomberg, never re-derived from the key"
+        "BLOOMBERG": "the row's ticker attribute holds 'BBG:<ticker>:<exch>' (CTO RULINGS batch 257 Q1): the input's Bloomberg security id with its trailing ' Equity' dropped and its space replaced by ':', no whitespace anywhere in the key (e.g. 'REL LN Equity' -> 'BBG:REL:LN'), for a listing with no ISIN, no CUSIP and no US exchange ticker; the verbatim Bloomberg id is carried in security_bloomberg, never re-derived from the key",
+        "NAME": "the row's ticker attribute holds the name-keyed form for a security with NEITHER a ticker NOR a CUSIP (contract 0.5.0, PRD ADDENDUM v0.7). PROPOSED KEY FORM: NAME::<slug>` where slug = the security's name upper-cased, every run of characters outside `A-Z`, `0-9` and `-` replaced by ONE space, trimmed, cut to the first 80 characters (the rule `classify_bd_securities.normalize_key` already applies); an empty slug yields no key and the write is refused. The row's classification attributes are untouched by the key form; a name-keyed row is never re-keyed to a ticker or CUSIP by a reader."
+      },
+      "key_form_rule24_record_NAME": {
+        "serves": "FWD-17, FWD-15 (PRD ADDENDUM v0.7); measured by TO-SC-e26, KEY_FORM_PROPOSAL_20261007.md",
+        "form": "NAME::<slug>` where slug = the security's name upper-cased, every run of characters outside `A-Z`, `0-9` and `-` replaced by ONE space, trimmed, cut to the first 80 characters (the rule `classify_bd_securities.normalize_key` already applies); an empty slug yields no key and the write is refused.",
+        "declared_before_any_write": "no row keyed NAME:: is written by this contract version; declaring the value populates nothing (R8 rule 24 (iv))",
+        "domain_declared": "every security the shared list can be asked to hold",
+        "mece_by_subtraction": "partition by the identifier a security has, first form that applies: a valid ticker -> the ticker (TICKER); else a 9-character CUSIP -> CUSIP:<9> (CUSIP); else a Bloomberg-only identifier -> BBG:<...> (BLOOMBERG); else -> NAME::<slug> (NAME). Each security takes exactly one. Old list bd-securities, 10,965 rows scanned 2026-10-07 = 3,825 ticker + 7,133 NAME:: + 0 CUSIP: + 7 other; the 7 other (DEST_LCAP_I, JPM_STRUCT_0029, The Hartford, WALDROP_DAF, CASH_USD, Xometry, DEST_INTL_I) are the uncovered members, named and not re-keyed",
+        "same_grain": "one key is one security as the old list's own writers identify it (one normalised name, one row); never an account, lot or position; the slug rule is the one classify_bd_securities.normalize_key already applies",
+        "intent_coherence": "one axis, one intent: no ticker and no CUSIP, keyed by name. It never also means name alias or needs review (those are separate attributes on the row). A ticker contains no ':', so NAME:: cannot be read as a ticker or a CUSIP",
+        "state_coherence": "choosing the key form moves no ticker row, CUSIP: row or BBG: row key and no asset_class, sub_asset_class or classified_by value. Re-keying the 829 non-conforming old NAME:: rows is a merge decision (822 collide with a conforming row) and is NOT done by adopting this form; a name slug truncated at 80 characters could collide for two distinct securities, none does in today's 7,133 (longest slug 75)",
+        "token_census": "word-boundary census of NAME::, 2026-10-07, comp-find '\\bNAME::' --all: 3,733 hits over 58,833 files scanned; the prefix is already the live form of the old list (18 first-party source files, one sense), so adopting it adds no new token"
       },
       "absent": "a row without identifier_namespace reads as TICKER (CTO RULING 103140); the value is never inferred from the ticker column's own shape (e.g. a leading \"CUSIP:\" substring) -- it is a stated attribute, not a derived one, so a row's identifier_namespace and its ticker's shape are two carriers that must agree by construction of the writer, never by a reader re-parsing the key",
       "rule24_record": {
@@ -122,6 +134,141 @@
         "intent_coherence": "one axis: where the listing trades; it is not the issuer's domicile and carries no class",
         "state_coherence": "setting listing_country moves no asset_class or classified_by value; sub_asset_class moves only through the batch 257 Q3 order (GICS first)",
         "token_census": "word-boundary census of listing_country, 2026-10-05 ~07:0xZ, git grep over data, portal/src, infra/aws/lambda, lib, org/standards: 0 files (positive control: security_bloomberg 18 files); no collision"
+      }
+    },
+    "gics_sector": {
+      "serves": "FWD-12 (PRD ADDENDUM v0.5, v0.10: C-SECTOR, C-NOCHAR)",
+      "type": "string",
+      "values": [
+        "Communication Services",
+        "Consumer Discretionary",
+        "Consumer Staples",
+        "Energy",
+        "Financials",
+        "Health Care",
+        "Industrials",
+        "Information Technology",
+        "Materials",
+        "Real Estate",
+        "Utilities"
+      ],
+      "domain": "rows of etf-classifications whose security is in the Bloomberg characteristics file; absent elsewhere",
+      "source": "GICS_SECTOR_NAME",
+      "definition": "the GICS sector name of the security as the Bloomberg characteristics file serves it (GICS_SECTOR_NAME)",
+      "absent": "a row with no gics_sector is one whose security is absent from the characteristics file or is non-equity cash/fixed income; the row omits the attribute, no placeholder spelling of unknown is ever stored",
+      "legacy_untouched": "the legacy sector attribute (179 seed rows, another grain) and sub_asset_class keep their bytes; this field is a NEW attribute and rewrites neither",
+      "label_only": "C-NOCHAR: a label; no measurement enters the table",
+      "rule24_record": {
+        "domain_declared": "the GICS sector Bloomberg assigns to a security, field GICS_SECTOR_NAME of the characteristics file; 33 partitions of s3://opal-data-etfs/bbg/ read read-only 2026-10-07 (33 of 33 listed), 10 distinct values in the union; GICS defines 11 sectors",
+        "mece_by_subtraction": "the closed list is the 11 sectors GICS defines (CTO round-8 ruling 2.6, contract 0.6.0): the 10 MEASURED values plus Real Estate. Subtracting the 10 measured from the producer's GICS_SECTORS (etf_positioning_gold.py:125) left Real Estate, which is now ADMITTED though still not measured in any partition (zero rows; held_not_measured keeps that fact). A value outside the 11 reads as unknown and is surfaced, never admitted; a further change is a contract amendment. Ultra Short Duration and Cash & Cash Equivalents are not sector values",
+        "same_grain": "one value per security (one row of etf-classifications), the grain of the characteristics file's row; not the served sub_asset_class grain, which mixes sectors with cash and ultra-short values",
+        "intent_coherence": "one axis: the GICS sector label of the security; no class, cash marker, provenance or measurement (C-NOCHAR)",
+        "state_coherence": "adding a security to the characteristics pull moves a row from absent to a value and nothing else; a new vendor sector moves the list only by a contract amendment; admitting Real Estate moves no existing row (zero rows carry it) and no other value; the legacy sector attribute is not moved",
+        "token_census": "word-boundary census of gics_sector, 2026-10-07, comp-find '\\bgics_sector\\b' -i: 246 hits over 94 files, 58,819 files scanned; none is an etf-classifications attribute (the rivalfunds gold shape carries a gics_sector column of another table and grain; the name is the estate's existing spelling for the same fact at another grain)"
+      },
+      "held_not_measured": [
+        "Real Estate"
+      ]
+    },
+    "gics_industry_group": {
+      "serves": "FWD-12 (PRD ADDENDUM v0.5, v0.10: C-SECTOR, C-NOCHAR)",
+      "type": "string",
+      "values": [
+        "Automobiles & Components",
+        "Banks",
+        "Capital Goods",
+        "Commercial & Professional Services",
+        "Consumer Discretionary Distribution & Retail",
+        "Consumer Durables & Apparel",
+        "Consumer Services",
+        "Consumer Staples Distribution & Retail",
+        "Energy",
+        "Equity Real Estate Investment Trusts (REITs)",
+        "Financial Services",
+        "Food, Beverage & Tobacco",
+        "Health Care Equipment & Services",
+        "Household & Personal Products",
+        "Insurance",
+        "Materials",
+        "Media & Entertainment",
+        "Pharmaceuticals, Biotechnology & Life Sciences",
+        "Real Estate Management & Development",
+        "Semiconductors & Semiconductor Equipment",
+        "Software & Services",
+        "Technology Hardware & Equipment",
+        "Telecommunication Services",
+        "Transportation",
+        "Utilities"
+      ],
+      "vendor_decode": {
+        "Automobiles & Components": "Automobiles & Components",
+        "Banks": "Banks",
+        "Capital Goods": "Capital Goods",
+        "Commercial & Professional Serv": "Commercial & Professional Services",
+        "Consumer Discretionary Distrib": "Consumer Discretionary Distribution & Retail",
+        "Consumer Durables & Apparel": "Consumer Durables & Apparel",
+        "Consumer Services": "Consumer Services",
+        "Consumer Staples Distribution": "Consumer Staples Distribution & Retail",
+        "Energy": "Energy",
+        "Financial Services": "Financial Services",
+        "Food, Beverage & Tobacco": "Food, Beverage & Tobacco",
+        "Health Care Equipment & Servic": "Health Care Equipment & Services",
+        "Household & Personal Products": "Household & Personal Products",
+        "Insurance": "Insurance",
+        "Materials": "Materials",
+        "Media & Entertainment": "Media & Entertainment",
+        "Pharmaceuticals, Biotechnology": "Pharmaceuticals, Biotechnology & Life Sciences",
+        "Semiconductors & Semiconductor": "Semiconductors & Semiconductor Equipment",
+        "Software & Services": "Software & Services",
+        "Technology Hardware & Equipmen": "Technology Hardware & Equipment",
+        "Telecommunication Services": "Telecommunication Services",
+        "Transportation": "Transportation",
+        "Utilities": "Utilities"
+      },
+      "domain": "rows of etf-classifications whose security is in the Bloomberg characteristics file; absent elsewhere",
+      "source": "GICS_INDUSTRY_GROUP_NAME",
+      "definition": "the GICS industry group name of the security as the Bloomberg characteristics file serves it (GICS_INDUSTRY_GROUP_NAME), stored as the FULL GICS name: the writer maps the vendor's spelling (up to 30 characters, some cut) to the full name through vendor_decode in this file (CTO round-8 ruling 2.7, contract 0.6.0); a spelling not in vendor_decode leaves the field empty and the row is listed (state NO-DECODE), never guessed",
+      "absent": "a row with no gics_industry_group is one whose security is absent from the characteristics file, is non-equity, or was pulled before 2026-08-27; the row omits the attribute, never a placeholder",
+      "legacy_untouched": "the legacy sector attribute (179 seed rows, another grain) and sub_asset_class keep their bytes; this field is a NEW attribute and rewrites neither",
+      "label_only": "C-NOCHAR: a label; no measurement enters the table",
+      "rule24_record": {
+        "domain_declared": "the GICS industry group Bloomberg emits for a security, field GICS_INDUSTRY_GROUP_NAME; the column exists from partition 2026-08-27; 33 partitions of s3://opal-data-etfs/bbg/ read read-only 2026-10-07 (33 of 33 listed): 23 distinct vendor spellings in the union, the same 23 as contract 0.5.0 (none measured outside them)",
+        "mece_by_subtraction": "the closed list is the 25 full GICS industry-group names (CTO round-8 ruling 2.7, contract 0.6.0): the 23 measured spellings decoded to full names (six are 30-character truncations and one is a 29-character cut or abbreviation of a longer name) plus the two real-estate groups the book never held, Equity Real Estate Investment Trusts (REITs) and Real Estate Management & Development, which no measured spelling decodes to and which are admitted but not measured. vendor_decode is closed over the 23 measured spellings only; a spelling outside it (including the vendor's unknown truncation of a real-estate group) leaves the field empty and the row listed, never guessed or admitted",
+        "same_grain": "one value per security, one level finer than gics_sector and the same row grain; not the holding-row grain of the holding artifact's industry_group",
+        "intent_coherence": "one axis: the vendor's industry-group label for the security; it carries no truncation repair, basis/provenance word or lifecycle rung",
+        "state_coherence": "the decode moves the stored spelling of seven vendor values to the full name at write time and moves no other value; no row carries a vendor spelling today (the writer is not applied), so no stored row is re-spelled; adding a security to the characteristics pull moves a row from absent to a value; neither moves gics_sector, and a change to the sector list does not move this list",
+        "token_census": "word-boundary census of gics_industry_group, 2026-10-07, comp-find '\\bgics_industry_group\\b' -i: 155 hits over 43 files, 58,819 files scanned; none is an etf-classifications attribute (rivalfunds gold shape, Bloomberg enrichment and daily-pull modules, checks)"
+      }
+    },
+    "sub_asset_class": {
+      "serves": "FWD-17, FWD-11 (CTO round-8 ruling 2.5, contract 0.6.0)",
+      "type": "string",
+      "values_by_class": {
+        "cash": ["Cash", "Money Market", "T-Bill"],
+        "fixed_income": ["Cash", "High Yield", "Intermediate", "International", "Long Duration", "Municipal", "Short Duration", "Structured Credit", "TIPS", "Ultra Short Duration"],
+        "equity": ["Communication Services", "Consumer Discretionary", "Consumer Staples", "Developed", "EM", "Energy", "Financials", "Global", "Health Care", "Industrials", "Information Technology", "International", "Materials", "US Large Cap", "US Mid Cap", "US Small Cap", "Utilities"],
+        "structured": ["Hedge", "Options Income"],
+        "alternatives": ["International Real Estate", "Real Estate"],
+        "commodities": ["Commodities", "Metals", "Oil"]
+      },
+      "domain": "every row of etf-classifications and every verdict (DIRECT or AI) proposed for a row, per asset_class; the six classes only (no multi_asset: Andrew-direct 2026-10-07, six classes only)",
+      "source_by_class": {
+        "fixed_income": "MEASURED: read-only scan of etf-classifications 2026-10-07, 3,507 rows: the 10 non-empty fixed_income sub_asset_class values (679 fixed_income rows, 231 of them carry no sub_asset_class and are absent, not a value)",
+        "equity": "MEASURED: same scan, the 17 non-empty equity values (2,785 equity rows, 34 with no sub_asset_class); the 9 sector-named values are the legacy sub_asset_class spelling of a sector, another grain than gics_sector",
+        "structured": "MEASURED: same scan, 2 values over 20 rows",
+        "alternatives": "MEASURED: same scan, 2 values over 11 rows",
+        "commodities": "MEASURED: same scan, 3 values over 12 rows",
+        "cash": "DECLARED, the table holds 0 cash rows: Money Market and T-Bill are the two sub-classes the 15 old bd-securities cash rows carry (T-Bill 8, Money Market 7; row MDPF_SECCLASS-W26-S6, OLD_LIST_RECLASSIFY_SET_20261007.tsv); Cash is the generic cash line and the estate's existing spelling, measured as fixed_income/Cash (17 rows) in the same scan"
+      },
+      "bound": "CTO round-8 ruling 2.5: this closed list is the bound for every class, cash included. A DIRECT or AI verdict lands if its sub_asset_class is a member of values_by_class[asset_class], not only of the values the table happens to hold; a value outside the list for its class is refused and the row is listed",
+      "absent": "a row with no sub_asset_class stays absent; no value is defaulted or inferred (231 fixed_income and 34 equity rows today)",
+      "rule24_record": {
+        "domain_declared": "the sub_asset_class values of etf-classifications per asset_class, read-only scan 2026-10-07: 3,507 rows, classes fixed_income 679, equity 2,785, structured 20, commodities 12, alternatives 11, cash 0",
+        "mece_by_subtraction": "per class the list is the measured values (a printed denominator per class in source_by_class) and, for the empty class cash, the declared sub-classes with their sources; every measured non-empty value is in its class's list (each class's measured set minus its list is empty), and cash's three values are the only members not measured in the table",
+        "same_grain": "one value per row (ticker), within its class; the value is a sub-class WITHIN the row's asset_class, not a standalone vocabulary: International appears in fixed_income and in equity as two different sub-classes of two classes",
+        "intent_coherence": "one axis: the finer class of the row under its asset_class; no vendor spelling or provenance is carried, though the legacy equity values spell sector names",
+        "state_coherence": "declaring the list moves no row and no existing value; the bound moves only what a future DIRECT or AI verdict may land; adding a value to one class's list moves no other class's list; the 15 old cash rows are re-planned under this bound by SC-e-50, not by this contract edit",
+        "token_census": "sub_asset_class is the existing etf-classifications column (POSN_ASTTAX's, named in _what); this edit declares its closed lists and does not rename or move the column"
       }
     }
   }

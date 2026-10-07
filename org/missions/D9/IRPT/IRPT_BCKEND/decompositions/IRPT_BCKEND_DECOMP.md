@@ -1861,3 +1861,100 @@ builds and the applies follow under the CTO half; for `irpt-directory-search` an
 | `IB-pr-328` | the served.py and loaders.py staged_from pins of reporting-read, export-render, directory-search, holdings -> d8d8e7d868 | WORLD (the source map is the build input of four served functions; the order applies nothing) | IB-pr-327 (drained) | P60 |
 
 fanout: 1 of 1 chains, cap 8, reason: one source-map edit, eight members. Worker 0.9.0_WK_IRPT_BCKEND~131 in its own worktree.
+
+## 54. ROUND 61, WORKSTREAM ~P (2026-10-07 ~09:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round analysis @e363a194ed section 5)
+
+The rectangle is the analysis's ENRICHMENT LIST for ~P, E-P1..E-P7, one cell per item. Rounds 47-60 were repair and release rounds and
+moved no outcome; these cells aim at FWD-2, FWD-3 (INF export, via the adapter build) and FWD-7, plus the four record/tooling rows.
+Write sets are disjoint per cell: only IB-pr-334 edits `lambda-source-map.json` (the irpt-directory-search row); IB-pr-329 changes the
+builder only; IB-pr-332 moves the adapter's three build-only modules out of the scanned top level and does not touch the map.
+Checks: `deliverables/2.0.0_SA_COO~P2/checks/r61/p61_cells.py`, every one dry-run at base 6e462d3499.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-329` | E-P1 one S3 key per function (S343) | the builder uploads to the map's artifact_s3_key | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-a |
+| `IB-pr-330` | E-P2 the deploy recorder stages only its own paths (S344) | release records | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-b |
+| `IB-pr-331` | E-P3 the release census is the issuer's own build against live (S337 census half) | release tooling | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-c |
+| `IB-pr-332` | E-P4 the adapter builds (W127-S1) | FWD-3 (INF export needs an adapter build) | WORLD (floor: infra/ path; analysis class LOCAL) | none | P61-d |
+| `IB-pr-333` | E-P5 the refresh manifest records the fire that ran (S348) | FWD-7 | WORLD (floor: infra/ path; analysis class SERVED; the release and the driven fire are the issuer's under its half) | none | P61-e |
+| `IB-pr-334` | E-P6 FWD-7 on current bytes: the search serves the over-age branch | FWD-7 | WORLD (code + the map row; release, the five-arm live drive and both halves are the issuer's) | IB-pr-333 (one release packet) | P61-e |
+| `IB-pr-335` | E-P7 FWD-2 replay on current bytes | FWD-2 | SERVED (read-only replay against the live API) | none | P61-f |
+
+fanout: 6 of 6 chains, cap 8, reason: five independent cells plus the E-P5 -> E-P6 queue that ships as one directory release packet. Slots 0.9.0_WK_IRPT_BCKEND~132..137, one worktree each; ~136 holds IB-pr-333 then IB-pr-334.
+
+## 55. ROUND 62, WORKSTREAM ~P (2026-10-07 ~10:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO round-61 analysis @aae1ed7781 section 3 and the r61 directory release CTO half @74e91285b4)
+
+The rectangle is the analysis's ENRICHMENT LIST for ~P (E-P8, E-P9, E-P10; E-P11 is the issuer's own disarm row, filed in this
+issuance, not a cell) plus the two preconditions the r61 directory release's CTO half sets (the handler.py pin; the two-instrument consumer
+census). Write sets are disjoint: only IB-pr-337 edits lambda-source-map.json; IB-pr-336 owns export/ and the render host; IB-pr-338 adds
+tests only; IB-pr-339 owns _ids/. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r62/p62_cells.py`, every one dry-run at base bc794d2770.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-336` | E-P9 the export takes a client report (a1 submit, a3 render host + unknown-template refusal, a4 print package) | IRPT_CUSTDY hop 5; export integrity | WORLD (floor: infra/; analysis class LOCAL) | none | P62-a |
+| `IB-pr-337` | r61 release precondition: refresh stages handler.py from the running blob (S357) | FWD-7 (the directory release) | WORLD (floor: infra/) | none | P62-b |
+| `IB-pr-338` | r61 release precondition P1: every reader of the search response passes on plain and over-age (W136-S1) | FWD-7 (the directory release) | WORLD (floor: an infra/ test path) | none | P62-c |
+| `IB-pr-339` | E-P8 the seam holds no 'None'; ids.py treats 'None'/'nan' as unmapped; the writer named (IRPT_CUSTDY W5-S1) | FWD-1/FWD-2 coverage; IRPT_CUSTDY E1 gate | WORLD (floor: infra/; analysis class LOCAL) | none | P62-d |
+| `IB-pr-340` | E-P10 one fixture per gated route (W137-S1) | FWD-2 | SERVED | none | P62-e |
+
+fanout: 5 of 5 chains, cap 8, reason: five independent cells; the analysis's "fan-out 3" counts E-P8..E-P10, and the two release preconditions are this issuer's addition under the CTO half. Slots 0.9.0_WK_IRPT_BCKEND~138..142; portal_ref: 8ddfe409 (portal DEV at the cut) for ~138 and ~140.
+
+## 56. ROUND 63, WORKSTREAM ~P (2026-10-07 ~10:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on 1.0.0_SA_CTO~DELL2 ruling msg 337)
+
+IB-pr-338 (round 62) found 5 of 7 readers of the search response failing on the over-age envelope, so the r61 directory release HOLDS on
+its CTO half's P1. Ruling msg 337: the 4 portal failures are the server's defect (a server-only `internal_correlation_id` in the over-age
+`_status`); the IRPT_CUSTDY reader reads directory.json and is outside the census's population (W140-S2). One cell; round 62 already has
+orders at HEAD, so it is round 63. Check: `deliverables/2.0.0_SA_COO~P2/checks/r63/p63_cells.py`, dry-run at base 1758606f46.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-341` | the over-age status carries only public members; the 4 portal reader tests pass (W140-S1) | FWD-7 (the r61 directory release, P1) | WORLD (floor: infra/) | IB-pr-334, IB-pr-338 (drained) | P63-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one ruled cell. Slot 0.9.0_WK_IRPT_BCKEND~143; portal_ref: d53a7a0f (portal branch wk-IRPT_BCKEND-140-portal, IB-pr-338's reader tests).
+
+## 57. ROUND 64, WORKSTREAM ~P (2026-10-07 ~10:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IRPT_CUSTDY round-3 analysis @ec25e39844 S8(b), msg 383)
+
+One measurement cell routed to this workstream: which of the 7,022 granted accounts are NOT_IN_DIRECTORY (1,961 per IRPT_CUSTDY's run) and
+why each is absent. Read-only; the firm-bucket fence now admits dell2 on 49financial and inflection (cottonwood still denied). Check:
+`deliverables/2.0.0_SA_COO~P2/checks/r64/p64_cells.py`, dry-run at base 33949e002d.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-342` | directory-coverage census of the NOT_IN_DIRECTORY granted accounts, reason per account | FWD-1/FWD-7 directory coverage; IRPT_CUSTDY S8(b) | SERVED (read-only against served data) | none | P64-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one measurement cell. Slot 0.9.0_WK_IRPT_BCKEND~144.
+
+## 58. ROUND 65, WORKSTREAM ~P (2026-10-07 ~11:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on 1.0.0_SA_CTO~DELL2 PRIORITY msg 439, PRD v0.30 @f20371eb03 items 33-36)
+
+Row W142-S4 is ARMED: export reads FAIL OPEN (`export/entry.py` `_covered` admits any holder of an export id when the receipt names no
+account). The CTO orders three items ahead of every other round-65 cell. Checks: `deliverables/2.0.0_SA_COO~P2/checks/r65/p65_cells.py`,
+dry-run at base 31b26bff2d.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-343` | (1) receipt names covered_account_ids at freeze; `_covered` REFUSES an empty list; both schema copies require it | FWD-2 | WORLD (floor: infra/) | none | P65-a |
+| `IB-pr-344` | (2) back-fill tool + DRY-RUN census (read / filled / unfillable); the apply is the issuer's under a never-widen pair | FWD-2 | WORLD (floor: infra/) | IB-pr-343 | P65-a |
+| `IB-pr-345` | (3) exposure: read-log census of cross-scope export reads while the branch was served | FWD-2 | SERVED (read-only) | none | P65-b |
+
+fanout: 2 of 2 chains, cap 8, reason: (1) then (2) share the field and its derivation (one worker's queue); (3) is independent. Slots 0.9.0_WK_IRPT_BCKEND~145 (343 then 344) and ~146.
+
+## 59. ROUND 66, WORKSTREAM ~P (2026-10-07 ~12:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO review msg 403 and the dell2 portal toolchain going live, msg 472)
+
+The PrintEntry custody-report candidate (@cdda4378, IB-pr-336's portal half) was reviewed LAND-WITH-NOTE: typecheck + eslint + one 0-request
+refusal test before DEV, and readReportKind must refuse an unknown kind. Both are one file on the page, so one cell. Row S365 disarms when
+it lands. Check: `deliverables/2.0.0_SA_COO~P2/checks/r66/p66_cells.py`, dry-run at base fd0c709235 (AC1 FAIL; AC2 is a control, PASS).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-346` | print page refuses an unknown kind; the custody-report candidate's typecheck, eslint, refusal test | FWD-8/FWD-4; IRPT_CUSTDY hop 5 | WORLD (a portal product file) | IB-pr-336 (drained) | P66-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one page file. Slot 0.9.0_WK_IRPT_BCKEND~147; portal_ref: cdda4378 (branch wk-IRPT_BCKEND-138-portal).
+
+## 60. ROUND 67, WORKSTREAM ~P (2026-10-07 ~12:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 525 and the IRPT_CUSTDY round-4 analysis @16d9b128c0, msg 512)
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-347` | who can reach the fail-open export read NOW (non-Opal principals with a firm grant on the export routes); decides kit-wait vs an emergency apply | FWD-2 (W142-S4 / W146-S1) | SERVED (read-only) | none | P67-a |
+| `IB-pr-348` | E-P8 criterion 4: the seam guard treats every spelling of none/nan/null as unmapped | FWD-1/FWD-2 coverage | WORLD (floor: infra/) | IB-pr-339 (drained) | P67-b |
+
+fanout: 2 of 2 chains, cap 8, reason: two independent cells. Slots 0.9.0_WK_IRPT_BCKEND~148, ~149. Check: `deliverables/2.0.0_SA_COO~P2/checks/r67/p67_cells.py`, dry-run at base 8d7577866e.

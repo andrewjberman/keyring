@@ -1,0 +1,22 @@
+# /canonical-drive log -- 2.0.0_SA_COO~C2 on ADVI_COTBKF, dell2, 2026-10-07 09:0xZ-11:0xZ
+
+Copied from the runtime tick file org/mcp/drive_ticks/2.0.0_SA_COO~C2.md (gitignored), from tick 9 on. Push state at write: LOCAL.
+
+## tick 9 2026-10-07T09:12Z (cron + CTO round-5 L10 @21843491cd, CVO r5 compile @521f5aaab8)
+| ADVI_COTBKF | L10 answered: PARKED (3 un-park conditions) | 5 | 3/3 | 0 cuttable | live r1 | NO-OP by ruling: no issuance until fix B on dell2 (-> E2) or the NFRA_CTLPLN r4 write grant (-> E5, E3); cadence 10m -> 30m (cron 17,47) |
+Un-park probe each tick: calendar_source() / fallback first year; the grant arrives by message.
+## event 2026-10-07T09:19Z (MSTR~DELL2 msg 247)
+E4 write-in dell2-20261007T085711Z-7b15 ADMITTED by laptop 1.0.0_SA_CTO (msg 106095) on four conditions; the laptop apply is laptop 2.0.0_SA_COO~C's. Nothing granted yet; no dell2 act owed. Un-park state unchanged (E2, E5, E3 still parked).
+## tick 10 2026-10-07T09:26Z (cron) | ADVI_COTBKF | PARKED | 5 | 3/3 | 0 cuttable | live r1 | NO-OP: fix B not on dell2 (fallback 2024..2027; lib unchanged since 5 days); no write-grant message |
+## event 2026-10-07T09:34Z (laptop rulings 09:3xZ via msgs 256, 258) | ADVI_COTBKF | PARKED | 5 | -- | -- | live r1 | rows S13 (S12 premise wrong: targets are opal-data-assets), S14 (CB-e-3 guard aims at the wrong bucket, inert), S15 (W12-S2 listing) @b9411881a0; draft corrected; re-ruling asked of 1.0.0_SA_CTO~DELL2 (REC un-park E5 now) |
+## event 2026-10-07T09:4xZ (CTO~DELL2 re-ruling msg 264) | ADVI_COTBKF | E5 applied; r6 issued | 6 | 0/1 | 1/1 | live r1 | DRIVE FORWARD: E5 crosswalk applied from dell2, ledger CLOSED 1/1 @98652475d8 (branch A, 1533 rows read back); round 6 CB-f-1 (S14 fix + crm source count) issued @3c147f095c, worker ~20 spawned |
+## event 2026-10-07T09:47Z | ADVI_COTBKF | E3 apply running | 6 | 1/1 | 1/1 | live r1 | drained ~20 @fa9d12daa1 (VALID; plan crm_source_keys=0); E3 COO half GIVEN; ledger advi-cotbkf-r6-documents-apply-20261007 OPEN; apply started 09:47Z |
+## tick 11 2026-10-07T09:56Z (cron) | ADVI_COTBKF | E3 apply IN-PROGRESS | 6 | 1/1 | 1/1 | live r1 | NO-OP: apply moving, 2,306 of 11,119 keys at 9 min (~45 min total at this rate); ledger open, window 3 h |
+## event 2026-10-07T10:2xZ (hold A lifted, msgs 316/321) | ADVI_COTBKF | E2 un-parked | 6 | -- | -- | live r1 | DRIVE FORWARD: links on 2010-2027 calendar = laptop 1450/1450 all columns; census needed 9,388,961 = round 2; E2 COO half GIVEN @163c0dd8a1; CTO half asked; E3 apply still running |
+## event 2026-10-07T10:1xZ-10:3xZ (hold A lifted; CTO half E2 msg 329; fence msg 339)
+| ADVI_COTBKF | L8 (r6 packet at CVO) | 6 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: E2 applied (branch A, = laptop 1450/1450) and E3 applied (11,119, read back), ledgers CLOSED @3c39c9f4ae; S16/S17/S18 disarm S9, W12-S1, S12 (0 ARMED); r6 packet @f6d26131f1 to 3.0.0_SA_CVO; C-RESTRICTED COO half @c65cf8604d sent for relay |
+## tick 12 2026-10-07T10:26Z (cron) | ADVI_COTBKF | L8 (r6 packet at CVO) | 6 | 1/1 | 1/1 | live r1 | NO-OP: packet msg 340 READ 10:24:37Z, 2 min old; L8/L9 is the CVO's; 0 ARMED; nothing uncovered |
+## event 2026-10-07T10:4xZ (CTO r6 L10 msg 350 @1c9c98e652: FWD-5 REALIZED, 3 of 9) | ADVI_COTBKF | L6 r7 -> L7 | 7 | 0/3 | 3/3 | live r1 | DRIVE FORWARD: round 7 issued @28e63ee8e6 (fanout 3 of 3): CB-g-1 price-store scanner (~21), CB-g-2 FWD-8 read (~22), CB-g-3 FWD-6 coverage statement (~23); workers spawned |
+## event 2026-10-07T10:5xZ | ADVI_COTBKF | L7 done -> L8 | 7 | 3/3 | 3/3 | live r1 | DRIVE FORWARD: drained ~21 @d97b008a7c (after a premature branch delete, restored from 7dcadf7375 -- no loss), ~22 @ce7a734b92, ~23 @03244ba441; real runs FWD8-READ 439/21/0, COVERAGE 11 tables 0 missing; cottonwood still DENIED (probed) -> E1 relayed msgs 377-378; r7 packet @81508e219c to CVO |
+## event 2026-10-07T11:0xZ (CTO r7 L10 msg 389: FWD-8 REALIZED, 4 of 9) | ADVI_COTBKF | L6 r8 -> L7 | 8 | 0/1 | 1/1 (E3 not cut) | live r1 | DRIVE FORWARD: E3 premise contradicts PRD v0.4 C-SILVER (all 1,416,497 kept by design) -> REC strike sent to CTO~DELL2; round 8 CB-h-1 (repeat count + per-kind FWD-6 page) issued @a80c0f84b7, worker ~24 spawned |
+## tick 13 2026-10-07T11:00Z (cron) | ADVI_COTBKF | L7 r8 (IN-PROGRESS) | 8 | 0/1 | 1/1 | live r1 | NO-OP: worker ~24 MOVING (coverage_statement.py edited 10:58Z); CTO struck E3 on this seat's REC (msg 393, correction @20b2b40d99) |

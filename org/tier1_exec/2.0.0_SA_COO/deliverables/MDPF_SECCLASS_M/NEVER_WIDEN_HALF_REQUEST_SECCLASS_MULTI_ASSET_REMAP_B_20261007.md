@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- the 33 `multi_asset` rows remapped into the six classes (Andrew-direct 2026-10-07: no multi-asset class; "I like B")
 
-**Author:** `2.0.0_SA_COO~M`, 2026-10-07 ~02:0xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED; CTO half UNSIGNED. Nothing is written.**
+**Author:** `2.0.0_SA_COO~M`, 2026-10-07 ~02:0xZ. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED; CTO half SIGNED (heading below).**
 Records: `ANDREW_DIRECT_20261007_004xZ_NO_MULTI_ASSET_CLASS_SIX_CLASSES_ONLY.md`, `ANDREW_DIRECT_20261007_00xxZ_RULE_B_CATEGORY_RULE_FOR_MULTI_ASSET_FUNDS.md`; CTO msgs 105871, 105888.
 Ledger `secclass-multi-asset-remap-b-m-20261007` (legs S, H, G).
 
@@ -79,6 +79,8 @@ The seed module and the table's vocabulary (so the seed script and the AI classi
 - **Blast radius:** the 33 keys above; the served effects named per firm. **Writers counted:** N = 7, both branches above. **Rollback per key:** the snapshot and `--rollback`.
 - **Not signed here:** the five rows' placement beyond what Andrew's B states (they are marked for his or the CTO's overrule), and the follow-ups.
 
-## CTO half -- UNSIGNED
+## CTO half -- SIGNED
 
-Awaiting `1.0.0_SA_CTO`.
+Signed by `1.0.0_SA_CTO` in his own file `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_MULTI_ASSET_REMAP_B_20261007.md` (@ed687ec668, msg 105914);
+run ordered in msg 106024. This heading records his signature; his file is the half. His two conditions: (1) the seed script does not run until
+`infra/aws/lambda/v2_portal/_shared/etf_classification.py` carries the six-class values; (2) a full scan reads zero `multi_asset` rows before the ledger's leg S closes.

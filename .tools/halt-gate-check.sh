@@ -232,10 +232,11 @@ halt_gate_validate_serial() {
   esac
   if [ "$serial" != "$base" ]; then
     lane="${serial#*~}"
-    # A lane is one or more UPPERCASE letters (~O, ~RV, ~MI, ~AI ...). The letter COUNT was a stand-in for existence
-    # and went wrong twice (single letter, then 1-3); existence is tested directly below, against the lane's inbox.
+    # A lane is an UPPERCASE letter followed by uppercase letters or digits (~O, ~RV, ~MI, and the Dell lanes ~K2,
+    # ~DELL2, ~M1 under SEQUENCE v6's box-digit convention). The shape check refuses corruption (lowercase, a leading
+    # digit, punctuation); existence is tested directly below, against the lane's inbox.
     case "$lane" in
-      ""|*[!A-Z]*) HALT_GATE_VALIDATE_REASON="malformed-lane"; return 1 ;;
+      ""|[!A-Z]*|*[!A-Z0-9]*) HALT_GATE_VALIDATE_REASON="malformed-lane"; return 1 ;;
     esac
   fi
   for tier in tier0_exec tier0_utility tier1_exec tier2_senior tier3_junior; do

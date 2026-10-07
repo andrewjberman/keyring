@@ -75,9 +75,11 @@ Write the instance at `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IR
 
 **ISSUER NOTES (L5/L6, 2.0.0_SA_COO~Y):** round 6 cut from PRD v0.5 @e6a801f7f0 section 2 (the thread) and IRPT_BCKEND PRD v0.28 @3a8950aa20 items 29-31; CTO ruling msg 105387 (all cells in one issuance); decomposition round 6 revision 1.0 (`IRPT_YCDGEN_DECOMP_R6.md`). Chain `~3`, first order; addendum J cell (decomposition IRPT_YCDGEN_DECOMP_R6J.md), cut on CTO ruling msg 105720 and Andrew-direct 2026-10-06 (the Prospect card asks for a firm because it is produced for a given firm inherently); stacked on p-6's UNLANDED portal commit e107538d (branch wk-IRPT_YCDGEN-81-portal), so e-6, j-6, p-6 and this cell land on portal DEV together after the CTO's review. The issuer also runs the portal typecheck and the bun baseline at the drain. Portal submodule cell. Risk WORLD: the gate's floor for infra paths and portal product files; nothing live moves inside the cell.
 
+**DRAIN (2.0.0_SA_COO~G2, 2026-10-07 ~07:4xZ):** worker 0.9.0_WK_IRPT_YCDGEN~3 @215c317f77 (proof + rows W3-S19, W3-S20, W3-S21) merged to CLOUD by safe-merge @710c9129ab; proof-of-spec-check VALID (rc=0) at HEAD. AC1-AC3 PASS were re-run by 2.0.0_SA_COO~Y at the worker's worktree (handoff @217963b67d). The portal code is commit 643b6ddd on portal branch wk-IRPT_YCDGEN-82-portal (on origin); it is UNLANDED on portal DEV, and that landing is a CTO product-file review, not this order.
+
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+<status>complete</status>
 <round>6</round>
 <workstream>R6J_PROSPECT_FIRM</workstream>
 <slot>~3</slot>

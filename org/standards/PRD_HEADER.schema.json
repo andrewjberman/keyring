@@ -17,7 +17,7 @@
    "description": "Directive code. MUST match the register row's `directive` and the DIRECTIVES.yaml member list -- two carriers, compared."
   },
   "fabric": {
-   "enum": ["laptop", "site-z"],
+   "enum": ["laptop", "site-z", "dell1", "dell2"],
    "description": "Same enum as the register row and to-pipeline-gate.py:72 FABRIC_ENUM. MUST match the register row."
   },
   "prd_version": {

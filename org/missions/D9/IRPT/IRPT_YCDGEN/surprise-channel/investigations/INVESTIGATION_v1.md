@@ -1901,3 +1901,162 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Inert for FWD-1: the thread is the Prospect portfolio upload (PRD v0.8 FWD-1 and s2 step 1; input_id, snapshot_id null). CTO ruling msgs 105681 and 105683: one definition, the server's; no cell now; for the CTO's round analysis."
 }
 ```
+
+## IRPT_YCDGEN-W3-S19 -- the Prospect card cannot read the firm catalogue through any prop the order's paths reach, so the page header publishes it to a module-level holder the card reads
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S19",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:12:00Z",
+  "one_line": "HeaderSelection (header/HeaderSelectionContext.ts) and TabShell.tsx carry no firm catalogue and are outside YCD-q-6's paths, so index.tsx publishes the catalogue to stagedProspect.ts and AnalysisTab reads it from there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6 R18 (a): the card shows a firm choice 'from the same catalogue the Firm dropdown uses'; the paths named are ProspectComposer, AnalysisTab, stagedProspect.ts (new), FirmDropdown and index.tsx.",
+  "world_is": "AnalysisTab receives only api, scope, firmId and selectedScopeRef from TabShell; the catalogue (index.tsx catalogueQuery) lives above TabShell and the only carrier between them is HeaderSelectionContext, whose HeaderSelection type is in a file outside the order's paths. A useQuery in AnalysisTab would throw in the existing static-render tests (no QueryClientProvider). So index.tsx calls publishFirmCatalogue({internal, firms}) in an effect (withdrawn on unmount) and AnalysisTab reads useFirmCatalogue() (useSyncExternalStore) from stagedProspect.ts. Memory only; one workspace per page, so one holder. A later cell holding HeaderSelectionContext.ts and TabShell.tsx could replace the holder with a context field.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_YCDGEN-82-portal src/pages/InvestorReporting/header/HeaderSelectionContext.ts:15-50 (HeaderSelection fields)",
+      "portal src/pages/InvestorReporting/tabs/TabShell.tsx:164-172 (AnalysisTab props)",
+      "bun portal/scripts/prospect-firm-exercise.mjs firm and dropdown (render the real components through the holder)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "For the CTO's round analysis: the holder is a second carrier of the catalogue beside the page's own prop; both are fed from the one catalogueQuery."
+}
+```
+
+## IRPT_YCDGEN-W3-S20 -- the portal has no DOM library, so no button handler or effect can run in a bun exercise; YCD-q-6's exercise grades the card by static render, the real send helpers and source-wiring checks
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S20",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:13:00Z",
+  "one_line": "No happy-dom, jsdom or testing-library is installed under portal/node_modules, so prospect-firm-exercise.mjs cannot press Review or Generate or run the write-through effect; the send decision lives in exported helpers it drives directly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6: 'firm drives the Prospect card ... the upload request and the submit request both carry cottonwood'; 'remount stages a file and a review result, remounts the composer as a client pick or tab switch does'.",
+  "world_is": "ls portal/node_modules finds no happy-dom, jsdom, @testing-library or react-test-renderer; react-dom/server runs neither handlers nor effects. The exercise therefore (1) drives sendProspectUpload / sendProspectSubmit / prospectFirmDecision (exported from stagedProspect.ts and the only code the composer sends through) against a recording stub, (2) static-renders the real ProspectComposer and AnalysisTab for what a fresh mount shows (a fresh mount reads the staged slot exactly as a remount does), and (3) checks by source regex that the composer writes through to the slot (holdStaged in an effect) and clears on a new file or firm. What is NOT executed: the click on Review portfolio, the useEffect write-through and the file input's change handler. Precedent: portal/scripts/global-tenant-exercise.mjs (p-6) grades the same way; src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx drives handlers by wrapping the JSX runtime.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal/node_modules directory listing (no DOM library present)",
+      "portal/scripts/prospect-firm-exercise.mjs remount arm (the three source-wiring checks)",
+      "portal src/pages/InvestorReporting/__tests__/dsgn-irptv1/s55.component-wiring.test.tsx:28-50"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "If the issuer's live close shows a file lost across a client pick, the effect write-through is the first thing to read (ProspectComposer.tsx holdStaged effect)."
+}
+```
+
+## IRPT_YCDGEN-W3-S21 -- running the whole InvestorReporting bun suite rewrites four tracked wire files (AnalysisReport.ts, ExportBundle.ts, index.ts, responses.ts) in the worktree
+
+```json
+{
+  "id": "IRPT_YCDGEN-W3-S21",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~3",
+  "surfaced_at": "2026-10-06T21:14:00Z",
+  "one_line": "bun test src/pages/InvestorReporting leaves contracts/wire/{AnalysisReport,ExportBundle,index,responses}.ts modified (120 changed lines, 56 deleted from AnalysisReport.ts) in the portal worktree; the IVE17-AC2 regenerated-wire test is the likely writer.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-q-6 section 3: the baseline is bun test over fe-s-13 and tabs/analysis (40 pass, 11 fail); the order names only that narrower run, not the whole suite.",
+  "world_is": "Running the wider bun test src/pages/InvestorReporting (to check no other test read the four files I edited) ended with git diff --stat showing those four tracked wire files changed outside every order's paths (twice: after the base-source run and after mine). The failing-test list names 'IVE17-AC2 -- the regenerated wire carries every landed ask'. I restored the four from HEAD with git show and committed none of them. The narrower baseline run (fe-s-13 + tabs/analysis) did not touch them.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "git diff --stat in the portal worktree after bun test src/pages/InvestorReporting (AnalysisReport.ts 56, ExportBundle.ts 6, index.ts 8, responses.ts 30 changed lines)",
+      "bun test output: IVE17-AC2 line in the failing list of the base-source run"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "INERT for this order (nothing committed). A worker or drain that runs the whole suite and commits with a broad path set would carry the rewritten wire files; the writer was inferred from the test name, not read."
+}
+```
+
+## IRPT_YCDGEN-W5-S1 -- `bunx` is not on the worker shell PATH, so the order's `bunx tsc --noEmit` cannot run as written
+
+```json
+{
+  "id": "IRPT_YCDGEN-W5-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~5",
+  "surfaced_at": "2026-10-07T08:05:19Z",
+  "one_line": "bunx tsc --noEmit fails with 'bunx: No such file or directory' (rc 127) in the worktree shell where bun resolves; bun x tsc --noEmit ran instead and printed 0 errors before and after the edit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-t-6 section 3: run bunx tsc --noEmit from the portal directory and state its error count before and after.",
+  "world_is": "With the bun directory from the spawn line on PATH, bun runs but bunx is absent (timeout: failed to run command 'bunx', rc 127). bun x tsc --noEmit from the portal directory exits 0 with 0 'error TS' lines both on the base source (HEAD files restored) and with the edit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bunx tsc --noEmit output: failed to run command 'bunx': No such file or directory (rc 127)",
+      "bun x tsc --noEmit: rc 0, 0 error TS lines, base and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Substituted the equivalent bun x form; no criterion depends on tsc."
+}
+```
+
+## IRPT_YCDGEN-S14 -- dell2's AWS user cannot run SSM commands on the resident host, so every host read and resident build for this project's dell2 lane is blocked
+
+```json
+{
+  "id": "IRPT_YCDGEN-S14",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T09:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "ssm:SendCommand on resident host i-0167fd745ad906a66 is denied to cloudops-dell2-agent-user, so dell2 cannot read the host for ledger irpt-ycdgen-r6-branch-b2-20261006 (F1 reads) or ship the next resident build (M1, the 390 s release)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "The seat that owns the resident host files and the open ledger (2.0.0_SA_COO~G2, CTO msgs 90/189) can read the host it is accountable for.",
+  "world_is": "2026-10-07 ~09:10Z, python org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_Y/live_walk/host_read.py <host_root_read.sh> from dell2 returned: AccessDeniedException ... User: arn:aws:iam::313476888478:user/cloudops-dell2-agent-user is not authorized to perform: ssm:SendCommand on resource: arn:aws:ec2:us-east-1:313476888478:instance/i-0167fd745ad906a66. Nothing ran on the host.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the AccessDeniedException text above (dell2 session, 2026-10-07 ~09:10Z)",
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~G2/host_root_read.sh (the read-only script; changes nothing)"
+    ]
+  },
+  "notes": "Inert now: no host act is due before Andrew's F1 click. Per 1.0.0_SA_CTO~DELL2 standing rule msg 218 the read goes to the laptop as a FILE through 0.0.0_AB_MSTR~DELL2; no fence is widened from dell2. Whether dell2 should hold ssm:SendCommand on this host is NFRA_CTLPLN's question, not this project's."
+}
+```
+
+## IRPT_YCDGEN-S15 -- the t-6 worker fetched portal packages from the npm registry (egress off Opal) on the issuer's instruction
+
+```json
+{
+  "id": "IRPT_YCDGEN-S15",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-07T12:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "the issuer's spawn line for worker 0.9.0_WK_IRPT_YCDGEN~5 (cell t-6, ~07:58Z) told it to run bun install in C:/dev/wk-ycdgen-6-t5/portal; that is one npm-registry fetch, egress off Opal infrastructure",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "No seat makes egress off Opal infrastructure; a dell2 portal worktree links or copies the shared lockfile-matched portal/node_modules and never runs npm or bun install (CLAUDE.md Agent Autonomy; 1.0.0_SA_CTO~DELL2 msg 473).",
+  "world_is": "One registry fetch at ~08:0xZ 2026-10-07, 244 top-level packages placed in C:/dev/wk-ycdgen-6-t5/portal/node_modules only (untracked); bun.lock restored by the worker; nothing built from those packages was committed or shipped. The error is the issuer's instruction, not the worker's. Re-proof on the shared node_modules (laptop pack, lockfile-matched), worktree C:/dev/wk-g2-pageproof with a junction to C:/dev/ajb_workspace/portal/node_modules: at 949830e8 typecheck rc=0; exercise arms signout, remount, firm, dropdown all PASS; bun test fe-s-13 + tabs/analysis 32 pass / 16 fail / 1 error over 48 tests, identical at base 4d16a2a0 (standalone-worktree path artifact, docs/ unresolved), so t-6 changes no test count.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls C:/dev/wk-ycdgen-6-t5/portal/node_modules: 244 entries; git status in that portal worktree clean",
+      "1.0.0_SA_CTO~DELL2 msgs 473 and 481 (ruling: file the row, leave the directory, re-prove on the shared node_modules)",
+      "re-proof transcript in the issuer's session 2026-10-07 ~12:1xZ (commands and outputs above)"
+    ]
+  },
+  "notes": "Per CTO msg 481 the directory is NOT deleted (a recursive delete would need Andrew's word); it goes when that worktree is retired. The t-6 proof of record is the re-proof above, not the worker's run."
+}
+```
