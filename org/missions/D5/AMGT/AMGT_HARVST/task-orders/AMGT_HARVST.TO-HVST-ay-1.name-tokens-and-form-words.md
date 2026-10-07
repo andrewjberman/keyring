@@ -127,9 +127,22 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - The close run is the issuer's: bbg resumes after Andrew's hand-solve of its bot check (`--clear-stop bbg`); the OMAB pair,
   concluded on the round-51 rule, is re-run with `--names`.
 
+**COMPLETE 2026-10-07 ~02:5xZ (issuer):**
+- **Built:** worker ~102 @d130e7301a + @e3351ae1e7; merged @ba9ad361fd (7 files, dropped 0, foreign 0).
+- **AC1 PASS:** 11 of 11. **AC2 PASS:** REPLAY OK -- bbg kept 3,276 of 3,282 (lost: 4 `substring_accident` Monster, Nokia,
+  SAP, UBS; 2 `alias` Eli Lilly); wsj kept 566 of 566; over 26,907 stored wsj URLs AT&T old 8,758 new 11, SSE old 501 new 0,
+  Bank of America old 11 new 9, Amazon.com old 7 new 94, Meta Platforms old 2 new 2. **AC3 PASS:** 704 passed on the branch;
+  issuer re-run on merged CLOUD 706 passed, 1 skipped.
+- **Existing assertion changed:** `test_ax1_slug_phrase_and_bound.py` `test_ii_eli_lilly_is_not_eli_manning_and_lilly_pulitzer`
+  now asserts the any-order match (as the face directed).
+- **Rows:** none. Row AMGT_HARVST-Z-S92's hazard is closed by this merge; the issuer's stop file `R46_STOP_BBG` is removed.
+- **Close run:** OWED. bbg is stopped on its own `bot_check` (01:55Z) and resumes only on Andrew's hand-solve
+  (`--clear-stop bbg`); the OMAB pair, concluded on the round-51 rule, is then re-run with `--names`.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>52</round>
 <slot>~102</slot>
 <fabric>site-z</fabric>
