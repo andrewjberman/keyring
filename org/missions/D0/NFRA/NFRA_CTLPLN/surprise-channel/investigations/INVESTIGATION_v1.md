@@ -1118,3 +1118,78 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Three deployed Lambdas carry their own older 163-line copy of the module, outside the order's grant (it edits no importer and deploys nothing). The new fallback and CalendarCoverageError reach them only if the copies are replaced from lib/. Until then they answer a pre-2024 holiday as a trading day, and from 2028-01-01 every weekday, with no error; their current call sites pass current dates (bd-served-vintage-alarm, opal-assets-absence-check) or an event day (inf-etf-ownership-daily, UNKNOWN). Disarm owner is the issuer who decides whether a re-vendor cell is cut; this worker did not copy the file."
 }
 ```
+
+## NFRA_CTLPLN-W13-S1 -- CT-k-2: pip's local cache on the laptop is empty, so the pack's preference (a) is built but never exercised against a real cached wheel
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "The order's pack prefers a wheel already in pip's local cache or wheelhouse; on the laptop that cache holds 0 bytes and 0 wheels, so every packed artifact is rebuilt from installed files (preference b) and the cached-wheel arm has no real wheel to find.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pip cache info, run in worktree C:/tmp/wk-ctlpln-13 on 2026-10-07: wheels location under LOCALAPPDATA/pip/cache/wheels, size 0 bytes, 0 locally built wheels; http-v2 size 0 bytes",
+      "org/devices/kit_python_pack.py (branch wk-NFRA_CTLPLN-13): the pack run against a target with nothing installed wrote 69 wheels, every 'how' = rebuilt-from-installed-files; pip install --no-index --dry-run of all 69 rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 build 2: for each missing distribution, (a) a wheel already in pip's local cache or wheelhouse that matches the target is preferred, then (b) a wheel rebuilt from the installed files.",
+  "world_is": "python -m pip cache info on the laptop (pip 26.0.1): 'Package index page cache size: 0 bytes', 'Number of HTTP files: 0', 'Number of locally built wheels: 0'; no wheelhouse directory is named. All 69 artifacts of a full-closure pack for a target with nothing installed were 'rebuilt-from-installed-files'; the cache arm (fits_target and find_cached_wheel in org/devices/kit_python_pack.py) is code, not exercised against a real wheel. The pip --dry-run self-check validated every rebuilt wheel instead."
+}
+```
+
+## NFRA_CTLPLN-W13-S2 -- CT-k-2: blpapi, an import in .tools/ or lib/, is not installed on the laptop; it is the only NOT-INSTALLED-HERE module
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "The census finds 1 third-party module the laptop itself lacks (blpapi, OPTIONAL, 1 importing file), so compare reads missing=1 on the laptop and on any box, and the pack lists it UNPACKABLE.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_required.json not_installed_modules = [{module: blpapi, usage: OPTIONAL, importers: 1}], from python org/devices/kit_python_census.py required on branch wk-NFRA_CTLPLN-13 (base a68599cde3)",
+      "KIT-COMPARE device=laptop python=3.12.10 required=21 present=20 missing=1 version_differs=0 hard_missing=0 ok=False (this worker's compare of the laptop's own installed read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 bounds: if required reports a third-party module NOT-INSTALLED-HERE, that is a finding for the report (the laptop itself lacks something its tools import), not something to install; compare ok=True only when m == 0.",
+  "world_is": "KIT-REQUIRED files=745 unparsed=0 modules=135 stdlib=67 local=47 third_party=21 distributions=20 not_installed_here=1: the one is blpapi (the Bloomberg API Python binding), imported in a try, 1 file. KIT-COMPARE on the laptop reads required=21 present=20 missing=1 ok=False, so the order's compare line cannot read ok=True on any box until blpapi is installed there or dropped from the list. The pack and install tools treat an OPTIONAL module with no distribution as UNPACKABLE and counted but not failing their own ok; compare keeps the order's rule (ok only when missing=0). Nothing was installed."
+}
+```
+
+## NFRA_CTLPLN-W13-S3 -- CT-k-2: 26 of the 47 modules classified LOCAL resolve to a repo name outside the path roots the order names
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T09:21:46Z",
+  "one_line": "Read literally, the order's LOCAL rule (inside .tools/, lib/, or beside the importing file) leaves 26 more repo-internal module names classed as third-party; the census classifies them LOCAL by a repo-wide name match and records local_via per module.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/kit_python_census.py required, first run (path roots only): local=21 third_party=47 not_installed_here=27; second run (repo-wide names added): local=47 third_party=21 not_installed_here=1, on branch wk-NFRA_CTLPLN-13",
+      "org/devices/kit_python_required.json is a third_party-only list; the 26 repo-wide-name modules were printed from census_required() with local_via=repo-wide-name and shadows_installed_distribution=false"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 build 1: classify an import LOCAL only when it resolves to a module or package inside the repository (.tools/, lib/, or a package beside the importing file); everything else THIRD-PARTY.",
+  "world_is": "With only the order's roots the census read local=21 third_party=47 not_installed_here=27 (price_axis_pull, kuzu_cli, orchestrator, serp and 23 others, each the stem of a tracked .py elsewhere in the repo, reached by a sys.path insert the static read cannot follow). The census now classes a name LOCAL when no installed distribution provides it and a tracked .py stem or directory of that name exists anywhere in the repo (local_via=repo-wide-name, 26 modules), leaving third_party=21 and not_installed_here=1. No LOCAL name shadows an installed distribution (shadows_installed_distribution=false for all 47)."
+}
+```
