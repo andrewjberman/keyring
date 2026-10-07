@@ -2456,3 +2456,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The raw simulator answers allowed for two of the five arms on the document with and without the added statement; the added statement is not their cause. The worker kept the raw column printed beside the KMS-rule column and counted the KMS rule, and did not edit the key policy's root statement (outside the amendment). A future reader of a KMS key policy with a simulator needs the same composition."
 }
 ```
+
+## NFRA_CTLPLN-W6-S11 -- TO-CT-e-3: the platform scanner on this laptop exits 2 with 'Product/Feature disabled', which the order reads as 'a threat was found'
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T18:54:42Z",
+  "one_line": "MpCmdRun.exe -Scan -ScanType 3 -File <own synthetic wheel> -DisableRemediation exits 2 on this laptop with '[Failed][0x80004005] Unspecified error' because Defender's antivirus is disabled; exit 2 is not a threat verdict here, so check 7 reads failed on this box whatever the file holds.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake_check.py check_7 on a tiny synthetic wheel the test built: exit_code=2, last_lines ['[Failed][0x80004005] Unspecified error', 'CmdTool: Failed with hr = 0x80004005. Check ...MpCmdRun.log for more information']; the scanner's own log line before it reads 'WARN: Product/Feature disabled'.",
+      "powershell Get-MpComputerStatus: AMServiceEnabled False, AntivirusEnabled False, RealTimeProtectionEnabled False; SecurityCenter2 lists 'Windows Defender' (productState 393472) and 'Little Dog Tech Managed Antivirus Antimalware' (266240)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-e-3 BUILD 1 check 7: exit code 0 means no threat found, 2 means a threat was found; anything else, or the scanner absent or refusing, is failed.",
+  "world_is": "Exit 2 also means the scanner refused to scan (Defender's antivirus off, a managed third-party product active). The tool records failed either way and says in the summary when the output shows an error, so no pass is possible; but while Defender is off, check 7 cannot pass on this laptop and no file can reach 'checked' here. The real-scanner test case is counted skipped for that reason.",
+  "notes": "For the issuer: either the CTO's signed batch accepts a failed check 7 is never 'checked' (the seam says so), or check 7 needs the managed product's own scanner named in a later round."
+}
+```
+
+## NFRA_CTLPLN-W6-S12 -- TO-CT-e-3: THE SEAM leaves four format points open that the tool resolved one way; the fetch, receive and closure tools should read the same way
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T18:54:42Z",
+  "one_line": "THE SEAM does not fix (a) whether OPAL_INTAKE_RECORDS is the base of <base>/<batch>/ or the batch folder itself, (b) whether held_path starts with holding/, (c) whether attestation is a string or an object, (d) the shape of a check's evidence; intake_check.py resolves each tolerantly or by a stated rule.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "intake_check.py Cfg/records_dir: records at <OPAL_INTAKE_RECORDS>/<batch>/<file>.check.json; the FETCH record is read from there, else from <OPAL_INTAKE_RECORDS>/ directly.",
+      "held_path_ok: accepts holding/<batch>/<file> and <batch>/<file>; the file is read at <root>/holding/<batch>/<file> either way.",
+      "check_5: attestation may be the string 'present'|'absent'|'unread' (URL read from top-level attestation_url) or an object with state/status/value and url.",
+      "each check's evidence is an object with a 'summary' string plus detail keys; a not_applicable check carries evidence.reason; check 8 carries evidence.signer and evidence.path; MANIFEST.json lists files[] with name, sha256, size, check_record(+_sha256), delivery(+_sha256)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM: record formats fixed so four cells share files and never wait on each other's code.",
+  "world_is": "The listed fields are underdetermined by the seam text; the check tool is tolerant on read where it can be and states its write format. The receive tool reading evidence as a plain string, or the fetch tool writing OPAL_INTAKE_RECORDS as the batch folder, would be the mismatch to look for at the drain."
+}
+```
