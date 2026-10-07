@@ -497,3 +497,17 @@ also emits account_class_daily; its role writes one more prefix; the schedule is
 | (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
 
 fanout: 1 of 1 chains, cap 8, reason: one prep cell; the apply follows it. Worker 0.9.0_WK_IRPT_DASHBD~19 in its own worktree.
+
+## 23. ROUND 23, WORKSTREAM B (2026-10-07 ~13:4xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-22 analysis @a1873a8be7, msg 615)
+
+Round 22 is closed: DB-b-34 @d48052d79b (the account_class_daily release prepared; REMEDIATION_v8 @372500963a). Both never-widen halves
+are given (CTO @9816b17511, COO @13363d403b); the apply waits only on the dell2 terraform kit, and this seat sets the source-map pins at
+the apply (ruling msg 600). FWD-8 stays held on Andrew's split-pull word. The analysis takes PRD backlog B2 (FWD-4).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-35` | E1: account_activity_daily, account_lot_realized, account_lot_unrealized_daily for 49F, built and run locally; one account-window ties to the cent; each realized lot ties to its closing transaction; builder names | LOCAL (no S3 write) | none | B23 |
+| (class release apply) | safe-apply of reporting-gold with the pins | WORLD | the terraform kit | the issuer's act |
+| (FWD-8) | the split BD pull | WORLD | Andrew's per-use word | held |
+
+fanout: 1 of 1 chains, cap 8, reason: one build cell. Worker 0.9.0_WK_IRPT_DASHBD~20 in its own worktree.

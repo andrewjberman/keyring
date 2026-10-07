@@ -5,7 +5,7 @@
  "project": "IRPT_YCDGEN",
  "directive": "D9",
  "fabric": "laptop",
- "prd_version": "v0.9",
+ "prd_version": "v0.10",
  "step": 4,
  "brief_ref": "docs/briefs/irpt-ycharts-inhouse-generation-feasibility-20261005.md@69141b561e",
  "endpoint_outcomes": ["FWD-1", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
@@ -178,8 +178,9 @@ cloud". Inputs:
   FWD-18 An advisor clears every flagged row of a file quickly
          DONE WHEN  EXERCISED -- one file with three or more flagged rows cleared on the page
          ACCEPT     accepting one suggestion is a single action that takes effect straight away, and
-                    one action accepts every suggestion on the file at once; nothing is accepted
-                    unless the advisor chose it
+                    one action accepts every corrected-ticker suggestion on the file at once; a
+                    stand-in for a different security is always accepted one at a time; nothing is
+                    accepted unless the advisor chose it
          SOURCE     check/swap brief O2, O4, R2
 
   FWD-19 An advisor picks a stand-in for a fund Opal cannot price from a short list, instead of
@@ -231,6 +232,11 @@ cloud". Inputs:
   record @1ea0796be2: "AI functionalities for autosuggesting swaps of unrecognized securities and associated frontend ops").
   FWD-1 to FWD-16 are unchanged. The seven are emitted by this seat and are NOT YET CONFIRMED by Andrew; the ratified-text half
   re-opens on the ENDPOINT change. Y-5 packet 2 (the web-search swap) is superseded by S32 (msg 120).
+- v0.10 (`1.0.0_SA_CTO~DELL2`, 2026-10-07 ~13:4xZ): FWD-18 AMENDED IN PLACE (id unchanged). Bulk accept is narrowed to corrected-ticker
+  (typo) suggestions; a stand-in is never bulk-accepted, because it changes what the report measures. Source: the CRO brief section
+  4.3b @f9386e5865, E7 ("the case for friction in AI UX: why accept all is the wrong pattern"), found under Andrew's word of ~13:3xZ
+  (web search only). Still not confirmed by Andrew. The brief's R13 (remember an accepted correction per firm) is NOT added: whether a
+  firm-scoped memory is wanted is a product call left for Andrew.
 - A word of his that amends an FWD becomes an addendum under the next unused id (FWD-16), or an in-place amendment. It is never
   a cell's choice.
 

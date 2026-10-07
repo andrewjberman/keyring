@@ -51,7 +51,11 @@ def census(s3, bucket):
 def main(argv):
     s3 = boto3.client("s3", region_name="us-east-1")
     buckets = sorted(b["Name"] for b in s3.list_buckets()["Buckets"] if b["Name"].startswith("opal-data-"))
-    rows = [census(s3, b) for b in buckets]
+    rows = []
+    for b in buckets:
+        r = census(s3, b)
+        rows.append(r)
+        print(f"  scanned {b}: listed={r['listed']} hits={r['hits']} unread={r.get('unread', '')}", flush=True)
     for r in rows:
         if r.get("unread"):
             print(f"  {r['bucket']}: UNREAD {r['unread']}")

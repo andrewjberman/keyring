@@ -95,6 +95,7 @@ lanes:
       - 2.0.0_SA_COO~Y2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
       - 2.0.0_SA_COO~M
       - 2.0.0_SA_COO~M2   # dell2 successor, granted by 1.0.0_SA_CTO~DELL2 on msg 171 (predecessor parity)
+      - 2.0.0_SA_COO~D2   # IRPT_DASHBD release pins (msg 594); 1.0.0_SA_CTO~DELL2
     description: "CTO grantor IRPT-P-BUILD-01, 2026-09-22: exact shared source-map file only; preserve YANG_PIPELINE_DEPLOY incumbents plus exact COO~P. P may change IRPT build composition only under completion contract, with non-IRPT member equality proof and independent review; no upload/deploy grant. Path gate is file-granular, not JSON-member enforcement. CTO grantor IRPT RULINGS batch 62, 2026-10-01: exact COO~Y added for the rows of irpt-status and irpt-ycharts-generate only (the whole-bundle moves of batch 61 item 2b); every other row stays COO~P's. CTO grantor IRPT RULINGS batch 101, 2026-10-01: exact COO~M added for the irpt-holdings row only (the split-account route leg, packet signed @07e4769540); every other row stays as before."
 
   # Andrew-direct IRPT completion, CTO grantor 2026-09-22.

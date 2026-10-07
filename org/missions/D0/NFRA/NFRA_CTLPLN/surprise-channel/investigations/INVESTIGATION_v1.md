@@ -1986,3 +1986,313 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "One bun process of the earlier kit's own test ran outside the harness. It carries --no-install and a script with no import, so it cannot auto-install; the Dell read-back typecheck in kit_portal_tree.py already uses that flag. Not counted by a listener, so reported rather than measured."
 }
 ```
+
+## NFRA_CTLPLN-S17 -- disarm record for NFRA_CTLPLN-S13: --no-install measured on bun 1.3.9 and 1.4.2; dell2 covered by Andrew's word; a bare run still fetches
+
+```json
+{
+  "id": "NFRA_CTLPLN-S17",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T14:23:01Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-S13: the flag --no-install stops bun's registry fetch on bun 1.3.9 (laptop) and bun 1.4.2 (dell1), measured by request count; dell2 is not measured, on Andrew's word that dell1's read stands for both.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Laptop, issuer's own run at 3b95b7c3aa: BUN-NO-EGRESS bun=1.3.9 positive_requests=6 candidates=9 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell1, bus c1d80ce3 (file org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_READBACKS_FOR_COO_C_20261007_1420Z.md), behind an outbound firewall block on bun.exe that Andrew added in an elevated shell: BUN-LISTENER-SELFCHECK ok=True; BUN-NO-EGRESS bun=1.4.2 positive_requests=6 candidates=12 passing=4 leaked_public=0 form=flag:--no-install ok=True",
+      "dell2: NOT measured. Andrew-direct at the dell2 terminal ~14:0xZ as relayed by 0.0.0_AB_MSTR msg 106292, verbatim: 'we dont need to test the bun firewall process here because we've already proved it on dell1.' dell2 runs bun 1.4.2 by its own earlier report (msg 106209)",
+      "Merged @e131723efb: org/devices/kit_bun_no_egress.py wrap carries the flag and refuses install-class commands; .tools/wk-provision.sh refuses its install mode without a non-public registry redirect (CTk2-AC8 7/7, CTk2-AC9 ok)",
+      "Not read at this filing: dell1's confirmation that the firewall rule was removed; dell1's full result file (kept on dell1)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "NFRA_CTLPLN-S13 (ARMED): bun fetches from the public registry on a run outside a node_modules tree; disarm when the measured form is in the kit and each box has read it back.",
+  "world_is": "The measured form is in the kit and two of three boxes read it back; the third is covered by Andrew's word, not by a measurement. What the disarm is: a wrapper and a flag a seat must USE. A bare `bun run` of a file outside a node_modules tree still fetches on every box; nothing mechanical stops a seat from typing it. The CTO's interim rule (msgs 106214, 106220: bun only inside a portal tree that holds node_modules; no bun install) therefore remains the standing control, and S13 is disarmed only for a seat that follows it or uses the wrapper. Whether a mechanical stop is wanted (a PATH shim, a standing firewall rule) is an open question for the CTO and Andrew, not built here."
+}
+```
+
+## NFRA_CTLPLN-W8-S3 -- TO-CT-d-5 amendment: dell_respol_policy.json has no generator and the script has no --check
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The amendment says dell_respol_policy.json is produced by tests/derive_respol_actions.py and names a --check and a regenerate command; the script is a read-only checker that takes no argument and writes nothing.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py main(): reads the four policy documents and the Deny statement, prints, returns; no write call and no argparse",
+      "git log --follow dell_respol_policy.json: one commit, ce05f0e838, the file created by hand with the build"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: add sqs:SetQueueAttributes by the file's own generator (tests/derive_respol_actions.py), regenerate with the generator's own command, run its --check.",
+  "world_is": "The JSON (hand-wrapped, one Deny statement, sorted actions) was edited by inserting one sorted entry in place; derive_respol_actions.py was changed to carry the action as RULED-IN (removed from RULED_ALLOWED) and its single run is the check: RESPOL-DERIVED ... actions=75 covered=75/75 ruled_allowed_caught=0 ok=True. No --check flag exists and none was added."
+}
+```
+
+## NFRA_CTLPLN-W8-S4 -- TO-CT-d-5 amendment: the simulation block count 13 needs one arm the amendment did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "The existing respol block already held sqs:SetQueueAttributes -> allowed, so adding the two named arms to a block of 11 cannot read 13: that arm has to flip, giving 12; a neighbouring-action control (sqs:TagQueue -> allowed) was added to reach the ordered respol_ok=13/13.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py RESPOL list before this pass: 11 arms including (sqs:SetQueueAttributes, allowed)",
+      "last line of the simulation after the edit: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT step 2: extend the block by two arms (SetQueueAttributes -> explicitDeny; CreateQueue -> allowed); the block then reads 13 of 13.",
+  "world_is": "Block is now 9 explicitDeny arms + sqs:SetQueueAttributes explicitDeny + sqs:CreateQueue allowed + sqs:TagQueue allowed + sns:SetTopicAttributes allowed = 13; the old SetQueueAttributes-allowed arm was changed, not kept. TagQueue is the unnamed addition: it shows the Deny does not catch the neighbouring queue action the create policy allows."
+}
+```
+
+## NFRA_CTLPLN-W8-S5 -- TO-CT-d-5 amendment: the Deny leaves a dead Allow, and a read-only derivation still lists SetQueueAttributes as a queue update need
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T14:14:33Z",
+  "one_line": "dell_create_policy.json still Allows sqs:SetQueueAttributes and tests/derive_resource_kinds.py still lists it as an update action of aws_sqs_queue; the explicit Deny now overrides both, so a Dell can no longer update a queue, and six roots that declare a separate queue policy cannot be applied from a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/queue_attribute_writers.json declared.by_root and the native Grep over infra/aws/terraform for the four resource kinds: 23 aws_sqs_queue, 9 aws_sqs_queue_policy, 0 redrive_policy, 0 redrive_allow_policy",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json line 36 and tests/derive_resource_kinds.py line 80 at b062620452"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT: deny sqs:SetQueueAttributes for the Dell group; a later change goes by write-in; say which roots declare a separate policy resource and whether any is Dell-placed.",
+  "world_is": "Read-only files are unchanged (dell_create_policy.json line 36, derive_resource_kinds.py line 80); check_identity.py still reads ok=True. Roots declaring a separate aws_sqs_queue_policy: globgrph, inf-pipeline, nfra-agentbus, nfra-agentbus-alyssa01, opal-gateway, partner-etl-ops-alerts (9 resources). No project row in org/projects carries a Dell fabric (392 rows: 38 laptop, 16 site-z, 338 unset), and the root-to-project mapping was not read, so no root is shown Dell-placed or not."
+}
+```
+
+## NFRA_CTLPLN-W13-S14 -- ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 bu
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "ruff is installed as py3-none-win_amd64 (Root-Is-Purelib false), a build that fits Python 3.14 on win_amd64 but is neither pure Python nor stable-ABI; the order's classes do not name it, so it is classed ABI3-INSTALLED with fit_kind no-abi-platform",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json requirements[name=ruff]: class ABI3-INSTALLED, tags [py3-none-win_amd64], fit_kind no-abi-platform, evidence <site-packages:3.12>/ruff-0.15.11.dist-info",
+      "packaging.tags.compatible_tags(python_version=(3,14), interpreter='cp314', platforms=['win_amd64']) yields py3-none-win_amd64, so the target installs it; the order defines PURE-INSTALLED as Root-Is-Purelib true with py*-none-any and ABI3-INSTALLED as cp3X-abi3-win_amd64 only",
+      "the other ABI3-INSTALLED rows are true stable-ABI builds (bcrypt cp39, curl_cffi cp39, psutil cp37, PyMuPDF cp310, cryptography cp311, safetensors cp38, tokenizers cp39); the tool also reserves fit_kind native-target for an installed cp314 build, which no copy on this machine is"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: an installed distribution is PURE-INSTALLED (py3-none-any, Root-Is-Purelib true), ABI3-INSTALLED (cp3X-abi3-win_amd64, X <= 14), or does not fit (cp312-cp312-win_amd64); no class for a platform-specific, ABI-free build.",
+  "world_is": "ruff 0.15.11 is a py3-none-win_amd64 wheel: it fits 3.14 on win_amd64 and has no Python-version binding, but its files include a platform binary and a Scripts entry, so a re-pack from RECORD must keep the platform tag. The tool classed it ABI3-INSTALLED and says why in fit_kind; the issuer may rename or split the class."
+}
+```
+
+## NFRA_CTLPLN-W13-S15 -- this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T14:36:33Z",
+  "one_line": "this machine holds no Python 3.14 interpreter and its pip cache holds zero entries, so no requirement is WHEEL-ON-DISK: every non-compiled-for-3.12 package depends on an offline re-pack from installed files, and the 3.14 stand-in folder is empty",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/devices/kit_python_wheels_cp314.json sources: pip cache present, entries 0, bytes 0; kit pack output (3 directories under the temporary root), Downloads (45597 directories walked), this worktree and the base checkout: 0 wheels identified (the only .whl file under the repository is a 0-byte numpy-1.26.4-cp312 file under infra/aws/lambda/layers/pyiceberg-nessie-deps/python, counted not_a_wheel)",
+      "interpreters: py -0p lists one (3.12.10 under the user's Programs\\Python\\Python312); a Program Files Python314 folder has Doc, Lib/site-packages (empty) and Scripts but no python.exe; HKLM PythonCore 3.14 has no InstallPath; HKCU PythonCore 3.12 names an anaconda3 folder that does not exist",
+      "pip cache list prints 'No locally built wheels cached.'; the kit's own pack tool (a) 'wheel already in pip's local cache' therefore finds nothing on this machine"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 6: sources to read include the pip HTTP and wheel caches, kit pack output, Downloads and the repository for wheel files, and the installed distributions of every interpreter py -0p lists.",
+  "world_is": "Only one interpreter's site-packages (3.12, 307 distributions read, plus 7 in the user site) can be read; the 3.14 folder is empty and no wheel file of any tag exists in any named source. The result is therefore: 41 PURE-INSTALLED and 8 ABI3-INSTALLED (re-pack from installed files, not yet done), 18 NEEDS-FETCH (compiled cp312 only), 0 WHEEL-ON-DISK."
+}
+```
+
+## NFRA_CTLPLN-S18 -- requirements.txt omits 73 dependencies of the 67 packages it lists; 12 are compiled for Python 3.12 only
+
+```json
+{
+  "id": "NFRA_CTLPLN-S18",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T15:28:38Z",
+  "one_line": "The regenerated root requirements.txt lists 67 packages and omits 73 that those packages themselves require; 12 of the 73 are compiled for Python 3.12 only, so an install from the file alone would not be complete on any box and cannot be on a Dell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Issuer's re-run on the merged tool: PY-REQ lines=67 parsed=67 unparsed=0 in_both=20 only_requirements=47 only_census=0 ok=True; PY-WHEELS target=cp314-win_amd64 requirements=67 wheel_on_disk=0 pure_installed=41 abi3_installed=8 needs_fetch=18 not_applicable=0 unparsed=0 undeclared_deps=73 ok=True",
+      "Decision file org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~13/PYTHON_WHEELS_NEEDING_A_FETCH_FOR_CP314.md (merged @bd489b912b): the 73 names with the requirement that needs each; in a secondary read of the installed copies 59 are pure, 12 compiled for cp312 only (aiohttp, cffi, charset-normalizer, click, contourpy, coverage, fonttools, greenlet, jiter, kiwisolver, mmh3, regex), 2 fit",
+      "requirements.txt @bc10584676 (3.0.0_SA_CVO, on Andrew's word); the file's own caveat: a clean-start resolve is not verified",
+      "1.0.0_SA_CTO msg 106317 item 3: 'The 73 omitted dependencies are a defect in requirements.txt; file it for 3.0.0_SA_CVO, who wrote the file.'",
+      "How the 73 were counted: the Requires-Dist of each found installed copy, markers evaluated for Python 3.14 on 64-bit Windows; a dependency needed only under another marker is not counted; a package with no installed copy here contributes none"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The record for the regenerated file: requirements.txt holds all actual dependencies.",
+  "world_is": "The file holds the packages the firm's code imports directly. Their own dependencies are not listed, so the list is complete for an index-backed install (pip resolves the rest) and incomplete for an offline one, which is the only kind a Dell may make. The Python kit therefore installs with no dependency resolution and reports an import that fails for a missing dependency as its own class. Owner of the file: 3.0.0_SA_CVO. Whether the file should pin the full closure, or a second generated file should, is for that owner and the package-intake design (PRD v0.16, C-INTAKE)."
+}
+```
+
+## NFRA_CTLPLN-W6-S6 -- AMENDMENT 4: check_dell_fence_join.py is still a reader that ignores an unknown row key, and it is outside the grant and pinned
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S6",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "After the validator and the module refuse an unknown key, tests/check_dell_fence_join.py (render_arns, registry_diff) still ignores one: measured by derive_fence_row_shape.py, a scratch row with an unknown key renders the dell1 ARN into 3 of 3 buckets there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "derive_fence_row_shape.py output (AC2 after the build): validator refusals 3 for rows plus an unknown key; terraform plan in a scratch module rc=1 (precondition); join check renderer: dell1 ARN in the rendered list of 3/3 buckets; FENCE-ROW-SHAPE ... extra_key_ignored=1 extra_key_refused=2",
+      "infra/aws/terraform/shared-infra/tests/check_dell_fence_join.py render_arns() reads r.get('arn') / r['principal'] only; the check is not in this amendment's write grant and the order says not to touch it or its pin"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4: every reader of the file must refuse an unknown key, never ignore it.",
+  "world_is": "Two of the three row-parsing readers now refuse (the validator, and the module at plan time). The third is a test that renders nothing into any policy, so the hazard is INERT: it can only mis-grade, not admit. It is left as it is by the order; the issuer re-grades it at the merge when it moves the pin."
+}
+```
+
+## NFRA_CTLPLN-W6-S7 -- AMENDMENT 4: derive_fence_row_shape.py (AC2) did not finish in 120 s at the start of this pass, and its probe had to change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "CT4d2-AC2's script read rc=124 after 120 s on this worktree before any edit; the order did not say it would need changes, but the amendment's closed key set makes its actions+prefix probe a valid row, and its scratch module copy collided with the landed output.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/shared-infra/tests/derive_fence_row_shape.py before any edit: real 2m0.7s, rc=124 (check_dell_fence_join.py in the same worktree: 1m9s, rc=0)",
+      "after the edit: real 42 s, rc=0, last line FENCE-ROW-SHAPE rows=29 key_sets=1 rows_with_actions=0 rows_with_prefix=0 readers=16 extra_key_ignored=1 extra_key_refused=2 can_carry_today=False ok=True",
+      "changes: sim_call caches results in a temporary directory outside the repository (key = the whole request incl. the document bytes, TTL 3600 s, an ERROR never cached); 6 workers instead of 2; the extra-key probe is now an UNKNOWN key (actions and prefix are known keys); the scratch module copy no longer writes the proposed HCL (it is the module now)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 3 criterion CT4d2-AC2 and AMENDMENT 4's rule that every invocation finish under timeout 120.",
+  "world_is": "The simulator shim runs about 3 s a call; the old script made ~38 calls with 2 workers. The script's meaning is kept (rows, readers, can_carry_today as measured) and its three-reader count now reads 1 ignored, 2 refused."
+}
+```
+
+## NFRA_CTLPLN-W6-S8 -- AMENDMENT 4: lib/tests/test_opal_naming.py reads 6 failed / 87 passed on the pinned base, not the 2 / 91 its docstring states
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "Before any edit of lib/opal_naming.py (the base file written over the worktree copy, then restored) pytest on test_opal_naming.py gives 6 failed, 87 passed; after the edit the same 6 ids fail and 87 pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/tests/test_opal_naming.py with the file at 06c783b92b: 6 failed, 87 passed; failing ids: test_grade_agrees_with_every_worked_case for inf-silver-chain|LAMBDA, Inflection-SilverChain-DimConversionFailure|CW_ALARM, inf/otp-relay/token|SECRET, opal-portal-data-proxy-api|API_GW, wsb-49f-model-aua-pull-daily|SCHEDULE; and test_lambda_plane_consumers_is_import_aware_not_a_bare_substring (8 == 7)",
+      "the same pytest after the edit: the identical six ids, 6 failed, 87 passed; run as a script (python lib/tests/test_opal_naming.py) the file prints nothing and exits 0 both before and after"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "the test file's docstring: the baseline is 2 failed / 91 passed.",
+  "world_is": "The baseline has moved since the docstring was written; the identical failing set before and after is the control, so this build changes none. Not adjudicated here."
+}
+```
+
+## NFRA_CTLPLN-W6-S9 -- AMENDMENT 4: the module also refuses a half-scoped or malformed scoped row, which the order did not name
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:34:29Z",
+  "one_line": "The order asked the module to refuse an unknown key; main.tf also refuses a row with only one of actions/prefix, an action outside the closed set, a prefix not ending in /, and a wildcard or non-ARN principal on a scoped row, because the module renders from rows the validator may not have graded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fence_scoped_rows.py: module plan in a scratch root refuses cases 1,2,3,4,6 (unknown key, actions without prefix, prefix without /, PutObject in actions, wildcard ARN); cases 5 (other firm's prefix) and 7 (duplicate principal) are validator-only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 item 1: the module must refuse a key outside the closed set.",
+  "world_is": "Without the extra rules, a row with actions but no prefix would pass the module's key check and render as a full admission. Each extra rule is one more precondition on the same two outputs; fence_exemption_arns' value is unchanged for today's rows."
+}
+```
+
+## NFRA_CTLPLN-W6-S10 -- AMENDMENT 4: CT4d2-AC3's expect carries an unescaped + that the checker reads as a quantifier
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:44:38Z",
+  "one_line": "CT4d2-AC3's <expect> unknown_key_refused_by=validator+module is read by the proof checker as a regex, where + is a quantifier, so the criterion's own correct output line can never match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c re.search('unknown_key_refused_by=validator+module', <the check's last line>, re.S) returns None; re.search(r'unknown_key_refused_by=validator\\+module', same line, re.S) matches (the last line reads unknown_key_refused_by=validator+module)",
+      "python .tools/proof-of-spec-check.py on the instance with AC3 status PASS: VIOLATION acceptance[CT4d2-AC3]: status=PASS but output_evidence does NOT match expect 'unknown_key_refused_by=validator+module' -- INVALID",
+      "the order's own last-line format names the token validator+module as one of four values (validator+module|validator|module|none), so the output cannot be changed to satisfy the pattern"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 CT4d2-AC3: <expect>unknown_key_refused_by=validator+module</expect>, graded by the checker as a regex match on the output.",
+  "world_is": "The expectation is a literal string that contains a regex metacharacter. The criterion is met by its words (the line reads validator+module with ok=True and unchanged_today=True), but a mechanical PASS row cannot be written. The worker did not amend the expectation (the issuer's to amend, with the gate limb stated); the proof row records AC3 as UNVERIFIABLE-BY-INSTRUMENT with the verbatim line, and the order stays in_progress.",
+  "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
+}
+```
