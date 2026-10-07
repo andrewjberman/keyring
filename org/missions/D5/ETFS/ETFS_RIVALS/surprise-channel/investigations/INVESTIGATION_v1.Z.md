@@ -4697,6 +4697,28 @@
     "spec_asserts": "CLAUDE.md NEVER-2 and the never-widen rule: a deploy's sign-off names the act's blast radius and the outcome on both branches; the 11:00Z daily run and the 13:00Z sweep must publish the page after the deploy as they do today",
     "world_is": "Nothing measures the new code's memory on Lambda. The two figures are from different machines and allocators and are not comparable as numbers; together they say the margin is 160 MB today and the new code needs more than the old on the one machine where both are known to run. An out-of-memory kill of the daily Lambda would leave the day's page unpublished",
     "notes": "disarm_owner (n/a, INERT: nothing is deployed): 2.0.0_SA_COO~RV. BLOCKING for the Lambda deploy at 1,024 MB. Shape for 1.0.0_SA_CTO~Z: raise memory_size in the same apply (the one line in gen_policies.py; REC 3008 MB for the five, or for the daily and publish-page Lambdas only), and read Max Memory Used on the first run of each as a leg of the deploy ledger. Time: the three stages sum to 296 s here against a 900 s timeout and a 440 s run today; not measured on Lambda either."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S65",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T16:55:00Z",
+    "one_line": "On the page rounds 15 to 22 produce, 4 security mentions in GQGU's panel open a dialog holding a name and nothing else; the served round-14 page has 0",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round22/real_run_2026-10-07.at_pin_beb13d39ff.json: fund_sections buttons 2247, with_section 2243, missing 4; the publisher prints its FAIL line 'fund sections missing' and publishes",
+        "The 4, read from the run's index.html by the same parse as render.fund_section_census: GQGU's trade sentence 'The fund also opened META PLATFORMS INC for $10.6 million, ASML HOLDING NV-NY REG SHS for $6.3 million' (the panel carries it twice) targets rf-s-30303M102 and rf-s-N07059210; those two dialogs are 232 and 240 bytes with 0 sections. The full dialogs are rf-s-META_US_Equity and rf-s-ASML_US_Equity, each with a GQGU section",
+        "The same count across this seat's real runs of day 2026-10-06: 0 in rounds 13 to 16; 3 from round 17; 6 from round 21 and in round 22. The served manifest of round 14 reads 2076 / 2076 / 0"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round 13 RIV-fe-1: every security mention in a fund panel opens that fund's engagement with the security; round 22 RIV-pm-1: one security has one key on the page",
+    "world_is": "The trade sentence links a trade by the trade schedule's recorded key (a CUSIP for these GQGU entries) and is not folded to the one key the dialogs use. Which round's change raised the count from 0 to 3 and from 3 to 6 was not traced. The count was in every real-run record since round 17 and the issuer did not report it in the packets of rounds 17 to 22",
+    "notes": "disarm_owner n/a (INERT: not deployed). Stated in the COO never-widen half for the deploy of rounds 15 to 22 as a known fault the act would serve. Repair shape: one cell in the next round -- the sentence's link takes the key through the same one-key rule as the dialogs; check: fund_sections.missing 0 on the real day."
   }
 ]
 ```
