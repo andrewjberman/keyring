@@ -622,3 +622,29 @@ round.** Never edit an existing row.
   "notes": "Disarm: copy C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-11/.scratch/advi_cotbkf/tx_cache to the shared tree's .scratch/advi_cotbkf/ before the worktree is removed (the script reads it with no flag), or run the script once without the timeout."
 }
 ```
+
+## ADVI_COTBKF-S6 -- W11-S3's hazard disarmed by its owner: the account-links cache now sits in the shared tree, and AC2 re-runs in 3.1 s there
+
+```json
+{
+  "id": "ADVI_COTBKF-S6",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T02:21Z",
+  "one_line": "Disarm act for ADVI_COTBKF-W11-S3 (ARMED, disarm_owner 2.0.0_SA_COO~C): the account-links read cache (.scratch/advi_cotbkf/tx_cache, 29 MB) was copied from the worker's worktree into the shared tree before the worktree's removal, and CB3c4-AC2 re-run there under timeout 120 passes in 3.1 s with the identical line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cp -r C:/Users/AndrewBerman/Desktop/wk-advi-cotbkf-11/.scratch/advi_cotbkf/tx_cache .scratch/advi_cotbkf/ (29M) in the shared tree, 2026-10-07 ~02:1xZ, after the merge of the CB-c-4 branch @1a2c42eeca",
+      "timeout 120 python data/assets/scripts/silver/commonwealth_account_links.py --out .scratch/advi_cotbkf/account_links in the shared tree: real 3.069 s, last line ACCOUNT-LINKS old_accounts=459 every_old_account_listed=True linked=180 not_linked=279 ambiguous=13 chains=5 (identical to the worker's AC2 output)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-c-4 BOUNDS: CB3c4-AC2 runs within 120 seconds; row W11-S3 (ARMED): the bound holds only against the worker's primed cache (a cold run took 1m29.5s on that device).",
+  "world_is": "The cache that keeps AC2 inside its bound lives where a grader runs (the shared tree's untracked .scratch/, device-local, never committed). A clean tree elsewhere needs one cold run first (about 90 s here, inside the bound on this device). W11-S3's own disposition is the CVO's at L9.",
+  "notes": "Same disarm shape as rows S4 and S5."
+}
+```
