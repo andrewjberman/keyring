@@ -537,3 +537,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "decide() prints the first sentence and, if a card row ever gains a correct_name, canonical or canonical_name key, appends it as 'Correct name: ...' (tested with a hand-made card). On the real file no card gives one, so the clause is reachable in the test only."
 }
 ```
+
+## LGIC_BLANKFIX-S4 -- a refused key's line says another firm's store though its bucket is this firm's
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-07T15:24:34Z",
+  "one_line": "The two REFUSED lines of the round-2 run say 'this key belongs to another firm's store' while the same line gives the key's bucket as the 49 Financial bucket; the refusal rests on a path token, and the sentence states more than was read.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/2.0.0_SA_COO~G/THREAD_TRACE_round2_bd-pipeline.txt: REFUSED S3Key code/bronze/cot_bronze_ingest.py ... conflict: path token 'cot' names firm 'cottonwood', the root entry's scope is '49financial'; the key's bucket: opal-data-bd (two lines, bd-49f-fees-runner/lambda_function.py:43 and bd-49f-runner/lambda_function.py:59)",
+      "BF-e-3 worker report: the path-token conflict check, firm tokens and source tokens alike, routes to REFUSED-CROSS-FIRM; whether this is a real cross-firm reference is not decided"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ROUND_ANALYSIS.round1.md E3: a match is on (bucket, key), never the key alone; a key matched across two firms is refused. Round-2 decomposition: a REFUSED line states a finding about the code whole.",
+  "world_is": "The key's bucket is 49 Financial's (opal-data-bd) and only its path names Cottonwood (a file called cot_bronze_ingest.py under code/bronze/). The line's opening sentence asserts another firm's store; what was measured is a Cottonwood-named code file kept in the 49 Financial bucket. A reader who did not build the check could take it as a cross-firm data reference. The run exits 0 with these two lines; whether FWD-1 reads them as actionable, and whether the wording should say 'names another firm' instead, is for BE8-AC3's grader and the CTO. Nothing was changed."
+}
+```
