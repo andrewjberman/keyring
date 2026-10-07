@@ -37,6 +37,14 @@ A row is `{"segment": str, "level": int, "values": [five entries, each a float o
    at most five. The body is `{"security", "pulled_at", "response"}`. An object is usable when `response["__field_errors__"]`
    has no entry for `PG_REVENUE` AND (the response carries `PG_REVENUE` or `PG_OPERATING_INCOME`, or it has no field errors
    at all). An object that holds only refused fields (a field probe) is skipped, even when it is the newest.
+   **AMENDMENT 1 (issuer, 2026-10-07, on row AMGT_RESAPP-Z-W289-S1).** Read the five newest objects, then choose in two
+   passes. FIRST: the newest of them that has no `PG_REVENUE` field error AND carries `PG_REVENUE` or `PG_OPERATING_INCOME`.
+   ONLY IF none of the five does: the newest usable one by the rule above. So a later pull of other fields into the same folder
+   (AMD US holds one, stamped 20261007T145856Z, with no segment list and no errors) never hides a stored table. Add one plant
+   test for exactly that case: a newer error-free object with no segment list above an older one with a table serves the table.
+   The check was amended to the same rule on the issuer's tree; run it from there against YOUR worktree's code:
+   `cd /c/tmp/r78-289 && PYTHONPATH="$(pwd)" python "/c/Users/Opal Bloomberg/Desktop/ajb_workspace/org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/checks/r78_bb1.py" --crit AC1 --where local; echo "exit=$?"`
+   (and the same line with AC2 and AC3). Row Z-W289-S1 is disarmed by this amendment; do not edit it.
 3. **Rows.** `response["PG_REVENUE"]` and `response["PG_OPERATING_INCOME"]` are lists of
    `{"Metric Name", "Period 1 Value" .. "Period 5 Value", "Product Geographic Hierarchy Level"}`. For each row:
    `segment` is the metric name with every non-breaking space (`chr(160)`) turned into a space, runs of space collapsed, ends
