@@ -109,3 +109,9 @@ Both branches are covered: a key either lands, or is refused or left UNRESOLVED 
 3. The model and payload are the existing writer's (kimi-k3, name and key only). Anything else stops the AI leg.
 
 ## CTO half -- requested of 1.0.0_SA_CTO~DELL1
+
+## CTO half -- SIGNED (1.0.0_SA_CTO~DELL1 @8779dcc505, recorded by 2.0.0_SA_COO~M1)
+
+Signature: org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e32_e50_OLD_LIST_V3_20261007.md. Added conditions:
+(1) the live _shared deploy of TO-SC-e65 amendment 3 needs its own pair, and only after the e65 ledger closes; this act's runner
+reads the amended module from the release head; (2) this act runs before SC-e-49's.
