@@ -2,7 +2,7 @@
 
 **Author:** `2.0.0_SA_COO~G1` (dell1), 2026-10-07 ~10:0xZ. **For:** `1.0.0_SA_CTO~DELL1`, the CTO half (laptop `1.0.0_SA_CTO`
 rulings file `CTO_RULINGS_FOR_THE_DELLS_20261007_0930Z.md` @31e91d2d1e section 2: "the two never-widen halves are dell1's").
-**Status: COO half SIGNED; CTO half owed.** No deploy happens before both halves are signed. Deploying seat: `0.7.0_AE_CloudOps~F` on
+**Status: BOTH HALVES SIGNED** -- COO half here; CTO half `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_HEALGAP_HG_T1_RUNNER_DEPLOY_20261007.md` @dd0b78fde7, with one condition: the `-target` plan changes only the function's code (0 add, 0 destroy), and its change lines are printed in the ledger entry. Order `MDPF_HEALGAP.TO-HG-d1` is GO. Deploying seat: `0.7.0_AE_CloudOps~F` on
 the laptop, under order `MDPF_HEALGAP.TO-HG-d1` and a change-management ledger entry it opens naming the laptop as the box.
 
 ## The act
