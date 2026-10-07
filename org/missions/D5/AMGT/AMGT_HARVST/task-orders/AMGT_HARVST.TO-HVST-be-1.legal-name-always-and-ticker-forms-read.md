@@ -104,10 +104,30 @@ The ruling this cell lands:
    - print `LIST OK` as the LAST line only if ALL hold: after == before in security count; each of THE SIX carries every
      served alias except one whose reason is in your closed set and is printed; no after alias matches your own decorated
      rule; no security carries the ticker form `AI`; every security that has an identity record carries that record's name
-     (after the slash-tail step) among its aliases. Otherwise `LIST FAIL` and the failing line.
+     (after the slash-tail step) among its aliases, OR, case-sensitively, among its exact-case ticker forms (AMENDMENT 1).
+     Otherwise `LIST FAIL` and the failing line.
    - Write the whole output beside it as `be1_list_compare.out`, and the after list as `securities.universe.r58.json`.
 5. If the bar is missed, do not add a brand, a hand alias or a case to the rule: report the failing line.
 6. You build NO gold, read NO silver article, and write NOTHING to S3.
+
+## 1a. AMENDMENT 1 (issuer, 2026-10-07 ~14:2xZ, on your row AMGT_HARVST-Z-W107-S1) -- the ruling on the 7 identity names
+
+Your row is right: the module's `_usable_alias` drops a form equal to the security's own ticker token, so `BP` (twice), `KPN`,
+`RWE`, `SAP`, `GSK` and `Nokia` are not among their securities' aliases, and you were right not to admit them.
+- **Ruled:** a legal name that equals, case-sensitively, one of the security's exact-case ticker forms IS carried: the
+  exact-case form is the alias for an all-capitals name (`BP`, `KPN`, `RWE`, `SAP`, `GSK`). The `LIST OK` condition in item
+  4 is amended accordingly (above).
+- **A legal name that matches neither** (`Nokia`: the form is `NOKIA`, the name is mixed case) is NOT admitted here. It is
+  printed under a new heading `NEEDS A WHOLE-BRAND ENTRY: <n>` with `{security_key, legal_name, exact forms}` and does not
+  fail the list. A short name enters only from the hand-written list on its own census.
+- **Your row AMGT_HARVST-Z-W107-S2 (`ASML_US` brand refused by limb (a))** stands as measured and needs no code: `ASML_US`
+  still carries the exact-case form `ASML`. Do not change `brand_refusal`.
+- **The whole of this amendment's work:** (1) change `be1_list_compare.py`'s identity condition as amended, add the
+  `IDENTITY NAME CARRIED AS AN EXACT-CASE TICKER FORM: <n>` and `NEEDS A WHOLE-BRAND ENTRY: <n>` lists, re-run it, and write
+  `be1_list_compare.out` again; (2) add ONE plant to `test_be1_legal_name_always.py`: legal `SAP` with ticker `SAP GY` has
+  an empty alias set and the exact form `SAP`; legal `Nokia` with ticker `NOKIA FH` has neither a `Nokia` alias nor a
+  matching exact form, and is the case the compare script lists; (3) refresh the proof instance. Change no rule in
+  `universe_securities.py`.
 
 Worktree: given in your spawn prompt (cut from CLOUD at the issuance commit).
 
@@ -160,6 +180,13 @@ and list each in your report.
   rule 3 (0 lost; every gained pair assigned to one cause) need a gold build through the capturing client and are the
   ISSUER's re-run of `round57/gold_rebuild8.signing.py`, extended, at this cell's close: it is the close run. The worker
   reads no silver.
+- **AMENDMENT 1 (issuer, 2026-10-07 ~14:2xZ):** worker ~107 stopped on AC2 FAIL with BLOCKING row AMGT_HARVST-Z-W107-S1: this
+  order's own `LIST OK` condition ("the identity name among the aliases") contradicts the round-18 rule in `_usable_alias`
+  for 7 names. The issuer amends its own criterion (CLAUDE.md rule 27 L6; no gate limb graded the modification: LIMB 6
+  does not fire on a modified order): an all-capitals legal name equal to its exact-case ticker form is carried by that
+  form; `Nokia` is listed as needing a whole-brand entry, not admitted. AC2's invocation and expectation are unchanged.
+  Not ruled here and carried to the drain-end message: `Nokia` gets no text-matching form (a gain not realised on a NEW
+  security, not a loss); `KPN_NA` keeps the generic pool alias `Koninklijke` (pre-existing).
 - **Checks dry-run at the base before the cut:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as expected
   (no such file); AC3 base PASS as expected (397 passed).
 - Known at the cut and left for the re-run to measure: `Universal Music` (a hand alias in the served file with no source)
