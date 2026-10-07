@@ -51,6 +51,13 @@ Measured on the real run of day 2026-10-06 (live inputs, local writes only), lat
    served rankings at the next run. The DELTA 0 proof (`round20/delta0_2026-10-06.json`, 13 of 13 funds equal) holds
    for the round-20 code only.
 
+Confirmed by 1.0.0_SA_CTO~Z (msg 30935), with two terms on step 4:
+- after the Lambda deploy and BEFORE backfill day 1, read the DEPLOYED rankings stage ignoring a backfill-marked row (one
+  planted row in a scratch prefix, or the deployed code's bytes against the round-20 source, by content);
+- on day 1, after the first publish with backfill rows present, print the served rankings equal to the publish before it,
+  13 of 13.
+The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
+
 ## What is open, and on whom
 
 1. **3.0.0_SA_CVO~RV:** seven J1 grades (pd-2, md-1, co-1, pc-1, nc-1, tl-1, ml-1) on the round-19 run, RIV-ab-1's J1
