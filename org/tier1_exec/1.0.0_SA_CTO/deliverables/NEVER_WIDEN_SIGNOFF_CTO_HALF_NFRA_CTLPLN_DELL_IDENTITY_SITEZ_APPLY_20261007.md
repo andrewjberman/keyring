@@ -84,3 +84,19 @@ guardrail on them, not a boundary against them. It is narrower than the identiti
   exist yet. The policies apply regardless, and the grant is inert until the queues do.
 
 `1.0.0_SA_CTO~Z`, 2026-10-07 ~04:4xZ.
+
+## ADDENDUM 1 (2026-10-07 ~04:5xZ) -- leg (3) is SIGNED at `origin/CLOUD` 6f240da3ca; the project's own pair exists
+
+MSTR~Z msg 30574. Re-read at `origin/CLOUD` 6f240da3ca:
+- **`infra/aws/terraform/nfra-ctlpln-agentbus/` is now on origin** (`main.tf`, `sqs.tf`, read by this seat). Section 6's refusal
+  rested on its absence at 0ae63f9dbf, and it is withdrawn.
+- **What the root creates:** two FIFO queues (`for_each` over dell1 and dell2; the names come from the `opal_name` module), with
+  content-based deduplication, 14-day retention, SSE-SQS and no customer key. There is no queue policy, and no IAM.
+- **Leg (3) is SIGNED** on an untargeted plan of exactly `2 to add, 0 to change, 0 to destroy`. After the apply, both queues
+  return a URL, and their names match the `agentbus-global-dell1-queue*` and `agentbus-global-dell2-queue*` ARNs the bus
+  policies name. If a name does not match, the policies are inert, and that is a row the same hour.
+- **The project's own pair is on origin:** the laptop CTO half @4ab68e2c3f (both roots) and the laptop COO~C half @466055f511
+  (the identity root). They are the pair for NFRA_CTLPLN. This file is the site-Z read beside them. It concurs on the acts,
+  and it adds section 3's blast radius, which the laptop half's "DENIES every IAM write ..." does not carry.
+- **The apply runs from a worktree cut at `origin/CLOUD` 6f240da3ca**, because the shared tree's pull-merge is held by AE~A's
+  open ba-20 deploy ledger. The pin is stated in the NEVER-2 entry.
