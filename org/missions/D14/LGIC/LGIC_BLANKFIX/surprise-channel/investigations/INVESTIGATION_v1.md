@@ -284,3 +284,79 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The fourth verdict applies only when no registry row resolves a system (BF-t-2's face, from _slots R1.e). infra/logic/registry/resources.json holds a row placing openpyxl-layer under tradeops, so the name grades OUT-OF-PATTERN with a complete fix that adds a system. Whether a row outranks the ruling for layers, or the row should go, is the registry owner's and the CTO's; nothing was changed."
 }
 ```
+
+## LGIC_BLANKFIX-W7-S1 -- The root map proposal carries no source_dirs: the landed map has one entry (bd-pipeline), which owns no contes
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "The root map proposal carries no source_dirs: the landed map has one entry (bd-pipeline), which owns no contested folder, and the repository decides the folder owners but not the scope of their entries.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/root_map.json roots keys: ['bd-pipeline'] at HEAD",
+      "infra/aws/lambda/ci/lambda-source-map.json: irpt-directory-refresh/-search -> investor-reporting/directory, irpt-export-render -> export, irpt-holdings -> holdings, irpt-intake-poller -> intake, irpt-narrative -> narrative, irpt-status -> ops, irpt-performance-adapter -> performance, irpt-49f-reporting-publish-lambda -> reporting-publish, irpt-ycharts-generate -> ycharts/generate, each tf_file in the same-named root; cot-rebalancer-runner tf_file infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf; five cot-pipeline folders tf_file in infra/aws/terraform/cot-pipeline",
+      "scope undecided: investor-reporting roots read per-firm buckets from firm_registry.json (directory/iam.tf:1-14, ycharts/generate.tf:236-249), performance spans orion, blackdiamond and cottonwood, holdings, intake, ops and reporting-publish name no firm; cot-pipeline names opal-data-cot, opal-data-bd, opal-data-inf, opal-data-etfs and resources.json places its cot-* names under five systems (advi, mdpf, posn, blackdiamond, etfs)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7: the proposal is the landed map plus source_dirs on the entry of the root shown to own each contested folder, adding an entry only where the repository decides system, scope and source.",
+  "world_is": "No entry could be added on the repository's word, so ROOT_MAP_SOURCE_DIRS_PROPOSED.json is the landed map byte for byte and the reader assigns nothing from it (SCOPE-TABLE unassigned=119 both ways). With a scratch map listing the eleven owners as source_dirs the reader assigns 40 of the 51 contested items (table unassigned 119 -> 79). Missing: scope for each of the 11 roots (and system for cot-pipeline and opal-assets, source for the investor-reporting roots other than ycharts), which is the registry owner's to decide. The parent folder infra/aws/lambda/investor-reporting (11 items: shared _authz, _keys, _scope and reports code) is declared by all 12 sibling roots and is left undecided on purpose."
+}
+```
+
+## LGIC_BLANKFIX-W7-S2 -- infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe holds 4 repository names and is declared by no root's .tf
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "infra/aws/lambda/cot-pipeline/bd-cot-freshness-probe holds 4 repository names and is declared by no root's .tf and no source-map function.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git grep bd-cot-freshness-probe -- infra/aws/terraform infra/aws/lambda/ci matches only infra/aws/terraform/cot-pipeline/CHANGELOG.json at HEAD",
+      "python lib/opal_naming_scope.py contested: infra/aws/lambda/cot-pipeline items=4 (these four) before the sub-folder cot-rebalancer-runner items=4"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7 cell: the owner of a folder is the root whose .tf declares the Lambda functions built from it.",
+  "world_is": "For bd-cot-freshness-probe there is no such root: it is under the cot-pipeline folder only by the artifact_key prefix of the cot-pipeline root. If the map lists infra/aws/lambda/cot-pipeline for the cot-pipeline root, the reader assigns the four names to it by the parent listing; whether that is the right root for an undeclared function is the registry owner's call."
+}
+```
+
+## LGIC_BLANKFIX-W7-S3 -- The order says the table reads 1,962 repository names; at HEAD of this branch it reads 1,965 with the same 119
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W7-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~7",
+  "surfaced_at": "2026-10-07T14:10:58Z",
+  "one_line": "The order says the table reads 1,962 repository names; at HEAD of this branch it reads 1,965 with the same 119 unassigned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_scope.py table at the base of wk-blankfix-7 (before any edit): SCOPE-TABLE ok=True roots=61 items=1965 assigned=1846 unassigned=119",
+      "row LGIC_BLANKFIX-W1-S1 recorded items=1962 assigned=1843 unassigned=119 on branch wk-LGIC_BLANKFIX-1"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-e-7 THE CELL: python lib/opal_naming_scope.py table reads 1,962 repository names and leaves 119 unassigned.",
+  "world_is": "The repository gained three assigned names since that run; the unassigned 119 and the 51 contested items are unchanged. No test of this order depends on 1,962: the tests read the total from the census."
+}
+```
