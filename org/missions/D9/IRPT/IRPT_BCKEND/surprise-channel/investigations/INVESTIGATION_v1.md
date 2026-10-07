@@ -19718,3 +19718,80 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "All 7,022 granted accounts are 49financial (ownership map in opal-data-bd). Inflection has no ownership_map object; cottonwood's map (opal-data-cot) holds 0 advisors, so zero cottonwood accounts needed the fence reason; FENCE_COTTONWOOD_BUCKET_DENIED is declared with count 0."
 }
 ```
+
+## IRPT_BCKEND-S366 -- E-M2's e2 FAIL is an instrument defect: the unassigned rule could not hold in the L0 category shape; re-checked over all 1,876 instances
+
+```json
+{
+  "id": "IRPT_BCKEND-S366",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T11:47:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The laptop E-M2 read (@471da6f0b0) failed e2 on ONE unassigned account (49F acc_8edbf9b2d53df56d206d2717, value 0.0, one non-TARGET child) because the reader required 'no non-TARGET child', while every served ACCOUNT carries a CATEGORY child (49F: 7,597 accounts, 7,597 CATEGORY nodes), so the rule fails by construction. Issuer ruling: the residual is visible and not redistributed when the unassigned account is served as an ACCOUNT, its subtree ties, and no MODEL_LEAF / MODEL_WRAPPER / SLEEVE sits under it; checked over EVERY listed instance. Re-run from dell2 (49F and INF readable since the fence join) on the same 2026-10-05 publication: 1,876 of 1,876 pass (49F 1,645 incl. 888 zero-value; INF 231 incl. 56 zero-value). COT lists 0 unassigned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_MVP_M/R31M_FWD5_PROOF_CASES_READ.json @471da6f0b0 (sha256 2b61c5a833c7...): e1 PASS, e2 FAIL (unassigned check residual_visible false), e3 PASS; 49financial node_kinds ACCOUNT 7597 / CATEGORY 7597",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/R31M_UNASSIGNED_RECHECK_20261007.json, committed with this row: run on dell2 as cloudops-dell2-agent-user, --date 2026-10-05; e2_unassigned PASS 1876 of 1876; reader --self-test 3 arms OK (a model-leaf redistribution FAILs, a dropped account FAILs)"
+    ]
+  },
+  "spec_asserts": "Reader r31m_fwd5_proof_cases_read.py @229b82df18: an unassigned instance passes only with no non-TARGET child, and one instance is tested.",
+  "world_is": "IB-mr-311 AMENDMENT 1 (issuer, inside its own unissued decomposition): e2's unassigned case is graded on r31m_unassigned_recheck.py over every instance; the other three cases stay on the laptop FILE. E-M2 is issued on both files."
+}
+```
+
+## IRPT_BCKEND-S367 -- S363 disarmed: E-M2 graded on the delivered reads and drained
+
+```json
+{
+  "id": "IRPT_BCKEND-S367",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T11:56:52Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "S363 (BLOCKING, ARMED) is disarmed on its own condition: the laptop FILE was delivered and graded. TO-IB-m31-311 graded the laptop CASES read (@471da6f0b0) and the dell2 unassigned RECHECK (@6458a5a9d3): E1-CASES-NAMED (4 of 4 found), E2-CASES-RECONCILE (unassigned 1876 of 1876), E3-COVERAGE-DENOMINATED (3 of 3 firms); proof VALID, drained @5eea584574. Cottonwood remains refused to the dell2 identity (probed 11:32Z); that residual is the fence apply's, not this row's.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~153/IRPT_BCKEND.TO-IB-m31-311.fwd5-proof-cases-delivered-reads.proof_of_spec.json: proof-of-spec-check VALID rc=0, re-run by the issuer before the drain",
+      "drain 5eea584574 (safe-merge: 3 needed, 0 dropped, 0 foreign; index check 0 of 3 differ)"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND-S363 disarm condition: the laptop FILE is delivered and graded, or the fence join admits the dell2 identity read-only.",
+  "world_is": "First condition met and graded. S363 DISARMED. E-M2 (cell IB-mr-311) complete for round 31 ~M."
+}
+```
+
+## IRPT_BCKEND-S368 -- E-M3 (round 32 ~M) needs the Cottonwood producer build: still fenced from dell2, routed to the laptop as a FILE
+
+```json
+{
+  "id": "IRPT_BCKEND-S368",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T12:06:12Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "E-M3 (CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUND_31_M_20261007.md, msg 454) reads the producer's private collapse evidence, which exists only in Cottonwood's custody source (BD fact_holdings Relationship ID) and only inside a producer build; opal-data-cottonwood is still refused to the dell2 identity (head-object 403 at 12:06Z, probed under the msg 361 rule), so the read is a committed read-only script run on the laptop and delivered as a FILE.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07T12:06Z on dell2: .tools/aws s3api head-object --bucket opal-data-cottonwood --key irpt/cottonwood/platinum/holdings/current/manifest.json -> 403 Forbidden (49financial and inflection read since ~10:44Z)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py validate_cot_actual_positions: relationship_rows_collapsed and original_rows[].relationship_id live in the evidence the builder puts in _manifest.actual_custody_controls, which land() strips from the served body",
+      "reader org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/r32m_multi_relationship_read.py, committed with this row; --self-test 3 arms OK"
+    ]
+  },
+  "spec_asserts": "Round 32 ~M issues E-M3 as a SERVED read naming one true multi-relationship membership.",
+  "world_is": "No dell2 principal can read Cottonwood. Disarms when the laptop FILE is delivered and graded, or when Cottonwood admits the dell2 identity read-only. This row widens no policy."
+}
+```
