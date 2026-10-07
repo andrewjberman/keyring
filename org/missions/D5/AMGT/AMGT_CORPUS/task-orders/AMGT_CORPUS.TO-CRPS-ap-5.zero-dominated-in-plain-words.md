@@ -83,3 +83,5 @@ Read-only: the whole repository, in particular `portal/CLAUDE.md` and the issuer
 <round>40</round>
 <slot>~4</slot>
 <fabric>site-z</fabric>
+
+<status>complete</status>
