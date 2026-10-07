@@ -4719,6 +4719,27 @@
     "spec_asserts": "Round 13 RIV-fe-1: every security mention in a fund panel opens that fund's engagement with the security; round 22 RIV-pm-1: one security has one key on the page",
     "world_is": "The trade sentence links a trade by the trade schedule's recorded key (a CUSIP for these GQGU entries) and is not folded to the one key the dialogs use. Which round's change raised the count from 0 to 3 and from 3 to 6 was not traced. The count was in every real-run record since round 17 and the issuer did not report it in the packets of rounds 17 to 22",
     "notes": "disarm_owner n/a (INERT: not deployed). Stated in the COO never-widen half for the deploy of rounds 15 to 22 as a known fault the act would serve. Repair shape: one cell in the next round -- the sentence's link takes the key through the same one-key rule as the dialogs; check: fund_sections.missing 0 on the real day."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S66",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T17:17:11Z",
+    "one_line": "Correction to row ETFS_RIVALS-Z-S65: the cause it names for the 4 name-only dialogs was a guess, not a read",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Row ETFS_RIVALS-Z-S65 world_is says the sentence links a trade by the trade schedule's recorded key. No code was read for that",
+        "What is read: the phrase 'also opened' is in no file of data/etfs/scripts/rivalfunds, so the sentence is not built by the renderer; it is in GQGU's account text. A dialog shell of 232 and 240 bytes with 0 sections exists under each CUSIP key (30303M102, N07059210) on the run's page"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A row's world_is states what was measured",
+    "world_is": "The cause of row Z-S65 is not traced: which stage emits a dialog shell under the CUSIP key, and why the account text's name links to it and not to the Bloomberg-keyed dialog. The fault, its count of 4 and the repair being one cell of the next round stand",
+    "notes": "Cites ETFS_RIVALS-Z-S65. The COO never-widen half for the deploy carries the same correction."
   }
 ]
 ```
