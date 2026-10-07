@@ -122,9 +122,24 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   and plans them; the issuer reads the `PAIRS` lines and the 37 against `stop_status_pairs.json`.
 - The alias cell (ADDENDUM 3 item 2, section 66) moves to round 54.
 
+**COMPLETE 2026-10-07 ~04:2xZ (issuer):**
+- **Built:** worker ~103 @2bb6cedf5a + @711c7591d4; merged @296601ed65 (7 files, dropped 0, foreign 0).
+- **AC1 PASS:** 13 of 13. **AC2 PASS:** 717 passed on the branch; issuer re-run on merged CLOUD 719 passed, 1 skipped.
+- **Existing assertions changed (both in `test_ae4_backfill_driver.py`, both because the stopped pair is planned again):**
+  `test_stopped_publisher_under_cooldown_is_not_resumed_then_resumes_after_expiry` (`[K3, K4, K5]` -> `[K2, K3, K4, K5]`);
+  `test_error_inside_the_clearing_run_stops_the_leg_again_with_no_retry` (`[K2]` -> `[K1, K2]`).
+- **Rows:** AMGT_HARVST-Z-W103-S1 (OBSERVATION, INERT): `transport.request_kind` labels a Bloomberg article URL `listing`
+  (the path contains `/news`), so the 400 skip keys on a new `is_article_request()` instead.
+- **Close run (issuer, 04:2xZ, 0 network calls):** `backfill_driver --dry-run` over the four live checkpoints under the merged
+  driver plans every stop-status pair again: wsj 8 of 8, bbg 8 of 8, barrons 12 of 12, sa 5 of 5 names
+  (`deliverables/2.0.0_SA_COO_H/round52/stop_status_pairs.json` is the list). Live: the running drivers hold the old driver
+  code until they exit; each leg's next invocation migrates its checkpoint. Barrons restarts from `r46_sa_barrons_checkpoint.json`
+  on the merged driver once the separate retry leg ends on its stop file.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>53</round>
 <slot>~103</slot>
 <fabric>site-z</fabric>
