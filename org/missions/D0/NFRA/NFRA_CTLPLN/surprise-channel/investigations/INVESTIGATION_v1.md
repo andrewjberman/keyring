@@ -730,3 +730,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "dell1's seats (1.0.0_SA_CTO~DELL1, 2.0.0_SA_COO~M1, 2.0.0_SA_COO~H1) committed between ~07:15Z and the install with only the owned-paths gate, so their local commits before it (incl. 78756a9b74, ea7b1706a9, a35cc608fe) were not graded by the law lock, to-pipeline gate or surprise-row gate; the trunk merge at site Z grades them on the merged index. dell2 is unmeasured from here. The kit has no hook step, so every future box repeats it. The prd-header-notify orphan is repo-wide, not dell1's."
 }
 ```
+
+## NFRA_CTLPLN-S9 -- disarm of NFRA_CTLPLN-W1-S1: the round-3 Dell policy is applied at the laptop; the named-role PassRole rule is live
+
+```json
+{
+  "id": "NFRA_CTLPLN-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T08:32Z",
+  "one_line": "Issuer disarm of NFRA_CTLPLN-W1-S1: the round-3 Dell policy is APPLIED at the laptop (2 added, 1 changed, 0 destroyed) and the PassRole rule Andrew confirmed is live -- a Dell passes only roles the laptop names, and none is named yet.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "0.7.0_AE_CloudOps~E msg 106072 and the CLOSED ledger entry org/critical_paths/change_management/20261007T0811Z_nfra-ctlpln-dell-policy-r3-laptop-20261007_deploy_completion.md (5 of 5 legs; open f381720cde, close 95b6e421cd)",
+      "Issuer's own re-plan of the identity root after the apply, 2026-10-07 ~08:3xZ: terraform plan -detailed-exitcode exit 0 (no changes)",
+      "Issuer's own comparison of the seat's saved LIVE documents to the repo files: deploy policy v2 equal, create policy v1 equal; the live deploy document carries DenyPassRoleExceptNamed on Resource * beside the four round-2 Deny statements",
+      "Both never-widen halves: COO d3ffdf3, CTO 2d27f79524; Andrew's card-1 answer 'Yes' (PRD v0.10)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "W1-S1 (round 2): iam:PassRole is denied outright, so a Dell deploy that registers a task definition or a target naming a role fails; rule a narrow allow. PRD v0.8 and v0.10: a Dell may pass only the named roles the laptop made for Dell-placed work, with the iam:PassedToService condition.",
+  "world_is": "DISARM (issuer): the ruled form is live. Passing a role is refused for every role today because no role request has been applied; the first applied request renders that role into the policy (tests/render_passrole.py) and the next laptop apply admits it. So a Dell deploy that needs a role still fails closed and loud, now with a written route (C-ROLE-REQUEST) instead of no route. NOT yet exercised: the live round trip (a Dell writes in, the laptop applies, the Dell creates with the role); it waits on a Dell publishing its branch (CTO msg 106056)."
+}
+```
+
+## NFRA_CTLPLN-S10 -- CT3c6-AC2 passed untracked and fails committed: the fabric-reader census does not classify its own files
+
+```json
+{
+  "id": "NFRA_CTLPLN-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T08:32Z",
+  "one_line": "A round-3 criterion passed in the worker's tree and fails on the trunk: CT3c6-AC2's census of fabric readers reads unclassified=5 ok=False once its own two files are committed, and the issuer did not re-run it after the merge.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Worker proof at 13ec2d1be4: FABRIC-CENSUS files_scanned=1692 hits=53 ... unclassified=0 ok=True",
+      "Issuer's run on the trunk, 2026-10-07 ~08:1xZ: FABRIC-CENSUS files_scanned=1700 hits=58 enum_source=5 compares=1 display=33 fixture=14 unclassified=5 ok=False; the five hits are three lines of .tools/tests/fabric_value_census.py and two of .tools/tests/test_fabric_enum_dell.py",
+      "The census scans tracked files (git ls-files); both files were untracked when the worker ran it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-c-6 CT3c6-AC2: every reader of a fabric value in the scanned tree is found and classified (unclassified=0 ok=True); its proof instance is VALID at HEAD.",
+  "world_is": "The instance is VALID and the criterion's output was true where it was run; on the trunk the same invocation fails. Cause: a check whose population (tracked files) changes when the check itself is committed. The issuer's drain re-ran CT3c6-AC1 and not AC2. Repair: cell CT-d-6 of round 4 (handed, worker ~9) repairs the census table and keeps a hit in a new test file UNCLASSIFIED until named. The general case for the drain: re-run every criterion whose invocation reads tracked files AFTER the merge, not before it."
+}
+```
