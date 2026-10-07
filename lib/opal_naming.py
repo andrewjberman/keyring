@@ -52,7 +52,11 @@ REGISTRY_DIR = os.path.join(REPO, *REGISTRY_REL.split("/"))
 SCHEMA_PATH = os.path.join(REPO, "org", "standards", "NAMING_SCHEMA.json")
 DIRECTIVES_PATH = os.path.join(REPO, "org", "missions", "DIRECTIVES.yaml")
 REGISTRY_FILES = ("systems.json", "scopes.json", "tiers.json", "exemptions.json", "remediations.json",
-                   "resources.json", "reporting_policies.json")
+                   "resources.json", "reporting_policies.json", "legacy_addresses.json")
+# Registry files an older deployed package may not carry; load_registry() reads an absent one as None.
+OPTIONAL_REGISTRY_FILES = ("reporting_policies.json", "legacy_addresses.json")
+# The legacy_addresses.json row's closed field set (1.0.0_SA_CTO ruling 2, ADVI_COTBKF r2-r3 analysis).
+LEGACY_FIELDS = ("key", "bucket", "template", "shape", "params", "reader", "evidence", "note")
 # The resources.json row's fields (LGIC_ENFORCE EN-r-4, PRD v1.2 DEC-1 candidate E13; 1.0.0_SA_CTO ruling 97177):
 # a resource-to-system row fills the {system} placeholder (NAMING_SCHEMA.json grade.placeholder) and, since
 # the 2026-09-21 amendment, overrides a DIFFERENT system the tokens resolve. RES_FIELDS names the closed field
@@ -216,7 +220,7 @@ def load_registry(reg_dir=None, systems_file=None):
         # Older non-reporting packages carry the six original registry files.
         # Their default homes remain usable; reporting and canonical validation
         # still refuse a missing policy document through the validator below.
-        if fname == "reporting_policies.json" and not os.path.isfile(path):
+        if fname in OPTIONAL_REGISTRY_FILES and not os.path.isfile(path):
             reg[fname[:-5]] = None
             continue
         reg[fname[:-5]] = _read_json(path)
@@ -562,6 +566,41 @@ def validate(reg_dir=None, systems_file=None):
                     refuse(sw, "prefix", "a known bucket and a prefix ending in /")
             else:
                 refuse(sw, "kind", "bucket-alias or s3-prefix")
+
+    # legacy_addresses.json: a READ address for a store that predates the canon. A row is refused for a
+    # missing, extra or empty field, a repeated key, an unknown bucket, a shape/template mismatch, a template
+    # whose placeholders are not exactly its params, or a reader that is not a project.
+    leg_obj = reg.get("legacy_addresses")
+    alias_buckets = {a["spelling"] for s in scopes for a in s.get("aliases", []) if "bucket" in a.get("planes", [])}
+    seen_leg = set()
+    for i, r in enumerate((leg_obj or {}).get("legacy_addresses", []) if isinstance(leg_obj, dict) else []):
+        where = "legacy_addresses.json[%d]" % i
+        if not isinstance(r, dict):
+            refuse(where, "row", "not an object")
+            continue
+        if set(r) != set(LEGACY_FIELDS):
+            refuse(where, "row", "fields must be exactly %s" % ", ".join(LEGACY_FIELDS))
+            continue
+        for f in LEGACY_FIELDS:
+            if f != "params" and (not isinstance(r[f], str) or not r[f].strip()):
+                refuse(where, f, "missing or empty")
+        lkey, tmpl, params = r["key"], r["template"], r["params"]
+        if not isinstance(lkey, str) or not _KEY_RE.match(lkey):
+            refuse(where, "key", "%r: a legacy address key is lowercase kebab-case ASCII" % (lkey,))
+        if lkey in seen_leg:
+            refuse(where, "key", "%r is a repeated key" % (lkey,))
+        seen_leg.add(lkey)
+        if r["bucket"] not in known_buckets | alias_buckets:
+            refuse(where, "bucket", "%r is not a bucket scopes.json or bucket.standing_shared knows" % (r["bucket"],))
+        if r["shape"] not in ("object", "prefix"):
+            refuse(where, "shape", "object or prefix")
+        if isinstance(tmpl, str) and tmpl:
+            if not tmpl.isascii() or tmpl.startswith("/") or (r["shape"] == "prefix") != tmpl.endswith("/"):
+                refuse(where, "template", "ASCII, no leading /, and ending in / exactly when the shape is prefix")
+            if not isinstance(params, list) or re.findall(r"\{([^{}]*)\}", tmpl) != params or len(set(params)) != len(params):
+                refuse(where, "params", "exactly the template's {placeholders}, in order, none repeated")
+        if r["reader"] not in all_projects:
+            refuse(where, "reader", "%r is not a project in org/missions/DIRECTIVES.yaml" % (r["reader"],))
 
     # resources.json (EN-r-4, PRD v1.2 DEC-1 E13; ruling 97177): {name, type, system, evidence} rows that
     # fill a {system} placeholder ONLY where the name's own tokens resolve none (NAMING_SCHEMA.json
@@ -1762,6 +1801,25 @@ def address(source, scope, tier, table, partition, object=None):
             raise ValueError("object must be a non-empty ASCII string not starting with '/': %r" % (object,))
         out += "/" + object
     return out
+
+
+def legacy_address(key, **params):
+    """s3://{bucket}/{key} for a store that predates the canon: the one row of
+    infra/logic/registry/legacy_addresses.json whose key this is, its template filled from params. A READ
+    address only. KeyError for a key no row carries; ValueError for params that are not exactly the row's."""
+    doc = _registry().get("legacy_addresses")
+    if not isinstance(doc, dict):
+        raise RegistryError("infra/logic/registry/legacy_addresses.json is absent from this package")
+    for row in doc.get("legacy_addresses", []):
+        if row.get("key") == key:
+            break
+    else:
+        raise KeyError("no legacy_addresses.json row carries key %r" % (key,))
+    if set(params) != set(row["params"]):
+        raise ValueError("legacy address %r takes exactly %s; got %s" % (key, row["params"], sorted(params)))
+    for label, val in params.items():
+        _segment(label, val)
+    return "s3://%s/%s" % (row["bucket"], row["template"].format(**params))
 
 
 def _validate_reporting_policies(reg):
