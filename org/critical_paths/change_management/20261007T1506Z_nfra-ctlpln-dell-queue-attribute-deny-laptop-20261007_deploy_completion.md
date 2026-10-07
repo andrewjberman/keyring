@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-07T15:06:12.377300+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261007T151944Z
 **Deploy:** NFRA_CTLPLN CT-d-5 as amended -- BOX: THE LAPTOP. ONE untargeted safe-apply of infra/aws/terraform/nfra-ctlpln-identity adding sqs:SetQueueAttributes to DenyResourcePolicyWrites (74 -> 75 actions), one in-place update of cloudops-dell-agent-respol-policy. It NARROWS ONLY. Closes the gap this seat found under TO-APPLY-6 (msg 106271). PRIOR DEFAULT VERSION v1, 1 of the 5-version maximum. Both halves SIGNED: COO @f9858d0ab1, CTO @2792d4cf57. CTO condition 5 SHOWN before the apply. Plan measured 0 to add, 1 to change, 0 to destroy with exactly one added action.
 **Authored by:** 0.7.0_AE_CloudOps~E
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -12,117 +12,16 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| A1 | activation | one untargeted safe-apply of the identity root at the laptop | CTO condition 5 shown BEFORE the apply from the fabric manager's record DELL_NOTICE_QUEUE_ATTRIBUTE_DENY_SENT_20261007_1445Z.md (both Dell managers READ and acked by MessageId); plan reads EXACTLY 0 to add / 1 to change / 0 to destroy on aws_iam_policy.dell_agent_respol with EXACTLY ONE added line, + sqs:SetQueueAttributes, and ZERO removed lines; safe-apply completes 0 added 1 changed 0 destroyed |  | OPEN |
-| V1 | verify | the three live arms against the ATTACHED policies, each attributed | a Dell user sqs:SetQueueAttributes -> explicitDeny with the matched statement naming DenyResourcePolicyWrites; sqs:CreateQueue -> allowed; sqs:TagQueue -> allowed. The two allowed arms are the controls that prove this Deny did not stop a Dell creating or tagging a queue, which is the weak point both halves name |  | OPEN |
-| V2 | verify | the live document equals the repo file, and the version moved | parsed comparison of the LIVE default-version document against dell_respol_policy.json with a planted-mutant control; the action count reads 75 (74 before) with sqs:SetQueueAttributes present; the new default version id is recorded beside the prior v1, and the version count stays within the 5 maximum |  | OPEN |
-| V3 | verify | AC1 + AC2 and the three checks re-read | simulate_policy.py reads respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True (AC1); the re-plan -detailed-exitcode reads exit=0, a WHOLE-ROOT 0-diff since the apply is untargeted (AC2); check_identity.py and derive_respol_actions.py re-read clean with actions=75 covered=75/75 |  | OPEN |
+| A1 | activation | one untargeted safe-apply of the identity root at the laptop | CTO condition 5 shown BEFORE the apply from the fabric manager's record DELL_NOTICE_QUEUE_ATTRIBUTE_DENY_SENT_20261007_1445Z.md (both Dell managers READ and acked by MessageId); plan reads EXACTLY 0 to add / 1 to change / 0 to destroy on aws_iam_policy.dell_agent_respol with EXACTLY ONE added line, + sqs:SetQueueAttributes, and ZERO removed lines; safe-apply completes 0 added 1 changed 0 destroyed | APPLIED at the LAPTOP 2026-10-07 ~15:12:37Z via .tools/safe-apply.sh -chdir=infra/aws/terraform/nfra-ctlpln-identity apply -input=false -no-color -auto-approve, UNTARGETED. The apply's OWN plan read Plan: 0 to add, 1 to change, 0 to destroy and the result read Apply complete! Resources: 0 added, 1 changed, 0 destroyed, modifying aws_iam_policy.dell_agent_respol only. GATING EVIDENCE: the plan carried ONE resource block and EXACTLY ONE added line -- + sqs:SetQueueAttributes -- with ZERO removed lines and no create / destroy / replace markers anywhere, so the diff is the one added action and nothing else. CTO CONDITION 5 WAS SHOWN BEFORE THE APPLY and at the precision the record itself uses: 0.0.0_AB_MSTR's record DELL_NOTICE_QUEUE_ATTRIBUTE_DENY_SENT_20261007_1445Z.md carries the line as sent, both Dells SENT by MessageId, and both Dell fabric managers READ and ACKED BY MessageId (dell1 15:02:38Z bus df644065, dell2 15:03:04Z bus 02816c61), with onward relay reported as broker-DELIVERED to 6 of 6 and 9 of 9 live seats. EACH SEAT'S OWN READ IS NOT SHOWN and is not leaned on -- the record says so and so does this entry. 1.0.0_SA_CTO's own reading (msg 106330) agrees the condition is satisfied by that record. This seat messaged no Dell; it asked 0.0.0_AB_MSTR once, as the order directs. Commit gate empty both ways with a positive control and a blob-level pass (0 of the root's files differ at aa6b587487 vs HEAD), RE-VERIFIED at HEAD f9030ef032 after the integrator moved HEAD mid-step. This seat created and changed NO queue. | CLOSED 20261007T151943Z |
+| V1 | verify | the three live arms against the ATTACHED policies, each attributed | a Dell user sqs:SetQueueAttributes -> explicitDeny with the matched statement naming DenyResourcePolicyWrites; sqs:CreateQueue -> allowed; sqs:TagQueue -> allowed. The two allowed arms are the controls that prove this Deny did not stop a Dell creating or tagging a queue, which is the weak point both halves name | PASS 4/4 against the ATTACHED policies via simulate_principal_policy on the live users, one resource ARN per call, MatchedStatements read on every arm. cloudops-dell1-agent-user sqs:SetQueueAttributes -> explicitDeny matched cloudops-dell-agent-respol-policy; cloudops-dell2-agent-user the same, so BOTH Dells are refused and not just the one the arm list named. THE TWO CONTROLS, which are the point rather than decoration because both halves name 'a Deny that stops a Dell creating a queue at all' as the hazard: sqs:CreateQueue -> ALLOWED and sqs:TagQueue -> ALLOWED, and BOTH are attributed to cloudops-dell-agent-create-policy, NOT to the respol policy -- so the new Deny demonstrably does not reach a create or a tag. ATTRIBUTION IS EXACT HERE, which is worth stating because it is not always: MatchedStatements names the POLICY and not the Sid, but this policy holds exactly ONE statement (DenyResourcePolicyWrites, verified in the live document), so naming the policy names the statement uniquely. Evidence: deliverables/READBACK7_step6_20261007.txt. | CLOSED 20261007T151943Z |
+| V2 | verify | the live document equals the repo file, and the version moved | parsed comparison of the LIVE default-version document against dell_respol_policy.json with a planted-mutant control; the action count reads 75 (74 before) with sqs:SetQueueAttributes present; the new default version id is recorded beside the prior v1, and the version count stays within the 5 maximum | PASS. The default version moved v1 -> v2 and the policy now holds 2 of its 5 permitted versions, so V1 IS RETAINED and the rollback named in this entry (set v1 as default) is live and executable -- which is the whole reason step 2 measured the version count before the apply rather than assuming room. The LIVE v2 document equals dell_respol_policy.json by parsed comparison (True), with a NEGATIVE CONTROL through the same comparator: a planted Sid-rename reads False, ruling out an always-true comparator. The action count moved 74 -> 75 and sqs:SetQueueAttributes is present; the sqs actions denied are now AddPermission, RemovePermission and SetQueueAttributes, where before they were only the first two. The live document carries exactly ONE statement, DenyResourcePolicyWrites. Prior and new documents are both committed (BEFORE7_respol_document_v1_*.json, AFTER7_respol_document_v2_*.json) so the one-action delta is reproducible from bytes by a verifier who was not present. | CLOSED 20261007T151944Z |
+| V3 | verify | AC1 + AC2 and the three checks re-read | simulate_policy.py reads respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True (AC1); the re-plan -detailed-exitcode reads exit=0, a WHOLE-ROOT 0-diff since the apply is untargeted (AC2); check_identity.py and derive_respol_actions.py re-read clean with actions=75 covered=75/75 | PASS on both criteria and all three checks. AC1: simulate_policy.py reads POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 all_ok=True, matching the expect; the resource-policy block moved 11 -> 13 arms with this amendment, and the preflight notes the action's REMOVAL is caught as a mutant by that block, so the 13/13 is a tested assertion and not a passing tautology. AC2: the re-plan with -detailed-exitcode reads No changes with exit=0, and because the apply was UNTARGETED this is a WHOLE-ROOT 0-diff -- the committed configuration and the deployed state agree across the entire root. The other two checks re-read clean: IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=11/11 policy_size_ok=True ok=True, and RESPOL-DERIVED services=28 with_actions=20 none=7 unsure=1 actions=75 covered=75/75 ruled_allowed_caught=0 ok=True -- the 75/75 coverage being the derivation's own confirmation that the added action is the one the ruling names and that no ruled-allowed action was caught by mistake. | CLOSED 20261007T151944Z |
 
 ## Log
 
 - 20261007T150612Z OPENED by 0.7.0_AE_CloudOps~E with 4 leg(s)
-
----
-
-## BOX
-
-**THE LAPTOP.** Executor `0.7.0_AE_CloudOps~E`, seated by `2.0.0_SA_COO~C` under task order
-`NFRA_CTLPLN.TO-APPLY-7.dell-queue-attribute-deny-apply-laptop` @3fd57f4133 (GO msg 106313, acked). Applying identity
-`arn:aws:iam::313476888478:user/Andrew_Berman`. Terraform v1.15.8 on PATH.
-
-**This order closes a gap this seat found on its own initiative** under TO-APPLY-6: a resource-policy arm the order
-did not ask for showed `sqs:SetQueueAttributes` reading ALLOWED, and that it was absent from the Deny's 74 actions.
-The issuer also corrected the TO-APPLY-6 COO half's prose, which had listed "a queue policy" among what a Dell is
-refused.
-
-## CTO CONDITION 5 -- SHOWN BEFORE THE APPLY, and stated at the precision the record itself uses
-
-Source: `org/tier0_exec/0.0.0_AB_MSTR/deliverables/DELL_NOTICE_QUEUE_ATTRIBUTE_DENY_SENT_20261007_1445Z.md`, written
-by `0.0.0_AB_MSTR` on this seat's question (msg 106320). This seat does not message a Dell.
-
-| claim | state |
-|---|---|
-| SENT to dell1 | MessageId `52451c51-afbd-4507-9f1a-9a47e54ac523` |
-| SENT to dell2 | MessageId `a3b98523-74ae-45d8-b298-38ac6b2de267` |
-| READ by `0.0.0_AB_MSTR~DELL1` | **ACKED BY MessageId**, bus `df644065`, 15:02:38Z |
-| READ by `0.0.0_AB_MSTR~DELL2` | **ACKED BY MessageId**, bus `02816c61`, 15:03:04Z |
-| relayed onward, dell1 | 6 of 6 live seats broker-DELIVERED (ids 339-344) |
-| relayed onward, dell2 | 9 of 9 live seats broker-DELIVERED (ids 711-719) |
-| **each seat's own read** | **NOT SHOWN** -- delivery is not a read, and the record says so itself |
-
-So "both Dells are told" is satisfied at the level the condition asks: each Dell's fabric manager has READ it and
-acked by MessageId. dell1's manager adds "TO-APPLY-7 may proceed as far as dell1 is concerned"; dell2's adds that
-dell2 has no queue change in flight. The weaker onward claim is recorded as DELIVERED, not read, and is not leaned on.
-
-**A search trap worth recording:** `comp-find 'SetQueueAttributes' org/tier0_exec` returns a MEASURED ZERO over 481
-files even with this record present, because the record correctly writes the English ("a queue's policy or its other
-attributes") rather than the API name. The filename was the signal. A token census is not a census of the claim.
-
-## BLAST RADIUS -- one IAM object, narrowing only
-
-One new default version of `cloudops-dell-agent-respol-policy`. No other principal, role, resource or served output.
-No object is created, changed or deleted anywhere; this seat creates and changes **no queue**.
-
-| before | after |
-|---|---|
-| default version `v1`, 1 of the 5-version maximum | a new default version, still within the maximum |
-| `DenyResourcePolicyWrites` carries **74** actions | **75** actions |
-| sqs actions denied: `AddPermission`, `RemovePermission` | plus **`SetQueueAttributes`** |
-
-**What both Dell users lose:** every `sqs:SetQueueAttributes` call -- the queue's access policy AND every other later
-attribute change (visibility timeout, retention, redrive, encryption settings). `sqs:CreateQueue` with attributes,
-`sqs:TagQueue` and `sns:SetTopicAttributes` stay allowed; the topic action is not in the ruling and is not added.
-
-**NAMED SO IT IS NOT READ AS A REGRESSION:** a Terraform root declaring a separate `aws_sqs_queue_policy` resource
-can no longer be applied from a Dell -- on a create as well as a change -- because that resource writes through the
-denied action. Six roots declare one (9 resources): globgrph, inf-pipeline, nfra-agentbus, nfra-agentbus-alyssa01,
-opal-gateway, partner-etl-ops-alerts. The CTO accepts this as the intended reading of Andrew's "For now, laptop
-should admin". **NOT READ BY ANYONE:** whether a Dell-placed project owns one of globgrph, inf-pipeline, opal-gateway
-or partner-etl-ops-alerts -- the two agentbus roots were never a Dell's to apply. `2.0.0_SA_COO~C` owes that mapping.
-
-## THE PREMISE'S WEAK POINT, carried not buried
-
-The ruling rests on "a queue's attributes are set when Terraform creates it": 18 of 18 Terraform creates carried
-attributes inside the create call, 15 with no `SetQueueAttributes` within 120 seconds. **The residual:** on two of
-the three that did follow up (both FIFO queues of one root) the call also carried `DeduplicationScope` and
-`FifoThroughputLimit` beside `Policy`, and the audit trail cannot show which resource sent it. Other regions unread.
-COO condition 4 turns that into a same-window restore if it comes true, and the CTO accepted it because the cost of
-being wrong is one refused create on a Dell, not a served change.
-
-## ROLLBACK
-
-**IAM keeps the prior version.** The prior default is **`v1`**, measured before the apply, and the policy held only
-1 of its 5 permitted versions, so the apply has room and `v1` survives.
-
-| route | act | window |
-|---|---|---|
-| primary | `aws iam set-default-policy-version --policy-arn arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-policy --version-id v1` | same window |
-| alternative | revert the one entry in `dell_respol_policy.json` and `safe-apply` | next window |
-
-**TRIGGERS:** AC1 or AC2 failing; the live document ceasing to equal the repo file; `sqs:CreateQueue` or
-`sqs:TagQueue` ceasing to be allowed; or COO condition 4 -- a Dell-placed project's queue CREATE refused for a reason
-other than a separate policy resource, which is the weak point coming true, in which case the prior version is
-restored the same window and the CTO is told.
-
-## PRE-APPLY EVIDENCE IN HAND
-
-- **COMMIT GATE:** `git diff --stat aa6b587487 HEAD` on the root empty, `git status --porcelain` empty, a POSITIVE
-  CONTROL (`aa6b587487^..HEAD` prints 6 files / 1213 insertions) and a BLOB-LEVEL pass -- 0 of the root's files
-  differ between `aa6b587487` and HEAD.
-- **THREE CHECKS, each `ok=True`:**
-  `IDENTITY-STATIC validate=ok no_access_key=True names_from_builder=11/11 policy_size_ok=True ok=True`;
-  `POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9
-  routes_ok=5/5 all_ok=True` (the resource-policy block moved 11 -> 13 arms with this amendment);
-  `RESPOL-DERIVED services=28 with_actions=20 none=7 unsure=1 actions=75 covered=75/75 ruled_allowed_caught=0 ok=True`.
-- **STEP 2:** prior default `v1`; **1 of 5** versions held, so no version-limit failure; the BEFORE document carries
-  **74** actions with `sqs:SetQueueAttributes` ABSENT -- the gap, confirmed one last time at the live plane.
-- **THE PLAN:** `Plan: 0 to add, 1 to change, 0 to destroy`; 1 resource block, `aws_iam_policy.dell_agent_respol
-  will be updated in-place`; **EXACTLY ONE added line, `+ "sqs:SetQueueAttributes",`, and ZERO removed lines**; no
-  create/destroy/replace markers. Saved: `deliverables/PLAN7_nfra-ctlpln-identity_20261007.txt`.
-
-## INSTRUMENT NOTES
-
-Step 6's arms run against the ATTACHED policies via `simulate_principal_policy` on the live user, with
-`MatchedStatements` read on each so the deny is attributed to `DenyResourcePolicyWrites` by name rather than
-inferred. One resource ARN per call. The two ALLOWED arms (`CreateQueue`, `TagQueue`) are the controls that
-distinguish a scoped Deny from one that stops a Dell using queues at all -- which is precisely the weak point the
-halves name, so they are evidence and not decoration.
+- 20261007T151943Z LEG A1 closed: APPLIED at the LAPTOP 2026-10-07 ~15:12:37Z via .tools/safe-apply.sh -chdir=infra/aws/terraform/nfra-ctlpln-identity app
+- 20261007T151943Z LEG V1 closed: PASS 4/4 against the ATTACHED policies via simulate_principal_policy on the live users, one resource ARN per call, Match
+- 20261007T151944Z LEG V2 closed: PASS. The default version moved v1 -> v2 and the policy now holds 2 of its 5 permitted versions, so V1 IS RETAINED and t
+- 20261007T151944Z LEG V3 closed: PASS on both criteria and all three checks. AC1: simulate_policy.py reads POLICY-SIM allowed_ok=22/22 denied_ok=19/19 pa
+- 20261007T151944Z CLOSED -- all 4 legs proven
