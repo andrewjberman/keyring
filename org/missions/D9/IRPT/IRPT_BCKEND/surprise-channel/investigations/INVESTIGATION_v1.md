@@ -18661,31 +18661,246 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
 }
 ```
 
-## IRPT_BCKEND-S351 -- S338 measured from the laptop: Inflection held positions on all three days; each day has no partition because the producer's declared close rule finds no source partition holding that day's close
+## IRPT_BCKEND-S348 --the 10-06 directory refresh manifests misstate the fire that moved the directory
+
+```json
+{
+  "id": "IRPT_BCKEND-S348",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-07T08:20:00Z",
+  "one_line": "The 2026-10-06 directory refresh manifests misstate the fire that moved every firm's directory: 49F and INF stop at RUNNING / REFRESH_DISPATCHED / revision pending, and COT has no _refresh/2026-10-06/ manifest because its 13:40Z fire wrote its result under _refresh/2026-09-22/ as a READY 2026-09-22 build of 248 entries, while COT's latest.json points to the 2026-10-05 directory of 270.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3 get-object opal-data-bd investor-reporting/directory/_refresh/2026-10-06/manifest.json (versions 13:30:37Z, 13:40:39Z current): state RUNNING, reason_code REFRESH_DISPATCHED, directory_revision pending, ssm_command_id 928a49c8-..; notes 'last command 4237a59f-.. was dispatched for 2026-09-25 ... re-dispatching' (3.0.0_SA_CVO, dell2, 2026-10-07 ~08:0xZ)",
+      "s3 get-object opal-data-inf .../_refresh/2026-10-06/manifest.json: state RUNNING, REFRESH_DISPATCHED, revision pending (same read)",
+      "s3 list opal-data-cot .../_refresh/2026-10-06/: no object; .../_refresh/2026-09-22/manifest.json current version LastModified 2026-10-06T13:40:41Z (earlier versions 10-06 13:30:41Z, 10-01, 09-30, 09-29, 09-28, 09-22): correlation_id irpt-refresh-2026-10-06-cottonwood, as_of_business_date 2026-09-22, dispatched_for 2026-10-06, state READY, REFRESH_COMPLETED_WITH_ADDITIONS, added 248, previous_entry_count 0 (same read)",
+      "s3 get-object latest.json: 49F as-of 2026-10-05, 4,696 entries, generated 13:40:46Z; INF as-of 2026-10-06, 294, 13:40:51Z; COT as-of 2026-10-05, 270, key investor-reporting/directory/2026-10-05/directory.json, 13:40:46Z (same read)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S335's disarm reads 'a refresh after the fix lands READY at all three firms'; a refresh manifest is the day's record of what the refresh did (the dispatcher writes it first and rewrites it at the end).",
+  "world_is": "The served pointers moved at all three firms at 13:40Z, so nothing served is wrong. The record is: no firm's 10-06 manifest reads READY; two never got their end rewrite; COT's fire filed its result under an old business date, and the COT key history shows the 09-22 manifest rewritten on five other fire days. Whether the dispatcher keys the COT manifest by the artifact's date or by a stale command's date is not read.",
+  "notes": "INERT (pointers correct). Owner 2.0.0_SA_COO~P2, S335's disarm owner: read why the end rewrite did not land at 49F and INF and why COT's manifest key is 2026-09-22; S335's disarm row says which reading it uses. Filed by the sweep-9 compile, not compiled in it."
+}
+```
+
+## IRPT_BCKEND-S349 -- DISARM of IRPT_BCKEND-S335: a directory refresh after the fix landed at all three firms
+
+```json
+{
+  "id": "IRPT_BCKEND-S349",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:14:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S335 (BLOCKING, ARMED; disarm owner the P workstream, now 2.0.0_SA_COO~P2 per REMEDIATION_v20): its condition, 'a refresh after the fix lands READY at all three firms', was met by the retry schedule irpt-directory-refresh-retry-daily's first fire, 2026-10-06 13:40Z, measured and committed by 2.0.0_SA_COO~P @3680d1cd3c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 3680d1cd3c (2.0.0_SA_COO~P, 2026-10-06): all three latest.json keys moved at 13:40Z -- 49financial 4620->4696 entries, inflection 292->294, cottonwood 258->270; entries_valid = entry_count; SSM commands rc 0; ledger irpt-s335-retry-schedule-20261005 CLOSED 2 of 2 legs",
+      "the remedy is the second arm of S335's condition (a later fire with the runner up), applied @fb8f047e40 under IB-pr-325 (drain @45ac71f1c7)",
+      "not re-read from dell2: the firm buckets deny the dell2 identity (S347); the measurement cited is the predecessor's committed read"
+    ]
+  },
+  "dismissal_reason": "The disarm condition was measured met on 2026-10-06; REMEDIATION_v20 lists S335 as REMEDIATED with only its disarm owed.",
+  "spec_asserts": "IRPT_BCKEND-S335 (ARMED): the directory refresh fails HAND_OVER_RUNNER_OFFLINE at all three firms.",
+  "world_is": "MEASURED 2026-10-06 13:40Z: the retry fire landed at all three firms. S335 is disarmed."
+}
+```
+
+## IRPT_BCKEND-S350 -- DISARM of IRPT_BCKEND-S347: the S338 read was made by a permitted principal (row S348)
+
+```json
+{
+  "id": "IRPT_BCKEND-S350",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-07T08:14:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S347 (BLOCKING, ARMED, disarm owner 2.0.0_SA_COO~P2): its un-park condition (a), 'a principal permitted on opal-data-inflection reads the three gap days and their upstream positions', is met by laptop 3.0.0_SA_CVO's row IRPT_BCKEND-S348 @8dc6d1f929 (decision 106062). The standing fence fix is NFRA_CTLPLN round 4's first cell (2.0.0_SA_COO~C), not this row.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~P2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 8dc6d1f929 on origin CLOUD (3.0.0_SA_CVO, laptop): row S348 -- Inflection held positions on all three days (888, 922, 948 accounts); the gaps follow the producer's close rule (05-11 and 08-10 NO_SINGLE_CLOSE on the next partition; 06-30 source date 2026-07-01 absent); a backfill cannot fill them",
+      "1.0.0_SA_CTO~DELL2 msgs 99 and 110; 0.0.0_AB_MSTR~DELL2 msgs 109 and 116 (relaying laptop 1.0.0_SA_CTO 106062 and 106065)"
+    ]
+  },
+  "dismissal_reason": "The blocked measurement exists. What remains is a ruling on ledger irpt-inf-performance-serving-20261002 leg A1's wording, held by 1.0.0_SA_CTO~DELL2 (laptop recommendation: a partition or a named day in the adapter's missing-trading-day disclosure, three expected).",
+  "spec_asserts": "IRPT_BCKEND-S347 (ARMED): S338 cannot be measured because dell2 is denied on opal-data-inflection.",
+  "world_is": "S338 is measured (S348). S347 is disarmed; the dell2 identity is still denied on the bucket until NFRA_CTLPLN round 4 applies."
+}
+```
+
+## IRPT_BCKEND-S351 -- DISARM of IRPT_BCKEND-S339: a resident build carries a named member list (st24 read against its census)
 
 ```json
 {
   "id": "IRPT_BCKEND-S351",
   "project": "IRPT_BCKEND",
   "fabric": "laptop",
-  "surfaced_by": "3.0.0_SA_CVO",
-  "surfaced_at": "2026-10-07T08:10Z",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-07T08:39:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISARM of IRPT_BCKEND-S339 (ARMED, disarm owner 2.0.0_SA_COO~Y2): one resident build was read against its list. Root 409e3066d1-st24 has a package census naming 267 members, its delta against the previous root enumerated (11 added, 3 changed, 0 removed), 16 pinned members, and gates G1-G4 true. The builder no longer ships an unnamed tree.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Y2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6/act/PACKAGE_CENSUS_409e3066d1-st24.json: keys members (267), added (11: ycharts/research/*), changed (3: reporting_policies.json, reports/resident_bindings.json, ycharts/generate/resident_worker.py), removed (0), pinned_members (16), gates {G1..G4: true}",
+      "the remedy commits named in REMEDIATION_v20: c1dd9ada9c (TO-YCD-n-6, members_added gate) and 2b5f4f00e1 (TO-YCD-m-6, a named file list)",
+      "read from the committed census, not from the host: the resident host is 2.0.0_SA_COO~G2's to write and release (1.0.0_SA_CTO~DELL2 msg 91)"
+    ]
+  },
+  "dismissal_reason": "The disarm condition in REMEDIATION_v20 (a resident build carries a named member list; read one build against its list) is met by st24. Future builds are 2.0.0_SA_COO~G2's, under the same builder.",
+  "spec_asserts": "IRPT_BCKEND-S339 (ARMED): build_resident_package.py packages the whole tree at its --pin, so a resident build ships every merged-but-unreleased change.",
+  "world_is": "The st24 build names its 267 members and gates the 11-member addition. S339 is disarmed."
+}
+```
+
+## IRPT_BCKEND-S352 -- the dell2 identity is refused on all three firms' served Holdings publications, so E-M1 cannot run from dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-S352",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T08:46:45Z",
   "disposition": "UNDER_INVESTIGATION",
-  "one_line": "Row S338's NOT MEASURED half, read from the laptop: Inflection held positions on 2026-05-11, 2026-06-30 and 2026-08-10 (888, 922 and 948 accounts in the source partitions of those dates). None of the three is a no-data day. Each lacks a gold partition because, under the producer's declared partition_close, no source partition holds that trading day's CLOSE: two by declaration (NO_SINGLE_CLOSE), one because the 2026-07-01 source partition does not exist.",
+  "one_line": "The dell2 agent identity (cloudops-dell2-agent-user) is refused on irpt/<firm>/platinum/holdings/current/manifest.json at all three firm buckets (opal-data-49financial, opal-data-inflection, opal-data-cottonwood: HeadObject 403 each; ListBucket on opal-data-49financial an explicit deny), so cell E-M1 of the rounds 47-60 analysis (the FWD-5 replay on the served publication) cannot be executed by any dell2 worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~08:4xZ on dell2: .tools/aws s3api head-object --bucket opal-data-{49financial,inflection,cottonwood} --key irpt/<firm>/platinum/holdings/current/manifest.json: 403 Forbidden, 3 of 3",
+      "MEASURED same read: list-objects-v2 --bucket opal-data-49financial --prefix irpt/: AccessDenied, s3:ListBucket with an explicit deny in a resource-based policy, principal arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "positive control, same identity, same minute: sts get-caller-identity answered; dynamodb describe-table etf-classifications answered (ItemCount 3507), so the identity works and the refusal is bucket-scoped",
+      "the served-publication reader org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/holdings_publication_row_read.py read the same three keys from the laptop on 2026-10-02 (HOLDINGS_PUBLICATION_ROW_READ_20261002.json), so the refusal is per identity",
+      "IRPT_BCKEND-S347 (2.0.0_SA_COO~P2) is the same deny measured on opal-data-inflection ListBucket only; this row widens the measured scope to all three firms and to GetObject/HeadObject"
+    ]
+  },
+  "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_47_60_20261007.md @e363a194ed section 5: 2.0.0_SA_COO~M2 (dell2) issues E-M1, a read of each firm's newest served Holdings publication (gold parquet, sha256 checked).",
+  "world_is": "No dell2 principal can read the served Holdings publication of any firm. E-M1 is decomposed (R30_M) and NOT issued. It un-parks when either (a) a principal permitted on the three firm buckets runs the read (a laptop seat delivers the result as a FILE and 2.0.0_SA_COO~M2 files the row, per the 08:50Z CTO ruling on Dell-only row ids), or (b) the owner of the firm-bucket policies admits the dell2 identity read-only. This row widens no policy (CLAUDE.md cross-firm guard; never-widen)."
+}
+```
+
+## IRPT_BCKEND-S353 -- REMEDY of IRPT_BCKEND-S320: the irpt-ycharts-generate source-map row now records the live hash
+
+```json
+{
+  "id": "IRPT_BCKEND-S353",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~Y2",
+  "surfaced_at": "2026-10-07T08:51:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "REMEDY of IRPT_BCKEND-S320 (OPEN, owner 2.0.0_SA_COO~Y2, REMEDIATION_v20): in lambda-source-map.json, row irpt-ycharts-generate deployed_code_sha256 FgZcBjJu.. -> uFTONal/RhfoETes.., the live CodeSha256. It now equals the row's artifact_sha256. No other field moved.",
   "class": "OBSERVATION",
   "hazard_standing": "INERT",
   "grounding": {
     "status": "GROUNDED",
     "evidence": [
-      "producer source: data/assets/scripts/gold/irpt_holdings_performance/sources.json entry orion -> bucket opal-data-assets, positions_prefix {monolith}/{scope}/silver/fact_positions/, link_across_gaps true, gap_link_max_trading_days 10, balance_prefix null",
-      "s3api list-objects-v2 on that prefix, every page (this seat, 2026-10-07 08:0xZ): 2352 date= partitions, 2020-04-24 to 2026-10-06. Present: date=2026-05-11, 2026-06-30, 2026-08-10. ABSENT: date=2026-07-01 (2026-06-30 and 2026-07-02 are present on either side)",
-      "the producer's own close_partitions(), imported and run read-only on the three days: 2026-05-11 day-t close -> [] (its close would sit in the partition dated 2026-05-12, which the declaration marks NO_SINGLE_CLOSE); 2026-06-30 day-t close -> [2026-07-01, PRIOR_TRADING_DAY, NOT PRESENT]; 2026-08-10 day-t close -> [] (partition 2026-08-11 is declared NO_SINGLE_CLOSE). For all three the t-1 close IS present (2026-05-08 in 05-11/05-10/05-09; 2026-06-29 in 06-30; 2026-08-07 in 08-10/08-09/08-08). Control: 2026-08-07 resolves to three present partitions",
-      "rows and distinct accountId read from the source parquet: date=2026-05-11 24293 rows, 888 accounts; date=2026-05-12 24372, 893; date=2026-06-30 33588, 922; date=2026-07-02 33618, 922; date=2026-08-10 35262, 948; date=2026-08-11 35262, 948",
-      "holdings_performance.py _frame_for lines 1044-1048: with no partition holding the day-t close it returns ABSENT ('no day-t price exists') and writes no row; lines 1018-1034: the NEXT trading day links back over the missing close, so the return of the missing day is carried in the following day's linked row"
+      "lambda get-function-configuration irpt-ycharts-generate (dell2, 2026-10-07 ~08:3xZ): CodeSha256 uFTONal/RhfoETes4rqJ4xRjJV4d2/nv3OlwuR9AXCQ=, LastModified 2026-10-04T01:57:24Z",
+      "lambda-source-map.json before the fix: deployed_code_sha256 FgZcBjJuwuBD.. with artifact_sha256 uFTONal/RhfoETes.. on the same row, so only the one field was stale",
+      "the fix is a one-field edit in the commit that carries this row (lane grant extended to ~Y2 @4f3505fb84). The recorder was not run: record-terraform-deploy.sh sets last_deployed_commit to the newest commit on source_dir, and IRPT_YCDGEN commits since 10-04 that are not deployed would then read as deployed"
     ]
   },
-  "spec_asserts": "Ledger irpt-inf-performance-serving-20261002 leg A1 (CTO batch 202 @8da55ee13b): every trading day of 2026 through the fire's day has a date= partition under Inflection's holdings gold; a trading day without one FAILS A1. Row S338 left NOT MEASURED whether Inflection had positions on the three days.",
-  "world_is": "The three gaps are the producer behaving as declared, not a failed run and not a no-data day. A backfill cannot fill them: the closes of 2026-05-11 and 2026-08-10 are in no partition by the declaration's own measurement, and the close of 2026-06-30 would need the 2026-07-01 pull, which is not in the source. As written, leg A1 can never pass for 2026. Whether A1's wording changes (a trading day with no close in any source partition is a disclosed gap) is 1.0.0_SA_CTO's.",
-  "notes": "RENUMBERED 2026-10-07 from S348 to S351 by its author on 1.0.0_SA_CTO msg 106081: dell2 minted S348, S349 and S350 in the same hour (branch q/dell2/custdy-r1-drains-cotbkf-l8-cro/r1), and S351 is the first id free on the laptop trunk and on that branch. dell2 row S350 cites this row as S348. Read-only: no backfill, no landing, no policy change (CTO msg 106060). NOT read: the gold rows of 2026-05-12, 2026-07-01 and 2026-08-11 (whether each carries the linked span the code implies); whether the adapter's missing-trading-day disclosure names the three days (S338's second NOT MEASURED item); why partitions 2026-05-12 and 2026-08-11 were declared NO_SINGLE_CLOSE (2026-08-10 and 2026-08-11 have equal row and account counts, which is consistent with a repeated snapshot, INFERRED). The gold bucket opal-data-inflection was not read by this seat."
+  "dismissal_reason": "The record matches the running bytes. The remedy's second half, the ~Y close-leg checklist step, passes with the 390 s release to 2.0.0_SA_COO~G2, the one releaser of this function's resident files (1.0.0_SA_CTO~DELL2 msg 91). Its HANDOVER.md never-widen text names the recorder step (@59ae6e3b73).",
+  "spec_asserts": "IRPT_BCKEND-S320: lambda-source-map.json records irpt-ycharts-generate at a hash the function no longer runs.",
+  "world_is": "The row's deployed_code_sha256 equals the live CodeSha256 uFTONal/RhfoETes.."
+}
+```
+
+## IRPT_BCKEND-W132-S1 -- IB-pr-329 needed one extra line in the builder's field list
+
+```json
+{
+  "id": "IRPT_BCKEND-W132-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~132",
+  "surfaced_at": "2026-10-07T09:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-329 said touch only S3_KEY and the BUILD_ONLY line in build-and-upload.sh; the field list script (TMPJS_LIST) did not emit artifact_s3_key, so one more line was needed there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/build-and-upload.sh@da72ce8b3c: TMPJS_LIST console.log object carries name/source_dir/files/staged_from only at the base; added `artifact_s3_key: cfg.artifact_s3_key || ''` (1 line). Without it the per-function JSON has no key to read and the test failed (key= absent)."
+    ]
+  },
+  "spec_asserts": "The worker face says S3_KEY is read with the script's existing JSON tool the way name/source_dir/files are read, implying the per-function JSON already carries the field.",
+  "world_is": "The per-function JSON built by TMPJS_LIST omitted artifact_s3_key; the one-line addition is inside the same file's grant. Line 152 (writeback of the builder key into the map) is untouched and now writes the map's own key back for the three reporting functions."
+}
+```
+
+## IRPT_BCKEND-W134-S1 -- the pin-based release census reads 4 changed members for irpt-ycharts-generate at f36a8cdefd, the issuer read 19
+
+```json
+{
+  "id": "IRPT_BCKEND-W134-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~134",
+  "surfaced_at": "2026-10-07T12:00:00Z",
+  "one_line": "IB-pr-331: release-census.py irpt-ycharts-generate --pin f36a8cdefd prints changed_members=4 (canonical_profile_reads.py, loaders.py, maintained_sources.py, served.py), not the issuer's 19; the 15 extra members the issuer counted (every fixtures/har/* file plus templates.json) are byte-identical to the live zip in the blobs at f36a8cdefd. Tool not tuned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-ycharts-generate --pin f36a8cdefd -> built_members=114 live_members=114, 4 changed lines, changed_members=4, rc 0, 8.8 s; output saved at org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~134/release_census_irpt-ycharts-generate_f36a8cdefd.txt",
+      "the real builder, BUILD_ONLY=1 bash infra/aws/lambda/ci/build-and-upload.sh investor-reporting irpt-ycharts-generate, run in this worktree (HEAD 27b47e8ef1, a descendant of f36a8cdefd) and diffed member by member against the same live zip: 114 vs 114 members, 6 changed (the 4 above plus publication_worker.py and publisher.py, which moved after f36a8cdefd), 0 under fixtures/ or templates.json",
+      "git log f36a8cdefd..HEAD over ycharts/generate/fixtures and templates.json is empty; git ls-files --eol shows i/lf w/lf for the fixtures here (core.autocrlf=false), and the live zip carries 0 CRLF in the 6 changed members",
+      "the issuer's 15 = 14 fixtures/har entries (13 json + report.pdf) + top-level templates.json = 15 of the 114 files[] entries; a binary pdf cannot differ by line-ending conversion, so a CRLF checkout does not explain all 15",
+      "not reproduced: the issuer's 19-member run environment. HELD, not measured: the difference lies in the issuer's worktree or in a live zip that has since been redeployed, since neither is readable from here"
+    ]
+  },
+  "spec_asserts": "IRPT_BCKEND.TO-IB-pr-331 WORKER FACE: the issuer's own re-census at f36a8cdefd read 19 changed members for irpt-ycharts-generate (4 re-pinned + 15 under fixtures/templates); IB61-3-AC2 expects changed_members=19.",
+  "world_is": "A build of the blobs at f36a8cdefd against the live get-function zip reads 4 changed members. IB61-3-AC2 will FAIL on the tool's honest output. Which census is right is for the issuer: either the 19 came from worktree bytes the pin-based method cannot see (then the builder, which reads the worktree, ships what the census does not), or from a live zip that has since moved.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-S354 -- S338 measured (the laptop CVO's FILE, filed on dell2): three no-close days, a backfill cannot fill them
+
+```json
+{
+  "id": "IRPT_BCKEND-S354",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "1.0.0_SA_CTO~DELL2",
+  "surfaced_at": "2026-10-07T09:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Row S338's NOT MEASURED half, filed on dell2 from the laptop CVO's FILE: Inflection held positions on 2026-05-11, 2026-06-30 and 2026-08-10 (888, 922 and 948 accounts). Each lacks a gold partition because, under the producer's declared close rule, no source partition holds that day's close (two NO_SINGLE_CLOSE by declaration, one because the 2026-07-01 source partition is absent). A backfill cannot fill them.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/IRPT_BCKEND_S338_INFLECTION_THREE_DAYS_MEASURED_20261007.md @9c0a10062f (origin CLOUD e688467732): the laptop CVO's read-only measurement, delivered as a FILE under laptop CTO rulings 106091/106092 (only dell2 mints row ids for this project); it was first filed on the laptop as S348 (@8dc6d1f929), renumbered S351 (@ffd56930e6), then withdrawn",
+      "the producer's own close_partitions(), run read-only by the laptop CVO on the three days, with a control day (2026-08-07) that resolves to three present partitions"
+    ]
+  },
+  "spec_asserts": "Leg A1 of ledger irpt-inf-performance-serving-20261002 (amendment 20261003): every 2026 trading day through the fire's day has a date= partition under Inflection's holdings gold.",
+  "world_is": "Three 2026 trading days can never have a partition under the producer's declared close rule, so the amendment's clause could not pass. Leg A1 was amended @9204974f23 to pass on three disclosed no-close days; this row is the evidence that amendment cites."
 }
 ```

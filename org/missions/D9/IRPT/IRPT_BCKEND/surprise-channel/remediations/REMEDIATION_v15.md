@@ -454,15 +454,15 @@ Author: 3.0.0_SA_CVO, 2026-09-30. Graduated at sweep 5's L9 (ADJUDICATION_v19.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v30",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v30"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-01T07:18:15Z"
     }
   }
 ]

@@ -908,3 +908,144 @@ round.** Never edit an existing row.
   "notes": "Candidate for lint on a device with ruff at the drain."
 }
 ```
+
+## ADVI_COTBKF-S9 -- the account links differ between the laptop and dell2
+
+```json
+{
+ "id": "ADVI_COTBKF-S9",
+ "project": "ADVI_COTBKF",
+ "fabric": "laptop",
+ "surfaced_by": "3.0.0_SA_CVO",
+ "surfaced_at": "2026-10-07T08:45Z",
+ "one_line": "The account-links script gives different answers on the laptop and on dell2 over the same silver table: 3 of 1,450 rows differ (laptop 212 LINKED, dell2 211). Two links whose evidence holds on the transactions (0QF879348 -> B3S606523, B3S780328 -> B3S782287) read NOT_LINKED 'closed to cash' on dell2, and cv0QF879185 is AMBIGUOUS on the laptop and LINKED on dell2.",
+ "class": "BLOCKING",
+ "hazard_standing": "ARMED",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (the laptop worker's run, committed): LINKED 212, NOT_LINKED 1,238 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   ".scratch/advi_cotbkf/account_links_r4/account_links.csv (the issuer's dell2 real run, untracked): LINKED 211, NOT_LINKED 1,239; row-by-row against the laptop file, 3 rows differ (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "transactions (.scratch/advi_cotbkf/tx_cache, 1,416,497 rows): 0QF879348's and B3S780328's printed in-kind receipts are present at the printed quantities and dates (part of the 123 of 123 items in the round-4 L9 grade) (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)",
+   "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError (row W12-S1: lib/trading_calendar falls back to a 2024-2027 holiday list); the exits that differ are dated 2023-02-14 and 2023-12-22 (this compile's read, dell2, 2026-10-07 ~08:1xZ-08:4xZ)"
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "spec_asserts": "CB-d-2: 'Never guess a link' and the same rule over the same table gives one answer; the issuer's --apply writes the silver account_links table the analyst reads.",
+ "world_is": "The result depends on the box that runs it. The dell2 run is the wrong one on the two links checked, and an --apply run on dell2 would write it. The cause is not measured; the calendar fallback is the leading candidate, since both differing exits fall before 2024, where the fallback counts holidays as trading days.",
+ "disarm_owner": "2.0.0_SA_COO~C2",
+ "notes": "ARMED for the apply. Disarms when the cause is named and the run that is applied reproduces the committed laptop deliverable row for row (or the deliverable is shown wrong on those 3 rows). Do not --apply from dell2 before then. Filed by the round-4 compile, not compiled in it."
+}
+```
+
+## ADVI_COTBKF-S10 -- Cause of S9 and W12-S1 MEASURED: lib/trading_calendar's fallback holiday list (2024-2027 only). With NYSE holidays 2010-2023 added to the fallback, dell2's account-links run reproduces the laptop deliverable 1,450 of 1,450 rows (0 differ; the unpatched dell2 run differs on 11)
+
+```json
+{
+  "id": "ADVI_COTBKF-S10",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T08:45Z",
+  "one_line": "Cause of S9 and W12-S1 MEASURED: lib/trading_calendar's fallback holiday list (2024-2027 only). With NYSE holidays 2010-2023 added to the fallback, dell2's account-links run reproduces the laptop deliverable 1,450 of 1,450 rows (0 differ; the unpatched dell2 run differs on 11)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python <scratchpad>/s9_calendar_probe.py (extends tc.NYSE_HOLIDAYS_FALLBACK in-process with 127 rule-derived NYSE holidays 2010-2023, then runs data/assets/scripts/silver/commonwealth_account_links.py --out .scratch/advi_cotbkf/s9_probe) on dell2 at 08:4xZ: ACCOUNT-LINKS ended_accounts=1450 linked=212 not_linked=1238 ambiguous=14",
+      "csv compare keyed on old_account: probe vs deliverables/0.9.0_WK_ADVI_COTBKF~13/account_links_r4.csv (laptop, pmc present): 0 of 1,450 rows differ; unpatched dell2 r4 run vs the same file: 11 rows differ (0QF879185, 0QF879348, B3S605712, B3S606523, B3S780328, ...)",
+      "python -c 'import pandas_market_calendars' on dell2: ModuleNotFoundError; holidays and exchange_calendars also absent",
+      "consumers: 91 .py files under lib/, data/, infra/ import trading_calendar (token census)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S9 disarm condition: the cause is named and the run that is applied reproduces the committed laptop deliverable row for row.",
+  "world_is": "The cause is named and the reproduction holds under a pre-2024-complete calendar. S9 stays ARMED: an unpatched --apply on dell2 (or any box or Lambda without pandas_market_calendars) still writes the wrong 11 rows. Two remedies, either disarms S9 and W12-S1: (a) run the apply only where pandas_market_calendars is installed; (b) extend NYSE_HOLIDAYS_FALLBACK in lib/trading_calendar.py back to the earliest year its consumers read. (b) touches 91 consumers, Lambdas included, so it is not this project's write surface: routed to 1.0.0_SA_CTO.",
+  "notes": "The probe's holiday list is derived from the published rules plus the 2018-12-05 closure; it omits 2012-10-29/30 (Sandy), which the account-links comparison did not need. A fallback edit should take pmc's own output as its source, not this list."
+}
+```
+
+## ADVI_COTBKF-S11 -- RULING C list (laptop 1.0.0_SA_CTO 08:5xZ): the pre-2024-dated artifacts this lane made on dell2 through lib/trading_calendar.py -- one committed (the round-4 census's day figures), the rest scratch; none served, landed or graded REALIZED; each re-run after ruling B's fix
+
+```json
+{
+  "id": "ADVI_COTBKF-S11",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:05Z",
+  "one_line": "RULING C list (laptop 1.0.0_SA_CTO 08:5xZ): the pre-2024-dated artifacts this lane made on dell2 through lib/trading_calendar.py -- one committed (the round-4 census's day figures), the rest scratch; none served, landed or graded REALIZED; each re-run after ruling B's fix",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "COMMITTED: deliverables/0.9.0_WK_ADVI_COTBKF~12/PRICE_CENSUS_20261007.{json,md} @642222e85f (made on dell2 by ~12): security_days_needed=9630847, security_days_covered=1318560 span pre-2024 dates under calendar NYSE/hardcoded-fallback-2024-2027 (row W12-S1). The priced counts (priced_any=1720, priced_fixed_income=184) do not read the calendar. Quoted in the drain-end packet @29479eeb61",
+      "SCRATCH (untracked, dell2 .scratch/advi_cotbkf/): account_links_r4/ (07:3xZ, unpatched calendar; differs from the laptop on 11 of 1,450 rows), r4_realrun/d1.log and d2.log (the census and links real runs), s9_probe/ (patched calendar, diagnostic only)",
+      "NOT calendar-dependent (0 imports of trading_calendar), so outside ruling A: crosswalk_r4/, documents_plan/, documents_plan_e3base/",
+      "NOT produced: no --apply from dell2 in this lane; nothing landed in S3 by this lane"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Ruling C: each Dell COO lists, as rows, the artifacts its lane produced on a Dell since seating whose dates precede 2024; each is re-run after the fix; none is served, landed to gold or graded REALIZED meanwhile.",
+  "world_is": "Two calendar-dependent artifacts exist in this lane on dell2: the committed census day figures and the scratch links run. The links' applied run is E2, uncut until the fix. The census re-run is E2 criterion (3). The CVO's round-4 grade of CB4d1-AC3 was NOT MET and graded nothing REALIZED from them.",
+  "notes": "Re-run owner: 2.0.0_SA_COO~C2 in E2. The scratch links output is not deleted (it is the S9 evidence); it is never applied."
+}
+```
+
+## ADVI_COTBKF-W19-S1 -- the role-request writer cannot state a user as the assuming principal (CB-e-4)
+
+```json
+{
+  "id": "ADVI_COTBKF-W19-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~19",
+  "surfaced_at": "2026-10-07T08:58Z",
+  "one_line": "role_request.py cannot express the break-glass role's trust (a console USER); the request carries assuming_service signin.amazonaws.com as the nearest admitted shape",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/standards/ROLE_REQUEST.schema.json assuming_service pattern ^[a-z0-9-]+(\\.[a-z0-9-]+)+$ admits only a dotted service name; org/devices/role_request.py write has no principal field",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf:248-257 trust = Principal AWS Andrew_Berman_Console user, sts:AssumeRole",
+      "request org/devices/role_requests/dell2/dell2-20261007T085711Z-7b15.json written with assuming_service signin.amazonaws.com; the merged .tf, not the request, is the authority for trust"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-e-4: the writer admits the break-glass role request, with the assuming principal a user rather than a service as the named possible refusal.",
+  "world_is": "The writer admits the request only with a service-shaped assuming_service; the user principal cannot be stated. The value signin.amazonaws.com is a placeholder, not the trust. The laptop applies the merged file's trust (console user only). Writer and schema are NFRA_CTLPLN's, not edited.",
+  "notes": "Gap also carried in C_RESTRICTED_WRITE_IN.md."
+}
+```
+
+## ADVI_COTBKF-S12 -- The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket
+
+```json
+{
+  "id": "ADVI_COTBKF-S12",
+  "project": "ADVI_COTBKF",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-07T09:15Z",
+  "one_line": "The round-5 issuer applies (E5 crosswalk, E3 documents) write to opal-data-cottonwood, whose bucket policy explicitly denies the dell2 identity ListBucket and GetBucketPolicy; whether it also denies PutObject is unmeasured, and measuring it would be a write into a fenced bucket",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws s3 ls --recursive s3://opal-data-cottonwood/commonwealth/cottonwood/silver/crosswalk/ on dell2, 09:0xZ: AccessDenied, ListObjectsV2, user/cloudops-dell2-agent-user, 'with an explicit deny in a resource-based policy'",
+      "aws s3api get-bucket-policy --bucket opal-data-cottonwood on dell2, 09:1xZ: AccessDenied, explicit deny in a resource-based policy",
+      "GetObject is admitted: commonwealth_documents.py --plan on dell2 read the bronze archives (sources_verified=11119), 09:1xZ",
+      "commonwealth_crosswalk.py apply_to_s3 and commonwealth_documents.py --apply write at opal_naming.address('commonwealth', cottonwood, ...) = opal-data-cottonwood"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Decomposition round 5, issuer's acts 1-2: E5 and the E3 apply run from this seat after the drain; standing rule (1.0.0_SA_CTO~DELL2 msg 214): never widen a fence from dell2.",
+  "world_is": "The dell2 identity is fenced on the Cottonwood bucket (NFRA_CTLPLN's Dell bucket fences). No apply is attempted from dell2: a Put that succeeded would write served output from a fenced box, and one that failed would half-land a ledger. ARMED: no --apply of E3 or E5 from dell2.",
+  "notes": "Disarms when 1.0.0_SA_CTO~DELL2 rules where the applies run (the laptop by relay, or dell2 after NFRA_CTLPLN round 4 grants the write) and the apply runs there under a never-widen pair."
+}
+```

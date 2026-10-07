@@ -52,9 +52,12 @@ only reader; no write of its own). Hop 6 is a person's read, never a worker cell
    `parity_period_returns.RULED_PERIODS = ("QTD", "YTD", "1Y", "SI")` (task order `IRPT_BCKEND.TO-IB-pr-192`); 3Y raises
    `WindowNotRuled`. **Round 1 reports QTD, YTD, 1Y and SI, read from that constant, never re-typed.** The firm's read (hop 6) states
    whether its report needs another period; a period it names is an ENRICHMENT item, not a round-1 recut.
-7. **The named advisor -- OPEN, at Andrew.** Not in the brief, the PRD or the register. Hop 6 needs a real person at the firm to read
-   the run, so the choice is Andrew's (routed to `1.0.0_SA_CTO~DELL2`, who adjudicates this box's open calls). **No cell waits on it:**
-   every tool takes the advisor as an argument; only the issuer's real run after the drain needs the name.
+7. **The advisor -- RULED by measurement** (`1.0.0_SA_CTO~DELL2` msg 103, answering this seat's msg 101): from the S01 directory, the
+   49 Financial advisor with the FEWEST households among those with 10 OR MORE, whose EVERY account has Schwab silver rows at
+   2026-09-30; ties broken by the MOST asset classes held. The census (advisors scanned, households each) is printed beside the pick and
+   recorded here at the drain. CU-a-1 builds the pick as its `--pick` mode; the issuer runs it on real data after the drain.
+   **Hop-6 reader:** the chosen advisor (FWD-1 ACCEPT). Putting the reports in front of the advisor is egress to the firm and is
+   Andrew's act (CLAUDE.md Agent Autonomy; C-TEMPLATE); the CTO lists it for him once the drain's run is ready.
 8. **Fees (S04), PRD ruling 2:** round 1 reads the fee rows Schwab's transactions carry, labels them "Schwab transaction fee rows", and
    names every account where those rows are not the billed fee. The billed-fee source (Q-2) is not measured and not guessed.
 9. **Dependency graph:** `comp-blast irpt-export-render` -> TOOL-FAILED on dell2 (the box user cannot read `opal/mcp/graph-read-token`;
@@ -81,11 +84,16 @@ One JSON document per client (household), written by CU-a-2 + CU-a-3's join and 
 ```
 Every figure carries `status`; a figure that cannot be made says so in place (never dropped, never zero-filled).
 
+**The one code interface between cells** (fixed here so no cell waits on another): CU-a-3's module
+`data/assets/scripts/gold/irpt_custody/security_descriptions.py` exposes `describe(holdings: list[dict]) -> list[dict]`, returning each
+input dict with `class`, `sector`, `described` and `description_source` added (the contract's holding keys). CU-a-1 (`--pick` tie-break)
+and the issuer's join call it; their tests inject a stub with that signature and never import the real module.
+
 ## The cells
 
 | cell | what | serves | status | placement | risk | chain / slot |
 |---|---|---|---|---|---|---|
-| `CU-a-1` | hop 1: the advisor's client list -- given an advisor (rep code or name), resolve it against the registry and the IRPT_BCKEND directory, print accounts and households with their counts (account numbers masked to last 4); refuses an advisor with zero accounts | FWD-1 | NOT-EVALUATED | dell2 | LOCAL | A, `0.9.0_WK_IRPT_CUSTDY~1` |
+| `CU-a-1` | hop 1: the advisor's client list -- given an advisor, resolve it against the registry and the IRPT_BCKEND directory, print accounts and households with their counts (account numbers masked to last 4); refuses an advisor with zero accounts. `--pick` applies constraint 7's rule over every 49 Financial advisor and prints the census beside the pick | FWD-1 | NOT-EVALUATED | dell2 | LOCAL | A, `0.9.0_WK_IRPT_CUSTDY~1` |
 | `CU-a-2` | hops 2 + 3: the figures -- for an account list, prints the Schwab partition dates it read (refuses if 2026-09-30 is not covered), then computes per account and household the RULED_PERIODS returns from the `account_return_daily` gold, start/end market value, holdings, activity from the transaction rows, and fee rows labelled; writes the contract's JSON locally by default, `--apply` to the `address()` prefix | FWD-1 | NOT-EVALUATED | dell2 | WORLD | B, `0.9.0_WK_IRPT_CUSTDY~2` |
 | `CU-a-3` | hop 4: the securities -- given holdings, returns class and sector per holding from the one classification table (`etf_classification.py` reader) and `described: false` with `description_source: NONE` for any holding it cannot describe; prints described/undescribed counts | FWD-1, FWD-6 | NOT-EVALUATED | dell2 | LOCAL | C, `0.9.0_WK_IRPT_CUSTDY~3` |
 | `CU-a-4` | hop 5: the 49 Financial template and its render input -- the per-firm template (sections, period order, wording, branding slots) as data read from the firm's `address()` (fixture locally), and a builder that lays one contract document into the template; prints the render path's input contract as read from IRPT_BCKEND's source (`submit-export` and the render host), and renders one fixture locally through the template | FWD-1, FWD-3 | NOT-EVALUATED | dell2 | LOCAL | D, `0.9.0_WK_IRPT_CUSTDY~4` |
@@ -106,7 +114,7 @@ tests against its own fixture. CU-a-2's real-data read and every `--apply` are t
 
 ## The issuer's acts after the drain (L7 close; the COO's one real run of FWD-1)
 
-1. Andrew's named advisor in hand (constraint 7); if not, the real run waits on that one call and nothing else.
+1. `CU-a-1 --pick` on real data: the census and the pick (constraint 7), recorded in this file's constraint 7.
 2. `CU-a-1` for that advisor: the account and household list, counts printed.
 3. Open the ledger entry `org/critical_paths/change_management/` (a write into a NEW prefix whose key list the issuer controls: the
    never-widen pair does not apply -- CLAUDE.md section 5 non-application).
@@ -114,5 +122,5 @@ tests against its own fixture. CU-a-2's real-data read and every `--apply` are t
    contract document per household under the gold `address()` prefix; read back (count = households).
 5. `CU-a-4` for each document, through `irpt-export-render`: one report per client; each opened and looked at.
 6. Close the ledger entry with the measured keys and counts.
-7. Hop 6: the reports go to the firm's reader Andrew names; nothing reaches a client (C-TEMPLATE). The read, with each report it would
-   not send and the reason, is FWD-1's EXERCISED evidence and goes to the L8 packet.
+7. Hop 6: putting the reports in front of the chosen advisor is Andrew's act (constraint 7); nothing reaches a client (C-TEMPLATE). The
+   advisor's read, with each report it would not send and the reason, is FWD-1's EXERCISED evidence and goes to the L8 packet.

@@ -23,7 +23,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v24",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v24"
     },
@@ -32,7 +32,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
       "owner": "2.0.0_SA_COO~P",
       "at": "2026-10-01T13:12:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S218",
@@ -50,16 +50,16 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v24",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v24"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P",
-      "at": null
+      "at": "2026-10-05T05:55:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S217",
@@ -132,16 +132,16 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v24",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v24"
     },
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P",
-      "at": null
+      "at": "2026-10-05T14:25:00Z"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "IRPT_BCKEND-S215",
@@ -185,7 +185,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
     "owner": "2.0.0_SA_COO~P",
     "round": "v24",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P",
       "round": "v24"
     },
@@ -194,7 +194,7 @@ Author: 3.0.0_SA_CVO, 2026-09-29. Graduated at sweep 3's L9 (ADJUDICATION_v17.md
       "owner": "2.0.0_SA_COO~P",
       "at": null
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

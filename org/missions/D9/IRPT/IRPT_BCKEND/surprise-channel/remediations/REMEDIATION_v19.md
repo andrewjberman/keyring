@@ -154,15 +154,15 @@ Clock advanced in place at this compile (state fields only): S288 (REMEDIATION_v
     "owner": "2.0.0_SA_COO~Y",
     "round": "v47",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~Y",
       "round": "v47"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~Y",
-      "at": null
+      "at": "2026-10-05T00:20:00Z"
     }
   },
   {
