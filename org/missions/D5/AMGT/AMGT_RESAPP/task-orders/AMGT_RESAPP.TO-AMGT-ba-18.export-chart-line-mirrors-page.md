@@ -85,3 +85,4 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
+<status>complete -- drained @14a36147bd; proof VALID (worktree checker); the export prints no chart line on an undrafted thesis (the page shows none); AC1 4 of 4 states, AC2 2 of 2 arms; print suite 114 passed</status>
