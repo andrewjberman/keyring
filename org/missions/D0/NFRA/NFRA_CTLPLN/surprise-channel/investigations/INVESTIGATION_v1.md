@@ -2534,3 +2534,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "The listed fields are underdetermined by the seam text; the check tool is tolerant on read where it can be and states its write format. The receive tool reading evidence as a plain string, or the fetch tool writing OPAL_INTAKE_RECORDS as the batch folder, would be the mismatch to look for at the drain."
 }
 ```
+
+## NFRA_CTLPLN-W8-S7 -- TO-CT-d-1 AMENDMENT
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T20:27:30Z",
+  "one_line": "TO-CT-d-1 AMENDMENT: re-taking the saved census file with --live breaks check_fence_scoped_rows (C1-C3) and the --control arm, so the committed file was kept at its prior bytes",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell_fence_census.py --live (default --out) rewrote tests/dell_fence_census.json; the three fenced firm buckets went from 4/1/1 to 7/7/4 policy statements (each gained the three DenyScopedExemption statements; one also gained three DenyRestricted statements not from this order).",
+      "With that file in place: check_fence_scoped_rows.py read sim_ok=27/30 ok=False (controls C1, C2, C3 'plain admission' answered explicitDeny, expected allowed, because the saved policy already carried the scoped statements those controls add); check_dell_fence_join.py stayed ok=True; --control read dell_on_fenced=allowed ok=False.",
+      "Restored with git show HEAD:<path>; after the restore both sibling checks read ok=True and --control reads ok=True. The re-taken copy is kept in the worker scratch only."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The amendment says re-take the saved file --live so it holds the current policies, and that --control and the sibling checks still pass.",
+  "world_is": "The saved file is both the census's input and the sibling check's 'before' state; they cannot both hold after a re-take. Any later --live run with the default --out re-arms the break until the sibling's baseline (or the census's output path) is separated."
+}
+```
+
+## NFRA_CTLPLN-W8-S8 -- TO-CT-d-1
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-07T20:27:30Z",
+  "one_line": "TO-CT-d-1: the --control arm needs a Dell user the fence DENIES, and live no Dell user is denied on any fenced bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "--live before and after this change: dell2 reads ADMITTED/allowed on 24 of 24 buckets; dell1 reads ADMITTED on 21 and SCOPED on 3 (dell1_admitted=21/24 dell1_scoped=3 dell2_admitted=24/24 dell2_scoped=0).",
+      "run_control (hardcoded dell2) on a live-taken file: admitted principal allowed, dell2 allowed, line 'CONTROL admitted_principal=allowed dell_on_fenced=allowed ok=False'. On the committed (older) file, where dell2 was DENIED on the three fenced buckets, it reads ok=True.",
+      "Not changed: the expected value is kept, no scratch-copy fallback was added; the committed-file control still passes."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT4d1-AC2: on a fenced bucket a Dell user is denied by the fence while an admitted principal is allowed.",
+  "world_is": "Since the Dell fence join landed, the fence admits both Dell users (dell1 confined by scope); the control's negative arm has no live Dell subject. A future control should take its negative arm from a scratch copy with the user removed, or from a non-Dell unlisted principal."
+}
+```
