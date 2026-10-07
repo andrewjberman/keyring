@@ -339,3 +339,28 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "The order says the wrapper records AccessDenied on dell2. Measured: the real CLI run on dell2 for the advisor with the most granted accounts completed the ownership-map read (opal-data-bd) and the directory read, resolved the book, and was denied (explicit deny in a resource-based policy, s3:ListBucket on opal-data-49financial) at the coverage read, so the file carries error=AccessDenied and 422 uncovered accounts (308 NOT_IN_DIRECTORY, 114 PROJECTION_REFUSED), 0 households."
 }
 ```
+
+## IRPT_CUSTDY-S7 -- drain red: the none_source test fails after IRPT_BCKEND's seam fix changed ids.py
+
+```json
+{
+  "id": "IRPT_CUSTDY-S7",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~K2",
+  "surfaced_at": "2026-10-07T10:24:00Z",
+  "one_line": "Drain red at 1312dbea80: test_none_source_names_the_seam_line (round 2, CU-b-1) fails at HEAD because IRPT_BCKEND's seam fix @b43f82c155 made ids.py return the raw account for a 'None' mapping, so none_source.py's fixture no longer produces a refusal to trace.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "dell2 ~10:2xZ, HEAD 1312dbea80: python -m pytest -q data/assets/scripts/gold/irpt_custody/tests -> 1 failed, 64 passed, 1 xfailed; FAILED tests/test_advisor_projection_refused.py::test_none_source_names_the_seam_line at line 114 (assert last.endswith(':%d owner=FOO_BAR refused=1 distinct=4 via_none=1'))",
+      "IRPT_BCKEND drain @b43f82c155 (2.0.0_SA_COO~P2 msg 299): ids.py ~388 returns the raw account for an empty, 'None' or 'nan' mapping; the test passed at its own drain 1c925383a4, before that change"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 2 CU-b-1: none_source.py names where the 'None' value is made; its fixture test prints NONE-SOURCE file=... via_none=1.",
+  "world_is": "The 'None' source is fixed upstream, so the tracer's fixture premise no longer holds against HEAD's ids.py. The tool did its job (W5-S1 -> E-P8). Next round's repair batch: retire none_source.py or re-point its test at a fixture projection that still refuses; this round does not re-cut it."
+}
+```
