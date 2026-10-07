@@ -2451,3 +2451,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "NOT read: whether the Cottonwood gold chain invokes B_01b with --upload; which push carried the 04:16:37Z upload. The disarm clocks of S38 and S39 are the CVO's to write; this row is the owner's evidence. The CTO ruling's second item (11 of 11 gold scripts of push 1: signed or not) is a separate read by this seat, reported in its own row."
 }
 ```
+
+
+## MDPF_SECCLASS-S41 -- push 1's 11 gold scripts read: 7 moved no bytes, 3 are test files back at their pre-S29 bodies, 1 (Cottonwood B_01b) was the unsigned change and is rolled back
+
+```json
+{
+  "id": "MDPF_SECCLASS-S41",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M",
+  "surfaced_at": "2026-10-07T06:50Z",
+  "one_line": "11 of 11 gold scripts written by 0.0.0_AB_MSTR's push 1 (2026-10-07 04:16-04:17Z) read against their own version history: 7 runnable scripts carry the same ETag as the version live before the push, so no served code moved; 3 test files changed back to their 2026-10-02 bodies with no half; 1 runnable script changed with no half, Cottonwood B_01b, rolled back under row S40.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "denominator: list-object-versions over opal-data-cot code/gold/ and opal-data-bd code/gold/, versions with LastModified >= 2026-10-07T03:00Z: 11 non-shared keys (Cottonwood 7, Black Diamond 4), matching the count in 0.0.0_AB_MSTR's session log @3614b54eec, plus 6 lib/_shared copies",
+      "NO BYTES MOVED, 7 of 11 (ETag of the 04:16Z version equals the ETag of the version live before it, and equals md5 of repo HEAD): Cottonwood C_06 75135f33, D_03 6f48eaf3, D_04 c7744c5b, lib/mix_views 8c233b0d; Black Diamond C_06 0095fc95, D_03 84f9bf8e, lib/mix_views 2c8dbfd7",
+      "TEST FILES CHANGED, NO HALF, 3 of 11: Cottonwood tests/test_mix_publishes_every_class.py (cae0c271, equal to its 2026-10-02 version, replacing the S29 body 5d89d25e), Cottonwood tests/test_other_admission.py (4789dc03, equal to its 2026-10-02 version), Black Diamond tests/test_composition_canonical.py (ee622561, equal to its 2026-10-02 version, replacing 899d469a)",
+      "RUNNABLE SCRIPT CHANGED, NO HALF, 1 of 11: Cottonwood B_01b.classify_new_securities.py, 28b33a17 at 04:16:37Z over eedfd1d1; rolled back at 06:34:58Z to eedfd1d1 (row S40, ledger secclass-s39-cot-b01b-rollback-m-20261007)",
+      "outside the 11: the 6 lib/_shared etf_classification copies (3 per bucket) each carry the same ETag as the version before"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO ruling CTO_RULING_MDPF_SECCLASS_S39_ROLL_BACK_COT_B01B_20261007.md: for each of the 11, is the live S3 version a change with a signed half, or not; an unsigned one is a row with the roll-back default.",
+  "world_is": "After the B_01b rollback every runnable gold script in both buckets is at the body that was live before push 1. The three test files are at their pre-S29 bodies, which is where the S29 repo restore (a62580ef8f) put them; this seat did NOT roll them back, because the versions before them are the S29 tests that assert multi_asset. Cottonwood tests/test_other_admission.py in S3 (3525 bytes) still holds the B_01b test this seat removed from the repo in 2332d9a5df (2416 bytes); the next changed-script push uploads the repo body.",
+  "notes": "ETag is used as a body identity because every object here is a single-part SSE-S3 upload; B_01b alone was compared by cmp. NOT read: whether any gold run imports or executes the files under code/gold/tests/."
+}
+```
