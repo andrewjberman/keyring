@@ -4631,6 +4631,29 @@
     "spec_asserts": "Cell RIV-bk-1 interface 3: stored currency is 'the currency of its newest non-backfill G4 row'; check_points before and record after the lookup; the plan's points and the budget check count only un-held dates.",
     "world_is": "The cell does not say what a newest non-backfill row with no currency means, which ledger mode the lookup carries, whether max_points includes the lookups, or what an unreadable G4 object does. Built: skip to the next older row with a currency; mode market-range; max_points and the budget cover historical points plus lookups (the plan's points stay historical only); FAILED before any request.",
     "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. All four are one-line changes in _market_range / _stored_currencies if the issuer rules otherwise."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S62",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T13:35:06Z",
+    "one_line": "A drain merge that touches rivalfunds/enrichment_bloomberg.py or bbg_budget.py is a deploy of the daily vehicle's enrichment step on site Z, and rounds 15 and 20 merged both with no deploy ledger entry",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 431 and 477: the scheduled vehicle runs `python -m rivalfunds.collector_bloomberg --mode daily` and `python -m rivalfunds.enrichment_bloomberg --mode daily` from REPO = the site-Z working tree; integrations/bloomberg/READ_HERE.md section 3: 'SITE-Z SCHEDULED TASKS RUN THE WORKING TREE. An edit to these files IS a deploy the moment it touches disk'",
+        "git diff --stat 8bd783d51f HEAD over the vehicle-run rivalfunds files: enrichment_bloomberg.py +212/-3 and bbg_budget.py +31 (rounds 15 RIV-bf-1 and 20 RIV-bk-1); collector_bloomberg.py and security_names.py unchanged",
+        "Round 15's merge (8b9455602b, ~08:55Z) was on disk before today's 11:00Z vehicle run, whose log (opal_bbg_logs/bbg_tplus1_20261007_070002.log) reads the enrichment step OK: 581 market securities, 0 security errors, exit 94 landed. So that change is exercised on the daily path",
+        "Round 20's merge (42462181c1, ~13:0xZ): the hunks in enrichment_bloomberg.py are the module docstring, one new helper after _held_dates and _market_range (git diff of the merge, hunk headers read by the issuer). The daily, market and names modes are not in the diff. Its first vehicle run is 2026-10-08 11:00Z"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CLAUDE.md NEVER-2: a deploy opens a ledger entry in org/critical_paths/change_management/ at its start; an order whose cell can deploy names that surface",
+    "world_is": "Two worker cells changed a file the scheduled vehicle executes from the working tree, and the issuer's merges put them live without an entry. Both changes sit in the ad hoc market-range mode, which the vehicle never calls, and the first is proven harmless by a real run. The exposure is the class: the next cell that edits a daily-path function of these files deploys at its merge",
+    "notes": "disarm_owner (n/a, INERT): 2.0.0_SA_COO~RV. The issuer reads the 2026-10-08 11:00Z enrichment line as round 20's proof on the daily path. For the next cut touching collector_bloomberg.py, enrichment_bloomberg.py, bbg_budget.py or security_names.py: the order names change_management and its sentinel, and the merge is timed after a day's vehicle run."
   }
 ]
 ```
