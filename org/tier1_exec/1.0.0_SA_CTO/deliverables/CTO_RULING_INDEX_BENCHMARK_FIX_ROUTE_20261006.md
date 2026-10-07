@@ -158,3 +158,40 @@ VersionId `fxNfvcQ8...`, `data_as_of` 2026-10-05 (the second re-pull, sent by MS
 
 The guard went quiet without a code change, as designed. The served panel shows no wrong number and no N/A caused by a
 stale series.
+
+### ADDENDUM 6 (2026-10-07 ~06:2xZ) -- the two detection gaps are approved by Andrew; the build is routed
+
+**Andrew-direct ~05:55Z** at the `3.0.0_SA_CVO~Z` terminal (record
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/ANDREW_DIRECT_20261007_055xZ_BBG_CHECKER_SERIES_DATE_COMPARE_AND_TRIPWIRE_RECENCY_APPROVED.md`
+@1981fd223d): "Yeah we can close gap 1 with the checker compare you described, go with your recs on that matter and gap 2". The
+lift of the `integrations/bloomberg/` no-modify order covers THESE TWO EDITS ONLY.
+
+**Routed to `2.0.0_SA_COO~Z`** (the owner seated on this fix route by MSTR~Z msg 30084): ONE issuance of two cells, to the seat
+whose lane owns `integrations/bloomberg/pipeline/` (read with `owned-paths-validate`, as for the guard).
+
+1. **Gap 1, the checker** (`integrations/bloomberg/pipeline/freshness_check.py`).
+   - After its existing date check, it reads each model's `benchmark_last_date.index` and `.etf` from the served
+     `json/benchmarks/model_portfolio_benchmarks.json` and compares each to `data_as_of`.
+   - A series behind raises the checker's EXISTING summons, naming the model, the side and the two dates. No new alert,
+     schedule or channel is added.
+   - A served object with no `benchmark_last_date` reads as a DISTINCT not-measured result. It is never a pass.
+   - Proof on real objects, both versions of the served key from 2026-10-06/07:
+     - VersionId `Qbef40yV...` (16:16:52Z; index 09-29 on 5 models, etf 09-29 on 4): summons, naming 9 series.
+     - VersionId `fxNfvcQ8...` (01:28:18Z; all 10 current): no summons.
+     - A planted body with the field removed: the not-measured result.
+2. **Gap 2, the tripwire** (row OPAL_BBGTML-Z-S5; the pull-side check in `integrations/bloomberg/`).
+   - For every custom CIX series in the data PKL, the last non-null date equals the as-of date (`lib/trading_calendar`). A
+     series behind FAILS the tripwire, naming the series and its last date.
+   - Proof on real PKLs, the versions of `benchmarks/data_20261005_v1.pkl`:
+     - the 2026-10-06 12:29Z pull: FAIL, naming the 7 series at 2026-09-29;
+     - the 2026-10-07 01:26Z re-pull: PASS.
+   - Control: SPX stays PASS on both.
+
+**Conditions on landing (site-Z Scheduled Tasks run the WORKING TREE, so an edit is live when it touches disk):**
+- Both edits are built and proved in a linked worktree. They merge into the shared tree in ONE gap that is NOT between
+  10:30Z and 12:00Z (the 07:00 ET vehicle and the 07:30 ET check).
+- The merge is the deploy. It is recorded as one NEVER-2 entry, with the first scheduled run after it as its read.
+- No other file under `integrations/bloomberg/` is touched. The sign-in rows (Z-S1..Z-S4) and `publish_to_portal.py` stay
+  under the order.
+- The first live read: the 07:00 ET vehicle's tripwire result and the 07:30 ET checker result on the day after the merge,
+  both PASS on current data. A FAIL on current data means revert the merge the same hour.
