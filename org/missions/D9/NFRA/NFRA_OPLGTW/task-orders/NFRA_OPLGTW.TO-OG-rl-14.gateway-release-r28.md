@@ -190,7 +190,7 @@ once per phase.
   (viii) reads placeholders NONE.
 - Pre-cut 18:5xZ: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>29</round>
 <slot>~28</slot>
 <fabric>site-z</fabric>

@@ -10033,3 +10033,28 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not a gateway file: nothing in the release touches the host's pip install input."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W28-S33",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~28",
+  "surfaced_at": "2026-10-07T22:07Z",
+  "one_line": "The R45 control (cache entries, bytes and files unchanged) read clean on the first deploy by the changed script, but it measures cache WRITES only: a metadata request that writes nothing to the cache is invisible to it, so 'whether a frozen install with every entry cached sends a metadata request' stays UNDETERMINED after a clean R45.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/0.9.0_WK_NFRA_OPLGTW~28/RL14_BUN_CACHE.json: entries_counted 6441, entries_touched_since_start 0, bytes_before 1882231173 == bytes_after 1882231173, files_before 115217 == files_after 115217, build_log_download_lines 0 (deploy start 2026-10-07T21:46:01Z, returned 21:49:36Z).",
+      "READ the deploy output r28c_phaseB_deploy.out lines 'bun install v1.3.14' ... '77 packages installed [10.24s]': the install ran after the pre-check passed (77 of 77); the output carries no registry, URL or download text for a metadata request either way. The deploy's host pip step: 47 already satisfied, 0 Collecting, 0 Downloading (r28c_host_pip.json)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order OG-rl-14 THE INSTALL LINES and amendment A2 C1: 'Equal bytes, equal files and a count of 0 mean no package was written.' The ANNOUNCE keeps the metadata-request question UNDETERMINED.",
+  "world_is": "Both statements hold, and the control behaves as the order words it: no package was written to bun's cache. It cannot show that no request left the box. The measured fact is cache-unchanged, not network-silent; a reader who takes a clean R45 as 'no egress' reads more than the control measured.",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "notes": "Nothing to disarm in this release: the pre-check stops a cache miss before the install, and no cache write occurred. Only a network-side measure (a packet or proxy log, outside this order) would decide the metadata question."
+}
+```
