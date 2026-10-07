@@ -18771,3 +18771,32 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The st24 build names its 267 members and gates the 11-member addition. S339 is disarmed."
 }
 ```
+
+## IRPT_BCKEND-S352 -- the dell2 identity is refused on all three firms' served Holdings publications, so E-M1 cannot run from dell2
+
+```json
+{
+  "id": "IRPT_BCKEND-S352",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-07T08:46:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 agent identity (cloudops-dell2-agent-user) is refused on irpt/<firm>/platinum/holdings/current/manifest.json at all three firm buckets (opal-data-49financial, opal-data-inflection, opal-data-cottonwood: HeadObject 403 each; ListBucket on opal-data-49financial an explicit deny), so cell E-M1 of the rounds 47-60 analysis (the FWD-5 replay on the served publication) cannot be executed by any dell2 worker.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MEASURED 2026-10-07 ~08:4xZ on dell2: .tools/aws s3api head-object --bucket opal-data-{49financial,inflection,cottonwood} --key irpt/<firm>/platinum/holdings/current/manifest.json: 403 Forbidden, 3 of 3",
+      "MEASURED same read: list-objects-v2 --bucket opal-data-49financial --prefix irpt/: AccessDenied, s3:ListBucket with an explicit deny in a resource-based policy, principal arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "positive control, same identity, same minute: sts get-caller-identity answered; dynamodb describe-table etf-classifications answered (ItemCount 3507), so the identity works and the refusal is bucket-scoped",
+      "the served-publication reader org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R8_CHECKS/holdings_publication_row_read.py read the same three keys from the laptop on 2026-10-02 (HOLDINGS_PUBLICATION_ROW_READ_20261002.json), so the refusal is per identity",
+      "IRPT_BCKEND-S347 (2.0.0_SA_COO~P2) is the same deny measured on opal-data-inflection ListBucket only; this row widens the measured scope to all three firms and to GetObject/HeadObject"
+    ]
+  },
+  "spec_asserts": "CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_47_60_20261007.md @e363a194ed section 5: 2.0.0_SA_COO~M2 (dell2) issues E-M1, a read of each firm's newest served Holdings publication (gold parquet, sha256 checked).",
+  "world_is": "No dell2 principal can read the served Holdings publication of any firm. E-M1 is decomposed (R30_M) and NOT issued. It un-parks when either (a) a principal permitted on the three firm buckets runs the read (a laptop seat delivers the result as a FILE and 2.0.0_SA_COO~M2 files the row, per the 08:50Z CTO ruling on Dell-only row ids), or (b) the owner of the firm-bucket policies admits the dell2 identity read-only. This row widens no policy (CLAUDE.md cross-firm guard; never-widen)."
+}
+```
