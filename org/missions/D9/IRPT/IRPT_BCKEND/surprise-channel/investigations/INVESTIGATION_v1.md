@@ -19323,3 +19323,53 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "No dell2 principal can read them. Disarms when the laptop FILE is delivered and graded, or when the fence join admits the dell2 identity read-only. This row widens no policy."
 }
 ```
+
+## IRPT_BCKEND-W143-S1 -- TO-IB-pr-341 premise: C:/dev/ajb_workspace/portal/node_modules does not exist; node_modules junctioned from C:
+
+```json
+{
+  "id": "IRPT_BCKEND-W143-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~143",
+  "surfaced_at": "2026-10-07T10:34:45Z",
+  "one_line": "TO-IB-pr-341 premise: C:/dev/ajb_workspace/portal/node_modules does not exist; node_modules junctioned from C:/dev/wk-ycdgen-6-t5/portal/node_modules instead.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls C:/dev/ajb_workspace/portal/node_modules -> cannot access",
+      "ls C:/dev/wk-ycdgen-6-t5/portal/node_modules/react -> present; bun test then ran 10 pass 0 fail"
+    ]
+  },
+  "spec_asserts": "The order says to junction node_modules from C:/dev/ajb_workspace/portal/node_modules.",
+  "world_is": "That path is absent (ls: cannot access). A sibling worktree C:/dev/wk-ycdgen-6-t5/portal/node_modules exists with react present; the worker junctioned it into C:/dev/wk-irpt-bckend-143/portal/node_modules (gitignored, uncommitted). No install or network call was made.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_BCKEND-W143-S2 -- TO-IB-pr-341: the P3 over-age reader test compared full option rows to plain rows, which now differ in the par
+
+```json
+{
+  "id": "IRPT_BCKEND-W143-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~143",
+  "surfaced_at": "2026-10-07T10:34:45Z",
+  "one_line": "TO-IB-pr-341: the P3 over-age reader test compared full option rows to plain rows, which now differ in the parsed availability; the test compares rows without availability.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bun test src/pages/InvestorReporting/__tests__/ir-62-overage/ before the body edit: 9 pass 1 fail (P3 over-age toEqual diff on availability); after: 10 pass 0 fail",
+      "portal worktree commit 5c726cf439"
+    ]
+  },
+  "spec_asserts": "The order says turn the four test.failing reader tests into plain test (readers not edited) and nothing about the test bodies.",
+  "world_is": "With the public status the over-age answer parses and each P3 row carries availability state STALE / DIRECTORY_OVER_AGE (business date 2026-10-02) where the status-less plain answer carries UNCERTAIN, so toEqual(plain.rows) failed after the marker was removed. The worker edited only that test body (search-readers.test.ts, inside the grant) to compare the same rows with the availability key removed recursively; no reader, envelope.ts or fixture was hand-edited. Portal commit 5c726cf439.",
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
