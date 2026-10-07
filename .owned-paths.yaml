@@ -687,6 +687,12 @@ lanes:
       - 2.0.0_SA_COO~M
     description: "CTO grantor, IRPT RULINGS batch 135, 2026-10-02 (msg 104148): the POD4 members preserved verbatim plus exact COO~M, for four exact files of the Black Diamond forward fix (batch 117 item 4 (i), batch 99 item 4): C_06, D_03, D_04 and lib/mix_views.py -- the mix carries unclassified, commodities and structured as classes. Code only: no deploy grant; the served move rides its own packet with both halves. Struck when MDPF_SECCLASS closes."
 
+  ADVI_COTBKF_C:
+    permitted_agents:
+      - 1.0.0_SA_CTO
+      - 2.0.0_SA_COO~C
+    description: "CTO grantor, 2026-10-07 (2.0.0_SA_COO~C msg 105946): ADVI_COTBKF C-RESTRICTED, the restricted prefix in opal-data-cottonwood for the Commonwealth CRM zip. Two exact files; PLAN and SIMULATE only -- the apply stays with the file's owner (CLOUD_OPS_OR_ETL) under a never-widen pair."
+
   NFRA_CTLPLN_FAST_C:
     permitted_agents:
       - 1.0.0_SA_CTO
@@ -2787,6 +2793,14 @@ paths:
   "infra/aws/terraform/modules/opal_name/tests/fifo.tftest.hcl":
     lane: NFRA_CTLPLN_FAST_C
     note: "NFRA_CTLPLN round 2 (CT-b-1 / CT-b-3), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105937; exact NEW file: the fifo test."
+
+  "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf":
+    lane: ADVI_COTBKF_C
+    note: "ADVI_COTBKF C-RESTRICTED (round 4), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105946; exact file: statements for the cottonwood key only (deny reads of the restricted prefix except Andrew and break-glass; deny writes except the landing role); plan and simulate only, the owner applies."
+
+  "infra/aws/terraform/shared-infra/tests/check_restricted_prefix.py":
+    lane: ADVI_COTBKF_C
+    note: "ADVI_COTBKF C-RESTRICTED (round 4), CTO grantor 2026-10-07 on 2.0.0_SA_COO~C msg 105946; exact NEW test file."
 
   "infra/aws/**":
     lane: CLOUD_OPS_OR_ETL
