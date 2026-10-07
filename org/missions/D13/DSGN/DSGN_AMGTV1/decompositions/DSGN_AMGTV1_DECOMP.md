@@ -2106,3 +2106,21 @@ designed-states pair is two FULL sweep runs: a page whose error-state marker is 
 **Chains:** 2, no shared file. **Fan-out:** 1 of 1 worker chain (`fanout: 1`); the second cell is the issuer's. **Risk:** LOCAL.
 **Not this round:** the country's capitals and the Filings ledger row (the producer's, routed to `2.0.0_SA_COO~Z` by msg 30869); the
 What-changed row labelled in the vendor's words (not read; named in the close); row Z-S21.
+
+## v50 -- ROUND 50 (issuer, 2026-10-07 ~13:0xZ) -- ONE CELL: THE RENDER CHECK REQUIRES THREE DESIGNED STATES, NOT FOUR
+
+**Rectangle:** CTO msg 30918 ("the four-against-three count in the instrument is one script-only cell for the next issuance, whatever
+the grade"), on the finding in `round49/ROUND49_CLOSE.md` @5e36b6ca82. PRD v0.17 FWD-19 names three designed states and FWD-20 reads
+"the three states of FWD-19 present"; `portal/scripts/ui-contract-check.mjs` still requires a no-permission state in its run cell and
+the standalone no-permission capture in `gradeFwd19`. **Base:** portal b3440392 (CTO-APPROVED for the one DEV push @add38b2768).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzb-1` | FWD-19, FWD-20 (the check grades the amended text) | `portal/scripts/ui-contract-check.mjs` | ~112 (worker-light) |
+
+**Check:** `round50/checks/r50/r50.cjs` lifts `gradeFwd19` and the run-cell block out of the script's text and evaluates them with
+planted inputs: 2 of 4 at base b3440392 (both cells FAIL on a missing no-permission), 4 of 4 on a scratch reference edit, `r47i.cjs`
+still 4 of 4. The order's third criterion is the real run: the designed-states pair of `round49/checks/plants49/plants49.cjs` on the
+edited instrument (an untouched full sweep still PASSES; the stripped-error page still FAILS).
+**Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. The candidate becomes b3440392 + 1 commit touching no product file.
+**Not this round:** renaming the `fourStates` key (other files read it); removing the standalone capture itself.
