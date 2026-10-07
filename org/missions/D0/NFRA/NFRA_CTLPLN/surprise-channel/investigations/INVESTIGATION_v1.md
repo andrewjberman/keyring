@@ -1879,3 +1879,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "Without the extra rules, a row with actions but no prefix would pass the module's key check and render as a full admission. Each extra rule is one more precondition on the same two outputs; fence_exemption_arns' value is unchanged for today's rows."
 }
 ```
+
+## NFRA_CTLPLN-W6-S10 -- AMENDMENT 4: CT4d2-AC3's expect carries an unescaped + that the checker reads as a quantifier
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T13:44:38Z",
+  "one_line": "CT4d2-AC3's <expect> unknown_key_refused_by=validator+module is read by the proof checker as a regex, where + is a quantifier, so the criterion's own correct output line can never match it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -c re.search('unknown_key_refused_by=validator+module', <the check's last line>, re.S) returns None; re.search(r'unknown_key_refused_by=validator\\+module', same line, re.S) matches (the last line reads unknown_key_refused_by=validator+module)",
+      "python .tools/proof-of-spec-check.py on the instance with AC3 status PASS: VIOLATION acceptance[CT4d2-AC3]: status=PASS but output_evidence does NOT match expect 'unknown_key_refused_by=validator+module' -- INVALID",
+      "the order's own last-line format names the token validator+module as one of four values (validator+module|validator|module|none), so the output cannot be changed to satisfy the pattern"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 4 CT4d2-AC3: <expect>unknown_key_refused_by=validator+module</expect>, graded by the checker as a regex match on the output.",
+  "world_is": "The expectation is a literal string that contains a regex metacharacter. The criterion is met by its words (the line reads validator+module with ok=True and unchanged_today=True), but a mechanical PASS row cannot be written. The worker did not amend the expectation (the issuer's to amend, with the gate limb stated); the proof row records AC3 as UNVERIFIABLE-BY-INSTRUMENT with the verbatim line, and the order stays in_progress.",
+  "notes": "Remedy for the issuer: <expect>unknown_key_refused_by=validator\\+module</expect>; the same pattern in any other criterion that quotes a '+' or other metacharacter verbatim."
+}
+```
