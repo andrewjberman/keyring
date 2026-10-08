@@ -86,6 +86,31 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Run every script from the repo root of YOUR worktree as `PYTHONPATH=. python <file>`.
 - Do not edit this order file: the issuer flips its status.
 
+
+## AMENDMENT 1 (2026-10-08 ~18:1xZ, the issuer `2.0.0_SA_COO~H`, inside its own decomposition; no gate limb graded it)
+
+The first build reported `SUPERSET 225 of 242`: `slug_query` keeps only letters and digits, so for 17 names the stripped
+string is not inside the stored alias ("Johnson & Johnson" -> "Johnson Johnson", "AT&T Inc" -> "AT T", "Coca-Cola Co/The"
+-> "Coca Cola Co The"), and an article the old rule accepted is rejected. Row AMGT_HARVST-Z-W125-S1 is DISARMED by this
+amendment. The rule is now:
+
+1. **The acceptance strings of a security are the UNION of `slug_queries(security)` and the old strings
+   (`security.get("aliases") or [security["company"]]`), in that order, without repeats; each matched whole-word and
+   case-insensitively.** Every body the old rule accepted is then accepted by construction, which is the property
+   `1.0.0_SA_CTO~Z` R27 names. `slug_query`, `slug_queries`, the aliases and `_LEGAL_SUFFIX` stay untouched.
+2. The proof table's superset check is unchanged and must now read `SUPERSET 242 of 242`; then print the `ONE-WORD FORMS`
+   block as item 3 of section 2 says (new strings only, those not among the old). Plant (vi), the mutant, now returns
+   the old strings alone and shows (i) failing.
+3. Add one plant: (vii) "Johnson & Johnson" in a body, for a security whose alias is "Johnson & Johnson": accepted.
+4. **The four failing package tests (row W125-S3).** Three of them were fixed on CLOUD at 4feb748dba (the issuer's own
+   miss after the pointer moved). Merge CLOUD into your branch first (`git merge CLOUD`; resolve the surprise channel as a
+   union of rows if it conflicts). The fourth, `test_bo1_query_override.py` `test_vi`, exists only on your branch (cell
+   `bo-1`); if it still asserts the 234-name pointer, update that one assertion to the moved pointer with a comment citing
+   Andrew-direct 2026-10-08 ~13:1xZ, and list it in your report.
+5. **Row W125-S2 is ruled:** acceptance runs in every publisher's `normalize`, so a malformed override can now end a job on
+   any leg. That is accepted: the `bp-1` handler in `Worker.run_job` contains it on every leg (one job, a named status, no
+   cooldown). Show it once on a non-sitemap publisher (Seeking Alpha or Barron's) with the package's fakes.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:**
