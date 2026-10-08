@@ -111,8 +111,10 @@ retire also becomes unnecessary under B, because the gates read a private index,
   drains can run often (for example, after each push) instead of rarely. Cadence is the project's to set.
 - **3. "Is git the cause" per box:** F2's `LOCK-WAIT` and `LOCK-RECLAIM` rows, plus one timing row per commit (lock
   held, hooks), answer it from a file read on demand. That is a log, not a monitor.
-- **4. Conflict-free shared files:** the union rule (F4) is the stopgap. The design answer is one file per writer (per
-  box or per seat) that readers join, so two boxes never append to the same file.
+- **4. Conflict-free shared files:** there is no stopgap. The union rule (F4) was rolled back at its first use, because
+  the surprise channels hold rows inside one JSON list per file (LD-0622). The design answer is one file per writer
+  (per box or per seat) that readers join, or a merge driver that understands rows, so two boxes never edit the same
+  list.
 - **5. Branch model:** at the measured rates, one trunk is not the bottleneck. The commit lock is per clone and busy
   about 22% of the peak hour; the merge window is the stall, and per-box or per-project branches add merges. Your
   decision record should still carry the costs. Per-box branches: fewer pushes racing, but slower cross-box visibility

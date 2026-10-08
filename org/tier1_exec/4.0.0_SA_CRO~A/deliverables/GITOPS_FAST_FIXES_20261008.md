@@ -50,7 +50,9 @@ about 4 new processes a second per waiter. The one timed one-file docs commit to
 - Read the holder with the builtin `read -r holder_pid < "$LOCK_DIR/pid"`.
 - Reclaim only when (a) `kill -0` says the holder is dead, (b) no pid file has appeared for 10 consecutive polls, or
   (c) this waiter has seen the SAME live holder for `SAFE_COMMIT_LOCK_STALE_SEC` (default 600), counted by the waiter's
-  own loop counter and not by mtime.
+  own loop counter and not by mtime. **[SUPERSEDED: as listed, (c) could never fire, because a waiter gives up at 300 s
+  before it has watched a holder for 600 s (found by `0.0.0_AB_MSTR`, LD-0622). `1.0.0_SA_CTO` ruled the default to
+  240 s under the 300 s give-up (msg 106997).]**
 - Append a `LOCK-RECLAIM <holder> <reason>` row to the audit log on every reclaim. Append `LOCK-WAIT <seconds>` on any
   acquisition that waited. This gives the brief's O5 its first measured git-wait number from today.
 - Wait with `read -t 1` on a held-open FIFO (the no-spawn pattern of `org/mcp/inbox-watch.sh`, `_wait5`) in place of
@@ -84,6 +86,13 @@ reducing. The test daemon this seat started was stopped at once (`git fsmonitor-
 `4.0.0_SA_CRO~B`'s.
 
 ## F4 -- A union merge driver for the append-only shared files
+
+**ROLLED BACK (2026-10-08 ~16:4xZ, `0.0.0_AB_MSTR` msg 106995, LD-0622, commit `a769a69d2a`; rollback accepted by
+`1.0.0_SA_CTO` msg 106997).** At its first real use, union auto-merged both `INVESTIGATION_v1.md` files and the row gate
+refused the merged index: the rows sit inside ONE JSON list per file, and union inserted them at different points,
+leaving an unparseable block. A conflict would have returned the drain to `safe-merge --continue`; the union left no
+such path. **This list's error:** it called these files line-appended without reading their format. A row-aware driver,
+or one file per writer, is project work under brief O6. The text below is kept as written.
 
 **Why [READ].** CLAUDE.md 14b: two branches appending to one surprise channel "land at the same offset and guarantee a
 conflict". `/integrate` already tells the integrator to resolve an append collision as a UNION by hand, as was done in
