@@ -30,6 +30,27 @@ text is in this file, in git, or in any message of this seat. FWD-26 is NOT serv
 - The loader on this box, with the examples switch set: `voice.examples("teams_reply")` returns 12; the prompt block is 4023
   characters (bound 6000).
 
+## SET 2, "Teams only" -- stored over the first cut at ~10:5xZ (ruling `1.0.0_SA_CTO` msg 106883)
+
+- Recorder (`data/transcripts/scripts/teams_chat/voice_record.py`, cell CT-i-7, merged at CLOUD 177a4eee8e), on the real
+  archive, counts only: `VOICE-RECORD ok=True keys=1779 read=1218 by_andrew=524 recorded=255 teams_reply=174 teams_post=81
+  chats=22 days=32` (60 days read). Recorded to `C:/opal-voice/recorded_set2/`, outside every git tree.
+- Spread harvest, 12 per kind: `VOICE-HARVEST kind=teams_reply read=174 by_andrew=174 kept=12 written=True days=12 chats=12`
+  (sent 2026-08-21 to 2026-10-07, 1433 characters); `VOICE-HARVEST kind=teams_post read=81 by_andrew=81 kept=12
+  written=True days=12 chats=12` (2026-09-15 to 2026-10-08, 3219 characters). `mail_reply`, `job_completion`, `end_of_day`: 0.
+- Carrying a firm's name: 0 of 24, against 8 firm-name terms from the registry; a person's name is not tested.
+- The object's `cut` field says: "set 2, Teams only"; 12 replies and 12 posts spread over days and chats; reply or post is
+  decided by order in the archive, not by meaning; no mail; no drafter reads `teams_post` yet; FWD-26 served for the Teams
+  half only, NOT SERVED for mail.
+- Same key. New VersionId `88xA75YeJK1Zzctyybt9mMEP.LqNofwk`, 7535 bytes, SHA-256
+  `5d7f705660f02eb3e0937adee1ba71af2e5fdb9d79269f5de1411b72e314f8a6` (the pre-label file the ruling quoted was 6949 bytes,
+  sha256 bd111bc0...). Read back byte-equal, `aws:kms`.
+- The first cut is still retrievable: VersionId `LzwFFAOP45YGTKpBLc3N0b4sF5Mlcvw7` read after the put, 3386 bytes, the same
+  SHA-256 as recorded above.
+- The loader on this box: 12 replies, 12 posts; the reply prompt block is 3558 characters (bound 6000).
+- The deployed function carries `voice.py` since 08:15Z and reads this key at its next reply draft. No draft has been made
+  since: the handler has had no invocation.
+
 ## What this is not
 
 - The deployed function does not read it yet: the package with `voice.py` is not deployed (order NFRA_CTLPLN.TO-APPLY-11).
