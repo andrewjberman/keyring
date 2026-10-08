@@ -2,7 +2,7 @@
   "project_code": "NFRA_TRNSPT",
   "macro_code": "NFRA",
   "directive": "D9",
-  "fabric": "laptop",
+  "fabric": "dell2",
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
