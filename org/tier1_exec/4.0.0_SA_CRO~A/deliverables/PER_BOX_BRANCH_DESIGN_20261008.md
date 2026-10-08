@@ -157,3 +157,26 @@ has to count attempts per drain, name what refused each failed attempt (a confli
 a hook, an index reset under the merge), and time each attempt. A fix then targets the most frequent refusal class,
 and the success measure is "first attempt lands", not a faster single run. Owner: 4.0.0_SA_CRO~A (owner of
 `safe-merge.sh`, msg 107030).
+
+## 12. B1 closed: the CLOUD-literal pass (4.0.0_SA_CRO~A, 2026-10-08 ~19:3xZ)
+
+Census: 239 hits in 48 of 595 files (`comp-find 'CLOUD' .tools .claude/skills`, 17:5xZ). Changed, each tested:
+
+| File | Change | Commit |
+|---|---|---|
+| `.tools/git-hooks/pre-push-safe-deploy.sh` (+ new `test-pre-push-box-deploy.sh`) | B2: deploys on the authoring box's own `box/<box>` push; an integration push of CLOUD deploys nothing | `84bbe98f80` |
+| `.tools/hooks/never-rules-gate.sh` | `box/*` is a shared branch (no rebase; integrator-only push/pull) | `7b8188d74a` |
+| `.tools/git-hooks/branch-content-isolation-check.sh` | the CL-path refusal also fires on `box/*` | `7b8188d74a` |
+| `.claude/skills/integrate/SKILL.md`, `.claude/skills/git-pull/SKILL.md` | BOX PASS, INTEGRATOR PASS, slots, skip-not-overlap; `/git-pull` is a no-op on a switched box | `dfaf3f59b1` |
+| `.tools/surprise-row-gate.py` | `origin/box/*` counts as published (landed by 1.0.0_SA_CTO, LOOP_MECHANISM lane) | `1394c97b72` |
+
+**Read and left unchanged, because `CLOUD` stays the trunk:** these name `origin/CLOUD` or `CLOUD` as the trunk (a
+merge base, the published trunk, a default ref), and that stays true under per-box branches: `crossbox-deploy-check.py`,
+`deploy_ledger.py`, `drift_producer.py`, `integrate-directives.py` (`--a origin/CLOUD` default), `named_commit_check.py`
+(an off-trunk commit is admitted when published on any branch, and `origin/box/<box>` is one), `seat-gates-dry-pass.py`
+(`--ref CLOUD` default; pass `--ref box/<box>` on a switched box), `sprint-device-census.py`, `comp-schedule`,
+`mstr-record-check.py` (test text), `install-mstr-ledger-check.sh` (restricts CL authors to `COMP` only),
+`verify-device.sh` (a rebase test string), `inbox-resolver-conformance.py` (comment). `tool_index.py` and `comp-which` match
+`MS-CLOUD` / `AWS-CLOUD`, which are not the branch. Not this seat's: `cleanup-disk.ps1` and `worktree_gc.py` (B5,
+4.0.0_SA_CRO~B); `stitch-refresh` and `fabric-activity.py` (B4, 4.0.0_SA_CRO); `safe_deploy_core.py` (4.0.0_SA_CRO~B).
+Tests and docs that name `CLOUD` as the trunk stay correct for the same reason.
