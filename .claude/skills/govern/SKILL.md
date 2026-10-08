@@ -32,9 +32,15 @@ a ruling, for a reviewer to judge.
 
 ## When to invoke
 
-- **Andrew discretion only.** `/govern` is NOT auto-armed at session start (Andrew
-  direct 2026-06-03, superseding the LD-0124 startup-arm clause). MSTR does not load
-  a `/govern` loop at load; whether to run it — and at what cadence — is Andrew's call.
+- **Armed at instantiation, every 30 minutes.** Every fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`) arms
+  `/govern 30m` at load, after `/watcher`, `/agentbus` and `/integrate`. Andrew-direct 2026-10-08 ~17:4xZ, VERBATIM: "MSTR
+  agents should have /govern on a 30m loop at instantiation." (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`; it
+  supersedes the 2026-06-03 "not auto-armed" word). A different cadence is still Andrew's call.
+- **Each box fires on its own minutes of the hour** (Andrew-direct ~18:0xZ, VERBATIM in section 9 of
+  `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `:00` and `:30`, site Z `:06` and
+  `:36`, dell1 `:12` and `:42`, dell2 `:18` and `:48`. Arm the cron on those minutes (e.g. dell1 `12,42 * * * *`), never a
+  bare interval. A cycle still running when its next slot arrives skips that slot.
 - When Andrew invokes `/govern`, it initiates the loop at the 1-hour default (or the
   interval Andrew gives).
 - Never invoked by any agent other than a fabric manager (`0.0.0_AB_MSTR`, with or without a `~<lane>`).
@@ -102,6 +108,16 @@ cleanly." Every cycle, before Step 3b:
    **UNKNOWN** (including "placement unread for <n> order(s)") is never respawned: an unread placement licenses no respawn.
 4. **QUIET, MOVING, ELSEWHERE, UNKNOWN**: no act here. List the ELSEWHERE and UNKNOWN seats in the report.
 5. **RECORD** each act (the serial, the class, the skill run, its result) in the cycle report's SEATS line and the heartbeat.
+6. **GARBAGE COLLECTION** (Andrew-direct 2026-10-08 ~16:3xZ, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`).
+   /govern is the box's one UNATTENDED reaper (Andrew to 1.0.0_SA_CTO ~17:4xZ, "1.) A is better for now"; no scheduled task).
+   Every cycle, this box: (a) processes -- `powershell -NoProfile -File .tools/kill-maint.ps1 -Unattended`. It prints the
+   Claude/Codex session map (never targets), catches REPLACED watcher copies itself (no separate /watcher census), aborts on a
+   bad map, stops each target's whole tree and writes KILL-MAINT-RUN to `org/mcp/agent-spawn-audit.log`. (b) worktrees --
+   `python .tools/worktree_gc.py --go`: removes only CLEAN worktrees (merged, nothing uncommitted, idle >= 24 h; never
+   `--force`), never touches HELD unlanded work or a `drain-*` tree; for every ESCALATE row (held >= 48 h, owner not live)
+   bring the owner online to assess it (Andrew ~17:3xZ, "The agent has to be online to assess"; record
+   `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_173xZ_GC_FOUR_CALLS_ANSWERED_WORKTREE_OWNER_MUST_ASSESS.md`).
+   Record stopped count, classes, MB freed, worktrees removed and ESCALATE rows on the GC line.
 
 This step acts on this box only. Another box's seat is that box's manager's; the register `org/devices/DEVICES.json` is the list
 of boxes and Step 3b is how the managers keep in touch.
@@ -148,6 +164,7 @@ Print fixed format (CROSS-FABRIC line added per the 2026-08-19 amendment):
   PRE-1-TURN:    {N} too fresh
   RESPONDED:     {N} closed
   SEATS:         {n} seats | moving {a} quiet {b} hung {c} dead {e} unknown {u} | acts: {serial: skill -> result | none}
+  GC:            {n} stopped ({classes}) | {MB} MB freed | worktrees removed {w} | escalate {e} (owners) | 0
   CROSS-FABRIC:  status exchanged | on-track every box / finding: ... | merge: ran (heads) / assess-only / not-quiet
   LOOP:          cron-driven (next cycle in {interval})
 ```

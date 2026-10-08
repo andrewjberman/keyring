@@ -177,7 +177,65 @@ _lock_take() {
   return 1
 }
 _lock_drop() { [ "$_LOCK_MINE" -eq 1 ] && [ "$_KEEP_LOCK" -eq 0 ] && rm -rf "$_LOCK" 2>/dev/null; return 0; }
-trap _lock_drop EXIT
+
+# KILLED MID-MERGE (GC P3 residue item 1, 4.0.0_SA_CRO~B 107108; owner 4.0.0_SA_CRO~A per 1.0.0_SA_CTO 107030). The ONE
+# exception to "a merge already open here is never aborted": the open merge was opened by safe-merge (its lock dir
+# exists), the lock's holder process is gone, and no conflict was handed back (no $STATE). That is a run killed during
+# its grade or commit, not a conflict a seat is resolving, and it blocked this worktree for good. A merge opened any
+# other way has no lock dir and is still refused untouched. Returns 0 only when it aborted that merge.
+_sm_recover_killed() {
+  local _hp=""
+  [ -n "$_LOCK" ] && [ -d "$_LOCK" ] || return 1
+  [ ! -f "$STATE" ] || return 1
+  _hp="$(cat "$_LOCK/pid" 2>/dev/null || echo '')"
+  if [ -n "$_hp" ] && kill -0 "$_hp" 2>/dev/null; then return 1; fi
+  echo "safe-merge: WARN -- the merge open here was opened by a safe-merge run that is gone ($(_lock_who)) and handed back no conflict: a run killed mid-merge. Aborting that merge." >&2
+  if ! git merge --abort 2>/dev/null; then
+    echo "safe-merge: ERROR -- git merge --abort failed; the killed merge is still open. Inspect by hand." >&2
+    return 1
+  fi
+  rm -f "$(git rev-parse --git-path index).safe-merge.${_hp:-x}" 2>/dev/null || true
+  _sm_row "MERGE-KILLED-ABORTED" "holder=${_hp:-?} what=$(cat "$_LOCK/what" 2>/dev/null || echo '?')"
+  rm -rf "$_LOCK" 2>/dev/null || true
+  return 0
+}
+
+# ---------------------------------------------------------------- ONE AUDIT ROW PER ATTEMPT
+# Andrew-direct 2026-10-08 ~18:3xZ: long merges are long "because they are failing multiple times". Until now every
+# refusal here went to stderr only, so how many attempts a drain took, and what refused each, was in no record.
+# Each run now appends one MERGE-ATTEMPT row: rc, seconds, the arguments, and the first refusal/warning line.
+# Owner 4.0.0_SA_CRO~A (1.0.0_SA_CTO msg 107030). rc: 0 merged, 1 refused, 2 usage, 4 conflict handed back, 5 tree drop.
+_SM_T0="${EPOCHREALTIME:-}"
+_SM_ARGS="$*"
+_SM_AUDIT="$(git rev-parse --path-format=absolute --git-common-dir 2>/dev/null)/../org/git-author-override-audit.log"
+_SM_ERR="$(git rev-parse --path-format=absolute --git-path "safe-merge.err.$$" 2>/dev/null || echo '')"
+_sm_row() { echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) $1  ${OPAL_AGENT_SERIAL:-unknown}  $2" >> "$_SM_AUDIT" 2>/dev/null || true; }
+_sm_secs() {
+  local a="${_SM_T0/[.,]/}" b="${EPOCHREALTIME:-}"; b="${b/[.,]/}"
+  [ -n "$a" ] && [ -n "$b" ] || { echo "?"; return 0; }
+  local d=$(( (10#$b - 10#$a) / 10000 )); printf '%d.%02d' $((d / 100)) $((d % 100))
+}
+_sm_on_exit() {
+  local rc=$? cls=""
+  _lock_drop
+  # GC P3 residue item 5: this run's private index never outlives it (a kill -9 still can; the sweep below takes those).
+  [ -n "${_PRIV_IDX:-}" ] && rm -f "$_PRIV_IDX" 2>/dev/null
+  if [ -n "$_SM_ERR" ] && [ -f "$_SM_ERR" ]; then
+    cls="$(grep -m1 -oE '(REFUSED|FAILED|BLOCKED|ERROR|CONFLICT|WARN)[^.]{0,90}' "$_SM_ERR" 2>/dev/null | tr -s ' ' || true)"
+    rm -f "$_SM_ERR" 2>/dev/null
+  fi
+  _sm_row "MERGE-ATTEMPT" "rc=$rc  secs=$(_sm_secs)  graded=${_SM_GRADED:-n/a}  args=(${_SM_ARGS})  first=(${cls:-none})"
+  return 0
+}
+trap _sm_on_exit EXIT
+if [ -n "$_SM_ERR" ]; then exec 2> >(tee "$_SM_ERR" >&2); fi
+# Sweep private indexes left by runs that were killed (their pid is gone).
+for _old in "$(git rev-parse --git-path index 2>/dev/null)".safe-merge.*; do
+  [ -f "$_old" ] || continue
+  _op="${_old##*.safe-merge.}"
+  case "$_op" in (*[!0-9]*|"") continue ;; esac
+  if [ "$_op" != "$$" ] && ! kill -0 "$_op" 2>/dev/null; then rm -f "$_old" 2>/dev/null && _sm_row "MERGE-PRIVIDX-SWEPT" "pid=$_op"; fi
+done
 
 # ---------------------------------------------------------------- post-commit TREE check
 # ⛔ 1.0.0_SA_CTO~Z 2026-09-29 (DSGN_AMGTV1 round-2 DRAIN_END_READ s.3 @e724da66a2): under shared-tree
@@ -396,7 +454,7 @@ fi
 # touch nothing -- never abort it. Then take the lock, before the clean-index check, so a second run cannot pass that
 # check in the seconds before this run's `git merge` stages.
 if [ "$_CONTINUING" -eq 0 ]; then
-  if _merge_open; then
+  if _merge_open && ! _sm_recover_killed; then
     echo "safe-merge: REFUSED -- A MERGE IS ALREADY OPEN in this worktree (MERGE_HEAD $(git rev-parse --short -q --verify MERGE_HEAD 2>/dev/null || echo '?')); this run did not open it." >&2
     [ -d "$_LOCK" ] && echo "            Holder: $(_lock_who)." >&2
     echo "            Nothing was touched. Wait for that merge to commit, then re-run; or drain in a linked worktree." >&2
@@ -530,7 +588,36 @@ if [ "${#STAGED_ARR[@]}" -eq 0 ]; then
   git merge --abort 2>/dev/null || true
   exit 1
 fi
-echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
+# GRADE ONLY WHAT THE MERGE INTRODUCES (Andrew-direct 2026-10-08 ~19:1xZ, "Sure, yes", verbatim in
+# org/tier1_exec/4.0.0_SA_CRO~A/deliverables/MERGE_ROOT_CAUSE_B3_20261008.md section 7). Each side was graded when it was
+# committed; re-grading everything a parent carries is what made big merges slow and made them fail (R1-R3 there).
+# GRADE_ARR = staged paths whose merged content differs from MERGE_HEAD too (differs from BOTH parents: a conflict
+# resolution, or a file git auto-merged into content neither parent had) PLUS staged paths BOTH sides changed since the
+# merge base (the guard: two sides adding rows to one channel file is the collision a drain exists to catch).
+# An empty GRADE_ARR is a stated skip, never a silent pass. SAFE_MERGE_FULL_GRADE=1 grades every staged path as before.
+GRADE_ARR=()
+if [ "${SAFE_MERGE_FULL_GRADE:-0}" = "1" ]; then
+  GRADE_ARR=("${STAGED_ARR[@]}")
+  _grade_why="SAFE_MERGE_FULL_GRADE=1: every staged path"
+else
+  _mb="$(git merge-base HEAD MERGE_HEAD 2>/dev/null || echo '')"
+  declare -A _GR=()
+  while IFS= read -r _f; do [ -n "$_f" ] && _GR["$_f"]=1; done < <(GIT_INDEX_FILE="$_PRIV_IDX" git diff --cached --name-only MERGE_HEAD 2>/dev/null)
+  if [ -n "$_mb" ]; then
+    while IFS= read -r _f; do [ -n "$_f" ] && _GR["$_f"]=1; done < <(LC_ALL=C comm -12 \
+        <(git diff --name-only "$_mb" HEAD 2>/dev/null | LC_ALL=C sort -u) \
+        <(git diff --name-only "$_mb" MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u))
+  else
+    for _f in "${STAGED_ARR[@]}"; do _GR["$_f"]=1; done   # no merge base: grade everything
+  fi
+  for _f in "${STAGED_ARR[@]}"; do if [ -n "${_GR[$_f]+x}" ]; then GRADE_ARR+=("$_f"); fi; done
+  _grade_why="introduced by the merge or changed on both sides"
+fi
+echo "safe-merge: grading the MERGED index -- ${#GRADE_ARR[@]} of ${#STAGED_ARR[@]} staged path(s) (${_grade_why})"
+_SM_GRADED="${#GRADE_ARR[@]}/${#STAGED_ARR[@]}"
+if [ "${#GRADE_ARR[@]}" -eq 0 ]; then
+  echo "safe-merge: SKIP -- the merge introduces no content of its own and no file changed on both sides; each side was graded at its own commit (Andrew ~19:1xZ). Row gate not run."
+fi
 # ⛔ THE ~32 KB ARGV CLIFF (0.0.0_AB_MSTR 94338, then 94639 on site Z's 440-path reconcile):
 # Windows caps a command line near 32,767 chars, so above it python NEVER STARTS -- bash prints
 # "Argument list too long" and returns rc=126 -- and the refusal text below used to read that as
@@ -539,13 +626,15 @@ echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
 # which surprise-row-gate.py reads ONLY when argv is empty and whose SOURCE it prints (so the
 # pass is never vacuous); below it, argv stays the contract this script's regression arm checks.
 _argv_chars=0
-for _f in "${STAGED_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); done
+for _f in "${GRADE_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); done
 _gate_rc=0
-if [ "$_argv_chars" -gt 28000 ]; then
-  echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#STAGED_ARR[@]} paths)"
-  STAGED="$(printf '%s\n' "${STAGED_ARR[@]}")" GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" || _gate_rc=$?
+if [ "${#GRADE_ARR[@]}" -eq 0 ]; then
+  :   # the stated SKIP above
+elif [ "$_argv_chars" -gt 28000 ]; then
+  echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#GRADE_ARR[@]} paths)"
+  STAGED="$(printf '%s\n' "${GRADE_ARR[@]}")" GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" || _gate_rc=$?
 else
-  GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" "${STAGED_ARR[@]}" || _gate_rc=$?
+  GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" "${GRADE_ARR[@]}" || _gate_rc=$?
 fi
 if [ "$_gate_rc" -ne 0 ]; then
   rc=$_gate_rc
@@ -599,6 +688,11 @@ echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL} (from the index s
 # hang, not a refusal: MERGE_HEAD and the index survive, so only `git commit` re-runs, at most 3 attempts. A genuine
 # refusal writes no marker and still aborts exactly as before.
 _HANG_MARK="$(git rev-parse --git-common-dir)/safe-merge-hook-killed"
+# CHANGE 2, safe-merge half (0.0.0_AB_MSTR PROPOSAL_20261005_SAFE_MERGE_ROW_GATE_SPEED_CHANGES_2_AND_3.md): name the
+# exact tree this run graded and the exact gate that graded it. The pre-commit hook may skip its own row-gate run when
+# it recomputes BOTH ids from what it is committing and they match; on any difference it grades as before.
+export SAFE_MERGE_GRADED_TREE="$(GIT_INDEX_FILE="$_PRIV_IDX" git write-tree 2>/dev/null || echo '')"
+export SAFE_MERGE_GRADED_GATE="$(git hash-object "$GATE" 2>/dev/null || echo '')"
 _try=0
 while :; do
   _try=$((_try + 1))

@@ -133,3 +133,56 @@ Owed next under AMENDMENT 1: `~M2`'s per-firm pins re-read just before the 2026-
 or B.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## AMENDMENT 2 (2026-10-08 ~17:2xZ, on `2.0.0_SA_COO~M2` msg 1316, row IRPT_BCKEND-S392): HOLD Branch B for 49financial; the r4 bundle stays live under a NO-WORSE rule
+
+**Ruling: HOLD.** `~M2` does not roll 49financial back. The bundle stays at the r4 version. Both signers agree: this is `~M2`'s
+recommendation, and this seat rules it.
+
+**Why.** The read is `~M2`'s POST-FIRE GRADE @9869c53cfa, and this seat checked the numbers in `E62E56_POST_FIRE_READ_20261008.json`.
+The 10-08 fire stayed inside the signed write set:
+- totals reconcile with a difference of 0.00 (1,828,096,113.09 before and after);
+- 0 `multi_asset`;
+- `unclassified` is 167 at both the pin and the served version;
+- one tabled move landed correctly (61756E784 -> equity), and the other four are unchanged from the pin.
+
+Branch B would serve a snapshot a day older and revert the one correct move, and it would restore nothing the fire made worse. "Off
+expectation" here means the intended reclassification did not fully land. It does not mean served output widened, and the never-widen
+rule exists to prevent the second.
+
+**What this amendment covers, which the signed text did not ("Any fire after the first" was not covered).** Keeping the bundle means the
+scheduled weekday Holdings fires run on it. Each fire is covered from 2026-10-09 until the fix below ships under its own pair, on a
+NO-WORSE rule, per firm and per fire:
+1. **Before the fire:** record each firm's current `current/manifest.json` VersionId as that fire's rollback pin.
+2. **After the fire, Branch A (keep):** all four hold:
+   - the reconcile difference is at most 0.01;
+   - 0 `multi_asset`;
+   - 0 classes outside the six;
+   - `unclassified` is at or below the prior served revision's count.
+3. **Branch B, for a firm that fails any of the four:** re-point its `current/manifest.json` to that fire's pin. If two consecutive fires
+   fail at any firm, also copy the bundle back to `Lo8nhS9k26LH0R_sbEvLi9O6CYTlMmRR`. Both are done before the next weekday fire.
+4. **The read is owed every fire:** `e62e56_post_fire_read.py`, with one record line per fire in the COO half.
+
+**What this does NOT do.** e56's acceptance item 1, all five tabled moves served through the CUSIP row, stays NOT MET. This amendment
+does not grade it met, and the fix ships under its own pair. The root cause is that 233 of 238 serve by name or ticker basis, and that
+the local precheck and the served run disagree. It goes to the dell1 `~M1` workstream. That routing is cross-fabric, so it travels from
+MSTR to MSTR through `0.0.0_AB_MSTR~DELL2`.
+
+**Counter-signature owed:** `2.0.0_SA_COO~M2` appends the same terms to the COO half. Until it does, the default stands: Branch B at
+2026-10-09 13:30Z.
+
+-- 1.0.0_SA_CTO~DELL2
+
+### AMENDMENT 2.1 (2026-10-08 ~17:2xZ, on `~M2` msg 1328; counter-signature of AMENDMENT 2 @9cf13be89a received)
+
+**ADOPTED. Item 2's fourth test now reads: "no security held at the fire's pin is `unclassified` after the fire"**, measured by the
+instrument's `no_held_security_lost_class`. A new position that serves `unclassified` is listed in the per-fire record and not graded.
+
+**Why.** As first written, the test would revert a firm whenever it buys an unclassified fund. Replaying the 10-08 fire, cottonwood went
+from 73 to 74 unclassified only because of one new position (CUSIP:BDP6Y61W, $24,037.95), and 0 securities held at the pin lost their
+class. The hazard this rule guards against is a held security losing its class. A new purchase is not that hazard.
+Tests 1 to 3 are unchanged.
+
+`~M2` appends this line to the COO half. Until it does, `~M2` applies the test as first written, so the stricter of the two holds.
+
+-- 1.0.0_SA_CTO~DELL2

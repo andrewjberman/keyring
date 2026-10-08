@@ -19,6 +19,20 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` at `17 * * * *`, DIRECTED: re-armed after the 2026-10-08 laptop reboot on
+  Andrew's "1.) Yes." (~18:3xZ, last addendum of
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
+  `ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`; GitOps, GC and graph coherence
+  ranked first each tick. Stop: as that record. Landed by 1.0.0_SA_CTO.
+
+- Every fabric manager (`0.0.0_AB_MSTR`, `~Z`, `~DELL1`, `~DELL2`) `/govern 30m` at instantiation, DIRECTED. Andrew at the laptop
+  `1.0.0_SA_CTO` terminal ~17:4xZ 2026-10-08, VERBATIM: "MSTR agents should have /govern on a 30m loop at instantiation." Record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`. Supersedes
+  the 60m interval in the `~DELL1` and `~DELL2` rows below. Stop: his stand-down. Landed by 1.0.0_SA_CTO.
+  Minutes of the hour, DIRECTED (Andrew ~18:0xZ, verbatim in section 9 of
+  `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md`): laptop `0,30`, `~Z` `6,36`, `~DELL1` `12,42`,
+  `~DELL2` `18,48`.
+
 - `0.0.0_AB_MSTR~DELL1` `/govern 60m` DIRECTED (Andrew at the dell1 terminal ~07:08Z 2026-10-07, as relayed by `0.0.0_AB_MSTR` msg 106029 from bus
   4db364bf, VERBATIM as relayed: "Time to get to work, run /git-pull ajb_workspace, afterwards check sequence.yaml and directives.yaml and get
   to work on the projects assigned to you."; the `/govern 60m` arm is that fabric manager's own report of his act). Lanes it awarded:
@@ -133,11 +147,13 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
   /canonical-drive on their projects."). Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md`.
   Class DIRECTED, chooser Andrew; landed by 1.0.0_SA_CTO~DELL1. Stop: both projects `status: complete`, HELD-AT-STOP, or his stand-down.
-  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST.
-  - EXTENSION asked by `1.0.0_SA_CTO~DELL1` (bus d60577bf, relayed by `0.0.0_AB_MSTR` msg 106074), landed by 1.0.0_SA_CTO 2026-10-07 ~08:4xZ as
-    AUTHORITY-UNVERIFIED (transient): MDPF_HEALGAP joins that `/self-drive 60m`, paired with `2.0.0_SA_COO~G1` `/canonical-drive 10m`. The
-    asking seat calls it DIRECTED on a record @7cf0be6c7d that is on dell1 only; this seat has not read it. Andrew held `~G1` at dell1 ~07:52Z
-    until the project's L1 (relay 106059), so the record must show his release. Re-class to DIRECTED when it is on origin and read.
+  - `1.0.0_SA_CTO~DELL1` `/self-drive 60m` over MDPF_SECCLASS, MDPF_SECHIST, MDPF_HEALGAP. Paused 2026-10-07 ~22:3xZ on his word;
+    RE-ARMED 2026-10-08 ~17:5xZ on Andrew-direct at the dell1 CTO terminal, VERBATIM: "Yes rec approved, please proced" (the card named
+    all three projects), record @2a728669cf.
+  - EXTENSION (MDPF_HEALGAP, paired with `2.0.0_SA_COO~G1` `/canonical-drive 60m`): first landed 2026-10-07 ~08:4xZ as
+    AUTHORITY-UNVERIFIED; re-classed DIRECTED on the 2026-10-08 ~17:5xZ word above. Cadence 10m -> 60m on Andrew-direct ~18:5xZ
+    2026-10-08 at the `2.0.0_SA_COO~G1` terminal, VERBATIM: "Ok lets slow that down to 60 min" (class DIRECTED, chooser Andrew; G1
+    msg 1057, cron ae79a828 at :07).
   - `2.0.0_SA_COO~M1` `/canonical-drive MDPF_SECCLASS` and `2.0.0_SA_COO~H1` `/canonical-drive MDPF_SECHIST`. He named no cadence,
     so each uses the skill's 10m DIRECTED own-project default.
   - The `/govern` arms of the two fabric managers are the two DIRECTED rows at the top of this section.

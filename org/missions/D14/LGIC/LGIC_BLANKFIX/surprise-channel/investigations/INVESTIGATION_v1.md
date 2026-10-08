@@ -1248,3 +1248,172 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The worker's saved run and the issuer's second-seat run print the same last line (ALL-ROOTS ok=True roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=248 not_asked=32 pattern=8 carded=0 refused=0 hole=0 carded_class_holes=0 source_bucket_holes=0 event_rule_holes=0 unknown_word_holes=0 other_holes=0). One line differs between the two whole outputs: 'UNMAPPED infra/aws/terraform/nfra-ctlpln-identity names=10' against 'names=11' -- another project committed a name in a root the map does not cover. So 'the same totals' holds for everything the check reads, and the estate moved under the part it does not. The check script (a worker's deliverable) fails on the whole-output compare; the criterion BS9-AC1 passed in the worker's tree at its run. For the grader: whether FWD-9's repeat is the mapped totals, or the whole output on a pinned commit."
 }
 ```
+
+## LGIC_BLANKFIX-S9 -- item E5 was labelled FWD-5 and described FWD-6 (answered before the cut)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T17:11:48Z",
+  "one_line": "The round-5 analysis's item E5 was labelled FWD-5 but described a refusal at the moment a name is written, which is FWD-6's ACCEPT in the PRD; answered by 1.0.0_SA_CTO msg 106956 before the cut.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round5.md @34ba4c1c90 -- item E5 'FWD-5: run it with nothing written first ... the check, run before any name is written, refuses a new stored name the canon would print as FIX'",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md:59-64 -- FWD-5: a person who has never run the check follows written instructions on a fresh copy and it finishes",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md:66-71 -- FWD-6: whoever creates a name the check cannot place hears about it when they create it",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/ledger/ROUND_ANALYSIS.round5.md @cbdf36254c -- amended: E5 serves FWD-6; E6 added for FWD-5 as the PRD states it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "PRD v0.2 FWD-5: anyone can run the check from start to finish without writing anything for it first (no skip list). FWD-6: the creator of an unplaceable name hears at creation.",
+  "world_is": "The analysis @34ba4c1c90 joined FWD-5's words to FWD-6's mechanism. Asked of 1.0.0_SA_CTO (msg 106951); answered msg 106956 and the analysis amended @cbdf36254c. Round 6 is cut on the amended text: BF-u-6 serves FWD-6, BF-u-7 serves FWD-5. Nothing open for the issuer."
+}
+```
+
+
+## LGIC_BLANKFIX-W1-S14 -- the scope enumeration misses names declared through locals, modules or a .json file: 11 of the 24 names=0 roots declare names
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S14",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T17:55:29Z",
+  "one_line": "The scope enumeration misses names a root declares through locals, modules (opal_name, partner-firm-table, served-guard) or a .json file: 11 of the 24 'names=0' roots declare names, and 5 more roots print only part of theirs.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json at this worktree: 'UNMAPPED <root> names=0' for 24 roots; reading each root's .tf (and the one .json file etfs-rivalfunds reads) shows 11 of the 24 declare named resources the scope enumeration does not count. Per root, one declaring line:",
+      "infra/aws/terraform/c3materialize-b4/main.tf:77 -- name = \"opal-c3materialize-b4-sbm\" (a local) names the ECR repository, IAM role, inline policy and CodeBuild project",
+      "infra/aws/terraform/etfs-rivalfunds/generated.auto.tfvars.json:11 -- \"role_name\": \"etfs-rivalfunds-daily-role\" (names come from a .json file; lambdas.tf:14 'name = each.value.role_name')",
+      "infra/aws/terraform/investor-reporting/holdings-performance/iam.tf:34-40 -- module \"irpt_holdings_performance_role_name\" { source = \"../../modules/opal_name\" system = \"irpt\" ... } assigned at iam.tf:51 'name = module.irpt_holdings_performance_role_name.name'",
+      "infra/aws/terraform/investor-reporting/reporting-gold/iam.tf:24-30 -- module \"irpt_reporting_gold_role_name\" { source = \"../../modules/opal_name\" system = \"irpt\" ... }",
+      "infra/aws/terraform/mdpf-secclass/new-security-classifier/main.tf:112-118 -- module \"name_lambda\" { source = \"../../modules/opal_name\" system = \"mdpf\" ... }; main.tf:157-164 assign local.function_name, local.role_name, local.schedule_name",
+      "infra/aws/terraform/nfra-agentbus/iam.tf:21 -- name = local.role_a_name (and sqs.tf:10 name = local.q_a_to_b_name; kms.tf:41 name = \"alias/${local.prefix}\")",
+      "infra/aws/terraform/nfra-agentbus-alyssa01/sqs.tf:8 -- name = local.q_a_to_b_name (iam.tf:12 name = local.role_a_name; iam.tf:58 name = local.user_b_name)",
+      "infra/aws/terraform/nfra-ctlpln-agentbus/sqs.tf:30 -- name = module.queue_name[each.key].name (module opal_name, system = \"agentbus\", sqs.tf:20)",
+      "infra/aws/terraform/partner-firms/demo.tf:31-34 -- module \"firm_demo\" { source = \"../modules/partner-firm-table\" firm_id = \"demo\" }; the table name is built at modules/partner-firm-table/main.tf:22 'name = \"opal-partner-${var.firm_id}\"' (four firms, four tables)",
+      "infra/aws/terraform/served-guard-49f/_root.tf:36-40 -- module \"guard\" { source = \"../modules/served-guard\" firm = \"49f\" ... }; modules/served-guard/main.tf:181 'name = \"${local.name}-on-write\"' is an EVENT_RULE built from var.firm",
+      "infra/aws/terraform/served-guard-cot/_root.tf:31-34 -- module \"guard\" { source = \"../modules/served-guard\" firm = \"cot\" ... } (same module, same rule)",
+      "The same blind spot also hides stored names in roots the census DOES read, so they classify as no-stored-name: infra/aws/terraform/transcripts/main.tf:119-120 'resource \"aws_s3_bucket\" \"transcripts\" { bucket = local.bucket' and pull.tf:121 'name = local.pull_rule_name' (census: names=2, both LAMBDA); infra/aws/terraform/modules/served-guard/main.tf:181 (census: IAM_POLICY=4 only); infra/aws/terraform/served-guard-inf/_root.tf:32-35 (census: IAM_POLICY=1); infra/aws/terraform/mdpf-secclass/sector-writer/main.tf:83-90 (etfs bucket and run-list prefix built in locals).",
+      "infra/logic/registry/root_map.json _about, paragraph 'A ROOT WITH NOTHING TO NAME': names=0 alone never justifies names: 'none' -- 'nfra-agentbus reads names=0 and declares IAM roles named from local.role_a_name'. The other 13 of the 24 are not this class: 7 attach to buckets or APIs declared elsewhere, 4 are modules whose names come from the caller, and 2 declare nothing at all (canonical-schwab-si2-schedule/main.tf, opal-assets-absence/main.tf: terraform, provider and locals blocks only)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-u-1 step 4: 'If any root reads DECLARES-NAMES, file ONE surprise row for the class (the scope enumeration misses names declared that way), listing the roots and one declaring line each.' The census line 'UNMAPPED <root> names=0' is read by the registry as a root with nothing to name (root_map.json _about).",
+  "world_is": "11 of the 24 names=0 roots declare named resources (ECR, IAM, CodeBuild, Lambda, SQS, KMS alias, DynamoDB, EventBridge rules, schedules) that opal_naming_scope.root_items does not enumerate, because the name is built in a local, through a module the enumeration does not follow, or in a generated .json file. Five further roots (transcripts, modules/served-guard, served-guard-inf, mdpf-secclass/sector-writer, investor-reporting/reporting-read) print only the names written as literals; transcripts and the served-guard module declare a bucket and an EVENT_RULE that the census does not list. If any of these roots is mapped, the check still grades only the names the enumeration returns, so a wrong name in the missing set is never on the list (FWD-2). Entered as 'none' on the zero, the root would be mis-entered. The ruling file MAP_ENTRIES_FOR_RULING_round6.md gives each of the 11 a verdict DECLARES-NAMES and a drafted ordinary entry; the enumeration gap itself is lib/opal_naming_scope.py's and is not touched by this cell."
+}
+```
+
+## LGIC_BLANKFIX-W1-S15 -- TO BF-u-6 says the commit-time naming gate is WARN today; the repository has it ENFORCING
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S15",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T18:23:39Z",
+  "one_line": "TO BF-u-6 (and CLAUDE.md rule 30) call the commit-time naming gate 'WARN today'; org/mcp/naming-gate.enforce exists, so the gate refuses.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/mcp/naming-gate.enforce -- present in this worktree (test -e, rc 0).",
+      ".tools/naming-gate.py module docstring: 'ENFORCE is on with --enforce, env NAMING_GATE_ENFORCE=1, or a present org/mcp/naming-gate.enforce: a REFUSE then exits 1.'",
+      "python .tools/naming-gate.py --diff <a diff adding schedule irpt-directory-newjob to infra/aws/terraform/investor-reporting/directory/schedule.tf> (run in the worktree): 'NAMING-GATE: REFUSE 1 graded', rc=1.",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/PRE_WRITE_REFUSAL_PATTERNS_20261008.md row 16 and pattern 4 already record the same drift (ENFORCE since 2026-09-17)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-u-6 THE CELL: 'the commit-time naming gate already in the tree (CLAUDE.md rule 30, WARN today)'.",
+  "world_is": "The gate is in ENFORCE mode and refused the wrong-name arm of the design's measurement with rc=1. The design (FWD6_DESIGN_round6.md) is written against ENFORCE. No criterion is blocked."
+}
+```
+
+## LGIC_BLANKFIX-W1-S16 -- TO BF-u-6 gives the PRD's FWD-6 as lines 66-71; the ACCEPT's last clause is at line 72
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S16",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T18:23:39Z",
+  "one_line": "The order names PRD lines 66-71 for FWD-6; the block is lines 67-73 (line 66 is blank; the ACCEPT's closing clause 'longer than it was the last time anyone ran the check' is line 72).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/prd/LGIC_BLANKFIX_PRD.md lines 66-73 printed with sed -n 66,73p at trunk 41361dfefe: 66 blank, 67 'FWD-6 Whoever creates a name...', 68-69 DONE WHEN, 70-72 ACCEPT, 73 SOURCE."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-u-6 THE CELL: 'The PRD's FWD-6 is ...LGIC_BLANKFIX_PRD.md lines 66-71: its ACCEPT has two halves'; BU6-AC2: 'FWD-6's ACCEPT (PRD lines 66-71)'.",
+  "world_is": "Lines 66-71 end mid-sentence in the ACCEPT; the second half of the ACCEPT (the list of unplaceable names no longer than before) is on line 72. The design quotes lines 67-73. Nothing is blocked; the CVO's reading at BU6-AC2 should take lines 67-73."
+}
+```
+
+## LGIC_BLANKFIX-S10 -- 180 UNDECIDED fields hold 73 of the 74 drafted entries (parked to round 7)
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T18:39:50Z",
+  "one_line": "Of the 74 entries BF-u-1 drafted, only inf-pipeline loads: 60 ordinary entries carry 180 UNDECIDED fields between them and 13 names:none entries wait on the reader (BF-u-2). 4.0.0_SA_CRO asks that a worker measure the 180.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/ROOT_MAP_ROUND6_NOTES_20261008.md @6091606dd8 -- 'UNDECIDED fields: 180. By field: source 51, fills 49, scope 33, exceptions 26, system 19, why 2'; per-root list follows",
+      "org/tier1_exec/4.0.0_SA_CRO/deliverables/ROOT_MAP_ROUND6_NOTES_20261008.md @6091606dd8 -- 'Per entry (each alone): 1 PASS (inf-pipeline), 73 FAIL'; decided subset all ok=True mapped=14 items=776 hole=69",
+      "4.0.0_SA_CRO msg 107107 -- 'have the round-6 worker measure the 180 UNDECIDED fields'; REC retire the 2 empty roots as dead Terraform rather than add a third why",
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/decompositions/LGIC_BLANKFIX_DECOMP.round6.md -- FROZEN at the cut; no round-6 cell measures UNDECIDED fields"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 6 E1: map the next roots, largest first; BF-u-1 drafts each field decided by a file and line or UNDECIDED, and the registry's lane writes the entries.",
+  "world_is": "The drafts leave 180 fields UNDECIDED, so 73 of 74 entries cannot land; measuring them is work no frozen round-6 cell carries. Parked: owner 2.0.0_SA_COO~G; un-parks at the round-6 drain-end message to 1.0.0_SA_CTO as a round-7 input, with the CRO's empty-root retirement recommendation. The 13 names:none entries are BF-u-2's (slot ~4, queued)."
+}
+```
+
+## LGIC_BLANKFIX-W4-S2 -- BU3-AC2 expects stale_hints=0 but the estate holds one item whose file is not in its ruling's declared_in
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S2",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T19:05:00Z",
+  "one_line": "Built to the cell, `all` prints stale_hints=1 (not 0): the bd-pipeline freshness probe declares `bronze/`, a file the opal-assets-ingest-mirror ruling does not list; BU3-AC2 cannot be met as written.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py (worktree wk-LGIC_BLANKFIX-4) `python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json` -> `STALE-HINT bd-pipeline || FIX S3Key bronze/ -> orion/inflection/bronze/; the ruling's declared_in names infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py; the key is declared in infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py  [...:74]`; last line ends `other_holes=0 stale_hints=1`",
+      "infra/logic/registry/key_rulings.json -- the `bronze/` row (bucket opal-data-inf) lists only the ingest-mirror lambda_function.py in declared_in; the line's answer is the same as at the base (before and after bodies of the run differ only by the STALE-HINT line)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BU3-AC2: stale_hints=0 at the cut 'since every declared_in path exists' (4.0.0_SA_CRO, msg 106778); build item 2: a stale hint is a match where the item's file is not in the row's declared_in.",
+  "world_is": "Existence of every declared_in path is not the test the build defines: the probe's `bronze/` matched this row at the base through its (bucket, key) match and now matches it as the only candidate of the key, so by the defined rule it is one stale hint. No weakening made. Two ways to reach 0, both outside this cell: the registry's lane adds the probe path to the row's declared_in, or the COO amends item 2 so a match the item's own bucket confirms is not stale."
+}
+```

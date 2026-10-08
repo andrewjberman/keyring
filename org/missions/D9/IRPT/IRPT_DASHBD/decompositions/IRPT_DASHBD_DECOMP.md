@@ -616,3 +616,27 @@ smallest measured column set; batch first, raise memory only if the batched peak
 | (issuer act) | E2(2): the batched run on pandas 2.2.3 -- the laptop carries pandas 2.3.3 (MSTR msg 1136), so it runs on dell2 when the Python 3.12 kit lands, with DB-b-43 | LOCAL | DB-b-48 | B28 |
 
 fanout: 1 of 1 chains, cap 8, reason: E2 measures the stage only once E1 stops its refusal, and both edit the same producer. Worker 0.9.0_WK_IRPT_DASHBD~27 in its own worktree.
+
+## 30. ROUND 28, WORKSTREAM BD (2026-10-08 ~13:5xZ, issuer 2.0.0_SA_COO~D2, the tie-out cell named in section 27)
+
+DB-b-45 is complete @3efc66cf42: the one split Black Diamond pull ran on dell2 at 12:37:21Z after the secrets grant applied (11:33:48Z);
+2,299 of 2,299 landed under pull=split20261007, 0 FAILED. The tie-out grades FWD-8's two branches (round-19 analysis section 2).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-49` | the split tie-out: BD's two halves against Opal's served returns for the 2,299 segments; branch A (> half tie on both halves within 0.35 pp) or B; the recompose control | LOCAL | DB-b-45 (complete) | B26-4 |
+
+fanout: 1 of 1 chains, cap 8, reason: one comparison over one landed pull. Worker 0.9.0_WK_IRPT_DASHBD~28 in its own worktree.
+
+## 31. ROUND 29, WORKSTREAMS BD + B (2026-10-08 ~19:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-28 analysis @e9b17e6e75, msg 1428)
+
+Round 28 is closed: DB-b-47 + DB-b-48 merged @24d088b96e, DB-b-49 @a556d87e79 (round-close-check MAY-CLOSE). FWD-8 reads BRANCH B:
+the divergence is after 2025-01-10. S34 (440 accounts whose BD halves do not recompose) gates any Opal repair. No vendor call is owed.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-50` | E1: class S34's 440 accounts (closed cause set + named other); trace the 724.16 pp outlier; the overlap with the 1,834 right-half misses | LOCAL | DB-b-49 (merged) | B29-1 |
+| `DB-b-51` | E2: the right-half gap's shape for the 1,528 misses outside S34, Opal's components only; top driver; the 2,220 left-half ties as control | LOCAL | DB-b-49 (merged; the population is DB-b-49's per-row flag, not DB-b-50's output) | B29-2 |
+| `DB-b-52` | E3 (W27-S2): the full run over 7,604 accounts <= 750 s; the chosen batch size set as the producer's default | LOCAL | DB-b-48 (merged) | B29-3 |
+
+fanout: 3 of 3 chains, cap 8, reason: three independent reads -- E1 and E2 take fixed populations from DB-b-49's record, E3 edits only the lots producer. Workers 0.9.0_WK_IRPT_DASHBD~29, ~30, ~31, one worktree each.

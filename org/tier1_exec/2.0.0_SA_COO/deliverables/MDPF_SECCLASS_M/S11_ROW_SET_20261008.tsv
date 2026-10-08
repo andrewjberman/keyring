@@ -1,0 +1,118 @@
+key	name	action	asset_class	sub_asset_class	current_class	rule	evidence
+DFUS	DIMENSIONAL U.S. EQUITY MARKET ETF	NEW	equity				US equity-market ETF by name; old map equity
+NAME::CAIS PRIVATE EQUITY CORE II LP	CAIS PRIVATE EQUITY CORE II LP	NEW	alternatives			andrew-alternatives	private equity LP by name
+NAME::PROSPERA INCOME ETF	PROSPERA INCOME ETF	NEW	fixed_income				Prospera Income ETF income-oriented; old map fixed_income
+NAME::CNL STRATEGIC CAPITAL LL C CLASS A 1G	CNL STRATEGIC CAPITAL LL C CLASS A 1G	NEW	alternatives			andrew-alternatives	CNL Strategic Capital LLC, perpetual-life private-company holding fund (no listed market); old map alternatives
+NAME::BLACKSTONE - BXPE ESC	BLACKSTONE - BXPE ESC	NEW	alternatives			andrew-alternatives	Blackstone Private Equity Strategies Fund (BXPE) by name; private fund
+SDVY	FIRST TRUST SMID CAP RISING DIVIDEND ACHIEVERS ETF	NEW	equity				First Trust SMID Cap equity ETF by name; old map equity
+NAME::INDEXED ANNUITY	INDEXED ANNUITY	NEW	structured	Hedge			index-linked annuity contract; table precedent NAME::RUSS 2000 ANN LOCK5YR-10 structured/Hedge; old map alternatives; CVO to judge
+NICHX	VARIANT ALTERNATIVE INCOME INSTITUTIONAL	NEW	alternatives				Variant Alternative Income interval fund by name; old map alternatives; not named hedge/private/real estate so no rule mark
+UWMC	UWM HOLDINGS CORPORATION COM CL A	NEW	equity				UWM Holdings common stock; old map equity
+SCBP1	TOTAL MARKET EQUITY INDEX POOL	NEW	equity				Total Market Equity Index Pool; table precedent CUSIP:808516702 same name equity
+NAME::SCHWAB CHARLES FAMILY FD GOV SECURITIES	SCHWAB CHARLES FAMILY FD GOV SECURITIES	NEW	fixed_income				Schwab government securities fund by name (no Money/MMKT in the name); C_06 fallback equity has no basis; CVO to judge cash vs fixed_income
+NAME::CALL BE 00105	CALL BE 00105	NEW	structured	Options Income			listed option (CALL) line; table precedent: CALL ... rows read structured/Options Income; old map alternatives
+NAME::JHANCOCK BALANCED R6	JHANCOCK BALANCED R6	NEW	equity				balanced fund; Rule B (balanced -> equity); old map alternatives
+NAME::CALL IREN 00010	CALL IREN 00010	NEW	structured	Options Income			listed option (CALL) line; table precedent: CALL ... rows read structured/Options Income; old map alternatives
+FYC	FIRST TRUST SMALL CAP GROWTH ALPHADEX FUND	NEW	equity				First Trust small cap growth equity fund by name; old map equity
+USERX	US GLOBAL INVESTORS GLD & PREC MTLS	NEW	commodities	Metals			US Global Investors Gold & Precious Metals fund; table precedent FGMPX/FEGIX commodities/Metals; old map alternatives
+NAME::KKR PRIVATE EQUITY CONGL OMERATE LLC CLASS U	KKR PRIVATE EQUITY CONGL OMERATE LLC CLASS U	NEW	alternatives			andrew-alternatives	KKR Private Equity Conglomerate LLC (K-PRIME) by name; private equity fund
+NAME::FIRST TRUST MULTI-STRATEGY CL I	FIRST TRUST MULTI-STRATEGY CL I	NEW	alternatives				multi-strategy fund by name, no hedge/private/real estate marker; C_06 fallback equity has no basis; CVO to confirm
+NAME::FIDELITY ADVISOR STOCK SELEC MID CP M	FIDELITY ADVISOR STOCK SELEC MID CP M	NEW	equity				stock fund mid cap by name
+NAME::VARIANT ALTERNATIVE INCOME INSTITUTIONAL	VARIANT ALTERNATIVE INCOME INSTITUTIONAL	NEW	alternatives				Variant Alternative Income interval fund by name; same fund as NICHX; old map alternatives
+NAME::STEPSTONE PRIVATE MARKETS I	STEPSTONE PRIVATE MARKETS I	NEW	alternatives			andrew-alternatives	StepStone Private Markets fund by name
+NAME::FS MVP PRIVATE MKTS FD CL I	FS MVP PRIVATE MKTS FD CL I	NEW	alternatives			andrew-alternatives	FS MVP Private Markets Fund by name
+NAME::NUVEEN CHURCHILL PRVATE CAP SHS CL I	NUVEEN CHURCHILL PRVATE CAP SHS CL I	NEW	alternatives			andrew-alternatives	Nuveen Churchill Private Capital Income Fund by name
+NAME::HARTFORD BALANCED INCOME F	HARTFORD BALANCED INCOME F	NEW	equity				balanced fund; Rule B and table precedent NAME::HARTFORD BALANCED INCOME I equity
+NAME::BUFFALO GROWTH INCOME INST	BUFFALO GROWTH & INCOME INST	NEW	equity				growth and income stock fund by name; Rule B balanced/growth-income -> equity
+NAME::LORD ABBETT GLOBAL EQUITY I	LORD ABBETT GLOBAL EQUITY I	NEW	equity				global equity fund by name
+SCII1	INCOME INDEX POOL	NEW	fixed_income				Income Index Pool; old map fixed_income
+NAME::FRANKLIN ETHEREUM ETF	FRANKLIN ETHEREUM ETF	NEW	commodities	Commodities			spot ether ETF; table precedent bitcoin trusts commodities/Commodities; old map alternatives
+XVV	ISHARES ESG SELECT SCREENED S&P 500 ETF	NEW	equity				iShares ESG Select Screened S&P 500 ETF by name; old map equity
+SKWD	SKYWARD SPECIALTY INS GROUP IN COM	NEW	equity				Skyward Specialty Insurance common stock; old map equity
+NAME::CONSERVATIVE PORTFOLIO	CONSERVATIVE PORTFOLIO	NEW	equity				allocation portfolio; Rule B (allocation -> equity); old map alternatives; CVO to judge
+NAME::JPMCB SMARTRETIREMENT DRE 2040 CF-D	JPMCB SmartRetirement DRE 2040 CF-D	NEW	equity				target-date collective fund; Rule B (target-date -> equity); old map alternatives
+NAME::S P 500 ANN LOCK 5YR -10	S&P 500 Ann Lock 5Yr -10%	NEW	structured	Hedge			annuity lock product; table precedent NAME::RUSS 2000 ANN LOCK5YR-10 structured/Hedge; old map alternatives
+NAME::SCHWAB TARGET 2025 INDEX	SCHWAB TARGET 2025 INDEX	NEW	equity				target-date index fund; Rule B; table precedent Schwab Target 2040 Index equity; old map alternatives
+NAME::EATON VANCE STRATEGIC INCOME CLASS I	EATON VANCE STRATEGIC INCOME CLASS I	NEW	fixed_income				strategic income fund; Rule B income-oriented -> fixed_income
+NAME::PROSHARES BITCOIN ETF	PROSHARES BITCOIN ETF	NEW	commodities	Commodities			bitcoin futures ETF; table precedent bitcoin ETFs commodities/Commodities; old map alternatives
+SCGK1	SOCIALLY RESPONSIBLE FIX ED INCOME POOL	NEW	fixed_income				Socially Responsible Fixed Income Pool by name; old map fixed_income
+NAME::INVESCO VARIABLE RATE PREFERRED ETF	INVESCO VARIABLE RATE PREFERRED ETF	NEW	fixed_income				preferred income ETF; table precedent preferred ETFs fixed_income
+NAME::AMERICAN FUNDS INCOME FUND OF AMER 529A	AMERICAN FUNDS INCOME FUND OF AMER 529A	NEW	fixed_income				Income Fund of America; table precedent AMECX fixed_income (Rule B income-oriented)
+NAME::VORNADO RLTY TR PFD SER L 5 40	VORNADO RLTY TR PFD SER L 5.40%	NEW	equity				REIT preferred stock, not a fund; table precedent Arbor Realty preferred equity
+NAME::S P FUTURES 3 IDX PTPT W	S&P Futures 3 Idx PTPT w	NEW	structured	Hedge			index participation (futures-linked) product; same family as annuity locks; old map alternatives; CVO to judge
+GTOP	GOLDMAN SACHS TECHNOLOGY OPPORTUNITIES ETF	NEW	equity				Goldman Sachs Technology Opportunities equity ETF by name; old map equity
+NAME::RALLIANT CORP COM	RALLIANT CORP COM	NEW	equity				Ralliant Corp common stock; old map equity
+NAME::BD949S99	BD949S99	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::ARK 21SHARES BITCOIN ETF	ARK 21SHARES BITCOIN ETF	NEW	commodities	Commodities			spot bitcoin ETF; table row ARKB commodities/Commodities; old map alternatives
+NAME::FRANKLIN XRP ETF	FRANKLIN XRP ETF	NEW	commodities	Commodities			spot XRP ETF, a crypto commodity trust; same treatment as bitcoin trusts; old map alternatives
+OXYWS	OCCIDENTAL PETE CORP WT EXP 080327	NEW	equity				Occidental warrant; table precedent warrants read equity
+NAME::VANECK BITCOIN ETF	VANECK BITCOIN ETF	NEW	commodities	Commodities			spot bitcoin ETF; table precedent commodities/Commodities; old map alternatives
+NAME::MORNINGSTAR DEFENSIVE BOND	MORNINGSTAR DEFENSIVE BOND	NEW	fixed_income				bond fund by name
+NAME::PIMCO ALL ASSET I2	PIMCO ALL ASSET I2	NEW	equity				allocation fund (fund of funds); Rule B (allocation -> equity); old map alternatives; CVO to judge
+HEAL	GLOBAL X HEALTHTECH ETF	NEW	equity				Global X HealthTech equity ETF by name; old map equity
+NAME::TQQQ AUG 09 24 82 CALL	TQQQ AUG 09'24 $82 CALL	NEW	structured	Options Income			listed option (CALL) line; table precedent: CALL ... rows read structured/Options Income; old map alternatives
+NAME::BDDNL2V4	BDDNL2V4	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::BD9AS499	BD9AS499	NEW	fixed_income				opaque Black Diamond id; own evidence is the old map class only (fixed_income)
+NAME::IGV JUL 17 26 114 CALL	IGV JUL 17'26 $114 CALL	NEW	structured	Options Income			listed option (CALL) line; table precedent: CALL ... rows read structured/Options Income; old map alternatives
+NAME::PIMCO TRENDS FUND INSTITUTIONAL	PIMCO TRENDS FUND INSTITUTIONAL	NEW	alternatives				PIMCO TRENDS managed futures fund by name; old map alternatives; no rule mark
+PQTIX	PIMCO TRENDS MANAGED FUTURES STRAT INSTL	NEW	alternatives				PIMCO TRENDS managed futures strategy fund by name; old map alternatives; not a hedge/private/real estate fund so no rule mark
+NAME::INVESCO DB US DOLLAR INDEX BULLISH FUND	INVESCO DB US DOLLAR INDEX BULLISH FUND	NEW	alternatives				US dollar currency-futures commodity pool (UUP); old map alternatives; a currency pool, not a commodity-price fund; CVO to judge
+PPLT	ABRDN PHYSICAL PLATINUM SHARES ETF	NEW	commodities	Metals			abrdn Physical Platinum Shares; table precedent PLTM/PALL commodities/Metals; old map alternatives
+COMP	COMPASS INC CL A	NEW	equity				Compass Inc common stock; old map equity
+BINC	ISHARES FLEXIBLE INCOME ACTIVE ETF	NEW	fixed_income				iShares Flexible Income Active ETF by name; old map fixed_income
+NAME::BDP134X3	BDP134X3	NEW	alternatives				opaque Black Diamond id; own evidence is the old map class only (alternatives)
+GSRTX	GOLDMAN SACHS ABSOLUTE RET TRCKR INV	NEW	alternatives				Goldman Sachs Absolute Return Tracker (hedge-fund-index replication) by name; old map alternatives; sibling NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL reads structured/Hedge (CVO to reconcile)
+NAME::BDP10C6I	BDP10C6I	NEW	alternatives				opaque Black Diamond id; own evidence is the old map class only (alternatives)
+NAME::BDO6GHW8	BDO6GHW8	NEW	fixed_income				opaque Black Diamond id; own evidence is the old map class only (fixed_income)
+NAME::FIDELITY WISE ORIGIN BITCOIN FUND	FIDELITY WISE ORIGIN BITCOIN FUND	NEW	commodities	Commodities			spot bitcoin fund; table precedent commodities/Commodities; old map alternatives
+NAME::GOLDMAN SACHS MANAGED FUTS STRAT INV	GOLDMAN SACHS MANAGED FUTS STRAT INV	NEW	alternatives				managed futures strategy fund by name; old map alternatives; no rule mark
+ASFYX	VIRTUS ALPHASIMPLEX MGD FUTS STRAT I	NEW	alternatives				Virtus AlphaSimplex Managed Futures Strategy by name; old map alternatives; no rule mark
+NAME::ISHARES TRUST ISHARES USD GREEN BOND ETF	ISHARES TRUST ISHARES USD GREEN BOND ETF	NEW	fixed_income				green bond ETF by name; C_06 fallback equity has no basis
+NAME::VOLATILITY SHARES 2X BITCOIN ETF	VOLATILITY SHARES 2X BITCOIN ETF	NEW	commodities	Commodities			2x bitcoin futures ETF; table precedent commodities/Commodities; old map alternatives
+NAME::BD7UD5HA	BD7UD5HA	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::CLOV NOV 28 25 4 CALL	CLOV NOV 28'25 $4 CALL	NEW	structured	Options Income			listed option (CALL) line; table precedent: CALL ... rows read structured/Options Income; old map alternatives
+NAME::INCOME INDEX POOL	INCOME INDEX POOL	NEW	fixed_income				Income Index Pool; same name as SCII1; old map fixed_income
+BITX	2X BITCOIN STRATEGY ETF	NEW	commodities	Commodities			2x Bitcoin Strategy ETF holds bitcoin futures; table precedent bitcoin ETFs commodities/Commodities; old map alternatives
+NAME::ISHARES ETHEREUM TRUST ETF	ISHARES ETHEREUM TRUST ETF	NEW	commodities	Commodities			spot ether trust; table precedent commodities/Commodities; old map alternatives
+MPNGY	MEITUAN UNSPONSRED ADS	NEW	equity				Meituan unsponsored ADR; old map equity
+NAME::SCHFDX0	SCHFDX0	NEW	fixed_income				opaque id; own evidence is the old map class only (fixed_income)
+NAME::BD7I9FCG	BD7I9FCG	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+RAL	RALLIANT CORP COM	NEW	equity				Ralliant Corp common stock; old map equity
+NAME::BDV4IISI	BDV4IISI	NEW	fixed_income				opaque Black Diamond id; own evidence is the old map class only (fixed_income)
+NAME::BDVR693I	BDVR693I	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::BDYXF3XU	BDYXF3XU	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::BDMRCIX0	BDMRCIX0	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::VICTORY PIONEER STRATEGIC INCOME Y	VICTORY PIONEER STRATEGIC INCOME Y	NEW	fixed_income				strategic income fund; Rule B income-oriented -> fixed_income
+NAME::HERTZ GLOBAL HLDGS INC WT EXP 063051	HERTZ GLOBAL HLDGS INC WT EXP 063051	NEW	equity				warrant on Hertz common; table precedent warrants read equity; old map alternatives
+NAME::BDPU6036	BDPU6036	NEW	equity				opaque Black Diamond id; own evidence is the old map class only (equity)
+NAME::DARKHORSE TECHNOLOGIES INC COM SHS	DARKHORSE TECHNOLOGIES INC COM SHS	NEW	equity				common shares of a company
+NAME::BDP10C63	BDP10C63	NEW	alternatives				opaque Black Diamond id; own evidence is the old map class only (alternatives)
+NAME::BDP134X6	BDP134X6	NEW	alternatives				opaque Black Diamond id; own evidence is the old map class only (alternatives)
+NAME::BDPD3F76	BDPD3F76	NEW	fixed_income				opaque Black Diamond id; own evidence is the old map class only (fixed_income)
+NAME::BDP10C60	BDP10C60	NEW	alternatives				opaque Black Diamond id; own evidence is the old map class only (alternatives)
+TSEOQ	TRINSEO PLC SHS	NEW	equity				Trinseo PLC common shares; old map equity
+CMWAY	COMMONWEALTH BANK OF AUSTRALIA SPONSORED ADR	NEW	equity				Commonwealth Bank of Australia ADR; old map equity
+NAME::COHEN STEERS PREFERRED SEC INC I	COHEN & STEERS PREFERRED SEC & INC I	NEW	fixed_income				preferred securities and income fund; table precedent NPSRX fixed_income
+NAME::SHAW PARK PRIVATE MARKET S 2021 LP	SHAW PARK PRIVATE MARKET S 2021 LP	NEW	alternatives			andrew-alternatives	private markets LP by name
+NAME::TEMPLETON WORLD A	TEMPLETON WORLD A	NEW	equity				Templeton World Fund (global equity) by name; C_06 fallback equity confirmed
+NAME::BOW RIVER CAPITAL EVERGR EEN FUND CLASS I	BOW RIVER CAPITAL EVERGR EEN FUND CLASS I	NEW	alternatives			andrew-alternatives	Bow River Capital Evergreen Fund, an evergreen private-markets fund by name
+NAME::THOMPSON BOND	THOMPSON BOND	NEW	fixed_income				bond fund by name
+NAME::OCEAN PARK TACTICAL ALL ASSET INSTL	OCEAN PARK TACTICAL ALL ASSET INSTL	NEW	equity				tactical all-asset allocation fund; Rule B (allocation -> equity); old map alternatives; CVO to judge
+NAME::PRINCIPAL DIVERSIFIED INCOME INSTL	PRINCIPAL DIVERSIFIED INCOME INSTL	NEW	fixed_income				diversified income fund; Rule B income-oriented -> fixed_income
+NAME::MORNINGSTAR MULTISECTOR BOND	MORNINGSTAR MULTISECTOR BOND	NEW	fixed_income				multisector bond fund by name
+NAME::AMERICAN FUNDS 2040 TRGT DATE RETIRE A	AMERICAN FUNDS 2040 TRGT DATE RETIRE A	NEW	equity				target-date fund; Rule B; table precedent NAME::AMERICAN FUNDS 2030/2050 TRGT DATE RETIRE A equity
+NAME::AMERICAN BEACON AHL MGD FUTS STRAT Y	AMERICAN BEACON AHL MGD FUTS STRAT Y	NEW	alternatives				AHL managed futures strategy fund by name; old map alternatives; no rule mark
+NAME::TFI INTL INC COM	TFI INTL INC COM	NEW	equity				TFI International common stock
+NAME::PIMCO ALL ASSET INSTL	PIMCO ALL ASSET INSTL	NEW	equity				allocation fund (fund of funds); Rule B (allocation -> equity); old map alternatives; CVO to judge
+NAME::ORION PROPERTIES INC COM	ORION PROPERTIES INC COM	NEW	equity				Orion Properties is a REIT company (stock), not a fund; old map equity
+REM	iShares Mortgage Real Estate ETF	REMAP	alternatives	Real Estate	equity	andrew-alternatives	iShares Mortgage Real Estate ETF: a real estate (mortgage REIT) ETF by name [now equity/Financials; updated_by mdpf-secclass-model]
+NAME::COHEN STEERS GLOBAL REALTY I	Cohen & Steers Global Realty I	REMAP	alternatives	International Real Estate	equity	andrew-alternatives	Cohen & Steers Global Realty fund: real estate fund; global scope, table precedent Global Real Estate funds read International Real Estate [now equity/Global; updated_by mdpf-secclass-old-list-reclassify]
+NAME::FLEXSHARES GLOBAL QUALITY REAL ESTATE INDEX FUND	Flexshares Global Quality Real Estate Index Fund	REMAP	alternatives	International Real Estate	equity	andrew-alternatives	real estate index fund, global; table precedent Global Real Estate funds [now equity/Global; updated_by mdpf-secclass-old-list-reclassify]
+NAME::T ROWE PRICE REAL ESTATE	T. Rowe Price Real Estate	REMAP	alternatives	Real Estate	equity	andrew-alternatives	T. Rowe Price Real Estate Fund by name [now equity/US Large Cap; updated_by mdpf-secclass-old-list-reclassify]
+NAME::PACER DATA INFRASTRUCTURE REAL ESTATE ETF	Pacer Data & Infrastructure Real Estate ETF	REMAP	alternatives	Real Estate	equity	andrew-alternatives	real estate ETF by name (data and infrastructure REITs) [now equity/US Large Cap; updated_by mdpf-secclass-old-list-reclassify]
+NAME::FIRST TRUST S P REIT INDEX FUND	First Trust S&P REIT Index Fund	REMAP	alternatives	Real Estate	equity	andrew-alternatives	REIT index fund by name (a fund of REITs, not a REIT stock) [now equity/US Large Cap; updated_by mdpf-secclass-old-list-reclassify]
+NAME::PENDER REAL ESTATE CREDIT I1	Pender Real Estate Credit I1	REMAP	alternatives	Real Estate	fixed_income	andrew-alternatives	Pender Real Estate Credit Fund: real estate fund by name [now fixed_income/Structured Credit; updated_by mdpf-secclass-old-list-reclassify]
+NAME::SHAW PARK MULTI STRATEGF OFFSHORE FUND LP	Shaw Park Multi Strategf Offshore Fund LP	REMAP	alternatives		structured	andrew-alternatives	offshore multi-strategy fund LP: a hedge fund; contract has no alternatives sub-class for it so sub left absent [now structured/Hedge; updated_by mdpf-secclass-model]
+NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES	CCA Eiger Opportunity LP Capital Values	REMAP	alternatives		structured	andrew-alternatives	Opportunity LP, a private partnership fund; sibling NAME::CCA FC HOUSTON OPPORTUNITY LP reads alternatives/Real Estate; sub left absent (no evidence of real estate) [now structured/Hedge; updated_by mdpf-secclass-model]
+NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I	Blackstone Private Credit Fund SHS CL I	REMAP	alternatives		fixed_income	andrew-alternatives	Blackstone Private Credit Fund (BCRED): a private fund by name; no contract alternatives sub-class so sub absent [now fixed_income/Structured Credit; updated_by mdpf-secclass-model]
+NAME::CARLYLE TACTICAL PRIVATE CREDIT N	Carlyle Tactical Private Credit N	REMAP	alternatives		fixed_income	andrew-alternatives	Carlyle Tactical Private Credit fund: private credit fund by name; no contract alternatives sub-class so sub absent [now fixed_income/Structured Credit; updated_by mdpf-secclass-model]

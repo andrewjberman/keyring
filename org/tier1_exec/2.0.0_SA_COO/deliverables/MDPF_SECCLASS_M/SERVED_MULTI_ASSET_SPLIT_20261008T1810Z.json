@@ -1,0 +1,284 @@
+{
+ "token": "multi_asset",
+ "cut_utc": "2026-10-07T07:10:00+00:00",
+ "buckets": [
+  {
+   "bucket": "opal-data-bd",
+   "listed": 25265,
+   "hit_keys": [
+    {
+     "key": "platinum/clients/z08119861/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:38+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08124280/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T00:50:41+00:00",
+     "data_as_of": "2026-10-05",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08125071/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:48+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08219275/concentration.json",
+     "hits": 4,
+     "last_modified": "2026-10-08T05:52:07+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08250779/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:37+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08294888/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:51:57+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08296293/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:41+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08306218/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:51:52+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08319161/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:09+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08320620/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:41+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08320621/concentration.json",
+     "hits": 18,
+     "last_modified": "2026-10-08T05:51:39+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08325329/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:55+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08326151/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:01+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08326911/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:43+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08331413/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:52:46+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08348207/concentration.json",
+     "hits": 18,
+     "last_modified": "2026-10-08T05:51:47+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08361603/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:52:47+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08367003/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:32+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08367108/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:51:40+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08370165/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:31+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08370405/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:39+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08391340/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:38+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08396078/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:45+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08397108/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:41+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08397885/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:51+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08398262/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:01+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08399935/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:02+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08400054/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:21+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z08400735/concentration.json",
+     "hits": 2,
+     "last_modified": "2026-10-08T05:52:22+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0880128/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:51:58+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0880237/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:47+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0880407/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:52:16+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0884828/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:37+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0884841/concentration.json",
+     "hits": 12,
+     "last_modified": "2026-10-08T05:51:42+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0884950/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:51:42+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z0893313/concentration.json",
+     "hits": 6,
+     "last_modified": "2026-10-08T05:52:05+00:00",
+     "data_as_of": "2026-10-06",
+     "post_switch": true
+    }
+   ]
+  },
+  {
+   "bucket": "opal-data-cot",
+   "listed": 1153,
+   "hit_keys": [
+    {
+     "key": "platinum/clients/z09305621/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-08T11:36:56+00:00",
+     "data_as_of": "2026-10-07",
+     "post_switch": true
+    },
+    {
+     "key": "platinum/clients/z09305679/concentration.json",
+     "hits": 1,
+     "last_modified": "2026-10-08T11:36:56+00:00",
+     "data_as_of": "2026-10-07",
+     "post_switch": true
+    }
+   ]
+  }
+ ]
+}

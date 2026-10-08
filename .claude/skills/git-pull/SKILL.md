@@ -64,18 +64,24 @@ do not stack two loops on the same checkout.
 - **Branch:** the loop targets **the currently checked-out branch**, resolved at run
   time (`git rev-parse --abbrev-ref HEAD`) — normally `CLOUD`. It does not hardcode a
   branch, so it stays correct if the checkout is on a different branch.
+- **On a box that has switched to `box/<box>`** (per-box branches, 2026-10-08; `/integrate` "PER-BOX BRANCHES"): only
+  this box writes `box/<box>`, so the fast-forward from `origin/box/<box>` is always a no-op. This loop does NOT take
+  the trunk on such a box. The trunk arrives through the `/integrate` BOX PASS (a merge of `origin/CLOUD` in a drain
+  worktree, then a fast-forward). Leave `/git-pull` unarmed on a switched box.
 
 ## Step 2 — Arm the loop (Monitor tool, persistent)
 
-Use the **Monitor tool** with `persistent: true`, `timeout_ms: 3600000`. Substitute
+Use the **Monitor tool** with `timeout_ms: 1800000` (the tool caps every Monitor at 30 minutes and has no
+`persistent` field). The loop ends itself at 1770 s (29.5 minutes, Andrew-direct 2026-10-08 ~16:2xZ), so no
+`git fetch` or `sleep` outlives it; re-arm on its last line. Substitute
 `<SECONDS>` for the requested cadence (default `900`). The command emits an event only
 on a fast-forward, a blocked divergence, or a fetch failure — silent otherwise:
 
 ```
 Monitor(
-  persistent=true, timeout_ms=3600000,
+  timeout_ms=1800000,
   description="CLOUD auto-pull every <N> (ff-only)",
-  command="cd \"$(git rev-parse --show-toplevel)\" || exit 1; BR=$(git rev-parse --abbrev-ref HEAD); while true; do if git fetch -q origin \"$BR\" 2>/dev/null; then before=$(git rev-parse --short HEAD); out=$(git merge --ff-only \"origin/$BR\" 2>&1); after=$(git rev-parse --short HEAD); if [ \"$before\" != \"$after\" ]; then echo \"[git-pull] $BR $before -> $after fast-forwarded\"; elif printf '%s' \"$out\" | grep -qiE 'not possible|diverg|overwritten|conflict|^error|^fatal'; then echo \"[git-pull] $BR BLOCKED (needs reconcile): $(printf '%s' \"$out\" | head -1)\"; fi; else echo \"[git-pull] $BR FETCH FAILED $(date -u +%Y-%m-%dT%H:%MZ) — if auth, complete one GCM popup then re-arm\"; fi; sleep <SECONDS>; done")
+  command="cd \"$(git rev-parse --show-toplevel)\" || exit 1; BR=$(git rev-parse --abbrev-ref HEAD); END=$((SECONDS+1770)); while [ $SECONDS -lt $END ]; do if git fetch -q origin \"$BR\" 2>/dev/null; then before=$(git rev-parse --short HEAD); out=$(git merge --ff-only \"origin/$BR\" 2>&1); after=$(git rev-parse --short HEAD); if [ \"$before\" != \"$after\" ]; then echo \"[git-pull] $BR $before -> $after fast-forwarded\"; elif printf '%s' \"$out\" | grep -qiE 'not possible|diverg|overwritten|conflict|^error|^fatal'; then echo \"[git-pull] $BR BLOCKED (needs reconcile): $(printf '%s' \"$out\" | head -1)\"; fi; else echo \"[git-pull] $BR FETCH FAILED $(date -u +%Y-%m-%dT%H:%MZ) — if auth, complete one GCM popup then re-arm\"; fi; s=<SECONDS>; r=$((END-SECONDS)); [ $r -lt $s ] && s=$r; [ $s -gt 0 ] && sleep $s; done; echo \"[git-pull] $BR loop ended at 29.5 min (bounded; the harness kills Monitors at 30 min) -- re-arm /git-pull to continue\"")
 ```
 
 Note the returned **task id** — that is what `/git-pull status` (`TaskOutput(id, block=false)`)

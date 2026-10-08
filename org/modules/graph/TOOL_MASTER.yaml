@@ -9,9 +9,28 @@ population_authority: org/modules/graph/comp-coverage-map.yaml -- tools[] + meta
   AN ATTRIBUTE STORE AND IS NEVER A POPULATION SOURCE (CTO ruling 20260728T212335Z). gen_tool_registry.py
   FAILS LOUD on any population divergence in either direction -- no silent skip.
 counts:
-  tools: 99
-  population_authority_count: 99
+  tools: 100
+  population_authority_count: 100
 tools:
+  comp-activity:
+    concern: WHO is working on a surface, PER BOX -- commits, open task orders' <paths>, open deploy entries
+      and the estate graph's view; the cross-box OVERLAP map and per-box figures
+    canonical_call: comp-activity who <path-or-surface> [--hours 24] [--graph] ; comp-activity overlap
+      ; comp-activity boxes
+    classification_status: UNCLASSIFIED -- present in the population authority, no enumeration primitive
+      resolved. NOT a claim that it covers nothing; a claim that this generator could not determine it.
+    state: null
+    derived: null
+    denominator_construction: null
+    knows_own_denominator: null
+    control_established: null
+    universe: null
+    excludes: []
+    cost_band: UNKNOWN
+    primitives: []
+    engines: []
+    bounding: []
+    status: active
   comp-adversary:
     concern: null
     canonical_call: null

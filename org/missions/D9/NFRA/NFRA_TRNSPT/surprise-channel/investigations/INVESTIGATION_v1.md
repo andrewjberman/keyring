@@ -859,6 +859,72 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "C3: one scheduled fire with a window reaching 2026-08-11 lands that message (analysis round 3 s.2: the named admitted message).",
     "world_is": "The fire landed 3 other admitted messages; 2026-08-11 is absent from bronze, cause not readable from the counts.",
     "notes": "FWD-7's DONE WHEN (a real feedback email filed by the ordinary daily run, no person starting it) is met by the 3 messages. No message content was read or printed; keys and counts only."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-08T17:55:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TR-c-5: the opal-gateway manifest deployed_commit aa75078e1b72a28219e6148d3ec8e9bf705ea111 is not an object in this repository, so mail_route.py deployed-vs-HEAD cannot be compared by git show; AC1 left failing, no verdict written.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/ec2/EC2_MANIFEST.json:503 deployed_commit aa75078e1b72a28219e6148d3ec8e9bf705ea111; git cat-file -t on it: could not get object info; git show of it:mail_route.py: fatal bad object (sha256 of the empty read e3b0c442...)",
+        "commit 6a5d5e8d60 (the deploy record, 2026-10-07) is in the repo; mail_route.py has NO diff between 6a5d5e8d60 and HEAD (git diff --stat empty), which bounds but does not replace the deployed-commit compare",
+        "positive control ran: mail_route.py at 03a23664b4~1 vs HEAD DIFFERS (sha256 e5b6409c... vs c7bf6ad9...), 13 changed lines"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-c-5: the manifest's deployed_commit is a commit whose mail_route.py can be read with git show and compared with HEAD.",
+    "world_is": "The commit aa75078e1b is absent from this repo (deploy record 6a5d5e8d60 names it, source commit is not reachable here); the worker's record carries the facts and no MAIL_ROUTE line, so r5_checks c5-record reads FAIL.",
+    "notes": "The issuer may read the same compare against a repo that holds the commit, or accept the 6a5d5e8d60 bound; that is a ruling, not the worker's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T19:25:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Round-5 analysis E1 asks the 20261007T233013Z run record whether the 2026-08-11 message was listed and which admission test failed; run.json keeps totals only and holds no message id or per-test flag for a non-admitted candidate, so the question is answered by a re-classification read instead (decomposition round 6, ruling 1).",
+    "disarm_owner": "2.0.0_SA_COO~T2 (issuer act TR-e-6)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/pull.py:134-190: run() adds a non-admitted candidate to candidates, near_miss, excluded_trade_update and not_landed_not_admitted and continues; no per-message entry is written",
+        "row NFRA_TRNSPT-D2-S2 grounding: run.json numeric fields only (candidates=99 ingest=3 near_miss=96 not_landed_not_admitted=96)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO round-5 analysis @a8931c9d12 E1 (1): from the fire's run record, read on dell2, is the 08-11 message's id present in the listing, and each admission test's result as pass/fail flags.",
+    "world_is": "The run record cannot answer it: it stores counts, not the listing or per-message flags. The decisive read is a gateway re-listing of 2026-08-10..12 for the pull's sender table with criterion.classify, flags only.",
+    "notes": "A run record that kept per-candidate flags (date, sender index, four booleans) would make the next such question a store read; that is a design option for the CTO, not built here."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T19:41:17Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "TR-g-7: the ruled new silver column admission_class makes two existing test_outlook_silver.py assertions fail (19-column pins); the file is outside this order's paths, so the suite check is red until the issuer amends them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/transcripts/scripts/tests -q -p no:cacheprovider -k 'outlook or mail or encrypted' --ignore=data/transcripts/scripts/tests/test_eod_voice.py: 2 failed, 99 passed",
+        "data/transcripts/scripts/tests/test_outlook_silver.py:149-153 test_row_columns_and_types pins set(row) to 19 names without admission_class; :232 test_the_wipes_limits_travel_inside_the_parquet asserts table.num_columns == 19 (now 20)",
+        "test_eod_voice.py fails at collection (ModuleNotFoundError: test_teams_chat_tenant), unrelated to this order and outside the -k filter's reach; excluded with --ignore"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-g-7 build item 4: silver gets a new column admission_class (schema updated), and the order asks existing outlook tests to stay green without changing an existing test's expectation.",
+    "world_is": "Adding the column is the ruled semantic and moves the silver row from 19 to 20 columns; the two pins are exact-set / exact-count assertions in a file this order does not grant. Both criteria (g7-class, g7-gold) pass; only the issuer's drain suite is red.",
+    "notes": "Fix is two lines in test_outlook_silver.py: add admission_class to the expected set and 19 -> 20. The worker did not edit it (refusal clause)."
   }
 ]
 ```

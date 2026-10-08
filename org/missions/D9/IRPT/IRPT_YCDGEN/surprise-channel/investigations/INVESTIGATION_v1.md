@@ -2088,3 +2088,249 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Fix shape (a cell, not yet cut): project the success-path status the same way the refusal path does, so internal_correlation_id never reaches the wire. Ledger irpt-ycdgen-r6-branch-b2-20261006 stays OPEN with leg F1 failed at this point; nothing on it is re-run before the artifact is measured (NEVER-2)."
 }
 ```
+
+## IRPT_YCDGEN-W6-S1 -- no schema change can make a regeneration byte-identical to the committed AnalysisReport.ts: the generator cannot emit the committed form and its header carries the schema sha256
+
+```json
+{
+  "id": "IRPT_YCDGEN-W6-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T07:50:00Z",
+  "one_line": "YCD-u-6 AC2 is unreachable: with the OPAL_ENGINE branch added the generator output differs from the committed type first at line 5 (the Source sha256 line) and in 43 committed lines no schema can make it emit.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "YCD-u-6 contract R19: the generator, run to a temporary directory against the new schema, produces an AnalysisReport.ts byte-identical to the committed one at portal d1b21c97.",
+  "world_is": "u6_checks.py regen (a copy of gen-wire.ts run from portal/ with --no-install, out-dir in a temp tree, portal tree unchanged before and after): against the BASE schema a regeneration drops 56 lines of the committed type (S388 reproduced); against the changed schema (sha256 9c55f7c9b8fd0a52956cc394d28859f9917cf4aeca7413530d546496d00b5b67) the generator wrote 241 lines / 7810 bytes, the committed file is 149 lines / 5314 bytes, identical False. FIRST DIFFERING LINE 5: generated ' * Source sha256: 9c55f7c9...' against committed ' * Source sha256: 1bd0dc85...'; the header hashes the schema, so ANY schema change moves it. Beyond line 5 the committed file holds declarations the generator has no code to emit (renderModule prints one export per schema, no descriptions as comments, no named aliases, no template-literal types): AnalysisSectionNotAvailableReason, AnalysisReportOpalSectionWire, AnalysisReportOpalWire, AnalysisReportAnyWire, the INPUT_MISSING:${string} member and the '/** v2 discriminator' comment; all six tokens measured absent from the generated output. The type generated for the changed schema is an intersection 'Base & (YCHARTS form | OPAL form)', not the committed interface plus the hand-added OPAL declarations. The other 26 generated files are identical between the base-schema run and the changed-schema run. A regeneration therefore still replaces the committed hand-added OPAL declarations.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py regen output (this order, run from the worktree root): rc=1, 'FIRST DIFFERING LINE 5', 'DIFF: 135 lines only in generated, 43 lines only in committed', 'MEASURE base schema: a regeneration drops 56 lines'",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts at d1b21c97: renderModule emits one export interface or type per schema; no description comments, no named aliases",
+      "portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts at d1b21c97 lines 96-149 (the hand-added block)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A decision is owed, not by this worker: extend the generator to emit the OPAL declarations, or move them to a file the generator does not write, or re-stamp the committed header by hand after each schema change. Until then nobody runs gen-wire into contracts/wire/; iv-e-26.wire-regen.test.ts and any test that calls generate() will still rewrite or fail on this file. No existing branch was changed to force a match."
+}
+```
+
+## IRPT_YCDGEN-W6-S2 -- the OPAL_ENGINE branch turns existing readers red: five python tests, two portal content pins and the lambda source map's schema sha pin
+
+```json
+{
+  "id": "IRPT_YCDGEN-W6-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T07:50:00Z",
+  "one_line": "With the branch in, u6_checks.py census finds 5 python tests and 2 portal content pins newly red against the base schema, plus a stale sha256 pin in lambda-source-map.json; none is fixable inside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "YCD-u-6: every reader of the schema is named and reads the new branch without error (AC3).",
+  "world_is": "Measured by u6_checks.py census, each reader run under the changed schema and, if red, again under the BASE schema swapped into the working tree (restored afterwards; sha printed). NEW RED against base: (1) _contracts/tests/test_analysisreport_v2.py::test_v1_untouched (pins the v1 file sha256 1bd0dc85 and equality with the packaged copy); (2) export/tests/test_packaged_contracts_match_docs.py[AnalysisReport.schema.json] (the packaged copy under _contracts/ is byte-equal to the docs copy; it is outside this order's paths and still v1, sha 1bd0dc85); (3) ycharts/extract/tests/test_publication.py::test_committed_three_variant_pdfs_preserve_denominators_and_undated_rows[overview, comparison, multicomp] (3 tests: it validates a PARTIAL view with dict(schema, required=list(view)); the v1 required members now live in $defs/ycharts under a top-level oneOf, so the partial view is refused; any root that also validates OPAL documents cannot keep the vendor members in its root required list); (4) portal fe-s-13/content-pins.test.ts: 'AnalysisReport.extraction_validation: no longer REQUIRED' and 'AnalysisReport.vendor_artifact: no longer REQUIRED' (same cause as 3; the other four consumed-required members stay in the root required list, which now names the five members both forms share); (5) infra/aws/lambda/ci/lambda-source-map.json carries the docs schema sha256 1bd0dc85 for two packagings, now stale. UNCHANGED and green: test_undated_analysis (12), test_owned_report (32), test_repository (24); the 7 portal tests failing at base (incl. unprojected_grant) are identical before and after. The deployed validators (export/submit_installed.py, reports/resident_installed.py, reports/generate_installed.py, both run_offline_suite.py) read the PACKAGED copy, which carries no OPAL branch until it is synced to the docs copy and re-pinned.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py census output: 'NEW RED 1: [test_v1_untouched]', 'NEW RED 1: [test_the_packaged_schema_is_byte_equal_to_the_published_docs_copy[...]]', 'NEW RED 3: [test_committed_three_variant_pdfs_...]', 'PORTAL NEW AnalysisReport pin problems vs base: 2', 'manifest ... sha256 pin of the docs schema is the BASE sha (STALE after this change)'",
+      "baseline run by hand before the edit: the six python modules 93 passed; portal content-pins, producer-fixtures and fe-s-1 fixtures 15 pass 5 fail, the same 5 failing under the base schema",
+      "infra/aws/lambda/ci/lambda-source-map.json lines 4235 and 4888 (repo_path docs/.../AnalysisReport.schema.json, sha256 1bd0dc85...)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Landing this schema without the follow-ups reddens those tests in the drain: packaged copy sync and the v1 sha re-pin (BCKEND lane), the source-map re-pin, the partial-view test (it reads a root required list that no OPAL-capable root can keep) and portal consumed.ts / content pins. None is touched here: all are outside <paths>."
+}
+```
+
+## IRPT_YCDGEN-W6-S3 -- carrying the OPAL_ENGINE form at the v1 root needed more than a new branch: the root additionalProperties and required moved into $defs/ycharts and two property definitions became anyOf
+
+```json
+{
+  "id": "IRPT_YCDGEN-W6-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T07:50:00Z",
+  "one_line": "A document of the OPAL form cannot validate against the v1 root as it stood (root additionalProperties false, vendor members required, sections and effective_inputs shaped for the vendor form), so the root was restructured while every v1 document and every #/properties pointer stays valid.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 section 1: add the OPAL_ENGINE form as a NEW, ADDITIVE branch; do not change, narrow or remove any existing branch.",
+  "world_is": "What changed in AnalysisReport.schema.json (sha256 9c55f7c9b8fd0a52956cc394d28859f9917cf4aeca7413530d546496d00b5b67): the v1 form is now $defs/ycharts, with the root's old additionalProperties:false and full required list moved into it unchanged and every property referenced from the root properties; $defs/opal_engine is copied verbatim from _contracts/AnalysisReport.v2.schema.json $defs/opal_engine; the root is oneOf those two, with required narrowed to the five members both forms share (request_ref, effective_inputs, sections, disclosures, release); a root provider property (enum YCHARTS or OPAL_ENGINE, optional on the v1 form) is added. The root properties stay so #/properties/request_ref, sections, extraction_validation, undated_sections and extraction_coverage (analysis-report.response.schema.json; test_owned_report.py) keep resolving; properties.effective_inputs and properties.sections.items are now anyOf [v1 definition, OPAL definition], and undated_sections' internal refs point at #/properties/sections/items/anyOf/0/... Measured: 7 AnalysisReport documents in 10010 tracked json files (outer plus portal); 2 valid before, the same 2 valid after, 0 regressions, 2 newly valid (the v2 OPAL and v2 YCHARTS fixtures), 3 invalid both; the OPAL fixture is valid and the vendor-member and NOT_AVAILABLE-without-reason fixtures are refused. The file is re-serialised with json.dumps(indent=2), so the diff is larger than the change.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py schema output: 'COUNT: 7 documents; valid before 2; valid before and after 2; valid before and NOT after 0; newly valid 2; invalid both 3' and six BRANCH lines as expected",
+      "base schema bytes: git show 1974945570:docs/contracts/investor-reporting/v1/AnalysisReport.schema.json sha256 1bd0dc85847690b277e3a3011bcbe500a02820792cd53a38a1201fc3c55d153f"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "A purely additive change (new $defs and an optional provider only, root untouched) would keep every reader green but leave the OPAL form invisible to the root validator and to the generator, which reads the root. Which reading the CTO's ruling (msg 1194) meant is the issuer's to confirm; the worker took the reading that makes the root carry the form."
+}
+```
+
+## IRPT_YCDGEN-W6-S4 -- the analysis-report response schema requires extraction_validation, so a response slice of the OPAL form is refused
+
+```json
+{
+  "id": "IRPT_YCDGEN-W6-S4",
+  "project": "IRPT_YCDGEN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T07:50:00Z",
+  "one_line": "analysis-report.response.schema.json data requires request_ref, sections and extraction_validation; an OPAL_ENGINE report has no extraction_validation (it has computation_validation), so its sections slice does not validate against the response contract even though the sections pointer now accepts the OPAL section shape.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 section 1: every reader of the schema is read against the new branch.",
+  "world_is": "u6_checks.py census builds the response validator over the five pointers into the changed schema (registry of the v1 schemas) and validates a slice from the v1 valid fixture (request_ref, sections, extraction_validation): VALID; the same slice from the v2 OPAL valid fixture (request_ref, sections): invalid (a required member of the response data is absent). The five pointers all resolve in the changed schema.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py census: READER [response] ... 'AnalysisReport.valid.json VALID; AnalysisReport.v2.opal.valid.json invalid'",
+      "docs/contracts/investor-reporting/v1/responses/analysis-report.response.schema.json lines 48-70 (data required: request_ref, sections, extraction_validation)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "The response schema is outside this order's paths and the served OPAL route is not this cell's; recorded so the response contract is read against the OPAL form before anyone serves it through this route."
+}
+```
+
+## IRPT_YCDGEN-D2-W6-S1 -- With gen-wire.ts reading AnalysisReport from the v2 schema, the generated body is not identical to the committed AnalysisReport.ts: the committed file
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:20:00Z",
+  "one_line": "With gen-wire.ts reading AnalysisReport from the v2 schema, the generated body is not identical to the committed AnalysisReport.ts: the committed file is hand-edited (annotation, optional provider, three hand-added OPAL types), the generator emits one union type.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 section 2 R19 (recut): the generated AnalysisReport.ts body equals the committed one (header excluded); section 1: the OPAL_ENGINE form is carried by the generated type.",
+  "world_is": "u6_checks.py regen (bun --no-install from portal/, schemaFilePath('AnalysisReport') = the v2 file, source header cites infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json): generated body 134 lines, committed body 139 lines; FIRST DIFFERING BODY LINE 2: generated '  readonly provider: 'YCHARTS'' vs committed '  /** v2 discriminator (IRPT_BCKEND PRD v0.28 item 29). ... */' followed by 'readonly provider?: 'YCHARTS''. The generator renders the schema's top-level oneOf as `export type AnalysisReportWire = {...YCHARTS...} | {...OPAL_ENGINE...}` (inline, provider required on both). The committed file keeps `export interface AnalysisReportWire` (YCHARTS members only, provider optional) and appends hand-added AnalysisSectionNotAvailableReason (template-literal union for reason), AnalysisReportOpalSectionWire, AnalysisReportOpalWire (request_ref and disclosures and release as indexed access into AnalysisReportWire) and AnalysisReportAnyWire. Last change to the committed file: portal 81bbeba2 (YCD-u-6-adjacent YCD-e-6, Analysis tab reads the OPAL_ENGINE form), whose in-file comment says 'Hand-added beside the generated v1 interface'. The generator edit itself is correct and complete for this cell (v1 byte-frozen, every other contract unchanged); equality cannot be reached without editing a schema (reason as a pattern, provider optional) or the committed type or the generator's union rendering, none of which this cell may do.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py regen output 'FIRST DIFFERING BODY LINE 2' and 'DIFF: 33 lines only in generated, 38 only in committed'",
+      "portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts lines 92-149 at d1b21c97 (hand-added OPAL types)",
+      "consistent with row IRPT_YCDGEN-W6-S1 (measured on the v1-edit attempt)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Consumers that index AnalysisReportWire['request_ref'] and the three OPAL names depend on the committed shape, so replacing the committed file with the generated union would break them. A next cell has to choose one of: teach the generator to emit the interface-plus-OPAL-types form from the v2 schema, or drop the hand-added block and migrate the consumers to the union. AC2 is recorded FAIL, not forced."
+}
+```
+
+## IRPT_YCDGEN-D2-W6-S2 -- Three python tests among the readers of the AnalysisReport schemas fail in this worktree for reasons that do not touch either schema: a routes.json co
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:21:00Z",
+  "one_line": "Three python tests among the readers of the AnalysisReport schemas fail in this worktree for reasons that do not touch either schema: a routes.json count of 19 where the test expects 20 (two tests), and an absent brand asset (one test).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-u-6 AC3: every reader of either AnalysisReport schema is named and its tests pass.",
+  "world_is": "u6_checks.py census runs 20 python tests (33 outer readers outside org/, found by searches A and C; 6 portal readers named, not run): 17 pass; test_owned_request_contracts.py::test_public_routes_are_declared_against_the_installed_status_handler and test_upload_contract.py::test_route_denominators_are_measured_and_upload_is_declared_against_generate both fail 'assert 19 == 20' on the length of a route list; ycharts/research/tests/test_opal_producer.py::test_the_real_layout_renders_the_pdf_with_the_not_in_this_version_line fails 'LayoutRefused: brand asset absent in 2 root(s): deck_generation/brand_spec/brand.json (set IRPT_BRAND_SPEC)'. test_upload_contract.py fails identically when run from the main checkout C:/dev/ajb_workspace, and deck_generation/brand_spec/ is absent from the main checkout and untracked in this worktree. v1 is byte-equal to its merge-base copy and the only portal edit is gen-wire.ts, which no python test reads, so none of the three can be caused by this cell. Consistent with the 19-vs-20 route count carried to the CTO's analysis in row IRPT_BCKEND-S391 (stale api/routes.json).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "u6_checks.py census output 'TESTS: 20 run, 3 failed [...]'",
+      "pytest E lines: 'assert 19 == 20' (x2) and 'LayoutRefused: brand asset absent in 2 root(s)'",
+      "pytest of test_upload_contract.py from C:/dev/ajb_workspace: 1 failed, 7 passed (same test)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "AC3 is recorded FAIL by the criterion's own wording (every test passes). The census names the three so the issuer can rule them out of the reader set or fix them in their owning cell."
+}
+```
+
+## IRPT_YCDGEN-D2-W6-S3 -- the generator emits an invalid `interface` for the v2 union; the committed generated AnalysisReport.ts does not typecheck and two wire files are outside this order's paths
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W6-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~6",
+  "surfaced_at": "2026-10-08T17:41:00Z",
+  "one_line": "The generator emits `export interface AnalysisReportWire {..} | {..}` for the v2 union, which is not valid TypeScript, so the committed generated AnalysisReport.ts fails the portal typecheck (35 syntax errors); wire/index.ts and wire/responses.ts also name the hand-added types and are outside this order's paths.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "YCD-v-6 R20: the committed AnalysisReport.ts equals the generator's output from v2, every consumer reads the generated union, the portal typechecks, and its InvestorReporting tests pass as they did. Order bars a gen-wire.ts edit and limits the write grant under contracts/wire/ to AnalysisReport.ts.",
+  "world_is": "(1) renderModule tests `body.startsWith('{') && body.endsWith('}')` to choose `interface`; a union body `{...} | {...}` passes that test, so gen-wire.ts line ~421 emits `export interface AnalysisReportWire {...} | {...}`. bun typecheck (tsc -b --noEmit) on the regenerated file: 35 errors, all TS1109/TS1005/TS1011 in contracts/wire/AnalysisReport.ts lines 94-141. (2) Measured with a TEMPORARY, uncommitted edit that changes only that one keyword to `export type AnalysisReportWire = {`, typecheck of the whole portal is rc 0 with the consumers migrated here (adapt.ts, contracts/index.ts, coverage.test.ts; investor-reporting.ts needed no edit), but ONLY with two further temporary edits to files this order may not write: contracts/wire/index.ts (re-exports AnalysisReportAnyWire, AnalysisReportOpalSectionWire, AnalysisReportOpalWire, AnalysisSectionNotAvailableReason, no longer exported) and contracts/wire/responses.ts (imports AnalysisReportOpalWire and reads AnalysisReportWire['extraction_validation'|'undated_sections'|'extraction_coverage'], members only the YCHARTS branch has). (3) The committed branch state is therefore: AC1 PASS, typecheck FAIL (35 errors in AnalysisReport.ts, which also hide any semantic errors elsewhere), and the InvestorReporting suite has exactly one test that was green at d1b21c97 and is red here, iv-e-17.regenerated.test.ts 'IVE17-AC2 -- the regenerated wire carries every landed ask, and the portal typechecks clean', which runs tsc and fails on the same 35 errors. (4) Side finding: running the portal suite in the real tree executes iv-e-26.wire-regen and rewrites every file under contracts/wire/; the rewrite changed ExportBundle.ts, ExportReceipt.ts, HoldingsSnapshot.ts, index.ts and responses.ts, so those five already differ from the generator's output at d1b21c97. The worker restored all of them from HEAD (git status clean apart from the four paths in this order) and v6_checks.py tests runs both trees in temporary copies so it cannot recur.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "v6_checks.py typecheck: 'rc=2 ; 35 error line(s)' and '35 error(s) in src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts'",
+      "v6_checks.py tests: 'green at d1b21c97: 900 ; of those not green at head: 1' naming iv-e-17.regenerated.test.ts IVE17-AC2",
+      "portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts renderModule, the `body.startsWith('{') && body.endsWith('}')` choice between interface and type",
+      "temporary experiment: typecheck rc 0 with the interface->type keyword change plus the two wire/index.ts and wire/responses.ts edits described above (not committed; reproducible from the description)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "ARMED because draining the portal branch as it stands lands a tree that does not typecheck. Disarm: either do not drain dc88c4f7 plus this cell's portal commit until a cell with write grants on gen-wire.ts (union bodies emit `export type`), wire/index.ts and wire/responses.ts (drop the four hand-added names, derive the YCHARTS slice with Extract) has run, or amend this order's paths to include them and re-run. The consumer migration in this order is correct and complete against that fixed shape."
+}
+```
+
+## IRPT_YCDGEN-D2-S1 -- dell2 F1 retry blocked by construction: the only Opal-served principal is Andrew's own sign-in
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T17:15:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 F1 retry (Andrew 'HAVE DELL2 RETRY'; CTO ruling CTO_RULING_IRPT_YCDGEN_FWD1_DELL2_RETRY_20261008.md) cannot meet conditions 1 and 4 together: the one principal a seat can sign in as is served by the YCharts producer, and the only Opal-served principal is Andrew's own sign-in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "The ruling counts a dell2-made run when it goes through the deployed portal route as an authenticated Cottonwood-allowed principal, on one real Cottonwood portfolio, ends in an Opal-made Overview read back, with zero YCharts calls measured.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:121 OPAL_PRODUCER_PRINCIPALS = ('andrew@opalinvest.com',); producer_for (:126-131) sends every other principal to the YCharts path; :115-120 say the list changes only on Andrew's word and 'No other principal goes on this list'. The one seat-usable Cottonwood-allowed principal is svc-irpt-analysis@opalinvest.com (userType service, allowedFirmIds cottonwood; IRPT_MVP_Y/live_walk/svc_principal.py:30-60): a run as it would take the YCharts path, so condition 4 fails and a vendor call would be made. Signing in as Andrew is not a seat act. No real Cottonwood holdings file is held on dell2 (repo files are AAPL/VNQ test portfolios). UNMEASURED: whether the upload's symbol resolve contacts the provider on the Opal path (inferred from the provider lease at resident_worker.py:737-744, not traced).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident_worker.py:112-131 at dell2 CLOUD 8442ad9b0a",
+      "svc_principal.py:30-60",
+      "portal route map: api-client.ts:15,147,160-165; ProspectComposer.tsx:266-325; investor-reporting.ts:1325-1350"
+    ]
+  },
+  "notes": "No run was made: running as the service principal would itself be a YCharts call. Unblocks on Andrew's word, one of: (a) add svc-irpt-analysis@opalinvest.com to OPAL_PRODUCER_PRINCIPALS for this run (a resident release) and name the real Cottonwood holdings file to submit; or (b) the organic arm, Andrew's own run. Result sent to 0.0.0_AB_MSTR~DELL2 per the ruling."
+}
+```
+
+## IRPT_YCDGEN-D2-S2 -- round-close-check reads an empty expected to_id and refuses every round-6 proof
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T18:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "round-close-check.py refuses all 19 round-6 proof instances with \"names to_id '<the order's own id>', not ''\": the expected to_id it compares against is empty",
+  "spec_asserts": "round-close-check.py grades each complete order's proof instance against that order's to_id, so a well-formed instance whose to_id is the order's own id passes.",
+  "world_is": "`python .tools/round-close-check.py --project IRPT_YCDGEN --round 6` at dell2 CLOUD 2c287dec89 (2026-10-08 ~18:2xZ): ORDERS 19 complete; PROOF-BAD 19 of 19, each line 'names to_id IRPT_YCDGEN.TO-YCD-<x>-6.<slug>, not ''' -- the instance's to_id is the order's file stem and the expected value is empty; PROOFS proof_ok=0 proof_bad=19; verdict=REFUSED. The same instances pass .tools/proof-of-spec-check.py (VALID rc=0 on u-6 and v-6 today). UNMEASURED: which code path yields the empty expected id (likely the tree task-orders/ layout vs a flat task_orders/ read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round-close-check.py output, 19 PROOF-BAD lines, verdict=REFUSED",
+      "proof-of-spec-check.py VALID rc=0 on IRPT_YCDGEN.TO-YCD-v-6 instance @e02ad46806"
+    ]
+  },
+  "notes": "Not a round-6 defect: the round's close also waits on FWD-1 (F1 release held to ~20:0xZ). Owner of the checker to confirm; this seat keeps working."
+}
+```

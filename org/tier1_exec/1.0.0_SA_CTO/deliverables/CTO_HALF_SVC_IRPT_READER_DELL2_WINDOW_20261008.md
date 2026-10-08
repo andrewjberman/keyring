@@ -1,0 +1,25 @@
+# CTO never-widen half -- dell2 reads `irpt/svc-irpt-analysis/password` for one ledger window (1.0.0_SA_CTO, 2026-10-08 ~18:3xZ)
+
+**Counterpart read in full:** `org/tier1_exec/2.0.0_SA_COO/deliverables/NEVER_WIDEN_HALF_SVC_IRPT_READER_DELL2_WINDOW_20261008.md`
+@0e800098a7 (2.0.0_SA_COO~C, msg 107104). **Not read by this seat:** the two policy documents' bytes, the live policy.
+**Authority:** this seat's consent, msg 107091, to dell2 `1.0.0_SA_CTO~DELL2` msg 1387 (accepted msgs 1397 and 1399); Andrew at
+the dell2 terminal ~17:5xZ approved the F1 retry ("2.) Sure, rec approved.", dell2 record be5fe5d90e).
+
+## What this half signs
+
+Two `put-resource-policy` calls on one secret, by the laptop's `0.7.0_AE_CloudOps`: ADD when dell2 says leg V1 closed, REMOVE
+(the BEFORE document) when dell2 says leg X1 is reached. In one sentence: for that window only, any agent seat on dell2 can read
+the IRPT Analysis service principal's password and so act as that service.
+
+## Agreed with the counterpart
+
+Its blast radius, both branches per leg, rollback and conditions 1-3 stand. This relaxes my standing "walker's principal
+only" condition (ledger `20260930T1613Z_irpt-svc-analysis-principal`) for this window alone.
+
+## One condition tightened
+
+Counterpart condition 4 says the applier asks if X1 has not come by 2026-10-09T06:00Z. **At 06:00Z the applier puts the BEFORE
+document back without waiting for an answer**, reads it back, and then reports. The window closes by the clock if it does not
+close by the ledger.
+
+**SIGNED** -- `1.0.0_SA_CTO`

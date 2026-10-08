@@ -2795,3 +2795,152 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W27-S1 -- The quantity closed alone separates the 175 repeated-id rows; the contract key keeps lot_id because the whole day needs it.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T10:46:26Z",
+  "one_line": "Among the 175 repeated-id realized rows the quantity closed alone is already unique (175 of 175), so lot_id is not necessary within those rows; the key is lot_id plus quantity because lot_id is necessary over the whole 2,523-row day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-47 item 1 and DB28-1-AC1: the smallest column set beginning with the current key under which the 175 rows are unique, with each key column necessary (dropping any one leaves fewer than 175).",
+  "world_is": "MEASURED (LOT_KEY_E1.json): over the 175 rows quantity alone separates all 175 (every other table column fewer), so within those rows only quantity is necessary and key_columns is [quantity], its drop leaving the current key at 87 of 175. Over the whole day frame (2,523 rows) dropping lot_id from the contract key (account, date, lot_id, quantity) leaves 2,357 unique, so lot_id stays necessary to the table key and the contract primary_key is the current key plus quantity. The minimality list therefore reports the necessary column within the 175, and the contract key is the wider five-column key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/LOT_KEY_E1.json columns_of_the_contract_key_each_dropped_one_at_a_time, whole_day_frame"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W27-S2 -- The lots peak is flat across batch sizes (about 1.7 GB): a batch-independent component sets it, and 250 per batch is over 900 s.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T14:07:26Z",
+  "one_line": "Batching bounds the lots stage but the peak does not fall with the batch size: 1,713 MB at 250 accounts per batch and 1,735 MB at 1,000, so a component the batch does not shrink sets it; and 250 per batch takes 905.7 s in total, over 900.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-48 item 1: the lots stage processes accounts in bounded batches so its peak memory does not grow with the population; DB28-2-AC1 grades the lots peak flat across two batch sizes (max/min <= 1.25).",
+  "world_is": "MEASURED (BATCHED_E2.json, 7,604 accounts, 2026-10-06, pandas 3.0.6 not the served 2.2.3): batch 250 lots 684.61 s / 1,713.4 MB, total 905.67 s; batch 1000 lots 495.54 s / 1,735.3 MB, total 768.91 s; max/min 1.013. Round 27's unbatched run reached at least 2,759.5 MB and refused. The peak is flat across batch sizes, so what sets it was not found to be the batch; the balance-history scan (paid once, population-wide) and the day's partitions are the batch-independent reads in the stage but were not isolated here. Smaller batches cost wall time (31 batches vs 8). The population at run time was 7,604 against the order's 7,597.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/BATCHED_E2.json runs, lots_peak_max_over_min"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S34 -- DB-b-49 recompose control misses on 440 of 2,299: BD's split halves do not chain to BD's own full segment
+
+```json
+{
+  "id": "IRPT_DASHBD-S34",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T17:16:48Z",
+  "one_line": "DB-b-49's recompose control does not hold on 440 of 2,299 accounts: BD's two split halves chained do not reproduce BD's own full-segment gross within 0.35 pp (max 724.16 pp), so on those accounts branch B's right-half gap cannot yet be read as Opal-vs-BD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-49 item 3: the recompose control ((1+left)(1+right)-1 against BD's full-segment gross in the round-18 record) shows the two pulls agree with each other.",
+  "world_is": "MEASURED (TIEOUT_SPLIT_E1.json recompose): compared 2,299, within 0.35 pp 1,859, not comparable 0, max abs diff 724.16 pp. Branch B stands on the rule (tied_both 431 of 2,299 vs 1,149.5; left half 2,220 tied, right half 465). The 440 disagreeing accounts and the outlier were not examined; whether they overlap the 1,868 right-half misses is unmeasured. Next-round candidate for 1.0.0_SA_CTO~DELL2's round-28 analysis.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~28/TIEOUT_SPLIT_E1.json recompose",
+      "commit a556d87e79"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W30-S1 -- fee_amount is zero on every served day of the E2 population's right halves
+
+```json
+{
+  "id": "IRPT_DASHBD-W30-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~30",
+  "surfaced_at": "2026-10-08T19:09:34Z",
+  "one_line": "fee_amount carries no variance over the 1,528 E2 right halves (every window-day value is 0 or null), so its correlation with the gap is undefined and it is listed under drivers_undefined, not drivers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-51 item 2: record drivers as one {component, corr} per component including fee_amount, corr = Pearson correlation of the per-account fee_amount / first-day market_value_eod with the signed gap.",
+  "world_is": "MEASURED (RIGHT_GAP_E2.json statistic, drivers_undefined): the per-account fee_amount sum / first-day market_value_eod takes ONE distinct value (0.0) across all 1,528 accounts, min 0.0 max 0.0, so Pearson is undefined. The check DB29-2-AC2 requires every drivers entry to carry a numeric corr, so fee_amount is recorded in drivers_undefined with its reason rather than as a filled figure; five components remain in drivers (needs >= 3). Whether the gold fee_amount is unpopulated for this firm, or fees are genuinely absent from the served series, was not examined.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~30/RIGHT_GAP_E2.json drivers_undefined"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W30-S2 -- round 18's read_gold fixes its column list; the further components were read by a sibling reader
+
+```json
+{
+  "id": "IRPT_DASHBD-W30-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~30",
+  "surfaced_at": "2026-10-08T19:09:34Z",
+  "one_line": "The imported round-18 reader (tieout_e2_gross -> tieout_e2.read_gold) reads a fixed column list without income_received, fee_amount, day_quality or carried_days, so right_gap_e2.py reads the same partitions with those columns and imports only the constants, _num and segment_days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-51 worker face: round 18's reader of the served series is imported, not restated.",
+  "world_is": "MEASURED (tieout_e2.py read_gold, local cols list): the list is account_id, business_date, market_value_eod, external_flow, income_return, total_return_daily, holdings_price_return_reason; the order needs four columns it lacks, and the list is a function-local, so it cannot be extended by import. right_gap_e2.py::read_gold repeats the partition-listing and GET loop (S3 reads only) with the order's columns; bucket, prefix, number coercion and the segment rule come from the import. 566 partitions listed; all 2,238 distinct accounts requested (the union of the 1,528 E2 and 2,220 control sets) have served rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/tieout_e2.py read_gold",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~30/right_gap_e2.py read_gold"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W29-S1 -- 437 of S34's 440 are not a split-pull defect: BD's net returns chain, and the gross gap is round 18's fee add-back being evaluated on a different value basis per range.
+
+```json
+{
+  "id": "IRPT_DASHBD-W29-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~29",
+  "surfaced_at": "2026-10-08T18:30:00Z",
+  "one_line": "On 437 of the 440 non-recomposing accounts BD's NET returns chain to BD's full-range NET within 0.35 pp (day counts and held flags agree); the gross gap comes from the round-18 fee add-back fees / ((bmv + emv) / 2), which is not additive across ranges and reaches -8.6 on a closing account with a negative fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-27 (round 18) reader: gross = BD net twr + fees / ((bmv + emv) / 2) is a sound gross basis for any range, so halves chained should reproduce the full-range gross (DB-b-49 recompose control).",
+  "world_is": "MEASURED (S34_CLASS_E1.json, 880 landed objects re-read): net chain within tolerance on 437 of 440; 3 are over tolerance on net (0.40 to 0.45 pp) with near-zero opening values; 18 have ending value 0 on the full range (denominator is half the opening value); 30 carry a negative fee on a point; the 724.16 pp outlier has fees -175.99 on a left half with bmv 40.69 / emv 219.04 (add-back -1.36) and -174.9 on the full range with emv 0 (add-back -8.60). The gross basis therefore cannot be compared across ranges of different length on small or closing balances. Not examined: how many of the 9,078 round-18 segments outside S34 carry the same distortion within tolerance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~29/S34_CLASS_E1.json counts, outlier, sub_counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

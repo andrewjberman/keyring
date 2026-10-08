@@ -11,13 +11,21 @@ A reader MUST compare against the live file and FALL BACK TO PARSING on mismatch
 must be able to know it is stale.
 """
 MASTER_PATH = 'org/modules/graph/TOOL_MASTER.yaml'
-MASTER_SHA256 = '5f7d4c041d5f1779c46517f100cac20b0823e2372291fa7bec49e82771aca77e'
+MASTER_SHA256 = '2f777a16e1a8daa5a6a161f132ff7d0ad121f9aa17e0e412244469bb40c53323'
 MANIFEST_PATH = 'org/modules/graph/graph-call-manifest.yaml'
-MANIFEST_SHA256 = 'a4dd261c773f1a418e9a3cb901ed1ed65e1655c6058616643bf5ff66f6545f0d'
+MANIFEST_SHA256 = '6b2b01567d82cbb030fdb8013646efc89731833c0eff66b12f043ef02ab29f47'
 LEDGER_PATH = 'org/modules/graph/comp-coverage-map.yaml'
-LEDGER_SHA256 = 'd102c3dc52a7d42084c911bb44aeaf644a4f6bebbfeb212efd10843a6409244c'
+LEDGER_SHA256 = '6a007b7c2b9f2243a28b58235e5d707c44fa34ef3af10ab91ad418b6d5031cfd'
 
-TOOLS = {'comp-adversary': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
+TOOLS = {'comp-activity': {'canonical_call': 'comp-activity who <path-or-surface> [--hours 24] [--graph] ; comp-activity '
+                                     'overlap ; comp-activity boxes',
+                   'concern': "WHO is working on a surface, PER BOX -- commits, open task orders' <paths>, open "
+                              "deploy entries and the estate graph's view; the cross-box OVERLAP map and per-box "
+                              'figures',
+                   'cost_band': 'UNKNOWN',
+                   'excludes': [],
+                   'status': 'active'},
+ 'comp-adversary': {'cost_band': 'UNKNOWN', 'excludes': [], 'status': 'active'},
  'comp-arity': {'control_established': 'POSITIVE',
                 'cost_band': 'TENS_OF_SECONDS',
                 'denominator_construction': 'TRAVERSED',
@@ -1130,6 +1138,74 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
               'status': 'canonical',
               'tool': 'comp-kuzu',
               'use_case': 'List/inspect cloud resources of a type (all Lambdas, all S3 buckets, all roles).'},
+             {'anti_pattern': 'REFUSED AS DISCOVERY SOURCES FOR THIS QUESTION, each for a measured reason (R-81 '
+                              's.3): comp-estate -- it answers from estate-coverage-resolver.json, generated_at '
+                              '2026-08-20, last_review 2026-07-30, regeneration EXPLICITLY PARKED (CTO 2026-08-14), '
+                              'so it cannot see a Lambda created since August; comp-routes -- ZERO AWS calls, '
+                              'Terraform plane only (23 documented CloudFront behaviours against 29 live); comp-aws '
+                              'derive -- a DERIVE, deprecated for agent use by Andrew-direct, and an 8-minute '
+                              'rebuild to answer a question a read answers; comp-iam gaps/roles/services/stats -- '
+                              'their population is the hand-maintained lambda-source-map.json and they print no '
+                              'plane banner and no scanned denominator (comp-iam live/reconcile/simulate answer '
+                              'AUTHORIZATION, never existence). AND: reading a 0-hit run as CONFIRMED ABSENCE -- it '
+                              'is a measured zero over the node denominator the tool prints, at the vintage it '
+                              'prints.',
+              'canonical_call': "comp-find --corpus aws '<name-or-arn pattern>' [NODE_TYPE ...] [--all | --page N] "
+                                '[--budget N]   # pathspecs ARE node_type filters (LAMBDA, IAM_ROLE, S3_BUCKET, '
+                                "...); --name '<glob>' matches name/arn only; --cursor resumes a budget-stopped pull",
+              'cost': '~5-10s per pull -- MEASURED 7.19s over 2590 aws nodes on 2026-09-19 (default budget 90s, '
+                      '--budget N to change, --budget 0 unbounded)',
+              'freshness': 'the SERVED aws plane, and every run STATES ITS OWN AGE AND ITS OWN DENOMINATOR: a '
+                           'VINTAGE line (`Built from the estate as of <UTC>` + the stitch source + manifest sha), a '
+                           'DENOMINATOR line (`N hit(s) across M aws node(s) scanned [corpus=aws]`), a DRIFT line '
+                           'banding every SCANNED node by drift_class (DECLARED / IN_REPO / LIVE-no-DECLARED / '
+                           'AWS_MANAGED / MULTI_STATE_MANAGED / LIVE-INCREMENTAL / unset), and a WITHIN BUDGET / '
+                           'BUDGET REACHED line that NAMES the unit a deferred pull stopped at rather than returning '
+                           'a short list silently. Nothing here is inferred from client time.',
+              'id': 'cloud.inventory.subject_composition',
+              'layer': 'cloud',
+              'mode': 'query',
+              'notes': 'NEAR-DUPLICATES COMPARED AT THE CUT, and why each is a DIFFERENT use case (the full record '
+                       "with the sieve's denominator is "
+                       'org/missions/D14/LGIC/LGIC_LGCTFM/deliverables/0.9.0_WK_LGIC_LGCTFM~2/MANIFEST_ENTRY_R4.json): '
+                       'cloud.lookup.nodes_by_type -- lists nodes of ONE TYPE YOU ALREADY NAME off the Kuzu '
+                       'projection; it cannot take a subject token across types and its rows carry NO drift_class, '
+                       "so it cannot answer 'is this live thing declared'. cloud.describe.resource -- ONE resource "
+                       'you have ALREADY IDENTIFIED (exact ARN/name), synthesized; the step AFTER this one. '
+                       'search.graded.find -- the SAME TOOL on the REPO corpus (layer source): it finds what the '
+                       'repo DECLARES and is structurally blind to the LIVE-no-DECLARED class this entry exists to '
+                       'surface. cloud.classes.list -- the 30 resource CLASSES the compiler models (a ceiling), not '
+                       'instances. cloud.metrics.summary / cloud.diff.snapshot -- per-class COUNTS and snapshot '
+                       'deltas off a derive, an aggregate rather than an enumeration you can act on. '
+                       'pipeline.keys.enumerate -- S3 KEYS under a prefix (object grain, inside one bucket), not the '
+                       'resource plane. cloud.assets.backfill_census -- OBJECTS in the OPAL_ASSETS monolith per '
+                       'channel, same object-grain distinction. cloud.secrets.inspect -- an inventory scoped to ONE '
+                       'node type with rotation/freshness facets. cloud.debris.coldness_ledger / '
+                       'cloud.similar.resource / estate.dups.duplicate_resources -- all PRESUPPOSE the inventory and '
+                       'rank/compare it. cloud.iam.permission_gaps / cloud.blast.what_breaks / '
+                       'estate.thread.traversal -- the authorization, blast-radius and named-thread questions that '
+                       "R-81's six-way tie was collapsing INTO this one. ISSUED SHAPE NOTE (LGIC_LGCTFM LT-m-1): the "
+                       "round-4 checker's m1-entry arm requires status in (active|current|live); this file's own "
+                       'per-entry schema (:28) and NFRA_GRAPHS s.7 AC1 -- which R-81 quotes to justify this entry -- '
+                       'require `canonical`, and 125 of the 128 pre-existing entries carry it. `canonical` is '
+                       "written here because the manifest's vocabulary governs the manifest; the arm's token set is "
+                       'filed as a BLOCKING surprise row (LGIC_LGCTFM-W2-S35) against the fixed input, not worked '
+                       'around in this file.',
+              'rebuild_trigger': 'none -- there is no refresh an agent runs on this route. The derive is the WRITE '
+                                 'path (cloud.derive.refresh) and comp-aws is DEPRECATED FOR AGENT USE '
+                                 '(Andrew-direct, NFRA_CLDGRPH CG-s-30: an agent reads the SERVED graph and never '
+                                 'derives). If the stated vintage is too old for the question, that is an '
+                                 'estate-schedule matter to raise, not a call to make -- the posture of '
+                                 'cloud.read.served_vintage, one layer up.',
+              'status': 'canonical',
+              'tool': 'comp-find',
+              'use_case': 'What AWS resources EXIST / which live resources compose this subject (a firm, a pipeline, '
+                          'a product, a token) / does this resource exist in AWS at all / what is RUNNING in AWS '
+                          'that the repo never declared -- the live resource INVENTORY, banded by node_type, every '
+                          'hit carrying its own drift_class (DECLARED vs LIVE-no-DECLARED) so existence and '
+                          "declaredness come back in ONE answer. This is the EXISTENCE half of 'what AWS resources "
+                          "exist + how are they typed/connected'; the connected half is "
+                          'cloud.reachability.transitive.'},
              {'anti_pattern': 'manual multi-hop tracing or a full re-derive',
               'canonical_call': 'comp-kuzu "MATCH (a:CloudNode {name:$x})-[*1..3]->(b:CloudNode) RETURN DISTINCT '
                                 'b.node_type, b.node_id  // TEMPLATE: no CLI param binding -- substitute $x with a '
@@ -1247,6 +1323,40 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                           'the graph up to date -- READ the served projection and read the VINTAGE line it prints. '
                           "There is nothing an agent refreshes: the served graph is advanced on the estate's own "
                           'schedule.',
+              'write_path': False},
+             {'anti_pattern': "grepping git log on one box for another box's work, or asking in a message who is on "
+                              'a surface -> comp-activity who',
+              'canonical_call': 'comp-activity who <path-or-surface> [--hours 24] [--graph]',
+              'cost': 'seconds -- one S3 list + cached GETs of the per-commit records; --graph adds one served-graph '
+                      'query',
+              'freshness': 'EDITS: seconds after a commit on a box that runs the post-commit hook (MERGED/PUSHED '
+                           "read from this box's last fetch, age printed); DECLARES and HOLDS: this box's tree; "
+                           "--graph: the served graph's VINTAGE line",
+              'id': 'fabric.activity.who',
+              'layer': 'fabric',
+              'mode': 'query',
+              'rebuild_trigger': 'none -- each box writes its own record at commit time '
+                                 '(.tools/git-hooks/fabric-activity-post-commit.sh)',
+              'status': 'canonical',
+              'tool': 'comp-activity',
+              'use_case': 'Who else is working on this file / folder / Terraform module / Lambda / gold script -- '
+                          'which box, which seat, which commit, which open task order, which open deploy -- before I '
+                          'change it',
+              'write_path': False},
+             {'anti_pattern': "assembling an overlap picture by hand from several boxes' logs -> comp-activity "
+                              'overlap',
+              'canonical_call': 'comp-activity overlap [--hours 24] [--all] ; comp-activity boxes [--hours 24]',
+              'cost': 'seconds -- the same store read as who',
+              'freshness': 'as fabric.activity.who; records carry box_claim (measured from the hook, inferred for '
+                           'backfilled history)',
+              'id': 'fabric.activity.overlap',
+              'layer': 'fabric',
+              'mode': 'query',
+              'rebuild_trigger': 'none',
+              'status': 'canonical',
+              'tool': 'comp-activity',
+              'use_case': 'Where are two boxes getting close -- which surfaces have two or more boxes on them right '
+                          'now, and how is each box loaded',
               'write_path': False},
              {'anti_pattern': 'looking for a rebuild when an answer seems old -> read cloud.read.served_vintage and '
                               'read the VINTAGE line it prints.',
@@ -3514,7 +3624,20 @@ MANIFEST_DOC = {'contract': {'default': 'QUERY',
                                            'undeclared -- the one live citation (molecule SKILL.md Dimension-3 '
                                            'upstream bullet) fixed in the declaring commit; from here the gate '
                                            'polices estate-wide'}},
- 'tools_index': {'comp-assets': {'does': 'READ-ONLY backfill census over the OPAL_ASSETS monolith '
+ 'tools_index': {'comp-activity': {'does': 'WHO else is working on a surface, per box: commits by box (MERGED / '
+                                           'PUSHED / on-box), open task orders whose <paths> cover it, open deploy '
+                                           'entries that hold it, and with --graph what the estate graph says it is; '
+                                           'plus the cross-box OVERLAP map and per-box figures. Engine '
+                                           '.tools/fabric-activity.py over the per-commit activity store (s3 '
+                                           'globgrph fabric/activity/v1) -- every box writes one record per commit',
+                                   'entries': ['fabric.activity.who', 'fabric.activity.overlap'],
+                                   'subcommands': ['who <path-or-surface>',
+                                                   'overlap',
+                                                   'boxes',
+                                                   '--hours',
+                                                   '--graph',
+                                                   '--all']},
+                 'comp-assets': {'does': 'READ-ONLY backfill census over the OPAL_ASSETS monolith '
                                          '(s3://opal-data-assets): per channel folder, per-layer counts/bytes/feeds '
                                          "+ date FRONTIER + 0-byte count, PLUS the channel's declared "
                                          'meta/backfill-status.json (V2-6 schema: frontier/completeness/counts/NAMED '
@@ -6268,6 +6391,13 @@ LEDGER_DOC = {'gap_census': {'gaps': [{'detail': 'no comp-ms; reachable only via
             'surface': 'LOCAL',
             'tool': 'comp-heat',
             'touches_resource': ['freshness']},
+           {'concern': 'WHO is working on a surface, PER BOX -- commits (one record per commit, written by the box '
+                       "that made it), open task orders' <paths>, open deploy entries, and the estate graph's view; "
+                       'the cross-box OVERLAP map and per-box figures',
+            'granularity': 'file',
+            'surface': 'GIT',
+            'tool': 'comp-activity',
+            'touches_resource': []},
            {'concern': 'value-MOTION -- is the CONTENT genuinely changing or frozen-but-fresh? '
                        '(code/config/schema/served-key motion lens)',
             'distinct_from': [{'my_concern': 'value-MOTION (frozen-but-fresh content)',

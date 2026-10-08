@@ -2055,6 +2055,19 @@ packaged member and no build script changes. Check: `deliverables/2.0.0_SA_COO~P
 
 fanout: 1 of 1 chains, cap 8, reason: one file move. Slot ~168.
 
+## 68. ROUND 75, WORKSTREAM ~P (2026-10-08 ~03:4xZ, issuer 2.0.0_SA_COO~P2 on dell2, on row S388 after the owner split)
+
+One regeneration of the portal wire types on DEV d1b21c97 changes 6 files. Four are ~P's: ExportBundle (IB-pr-336), ExportReceipt
+(IB-pr-343), and responses/index (the route table, IB-pr-355). AnalysisReport is IRPT_YCDGEN's (~G2 owns it, msg 1188) and
+HoldingsSnapshot is MDPF_SECCLASS's (relayed to dell1 via ~M2). This cell regenerates ~P's four from their contracts and restores
+the rest. Check: `deliverables/2.0.0_SA_COO~P2/checks/r75/p75_cells.py`, dry-run in worktree ~169 at portal DEV d1b21c97.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-361` | regenerate ExportBundle, ExportReceipt, responses, index from their contracts; nothing else | FWD-2 / FWD-8 | LOCAL (portal) | none | P75-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one regeneration. Slot ~169; portal_ref: d1b21c97 (portal origin DEV).
+
 ## 69. ROUND 76, WORKSTREAM ~P (2026-10-08 ~05:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO's rounds 69-74 analysis @b35c7d8c73, msg 1214)
 
 The CTO's enrichment list names two items, which the CTO numbers "round 75". Round 75 already holds IB-pr-361, so they are cut here
@@ -2067,3 +2080,78 @@ packet only, nothing applied. The PROD print promote follows E2 on Andrew's word
 | `IB-pr-363` | E2: the custody release packet (census at one pin, every member owned, both branches, rollback per function, after-reads) | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; the packet only, nothing applied) | IB-pr-351/352/355/356/359 (drained) | P76-b |
 
 fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (E1: rows + its deliverable; E2: a possible source-map re-pin + its deliverables). Slots ~170, ~171.
+
+## 70. ROUND 77, WORKSTREAM ~P (2026-10-08 ~17:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both never-widen halves of IB-pr-363: COO half @7a5f0d2fb7, CTO half @652141d7cc, msg 1314 "the release order is yours to cut")
+
+The custody release pair at pin 1e0cdaf90c, applied from dell2 (step C applied 12:39:33Z, msgs 1288/1297; irpt-export-render is not one
+of the ten protected functions in `infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json`; no firm bucket, state-bucket
+config, shared key or assets bucket is changed, so the before-rule does not bind and the act is reported after). Function first,
+then the one route. Check: `deliverables/2.0.0_SA_COO~P2/checks/r77/p77_cells.py`, dry-run at base 0c9d22dbd1 (both FAIL, no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-364` | release irpt-export-render at 1e0cdaf90c (3 members), then apply the custody-report-read route; after-reads per both halves | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-363 (drained @7a5f0d2fb7) | P77-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release pair, ordered acts. Slot ~172.
+
+## 71. ROUND 78, WORKSTREAM ~P (2026-10-08 ~17:5xZ, issuer 2.0.0_SA_COO~P2, on the CTO analysis ADDENDUM 1 @e4ad79e976, msg 1344: E4)
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-365` | E4: bound comp-tagauthz's IAM read (timeout failing CLOSED with a named reason, or a narrower read); disarm S334. Commit lane `GIT_COMMIT_AUTHOR_OVERRIDE=0.5.0_AE_OpalETL` naming msg 1342 | release hygiene (S334) | LOCAL | none | P78-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one tool file + one row (round 77 holds the release; ONE ISSUANCE PER ROUND, so E4 is cut as
+round 78, which the analysis permits). Slot ~173. Check `deliverables/2.0.0_SA_COO~P2/checks/r78/p78_cells.py`, dry-run at base 212717f781 on dell2: AC1 PASS (61.4 s,
+the read returns here), AC2 FAIL (rc 0, no bound), AC3 FAIL (no row).
+
+## 73. ROUND 80, WORKSTREAM ~P (2026-10-08 ~18:3xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO analysis ADDENDUM 4 @eba8fde8bb: E7)
+
+The custody route is live but irpt-export-render packages reports/repository.py at 83e8b9577a, whose KINDS lacks CUSTODY_REPORT
+(row D2-W172-S3, ruled ~P's by ADDENDUM 4). This round repins and writes the packet; the release follows under a new pair (round 81),
+built from a clean worktree (row D2-S3). Section 72 (round 79, IB-pr-366) is on branch wk-IRPT_BCKEND-174; the drain unions both.
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r80/p80_cells.py`, dry-run at base 2c287dec89: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-367` | E7 part 1: repin repository.py (+ any read-path policy row) past b13bab7495; clean-tree BUILD_ONLY; never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-364 (drained) | P80-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~175.
+
+## 74. ROUND 81, WORKSTREAM ~P (2026-10-08 ~19:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 5 msg 1408: E7 releases first)
+
+Both halves of IB-pr-367 are at HEAD (COO @764a0abf3c, CTO @275e506034). The custody after-reads move to the order after E8 (~M2) and
+IRPT_CUSTDY E2 (~K2); this order adds the CTO half's retained-read regression (one existing ANALYSIS/PERFORMANCE report read back by
+reference before and after; any change is Branch B). Check: `deliverables/2.0.0_SA_COO~P2/checks/r81/p81_cells.py`, dry-run at base
+ea6b96a66a: AC1 FAIL, AC2 FAIL (no file).
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-368` | release irpt-export-render at a0d8d4943f (repository.py + retention.py) from a clean worktree; pre/post retained read-back | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-367 (drained @9a594e96a8) | P81-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Slot ~176.
+## 72. ROUND 79, WORKSTREAM ~P (2026-10-08 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO analysis ADDENDUM 2 @b227133904, msg 1362: E5)
+
+Release 2 (irpt-ycharts-generate, X-1) rolled back at 17:44:54Z: on the served path the guard builds InteractiveAccess with no profile
+reader and resolves the create owner as the actor itself, so uploads.py's on-behalf branch is unreachable. This cell fixes the served
+guard (~P's lane); uploads.py (~Y2) is the target rule, not edited. After it drains, ~Y2 re-pins and a new release-2 pair is signed.
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r79/p79_cells.py`, dry-run at base 5ff7717f66: AC1 FAIL, AC2 FAIL (no test file), AC3 PASS.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-366` | E5: the live guard resolves the on-behalf owner for an OPAL_GLOBAL filer whose allowedFirmIds lists the firm; real served-path test, four negative arms; existing suites green | X-1 / TCKT_VNEXT TV-r-1 | WORLD (floor: infra/; nothing built or applied) | none | P79-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one guard change and its test. Slot ~174.
+
+## 75. ROUND 82, WORKSTREAM ~P (2026-10-08 ~19:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 6 msg 1415: E9)
+
+ReportRepository reserves every family under one default revision; a CUSTODY_REPORT must live under its own policy row
+(irpt-custody-x10-v1, E8, ~M2) so irpt-x10-v1 stays byte-unchanged. This cell is the code; its release is a later pair after IB-pr-368
+is live. Order (ADDENDUM 6): IB-pr-368 release -> E8 PENDING -> E9 + its pair -> E8 ACTIVE -> IRPT_CUSTDY E2 real report -> after-reads.
+Section 74 (round 81, IB-pr-368) is on branch wk-IRPT_BCKEND-176; the drain unions both. Check:
+`deliverables/2.0.0_SA_COO~P2/checks/r82/p82_cells.py`, dry-run at base 038b35d676: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-369` | E9: ReportRepository retains each family under its own policy revision; custody callers pass the custody revision; regression arm | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing built or applied) | none (code) | P82-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repository change and its tests. Slot ~177.

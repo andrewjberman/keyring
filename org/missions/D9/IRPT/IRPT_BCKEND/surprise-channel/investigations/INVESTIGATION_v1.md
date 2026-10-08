@@ -20627,3 +20627,845 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: 0 extras."
 }
 ```
+
+## IRPT_BCKEND-W169-S1 -- regenerated ExportReceipt makes covered_account_ids required; a test consumer no longer typechecks
+
+```json
+{
+  "id": "IRPT_BCKEND-W169-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~169",
+  "surfaced_at": "2026-10-08T05:37:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After regenerating ~P's four wire files (portal branch wk-IRPT_BCKEND-169-portal @c0291b68), tsc -b --noEmit exits 2: iv-e-26.submit-data-optional.test.ts line 33 builds an ExportReceipt facts object without the now-required covered_account_ids (IB-pr-343). IB75-1-AC2 is a stop; no consumer was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_BCKEND-169-portal @c0291b68; p75_cells.py . IB75-1-AC2 -> FAIL: TS2741 at iv-e-26.submit-data-optional.test.ts(33,5), 1 error"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration (base PASS as a control).",
+  "world_is": "It exits 2 with one TS2741 in a test fixture that omits covered_account_ids. The fixture needs the field; the owner of that test (not this cell's grant) must add it."
+}
+```
+
+## IRPT_BCKEND-W170-S1 -- The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W140-S1: IB-pr-341 (portal @5c726cf4, an ancestor of portal DEV d1b21c970c) made the over-age status public. On DEV d1b21c970c, `bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage` reads '10 pass, 0 fail' (rc 0); the four over-age reader arms P1-P4 are plain tests (no test.failing remains in the file) and pass.",
+  "one_line": "The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10 pass, 0 fail on portal DEV d1b21c970c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal DEV d1b21c970c (HEAD of the shared checkout, branch DEV, equal to origin/DEV); git merge-base --is-ancestor 5c726cf4 HEAD -> true",
+      "bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage -> '10 pass / 0 fail / 22 expect() calls / Ran 10 tests across 1 file', rc 0",
+      "grep -c 'test.failing|it.failing' search-readers.test.ts -> 0; arms P1-P4 over_age are plain tests (line 49 comment: IB-pr-341)"
+    ]
+  },
+  "spec_asserts": "W140-S1: all four portal readers throw EnvelopeMismatch('status') on the over-age answer.",
+  "world_is": "They no longer do: the four over-age arms pass as plain tests on DEV. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W170-S2 -- A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) an
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W145-S2: finalize_on_read.finalize hands the pending pointer's account_ids to handler.finalize_export as covered_account_ids and refuses a pointer naming none (commit 7afc91d40c, IB-pr-343 amendment 1, shipped in the IB-pr-349 release). `release-census.py irpt-export-render --pin b921635dad` reads 'built_members=63 live_members=63 changed_members=0' (rc 0), so the live bytes equal the pin; test_retained_finalize_names_accounts.py: 6 passed.",
+  "one_line": "A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) and the 6 retained-finalize tests pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> 'function=irpt-export-render pin=b921635dad built_members=63 live_members=63 / changed_members=0', rc 0",
+      "python -m pytest tests/test_retained_finalize_names_accounts.py -q (from infra/aws/lambda/investor-reporting/export) -> '6 passed in 1.76s', rc 0",
+      "finalize_on_read.py:98 finalize_export(..., covered_account_ids=covered); handler.py:327 passes covered_account_ids or submission.get('covered_account_ids')"
+    ]
+  },
+  "spec_asserts": "W145-S2: after release every retained export raises ReceiptRefused at finalize, because no covered account reaches receipt.build.",
+  "world_is": "It does not: the retained path carries the pointer's accounts, and a pointer naming none is refused before finalize. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W171-S1 -- infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/route
+
+```json
+{
+  "id": "IRPT_BCKEND-W171-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~171",
+  "surfaced_at": "2026-10-08T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/routes.json; routes.tf reads only the docs copy, so a route added to the stale copy would never apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the two files at 1e0cdaf90c: differ at char 7 line 2",
+      "infra/aws/terraform/investor-reporting/api/routes.tf local.contract_routes_path points at docs/contracts/investor-reporting/v1/routes.json (comment: 'routes.json IS the carrier and Terraform reads it')"
+    ]
+  },
+  "spec_asserts": "routes.tf: ONE route list, the contract file; no second carrier.",
+  "world_is": "A second routes.json is tracked in the api root. Nothing reads it for the apply; the IB-pr-363 packet names the docs copy as the writer's input."
+}
+```
+
+## IRPT_BCKEND-S390 -- W169-S1 resolved: AMENDMENT 1 granted the one fixture; IB75-1-AC2 (tsc -b --noEmit) PASS on branch 169
+
+```json
+{
+  "id": "IRPT_BCKEND-S390",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W169-S1: AMENDMENT 1 to IB-pr-361 (@63db9c46c6) granted iv-e-26.submit-data-optional.test.ts; the worker added covered_account_ids to the fixture's facts (portal f63c5fdd) and the issuer re-ran IB75-1-AC2 on branch 169: tsc -b --noEmit rc 0. Proof @2874a10e7f VALID; drained @7a5f0d2fb7.",
+  "one_line": "The one consumer fixture now carries covered_account_ids, so the regenerated ExportReceipt typechecks; the portal branch remains a DEV candidate on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment @63db9c46c6; drain @7a5f0d2fb7; L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md (IB75-1-AC2 PASS)"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration.",
+  "world_is": "It does, after the granted one-line fixture edit."
+}
+```
+
+## IRPT_BCKEND-S391 -- W171-S1 ruled INERT: nothing applies from the stale api/routes.json; its removal is carried to the CTO's analysis
+
+```json
+{
+  "id": "IRPT_BCKEND-S391",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W171-S1 as not a hazard to any apply: routes.tf local.contract_routes_path reads docs/contracts/investor-reporting/v1/routes.json only, and the IB-pr-363 packet names that docs copy as the writer's input. The stale second carrier is a cleanup item listed in the rounds 75-76 L8 packet's Rows section for the CTO's round-N analysis; the issuer cuts no cell for it mid-round.",
+  "one_line": "The tracked infra/aws/terraform/investor-reporting/api/routes.json is read by no apply; deleting it is an enrichment item for the next round, not a live hazard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W171-S1 evidence: routes.tf contract_routes_path -> docs/contracts/investor-reporting/v1/routes.json",
+      "L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md, Rows: W171-S1 OBSERVATION/INERT"
+    ]
+  },
+  "spec_asserts": "routes.tf: one route list, the contract file.",
+  "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
+}
+```
+
+## IRPT_BCKEND-S392 -- SC-e-62/e56 first fire: 1 of 5 tabled class moves landed; Branch B held for the paired signer's ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-S392",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first Holdings fire on the SC-e-62/e56 bundle (2026-10-08 14:15Z) published all three firms reconciled with 0 multi_asset, but only 1 of e56's 5 tabled 49financial class moves landed and 233 of the 238 newly placed CUSIPs serve by name/ticker basis, not their CUSIP row. By the COO half's rule 49financial takes Branch B (rollback before the 2026-10-09 14:15Z fire); the rollback is held for a ruling by the paired signer.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E62E56_SERVED_CLASS_CENSUS_20261008.json (sha256 ec864bc9deb4...): 49financial 47 match / 4 off of 51; cottonwood 185 match / 2 not held of 187; 1 TABLE-basis node among the listed",
+      "pinned 10-06 control (49financial index GtsM8pj9...): 06745PR94 fixed_income/NAME_ALIAS, 808516702/108/801 unclassified/NONE in both 10-06 and 10-07; 61756E784 fixed_income -> equity",
+      "E62E56_POST_FIRE_READ_20261008.json (sha256 5d31fa129be0...): reconcile difference 0.00 at all three firms",
+      "COO half NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md, section POST-FIRE GRADE"
+    ]
+  },
+  "spec_asserts": "e56 acceptance 1: each firm's served snapshot reads the 238 by the class and sub-class of their CUSIP: row, and the five tabled class changes read as stated.",
+  "world_is": "The class change reached 1 of 5 tabled securities; the served run did not apply the CUSIP row where the local r2 precheck did. Disarm: the CTO rules hold-or-rollback; the root cause (served run vs the local build) routes to MDPF_SECCLASS dell1 2.0.0_SA_COO~M1."
+}
+```
+
+## IRPT_BCKEND-D2-W156-S1 -- IB-yr-651 release 2 stopped before the admit read and rolled back: the dell2 operator credential cannot read, verify or delete irpt-requests (KMS decrypt denied), so after-read 1 and the upload-key deletes could not be met
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order needs to read back, and delete, the upload record the admit creates in irpt-requests; the credential this seat runs under (cloudops-dell2-agent-user) is denied kms:Decrypt on that table's CMK, so the admit read was not run, release 2 was rolled back to ZspX0qD2.., and the test profile row was deleted and read NOT FOUND.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "aws dynamodb query and get-item on irpt-requests as cloudops-dell2-agent-user: AccessDeniedException, kms:Decrypt denied on key 7f4d3042-10d8-49a7-b55e-3c963cea8111 (describe-table SSEType KMS), 2026-10-08 ~17:41Z",
+      "intake/uploads.py create(): the admit writes an UPLOAD# row via DynamoReportIndex (irpt-requests, key tenant+request_revision) and an S3 object via artifacts.put; y65_cells.py AC2 reads the same keys with the same default credentials",
+      "ledger org/critical_paths/change_management/20261008T1732Z_irpt-ycg-release2-20261008_deploy_completion.md: L1-L3 closed; release 2 applied 17:37:00Z (798Lgqw2.., re-plan 0 changes, census failed={}), rolled back 17:44:54Z to ZspX0qD2.. (census failed={}, re-plan 0 changes)",
+      "rollback mechanism: the module reads the CURRENT S3 version, so the old version 4Pvl.mN3tY9bIQDDVVnGYFiNoKbrUSTh was re-promoted by one s3api copy-object (metadata COPY) to new versionId QBeNB.XXjTccRAbSADmCh_Wv7R0brx6q, content-sha256 ZspX0qD2..; then a targeted plan (0/1/0) and safe-apply. That copy-object is a live write the order's Grant did not list."
+    ]
+  },
+  "spec_asserts": "Order steps 6-7 and AC2: the admit read creates records the worker reads back and deletes, and the checker reads each key NOT FOUND; the grant lists exactly the live writes.",
+  "world_is": "The only credential on this device cannot decrypt irpt-requests, so an admit would leave a record this seat can neither read nor delete and AC2 could not grade; the worker stopped before after-read 1 (reads 2-5 not run), deleted the test row, rolled back with an extra copy-object, and filed this row. Disarm: nothing is armed (live is release 1, no test data exists); to run release 2 the issuer must grant a credential or an executing seat that can decrypt irpt-requests, or re-scope AC2 to the keys this seat can read."
+}
+```
+
+## IRPT_BCKEND-D2-W156-S2 -- Reading the live route: the admit may not reach the on-behalf branch at all, because the guarded owner for an internal subject is built from the subject itself
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W156-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~156",
+  "surfaced_at": "2026-10-08T17:52:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "By reading the code (not run live), on POST /api/scoped/investor-reporting/analysis/inputs an internal subject's owner is access.prospect_owner(), whose principal_id is the subject, so uploads.py create() sees principal_id == owner.principal_id and never takes the on-behalf branch; after-read 1's acting_principal_id would not be written and read 2 could admit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:905-922 (_handle_prospect): for verified_internal_subject, resolve_owner = access.prospect_owner() and the owner passed to the compute is that value",
+      "infra/aws/lambda/investor-reporting/_scope/interactive_access.py:123-137 prospect_owner(): owner = current() minus fingerprint/allowedFirmIds, so owner.principal_id == subject",
+      "infra/aws/lambda/investor-reporting/intake/uploads.py:243-248: on_behalf requires principal_id != owner.principal_id; the unit tests (test_uploads_on_behalf.py, test_upload_door_reads_allowed_firms.py) pass an advisor-derived owner separately, which the live guard never builds for an internal subject",
+      "served.py:1010-1024: a non-service internal subject may already select any registered tenant via selected_tenant; only x-user-type service is held to allowedFirmIds, at the boundary with FIRM_BINDING"
+    ]
+  },
+  "spec_asserts": "Pair after-reads 1-2: an OPAL_GLOBAL filer whose allowedFirmIds names the firm is admitted with acting_principal_id = the filer and owner.firm_id = the firm; an unlisted firm is refused with the existing UPLOAD_* code.",
+  "world_is": "Inferred from source only; no live read was run (see IRPT_BCKEND-D2-W156-S1). If it holds, the live route admits an internal subject for a selected firm as before, records no acting_principal_id, and refuses an unlisted firm (service type) with FIRM_BINDING, not the upload code, so after-reads 1-2 as written cannot pass over this route; the offline suites pass because they supply the owner themselves."
+}
+```
+## IRPT_BCKEND-D2-W172-S1 -- amendment arrived after both applies; gate passed without override; plan text committed after the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 (plan text committed before each apply) reached the worker after both applies had landed; the safe-apply tag-authz gate passed without TAGAUTHZ_OVERRIDE on both roots, so no override was used and the plan text is committed after the fact from the saved planfiles.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh output on export root: 'comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag'; api root apply rc=0; both re-plans exit 0 (No changes)",
+      "amendment @212717f781; ledger open commit 4328e78b53; plan text written by terraform show -no-color on the saved planfiles export.tfplan and api.tfplan (the exact files applied)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: commit terraform show of each planfile before its apply; use TAGAUTHZ_OVERRIDE only after the gate has refused without it.",
+  "world_is": "Both applies ran before the amendment arrived; the gate did not refuse on either root (it passed), so tagauthz_override_used is []. The plan text files are the applied planfiles rendered after the apply, not before it. The CTO may want to know S334 did not fire on these two roots."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S2 -- record-terraform-deploy.sh needs a CHANGELOG.json path the order does not grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, which the order's <paths> does not name; the lane gate refused, so the source map was committed alone and the changelog entry is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: owned-paths violation on infra/aws/terraform/investor-reporting/CHANGELOG.json, lane IRPT_COMPLETION_P, 'no NON-TERMINAL task order names this path in its paths block'",
+      "record-terraform-deploy.sh PATHSPEC adds infra/aws/terraform/${PIPELINE}/CHANGELOG.json whenever the changelog writer ran",
+      "recorder's would-be CHANGELOG entry kept at worktree .scratch/CHANGELOG.recorder_output.json (not committed)"
+    ]
+  },
+  "spec_asserts": "Order BOUNDS: the source map moves only through the build and record-terraform-deploy.sh; paths grant lists lambda-source-map.json and lambda/ci/CHANGELOG.md but not the terraform root CHANGELOG.json.",
+  "world_is": "The recorder cannot commit under this grant. The source map carries artifact_sha256 03p2eIEKU9... and last_deployed_at 2026-10-08T17:30:56Z (committed alone). The investor-reporting CHANGELOG.json has no entry for this deploy; the issuer decides whether a later order records it. Nothing served is affected."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S3 -- shipped repository.KINDS excludes CUSTODY_REPORT: the owner read fails closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released irpt-export-render cannot serve a custody report to its owner: repository.KINDS is (PERFORMANCE, ANALYSIS), so ReportRepository.get raises ReportRefused for a CUSTODY_REPORT record and the route answers DEPENDENCY_UNAVAILABLE; the other-firm refusal is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip repository.py: KINDS = ('PERFORMANCE', 'ANALYSIS'); _report_identity raises ReportRefused('unsupported report kind') for CUSTODY_REPORT; get() calls _report_identity",
+      "offline run of the live custody_read.py: owner firm as shipped -> ReportRefused 'unsupported report kind' (DEPENDENCY_UNAVAILABLE); with KINDS patched in the control run -> SERVED 228 bytes; other firm -> ReportDenied (OBJECT_NOT_COVERED) in both",
+      "reporting policy ACTIVE family list holds no CUSTODY_REPORT family (13 families); S3 irpt/<firm>/ has no custody prefix"
+    ]
+  },
+  "spec_asserts": "Packet and both never-widen halves: an Opal principal reads one retained CUSTODY_REPORT by reference and revision within its scope (Branch A).",
+  "world_is": "Nothing is retained (0 custody reports) and the shipped repository cannot read one back, so the Opal-by-ref leg cannot succeed until IRPT_CUSTDY adds the kind to repository.KINDS and a custody family to the reporting policy. The failure is closed (no body). This is the open leg named OPEN-BY-DESIGN in the after-reads, with a narrower cause than 'no report yet'."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S4 -- IB77-1-AC1 instrument crashes on this device (aws shim, large output); route is live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB77-1-AC1 cannot run on this device: the check's get-routes call (python subprocess -> bash .tools/aws -> aws.exe) dies with rc 3221225477 (0xC0000005) for the api's 6,368-byte route list, so AC1 reads FAIL although the route is live; the same call from the shell, and aws.exe called directly, return the list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py IB77-1-AC1 run 3 times (bare, bash -c, powershell.exe): 'FAIL: get-routes rc 3221225477', identical each time",
+      "python subprocess of ['bash', '.tools/aws', 'apigatewayv2','get-routes',...,'--query','Items[].RouteKey'] -> rc 3221225477, 0 bytes; same with --query Items[:40].RouteKey (2,360 bytes) -> rc 0; Items[] full list (6,368 bytes) -> crash; under 'bash -c \"bash .tools/aws ... | wc -c\"' from python -> rc 0, 6368; C:/Program Files/Amazon/AWSCLIV2/aws.exe called directly from python -> rc 0, 6368 bytes",
+      "shell read of the same call: GET /api/scoped/investor-reporting/custody-report/{reportId} CUSTOM naqxlm listed on api 7k3ed8px20 (get-routes --query Items[?contains(RouteKey,'custody')])",
+      "every other AC1 field verified true by hand: pin, 3 members, start sha == rollback target, built == live == 03p2eIEK..., post-census 0, both re-plans 0, ledger closed, rolled_back false"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1: the check re-reads the route list live and prints 'IB77-1-AC1 PASS'.",
+  "world_is": "The check's instrument fails on this device before it reads the route list: a large-output aws call launched from a native python process through the .tools/aws shim crashes. The route is live; the check's verdict is FAIL by instrument fault, not by state. The check was not changed and AC1 is recorded FAIL; the order stays open. The issuer can re-run AC1 on a device where the shim call succeeds, or decide the instrument fix (.tools/aws is not in this order's paths)."
+}
+```
+## IRPT_BCKEND-D2-W173-S1 -- comp-tagauthz's IAM read is bounded; S334 resolved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W173-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~173",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S334: commit fad269226b changes .tools/comp-tagauthz.py to bound the IAM get-account-authorization-details read (env COMP_TAGAUTHZ_IAM_TIMEOUT, default 150 s) and fail closed rc 1 with TAGAUTHZ_IAM_READ_TIMEOUT. IB78-1-AC1 last line: IB78-1-AC1 PASS (rc 0 in 22.5 s); IB78-1-AC2 last line: IB78-1-AC2 PASS (rc 1 naming TAGAUTHZ_IAM_READ_TIMEOUT).",
+  "one_line": "The gate's IAM read now has a 150 s default bound and fails closed with a named token instead of hanging.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit fad269226b on wk-IRPT_BCKEND-173; p78_cells.py IB78-1-AC1 and AC2 PASS"
+    ]
+  },
+  "spec_asserts": "S334: the comp-tagauthz IAM read is unbounded and can hang the apply gate.",
+  "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
+}
+```
+
+## IRPT_BCKEND-D2-S1 -- D2-W172-S4 and D2-W172-S2 resolved: the AC1 check filters its route read (AMENDMENT 2); the custody-release changelog entry is recorded
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S4 and IRPT_BCKEND-D2-W172-S2. S4: AMENDMENT 2 @bebe0e817a makes the AC1 check filter get-routes server-side to the one route key (the 6,368-byte list crashed python -> bash .tools/aws -> aws.exe with 0xC0000005) and sums the per-page length(Items) counts; IB77-1-AC1 PASS ('1 match of 115 routes'), re-run by the issuer and by the re-seated worker (@e78cb6aba6); IB-pr-364 complete, drained @fd99fb52e5. S2: the issuer recorded the irpt-export-render custody-release entry (version investor-reporting-custody-release-pr364, deployed_at 2026-10-08T17:30:56Z) in infra/aws/terraform/investor-reporting/CHANGELOG.json from the recorder output the worker saved, in the commit that carries this row.",
+  "one_line": "The release's AC1 instrument no longer crashes on dell2, and the deploy changelog carries the custody release.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py . IB77-1-AC1 -> 'OK: pin 1e0cdaf90c, 3 of 3 members, live CodeSha256 == built, route live (1 match of 115 routes), replans 0, ledger closed' / IB77-1-AC1 PASS",
+      "CHANGELOG.json entries[0].version investor-reporting-custody-release-pr364 (from wk-irpt-bckend-172/.scratch/CHANGELOG.recorder_output.json)"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1 reads the live route; record-terraform-deploy.sh records every apply in the pipeline changelog.",
+  "world_is": "Both hold now."
+}
+```
+
+## IRPT_BCKEND-D2-S2 -- D2-W172-S3 ruled: the released custody-report route refuses every owner read until repository.KINDS carries CUSTODY_REPORT; routed to the CTO as the next enrichment
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W172-S3 as an UNSERVED leg, not a hazard: the live route fails CLOSED (DEPENDENCY_UNAVAILABLE, no body) for any CUSTODY_REPORT because the shipped repository.KINDS is (PERFORMANCE, ANALYSIS). The other-firm refusal holds. CTO criterion (3) of E1 (Opal read by ref returns the report) is therefore unmet on two counts: 0 retained custody reports, and the kind gap. Carried to 1.0.0_SA_CTO~DELL2 in the rounds 77-78 L8 packet as the next enrichment (who adds the kind and the custody reporting-policy family: IRPT_CUSTDY or ~P), not cut mid-round.",
+  "one_line": "The custody-report route is live and safe, but cannot yet return a custody report to anyone: the repository does not know the kind.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W172-S3 (offline run of the live zip's custody_read path: ReportRepository.get raises ReportRefused for CUSTODY_REPORT)",
+      "IB77-1_release_after_reads.json: opal_by_ref OPEN-BY-DESIGN, retained_custody_reports 0"
+    ]
+  },
+  "spec_asserts": "Packet branch A: an Opal principal reads one retained custody report by ref within scope.",
+  "world_is": "Not yet reachable: no report is retained and the repository refuses the kind. Closed, not open."
+}
+```
+
+## IRPT_BCKEND-D2-S3 -- dell2 shared tree: build residue in export/, and a modified entry.py that drops the live custody route
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T18:10:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 shared tree carries build residue in infra/aws/lambda/investor-reporting/export/: 32 untracked paths (copies of packaged members such as repository.py, custody.py, events.py, mint.py, dated 2026-10-08 ~01:03Z) and a MODIFIED tracked entry.py whose diff removes IB-pr-355's custody-report ROUTES and dispatch lines, the code the 17:22Z release just put live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (export lane): confirm the residue is no live seat's work, then git restore export/entry.py and remove the untracked staging copies",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short --untracked-files=all infra/aws/lambda/investor-reporting/export/ on dell2 CLOUD: 32 lines; git diff export/entry.py: -3/+1, removing 'GET /api/scoped/investor-reporting/custody-report/{reportId}': 'custody-report-read' and its dispatch entry",
+      "export/repository.py (untracked) differs from reports/repository.py at line 16 (KINDS); mtime 2026-10-07T21:03:36 local",
+      "the release is unaffected: release-census.py irpt-export-render --pin 1e0cdaf90c builds from pinned blobs and reads changed_members=0 (this seat, 2026-10-08 ~18:1xZ)"
+    ]
+  },
+  "spec_asserts": "A tracked source file in the shared tree equals HEAD unless a seat is editing it, and builds stage outside the source dir.",
+  "world_is": "Anyone who commits export/entry.py from the shared tree, or runs a working-tree check over export/ (the ADHC_DRIFTD.002 parity limb that flagged S381), carries the residue: the first would drop the live custody route from source."
+}
+```
+
+## IRPT_BCKEND-D2-S4 -- D2-S3 disarmed: the shared tree's export/ residue is removed and entry.py restored to HEAD (custody route present)
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T18:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-S3 (CTO ADDENDUM 4 @eba8fde8bb: disarm the same turn it is read). The residue was no seat's work: the modified export/entry.py was byte-identical to entry.py at the old staged pin 34f71024a1 (sha256 fc241d806ecc), and all 31 untracked files were byte-identical to blobs already in git (git hash-object + cat-file -e: 31 of 31), all with mtime 2026-10-07 21:03 local (one build batch). Before removal the diff was saved to deliverables/2.0.0_SA_COO~P2/D2-S3_shared_tree_entry_py_pre_restore.patch and every removed path with its blob id to D2-S3_removed_staging_copies.txt. After: export/entry.py equals HEAD (sha256 b32032d38b94, 2 custody-report-read lines); export/ reads 0 untracked and 0 modified paths.",
+  "one_line": "No build or commit from the dell2 shared tree can now drop the live custody route or carry stale staged copies.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git show 34f71024a1:.../export/entry.py | sha256sum -> fc241d806ecc == the modified working file; after git checkout -- the file: b32032d38b94",
+      "31 untracked paths, 31 of 31 blobs present in the object store; git ls-files --others export/ -> 0 after removal"
+    ]
+  },
+  "spec_asserts": "A tracked source file in the shared tree equals HEAD unless a seat is editing it, and builds stage outside the source dir.",
+  "world_is": "Holds again for export/. The staging-in-source-dir behaviour of the build that left it is not changed by this row."
+}
+```
+
+## IRPT_BCKEND-D2-W175-S1 -- the CUSTODY_REPORT kind is packaged after IB-pr-367, but no retention policy family registers it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W175-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~175",
+  "surfaced_at": "2026-10-08T18:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The repin makes the packaged repository.py name CUSTODY_REPORT, but the ACTIVE retention policy irpt-x10-v1 registers no CUSTODY_REPORT family, so an enforced repository refuses to retain or read a custody report (RetentionRefused: unregistered retention family); after-read 1 cannot pass until a policy row carries the family.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python (lib/opal_naming.reporting_policy('irpt-x10-v1')['families'] at P a0d8d4943f): 13 families, 'CUSTODY_REPORT' in families -> False; state ACTIVE",
+      "infra/aws/lambda/investor-reporting/reports/retention.py@f60e6f1d2a RetentionPolicy._policy: family_policy = policy.get('families', {}).get(family); not a dict -> RetentionRefused('unregistered retention family'); ReportRepository.persist calls retention.reserve(..., report_kind, ...) and get() calls _check_retention(..., item['ref']['report_kind'], ...) -> require_live -> _policy",
+      "infra/logic/registry/reporting_policies.json at HEAD a0d8d4943f: grep CUSTODY_REPORT over infra/logic and lib -> no match; the other two policy rows (irpt-dashbd-x10-v1, irpt-ycdgen-research-v1) list SERVED_* and YCHARTS_* families only",
+      "b13bab7495 (IB-pr-336) touched no registry file; test_repository.py exercises CUSTODY_REPORT with retention=None only",
+      "reporting_policies.json is therefore NOT repinned by IB-pr-367: a repin to any commit at or before HEAD cannot add the family"
+    ]
+  },
+  "spec_asserts": "IB-pr-367 cell text: check the reporting_policies.json row (pinned c4fedd31c5) and any member the read path imports; once repository.py's KINDS carries CUSTODY_REPORT, an owner read of a CUSTODY_REPORT no longer fails closed (the order's after-read 1: an Opal custody-report-read returns a real report).",
+  "world_is": "The repin of repository.py (b13bab7495) and retention.py (f60e6f1d2a) is necessary and is done, but not sufficient: the policy registry has no CUSTODY_REPORT family, so ReportRepository.persist and .get under the enforced retention refuse the kind by family. Existing PERFORMANCE and ANALYSIS retained reads are unchanged (their references carry irpt-x10-v1, which is ACTIVE and unchanged). Owner of the missing row: the registry lane (4.0.0_SA_CRO owns reporting_policies.json rows); the producer (IRPT_CUSTDY E2) hits the same refusal on its first persist."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S1 -- IB-pr-368 stopped before apply: no read route returns a retained ANALYSIS or PERFORMANCE report ok, so the condition-1 regression pre-read cannot be built
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB-pr-368 STOPPED before any apply: the function has no read operation that returns a retained ANALYSIS or PERFORMANCE report ok with a body, so the CTO condition-1 regression pre-read (ok, report_id, revision, body_sha256) cannot be built; the one repository.get read route (custody-report-read) refuses any non-CUSTODY_REPORT kind by name, and denied an Opal principal on a real retained ANALYSIS report (OBJECT_NOT_COVERED). Nothing applied, no ledger opened, live still 03p2eIEK.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "step 0 reads: merge-base --is-ancestor a0d8d4943f HEAD rc=0; live CodeSha256 03p2eIEKU9iSIOe5GYDbkbisapqAjULUyAPA/Wcxrfc= (LastModified 2026-10-08T17:22:16Z); git status --porcelain empty; packet blob aa9115a66f459f89ec970a60998cd26be23cc310; both halves present at HEAD fba505cec6",
+      "step 1: release-census.py irpt-export-render --pin a0d8d4943f -> changed repository.py, retention.py; changed_members=2",
+      "infra/aws/lambda/investor-reporting/export/entry.py@fba505cec6 ENTRY.operations: submit-export (write), export-receipt and export-download (read the receipt object and its download slice; neither calls repository.get), custody-report-read; grep of ports['reports'] over export/: the only readers are submit_service.py:57, submit_async.py:133 (writes) and custody_read.py:72",
+      "export/custody_read.py:72-80@fba505cec6: resolves through retained_export.resolve (reports.get = repository.get, so retention.py runs) and then raises ExportSubmitRefused('the custody report read serves a CUSTODY_REPORT only; ...') when the kind is anything else, so an ANALYSIS or PERFORMANCE reference can never answer ok with a document through this route",
+      "one direct invoke (read only, no write op) of custody-report-read with an Opal internal principal (r57_invokes happy-principal header shape), selected_tenant of the report's firm, and the retained ANALYSIS reference taken from deliverables/0.9.0_WK_IRPT_BCKEND~101/ANALYSIS_EXPORT_R28.json: StatusCode 200, ok=false, public_reason_code OBJECT_NOT_COVERED (repository.py _allow: retained_export.authorizer requires the caller's identity equal the retained owner field for field, and an Opal principal is not the owner)",
+      "dynamodb scan of irpt-requests to enumerate retained reports and owners: AccessDeniedException kms:Decrypt for the worker identity, so the table cannot be read outside the function",
+      "p81_cells.py IB81-1-AC2 requires pre_read.ok is True and equal report_id, revision, body_sha256 on both sides; satisfying it by impersonating the owner's advisor headers would not help (custody-report-read still refuses the kind) and is not done"
+    ]
+  },
+  "spec_asserts": "TO IB-pr-368 step 2 and CTO half condition 1: an existing retained ANALYSIS or PERFORMANCE report can be read back by reference through one of the function's own READ operations that resolves it through repository.get, by direct invoke under an Opal principal, returning ok with a body.",
+  "world_is": "The deployed function serves exactly one reference-resolving read, custody-report-read, and it serves a CUSTODY_REPORT only; export-receipt and export-download never reach repository.get. So there is no pre-read baseline for retention.py's effect on an ANALYSIS or PERFORMANCE read, and the release was not applied. Options for the issuer and CTO (not chosen here): (a) name a different read-back that does exercise retention.py for those kinds (for example an owner-principal read arm, or the CTO's offline replay of repository.get over a retained blob with the old and new retention.py), or (b) have the CTO restate condition 1 for a function with no such route. Nothing was changed in the world: live CodeSha256 unchanged, no ledger entry, no build, no plan."
+}
+```
+## IRPT_BCKEND-D2-W174-S1 -- IB-pr-366 stopped: the served CREATE path has no server-resolvable owner principal for the target firm
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:23:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "DECOMP_INVALIDATING by the order's own instruction (the row gate refuses that disposition while the round has open orders, so it is filed UNDER_INVESTIGATION): IB-pr-366 cannot be built as written: the served CREATE path has no server-resolvable owner PRINCIPAL for the target firm, so the admitted on-behalf owner shape (a firm advisor's owner, principal_id != the filer) cannot be built without inventing a principal. Cell stopped before any served.py or interactive_access.py edit.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py:892-925 (_handle_prospect) and :977-1024 (handle): the only verified inputs on a CREATE by an internal subject are the filer's own trusted headers (x-firm-id opal-capital, x-user-email = the filer, empty x-advisor-id) and selected_tenant (the target FIRM, registry-validated). Nothing names a principal of the target firm.",
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:70-123: the EXISTING canonical reads are get_user(email) (the filer's own row: carries allowedFirmIds, no firm roster), get_partner_profile(email, firm_id) (needs the advisor's email first) and get_organization('opal-capital'). None lists or resolves a firm's advisor. A firm-to-advisor read would be a new read, which the order forbids.",
+      "infra/aws/lambda/investor-reporting/_scope/prospect.py:22-48 resolve_prospect_owner: the owner principal_id is the verified email of a FIRM_ADVISOR/FIRM_OPERATIONS caller's own headers. intake/tests/test_uploads_on_behalf.py:50 and test_upload_door_reads_allowed_firms.py:93 get that owner from the FIRM advisor's own claims, which the filer's request never carries.",
+      "intake/uploads.py:243-248 needs owner.principal_id != filer principal_id: access.prospect_owner() (interactive_access.py:123-137) copies the filer, so the owner firm can be set to the target but the principal cannot be made different from a verified source. The only other sources are an unverified body field (forbidden by the order) or a synthesized id derived from the firm string (inventing a principal that no advisor's resolve_prospect_owner would ever equal, so no firm advisor could later re-read the record)."
+    ]
+  },
+  "spec_asserts": "IB-pr-366: for an OPAL_GLOBAL filer whose allowedFirmIds lists the target firm, the guard resolves the owner shape uploads.py admits (the FIRM advisor's owner, principal != filer); owner firm and principal are SERVER-RESOLVED from verified request fields or existing server state; if no server-resolvable owner principal exists, STOP and file DECOMP_INVALIDATING.",
+  "world_is": "The firm half is resolvable (selected_tenant, registry-validated, and allowedFirmIds from the existing get_user read via a profile_reader on the guard's InteractiveAccess). The principal half is not: no verified request field and no existing profile read yields a principal of the target firm that differs from the filer. Cell stopped; no source file edited, no test written (a test over a synthesized owner would assert the invention). AC3 PASS at base (6 of 6 suites), AC1 and AC2 FAIL (no test file). Choices for the CTO or the COO: (a) rule a server-held firm intake principal (named, with its source) that the guard may use as owner.principal_id; (b) change uploads.py's on-behalf rule so a firm-level owner with the filer as principal is admitted (~Y2's lane); (c) a body-named advisor email verified against a partner-profile read (get_partner_profile(email, firm) exists) -- an unverified body field becomes a lookup key only, which the order does not currently allow."
+}
+```
+
+## IRPT_BCKEND-D2-W174-S2 -- S1 resolved by CTO msg 1402 option (c): the served CREATE guard resolves the on-behalf owner from a verified advisor profile
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:36:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W174-S1: the CTO ruled option (c) (msg 1402) and the order was amended (AMENDMENT 1, 1e3ab5d454). The served CREATE guard now takes an advisor email as a lookup key only (query string advisor_email), verifies it through the existing CanonicalProfileReaders.get_partner_profile(email, tenant) and get_user(email) on the registry-validated owner firm, and builds the owner with resolve_prospect_owner from that advisor's verified identity; fix commit fff1b0395a (served.py _create_owner / _advisor_owner / _RequestReads; uploads.py and interactive_access.py unchanged). IB79-1-AC1, AC2, AC3 PASS at that commit.",
+  "one_line": "S1 resolved: the principal half of the on-behalf owner is now server-resolved from a verified advisor profile, per CTO msg 1402 option (c).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/_authz/served.py@fff1b0395a _create_owner/_advisor_owner",
+      "infra/aws/lambda/investor-reporting/_authz/tests/test_served_on_behalf_create.py@fff1b0395a (18 tests through served.lambda_entry; the stored owner equals resolve_prospect_owner of the advisor's claims)",
+      "CTO msg 1402 (option (c)); order AMENDMENT 1 @1e3ab5d454"
+    ]
+  },
+  "spec_asserts": "IB-pr-366 as amended: the CREATE request names an advisor email used only as a lookup key, verified through get_partner_profile on the owner firm; fail closed with existing codes on absent email, absent or disabled profile, another firm's advisor, or a read error.",
+  "world_is": "Holds in the offline served-path test (15 refusal arms and the admit arm pass). Not exercised live; see D2-W174-S3 for the grant the live function role lacks."
+}
+```
+
+## IRPT_BCKEND-D2-W174-S3 -- the on-behalf advisor lookup needs a read grant on opal-partner-<firm> that the irpt-ycharts-generate role does not have
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W174-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~174",
+  "surfaced_at": "2026-10-08T18:36:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The on-behalf advisor lookup reads opal-partner-<firm>, and irpt-ycharts-generate's role grants no read on any opal-partner table, so the live admit fails closed (NOT_AUTHORIZED) until Terraform adds it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "infra/aws/terraform/investor-reporting/ycharts/generate.tf:196-203: the role's dynamodb grants are Query on opal-users-v2/index/email-index and GetItem on opal-users-v2 (plus jobs, requests, etf-classifications); no opal-partner-* resource appears in the file",
+      "infra/aws/lambda/investor-reporting/_scope/canonical_profile_reads.py:105-123: get_partner_profile does GetItem on TableName opal-partner-<firm>",
+      "infra/aws/lambda/investor-reporting/_authz/served.py@fff1b0395a _advisor_owner: any read error becomes ProspectOwnershipRefused, public NOT_AUTHORIZED, nothing stored"
+    ]
+  },
+  "spec_asserts": "CTO msg 1402 option (c): verify the advisor email through the EXISTING get_partner_profile on the owner firm.",
+  "world_is": "By reading the Terraform (no live call), the function role cannot GetItem opal-partner-49financial, so a deployed build would refuse every on-behalf upload. The code path is correct and fails closed; the grant (and its KMS decrypt scope, if the partner tables are CMK-encrypted) is an infra change outside this order's paths. Also for the release pair: the advisor email travels as the query parameter advisor_email beside selected_tenant, because the upload body schema rejects unknown fields."
+}
+```
+
+## IRPT_BCKEND-D2-S5 -- D2-W175-S1 and D2-W174-S3 ruled: each carried to the cell that owns its fix
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W175-S1 and IRPT_BCKEND-D2-W174-S3 by carrying each to its owner. W175-S1 (no CUSTODY_REPORT retention family): CTO ADDENDUM 5/6 (msgs 1408, 1415) seat it as E8 (2.0.0_SA_COO~M2, a new row irpt-custody-x10-v1, PENDING then ACTIVE) plus E9 (this lane, IB-pr-369, ReportRepository per-family revisions); the custody read keeps failing closed until both land. W174-S3 (irpt-ycharts-generate's role grants no read on opal-partner-<firm>, so the on-behalf admit fails closed NOT_AUTHORIZED once IB-pr-366 ships): a precondition of 2.0.0_SA_COO~Y2's NEW release-2 pair (E6, CTO ADDENDUM 2/3), which must name the IAM grant and its applier; IAM changes are refused on the Dells (msg 1288), so the grant is a laptop act through 0.0.0_AB_MSTR~DELL2. Both are fail-closed, never exposure.",
+  "one_line": "The custody kind's policy row and the on-behalf lookup's IAM read are each owned by the cell that ships them; both gaps fail closed today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ADDENDUM 5 (E8 -> ~M2) and ADDENDUM 6 (E8 re-cut + E9 -> ~P2), CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_75_76_P_64_Y_20261008.md",
+      "row D2-W174-S3: ycharts/generate.tf:196-203 grants no opal-partner read (worker read, no live call)"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: E8 (~M2) and E9 (IB-pr-369) carry the first; ~Y2's E6 pair carries the second."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S2 -- S1 resolved: the retained-read regression condition ran as the offline differential replay and the IB-pr-367 release was applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W176-S1: the retained-read regression condition had no live instrument (irpt-export-render has no read route for a retained ANALYSIS or PERFORMANCE report), and the CTO restated it as an offline differential replay (CTO half AMENDMENT 1 @49efddd80c, msg 1423) which the order adopted (AMENDMENT 1, @0004fcc566). The replay ran and is committed at d8d2fb723c, before the ledger (9fb292a64c) and before the apply: one ANALYSIS fixture under irpt-x10-v1, reserved by the LIVE zip's own code path, read back through repository.get in the live zip (03p2eIEK...) and in the built zip (idanP8nX...) in separate python -I processes with identical result_sha256 a7a8ae481b9727753526baa9ed187bc0d56aead9e6650cca0c9f56ab863c18c8, neither raising nor refusing; the altered policy_sha256 control was refused by both (RetentionRefused: retention binding changed); test_repository (24), test_retained_repository (9) and test_retention (21) passed, each alone. The release was then applied (live CodeSha256 == built, re-plan 0, census 0, ledger closed); IB81-1-AC1 and AC2 PASS.",
+  "one_line": "S1 resolved: the retained-read regression check ran as the CTO's offline differential replay, live == built, negative control refused by both, then the release applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/ (replay_zip.py, live_run.json, built_run.json, suite_*.txt)@d8d2fb723c",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_IB_pr_367_REPOSITORY_REPIN_CTO_HALF.md@49efddd80c (AMENDMENT 1, msg 1423)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/IB81-1_release_after_reads.json (replay, built_sha, ledger_open_commit 9fb292a64c, ledger_closed)"
+    ]
+  },
+  "spec_asserts": "CTO half condition 1 as amended (msg 1423, @49efddd80c): a differential replay of repository.get on one irpt-x10-v1 fixture reserved by the live zip's code path, identical bytes, altered-policy control refused in both, three suites pass, record committed before the apply.",
+  "world_is": "It held on every arm: live and built returned the same result_sha256 on the reserved ANALYSIS fixture, the control was refused by both, the suites passed, and the record was committed before the ledger and the apply. The limit is the one the amendment names: this is a code-level proof on in-memory fakes, not a read of a live retained report."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S3 -- the packaged composition.py is older than the source composition.py the suites exercise
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The packaged composition.py in irpt-export-render (live and built alike) is the aa1cfaea6b vintage; the source composition.py at HEAD is newer, so the three suites exercised a composition the function does not ship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of infra/aws/lambda/investor-reporting/reports/composition.py against the built zip's composition.py: differ at line 25 (the source adds additional_policy_revisions and per-family revisions; f60e6f1d2a YCD-l-6)",
+      "diff -rq of the unzipped live and built zips: only repository.py and retention.py differ, so composition.py is identical in both and unchanged by this release",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/replay_zip.py: the replay imports composition from the zip directory, asserted per module"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: the three suites pass; the replay exercises the live and the built zip.",
+  "world_is": "The suites import the source tree at HEAD, whose composition.py is newer than the one packaged; the replay used the packaged one, so the served combination (packaged composition with the new repository.py and retention.py) is covered by the replay only, not by the suites. No behavioural difference was observed on the replay's path, and the next release that moves composition.py will change the served surface."
+}
+```
+
+## IRPT_BCKEND-D2-S6 -- D2-W176-S3 ruled: the packaged composition.py lags HEAD; E9's release pair repins it with the E9 change
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S6",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T20:40:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W176-S3 by carrying it to E9's release pair (IB-pr-369 is the code; its pair follows, CTO ADDENDUM 6). irpt-export-render packages composition.py at a staged pin older than HEAD's source, so source-tree suites exercise a composition the function does not ship; IB-pr-368's served combination was covered by the offline differential replay of the live and built zips (identical result_sha256 a7a8ae481b97, negative control refused by both). E9 changes composition.py (the revisions map), so its packet must repin the composition.py staged row together with repository.py and submit_installed.py, and grade the census at that pin.",
+  "one_line": "The shipped composition.py is older than the source; the next release (E9) must carry it forward explicitly.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "row D2-W176-S3 (both zips' composition.py differ from HEAD source)",
+      "IB-pr-368 after-reads replay record (commit d8d2fb723c), drained @4f101ea53d"
+    ]
+  },
+  "spec_asserts": "A release census names every member whose behaviour the release depends on.",
+  "world_is": "Holds for IB-pr-368 (replay); E9's pair must name composition.py."
+}
+```
+## IRPT_BCKEND-D2-W177-S1 -- submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (release ordering: the irpt-custody-x10-v1 registry row from 2.0.0_SA_COO~M2 must be in the built registry before export/submit_installed.py is built or deployed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/composition.py:build_retained_repositories calls reporting_policy(revision) for every additional revision; lib/opal_naming.py:1966-1977 reporting_policy raises ValueError('unknown reporting policy revision') when no row matches",
+      "infra/logic/registry/reporting_policies.json at the worktree base holds no irpt-custody-x10-v1 row (Grep irpt-custody|CUSTODY_REPORT over infra/logic: no match); the row is E8, lane 2.0.0_SA_COO~M2, PENDING_ENFORCEMENT",
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py reports(): additional_policy_revisions=(CUSTODY_POLICY_REVISION,) added by this order's cell IB-pr-369"
+    ]
+  },
+  "spec_asserts": "IB-pr-369: the custody read caller in submit_installed passes the custody revision through build_retained_repositories(..., additional_policy_revisions=...); the release is a later pair after the registry row.",
+  "world_is": "Source and offline tests are correct (a fixture registry holds both rows). A build or deploy of this source against a registry without the custody row would fail the whole submit path, not only custody; ordering is the release pair's, which this order does not do (no AWS, no build)."
+}
+```
+
+## IRPT_BCKEND-D2-W177-S2 -- Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py:77 build_retained_repositories(...) with no additional_policy_revisions; it uses stores.artifacts only (NORMALIZED_PORTFOLIO), never stores.reports, and is outside the <paths> grant, so unedited",
+      "Grep persist_custody_report over infra/aws/lambda: only reports/custody_write.py and reports/tests/test_custody_write.py; no production code composes a retained ReportRepository and calls it, so reports/custody_write.py (which receives its repository injected) needed no edit",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E8_CUSTODY_REPORT_FAMILY_SHAPE_20261008.md section 2 lists these callers"
+    ]
+  },
+  "spec_asserts": "IB-pr-369 names submit_installed.py (custody read) and custody_write.py (custody write) as the custody callers that pass the custody revision.",
+  "world_is": "Only submit_installed.py composes a ReportRepository that must read a CUSTODY_REPORT; custody_write.py takes the repository its caller composed. When IRPT_CUSTDY's writer is wired it must compose with additional_policy_revisions=(composition.CUSTODY_POLICY_REVISION,), else its persist refuses 'unregistered retention family' (a fail-closed outcome, pinned by the unregistered_kind_refuses test)."
+}
+```
+
+
+## IRPT_BCKEND-D2-W177-S3 -- S1 resolved: the custody revision is requested only when the registry carries it, so no build before E8 breaks PERFORMANCE/ANALYSIS submits.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T20:10:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W177-S1: AMENDMENT 1 (a356481e93) was implemented; fix commit 97e679c64f. export/submit_installed.py retained_reports() reads reporting_policy(CUSTODY_POLICY_REVISION) as composition.py does and requests the custody revision only when it resolves (ValueError = unknown revision composes without it). With a registry holding only irpt-x10-v1 the submit composition builds, PERFORMANCE/ANALYSIS read back, CUSTODY_REPORT refuses 'unregistered retention family'. Test x10_composes_without_custody_row passes (5 passed in the file) and fails (ValueError unknown reporting policy revision) against the always-request behaviour. No release ordering is now needed.",
+  "one_line": "S1 resolved: the custody revision is requested only when the registry carries it, so no build before E8 breaks PERFORMANCE/ANALYSIS submits.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py retained_reports @97e679c64f",
+      "infra/aws/lambda/investor-reporting/reports/tests/test_repository_family_revisions.py test_x10_composes_without_custody_row @97e679c64f"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: custody revision requested only when the registry carries irpt-custody-x10-v1.",
+  "world_is": "Source composes against a registry with or without the custody row."
+}
+```
+
+
+## IRPT_BCKEND-D2-W177-S4 -- IB82-1-AC2 can never PASS: p82_cells.py line 56 holds a backspace byte (0x08) inside its regex where  was meant, so the amendment arm always fails even when the test passes.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T20:12:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB82-1-AC2 can never PASS: p82_cells.py line 56 holds a backspace byte (0x08) inside its regex where \b was meant, so the amendment arm always fails even when the test passes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (repair the 0x08 byte in checks/r82/p82_cells.py line 56, then re-run IB82-1-AC2)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r82/p82_cells.py line 56: re.search(r\"\b[1-9]\\d* passed\", last2) (bytes read in Python); the same pytest invocation by hand: rc 0, '1 passed, 4 deselected'",
+      "check introduced by a356481e93; outside the worker's paths grant, so unedited"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: IB82-1-AC2 also runs -k x10_composes_without_custody_row and PASSes when it passes.",
+  "world_is": "The check prints 'FAIL: -k x10_composes_without_custody_row rc 0: 1 passed' and IB82-1-AC2 FAIL. Fix is one byte in the COO's check (replace 0x08 with the two characters backslash b); the order stays open until then. disarm_owner is the issuer."
+}
+```
+
+## IRPT_BCKEND-D2-S7 -- D2-W177-S4 disarmed: the issuer's p82 check carried a 0x08 byte for ; repaired, IB82-1-AC2 PASS
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T19:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W177-S4: the issuer's AMENDMENT 1 edit to checks/r82/p82_cells.py (a356481e93) wrote the regex word-boundary as a literal backspace byte (0x08) because the edit script's string escaping collapsed the two-character escape, so the x10_composes_without_custody_row pass-count could never match. The issuer replaced the byte with the two-character escape (0 bytes 0x08 remain) in the commit that carries this row; re-run: IB82-1-AC2 PASS (-k x10_composes_without_custody_row 1 passed; test_repository 24, test_retained_repository 9, test_retention 21 passed). The assertion is unchanged; the defect was the issuer's, not the worker's.",
+  "one_line": "The E9 AC2 check now grades what it asserts; the worker's fix passes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "od -c of line 56 showed \b (0x08) before the fix; byte count 0 after",
+      "p82_cells.py . IB82-1-AC2 -> IB82-1-AC2 PASS"
+    ]
+  },
+  "spec_asserts": "A criterion's check grades the stated assertion.",
+  "world_is": "It does again."
+}
+```

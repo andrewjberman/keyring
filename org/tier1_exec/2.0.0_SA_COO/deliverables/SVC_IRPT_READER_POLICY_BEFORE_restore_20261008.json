@@ -1,0 +1,29 @@
+{
+ "Version": "2012-10-17",
+ "Statement": [
+  {
+   "Sid": "WalkerReadsByExplicitArn",
+   "Effect": "Allow",
+   "Principal": {
+    "AWS": "arn:aws:iam::313476888478:user/Andrew_Berman"
+   },
+   "Action": [
+    "secretsmanager:GetSecretValue",
+    "secretsmanager:DescribeSecret"
+   ],
+   "Resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:irpt/svc-irpt-analysis/password-rfHf9l"
+  },
+  {
+   "Sid": "NobodyElseReadsTheValue",
+   "Effect": "Deny",
+   "Principal": "*",
+   "Action": "secretsmanager:GetSecretValue",
+   "Resource": "arn:aws:secretsmanager:us-east-1:313476888478:secret:irpt/svc-irpt-analysis/password-rfHf9l",
+   "Condition": {
+    "ArnNotEquals": {
+     "aws:PrincipalArn": "arn:aws:iam::313476888478:user/Andrew_Berman"
+    }
+   }
+  }
+ ]
+}

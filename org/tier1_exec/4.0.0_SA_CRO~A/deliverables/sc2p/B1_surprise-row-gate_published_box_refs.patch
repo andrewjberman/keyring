@@ -1,0 +1,64 @@
+diff --git a/.tools/surprise-row-gate.py b/.tools/surprise-row-gate.py
+index 3cac9d1280..1885586396 100644
+--- a/.tools/surprise-row-gate.py
++++ b/.tools/surprise-row-gate.py
+@@ -865,6 +865,24 @@ def _parent_row_ids(root, rel):
+ 
+ # The ONE published trunk both devices commit to (LD-0613). Not a device fact: the ref name is the same on both.
+ PUBLISHED_REF = "refs/remotes/origin/CLOUD"
++# PER-BOX BRANCHES (2026-10-08, build item B1, 1.0.0_SA_CTO PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md; Andrew ~18:0xZ):
++# a box branch on origin is PUBLISHED too. Its rows were graded when its box committed them, and the integrator that
++# merges it into CLOUD cannot re-mint them; with CLOUD alone as "published", every integration of a box branch that
++# carries a new row would be refused at the integrator. The union below is a no-op while no origin/box/* ref exists.
++PUBLISHED_BOX_PREFIX = "refs/remotes/origin/box/"
++
++
++def _published_refs(root):
++    """origin/CLOUD first, then every origin/box/* ref. A failed listing yields CLOUD alone (today's behaviour)."""
++    refs = [PUBLISHED_REF]
++    try:
++        r = subprocess.run(["git", "for-each-ref", "--format=%(refname)", PUBLISHED_BOX_PREFIX], cwd=root,
++                           capture_output=True, text=True, encoding="utf-8", errors="surrogateescape", timeout=60)
++        if r.returncode == 0:
++            refs.extend(x.strip() for x in r.stdout.splitlines() if x.strip())
++    except Exception:  # noqa: BLE001
++        pass
++    return refs
+ 
+ 
+ def _published_row_ids(root, rel):
+@@ -879,13 +897,18 @@ def _published_row_ids(root, rel):
+     COST: one git read per channel file per merge. NON-APPLICATION: off a merge; a row minted in the merge commit
+     (in neither parent); every limb other than the coordinate discipline.
+     """
+-    st, text = _blob(root, PUBLISHED_REF, rel)
+-    if st == "ERROR":
+-        return None
+-    if st == "ABSENT" or not text:
+-        return set()
+-    rows, _bad = _rows(text, rel.lower().endswith(".json"))
+-    return {str((r or {}).get("id") or "").strip() for r in rows} - {""}
++    ids = set()
++    for ref in _published_refs(root):
++        st, text = _blob(root, ref, rel)
++        if st == "ERROR":
++            if ref == PUBLISHED_REF:
++                return None          # the trunk unreadable: exempt nothing, exactly as before
++            continue                 # an unreadable box ref only narrows the exemption, never widens it
++        if st == "ABSENT" or not text:
++            continue
++        rows, _bad = _rows(text, rel.lower().endswith(".json"))
++        ids |= {str((r or {}).get("id") or "").strip() for r in rows} - {""}
++    return ids
+ 
+ 
+ def _row_is_other_fabric(row):
+@@ -2536,7 +2559,7 @@ def check_file(root, rel):
+                         if str(r.get("id") or "").strip() in _pids and str(r.get("id") or "").strip() in _pub)
+         if _onpub:
+             notes.append("%s: MERGE -- coordinate discipline not applied to %d row(s) the published trunk (%s) already "
+-                         "carries: %s (batch 112)" % (rel, len(_onpub), PUBLISHED_REF, ", ".join(_onpub)))
++                         "carries: %s (batch 112)" % (rel, len(_onpub), PUBLISHED_REF + " or an origin/box/* ref", ", ".join(_onpub)))
+     # FOREIGN-ROW SWEEP: every new investigation row is the committer's own, or a co-worker's riding along.
+     _cw = _seats_with_open_orders(root, folder_project)[0] if folder_project else set()
+     _fv, _fn = _foreign_row_violations(rel, kind, added, _cmt, coworkers=_cw,

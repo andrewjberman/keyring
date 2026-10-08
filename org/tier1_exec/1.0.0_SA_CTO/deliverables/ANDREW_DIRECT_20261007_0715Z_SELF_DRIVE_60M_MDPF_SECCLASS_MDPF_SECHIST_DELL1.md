@@ -46,3 +46,13 @@ need to asses what can be done locally on this device. are you blocked by the la
 
 Cron `0290895f` deleted (CronDelete). Last log: tick 16 @611b45d8c7. The loop is PAUSED, not DONE. It re-arms only on Andrew's word,
 off this record.
+
+## RE-ARMED -- 2026-10-08 ~17:5xZ, Andrew-direct at the dell1 CTO terminal
+
+VERBATIM: "Yes rec approved, please proced"
+
+It answers the /open-calls card printed by `1.0.0_SA_CTO~DELL1` at 17:55Z (box list id `dell1-20261008T175521Z-abbb`): "Re-arm
+/self-drive 60m at 1.0.0_SA_CTO~DELL1 over MDPF_SECCLASS, MDPF_SECHIST and MDPF_HEALGAP?" REC (yes): re-arm 60m with HEALGAP
+folded in on this word. The pause ends. Scope: MDPF_SECCLASS, MDPF_SECHIST, MDPF_HEALGAP. Cadence 60m. MDPF_HEALGAP's inclusion is now
+on Andrew's word (it was the driver's tick-2 ruling, classed AUTHORITY-UNVERIFIED in LIVE_ARMS). All other ARM TERMS stand. The cron
+is created after this record commits; tick 17 runs on arming.

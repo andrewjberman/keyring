@@ -4584,6 +4584,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S31 -- the Dell deploy grant reaches the cloud graph bucket (opal-* wildcard), head marker and Iceberg files included
+
+```json
+{
+  "id": "NFRA_CTLPLN-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T14:20:00Z",
+  "one_line": "the Dell group's deploy policy grants s3:PutObject on arn:aws:s3:::opal-*/*, which includes the cloud graph's bucket opal-313476888478-globgrph, where a write to warehouse/_branch_head.main.json starts a Kuzu rebuild and the Iceberg graph tables live; no fence names the bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~14:1xZ by 4.0.0_SA_CRO: infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json, an Allow of s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:ListBucket and more on ['arn:aws:s3:::opal-*', 'arn:aws:s3:::opal-*/*']; its only S3 Deny covers delete and lifecycle on opal-data-* (not opal-313476888478-*).",
+      "Read: infra/aws/terraform/globgrph/projection.tf (an S3 write to warehouse/_branch_head.main.json notifies the queue that starts the projection worker) and infra/aws/globgrph/derive_runner.py:390, :407-419 (the head marker names the current snapshot of graph_nodes and graph_edges).",
+      "Not measured: the live policy (no simulate-principal-policy run), whether a bucket policy on opal-313476888478-globgrph denies the Dell users, and whether any Dell seat has written there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Dell grant is read as admitting deploys and the firm buckets; the graph plane is described as written only by its own in-VPC service roles (docs/architecture/NFRA_GLOBGRPH_PRD.md, the v0.4.1 N-agent rule: agents never write the graph).",
+  "world_is": "As written, a Dell credential can put any object in the graph bucket, including the head marker and the Iceberg table files, so a Dell seat could start a rebuild or replace graph data. Nothing found says this was intended or ruled out. INERT: nothing is known to have done it.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
+}
+```
+
 ## NFRA_CTLPLN-Z-S3 -- the trading calendar's fallback ends at 2027: on 2028-01-01 every staleness read on a function that runs the fallback raises
 
 ```json
@@ -4609,6 +4636,356 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "2.0.0_SA_COO~C",
   "notes": "Filed at the CTO's direction (msg 31336). The disarm is the fallback regenerated to cover 2028 onward and carried by a redeploy of each function that runs it, before 2028-01-01. Surfaced, not chased; no code edited."
+}
+```
+
+## NFRA_CTLPLN-S32 -- placement-check places every Dell project on the laptop (reads `fabric`, never `placement`)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T16:55:00Z",
+  "one_line": ".tools/placement-check.py resolves a project's box from project.json `fabric` only (:90), so projects carrying fabric=laptop with placement=DELL1/DELL2 are counted on the laptop and dell1 and dell2 read as placed 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~16:5xZ: .tools/placement-check.py:90 `box = dev.resolve(str(d.get(\"fabric\") or \"\"), reg)`; no read of `placement` in read_projects().",
+      "Read by a 4.0.0_SA_CRO sub-read 2026-10-08 ~16:3xZ: IRPT_YCDGEN, NFRA_TRNSPT and MDPF_SECHIST carry fabric=laptop with placement=DELL2/DELL2/DELL1, and the tool reports dell1 and dell2 as 'placed 0 (ROOM)'.",
+      "Not read: whether crossbox-deploy-check.py reads placement first in code (its docstring says so)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "placement-check is the C-PLACEMENT viewer of which box holds which project; crossbox-deploy-check imports its overlaps.",
+  "world_is": "Every Dell-placed project is attributed to the laptop, so the per-box placement figures and any cross-box overlap that depends on the box are wrong for dell1 and dell2. INERT: a viewer that never changes an exit; crossbox-deploy-check's use not traced.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~16:1xZ order (long-term graph coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_161xZ_GRAPH_COHERENCE_LONG_TERM_FOLD_IN_ACTIVITY_OVERLAP.md). Proposes no change; the fix owner is the tool's."
+}
+```
+
+## NFRA_CTLPLN-W14-S19 -- CTa1-AC5 reads dell_write_refused=8/10, not 10/10: with the resource-policy Allow applied the two Dell users can kms:PutKeyPolicy the transcripts key, so the criterion cannot be met as written
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S19",
+  "one_line": "CTa1-AC5 (check_transcripts_dell_decrypt.py) expects dell_write_refused=10/10 and reads 8/10 on the unchanged tree: both Dell users' LIVE policies now allow kms:PutKeyPolicy on the transcripts key (the resource-policy Allow applied in step C); the test was not weakened and the order stays open on this criterion.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py run from the worktree root BEFORE any edit of this pass (HEAD d613ff4526): 'ARM cloudops-dell1-agent-user kms:PutKeyPolicy raw_doc=allowed raw_pre_edit_doc=allowed named_statements_only=implicitDeny own_policies=allowed KMS_RULE=allowed' and the same line for cloudops-dell2-agent-user; last line 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'",
+      "infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py:237 simulates the LIVE user (iam simulate-principal-policy, PolicySourceArn=user ARN) for the own_policies column; the KMS_RULE column is 'named statements, or root delegation AND the user's own live policy'",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json: kms:PutKeyPolicy is in_allow true since AMENDMENT 10 (freed block reads allowed for both users); order AMENDMENT 14 records the Allow applied 2026-10-08 under NFRA_CTLPLN.TO-APPLY-13; order AMENDMENT 12 lists 'a key policy, the transcripts key' among the four ACCEPTED routes",
+      "the proof instance of the previous pass (AMENDMENT 14, HEAD e0507c1d26) recorded 10/10 for this criterion, taken before the Allow was live"
+    ]
+  },
+  "spec_asserts": "CTa1-AC5: TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True (the Dell users decrypt the transcripts key and write nothing to it).",
+  "world_is": "The two arms that read allowed are kms:PutKeyPolicy for dell1 and for dell2. The transcripts key policy gives the account root administration without use (RootAdministersTheKeyAndCannotUseIt), which KMS reads as delegation to IAM, and the Dell users' live identity policies now allow kms:PutKeyPolicy on any key (the resource-policy Allow, which the CTO and Andrew widened and which the order lists the transcripts key's policy under as an accepted route). The criterion was true while that Allow was unapplied and cannot be true with it applied, independent of this pass's edits (the baseline above predates them). kms:ScheduleKeyDeletion, Encrypt, GenerateDataKey and ReEncryptFrom still read refused (8 of 10).",
+  "notes": "Not fixed here, by design: making it 10/10 means either a Deny for the two Dell users on kms:PutKeyPolicy in the transcripts key policy (an edit and an apply of the transcripts root that contradicts the accepted route) or changing the criterion's expected value (weakening a test); both are the issuer's or the CTO's call. The grant of AMENDMENT 16 neither causes nor changes this reading."
+}
+```
+
+## NFRA_CTLPLN-W14-S20 -- AMENDMENT 16 grants the PLATFORM-KEY class, so the table's 'doubt resolves to PLATFORM-KEY' rule now grants doubtful secrets; the Secrets Manager resource-policy exclusion keeps its reason text
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S20",
+  "one_line": "The classification table was written so that doubt between PLATFORM-KEY and anything else resolved to PLATFORM-KEY, which kept a doubtful secret out of the grant; with PLATFORM-KEY granted that rule now puts doubtful secrets IN (gateway/principals/rosters, opal/auth/origin-verify are two named by doubt among the 28); and secretsmanager:PutResourcePolicy/DeleteResourcePolicy stay out of the Allow on a reason that now covers 20 secrets, not 48.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py CLASSIFICATION rows 'gateway/principals/rosters' (reason ends 'doubt resolves to PLATFORM-KEY') and 'opal/auth/origin-verify' (reason: 'AMENDMENT 9 lists an origin-verify value under OTHER; the issuer's dispatch says PLATFORM-KEY and the doubt rule agrees')",
+      "tests/derive_vendor_secrets.py --from-file tests/vendor_secrets_census.json: 'CLASS PLATFORM-KEY n=28 (granted)', 'DECISIONS {BLOCKED-BY-KEY: 1, GRANTED: 94, OTHER: 19}'",
+      "dell_respol_policy.json: secretsmanager:DeleteResourcePolicy and secretsmanager:PutResourcePolicy in_allow false, reason 'would undo the secrets carve-out of this plan (issuer; CTO to confirm)'; simulation FREED-EXCLUDED lines read implicitDeny for both users"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 1: PLATFORM-KEY becomes a granted class; OTHER (19) and BLOCKED-BY-KEY stay out; only the rule that grants the class changes.",
+  "world_is": "The 28 platform keys are the table's rows as AMENDMENT 9 placed them, and Andrew's word names 'the 28 platform keys', so the grant is what was ruled. The two rows placed by doubt are in it for that reason. Nothing was reclassified. The 19 OTHER (including the two one-time-code relays and the GitHub tokens) and schwab/sdd/session remain unreadable; a Dell cannot rewrite their access through a secret resource policy because those two actions are not in the Allow.",
+  "notes": "For the CTO to confirm: (a) the doubt rule's new effect on the two named rows; (b) the issuer's exclusion (d) of AMENDMENT 10 still stands for the 20 withheld secrets and its stored reason text still reads correctly, so it was left as is."
+}
+```
+
+## NFRA_CTLPLN-W14-S21 -- DenyCloudTrailWrites is now an explicit list for Put and Delete: a future CloudTrail action that begins Put or Delete is no longer denied by a wildcard
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S21",
+  "one_line": "To free cloudtrail:PutResourcePolicy and cloudtrail:DeleteResourcePolicy the Deny's cloudtrail:Put* and cloudtrail:Delete* wildcards were replaced by the seven explicit names of the current service model; a CloudTrail action AWS adds later under those two prefixes is not denied until someone adds it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json DenyCloudTrailWrites: Stop*, Update*, DeleteChannel, DeleteDashboard, DeleteEventDataStore, DeleteTrail, PutEventConfiguration, PutEventSelectors, PutInsightSelectors",
+      "botocore 1.43.0 cloudtrail service model: 60 operations; prefixes Stop 3, Delete 5, Update 4, Put 4 (16); tests/simulate_policy.py UNDO-STILL-SHAPE: DenyCloudTrailWrites covers 14 of 16, the 2 others are the freed pair",
+      "IAM wildcards have no 'except' form and a Deny cannot be written as NotAction for this purpose without a Condition on the action; the order allowed 'write it explicitly'"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 2: rewrite DenyCloudTrailWrites so it no longer denies the two actions and still denies every other CloudTrail Stop/Delete/Update/Put action, writing the list explicitly from the service reference or the simulator.",
+  "world_is": "Stop* and Update* kept their wildcards (no member of either family is freed, so they are equal and future-proof). Put and Delete are explicit. The action names were read from the installed botocore service model (operation names are the IAM action names for CloudTrail); the AWS service authorization reference was not fetched (no web access in this pass).",
+  "notes": "If a seat wants wildcard coverage back, the only wildcard form that still frees the two is a narrower prefix set (for example cloudtrail:PutE*, cloudtrail:PutI*, cloudtrail:DeleteC*, DeleteD*, DeleteE*, DeleteT*), which is also a guess about future names; left to the CTO."
+}
+```
+
+## NFRA_CTLPLN-W14-S22 -- AMENDMENT 16 item 1: the split into 'one managed policy per granted class' would be 3 policies and 8 of 10, not the 7 the order expects; built as two parts, and the existing secrets policy does not change
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:02:06Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S22",
+  "one_line": "The order names one policy per granted class as the split rule and expects 7 of 10 and 'the secrets policy changed in place'; the rule gives 3 secrets policies (8 of 10), so the grant is split in two by class set and the existing policy is byte-identical, which a plan shows as no change.",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "order AMENDMENT 16 item 1 and item 9: 'SPLIT by a stable rule (one managed policy per granted class ...)', 'expected 7 of 10', 'the deploy, create and resource-policy Allow policies and the secrets policy changed in place; one new secrets policy and its attachment created'",
+      "tests/check_identity.py: 'policy vendor-secrets part one chars_no_whitespace=5968', 'policy platform-secrets part two chars_no_whitespace=2707', 'group managed-policy attachments=7 quota=10'; 35 + 31 + 28 granted per class",
+      "IAM: a description change on aws_iam_policy forces replacement (provider behaviour, read from the provider's schema from memory, not run), which is why the existing policy's description is left as it is and still true of its content"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 16 item 1: one managed policy per granted class; keep the existing policy's name and address for one of the parts so it updates in place; group expected 7 of 10.",
+  "world_is": "Part one (VENDOR-CREDENTIAL and CLIENT-SESSION, 66 ARNs, 5,968 characters) is unchanged in name, address, description and document; part two (PLATFORM-KEY, 28 ARNs, 2,707) is new. The expected plan is 2 to add, 3 to change (deploy, create, resource-policy Allow), 0 to destroy; the secrets policy is not among the changes.",
+  "notes": "Section G of the plan note says this in the plan table. If the issuer wanted three policies, or wanted the existing one rewritten, that is a recut; the two forms grant the same 94 secrets."
+}
+```
+
+## NFRA_CTLPLN-W14-S23 -- resolution record for W14-S19: AMENDMENT 17 recut CTa1-AC5; CVO to disposition S19
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T17:22:18Z",
+  "one_line": "Resolution record for NFRA_CTLPLN-W14-S19: AMENDMENT 17 recut CTa1-AC5 to dell_write_refused=8/10 and the re-run reads it; the row gate refuses a worker's in-place edit and a worker's adjudicates, so this row is filed UNDER_INVESTIGATION for 3.0.0_SA_CVO to disposition S19.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 17 item 3 @df84da40fa: row W14-S19 is dispositioned as resolved by that amendment",
+      "python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py at HEAD df84da40fa, last line: TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=8/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False; the two allowed arms are kms:PutKeyPolicy for cloudops-dell1-agent-user and cloudops-dell2-agent-user, allowed by cloudops-dell-agent-respol-allow-policy (applied TO-APPLY-13) through the key policy's RootAdministersTheKeyAndCannotUseIt delegation",
+      ".tools/surprise-row-gate.py refused (1) an in-place disposition of NFRA_CTLPLN-W14-S19 ('EXISTING row ... was MUTATED in place') and (2) `adjudicates` on a worker's row ('3.0.0_SA_CVO's field'); this row is the lawful form"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 17 item 3: row W14-S19 is dispositioned as resolved by this amendment.",
+  "world_is": "S19 keeps disposition UNDER_INVESTIGATION in its own bytes (append-only; worker rows may not disposition). The criterion now reads PASS against the recut expectation.",
+  "notes": "Cites NFRA_CTLPLN-W14-S19. Proposed disposition for the CVO: S19 resolved by AMENDMENT 17 (the issuer's recut of its own criterion; the two kms:PutKeyPolicy arms are the accepted route, item 4 of 'What this Allow CAN undo', CTO msg 106733). The worker does not set it."
+}
+```
+
+## NFRA_CTLPLN-W14-S24 -- AMENDMENT 15 reads 'the routes Deny'; routes.tf builds TWO Deny policies and item 5 as put to Andrew names only one
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:54Z",
+  "one_line": "routes.tf creates cloudops-dell-agent-routes-host-policy (command documents, code prefixes) and cloudops-dell-agent-routes-fn-policy (function updates on 66 ARNs of YES-role functions); this pass removed only the host policy, because item 5's own words and msg 106945 name documents, task definitions and prefixes, not functions.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_TEN_ANSWERS_LIFT_ITEMS_5_AND_4_WIDEN_BOTH_GRANTS_DELL2_RETRIES_DELL1_INSTALLS.md row 1: item 5 is the Deny on 'writing or sending a command document, task definition or downloaded artifact prefix that runs as a privileged role', the description of the host policy in routes.tf",
+      "infra/aws/terraform/nfra-ctlpln-identity/routes.tf at c9d8210b3e: two aws_iam_policy resources (dell_agent_routes_fn, dell_agent_routes_host) and two group attachments; AMENDMENT 15 item 2 says 'the policy or policies and attachments that routes.tf creates'",
+      "INFERRED reading of which of the two Andrew lifted; the record's quoted text matches the host policy's description word for word and the function policy's description ('updating a function that runs as a role able to write IAM, the audit trail or delete production data') is not in it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 15 items 1 and 2: remove the routes Deny (policy or policies and attachments routes.tf creates); report whether there is a second document.",
+  "world_is": "Two documents. Removed: aws_iam_policy.dell_agent_routes_host[0] and its attachment (2 destroys). Kept: aws_iam_policy.dell_agent_routes_fn[0] and its attachment; the simulation prints ROUTES-KEPT for a function of a YES-IAM role, explicitDeny by DenyRoutesToPrivilegedRolesFunctions, both users.",
+  "notes": "If the issuer reads 'the routes Deny' as both, the cut is two more destroys and the same edit in routes.tf, check_identity.py (EXPECTED and counted) and the kept arm of simulate_policy.py; it is not done unasked because it widens a function-update refusal Andrew's quoted words do not name."
+}
+```
+
+## NFRA_CTLPLN-W14-S25 -- dell1's 'bd code prefix' refusal is not reproduced on the identity plane; no statement of this root refuses s3:PutObject on opal-data-bd/code/
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S25",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:56Z",
+  "one_line": "AMENDMENT 15 item 2's stop condition asks which statement refuses dell1's s3:PutObject on the cot and bd code prefixes: the cot prefixes are refused by cloudops-dell-agent-routes-host-policy (DenyRoutesToPrivilegedRolesPrefixes), but live SimulatePrincipalPolicy reads every opal-data-bd/code/ key I tried ALLOWED for both users, so a bd refusal, if real, is not an identity-policy refusal and not the routes policy.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "iam:SimulatePrincipalPolicy on arn:aws:iam::313476888478:user/cloudops-dell1-agent-user and cloudops-dell2-agent-user, 2026-10-08 ~18:1xZ, s3:PutObject: opal-data-cot/code/gold/x.py, code/bronze/cot_bronze_ingest.py, code/silver/cot_silver_merge.py -> explicitDeny, matched cloudops-dell-agent-routes-host-policy; opal-data-bd/code/gold/x.py, code/silver/x.py, code/bronze/x.py, code/bronze/cot_bronze_ingest.py, code/bronze/templates/fees.json, code/gold/gold_dispatch.sh, code/gold/lib/advisor_nna_attribution.py, code/canonical-schwab-runner/run-canonical.sh -> allowed, matched cloudops-dell-agent-deploy-policy (S3ObjectsOnOpalBuckets); denominator 14 resources x 2 users in the second run",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/reached_roles_census.json: the hosts route download prefixes name only opal-data-cot and opal-data-inf keys; the rendered hosts document (1,445 characters) names no opal-data-bd key",
+      "infra/aws/terraform/shared-infra/s3-lgic-firm-buckets.tf and s3-49financial.tf: the Terraform-declared fences are on opal-data-49financial, opal-data-cottonwood and opal-data-inflection; no bucket policy for opal-data-bd is declared in that root. Live bucket policies, service control policies and key policies were not read (outside the bounds: SimulateCustomPolicy and SimulatePrincipalPolicy only)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 15 item 2: dell1's measured refusal on the cot and bd code prefixes is caused by the routes policy; if not, STOP and report the statement.",
+  "world_is": "Cot: caused by the routes-host policy, removed by this step, so the Cottonwood code prefix frees. Bd: no identity statement refuses it, before or after; the simulation's Black Diamond arm (opal-data-bd/code/gold/x.py) reads allowed in both states for both users. The statement behind a real dell1 refusal on bd, if there was one, is outside what this pass can read. The pass continued because the stop condition names a refusing statement outside the routes policy and none was found on the plane it can read.",
+  "notes": "The issuer should ask dell1 for the exact key, the error text and the time of the bd refusal (an AccessDenied from S3 names whether an explicit deny in a resource-based policy or an identity policy, or an SCP, caused it). Removing the routes policy cannot deliver a bd write that something outside the identity policies refuses."
+}
+```
+
+## NFRA_CTLPLN-W14-S26 -- Lifting item 5 does not let a Dell SEND or DELETE the twelve command documents: no Allow covers ssm:SendCommand or ssm:DeleteDocument
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T18:25:57Z",
+  "one_line": "After the routes-host Deny is gone the simulation reads ssm:SendCommand and ssm:DeleteDocument on the twelve documents implicitDeny for both users (24 of 69 arms per user): the Deny was the only statement naming them, and no Allow in the group's six policies grants either action; only Create, Update and UpdateDocumentDefaultVersion free.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py at this pass's commit, ROUTES-FREED lines: dell1 and dell2, ssm:SendCommand on each of 12 documents -> STILL-REFUSED implicitDeny by no Allow statement matches; ssm:DeleteDocument likewise; with the hosts document (today) -> explicitDeny by DenyRoutesToPrivilegedRolesDocuments",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json and dell_create_policy.json: no Allow of ssm:SendCommand or ssm:DeleteDocument; dell2_ssm_policy.json allows ssm:SendCommand only on the instance and two other documents",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~14/PLAN_NOTE_DELL_VENDOR_SECRETS.md section F, 'What STILL refuses'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Item 5 as lifted by Andrew: the Deny on 'writing or sending a command document ... that runs as a privileged role' comes off both Dells.",
+  "world_is": "The Deny comes off; writes of documents and code prefixes free (82 of 130 formerly refused arms); sends and deletes of the twelve documents (48 of 130) stay refused because nothing allows them. Same shape as the resource-policy Deny of AMENDMENT 9, which AMENDMENT 10 followed with an Allow.",
+  "notes": "Whether a Dell should be able to send these twelve documents is a grant to cut (an Allow of ssm:SendCommand on the twelve document ARNs plus the instances), not a removal; the issuer and the CTO decide. Not done: it is outside AMENDMENT 15."
+}
+```
+
+## NFRA_CTLPLN-W14-S27 -- IAM cannot pair a document with an instance: the only form that gives dell2 + RunShellScript + F1 = allowed and dell2 + RunShellScript + any other host of the group Allow = refused also refuses every document to those hosts while the window is open
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "ssm:SendCommand is authorised against the document and the instance as separate resources with the same request context, so a Deny on the shell-script document cannot except one instance; the pairing is only reachable by refusing the OTHER hosts' instance resources for every document while the window is open (dell2 loses its sends of the twelve documents to those six hosts for the window's life).",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SHELLWIN-ARM 01-07 and 13 (this pass): OPEN dell2 [RunShellScript, F1 host] -> allowed; OPEN dell2 [RunShellScript, each of the 6 hosts] -> explicitDeny per-resource [allowed, explicitDeny] by DenyOtherPrivilegedHostsWhileShellWindowOpen; OPEN dell2 [advi-49f-chain-dispatch, host 1] -> explicitDeny (the collateral)",
+      "forms tried (scratch script .scratch/forms.py at this pass, iam:SimulateCustomPolicy, both ARNs in one ResourceArns): FORM 1 (DenyShellDocuments loses the RunShellScript resource, Allow RunShellScript + F1 added): dell2 [RunShellScript, F1] allowed BUT dell2 [RunShellScript, bd host i-0090b823a4a0997e3] allowed too (document side allowed by the window, instance side allowed by the group Allow) -> does NOT give the pairing; FORM 2 (FORM 1 + a Deny of ssm:SendCommand on the instance ARNs of the six hosts while open): pairing exact (F1 allowed, each of the six refused, an instance outside the Allow implicitDeny, dell1 [RunShellScript, F1] implicitDeny) with the collateral above; no condition key distinguishes the document on the instance-side evaluation, so no narrower form exists in IAM",
+      "modules/routes_policy/main.tf locals win_added, shellwin_open_json; iam.tf aws_iam_policy.dell2_ssm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 19 item 3: prove which IAM form gives exactly dell2 + RunShellScript + F1 = allowed and dell2 + RunShellScript + any other 1(b) instance = refused; if none, STOP.",
+  "world_is": "FORM 2 gives the pairing exactly as stated and was built. It is not free: while open (until the hard close 2026-10-09T06:00Z) dell2 cannot send ANY document to the six hosts (the Deny is on their instance resources), a restriction only, in the safe direction. With the default (closed) none of it is in force.",
+  "notes": "The issuer should confirm to the CTO that the collateral is accepted; if not, drop the statement DenyOtherPrivilegedHostsWhileShellWindowOpen from the module (one list element, win_added) and the pairing is lost: dell2 RunShellScript then reaches all six hosts while open, as FORM 1 shows. The F1 host is not one of the six (census verdict NO), so the Deny never touches it."
+}
+```
+
+## NFRA_CTLPLN-W14-S28 -- The group send Allow is a cross product of documents and hosts, and dell2's standing shell Deny is not a shell boundary: twelve documents with free-text parameters reach six privileged hosts, and dell2's own resident documents reach them too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "Because the document and the instance are authorised separately, the group Allow lets both Dells send each of the 12 documents to each of the 6 hosts (including the cot documents to bd hosts), dell2 can send irpt-ycharts-deploy and irpt-ycharts-run (its own Allow names them) to the 6 hosts and any of the 12 to the F1 host, and several of the 12 interpolate a free-text parameter into a shell command line, so dell2 has a shell on the roles of those hosts through them while DenyShellDocuments stands.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SENDCMD-REPORTED lines (this pass): dell2 [F1, advi-49f-chain-dispatch] -> allowed per-resource [allowed, allowed]; dell2 [bd host i-0090b823a4a0997e3, irpt-ycharts-run] -> allowed [allowed, allowed]; dell1 [F1, advi-49f-chain-dispatch] -> implicitDeny (dell1 has no F1 instance Allow); SHELLWIN-REPORTED: OPEN dell2 [F1, advi-49f-chain-dispatch] -> allowed",
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check output (this pass), PARAM lines: opal-cot-bronze-run RunDate/Table/DryRun, opal-cot-silver-run RunDate/DryRun, opal-cot-gold-run DryRun/StartAt, opal-inf-export-run HeadlessMode/SkipS3/SkipExport, opal-inf-test-login-stage1-3 HeadlessMode, opal-inf-jwt-fetch HeadlessMode are FREE-TEXT-COMMAND (interpolated into a shell command line, no allowedValues, no allowedPattern); irpt-ycharts-deploy ArtifactPrefix likewise (ssm.tf:43)",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md CELL: \"a document that takes a free-text command parameter is a shell on that role and is OUT of the grant\" (CTO ruling 106138 section 1), now overtaken by msgs 107113 and 107120 for the twelve documents"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO msg 107120: dell2's DenyShellDocuments \"stays as the standing rule\"; msg 107113: Allow ssm:SendCommand on the 12 documents and AWS-RunShellScript for the Dell group.",
+  "world_is": "The standing rule keeps dell2 off AWS-RunShellScript but not off a shell: the 12 documents the group Allow names carry free-text parameters, so a send with a crafted parameter runs a command as the host role (a role the census reads YES-DELETE). The never-widen pair reading this should treat the group Allow as a shell on the six hosts for BOTH Dells; the Deny is cosmetic for dell2 once the Allow applies. Not fixed here: no IAM form separates documents by parameter.",
+  "notes": "Pair this with the CTO: either accept (the Allow is the ruling), or drop the free-text documents from the 12 (a smaller list is one filter in the module, derive_ssm_documents classifies each parameter) or have dell2 policy deny the free-text ones by name (a document-side Deny cuts them for all hosts, F1 included)."
+}
+```
+
+## NFRA_CTLPLN-W14-S29 -- The order's sendcmd_ok says RunShellScript on a host of the Allow is allowed for BOTH users; for dell2 that cannot hold beside item 3 or the standing Deny, so dell2's arm reads explicitDeny and counts as met
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S29",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "AMENDMENT 19 item 4 sendcmd_ok: 'both users: each of the 12 documents and RunShellScript on one 1(b) host allowed'; item 3 and msg 107120 refuse dell2 + RunShellScript + any 1(b) host (window closed: DenyShellDocuments; open: the pairing Deny), and the window is dell2's only shell exception.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py SENDCMD-ARM 13 (dell1 [host, RunShellScript] -> allowed) and 30 (dell2 -> explicitDeny by DenyShellDocuments); SHELLWIN-ARM 02-07 and 16",
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-a-1.dell2-sendcommand-grant.md AMENDMENT 19 items 3 and 4 (the two texts)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "item 4: sendcmd_ok counts RunShellScript on a 1(b) host as allowed for both users.",
+  "world_is": "sendcmd_ok=34/34 counts dell1 allowed and dell2 refused (wanted explicitDeny by DenyShellDocuments). Also changed by item 2, not a surprise: the ssm_ok arm \"dell1 reads a command result\" read denied at the base and reads allowed now (the group Allow carries the read actions); routes_freed moved 90/138 to 114/138 and routes_still_refused 48 to 24 because the sends of the twelve documents now read allowed (no Deny on them, an Allow for them).",
+  "notes": "If the issuer meant dell2 to be allowed RunShellScript on a 1(b) host, that is a second window (a new ruling); nothing here builds it."
+}
+```
+
+## NFRA_CTLPLN-W14-S30 -- Two readings the order left open, taken narrow: the hosts of the send Allow are the 6 hosts a document is found to run on (not all 17 hosts of the 3 privileged roles), and the window is a document swap in dell2's own policy (not separate resources)
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S30",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T19:23:34Z",
+  "one_line": "1(b) 'the instance ARNs those documents run on - the hosts the role census ties to the privileged roles': read as the host routes with at least one document (6 of 17 YES-role hosts; the other 11 (8 historical-prices-fetcher, bd-fees, bd-assets, smartx-exporter) have no document route and are not named); the window variable chooses the document aws_iam_policy.dell2_ssm carries (no separate window resource), so the default plan leaves dell2_ssm unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/terraform/nfra-ctlpln-identity/tests/derive_ssm_documents.py --check SEND-GRANT-1b table (17 YES-role hosts, all verdict YES-DELETE, all state stopped; 6 IN the send Allow)",
+      "infra/aws/terraform/nfra-ctlpln-identity/iam.tf aws_iam_policy.dell2_ssm policy = var.open_dell2_f1_shell_window ? module.routes_policy.shellwin_open_json : file(dell2_ssm_policy.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "item 1(b) and item 3 as written; item 6 \"dell2's window resources absent\" with the default.",
+  "world_is": "Narrow reading built. Widening to all 17 hosts is one changed filter in the module (rt.kind == \"host\") and adds 11 instance ARNs (about 700 characters). A separate count-gated window policy cannot work: the standing Deny on the shell-script document is in dell2_ssm_policy.json and an Allow cannot override a Deny, so the file's Deny must leave the document while the window is open. Plan note section H says so by address.",
+  "notes": "Both are the issuer's to confirm; neither changes the six criteria."
 }
 ```
 

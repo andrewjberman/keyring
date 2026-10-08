@@ -318,6 +318,54 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "world_is": "The right value landed inside the 06:05-06:20Z window, so the exercise is intact (FAILED-OK, RESTORED-OK). But the act carries no owner: a laptop-credential process or Andrew directly wrote the target, and nothing in the order or the halves names it. INERT: the value is the declared restore value and no further put is pending. The ledger names the actor by CloudTrail identity until the laptop identifies it (asked by MSTR~DELL1 msg 808)."
   },
   {
+    "id": "MDPF_HEALGAP-S11",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-08T13:05Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Condition 4 of the FWD-1 exercise half sets its service line at 13:30Z, but gold dim_model_portfolio -- the gold layer built from the Cottonwood model silver tables -- lands at 13:30:39Z-13:30:42Z on 9 of the last 10 days, so a condition-4 read widened to gold returns MISSED on a normal day with nothing wrong.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list of blackdiamond/cottonwood/gold/dim_model_portfolio/ at 2026-10-08T13:0xZ: 60 partitions; the newest 10 LastModified in UTC are 2026-10-07 13:30:40Z, 10-06 13:30:40Z, 10-05 13:30:40Z, 10-04 13:30:40Z, 10-03 13:30:39Z, 10-02 13:30:40Z, 10-01 22:08:16Z, 09-30 13:30:42Z, 09-29 13:30:40Z, 09-28 13:30:40Z -- 9 of 10 inside 13:30:39Z-13:30:42Z, the tenth later still",
+        "the writer is data/assets/scripts/gold/build_dim_model_portfolio.py invoked by the EC2 mdpf-daily-runner at infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:554, NOT by the runner's on_success destination opal-assets-silver-blackdiamond, so gold is not on the chain condition 4 names",
+        "129 scheduled EventBridge rules enumerated with aws events list-rules: none carries a 13:30 cron (nearest are opal-assets-silver-blackdiamond-sweep-daily and etf-positioning-producer-daily at cron(0 13 * * ? *)), which corroborates that the 13:30:40Z arrival is the EC2 runner's own cadence and not an Events schedule",
+        "leg L5 of org/critical_paths/.open_deploys/mdpf-healgap-hg-d3-fwd1-exercise-20261008.json: condition 4 graded MET at 13:01:58Z on the instrument the condition names, the on_success chain's newest write for D=2026-10-08 at 11:46:08Z, with the four model silver tables at 11:32:29Z-11:32:33Z"
+      ]
+    },
+    "spec_asserts": "CTO half condition 4, carried as TO-HG-d3 act 4b: whether the date's served Cottonwood figures were in place by 13:30Z is a discriminating read of whether the heal delivered in time.",
+    "world_is": "On the instrument the condition names -- the on_success chain -- D=2026-10-08 read MET by 1h43m, so the heal itself is not in question and this row does not reopen it. But the 13:30Z line sits 39 to 42 seconds INSIDE gold's own daily arrival, so widening 'served' to gold makes the same read return MISSED on nine of the last ten days with no failure present: at that width the line discriminates nothing. FWD-1's own wording is 'by the end of the same day', which both widths satisfy. Owner: 2.0.0_SA_COO~G1, to decide whether condition 4's successor reads silver and keeps 13:30Z, or reads gold and moves the line past the mdpf-daily-runner's arrival.",
+    "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
+  },
+  {
+    "id": "MDPF_HEALGAP-S12",
+    "project": "MDPF_HEALGAP",
+    "fabric": "laptop",
+    "surfaced_by": "0.7.0_AE_CloudOps~F",
+    "surfaced_at": "2026-10-08T14:25Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The actor of the 06:08:46Z HG-d3 restore is this seat's OWN fail-safe background task, which outlived a harness-reported kill AND the seat's close and made a production AWS write about 10 hours later with no live seat: a harness kill notice is not evidence the process died, and an unregistered armed actuator can act for a seat that no longer exists.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Read directly by this seat at 2026-10-08T14:2xZ, not taken from a report: C:/Users/AndrewBerman/AppData/Local/Temp/claude/C--Users-AndrewBerman-Desktop-ajb-workspace/393fd2b5-feaa-49dd-81e2-9376e8701755/tasks/bv5miebw8.output, 414 bytes, mtime 2026-10-08 02:08 local (06:08Z). Verbatim: FAILSAFE-WOKE 2026-10-08T06:08:40Z current_input={\"mode\":\"pull\",\"induce\":\"auth-lapse\"} / FAILSAFE-ACTING the induce input is still live -- performing the order's second put-targets / FailedEntryCount 0 / FAILSAFE-PUT_UTC=2026-10-08T06:08:45Z / FAILSAFE-READBACK {\"mode\":\"pull\"} / FAILSAFE-RESTORED-BY-SCRIPT -- the seat still owes HG1-d3-AC3, the no-change plan and the ledger record",
+        "The sibling 06:03Z wake task's output file in the same directory reads [killed], 10 bytes, mtime 2026-10-07 16:26 local (20:26Z) -- so of the two timers the prior session reported killed at 20:2xZ, ONE really died and the other did not, and both were reported the same way",
+        "FAILSAFE-PUT_UTC 06:08:45Z matches the CloudTrail PutTargets at 2026-10-08T06:08:46Z to the second, and the user agent aws-cli/1.44.44 Python 3.12.10 Windows 10.0.26100 matches this laptop's own shim exactly",
+        "HAZARD SPENT, measured: a Win32_Process census over every process on this box for the prior session id 393fd2b5-feaa-49dd-81e2-9376e8701755 and separately for put-targets|hg_d3|FAILSAFE|cot-rebalancer-runner-daily returns ZERO rows, so no such actuator is running now",
+        "0.0.0_AB_MSTR msg 106939 to 1.0.0_SA_CTO (13:25:26Z) reports the same file and quotes Andrew at dell1 ~13:1xZ: \"i did not do it by hand ... look into it regardless\""
+      ]
+    },
+    "spec_asserts": "CTO ruling 106485 names owner (1) of the restore as 0.7.0_AE_CloudOps~F \"at its 06:03Z wake\", and the prior session's own log states that the 06:03Z wake and the idempotent fail-safe were armed in-session and that \"neither survives this session ending\" -- which is why the four-deep fallback chain was ruled at all.",
+    "world_is": "One of the two DID survive, and it acted correctly at 06:08:45Z with no live seat, so owner (1) in effect performed step 2 after all. Three consequences, none of which the order or the ruling anticipated. (1) A harness-reported kill is not evidence a process died: the prior session reported both timers killed at 20:2xZ and one of them was still running ten hours later. (2) An armed actuator that can make a PRODUCTION AWS write is invisible once its seat is gone: nothing in org/ref/LIVE_ARMS.md, the broker, the task orders or the halves named it, so the fabric spent about seven hours attributing the write to an unknown actor and reached \"operator's own terminal, inferred\" -- while the answer sat in a 414-byte file on this box the whole time. (3) The ledger entry that should carry the correction cannot: once deploy_ledger.py close removes the sentinel, close-leg refuses the slug outright (measured), and a hand-edit of the entry .md is outside that tool's world, so leg L2's text stands as written at close and this row plus the proof instance carry the correction instead. DISARM (1.0.0_SA_CTO): rule whether a seat may arm an actuator that can outlive its session and make a production write, and if so require the arm to be registered where the next reader can attribute it in ONE read -- an org/ref/LIVE_ARMS.md row naming the task id, the exact write and the condition. Until that exists the next such put-targets is mis-attributed exactly the same way.",
+    "notes": "The specific process is gone, so nothing needs killing; the ARMED standing is about the PRACTICE, which recurs on the next seat that arms a fail-safe. Answers the open question in MDPF_HEALGAP-D1-S3 (2.0.0_SA_COO~G1) rather than re-filing it; D1-S3's own disposition stays its owner's. Distinct from MDPF_HEALGAP-S11, which is about condition 4's 13:30Z line."
+  },
+  {
     "id": "MDPF_HEALGAP-D1-S4",
     "project": "MDPF_HEALGAP",
     "fabric": "dell1",
@@ -362,27 +410,155 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "world_is": "One of ~F's restore mechanisms was an unattended background task that survived both the kill and the seat's close and did the restore correctly inside the window. The restore therefore had an owner the whole time; the defect is the liveness report ('timers died') that called a running task dead. For the next cut: a seat that arms a restore names every mechanism it armed and reads each one's state, rather than inferring death from its own session ending. Follow-up of the killed-but-not-killed gap is the laptop's (MSTR msg 924)."
   },
   {
-    "id": "MDPF_HEALGAP-S11",
+    "id": "MDPF_HEALGAP-D1-W3-S1",
     "project": "MDPF_HEALGAP",
-    "fabric": "laptop",
-    "surfaced_by": "0.7.0_AE_CloudOps~F",
-    "surfaced_at": "2026-10-08T13:05Z",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~3",
+    "surfaced_at": "2026-10-08T15:02:00Z",
+    "one_line": "HG-t-3 reads the earlier run result with s3:GetObject to set healed_at, but the runner role is granted PutObject and ListBucket only, so in production the read fails soft and healed_at is never recorded on a re-attempt.",
     "class": "OBSERVATION",
     "hazard_standing": "INERT",
-    "disposition": "UNDER_INVESTIGATION",
-    "one_line": "Condition 4 of the FWD-1 exercise half sets its service line at 13:30Z, but gold dim_model_portfolio -- the gold layer built from the Cottonwood model silver tables -- lands at 13:30:39Z-13:30:42Z on 9 of the last 10 days, so a condition-4 read widened to gold returns MISSED on a normal day with nothing wrong.",
     "grounding": {
       "status": "GROUNDED",
       "evidence": [
-        "s3api list of blackdiamond/cottonwood/gold/dim_model_portfolio/ at 2026-10-08T13:0xZ: 60 partitions; the newest 10 LastModified in UTC are 2026-10-07 13:30:40Z, 10-06 13:30:40Z, 10-05 13:30:40Z, 10-04 13:30:40Z, 10-03 13:30:39Z, 10-02 13:30:40Z, 10-01 22:08:16Z, 09-30 13:30:42Z, 09-29 13:30:40Z, 09-28 13:30:40Z -- 9 of 10 inside 13:30:39Z-13:30:42Z, the tenth later still",
-        "the writer is data/assets/scripts/gold/build_dim_model_portfolio.py invoked by the EC2 mdpf-daily-runner at infra/aws/ec2/mdpf-daily-runner/mdpf-daily-dispatch.sh:554, NOT by the runner's on_success destination opal-assets-silver-blackdiamond, so gold is not on the chain condition 4 names",
-        "129 scheduled EventBridge rules enumerated with aws events list-rules: none carries a 13:30 cron (nearest are opal-assets-silver-blackdiamond-sweep-daily and etf-positioning-producer-daily at cron(0 13 * * ? *)), which corroborates that the 13:30:40Z arrival is the EC2 runner's own cadence and not an Events schedule",
-        "leg L5 of org/critical_paths/.open_deploys/mdpf-healgap-hg-d3-fwd1-exercise-20261008.json: condition 4 graded MET at 13:01:58Z on the instrument the condition names, the on_success chain's newest write for D=2026-10-08 at 11:46:08Z, with the four model silver tables at 11:32:29Z-11:32:33Z"
+        "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:73-112 @f0da37597a: statements WriteOwnCottonwoodBronzeMeta (s3:PutObject on bronze/* and meta/*), ListCottonwoodForLandingGuard (s3:ListBucket), DenyBlackdiamond49fFirmSep; a scan of the file for 'GetObject' / 's3:Get' finds none (the only s3:* is the :103 Deny on the 49f tree)",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py _already_landed docstring: 'the role holds s3:ListBucket, not s3:GetObject'",
+        "task order HG-t-3 build item 1 asks healed_at to be set 'when an earlier result marked a feed missing', which needs a read of the earlier result; _read_earlier_result in the worker's change attempts get_object and returns {} on any failure, so the run never fails on it",
+        "test_healgap_result.py::test_reattempt_records_healed_at_for_the_filled_feed passes against an in-memory S3 that serves get_object; nothing in this order exercises the real role"
       ]
     },
-    "spec_asserts": "CTO half condition 4, carried as TO-HG-d3 act 4b: whether the date's served Cottonwood figures were in place by 13:30Z is a discriminating read of whether the heal delivered in time.",
-    "world_is": "On the instrument the condition names -- the on_success chain -- D=2026-10-08 read MET by 1h43m, so the heal itself is not in question and this row does not reopen it. But the 13:30Z line sits 39 to 42 seconds INSIDE gold's own daily arrival, so widening 'served' to gold makes the same read return MISSED on nine of the last ten days with no failure present: at that width the line discriminates nothing. FWD-1's own wording is 'by the end of the same day', which both widths satisfy. Owner: 2.0.0_SA_COO~G1, to decide whether condition 4's successor reads silver and keeps 13:30Z, or reads gold and moves the line past the mdpf-daily-runner's arrival.",
-    "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-3 item 1: when an earlier result marked a feed missing and this run lands it, healed_at is set; and the preflight says the result key sits inside the runner's existing PutObject grant with no role change.",
+    "world_is": "PutObject on meta/* covers writing the result, and the per-feed arrived/missing status and the PARTIAL raise never need a read (they come from listing). Only the healed_at carry-over needs GetObject on meta/<date>-result.json, which the role does not hold, so on the live role a re-attempt that fills the feed still reads COMPLETE with healed_at null. Owner: 2.0.0_SA_COO~G1 to decide whether the role gains s3:GetObject on blackdiamond/cottonwood/meta/*-result.json (a terraform change outside this order's grant) or healed_at is read as best-effort. Not fixed here; no check weakened."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:22:25Z",
+    "one_line": "FWD-6 asks each session-dependent pull to be marked RECOVERS or NOT-EXPOSED, but four pulls (five schedules) are exposed to a lapsed login and have neither answer: asset-dim, two Schwab SDD pulls, and the ASTN FT leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) fires SSM opal-bd-asset-dim-download, which mints a bearer from blackdiamond/49f/session (infra/aws/ssm/opal-bd-asset-dim-download.json line 23); the 49F fees mint bd-49f-fees-session-daily is cron(20 22 ? * MON-FRI *), ten minutes later (live list-rules read 2026-10-08); no re-attempt target exists on the rule",
+        "canonical-schwab-si2-08242234-daily-pull and canonical-schwab-si2-08335338-daily-pull run sdd-daily-pull.ps1, whose own text says a dead standing SI2 session needs a human to re-establish it (infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:271-272); the 30-day lookback (:33) refills the days only after that",
+        "astn-wsjft-3am-run rides the parked astn/ft/session cookie (tools/astn_wsjft/scripts/run.py:53-59); on failure it records the warning 'session expired? -> run harvest_ft_session' (run.py:133), a manual step",
+        "the census with all 23 answered rows and the section 'Exposed, neither answer is true': org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~6/FWD6_SESSION_DEPENDENT_PULLS_CENSUS.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-t7 and PRD FWD-6: every scheduled pull whose success depends on a vendor login kept alive by something else is marked either 'recovers the same way' or 'not exposed, because ...'; a pull left without an answer fails the outcome. AC1 accepts only RECOVERS or NOT-EXPOSED because <reason> in the answer column.",
+    "world_is": "Four pulls on five schedules depend on a login that lapses and is not re-minted before they run, and neither answer is true of them (asset-dim: no re-attempt and the missed as-of is not re-pulled; Schwab SDD: next-fire catch-up but only after a person restores the session; ASTN FT: manual cookie harvest, no re-attempt). They are listed outside the table, each with the recovery that exists today, so the table carries no false answer and AC1 still reads CENSUS-OK on the 23 true ones. Whether FWD-6 is met for these four is the CVO's grade, and whether they become round-3 enrichment is the COO's and CTO's.",
+    "notes": "No remedy attempted; the order is read-only and these are outside its write grant. ARMED because a lapse on any of the four in normal operation leaves a day unfilled with nobody acting; disarm owner is the round issuer, who recuts."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:22:25Z",
+    "one_line": "The native Grep tool fails in this worker environment with ENOENT on ripgrep, and the comp-find census verb ran past the 120s Bash bound on a two-token query.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep(pattern='recover_or_exit|check_jwt_freshness|assert_fresh_or_exit', path='C:/tmp/wk-healgap-6/infra/aws/lambda/inf-pipeline') returned 'ENOENT: no such file or directory, uv_spawn rg' at the worker's first search, 2026-10-08 ~15:1xZ",
+        "comp-find 'wsd-49f-partner-held-etf-daily|wsb-49f-model-aua-daily' --files --all --limit 30 was moved to the background after the 120s timeout (task b56zda7kh) and completed with exit 0 later; the worker did not wait on it and read the same answer with git ls-files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker brief: code search by comp-find / comp-which, and the Grep tool is fine.",
+    "world_is": "The Grep tool cannot run (no ripgrep binary found by the harness in this session), and comp-find with --all on the whole worktree is slow enough to exceed the bound, so the census reads were done by git ls-files plus Python line scans and direct file reads. Results are the same file:line facts; only the instrument differed."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:23:25Z",
+    "one_line": "The order says worker rows are MDPF_HEALGAP-W6-S<k>, but the row gate refuses that id on fabric dell1 and requires MDPF_HEALGAP-D1-W6-S<k>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-HG-t7 BOUNDS refusal clause: 'a surprise row (id MDPF_HEALGAP-W6-S<k>, fabric dell1, ...)'",
+        ".tools/surprise-row-gate.py at the commit of this row: \"MDPF_HEALGAP-W6-S1: fabric='dell1' but the id carries no coordinate ... dell1 = id <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>)\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-t7 BOUNDS: worker surprise rows are minted MDPF_HEALGAP-W6-S<k> with fabric dell1.",
+    "world_is": "On fabric dell1 the gate accepts only MDPF_HEALGAP-D1-W6-S<k>. This worker's rows are therefore MDPF_HEALGAP-D1-W6-S1, -S2 and this one (-S3); the proof instance cites the D1 form."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S6",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T15:30:00Z",
+    "one_line": "Disarms MDPF_HEALGAP-D1-W6-S1 (disarm owner 2.0.0_SA_COO~G1): the four exposed session-dependent pulls (bd-asset-dim-trigger, two Schwab SDD masters, the ASTN FT leg) pre-date this project and change nothing it builds; they are routed by name to the round-2 drain-end read as FWD-6 residuals for the CTO's round-2 analysis, never left as a silent census footnote.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "deliverables/0.9.0_WK_MDPF_HEALGAP~6/FWD6_SESSION_DEPENDENT_PULLS_CENSUS.md section 'Exposed, neither answer is true' (drained @a0ee7928f1); CENSUS-OK rows=23 denominator=162 re-run by the issuer.",
+        "PRD v0.2 FWD-6 ACCEPT: each pull marked RECOVERS or NOT-EXPOSED because ...; a pull left without an answer fails the outcome. C-FIX-NOT-NOTIFY: no outcome becomes a monitor or alert.",
+        "None of the four is touched by any round-2 write set (decomposition ROUND 2, write sets)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-W6-S1: ARMED -- four pulls depend on a login that lapses and is not re-minted before they run, with neither answer true.",
+    "world_is": "The exposure is real and pre-existing (not caused or widened by MDPF_HEALGAP). Disarmed for this project by routing: the round-2 drain-end read carries the four by name as FWD-6 NOT YET REALIZED residuals, each with its recovery today, so the CTO's round-2 analysis decides whether each becomes a round-3 cell (heal it the way FWD-1 did) or a ruled NOT-EXPOSED with a new reason. No monitor or notification is built (C-FIX-NOT-NOTIFY). Owner of the routing: 2.0.0_SA_COO~G1; owner of the decision: 1.0.0_SA_CTO~DELL1 at L10."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S7",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T16:05:00Z",
+    "one_line": "A second reader of the runner's same-day bronze was missed by every half of this project: cot-satellites-registry-producer-daily cron(0 7 * * ? *) is DERIVED from the runner's 06:00Z landing. Today's induced failure (HG-d3) starved it: 07:00Z and 07:01Z both BLOCKED, so the served platinum/satellites/registry.json and holdings.json still read as_of 2026-10-07. The HG-t-5 move to 12:45Z would starve it every day.",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "1.0.0_SA_CTO~DELL1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/cot-pipeline/satellites-registry-producer.tf:286 description 'Fires 1h after the measured 06:00:43Z upstream landing'; the same file's schedule comment: if cot-rebalancer-runner-daily is ever re-anchored, this cron must move with it.",
+        "CloudWatch /aws/lambda/cot-satellites-registry-producer 2026-10-08: 07:00Z and 07:01Z 'RegistryProducerError: BLOCKED: no roster partition at s3://opal-data-assets/blackdiamond/cottonwood/bronze/rebalancer_models/2026-10-08/page_000.json'; no event after 07:04Z. Paginated read 09-28..10-07: 'OK: wrote' on each of 10 of 10 days.",
+        "s3 head opal-data-cot platinum/satellites/registry.json LastModified 2026-10-07T07:00:19Z, body as_of 2026-10-07; holdings.json 2026-10-07T07:00:20Z.",
+        "Round-1 never-widen halves and the R2 act-2 half draft counted N=1 reader (the 13:30Z silver/gold floor); comp-find over infra/ for cot-rebalancer-runner-daily hits the runner's own .tf and this file."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD/decomp ROUND 2 HG-t-5: moving the daily fire to cron(45 12 * * ? *) changes one schedule under its own pair with served delta 0; round-1 exercise halves: an induced 06:00Z failure healed by 11:32Z reaches every served reader by its floor.",
+    "world_is": "The satellites producer reads same-day bronze at 07:00Z with no re-attempt, so any day the runner lands after 07:00Z serves a one-day-stale registry. Today is such a day (stale now). Held by 2.0.0_SA_COO~G1: HG-t-5 is NOT applied (act 2 split; the age change HG-t-4 alone may proceed). Disarm owner 1.0.0_SA_CTO~DELL1 rules (a) the same-day re-run of the producer (a served write off its clock; never-widen pair, owner 0.6.2_AE_PartnerETL) and (b) the FWD-5 design: move the satellites trigger with the runner, chain it to the stamp, or withdraw HG-t-5."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S8",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T16:08:00Z",
+    "one_line": "D1-S7 ruling (a) executed, branch A: the same-day re-run at 16:07:33Z rewrote registry.json and holdings.json as_of 2026-10-08; the served gap is closed. D1-S7 stays ARMED until ruling (b), the stamp chain, is cut as a PRD addendum at L10 (CTO 51c9c0e64a section 3).",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Ledger org/critical_paths/change_management/20261008T1607Z_healgap-satellites-rerun-20261008_deploy_completion.md CLOSED, 2 of 2 legs proven.",
+        "head_object 16:08Z: registry.json 16:07:36Z version vXnGqZ.W7ab8xIhkZT5ZKttXNHMQS.bS as_of 2026-10-08 books 9; holdings.json 16:07:37Z version 3QEozK4gibtzby_gvIuHUz9uqWNxAMOx.",
+        "A correction to D1-S7: its surfaced_at reads 16:05Z; the actual time was ~15:43Z (broker send 20261008T154308Z). The row is append-only and left as written."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S7: the served satellites registry reads as_of 2026-10-07 on 2026-10-08.",
+    "world_is": "Served keys read as_of 2026-10-08 from 16:07:36Z. The structural cause (a 07:00Z cron coupled to the runner's fire time) remains until the stamp chain lands."
   }
 ]
 ```

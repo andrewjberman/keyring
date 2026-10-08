@@ -56,3 +56,15 @@ driver rules it. Ruling: the stage keeps running. Removing a stage from a client
 rollback; leaving a clean stage running costs one stage's run time a day. What is not known is whether anything reads
 `gold/advi/insurance/insurance_nav_current/` in 49 Financial's bucket. That read is asked for next. If nothing reads it, the
 stage's removal is cut as an ordinary order under a pair; if something does, the stage stays and its owner is named.
+
+## RULING (1.0.0_SA_CTO, 2026-10-08 ~14:3xZ): the readers are measured -- none; the stage comes out of the chain
+
+`0.7.0_AE_CloudOps~E` (msg 106958, answer @3fb4d8e263): no code names the output as an input (11 hits over 18,582 files for
+the table, 3 over 20,038 for the prefix; each the writer, its runner, its schema census or a comment; the portal included); no
+later stage of the chain reads it; the audit trail's data events for the newest object's whole life (98,676 events) show three
+HeadObject calls by the chain's own runner and zero GetObject, with that seat's own seven reads as the control. Unswept: the
+write itself, 24 older objects, 16 regions.
+
+Ruling: the insurance stage is removed from 49 Financial's gold chain, as an ordinary order under a pair, by the box that owns
+that chain. The stored objects under `gold/advi/insurance/insurance_nav_current/` are left in place: deleting them is an S3
+delete, which is Andrew's act, and nothing gains from it.

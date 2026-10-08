@@ -20,7 +20,10 @@
 #       bash org/mcp/inbox-watch.sh <agent_serial>
 #     Polls every 5s; on the first delivery it prints the message(s) and EXITS,
 #     firing a Bash-tool background-task completion notification. The agent must
-#     re-launch after every notification. This is the design the whole
+#     re-launch after every notification. STRICTLY ONE-SHOT (2026-10-08 process-GC,
+#     4.0.0_SA_CRO~B): the old untracked nohup self-respawn is removed -- it had no
+#     time limit and no parent check, so every delivery left an unkillable-by-design
+#     deaf copy that drained the inbox silently. This is the design the whole
 #     failure-mode catalog (ORPHAN / MULTIPLE / RELATIVE-PATH /
 #     AUTO-RESPAWN-INTERRUPT-LOST / the misleading exit-143) grew up around.
 #
@@ -38,10 +41,8 @@ MODE="${2:-legacy}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 INBOX_BASE="$SCRIPT_DIR/inbox"
 
-# Single-watcher guard: legacy mode only. Stream mode is single-instanced
-# structurally — /watcher checks the session TaskList before arming, and the
-# atomic mv below makes any accidental double-stream exactly-once anyway (the
-# loser's mv fails -> `|| continue` -> it emits nothing). The legacy guard's
+# Single-watcher guard: legacy mode only. Stream mode has its OWN guard (the
+# per-serial owner file, newest arm wins -- see STREAM MODE below). The legacy guard's
 # `$NF == ser` test would not even match a stream launch (last field is
 # "stream", not the serial), so we skip it explicitly.
 if [ "$MODE" != "stream" ]; then
@@ -156,6 +157,63 @@ if [ "$MODE" = "stream" ]; then
     _wait5() {
         if [ "$_NOSPAWN" -eq 1 ]; then read -rt 5 -u 9 _ 2>/dev/null || true; else sleep 5; fi
     }
+    _audit() {  # one line to orphan-audit.log, same format as WATCHER-SELF-EXIT
+        local ts
+        ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
+        echo "$ts  $1" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
+    }
+    # ------------------------------------------------------------------------
+    # SINGLE-INSTANCE GUARD, NEWEST ARM WINS (2026-10-08 process-GC, 4.0.0_SA_CRO~B).
+    # A second stream copy for the same serial (an orphan, or a duplicate arm) used
+    # to split the inbox: each claimed whatever it saw first, and a copy whose
+    # stdout was dead stole the mail. Now each arm writes its MSYS pid ($$) to
+    # $WATCH_DIR/.watcher.owner (temp file + mv, atomic). Every cycle, and again
+    # before every claim, the watcher re-reads it with the `read` builtin (no
+    # spawn); a pid that is not its own means a newer arm took over -> one
+    # WATCHER-REPLACED audit line and exit 0 WITHOUT claiming. No kill needed. A
+    # missing/empty owner file is re-claimed (fail open: the inbox stays watched).
+    # On any exit the EXIT trap removes the owner file only if it still names us.
+    # ------------------------------------------------------------------------
+    _OWNER_FILE="$WATCH_DIR/.watcher.owner"
+    _owner_read() {
+        _OWNER_PID=""
+        if [ -f "$_OWNER_FILE" ]; then read -r _OWNER_PID < "$_OWNER_FILE" 2>/dev/null || true; fi
+    }
+    _owner_claim() {
+        local tmp="$_OWNER_FILE.tmp.$$"
+        if printf '%s\n' "$$" > "$tmp" 2>/dev/null && mv -f "$tmp" "$_OWNER_FILE" 2>/dev/null; then
+            return 0
+        fi
+        rm -f "$tmp" 2>/dev/null || true
+        return 1
+    }
+    _owner_check() {  # exits 0 if a newer arm owns the serial
+        _owner_read
+        if [ -z "$_OWNER_PID" ]; then _owner_claim || true; return 0; fi
+        if [ "$_OWNER_PID" != "$$" ]; then
+            _audit "WATCHER-REPLACED  serial=$SERIAL  pid=$$  newer=$_OWNER_PID -- a newer arm owns this inbox; exiting without claiming"
+            # Say so on the event stream: a seat that sees only "stream ended" would re-arm, replace the newer copy, and
+            # start a hand-back loop. This line tells it the newer watcher is live and nothing is to be done.
+            echo "[WATCHER-REPLACED] an older inbox watcher for $SERIAL stopped: a newer one (pid $_OWNER_PID) now owns the inbox. Mail is still being received. Do NOT re-arm." 2>/dev/null || true
+            exit 0
+        fi
+    }
+    _owner_release() {
+        _owner_read
+        if [ "$_OWNER_PID" = "$$" ]; then rm -f "$_OWNER_FILE" 2>/dev/null || true; fi
+    }
+    _claimed=0
+    for _try in 1 2 3; do
+        if _owner_claim; then _claimed=1; break; fi
+        sleep 1
+    done
+    if [ "$_claimed" -ne 1 ]; then
+        echo "inbox-watch: WARN: could not write $_OWNER_FILE after 3 tries; the first cycle's owner check decides" >&2
+    fi
+    trap '_owner_release' EXIT
+    # FAILED-ANNOUNCE RECOVERY: ignore SIGPIPE so an echo into a dead stdout pipe
+    # returns an error instead of killing the script mid-claim (see the claim below).
+    trap '' PIPE
     echo "inbox-watch: STREAM mode for $SERIAL watching $WATCH_DIR (persistent; parent-tied: $([ "$PARENT_CHECK" -eq 1 ] && echo "pid $WATCH_PARENT" || echo "OFF"); wait=$([ "$_NOSPAWN" -eq 1 ] && echo no-spawn || echo sleep))" >&2
     # EXPIRY ALERT (Andrew-direct 2026-09-21 ~01:4xZ): the harness KILLS every Monitor at its
     # timeout (cap 30 min) and a killed watcher says nothing -- the seat goes deaf on an expiry
@@ -175,22 +233,32 @@ if [ "$MODE" = "stream" ]; then
             echo "$ts  WATCHER-SELF-EXIT  serial=$SERIAL  parent=$WATCH_PARENT gone -- exiting instead of orphaning" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
             exit 0
         fi
+        _owner_check
         for msg in "$WATCH_DIR"/*.md; do
             [ -f "$msg" ] || continue
             base="$(basename "$msg")"
             dest="$WATCH_DIR/read/$base"
+            _owner_check   # a newer arm may have taken over mid-cycle: never claim for it
             # Atomic claim. If a concurrent stream won the race, our mv fails and
             # we skip silently -> exactly-once emit across any number of streams.
             mv "$msg" "$dest" 2>/dev/null || continue
-            printf '%s\n' "$base" >> "$WATCH_DIR/.unread-deliveries"
             # ONE line == ONE Monitor notification. Filename is enough for the
-            # agent to read the message from read/ and act.
-            echo "[INBOX] $base"
+            # agent to read the message from read/ and act. Claim stays BEFORE the
+            # announce (the seat reads read/<file> on the line); a FAILED announce
+            # (dead stdout; SIGPIPE is ignored above, so echo returns non-zero, and
+            # the `if` keeps set -e from firing) moves the message BACK to the inbox
+            # root for the next watcher, logs one line, and exits.
+            if ! echo "[INBOX] $base" 2>/dev/null; then
+                if mv "$dest" "$msg" 2>/dev/null; then _ret="returned to inbox root"; else _ret="RETURN FAILED, left in read/"; fi
+                _audit "WATCHER-ANNOUNCE-FAILED  serial=$SERIAL  pid=$$  file=$base  $_ret -- stdout gone; exiting"
+                exit 0
+            fi
+            # Sentinel AFTER a successful announce, so a returned message is never listed.
+            printf '%s\n' "$base" >> "$WATCH_DIR/.unread-deliveries"
         done
         if [ "$_EXPIRY_SECS" -gt 0 ] && [ "$SECONDS" -ge "$_EXPIRY_SECS" ]; then
-            echo "[WATCHER-EXPIRED] inbox watcher for $SERIAL ENDED after ${SECONDS}s (Monitors die at 30 min). YOU ARE NOT RECEIVING MAIL. RE-ARM NOW, this turn, with ONE Monitor call and no skill load: command 'bash \"$SCRIPT_DIR/inbox-watch.sh\" $SERIAL stream', timeout_ms 1800000. Run full /watcher only if events stop arriving."
-            ts="$(date -u +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || echo unknown-ts)"
-            echo "$ts  WATCHER-EXPIRY-EXIT  serial=$SERIAL  after=${SECONDS}s" >> "$SCRIPT_DIR/orphan-audit.log" 2>/dev/null || true
+            echo "[WATCHER-EXPIRED] inbox watcher for $SERIAL ENDED after ${SECONDS}s (Monitors die at 30 min). YOU ARE NOT RECEIVING MAIL. RE-ARM NOW, this turn, with ONE Monitor call and no skill load: command 'bash \"$SCRIPT_DIR/inbox-watch.sh\" $SERIAL stream', timeout_ms 1800000. Run full /watcher only if events stop arriving." 2>/dev/null || true
+            _audit "WATCHER-EXPIRY-EXIT  serial=$SERIAL  after=${SECONDS}s"
             exit 0
         fi
         _wait5
@@ -220,11 +288,8 @@ fi
 # Exit-on-message is load-bearing: Claude Code background task completion fires
 # the interrupt that wakes the agent.
 #
-# Auto-respawn: on delivery, a new untracked copy is spawned (nohup, 1s delay)
-# so the inbox is always watched. The untracked copy writes to
-# /tmp/inbox-watch-<serial>.log but will NOT fire a Claude Code interrupt.
-# To restore full interrupt coverage after the untracked copy has been running
-# a while, re-register a tracked instance via run_in_background=true.
+# ONE-SHOT: no auto-respawn (removed 2026-10-08, process-GC). The caller
+# re-launches after the notification; nothing is left running after exit.
 while true; do
     FOUND_FOR_ME=0
 
@@ -246,9 +311,7 @@ while true; do
             # Deterministic delivery sentinel: append the delivered filename to
             # .unread-deliveries. The supervisor /loop body Step 0 (org/XXX.md)
             # cats this file every tick as a failsafe against the agent replying
-            # to the task-notification without reading the messages above. The
-            # untracked auto-respawn copy also appends here, so deliveries it
-            # makes silently (no interrupt) are still recorded for the next tick.
+            # to the task-notification without reading the messages above.
             printf '%s\n' "$(basename "$dest")" >> "$WATCH_DIR/.unread-deliveries"
             echo "===================================================================="
             echo "FROM: $(basename "$dest")"
@@ -264,14 +327,10 @@ while true; do
         echo "  them, delete the file. The supervisor /loop body Step 0 cats it"
         echo "  every tick as a failsafe -- see org/XXX.md '/loop' section."
         echo ""
-        # Respawn next watcher (untracked). Sleep 1s first so this instance
-        # exits before the new copy starts -- otherwise the single-watcher guard
-        # in the new copy sees this PID as a live duplicate and kills itself.
-        # INBOX_WATCH_RESPAWN=1 marks the respawn for watcher-status sub-case
-        # disambiguation per LD-TARGET-B-EXT (MSTR 2026-05-26T~04:45Z).
-        SAFE_SERIAL=$(printf '%s' "$SERIAL" | tr '/~' '__')
-        ( sleep 1; INBOX_WATCH_RESPAWN=1 exec bash "$0" "$SERIAL" >> "/tmp/inbox-watch-${SAFE_SERIAL}.log" 2>&1 ) &
-        disown $! 2>/dev/null || true
+        # One-shot: exit here. The former untracked self-respawn (nohup, no time
+        # limit, no parent check, INBOX_WATCH_RESPAWN=1) is removed -- 2026-10-08
+        # process-GC. The INBOX_WATCH_RESPAWN tracker read above stays for any
+        # copy still running from before this change.
         exit 0
     fi
     sleep 5

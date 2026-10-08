@@ -144,14 +144,145 @@ def deliverable(sqs, queue_url: str, messages: list) -> list:
     return out
 
 
+# ---------------------------------------------------------------------------
+# OWNER TIE (P1 process GC, 4.0.0_SA_CRO~B). The harness stops a Monitor by killing the TOP of its bash chain
+# (claude.exe -> Git\bin\bash.exe shim -> usr\bin\bash -c -> exec'd bash -> exec'd python). Measured: killing that
+# shim leaves every process below it alive, so this consumer kept the lock and refused every re-arm (rc 3) until its
+# 1700 s cap. Inside the script $PPID is 1 (the shim is not an MSYS process), so the owner is found on the WINDOWS
+# parent chain: OWNER = the topmost consecutive bash.exe/sh.exe ancestor, SESSION = that process's parent.
+# One handle per owner is opened at start and held (a held handle defeats PID reuse); each loop pass polls it.
+# FAIL OPEN: no owner given, a handle that cannot be opened, or one already signalled -> cap only, said on stderr.
+# ---------------------------------------------------------------------------
+_SYNCHRONIZE = 0x00100000
+_PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
+_WAIT_OBJECT_0 = 0
+_BASH_NAMES = {"bash.exe", "sh.exe"}
+
+
+def _windows_parents() -> dict:
+    """{pid: (parent_pid, exe_name)} from one Toolhelp snapshot (Windows only)."""
+    import ctypes  # noqa: PLC0415
+    from ctypes import wintypes  # noqa: PLC0415
+
+    class _PE(ctypes.Structure):
+        _fields_ = [("dwSize", wintypes.DWORD), ("cntUsage", wintypes.DWORD), ("th32ProcessID", wintypes.DWORD),
+                    ("th32DefaultHeapID", ctypes.c_void_p), ("th32ModuleID", wintypes.DWORD),
+                    ("cntThreads", wintypes.DWORD), ("th32ParentProcessID", wintypes.DWORD),
+                    ("pcPriClassBase", ctypes.c_long), ("dwFlags", wintypes.DWORD),
+                    ("szExeFile", ctypes.c_char * 260)]
+
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    k32.CreateToolhelp32Snapshot.restype = wintypes.HANDLE
+    snap = k32.CreateToolhelp32Snapshot(0x2, 0)  # TH32CS_SNAPPROCESS
+    if not snap or snap == wintypes.HANDLE(-1).value:
+        return {}
+    out = {}
+    try:
+        ent = _PE()
+        ent.dwSize = ctypes.sizeof(_PE)
+        ok = k32.Process32First(wintypes.HANDLE(snap), ctypes.byref(ent))
+        while ok:
+            out[int(ent.th32ProcessID)] = (int(ent.th32ParentProcessID), ent.szExeFile.decode("ascii", "replace"))
+            ok = k32.Process32Next(wintypes.HANDLE(snap), ctypes.byref(ent))
+    finally:
+        k32.CloseHandle(wintypes.HANDLE(snap))
+    return out
+
+
+def resolve_owners(start_winpid: int) -> list:
+    """[owner, session]: owner = topmost consecutive bash/sh at or above start; session = its parent (if live)."""
+    procs = _windows_parents()
+    if start_winpid not in procs:
+        return []
+    owner = start_winpid
+    seen = {owner}
+    while True:
+        parent = procs[owner][0]
+        if parent in seen or parent not in procs or procs[parent][1].lower() not in _BASH_NAMES:
+            break
+        owner = parent
+        seen.add(owner)
+    session = procs[owner][0]
+    return [owner] + ([session] if session in procs and session not in seen else [])
+
+
+def open_owner_handles(pids: list) -> list:
+    """[(pid, handle)] for each live owner; fail open (empty list) with one stderr line per refusal."""
+    if not pids:
+        print("agentbus-consumer: owner-tie OFF (no --owner-winpid) -- exits only at its cap.", file=sys.stderr,
+              flush=True)
+        return []
+    if os.name != "nt":
+        print("agentbus-consumer: owner-tie OFF (not Windows) -- exits only at its cap.", file=sys.stderr, flush=True)
+        return []
+    import ctypes  # noqa: PLC0415
+    from ctypes import wintypes  # noqa: PLC0415
+
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    k32.OpenProcess.restype = wintypes.HANDLE
+    k32.WaitForSingleObject.restype = wintypes.DWORD
+    held = []
+    for pid in pids:
+        if pid <= 0:
+            print(f"agentbus-consumer: owner-tie OFF for pid {pid} (not a pid) -- ignored.", file=sys.stderr,
+                  flush=True)
+            continue
+        h = k32.OpenProcess(_SYNCHRONIZE | _PROCESS_QUERY_LIMITED_INFORMATION, False, pid)
+        if not h:
+            print(f"agentbus-consumer: owner-tie OFF for winpid {pid} (OpenProcess failed, "
+                  f"err {ctypes.get_last_error()}) -- ignored.", file=sys.stderr, flush=True)
+            continue
+        if k32.WaitForSingleObject(wintypes.HANDLE(h), 0) == _WAIT_OBJECT_0:
+            print(f"agentbus-consumer: owner-tie OFF for winpid {pid} (already exited at start) -- ignored.",
+                  file=sys.stderr, flush=True)
+            k32.CloseHandle(wintypes.HANDLE(h))
+            continue
+        held.append((pid, h))
+    if held:
+        print(f"agentbus-consumer: owner-tie ON -- exits when winpid {', '.join(str(p) for p, _ in held)} exits.",
+              file=sys.stderr, flush=True)
+    else:
+        print("agentbus-consumer: owner-tie OFF (no owner handle held) -- exits only at its cap.", file=sys.stderr,
+              flush=True)
+    return held
+
+
+def owner_gone(held: list):
+    """The pid of the first owner whose handle is signalled (it exited), else None."""
+    if not held:
+        return None
+    import ctypes  # noqa: PLC0415
+    from ctypes import wintypes  # noqa: PLC0415
+
+    k32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    k32.WaitForSingleObject.restype = wintypes.DWORD
+    for pid, h in held:
+        if k32.WaitForSingleObject(wintypes.HANDLE(h), 0) == _WAIT_OBJECT_0:
+            return pid
+    return None
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--queue-url", required=True)
-    ap.add_argument("--device", required=True)
+    ap.add_argument("--resolve-owners", type=int, default=0, metavar="WINPID",
+                    help="print the owner and session Windows pids above WINPID, then exit (used by the wrapper)")
+    ap.add_argument("--queue-url", default="")
+    ap.add_argument("--device", default="")
     ap.add_argument("--region", default="us-east-1")
     ap.add_argument("--lock", default="")
     ap.add_argument("--lock-pid", default="")
+    ap.add_argument("--owner-winpid", type=int, action="append", default=[],
+                    help="Windows pid whose exit ends this consumer (repeatable; absent or 0 = cap only)")
     args = ap.parse_args()
+
+    if args.resolve_owners:
+        try:
+            print(" ".join(str(p) for p in resolve_owners(args.resolve_owners)))
+        except Exception as exc:  # noqa: BLE001 -- fail open: the wrapper passes no owner
+            print(f"agentbus-consumer: owner resolve failed ({type(exc).__name__})", file=sys.stderr)
+        return 0
+    if not args.queue_url or not args.device:
+        ap.error("--queue-url and --device are required")
 
     def _release_lock() -> None:
         if not args.lock:
@@ -166,9 +297,21 @@ def main() -> int:
 
     atexit.register(_release_lock)
 
-    import boto3  # deferred so a missing boto3 fails loud at start, not mid-loop
+    try:
+        owners = open_owner_handles([p for p in args.owner_winpid if p is not None])
+    except Exception as exc:  # noqa: BLE001 -- fail open
+        print(f"agentbus-consumer: owner-tie OFF ({type(exc).__name__}) -- exits only at its cap.", file=sys.stderr,
+              flush=True)
+        owners = []
 
-    sqs = boto3.client("sqs", region_name=args.region)
+    import boto3  # deferred so a missing boto3 fails loud at start, not mid-loop
+    from botocore.config import Config  # noqa: PLC0415
+
+    # Bounded blocking: the owner is polled between calls, so a hung connect must not outlast the 20 s long-poll by
+    # much. read_timeout stays above WaitTimeSeconds=20.
+    sqs = boto3.client("sqs", region_name=args.region,
+                       config=Config(connect_timeout=5, read_timeout=30,
+                                     retries={"max_attempts": 2, "mode": "standard"}))
     print(f"agentbus-consumer: watching {args.device} inbound (long-poll 20s, "
           "single-process boto3). Emits one line per message; silent otherwise.",
           file=sys.stderr, flush=True)
@@ -186,7 +329,29 @@ def main() -> int:
     def _expired() -> bool:
         return bool(max_s) and time.monotonic() - t0 >= max_s
 
+    def _check_owner() -> bool:
+        gone = owner_gone(owners)
+        if gone is None:
+            return False
+        try:
+            print(f"agentbus-consumer: owner winpid {gone} exited -- releasing the lock and exiting.",
+                  file=sys.stderr, flush=True)
+        except Exception:  # noqa: BLE001
+            pass
+        return True
+
+    def _sleep(seconds: float) -> bool:
+        """Sleep in 1 s slices; True if the owner exited meanwhile."""
+        end = time.monotonic() + seconds
+        while time.monotonic() < end:
+            if _check_owner():
+                return True
+            time.sleep(min(1.0, max(0.0, end - time.monotonic())))
+        return _check_owner()
+
     while True:
+        if _check_owner():
+            return 0
         if _expired():
             try:
                 print(f"[AGENTBUS-EXPIRED] consumer for {args.device} ended after {max_s}s (Monitors die at 30 min). "
@@ -206,7 +371,8 @@ def main() -> int:
             detail = f"{type(exc).__name__}: {exc}"[:160]
             print(f"[agentbus] RECV ERROR -- this is NOT an empty queue: {detail}",
                   flush=True)
-            time.sleep(min(60, max(1, max_s - (time.monotonic() - t0))) if max_s else 60)
+            if _sleep(min(60, max(1, max_s - (time.monotonic() - t0))) if max_s else 60):
+                return 0
             continue
 
         for msg in deliverable(sqs, args.queue_url, resp.get("Messages", [])):
