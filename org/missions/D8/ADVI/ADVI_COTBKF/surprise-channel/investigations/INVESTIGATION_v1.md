@@ -1965,3 +1965,53 @@ round.** Never edit an existing row.
   "world_is": "Those two counts hold, and 13 more listings (REPR) carry the field with a non-numeric value, which the index's _int() turns into null. The script folds them into listing_none on the PAGE-COUNTS line (10,085) and shows them apart in page_counts.md. No listing in any doc type carries a positive value, so the cause (absent: no positive NumberOfPages in any listing) is unchanged; all 13 REPR PDFs are counted from their bytes."
 }
 ```
+
+## ADVI_COTBKF-D2-W35-S1 -- on the real run the zero-Amount valuation newly grades 6 months, all DIFF, all lo/li; no trf* row sits in a newly graded month
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T22:24Z",
+  "one_line": "Zero-Amount flow rows 20,403, valued 5,017, blank for no price 15,386; only 6 account-months move from UNGRADABLE to graded (all DIFF, 2,284 -> 2,290; MATCH unchanged at 1,947), each carries an lo or li row, none a trf* row, so the order's 'transfer' example month is an lo",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "DAILY-RETURNS account_days=1691729 computed=127396 blank=1564333 flow_types=61 of 61 zero_amount=20403 valued=5017 blank_no_price=15386 (computed 127,300 -> 127,396)",
+      "monthly grade over the same performance rows before/after: UNGRADABLE 78,362 -> 78,356, DIFF 2,284 -> 2,290, MATCH 1,947 -> 1,947; valued rows by type li 458, lo 4,474, trco 27, trfi 15, trfo 43, si/so 0; no valued row has Quantity 0 or a cash CUSIP"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-1 item 4: one account-month containing a valued zero-Amount transfer, fully priced, blank before and computed and graded after.",
+  "world_is": "Most months holding a zero-Amount row stay blank for another reason (an unpriced holding, or 15,386 rows with no same-day price). The only months that become fully priced are 6, all lo/li (securities in or out of the account); the worked month is B3S703388 2025-09 (lo of 21 shares of 594918104 at 508.037384 = -10668.785065, UNGRADABLE -> DIFF computed 0.7664 vs reported 0.84). Also: the transactions cache (cache/transactions.parquet) has no Amount, so the returns script reads Account_Number, Trade_Date, Transaction_Type, Amount, Cusip, Quantity from S3 (read-only) as before."
+}
+```
+
+## ADVI_COTBKF-D2-W35-S2 -- the start-of-day negative-base rule blanks days after a negative prior-day value that the end rule computes; the no-flow control holds only on the months graded under both
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W35-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~35",
+  "surfaced_at": "2026-10-07T23:36Z",
+  "one_line": "The order's start-of-day rule (zero or negative base stays ZERO_BASE) blanks 26,903 days that the end rule computes, all after a NEGATIVE prior-day value, so 416 no-flow months graded under end are blank under start and the control 'every no-flow month grades identically' holds only on the months graded under both",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "start run: ZERO_BASE 29,668 account-days against 2,578 under end; 27,112 days computed under end and ZERO_BASE under start, of which 25,499 have flow 0 and 26,903 have prev < 0 (209 have prev > 0 with a large outflow); account_day_value.parquet carries 27,672 negative values over 637 accounts",
+      "graded months: end 4,237, start 3,614, both 3,613, end only 624 (208 flow, 416 no-flow, 291 MATCH under end), start only 1; commonwealth_flow_timing.py prints these as excluded_graded_one_side_only"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO CB-q-2 item 1 and AC2: start of day is value_t / (value_(t-1) + flow_t) - 1 with a zero or negative base ZERO_BASE, and the no-flow control grades identically under both timings (control_same=True).",
+  "world_is": "The end rule blanks only value_(t-1) == 0, so an account whose prior-day value is negative (an overdrawn cash line, a short position) gets a computed return under end (flat -498.20 reads 0.0) and a blank under start. The two conventions are the same formula on a no-flow day, so the gap is the base rule, not the timing. The script compares the months graded under BOTH (control_same=True over 2,676 months) and states the 624 excluded months in flow_timing.md; whether a negative base should be blank under end too (which would move the round 16 grade, 4,237 months, by about 624) is a ruling for the CTO, not made here. The default FLOW_TIMING stays end."
+}
+```
