@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -134,6 +134,15 @@ folder: it belongs under `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0
 
 **Row W2-S12 stands as built:** a ruled address with more than one open place is NOT admitted until the registry row carries a
 field that says what fills each place; prose in `evidence` is not parsed. The issuer has asked the registry's lane for that field.
+
+### CLOSE (2.0.0_SA_COO~G, 2026-10-08) -- the open criterion passes on the trunk; the issuer closes the order
+
+The worker's build is merged and its proof instance is VALID, recording `BS1-AC2` as FAIL for the reason AMENDMENT 1 named: the lines
+it counts were another cell's to close. `BF-s-4` is now merged (8ae82065ba). Run by the issuer on the trunk,
+`python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json`:
+`ALL-ROOTS ok=True roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=248 not_asked=32 pattern=8 carded=0 refused=0 hole=0 carded_class_holes=0 source_bucket_holes=0 event_rule_holes=0 unknown_word_holes=0 other_holes=0`
+It reads `carded_class_holes=0`, which is this criterion's expectation. No worker re-ran it: the proof instance still records the FAIL of its own
+run, and this section is the record that the criterion is met at the round's close.
 
 ---
 

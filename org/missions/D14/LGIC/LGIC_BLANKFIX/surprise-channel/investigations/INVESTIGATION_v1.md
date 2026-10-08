@@ -1171,3 +1171,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The owned-paths gate grants a worker exactly the paths of non-terminal orders issued_to its serial (ADHC_OWNPTH.005). BF-s-1 names ~1, so the build (lib/opal_naming_rootcheck.py, its test) and the proof instance sit uncommitted in C:/tmp/wk-blankfix-2 on wk-LGIC_BLANKFIX-2. No override was used. Only this channel file, lane ANY, is committed. The issuer re-issues the order to ~2 (or commits the worktree diff) to land the build."
 }
 ```
+
+## LGIC_BLANKFIX-S6 -- a ruling matched on a file path broke when the file moved
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S6",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T05:45:51Z",
+  "one_line": "A key ruling matched on the path of the file that declares the key stopped matching when another project moved that file; the estate-wide run gained a hole from a file move.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/key_rulings.json @ac99c10b2e: the (opal-data-ycharts, firms/) row carries declared_in = [infra/aws/lambda/investor-reporting/export/backfill_covered_account_ids.py]",
+      "that path does not exist on the trunk; the file is at infra/aws/lambda/investor-reporting/export/tools/backfill_covered_account_ids.py since commit 8d66fb03da (0.9.0_WK_IRPT_BCKEND~168, IB-pr-360)",
+      "the issuer's run after 8ae82065ba: ALL-ROOTS ok=True roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=248 not_asked=32 pattern=8 carded=0 refused=0 hole=0 carded_class_holes=0 source_bucket_holes=0 event_rule_holes=0 unknown_word_holes=0 other_holes=0 -- the one hole is HOLE S3Key firms/ at the new path"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "key_rulings.json _about.row_fields (declared_in): a row matches when the item's key equals the row's key and the file declaring the item is one of declared_in; no bucket is read.",
+  "world_is": "The match is exact on a repository path, and a path is not a stable identity: a move by any project silently un-matches the row and the name prints as a hole again. The registry's lane wrote the path while the file was at the old place in its tree; the move arrived on the laptop in the level-set of ~05:00Z. Asked of 4.0.0_SA_CRO: correct the path (msg sent). Not decided here: whether declared_in should match on something a move does not break (the file's name within the root's source folder, or the declaring function), or whether a check should refuse a declared_in path that does not exist."
+}
+```
