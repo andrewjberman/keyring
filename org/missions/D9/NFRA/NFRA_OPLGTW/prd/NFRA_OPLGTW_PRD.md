@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.7",
+  "prd_version": "v1.8",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -536,4 +536,61 @@ the gateway 2026-09-30 18:33Z under never-widen halves, with no OPLGTW addendum.
   at a time) stays DEFERRED.
 
 **Sign-off.** CONTRACTS text changes (C3) and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
+`prd-signoff` binds the ENDPOINT hash only, so this seat sends the request itself.
+
+### v1.8 addendum (2026-10-08 ~15:5xZ, 1.0.0_SA_CTO~Z) -- C7 headless MAIL route admits by sender DOMAIN
+
+Input: a cross-fabric request (CLAUDE.md rule 32) from the laptop `1.0.0_SA_CTO`, relayed by `0.0.0_AB_MSTR~Z` msgs 31615 and
+31619 (laptop bus c544f4d5 and 418ddcfe). The laptop's measurement: `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~31/MAIL_ROUTE_MEASURED.md`.
+Site Z's code read: `org/missions/D9/NFRA/NFRA_OPLGTW/deliverables/2.0.0_SA_COO~O/MAIL_ROUTE_DOMAIN_READ_FACTS_20261008.md` @834beaddab.
+
+**Whose words, and whose reading.** As the laptop carries them (NFRA_CTLPLN C-SEATS clause 9; this seat did not read the
+record), Andrew asked on 2026-10-07 for his own mailbox to be read for work requests, a message considered only when its
+sender's domain is one of the firms he named and its body names him. The route's shape below is this fabric's design to
+serve that. It was stated to him at the `1.0.0_SA_CTO~Z` terminal on 2026-10-08 (~07:4xZ, ~15:3xZ). The firms are his: the
+gateway admits a domain only from the table named below, and adding a firm is his word, never a seat's.
+
+**The mailbox.** The route's one fixed identity, MS_INGEST_IDENTITY, is Andrew's own mailbox: `2.0.0_SA_COO~O` read the live
+configuration on r28 `aa75078e1b` by a digest compare against the signed-in user's `whoami` and it reads EQUAL (msg 31840; one
+comparison, no negative control, no address printed). No other mailbox is reachable by this route, before or after.
+
+**The change (C7), two things.**
+1. **Admission.** A message is admitted when its OWN sender is on the sender table (as today) OR its own sender's domain is
+   on the DOMAIN TABLE. The domain is the text after the last `@`, compared case-insensitively and whole: no subdomain
+   match, no suffix match. No thread is consulted. The message-by-id route applies the same rule.
+2. **Listing.** `GET /hx/mail/messages` takes EXACTLY ONE of `sender` (as v1.4) or `sender_domain` (ONE domain, on the domain
+   table). With `sender_domain` the Graph query filters on the received window only, and the gateway judges each row's own
+   `from` against the requested domain: a row that fails is dropped and counted in the audit, never listed. A Graph filter
+   on an address suffix is NOT used; it is untested.
+
+**Rules that do not move.** GET only. The same prefix and bearer. Rows are v1.4's five fields exactly: no subject, body,
+recipient or attachment name. The window is at most 31 days, `page_size` 1..50, 200 pages a request; a page of a domain
+listing may hold fewer rows than `page_size`, and an empty page with a `next_page_token` is legal. The opaque token now
+binds the sender OR the domain, and the window. The audit carries a hash of the domain, the rows listed and the rows
+dropped; never an address or content.
+
+**The body test is the caller's.** Whether the body names him (a whole word, the subject, signature and quoted text apart)
+is judged by the laptop's caller on the message it fetches by id. The gateway does not read a body to decide a listing.
+
+**The domain table.** One configured value read at start, like the sender table. Its entries are copied from
+`infra/logic/registry/scopes.json` (`tenant.email_domain`) and `infra/logic/registry/mail_parties.json`, by the release's
+own record, entry by entry. An empty or unset table refuses every `sender_domain` request 403 before any Graph call, and
+admits nothing by domain. A firm with no domain recorded is not considered.
+
+**What this widens, stated plainly.** Today three exact addresses can be read. After this, every message from every
+address at a listed firm can be listed and fetched by the bearer's one holder. That is a widening of a served read: it
+carries CTO, COO and CVO never-widen halves (round 12's enrichment item 2), and the halves name the table's entries.
+
+**Acceptance, run on the released host.**
+1. A message from a listed domain, from an address NOT on the sender table, is listed and fetched.
+2. Negative arms: an unlisted domain is refused 403; `sub.<listed domain>` is refused; a request with both `sender` and
+   `sender_domain`, or neither, is refused 400; a token with an altered domain is refused 400; with the table empty every
+   domain request is refused.
+3. v1.4's four checks and two negative arms read as before (the three addresses still work).
+
+**Release.** One build cell and one narrow release by `2.0.0_SA_COO~O`. The restart falls under row Z-S67: not inside the
+12 hours before a 07:00 America/New_York send, and after the one-session question on `opal-gateway-bbg` is settled by
+Andrew, who has said that sign-in is his to handle (2026-10-08 ~13:2xZ).
+
+**Sign-off.** CONTRACTS text changes (C7) and ENDPOINT does not. The ratified-text half re-opens for `3.0.0_SA_CVO~O`.
 `prd-signoff` binds the ENDPOINT hash only, so this seat sends the request itself.
