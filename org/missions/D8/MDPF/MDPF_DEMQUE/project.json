@@ -5,7 +5,7 @@
   "fabric": "laptop",
   "pipeline": "mdpf",
   "status": "active",
-  "dep_stage": "PRD",
+  "dep_stage": "DECOMP",
   "created": "2026-10-08",
   "registered_under_tree": "2026-10-08",
   "placement": "DELL1",
@@ -42,13 +42,15 @@
       "note": "CVO F1 (ceiling vs reserve split in C-RESERVE) and F2 (phantom pacer citation removed); endpoint unchanged"
     }
   ],
-  "decompositions": [],
+  "decompositions": [
+    "org/missions/D8/MDPF/MDPF_DEMQUE/decompositions/MDPF_DEMQUE_DECOMP.md"
+  ],
   "decomposition_lineage": [],
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10)",
     "cro": "4.0.0_SA_CRO~Z (L1 org-wide brief) and 4.0.0_SA_CRO~DELL2 (Cottonwood research)",
-    "coo": "UNSEATED -- to be spawned on dell1 (Andrew-direct ~20:4xZ: no spawn limits on Dell boxes)"
+    "coo": "2.0.0_SA_COO~Q1 (dell1; L5-L7, round 1 cut 2026-10-08)"
   },
   "placement_ruling": "Andrew-direct ~19:3xZ: 'a registered project which will be run on this device' (dell1).",
-  "coo_lane": null
+  "coo_lane": "2.0.0_SA_COO~Q1"
 }
