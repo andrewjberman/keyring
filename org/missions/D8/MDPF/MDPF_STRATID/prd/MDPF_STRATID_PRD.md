@@ -5,7 +5,7 @@
  "project": "MDPF_STRATID",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md@68aa9dbe9e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7"],
@@ -106,8 +106,10 @@ basis applied, dollars sent to Global, bucket shown).
 
 **C-BASIS -- basis is per strategy PER FIRM.** The registry's basis axis gains a firm dimension: `(member, firm) -> carve_out | additive`.
 Cottonwood's SMA sleeves are ADDITIVE at Global (Andrew ~18:3xZ). 49financial's DIVZ and PFOE stay the VERIFIED carve-outs they are
-today. Tax keeps its additive basis at every firm it has today. A `(member, firm)` pair with no declared basis does not count at Global
-and is listed (C-UNIDENTIFIED). No default basis exists.
+today. Tax keeps its additive basis at every firm it has today. **Default (v0.2, CVO finding F1):** an identified ETF Strategy or SMA
+sleeve whose `(member, firm)` pair has no declared basis counts at Global as ADDITIVE under C-OVERLAP, because a sleeve is outside the
+Models (Andrew ~18:3xZ). A carve-out is declared, never defaulted. This is what lets a new Opal ETF's sleeve, or an Eclipse sleeve,
+show in the SMA group with no engineer (FWD-4, FWD-5). An overlap the control withholds is listed as withheld, never dropped silently.
 
 **C-SLEEVE -- what an ETF Strategy is.** An Opal ETF Strategy is a client SLEEVE (a whole model or sub-portfolio in the source system)
 whose NAME carries an Opal ETF's ticker as a whole word, or its full fund name. It is identified in all three intake surfaces: SmartX,
@@ -137,8 +139,8 @@ by a person as Opal Muni, or excluded with the reason recorded, before any Muni 
 where it is and appears on the C-UNIDENTIFIED list.
 
 **C-GLOBAL-PAIR -- served Global moves only under the laptop's pair.** Any act that changes Global's served output
-(`opal-data-assets/portal/gold/mdpf/global/`) carries a never-widen pair whose CTO half is laptop `1.0.0_SA_CTO` (MDPF_GLOBAL owner,
-msg 107101), plus this seat's half. Per-firm views (Cottonwood, 49financial, Inflection) do not move under this project except where a
+(`opal-data-assets/portal/gold/mdpf/global/`) carries a never-widen pair: the CTO half is signed by laptop `1.0.0_SA_CTO` (MDPF_GLOBAL owner, msg 107101), and the COO half by the
+`2.0.0_SA_COO` lane seated on MDPF_STRATID (v0.2, CVO finding F2). `1.0.0_SA_CTO~DELL1` reads each pair before it goes to the laptop. Per-firm views (Cottonwood, 49financial, Inflection) do not move under this project except where a
 named outcome requires it (FWD-3 Muni at Cottonwood).
 
 **C-LAYERS -- where the work sits.** Identification happens where each sleeve is first named (silver or the feeder), through the
@@ -174,7 +176,7 @@ here, not rebuilt), `MDPF_SECCLASS` (security classification; a different axis),
 | S02 | FWD-5 | the one runtime list of Opal ETFs (ticker + full name) | measured (`etf_universe.json`, 4 tickers, no names) | amend | C-ONE-LIST; no new address without the builder |
 | S03 | FWD-4 | SMA strategy name rules as data (Tax, Muni; open-ended) | held | build | C-SMA-RULES |
 | S04 | FWD-5 | Eclipse (Inflection) sleeve names carrying an Opal ETF ticker or full name | held (no census yet; open item 1) | read | denominator printed |
-| S05 | FWD-1, FWD-2 | the per-firm basis axis in the SMA registry | measured (`mdpf_category_registry.py:343-375`) | amend | C-BASIS; no default basis |
+| S05 | FWD-1, FWD-2 | the per-firm basis axis in the SMA registry | measured (`mdpf_category_registry.py:343-375`) | amend | C-BASIS; default additive, carve-out declared |
 | S06 | FWD-1, FWD-2, FWD-6 | the additive fold of Cottonwood strategy dollars into Global with an overlap control | measured (`apply_taxsma_overlay`, `mdpf_gold_consolidator.py:1648`; hold-out `build_cottonwood_mdpf_slice.py:354-357`) | wire | C-OVERLAP; C-GLOBAL-PAIR |
 | S07 | FWD-3 | the Muni sleeve and the $64.1M `Opal_Muni_Income` account | measured (served 2026-10-07) | read | C-MUNI-VERIFY before any dollar counts |
 | S08 | FWD-7 | the per-run list of unidentified strategy candidates (firm, name, dollars) | held | build | C-UNIDENTIFIED |

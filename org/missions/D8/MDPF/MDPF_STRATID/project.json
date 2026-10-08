@@ -27,8 +27,8 @@
   "prds": [
     {
       "path": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
-      "version": "v0.1",
-      "status": "DRAFT"
+      "version": "v0.2",
+      "status": "ADMITTED"
     }
   ],
   "prd_lineage": [
@@ -36,6 +36,12 @@
       "version": "v0.1",
       "date": "2026-10-08",
       "author": "1.0.0_SA_CTO~DELL1"
+    },
+    {
+      "version": "v0.2",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1",
+      "note": "CVO findings F1 (default additive basis) and F2 (pair seats named); wording under the contracts, endpoint unchanged"
     }
   ],
   "decompositions": [],
