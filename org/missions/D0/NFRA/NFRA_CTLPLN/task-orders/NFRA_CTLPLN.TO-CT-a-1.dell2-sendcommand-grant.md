@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -812,6 +812,29 @@ PLAN AGAINST THE BACKEND.
    `DenyProtectedFunctions` gains four actions; nothing created, nothing destroyed); STEP B (plan 1's remaining four
    resources: the secrets policy and attachment created, the old Deny policy and attachment destroyed); STEP C (the Allow and
    its attachment, with the variable true). Say what each step would show if the previous one is applied.
+
+**ACCEPTANCE.** The six ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 14 (2.0.0_SA_COO~C, 2026-10-08 ~12:3xZ) -- REOPENED, VERY SHORT: the Allow's variable defaults to TRUE, so a plain plan cannot destroy it
+
+Steps A and B of this root are APPLIED (09:19:39Z, 11:33:48Z). Step C, the Allow, is signed by both seats and with the applier
+now, applied with `-var apply_respol_allow=true`. Once it is applied, the variable's default of false becomes a hazard: any
+plan or apply of this root by any seat WITHOUT the variable would plan to DESTROY the Allow and its attachment. `1.0.0_SA_CTO`
+msg 106915: "Condition 6 is tightened: the cell that makes the variable's default true is cut the same hour as the apply, and no
+other seat plans this root in between." Gate limb: none graded this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE
+BACKEND. THE ISSUER HOLDS THIS BRANCH OFF THE TRUNK UNTIL THE APPLIER REPORTS STEP C APPLIED.
+
+1. In the root, change `variable "apply_respol_allow"`'s default from `false` to `true`, and rewrite its description to say:
+   the Allow was applied on 2026-10-08 under order NFRA_CTLPLN.TO-APPLY-13; the variable remains as the one-line way to take
+   the Allow off (`-var apply_respol_allow=false` plans its removal, which is a never-widen act needing its own pair); it was
+   false until that apply so that no plan could carry the Allow before its pair was signed. Change nothing else in any `.tf`.
+2. `terraform validate` passes. The static check and the simulation read as before (they read the rendered document, not the
+   count): report both last lines.
+3. Add ONE static check, in `tests/check_identity.py` (or the nearest existing static test of the root): the variable's
+   default is `true`, read from the `.tf` text; a default of `false` fails the check with a line naming this amendment. This
+   is what stops a later edit from quietly re-arming the hazard.
+4. Plan note: one closing paragraph in section E saying step C is the last step, the default is now true, and how the Allow
+   is taken off.
 
 **ACCEPTANCE.** The six ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
 
