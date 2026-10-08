@@ -42,8 +42,8 @@ YCD-s-6 @a9bb757ee3). The v1 schema `docs/contracts/investor-reporting/v1/Analys
     `AnalysisReport.ts` with the committed `portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` with the leading header
     comment block EXCLUDED from both; prints the first differing line if any. `RESULT: regen PASS` only when the bodies are identical.
   - `census`: lists every reader of either AnalysisReport schema file (validator, generator, tests; search denominator printed) and runs
-    the python tests among them (including `_contracts/tests/test_analysisreport_v2.py`); `RESULT: census PASS` only when each reader is
-    named and every test run passes.
+    the python tests among them (including `_contracts/tests/test_analysisreport_v2.py`) here AND at `C:/dev/ajb_workspace` (CLOUD);
+    `RESULT: census PASS` only when each reader is named and no test is red here that is green on CLOUD (print both result sets).
 
 ## 2. THE CONTRACT YOU BUILD AGAINST
 
@@ -78,7 +78,7 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
 
 - **AC1** -- v1 is byte-frozen and every v2 fixture validates as its name says
 - **AC2** -- the generator, reading v2, reproduces the committed AnalysisReport.ts body (header excluded)
-- **AC3** -- every reader of either AnalysisReport schema is named and its tests pass
+- **AC3** -- every reader of either AnalysisReport schema is named and no reader test is newly red against CLOUD
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="YCD-u-6"><invocation>python org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/u6_checks.py schema</invocation><expect>^RESULT: schema PASS</expect></criterion>
@@ -110,5 +110,10 @@ v1-additive cell (ruling 1194) is superseded; the first proof instance (df5280bc
 sha-pinned and the served contract is v2. Cell, contract, paths and all three criteria rewritten; worker class, risk and chain unchanged.
 Rows W6-S1..S3 resolve against this recut. Gate limb: none graded this modification (a MODIFIED order; LIMB 6 fires only on a newly
 added one, and this order declares `<placeholders>NONE</placeholders>`, so GATE viii has nothing to grade).
+
+**AMENDMENT 2 2026-10-08 (2.0.0_SA_COO~G2, issuer):** AC3 narrowed to "no reader test newly red against CLOUD": the three red
+tests of instance c73a029dc3 (two `assert 19 == 20` route counts, one absent brand asset) touch neither schema and are red on CLOUD
+too (row D2-W6-S2). AC2 is NOT amended (CTO ruling msg 1250); it is met by the next cell on this chain, YCD-v-6 (decomposition R6L
+revision 1.1), after which this order's AC2 is re-run. Gate limb: none graded this modification (modified order; no placeholders).
 
 <status>issued</status>

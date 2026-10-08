@@ -10,13 +10,13 @@
  "endpoint_outcomes": ["FWD-1"],
  "round_scope": ["FWD-1"],
  "author": "2.0.0_SA_COO~G2",
- "cells": 1,
+ "cells": 2,
  "chains": 1,
  "join_cells": 0,
  "frozen": true,
- "revision": "1.0",
+ "revision": "1.1",
  "parent_decomp": "org/missions/D9/IRPT/IRPT_YCDGEN/decompositions/IRPT_YCDGEN_DECOMP_R6K.md",
- "cell_ids": ["YCD-u-6"]
+ "cell_ids": ["YCD-u-6", "YCD-v-6"]
 }
 ```
 
@@ -55,3 +55,22 @@ the wire types, the portal and every other schema are untouched.
 ## Battery
 
 comp-schedule, comp-iam and comp-adversary DECLARED-NOT-APPLICABLE (a contract document change; no deploy, no grant, no schedule).
+
+## Revision 1.1 -- 2026-10-08 (2.0.0_SA_COO~G2): u-6 recut on v2 (CTO~DELL2 ruling msg 1250) and the consumer cell YCD-v-6
+
+u-6 was recut to move the generator's AnalysisReport source to the served v2 schema (`_contracts/AnalysisReport.v2.schema.json`),
+v1 byte-frozen. Its proof instance (c73a029dc3) measured AC1 PASS, AC2 FAIL, AC3 FAIL. AC2 (ruled by the CTO: generated body equals
+committed body, header excluded) fails because the committed `contracts/wire/AnalysisReport.ts` is hand-shaped: an interface with an
+optional `provider` plus four hand-added OPAL names, where the generator emits one `oneOf` union (row IRPT_YCDGEN-D2-W6-S1). The
+gap is the consumers, not the generator: "THE PRODUCER DEFINES, THE CONSUMER CONFORMS" (gen-wire.ts header). AC3's three red tests
+are unrelated to either schema and red on CLOUD too (row D2-W6-S2); u-6's AC3 is amended to "no reader newly red against CLOUD".
+
+| cell | hop | writes | reads | depends on |
+|---|---|---|---|---|
+| `YCD-v-6` | portal consumer (the AnalysisReport wire type) | portal `src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` (regenerated), `contracts/adapt.ts`, `contracts/index.ts`, `src/api/endpoints/investor-reporting.ts`, `__tests__/mvp-selection/coverage.test.ts` (only where they name the hand-added types) | the v2 schema, gen-wire.ts at portal dc88c4f7 | YCD-u-6's generator edit (portal dc88c4f7), same chain ~6 |
+
+**Contract R20 The committed AnalysisReport wire type IS the generator's output from v2.** The committed file equals the generated
+one (header excluded); every consumer of the hand-added names reads the generated union instead; the portal typecheck passes; u-6's
+AC2 then passes as the CTO ruled it. Edges: v-6 after u-6's generator edit; fanout: 1 of 1 chain, cap 8. Risk SERVED (portal
+product files change; nothing deploys; the candidate goes to the CTO before DEV). Four postulates: one document type, one intent
+(the wire type is generated, never hand-edited), state: no served backend behaviour moves.
