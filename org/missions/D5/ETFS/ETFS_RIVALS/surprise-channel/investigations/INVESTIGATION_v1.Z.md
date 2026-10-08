@@ -4898,6 +4898,28 @@
     "spec_asserts": "PRD C-OWED-GRAIN and FWD-22 / FWD-23: a close filed under a date is that date's close. Rows Z-S69 and Z-S70 asserted that 430 closes of 2026-09-29 were wrongly unused",
     "world_is": "The 430 closes are 2026-09-30's, filed a day early. The served page (rounds 15 to 24) does not read them: correct by accident, through a name tie-break. Round 25's RIV-rg-1 as merged on site-Z CLOUD (1d2241ca66) WOULD read them as 2026-09-29's: it is not deployed and must not be deployed as it stands. The before and after this seat produced (2,418 moved rows; MediaTek +0.233) measured the effect of that mis-dated day and was presented as a repair. A rule keyed on as_of equal to the partition date would keep the mis-dated object and drop four correct ones. Why the object is a day early was not traced; 2026-09-30 itself has no partition",
     "notes": "Cites ETFS_RIVALS-Z-S69 and Z-S70, whose class and direction this row replaces. ARMED: site-Z CLOUD HEAD carries a reader that would serve wrong closes if deployed; the deploy tree and the saved plan C:/tmp/rv_apply25.tfplan are at that pin. Disarm: no apply of pin acf83a5716 or any pin holding 1d2241ca66 until RIV-rg-1 is amended and re-graded; the COO half @cfa71419f0 is WITHDRAWN by this row. The miss was this seat's: it counted closes and did not check whose day they were; the CTO's condition C1 and the reviewer's hand read caught it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S72",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T00:22:34Z",
+    "one_line": "The 11:00Z vehicle's enrichment leg loads, from the working tree, the module that holds round 25's withdrawn reader; it calls nothing of it",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 431 and 477: the vehicle runs rivalfunds.collector_bloomberg and rivalfunds.enrichment_bloomberg, --mode daily, from the working tree",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py line 1021: after a daily market pull lands it imports security_names, whose line 34 imports gold_holding_contribution, where round 25 added g4_rows and g4_window",
+        "security_names.py calls _newest_by_date, _blank, target_uri, parquet_bytes and _content_sha of that module; none is in round 25's diff of it (five functions added; removed lines only inside handler_entry and one constant re-wrapped). The name g4_ appears 0 times in security_names.py, enrichment_bloomberg.py and collector_bloomberg.py (1.0.0_SA_CTO~Z's own read, msg 31489). The module imports clean at CLOUD HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S62: the vehicle runs the working tree, so a merge touching a module it loads is a deploy of that module",
+    "world_is": "The 2026-10-08 11:00Z run loads round 25's module top level and cannot call the reader. Not exercised: the leg was not run by this seat. 1.0.0_SA_CTO~Z ruled no revert (msg 31489) with one term: the first read of that day's vehicle log states the enrichment leg's exit code and its security_names step are as on 2026-10-07; an ImportError or a new top-level failure in gold_holding_contribution there is a BLOCKING row and a revert the same hour",
+    "notes": "Related: ETFS_RIVALS-Z-S62, Z-S71. Owner of the log read: 2.0.0_SA_COO~RV, with the L4 leg of ledger etfs-rivalfunds-r22."
   }
 ]
 ```

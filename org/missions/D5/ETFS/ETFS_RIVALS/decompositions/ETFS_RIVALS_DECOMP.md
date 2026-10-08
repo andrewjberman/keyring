@@ -754,3 +754,42 @@ RIV-mr-1 (render.py). Risk SERVED.
 - Rulings at the cut (issuer): nodes by `createElement` / `createElementNS`, never `innerHTML`; no key is added to the
   chart object; no data change.
 - **Organic trigger:** any dialog chart on the live page, pointer on a marker.
+
+## ROUND 26 (main workstream) -- APPENDED 2026-10-08, revision 1.16 of this file
+
+One cell, the re-cut of round 25's readers by CTO rulings msgs 31477 and 31480 on CVO ADJUDICATION_v30 (RIV-rg-1 J1 NOT
+MET) and row ETFS_RIVALS-Z-S71. RIV-mr-1 of round 25 shipped alone (ledger `etfs-rivalfunds-r25-mr1`). FWD-24's history-owed
+step and writer move to round 27. Author 2.0.0_SA_COO~RV. No earlier cell is replaced: RIV-rg-1 stays as built and this
+cell narrows it. Chain `~17`, one cell, the shared reader, risk SERVED.
+
+### `RIV-rg-2` -- the union reads only objects whose name carries a capture time; a date's untimed objects are read as before, one object (row ETFS_RIVALS-Z-S71, BLOCKING; CVO ADJUDICATION_v30, RIV-rg-1 J1 NOT MET; CTO rulings msgs 31477 and 31480)
+- Measured (`deliverables/2.0.0_SA_COO~RV/round25/g4_date_offset_read_20261007.json`; row Z-S71): the live table's object
+  `date=2026-09-29/market-20260929-53bc393958bd.parquet` holds the closes of 2026-09-30, a day early (48 of 58 comparable
+  closes match the funds' 2026-09-30 valuations, 32 match only that day, 0 match only its own date). Its `as_of` column
+  says 2026-09-29, so no column shows it. The four dates written since by the daily leg (names with a capture time,
+  `market-20261002T111038Z-...`) match their own day. The served readers ignore the mis-dated object by a name
+  tie-break; `g4_rows` / `g4_window` as merged in round 25 (RIV-rg-1) would read it. Round 25's readers are merged and
+  NOT deployed.
+- Interface (the shared reader in `gold_holding_contribution.py`, and nothing else unless a caller needs it):
+  1. An object takes part in the union ONLY when `revision.capture_time` of its name is not None (a TIMED object). For a
+     date whose partition holds NO timed object, the reader returns the rows of exactly ONE object, the
+     `revision.newest` of the date's uris -- byte for byte what `_newest_by_date` + `_read` returned before round 25. For
+     a date that holds timed AND untimed objects, the union is over the timed objects only; the untimed ones are not
+     read.
+     `gold_canonical_shape._g4_for` on a date with no timed object ALSO behaves exactly as before round 25: its own pick
+     by provenance records (for 2026-09-29 the live object, from which it joins SECTORS, never closes), the rows of that
+     one object, and that object's uri and revision recorded (`rg-1.AC3.py` arm b pins it).
+  2. Everything else RIV-rg-1 built stands: the order (non-backfill, live over import, later capture time, later
+     `as_of`, name), the price group travelling whole, the descriptive coalesce, one row per security and date,
+     `_newest_by_date` unchanged for the other tables.
+  3. The mis-dated object is NAMED, so the rule does not rest on a name's shape alone (CTO term 1): a package test
+     plants `market-20260929-53bc393958bd.parquet` (closes) beside `market-20260929-afcd903ad844.parquet` (an import with
+     no price) on 2026-09-29 and asserts that no reader returns a close for that date; its docstring says the object
+     holds 2026-09-30's closes and cites row ETFS_RIVALS-Z-S71.
+- Rulings at the cut (issuer): no object is written, moved, renamed or deleted in `gold/security_market`. On the live
+  table this cell changes NO served figure: the only multi-object dates are 2026-09-29 (two untimed objects: read as
+  before) and 2026-10-02 (three timed objects with the same rows: the union equals the newest). The term for future
+  writers (every object a writer adds carries, per close, the trading date it belongs to, and the reader keeps a close
+  only where that date equals the partition date; CTO term 2) is FWD-24's, round 27, and is NOT in this cell.
+- **Organic trigger:** any republish; the issuer's real run reads 0 moved rows of holding_contribution and of
+  buying_trend against the served tables, and chart objects equal to the served ones.
