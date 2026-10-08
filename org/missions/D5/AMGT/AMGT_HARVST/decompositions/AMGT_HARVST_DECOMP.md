@@ -3485,3 +3485,26 @@ Issuer `2.0.0_SA_COO~H`. Series **`bl`**.
 **Checks dry-run at the base before the cut:**
 - `bl-1` AC1 (`cat bl1_never_collected.out`) base: FAIL as expected (no such file).
 - `bl-2` AC1 (`cat bl2_aig_requests.out`) base: FAIL as expected (no such file).
+
+## 82. ROUND 68 -- the three universes reconciled and the truncated stored names repaired, nothing fetched (`1.0.0_SA_CTO~Z` msg 31637, R19 and R20), 2026-10-08 ~09:0xZ
+
+`4.0.0_SA_CRO~Z`'s research (@2394cfc3d8) found the PRD puts any schedule outside the project and Andrew holds the mechanism
+and cadence, so R19 withdraws "a scheduled sweep is owed": no sweep cell, no switch. R20 replaces the two read cells of msg
+31631. `bl-2` is WITHDRAWN unspawned; `bl-1` was executing and finishes as the read behind (a). `bk-2` is terminal (merged
+@6ef6703bf6: 3 pairs removed); `bk-3` stays held.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bm`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (both cells write the same two new files; `bm-2` edits what `bm-1` makes).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bm-1` | `bm-1` | **The three universes reconciled (gold list 242, crosswalk 237, collector 234) and one identity record and universe entry added for each listed security the collector lacks (CAT, CSL, Keyence named so far), as NEW dated files beside the script.** The round-47 files and the config pointer are not touched; plants; nothing fetched. | LOCAL | worker ~120 (first) |
+| `HVST-bm-2` | `bm-2` | **AIG's truncated stored name repaired in the new identity file, and every other name cut the same way printed.** A stored full name where one exists, else the suffix fragment dropped, else left and listed; plants; nothing fetched. | LOCAL | worker ~120 (second) |
+
+**Not in this round, stated:** moving `lib/opal_data_harvest/config.json` to the new files, and any run for an added or
+repaired name. The first is the issuer's act on `1.0.0_SA_CTO~Z`'s word once no leg reads the old files; the second waits on
+Andrew's per-use word.
+
+**Checks dry-run at the base before the cut:**
+- `bm-1` AC1, `bm-2` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bm-1` AC2, `bm-2` AC2 (`cat` of the cell's output) base: FAIL as expected (no such file).

@@ -85,9 +85,15 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   call on a publisher; it waits on `4.0.0_SA_CRO~Z`'s answer."
 - Slot ~119's queue, second. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**WITHDRAWN 2026-10-08 ~09:0xZ (issuer), never spawned:** `1.0.0_SA_CTO~Z` msg 31637 (R20) replaced the two read cells of
+msg 31631 with (a) the three universes reconciled and the missing identity records and (b) AIG's truncated stored name
+repaired; those are `HVST-bm-1` and `HVST-bm-2` (round 68). `bm-2` item 3 prints the query the collector derives from AIG's
+stored name, old and repaired. `HVST-bl-1` was already executing and is left to finish as the read behind (a).
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>withdrawn</status>
 <round>67</round>
 <slot>~119</slot>
 <fabric>site-z</fabric>
