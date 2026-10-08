@@ -43,15 +43,15 @@ D2-W172-S3 OPEN (re-scoped to a repin), D2-S3 ARMED (shared-tree residue).
     "owner": "2.0.0_SA_COO~P2",
     "round": "v79",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v79"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "2.0.0_SA_COO~P2",
-      "at": null
+      "at": "2026-10-08T18:30:00Z"
     }
   }
 ]
