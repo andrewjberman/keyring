@@ -4965,6 +4965,27 @@
     "spec_asserts": "A cell id names one cell of the project (the decomposition's cell_refs and every packet cite cells by id)",
     "world_is": "Two ids each name two orders of different rounds. Nothing mechanical has confused them: each order's decomp_ref resolved, each check file lives under its own name, and the earlier orders are complete. A reader of the record who greps an id finds two cells. The id of round 27's reader cell stands as RIV-rk-1 with a note in the order",
     "notes": "Owner of the gate: 1.0.0_SA_CTO (the gate's own refusal names it). Shape of a repair: the issuance gate refuses a newly-added order whose cell id any existing order file carries, and admits a pure rename of an order added by the round's own issuance. The issuer's own remedy from here: list the existing ids before naming a cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W20-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~20",
+    "surfaced_at": "2026-10-08T05:21:30Z",
+    "one_line": "RIV-rk-1 rules that the untimed object yields no row for a security with no non-null descriptive field, and defines descriptive as every column outside the price group; every row the producer writes carries non-null provenance columns, so read literally the rule yields a row for every security of the untimed object and contradicts rg-2.AC1 arm c",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order RIV-rk-1 rulings: 'Descriptive fields are every column outside the price group' and 'a security present ONLY in the picked untimed object, with no non-null descriptive field there, yields NO row (so rg-2.AC1.py arm c stands unchanged)'",
+        "rg-2.AC1.py arm c plants UNT_ONLY (close 99.0, no sector) in an untimed object beside two timed objects and requires UNT_ONLY absent; its rows are built by enrichment_bloomberg._market_table, where security_bloomberg, revision, produced_at, producer_version, input_manifest and claim are non-null on every row (rg-2.AC1.py mrow)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Descriptive fields are every column outside the price group; a security only in the picked untimed object with no non-null descriptive field yields no row",
+    "world_is": "Built so that both sentences hold: the row-existence test reads gold_holding_contribution.G4_DESCRIPTIVE (the eight GICS columns, security_name, security_parsekey: the producer's MARKET_MAP less the price group). Once a row exists, every non-price column of the untimed object coalesces last in the order, as the order says. On the live table no date mixes timed and untimed objects, so nothing read today moves",
+    "notes": "File: data/etfs/scripts/rivalfunds/gold_holding_contribution.py (G4_DESCRIPTIVE, _g4_merge). A later column added to MARKET_MAP that describes a security needs a line in G4_DESCRIPTIVE."
   }
 ]
 ```
