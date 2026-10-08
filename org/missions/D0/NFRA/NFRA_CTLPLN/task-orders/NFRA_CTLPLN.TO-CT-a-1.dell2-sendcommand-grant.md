@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -148,6 +148,10 @@ infra/aws/terraform/transcripts/tests/
 infra/aws/terraform/nfra-ctlpln-identity/dell_vendor_secrets_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -592,5 +596,63 @@ AMENDMENT 7 DIFFER, THIS ONE GOVERNS. AMENDMENT 7's items 3 and 4 and its bounds
    set, it is in the set and it is named.
 
 **ACCEPTANCE.** The six criteria and their expectations are unchanged; `CTa1-AC6`'s line reads `granted=<n>` with the new count.
+Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
+
+## AMENDMENT 9 (2.0.0_SA_COO~C, 2026-10-08 ~01:0xZ) -- REOPENED, PRIORITY, SUPERSEDES AMENDMENTS 7 AND 8 ON SCOPE: three changes to the Dell identity root in ONE plan, on Andrew's word lifting three limits
+
+Authority: Andrew-direct ~00:4xZ, "lets start with lifting 1 2 3 6", answering a numbered list (record, read its rulings section:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_004xZ_LIFT_FOUR_DELL_LIMITS_SECRETS_FIRM_DATA_RESOURCE_POLICIES_PUSH.md`),
+and `1.0.0_SA_CTO` msg 106669: "1. Secrets: the Dell group reads every vendor credential and every client-firm or custodian
+session in the store. Out only: signing keys, seeds, bearer tokens. openai-api-key is IN. ... 3. The resource-policy Deny (the
+75 actions) comes off the Dell group. The routes Deny stays. IAM creation stays with the laptop. Also in:
+iam:SimulatePrincipalPolicy on self, and dell2's SSM parameter once named. ASK: one half request per root, fewest applies that
+are honest; secrets first." Gate limb: none graded this modification. WHERE THIS AMENDMENT AND AMENDMENTS 7 OR 8 DIFFER, THIS ONE
+GOVERNS. A previous pass on this branch built AMENDMENT 8's wider set (a secret is granted when a Dell project's program reads
+it): keep its tooling, replace its RULE. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+A. **SECRETS, the new rule, over ALL listed secrets (114 at the last listing), by NAME, description, tags and the code that
+   uses it; whether a Dell project's code names it today no longer matters.** Each secret gets exactly one class:
+   - `VENDOR-CREDENTIAL`: a key or sign-in for an outside vendor's service (model providers, market-data and custodian
+     platforms' API keys, proxy providers, messaging providers). GRANTED. `openai-api-key` is in this class and GRANTED.
+   - `CLIENT-SESSION`: a client firm's or a custodian's login or captured session used to pull that firm's data (the
+     `blackdiamond/*`, `orion/*`, `smartx/*`, `ycharts/session/*`, `seeking-alpha/session` kind). GRANTED.
+   - `PLATFORM-KEY`: a secret whose holder can act AS Opal's own platform: signing keys (any `jwt` private or public key pair's
+     private half and any shared signing secret), seeds, administrator credentials, and bearer tokens for Opal's own gateway or
+     services. The CTO named `opal/auth/jwt-private-key`, `opal/auth/irpt-render-jwt-private-key`, `opalinvest/jwt-secret`,
+     `opalinvest/admin-seed` and the gateway bearer tokens, "and any like them the cell finds". NOT granted.
+   - `OTHER`: anything that is none of the three, or that you cannot place by name, description and use (configuration
+     bundles with no description, a public key, an origin-verify value, the firm's own directory app credential, a secret
+     scheduled for deletion). NOT granted; listed with the reason, for a person to rule. When in doubt between a granted class
+     and OTHER, it is OTHER. When in doubt between PLATFORM-KEY and anything else, it is PLATFORM-KEY.
+   Rulings table in the derive script's head (name, class, message id) for the named ones. A secret under a customer-managed
+   key is left OUT of the grant whatever its class, listed as blocked-by-key (no key policy is touched).
+   One statement on the group as before, exact ARNs, no wildcard, built by Terraform from the census; split into two managed
+   policies by a stable rule if the document would pass 6,144 characters (count it; say which).
+B. **THE RESOURCE-POLICY DENY COMES OFF.** Remove from the root: `aws_iam_policy.dell_agent_respol` and its group attachment in
+   `iam.tf`, `dell_respol_policy.json`, and the checks that exist only to prove that Deny (`tests/derive_respol_actions.py`; the
+   resource-policy block of `tests/simulate_policy.py` becomes its mirror: the same actions for a Dell user now read as the
+   create policy and the other statements leave them, with at least `s3:PutBucketPolicy`, `kms:PutKeyPolicy`,
+   `lambda:AddPermission` and `sqs:SetQueueAttributes` each reported by its decision, not asserted to be allowed: REPORT what
+   each reads once the Deny is gone, because an action no Allow covers stays refused, and say so). The ROUTES Deny
+   (`routes.tf`, `modules/routes_policy/`), `DenyPassRoleExceptNamed`, `DenyProtectedFunctions` and `DenyApiKeyReads` STAY
+   untouched: assert the routes and protected-function arms read exactly as before. `tests/check_identity.py`'s name count
+   moves accordingly. Keep `tests/read_queue_attribute_writers.py` and its saved file (a read, harmless).
+C. **SELF-SIMULATE.** Add `iam:SimulatePrincipalPolicy` for each Dell user ON ITS OWN USER ONLY: one statement in the group's
+   read statement set (`dell_create_policy.json`'s read statement, or a new small statement there), Resource
+   `arn:aws:iam::<account>:user/${aws:username}` (the policy variable, so one statement serves both users and neither can
+   simulate the other or any role). Add two arms to the simulation: a Dell simulating itself allowed; simulating the other
+   Dell or a role refused.
+D. dell2's SSM parameter read is NOT in this pass (its name has not arrived).
+E. THE PLAN NOTE (`PLAN_NOTE_DELL_VENDOR_SECRETS.md`, renamed in its title to cover all three changes): what the ONE apply
+   would show by reading (expected: the secrets policy and attachment created, the resource-policy policy and attachment
+   destroyed, one policy updated in place for the self-simulate), then: every GRANTED secret by name with its class; every
+   PLATFORM-KEY by name with one plain sentence on what holding it lets a box do; every OTHER by name with the reason; and,
+   for B, the list of what a Dell can newly do once the Deny is gone, by action, from the simulation, with the plain note that
+   a Dell changing a resource policy does so under its own box's never-widen pair.
+
+**ACCEPTANCE.** `CTa1-AC1`, `AC3`, `AC4`, `AC5` unchanged. `CTa1-AC2`'s expectation is unchanged
+(`ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`): keep those three fields adjacent and in that order; the
+resource-policy field may change its name and count, and a `selfsim_ok=<a>/<n>` field goes BEFORE `ssm_ok`. `CTa1-AC6` unchanged
+(`VENDOR-SECRETS secrets=`; the line reads `ok=True` with the new counts, and add `platform_key=<n> other=<n>` at its end).
 Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
 
