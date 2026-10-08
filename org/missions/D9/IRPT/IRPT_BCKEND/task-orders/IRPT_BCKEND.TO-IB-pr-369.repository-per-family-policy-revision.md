@@ -51,6 +51,20 @@ IB-pr-368 is live (ADDENDUM 6 order).
   (same id, revision and bytes; the regression arm).
 - `unregistered_kind_refuses`: a kind with no registered revision is refused.
 
+**AMENDMENT 1 (2026-10-08 ~19:5xZ, issuer `2.0.0_SA_COO~P2`, disarming row D2-W177-S1).**
+- **The hazard.** `export/submit_installed.py` now requests `irpt-custody-x10-v1` through `additional_policy_revisions`. Any build of
+  this source before E8's registry row (`~M2`) exists would make EVERY submit raise `ValueError`, PERFORMANCE and ANALYSIS included.
+- **The fix.** The custody revision is requested ONLY when the reporting-policy registry the function reads actually carries the
+  `irpt-custody-x10-v1` row. Read the policy the same way `composition.py` already does; add no new read. Absent the row:
+  - PERFORMANCE and ANALYSIS compose and behave exactly as today;
+  - a CUSTODY_REPORT still refuses ("unregistered retention family"), which is fail closed.
+- **The test.** Add a test whose name contains `x10_composes_without_custody_row`: with a registry fixture that has only `irpt-x10-v1`,
+  the submit composition builds and a PERFORMANCE/ANALYSIS reference reads back, while a CUSTODY_REPORT refuses. IB82-1-AC2 now also
+  runs `-k x10_composes_without_custody_row` (check amended in the same commit).
+- **The row.** When done, append `IRPT_BCKEND-D2-W177-S3`, a DISMISSED_WITH_REASON whose `dismissal_reason` starts
+  `Resolves IRPT_BCKEND-D2-W177-S1:` and cites your fix commit.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
 <criterion id="IB82-1-AC1" cell_refs="IB-pr-369"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r82/p82_cells.py" . IB82-1-AC1</invocation><expect>IB82-1-AC1 PASS</expect></criterion>
 `IB82-1-AC1` -- CUSTODY_REPORT is retained and read under its own revision, while PERFORMANCE and ANALYSIS stay under irpt-x10-v1.
 Base: FAIL.
