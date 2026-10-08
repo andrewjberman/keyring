@@ -75,7 +75,7 @@ function Get-AgentLoopDirective {
         '^1\.1\.0_SA_CTO$' {
             return "$header`n  CL CTO: /watcher ONCE. /cl-charter ad-hoc. Event-driven via the inbox Monitor."
         }
-        '^2\.[01]\.0_SA_COO$' {
+        '^2\.0\.0_SA_COO$' {
             return "$header`n  COO: /watcher ONCE. /drive is OFF by default. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing.`n  Event-triggered: /mstr-spawn, /mstr-kill (a COO function in addition to 0.0.0_AB_MSTR -- Andrew-direct 2026-08-28; seat and release work-population lanes directly, no request to MSTR)."
         }
         '^3\.0\.0_SA_CVO$' {
