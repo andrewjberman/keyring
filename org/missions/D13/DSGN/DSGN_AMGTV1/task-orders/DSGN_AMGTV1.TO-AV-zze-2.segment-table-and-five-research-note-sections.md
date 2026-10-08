@@ -139,7 +139,7 @@ Report once: the exact diff, the output line of every criterion, the portal and 
   where AMD read a reason before. Both draw whatever the drafting state is.
 - **One cell, not two:** both rows write `tabs/ThesisTab.tsx` and `types.ts`; cut by write set they are one cell.
 
-<status>pending</status>
+<status>complete</status>
 <round>53</round>
 <to_id>DSGN_AMGTV1.TO-AV-zze-2</to_id>
 <slot>~116</slot>
