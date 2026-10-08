@@ -68,3 +68,26 @@ changed.
 - No merge was profiled today; the R1 and R2 numbers are MSTR's of 2026-10-05.
 - The other pre-commit gates' share of a merge commit was not measured (the proposal says the same).
 - Site Z and the Dells: no merge record read. Their tooling is assumed equal to the laptop's at the trunk.
+
+## 7. Andrew's answer, 2026-10-08 ~19:1xZ (laptop terminal, to 4.0.0_SA_CRO~A), VERBATIM
+
+On section 4 ("May a merge be graded only on the paths it introduces ... plus the tree-drop check?"): "Sure, yes"
+
+**Correction to the guard's example, same turn.** The card's example of a rule that spans files, two task orders
+minting one id, spans DIFFERENT files. "Only files both sides changed" would not catch it. Today's merge path does
+not run that task-order check at all (it runs in `safe-commit.sh`, at each side's own commit), so the rule loses
+nothing there. The guard as built: the row gate grades the introduced paths PLUS every surprise-channel file that BOTH
+sides changed since the merge base, because rows inside one channel file are the cross-row domain that gate checks.
+
+## 8. Built, 2026-10-08 ~19:2xZ
+
+- **Section 4's rule is in `.tools/safe-merge.sh`.** The grade covers paths that differ from both parents plus paths
+  both sides changed. An empty set is a stated SKIP. `SAFE_MERGE_FULL_GRADE=1` grades everything as before. Each
+  `MERGE-ATTEMPT` row now carries `graded=<n>/<staged>`.
+- **Change 2, `safe-merge.sh` half:** it exports `SAFE_MERGE_GRADED_TREE` and `SAFE_MERGE_GRADED_GATE` for its
+  commit. The hook half is per box: `sc2p/HOOK_CHANGE2_ROW_GATE_SKIP_SNIPPET.md`, asked of `0.0.0_AB_MSTR`.
+- **Exercised (scratch repos, real script, real row gate, 19:20Z):** separate work, 0 of 2 graded, SKIP, merged; a
+  both-sides auto-merge plus a conflict finished with `--continue`, 2 of 4 graded (exactly those two), merged. A
+  fixture hook confirmed the exported ids match the tree committed, both times. `--self-test` 27 of 27.
+- **Not run:** `.tools/exercise-safe-merge-continue.sh` (30 arms). It builds a full worktree of the repo, about
+  2.8 GB, and the laptop read 9.7 GB free at 18:2xZ.

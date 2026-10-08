@@ -224,7 +224,7 @@ _sm_on_exit() {
     cls="$(grep -m1 -oE '(REFUSED|FAILED|BLOCKED|ERROR|CONFLICT|WARN)[^.]{0,90}' "$_SM_ERR" 2>/dev/null | tr -s ' ' || true)"
     rm -f "$_SM_ERR" 2>/dev/null
   fi
-  _sm_row "MERGE-ATTEMPT" "rc=$rc  secs=$(_sm_secs)  args=(${_SM_ARGS})  first=(${cls:-none})"
+  _sm_row "MERGE-ATTEMPT" "rc=$rc  secs=$(_sm_secs)  graded=${_SM_GRADED:-n/a}  args=(${_SM_ARGS})  first=(${cls:-none})"
   return 0
 }
 trap _sm_on_exit EXIT
@@ -588,7 +588,36 @@ if [ "${#STAGED_ARR[@]}" -eq 0 ]; then
   git merge --abort 2>/dev/null || true
   exit 1
 fi
-echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
+# GRADE ONLY WHAT THE MERGE INTRODUCES (Andrew-direct 2026-10-08 ~19:1xZ, "Sure, yes", verbatim in
+# org/tier1_exec/4.0.0_SA_CRO~A/deliverables/MERGE_ROOT_CAUSE_B3_20261008.md section 7). Each side was graded when it was
+# committed; re-grading everything a parent carries is what made big merges slow and made them fail (R1-R3 there).
+# GRADE_ARR = staged paths whose merged content differs from MERGE_HEAD too (differs from BOTH parents: a conflict
+# resolution, or a file git auto-merged into content neither parent had) PLUS staged paths BOTH sides changed since the
+# merge base (the guard: two sides adding rows to one channel file is the collision a drain exists to catch).
+# An empty GRADE_ARR is a stated skip, never a silent pass. SAFE_MERGE_FULL_GRADE=1 grades every staged path as before.
+GRADE_ARR=()
+if [ "${SAFE_MERGE_FULL_GRADE:-0}" = "1" ]; then
+  GRADE_ARR=("${STAGED_ARR[@]}")
+  _grade_why="SAFE_MERGE_FULL_GRADE=1: every staged path"
+else
+  _mb="$(git merge-base HEAD MERGE_HEAD 2>/dev/null || echo '')"
+  declare -A _GR=()
+  while IFS= read -r _f; do [ -n "$_f" ] && _GR["$_f"]=1; done < <(GIT_INDEX_FILE="$_PRIV_IDX" git diff --cached --name-only MERGE_HEAD 2>/dev/null)
+  if [ -n "$_mb" ]; then
+    while IFS= read -r _f; do [ -n "$_f" ] && _GR["$_f"]=1; done < <(LC_ALL=C comm -12 \
+        <(git diff --name-only "$_mb" HEAD 2>/dev/null | LC_ALL=C sort -u) \
+        <(git diff --name-only "$_mb" MERGE_HEAD 2>/dev/null | LC_ALL=C sort -u))
+  else
+    for _f in "${STAGED_ARR[@]}"; do _GR["$_f"]=1; done   # no merge base: grade everything
+  fi
+  for _f in "${STAGED_ARR[@]}"; do if [ -n "${_GR[$_f]+x}" ]; then GRADE_ARR+=("$_f"); fi; done
+  _grade_why="introduced by the merge or changed on both sides"
+fi
+echo "safe-merge: grading the MERGED index -- ${#GRADE_ARR[@]} of ${#STAGED_ARR[@]} staged path(s) (${_grade_why})"
+_SM_GRADED="${#GRADE_ARR[@]}/${#STAGED_ARR[@]}"
+if [ "${#GRADE_ARR[@]}" -eq 0 ]; then
+  echo "safe-merge: SKIP -- the merge introduces no content of its own and no file changed on both sides; each side was graded at its own commit (Andrew ~19:1xZ). Row gate not run."
+fi
 # ⛔ THE ~32 KB ARGV CLIFF (0.0.0_AB_MSTR 94338, then 94639 on site Z's 440-path reconcile):
 # Windows caps a command line near 32,767 chars, so above it python NEVER STARTS -- bash prints
 # "Argument list too long" and returns rc=126 -- and the refusal text below used to read that as
@@ -597,13 +626,15 @@ echo "safe-merge: grading the MERGED index -- ${#STAGED_ARR[@]} staged path(s)"
 # which surprise-row-gate.py reads ONLY when argv is empty and whose SOURCE it prints (so the
 # pass is never vacuous); below it, argv stays the contract this script's regression arm checks.
 _argv_chars=0
-for _f in "${STAGED_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); done
+for _f in "${GRADE_ARR[@]}"; do _argv_chars=$(( _argv_chars + ${#_f} + 1 )); done
 _gate_rc=0
-if [ "$_argv_chars" -gt 28000 ]; then
-  echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#STAGED_ARR[@]} paths)"
-  STAGED="$(printf '%s\n' "${STAGED_ARR[@]}")" GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" || _gate_rc=$?
+if [ "${#GRADE_ARR[@]}" -eq 0 ]; then
+  :   # the stated SKIP above
+elif [ "$_argv_chars" -gt 28000 ]; then
+  echo "safe-merge: ${_argv_chars} argv chars exceed the ~32 KB Windows cliff -- feeding the gate through the STAGED environment (${#GRADE_ARR[@]} paths)"
+  STAGED="$(printf '%s\n' "${GRADE_ARR[@]}")" GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" || _gate_rc=$?
 else
-  GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" "${STAGED_ARR[@]}" || _gate_rc=$?
+  GIT_INDEX_FILE="$_PRIV_IDX" python "$GATE" "${GRADE_ARR[@]}" || _gate_rc=$?
 fi
 if [ "$_gate_rc" -ne 0 ]; then
   rc=$_gate_rc
@@ -657,6 +688,11 @@ echo "safe-merge: committing the merge as ${OPAL_AGENT_SERIAL} (from the index s
 # hang, not a refusal: MERGE_HEAD and the index survive, so only `git commit` re-runs, at most 3 attempts. A genuine
 # refusal writes no marker and still aborts exactly as before.
 _HANG_MARK="$(git rev-parse --git-common-dir)/safe-merge-hook-killed"
+# CHANGE 2, safe-merge half (0.0.0_AB_MSTR PROPOSAL_20261005_SAFE_MERGE_ROW_GATE_SPEED_CHANGES_2_AND_3.md): name the
+# exact tree this run graded and the exact gate that graded it. The pre-commit hook may skip its own row-gate run when
+# it recomputes BOTH ids from what it is committing and they match; on any difference it grades as before.
+export SAFE_MERGE_GRADED_TREE="$(GIT_INDEX_FILE="$_PRIV_IDX" git write-tree 2>/dev/null || echo '')"
+export SAFE_MERGE_GRADED_GATE="$(git hash-object "$GATE" 2>/dev/null || echo '')"
 _try=0
 while :; do
   _try=$((_try + 1))

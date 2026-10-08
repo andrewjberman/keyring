@@ -19,7 +19,7 @@ Exit codes:
 
 Output (JSON, default):
   {
-    "macro": "COMP_LEARNS",
+    "macro": "NFRA",
     "verdict": "ACTIVE" | "QUIESCENT_WITH_DISCREPANCIES" | "QUIESCENT_CLEAN",
     "validated_complete": [{"id", "owner", "file", "declared_status", "closing_commits"}, ...],
     "validated_active":   [{"id", "owner", "file", "declared_status", "closing_commits"}, ...],
@@ -137,7 +137,7 @@ def find_any_commits(to_id: str) -> list[str]:
 
 
 def extract_to_id(filename: str, macro: str) -> str:
-    """Pull MACRO.NNN out of a TO filename like COMP_LEARNS.094.ds-griffe-packet-runner-script.md"""
+    """Pull MACRO.NNN out of a TO filename like NFRA_CMTQUE.001.example-task-order.md"""
     m = re.match(rf"({re.escape(macro)}\.[A-Za-z0-9_]+?)(?:\.[a-z0-9-]+)*\.md$", filename)
     if m:
         return m.group(1)
@@ -285,7 +285,7 @@ def render_summary(report: dict) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description="Validate macro quiescence for /loop expansion")
-    parser.add_argument("macro", help="Macro code (e.g., COMP_LEARNS)")
+    parser.add_argument("macro", help="Macro code (e.g., NFRA)")
     parser.add_argument("--summary", action="store_true", help="Human-readable summary instead of JSON")
     args = parser.parse_args()
 
