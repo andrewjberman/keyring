@@ -2118,3 +2118,80 @@ round.** Never edit an existing row.
   "world_is": "The list holds the two bank deposit sweeps. A money-market core position that behaves as a sweep for 232 accounts is valued as a priced holding and its buys and sells count as trades; whether it is a sweep vehicle under the ruling is the CTO's call (wider than the packet's 6-month enrichment item 2)."
 }
 ```
+
+## ADVI_COTBKF-D2-W41-S1 -- CB-t-2: no custodian designation of 316067107 as a core position is citable; the (b) entry stays OFF, sweeps-v2 = sweeps-v1 in membership
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:17:38Z",
+  "one_line": "CB-t-2: the ruling lands 316067107 on the list under rule (b) only with the custodian's designation; none exists in the repo or in the silver fields the chain reads, so the entry is off and the 163 movers are unchanged under v2.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/task-orders/ADVI_COTBKF.TO-CB-t-2.sweeps-v2-core.md (item 1: 'if none can be cited, leave it off, and say so in the report and a row')",
+      "S3 opal-data-assets commonwealth/cottonwood/silver/transactions (read-only, column projection): 316067107 Position_Type CASH 8,761 / DIVIDENDS_BOND_INTEREST_ACCUMULATION 7 of 8,768 rows, but Position_Type is CASH on 1,408,059 of the table's 1,416,497 rows for every security (cash/margin side, not a core flag); Asset_Type 'Cash Equivalent' is shared by all money-market funds; FundCode CTC1260; Transaction_Note carries trade wording only. Silver positions: Position_Type CASH, Account_Status 0.",
+      "repo search by CUSIP and by 'core position' (org/, docs/, data/): the CTO round-19 analysis and the CVO round-19 grade call it core on behavior; org/tier1_exec/1.0.0_SA_CTO/logs/2026-04-20/aua_active_filter_investigation_and_brief.md names it 'Fidelity Phillips Street Trust Govt Cash Resv' as an asset bought, not as a designated core; data/inf/config/ticker_lookup.json maps FDRXX to the name only.",
+      "deliverables/0.9.0_WK_ADVI_COTBKF~41/v2/sweep_regrade.md: SWEEP-REGRADE months_before=2057/1522/79014 months_after=2057/1522/79014 control_same=True; the 163 movers: core 16 / other_mmf 0 / neither 147 all still DIFF"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The CTO ruling: 316067107 goes on sweeps-v2 under (b) with the custodian's own documentation or account data naming it the core position; if no designation can be cited the entry does not land.",
+  "world_is": "No such documentation or field is readable. The behavior census (232 accounts, 8,768 rows, 91.1% same-day paired, dividends in 40 months) is the CVO's measure and informs; it is not a designation. A statement or custodian document held outside the repo, or a vendor field not in the silver tables, would let the entry land by one dict entry (rule b, designation_source set) and a re-run."
+}
+```
+
+## ADVI_COTBKF-D2-W41-S2 -- CB-t-2: sweeps-v2 version bump breaks one CB-t-1 test outside the CB-t-2 write grant
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:17:38Z",
+  "one_line": "test_the_arm_options_default_to_round_19 in test_commonwealth_mover_classes.py (my CB-t-1 test) pins ARM_LISTS['v1'] to the current SWEEP_LIST_VERSION; v2 is now current, so it fails; the file is not in CB-t-2's paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests (this worktree, after the CB-t-2 edits): 1 failed, 513 passed, 11 skipped; the one failure is data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py::test_the_arm_options_default_to_round_19",
+      "ARM_LISTS['v1'] is now (rule 'list', sweeps-v1-20261008) as the CB-t-2 order requires (v1 stays reachable); the test asserted it equal to (rule 'list', sw.SWEEP_LIST_VERSION)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB-t-1 test: the runner's v1 option reproduces round 19, pinned as equal to the current SWEEP_LIST_VERSION.",
+  "world_is": "The pin was over-coupled to the module's current-list name. The honest assertion is ARM_LISTS['v1'] == (RULE_LIST, sw.SWEEP_LIST_V1_VERSION). Not edited here: the file is outside the CB-t-2 grant. The CB-t-1 proof (AC1: 9 passed at 101fb91b59) was true at that commit. The issuer can widen the grant by one line or fold the one-line fix into a later order."
+}
+```
+
+## ADVI_COTBKF-D2-W41-S3 -- CB-t-2: remediation of ADVI_COTBKF-D2-W41-S2 (arm test re-pinned to SWEEP_LIST_V1_VERSION)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W41-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~41",
+  "surfaced_at": "2026-10-08T18:45:00Z",
+  "one_line": "Corrects ADVI_COTBKF-D2-W41-S2: after the issuer ruling (amendment c6e1cae6d3) the test now asserts against sw.SWEEP_LIST_V1_VERSION; S2 is REMEDIATED by this commit.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest -q data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py: 9 passed",
+      "python -m pytest -q data/assets/scripts/silver/tests: 514 passed, 11 skipped"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "ADVI_COTBKF-D2-W41-S2 was UNDER_INVESTIGATION: the CB-t-1 arm test pinned ARM_LISTS['v1'] to the current list version and failed once v2 landed.",
+  "world_is": "Fixed at line 113 of test_commonwealth_mover_classes.py (SWEEP_LIST_VERSION -> SWEEP_LIST_V1_VERSION) in the same commit as this row. The row gate bars in-place mutation of S2, so its disposition is closed by this new row citing the old id; S2 itself is unedited."
+}
+```
