@@ -150,6 +150,10 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_iam_roles_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_planreads_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_plan_reads.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/plan_reads_census.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
