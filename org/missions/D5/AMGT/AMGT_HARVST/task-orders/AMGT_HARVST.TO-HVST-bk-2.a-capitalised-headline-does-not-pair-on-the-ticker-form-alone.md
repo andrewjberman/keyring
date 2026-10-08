@@ -108,9 +108,27 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Chain of one, slot ~117. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as
   expected (no such file); AC3 base PASS as expected (498 passed).
 
+**AMENDMENT 1 + COMPLETE 2026-10-08 ~08:5xZ (issuer; no gate limb graded the amendment):**
+- **Built:** worker ~117 @79dd9547a7; merged @6ef6703bf6 (8 paths, index check 0 of 8 differ). Issuer drain check on merged
+  CLOUD: 508 passed.
+- **The face's definition could not be executed, and the fault is the issuer's** (row Z-W117-S1): the order's own verbatim
+  title has the lower-case word "on", so "EVERY alphabetic word begins upper-case" would not fire on it. The worker allowed
+  one closed list of title-case minor words (`a an the and but or nor for so yet as at by in of on to up off per via vs`,
+  the constant `_TITLE_CASE_MINOR_WORDS`). **AMENDMENT: that list stands as the definition.** The census prints the strict
+  reading beside it: 0 pairs removed, the reported pair included.
+- **AC1 PASS:** 10 of 10. **AC2 PASS:** CENSUS OK over 19,159 articles: 3,713 titles capitalised throughout; pairs removed 3
+  over 3 securities; pairs with a lower count but kept 0; pairs added 0. **AC3 PASS:** 508 on the branch.
+- **The 3 removed pairs:** bbg:TLG1WZKGZAIP00 "Bond Traders Bet on Fed Delivering 25 BP Rate Increase" on `BP_US_Equity` and on
+  `BP/_LN_Equity` (basis points; the reported pair, on both BP lines); bbg:TJ19YTKJH6V400 "BP Set to Quit UK North Sea Oil
+  in Pivotal Moment for PM Burnham" on `PM_US_Equity` (PM as Prime Minister, not Philip Morris). For `3.0.0_SA_CVO~Z` to
+  read before any rebuild's pair names them: `deliverables/0.9.0_WK_AMGT_HARVST~117/BK2_REMOVED_PAIRS.md`.
+- **Not served:** the rule is in the code and reaches gold only with the next rebuild, under its own never-widen pair.
+- **Existing assertion changed:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>66</round>
 <slot>~117</slot>
 <fabric>site-z</fabric>
