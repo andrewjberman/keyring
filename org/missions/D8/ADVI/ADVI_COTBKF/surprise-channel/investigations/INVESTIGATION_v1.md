@@ -2066,3 +2066,29 @@ round.** Never edit an existing row.
   "world_is": "No definition of 'fully priced flow month' over the committed grade gives 937 / 242; this script's denominator is every graded (MATCH or DIFF) month with at least one external-flow row, stated in flow_diff_classes.md. The class ranking does not depend on the gap."
 }
 ```
+
+## ADVI_COTBKF-D2-S29 -- the sweep re-grade moves 163 months MATCH -> DIFF
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S29",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~C2",
+  "surfaced_at": "2026-10-08T17:38Z",
+  "one_line": "The sweep-is-cash re-grade (CB-s-1) moves 163 months MATCH -> DIFF beside 543 DIFF -> MATCH; the worker did not investigate the 163",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_ADVI_COTBKF~40/sweep_regrade.md lines 692-702: DIFF -> MATCH 543, MATCH -> DIFF 163, DIFF -> UNGRADABLE 31, MATCH -> UNGRADABLE 10, UNGRADABLE -> graded 4",
+      "same file, control: 642 of 642 graded months of accounts with no listed-sweep row on or before the month unchanged; the literal in-month reading has 919 months, 158 moved, all in accounts that traded a sweep earlier",
+      "SWEEP-REGRADE sweeps=2 rejected=517 double_drop_months=74 fixed=42 months_before=1685/1931/78977 months_after=2057/1522/79014 control_same=True (drained @bf424e274b)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO round-18 ruling (msg 1237 @04b347e9ea): sweep balances are cash and sweep buys/sells INTERNAL, so a sweep-funded withdrawal moves the value once; the re-grade should repair DIFF months, not break MATCH months.",
+  "world_is": "Net MATCH rises 1,685 -> 2,057, but 163 months that matched Commonwealth before now DIFF. Unexplained: a candidate is that sweep balances counted as cash at 1.0 now enter the value in months where the earlier chain left them unpriced or cancelling, so a month that matched by offsetting errors no longer does. Classing the 163 is an enrichment candidate for the round-19 analysis."
+}
+```
