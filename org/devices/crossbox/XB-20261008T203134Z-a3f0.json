@@ -10,15 +10,19 @@
  "subject": "S3 delete of ONE test object: the E6 release-2 test admit's upload object -- ANSWERED by Andrew (Yes do it)",
  "body_path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CROSSBOX_BODY_E6_S3_DELETE_APPROVED_20261008.md",
  "opened_at": "2026-10-08T20:31:34Z",
- "state": "OPEN",
+ "state": "ACKED",
  "sent": {
   "at": "2026-10-08T20:33:01Z",
   "bus_message_id": "12819507-3e87-43c1-8c81-3be8fa3f9099"
  },
- "ack": null,
+ "ack": {
+  "at": "2026-10-08T20:54:36Z",
+  "by": "1.0.0_SA_CTO",
+  "bus_message_id": "ca158c40-a57f-426e-850d-e8df5a6c609d"
+ },
  "closed": {
-  "from_at": null,
-  "from_by": null,
+  "from_at": "2026-10-08T20:58:34Z",
+  "from_by": "1.0.0_SA_CTO~DELL2",
   "to_at": null,
   "to_by": null
  }
