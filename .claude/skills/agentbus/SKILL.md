@@ -224,3 +224,26 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
   (**read its `ratification_note`, not only `decision_summary`** — the summary describes the
   superseded DynamoDB draft, and two agents got that wrong on one day)
 - History tier (kept, not replaced): `org/mcp/agentbus-trunk/`
+
+## A cross-box call or order
+
+A call or an order for a seat on ANOTHER box travels as a committed FILE, `org/devices/crossbox/<id>.json`, never as bus text.
+The manager carries the line and never the substance: the line holds an id, a seat and a path. The tool is
+`.tools/crossbox-call.py`; it prints and reads lines and sends nothing itself. It is a tool, not a bus change, so the bar on a
+manager messaging a Tier-2 seat is not in play: `receive` writes a file for a seat on its own box.
+
+1. **Open** (the CTO, or the issuing seat, on the sending box): commit the body file, then
+   `python .tools/crossbox-call.py open --kind CALL|ORDER --to-device <d> --to-serial <serial> --from-serial <serial> --subject <text> --body <path> [--call-id <open-calls id>]`.
+   Commit the file it wrote, then `... line --id <id>` prints the sendable line (`open` prints it with `@UNCOMMITTED`).
+2. **Send** (the sending box's manager): put that one line on the bus with `bash .tools/agentbus-sqs.sh send <device> <from-serial> "<line>"`,
+   then `... sent --id <id> --bus-message-id <MessageId>`. Until step 5 `status --id <id>` reads `SENT, NOT ACKED` with its age.
+3. **Receive** (the receiving box's manager): pull the commit, hand the line the consumer printed to
+   `... receive --line "<line>"`. It prints `PULL-FIRST` when the commit is not here, refuses a line that does not match the
+   committed file, and otherwise drops ONE message file into the named seat's inbox directory (the watcher reads it).
+4. **Ack** (the named seat): `... ack --id <id> --by <serial>` prints `CROSSBOX-ACK <id> READ by <serial> at <UTC>`;
+   the manager puts that reply line on the bus.
+5. **Record the ack** (the sending box): `... acked --id <id> --line "<reply line>" --bus-message-id <MessageId>`.
+6. **Close** (each side, on its own box): `... close --id <id> --side from|to --by <serial>`. One side reads
+   `HALF-CLOSED (<side> only)`; the state is `CLOSED-BOTH` only when both are recorded, and `.tools/open-calls.py close`
+   refuses a CROSS-BOX call until it reads so. Each box commits its copy and the other folds it in with
+   `... merge --id <id> --ref <git ref>`; `list [--open]` shows every file in the tree with its state and age.
