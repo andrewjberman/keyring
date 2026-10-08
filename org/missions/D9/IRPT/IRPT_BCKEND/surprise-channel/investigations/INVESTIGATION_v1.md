@@ -20832,3 +20832,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The recorder cannot commit under this grant. The source map carries artifact_sha256 03p2eIEKU9... and last_deployed_at 2026-10-08T17:30:56Z (committed alone). The investor-reporting CHANGELOG.json has no entry for this deploy; the issuer decides whether a later order records it. Nothing served is affected."
 }
 ```
+
+## IRPT_BCKEND-D2-W172-S3 -- shipped repository.KINDS excludes CUSTODY_REPORT: the owner read fails closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released irpt-export-render cannot serve a custody report to its owner: repository.KINDS is (PERFORMANCE, ANALYSIS), so ReportRepository.get raises ReportRefused for a CUSTODY_REPORT record and the route answers DEPENDENCY_UNAVAILABLE; the other-firm refusal is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip repository.py: KINDS = ('PERFORMANCE', 'ANALYSIS'); _report_identity raises ReportRefused('unsupported report kind') for CUSTODY_REPORT; get() calls _report_identity",
+      "offline run of the live custody_read.py: owner firm as shipped -> ReportRefused 'unsupported report kind' (DEPENDENCY_UNAVAILABLE); with KINDS patched in the control run -> SERVED 228 bytes; other firm -> ReportDenied (OBJECT_NOT_COVERED) in both",
+      "reporting policy ACTIVE family list holds no CUSTODY_REPORT family (13 families); S3 irpt/<firm>/ has no custody prefix"
+    ]
+  },
+  "spec_asserts": "Packet and both never-widen halves: an Opal principal reads one retained CUSTODY_REPORT by reference and revision within its scope (Branch A).",
+  "world_is": "Nothing is retained (0 custody reports) and the shipped repository cannot read one back, so the Opal-by-ref leg cannot succeed until IRPT_CUSTDY adds the kind to repository.KINDS and a custody family to the reporting policy. The failure is closed (no body). This is the open leg named OPEN-BY-DESIGN in the after-reads, with a narrower cause than 'no report yet'."
+}
+```
