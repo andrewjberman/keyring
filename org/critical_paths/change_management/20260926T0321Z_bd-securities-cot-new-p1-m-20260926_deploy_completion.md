@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T03:21:35.082351+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR msg 816). Leg R1 owes the named-holdings read: the 941 written keys' COT moves (122 keys, USD 62,603,923.90 per leg A07) and BD's 652 accounts, read in the served per-client mix_timeseries at dates after the write, or reclassified under pre/post loaders, per the 09-30 method correction. Firm-bucket READ applied 05:17:17Z, so dell1 can take it. Nothing re-executed; no rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classifications (the table COT gold now reads): of 122 COT keys, 51 at the 09-26 class, 10 at a later deliberate model/scheduled class, 3 under a namespace prefix, 58 absent (USD 49,174,203.65; 52 of them outside FWD-15's census, row MDPF_SECCLASS-D1-S5). BD half (652 accounts) not yet read. Closes when the round-13 analysis rules the 58 absent keys (FWD-15 scope) and the BD read is taken. No rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
 **Deploy:** bd-securities COT-new write Part 1: 941 conditional PutItem (CTO @ab4a2e41bb; sha c96398886f143f54)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -25,3 +25,4 @@
 - 20260929T002333Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
 - 20260930T190520Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
 - 20261008T065132Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR m
+- 20261008T065635Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classi

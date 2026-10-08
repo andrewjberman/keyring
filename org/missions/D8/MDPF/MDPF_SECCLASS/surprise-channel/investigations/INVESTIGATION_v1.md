@@ -5155,3 +5155,29 @@ future reader should take rather than re-derive:
 Nothing about the four acts was measured by this seat at any point, and nothing is claimed about
 them. Rulings 811, 813 and 815 all land the same way: leave them in `check --red`, nothing owed
 by dell1 or by this seat.
+## MDPF_SECCLASS-D1-S5 -- 52 COT-held keys (USD 6.06M) absent from the canonical table and from FWD-15's UNPLACED census
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S5",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T07:00Z",
+  "one_line": "52 COT-held keys (USD 6,055,734.38) written to bd-securities on 09-26 are absent from etf-classifications AND absent from FWD-15's 99-key UNPLACED census, so the census domain is narrower than the COT holdings it claims to place.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/A07_DELTA_COT_NEW_20260926.json: changed keys with firm cot = 122 (per_firm.cot usd 62,603,923.90)",
+      "etf-classifications ConsistentRead scan 2026-10-08T06:5xZ, 9,155 rows: of the 122, 51 match the 09-26 'after' class, 10 differ (later model/scheduled reclass: INIYX, CSHI, LNGX, PFL, ISVDT, ANGIX, GENIX, BRW, ARKB, TOIXX), 61 absent by bare key; 3 more resolve under a CUSIP:/NAME::/BLOOMBERG: prefix or suffix; 58 absent, USD 49,174,203.65",
+      "UNPLACED_KEY_CENSUS_20261008.json (e70): of the 58 absent, 6 appear in the census (e.g. 4175_VOYA, CXMANUAL_HOME, CXMANUAL_LIMITEDLIABILITYCOMPANY); 52 do not, USD 6,055,734.38 -- largest 4175_GGHC 2,350,519.32, CXMANUAL_BROKERAGE 953,620.36, CXMANUAL_INVESTMENTPROPERTY 386,872.00, CSQ 227,321.64, FFC 179,322.60, ETHA 44,322.60"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD-15 / TO-SC-e70: the 99 UNPLACED-KEY entries are the census of keys the canonical table does not place, by firm and id pattern (99/99 in 13 groups).",
+  "world_is": "COT holds at least 52 more keys the canonical table does not carry, including plain listed tickers (CSQ, FFC, ETHA, ETH) and 4175_/CXMANUAL_ manual-entry keys, that the 99-key census never saw. The census's source set (FWD15_AI_PLAN_<firm>_20261007.json route UNPLACED-KEY) is narrower than the population of firm-held keys. Whether COT's served mix shows these as other/unclassified, or via a fallback, was not measured here.",
+  "notes": "Found while measuring laptop ~M's ledger bd-securities-cot-new-p1-m-20260926 leg R1 (owner now 2.0.0_SA_COO~M1). For the round-13 analysis: FWD-15's domain should be the firm-held key population, not the AI plan's UNPLACED route. Not a regression: these keys were never in the canonical table."
+}
+```
