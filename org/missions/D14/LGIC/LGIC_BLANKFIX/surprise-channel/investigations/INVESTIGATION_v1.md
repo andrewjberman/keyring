@@ -1468,3 +1468,56 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The two statements cannot both hold once a mapped root carries a name built in a local: the new lines are added rows, not changed answers, but the round-5 checker compares row counts against the saved file and reads any added row as a difference. No weakening made and the ~2 checker is outside this cell's grant; a later cell may re-baseline the saved run or let the checker ignore rows whose where is not in the saved file."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S9 -- BF-v-5: the loader refuses the HOME-source convention where the root's system equals its scope (5 roots), and 39 entries took HOME scope/source values the round-6 drafts left UNDECIDED
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T21:54:30Z",
+  "one_line": "To decide the drafts' UNDECIDED scope/source fields I applied the registry's own HOME-value convention (opal-assets, investor-reporting/*); it needs the registry owner's ratification, and the loader refuses it for five roots whose system equals their scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/root_map.json:271 (opal-assets) and :362-:401 (investor-reporting/*): scope and source are entered as HOME values and fills leaves them out; I applied that to 55 fields (23 scope, 32 source) in 39 entries in org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/MAP_ENTRIES_round7.json (each field's _cite says which rule)",
+      "lib/opal_naming_rootmap.py:_check_scope refuses scope == source ('a product is never a scope beneath itself'): the HOME source = the root's own system key is therefore unavailable for etfs-reports, etfs-netassets, etfs-canon (scope etfs), harvest (scope harvest) and mdpf-pipeline (scope mdpf); their source stays UNDECIDED in the entries file",
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/check_entries_land.py -> land=50 held=24 refused=0 undecided_fields=47 (round 6: 1 of 74 loading, 180 undecided)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-5: decide every UNDECIDED field the root's own files and the registry decide; a value is never taken from a folder's name alone; entries the loader accepts land.",
+  "world_is": "Where a root touches several firms' buckets, or declares no stored name, or reads no one vendor, no file names a single scope or source; the only decision available is the registry's own HOME-value convention, which the draft authors did not apply. It is a convention extension, not a finding: 4.0.0_SA_CRO adopts or amends it per entry. For the five product roots the convention cannot apply and a real upstream source (or a ruling that an etfs/mdpf/harvest root names its upstream vendor) is owed."
+}
+```
+
+## LGIC_BLANKFIX-W3-S10 -- BF-v-5: three round-6 UNDECIDED systems are decided by registry rows the drafts did not read, and the 42 inf-pipeline exceptions change no output line
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T21:54:30Z",
+  "one_line": "The round-6 drafts call the system of trade-pipeline, ticket-center and partner-etl-ops-alerts undecided, but the registry already names them; and listing the own-token exceptions changes no line the check prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/systems.json:406 (portal owner_basis): 'Terraform roots portal-auth, portal-content, trade-pipeline tagged Project = OpalPortal (main.tf:32), ticket-center tagged OpalPortal/TicketCenter'; infra/aws/terraform/trade-pipeline/main.tf:32 carries the tag; the draft (MAP_ENTRIES line 276, :746) says 'no systems.json key' / UNDECIDED",
+      "infra/logic/registry/resources.json: rows partner-etl-ops-queue, partner-etl-ops-sqs-consumer, partner-etl-ops-sqs-consumer-role are system advi ('CALL2 F15 -- a5 family F15'); the draft (line 796) says no one system owns the channel",
+      "ROOTCHECK for inf-pipeline with the 42 own-token exceptions and without them prints identical lines (items=364 right=39 fix=224 not_asked=57 pattern=13 hole=31 both ways), because an exception only acts on a name whose canonical form still carries a {system} blank and 3 of 364 do",
+      "the blanket default tag Project = OpalPortal also sits on shared-infra, c3materialize-b4 and the six CompDiff roots (_root.tf), so the tag alone decides no root; the portal row names trade-pipeline and ticket-center explicitly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 6 drafted trade-pipeline, ticket-center and partner-etl-ops-alerts with system UNDECIDED, and exceptions as 'names the default would place wrongly'.",
+  "world_is": "The registry decides those three systems (portal, portal, advi), so I decided them with the row cited; and the listed exceptions are redundant for the printed result today (they matter only for a {system}-blank name whose owner differs from the default). I entered them as the round-6 measurement defines them; the registry owner may drop them."
+}
+```
