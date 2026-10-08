@@ -18,6 +18,7 @@ SUBCOMMANDS
   flush                         retry records spooled locally after a failed put
   who TARGET [--hours N]        who touched a surface or path, from every box (TARGET: a repo path or a surface key)
   overlap [--hours N] [--all]   surfaces with two or more boxes on them, ranked; --all keeps append-only surfaces
+  boxes [--hours N]             per-box figures: commits, seats, surfaces, and how many another box is also on
   backfill --since ISO          write records for past non-merge commits on this branch, box INFERRED from serials
   surface PATH...               print the surface a path rolls up to (no network)
 
@@ -478,6 +479,31 @@ def cmd_overlap(args):
     return 0
 
 
+def cmd_boxes(args):
+    """Per-box figures for the window: commits, seats, surfaces, and how many of its surfaces another box is also on."""
+    recs, scanned = fetch(args.hours)
+    per = {}
+    surf_boxes = {}
+    for r in recs:
+        b = per.setdefault(r["box"], {"commits": 0, "seats": set(), "surfaces": set(), "last": "", "claims": set()})
+        b["commits"] += 1
+        b["seats"].add(r["seat"])
+        b["last"] = max(b["last"], r["when"])
+        b["claims"].add(r["box_claim"])
+        for s in r.get("surfaces", []):
+            if s["cls"] in ("APPEND", "RECORD"):
+                continue
+            b["surfaces"].add(s["key"])
+            surf_boxes.setdefault(s["key"], set()).add(r["box"])
+    print("BOXES last %dh: %d commits [records scanned %d]" % (args.hours, len(recs), scanned))
+    print("  %-9s %8s %6s %9s %8s  %-20s %s" % ("box", "commits", "seats", "surfaces", "shared", "last", "claim"))
+    for box, b in sorted(per.items(), key=lambda kv: -kv[1]["commits"]):
+        shared = sum(1 for k in b["surfaces"] if len(surf_boxes.get(k, set()) - {"unplaced"}) >= 2)
+        print("  %-9s %8d %6d %9d %8d  %-20s %s" % (box, b["commits"], len(b["seats"]), len(b["surfaces"]), shared,
+                                                   b["last"], "+".join(sorted(b["claims"]))))
+    return 0
+
+
 def cmd_surface(args):
     for p in args.paths:
         k, c = surface(p)
@@ -500,6 +526,8 @@ def main():
     o.add_argument("--hours", type=int, default=24)
     o.add_argument("--limit", type=int, default=40)
     o.add_argument("--all", action="store_true", help="include record folders and append-only files")
+    x = sub.add_parser("boxes")
+    x.add_argument("--hours", type=int, default=24)
     b = sub.add_parser("backfill")
     b.add_argument("--since", required=True)
     b.add_argument("--rev", nargs="*", default=["HEAD"])
@@ -507,7 +535,7 @@ def main():
     s.add_argument("paths", nargs="+")
     a = ap.parse_args()
     return {"emit": cmd_emit, "flush": lambda _a: (cmd_flush(), 0)[1], "who": cmd_who, "overlap": cmd_overlap,
-            "backfill": cmd_backfill, "surface": cmd_surface}[a.cmd](a)
+            "backfill": cmd_backfill, "surface": cmd_surface, "boxes": cmd_boxes}[a.cmd](a)
 
 
 if __name__ == "__main__":
