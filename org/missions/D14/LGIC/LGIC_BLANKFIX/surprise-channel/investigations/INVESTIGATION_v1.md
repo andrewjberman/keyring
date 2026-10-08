@@ -872,3 +872,127 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S11 -- six firm-unfilled stored-file holes of opal-assets fit none of the cell's four named hole classes
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T01:59:31Z",
+  "one_line": "BF-s-6 defines source_bucket as a bucket whose firm could not be filled; six opal-assets S3Key holes have the same cause (the root serves several firms, the map gives no firm) but are stored-file keys, so hole_class prints them as other.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json @ the BF-s-6 build: HOLE-CLASSES carded=22 source_bucket=3 event_rule=3 unknown_word=4 other=6; the six other lines are all opal-assets S3Key partial forms (schwab/{scope}/silver/account_xref, gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json, platinum/mdpf/aggregate_aua/, bronze/, bronze/eclipse/, code/bronze/templates/), printed whole by the command as OTHER-HOLE lines",
+      "lib/opal_naming_rootcheck.py hole_class: source_bucket requires line type S3_BUCKET, the cell's wording 'a bucket on a root that serves more than one firm whose firm could not be filled'; the same detail text 'this root serves more than one firm; its map entry does not give the firm' sits on these S3Key lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-6 item 3: source_bucket = a bucket on a root that serves more than one firm whose firm could not be filled; other = none of the four named classes, printed whole.",
+  "world_is": "The cell's wording reads literally as the S3_BUCKET line type, so the worker built it so; the stored-file keys with the same missing-firm cause are counted other_holes=6 and printed whole. Whether they belong in source_bucket is the CTO's reading of round 5 item S5 (the opal-assets sort); the one function hole_class changes in one place if so."
+}
+```
+
+## LGIC_BLANKFIX-W4-S1 -- the reproduction had to live inside the worktree, not a temporary folder
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T02:05:03Z",
+  "one_line": "BF-s-8 step 1 says build the reproduction in a temporary folder; the checker only grades an instance inside its own tree, so the reproduction was built under the worktree's .scratch/ and the crash (rc 2) reproduced there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduction: .tools/proof-of-spec-check.py <instance under .scratch/> BQ6-AC1 with one PENDING-THIS-COMMIT row naming a directory printed PermissionError, TOOL-ERROR, rc=2; the same instance naming a file printed VALID (rc=0). An instance outside the tree is refused by the checker's artifact-resolution/CHECKER-SCOPE branch (.tools/proof-of-spec-check.py, near line 383) before any artifact is read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-s-8 step 1: in a temporary folder build the smallest instance and governing order the checker accepts.",
+  "world_is": "The checker refuses an instance whose path is outside its repository root (CHECKER-SCOPE), so the temporary folder had to sit inside the worktree (.scratch/, removed after). The governing order used was the existing BF-q-6 order in the tree, not a copy. The crash reproduced; the fix is in .tools/proof-of-spec-check.py (artifact-resolution loop, one early directory test)."
+}
+```
+
+## LGIC_BLANKFIX-W1-S13 -- six holes of opal-assets fit none of the four classes S1 to S4
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S13",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T01:57:30Z",
+  "one_line": "TO BF-s-5: 6 of opal-assets' 20 holes (and of the 38) fit none of the CTO's classes S1 to S4: a stored-file key whose {scope} is open on a multi-firm root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/HOLES_SORTED_round5.txt: last line HOLES-SORTED ok=True roots=13 holes=38 carded=22 source_bucket=3 event_rule=3 unknown_word=4 new=6; all 6 NEW lines are type S3Key on root opal-assets, each 'partial form ...{scope}...; could not fill {source}/{scope}: this root serves more than one firm; its map entry does not give the firm'.",
+      "sort_holes.py (same folder): CLASSES tests S1, S3, S2, S4 in order; NEW_KINDS names the sixth kind; names: schwab/silver/account_xref, gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json, platinum/mdpf/aggregate_aua/, bronze/, bronze/eclipse/, code/bronze/templates/."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-5 CONTEXT: the CTO sorted the 17 lines it read into four classes, S1 carded, S2 source-owned bucket, S3 event rule, S4 unknown first word; the cell allows a fifth value NEW for a line no rule takes.",
+  "world_is": "Over all 38 holes: S1 carded=22, S2 source_bucket=3 (all opal-data-ycharts), S3 event_rule=3, S4 unknown_word=4, NEW=6. The NEW class is an S3Key (a key, not a bucket) on the multi-firm root opal-assets whose map entry gives no firm; the buckets the check read are opal-data-bd, opal-data-cot, opal-data-assets, opal-data-portal-v2 or none (two keys name several buckets, none picked). S2 as the CTO worded it (a source-owned bucket) does not cover a key; a ruling on how a multi-firm root's keys get their firm is a fifth route. Nothing in lib/ or the registry was changed."
+}
+```
+
+## LGIC_BLANKFIX-W3-S4 -- the Schwab key's path also carries a master account, which the firm test read as a firm of its own
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T02:21:39Z",
+  "one_line": "the Schwab key's path also carries a master account, which the firm test read as a firm of its own",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json row key 08242234: class MASTER, firm 49financial, vendor schwab",
+      "lib/opal_naming_keyfill.py _tok_firm and tests 'SOURCE: a path naming its own registry source in a firm's bucket is not refused' and 'SOURCE DIFFERENCE CONTROL: a path naming another FIRM (a master of Cottonwood) is refused' in lib/tests/test_opal_naming_keyfill.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-7 cell item 2 says the conflict is only the source test: a path whose first segment is a source the registry knows names ITS source.",
+  "world_is": "Removing the source conflict alone moved the refusal of schwab/08242234/silver/fact_rps (bd-pipeline, bucket opal-data-assets) to the firm test: the path word 08242234 is a MASTER row of scopes.json and v.scope maps it to itself, so lib/opal_naming_keyfill.py _firm_check read it as a firm other than the root's 49financial. scopes.json gives that MASTER row firm=49financial. The build maps a master token to its row's firm (_tok_firm) before comparing, so a master of the bucket's own firm is no conflict and a master of another firm (z09, Cottonwood) is refused as that firm."
+}
+```
+
+## LGIC_BLANKFIX-W3-S5 -- the registry holds no bucket-to-source table; the source test now reads the one source a product scope's bucket belongs to
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T02:21:39Z",
+  "one_line": "the registry holds no bucket-to-source table; the source test now reads the one source a product scope's bucket belongs to",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json: PRODUCT rows mdpf, etfs, irpt, harvest carry bucket; the firm rows carry bucket_firm only",
+      "python lib/opal_naming_keyfill.py crossfirm --map infra/logic/registry/root_map.json: last line KEYFILL-CROSSFIRM ok=True roots=13 keys=79 checked=47 ruled=11 unchecked=21 refused=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-7 cell item 2: refuse a key for a source only where the registry says the bucket belongs to one source and the path names another.",
+  "world_is": "The registry says a bucket belongs to a FIRM (scopes.json bucket and bucket aliases, v.bucket_firm); it names no source for a bucket as such. The only statement of one-source ownership it carries is a PRODUCT scope row whose key is also a systems.json source (mdpf, etfs, irpt, harvest) with its bucket. The build reads that as the bucket's one source (_bucket_source); a firm bucket and a shared store (opal-data-assets) name none, so no source is refused there. Today no real stored key is refused for a source on that rule: the real sweep prints refused=0. If the CTO wants a different table (for example the source a firm bucket's pipeline tree writes), it is a registry row to add."
+}
+```

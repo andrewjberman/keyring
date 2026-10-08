@@ -93,6 +93,28 @@ validated with `python .tools/proof-of-spec-check.py <instance> BS4-AC1,BS4-AC2`
 
 **REPORT:** both last lines whole; the four lines before and now, whole; commits.
 
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- the landed rulings, the measured state, and what is left for this cell
+
+The registry's lane landed the rulings: `infra/logic/registry/key_rulings.json`, `event_rules.json` and a NEW file
+`name_rulings.json` @331e3fe609 (`4.0.0_SA_CRO`, msg 106696; accepted by `1.0.0_SA_CTO`, msg 106698). Read each file's `_about`
+before you build. Measured by the issuer on the trunk after `BF-s-5` to `BF-s-8` merged
+(`python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json`):
+`roots_total=87 mapped=13 unmapped=74 completed=13 stopped=0 items=412 right=124 fix=228 not_asked=26 pattern=8 carded=0
+refused=0 hole=26 carded_class_holes=8 source_bucket_holes=3 event_rule_holes=0 unknown_word_holes=3 other_holes=12`.
+Run that command first and work from ITS lines, not from this summary.
+
+**What is left for THIS cell, in `lib/opal_naming_rootcheck.py` (the order stays staged until `BF-s-1` is merged on this slot):**
+1. **`name_rulings.json` has no reader.** It answers a name that is not a stored-file path: a bucket, a group, a secret (4 rows,
+   6 lines of the run). Build the reader: a line whose (name, type) matches a row prints `FIX` and the row's `canonical`, or
+   `NOT-ASKED` and the row's `none_owed` sentence. This is also what closes the three `source_bucket` lines
+   (`opal-data-ycharts`, ruled `opal-data-irpt`): the registry answers a source-named bucket with a row, never a fill.
+2. The stored-file prefixes among the unknown words (`bbg/`, `firms/`) are answered in `key_rulings.json`; where one still prints
+   `HOLE` because its bucket was not read, that is `BF-s-2`'s (the key reader). Report it; do not force it.
+3. A name the registry marks as a code pattern prints `PATTERN` with the registry's sentence: read `_about` of both files for
+   how a pattern is marked; if neither file has such a mark, build nothing for it and say so.
+4. `BS4-AC2` reads `unknown_word_holes=0`; add to your report the `source_bucket_holes` count, which your reader should also
+   bring to 0.
+
 ---
 
 ## RECORD FACE
