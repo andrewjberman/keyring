@@ -2141,3 +2141,17 @@ Check: `deliverables/2.0.0_SA_COO~P2/checks/r79/p79_cells.py`, dry-run at base 5
 | `IB-pr-366` | E5: the live guard resolves the on-behalf owner for an OPAL_GLOBAL filer whose allowedFirmIds lists the firm; real served-path test, four negative arms; existing suites green | X-1 / TCKT_VNEXT TV-r-1 | WORLD (floor: infra/; nothing built or applied) | none | P79-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one guard change and its test. Slot ~174.
+
+## 75. ROUND 82, WORKSTREAM ~P (2026-10-08 ~19:1xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 6 msg 1415: E9)
+
+ReportRepository reserves every family under one default revision; a CUSTODY_REPORT must live under its own policy row
+(irpt-custody-x10-v1, E8, ~M2) so irpt-x10-v1 stays byte-unchanged. This cell is the code; its release is a later pair after IB-pr-368
+is live. Order (ADDENDUM 6): IB-pr-368 release -> E8 PENDING -> E9 + its pair -> E8 ACTIVE -> IRPT_CUSTDY E2 real report -> after-reads.
+Section 74 (round 81, IB-pr-368) is on branch wk-IRPT_BCKEND-176; the drain unions both. Check:
+`deliverables/2.0.0_SA_COO~P2/checks/r82/p82_cells.py`, dry-run at base 038b35d676: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-369` | E9: ReportRepository retains each family under its own policy revision; custody callers pass the custody revision; regression arm | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing built or applied) | none (code) | P82-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repository change and its tests. Slot ~177.
