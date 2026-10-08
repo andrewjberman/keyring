@@ -20601,3 +20601,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "4 committed files differ from the regenerated output. Either the schemas or the committed types moved without the other. The owner is ~P2 until a cell traces which side is right; this round regenerated nothing."
 }
 ```
+
+## IRPT_BCKEND-S389 -- S381 resolved: the back-fill tool lives in export/tools/; the export build passes ADHC_DRIFTD.002 without BAU_PARITY_SKIP
+
+```json
+{
+  "id": "IRPT_BCKEND-S389",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T02:09:28Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S381: IB-pr-360 moved backfill_covered_account_ids.py to infra/aws/lambda/investor-reporting/export/tools/ (drained @37d65133d1), outside the parity limb's top-level scope. IB74-1-AC1 PASS re-run at HEAD: the ADHC_DRIFTD.002 rule finds 0 extras over 64 union members, the tool runs --help from its new home, and its 7 tests pass.",
+  "one_line": "Every irpt-export-render build since IB-pr-344 needed BAU_PARITY_SKIP=1 (which disables the extras limb for everything) because an unregistered operator tool sat in the export source dir. The tool now lives in export/tools/; no build script, source map or packaged member changed, and the deployed zip is unchanged.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "drain @37d65133d1 (wk-IRPT_BCKEND-168; worker commits 8d66fb03da, f62c3e84b2), proof VALID",
+      "issuer re-run at HEAD: p74_cells.py . IB74-1-AC1 -> 'OK: 0 parity extras over 64 union members; tool --help rc 0; tests 7 passed'"
+    ]
+  },
+  "spec_asserts": "S381: an export build passes the parity limb without an override.",
+  "world_is": "It does: 0 extras."
+}
+```
