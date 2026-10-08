@@ -102,9 +102,27 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~120's queue: `bm-1`, then `bm-2`. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2
   base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~09:3xZ (issuer):**
+- **Built:** worker ~120 @210ffc0d03; merged with `bm-2` @1b2e841422 (11 paths, index check 0 of 11 differ; the append-only
+  channel conflict resolved as the union of both sides' rows, 348 rows, 0 duplicate ids).
+- **AC1 PASS:** 4 of 4. **AC2 PASS:** RECONCILE OK; the regions sum to the union, 243.
+- **Denominators:** gold list 242; crosswalk 243 (the latest object, `crosswalk/v1/2026-10-07.json`; the 237 the ruling carries
+  is the 2026-09-29 object, row Z-W120-S1); collector universe 234; collector identity records 234.
+- **Regions:** in all three 234; on the list and in the crosswalk but NOT in the collector 8 (`6861_JP`, `BE_US`, `CAT_US`,
+  `CSL_AU`, `DG_US`, `ED_US`, `GEV_US`, `MRNA_US`; row Z-W120-S2: eight, not three); crosswalk only 1 (`ABNB_US_Equity`,
+  registered 2026-10-07, no pool record); every other region 0.
+- **ADDED 8** entries and records in the NEW files `deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_20261008.json` and
+  `rank_universe_identity_20261008.json`, by `build_rank_identity.py`'s own rules: company from the registry for 6861, CAT
+  and CSL (their pool name is null) and from the pool for the other five; `sa_symbol` derived for the five US-listed names,
+  UNRESOLVED for 6861 and CSL. **EXISTING RECORDS CHANGED: 0** at this cell.
+- **Untouched, checked by the issuer with a diff against the issuance commit:** the two round-47 files and
+  `lib/opal_data_harvest/config.json`. The collector still asks for 234 names.
+- **Existing assertion changed:** none at this cell.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>68</round>
 <slot>~120</slot>
 <fabric>site-z</fabric>

@@ -93,9 +93,30 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~120's queue, second. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as
   expected (no such file).
 
+**COMPLETE 2026-10-08 ~09:3xZ (issuer):**
+- **Built:** worker ~120 (re-seated) @6c9eb0eab5; merged with `bm-1` @1b2e841422.
+- **AC1 PASS:** 6 of 6. **AC2 PASS:** REPAIR OK. Package suite on the branch: 756 passed, 3 skipped.
+- **The ten 30-character stored names:** 5 WHOLE (AEP, BBSEY, BIPC, JBHT, 8306 JP); 2 CUT in a suffix fragment and REPAIRED in
+  the new identity file -- AIG "American International Group I" to "American International Group", KCDMY "Kimberly-Clark de
+  Mexico SAB d" to "Kimberly-Clark de Mexico"; 3 CUT, NOT REPAIRED -- `ICT_US_Equity` "International Container Termin" and
+  the two OMAB lines "Grupo Aeroportuario del Centro" (no stored source carries a fuller name and there is no suffix
+  fragment to drop). OTHER RECORDS CHANGED: 0.
+- **What AIG's jobs asked for (the withdrawn `bl-2`'s question):** the collector derived its query from the stored string, so
+  it asked for "American International Group I". From the repaired name it derives "American International".
+- **Stated, not fixed:** "American International" is a two-word query that could return other companies; no job has been run
+  with it. "Centro" is a real word, so OMAB's cut is the rule's reading, not proof.
+- **Existing assertion changed (1):** `test_bm1_identity_records.py` test i now excepts the two repaired records.
+- **Row Z-W120-S3 (ARMED, this seat's):** re-running `bm1_three_universes.py` rebuilds the identity file and would revert both
+  repairs while still printing RECONCILE OK. **Issuer ruling, the disarm:** `bm1_three_universes.py` is NOT re-run; the
+  order of acts is bm1 then bm2, once, and it is done. The next cell that touches these files folds the repair into the
+  builder so one script yields the repaired file; until then the row stays open for `3.0.0_SA_CVO~Z`'s remediation record.
+- **Not done, by ruling:** the config pointer is not moved to the new files, and no job is run for any added or repaired name;
+  a run waits on Andrew's per-use word.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>68</round>
 <slot>~120</slot>
 <fabric>site-z</fabric>
