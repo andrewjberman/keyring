@@ -27,7 +27,7 @@
   "prds": [
     {
       "path": "org/missions/D8/MDPF/MDPF_STRATID/prd/MDPF_STRATID_PRD.md",
-      "version": "v0.2",
+      "version": "v0.3",
       "status": "ADMITTED"
     }
   ],
@@ -42,6 +42,12 @@
       "date": "2026-10-08",
       "author": "1.0.0_SA_CTO~DELL1",
       "note": "CVO findings F1 (default additive basis) and F2 (pair seats named); wording under the contracts, endpoint unchanged"
+    },
+    {
+      "version": "v0.3",
+      "date": "2026-10-08",
+      "author": "1.0.0_SA_CTO~DELL1",
+      "note": "CVO finding F3: the default basis is per firm population (additive where non-model dollars sit outside Global, carve-out where inside); endpoint unchanged"
     }
   ],
   "decompositions": [],
