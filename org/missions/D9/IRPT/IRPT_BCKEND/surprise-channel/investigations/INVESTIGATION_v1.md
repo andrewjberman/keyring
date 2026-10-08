@@ -20863,3 +20863,130 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Inferred from source only; no live read was run (see IRPT_BCKEND-D2-W156-S1). If it holds, the live route admits an internal subject for a selected firm as before, records no acting_principal_id, and refuses an unlisted firm (service type) with FIRM_BINDING, not the upload code, so after-reads 1-2 as written cannot pass over this route; the offline suites pass because they supply the owner themselves."
 }
 ```
+## IRPT_BCKEND-D2-W172-S1 -- amendment arrived after both applies; gate passed without override; plan text committed after the fact
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:30:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "AMENDMENT 1 (plan text committed before each apply) reached the worker after both applies had landed; the safe-apply tag-authz gate passed without TAGAUTHZ_OVERRIDE on both roots, so no override was used and the plan text is committed after the fact from the saved planfiles.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-apply.sh output on export root: 'comp-tagauthz gate PASSED -- no plan resource overwrites an access-granting tag'; api root apply rc=0; both re-plans exit 0 (No changes)",
+      "amendment @212717f781; ledger open commit 4328e78b53; plan text written by terraform show -no-color on the saved planfiles export.tfplan and api.tfplan (the exact files applied)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: commit terraform show of each planfile before its apply; use TAGAUTHZ_OVERRIDE only after the gate has refused without it.",
+  "world_is": "Both applies ran before the amendment arrived; the gate did not refuse on either root (it passed), so tagauthz_override_used is []. The plan text files are the applied planfiles rendered after the apply, not before it. The CTO may want to know S334 did not fire on these two roots."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S2 -- record-terraform-deploy.sh needs a CHANGELOG.json path the order does not grant
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:35:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "record-terraform-deploy.sh also writes and commits infra/aws/terraform/investor-reporting/CHANGELOG.json, which the order's <paths> does not name; the lane gate refused, so the source map was committed alone and the changelog entry is not recorded.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "safe-commit refusal: owned-paths violation on infra/aws/terraform/investor-reporting/CHANGELOG.json, lane IRPT_COMPLETION_P, 'no NON-TERMINAL task order names this path in its paths block'",
+      "record-terraform-deploy.sh PATHSPEC adds infra/aws/terraform/${PIPELINE}/CHANGELOG.json whenever the changelog writer ran",
+      "recorder's would-be CHANGELOG entry kept at worktree .scratch/CHANGELOG.recorder_output.json (not committed)"
+    ]
+  },
+  "spec_asserts": "Order BOUNDS: the source map moves only through the build and record-terraform-deploy.sh; paths grant lists lambda-source-map.json and lambda/ci/CHANGELOG.md but not the terraform root CHANGELOG.json.",
+  "world_is": "The recorder cannot commit under this grant. The source map carries artifact_sha256 03p2eIEKU9... and last_deployed_at 2026-10-08T17:30:56Z (committed alone). The investor-reporting CHANGELOG.json has no entry for this deploy; the issuer decides whether a later order records it. Nothing served is affected."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S3 -- shipped repository.KINDS excludes CUSTODY_REPORT: the owner read fails closed
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T17:50:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The released irpt-export-render cannot serve a custody report to its owner: repository.KINDS is (PERFORMANCE, ANALYSIS), so ReportRepository.get raises ReportRefused for a CUSTODY_REPORT record and the route answers DEPENDENCY_UNAVAILABLE; the other-firm refusal is unaffected.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "live zip repository.py: KINDS = ('PERFORMANCE', 'ANALYSIS'); _report_identity raises ReportRefused('unsupported report kind') for CUSTODY_REPORT; get() calls _report_identity",
+      "offline run of the live custody_read.py: owner firm as shipped -> ReportRefused 'unsupported report kind' (DEPENDENCY_UNAVAILABLE); with KINDS patched in the control run -> SERVED 228 bytes; other firm -> ReportDenied (OBJECT_NOT_COVERED) in both",
+      "reporting policy ACTIVE family list holds no CUSTODY_REPORT family (13 families); S3 irpt/<firm>/ has no custody prefix"
+    ]
+  },
+  "spec_asserts": "Packet and both never-widen halves: an Opal principal reads one retained CUSTODY_REPORT by reference and revision within its scope (Branch A).",
+  "world_is": "Nothing is retained (0 custody reports) and the shipped repository cannot read one back, so the Opal-by-ref leg cannot succeed until IRPT_CUSTDY adds the kind to repository.KINDS and a custody family to the reporting policy. The failure is closed (no body). This is the open leg named OPEN-BY-DESIGN in the after-reads, with a narrower cause than 'no report yet'."
+}
+```
+
+## IRPT_BCKEND-D2-W172-S4 -- IB77-1-AC1 instrument crashes on this device (aws shim, large output); route is live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB77-1-AC1 cannot run on this device: the check's get-routes call (python subprocess -> bash .tools/aws -> aws.exe) dies with rc 3221225477 (0xC0000005) for the api's 6,368-byte route list, so AC1 reads FAIL although the route is live; the same call from the shell, and aws.exe called directly, return the list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py IB77-1-AC1 run 3 times (bare, bash -c, powershell.exe): 'FAIL: get-routes rc 3221225477', identical each time",
+      "python subprocess of ['bash', '.tools/aws', 'apigatewayv2','get-routes',...,'--query','Items[].RouteKey'] -> rc 3221225477, 0 bytes; same with --query Items[:40].RouteKey (2,360 bytes) -> rc 0; Items[] full list (6,368 bytes) -> crash; under 'bash -c \"bash .tools/aws ... | wc -c\"' from python -> rc 0, 6368; C:/Program Files/Amazon/AWSCLIV2/aws.exe called directly from python -> rc 0, 6368 bytes",
+      "shell read of the same call: GET /api/scoped/investor-reporting/custody-report/{reportId} CUSTOM naqxlm listed on api 7k3ed8px20 (get-routes --query Items[?contains(RouteKey,'custody')])",
+      "every other AC1 field verified true by hand: pin, 3 members, start sha == rollback target, built == live == 03p2eIEK..., post-census 0, both re-plans 0, ledger closed, rolled_back false"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1: the check re-reads the route list live and prints 'IB77-1-AC1 PASS'.",
+  "world_is": "The check's instrument fails on this device before it reads the route list: a large-output aws call launched from a native python process through the .tools/aws shim crashes. The route is live; the check's verdict is FAIL by instrument fault, not by state. The check was not changed and AC1 is recorded FAIL; the order stays open. The issuer can re-run AC1 on a device where the shim call succeeds, or decide the instrument fix (.tools/aws is not in this order's paths)."
+}
+```
+## IRPT_BCKEND-D2-W173-S1 -- comp-tagauthz's IAM read is bounded; S334 resolved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W173-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~173",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S334: commit fad269226b changes .tools/comp-tagauthz.py to bound the IAM get-account-authorization-details read (env COMP_TAGAUTHZ_IAM_TIMEOUT, default 150 s) and fail closed rc 1 with TAGAUTHZ_IAM_READ_TIMEOUT. IB78-1-AC1 last line: IB78-1-AC1 PASS (rc 0 in 22.5 s); IB78-1-AC2 last line: IB78-1-AC2 PASS (rc 1 naming TAGAUTHZ_IAM_READ_TIMEOUT).",
+  "one_line": "The gate's IAM read now has a 150 s default bound and fails closed with a named token instead of hanging.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit fad269226b on wk-IRPT_BCKEND-173; p78_cells.py IB78-1-AC1 and AC2 PASS"
+    ]
+  },
+  "spec_asserts": "S334: the comp-tagauthz IAM read is unbounded and can hang the apply gate.",
+  "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
+}
+```
