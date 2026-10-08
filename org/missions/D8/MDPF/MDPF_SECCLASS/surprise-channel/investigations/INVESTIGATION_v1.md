@@ -4813,3 +4813,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Remedy (SERVED code, CTO's): the ticker leg skips a key that starts with NAME:: (and reads only the part after CUSIP: as nothing). Pin the two names above as NOT cash in tests/test_cash_token.py. It ships as a lib/_shared explicit deploy like e65. Until then, the e32 V3 act's dry run refuses on this one key by its own check."
 }
 ```
+
+## MDPF_SECCLASS-D1-S1 -- the Lambda builder's staged_from guard sees DRIFT but not STALENESS, so a stale pin ships pre-port bytes green
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T01:09Z",
+  "one_line": "build-and-upload.sh stages every staged_from member from its PINNED commit ('git show <pin>:<repo_path>, never the worktree') and verifies the blob against the DECLARED sha256. When the pin and its declaration AGREE but both predate a merged port, the guard passes GREEN and the build ships PRE-PORT bytes. The guard detects DRIFT (declaration vs blob), never STALENESS (pin vs HEAD). mdpf-secclass-new-security-lambda pins all four _shared members at 87065e4565, an unrelated IRPT_YCDGEN compile commit; 3 of 4 differ from dell1 CLOUD. Because lambda_function.py lives in files[] and is read from the WORKTREE, a build mixes a ported entrypoint with pre-port shared modules -- and neither a 0/1/0 source_code_hash plan nor an AC1 that compares live CodeSha256 to the artifact's own content-sha256 can see it, since both read the new wrong-content zip.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "build-and-upload.sh:195-241 TMPJS_STAGE: `let pin = s.pin; if (!pin || pin === 'HEAD') { pin = git rev-parse HEAD }` then `git show pin + ':' + s.repo_path`, then `if (sha !== s.sha256)` ERROR 'the true source drifted since this was declared; re-pin it'. The comparison is blob-vs-declaration; the pin is never compared to HEAD.",
+      "lambda-source-map.json functions['mdpf-secclass-new-security-lambda'].staged_from: all 4 entries pin 87065e4565a29bb387c6945acbab01f54896a405 (commit 87065e4565 is '3.0.0_SA_CVO compile+grade(IRPT_YCDGEN round 5 L8/L9)'). Denominator 4: etf_classification.py DIFFERS, etf_classification_scheduled.py DIFFERS, etf_classifications_dynamodb.py same, rivalfunds_classification.py DIFFERS against dell1 CLOUD f9c38b6165.",
+      "rivalfunds_classification.py: pin blob aac14cb2c6 sha256 b2523e43f7edcd8e1de3820901dc9f76a2684a74566505a22828e76404d62bbd == the DECLARED sha256 (so the guard passes); CLOUD blob d3363dba79 sha256 4ed995369474a8a2f6fbaed378212e166a35ecce7755526ce08acfd0f2be3cad; git diff pin..CLOUD = 13 insertions / 12 deletions, and that diff carries the SC-e-57 text 'the sector lands here ONLY, never in sub_asset_class (S28)' and the elif->if change behind SC-e-61.",
+      "files[] vs staged_from: lambda_function.py is in files[] only, and its worktree sha256 b885cec903... equals its CLOUD blob, so it ships ported while the pinned members do not.",
+      "artifact_sha256 in the map (f0zhRV1FFFiVgnNMsEzYAGap8qCOWbb4xgZgpx8RIdQ=) equals the live function CodeSha256 and the artifact object's content-sha256 metadata, which is why AC1 reads ok=True off a self-consistent-but-wrong zip."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-DEPLOY-e57e61 objective: rebuild and apply the producer 'at the merged bytes of q/dell1/secclass-r12-rel-e57e61', proven by a 0/1/0 source_code_hash plan plus AC1 E57E61-LIVE ok=True. CLAUDE.md Rule 4: the source map PAIRS a Lambda with its repo dir and does NOT compare deployed bytes to built-from bytes. Rule 22a CODE: diff deployed bytes against the BUILD INPUT (source-map/manifest), never by filename.",
+  "world_is": "The build input is the PIN, not the merged branch, so 'at the merged bytes' is not what the named command produces while the pins are stale. The blob-vs-declaration guard is green in exactly that case, and both of the order's proofs (the plan's source_code_hash and AC1) are satisfied by the wrong-content zip.",
+  "notes": "Scope beyond this order: the pin/declaration pair, not the pin's recency, is what every staged_from build verifies, so any Lambda family using staged_from can ship pre-port shared modules silently after a port lands. Remedy for THIS act (issuer's, 2.0.0_SA_COO~M1): re-pin the four staged_from entries to the merged e57e61 commit with fresh sha256 values -- a write to infra/aws/lambda/ci/lambda-source-map.json, outside TO-DEPLOY-e57e61's <paths>. Candidate general remedy, NOT proposed as built: the builder prints, per staged member, whether its pin is an ancestor of HEAD AND whether the blob at HEAD differs from the blob at the pin, so staleness is visible beside drift. Nothing was built, uploaded or applied under this finding; the ledger entry secclass-e57e61-fwd10-apply-s-20261007 records the STOP with the world untouched."
+}
+```
