@@ -1,0 +1,810 @@
+#!/usr/bin/env python3
+"""open-calls.py -- one list of every open call per box, and the MEASUREMENT of whether a call touches only that box
+(NFRA_CTLPLN workstream SEATS, cell CT-s-5; contract C-SEATS clause 4).
+
+Andrew's word (2026-10-07 ~16:3xZ): the CTO of a fabric accrues every open call on its fabric; one that "only pertains to
+their fabric, does not interfere with any other projects resources or materials" it adjudicates; one that touches more goes
+through its manager. "Touches only its fabric" is a MEASUREMENT here, never a judgment.
+
+    python .tools/open-calls.py add --project <CODE> --subject <text> --asked-by <serial> --source <path>
+                                    [--orders <order file> ...] [--roots <dir> ...]
+    python .tools/open-calls.py list [--device <d> | --all]
+    python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
+    python .tools/open-calls.py scope --project <CODE> [--orders <order file> ...] [--roots <dir> ...]
+    python .tools/open-calls.py scope --selftest
+
+THE LIST is org/devices/state/<device>/open_calls.json (ONE WRITER: the box named, resolved from AGENTBUS_DEVICE through
+lib/devices.py, never from a path). Shape (schema "open-calls/1"; every reader refuses a key it does not know):
+    {"schema", "device", "written_at", "written_by", "rows": [ {id, project, subject, asked_by, source, orders, roots,
+     state (OPEN|CLOSED), opened_at, scope {...the measurement...}, closed (null | {at, by, ruling, crossbox})} ]}
+A file ABSENT is not an EMPTY list: `list --all` names the boxes whose file is absent.
+
+THE MEASUREMENT (`scope`), four readings and a shared set:
+  paths      the union of <paths> of the orders named (else the project's non-terminal orders) plus the roots named: a path
+             under another live project's home, or overlapping the write set of a project placed on ANOTHER box
+             (.tools/placement-check.py's read_projects() and overlaps(), imported), is a hit.
+  risk       the highest <risk> among those orders; WORLD is printed and does not alone make a call cross-box.
+  placement  the project.json `placement` (else `fabric`) resolved to a box; not this box, or unresolved, is a hit.
+  resources  the bucket and other names the named or inferred Terraform roots DECLARE (resource blocks: bucket, name,
+             function_name, table_name, queue_name, family), compared with the same reading of every root named by a
+             project placed on another box; a name both read is a hit. A named root that cannot be read is a hit.
+  shared     the trunk's own registers (SHARED_PATHS below) and any bucket the naming registry marks shared
+             (infra/logic/registry/tiers.json homes whose "home" is "shared"; SHARED_BUCKETS_FALLBACK only if that file
+             cannot be read) touch every box. A bucket named in a policy ARN counts for this reading only.
+BLIND: a resource shared in practice that no Terraform declares is not seen.
+LAST line: CALL-SCOPE project=<CODE> device=<d> paths=<clear|hit> placement=<clear|hit> resources=<clear|hit>
+           shared=<clear|hit> risk=<LOCAL|SERVED|WORLD> verdict=<OWN-BOX|CROSS-BOX>
+OWN-BOX means this box's CTO may settle the call. An act only Andrew can do still goes to him, named as that act: the tool
+prints that sentence and decides nothing about which acts those are.
+
+Environment (tests only): OPAL_STATE_ROOT replaces org/devices/state; OPAL_CROSSBOX_ROOT replaces org/devices/crossbox.
+Exit: 0 done (either verdict is a result), 1 refused, 2 usage or an unresolved box, 3 an unreadable register or list file.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime
+import glob
+import importlib.util
+import json
+import os
+import re
+import secrets
+import sys
+import tempfile
+
+TOOLS = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(TOOLS)
+
+SCHEMA = "open-calls/1"
+TOP_KEYS = {"schema", "device", "written_at", "written_by", "rows"}
+ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed"}
+ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "opened_at", "scope"}
+CLOSED_KEYS = {"at", "by", "ruling", "crossbox"}
+STATES = ("OPEN", "CLOSED")
+RISK_ORDER = ("LOCAL", "SERVED", "WORLD")
+
+# The trunk's own registers: a path here is on the shared branch, so a call that touches it touches every box.
+SHARED_PATHS = ("org/missions/DIRECTIVES.yaml", "org/missions/MACROS.yaml", ".owned-paths.yaml", "CLAUDE.md",
+                "org/XXX.md", ".tools", "lib", ".claude")
+# Used ONLY when infra/logic/registry/tiers.json cannot be read (the registry marks a shared bucket as a tier home with
+# "home": "shared"; this list is the explicit fallback the order asks for).
+SHARED_BUCKETS_FALLBACK = ("opal-data-assets", "opal-data-portal-v2")
+TF_PREFIX = "infra/aws/terraform/"
+TF_KEYS = ("bucket", "name", "function_name", "table_name", "queue_name", "family")
+RES_RE = re.compile(r'^resource\s+"(aws_[A-Za-z0-9_]+)"\s+"[^"]+"\s*\{', re.M)
+KEY_RE = re.compile(r'^ {2}(%s)\s*=\s*"([^"\n]+)"' % "|".join(TF_KEYS), re.M)   # two-space depth: not a nested block's name
+ARN_RE = re.compile(r'arn:aws:s3:::([A-Za-z0-9._${}\-]+)')
+RISK_RE = re.compile(r"<risk>\s*([A-Za-z]+)\s*</risk>")
+CAP = 6   # evidence lines kept per reading
+
+
+class Refused(Exception):
+    pass
+
+
+class BadFile(Exception):
+    pass
+
+
+def load_mod(name: str, rel: str):
+    spec = importlib.util.spec_from_file_location(name, os.path.join(ROOT, rel))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def now_utc() -> str:
+    return datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
+def age_text(stamp) -> str:
+    try:
+        then = datetime.datetime.strptime(str(stamp), "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=datetime.timezone.utc)
+        sec = int((datetime.datetime.now(datetime.timezone.utc) - then).total_seconds())
+        return "age %dh%02dm" % (sec // 3600, (sec % 3600) // 60)
+    except (ValueError, TypeError):
+        return "age unknown (written_at %r)" % (stamp,)
+
+
+def norm(p: str) -> str:
+    return str(p).strip().replace("\\", "/").rstrip("/")
+
+
+def rel_to_root(p: str, root: str) -> str:
+    """A repository-relative, forward-slash form of p (absolute or relative to the cwd or to root)."""
+    p = str(p)
+    cand = p if os.path.isabs(p) else (os.path.join(os.getcwd(), p) if os.path.exists(os.path.join(os.getcwd(), p))
+                                       else os.path.join(root, p))
+    try:
+        rel = os.path.relpath(os.path.abspath(cand), root)
+    except ValueError:
+        return norm(p)
+    return norm(p) if rel.startswith("..") else norm(rel)
+
+
+# ---------------------------------------------------------------- the measurement
+
+def shared_buckets(root: str) -> tuple:
+    """(set, basis): buckets the naming registry marks shared (tiers.json homes with home == 'shared')."""
+    path = os.path.join(root, "infra", "logic", "registry", "tiers.json")
+    try:
+        doc = json.load(open(path, encoding="utf-8"))
+        found = set()
+        for tiers in (doc.get("homes") or {}).values():
+            for cell in tiers.values():
+                if isinstance(cell, dict) and cell.get("home") == "shared" and cell.get("bucket"):
+                    found.add(cell["bucket"])
+        if found:
+            return found, "infra/logic/registry/tiers.json homes marked shared"
+    except (OSError, ValueError, AttributeError):
+        pass
+    return set(SHARED_BUCKETS_FALLBACK), "SHARED_BUCKETS_FALLBACK (tiers.json unreadable or marks none)"
+
+
+def tf_names(directory: str) -> tuple:
+    """(declared names, bucket names mentioned in policy ARNs) over the *.tf files of one root directory.
+    Declared = a quoted value of TF_KEYS inside a top-level `resource "aws_..." "x" {` block. Raises OSError when the
+    directory cannot be read."""
+    declared, arns = set(), set()
+    files = sorted(glob.glob(os.path.join(directory, "*.tf")))
+    if not os.path.isdir(directory):
+        raise OSError("not a directory: %s" % directory)
+    for path in files:
+        text = open(path, encoding="utf-8", errors="replace").read()
+        arns.update(m.group(1) for m in ARN_RE.finditer(text))
+        block, lines = None, []
+        for line in text.splitlines():
+            if block is None:
+                if RES_RE.match(line):
+                    block, lines = True, [line]
+            else:
+                lines.append(line)
+                if line.startswith("}"):
+                    declared.update(m.group(2) for m in KEY_RE.finditer("\n".join(lines)))
+                    block = None
+        if block:
+            declared.update(m.group(2) for m in KEY_RE.finditer("\n".join(lines)))
+    return declared, arns
+
+
+def infer_roots(paths: list, rootmap_keys: list) -> list:
+    """Terraform root folders (repo-relative) named by paths under infra/aws/terraform/; the longest root_map key wins."""
+    out = []
+    for p in paths:
+        p = norm(p)
+        if not p.startswith(TF_PREFIX):
+            continue
+        tail = p[len(TF_PREFIX):]
+        if not tail:
+            continue
+        best = max((k for k in rootmap_keys if tail == k or tail.startswith(k + "/")), key=len, default=None)
+        top = best or tail.split("/")[0]
+        root = TF_PREFIX + top
+        if root not in out:
+            out.append(root)
+    return out
+
+
+def order_facts(text: str, pc) -> tuple:
+    """(paths, risk or None, status or None) from one task-order text, read with placement-check's own patterns."""
+    paths = []
+    for m in pc.PATHS_RE.finditer(text):
+        paths.extend(norm(x) for x in m.group(1).splitlines() if x.strip() and not re.search(r"\s|^[<#`-]", x.strip()))
+    rk = RISK_RE.search(text)
+    st = pc.STATUS_RE.search(text)
+    return paths, (rk.group(1).upper() if rk else None), (st.group(1).lower() if st else None)
+
+
+def highest_risk(risks: list) -> str:
+    known = [r for r in risks if r in RISK_ORDER]
+    return max(known, key=RISK_ORDER.index) if known else "LOCAL"
+
+
+def measure(ctx: dict, code: str, mybox, paths: list, roots: list, risks: list) -> dict:
+    """PURE over ctx (files read only for Terraform roots). ctx: root, device, projects [{code, box, home, writes}],
+    overlaps (callable), rootmap_keys, shared_buckets, shared_basis. Returns the four readings, the shared set, the risk,
+    the verdict and the evidence lines."""
+    ov = ctx["overlaps"]
+    me, device = code, ctx["device"]
+    others = [q for q in ctx["projects"] if q["code"] != me]
+    ev = {"paths": [], "placement": [], "resources": [], "shared": []}
+    touch = [norm(p) for p in paths] + [norm(r) for r in roots]
+
+    for p in touch:
+        for q in others:
+            if ov(p, q["home"]):
+                ev["paths"].append("%s is under the home of project %s (%s)" % (p, q["code"], q["home"]))
+                continue
+            if q["box"] and q["box"] != device:
+                w = next((w for w in q["writes"] if ov(p, w)), None)
+                if w:
+                    ev["paths"].append("%s overlaps the write set of %s placed on %s (%s)" % (p, q["code"], q["box"], w))
+    if mybox is None:
+        ev["placement"].append("project %s has no placement or fabric that resolves to a box in the register" % me)
+    elif mybox != device:
+        ev["placement"].append("project %s is placed on %s, this box is %s" % (me, mybox, device))
+
+    all_roots = list(roots)
+    for r in infer_roots(paths, ctx["rootmap_keys"]):
+        if r not in all_roots:
+            all_roots.append(r)
+    mine_names, arn_names = {}, set()
+    for r in all_roots:
+        try:
+            declared, arns = tf_names(os.path.join(ctx["root"], r))
+            mine_names[r] = declared
+            arn_names.update(arns)
+        except OSError as exc:
+            ev["resources"].append("root %s cannot be read (%s): not clear" % (r, exc))
+    other_names = {}
+    for q in others:
+        if not q["box"] or q["box"] == device:
+            continue
+        for r in infer_roots(q["writes"], ctx["rootmap_keys"]):
+            if r not in other_names:
+                try:
+                    other_names[r] = (tf_names(os.path.join(ctx["root"], r))[0], q)
+                except OSError:
+                    continue
+    for r, declared in mine_names.items():
+        for r2, (declared2, q) in other_names.items():
+            both = sorted(declared & declared2)
+            if both:
+                ev["resources"].append("root %s declares %s, also declared by root %s named by %s on %s" % (
+                    r, ", ".join(both[:3]) + (" (+%d)" % (len(both) - 3) if len(both) > 3 else ""), r2, q["code"], q["box"]))
+
+    for p in touch:
+        hit = next((s for s in SHARED_PATHS if ov(p, s)), None)
+        if hit:
+            ev["shared"].append("%s is on the shared branch (%s)" % (p, hit))
+    named = set().union(*mine_names.values()) if mine_names else set()
+    for b in sorted((named | arn_names) & ctx["shared_buckets"]):
+        ev["shared"].append("bucket %s is marked shared (%s)" % (b, ctx["shared_basis"]))
+
+    flags = {k: ("hit" if v else "clear") for k, v in ev.items()}
+    risk = highest_risk(risks)
+    cross = any(v == "hit" for v in flags.values())
+    return {"project": me, "device": device, "paths": flags["paths"], "placement": flags["placement"],
+            "resources": flags["resources"], "shared": flags["shared"], "risk": risk,
+            "verdict": "CROSS-BOX" if cross else "OWN-BOX", "evidence": ev, "roots": all_roots, "touch": touch}
+
+
+def scope_line(res: dict) -> str:
+    return ("CALL-SCOPE project=%s device=%s paths=%s placement=%s resources=%s shared=%s risk=%s verdict=%s" % (
+        res["project"], res["device"], res["paths"], res["placement"], res["resources"], res["shared"], res["risk"],
+        res["verdict"]))
+
+
+def print_scope(res: dict, notes: list) -> None:
+    for n in notes:
+        print("  " + n)
+    print("  PATHS+ROOTS READ (%d): %s" % (len(res["touch"]), ", ".join(res["touch"][:CAP]) + (" ..." if len(res["touch"]) > CAP else "")))
+    print("  TERRAFORM ROOTS READ (%d): %s" % (len(res["roots"]), ", ".join(res["roots"]) or "none named or inferred"))
+    for k in ("paths", "placement", "resources", "shared"):
+        print("  %-9s %s" % (k.upper(), res[k]))
+        for line in res["evidence"][k][:CAP]:
+            print("    - " + line)
+        if len(res["evidence"][k]) > CAP:
+            print("    - (+%d more)" % (len(res["evidence"][k]) - CAP))
+    print("  RISK      %s%s" % (res["risk"], " (printed; WORLD alone does not make a call cross-box)" if res["risk"] == "WORLD" else ""))
+    print("  BLIND: a resource shared in practice that no Terraform declares is not seen by this reading.")
+    print("  OWN-BOX means this box's CTO may settle the call; an act only Andrew can do (a hold he set by name, an S3 delete, "
+          "a vendor use, a signature) still goes to him, named as that act. This tool does not decide which acts those are.")
+    print(scope_line(res))
+
+
+# ---------------------------------------------------------------- the real tree
+
+def real_ctx(root: str = ROOT) -> dict:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    pc = load_mod("opal_placement_check", ".tools/placement-check.py")
+    pc.ROOT = root
+    reg = dev.load()
+    name, basis = dev.this_device(reg)
+    projects, findings = pc.read_projects(dev, reg)
+    for p in projects:
+        p["box"] = project_box(p["home"], p["box"], dev, reg, root)
+    keys = []
+    try:
+        keys = sorted(json.load(open(os.path.join(root, "infra", "logic", "registry", "root_map.json"),
+                                     encoding="utf-8")).get("roots", {}))
+    except (OSError, ValueError):
+        pass
+    sb, sbasis = shared_buckets(root)
+    return {"root": root, "device": name, "device_basis": basis, "projects": projects, "findings": findings,
+            "overlaps": pc.overlaps, "rootmap_keys": keys, "shared_buckets": sb, "shared_basis": sbasis, "pc": pc,
+            "dev": dev, "reg": reg}
+
+
+def project_box(home: str, fabric_box, dev, reg, root: str):
+    """The project row's `placement` resolved to a box, else the box its fabric resolved to."""
+    try:
+        field = json.load(open(os.path.join(root, home, "project.json"), encoding="utf-8")).get("placement")
+    except (OSError, ValueError):
+        field = None
+    return (dev.resolve(str(field), reg) if field else None) or fabric_box
+
+
+def find_project(ctx: dict, code: str):
+    for p in ctx["projects"]:
+        if p["code"] == code:
+            return p
+    hits = glob.glob(os.path.join(ctx["root"], "org", "missions", "D*", "*", code, "project.json"))
+    if not hits:
+        return None
+    home = norm(os.path.relpath(os.path.dirname(hits[0]), ctx["root"]))
+    try:
+        fabric = json.load(open(hits[0], encoding="utf-8")).get("fabric")
+    except (OSError, ValueError):
+        fabric = None
+    return {"code": code, "home": home, "writes": [home], "live": False,
+            "box": project_box(home, ctx["dev"].resolve(str(fabric or ""), ctx["reg"]), ctx["dev"], ctx["reg"], ctx["root"])}
+
+
+def scope_project(ctx: dict, code: str, orders: list, roots: list) -> tuple:
+    """(result, notes). Raises Refused when the project is unknown."""
+    proj = find_project(ctx, code)
+    if proj is None:
+        raise Refused("project %s has no project.json under org/missions/D*/*/%s" % (code, code))
+    pc, notes = ctx["pc"], []
+    if proj.get("live") is False:
+        notes.append("project %s is not live (terminal status): its own tree is its write set" % code)
+    files = []
+    if orders:
+        files = [o if os.path.isabs(o) else (os.path.join(os.getcwd(), o) if os.path.exists(os.path.join(os.getcwd(), o))
+                                             else os.path.join(ctx["root"], o)) for o in orders]
+        notes.append("ORDERS: %d named" % len(files))
+    else:
+        files = sorted(glob.glob(os.path.join(ctx["root"], proj["home"], "task-orders", "*.md")))
+        notes.append("ORDERS: none named; the project's task-orders folder holds %d, the non-terminal ones are read" % len(files))
+    paths, risks, used = [], [], 0
+    for f in files:
+        try:
+            text = open(f, encoding="utf-8", errors="replace").read()
+        except OSError as exc:
+            raise Refused("order file %s cannot be read (%s)" % (f, exc))
+        p, risk, status = order_facts(text, pc)
+        if not orders and status in pc.TERMINAL_TO:
+            continue
+        used += 1
+        paths.extend(x for x in p if x not in paths)
+        if risk:
+            risks.append(risk)
+    notes.append("ORDERS READ: %d; <paths> entries %d; risks %s" % (used, len(paths), ",".join(risks) or "none declared (read as LOCAL)"))
+    rroots = [norm(rel_to_root(r, ctx["root"])) for r in (roots or [])]
+    res = measure(ctx, code, proj["box"], paths, rroots, risks)
+    return res, notes
+
+
+# ---------------------------------------------------------------- the list files
+
+def state_root() -> str:
+    return os.environ.get("OPAL_STATE_ROOT", "").strip() or os.path.join(ROOT, "org", "devices", "state")
+
+
+def crossbox_root() -> str:
+    return os.environ.get("OPAL_CROSSBOX_ROOT", "").strip() or os.path.join(ROOT, "org", "devices", "crossbox")
+
+
+def list_path(device: str) -> str:
+    return os.path.join(state_root(), device, "open_calls.json")
+
+
+def validate_doc(doc, device: str, where: str) -> dict:
+    if not isinstance(doc, dict):
+        raise BadFile("%s: top level is not an object" % where)
+    unknown = sorted(set(doc) - TOP_KEYS)
+    if unknown:
+        raise BadFile("%s: unknown key(s) %s (readers refuse a key they do not know)" % (where, ", ".join(unknown)))
+    missing = sorted(TOP_KEYS - set(doc))
+    if missing:
+        raise BadFile("%s: missing key(s) %s" % (where, ", ".join(missing)))
+    if doc["schema"] != SCHEMA:
+        raise BadFile("%s: schema %r is not %r" % (where, doc["schema"], SCHEMA))
+    if doc["device"] != device:
+        raise BadFile("%s: device %r is not %r (one file per box)" % (where, doc["device"], device))
+    if not isinstance(doc["rows"], list):
+        raise BadFile("%s: rows is not a list" % where)
+    for i, row in enumerate(doc["rows"]):
+        if not isinstance(row, dict):
+            raise BadFile("%s: row %d is not an object" % (where, i))
+        unknown = sorted(set(row) - ROW_KEYS)
+        if unknown:
+            raise BadFile("%s: row %s has unknown key(s) %s" % (where, row.get("id", i), ", ".join(unknown)))
+        missing = sorted(ROW_REQUIRED - set(row))
+        if missing:
+            raise BadFile("%s: row %s lacks %s" % (where, row.get("id", i), ", ".join(missing)))
+        if row["state"] not in STATES:
+            raise BadFile("%s: row %s state %r is not one of %s" % (where, row["id"], row["state"], "/".join(STATES)))
+        closed = row.get("closed")
+        if closed is not None and (not isinstance(closed, dict) or set(closed) - CLOSED_KEYS):
+            raise BadFile("%s: row %s `closed` carries a key this reader does not know" % (where, row["id"]))
+    return doc
+
+
+def read_list(device: str) -> dict:
+    path = list_path(device)
+    try:
+        doc = json.load(open(path, encoding="utf-8"))
+    except OSError as exc:
+        raise BadFile("%s: unreadable (%s)" % (path, exc))
+    except ValueError as exc:
+        raise BadFile("%s: not JSON (%s)" % (path, exc))
+    return validate_doc(doc, device, path)
+
+
+def write_list(device: str, doc: dict, serial: str) -> str:
+    doc["written_at"], doc["written_by"] = now_utc(), serial
+    path = list_path(device)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(json.dumps(doc, indent=1, ensure_ascii=True) + "\n")
+    os.replace(tmp, path)
+    return path
+
+
+def this_box(dev, reg) -> str:
+    name, basis = dev.this_device(reg)
+    if name is None:
+        raise Refused("this box is unresolved: %s" % basis)
+    return name
+
+
+def writer_serial(fallback: str) -> str:
+    return os.environ.get("OPAL_AGENT_SERIAL", "").strip() or fallback
+
+
+# ---------------------------------------------------------------- commands
+
+def cmd_scope(args) -> int:
+    if args.selftest:
+        return selftest()
+    if not args.project:
+        print("ERROR: scope needs --project <CODE> (or --selftest)", file=sys.stderr)
+        return 2
+    ctx = real_ctx()
+    if ctx["device"] is None:
+        print("ERROR: this box is unresolved: %s" % ctx["device_basis"], file=sys.stderr)
+        return 2
+    try:
+        res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
+    except Refused as exc:
+        print("ERROR: %s" % exc, file=sys.stderr)
+        return 2
+    print("scope | box %s (%s) | live projects read: %d | shared buckets: %s" % (
+        ctx["device"], ctx["device_basis"], len(ctx["projects"]), ", ".join(sorted(ctx["shared_buckets"]))))
+    print_scope(res, notes)
+    return 0
+
+
+def public_scope(res: dict) -> dict:
+    """The measurement as saved on the call: the readings, the risk, the verdict and the first evidence lines per reading."""
+    return {"measured_at": now_utc(), "paths": res["paths"], "placement": res["placement"], "resources": res["resources"],
+            "shared": res["shared"], "risk": res["risk"], "verdict": res["verdict"], "roots": res["roots"],
+            "evidence": {k: v[:CAP] for k, v in res["evidence"].items()}}
+
+
+def cmd_add(args) -> int:
+    ctx = real_ctx()
+    device = this_box(ctx["dev"], ctx["reg"])
+    if args.device and ctx["dev"].resolve(args.device, ctx["reg"]) != device:
+        raise Refused("REFUSED: a call is written to this box's list only (%s); %s is another box's list. One writer per box." % (
+            device, args.device))
+    res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
+    path = list_path(device)
+    if os.path.exists(path):
+        doc = read_list(device)
+    else:
+        doc = {"schema": SCHEMA, "device": device, "written_at": now_utc(), "written_by": "", "rows": []}
+    cid = "%s-%s-%s" % (device, datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ"), secrets.token_hex(2))
+    doc["rows"].append({
+        "id": cid, "project": args.project, "subject": args.subject, "asked_by": args.asked_by,
+        "source": rel_to_root(args.source, ctx["root"]),
+        "orders": [rel_to_root(o, ctx["root"]) for o in (args.orders or [])],
+        "roots": [norm(rel_to_root(r, ctx["root"])) for r in (args.roots or [])],
+        "state": "OPEN", "opened_at": now_utc(), "scope": public_scope(res), "closed": None})
+    written = write_list(device, doc, writer_serial(args.asked_by))
+    print("ADDED id=%s file=%s open=%d" % (cid, written, sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
+    print_scope(res, notes)
+    if res["verdict"] == "CROSS-BOX":
+        print("ROUTE: this call touches another box or a shared set; it goes the cross-box route "
+              "(.tools/crossbox-call.py), not a ruling alone. It cannot be closed here until a cross-box file for it reads CLOSED-BOTH.")
+    return 0
+
+
+def print_list(device: str, count: dict) -> None:
+    path = list_path(device)
+    doc = read_list(device)
+    rows = doc["rows"]
+    print("FILE %s | device=%s written_by=%s written_at=%s | %s | rows=%d" % (
+        path, doc["device"], doc["written_by"], doc["written_at"], age_text(doc["written_at"]), len(rows)))
+    for row in rows:
+        print("  %s [%s] %s | %s | scope=%s risk=%s | asked_by %s | source %s" % (
+            row["id"], row["state"], row["project"], row["subject"], row["scope"].get("verdict", "?"),
+            row["scope"].get("risk", "?"), row["asked_by"], row["source"]))
+    count["rows"] += len(rows)
+    count["open"] += sum(1 for r in rows if r["state"] == "OPEN")
+
+
+def cmd_list(args) -> int:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    reg = dev.load()
+    count = {"rows": 0, "open": 0}
+    absent, refused, read = [], [], 0
+    if args.all:
+        boxes = dev.names(reg)
+    elif args.device:
+        box = dev.resolve(args.device, reg)
+        if box is None:
+            print("ERROR: %r is not a device in the register (holds: %s)" % (args.device, ", ".join(dev.names(reg))), file=sys.stderr)
+            return 2
+        boxes = [box]
+    else:
+        boxes = [this_box(dev, reg)]
+    for box in boxes:
+        if not os.path.exists(list_path(box)):
+            absent.append(box)
+            print("ABSENT %s: no open_calls.json for %s in this tree (%s). Absent is not empty: nothing here says that box has no open calls." % (
+                box, box, list_path(box)))
+            continue
+        try:
+            print_list(box, count)
+            read += 1
+        except BadFile as exc:
+            refused.append(box)
+            print("REFUSED %s" % exc)
+    print("OPEN-CALLS-LIST boxes=%d read=%d absent=%s refused=%s rows=%d open=%d" % (
+        len(boxes), read, ",".join(absent) or "none", ",".join(refused) or "none", count["rows"], count["open"]))
+    return 3 if refused else 0
+
+
+def crossbox_closed_both(call_id: str, explicit) -> tuple:
+    """(file name or None, lines): a cross-box file for this call that reads CLOSED-BOTH."""
+    lines, found = [], None
+    files = sorted(glob.glob(os.path.join(crossbox_root(), "*.json")))
+    if not files:
+        lines.append("no cross-box file under %s (0 files)" % crossbox_root())
+    for path in files:
+        name = os.path.basename(path)
+        try:
+            data = json.load(open(path, encoding="utf-8"))
+        except (OSError, ValueError) as exc:
+            lines.append("%s unreadable (%s): cannot prove CLOSED-BOTH" % (name, type(exc).__name__))
+            continue
+        text = json.dumps(data)
+        body = ""
+        if isinstance(data, dict) and data.get("body_path"):
+            try:
+                body = open(os.path.join(ROOT, data["body_path"]), encoding="utf-8", errors="replace").read()
+            except OSError:
+                body = ""
+        names_call = (explicit and data.get("id") == explicit) or call_id in text or call_id in body
+        state = str(data.get("state", "")).upper() if isinstance(data, dict) else ""
+        if not names_call:
+            continue
+        lines.append("%s names the call, state %s" % (name, state or "(none)"))
+        if state == "CLOSED-BOTH" and found is None:
+            found = name
+    return found, lines
+
+
+def cmd_close(args) -> int:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    reg = dev.load()
+    device = this_box(dev, reg)
+    path = list_path(device)
+    row = None
+    doc = read_list(device) if os.path.exists(path) else {"rows": []}
+    for r in doc["rows"]:
+        if r["id"] == args.id:
+            row = r
+    if row is None:
+        for box in dev.names(reg):
+            if box != device and os.path.exists(list_path(box)):
+                try:
+                    if any(r["id"] == args.id for r in read_list(box)["rows"]):
+                        raise Refused("REFUSED: call %s is on %s's list; this box (%s) writes its own list only. One writer per box." % (
+                            args.id, box, device))
+                except BadFile:
+                    continue
+        raise Refused("REFUSED: no call %s on this box's list (%s)" % (args.id, path))
+    if row["state"] == "CLOSED":
+        raise Refused("REFUSED: call %s is already CLOSED" % args.id)
+    ruling = args.ruling if os.path.isabs(args.ruling) else (
+        os.path.join(os.getcwd(), args.ruling) if os.path.exists(os.path.join(os.getcwd(), args.ruling)) else os.path.join(ROOT, args.ruling))
+    if not os.path.isfile(ruling):
+        raise Refused("REFUSED: ruling %s is not a file; a closure cites the ruling it rests on" % args.ruling)
+    cross = None
+    if row["scope"].get("verdict") == "CROSS-BOX":
+        found, lines = crossbox_closed_both(row["id"], args.crossbox)
+        if found is None:
+            raise Refused("REFUSED: call %s reads CROSS-BOX and no cross-box file for it reads CLOSED-BOTH (%s). A call that touches "
+                          "another box is not settled alone." % (args.id, "; ".join(lines) or "none looked at"))
+        cross = os.path.splitext(found)[0]
+    row["state"] = "CLOSED"
+    row["closed"] = {"at": now_utc(), "by": args.by, "ruling": rel_to_root(args.ruling, ROOT), "crossbox": cross}
+    write_list(device, doc, writer_serial(args.by))
+    print("CLOSED id=%s by=%s ruling=%s crossbox=%s" % (args.id, args.by, row["closed"]["ruling"], cross or "not required (OWN-BOX)"))
+    return 0
+
+
+# ---------------------------------------------------------------- selftest
+
+class Scratch:
+    """Files this run creates in a temporary directory; cleanup removes them by name, then the empty directories."""
+
+    def __init__(self):
+        self.base = tempfile.mkdtemp(prefix="opalcalls_")
+        self.files, self.dirs = [], [self.base]
+
+    def write(self, rel: str, text: str) -> str:
+        path = os.path.join(self.base, rel)
+        d = os.path.dirname(path)
+        chain = []
+        while d != self.base and not os.path.isdir(d):
+            chain.append(d)
+            d = os.path.dirname(d)
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        self.dirs.extend(reversed(chain))
+        with open(path, "w", encoding="utf-8", newline="\n") as fh:
+            fh.write(text)
+        self.files.append(path)
+        return path
+
+    def cleanup(self):
+        for f in self.files:
+            try:
+                os.remove(f)
+            except OSError:
+                pass
+        for d in reversed(self.dirs):
+            try:
+                os.rmdir(d)
+            except OSError:
+                pass
+
+
+def selftest() -> int:
+    dev = load_mod("opal_devices", "lib/devices.py")
+    pc = load_mod("opal_placement_check", ".tools/placement-check.py")
+    try:
+        names = dev.names(dev.load())
+    except Exception as exc:
+        print("ERROR: device register unreadable (%s)" % exc, file=sys.stderr)
+        return 3
+    if len(names) < 2:
+        print("ERROR: the self-test needs two boxes in the register", file=sys.stderr)
+        return 3
+    here, there = names[0], names[1]
+    sc = Scratch()
+    cases = []
+    try:
+        tf = "infra/aws/terraform/"
+        res = lambda block: 'resource "aws_s3_bucket" "x" {\n  bucket = "%s"\n}\n' % block   # noqa: E731
+        sc.write(tf + "rootA/main.tf", res("bkt-a-only"))
+        sc.write(tf + "rootB/main.tf", res("bkt-b-only") + res("bkt-common"))
+        sc.write(tf + "rootC/main.tf", res("bkt-common"))
+        sc.write(tf + "rootS/main.tf", res("bkt-shared"))
+        sc.write(tf + "rootP/main.tf", 'resource "aws_iam_policy" "p" {\n  policy = "arn:aws:s3:::bkt-shared/*"\n}\n')
+        sc.write(tf + "rootT/main.tf", 'terraform {\n  backend "s3" {\n    bucket = "bkt-state"\n  }\n}\n'
+                 'resource "aws_s3_bucket" "x" {\n  bucket = "bkt-t-only"\n}\n')
+        sc.write(tf + "rootU/main.tf", 'terraform {\n  backend "s3" {\n    bucket = "bkt-state"\n  }\n}\n'
+                 'resource "aws_s3_bucket" "x" {\n  bucket = "bkt-u-only"\n}\n')
+        sc.write("org/missions/DY/N/THEIRS/task-orders/o1.md", "<status>issued</status>\n<risk>SERVED</risk>\n<paths>\ndata/theirs/x.py\n</paths>\n")
+        sc.write("org/missions/DY/N/THEIRS/task-orders/o2.md", "<status>complete</status>\n<risk>WORLD</risk>\n<paths>\ndata/done/y.py\n</paths>\n")
+        projects = [
+            {"code": "MINE", "box": here, "home": "org/missions/DX/M/MINE", "writes": ["org/missions/DX/M/MINE", "data/mine"]},
+            {"code": "SAMEBOX", "box": here, "home": "org/missions/DZ/O/SAMEBOX", "writes": ["org/missions/DZ/O/SAMEBOX"]},
+            {"code": "THEIRS", "box": there, "home": "org/missions/DY/N/THEIRS",
+             "writes": ["org/missions/DY/N/THEIRS", "data/theirs/x.py", tf + "rootB"]},
+            {"code": "NOBOX", "box": None, "home": "org/missions/DW/K/NOBOX", "writes": ["org/missions/DW/K/NOBOX"]}]
+        ctx = {"root": sc.base, "device": here, "projects": projects, "overlaps": pc.overlaps, "rootmap_keys": [],
+               "shared_buckets": {"bkt-shared"}, "shared_basis": "fixture", "pc": pc}
+
+        def flags(r):
+            return (r["paths"], r["placement"], r["resources"], r["shared"], r["risk"], r["verdict"])
+
+        r = measure(ctx, "MINE", here, ["data/mine/x.py"], [tf + "rootA"], ["LOCAL"])
+        cases.append(("a clear case reads OWN-BOX with every reading clear",
+                      flags(r) == ("clear", "clear", "clear", "clear", "LOCAL", "OWN-BOX")))
+        r = measure(ctx, "MINE", here, ["data/theirs/x.py"], [], ["LOCAL"])
+        cases.append(("a path in another box's project write set is a PATHS hit", r["paths"] == "hit" and r["verdict"] == "CROSS-BOX"))
+        r = measure(ctx, "MINE", here, ["org/missions/DZ/O/SAMEBOX/notes.md"], [], ["LOCAL"])
+        cases.append(("a path under another project's home is a PATHS hit even on the same box", r["paths"] == "hit"))
+        r = measure(ctx, "MINE", here, ["data/mine2/x.py"], [], ["LOCAL"])
+        cases.append(("a sibling path that only shares a name prefix is clear", r["paths"] == "clear" and r["verdict"] == "OWN-BOX"))
+        r = measure(ctx, "THEIRS", there, ["data/other/x.py"], [], ["LOCAL"])
+        cases.append(("a project placed on another box is a PLACEMENT hit", r["placement"] == "hit" and r["verdict"] == "CROSS-BOX"))
+        r = measure(ctx, "NOBOX", None, [], [], ["LOCAL"])
+        cases.append(("a project with no resolvable box is a PLACEMENT hit, never guessed OWN-BOX", r["placement"] == "hit"))
+        r = measure(ctx, "MINE", here, [], [tf + "rootC"], ["LOCAL"])
+        cases.append(("a bucket both boxes' projects name is a RESOURCES hit",
+                      r["resources"] == "hit" and r["verdict"] == "CROSS-BOX" and "bkt-common" in " ".join(r["evidence"]["resources"])))
+        r = measure(ctx, "MINE", here, [], [tf + "rootT"], ["LOCAL"])
+        r2 = measure(ctx, "MINE", here, [], [tf + "rootU"], ["LOCAL"])
+        cases.append(("a backend bucket both roots name is not a declared resource (no false RESOURCES hit)",
+                      r["resources"] == "clear" and r2["resources"] == "clear"))
+        r = measure(ctx, "MINE", here, [], [tf + "rootGONE"], ["LOCAL"])
+        cases.append(("a named root that cannot be read is a RESOURCES hit, not clear", r["resources"] == "hit"))
+        r = measure(ctx, "MINE", here, [tf + "rootA/main.tf"], [], ["LOCAL"])
+        cases.append(("a Terraform root is inferred from an order path under infra/aws/terraform",
+                      r["roots"] == [tf + "rootA"]))
+        r = measure(ctx, "MINE", here, [".tools/anything.py"], [], ["LOCAL"])
+        cases.append(("a path on the shared branch is a SHARED hit", r["shared"] == "hit" and r["verdict"] == "CROSS-BOX"))
+        r = measure(ctx, "MINE", here, ["CLAUDE.md"], [], ["LOCAL"])
+        cases.append(("a trunk register file is a SHARED hit", r["shared"] == "hit"))
+        r = measure(ctx, "MINE", here, [], [tf + "rootS"], ["LOCAL"])
+        cases.append(("a bucket the registry marks shared is a SHARED hit", r["shared"] == "hit" and r["verdict"] == "CROSS-BOX"))
+        r = measure(ctx, "MINE", here, [], [tf + "rootP"], ["LOCAL"])
+        cases.append(("a shared bucket named only in a policy ARN is a SHARED hit", r["shared"] == "hit"))
+        r = measure(ctx, "MINE", here, ["data/mine/x.py"], [], ["WORLD", "LOCAL"])
+        cases.append(("WORLD risk is printed and does not alone make a call cross-box",
+                      r["risk"] == "WORLD" and r["verdict"] == "OWN-BOX"))
+        cases.append(("the highest risk wins and an empty list reads LOCAL",
+                      highest_risk(["LOCAL", "SERVED"]) == "SERVED" and highest_risk([]) == "LOCAL"))
+        facts = order_facts(open(os.path.join(sc.base, "org/missions/DY/N/THEIRS/task-orders/o1.md")).read(), pc)
+        cases.append(("an order's paths, risk and status are read with placement-check's patterns",
+                      facts == (["data/theirs/x.py"], "SERVED", "issued")))
+        line = scope_line(measure(ctx, "MINE", here, [], [], ["LOCAL"]))
+        cases.append(("the last line has the named shape", bool(re.match(
+            r"^CALL-SCOPE project=\S+ device=\S+ paths=(clear|hit) placement=(clear|hit) resources=(clear|hit) "
+            r"shared=(clear|hit) risk=(LOCAL|SERVED|WORLD) verdict=(OWN-BOX|CROSS-BOX)$", line))))
+    finally:
+        sc.cleanup()
+    fails = 0
+    for label, ok in cases:
+        print("  %s  %s" % ("PASS" if ok else "FAIL", label))
+        fails += 0 if ok else 1
+    print("CALL-SCOPE-SELFTEST cases=%d/%d ok=%s" % (len(cases) - fails, len(cases), fails == 0))
+    return 1 if fails else 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(prog="open-calls.py", description=__doc__.split("\n")[0])
+    sub = ap.add_subparsers(dest="cmd", required=True)
+    add = sub.add_parser("add", help="append one call to this box's list")
+    add.add_argument("--project", required=True)
+    add.add_argument("--subject", required=True)
+    add.add_argument("--asked-by", required=True)
+    add.add_argument("--source", required=True)
+    add.add_argument("--orders", nargs="+", default=[])
+    add.add_argument("--roots", nargs="+", default=[])
+    add.add_argument("--device", help="refused unless it is this box (one writer per box)")
+    lst = sub.add_parser("list", help="print the list(s) with each file's age")
+    grp = lst.add_mutually_exclusive_group()
+    grp.add_argument("--device")
+    grp.add_argument("--all", action="store_true")
+    cls = sub.add_parser("close", help="set a call CLOSED with its ruling")
+    cls.add_argument("--id", required=True)
+    cls.add_argument("--by", required=True)
+    cls.add_argument("--ruling", required=True)
+    cls.add_argument("--crossbox", help="id of the cross-box file for this call, when its text does not carry the call id")
+    sco = sub.add_parser("scope", help="measure whether a call touches only this box")
+    sco.add_argument("--project")
+    sco.add_argument("--orders", nargs="+", default=[])
+    sco.add_argument("--roots", nargs="+", default=[])
+    sco.add_argument("--selftest", action="store_true")
+    return ap
+
+
+def main(argv: list) -> int:
+    args = build_parser().parse_args(argv)
+    try:
+        return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope}[args.cmd](args)
+    except Refused as exc:
+        print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
+        return 1 if str(exc).startswith("REFUSED") else 2
+    except BadFile as exc:
+        print("REFUSED: %s" % exc, file=sys.stderr)
+        return 3
+    except Exception as exc:   # a register that cannot be read must stop the tool, never fall back to a built-in list
+        if type(exc).__name__ == "RegisterError":
+            print(str(exc), file=sys.stderr)
+            return 3
+        raise
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
