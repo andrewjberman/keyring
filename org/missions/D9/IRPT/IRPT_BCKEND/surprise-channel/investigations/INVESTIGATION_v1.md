@@ -20885,3 +20885,27 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check's instrument fails on this device before it reads the route list: a large-output aws call launched from a native python process through the .tools/aws shim crashes. The route is live; the check's verdict is FAIL by instrument fault, not by state. The check was not changed and AC1 is recorded FAIL; the order stays open. The issuer can re-run AC1 on a device where the shim call succeeds, or decide the instrument fix (.tools/aws is not in this order's paths)."
 }
 ```
+## IRPT_BCKEND-D2-W173-S1 -- comp-tagauthz's IAM read is bounded; S334 resolved
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W173-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~173",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S334: commit fad269226b changes .tools/comp-tagauthz.py to bound the IAM get-account-authorization-details read (env COMP_TAGAUTHZ_IAM_TIMEOUT, default 150 s) and fail closed rc 1 with TAGAUTHZ_IAM_READ_TIMEOUT. IB78-1-AC1 last line: IB78-1-AC1 PASS (rc 0 in 22.5 s); IB78-1-AC2 last line: IB78-1-AC2 PASS (rc 1 naming TAGAUTHZ_IAM_READ_TIMEOUT).",
+  "one_line": "The gate's IAM read now has a 150 s default bound and fails closed with a named token instead of hanging.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit fad269226b on wk-IRPT_BCKEND-173; p78_cells.py IB78-1-AC1 and AC2 PASS"
+    ]
+  },
+  "spec_asserts": "S334: the comp-tagauthz IAM read is unbounded and can hang the apply gate.",
+  "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
+}
+```
