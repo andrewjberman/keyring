@@ -7686,6 +7686,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T04:08:15Z",
+      "one_line": "HVST-bh-10: under the second-anchor rule HEI_US_Equity keeps 0 of the 2 graded HEICO pairs (sa:3584086, sa:3685322): their ticker lists carry no name, brand or other symbol of HEICO, so AC2 reads CENSUS FAIL; Hawaiian Electric's pair is dropped (1 of 1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H: hold the drain of the HEI_US_Equity ticker_anchors entry (branch wk-AMGT_HARVST-110-r61) until the ruling on the 2 lost HEICO pairs; the order stays open on AC2",
+      "spec_asserts": "HVST-bh-10 section 1 item 4: a ticker list may carry no name, brand or other symbol of HEICO at all; if the 2 HEICO pairs cannot be kept under the terms (an anchor is the covered company's own name or brand, a symbol anchor is another listing of the same issuer in exact case, nothing else is added), print CENSUS FAIL, show each lost pair, state what in the article identifies HEICO, and stop. AC2 expects CENSUS OK.",
+      "world_is": "bh10_census.out (19137 silver articles, 242 securities): HEI_US_Equity pairs before 44 after 41; dropped 3: sa:3584086 and sa:3685322 (HEICO, 'ESL , HEI , WWD , LHX' and 'VSAT , HEI , TDY , CACI') and sa:4412260 (Hawaiian Electric, 'The utility's dividend to HEI remains suspended'). GRADED HEICO PAIRS KEPT 0 of 2; GRADED HAWAIIAN ELECTRIC PAIRS DROPPED 1 of 1; UNGRADED PAIRS DROPPED 0; OTHER SECURITIES CHANGED 0 of 242; last line CENSUS FAIL. Each lost article was searched whole, case-insensitive, for heico, hei.a, hei-a, hei/a, wencor, flight support, electronic technologies, mendelson and hawaiian electric: 0 hits in both. Nothing in either article identifies HEICO beyond the bare ticker list itself. The only other listing symbol read in any article is HEI.A (sa:4425338, which also names HEICO Corporation): not in the pool (302 records), the identity registry (72) or the collector's identity record (234), so the row carries 'evidenced by article spans only'; pairs kept only by it: 0. Of 19137 silver articles, 55 carry the string HEI or Hawaiian Electric and 43 carry an exact-case HEI span; 40 of those 43 name HEICO or Heico (the rule keeps them) and the 3 that do not are exactly the 3 graded pairs. No rule was loosened and no word that is not HEICO's own was added; the issuer takes the result back for a ruling. Also: the one existing assertion this cell's rule changed is test_bh3 test_viii_the_shipped_entry_is_the_one_csl_entry (one entry became two).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh10_census.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/BH2_NINE_FORMS.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
