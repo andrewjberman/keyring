@@ -818,6 +818,28 @@
     "spec_asserts": "The worker face says the worktree is a sparse checkout sufficient to commit a proof instance via safe-commit.",
     "world_is": "The cone as cut cannot pass the commit gates; five directories had to be added (org/surprise_channel as well, for the row gate). A later sparse worker would repeat it.",
     "notes": "Issuer's call whether the cut should widen the cone. Nothing was reconstructed beyond the four cone additions."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-S19",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MP",
+    "surfaced_at": "2026-10-08T22:05Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "Decomposition v4 R4.4 planned to cut MP-x-3, MP-x-4 and MP-x-5 into round 4 by issuer amendment after the issuance; to-pipeline-gate's ONE-ISSUANCE limb refuses any new order file in a round that already has an issuance, and reads no override. The three cells move to round 5.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "decompositions/NFRA_MCPORTAL_DECOMP.md @202c512520 R4.4: 'MP-x-3, MP-x-4 and MP-x-5 are cut into this round by issuer amendment when their gates land'.",
+        "safe-commit of NFRA_MCPORTAL.TO-MP-x-3.gateway-fabric-read-grant.md, 2026-10-08 ~22:0xZ: '[to-pipeline-gate] REFUSED ... round 4 of NFRA_MCPORTAL already has an issuance at HEAD (2 order(s) ...); ONE ISSUER PER ROUND is keyed to the ROUND ... A re-cut into the first issuance MODIFIES its orders and adds no file ... this limb reads no override.' The '# pipeline-override' line was taken for the other limbs and did not lift this one.",
+        "G-R3 is ruled (a) (laptop 1.0.0_SA_CTO msg 107359, relay 32030); the MP-x-3 order is drafted and its checks x3.AC1-3 are committed under deliverables/2.0.0_SA_COO~MP/round4/checks/ (dry-run at 202c512520: all FAIL)."
+      ]
+    },
+    "spec_asserts": "R4.4: gated round-4 cells are cut into round 4 when their gates land.",
+    "world_is": "A round's cells are cut in its one issuance or not in that round. MP-x-3 (G-R3 ruled), MP-x-4 (G-REL) and MP-x-5 (G-SEE) go on the round-5 enrichment list at round 4's L10; round 4 is MP-x-1 and MP-x-2. Cost: MP-x-3's apply waits for round 4's close; MP-x-4 already waits on MP-x-1, MP-x-2 and gateway r29.",
+    "notes": "Issuer's practice from here: a gated cell is issued STAGED in the first issuance, with <placeholders> where its criteria await a ruling."
   }
 ]
 ```

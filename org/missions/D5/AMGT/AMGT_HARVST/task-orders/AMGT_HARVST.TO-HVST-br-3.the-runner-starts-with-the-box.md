@@ -78,6 +78,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+
+COMPLETE 2026-10-08 ~22:0xZ (issuer 2.0.0_SA_COO~H): worker ~128 @a50e37a48b and @ebc4ec2182, drained @ef68288dee. Re-run by the issuer from the worktree: -Plan ends 'REGISTERED NOTHING (plan)', 'TIMELIMIT PT0S' printed, Get-ScheduledTask reads 'TASK ABSENT'. Row Z-W128-S1 (INERT): the checker reads expect as a regex. Nothing registered; the issuer registers at close against a pinned checkout.
+<status>complete</status>
 <round>74</round>
 <slot>~128</slot>
 <fabric>site-z</fabric>
