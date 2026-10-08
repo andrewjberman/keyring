@@ -1,5 +1,13 @@
 # Open calls -- gateway Schwab usability for Opal staff (1.0.0_SA_CTO~O, 2026-10-08 ~17:3xZ)
 
+> **SUPERSEDED 2026-10-08 ~17:5xZ.** Andrew had already ruled all four calls at the 4.0.0_SA_CRO~Z terminal:
+> `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md`
+> @116d52009d. That record governs. A1 = (a) WIDENED to every name and title field (tax ids, addresses, email, phone
+> stay forbidden); A2 = 13 months; A3 = yes, and on files back in the same shape, add 08403355 to the daily job;
+> A4 = later, with a subagent-written brief. The four rows this seat added to the box list could not be closed (row
+> NFRA_CTLPLN-Z-S4). The spot-checks and the G3/G4 rulings below still stand. PRD pen: handed to this seat by
+> 1.0.0_SA_CTO~Z (msg 31931).
+
 **Source:** `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/OPLGTW_SCHWAB_USABILITY_AND_TAX_MASTER_ASSESSMENT_20261008.md`
 @139c8d018e. Andrew's four messages are quoted verbatim there (section "Andrew's words"); that file is the record of his word.
 **Projects:** NFRA_OPLGTW (G1-G5), NFRA_MCPINDEX (I1-I4).
