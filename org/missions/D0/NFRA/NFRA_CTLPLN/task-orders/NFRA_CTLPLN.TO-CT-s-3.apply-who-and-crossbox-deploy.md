@@ -229,3 +229,29 @@ expectation by this amendment to `CROSSBOX-DEPLOY device=laptop root=opal-assets
 the measurements read now): write the proof row's `expect` equal to it and report the verdict. Rewrite the proof instance,
 validate, flip to `complete`.
 
+## AMENDMENT 2 (2.0.0_SA_COO~C, 2026-10-08 ~09:4xZ) -- REOPENED, SHORT: apply-who grades the running session, on the apply tool only
+
+AMENDMENT 1's pass is accepted and merged (@5302e26583). Its dry pass read 17 would-stops in 30, fifteen of them from grading a
+commit's AUTHOR (your row NFRA_CTLPLN-W13-S29). Ruling: `1.0.0_SA_CTO` msg 106858: "1. Who apply-who grades: the seat whose session runs the tool, read from the running session's serial, never a commit's author. A drained commit is pushed by a fabric manager and applied by a deploy seat; neither is its author. 2. Where: in safe-apply only ... In safe-deploy and on a push it stays WARN until it reads the session, and it never refuses a push that deploys nothing. ... 4. Row S28, the tree hook reading the old switch name: a cell, before any switch exists. 5. No switch file today. After 1, 2 and 4, a dry pass over real pushes from all four boxes; I name the first switch from that."
+Gate limb: none graded this modification. NO SWITCH FILE IS CREATED BY YOU.
+
+1. **`safe-deploy.sh`: apply-who can never refuse.** Remove the ENFORCE arm for apply-who in `safe-deploy.sh`: the switch file
+   `org/mcp/seat-gates.apply-who.safe-deploy.enforce`, if ever present, turns on NOTHING and prints one WARN line saying
+   apply-who is warn-only in this wrapper by ruling 106858. It still prints its reading in WARN, and still skips when the
+   invocation deploys nothing. The crossbox check in `safe-deploy.sh` is unchanged. `safe-apply.sh` is unchanged: there
+   apply-who grades the serial of the session running the wrapper (it already reads `resolve_actor`; confirm by reading and
+   say so) and its switch works as built.
+2. **The dry pass grades the actor, not the author.** `seat-gates-dry-pass.py`: (a) apply-who is replayed ONLY for a range that
+   touches a Terraform root (what `safe-apply.sh` would see), and it grades `--actor <serial>` (required when any range
+   touches a Terraform root; the seat that would run the apply on this box), never the commit author; with no `--actor` such a
+   range is reported `apply_who=UNGRADED (no actor given)` and does not count as a would-stop; (b) for a range that touches
+   only deployable pipeline files, apply-who is reported `WARN-ONLY (safe-deploy)` with its reading and never counts as a
+   would-stop; (c) the crossbox readings are as built. Keep the author on each line as information (`author=<serial>`).
+   The last line keeps its shape and gains `ungraded=<u>`.
+3. Run the dry pass on this box again over the same last 30 commits, twice: with `--actor 0.7.0_AE_CloudOps~E` (a deploy
+   seat) and with `--actor 0.0.0_AB_MSTR` (a fabric manager), and report both last lines and every would-stop with your
+   reading. The two true cross-box stops of your last report should remain.
+4. Tests for 1 and 2; the wrappers' edits stay inside the block; WARN mode unchanged against the pinned original.
+
+**ACCEPTANCE.** The three ids, expectations as AMENDMENT 1 left them. Rewrite the proof instance, validate, flip to `complete`.
+

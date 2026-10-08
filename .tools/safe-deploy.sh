@@ -50,11 +50,11 @@ fi
 
 # --- NFRA_CTLPLN CT-s-3 -- SEAT GATES (ONE block): who may deploy (apply-who-check.py) and the cross-box deploy
 # measurements (crossbox-deploy-check.py), per data/<pipeline> root named by the files, the --commit-range or HEAD~1..HEAD.
-# FOUR switches exist, one per check per tool; this wrapper reads two, each a file in org/mcp/ (OPAL_SEAT_GATES_ENFORCE_DIR
-# points a test at another directory; nothing here creates one): seat-gates.apply-who.safe-deploy.enforce and
-# seat-gates.crossbox.safe-deploy.enforce (safe-apply.sh reads the two .safe-apply. files). A check is in ENFORCE only
-# while ITS file exists; otherwise it is in WARN mode: it prints and NEVER changes this script's exit code or flow, whatever
-# happens inside the block. The old single org/mcp/seat-gates.enforce is retired: it turns on nothing and prints one WARN line.
+# FOUR switches exist, one per check per tool; this wrapper acts on ONE, a file in org/mcp/ (OPAL_SEAT_GATES_ENFORCE_DIR
+# points a test at another directory; nothing here creates one): seat-gates.crossbox.safe-deploy.enforce (safe-apply.sh reads
+# the two .safe-apply. files). APPLY-WHO IS WARN-ONLY HERE FOR GOOD (ruling 106858): seat-gates.apply-who.safe-deploy.enforce,
+# if ever present, turns on nothing and prints one WARN line. A check with a switch is in ENFORCE only while ITS file exists;
+# otherwise it is in WARN mode: it prints and NEVER changes this script's exit code or flow, whatever happens inside the block. The old single org/mcp/seat-gates.enforce is retired: it turns on nothing and prints one WARN line.
 # In ENFORCE a check that gives no verdict (a crash, an absent tool, a timeout, no python) BLOCKS with the error printed, and
 # so does an error of the block itself; the audited SEAT_GATES_OVERRIDE="reason" (org/safe-deploy-bypass-audit.log) passes both.
 # apply-who grades a DEPLOY: it runs only when this invocation will deploy at least one file, as the deploy core itself decides
@@ -65,7 +65,8 @@ SG_RC=0
 (
   set +e +u
   sg_dir="${OPAL_SEAT_GATES_ENFORCE_DIR:-$SCRIPT_DIR/../org/mcp}"
-  sg_mw=WARN; [ -e "$sg_dir/seat-gates.apply-who.safe-deploy.enforce" ] && sg_mw=ENFORCE
+  sg_mw=WARN
+  [ -e "$sg_dir/seat-gates.apply-who.safe-deploy.enforce" ] && echo "safe-deploy: WARN [seat-gates] org/mcp/seat-gates.apply-who.safe-deploy.enforce turns on nothing: apply-who is warn-only in this wrapper by ruling 106858 (it grades the session that applies, in safe-apply only)." >&2
   sg_mc=WARN; [ -e "$sg_dir/seat-gates.crossbox.safe-deploy.enforce" ] && sg_mc=ENFORCE
   [ -e "$sg_dir/seat-gates.enforce" ] && echo "safe-deploy: WARN [seat-gates] org/mcp/seat-gates.enforce is retired and turns on nothing; the four switches are org/mcp/seat-gates.apply-who.safe-apply.enforce, seat-gates.apply-who.safe-deploy.enforce, seat-gates.crossbox.safe-apply.enforce and seat-gates.crossbox.safe-deploy.enforce." >&2
   sg_to=""; command -v timeout >/dev/null 2>&1 && sg_to="timeout 60"
@@ -107,13 +108,9 @@ SG_RC=0
         sg_w="$($sg_to python "$SCRIPT_DIR/apply-who-check.py" --serial "$sg_serial" --root "$sg_root" 2>&1)"; sg_wrc=$?
         sg_wl="$(printf '%s\n' "$sg_w" | tail -n 1 | tr -d '\r')"
         case "$sg_wl" in
-          "APPLY-WHO "*" verdict=REFUSED "*) if [ "$sg_mw" = ENFORCE ]; then sg_blk="$sg_blk apply-who"; else sg_bad="$sg_bad apply-who"; fi ;;
+          "APPLY-WHO "*" verdict=REFUSED "*) sg_bad="$sg_bad apply-who" ;;
           "APPLY-WHO "*" verdict=ADMITTED "*) : ;;
-          *) if [ "$sg_mw" = ENFORCE ]; then
-               echo "safe-deploy: ERROR [seat-gates] apply-who-check gave no verdict (rc=$sg_wrc); ENFORCE fails closed:" >&2
-               printf '%s\n' "$sg_w" | tail -n 5 | tr -d '\r' | sed 's/^/safe-deploy: [seat-gates]   | /' >&2
-               sg_blk="$sg_blk apply-who:no-verdict"
-             else echo "safe-deploy: WARN [seat-gates] apply-who-check gave no verdict (rc=$sg_wrc): $sg_wl" >&2; fi ;;
+          *) echo "safe-deploy: WARN [seat-gates] apply-who-check gave no verdict (rc=$sg_wrc): $sg_wl" >&2 ;;
         esac
         echo "safe-deploy: [seat-gates] mode=$sg_mw $sg_wl" >&2
       fi
@@ -152,7 +149,7 @@ SG_RC=0
 ) || SG_RC=$?
 if [ "$SG_RC" -ne 0 ] && [ "$SG_RC" -ne 9 ]; then
   sg_pd="${OPAL_SEAT_GATES_ENFORCE_DIR:-$SCRIPT_DIR/../org/mcp}"
-  if [ -e "$sg_pd/seat-gates.apply-who.safe-deploy.enforce" ] || [ -e "$sg_pd/seat-gates.crossbox.safe-deploy.enforce" ]; then
+  if [ -e "$sg_pd/seat-gates.crossbox.safe-deploy.enforce" ]; then
     if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
       printf '%s SEAT_GATES_OVERRIDE actor=%s safe-deploy block-error rc=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
         "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$SG_RC" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../org/safe-deploy-bypass-audit.log"
