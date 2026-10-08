@@ -22038,6 +22038,51 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "A citing row, not an edit of Z-S368: Z-S368's standing is the CVO's to move. The roughly 650 priced peer rows that carry no currency at all are unchanged and are not this row's subject."
+},
+{
+  "id": "AMGT_RESAPP-Z-W303-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~303",
+  "surfaced_at": "2026-10-08T08:48:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Order AMGT-bb-19 FWD-12 expects the one statement of inputs to carry a filings row; on BA the page's input block has no filings input, and the Model tab ledger's Filings line reads 'no source set up yet; has not run yet' beside a Thesis tab that cites a 10-K filed January 30th, 2026.",
+  "spec_asserts": "AMGT-bb-19 section 1, FWD-12: 'The repair is ONE statement, carrying a filings row that says what the page used. If the page still shows two, or the two disagree, record both with captures.'",
+  "world_is": "Measured 2026-10-08 on BA US at portal ref d1b21c97, dev build on localhost:5174. Two statements of inputs are drawn: (1) the block 'Where this page's data comes from' above the tabs, 4 rows (Bloomberg, Seeking Alpha, web search, research pack; served input keys bloomberg, seekingalpha, serp, pack; no filings key), Seeking Alpha 'September 11th, 2026, 12:03a ET -- Worked'; (2) the Model tab ledger 'Where each input came from', 6 classes, Seeking Alpha 'Seeking Alpha; has not run yet', Filings 'no source set up yet; has not run yet', News 'last ran October 6th, 2026 and worked'. The two disagree on Seeking Alpha (worked on 2026-09-11 against has not run yet). Elsewhere on the Thesis tab the page states the filing it used ('the 10-K filed January 30th, 2026 -- read from the research pool'). The served overlay carries research_coverage and input_provenance (4 entries) for every name read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run1/fwd16/BA_top.json (provenance rows) and data/run1/api/overlay_BA.json (input_provenance).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run2/ledger/ba_model_ledger_wait.json (the six ledger lines).",
+      "captures 008 and 901 in the same deliverables folder; walk stamps 20261008T083459Z and 20261008T084357Z."
+    ]
+  },
+  "notes": "Recorded in WALK_ROUND78.md under FWD-12; no verdict on it."
+},
+{
+  "id": "AMGT_RESAPP-Z-W303-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~303",
+  "surfaced_at": "2026-10-08T08:48:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The walk was run as two walker arms, not one: a second short arm re-read the BA Model tab ledger, which the first arm read still on its 'Loading where each input came from' line.",
+  "spec_asserts": "AMGT-bb-19 section 1: one walk by hand, then 'Then disarm.'",
+  "world_is": "Run 1 (stamp 20261008T083459Z, holder Opal_Bloomberg:39172:9bf49411) read the BA Model tab 3.5 s after the press with the ledger still loading (0 ledger rows). Run 2 (stamp 20261008T084357Z, holder Opal_Bloomberg:39672:17e6ed9f, armed 08:43:58Z, disarmed 08:44:51Z) waited for the ledger and read it drawn with 6 rows after 1,018 ms. Both arms were disarmed by the walker with 'LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... REFUSED'; status after run 2 reads armed=no armedBy=none. The walker slot was read disarmed before each arm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run2/ledger/ba_model_ledger_wait.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/instrument/bb19_ledger_walk.mjs"
+    ]
+  },
+  "notes": "Round 77 recorded the BA ledger as not drawn in any of its three runs (row AMGT_RESAPP-Z-W286-S2); this arm's wait is the difference in method. GET only; guard unchanged."
 }
 ]
 ```
