@@ -7587,6 +7587,25 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W112-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~112",
+      "surfaced_at": "2026-10-08T00:48:17Z",
+      "one_line": "The nine-form census totals 17 pairs, below the 20 the dry run counted; BNP reads 2 against a dry-run 5 although silver has grown.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-2 section 0: dry run counted BNP 5, HEI 3, SNPS 3, DG 2, ED 2, GPN 2, ADBE 1, NKE 1, SHOP 1 (20 pairs); silver has grown since so counts may be higher; CENSUS OK needs T at least 20.",
+      "world_is": "bh2_nine_forms.out: 19032 silver articles; BNP 2, HEI 3, SNPS 3, DG 2, ED 2, GPN 2, ADBE 1, NKE 1, SHOP 1; TOTAL 17; CENSUS FAIL (BNP fell). Eight of nine forms equal the dry run. Cause of the BNP gap not investigated; the dry run's method for BNP may differ from csl_pairs_sample.py's, or BNP-resting articles left the latest-article set.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/bh2_nine_forms.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
