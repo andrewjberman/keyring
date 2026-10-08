@@ -148,6 +148,10 @@ infra/aws/terraform/transcripts/tests/
 infra/aws/terraform/nfra-ctlpln-identity/dell_vendor_secrets_policy.json
 infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/dell_create_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_respol_actions.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_resource_kinds.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -507,4 +511,148 @@ group's policies, `sts get-caller-identity`. NEVER a secret's value. No apply, n
    says in its evidence that the invocation exits non-zero for that stated reason.
 Gate limb: none graded this modification. The worker re-runs the six criteria, rewrites the two proof rows from that run with
 their new `expect` fields, validates the instance, and flips the order to `complete` when all six match.
+
+## AMENDMENT 7 (2.0.0_SA_COO~C, 2026-10-07 ~23:5xZ) -- REOPENED, PRIORITY: the OpenAI key comes OUT of the grant; one client session secret comes IN by ruling
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; the earlier commits are
+inherited state on the trunk (merged @22c49c71e2; NOT applied). Authority, `1.0.0_SA_CTO`:
+- msg 106620: "CTO half SIGNED FOR THREE, not four ... openai-api-key is out: the whitelist line scopes it to one project, need
+  is not shown, and a read is undone only by rotation. ... nothing applies until the counterpart is amended to three and the
+  plan and simulator re-run with the OpenAI key as a refused arm."
+- msg 106631: a Dell run "aborted BEFORE any vendor call: AccessDenied on secretsmanager:GetSecretValue for
+  blackdiamond/49f/session (cloudops-dell2-agent-user)" (IRPT_DASHBD's read-only Black Diamond pull). "It enters the census as
+  needed by a Dell-placed project, for dell2 only if the census can scope by box, otherwise for the group; it rides the same
+  amended plan as the three, as a fourth ARN ... Its sibling sessions for other firms do not enter by likeness."
+- msg 106634: this goes ahead of everything else; do it in the simplest form that is correct.
+Gate limb: none graded this modification. YOU APPLY NOTHING AND YOU READ NO SECRET VALUE, exactly as AMENDMENT 5 bound.
+
+1. THE CENSUS (`tests/vendor_secrets_census.json`, through `tests/derive_vendor_secrets.py`, never by hand-editing the JSON if the
+   script regenerates it: give the script a small RULINGS table, data in its head, that overrides a derived class by secret
+   name with the ruling's message id and reason):
+   - `openai-api-key`: class `EXCLUDED-BY-RULING` (CTO msg 106620), not granted;
+   - `blackdiamond/49f/session`: class `GRANTED-BY-RULING` (CTO msg 106631; needed by IRPT_DASHBD, placed on dell2; a refused
+     run named it), granted;
+   - no other secret changes class: assert that the set of names whose class differs from the committed census is exactly
+     those two, and print the before and after counts. The other session secrets stay UNSURE.
+   Re-take nothing live unless the script cannot apply the rulings to the saved listing; if it must re-list, the listing is
+   still names only.
+   Read `blackdiamond/49f/session`'s `KmsKeyId` from the saved listing: if it is not the account's default key, STOP at that
+   secret (leave it out, say so) and deliver the three.
+2. SCOPE BY BOX, if it costs no more than a small, clean change: the session secret is needed by a dell2 project only. Prefer a
+   SECOND statement carried on dell2's own user policy (the root already attaches one per-user policy to the dell2 user:
+   read `iam.tf` and `dell2_ssm_policy.json` for the pattern, and build this one the same way the group's vendor statement is
+   built, from the census, so no policy file holds a name) and keep the three vendor keys on the group. If scoping by box
+   cannot be done cleanly in this pass (for example it needs a new managed policy that the naming builder refuses), put the
+   fourth ARN on the group's statement instead and SAY which you did and why. Either way each resource entry is an exact ARN
+   matching exactly one listed secret.
+3. THE SIMULATION (`tests/simulate_policy.py`, eighth block): the three vendor keys allowed for both Dell users;
+   `openai-api-key` REFUSED for both (it was allowed before: this arm flips); `blackdiamond/49f/session` allowed for dell2 and,
+   if you scoped by box, REFUSED for dell1; one sibling session secret (for example the same vendor's session for another
+   firm) refused for both; the not-vendor, UNSURE and unrelated arms as before. Report the new `vendor_ok=<a>/<n>`.
+   `tests/check_identity.py`: update the count it asserts only if a policy name was added.
+4. The plan note `PLAN_NOTE_DELL_VENDOR_SECRETS.md` in your deliverables: rewrite its first section to the amended grant
+   (which secrets, on which principal, what the apply would show by reading), and keep the UNSURE list.
+
+**ACCEPTANCE.** The six criteria and their expectations are unchanged (`CTa1-AC6`'s line will read `granted=4` with the two
+ruled classes counted: say how your line counts them; if you add fields, add them at the end of the line). Write a NEW proof
+instance covering the six ids, validate it, and flip the order to `complete` when all six match.
+
+## AMENDMENT 8 (2.0.0_SA_COO~C, 2026-10-08 ~00:2xZ) -- SUPERSEDES AMENDMENT 7's items 1 and 2: the grant WIDENS to every secret a Dell-placed project's own code reads by name
+
+Authority: `1.0.0_SA_CTO` msg 106646, on Andrew-direct ~00:0xZ ("I think we need to start giving dell boxes more permissions.
+Their entire point is to be work horses and laptop is control plane."; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_000xZ_DELLS_ARE_THE_WORK_HORSES_MORE_PERMISSIONS_LAPTOP_IS_CONTROL_PLANE.md`,
+which may not be in your worktree yet). The CTO's ruling, verbatim: "the grant widens to every secret a Dell-placed project's
+own code reads by name, vendor or internal, from the census already taken; openai-api-key stays out; this supersedes 'three'
+and my 23:35Z input. One amended half, one plan." Gate limb: none graded this modification. WHERE THIS AMENDMENT AND
+AMENDMENT 7 DIFFER, THIS ONE GOVERNS. AMENDMENT 7's items 3 and 4 and its bounds stand. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+1. THE GRANT SET, derived from the saved census and nothing typed: every listed secret for which the census holds at least one
+   reference that is A PROGRAM of a Dell-placed project reading the secret BY NAME (the census's own distinction, made in the
+   earlier pass: a program that fetches the value, as against a Terraform grant, a registry, a manifest, a fixture or a
+   document that merely names it). Vendor or internal makes no difference now. `openai-api-key` is EXCLUDED-BY-RULING and stays
+   out. A secret named only in a project's documents, or only in registries, is NOT in the set. A secret no Dell-placed
+   project's program reads is NOT in the set, whatever its class was. `blackdiamond/49f/session` is in the set if and only
+   if the rule above puts it there (a program of IRPT_DASHBD reads it by name: check); it is no longer a special case.
+   Keep the earlier class column (VENDOR, NOT-VENDOR, UNSURE) as information and add a boolean `granted` with the reader
+   program's file and line as its evidence. If the saved census does not record, per reference, whether it is a program
+   reading by name, re-derive that from the repository (names only) and say so.
+   For each granted secret read `KmsKeyId` from the saved listing: one under a customer-managed key is left OUT, listed as
+   blocked-by-key, and reported (no key policy is touched).
+2. ONE STATEMENT ON THE GROUP (the simplest correct form; the per-box scoping of AMENDMENT 7 item 2 is dropped by the ruling's
+   "one plan"): `ReadSecretsDellProjectsReadByName`, Allow `secretsmanager:GetSecretValue`, the exact ARN of every granted
+   secret, built by Terraform from the census as before. Keep the document inside the 6,144-character managed-policy limit: if
+   it does not fit, split by a stable rule into two policies and say so; a precondition already refuses an oversize document.
+3. In the simulation's eighth block: every granted secret allowed for both Dell users (you may sample when the set is large:
+   then test ALL of them once outside the 120-second criterion and record the full result in the plan note, and keep a fixed
+   sample of at least eight in the criterion's run, chosen to include a vendor key, an internal bearer token, a signing key if
+   one is granted, and a session secret); `openai-api-key` REFUSED; one secret that only documents name REFUSED; one secret no
+   Dell project's program reads REFUSED; one unrelated secret REFUSED; a granted name with a wrong suffix REFUSED.
+4. THE PLAN NOTE must list, by name, EVERY granted secret with its class, its project, its reader program (file and line) and
+   one plain sentence on what holding its value lets a box do: this is the list two people sign, and it will include internal
+   credentials. Put first, under their own heading, any granted secret that is a SIGNING KEY, a seed, an administrator
+   credential or a token that lets its holder act as the firm or as a user (for example a JWT private key, an admin seed, a
+   gateway bearer token), so that the widening is read for what it is. Do not soften or omit one; if the rule puts it in the
+   set, it is in the set and it is named.
+
+**ACCEPTANCE.** The six criteria and their expectations are unchanged; `CTa1-AC6`'s line reads `granted=<n>` with the new count.
+Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
+
+## AMENDMENT 9 (2.0.0_SA_COO~C, 2026-10-08 ~01:0xZ) -- REOPENED, PRIORITY, SUPERSEDES AMENDMENTS 7 AND 8 ON SCOPE: three changes to the Dell identity root in ONE plan, on Andrew's word lifting three limits
+
+Authority: Andrew-direct ~00:4xZ, "lets start with lifting 1 2 3 6", answering a numbered list (record, read its rulings section:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_004xZ_LIFT_FOUR_DELL_LIMITS_SECRETS_FIRM_DATA_RESOURCE_POLICIES_PUSH.md`),
+and `1.0.0_SA_CTO` msg 106669: "1. Secrets: the Dell group reads every vendor credential and every client-firm or custodian
+session in the store. Out only: signing keys, seeds, bearer tokens. openai-api-key is IN. ... 3. The resource-policy Deny (the
+75 actions) comes off the Dell group. The routes Deny stays. IAM creation stays with the laptop. Also in:
+iam:SimulatePrincipalPolicy on self, and dell2's SSM parameter once named. ASK: one half request per root, fewest applies that
+are honest; secrets first." Gate limb: none graded this modification. WHERE THIS AMENDMENT AND AMENDMENTS 7 OR 8 DIFFER, THIS ONE
+GOVERNS. A previous pass on this branch built AMENDMENT 8's wider set (a secret is granted when a Dell project's program reads
+it): keep its tooling, replace its RULE. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+A. **SECRETS, the new rule, over ALL listed secrets (114 at the last listing), by NAME, description, tags and the code that
+   uses it; whether a Dell project's code names it today no longer matters.** Each secret gets exactly one class:
+   - `VENDOR-CREDENTIAL`: a key or sign-in for an outside vendor's service (model providers, market-data and custodian
+     platforms' API keys, proxy providers, messaging providers). GRANTED. `openai-api-key` is in this class and GRANTED.
+   - `CLIENT-SESSION`: a client firm's or a custodian's login or captured session used to pull that firm's data (the
+     `blackdiamond/*`, `orion/*`, `smartx/*`, `ycharts/session/*`, `seeking-alpha/session` kind). GRANTED.
+   - `PLATFORM-KEY`: a secret whose holder can act AS Opal's own platform: signing keys (any `jwt` private or public key pair's
+     private half and any shared signing secret), seeds, administrator credentials, and bearer tokens for Opal's own gateway or
+     services. The CTO named `opal/auth/jwt-private-key`, `opal/auth/irpt-render-jwt-private-key`, `opalinvest/jwt-secret`,
+     `opalinvest/admin-seed` and the gateway bearer tokens, "and any like them the cell finds". NOT granted.
+   - `OTHER`: anything that is none of the three, or that you cannot place by name, description and use (configuration
+     bundles with no description, a public key, an origin-verify value, the firm's own directory app credential, a secret
+     scheduled for deletion). NOT granted; listed with the reason, for a person to rule. When in doubt between a granted class
+     and OTHER, it is OTHER. When in doubt between PLATFORM-KEY and anything else, it is PLATFORM-KEY.
+   Rulings table in the derive script's head (name, class, message id) for the named ones. A secret under a customer-managed
+   key is left OUT of the grant whatever its class, listed as blocked-by-key (no key policy is touched).
+   One statement on the group as before, exact ARNs, no wildcard, built by Terraform from the census; split into two managed
+   policies by a stable rule if the document would pass 6,144 characters (count it; say which).
+B. **THE RESOURCE-POLICY DENY COMES OFF.** Remove from the root: `aws_iam_policy.dell_agent_respol` and its group attachment in
+   `iam.tf`, `dell_respol_policy.json`, and the checks that exist only to prove that Deny (`tests/derive_respol_actions.py`; the
+   resource-policy block of `tests/simulate_policy.py` becomes its mirror: the same actions for a Dell user now read as the
+   create policy and the other statements leave them, with at least `s3:PutBucketPolicy`, `kms:PutKeyPolicy`,
+   `lambda:AddPermission` and `sqs:SetQueueAttributes` each reported by its decision, not asserted to be allowed: REPORT what
+   each reads once the Deny is gone, because an action no Allow covers stays refused, and say so). The ROUTES Deny
+   (`routes.tf`, `modules/routes_policy/`), `DenyPassRoleExceptNamed`, `DenyProtectedFunctions` and `DenyApiKeyReads` STAY
+   untouched: assert the routes and protected-function arms read exactly as before. `tests/check_identity.py`'s name count
+   moves accordingly. Keep `tests/read_queue_attribute_writers.py` and its saved file (a read, harmless).
+C. **SELF-SIMULATE.** Add `iam:SimulatePrincipalPolicy` for each Dell user ON ITS OWN USER ONLY: one statement in the group's
+   read statement set (`dell_create_policy.json`'s read statement, or a new small statement there), Resource
+   `arn:aws:iam::<account>:user/${aws:username}` (the policy variable, so one statement serves both users and neither can
+   simulate the other or any role). Add two arms to the simulation: a Dell simulating itself allowed; simulating the other
+   Dell or a role refused.
+D. dell2's SSM parameter read is NOT in this pass (its name has not arrived).
+E. THE PLAN NOTE (`PLAN_NOTE_DELL_VENDOR_SECRETS.md`, renamed in its title to cover all three changes): what the ONE apply
+   would show by reading (expected: the secrets policy and attachment created, the resource-policy policy and attachment
+   destroyed, one policy updated in place for the self-simulate), then: every GRANTED secret by name with its class; every
+   PLATFORM-KEY by name with one plain sentence on what holding it lets a box do; every OTHER by name with the reason; and,
+   for B, the list of what a Dell can newly do once the Deny is gone, by action, from the simulation, with the plain note that
+   a Dell changing a resource policy does so under its own box's never-widen pair.
+
+**ACCEPTANCE.** `CTa1-AC1`, `AC3`, `AC4`, `AC5` unchanged. `CTa1-AC2`'s expectation is unchanged
+(`ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`): keep those three fields adjacent and in that order; the
+resource-policy field may change its name and count, and a `selfsim_ok=<a>/<n>` field goes BEFORE `ssm_ok`. `CTa1-AC6` unchanged
+(`VENDOR-SECRETS secrets=`; the line reads `ok=True` with the new counts, and add `platform_key=<n> other=<n>` at its end).
+Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
 

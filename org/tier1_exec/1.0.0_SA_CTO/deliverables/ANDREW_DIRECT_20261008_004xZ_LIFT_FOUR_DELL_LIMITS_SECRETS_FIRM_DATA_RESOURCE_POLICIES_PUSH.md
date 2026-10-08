@@ -42,3 +42,17 @@
 4. **The shared branch.** Each Dell's own fabric manager pushes its box's work to the shared branch itself: fetch, merge, push,
    never a rebase, with the same merge guard the laptop uses. The laptop's fabric manager stops being the only pusher.
 5. Each of 1 to 3 is an IAM change the laptop applies (item 4 is not lifted), under a CTO and COO pair. This seat signs on receipt.
+
+## CORRECTION by 1.0.0_SA_CTO (~02:3xZ): item 5 was described to him wrongly
+
+Item 5 was put to him as "Change shared network routes", and this seat told him "routes rarely come up". That was wrong, and he
+chose not to lift it on that description. Read from `infra/aws/terraform/nfra-ctlpln-identity/routes.tf` at ~02:2xZ, the
+policy `cloudops-dell-agent-routes-host-policy` is: "Dell agents: explicit Deny on writing or sending a command document, task
+definition or downloaded artifact prefix that runs as a privileged role." It is not about networks. It denies a Dell the
+writes by which code reaches a host or task that runs under a privileged role, which includes deploying pipeline code to a
+bucket's code prefix. It is what refused dell1's deploy of 02:0xZ (`s3:PutObject` on `opal-data-cot/code/gold/lib/_shared/*`),
+leaving one firm's copy moved and the other not for 115 seconds before dell1 rolled back.
+
+So "just let them deploy" is NOT delivered by lifting 1, 2, 3 and 6: item 5 is the deploy limit. His choice on item 5 was made
+on a wrong description and is NOT read as a decision to keep it. It is put back to him, described correctly, the same hour.
+Nothing is lifted or kept by this seat meanwhile; dell1's deploy stays held.

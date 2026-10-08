@@ -18,6 +18,7 @@ string both become HOLE. The modules (scope, rootmap, cadence, policyrole, keyfi
 Python 3.9; ASCII only.
 """
 import argparse
+import ast
 import json
 import os
 import re
@@ -92,6 +93,34 @@ def load_key_rulings(path=None):
     return out
 
 
+def named_in_source(item, asked, text=None):
+    """[names] of `asked` that the item's own Python source file NAMES as code: a variable, a function, an attribute
+    (`directory_handler._bucket_for(...)`) or an imported name. The keyfill reader sees a variable only as a string
+    constant; a per-firm row names a function the file calls, so the row's match reads the file's code as well. Docstrings,
+    comments and strings do not count. [] when the file is not Python, unreadable or does not parse."""
+    path, src = opal_naming_keyfill._item_text(item, text)
+    if path is None or src is None or not path.endswith(".py") or not asked:
+        return []
+    try:
+        tree = ast.parse(src)
+    except (SyntaxError, ValueError):
+        return []
+    seen = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Name):
+            seen.add(node.id)
+        elif isinstance(node, ast.Attribute):
+            seen.add(node.attr)
+        elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)):
+            seen.add(node.name)
+        elif isinstance(node, (ast.Import, ast.ImportFrom)):
+            for al in node.names:
+                seen.add(al.name.split(".")[-1])
+                if al.asname:
+                    seen.add(al.asname)
+    return sorted(a for a in asked if a in seen)
+
+
 def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
     its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
@@ -104,6 +133,7 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     runtime_reader = runtime_reader or opal_naming_keyfill.runtime_bucket
     asked = sorted(set(r["bucket_from"] for r in (rulings or {}).values() if r.get("bucket_from")))
     names, _rb = runtime_reader(item, None, asked)
+    names = sorted(set(names) | set(named_in_source(item, asked)))
     for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
         if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
             return row, None
@@ -545,6 +575,116 @@ def keys_check(root, map_path, out=print):
     return 0 if ok else 1
 
 
+HOLE_CLASSES = ("carded", "source_bucket", "event_rule", "unknown_word", "other")
+_LINE_RE = re.compile(r"^(?P<kind>[A-Z-]+) (?P<type>\S+) (?P<cur>.*?) -> (?P<detail>.*?)  \[(?P<where>[^\]]*)\]$")
+
+
+def hole_class(line_type, detail):
+    """The class of a HOLE line, decided here and nowhere else: `carded` (the detail says a card skipped it and gave no
+    name), `source_bucket` (a bucket of a root that serves more than one firm whose firm could not be filled), `event_rule`
+    (an event rule whose on-{event} token is not ruled), `unknown_word` (a word in no vocabulary, an unresolved token, or a
+    first segment that is neither a source nor a tier), else `other`."""
+    d = str(detail)
+    t = str(line_type)
+    if "skipped by a card" in d and "the card gives no correct name" in d:
+        return "carded"
+    if t == "S3_BUCKET" and "this root serves more than one firm" in d and "could not fill {source}/{scope}" in d:
+        return "source_bucket"
+    if t == "EVENT_RULE" and "token is not ruled" in d:
+        return "event_rule"
+    if "is in no vocabulary" in d or "is an unresolved token" in d or "is neither a source nor a tier" in d:
+        return "unknown_word"
+    return "other"
+
+
+def _split_line(line):
+    """(kind, type, current, detail, where) of a printed item line, or None."""
+    m = _LINE_RE.match(line)
+    return None if m is None else (m.group("kind"), m.group("type"), m.group("cur"), m.group("detail"), m.group("where"))
+
+
+def all_roots(map_path, out=print, run_one=None):
+    """The run over every Terraform root: the denominator first (roots, mapped, each unmapped root by name with its name
+    count from the scope), then each mapped root in sorted order (its ROOTCHECK line and COMPLETED or STOPPED), then the
+    totals per kind and the holes per class; the last line is ALL-ROOTS. Returns 0 when ok (whatever the holes)."""
+    run_one = run_one or check_root
+    all_r = list(opal_naming_scope._roots())
+    doc = opal_naming_rootmap.load_map(map_path)
+    keys = sorted((doc.get("roots") or {}))
+    covered, problems = set(), []
+    for key in keys:
+        try:
+            covered.add(opal_naming_scope._map_key_root(key))
+        except ValueError as exc:
+            problems.append("map key %s: %s" % (key, exc))
+    unmapped = [r for r in all_r if r not in covered]
+    out("ROOTS total=%d mapped=%d unmapped=%d" % (len(all_r), len(keys), len(unmapped)))
+    for r in unmapped:
+        try:
+            n = str(len(opal_naming_scope.root_items(r, map_path)[0]))
+        except Exception as exc:  # an unreadable count is printed and fails the run, never dropped
+            n = "unread"
+            problems.append("unmapped root %s: name count unread: %s: %s" % (r, type(exc).__name__, exc))
+        out("UNMAPPED %s names=%s" % (r, n))
+    done, stopped, tot = 0, 0, dict((k, 0) for k in KINDS)
+    cls = dict((c, 0) for c in HOLE_CLASSES)
+    other_lines, items_all = [], 0
+    for key in keys:
+        lines, reason = [], ""
+        try:
+            run_one(key, map_path, out=lines.append, report_only=True)
+        except Exception as exc:  # a stopped root is counted, never dropped
+            reason = "%s: %s" % (type(exc).__name__, exc)
+        last = lines[-1] if lines else ""
+        if not reason and not last.startswith("ROOTCHECK "):
+            reason = "no ROOTCHECK last line (last printed: %r)" % (last,)
+        if reason:
+            stopped += 1
+            out("ROOT %s | %s | STOPPED %s" % (key, last or "-", reason))
+            continue
+        count = dict((k, 0) for k in KINDS)
+        holes = []
+        for ln in lines[:-1]:
+            parts = _split_line(ln)
+            kind = ln.split(" ", 1)[0]
+            if kind in count:
+                count[kind] += 1
+            if kind == "HOLE" and parts is not None:
+                holes.append(parts)
+            elif kind == "HOLE":
+                holes.append(("HOLE", "?", "?", ln, "?"))
+        fields = dict(p.split("=", 1) for p in last.split()[1:] if "=" in p)
+        items = int(fields.get("items", "-1"))
+        if sum(count.values()) != items:
+            problems.append("%s: the counts sum to %d, the last line says items=%d" % (key, sum(count.values()), items))
+        done += 1
+        items_all += items
+        for k in KINDS:
+            tot[k] += count[k]
+        for (_k, typ, cur, detail, where) in holes:
+            c = hole_class(typ, detail)
+            cls[c] += 1
+            if c == "other":
+                other_lines.append("OTHER-HOLE %s || %s %s -> %s  [%s]" % (key, typ, cur, detail, where))
+        out("ROOT %s | %s | COMPLETED" % (key, last))
+    out("TOTALS completed=%d stopped=%d " % (done, stopped) + " ".join(
+        "%s=%d" % (k.lower().replace("-", "_"), tot[k]) for k in KINDS))
+    out("HOLE-CLASSES " + " ".join("%s=%d" % (c, cls[c]) for c in HOLE_CLASSES))
+    for ln in other_lines:
+        out(ln)
+    for p in problems:
+        out("FAIL: " + p)
+    ok = (len(keys) + len(unmapped) == len(all_r) and done + stopped == len(keys) and not problems
+          and sum(cls.values()) == tot["HOLE"])
+    out("ALL-ROOTS ok=%s roots_total=%d mapped=%d unmapped=%d completed=%d stopped=%d items=%d right=%d fix=%d "
+        "not_asked=%d pattern=%d carded=%d refused=%d hole=%d carded_class_holes=%d source_bucket_holes=%d "
+        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d"
+        % (ok, len(all_r), len(keys), len(unmapped), done, stopped, items_all, tot["RIGHT"], tot["FIX"],
+           tot["NOT-ASKED"], tot["PATTERN"], tot["CARDED"], tot["REFUSED"], tot["HOLE"], cls["carded"],
+           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"]))
+    return 0 if ok else 1
+
+
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
     if argv and argv[0] == "keys":
@@ -554,6 +694,12 @@ def main(argv=None):
         kp.add_argument("--map", required=True)
         ka = kp.parse_args(argv)
         return keys_check(ka.root, ka.map)
+    if argv and argv[0] == "all":
+        pp = argparse.ArgumentParser(description="the run over every Terraform root, denominator first")
+        pp.add_argument("cmd")
+        pp.add_argument("--map", required=True)
+        pa = pp.parse_args(argv)
+        return all_roots(pa.map)
     if argv and argv[0] == "lines":
         lp = argparse.ArgumentParser(description="run a root and check its own lines")
         lp.add_argument("cmd")
