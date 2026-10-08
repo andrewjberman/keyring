@@ -1,0 +1,6 @@
+# /canonical-drive ADVI_COTBKF -- 2.0.0_SA_COO~C2 on desktop-n8rjv0a, 2026-10-08 17Z (after the 16:38Z reboot)
+
+## event 2026-10-08T17:0xZ | ADVI_COTBKF | L7 executing | 19 | 0/1 | 1/1 | live r1 | DRIVE FORWARD: re-seat after 16:38Z reboot; watcher pid 6680; inbox 0 unread (50/50 READ); ~40 found dead with uncommitted partial work (sweeps module + tests + chain edits, regrade runner missing) -> respawned into C:/dev/wk-cotbkf-40 to finish; cron 30m re-armed per LIVE_ARMS DELL2 row |
+## tick 2026-10-08T17:0xZ | ADVI_COTBKF | L7 executing | 19 | 0/1 | 1/1 | live r1 | NO-OP: ~40 respawned minutes ago, still writing (no commit yet, regrade runner not yet present); inbox empty |
+## tick 2026-10-08T17:3xZ | ADVI_COTBKF | L7 done -> real run | 19 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: ~40 complete (AC1 8 passed, AC2 control_same=True, proof VALID); drained @bf424e274b (11 of 11 paths, 0 dropped); worktree + branch removed; real run on trunk in flight; row D2-S29 (163 MATCH->DIFF) @505036461c |
+## event 2026-10-08T17:4xZ | ADVI_COTBKF | L7 done -> L8 | 19 | 1/1 | 1/1 | live r1 | DRIVE FORWARD: real run on trunk identical (SWEEP-REGRADE ... control_same=True); round-close-check REFUSED only on AC3 UNGRADED (CVO's at L9); packet ADVI_COTBKF_ROUND_19_DRAIN_END_20261008.md to 3.0.0_SA_CVO |
