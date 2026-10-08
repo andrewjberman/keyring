@@ -22,49 +22,53 @@ your spawn line names; every path below is relative to that root. No vendor call
 - "Never `bun install`. Provision a worktree only with `wk-provision.sh --node-modules link` (it links C:\dev\ajb_workspace\portal\node_modules, the kit tree) or `none`. The rest of 106215 stands: bun only inside a portal tree holding node_modules, always --no-install, no registry-reaching probe."
 - "research browsing only when necessary; no packages, no installs, no file fetched onto the box."
 
-## 1. YOUR CELL (inlined from the round-6 addendum-L decomposition)
+## 1. YOUR CELL (inlined from the round-6 addendum-L decomposition, RECUT 2026-10-08 on 1.0.0_SA_CTO~DELL2 ruling msg 1250)
 
-### `YCD-u-6` -- the AnalysisReport schema carries the served OPAL_ENGINE form (contract hop; FWD-1)
-- `docs/contracts/investor-reporting/v1/AnalysisReport.schema.json`: add the OPAL_ENGINE form as a NEW, ADDITIVE branch that matches
-  the committed portal type `portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` (your portal worktree is at
-  d1b21c97). Do not change, narrow or remove any existing branch. Read how e-6 shaped the type before writing the schema.
-- `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/u6_checks.py` (new): one argument, one RESULT line.
-  - `schema`: validates every existing AnalysisReport fixture in the repo against the schema as it is at HEAD and as you changed it;
-    every document valid before is still valid (`RESULT: schema PASS` only then). Name the fixtures it found and count them.
-  - `regen`: runs the portal's wire generator (`portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts`; read it for its
-    out-dir argument) against the changed schema, writing to a temporary directory and NEVER into `contracts/wire/`. It then compares
-    the generated `AnalysisReport.ts` with the committed one byte for byte: `RESULT: regen PASS` only when they are identical. Run bun
-    from inside `portal/` with `--no-install`.
-  - `census`: lists every reader of `AnalysisReport.schema.json` (the validator, the generator, tests), found by a search whose
-    denominator is printed, and states for each that it reads the new branch without error: `RESULT: census PASS` only then.
+### `YCD-u-6` -- the portal generator builds AnalysisReport.ts from the served v2 schema (contract hop; FWD-1)
+The served AnalysisReport contract is `infra/aws/lambda/investor-reporting/_contracts/AnalysisReport.v2.schema.json` (built by
+YCD-s-6 @a9bb757ee3). The v1 schema `docs/contracts/investor-reporting/v1/AnalysisReport.schema.json` is FROZEN by a sha256 pin
+(`test_v1_untouched`). The portal generator still builds AnalysisReport.ts from v1. This cell moves that ONE source to v2.
+- DISCARD the earlier v1 edit on this branch (commit 0b6115b205): restore `docs/contracts/investor-reporting/v1/AnalysisReport.schema.json`
+  to its bytes at `git merge-base HEAD CLOUD`. Never edit v1 or v2 schema content.
+- `portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts`: make the AnalysisReport document schema (and only it) read from
+  the v2 path above, and make its generated header cite that path. Every other contract keeps its v1 source unchanged. The portal is a
+  git submodule at d1b21c97 on branch `wk-IRPT_YCDGEN-6-portal`; commit your portal edit there first, then commit the submodule pointer
+  in the outer worktree. Do NOT write into `contracts/wire/`.
+- `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/u6_checks.py`: rework the three arms (one argument, one RESULT line):
+  - `schema`: the v1 file's sha256 equals its merge-base copy, AND every AnalysisReport v2 fixture under
+    `infra/aws/lambda/investor-reporting/_contracts/fixtures/` validates exactly as its file name says (valid/invalid); count them.
+    `RESULT: schema PASS` only then.
+  - `regen`: runs the changed generator (bun from inside `portal/`, `--no-install`) to a temporary directory, then compares the generated
+    `AnalysisReport.ts` with the committed `portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` with the leading header
+    comment block EXCLUDED from both; prints the first differing line if any. `RESULT: regen PASS` only when the bodies are identical.
+  - `census`: lists every reader of either AnalysisReport schema file (validator, generator, tests; search denominator printed) and runs
+    the python tests among them (including `_contracts/tests/test_analysisreport_v2.py`); `RESULT: census PASS` only when each reader is
+    named and every test run passes.
 
 ## 2. THE CONTRACT YOU BUILD AGAINST
 
-**R19 The AnalysisReport schema carries the served OPAL_ENGINE form.** The v1 schema gains the OPAL_ENGINE form as a new branch that
-matches the committed `AnalysisReport.ts` at d1b21c97. Every document valid before stays valid. The generator, run to a temporary
-directory against the new schema, produces an `AnalysisReport.ts` byte-identical to the committed one. Every reader of the schema is
-named and read against the new branch. Why (measured, row IRPT_BCKEND-S388): today a regeneration REMOVES 56 lines from the committed
-type, the OPAL_ENGINE form cell YCD-e-6 added by hand on 2026-10-05; the schema (last changed 2026-09-22) does not carry it.
+**R19 (recut) The wire type is generated from the served contract.** The portal generator reads AnalysisReport from the v2 schema; v1
+stays byte-frozen; the generated AnalysisReport.ts body equals the committed one (header excluded). Why (measured, rows W6-S1..S3):
+the committed type carries the OPAL_ENGINE form that v2 defines, while the generator still reads v1, so a regeneration today REMOVES it.
 
 ## 3. WHAT YOU NEED TO KNOW
 
-- The committed type is the truth to match: `portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` at d1b21c97. Do NOT
-  edit any file under `portal/` -- this order writes the schema and your check script only.
-- The generator: `portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts`. It can write to an out-dir; never let it write
-  into `contracts/wire/`. If you cannot make it write elsewhere without editing it, file a row and stop that arm.
-- If no byte-identical result is reachable with an additive branch, file a row naming the first differing line and why; do not
-  change an existing branch to force it.
+- The committed type is the truth to match: `portal/src/pages/InvestorReporting/contracts/wire/AnalysisReport.ts` at d1b21c97.
+- If the v2-generated body cannot equal the committed body without editing a schema, file a row naming the first differing line and
+  why; do not edit a schema or the committed type to force it.
 - Python checks: `python <script> <arm>` from the worktree root. ASCII only. No client figure and no secret in any committed file.
 
 ## 4. SURFACES AND BOUNDS
 
-You READ (never edit): everything outside your `<paths>`, including all of `portal/`. NEVER: a vendor call, any AWS call, a deploy, a
-`bun install`, a package fetch, an edit under `portal/`. A check you cannot satisfy inside your `<paths>` is a surprise row appended to
+You READ (never edit): everything outside your `<paths>`. NEVER: a vendor call, any AWS call, a deploy, a `bun install`, a package fetch,
+an edit under `portal/` other than gen-wire.ts. A check you cannot satisfy inside your `<paths>` is a surprise row appended to
 `org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v1.md` (one `## <ROW-ID> -- <title>` section with a
-fenced json row; ids `IRPT_YCDGEN-W6-S<k>`, next unused k; `fabric` "laptop"; `surfaced_at` the real UTC time).
+fenced json row; ids `IRPT_YCDGEN-W6-S<k>`, next unused k; `fabric` "dell2"; `surfaced_at` the real UTC time).
 
 <paths>
 docs/contracts/investor-reporting/v1/AnalysisReport.schema.json
+portal
+portal/src/pages/InvestorReporting/__tests__/fe-s-13/gen-wire.ts
 org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/u6_checks.py
 org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/IRPT_YCDGEN.TO-YCD-u-6.analysisreport-schema-carries-opal-engine.proof_of_spec.json
 org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v1.md
@@ -72,9 +76,9 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
 
 ## 5. PROOF OF SPEC (each invocation LITERAL, run from your worktree root)
 
-- **AC1** -- every AnalysisReport document valid before the change is still valid against the changed schema
-- **AC2** -- the generator run against the changed schema reproduces the committed AnalysisReport.ts byte for byte
-- **AC3** -- every reader of the schema is named and reads the new branch
+- **AC1** -- v1 is byte-frozen and every v2 fixture validates as its name says
+- **AC2** -- the generator, reading v2, reproduces the committed AnalysisReport.ts body (header excluded)
+- **AC3** -- every reader of either AnalysisReport schema is named and its tests pass
 
 <proof_of_spec>
   <criterion id="AC1" cell_refs="YCD-u-6"><invocation>python org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/u6_checks.py schema</invocation><expect>^RESULT: schema PASS</expect></criterion>
@@ -84,11 +88,11 @@ org/missions/D9/IRPT/IRPT_YCDGEN/surprise-channel/investigations/INVESTIGATION_v
 
 ## 6. WHEN YOU ARE DONE
 
-Commit in your outer worktree, then write the instance at
+Commit in your outer worktree, then overwrite the instance at
 `org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/0.9.0_WK_IRPT_YCDGEN~6/IRPT_YCDGEN.TO-YCD-u-6.analysisreport-schema-carries-opal-engine.proof_of_spec.json`
 with `to_id` `IRPT_YCDGEN.TO-YCD-u-6.analysisreport-schema-carries-opal-engine`, check it with `python .tools/proof-of-spec-check.py
-<instance>`, and commit it. Report once: each criterion's verdict line with the output above it; the fixtures counted; the readers
-named; files written; rows filed. Leave the `<status>` flip to the issuer.
+<instance>`, and commit it. Report once: each criterion's verdict line with the output above it; files written; rows filed. Leave the
+`<status>` flip to the issuer.
 
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
@@ -101,4 +105,10 @@ a published contract document changes; nothing deployed moves.
 <workstream>R6L_ANALYSISREPORT_CONTRACT</workstream>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
+**AMENDMENT 2026-10-08 (2.0.0_SA_COO~G2, issuer):** recut on 1.0.0_SA_CTO~DELL2 ruling msg 1250 (answering my msg 1245): the
+v1-additive cell (ruling 1194) is superseded; the first proof instance (df5280bce5: AC1 PASS, AC2 FAIL, AC3 FAIL) measured that v1 is
+sha-pinned and the served contract is v2. Cell, contract, paths and all three criteria rewritten; worker class, risk and chain unchanged.
+Rows W6-S1..S3 resolve against this recut. Gate limb: none graded this modification (a MODIFIED order; LIMB 6 fires only on a newly
+added one, and this order declares `<placeholders>NONE</placeholders>`, so GATE viii has nothing to grade).
+
 <status>issued</status>
