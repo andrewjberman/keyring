@@ -991,6 +991,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "PRD C-BUCKET / C-TIERS: opal-data-transcripts is NFRA_TRNSPT's one store, written by this project's pulls; FWD-8 names its readers (CTO msgs 1542, 1567).",
     "world_is": "Another project's Teams chat-assist Lambda writes chat_messages bronze and chat_assist state into the same bucket under the teams/transcripts prefix, with no NFRA_TRNSPT registry row, decomposition cell or owner on this project's record.",
     "notes": "Counts and keys only; no object content was read. Not a hazard to the project's own partitions (disjoint prefixes)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S5",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T21:05:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "The mail wipe applied to Research transcript text (round 8 ruling) removes COMPANY names as if they were person names, so FWD-5's company read finds almost nothing: Microsoft 67 raw utterances -> 0 stored matches, Apple 24 -> 0, Broadcom 15 -> 0, Exxon 6 -> 0, NVIDIA 32 -> 8.",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (rule the transcript wipe: a company-preserving variant or an allowlist of securities, then a re-fold and re-write of the 29 silver objects, a SERVED act)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D9/NFRA/NFRA_TRNSPT/deliverables/2.0.0_SA_COO~T2/R10_COMPANY_READ.json: research_read.company_turns over the 29 stored objects (15,918 non-held-out rows) vs whole-word counts in research_transcripts/structured/*.json, counts only",
+        "round 8 fold wipe counts: name 14,153 replacements over 20,473 rows (R8_CLOSE.md); data/transcripts/scripts/outlook/wipe.py is the mail source's rule (parse_silver.py:5-6: 'No PII wipe on transcripts this round: staff names are the data')",
+        "decomposition round 8 addendum 1: issuer ruling 'speaker kept; utterance TEXT is wiped' through the mail wipe_blocks"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD FWD-5 ACCEPT: an analyst who now opens a file to find what was said about one company gets it without opening the file; round-9 analysis E1: given a company, return its speaker turns.",
+    "world_is": "The read works (NVIDIA: 8 turns in 5 meetings) but the stored text has lost most company names to the mail wipe, so the read is blind to them; some loss is also from held-out rows.",
+    "notes": "Counts only; no transcript text read into any record. The issuer's round-8 ruling chose the mail wipe for the text; that choice is the cause."
   }
 ]
 ```
