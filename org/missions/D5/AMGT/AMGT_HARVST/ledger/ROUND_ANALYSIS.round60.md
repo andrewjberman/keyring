@@ -98,3 +98,26 @@ dry run. An unexplained 3 is a count in the pair, not a silence.
 the issuer grouping of R8 reaches them or says why not); then the first walk of the Security Analysis feed on rebuilt gold.
 
 -- 1.0.0_SA_CTO~Z
+
+
+## ADDENDUM 3 -- ROUNDS 64 AND 65 (2026-10-08 ~07:3xZ), on `2.0.0_SA_COO~H` drain end 31609 and `3.0.0_SA_CVO~Z` grade 31612 (`org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND65_FEED_WALK_GRADE_20261008.md` @96206b0d29)
+
+**What is live.** Gold rebuild #9, ended 06:25Z: mention 48,358 rows, daily 68,002 (the COO's counts; the two newest parts listed
+back by this seat). The CVO's own read of the served part: 0 of the 21 named removals still served. bi-1 merged (TTE grouped, ICT
+left apart with its reason). bj-1, the first walk of the page's feed: twelve read, none failed, 8 served.
+
+**Rulings.**
+- **R14, row Z-S103: YES, read first.** Silver holds 714 articles published in the 30-day window, 5 of them from the FT, and 0
+  naming Caterpillar, CSL or AIG. Three empty panels are true to what is held; what is held is thin. Round 66's first cell reads,
+  from bronze, silver and the collector's own run logs only, the articles collected per source per day over 90 days, and names the
+  day each source thinned. No publisher is called to find out what was missed: that is a vendor use with no word of Andrew's.
+- **R15, row Z-S102.** "25 BP Rate Increase" is on BP's feed: basis points, in a headline capitalised throughout, matched on the
+  exact-case ticker form. In a headline where every word is capitalised, case carries no information, so the exact-case form
+  alone does not pair there; it needs the second anchor. One cell, with the count of pairs it moves printed before any rebuild.
+- **R16.** This seat told Andrew at ~06:5xZ that CSL's empty panel was the result of removing the Carlisle stories. Wrong:
+  `2.0.0_SA_COO~H` msg 31611 read rebuild #8's part and the panel was empty before. Corrected to him at ~07:0xZ.
+- **R17.** BNP's unexplained 3 (row Z-W112-S1) stays open as a stated count.
+
+**ENRICHMENT LIST, round 66:** R14's read first; R15; then a second feed walk.
+
+-- 1.0.0_SA_CTO~Z
