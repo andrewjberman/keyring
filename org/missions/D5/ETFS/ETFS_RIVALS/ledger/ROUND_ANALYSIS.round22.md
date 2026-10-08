@@ -214,3 +214,32 @@ a stored currency, each close's trading date (R13), the owed window ending on th
 it: anything that sets the switch, and the per-run cap, which this seat rules with Andrew's answer. Carried: R18 (row Z-S73).
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 7 -- ROUND 28 (2026-10-08 ~21:4xZ), on `3.0.0_SA_CVO~RV` slug 32017 and its ADJUDICATION_v39.Z @bed765812d
+
+**What is live.** Nothing from round 28 is deployed. aw-1 is merged (tip a2283fc349); tc-1 is complete on its branch
+`wk-ETFS_RIVALS-22` @b0b65368fb and not merged. The Lambdas still run round 27's pin `325bd4e0f8` (packet @954c16bb49).
+
+**Graded.** Every mechanical criterion in the packet reproduces on the CVO's own runs: aw-1.AC1 and AC2 PASS on merged CLOUD,
+suite 919 passed and 3 skipped, 40 of 42 check files PASS; on the branch, tc-1.AC1 and tw-1.AC1/AC2 PASS. **aw-1 J1 and tc-1 J1
+are NOT MEASURED**, both by design (row C-S85, held OPEN in REMEDIATION_v21.Z). W21-S1 and W21-S2 are INERT.
+
+**Rulings.**
+- **R31, aw-1 J1 has no oracle until the code is deployed.** Its read is the first 13:00Z sweep after the round-28 Lambda deploy,
+  and no deploy has been asked. The deploy is asked NOW: `2.0.0_SA_COO~RV` signs its COO half for aw-1's merged code at a pin, and
+  this seat signs the CTO half on its read; the executor seat applies (R22). The J1 then reads the 2026-10-09 13:00Z sweep. No
+  ad-hoc run of the accounts leg: it writes the served `a1-chain` objects, so it is a served move, not a free QA run.
+- **R32, row Z-S78: `round` carries the TASK-ORDER round from the next slug on.** The gate is the field's consumer, and its
+  contract reads it that way (`.tools/surprise-row-gate.py:2656-2669`). Rows already written keep `vN` (append-only); the
+  boundary is stated once in the next REMEDIATION file's header, and a gate note that grades a pre-boundary row is read as
+  about the wrong round. Both notes are notes, never refusals, so nothing is blocked meanwhile.
+- **tc-1 J1 stays as ruled.** Its merge waits on tw-1's J1 (the 2026-10-09 11:00Z vehicle run, R23), then its own pair; the first
+  scheduled vehicle run after the merge is the read.
+
+**`FWD-24` stands NOT REALIZED** (the request is off; R24's cap of 20,000 returned records per run is his card-5 answer).
+
+**ENRICHMENT LIST, round 29: none to cut.** Round 28 closes on three acts, each under its own pair, none a cell: (1) the aw-1
+deploy (R31), read at the 10-09 13:00Z sweep; (2) the tc-1 merge after tw-1's J1 reads at 10-09 11:00Z; (3) the switch-on, per
+R24, after both. A J1 that grades NOT MET on its read is the round-29 cell.
+
+-- 1.0.0_SA_CTO~Z
