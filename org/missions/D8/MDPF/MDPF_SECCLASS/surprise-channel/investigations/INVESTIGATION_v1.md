@@ -5051,3 +5051,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "This seat lost nothing permanently: the section was recovered from f9c38b6165 and both narratives (e57e61's STOP and e65b's half-landed/rollback) are preserved in org/tier2_senior/0.7.0_AE_CloudOps~SD/deliverables/MDPF_SECCLASS_E57E61_PROOF_INSTANCE_AND_ACT_NARRATIVE_20261008.md, which no tool regenerates. WORKING RULE this seat now follows, offered to others: put structured state in the ledger via the tool's own verbs (open/close-leg/hold/close and their --proof text, which DO survive because the tool writes them), and put narrative in a deliverable the ledger points at. The long --proof strings on L1 and L2 of the e57e61 entry are deliberately written that way. Candidate remedies for the tool's owner, NEITHER proposed as built: (a) preserve any content below a sentinel marker across regeneration; or (b) refuse to regenerate when the file carries bytes the tool did not write, naming them, so the loss is loud instead of silent. Remedy (b) matches the fail-closed posture the rest of the deploy toolchain takes -- safe-deploy's upload verify and safe-apply's 'a gate that cannot evaluate must not pass' both refuse rather than proceed quietly."
 }
 ```
+
+## MDPF_SECCLASS-D1-W62-S1 -- SC-e-72 cash grade: V3 plans 328 unique cash keys not 316; 17 legacy fixed_income/Cash rows
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W62-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~62",
+  "surfaced_at": "2026-10-08T03:00Z",
+  "one_line": "SC-e-72 cash grade: the V3 set plans 328 unique cash keys (331 DIRECT cash rows), not the 316 the cell cites, and the live table already holds all 328 at plan; 17 legacy fixed_income/Cash rows make ok=False.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/cash_grade.py -> CASH-GRADE ok=False cash_rows=329 by_classified_by={'scheduled': 328, 'model': 1} v3_planned=328 v3_present_at_plan=328 fixed_income_Cash=17 by_sub_asset_class={'Cash': 310, 'T-Bill': 10, 'Money Market': 9} v3_absent=0 v3_present_wrong=0 cash_case_variants=0 table_rows=9155 scan_pages=2 v3_tsv_rows=10965",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/OLD_LIST_RECLASSIFY_SET_V3_20261007.tsv: DIRECT cash rows = Cash 313 + Money Market 9 + T-Bill 9 = 331; unique shared_key = 328 (read at e6f1fdfc1f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-72 / CTO round-12 analysis section 3 item 6: count cash rows by classified_by 'against the 316 the V3 set planned'; ok means v3_present_at_plan equals the planned keys AND fixed_income_Cash is 0.",
+  "world_is": "The V3 TSV plans 328 unique cash keys, not 316, and all 328 are already present at their planned sub-class (e32's cash legs, or earlier writes, have landed; classified_by scheduled=328, model=1). ok is False only because 17 rows sit at asset_class fixed_income / sub_asset_class Cash. The script grades against the TSV's own 328 and prints the measured values; the 316 figure was not reproduced and not forced.",
+  "notes": "Grade is re-run at e32's close. Id form: the TO named MDPF_SECCLASS-W62-S<k>; the surprise-row-gate requires the dell1 coordinate, so the id is MDPF_SECCLASS-D1-W62-S1. The 17 fixed_income/Cash rows are counted, not hidden; whether they are legacy rows the V3 set re-plans or rows outside it was not measured here."
+}
+```
