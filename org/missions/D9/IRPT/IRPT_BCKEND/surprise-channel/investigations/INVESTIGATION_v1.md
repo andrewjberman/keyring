@@ -21309,3 +21309,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The check prints 'FAIL: -k x10_composes_without_custody_row rc 0: 1 passed' and IB82-1-AC2 FAIL. Fix is one byte in the COO's check (replace 0x08 with the two characters backslash b); the order stays open until then. disarm_owner is the issuer."
 }
 ```
+
+## IRPT_BCKEND-D2-S7 -- D2-W177-S4 disarmed: the issuer's p82 check carried a 0x08 byte for ; repaired, IB82-1-AC2 PASS
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S7",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T19:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W177-S4: the issuer's AMENDMENT 1 edit to checks/r82/p82_cells.py (a356481e93) wrote the regex word-boundary as a literal backspace byte (0x08) because the edit script's string escaping collapsed the two-character escape, so the x10_composes_without_custody_row pass-count could never match. The issuer replaced the byte with the two-character escape (0 bytes 0x08 remain) in the commit that carries this row; re-run: IB82-1-AC2 PASS (-k x10_composes_without_custody_row 1 passed; test_repository 24, test_retained_repository 9, test_retention 21 passed). The assertion is unchanged; the defect was the issuer's, not the worker's.",
+  "one_line": "The E9 AC2 check now grades what it asserts; the worker's fix passes it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "od -c of line 56 showed \b (0x08) before the fix; byte count 0 after",
+      "p82_cells.py . IB82-1-AC2 -> IB82-1-AC2 PASS"
+    ]
+  },
+  "spec_asserts": "A criterion's check grades the stated assertion.",
+  "world_is": "It does again."
+}
+```
