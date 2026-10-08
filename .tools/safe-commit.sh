@@ -348,41 +348,75 @@ fi
 # PRESERVED byte-for-byte from the pre-queue safe-commit.sh, EXCEPT the
 # sensitive-leak detection now calls the SHARED cg_sensitive_hits (no drift).
 # ==========================================================================
+# LOCK RECLAIM BY LIVENESS (GitOps F2; 1.0.0_SA_CTO FAST_FIX_RULINGS_20261008_162xZ.md item 7). The old loop deleted the
+# lock once its DIRECTORY was 60 s old; nothing refreshed that mtime, so a LIVE holder whose gates ran past 60 s lost
+# its lock and two commits shared one index, with no log row. Now a waiter reclaims only when (a) the holder pid is
+# dead, (b) no pid file appeared for 10 polls, or (c) it has watched the SAME live holder for LOCK_STALE_SEC, counted
+# by its own loop and never by mtime. Every reclaim appends LOCK-RECLAIM, every waited acquisition LOCK-WAIT, to
+# AUDIT_LOG. The wait is `read -t 1` on a held-open FIFO (no process per poll; inbox-watch.sh's _wait5 pattern), with
+# `sleep 1` as the fallback. Harness: extract this block (LOCK_DIR= .. LOCK_ACQUIRED=1) and source it.
 LOCK_DIR="${SAFE_COMMIT_LOCK_DIR:-$(git rev-parse --absolute-git-dir 2>/dev/null)/commit-queue.lock}"
-LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-60}"
+LOCK_TIMEOUT_SEC="${SAFE_COMMIT_LOCK_TIMEOUT:-300}"
+LOCK_STALE_SEC="${SAFE_COMMIT_LOCK_STALE_SEC:-600}"
 LOCK_ACQUIRED=0
 elapsed=0
+_lk_nopid=0
+_lk_same=""
+_lk_same_n=0
+_lk_fd=0
+_lk_reclaim() {   # $1 holder seen, $2 reason; re-read first so a lock a peer just re-took is never removed
+  local _now=""
+  if [ -f "$LOCK_DIR/pid" ]; then read -r _now < "$LOCK_DIR/pid" 2>/dev/null || true; fi
+  if [ "$1" != "none" ] && [ -n "$_now" ] && [ "$_now" != "$1" ]; then return 0; fi
+  if [ "$1" = "none" ] && [ -n "$_now" ]; then return 0; fi
+  rm -rf "$LOCK_DIR" 2>/dev/null || true
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) LOCK-RECLAIM  ${AGENT:-UNKNOWN}  holder=$1  reason=$2  waiter=$$" >> "$AUDIT_LOG" 2>/dev/null || true
+  return 0
+}
 while ! mkdir "$LOCK_DIR" 2>/dev/null; do
-  if [ -f "$LOCK_DIR/pid" ]; then
-    holder_pid="$(cat "$LOCK_DIR/pid" 2>/dev/null || true)"
-    if [ -n "$holder_pid" ] && ! kill -0 "$holder_pid" 2>/dev/null; then
-      rm -rf "$LOCK_DIR" 2>/dev/null || true
-      continue
+  if [ "$_lk_fd" -eq 0 ]; then
+    _lk_fd=2   # 2 = tried; 1 = FIFO open
+    _lk_fifo="${TMPDIR:-/tmp}/safe-commit-wait.$$"
+    if mkfifo "$_lk_fifo" 2>/dev/null; then
+      if exec 9<>"$_lk_fifo"; then _lk_fd=1; fi
+      rm -f "$_lk_fifo" 2>/dev/null || true
     fi
   fi
-  lock_mtime=""
-  if command -v stat >/dev/null 2>&1; then
-    lock_mtime="$(stat -c %Y "$LOCK_DIR" 2>/dev/null || true)"
-  fi
-  if [ -n "$lock_mtime" ]; then
-    now_s="$(date +%s)"
-    if [ $((now_s - lock_mtime)) -ge "$LOCK_TIMEOUT_SEC" ]; then
-      rm -rf "$LOCK_DIR" 2>/dev/null || true
+  _lk_holder=""
+  if [ -f "$LOCK_DIR/pid" ]; then read -r _lk_holder < "$LOCK_DIR/pid" 2>/dev/null || true; fi
+  if [ -n "$_lk_holder" ]; then
+    _lk_nopid=0
+    if ! kill -0 "$_lk_holder" 2>/dev/null; then
+      _lk_reclaim "$_lk_holder" "holder-dead"
       continue
     fi
-  elif find "$LOCK_DIR" -maxdepth 0 -mmin +1 2>/dev/null | grep -q .; then
-    rm -rf "$LOCK_DIR" 2>/dev/null || true
-    continue
+    if [ "$_lk_holder" = "$_lk_same" ]; then _lk_same_n=$((_lk_same_n + 1)); else _lk_same="$_lk_holder"; _lk_same_n=0; fi
+    if [ "$_lk_same_n" -ge "$LOCK_STALE_SEC" ]; then
+      _lk_reclaim "$_lk_holder" "live-holder-${_lk_same_n}-polls"
+      _lk_same_n=0
+      continue
+    fi
+  else
+    _lk_nopid=$((_lk_nopid + 1))
+    if [ "$_lk_nopid" -ge 10 ]; then
+      _lk_reclaim "none" "no-pid-file-10-polls"
+      _lk_nopid=0
+      continue
+    fi
   fi
   elapsed=$((elapsed + 1))
   if [ "$elapsed" -ge "$LOCK_TIMEOUT_SEC" ]; then
-    echo "ERROR: safe-commit mutex held >${LOCK_TIMEOUT_SEC}s by PID $(cat "$LOCK_DIR/pid" 2>/dev/null || echo unknown)." >&2
+    echo "ERROR: safe-commit mutex held >${LOCK_TIMEOUT_SEC}s by PID ${_lk_holder:-unknown}." >&2
     echo "       Other agent's commit stuck or hung. Inspect $LOCK_DIR." >&2
     exit 3
   fi
-  sleep 1
+  if [ "$_lk_fd" -eq 1 ]; then read -r -t 1 -u 9 _lk_x || true; else sleep 1; fi
 done
+if [ "$_lk_fd" -eq 1 ]; then exec 9<&- || true; fi
 echo "$$" > "$LOCK_DIR/pid"
+if [ "$elapsed" -gt 0 ]; then
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) LOCK-WAIT  ${AGENT:-UNKNOWN}  ${elapsed}s" >> "$AUDIT_LOG" 2>/dev/null || true
+fi
 LOCK_ACQUIRED=1
 trap '[ "$LOCK_ACQUIRED" -eq 1 ] && rm -rf "$LOCK_DIR" 2>/dev/null || true' EXIT
 
