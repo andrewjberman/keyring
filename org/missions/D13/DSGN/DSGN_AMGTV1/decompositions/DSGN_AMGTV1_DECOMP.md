@@ -2219,3 +2219,23 @@ Each order carries two criteria: its check and the battery.
 **Then:** the drain, battery29 with no skip on the combined candidate, `bun test` of the Freshness page, the one real run on a local build
 against the live function (AMD and ASML Thesis tab; /freshness on BA, a checked row and a no-record row), CTO review, and ONE DEV push on
 Andrew's word.
+
+## v54 -- ROUND 54 (issuer, 2026-10-08 ~22:5xZ) -- ONE BATCHED REPAIR CELL ON THE FRESHNESS PAGE (DIRECT ACT)
+
+**Rectangle:** the CTO's round-53 verdict (msg 32088) and the rows it routed to this round. This is the round-54 list in
+`round53/ROUND53_CLOSE.md` @4a5b10aaf3:
+- the finding: a no_record Seeking Alpha cell carries data-state "collected";
+- DSGN_AMGTV1-Z-S25: the day cells wrap;
+- DSGN_AMGTV1-Z-S26: the head "Research pack" names the built analysis.
+
+**Base:** the round-53 candidate portal 84e13d0f, CTO-approved for DEV. Its DEV push waits on Andrew's word.
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzf-1` DIRECT ACT (three repairs batched; under the size floor; `<risk>LOCAL</risk>`) | FWD-27 (the cell carries the served state; a day on one line; two packs, two phrases) | `pages/Freshness/Freshness.tsx`, `pages/Freshness/freshnessRows.ts`, `pages/Freshness/Freshness.test.tsx` | ~118 (worker-light) |
+
+**L5 ruling (S26):** the column head is "Built analysis". This is the head form of "the analysis built for this name".
+**Check:** `round54/checks/r54.cjs`. At the base 84e13d0f it reads 1 of 4: arms 1-3 FAIL as expected, PLANTED passes. On a scratch
+reference edit it reads 4 of 4, and `round53/checks/r53a.cjs` still reads 3 of 3 there.
+**Chains:** 1. **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL.
+**Then:** the drain, battery29 and the Freshness bun test on the stacked candidate, a /freshness real run, and CTO review.

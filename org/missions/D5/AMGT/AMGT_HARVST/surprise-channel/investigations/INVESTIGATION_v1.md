@@ -8009,6 +8009,32 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S105",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "2.0.0_SA_COO~H",
+      "surfaced_at": "2026-10-08T22:53:07Z",
+      "one_line": "Row Z-W120-S3 is disarmed at HEAD: the three record scripts that first wrote the 20261008 universe and identity files now refuse to write any file config.json names as a live collector pointer (@928dbc98e7).",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Z-W120-S3: re-running bm1_three_universes.py regenerates rank_universe_identity_20261008.json from the builder and silently reverts the AIG and KCDMY repairs; disarm_owner 2.0.0_SA_COO~H.",
+      "world_is": "At @928dbc98e7, bm1_three_universes.py write_json, bm2_truncated_names.py write_identity and bn1_names_made_whole.py write_text each call _refuse_live_collector_pointer, which raises SystemExit when the target equals a path lib/opal_data_harvest/config.json names (universe_source, symbol_resolution_source today). Controls run 2026-10-08 ~22:4xZ on each script: the live identity path REFUSED; a non-live path in the same folder passes. A re-run can no longer touch the files the collector reads; a deliberate rebuild writes a new dated file and moves the pointer under a ledger (R29).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.py @928dbc98e7",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm2_truncated_names.py @928dbc98e7",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.py @928dbc98e7",
+          "lib/opal_data_harvest/config.json"
+        ]
+      },
+      "adjudicates": [
+        "AMGT_HARVST-Z-W120-S3"
+      ],
+      "disposition": "DISMISSED_WITH_REASON",
+      "dismissal_reason": "The hazard is removed at HEAD by a refusal in each of the three writers (@928dbc98e7), shown by a positive and a negative control per script; nothing else is owed on Z-W120-S3."
     }
   ]
 ```

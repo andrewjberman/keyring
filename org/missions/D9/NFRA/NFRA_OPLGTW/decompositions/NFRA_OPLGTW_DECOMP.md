@@ -1814,3 +1814,9 @@ Label `<round>32</round>`, ONE issuance, eight cells in six chains.
 - PRD v2.0 item 5(b) "placed with an AE lane": placed in the issuer's L7 slot ~39 under CTO+COO halves, the puller's
   owner `0.6.2_AE_PartnerETL` named in the ask.
 - `OG-en-1`'s spawn waits for 23:05Z 2026-10-08 (the box-wide SDD session lock and the 22:15Z pull's deadline).
+- **OG-rl-15's scope, RULED** (`1.0.0_SA_CTO~O` msg 32087, 2026-10-08 ~22:4xZ, on the issuer's ask 32086): r29 carries
+  OG-md-1, OG-sf-1, OG-rf-1 AND OG-cm-1, plus the 13-month grant write for Andrew's and Alyssa's principals. Conditions:
+  OG-cm-1 drains before the r29 cut; the grant write is a never-widen act whose blast radius is the reach field of exactly
+  those two principals' grants, set to 13 calendar months, no other field or principal, rollback = the prior reach per
+  key, CTO+COO halves before it; until OG-bf-1 lands a date without a qualified record answers unavailable; R55's other
+  terms stand (the 12-hour window before the 07:00 ET send).

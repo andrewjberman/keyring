@@ -94,6 +94,18 @@ git worktree remove "$WT"; git branch -D integrate/$TS
   on their own (Steps 1-2: they deploy on that push), then run this pass. The deploy gate REFUSES an integration push
   that also carries commits from no box branch, because those would never deploy.
 
+## MICROPRODUCTS -- portal, opal_ai, mcportal (Andrew-direct 2026-10-08 ~22:4xZ: "yes to the microproduct policy")
+
+Policy and its measurement: `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/ACTIVITY_STUDY_AND_MICROPRODUCT_POLICY_20261008.md`
+(7 days: the monolith 2,718 landings, portal 160, opal_ai 4, mcportal 0). The microproducts get NO box branches:
+1. **One trunk, `DEV`.** A seat lands its change on `DEV` itself: fetch, merge, push, never rebase. A rejected push is a fetch and retry.
+2. **`PROD` only through `/prod-deploy`**, client-facing, unchanged.
+3. **Another box delivers through a short-lived candidate branch** (`cand-*`, `q/<box>/...`). **The seat that lands it deletes it in the same act.**
+4. **The workspace's pointers to these repos** move only by a deliberate commit (for example `/prod-deploy`'s pointer step),
+   never as a side effect. When two box branches moved one pointer, `git merge-tree` already takes the descendant. Two
+   diverged pointers are a real conflict: the box is HELD for a person.
+5. A microproduct moves to box branches only when its own push contention shows in a record.
+
 ## Step 0 -- identity + the two questions every push answers
 
 - You are an MSTR serial, or you stop here.

@@ -641,6 +641,7 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
 ```
 
 
+
 ## LGIC_BLANKFIX-W1-S9 -- TO BF-r-5 AMENDMENT 2: two of the four key rulings (etf_universe.json, daily/49financial) are not matched, because opal_naming_keyfill.bucket_of canno
 
 ```json
@@ -666,6 +667,7 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Two of the four are answered (session-trigger-mode.json prints FIX to blackdiamond/49financial/state/session-trigger-mode.json; ticker_lookup.json prints NOT-ASKED). The two ETF keys stay HOLE because bucket_of picks no bucket for them. lib/opal_naming_keyfill.py is outside this order's grant. A reader that follows a key's constant to the bucket the code pairs it with (ETFS_BUCKET at the call sites) would match both; or the rows could name the file. BR5-AC1 fails as written on hole=2 and is reported, not forced."
 }
 ```
+
 
 ## LGIC_BLANKFIX-W1-S10 -- TO BF-r-5 AMENDMENT 1 step 0 is built as a RETYPE only: 40 more literals under a function-name context carry no kind token and stay untyped, one of th
 
@@ -1545,5 +1547,81 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "disposition": "UNDER_INVESTIGATION",
   "spec_asserts": "BF-v-1 CONTEXT: the all-roots output is 'One line per name: KIND type current -> detail [where]', and the README section is to explain 'each line kind ... the per-name kinds'.",
   "world_is": "The per-name kinds exist only in a single-root run; the all-roots run shows them as per-root and total COUNTS (right=, fix=, ...). The README section describes the output as it is and names the single-root command for the per-name lines; the order's criterion is unaffected."
+}
+```
+
+## LGIC_BLANKFIX-W1-S17 -- The CVO's first repair for arm C (call place() for an unmapped root) would not have rescued it
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S17",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T22:36:50Z",
+  "one_line": "The CVO's first repair for arm C (call place() for an unmapped root) would not have rescued it: arm A's name has no {system} blank, so removing the map entry changes nothing the check prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "armC_output.txt in org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1 (control FIX irpt-daily-pull-lambda; entry removed HOLE no map entry; fills [scope] HOLE multi-firm), produced by armC_run.py beside it at trunk 7d4d1524d9",
+      "root check on a copy of the map without the entry, run in this worktree: ROOTCHECK ok=True ... items=15 right=13 fix=2 not_asked=0 hole=0 (lines FIX irpt-holdings-snapshot-daily, FIX irpt-directory-refresh-daily)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-v-3 CONTEXT, repair 1: arm C (remove the root's map entry, expect `{system}: no map entry for this root` from place()) can be made to print by letting step 1 call place() for an unmapped root.",
+  "world_is": "With the investor-reporting/directory entry removed from a copy of the map, check_root prints FIX SCHEDULE irpt-directory-refresh -> irpt-directory-refresh-daily unchanged (15 items, hole=0): the name irpt-directory-newjob-{cadence} has no {system} blank, so decide() never reaches the no-map-entry clause. The HOLE prints only for a name whose form has a {system} blank, e.g. a NEW Lambda `daily-pull` (grade: {system}-daily-pull-lambda): HOLE ... {system}: no map entry for this root. The design re-targets arm C to that name."
+}
+```
+
+## LGIC_BLANKFIX-W1-S18 -- Two round-6 claims are contradicted by the code
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S18",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T22:36:50Z",
+  "one_line": "Two round-6 claims are contradicted by the code: an unmapped root DOES print root-check lines (hole=48 on smartx-pipeline), and the code holds 18 HOLE texts, not the grade's 14.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "check_fwd6_design_round7.py in org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1 prints one HOLE-TEXT line per text and the last line hole_texts=18 owned=18 unowned=0",
+      "lib/opal_naming_rootcheck.py _ruling_of returns the three unread reasons (lines 207, 215, 218) and decide appends ans[ruling_unread] to the card and raised HOLE (lines 403-404, 409)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "FWD6 design round 6, decision rule step 4: 'Unmapped roots have no lines, so no HOLE count to ratchet'; the CVO grade BU6-AC2: 'decide() and its callers print 14 distinct texts'.",
+  "world_is": "python lib/opal_naming_rootcheck.py infra/aws/terraform/smartx-pipeline --map infra/logic/registry/root_map.json --report-only prints 117 item lines and ROOTCHECK ok=True ... hole=48 for a root with no map entry, so lines exist and the design now says why the ratchet leaves them out (no root map entry is 15 of the 48). The ast enumeration of lib/opal_naming_rootcheck.py finds 18 HOLE texts: 4 returns in decide, the card line, the frame, 8 why clauses, the collision, and 3 reasons _ruling_of appends to a card or raised HOLE (the grade counted 14, which omits the frame and the 3 suffixes). All 18 now have an owner row."
+}
+```
+
+## LGIC_BLANKFIX-W2-S16 -- the repeat check had more than line numbers failing it at the trunk
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S16",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-08T22:46:00Z",
+  "one_line": "BF-v-6 names line numbers as the only failure of the repeat check; on the trunk it crashed first (FileNotFoundError) on a mapped root with no saved run and no ROOT line, and the root-line and ALL-ROOTS-field compares would also have failed on added names and roots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py at base 4e2130eb1b -> traceback FileNotFoundError .../all_roots_round5/aaii-v2-bucket-lifecycle.txt (the map now holds 63 roots; 11 print 'NOTHING-TO-NAME <root> why=... names=0' and no ROOT line, so the script's ADDED list, built from ROOT lines, missed them)",
+      "live `all` (63 mapped): ROOT lines differ from the saved ones for investor-reporting/core, intake, ycharts and opal-assets (items 22/10/16/117 vs 21/5/14/84; intake carries hole=1); last-line fields mapped, completed, items, right, fix, not_asked, pattern, hole and the HOLE-CLASSES fields all differ; live carries kinds NOTHING-TO-NAME (11), OTHER-HOLE (59), UNCOUNTED (242) that the saved run lacks",
+      "the build compares per name and verdict, roots by presence and COMPLETED/STOPPED status, ALL-ROOTS fields roots_total and stopped only, and lists the rest: ALL-ROOTS-R5 ok=True mapped=13 unmapped=74 items=412 hole=0 stopped=0 repeat=identical with 39 ADDED roots, 40 ADDED-NAME, 3 UNLISTED-KIND lines printed"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-6 THE CELL: the script reads ok=False on the trunk only because commit 51f4545acd shifted ycharts line numbers; the build is the name-line identity and the ADDED-NAME / not-compared-kind rules (items 1 to 3).",
+  "world_is": "Three more causes stood at the base: a mapped root with no saved run and no ROOT line (NOTHING-TO-NAME) was not treated as ADDED; the per-root FIX brace check paired live rows with saved lines by position, which breaks when a name is added; and the ROOT-line and ALL-ROOTS-field compares failed on any added name or root. I made the added/not-compared rule cover them (item 2's intent) and kept every saved-run check as it was. A live-side HOLE (intake irpt-intake-poll, 'no cadence row') is printed as ADDED-NAME and is not graded here."
 }
 ```

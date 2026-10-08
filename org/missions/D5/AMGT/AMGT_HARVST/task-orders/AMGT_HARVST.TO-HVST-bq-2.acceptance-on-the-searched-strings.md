@@ -131,6 +131,9 @@ amendment. The rule is now:
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+
+COMPLETE 2026-10-08 ~22:5xZ (issuer 2.0.0_SA_COO~H): worker ~125 reseated 21:2xZ after the issuer's session ended; @80a9b98fc0 (AMENDMENT 1 build) and @09642610bd (proof), on wk-AMGT_HARVST-125-r73. Re-run by the issuer from the worktree: AC1 12 passed; AC2 'CHANGED 158 of 242', 'SUPERSET 242 of 242', 'ONE-WORD FORMS 67:'. Worker's AC3 799 passed, 3 skipped. Rows Z-W125-S4 (DISMISSED by the worker: AMENDMENT 1 closes S1-S3) and Z-W125-S5 (test_vi's second assertion now names AIG, the one security bo-1 gave an override: RULED correct by the issuer). NOT MERGED: the branch carries bo-1 and bp-1 (537ac56e9b) and changes what the collector accepts; per section 86 it merges after gold (R26/R30) under its own pair, and not while a leg runs from the shared tree.
+<status>complete</status>
 <round>73</round>
 <slot>~125</slot>
 <fabric>site-z</fabric>

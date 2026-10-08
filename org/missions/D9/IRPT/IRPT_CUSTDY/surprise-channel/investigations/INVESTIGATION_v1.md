@@ -921,3 +921,103 @@ validates every NEW row (schema `org/surprise_channel/schemas/investigation_item
   "world_is": "Holds on real data and against the export's own function. The template refuses an as_of-only document by name (MissingAsOfDateError), the validator likewise. Breaks 1, 2, 4 (IRPT_BCKEND P-c1..c3) and 5 (PROD promote) remain; P-c3 should mount ClientReportDocument from 6d84304d's tree, since 4c10b488 (on DEV) still reads as_of."
 }
 ```
+
+## IRPT_CUSTDY-W17-S1 -- the input PDF's charts are raster images with no text layer, so a chart's series cannot be extracted; they were read from the rendering
+
+```json
+{
+  "id": "IRPT_CUSTDY-W17-S1",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~17",
+  "surfaced_at": "2026-10-08T23:01:00Z",
+  "one_line": "The input PDF's charts are raster images with no text layer, so a chart's series cannot be extracted; they were read from the rendering.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "PyMuPDF page.get_image_info on the input's overview and accounts-summary pages: each chart region is one raster image; page.get_text returns no legend, axis or series text inside it",
+      "data/assets/scripts/gold/irpt_custody/bd_field_map.py (wk-IRPT_CUSTDY-17 on aa5dbdf463): lists each chart as one field; the map's chart-series rows carry bd_source_basis read-from-rendering (2 of 70 rows)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CU-g-3a step 1: the extractor enumerates every figure-bearing field of each base, 'a column header, a labelled figure, a chart series'.",
+  "world_is": "A chart series is not machine-readable in this PDF. The extractor stops at the chart (one field each); the series rows (portfolio line, benchmark lines, ending value line, net additions line, class shares, per-holding segments) were read from the rendered page by the worker, so they carry the weakest evidence basis in the map."
+}
+```
+
+## IRPT_CUSTDY-W17-S2 -- the portal submodule is empty in the worker worktree; ClientReportDocument.tsx was read from the main checkout
+
+```json
+{
+  "id": "IRPT_CUSTDY-W17-S2",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~17",
+  "surfaced_at": "2026-10-08T23:01:00Z",
+  "one_line": "The portal submodule is empty in the worker worktree; ClientReportDocument.tsx was read from the main checkout.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls of C:/tmp/wk-irpt-custdy-17/portal: empty; comp-find --name 'ClientReportDocument*' over the worktree: 0 hits across 65565 files",
+      "C:/dev/ajb_workspace/portal at git HEAD dbeb6764: src/pages/InvestorReporting/render/clientreport/ClientReportDocument.tsx and types.ts exist; types.ts carries as_of_date and the not-covered types, so it is the CU-g-4 vintage"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CU-g-3a: compare the layout with ClientReportDocument.tsx (read only); the worker's whole context is the worktree.",
+  "world_is": "The worktree carries no portal checkout, so the template was read from the main checkout's portal at dbeb6764 (read only, never edited). The comparison in LAYOUT_BASELINE_CU-g-3.md is against that file."
+}
+```
+
+## IRPT_CUSTDY-W17-S3 -- the screenshot is the Run Report dialog, not a template page, so the layout baseline comes from the PDF alone and one Run Report basis (Portfolio) is exercised
+
+```json
+{
+  "id": "IRPT_CUSTDY-W17-S3",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~17",
+  "surfaced_at": "2026-10-08T23:01:00Z",
+  "one_line": "The screenshot is the Run Report dialog, not a template page, so the layout baseline comes from the PDF alone and one Run Report basis (Portfolio) is exercised.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "the screenshot in Downloads (read in place): the dialog titled Run Report with a Portfolio / Relationship radio, Portfolio selector, Date Range, As of Date and Advanced Settings; no report page is shown",
+      "the PDF's page headers: the entity label on pages 2 to 4 is the portfolio, then each account; no relationship-level page exists"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CU-g-3a: 'Compare it (the layout baseline) with the PNG' and Andrew's word 'slice the Performance client statement on Black Diamond's Run Report bases'; the PNG is 'the template as Andrew sees it'.",
+  "world_is": "The PNG shows the dialog that produces the report, so there is nothing to compare page-for-page. The worker read 'bases' as the report's six titled sections (the order's own definition, plus the cover) and mapped the dialog's nine controls separately (10 rows, counted apart). If Andrew meant the dialog's Portfolio / Relationship BASIS, this input exercises Portfolio only; a Relationship-basis report would add a level above the portfolio pages."
+}
+```
+
+## IRPT_CUSTDY-W17-S4 -- the Write tool turns a typed backslash-u escape into the real character, so two new .py files arrived with non-ASCII bytes and CRLF line endings
+
+```json
+{
+  "id": "IRPT_CUSTDY-W17-S4",
+  "project": "IRPT_CUSTDY",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_CUSTDY~17",
+  "surfaced_at": "2026-10-08T23:01:00Z",
+  "one_line": "The Write tool turns a typed backslash-u escape into the real character, so two new .py files arrived with non-ASCII bytes and CRLF line endings.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "byte scan of bd_field_map.py and bd_leak_check.py right after the Write calls: non-ASCII bytes in both (at least 10 in the first and 6 in the second: superscripts, dashes, a right single quote) and CRLF endings; after the worker's rewrite to escape text: 0 non-ASCII bytes in both",
+      "CLAUDE.md section 4: no non-ASCII in production code"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Writing a Python file with the Write tool, with a unicode escape sequence typed in the source text, yields an ASCII file that carries the escape.",
+  "world_is": "The tool decodes the escape before writing, so the file holds the character itself. A worker who needs a non-ASCII constant in a .py file must write chr() or build the escape with chr(92) after the write, and byte-scan the file before commit."
+}
+```

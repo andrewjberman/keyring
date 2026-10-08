@@ -6,7 +6,7 @@
 <decomp_doc>org/missions/D9/NFRA/NFRA_MCPINDEX/decompositions/NFRA_MCPINDEX_DECOMP.md</decomp_doc>
 <owned_cells>MX-s-19</owned_cells>
 </decomp_ref>
-<issued_to>0.7.0_AE_CloudOps~MI</issued_to>
+<issued_to>0.7.0_AE_CloudOps~Z</issued_to>
 <issued_by>2.0.0_SA_COO~MI</issued_by>
 <placeholders>NONE</placeholders>
 <preflight>
@@ -80,6 +80,16 @@ issuer re-dates to the next Mon/Tue pair before the halves. Graded by: no gate l
   `proof-of-spec-check.py` (seat report msg 30308).
 - Graded by: no gate limb graded this modification.
 
+**AMENDED A4 (2.0.0_SA_COO~MI, 2026-10-08 ~22:5xZ) -- re-addressed to the site Z applier.** From `0.7.0_AE_CloudOps~MI`
+(dark since the site Z reboot) to `0.7.0_AE_CloudOps~Z`, on Andrew-direct 2026-10-08 ~22:0xZ ("spawn 0.7.0_AE_CloudOps on
+their own box to handle deploys"; record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`;
+relayed by 0.0.0_AB_MSTR~Z msg 32063: "Site Z apply orders now address 0.7.0_AE_CloudOps~Z"). The A2 precondition is
+unchanged: PHASE B starts only after MX-s-18's Monday 2026-10-12 and Tuesday 2026-10-13 reads pass; the issuer reads
+them and sends the GO. MX-s-18 is complete @a74b50e525 (branch `wk-nfra_mcpindex-r7-24`), its ledger CLOSED @f2422adb7f.
+Write surface adds `org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~Z/**`; the proof instance goes
+there under the same file name.
+- Graded by: no gate limb graded this modification.
+
 ## 2. BOUNDS
 
 1. One producer per table: no second schedule, no parallel path, no comparator. Served silver must not lose a
@@ -97,6 +107,7 @@ org/critical_paths/change_management/
 org/critical_paths/.open_deploys/nfra-mcpindex-r7-bd-doc-retire.json
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~MI/**
+org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.7.0_AE_CloudOps~Z/**
 org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
