@@ -19,3 +19,49 @@
 ## Log
 
 - 20261008T005409Z OPENED by 0.7.0_AE_CloudOps~SD with 3 leg(s)
+
+- 20261008T010626Z STOP BEFORE THE BUILD by 0.7.0_AE_CloudOps~SD -- nothing built, uploaded or applied; the world is untouched and both before-reads still hold. See the section below.
+
+## STOP BEFORE THE BUILD -- the source map's staged_from pins are stale (0.7.0_AE_CloudOps~SD, 20261008T010626Z)
+
+Step 4 was NOT run. Measured before any act:
+
+`infra/aws/lambda/ci/lambda-source-map.json` pins all four `staged_from` members of
+`mdpf-secclass-new-security-lambda` at `87065e4565a29bb387c6945acbab01f54896a405` -- a commit from an
+unrelated project (`3.0.0_SA_CVO` IRPT_YCDGEN round-5 compile).
+
+`infra/aws/lambda/ci/build-and-upload.sh` lines 195-241 stage each `staged_from` member from
+`git show <pin>:<repo_path>` -- its own comment says "never the worktree" -- and verify the blob's
+sha256 against the DECLARED value, refusing on a mismatch. Here the pin and its declaration AGREE,
+so the guard passes GREEN while shipping pre-port bytes. The guard cannot see staleness, only drift.
+
+Members, pin vs dell1 CLOUD (denominator 4):
+  etf_classification.py             DIFFERS
+  etf_classification_scheduled.py   DIFFERS
+  etf_classifications_dynamodb.py   same
+  rivalfunds_classification.py      DIFFERS  <- the e57/e61 surface itself
+
+`rivalfunds_classification.py`: pin blob `aac14cb2c6` (sha256 `b2523e43...`, equal to the declared
+value) vs CLOUD blob `d3363dba79` (sha256 `4ed99536...`); 13 insertions, 12 deletions. That diff IS
+the fix this order exists to ship -- "the sector lands here ONLY, never in sub_asset_class (S28)",
+plus the `elif` -> `if` change that keeps US listings.
+
+Meanwhile `lambda_function.py` is in `files[]`, NOT `staged_from`, so it ships from the WORKTREE at
+the ported bytes `e025665470`.
+
+So a build now yields a MIXED artifact: ported entrypoint, pre-port shared modules. The plan could
+still read 0/1/0 with `source_code_hash` only, and AC1 would still read `ok=True`, because AC1
+compares the live CodeSha256 against the artifact's `content-sha256` and both would be the new
+wrong-content zip. CLAUDE.md rule 22a: diff deployed bytes against the BUILD INPUT, never by
+filename.
+
+UNTOUCHED, re-read at the STOP: artifact IsLatest VersionId `2DwW9a.Pz6G7A1o.wSTshxZGZzFCVw5b`;
+function CodeSha256 `f0zhRV1FFFiVgnNMsEzYAGap8qCOWbb4xgZgpx8RIdQ=`. Both equal the before-reads.
+
+REMEDY, named and NOT executed: re-pin the four `staged_from` entries to the merged e57e61 commit
+with fresh sha256 values. That is a write to `infra/aws/lambda/ci/lambda-source-map.json`, which
+this order's `<paths>` block does not name -- OUT OF LANE for this seat; it belongs to the issuer,
+`2.0.0_SA_COO~M1`. Reported to the issuer the same hour.
+
+The entry stays OPEN by the tool's own rule (a HELD state requires every apply leg closed, and here
+none ran). It is OPEN-WITH-NOTHING-LANDED, not half-landed: there is nothing to roll back.

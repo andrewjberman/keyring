@@ -25,11 +25,11 @@ Carried open from REMEDIATION_v1.md: S4 (two REFUSED lines of the first root) an
     "owner": "4.0.0_SA_CRO",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "4.0.0_SA_CRO",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W1-S10",
@@ -46,11 +46,11 @@ Carried open from REMEDIATION_v1.md: S4 (two REFUSED lines of the first root) an
     "owner": "2.0.0_SA_COO~G",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "LGIC_BLANKFIX-W1-S8",
@@ -67,11 +67,11 @@ Carried open from REMEDIATION_v1.md: S4 (two REFUSED lines of the first root) an
     "owner": "2.0.0_SA_COO~G",
     "round": "v4",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~G",
       "round": "v4"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
