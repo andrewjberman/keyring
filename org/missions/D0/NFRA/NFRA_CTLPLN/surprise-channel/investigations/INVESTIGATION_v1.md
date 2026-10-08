@@ -3810,3 +3810,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~R: add the transcripts-pull build to the cut's item 3 and to the applier's preflight."
 }
 ```
+
+## NFRA_CTLPLN-W17-S1 -- the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the broker liveness file and the drive-mode leases are gitignored and exist only in the main worktree, so seat-list.py reads them there, not from the tree it runs in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".gitignore:251 org/mcp/liveness.json and .gitignore:614 org/mcp/drive_mode/ (git check-ignore -v, 2026-10-08 ~04:4xZ)",
+      "ls /c/tmp/wk-ctlpln-17/org/mcp/liveness.json: No such file or directory; the main worktree holds it (9 registered seats at 04:45Z)",
+      ".tools/seat-list.py main_root() and Ctx.path() at ff5e6ea8a7"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-7 BUILD 1: one row per live seat 'from this box's org/mcp/liveness.json', and the drive 'from .tools/drive-mode.py's markers'.",
+  "world_is": "org/mcp/liveness.json and org/mcp/drive_mode/ are untracked (gitignored) and absent from a linked worktree; they exist only in the main worktree. seat-list.py finds that worktree through the git common dir (as .tools/drive-mode.py main_root() does) and writes seats.json into the tree it runs in.",
+  "notes": "No decision needed for the cell; recorded because a worker run from a linked worktree and a seat run from the main worktree read the same live files but write seats.json to different trees."
+}
+```
+
+## NFRA_CTLPLN-W17-S2 -- the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R
+
+```json
+{
+  "id": "NFRA_CTLPLN-W17-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~17",
+  "surfaced_at": "2026-10-08T05:20:30Z",
+  "one_line": "the three COO seats live on the laptop read drive=NONE: no live lease and no LIVE_ARMS Arms row names a drive for ~C, ~G or ~R",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-list.py write, run from /c/tmp/wk-ctlpln-17 with AGENTBUS_DEVICE=laptop 2026-10-08 05:12:47Z: three COO rows, drive=NONE each",
+      "org/ref/LIVE_ARMS.md lines 46-49 (COO~C, no drive word) and grep for COO~G and COO~R over the file: 0 lines",
+      "the main worktree org/mcp/drive_mode/ holds 8 markers (seats 2.0.0_SA_COO~D, ~P, ~M and 4.0.0_SA_CRO); none names ~C, ~G or ~R (read 2026-10-08 ~05:2xZ)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-07 (cell text of TO-CT-s-7): 'COOs ... either run /canonical-drive /closer-drive to proceed projects, running /remote-drive if a one-off request comes in'; LIVE_ARMS.md 'all COOs should have /canonical-drive running'.",
+  "world_is": "seat-list.py write at 2026-10-08 ~05:12Z: 2.0.0_SA_COO~C, ~G and ~R each read drive=NONE (drive-mode status shows no lease with those seats; org/ref/LIVE_ARMS.md Arms names ~C only at line 46, with 'NO cron', and names ~G and ~R nowhere). All three read doing=WORKING by open orders (4, 4, 0) and commits (1m, 28m, 73m). The drive column therefore shows what is authorised, not what is running.",
+  "notes": "For 1.0.0_SA_CTO, who lands LIVE_ARMS rows: whether the Arms register should name the three laptop COOs' loops is its call. The tool decides nothing about it."
+}
+```
