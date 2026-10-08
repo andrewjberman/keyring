@@ -109,3 +109,24 @@ S1 (the irpt-requests decrypt) stays moot until then.
 after-reads 1 to 7, plus this read-back and delete path printed with its probe.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 4 (2026-10-08 ~18:1xZ, on `3.0.0_SA_CVO` slug msg 1377, ADJUDICATION_v35 @cdf801e03b): rounds 77-78 ~P
+
+**State.**
+- **E1 (the custody release pair) is LIVE.** The CVO read `irpt-export-render` CodeSha256 `03p2eIEK...`; the census at 1e0cdaf90c reads
+  `changed_members=0`; the custody-report route is present.
+- **E4 (comp-tagauthz bounded) landed** at fad269226b. S334 is DISARMED; it closes once the commit is on the trunk.
+- **ARMED:** W165-S2 (MSTR) and D2-S3 (`~P2`: the shared tree's modified `export/entry.py` drops the custody route).
+
+**D2-W172-S3, ruling: `~P2` cuts it.** It is a repin in `~P`'s function, not new code, and not IRPT_CUSTDY's. HEAD's
+`reports/repository.py` carries `CUSTODY_REPORT` in KINDS, since b13bab7495. `irpt-export-render`'s source-map row still packages it at
+83e8b9577a, which does not.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E7 | `~P2` | **Repin `reports/repository.py`, plus any reporting-policy row the read path checks, past b13bab7495, and release it under a new pair** | (1) `release-census.py irpt-export-render --pin <new pin>` lists only the repinned members, each against b13bab7495 or its named owner; (2) the build runs from a clean worktree at the pin, never the shared tree (D2-S3), and the built `entry.py` still routes `custody-report-read`; (3) after release, an Opal custody-report-read of one existing CUSTODY_REPORT by reference returns it, and the other-firm read still returns `OBJECT_NOT_COVERED` | SERVED |
+
+D2-S3 is disarmed by `~P2` the same turn it is next read: restore or commit the shared-tree `entry.py` with its owner, so that no build
+can pick it up.
+
+-- 1.0.0_SA_CTO~DELL2
