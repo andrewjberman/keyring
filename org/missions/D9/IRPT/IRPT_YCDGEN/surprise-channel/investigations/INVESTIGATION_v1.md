@@ -2362,3 +2362,57 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "CTO~DELL2 ruling msg 1664: next YCDGEN cell = a resident release carrying the brand asset (packaged into the root, or IRPT_BRAND_SPEC/IRPT_OPAL_LOGO set) under its own pair, after-read = one Opal-path layout renders; F1 retries after it. The retained SQS message keeps st25 in place until it dead-letters (an st24 retry would route svc to YCHARTS)."
 }
 ```
+
+## IRPT_YCDGEN-D2-W7-S1 -- The resident builder's --research filter (RESEARCH_EXT) omits .svg, so a --research build does not package the Opal logo and the resident host would s
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W7-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~7",
+  "surfaced_at": "2026-10-08T22:59:30Z",
+  "one_line": "The resident builder's --research filter (RESEARCH_EXT) omits .svg, so a --research build does not package the Opal logo and the resident host would still refuse the Opal page; the logo only ships through an explicit --member.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "R21: the resident package builder's --research packages both brand files (tracked, non-test files under ycharts/research/); the Opal layout then renders from a package tree outside any git repository.",
+  "world_is": "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py line 58: RESEARCH_EXT = ('.py', '.json', '.sh', '.md', '.cjs'); research_wanted() returns False for ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg (w6_checks.py render prints 'builder research_wanted(svg)=False'). brand.json is packaged by --research (.json); the logo is not. The builder is outside this order's paths (not edited). AC3 packages the logo through the builder's own --member rule (ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg=<repo path>), which renders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w6_checks.py render output: package=11 members (logo via --member: builder research_wanted(svg)=False) ... pdf=%PDF 41013 bytes 2 pages",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_P/build_resident_package.py:58 and :83-87 at 730e5cabf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "Disarm either way: add '.svg' to RESEARCH_EXT in the builder (a cell with that path), or pass --member ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg=infra/aws/lambda/investor-reporting/ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg on the release build and read the package listing for the file before the apply. This seat keeps working."
+}
+```
+
+## IRPT_YCDGEN-D2-W7-S2 -- build_brand_spec() output depends on the box: its logo.variants block is read from deck_generation/brand/logo_package (gitignored), which dell2 does n
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-W7-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_YCDGEN~7",
+  "surfaced_at": "2026-10-08T22:59:45Z",
+  "one_line": "build_brand_spec() output depends on the box: its logo.variants block is read from deck_generation/brand/logo_package (gitignored), which dell2 does not hold, so the packaged brand.json carries formats {} and preferred null for all 6 variants; the laptop would write relative paths.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "YCD-w-6: brand.json is written byte-identically to what build_brand_spec() produces.",
+  "world_is": "On this box deck_generation/brand/ is absent in the worktree and the main tree, build_brand_spec() returns missing = all 6 variants (w6_checks.py bytes prints 'logo variants missing on this box: 6 of 6'). brand.json is therefore byte-equal to the function's output HERE, but a laptop run would differ in logo.variants only. load_brand() reads only colors and typography from the spec (layout_overview.py _palette, brand['spec']['typography']), so the Opal page is unaffected; AC2 re-run on a box holding the logo package would report a bytes difference.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "w6_checks.py bytes output: brand.json=5996 bytes equals build_brand_spec() (logo variants missing on this box: 6 of 6)",
+      "deck_generation/scripts/03_extract_brand_spec.py build_brand_spec() variants loop at 730e5cabf9",
+      "layout_overview.py _palette and typography reads at 730e5cabf9"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "No action needed for the Opal page. If a byte-identical-to-laptop spec is wanted, regenerate brand.json on the laptop and replace the file under a cell that names that."
+}
+```

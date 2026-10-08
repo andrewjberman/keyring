@@ -1569,6 +1569,71 @@
  "spec_asserts": "An ARMED hazard disarms via its disarm_owner (CLAUDE.md section 2); L10 waits until every BLOCKING or ARMED row is dispositioned.",
  "world_is": "Four ARMED rows owned by 2.0.0_SA_COO~D were repaired in rounds 44 and 45 (the drain commits and the close records say so) and still read ARMED in comp-surprise because no disarm row followed the repairs. Their causes are absent on the candidate that shipped. This row records the disarms; the formal disposition is L9's to stamp.",
  "notes": "Issuer-authored disarm record at /canonical-drive DSGN_AMGTV1 tick 1 after the 2026-10-07 site-Z reboot relaunch, not an adjudication."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S24",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-08T22:35Z",
+ "one_line": "On AMD US the served filing-segment reason says a segment table with figures needs a separate segment data pull, and the Bloomberg segment table with figures is drawn directly above it (round-53 candidate 84e13d0f).",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round53/walk/read-20261008T222437Z/r53-AMD-US-thesis.png: 'REVENUE BY SEGMENT' table 6 rows x 5 columns, then 'BUSINESS SEGMENTS -- FROM THE FILING' reading 'No filing analysis is stored for this name yet, so no segment breakdown is shown. A segment table with figures needs a separate segment data pull.'",
+   "The sentence is the served segment_breakdown.reason on the live /thesis (round53/served/thesis_AMD_US_Equity.json); the page prints it verbatim (SegmentBreakdown.tsx)."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~Z",
+ "spec_asserts": "Every absence sentence the function serves is true of the page it is drawn on (PRD v0.18 SAUX-39 spirit; FWD-27).",
+ "world_is": "Since AMGT_RESAPP round 79 serves segment_table, the second clause of the served segment_breakdown.reason is no longer true for a name with a served table.",
+ "notes": "Producer text, AMGT_RESAPP's lane; the page draws what is served. Off-task observation from the round-53 real run."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S25",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-08T22:35Z",
+ "one_line": "On /freshness the Seeking Alpha cells now print the served sentence, and the wider column makes the 'Oldest input' and 'Bloomberg' day cells wrap onto two lines ('2026-09-' / '22').",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round53/walk/read-20261008T222437Z/r53-freshness.png, the first rows of the table at 1440 px wide."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "A day in a table cell reads on one line (portal design law, legibility).",
+ "world_is": "The day cells wrap at 1440 px once the Seeking Alpha cell carries a sentence.",
+ "notes": "Cosmetic; candidate for the next DSGN round (a whitespace-nowrap on day cells)."
+},
+{
+ "id": "DSGN_AMGTV1-Z-S26",
+ "project": "DSGN_AMGTV1",
+ "fabric": "site-z",
+ "surfaced_by": "2.0.0_SA_COO~D",
+ "surfaced_at": "2026-10-08T22:35Z",
+ "one_line": "The Freshness page's column header 'Research pack' names the analysis the system builds (every row reads the daily build day 2026-10-08), the phrase the CTO's ruling (msg 31721, decomposition v52) gives only to the research team's own document.",
+ "class": "OBSERVATION",
+ "hazard_standing": "INERT",
+ "grounding": {
+  "status": "GROUNDED",
+  "evidence": [
+   "org/missions/D13/DSGN/DSGN_AMGTV1/deliverables/2.0.0_SA_COO~D/round53/walk/read-20261008T222437Z/r53-freshness.png: header 'Research pack', 95 of 95 rows dated 2026-10-08.",
+   "portal/src/pages/Freshness/freshnessRows.ts INPUTS: { key: 'pack', label: 'Research pack' } at candidate 84e13d0f."
+  ]
+ },
+ "disposition": "UNDER_INVESTIGATION",
+ "disarm_owner": "2.0.0_SA_COO~D",
+ "spec_asserts": "Two packs, two phrases: 'the research team's pack' for the team's document, 'the analysis built for this name' for the built thing (PRD v0.18 SAUX-40; decomposition v52).",
+ "world_is": "One page still calls the built thing 'Research pack'.",
+ "notes": "Same class as round 53's AV-zze-3; candidate for the next DSGN round, wording to be ruled with it."
 }
 ]
 ```

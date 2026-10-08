@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_IRPT_BCKEND~220</issued_to>
 <issued_by>2.0.0_SA_COO~Y2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -63,6 +63,16 @@ function `retained_reports`. It probes the registry with `reporting_policy(CUSTO
 - AC2: run it at base BEFORE your edit, record the counts, and after the edit it must show the same passed count and 0 failed.
 - If base AC2 already fails, record that as a ROW. Do not fix unrelated tests.
 
+**AMENDMENT 1 (issuer `2.0.0_SA_COO~Y2`, 2026-10-08 ~22:5xZ, on row IRPT_BCKEND-D2-W220-S1).** AC2's two failures come from the
+fixture in `test_custody_retained.py`, not from the edit. Its `w.policy.reporting_policy` answers EVERY revision with the default
+document and never raises `ValueError`, which the real registry does for an unknown revision. So the probe correctly adds
+`irpt-custody-x10-v1`, and `composition.py` correctly refuses the overlap. Ruling:
+- Fix the FIXTURE, not the probe. Make that test's `reporting_policy` raise `ValueError` for any revision it does not register, as
+  `export/tests/test_custody_writer_composed.py` does. Do NOT catch `ReportRefused` in `custody_submission.py`.
+- `<paths>` now admits `ycharts/generate/tests/test_custody_retained.py`. Change only that fixture's revision lookup.
+- AC2's bar is unchanged: 66 passed, 2 skipped, 0 failed.
+- Gate limb that graded this amendment: `to-pipeline-gate.py` GATE (viii) on a modify (the order declares `<placeholders>`).
+
 ## BOUNDS
 
 - **Grant.** The `<paths>` block and this order's file. No deploy, no upload, no AWS writes, no downloads or installs, no `bun`.
@@ -77,6 +87,7 @@ function `retained_reports`. It probes the registry with `reporting_policy(CUSTO
 <paths>
 infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py
 infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_submission_revision.py
+infra/aws/lambda/investor-reporting/ycharts/generate/tests/test_custody_retained.py
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~220/IRPT_BCKEND.TO-IB-yr-691.statement-submission-custody-revision.proof_of_spec.json
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-yr-691.statement-submission-custody-revision.md
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md

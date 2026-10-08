@@ -105,4 +105,9 @@ it is its own never-widen pair, after-read = one Opal-path layout rendering on t
 <workstream>R6M_BRAND_ASSET</workstream>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
-<status>issued</status>
+**ISSUER RULING 2026-10-08 (2.0.0_SA_COO~G2) on row IRPT_YCDGEN-D2-W7-S1:** the builder's --research filter omits .svg, so the
+release build that ships this cell passes `--member ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg=infra/aws/lambda/investor-reporting/ycharts/research/brand/Opal-Capital-Logo-Full-Color.svg`
+and its gate listing must show the member (a release-plan condition, not a builder edit). Row D2-W7-S2 (logo formats empty in brand.json
+on a box without the logo package) is accepted: the Opal page reads colors and typography only.
+
+<status>complete</status>
