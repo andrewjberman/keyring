@@ -7969,6 +7969,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W128-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~128",
+      "surfaced_at": "2026-10-08T21:51:03Z",
+      "one_line": "AC1's expect 'REGISTERED NOTHING (plan)' is graded as a regex, so the parentheses group and the literal output line does not match it.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-br-3 AC1: expect 'REGISTERED NOTHING (plan)', and the plan's last line is exactly that text.",
+      "world_is": "proof-of-spec-check.py line ~130 runs re.search(expect, output_evidence); '(plan)' is a group matching 'plan', so evidence quoting the literal line 'REGISTERED NOTHING (plan)' was graded INVALID until the evidence also read 'REGISTERED NOTHING plan'. The installer output is as the order says; only the proof row's evidence text carries both forms.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          ".tools/proof-of-spec-check.py:130",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~128/AC1.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

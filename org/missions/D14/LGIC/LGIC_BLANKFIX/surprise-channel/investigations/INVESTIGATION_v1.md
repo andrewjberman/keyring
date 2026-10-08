@@ -1417,3 +1417,133 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Existence of every declared_in path is not the test the build defines: the probe's `bronze/` matched this row at the base through its (bucket, key) match and now matches it as the only candidate of the key, so by the defined rule it is one stale hint. No weakening made. Two ways to reach 0, both outside this cell: the registry's lane adds the probe path to the row's declared_in, or the COO amends item 2 so a match the item's own bucket confirms is not stale."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S3 -- BF-v-4 newly counts a local-built SCHEDULE name whose cadence the cadence reader cannot see: one new HOLE in a mapped root
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T21:34:00Z",
+  "one_line": "BF-v-4 counts a local-built schedule name in the mapped root investor-reporting/intake and the run prints one new HOLE (hole=0 -> hole=1): the cadence reader sees only literal names, so no cadence row exists for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json at wk-LGIC_BLANKFIX-4: `OTHER-HOLE investor-reporting/intake || SCHEDULE irpt-intake-poll -> partial form irpt-intake-poll-{cadence}; could not fill {cadence}: no cadence row for this name  [infra/aws/terraform/investor-reporting/intake/main.tf:122]`; the last line reads hole=1 other_holes=1 where the round-6 run (ALL_ROOTS_round6.txt) read hole=0",
+      "infra/aws/terraform/investor-reporting/intake/main.tf:122 `schedule_name = \"irpt-intake-poll\"` (a literal local); the schedule resource names itself name = local.schedule_name",
+      "lib/opal_naming_cadence.py cadences() builds its rows from opal_naming.census_tf_names(), which reads only literal names, so a schedule or event rule named through a local never gets a cadence row (lib/opal_naming_cadence.py:228-235)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-4 step 1: a locals value that is a literal is counted as an ordinary item with its where at the declaring line, and step 2: a mapped root's names newly counted by step 1 are graded like any other.",
+  "world_is": "Graded like any other, the newly counted SCHEDULE has no cadence row, so decide() cannot fill {cadence} and prints a HOLE; the same newly counted names in investor-reporting/core, ycharts and opal-assets grade FIX or RIGHT. The moved mapped-root counts: investor-reporting/core items 21 -> 22, investor-reporting/intake 5 -> 10, investor-reporting/ycharts 14 -> 16, opal-assets 84 -> 117 (all other mapped roots unchanged). The hole is the honest reading and nothing was hidden or weakened; the repair is outside this cell's grant (lib/opal_naming_cadence.py would read the same locals the scope now resolves), and a where at the resource block line would not repair it because the cadence reader keys on the literal census names."
+}
+```
+
+## LGIC_BLANKFIX-W4-S4 -- the round-5 saved-run check reads BF-v-4's newly counted names in four mapped roots as a difference
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T21:40:00Z",
+  "one_line": "The round-5 saved-run check (deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py, the BU3-AC3 instrument) now prints repeat=DIFFERS because BF-v-4 counts new names in four mapped roots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py at wk-LGIC_BLANKFIX-4 -> `FAIL: investor-reporting/ycharts: 16 rows for 14 saved lines` / `FAIL: opal-assets: 117 rows for 84 saved lines` / `ALL-ROOTS-R5 ok=False mapped=13 unmapped=74 items=412 hole=0 stopped=0 repeat=DIFFERS`",
+      "the same four roots are listed in row LGIC_BLANKFIX-W4-S3 with their before and after item counts; the unchanged mapped roots still match their saved lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-4 step 2: a mapped root's names newly counted by step 1 are graded like any other; and BU3-AC3 (round 6): no line of a mapped root changes its answer from the round-5 saved runs.",
+  "world_is": "The two statements cannot both hold once a mapped root carries a name built in a local: the new lines are added rows, not changed answers, but the round-5 checker compares row counts against the saved file and reads any added row as a difference. No weakening made and the ~2 checker is outside this cell's grant; a later cell may re-baseline the saved run or let the checker ignore rows whose where is not in the saved file."
+}
+```
+
+## LGIC_BLANKFIX-W3-S9 -- BF-v-5: the loader refuses the HOME-source convention where the root's system equals its scope (5 roots), and 39 entries took HOME scope/source values the round-6 drafts left UNDECIDED
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S9",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T21:54:30Z",
+  "one_line": "To decide the drafts' UNDECIDED scope/source fields I applied the registry's own HOME-value convention (opal-assets, investor-reporting/*); it needs the registry owner's ratification, and the loader refuses it for five roots whose system equals their scope.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/root_map.json:271 (opal-assets) and :362-:401 (investor-reporting/*): scope and source are entered as HOME values and fills leaves them out; I applied that to 55 fields (23 scope, 32 source) in 39 entries in org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/MAP_ENTRIES_round7.json (each field's _cite says which rule)",
+      "lib/opal_naming_rootmap.py:_check_scope refuses scope == source ('a product is never a scope beneath itself'): the HOME source = the root's own system key is therefore unavailable for etfs-reports, etfs-netassets, etfs-canon (scope etfs), harvest (scope harvest) and mdpf-pipeline (scope mdpf); their source stays UNDECIDED in the entries file",
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~3/check_entries_land.py -> land=50 held=24 refused=0 undecided_fields=47 (round 6: 1 of 74 loading, 180 undecided)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-5: decide every UNDECIDED field the root's own files and the registry decide; a value is never taken from a folder's name alone; entries the loader accepts land.",
+  "world_is": "Where a root touches several firms' buckets, or declares no stored name, or reads no one vendor, no file names a single scope or source; the only decision available is the registry's own HOME-value convention, which the draft authors did not apply. It is a convention extension, not a finding: 4.0.0_SA_CRO adopts or amends it per entry. For the five product roots the convention cannot apply and a real upstream source (or a ruling that an etfs/mdpf/harvest root names its upstream vendor) is owed."
+}
+```
+
+## LGIC_BLANKFIX-W3-S10 -- BF-v-5: three round-6 UNDECIDED systems are decided by registry rows the drafts did not read, and the 42 inf-pipeline exceptions change no output line
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T21:54:30Z",
+  "one_line": "The round-6 drafts call the system of trade-pipeline, ticket-center and partner-etl-ops-alerts undecided, but the registry already names them; and listing the own-token exceptions changes no line the check prints.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/systems.json:406 (portal owner_basis): 'Terraform roots portal-auth, portal-content, trade-pipeline tagged Project = OpalPortal (main.tf:32), ticket-center tagged OpalPortal/TicketCenter'; infra/aws/terraform/trade-pipeline/main.tf:32 carries the tag; the draft (MAP_ENTRIES line 276, :746) says 'no systems.json key' / UNDECIDED",
+      "infra/logic/registry/resources.json: rows partner-etl-ops-queue, partner-etl-ops-sqs-consumer, partner-etl-ops-sqs-consumer-role are system advi ('CALL2 F15 -- a5 family F15'); the draft (line 796) says no one system owns the channel",
+      "ROOTCHECK for inf-pipeline with the 42 own-token exceptions and without them prints identical lines (items=364 right=39 fix=224 not_asked=57 pattern=13 hole=31 both ways), because an exception only acts on a name whose canonical form still carries a {system} blank and 3 of 364 do",
+      "the blanket default tag Project = OpalPortal also sits on shared-infra, c3materialize-b4 and the six CompDiff roots (_root.tf), so the tag alone decides no root; the portal row names trade-pipeline and ticket-center explicitly"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round 6 drafted trade-pipeline, ticket-center and partner-etl-ops-alerts with system UNDECIDED, and exceptions as 'names the default would place wrongly'.",
+  "world_is": "The registry decides those three systems (portal, portal, advi), so I decided them with the row cited; and the listed exceptions are redundant for the printed result today (they matter only for a {system}-blank name whose owner differs from the default). I entered them as the round-6 measurement defines them; the registry owner may drop them."
+}
+```
+
+## LGIC_BLANKFIX-W4-S5 -- census --all-roots prints counts per root, not one line per name
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T22:03:00Z",
+  "one_line": "BF-v-1 CONTEXT says `census --all-roots` prints one line per name; it prints one ROOT line per mapped root, one UNCOUNTED line per uncounted name, and no RIGHT/FIX/... line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py census --all-roots at wk-LGIC_BLANKFIX-4 (HEAD d67274877f) -> 166 lines; first words: ALL-ROOTS 1, HOLE-CLASSES 1, OTHER-HOLE 1, ROOT 13, ROOTS 1, TOTALS 1, UNCOUNTED 74, UNMAPPED 74; zero lines of kind RIGHT, FIX, NOT-ASKED, PATTERN, CARDED, REFUSED or HOLE",
+      "lib/opal_naming_rootcheck.py all_roots() (lines 723-841) calls run_one(..., report_only=True) into a local list and prints only that list's last (ROOTCHECK) line inside the ROOT line; ALL_ROOTS_round6.txt carries the same line kinds (ROOT 13, UNMAPPED 74, no per-name line)",
+      "per-name lines come from `python lib/opal_naming.py census --root <root folder>` (check_root); the README section written by this cell says so"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-1 CONTEXT: the all-roots output is 'One line per name: KIND type current -> detail [where]', and the README section is to explain 'each line kind ... the per-name kinds'.",
+  "world_is": "The per-name kinds exist only in a single-root run; the all-roots run shows them as per-root and total COUNTS (right=, fix=, ...). The README section describes the output as it is and names the single-root command for the per-name lines; the order's criterion is unaffected."
+}
+```

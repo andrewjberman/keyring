@@ -5252,3 +5252,59 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while reconciling CT-i-10's real count (sms_sent=4 vs texted=9 + updated=5). Not fixed by the round-6 package (TO-APPLY-19)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-S35",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-08T21:30:45Z",
+  "one_line": "A real advisor email reached committed, pushed history: two 0.7.0_AE_CloudOps evidence files of IRPT_BCKEND.TO-APPLY-E6 leg 2 printed the owner field, which is the advisor's email, because the issuer's order said to print owner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/irpt_e6_20261008/Y67-1_laptop_cleanup_result.json and leg2-before.json: one email-shaped value each (counted 2026-10-08 ~21:27Z, values not printed); first committed @0ca54dbc3d, on origin box/laptop.",
+      "IRPT_BCKEND.TO-APPLY-E6 leg 2 step 1 as cut @4598d513c5: 'get-item (print owner and acting_principal_id only ...)'.",
+      "dell2 2.0.0_SA_COO~Y2 msg 1640 (relay RELAY_DELL2_PII_REDACTION_ASK_2107Z.md): the E6 pair requires opaque ids only.",
+      "Forward redaction by 0.7.0_AE_CloudOps msg 107339 (commit 99abbd98c2); 1.0.0_SA_CTO msg 107348 ruled forward redaction only, no history rewrite (NEVER-rebase), and that every order prints an opaque hash in place of an email or name."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An applier's evidence names a principal by an opaque id only (E6 pair; CTO msg 107348).",
+  "world_is": "The value remains in history at @0ca54dbc3d by ruling; the current files are redacted. The E6 order now prints a sha256 prefix in place of owner.",
+  "notes": "The issuer's wording caused it, not the applier. Rule from here: an order that has a worker report a record's fields names the opaque-id fields explicitly."
+}
+```
+
+## NFRA_CTLPLN-D2-S1 -- the dell2 terraform kit passes the read-back it was given but is not pinned to what the roots lock: 6 roots have no legal provider install path on dell2
+
+```json
+{
+  "id": "NFRA_CTLPLN-D2-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "dell2",
+  "surfaced_by": "0.7.0_AE_CloudOps~DELL2",
+  "surfaced_at": "2026-10-08T22:48Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 terraform bring-up kit makes the box able to plan, but its filesystem mirror holds only aws 5.100.0, aws 6.67.0 and archive 2.8.1 while terraform.rc EXCLUDES direct registry installs, so 5 of the 40 locked roots under infra/aws/terraform pin a provider version the mirror cannot serve and a sixth declares hashicorp/local which the mirror does not hold at any version -- an apply order cut to this seat against any of those six refuses at init with no legal install path on dell2.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/Users/Test/AppData/Roaming/terraform.rc: provider_installation { filesystem_mirror { path = \"C:/tmp/tfkit-in/kit-terraform-pack-20261007\" } direct { exclude = [\"registry.terraform.io/*/*\"] } } -- with direct excluded, a provider the mirror lacks has NO install path on dell2; it is not a slow path, it is no path",
+      "kit MANIFEST.json providers: hashicorp/aws 5.100.0 (h1:H3mU/7URhP0uCRGK8jeQRKxx2XFzEqLiOq/L2Bbiaxs=), hashicorp/aws 6.67.0, hashicorp/archive 2.8.1 -- windows_amd64, unpacked .exe (not .zip), so the h1 dirhash is the hash terraform must find in the lock",
+      "lock census, DENOMINATOR 40 .terraform.lock.hcl files under infra/aws/terraform, 5 unsatisfiable: astn-pipeline archive 2.8.0; globgrph archive 2.8.0; market-overview archive 2.7.1; opal-gateway archive 2.8.0 AND external 2.4.2 (hashicorp/external is absent from the mirror entirely); seeking-alpha archive 2.7.1 AND aws 5.100.0 H1-MISMATCH",
+      "seeking-alpha H1-MISMATCH is a PLATFORM mismatch, not a corrupt mirror: its lock carries exactly one h1 for aws 5.100.0, h1:edXOJWE4ORX8Fm+dpVpICzMZJat4AX0VRCAy/xkcOc0=, which differs from the windows_amd64 h1 the mirror serves; the negative control, ticket-center's lock, carries the mirror's h1 H3mU/... and that root planned clean this session",
+      "required_providers census with agreeing controls (95 `source =` occurrences inside required_providers blocks, 95 entries parsed brace-aware, 95 carrying a source): hashicorp/aws ~> 5.0 x83, hashicorp/archive <none> x6, archive ~> 2.4 x2, archive ~> 2.0 x1, aws ~> 6.0 x1, hashicorp/external ~> 2.3 x1, hashicorp/local ~> 2.4 x1",
+      "infra/aws/terraform/investor-reporting/core/main.tf declares hashicorp/local ~> 2.4 and has NO .terraform.lock.hcl and no .terraform/providers, so it resolves fresh at init and the mirror holds no hashicorp/local at any version",
+      "1 of 71 root directories under infra/aws/terraform carries .terraform/providers (ticket-center), so install-from-mirror is exercised on exactly one root; the other 70 are UNEXERCISED on this box, which is not the same as broken"
+    ]
+  },
+  "spec_asserts": "The CTO ruling msg 385 / relay msg 386 (IRPT_BCKEND-S364) specified the remedy as the bring-up kit carrying \"the laptop's terraform binary and provider plugin cache, PINNED TO THE VERSIONS THE ROOTS LOCK, read back by one `terraform version` and one plan of a no-op root on dell2\", with \"no registry download on dell2\".",
+  "world_is": "The kit satisfies the read-back it named (IRPT_BCKEND-D2-S11) but NOT the pinning clause: the mirror is pinned to three provider builds, while the roots lock seven distinct (source, constraint) pairs and 40 locks pin four distinct provider versions plus a non-Windows aws h1. The named read-back therefore cannot detect this class -- it passes on any ONE root whose lock the mirror happens to match, and ticket-center is such a root, so a green read-back is consistent with 6 roots being unservable. Remedy is not an apply: either the kit carries archive 2.7.1 + 2.8.0, external 2.4.2 and local 2.x for windows_amd64, or the laptop re-locks the affected roots for windows_amd64 (`terraform providers lock -platform=windows_amd64`) and ships the result, because generating either on dell2 requires the registry egress the rc deliberately forbids. Class BLOCKING because it names a concrete refusal on six identified roots that only a laptop-side act can clear; hazard_standing INERT because no apply order is in flight against any of the six at this moment, so nothing is being damaged while it stands."
+}
+```

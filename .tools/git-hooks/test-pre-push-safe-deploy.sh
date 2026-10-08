@@ -122,7 +122,9 @@ real_push "of CLOUD runs the gate once" 1 CLOUD "To "
 # MSYS_NO_PATHCONV: Git Bash mangles a slashed <ref>:<path> argument (CLAUDE.md, Git section).
 if MSYS_NO_PATHCONV=1 git -C "$WS" cat-file -e origin/CLOUD:.tools/git-hooks/pre-push-safe-deploy.sh 2>/dev/null; then
     MSYS_NO_PATHCONV=1 git -C "$WS" show origin/CLOUD:.tools/git-hooks/pre-push-safe-deploy.sh > "$TMP/hook_orig.sh"
-    if grep -qF 'refs/heads/CLOUD"' "$TMP/hook_orig.sh"; then
+    # FWD-5 is detected by its refusal text, which every FWD-5 version prints. Per-box B2 (84bbe98f80) rewrote the
+    # `!= "refs/heads/CLOUD"` test as a case arm, so the old literal no longer marks it (4.0.0_SA_CRO~A, 2026-10-08).
+    if grep -qF 'the deploy gate runs only on a push to refs/heads/CLOUD' "$TMP/hook_orig.sh"; then
         echo "SKIP: negative control -- origin/CLOUD already carries FWD-5; no pre-FWD-5 bytes to contrast"
     else
         cp "$TMP/hook_orig.sh" .tools/git-hooks/hook_orig.sh

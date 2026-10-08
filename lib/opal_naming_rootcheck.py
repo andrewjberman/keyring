@@ -484,7 +484,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
     root = _TF_PREFIX + map_key(root)
     rulings = load_key_rulings() if key_rulings is None else key_rulings
     nrulings = load_name_rulings() if name_rulings is None else name_rulings
-    items, _stats = opal_naming_scope.root_items(root, map_path)
+    items, _unc, _stats = opal_naming_scope.root_names(root, map_path)
     if not_judged is None:
         card_rows = load_card_rows()
     else:
@@ -531,7 +531,7 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
 
     if sink is not None:
         sink.append(entry)
-    return run_items(root, items, answer_of, len(opal_naming_scope.root_items(root, map_path)[0]), out, report_only, sink)
+    return run_items(root, items, answer_of, len(opal_naming_scope.root_names(root, map_path)[0]), out, report_only, sink)
 
 
 def _collisions(decided):
@@ -736,22 +736,38 @@ def all_roots(map_path, out=print, run_one=None):
             problems.append("map key %s: %s" % (key, exc))
     unmapped = [r for r in all_r if r not in covered]
     out("ROOTS total=%d mapped=%d unmapped=%d" % (len(all_r), len(keys), len(unmapped)))
+    uncounted_all = 0
     for r in unmapped:
         try:
-            n = str(len(opal_naming_scope.root_items(r, map_path)[0]))
+            r_items, r_unc, _st = opal_naming_scope.root_names(r, map_path)
+            n, u = str(len(r_items)), str(len(r_unc))
+            uncounted_all += len(r_unc)
         except Exception as exc:  # an unreadable count is printed and fails the run, never dropped
-            n = "unread"
+            n, u = "unread", "unread"
             problems.append("unmapped root %s: name count unread: %s: %s" % (r, type(exc).__name__, exc))
-        out("UNMAPPED %s names=%s" % (r, n))
+        out("UNMAPPED %s names=%s uncounted=%s" % (r, n, u))
     done, stopped, tot = 0, 0, dict((k, 0) for k in KINDS)
     cls = dict((c, 0) for c in HOLE_CLASSES)
     other_lines, stale_lines, items_all = [], [], 0
+
+    def emit_uncounted(key):
+        """One UNCOUNTED line per name the mapped root builds that its own files do not resolve (BF-v-4)."""
+        nonlocal uncounted_all
+        try:
+            unc = opal_naming_scope.root_names(opal_naming_scope._map_key_root(key), map_path)[1]
+        except Exception as exc:  # an unreadable root is printed and fails the run, never dropped
+            problems.append("mapped root %s: uncounted names unread: %s: %s" % (key, type(exc).__name__, exc))
+            return
+        uncounted_all += len(unc)
+        for u in unc:
+            out(opal_naming_scope.uncounted_line(u))
+
     for key in keys:
         ent = doc["roots"][key]
         if opal_naming_rootmap.nothing_to_name(ent):
             # a root the map says has nothing to name: mapped; read against the scope, never skipped
             try:
-                n = len(opal_naming_scope.root_items(opal_naming_scope._map_key_root(key), map_path)[0])
+                n = len(opal_naming_scope.root_names(opal_naming_scope._map_key_root(key), map_path)[0])
                 why = None if n == 0 else NTN_STOP % (n,)
             except Exception as exc:
                 n, why = -1, "%s: %s" % (type(exc).__name__, exc)
@@ -761,6 +777,7 @@ def all_roots(map_path, out=print, run_one=None):
             else:
                 stopped += 1
                 out("ROOT %s | NOTHING-TO-NAME why=%s | STOPPED %s" % (key, ent.get("why"), why))
+            emit_uncounted(key)
             continue
         lines, reason = [], ""
         try:
@@ -773,6 +790,7 @@ def all_roots(map_path, out=print, run_one=None):
         if reason:
             stopped += 1
             out("ROOT %s | %s | STOPPED %s" % (key, last or "-", reason))
+            emit_uncounted(key)
             continue
         count = dict((k, 0) for k in KINDS)
         holes = []
@@ -801,6 +819,7 @@ def all_roots(map_path, out=print, run_one=None):
             if c == "other":
                 other_lines.append("OTHER-HOLE %s || %s %s -> %s  [%s]" % (key, typ, cur, detail, where))
         out("ROOT %s | %s | COMPLETED" % (key, last))
+        emit_uncounted(key)
     out("TOTALS completed=%d stopped=%d " % (done, stopped) + " ".join(
         "%s=%d" % (k.lower().replace("-", "_"), tot[k]) for k in KINDS))
     out("HOLE-CLASSES " + " ".join("%s=%d" % (c, cls[c]) for c in HOLE_CLASSES))
@@ -814,10 +833,11 @@ def all_roots(map_path, out=print, run_one=None):
           and sum(cls.values()) == tot["HOLE"])
     out("ALL-ROOTS ok=%s roots_total=%d mapped=%d unmapped=%d completed=%d stopped=%d items=%d right=%d fix=%d "
         "not_asked=%d pattern=%d carded=%d refused=%d hole=%d carded_class_holes=%d source_bucket_holes=%d "
-        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d stale_hints=%d"
+        "event_rule_holes=%d unknown_word_holes=%d other_holes=%d stale_hints=%d uncounted=%d"
         % (ok, len(all_r), len(keys), len(unmapped), done, stopped, items_all, tot["RIGHT"], tot["FIX"],
            tot["NOT-ASKED"], tot["PATTERN"], tot["CARDED"], tot["REFUSED"], tot["HOLE"], cls["carded"],
-           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"], len(stale_lines)))
+           cls["source_bucket"], cls["event_rule"], cls["unknown_word"], cls["other"], len(stale_lines),
+           uncounted_all))
     return 0 if ok else 1
 
 
