@@ -28,3 +28,4 @@
 - 20261008T205606Z LEG D2 closed: SSM 959fadc3 20:55:02-20:55:46Z rc 0 (attempt 1 SSM 56fe806f refused at fetch, exit 30, nothing moved: host role lacks s
 - 20261008T205606Z LEG V1 closed: same SSM 959fadc3: running root 3cf5d52a7b-st25; allow list (andrew, svc-irpt-analysis); worker sha256 c0bbea55 = built;
 - 20261008T212529Z LEG F1 closed: RAN 21:10:18-21:10:32Z as svc through CloudFront (F1_RUN_RECORD_20261008.json): login 200, upload NORMALIZED, submit QUE
+- 20261008T2130Z NOTE secret window: retry ADD put 21:04:07Z (laptop 107315, set-compare rule 107308); one read by dell2 at ~21:10:18Z inside f1_svc_run.py (reported to MSTR, rule 2); REMOVE put 21:27:47Z, verified by simulation: dell2 explicitDeny, dell1 explicitDeny, Andrew_Berman allowed (laptop 107345, MSTR 1678). Condition (1) met before X1 closes.
