@@ -83,8 +83,8 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
 ## 2026-10-08 ~20:2xZ -- round 28, and THE ORDER OF ACTS FOR 2026-10-09
 
 - Issuance 222194aee0; AMENDMENT 1 to RIV-tc-1 @8d50ab6e32 (cap 20,000). Packet `deliverables/2.0.0_SA_COO~RV/round28/L8_PACKET_ROUND28.md`
-  @954c16bb49. **PARKED:** msg 31984 to 3.0.0_SA_CVO~RV is QUEUED, not read; owner 3.0.0_SA_CVO~RV; un-parks when that seat
-  is live (it is not among the live seats at 20:2xZ, nor is 1.0.0_SA_CTO~Z).
+  @954c16bb49. Msg 31984 to 3.0.0_SA_CVO~RV READ by that seat at 2026-10-08T21:02:03Z (`get_delivery_state`, read 21:1xZ);
+  L9 is the CVO's. The 20:2xZ park is closed.
 - RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
   tw-1.AC1 arm e grade the unmerged tc-1).
 - RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.
