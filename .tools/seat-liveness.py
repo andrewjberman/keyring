@@ -22,20 +22,31 @@ THE CLASSES (N minutes from --minutes, default 45):
            worktree inside N minutes.
   QUIET    alive, nothing inside N minutes, no open task order.
   HUNG     alive by process, an open task order assigned to it (<issued_to> equal to the serial), nothing inside N minutes.
-  DEAD     a registered session or an open order, and no process. EXCEPTION, stated in the line: a seat whose broker
-           heartbeat is under 10 minutes old with no process token is process-blind, not dead, and reads UNKNOWN (a
-           respawn over a live seat is the worse error).
+  DEAD     a registered session, or an open order whose project is PLACED ON THIS BOX, and no process. EXCEPTION, stated
+           in the line: a seat whose broker heartbeat is under 10 minutes old with no process token is process-blind, not
+           dead, and reads UNKNOWN (a respawn over a live seat is the worse error).
+  ELSEWHERE(<box>)  no process on this box, and EVERY open order's project is placed on another box. The serial string is
+           the same on every box and this box cannot see another box's sessions, so a seat working there has no process
+           here and is not dead. It is that box's manager's to look at; it is never respawned from here.
   UNKNOWN  the author filter matches nothing at all in the repository's history (a serial that never committed is never
-           QUIET), or the process list could not be read (no seat is called dead off a failed read).
+           QUIET); or the process list could not be read (no seat is called dead off a failed read); or no process, none of
+           its orders placed here, and at least one order whose project has no readable placement ("placement unread for
+           <n> order(s)": an unread placement never licenses a respawn).
+PLACEMENT: an order's project is the folder two levels above the order file (.../<CODE>/task-orders/<file>); its project.json
+`placement` field is resolved to a box by lib/devices.py resolve() (name or alias, case-insensitive; the same reader
+.tools/open-calls.py project_box() uses for that field). A seat with orders both here and elsewhere is decided as before (DEAD
+when no process) and its line carries both counts. The lane suffix (~Z) is used only through the register's `lane_letters`
+(owned_here below: whether this box lists an order-only seat at all); the register gives no other lane meaning.
 BLIND: a hang with no open order reads QUIET; a seat that works without committing or writing a deliverable reads HUNG or
 QUIET; a worker subagent is never listed; an open order issued to a seat that never ran reads DEAD, so the manager reads
 the order before it respawns.
 
-Fixture directory (--from-fixture): now (epoch), org/mcp/liveness.json, org/missions/D*/*/*/task-orders/*.md,
+Fixture directory (--from-fixture): now (epoch), org/mcp/liveness.json, org/missions/D*/*/*/task-orders/*.md (+ the project.json
+beside each task-orders folder, for placement),
 processes.json (list of command-line strings of the running claude processes), gitlog.txt ("epoch<TAB>author name" lines),
 deliverables.txt ("serial<TAB>epoch" lines).
 
-LAST line: SEAT-LIVENESS device=<d> seats=<n> moving=<a> quiet=<b> hung=<c> dead=<e> unknown=<u> ok=<True|False>
+LAST line: SEAT-LIVENESS device=<d> seats=<n> moving=<a> quiet=<b> hung=<c> dead=<e> elsewhere=<f> unknown=<g> ok=<True|False>
 Exit: 0 ok=True, 1 ok=False, 2 usage or an unresolved box, 3 an unreadable register or source.
 """
 from __future__ import annotations
@@ -52,9 +63,10 @@ import sys
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(TOOLS)
 
-CLASSES = ("MOVING", "QUIET", "HUNG", "DEAD", "UNKNOWN")
+CLASSES = ("MOVING", "QUIET", "HUNG", "DEAD", "ELSEWHERE", "UNKNOWN")
 FRESH_HEARTBEAT_SECONDS = 600
 ORDER_DATES = {}
+ORDER_PROJECTS = {}
 SERIAL_IN_CMDLINE = re.compile(r'"\s*([0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(?:~[A-Za-z0-9]+)?)')
 PS_SCRIPT = (
     "[Console]::OutputEncoding = New-Object System.Text.UTF8Encoding($false); "
@@ -136,6 +148,7 @@ def open_orders_to(ctx) -> dict:
         if word in SL.TERMINAL:
             continue
         out.setdefault(who.group(1), []).append(os.path.basename(path))
+        ORDER_PROJECTS.setdefault(who.group(1), []).append(os.path.dirname(os.path.dirname(path)))
         when = re.search(r"<issued_date>\s*(\d{4}-\d{2}-\d{2})", text)
         if when and when.group(1) > ORDER_DATES.get(who.group(1), ""):
             ORDER_DATES[who.group(1)] = when.group(1)
@@ -210,6 +223,26 @@ def newest_deliverable(ctx, serial: str):
     return best
 
 
+def placement_of(serial: str, dev, reg: dict, device: str) -> dict:
+    """{"here": n, "elsewhere": {box: n}, "unread": n} over the serial's open orders. The project's project.json `placement`
+    is resolved by lib/devices.py; a missing file, an unparseable file, an empty field or a value the register does not hold
+    counts as unread, never as here and never as elsewhere."""
+    out = {"here": 0, "elsewhere": {}, "unread": 0}
+    for home in ORDER_PROJECTS.get(serial, []):
+        try:
+            field = json.load(open(os.path.join(home, "project.json"), encoding="utf-8")).get("placement")
+        except (OSError, ValueError, AttributeError):
+            field = None
+        box = dev.resolve(field, reg) if isinstance(field, str) and field.strip() else None
+        if box is None:
+            out["unread"] += 1
+        elif box == device:
+            out["here"] += 1
+        else:
+            out["elsewhere"][box] = out["elsewhere"].get(box, 0) + 1
+    return out
+
+
 def owned_here(serial: str, reg: dict, device: str) -> bool:
     """Does this box run the serial's lane? A base serial and an unclaimed lane run where the register's default says."""
     lane = serial.partition("~")[2]
@@ -229,14 +262,27 @@ def owned_here(serial: str, reg: dict, device: str) -> bool:
 # ---------------------------------------------------------------- the classification
 
 def classify(*, alive: bool, registered: bool, hb_age, orders: list, commit_ep, deliv_ep, now: int, minutes: int,
-             process_read: bool, newest_order: str = "") -> tuple:
-    """(class, reason). Pure: every input is a measured value."""
+             process_read: bool, newest_order: str = "", placed: dict = None) -> tuple:
+    """(class, reason). Pure: every input is a measured value. `placed` is placement_of()'s answer for the seat's open orders
+    (None: no placement read, which is only ever correct for a seat with no open order)."""
     if not process_read:
         return "UNKNOWN", "process list unreadable: no seat is called dead or hung off a failed read"
     if not alive:
         if registered and hb_age is not None and hb_age <= FRESH_HEARTBEAT_SECONDS:
             return "UNKNOWN", "no process token but a broker heartbeat %dm old: process-blind, not called dead" % (hb_age // 60)
-        why = "%d open order(s), newest issued %s: %s" % (len(orders), newest_order or "?", ", ".join(orders[:2]))             if orders else "registered session"
+        if not orders:
+            return "DEAD", "no process carries this serial; registered session"
+        placed = placed or {"here": 0, "elsewhere": {}, "unread": len(orders)}
+        away = sum(placed["elsewhere"].values())
+        counts = "%d placed here, %d elsewhere, %d unread" % (placed["here"], away, placed["unread"])
+        why = "%d open order(s) (%s), newest issued %s: %s" % (len(orders), counts, newest_order or "?", ", ".join(orders[:2]))
+        if placed["here"] == 0 and placed["unread"] > 0:
+            return "UNKNOWN", ("placement unread for %d order(s), %d placed elsewhere: never called dead off an unread placement; %s"
+                               % (placed["unread"], away, why))
+        if placed["here"] == 0:
+            boxes = ",".join(sorted(placed["elsewhere"]))
+            return "ELSEWHERE(%s)" % boxes, ("no process on this box and every open order is placed on another box, so this "
+                                             "box cannot see it: that box's manager's to look at; %s" % why)
         return "DEAD", "no process carries this serial; %s" % why
     recent = max(commit_ep or 0, deliv_ep or 0)
     age_min = (now - recent) // 60 if recent else None
@@ -249,7 +295,7 @@ def classify(*, alive: bool, registered: bool, hb_age, orders: list, commit_ep, 
     return "QUIET", "alive, nothing for %dm, no open order" % age_min
 
 
-def build(ctx, device: str, reg: dict, minutes: int) -> tuple:
+def build(ctx, device: str, reg: dict, minutes: int, dev) -> tuple:
     """(rows, notes). Raises BadSource when the liveness file or the git read fails."""
     now = ctx.now()
     try:
@@ -286,16 +332,17 @@ def build(ctx, device: str, reg: dict, minutes: int) -> tuple:
         deliv_ep = newest_deliverable(ctx, serial)
         klass, why = classify(alive=serial in proc_by_serial, registered=info is not None, hb_age=hb_age,
                               orders=orders.get(serial, []), commit_ep=commit_ep, deliv_ep=deliv_ep, now=now,
-                              minutes=minutes, process_read=process_read, newest_order=ORDER_DATES.get(serial, ""))
-        rows.append({"serial": serial, "kind": kind_of(serial), "class": klass, "reason": why,
+                              minutes=minutes, process_read=process_read, newest_order=ORDER_DATES.get(serial, ""),
+                              placed=placement_of(serial, dev, reg, device) if serial in orders else None)
+        rows.append({"serial": serial, "kind": kind_of(serial), "class": klass.split("(")[0], "label": klass, "reason": why,
                      "pids": proc_by_serial.get(serial, []), "orders": len(orders.get(serial, []))})
     return rows, notes, process_read
 
 
 def final_line(device: str, rows: list, ok: bool) -> str:
     count = {c: sum(1 for r in rows if r["class"] == c) for c in CLASSES}
-    return "SEAT-LIVENESS device=%s seats=%d moving=%d quiet=%d hung=%d dead=%d unknown=%d ok=%s" % (
-        device, len(rows), count["MOVING"], count["QUIET"], count["HUNG"], count["DEAD"], count["UNKNOWN"], ok)
+    return ("SEAT-LIVENESS device=%s seats=%d moving=%d quiet=%d hung=%d dead=%d elsewhere=%d unknown=%d ok=%s" % (
+        device, len(rows), count["MOVING"], count["QUIET"], count["HUNG"], count["DEAD"], count["ELSEWHERE"], count["UNKNOWN"], ok))
 
 
 def main(argv: list) -> int:
@@ -318,7 +365,7 @@ def main(argv: list) -> int:
         return 2
     ctx = SL.Ctx(args.from_fixture)
     try:
-        rows, notes, process_read = build(ctx, device, reg, args.minutes)
+        rows, notes, process_read = build(ctx, device, reg, args.minutes, dev)
     except BadSource as exc:
         print("ERROR: %s" % exc, file=sys.stderr)
         print(final_line(device, [], False))
@@ -329,7 +376,7 @@ def main(argv: list) -> int:
         print(note)
     for row in rows:
         print("  %-26s %-8s %-8s pid=%-8s orders=%-3d %s" % (
-            row["serial"], row["kind"], row["class"], ",".join(str(p) for p in row["pids"]) or "none", row["orders"],
+            row["serial"], row["kind"], row["label"], ",".join(str(p) for p in row["pids"]) or "none", row["orders"],
             row["reason"]))
     ok = process_read and sum(1 for r in rows if r["class"] in CLASSES) == len(rows)
     line = final_line(device, rows, ok)
