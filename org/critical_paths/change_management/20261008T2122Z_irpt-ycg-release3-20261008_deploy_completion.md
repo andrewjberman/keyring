@@ -13,7 +13,7 @@
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
 | L1 | verify | pre-checks: pin ancestor, census=4 members, live CodeSha256 == ZspX0qD2, grant read-back, rollback objver | ancestor rc0 + changed_members=4 + live hash + grant statements + rollback objver | pin 1b94d50b8c ancestor of worktree HEAD rc0; release-census changed_members=4 (generate_installed.py, interactive_access.py, served.py, uploads.py); live CodeSha256 ZspX0qD2bCkFVoi3X8W0cBiPlHY37utqPysuLXMeduI= LastModified 2026-10-08T20:44:41Z; role policy irpt-ycharts-generate holds 16 Sids incl ReadPartnerProfileRowForOnBehalfAdvisor (GetItem on exactly opal-partner-49financial/-inflection/-cottonwood) and RetainOriginalHoldingsUploadsOnly (original_holdings, 3 firms), and does NOT hold RetainOriginalCsvUploadsOnly; ROLLBACK SOURCE S3 current versionId LF5iMV9_9RtJ6z.v.SOW7iGLD2j8JN0v content-sha256 ZspX0qD2..; shared ycharts tf dir diff HEAD empty | CLOSED 20261008T212240Z |
-| L2 | s3-prefix | build-and-upload investor-reporting irpt-ycharts-generate -> opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip | built sha256 == Un0wVZqj.. + new versionId |  | OPEN |
+| L2 | s3-prefix | build-and-upload investor-reporting irpt-ycharts-generate -> opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip | built sha256 == Un0wVZqj.. + new versionId | build-and-upload.sh investor-reporting irpt-ycharts-generate rc0: SHA256 Un0wVZqjqpwKhpYyFeBRW3fVFddrlHR0BtHjYuP5eNY= (== signed), s3://opal-313476888478-lambda-artifacts/investor-reporting/irpt-ycharts-generate.zip size=591141, new versionId NqbpRnnx5METt43XaI_4nmk5fZDRTQpk, content-sha256 metadata Un0wVZqj.. (head-object). Running code unchanged by this leg. | CLOSED 20261008T212414Z |
 | L3 | activation | safe-apply of ycharts saved plan -target module.irpt_ycharts_generate.aws_lambda_function.this 0 add 1 change 0 destroy | apply output + live CodeSha256 == Un0wVZqj.. |  | OPEN |
 | L4 | verify | after-reads 1-7, test row deleted NOT FOUND, admit keys handed to laptop | after-reads file + NOT FOUND read + admit_keys file |  | OPEN |
 
@@ -21,3 +21,4 @@
 
 - 20261008T212224Z OPENED by 0.9.0_WK_IRPT_BCKEND~159 with 4 leg(s)
 - 20261008T212240Z LEG L1 closed: pin 1b94d50b8c ancestor of worktree HEAD rc0; release-census changed_members=4 (generate_installed.py, interactive_acces
+- 20261008T212414Z LEG L2 closed: build-and-upload.sh investor-reporting irpt-ycharts-generate rc0: SHA256 Un0wVZqjqpwKhpYyFeBRW3fVFddrlHR0BtHjYuP5eNY= (=
