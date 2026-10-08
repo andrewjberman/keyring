@@ -2155,3 +2155,16 @@ Section 74 (round 81, IB-pr-368) is on branch wk-IRPT_BCKEND-176; the drain unio
 | `IB-pr-369` | E9: ReportRepository retains each family under its own policy revision; custody callers pass the custody revision; regression arm | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing built or applied) | none (code) | P82-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one repository change and its tests. Slot ~177.
+
+## 76. ROUND 83, WORKSTREAM ~P (2026-10-08 ~19:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ADDENDUM 6/9 msg 1474: E9 under its own pair)
+
+IB-pr-369 (per-family revisions) drained @0c2bdf7634; E8's PENDING row at HEAD (fdc0a92a21); IB-pr-368 live (idanP8nX). This round
+writes E9's release packet: repin repository.py, composition.py (row D2-S6) and the registry row, clean-tree BUILD_ONLY, packet with
+the PENDING -> ACTIVE answer and a replay regression arm for the release order. Check `deliverables/2.0.0_SA_COO~P2/checks/r83/p83_cells.py`,
+dry-run at base 25076d5af5: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-370` | E9 release packet: repin set, census, clean-tree BUILD_ONLY, never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-369 (drained) | P83-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~178.
