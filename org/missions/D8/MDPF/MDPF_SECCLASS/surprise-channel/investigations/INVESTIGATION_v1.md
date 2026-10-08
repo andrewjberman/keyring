@@ -5405,3 +5405,57 @@ by dell1 or by this seat.
   "notes": "Surfaced by the old-ledger measurement for 1.0.0_SA_CTO~DELL1 msg 1050; does not reopen bd-residual leg R (closed on its own read). A trace (which tickers make up the 6.94 pct) is the next cut."
 }
 ```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:48:32Z",
+  "one_line": "SC-e-75: the multi_asset on the 36 BD concentration.json keys does not enter in D_04; it is frozen on 2026-10-03..05 history entries of the C_06 envelopes gold/entities/clients/{rid}.json, so the D_04 fix is moot and the order stops at step 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BD_MULTI_ASSET_TRACE_20261008.md (org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/): 36 of 36 opal-data-bd concentration.json hit keys read; 141 multi_asset holdings; by date 2026-10-03=47, 10-04=47, 10-05=47; zero on any date >= 10-06; by ticker ABALX 12, AMECX 9, CAIBX 9, SCGB1 5, 88 no-ticker, plus KAGIX/FBALX/FKIQX/MDLOX/AAETX/CFIHX 3 each.",
+      "D_04.client_portal_summary.py:1192 conc_list = data.get('concentration', []) and :1208 write it unchanged to platinum/clients/{rid}/concentration.json; the module does no class mapping on that path.",
+      "s3://opal-data-bd/gold/entities/clients/z08119861.json (C_06 envelope, VersionId pUkdGIUqCg0Y_I8tkmOHelaTlNn5U.ar, LastModified 2026-10-08T05:24:01Z) already holds KAGIX asset_class multi_asset on 2026-10-03/04/05, class_source etf-classifications: the value is one hop upstream of D_04.",
+      "C_06.client_mix_timeseries.py:731-740 incremental merge: existing_conc[ds] is overwritten only for dates in the new partitions, so a dated entry classified while the etf-classifications table held multi_asset (R9 write 2026-10-03; remap commit 0d9457b639 2026-10-07 03:10 -0400) is never reclassified.",
+      "Deployed-vs-repo by content, 9 of 9 files identical (D_04, C_06, lib/etf_classifier, s3_layout, config, exclusions, floored_percentiles, mix_views, lib/_shared/etf_classifications_dynamodb): sha256 equal; no stale running bytes.",
+      "Criteria at the worktree root: SC14-e75-AC1 PYTEST-BAD rc=4 (test file absent, not written); SC14-e75-AC2 NOT-READY (half absent); SC14-e75-AC3 PYTEST-OK 76 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e75 step 2: 'FIX only if the source is D_04.client_portal_summary.py ... If the source is another file or an input object, STOP after step 1 and file a row. The issuer re-points.' Steps 3-4 (test, half request) presuppose a D_04 fix and a deploy of D_04 to code/gold/.",
+  "world_is": "The source is an INPUT OBJECT (the C_06 envelopes gold/entities/clients/{rid}.json, history dates 2026-10-03..05, frozen by C_06's incremental merge), not D_04. Deploying a changed D_04 would not move the 141 holdings unless D_04 itself rewrote the class, which is a class copy of exactly the kind the six-class design retired. Steps 2-4 were not executed; AC1 and AC2 cannot be met as written; AC3 holds as the control. The order is left open.",
+  "notes": "Not decided here (issuer's re-point): (i) a C_06 FULL build, which reclassifies every date through the current table; (ii) a targeted rewrite of the 36 envelopes' 3 dated entries; (iii) a D_04 passthrough guard that maps any class outside the six (plus unclassified) at write time, which would also pin the next such case. Any of (i)/(ii) writes served gold/entities/clients/ and platinum/clients/ objects and needs the never-widen pair. COT's twin is out of scope here: 2 opal-data-cot keys (z09305621, z09305679, 1 hit each, last modified 2026-10-08T11:36:56Z) in the cell's evidence file."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:59:51Z",
+  "one_line": "SC-e-75: C_06's retained-entry reclass heals every holding the envelope shows, but 15 of 105 changed dates keep a mix sum below 0.999 because the envelope holds only the top 10 holdings per date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Local run of reclassify_retained (C_06.client_mix_timeseries.py:273) over the 36 hit envelopes gold/entities/clients/{rid}.json named by SERVED_MULTI_ASSET_SPLIT_20261008T1810Z.json (read-only S3 get, live classifier): entries=105 holdings=141 (multi_asset->equity 84, ->fixed_income 57); mix sum after the move on the 105 changed dates: max 1.000001, min 0.952431, 15 of 105 below 0.999.",
+      "z08119861 (3 dates): mix sum 0.963313/0.963298/0.968003 before, 1.0 after; 1291 other dated entries byte-identical.",
+      "C_06.client_mix_timeseries.py:552-554 builds mix over MIX_ASSET_CLASSES, which has no multi_asset key, so multi_asset weight never entered the served mix; :559-566 keeps only TOP_N_CONC=10 holdings per date."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 step 2: recompute the date's mix class totals from the reclassified holdings, so the retained entries come out consistent.",
+  "world_is": "The mix is recomputed from the holdings the envelope holds. A multi_asset position outside a date's top 10 is not in the envelope and its weight was never in the mix, so on 15 of the 105 healed dates the mix stays short of 1.0 by that weight (up to 0.047569). The order's own test and criteria are met; the shortfall is stated in the half request (section Blast radius, 'Known limit'). Only a C_06 FULL build, which reclassifies from the canonical holdings, closes it.",
+  "notes": "Not disarmable and not decided here; the signing seats read the limit. Leg G should count mix sums < 0.999 on the healed dates beside the multi_asset census."
+}
+```
