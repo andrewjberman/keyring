@@ -21258,3 +21258,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: E8 (~M2) and E9 (IB-pr-369) carry the first; ~Y2's E6 pair carries the second."
 }
 ```
+
+## IRPT_BCKEND-D2-W176-S2 -- S1 resolved: the retained-read regression condition ran as the offline differential replay and the IB-pr-367 release was applied
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W176-S1: the retained-read regression condition had no live instrument (irpt-export-render has no read route for a retained ANALYSIS or PERFORMANCE report), and the CTO restated it as an offline differential replay (CTO half AMENDMENT 1 @49efddd80c, msg 1423) which the order adopted (AMENDMENT 1, @0004fcc566). The replay ran and is committed at d8d2fb723c, before the ledger (9fb292a64c) and before the apply: one ANALYSIS fixture under irpt-x10-v1, reserved by the LIVE zip's own code path, read back through repository.get in the live zip (03p2eIEK...) and in the built zip (idanP8nX...) in separate python -I processes with identical result_sha256 a7a8ae481b9727753526baa9ed187bc0d56aead9e6650cca0c9f56ab863c18c8, neither raising nor refusing; the altered policy_sha256 control was refused by both (RetentionRefused: retention binding changed); test_repository (24), test_retained_repository (9) and test_retention (21) passed, each alone. The release was then applied (live CodeSha256 == built, re-plan 0, census 0, ledger closed); IB81-1-AC1 and AC2 PASS.",
+  "one_line": "S1 resolved: the retained-read regression check ran as the CTO's offline differential replay, live == built, negative control refused by both, then the release applied.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/ (replay_zip.py, live_run.json, built_run.json, suite_*.txt)@d8d2fb723c",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/1.0.0_SA_CTO~DELL2/NEVER_WIDEN_IB_pr_367_REPOSITORY_REPIN_CTO_HALF.md@49efddd80c (AMENDMENT 1, msg 1423)",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/IB81-1_release_after_reads.json (replay, built_sha, ledger_open_commit 9fb292a64c, ledger_closed)"
+    ]
+  },
+  "spec_asserts": "CTO half condition 1 as amended (msg 1423, @49efddd80c): a differential replay of repository.get on one irpt-x10-v1 fixture reserved by the live zip's code path, identical bytes, altered-policy control refused in both, three suites pass, record committed before the apply.",
+  "world_is": "It held on every arm: live and built returned the same result_sha256 on the reserved ANALYSIS fixture, the control was refused by both, the suites passed, and the record was committed before the ledger and the apply. The limit is the one the amendment names: this is a code-level proof on in-memory fakes, not a read of a live retained report."
+}
+```
+
+## IRPT_BCKEND-D2-W176-S3 -- the packaged composition.py is older than the source composition.py the suites exercise
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W176-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~176",
+  "surfaced_at": "2026-10-08T19:10Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The packaged composition.py in irpt-export-render (live and built alike) is the aa1cfaea6b vintage; the source composition.py at HEAD is newer, so the three suites exercised a composition the function does not ship.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of infra/aws/lambda/investor-reporting/reports/composition.py against the built zip's composition.py: differ at line 25 (the source adds additional_policy_revisions and per-family revisions; f60e6f1d2a YCD-l-6)",
+      "diff -rq of the unzipped live and built zips: only repository.py and retention.py differ, so composition.py is identical in both and unchanged by this release",
+      "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~176/replay/replay_zip.py: the replay imports composition from the zip directory, asserted per module"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 1: the three suites pass; the replay exercises the live and the built zip.",
+  "world_is": "The suites import the source tree at HEAD, whose composition.py is newer than the one packaged; the replay used the packaged one, so the served combination (packaged composition with the new repository.py and retention.py) is covered by the replay only, not by the suites. No behavioural difference was observed on the replay's path, and the next release that moves composition.py will change the served surface."
+}
+```
