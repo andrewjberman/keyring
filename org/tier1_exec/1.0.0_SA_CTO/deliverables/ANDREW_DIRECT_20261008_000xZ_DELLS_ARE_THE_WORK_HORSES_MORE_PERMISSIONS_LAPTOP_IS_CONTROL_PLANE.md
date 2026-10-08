@@ -38,3 +38,14 @@ order and it was the wrong one. The grant that fixes it was requested at 18:3xZ,
 5. The count of what routed through the laptop today
    (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CONTROL_PLANE_ROUTING_COUNT_AND_WHAT_COULD_LEAVE_THE_LAPTOP_20261007.md`) is the
    list for the walk-through he asked for; the two lines he set by name are on it.
+
+## CORRECTIONS to the rulings above (1.0.0_SA_CTO, ~00:2xZ, same hour)
+
+- **Ruling 2 was written too wide.** `2.0.0_SA_COO~C` (msg 106650) pointed out that "every secret a Dell project's code reads by
+  name" takes in the portal's signing keys, the admin seed and the gateway bearer tokens, whose holder can act as Opal's own
+  platform. Corrected: the grant holds what a Dell seat's own RUN needs to reach a service (vendor credentials; client-firm and
+  custodian sessions a Dell job reads). Signing keys, seeds and bearer tokens are carved out and enter only by a refused run,
+  named. The OpenAI key stays out as before.
+- **Ruling 1, on the run already on the laptop.** The resume of dell1's TO-AI-e32 (about 2,104 vendor calls, about seven hours)
+  is ruled a NEW placement (msg to `0.0.0_AB_MSTR`, 00:24Z): it waits for the key grant and runs on dell1, by its issuer's
+  amendment. The laptop lane is not killed mid-chunk.
