@@ -48,3 +48,27 @@ induced hole therefore goes on the RE-ATTEMPT target's input, not the daily one.
    --reason "<S2 / hop-0 reason>" --execute`, then list the eleven `meta/<d>-missing.json`.
 5. **FWD-4 / FWD-5 read:** the settings and schedule in place (act 2's read-backs) are the APPLIED proof; FWD-5's winter margin is
    re-read on the first EST morning (2026-11-02).
+
+## Ruling R2-4 (issuer, 2026-10-08 ~16:2xZ) -- act 3 rides the 06:00Z daily fire, with the feed dropped being accounts
+
+This ruling supersedes R2-3 and act 3a-3e's feed and target, and nothing else. The context:
+- HG-t-5 is HELD (row D1-S7; CTO 51c9c0e64a 3b), so the daily fire stays at 06:00Z and remains the first pull of the day.
+- `cot-satellites-registry-producer` at 07:00Z reads `rebalancer_models/<D>/page_000.json` and
+  `rebalancer_model_detail/<D>/<id>.json` (`data/assets/scripts/gold/build_satellites_registry.py:121-122`). Dropping
+  model_detail, as the plan first said, would starve it a second time.
+- `rebalancer_accounts` is read only by the silver conversion (`opal-assets-silver-blackdiamond/rebalancer_conversion.py`,
+  `rebalancer_schemas.py`, `mirror_conversion.py`). Silver fires only on the runner's `on_success`, which a PARTIAL day withholds.
+
+The act:
+- The induce `{"mode":"pull","induce":"drop-feed:rebalancer_accounts"}` goes on the DAILY rule's target input. It is set the
+  evening before and read back.
+- At about 06:00-06:04Z, the first attempt and the 2 async retries each land models and model_detail, then write
+  `meta/<D>-result.json` PARTIAL with no stamp. Reading that result object is FWD-2's exercise.
+- The daily input is restored to `{"mode":"pull"}` and read back.
+- `repair.py --date <D>` runs as a dry run, then with `--execute`. The stamp lands at about 06:1xZ, before the 07:00Z satellites
+  producer and long before the 13:30Z floor. Reading the result as COMPLETE, plus the before and after key sets of the two
+  present feeds (R2-2), is FWD-3's exercise.
+- The 11:3xZ re-attempt SKIPs (the guard).
+
+Precondition: act 1 (the runner code) is deployed and reads `LastUpdateStatus Successful`. The act runs under its own
+never-widen pair. It rests on the standing vendor word for a same-day re-run (ACT 1 approval).
