@@ -5377,3 +5377,31 @@ by dell1 or by this seat.
   "notes": "Not disarmable by this seat: amending <owned_cells>, <decomp_ref> or the criterion set of an order is the issuer's act, and adding '# pipeline-override:' would be this seat implementing its own escape from a gate -- CLAUDE.md section 2 'DO NOT MANUFACTURE FRICTION' clause (a) runs the other way but the same principle bars inventing the exemption. Three shapes the issuer could take, none chosen here: (i) narrow <owned_cells> to SC-e-32 and repoint <decomp_ref> to DECOMP_R8.md, which closes every limb because AC1 already cites only SC-e-32 and SC-e-50 was never discharged by a criterion on this order; (ii) split the cells across two orders; (iii) the audited '# pipeline-override: <reason>' the gate itself offers. SCOPE BEYOND THIS ORDER: any order whose <decomp_ref> cites the round that RELEASED its cells rather than the one that DECLARED them is unflippable the same way, and the failure appears only at the close, after the work is done -- the gate cannot see it at the cut. This seat reverted its own premature 'complete' flip back to 'pending' rather than leave an uncommitted terminal claim in the working tree."
 }
 ```
+
+## MDPF_SECCLASS-D1-S11 -- BD firm mix unclassified 6.94 pct (> 5.0); alternatives sleeve appears to have moved to unclassified
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S11",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T19:05Z",
+  "one_line": "BD firm mix serves unclassified 6.94 pct (data_as_of 2026-10-06), over the 5.0 limit read at the 10-02 re-land (4.14 pct); across mix_periods alternatives fell from 3.6-4.4 pct (Q4'25-Q2'26) to 0.09 pct (Q3) / 0.06 pct (Q4) while unclassified rose 0 -> 4.14 -> 6.94 pct -- the alternatives sleeve appears to have moved to unclassified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object s3://opal-data-bd/platinum/firm/mix_summary.json (LastModified 2026-10-08T05:48:04Z, data_as_of 2026-10-06), read 2026-10-08 ~19:0xZ: mix pct equity 0.7247, fixed_income 0.1904, unclassified 0.0694, structured 0.0126, cash 0.0016, commodities 0.0008, alternatives 0.0006, other 0.0; sum 1.0",
+      "same object mix_periods: alternatives 2025-Q4 0.0441, 2026-Q1 0.0387, Q2 0.0361, Q3 0.0009, Q4 0.0006; unclassified Q4'25-Q2 0.0, Q3 0.0414, Q4 0.0694",
+      "ledger secclass-bd-thread-r4-reland-m-20261002 leg R (CLOSED 20261002T193059Z): unclassified 4.14 pct <= 5.0 -- the limit this row compares against"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BD_THREAD acceptance (re-land leg R): the firm mix serves every class present with unclassified at or below 5.0 pct.",
+  "world_is": "Unclassified is 6.94 pct and still rising, and the alternatives class has nearly emptied since Q3. Candidate cause, not proven: holdings that were alternatives under the old map (hedge funds, private funds) now resolve to no canonical class after the six-class switch / the 10-07 remap, rather than to alternatives.",
+  "notes": "Surfaced by the old-ledger measurement for 1.0.0_SA_CTO~DELL1 msg 1050; does not reopen bd-residual leg R (closed on its own read). A trace (which tickers make up the 6.94 pct) is the next cut."
+}
+```
