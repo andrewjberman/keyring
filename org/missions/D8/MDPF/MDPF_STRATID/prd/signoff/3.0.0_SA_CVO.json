@@ -1,0 +1,12 @@
+{
+  "prd": "MDPF_STRATID_PRD.md",
+  "prd_version": "v0.1",
+  "prd_pin": "c17e5e630010db146c80d5e2908cf8cf4b967bfb",
+  "half": "ratified-text",
+  "half_hash": "6ab65484cc7474a2a35a86ba145a6a59d9285cc19931f993c112d5e87f1b8279",
+  "endpoint_hash": "1a57a42e57421cb957ec8efdc93e685e26bd0edc20d23730db610e8f94cf8204",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/MDPF_STRATID_PRD_V01_RATIFIED_TEXT_REVIEW_20261008.md@8ad9f64a93",
+  "signed_by": "3.0.0_SA_CVO",
+  "signed_at": "2026-10-08T20:27:16Z"
+}
