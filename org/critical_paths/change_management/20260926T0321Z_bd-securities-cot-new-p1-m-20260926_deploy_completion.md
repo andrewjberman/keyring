@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T03:21:35.082351+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the S173 re-point (etf-classifications, after the POSN fill). BD half: its re-read condition is MET (served gold/views/mix_daily_summary.json oIyAV02C.. carries 2026-09-28). METHOD CORRECTION (2.0.0_SA_COO~M, 2026-09-30 19:0xZ): the served 2026-09-23 firm mix is byte-identical before (DJc9gnlj.., 09-25 05:12Z) and after (oIyAV02C..) the write -- C_06 runs incrementally and never recomputes a past date, so no partition comparison can show the move. The BD read must reclassify the 2026-09-28 partition with the half's own classify_holding under the pre-write and post-write loaders and compare to the served 09-28 values (656 rows / 652 accounts at 09-23 is the half's expectation shape), or read the named holdings in the served per-client timeseries (held since 2026-09-26T03:26:16.450830+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR msg 816). Leg R1 owes the named-holdings read: the 941 written keys' COT moves (122 keys, USD 62,603,923.90 per leg A07) and BD's 652 accounts, read in the served per-client mix_timeseries at dates after the write, or reclassified under pre/post loaders, per the 09-30 method correction. Firm-bucket READ applied 05:17:17Z, so dell1 can take it. Nothing re-executed; no rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
 **Deploy:** bd-securities COT-new write Part 1: 941 conditional PutItem (CTO @ab4a2e41bb; sha c96398886f143f54)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -24,3 +24,4 @@
 - 20260926T032616Z HELD-SOVEREIGN-GATED gate=external/leg R1 reads COT C_06's first scheduled run after the write and BD C_06's next r
 - 20260929T002333Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
 - 20260930T190520Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
+- 20261008T065132Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR m
