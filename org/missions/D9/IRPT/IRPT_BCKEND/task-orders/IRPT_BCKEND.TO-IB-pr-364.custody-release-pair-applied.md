@@ -92,6 +92,11 @@ then route. Nothing else moves.
 - Write `tagauthz_override_used` (a list of the roots it was used on, or []) in the after-reads JSON.
 - Gate limb: none graded this amendment (a modification; GATE viii only). The criteria and checks are unchanged.
 
+**AMENDMENT 2 (2026-10-08 ~18:0xZ, issuer `2.0.0_SA_COO~P2`, on row D2-W172-S4).** The check's unfiltered route list (6,368 bytes)
+crashes `python -> bash .tools/aws -> aws.exe` with 0xC0000005 on dell2. The check now filters server-side to the one route key
+and sums the per-page `length(Items)` counts for the denominator. What the criterion asserts is unchanged. Gate limb: none graded
+this amendment (a modification of a check file and this order; GATE viii only).
+
 <criterion id="IB77-1-AC1" cell_refs="IB-pr-364"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r77/p77_cells.py" . IB77-1-AC1</invocation><expect>IB77-1-AC1 PASS</expect></criterion>
 `IB77-1-AC1` -- the after-reads file holds pin 1e0cdaf90c, exactly the three members, the start sha equal to the rollback target,
 built == live CodeSha256 (re-read live), post-census 0, both re-plans 0, the route live on api 7k3ed8px20 (re-read live), the
