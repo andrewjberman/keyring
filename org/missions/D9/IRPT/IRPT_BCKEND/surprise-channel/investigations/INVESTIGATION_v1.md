@@ -21202,3 +21202,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "By reading the Terraform (no live call), the function role cannot GetItem opal-partner-49financial, so a deployed build would refuse every on-behalf upload. The code path is correct and fails closed; the grant (and its KMS decrypt scope, if the partner tables are CMK-encrypted) is an infra change outside this order's paths. Also for the release pair: the advisor email travels as the query parameter advisor_email beside selected_tenant, because the upload body schema rejects unknown fields."
 }
 ```
+
+## IRPT_BCKEND-D2-W177-S1 -- submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "submit_installed.compose now opts into irpt-custody-x10-v1, which the base registry does not hold, so a build of this source before the E8 registry row is live raises on every submit (PERFORMANCE and ANALYSIS included).",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (release ordering: the irpt-custody-x10-v1 registry row from 2.0.0_SA_COO~M2 must be in the built registry before export/submit_installed.py is built or deployed)",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/reports/composition.py:build_retained_repositories calls reporting_policy(revision) for every additional revision; lib/opal_naming.py:1966-1977 reporting_policy raises ValueError('unknown reporting policy revision') when no row matches",
+      "infra/logic/registry/reporting_policies.json at the worktree base holds no irpt-custody-x10-v1 row (Grep irpt-custody|CUSTODY_REPORT over infra/logic: no match); the row is E8, lane 2.0.0_SA_COO~M2, PENDING_ENFORCEMENT",
+      "infra/aws/lambda/investor-reporting/export/submit_installed.py reports(): additional_policy_revisions=(CUSTODY_POLICY_REVISION,) added by this order's cell IB-pr-369"
+    ]
+  },
+  "spec_asserts": "IB-pr-369: the custody read caller in submit_installed passes the custody revision through build_retained_repositories(..., additional_policy_revisions=...); the release is a later pair after the registry row.",
+  "world_is": "Source and offline tests are correct (a fixture registry holds both rows). A build or deploy of this source against a registry without the custody row would fail the whole submit path, not only custody; ordering is the release pair's, which this order does not do (no AWS, no build)."
+}
+```
+
+## IRPT_BCKEND-D2-W177-S2 -- Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W177-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~177",
+  "surfaced_at": "2026-10-08T19:21:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Two custody callers named in the E8 document are outside this order's paths or absent: ycharts/generate/custody_submission.py builds repositories with no custody revision, and persist_custody_report has no production composition site.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/ycharts/generate/custody_submission.py:77 build_retained_repositories(...) with no additional_policy_revisions; it uses stores.artifacts only (NORMALIZED_PORTFOLIO), never stores.reports, and is outside the <paths> grant, so unedited",
+      "Grep persist_custody_report over infra/aws/lambda: only reports/custody_write.py and reports/tests/test_custody_write.py; no production code composes a retained ReportRepository and calls it, so reports/custody_write.py (which receives its repository injected) needed no edit",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E8_CUSTODY_REPORT_FAMILY_SHAPE_20261008.md section 2 lists these callers"
+    ]
+  },
+  "spec_asserts": "IB-pr-369 names submit_installed.py (custody read) and custody_write.py (custody write) as the custody callers that pass the custody revision.",
+  "world_is": "Only submit_installed.py composes a ReportRepository that must read a CUSTODY_REPORT; custody_write.py takes the repository its caller composed. When IRPT_CUSTDY's writer is wired it must compose with additional_policy_revisions=(composition.CUSTODY_POLICY_REVISION,), else its persist refuses 'unregistered retention family' (a fail-closed outcome, pinned by the unregistered_kind_refuses test)."
+}
+```
