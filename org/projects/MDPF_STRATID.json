@@ -1,0 +1,13 @@
+{
+ "project_code": "MDPF_STRATID",
+ "home": "org/missions/D8/MDPF/MDPF_STRATID",
+ "directive": "D8",
+ "macro_code": "MDPF",
+ "fabric": "laptop",
+ "dep_stage": "PRD",
+ "status": "active",
+ "name": "Strategy identification into the Global aggregate: every Opal ETF Strategy and Opal SMA sleeve found at intake and counted once",
+ "generated_from": "org/missions/D8/MDPF/MDPF_STRATID/project.json",
+ "generated_by": ".tools/missions-tree-index.py",
+ "generated_at": "2026-10-08T20:19:13Z"
+}

@@ -1,0 +1,38 @@
+{
+  "project_code": "MDPF_STRATID",
+  "macro_code": "MDPF",
+  "directive": "D8",
+  "fabric": "laptop",
+  "pipeline": "mdpf",
+  "status": "active",
+  "dep_stage": "PRD",
+  "created": "2026-10-08",
+  "registered_under_tree": "2026-10-08",
+  "placement": "DELL1",
+  "pods": [
+    "PORTAL.MODEL_PORTFOLIOS"
+  ],
+  "related": [
+    "MDPF_GLOBAL",
+    "MDPF_TAXSMA",
+    "MDPF_SECCLASS",
+    "MDPF_HEALGAP",
+    "ETFS_SETUP",
+    "WSE_COTMDL"
+  ],
+  "name": "Strategy identification into the Global aggregate: every Opal ETF Strategy and Opal SMA sleeve found at intake and counted once",
+  "description": "Andrew-direct 2026-10-08 ~18:3xZ at the 1.0.0_SA_CTO~DELL1 terminal (Cottonwood SMA dollars ADDITIVE to Global; 'we need to make sure we have a system that gets those identified and sent over for counting in the global aggregate'; record @4672605201), restated ~20:1xZ (ETF Strategies are Opal-managed SMA sleeves named after an Opal ETF, by ticker or full name, in SmartX, Rebalancer and Eclipse, aggregated into the SMA taxonomy category under the ETF Strategies drill-down; SMA strategies Tax and Muni under ALT Strategies; record @8e4b5037b4). Feeds MDPF_GLOBAL; any change to Global's served output takes the laptop's never-widen pair (laptop 1.0.0_SA_CTO msg 107101).",
+  "brief_ref": "docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md",
+  "endpoint_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ENDPOINT_FORWARD_STRATEGY_IDENTIFICATION_INTO_GLOBAL_20261008.md",
+  "prds": [],
+  "prd_lineage": [],
+  "decompositions": [],
+  "decomposition_lineage": [],
+  "leads": {
+    "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10)",
+    "cro": "4.0.0_SA_CRO~DELL1 (L1, brief @68aa9dbe9e)",
+    "coo": "UNSEATED -- seated when a dell1 COO lane frees (laptop placement msg 107101)"
+  },
+  "placement_ruling": "Placed on dell1 by laptop 1.0.0_SA_CTO msg 107101 (relayed MSTR~DELL1 msg 1049), as MDPF_GLOBAL owner: seated when a dell1 COO lane frees; changes to Global's served output take the laptop's never-widen pair.",
+  "coo_lane": null
+}
