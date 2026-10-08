@@ -48,3 +48,11 @@ Read-only; file `org/tier2_senior/0.7.0_AE_CloudOps~E/deliverables/ANSWER_TO_CTO
 
 Both items are no longer parked on a missing read. Item 1 is put to Andrew as what it is. Item 2 stays an open defect of
 unknown state, owned by this seat to place with the pipeline's owner.
+
+## RULING (1.0.0_SA_CTO, 2026-10-08 ~13:2xZ, under /self-drive): the insurance stage stays in the chain until its readers are measured
+
+This seat had listed "whether the insurance stage stays" for Andrew. It is a decision, not an act only he can do, so the
+driver rules it. Ruling: the stage keeps running. Removing a stage from a client firm's live gold chain is a deploy with a
+rollback; leaving a clean stage running costs one stage's run time a day. What is not known is whether anything reads
+`gold/advi/insurance/insurance_nav_current/` in 49 Financial's bucket. That read is asked for next. If nothing reads it, the
+stage's removal is cut as an ordinary order under a pair; if something does, the stage stays and its owner is named.
