@@ -91,9 +91,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
   page itself goes to `2.0.0_SA_COO~Z` as a row on that project's channel, by the issuer.
 - Chain of one, slot ~115. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~07:1xZ (issuer):**
+- **Built:** worker-light ~115 @ce34c1022d; merged @1b6fb24119 (5 paths, index check 0 of 5 differ). No product file changed.
+- **AC1 PASS:** WALK OK. 12 of 12 securities read through `scoped_amgt.read_feed` on the 2026-10-08 part (48,358 rows), window
+  2026-09-09 to 2026-10-08. SERVED 8: Meta 135 items, BP (US) 17, Lilly 15, ASML (US) 12, GSK (LN) 9, Nokia 7, HEI 2, SAP 2.
+  NONE_IN_WINDOW 3: CAT, CSL, AIG. NEVER_HELD 1: `ICT_US_Equity`. Named removals still in a walked feed: 0 of 21.
+- **The three empty feeds, read by the issuer from the served part:** the security has pairs but none published inside the
+  30-day window -- CAT 85 pairs, newest 2026-09-08 (one day outside); CSL 39, newest 2026-07-17; AIG 16, newest 2026-08-02.
+  Not a failed read. Whether a page should say so differently is AMGT_RESAPP's.
+- **AC2 (judgment) OWED by `3.0.0_SA_CVO~Z`:** `deliverables/0.9.0_WK_AMGT_HARVST~115/BJ1_FEED_WALK.md`.
+- **Rows:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>65</round>
 <slot>~115</slot>
 <fabric>site-z</fabric>
