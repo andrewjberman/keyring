@@ -123,9 +123,33 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Chain of one, slot ~121. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as
   expected (no such file); AC3 base PASS as expected (count in the issuance commit).
 
+**COMPLETE 2026-10-08 ~10:2xZ (issuer):**
+- **Built:** worker ~121 @89fe764f9d; merged @357b53c71b (12 paths, index check 0 of 12 differ). The only changes under
+  `lib/opal_data_harvest/` are test files; `config.json` and the two round-47 files are unchanged (diffed by the issuer against
+  the issuance commit).
+- **AC1 PASS:** 7 of 7. **AC2 PASS:** NAMES OK. **AC3 PASS:** 33 of 33. Silver read 20,500 articles.
+- **AIG: REPAIRED** to "AMERICAN INTERNATIONAL GROUP, INC.", the SEC name the pool record's own resolution evidence quotes (the
+  crosswalk evidence quotes the same); stored as written, in capitals (row Z-W121-S1).
+- **AIG's query is STILL NOT SPECIFIC, reported not fixed:** `slug_query` returns "AMERICAN INTERNATIONAL" because
+  `publishers._LEGAL_SUFFIX` strips "group"; 2 held titles of another company (American Airlines) contain both words; no
+  held article carries AIG's full name, so the match count is 0 of 0. Aliases and slug brands are OR-ed, so no stored field
+  narrows it. A fix is a collector code change, which a live leg runs; it goes to `1.0.0_SA_CTO~Z` as the open call.
+- **OMAB_US and OMAB_MM: REPAIRED** to "Grupo Aeroportuario del Centro Norte", evidenced by article spans only (sa:3677299,
+  sa:3957263, sa:3958868; 4 articles carry that completion). Row Z-W121-S4: the pool refuses a CIK link for the Mexican line;
+  the issuer lets the repair stand on both lines, which the gold side already groups as one issuer by their equal name.
+- **ICT_US: NOT REPAIRED:** no stored source carries a fuller name and no article span completes it. Row Z-W121-S2: its pool
+  and crosswalk evidence carries the same SEDOL as `ICT_PM_Equity`'s registration; noted for the pool's own row
+  (AMGT_RESAPP-Z-S369), and not used here to infer an issuer link.
+- **One script builds the final files, byte-identical on a second run** (answers row Z-W120-S3). Records changed against round
+  47: 4 (AIG, KCDMY, OMAB_MM, OMAB_US); records added: 8.
+- **Existing assertions changed:** `test_bm1_identity_records.py` (the excepted set grows to 4 keys) and four tests of
+  `test_bm2_truncated_names.py` (AIG's full name and query; OMAB no longer asserted unchanged; the 4-key set).
+- **Not done, by ruling R22:** the pointer is not moved; no job is run.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>69</round>
 <slot>~121</slot>
 <fabric>site-z</fabric>
