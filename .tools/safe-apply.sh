@@ -74,6 +74,69 @@ if [ -n "${DEPLOY_COMMIT:-}" ]; then
   [ "${SAFE_NAMED_COMMIT_CHECK_ONLY:-}" = "1" ] && exit 0
 fi
 
+# NFRA_CTLPLN CT-s-3 -- SEAT GATES (ONE block): who may apply (apply-who-check.py) and the cross-box deploy
+# measurements (crossbox-deploy-check.py). WARN mode (the default) prints and NEVER changes this script's exit code or
+# flow; ENFORCE only while org/mcp/seat-gates.enforce exists (OPAL_SEAT_GATES_ENFORCE_FILE points a test elsewhere;
+# nothing here creates it). Any error inside the block (no python, an unreadable file, a timeout, a crash) is a WARN
+# line and the apply goes on as before. Audited override: SEAT_GATES_OVERRIDE="reason" (org/git-author-override-audit.log).
+# --dry-seat-gates runs the two checks, prints, and exits at the end of this block: no halt gate, plan or terraform follows.
+SG_RC=0
+(
+  set +e +u
+  sg_enf="${OPAL_SEAT_GATES_ENFORCE_FILE:-$SCRIPT_DIR/../org/mcp/seat-gates.enforce}"
+  sg_mode=WARN; [ -e "$sg_enf" ] && sg_mode=ENFORCE
+  sg_to=""; command -v timeout >/dev/null 2>&1 && sg_to="timeout 60"
+  sg_serial="UNKNOWN"
+  [ -f "$SCRIPT_DIR/lib/resolve-actor.sh" ] && . "$SCRIPT_DIR/lib/resolve-actor.sh" && sg_serial="$(resolve_actor)"
+  sg_root="."; sg_targs=(); sg_prev=""
+  for sg_a in "$@"; do
+    case "$sg_prev" in -target|--target) sg_targs+=(--target "$sg_a") ;; esac
+    case "$sg_a" in
+      -chdir=*) sg_root="${sg_a#-chdir=}" ;;
+      -target=*|--target=*) sg_targs+=(--target "${sg_a#*=}") ;;
+    esac
+    sg_prev="$sg_a"
+  done
+  sg_bad=""
+  sg_w="$($sg_to python "$SCRIPT_DIR/apply-who-check.py" --serial "$sg_serial" --root "$sg_root" "${sg_targs[@]}" 2>&1)"; sg_wrc=$?
+  sg_wl="$(printf '%s\n' "$sg_w" | tail -n 1 | tr -d '\r')"
+  case "$sg_wl" in
+    "APPLY-WHO "*" verdict=REFUSED "*) sg_bad="$sg_bad apply-who" ;;
+    "APPLY-WHO "*" verdict=ADMITTED "*) : ;;
+    *) echo "safe-apply: WARN [seat-gates] apply-who-check gave no verdict (rc=$sg_wrc): $sg_wl" >&2 ;;
+  esac
+  echo "safe-apply: [seat-gates] mode=$sg_mode $sg_wl" >&2
+  sg_c="$($sg_to python "$SCRIPT_DIR/crossbox-deploy-check.py" --root "$sg_root" --serial "$sg_serial" "${sg_targs[@]}" 2>&1)"; sg_crc=$?
+  sg_cl="$(printf '%s\n' "$sg_c" | tail -n 1 | tr -d '\r')"
+  case "$sg_cl" in
+    "CROSSBOX-DEPLOY "*" verdict=STOP") sg_bad="$sg_bad crossbox-deploy"; printf '%s\n' "$sg_c" | tr -d '\r' | sed -n 's/^STOP: /safe-apply: [seat-gates] STOP: /p' >&2 ;;
+    "CROSSBOX-DEPLOY "*" verdict=CLEAR") : ;;
+    *) echo "safe-apply: WARN [seat-gates] crossbox-deploy-check gave no verdict (rc=$sg_crc): $sg_cl" >&2 ;;
+  esac
+  echo "safe-apply: [seat-gates] mode=$sg_mode $sg_cl" >&2
+  if [ -n "$sg_bad" ] && [ "$sg_mode" = ENFORCE ]; then
+    if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
+      printf '%s SEAT_GATES_OVERRIDE actor=%s safe-apply root=%s blocked=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+        "$sg_serial" "$sg_root" "$sg_bad" "$SEAT_GATES_OVERRIDE" >> "$SCRIPT_DIR/../org/git-author-override-audit.log"
+      echo "safe-apply: [seat-gates] OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE" >&2
+    else
+      echo "safe-apply: BLOCKED by the seat gates (ENFORCE, org/mcp/seat-gates.enforce present):$sg_bad. Nothing was applied. Override: SEAT_GATES_OVERRIDE=\"reason\"." >&2
+      exit 9
+    fi
+  elif [ -n "$sg_bad" ]; then
+    echo "safe-apply: WARN [seat-gates] would stop under ENFORCE ($sg_bad ); WARN mode proceeds." >&2
+  fi
+  exit 0
+) || SG_RC=$?
+if [ "$SG_RC" -ne 0 ] && [ "$SG_RC" -ne 9 ]; then
+  echo "safe-apply: WARN [seat-gates] the block errored (rc=$SG_RC); proceeding exactly as before." >&2
+  SG_RC=0
+fi
+[ "$SG_RC" -eq 9 ] && exit 9
+for sg_x in "$@"; do
+  if [ "$sg_x" = "--dry-seat-gates" ]; then echo "safe-apply: --dry-seat-gates: the seat gates ran; nothing was applied." >&2; exit 0; fi
+done
+
 # HALTGT checkpoint -- fired immediately before the irreversible apply.
 if [ -f "$HALT_GATE" ]; then
   # shellcheck source=/dev/null
