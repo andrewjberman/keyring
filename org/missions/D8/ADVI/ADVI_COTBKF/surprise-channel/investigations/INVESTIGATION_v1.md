@@ -2379,3 +2379,31 @@ round.** Never edit an existing row.
   "world_is": "No CFNCASH row of the credit days carries a sale's cash in the 23 months; the conditional rule is implemented (commonwealth_sweeps.py funding_credit_rows(conditional=True), cash_leg conditional, default) and is a no-op on the data. All 23 are `other`. The order's refusal clause applies: the test is not weakened and the rule is not widened beyond the order."
 }
 ```
+
+## ADVI_COTBKF-D2-W45-S2 -- CB23w1-AC2 not met under AMENDMENT 1: regressions=1, the 25 recovered movers lost to condition (a)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S2",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T20:42Z",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 1: (a)+(b)+(c) leaves regressions=1 (B3S748567 2025-07) but loses all 25 round-22 recovered movers; no variant measured has regressions=0 and the 25 kept",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation with the shipped `conditional` = (a) sold security valued the day before + (b) no credit-signed CFNCASH row equal to the proceeds + (c) no CFNCASH row of any type equal to a same-day sweep sale: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0; report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md; one 0QF879352 month traced before the change in trace_0QF879352.md @86a13267df",
+      "classes of the 23 (sum 23): double_credit 0; vendor_cfncash_leg_of_sweep_sale 13 (0QF879352 2023-05,06,08,09,11,12, 2024-02,03,05,06,08,09,11: on all three credit days 2021-07-16, 2021-07-20, 2022-07-18 a CFNCASH lo equals the same-day sweep sale 12788.22 / 10000.00 / 7034.39; the credits total 32678.95 and sit in the level from the first complete day 2022-07-18: r19 17640.53, repaired 50319.48); sold_security_not_valued_day_before 9 (0QF879130 2025-05..10, B3S691415 2023-10, B3S808881 and B3S808882 2025-01); other:credit_kept_by_every_condition 1 (B3S748567 2025-07). Now: 22 of 23 MATCH",
+      "variants measured with the same invocation (scratch driver patching funding_credit_rows, caches shared, control_same=True in each): (a)+(b) as ordered: regressions=14 movers_back=0; (b)+(c) without (a): regressions=10 movers_back=25 months_after=2116/1507/78970; (a)+(b)+(c): regressions=1 movers_back=0. Credit days kept of 2703: (b)+(c) 2671, (a)+(b)+(c) 793",
+      "the 25 recovered movers are lost by (a), not by (c): their five accounts (0QF879238 2017-07..2018-06, B3S605725 2018-01, B3S804888 2024-02/08 2025-02/08, D49141608 2019-02..09, D49141714 2019-02) have 0 of their credit days with a sold security valued the day before, the same state as the 9 that (a) clears, so the condition cannot tell a credit that restores the level (the 25) from one that inflates it (the 9). The credit is right for the 25 and wrong for the 9 and the 13 by the evidence of the reported returns; the variable that separates them is not in (a), (b) or (c)",
+      "the remaining month B3S748567 2025-07 (computed 0.0535, reported 0.12): sold security the money-market fund 316067107 (rule (b) candidate, off in list v1, priced), credit days 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70), each paired with a sweep buy of the same amount and no CFNCASH row that day; r19 value 2025-07-31 9816.72 vs credited 21692.42, the difference 11875.70; the month's interest base matches r19 (0.12 pct of 9.8k)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 AMENDMENT 1 (issuer ruling on row D2-W45-S1): a credit conditioned on (a) the sold security valued the day before and (b) no equal credit-signed CFNCASH row, with a general condition for the 13 shipped only if it keeps round 22's 25 MATCH and the control unchanged, gives regressions=0.",
+  "world_is": "(a)+(b) leaves 14 regressions and loses the 25; (c) clears the 13 and keeps the 25 (measured without (a)); (a) clears 9 of the other 10 but loses the 25; one month (B3S748567 2025-07) is untouched by every condition. regressions=0 with the 25 kept is not reached by any combination of (a), (b), (c). The shipped default is (a)+(b)+(c) as the order directs; the issuer may rule (a) out, which gives regressions=10 with the 25 kept. The test is not weakened."
+}
+```
