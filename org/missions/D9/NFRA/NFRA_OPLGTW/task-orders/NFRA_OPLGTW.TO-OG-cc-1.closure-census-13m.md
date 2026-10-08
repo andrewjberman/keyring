@@ -93,7 +93,7 @@ Rows: id `NFRA_OPLGTW-Z-W41-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Round 32 (R3-T.30), item 5 plus item 4's marker clause; chain `OG-cc-1` -> `OG-bf-1` (section 4a item 8b) in slot ~41.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <slot>~41</slot>
 <fabric>site-z</fabric>

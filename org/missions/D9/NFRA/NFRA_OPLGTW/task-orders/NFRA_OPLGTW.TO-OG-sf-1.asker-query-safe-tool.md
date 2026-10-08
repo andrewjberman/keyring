@@ -93,7 +93,7 @@ Rows: id `NFRA_OPLGTW-Z-W37-S<k>`, fabric `site-z`, disarm_owner `2.0.0_SA_COO~O
 - Ships in the r29 release (`OG-rl-15`, R55), not cut in this issuance.
 - Pre-cut: see the issuance commit.
 
-<status>pending</status>
+<status>complete</status>
 <round>32</round>
 <slot>~37</slot>
 <fabric>site-z</fabric>

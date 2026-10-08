@@ -93,8 +93,15 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   - CTO half SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_ETFS_RIVALS_R28_AW1_DEPLOY_20261008.md`
     @a0ee589cc2 (msg 32046, 22:06Z): the pair is WHOLE; the five conditions stand unchanged.
   - Window: 2026-10-09, after the 11:00Z chain's REPORT lines and before 12:55Z.
-  - **PARKED, the apply:** owner 0.7.0_AE_CloudOps~RV (R22), not live at 22:0xZ. It un-parks when the 11:00Z REPORT lines
-    are read; this seat then seats the executor (`/mstr-spawn`) with both halves' paths.
+  - **PARKED, the apply:** owner 0.7.0_AE_CloudOps~Z, site Z's applier, seated 22:1xZ by 0.0.0_AB_MSTR~Z. Andrew-direct
+    ~22:0xZ, record `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_220xZ_ONE_LAPTOP_APPLIER_EXCEPTION_YES.md`,
+    msg 32058. Order `task-orders/ETFS_RIVALS.TO-APPLY-R28-aw1.rivalfunds-lambda-deploy-sitez.md` @137fb33429.
+    - Steps 1-3 are DONE (msg 32094, 22:53Z). Plan `C:/tmp/rv_apply28.tfplan` in `C:/tmp/rv-r8` at the exact pin reads
+      0/5/0: BRANCH A.
+    - This seat read `C:/tmp/rv_plan28.json` itself: 45 changes, 40 no-op and 5 update; each update changes only
+      `source_code_hash` and `last_modified`; the daily function's environment is identical.
+    - The second GO (apply) is this seat's to send on 2026-10-09, after the 11:00Z REPORT lines are read, inside
+      11:15Z-12:55Z.
 - RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
   tw-1.AC1 arm e grade the unmerged tc-1).
 - RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.
