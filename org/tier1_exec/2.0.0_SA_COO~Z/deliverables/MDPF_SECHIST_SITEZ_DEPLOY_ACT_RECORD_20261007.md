@@ -121,3 +121,26 @@ The first scheduled `OPAL_BBGTML_daily_pull` after the merge: 2026-10-08 07:00 A
 `close-leg` re-rendered the entry from its sentinel, and the "PRE-MERGE MEASUREMENT" section this seat appended at the open is no
 longer in the file (0 matches at 13:54Z). It stands in section 1 of this record and in git at e4e17dd7bc. The tool said so
 itself ("The .md is a RENDERING of the sentinel -- never hand-edit it"); the measurement belongs here, not there.
+
+# 5. L3, THE READ OWED BEFORE THE PULL: `ledger_dir()` RE-MEASURED ON THE MERGED TREE (2026-10-08 ~05:4xZ)
+
+Measured by `2.0.0_SA_COO~Z` in the shared tree at CLOUD HEAD `d99155c49a`, before the 2026-10-08 11:00Z scheduled pull.
+`data/etfs/scripts/rivalfunds/bbg_budget.py` was last changed by `3a941ae6c6` (2026-10-07).
+
+- `bbg_budget.ledger_dir()` under the default interpreter (3.14.7) and under the vehicle's interpreter (Python 3.11.9), with
+  `RIVALFUNDS_BBG_BUDGET_DIR` unset in the process: `C:\Users\Opal Bloomberg\AppData\Local\opal_bbg_budget` both times. The
+  ETF leg and the rival-funds collector import the same module and run as one user under one launcher, so they resolve the same
+  directory.
+- Negative control: with the variable set to `C:\negctl` the function returns `C:\negctl` (both interpreters).
+- The variable at Machine scope and at User scope: empty, both.
+- Launchers that set it: 0 occurrences of the name across 0 `.cmd`, `.bat`, `.ps1`, `.sh` and `.xml` files of the repo (one
+  content search); the hits of the name read in `.py` files were tests and check scripts.
+- That directory today: three ledger files (10-05, 10-06, 10-07). The 10-07 file holds yesterday's scheduled run, written by
+  the collector: `{"at": "2026-10-07T11:09:16Z", "mode": "daily", "rows": 749, "batch_id": "batch-20261007T110832Z"}` and a
+  `names` line of 6 rows. So the scheduled task's process wrote where this seat's session reads.
+
+**The condition holds on the merged tree: branch (a), no variable to set.** Limit, as in section 1: measured from this seat's
+session as the same Windows user, not inside the Task Scheduler's process; yesterday's line is the evidence for that process.
+
+Owed AFTER the pull, unchanged: the manifest at `bbg/2026-10-07/run_manifest.json`, the leg's exit in the vehicle log, and a
+`backfill` line in the 2026-10-08 ledger file. Then L3 closes, or the rollback of the COO half runs.
