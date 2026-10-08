@@ -94,6 +94,25 @@ def case3_4():
                and not any(p.is_symlink() for p in out.rglob("*")))
         record(3, "PASS" if ok3 else "FAIL", "stand-in pack files=%d bytes=%d linked=%d copied=%d; verify verified=%d/%d problems=%s"
                % (summary["files"], summary["bytes"], summary["linked"], summary["copied"], res["verified"], res["files"], res["problems"]))
+        # AMENDMENT 9: a release zip is packed in the PACKED mirror form, matched on its zh against the lock, and refused when it
+        # matches no locked hash
+        import zipfile
+        zdir = base / "zips" / kit.HOST / "example" / "zipped"
+        zdir.mkdir(parents=True)
+        zpath = zdir / kit.zip_name("%s/example/zipped" % kit.HOST, "9.9.9", kit.PLATFORM)
+        with zipfile.ZipFile(str(zpath), "w") as zf:
+            zf.writestr("terraform-provider-zipped_v9.9.9_x5.exe", b"MZ-zipped-" * 2048)
+        zh = "zh:" + kit.sha256_file(zpath)
+        zt = {"source": "%s/example/zipped" % kit.HOST, "version": "9.9.9", "h1": [], "zh": [zh]}
+        zbad = {"source": "%s/example/zipped" % kit.HOST, "version": "9.9.9", "h1": [], "zh": ["zh:" + "0" * 64]}
+        zout = base / "zmirror"
+        zsum, _zm = kit.pack([zt], [search], zout, zip_dirs=[base / "zips"])
+        zres = kit.verify(zout)
+        bsum, _bm = kit.pack([zbad], [search], base / "zmirror_bad", zip_dirs=[base / "zips"])
+        ok_zip = (zsum["providers"] == 1 and (zout / kit.HOST / "example" / "zipped" / zpath.name).is_file() and zres["verified"] == 1
+                  and not zres["problems"] and bsum["providers"] == 0 and len(bsum["not_on_box"]) == 1)
+        zip_detail = ("zip form: packed=%d verified=%d/%d; a zip matching no locked hash refused=%s"
+                      % (zsum["providers"], zres["verified"], zres["files"], bool(bsum["not_on_box"])))
         # the CLI tool's own verify, as a Dell runs it
         rc_v, txt_v = run_tool("verify", "--from", str(out))
         data = bytearray(placed.read_bytes())
@@ -104,8 +123,8 @@ def case3_4():
         res2 = kit.verify(out)
         rc_t, txt_t = run_tool("verify", "--from", str(out))
         src_intact = (search / kit.HOST / "example" / "fake" / "1.2.3" / kit.PLATFORM / "terraform-provider-fake_v1.2.3_x5.exe").read_bytes() != bytes(data)
-        ok4 = rc_v == 0 and rc_t == 1 and res2["mismatched"] == 1 and "REFUSED" in txt_t and "ok=False" in last_line(txt_t) and src_intact
-        record(4, "PASS" if ok4 else "FAIL", "untouched verify rc=%d; one byte flipped -> rc=%d mismatched=%d; %s" % (rc_v, rc_t, res2["mismatched"], last_line(txt_t)))
+        ok4 = rc_v == 0 and rc_t == 1 and res2["mismatched"] == 1 and "REFUSED" in txt_t and "ok=False" in last_line(txt_t) and src_intact and ok_zip
+        record(4, "PASS" if ok4 else "FAIL", "untouched verify rc=%d; one byte flipped -> rc=%d mismatched=%d; %s | %s" % (rc_v, rc_t, res2["mismatched"], last_line(txt_t), zip_detail))
 
 
 def smallest_probe_root(req):
