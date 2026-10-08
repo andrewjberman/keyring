@@ -53,3 +53,20 @@ condition 3 and amendment 1 now read: **the first Cottonwood gold run that rebui
 (expected ~11:36Z 2026-10-08). The pass is that the total equals the before-read (568,707,320.21, VersionId `eH1ZuCUJ...`) and that
 `fixed_income` and `cash` move by the `CASH` row's amount. "BD-family" in condition 3 was my wording error. The reader rule of
 amendment 1 stands: dell1 if admitted by then, else ~S.
+
+## AMENDMENT 3 (2026-10-08 ~10:5xZ, msg 859, row D1-S6) -- condition 3 replaced; it could not pass as written
+
+M1 measured it from the served bytes. Cottonwood's compositions from BEFORE the write (generated 10-07 ~11Z) already list `CASH` as
+`cash` in 206 of 226 clients (USD +781,527.87) and 0 in `fixed_income`. So the -$5.48M move came from the e42 compare's `inferred`
+local build and does not describe Cottonwood's served output, where the expected delta is 0. The new run also carries a new
+`data_as_of`, so the firm total cannot equal the before-read's 568,707,320.21. Comparing a total across two data days was my
+specification error, the same class as e66's condition 3.
+
+**Condition 3 now reads (M1's grade, adopted):** on the first Cottonwood run that rebuilds `platinum/firm/mix_summary.json` after
+03:12:55Z:
+- (a) the output is rebuilt after the write;
+- (b) `CASH` is `cash` in every client composition that lists it, with no `fixed_income` `CASH` line;
+- (c) the sum of the mix market values equals `composition.total_market_value` within USD 1.
+
+A miss on (b) or (c) is a same-day rollback from the snapshot. The 49 Financial side is graded at the a07/d06 chain after 12:45Z, by
+the same (b)-(c) shape.
