@@ -20781,3 +20781,28 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
 }
 ```
+
+## IRPT_BCKEND-W173-S1 -- comp-tagauthz's IAM read is bounded; S334 resolved
+
+```json
+{
+  "id": "IRPT_BCKEND-W173-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~173",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-S334: commit fad269226b changes .tools/comp-tagauthz.py to bound the IAM get-account-authorization-details read (env COMP_TAGAUTHZ_IAM_TIMEOUT, default 150 s) and fail closed rc 1 with TAGAUTHZ_IAM_READ_TIMEOUT. IB78-1-AC1 last line: IB78-1-AC1 PASS (rc 0 in 22.5 s); IB78-1-AC2 last line: IB78-1-AC2 PASS (rc 1 naming TAGAUTHZ_IAM_READ_TIMEOUT).",
+  "one_line": "The gate's IAM read now has a 150 s default bound and fails closed with a named token instead of hanging.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit fad269226b on wk-IRPT_BCKEND-173; p78_cells.py IB78-1-AC1 and AC2 PASS"
+    ]
+  },
+  "spec_asserts": "S334: the comp-tagauthz IAM read is unbounded and can hang the apply gate.",
+  "world_is": "The read is bounded by COMP_TAGAUTHZ_IAM_TIMEOUT (default 150 s); an overrun exits 1 naming TAGAUTHZ_IAM_READ_TIMEOUT."
+}
+```
