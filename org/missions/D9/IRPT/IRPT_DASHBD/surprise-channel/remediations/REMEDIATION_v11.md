@@ -42,11 +42,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-07 ~20:3xZ. Graduated at this co
   "owner": "2.0.0_SA_COO~D2",
   "round": "v26",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~D2",
    "round": "v26"
   },
-  "closed": false
+  "closed": true
  }
 ]
 ```
