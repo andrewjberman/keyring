@@ -383,6 +383,46 @@ One more note from the same sweep, on why this leg sits with a laptop seat at al
 says the check is run by "a laptop seat the bucket admits" -- the same `opal-data-49financial`
 admission that keeps e42 here rather than on a Dell.
 
+## Addendum 07:35Z -- scope split on e42/e68, and a07's IsLatest has moved since this ledger recorded it
+
+**SCOPE, per two amendments verified at the orders themselves (origin CLOUD `5fc385ef22`), not from the
+relay.** `TO-VERIFY-e68` amendment 2: SUPERSEDED -- dell1's firm-bucket READ applied at 05:17:17Z, so
+dell1 takes the ~11:36Z AFTER read and this lane stands down; the two polls armed at 03:50Z were
+stopped. `TO-DEPLOY-e42` amendment 1: dell1 takes the 12:45Z L2 read, but THIS LANE KEEPS (a) the
+`<status>` flip once the read lands and (b) **the ROLLBACK if the read finds a move the JSON does not
+list**, because limit item 5 still bars dell1 from writing a code prefix. So e42 did not hand off; it
+SPLIT, and the half this lane kept is the write half.
+
+Committing the e68 interim before the stand-down paid off in a way not foreseen: dell1's first exercise
+of its new admission read `opal-data-cot platinum/firm/mix_summary.json` at **the same VersionId this
+lane had captured as the before-read**, so that section is the baseline its AFTER read is graded
+against.
+
+**THE ROLLBACK HANDLE IS LIVE, AND THE KEY IT WOULD REPLACE IS NOT THE ONE THIS LEDGER NAMED.** Verified
+because the retained act depends on it:
+
+| | VersionId | LastModified | ETag | Size |
+|---|---|---|---|---|
+| rollback target (live) | `72tSRnxMSKkBdtgAJZtqQcHeebqACIl1` | 2026-09-01T14:12:21Z | `9202d701c552d4fb38a40f975f0eae9e` | 34,289 |
+| **current IsLatest** | `7wzSt1JzOCzNiPpAiEF1Tqqbrcwq4elj` | **2026-10-07T16:31:18Z** | `4092c5b80469ab780040a842eebe13cb` | 39,316 |
+| what L1 recorded as IsLatest | `CQXT.gVFAKyhpUWVt3Vwt48F3IiIER3x` | 2026-10-07T13:44:30Z | `4092c5b80469ab780040a842eebe13cb` | 39,316 |
+
+The ETag and size are IDENTICAL across the last two, so **the 16:31:18Z event moved a VERSION and not
+CONTENT** -- a byte-identical PUT to a versioned bucket still mints a VersionId, the same mechanism the
+e65 ledger's leg L3 documented for its six re-uploads. Beside it,
+`_code/tests/test_a07_canonical_first.py` is NEW at 16:31:23Z with a SINGLE version (`3IPTlGM9...`), and
+this lane's upload plan was "the ONE key" with `second_targets_for []`, so that test is another seat's
+ship and the carrier rode along byte-identically. Denominator: 86 keys under `_code/` now (84 at this
+lane's sweep), of which 4 carry a 10-07 stamp after 16:25Z -- that pair, plus `d06_firm_mix_summary.py`
+and its test at 17:59Z.
+
+**Why this is worth writing down rather than shrugging at.** Nothing is broken and no rollback is owed
+by it. But dell1 sweeps `_code/` at 12:45Z under CTO condition 2, where "ANY other key moving is a
+STOP", and two keys carry a 16:31Z stamp that the e42 ledger does not account for. Unexplained, that
+reads as a STOP on a legitimate deploy. Relayed to `1.0.0_SA_CTO` at 07:34Z. L1's recorded VersionId was
+true when written and stays as the historical record; what changed is which version a rollback would be
+replacing, not which version it restores.
+
 ## Next Steps
 
 1. **[`0.0.0_AB_MSTR`]** Push the three commits above; `origin/CLOUD` read `c7cbd4c8a1` at 00:52Z and
