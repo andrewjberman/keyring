@@ -62,3 +62,20 @@ Placement now: **4.0.0_SA_CRO** (base) = multi-device graph coherence; **4.0.0_S
 **4.0.0_SA_CRO~B** = garbage collector and script ops (input: the dell1 draft @4d069108b5). Same word recorded by the
 CRO at `org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_160xZ_CRO_BASE_GRAPH_OPS_CRO_A_GITOPS_CRO_B_GC.md`
 @b387b7e868.
+
+## Addendum ~16:0xZ -- fast solutions across the boxes first; projects later
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO:
+
+> "Yes our goal is to get organized very quickly here"
+
+> "before bringing on all the COOs"
+
+> "In theory, these briefs dont necessarily have to be full on registered projects, just yet. We will want to develop
+> projects around these that will be operated on the laptop box, but because we are in a time crunch and need to move
+> very quickly, we need to get fast solutions out across the boxes while we get organized for the more comphrehensive
+> infrastructure builds"
+
+Placement: each of the three briefs leads with a FAST FIX that can go out to every box now; the registered project
+(laptop-operated) follows. The graph-coherence PRD draft `org/tier1_exec/1.0.0_SA_CTO/deliverables/GRAPH_COHERENCE_ENDPOINT_DRAFT_20261008.md`
+stays DRAFT and is not registered (no L3 carriers) until the project stage.
