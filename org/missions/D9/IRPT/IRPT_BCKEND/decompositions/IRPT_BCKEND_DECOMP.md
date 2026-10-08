@@ -2116,3 +2116,15 @@ Check: `deliverables/2.0.0_SA_COO~P2/checks/r80/p80_cells.py`, dry-run at base 2
 | `IB-pr-367` | E7 part 1: repin repository.py (+ any read-path policy row) past b13bab7495; clean-tree BUILD_ONLY; never-widen packet | FWD-8 / CUSTDY hop 5 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-364 (drained) | P80-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~175.
+## 72. ROUND 79, WORKSTREAM ~P (2026-10-08 ~18:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the CTO analysis ADDENDUM 2 @b227133904, msg 1362: E5)
+
+Release 2 (irpt-ycharts-generate, X-1) rolled back at 17:44:54Z: on the served path the guard builds InteractiveAccess with no profile
+reader and resolves the create owner as the actor itself, so uploads.py's on-behalf branch is unreachable. This cell fixes the served
+guard (~P's lane); uploads.py (~Y2) is the target rule, not edited. After it drains, ~Y2 re-pins and a new release-2 pair is signed.
+Check: `deliverables/2.0.0_SA_COO~P2/checks/r79/p79_cells.py`, dry-run at base 5ff7717f66: AC1 FAIL, AC2 FAIL (no test file), AC3 PASS.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-366` | E5: the live guard resolves the on-behalf owner for an OPAL_GLOBAL filer whose allowedFirmIds lists the firm; real served-path test, four negative arms; existing suites green | X-1 / TCKT_VNEXT TV-r-1 | WORLD (floor: infra/; nothing built or applied) | none | P79-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one guard change and its test. Slot ~174.
