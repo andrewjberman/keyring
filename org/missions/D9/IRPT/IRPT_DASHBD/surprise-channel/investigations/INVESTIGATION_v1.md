@@ -2710,3 +2710,162 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
   "disposition": "UNDER_INVESTIGATION"
 }
 ```
+
+## IRPT_DASHBD-W26-S1 -- The lots stage refuses at population scale on a repeated realized lot id, after 244.7 s and above the memory limit.
+
+```json
+{
+  "id": "IRPT_DASHBD-W26-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~26",
+  "surfaced_at": "2026-10-08T03:40:17Z",
+  "one_line": "At the 49F population the extended handler's lots stage REFUSES on a repeated realized lot id (87 ids, 175 rows, 36 accounts) after 244.7 s and a 2,759.5 MB peak working set: the memory limit is breached by 711.5 MB before the refusal, and the lots tables are not produced.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-46 item 1: run the extended handler's --local for 2026-10-06 over its own population (7,597 accounts) and record wall and peak per stage, with the per-account tail; the producer's realized_rows docstring: a realized lot id is unique on every partition measured, so a repeat is a source change to look at.",
+  "world_is": "Measured with the handler and producer unchanged (SIZING_S31.json): returns 122.6 s / 257.8 MB, class 92.7 s / 295.6 MB, lots 244.7 s / 2,759.5 MB (process peak), total 461.1 s / 2,759.5 MB against 900 s / 2048 MB. The lots stage read the 7,597 accounts and classified the flow, then realized_rows raised SystemExit 'realized lot id ... appears twice in one frame' (handler.lots_days caught it: LOTS_SKIPPED, handler.local raised REFUSED). The 2026-10-06 fact_rld partition holds 2,523 rows, 2,435 distinct ids, 87 ids repeated (175 rows, one id three times), 36 accounts, 0 ids across more than one account, 0 rows equal to another in all columns (REALIZED_ID_REPEAT_COUNTS.json). The stage never reached the activity loop, the in-kind step or the writes, so the stage's full wall and peak are unmeasured (not extrapolated) and the memory figure is a floor; the earlier 20- and 100-account local runs did not report it. The timeout is not breached up to the refusal (461.1 s of 900 s). Served on pandas 2.2.3 / Linux; this run is pandas 3.0.6 / Windows working set, so the memory figure is a laptop measure.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/REALIZED_ID_REPEAT_COUNTS.json",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/sizing_s31.py",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py realized_rows (the repeat refusal)",
+      "infra/aws/lambda/investor-reporting/reporting-gold/handler.py lots_days, local"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "notes": "With the repeat unresolved, a served fire would spend about 245 s and over 2.7 GB on the lots stage and then skip the three tables each day; the limit of 2048 MB would be crossed in the lots stage. Whether the repeat is a source change to dedupe, to key by another column, or to refuse by design is a producer decision outside this order's paths. The population-scale completion time and peak need a re-run once the repeat is resolved."
+}
+```
+
+## IRPT_DASHBD-W26-S2 -- The per-account tail of the lots stage is null: the stage is batched and the refusal precedes its only per-account loop.
+
+```json
+{
+  "id": "IRPT_DASHBD-W26-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~26",
+  "surfaced_at": "2026-10-08T03:40:17Z",
+  "one_line": "The lots stage has no per-account step to time except the activity row loop, which the refusal prevented from running, so the per-account seconds tail (p50, p95, p99, max) is null in SIZING_S31.json and DB27-2-AC1 FAILs on it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-46 item 1 and 3: record the seconds per account for the lots stage, with per_account_seconds {p50, p95, p99, max}; the criterion DB27-2-AC1 requires all four non-null.",
+  "world_is": "compute_local batches its reads, flow classification and unrealized-row build over all accounts at once (read_window 15.2 s, first_data_dates 118.3 s, unrealized_rows 108.9 s, classify_flow_days 1.4 s, realized_rows 0.01 s inside the 244.7 s stage); the only per-account call is activity_row in the final loop, reached after realized_rows, which refused. So no per-account sample exists (per_account_samples 0). The stage's mean is 0.0322 s per account (244.65 s over 7,597), a batch mean and not a tail; the tail is not derived from it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json per_account_samples, lots_substeps_seconds",
+      "data/assets/scripts/gold/irpt_reporting/account_activity_lots.py compute_local"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S33 -- W26-S1 gated: lots stage refuses and crosses 2048 MB at population scale
+
+```json
+{
+  "id": "IRPT_DASHBD-S33",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T04:25:43Z",
+  "one_line": "W26-S1 gated: the activity-and-lot release stays withheld; the lots stage refuses at population scale on 87 realized lot ids repeated within one day's frame (36 accounts) and peaks at least 2,759.5 MB against 2,048 MB. The key and the memory fit go to 1.0.0_SA_CTO~DELL2 as round-28 work.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "adjudicates": [
+    "IRPT_DASHBD-W26-S1"
+  ],
+  "spec_asserts": "W26-S1: the lots stage of the extended reporting-gold handler refuses at population scale and crosses 2048 MB, so the release as prepared would skip the three tables on every fire.",
+  "world_is": "MEASURED (DB-b-46, SIZING_S31.json and REALIZED_ID_REPEAT_COUNTS.json): 7,597 accounts, 2026-10-06; returns 122.57 s / 257.8 MB, class 92.69 s / 295.6 MB, lots 244.65 s to the refusal / 2,759.5 MB peak; total 461.06 s. realized_rows raised on a repeated realized lot id: 2,523 rows, 2,435 distinct ids, 87 ids repeated (175 rows; one thrice), 36 accounts, 0 ids spanning accounts, 0 full-row duplicates. The 20-account sample showed neither. Not live: the release apply is gated on the COO half, which stays withheld (S31, S32, and now this). The remedy is a design call -- the realized lot key and how the lots stage fits in the function -- and goes to the CTO.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/SIZING_S31.json",
+      "deliverables/0.9.0_WK_IRPT_DASHBD~26/REALIZED_ID_REPEAT_COUNTS.json",
+      "commit f70cc737df"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W27-S1 -- The quantity closed alone separates the 175 repeated-id rows; the contract key keeps lot_id because the whole day needs it.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T10:46:26Z",
+  "one_line": "Among the 175 repeated-id realized rows the quantity closed alone is already unique (175 of 175), so lot_id is not necessary within those rows; the key is lot_id plus quantity because lot_id is necessary over the whole 2,523-row day.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-47 item 1 and DB28-1-AC1: the smallest column set beginning with the current key under which the 175 rows are unique, with each key column necessary (dropping any one leaves fewer than 175).",
+  "world_is": "MEASURED (LOT_KEY_E1.json): over the 175 rows quantity alone separates all 175 (every other table column fewer), so within those rows only quantity is necessary and key_columns is [quantity], its drop leaving the current key at 87 of 175. Over the whole day frame (2,523 rows) dropping lot_id from the contract key (account, date, lot_id, quantity) leaves 2,357 unique, so lot_id stays necessary to the table key and the contract primary_key is the current key plus quantity. The minimality list therefore reports the necessary column within the 175, and the contract key is the wider five-column key.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/LOT_KEY_E1.json columns_of_the_contract_key_each_dropped_one_at_a_time, whole_day_frame"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W27-S2 -- The lots peak is flat across batch sizes (about 1.7 GB): a batch-independent component sets it, and 250 per batch is over 900 s.
+
+```json
+{
+  "id": "IRPT_DASHBD-W27-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~27",
+  "surfaced_at": "2026-10-08T14:07:26Z",
+  "one_line": "Batching bounds the lots stage but the peak does not fall with the batch size: 1,713 MB at 250 accounts per batch and 1,735 MB at 1,000, so a component the batch does not shrink sets it; and 250 per batch takes 905.7 s in total, over 900.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-48 item 1: the lots stage processes accounts in bounded batches so its peak memory does not grow with the population; DB28-2-AC1 grades the lots peak flat across two batch sizes (max/min <= 1.25).",
+  "world_is": "MEASURED (BATCHED_E2.json, 7,604 accounts, 2026-10-06, pandas 3.0.6 not the served 2.2.3): batch 250 lots 684.61 s / 1,713.4 MB, total 905.67 s; batch 1000 lots 495.54 s / 1,735.3 MB, total 768.91 s; max/min 1.013. Round 27's unbatched run reached at least 2,759.5 MB and refused. The peak is flat across batch sizes, so what sets it was not found to be the batch; the balance-history scan (paid once, population-wide) and the day's partitions are the batch-independent reads in the stage but were not isolated here. Smaller batches cost wall time (31 batches vs 8). The population at run time was 7,604 against the order's 7,597.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~27/BATCHED_E2.json runs, lots_peak_max_over_min"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-S34 -- DB-b-49 recompose control misses on 440 of 2,299: BD's split halves do not chain to BD's own full segment
+
+```json
+{
+  "id": "IRPT_DASHBD-S34",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~D2",
+  "surfaced_at": "2026-10-08T17:16:48Z",
+  "one_line": "DB-b-49's recompose control does not hold on 440 of 2,299 accounts: BD's two split halves chained do not reproduce BD's own full-segment gross within 0.35 pp (max 724.16 pp), so on those accounts branch B's right-half gap cannot yet be read as Opal-vs-BD.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-49 item 3: the recompose control ((1+left)(1+right)-1 against BD's full-segment gross in the round-18 record) shows the two pulls agree with each other.",
+  "world_is": "MEASURED (TIEOUT_SPLIT_E1.json recompose): compared 2,299, within 0.35 pp 1,859, not comparable 0, max abs diff 724.16 pp. Branch B stands on the rule (tied_both 431 of 2,299 vs 1,149.5; left half 2,220 tied, right half 465). The 440 disagreeing accounts and the outlier were not examined; whether they overlap the 1,868 right-half misses is unmeasured. Next-round candidate for 1.0.0_SA_CTO~DELL2's round-28 analysis.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_IRPT_DASHBD~28/TIEOUT_SPLIT_E1.json recompose",
+      "commit a556d87e79"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```

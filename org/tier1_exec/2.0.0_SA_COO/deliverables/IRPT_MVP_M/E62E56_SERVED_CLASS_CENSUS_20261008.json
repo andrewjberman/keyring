@@ -1,0 +1,4562 @@
+{
+ "49financial": {
+  "pub": {
+   "business_date": "2026-10-07",
+   "revision": "61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/49financial/platinum/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.manifest.json",
+   "manifest_version": "rhncZNedrzimF43VGkEvYwcv8vHo6HPT",
+   "gold_key": "irpt/49financial/gold/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.parquet",
+   "gold_version": "wjv_XCBugO5977y.r1nG8PeKcRgaHZvf",
+   "gold_sha256": "54fc047f7e481946b4e2e49d231108c3070ffe3b994823d8eb6c8692243b3c04",
+   "header_key": "irpt/49financial/platinum/holdings/date=2026-10-07/61537f666d00122a08098796eadeaf1d0d7398cea987b2ab6b3e99ee2bd5f9a5.header.json",
+   "header_sha256_checked": true
+  },
+  "listed": 51,
+  "tally": {
+   "match": 47,
+   "MISMATCH": 4
+  },
+  "producers_all": {
+   "holdings_snapshot.build_schwab_smartx_meshed": 122477
+  },
+  "rows": [
+   {
+    "cusip": "05949QAY1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "06745PR94",
+    "expected": "structured",
+    "expected_sub": "Hedge",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": false
+   },
+   {
+    "cusip": "09182TBT3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "102853GQ5",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "13376TBX2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "194469QX3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "208422KW4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "225470VM2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "240091LL0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "241064EM2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "245505XY3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "302950407",
+    "expected": "alternatives",
+    "expected_sub": "Real Estate",
+    "served": {
+     "alternatives": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Real Estate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "32056CAE9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "346905LN0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "435475SM1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "450812Q96",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "466247ZR7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "480256EB8",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "521854CH0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "54422NHH2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "54811BSM4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "603827WS1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "60534TLN3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "60534WYU6",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "61370NLG6",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "61371AWR7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "61372GFX9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "646039YQ4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "67884GWN0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "80586AAU5",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "809545WJ1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "833240HJ6",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "845080JG6",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "867344AM5",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "89602HGC5",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "914354AC9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "932449CN9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "949764SJ4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Cash": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "949797AA2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Structured Credit": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "97112AEA2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "974433JM7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "98851WBW2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "25434V401",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "equity": 1
+    },
+    "basis": {
+     "TICKER_SHAPE": 1
+    },
+    "sub": {
+     "None": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "33737M300",
+    "expected": "equity",
+    "expected_sub": "US Small Cap",
+    "served": {
+     "equity": 13
+    },
+    "basis": {
+     "TICKER_SHAPE": 13
+    },
+    "sub": {
+     "None": 13
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 13
+    },
+    "nodes": 13,
+    "ok": true
+   },
+   {
+    "cusip": "52471R630",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "equity": 1
+    },
+    "basis": {
+     "TICKER_SHAPE": 1
+    },
+    "sub": {
+     "None": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "61756E784",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "equity": 1
+    },
+    "basis": {
+     "TABLE": 1
+    },
+    "sub": {
+     "US Large Cap": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "00900W100",
+    "expected": "equity",
+    "expected_sub": "Global",
+    "served": {
+     "equity": 2
+    },
+    "basis": {
+     "TICKER_SHAPE": 2
+    },
+    "sub": {
+     "None": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "808516702",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "unclassified": 22
+    },
+    "basis": {
+     "NONE": 22
+    },
+    "sub": {
+     "None": 22
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 22
+    },
+    "nodes": 22,
+    "ok": false
+   },
+   {
+    "cusip": "808516108",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "unclassified": 3
+    },
+    "basis": {
+     "NONE": 3
+    },
+    "sub": {
+     "None": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 3
+    },
+    "nodes": 3,
+    "ok": false
+   },
+   {
+    "cusip": "808516801",
+    "expected": "equity",
+    "expected_sub": "Developed",
+    "served": {
+     "unclassified": 21
+    },
+    "basis": {
+     "NONE": 21
+    },
+    "sub": {
+     "None": 21
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 21
+    },
+    "nodes": 21,
+    "ok": false
+   },
+   {
+    "cusip": "025083882",
+    "expected": "equity",
+    "expected_sub": "US Large Cap",
+    "served": {
+     "equity": 1
+    },
+    "basis": {
+     "TICKER_SHAPE": 1
+    },
+    "sub": {
+     "None": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_schwab_smartx_meshed": 1
+    },
+    "nodes": 1,
+    "ok": true
+   }
+  ]
+ },
+ "inflection": {
+  "pub": {
+   "business_date": "2026-10-07",
+   "revision": "efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/inflection/platinum/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.manifest.json",
+   "manifest_version": "57O2CTPxMFlfVhTfYZ9AnQQyH_aub28k",
+   "gold_key": "irpt/inflection/gold/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.parquet",
+   "gold_version": "o7rLTWwdAywrrHGLWQS9MaeBnuN2vtWK",
+   "gold_sha256": "4273e03003ada1380f08058c79e0dbda053b42b52379c385763bf2e5c79d43d5",
+   "header_key": "irpt/inflection/platinum/holdings/date=2026-10-07/efe113f13183c449a6831a6d4d9c3d82f130a5aba58d67f293d0d34fb197f2a7.header.json",
+   "header_sha256_checked": true
+  },
+  "listed": 0,
+  "tally": {},
+  "producers_all": {
+   "holdings_snapshot.build_orion_eclipse_meshed": 33790
+  },
+  "rows": []
+ },
+ "cottonwood": {
+  "pub": {
+   "business_date": "2026-10-07",
+   "revision": "8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e",
+   "schema_version": "irpt-holdings-manifest-v2",
+   "manifest_key": "irpt/cottonwood/platinum/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.manifest.json",
+   "manifest_version": "1Br9XRcrsNOeDjzAQAUfqvv.a7HoZ.FB",
+   "gold_key": "irpt/cottonwood/gold/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.parquet",
+   "gold_version": "rIqlOsQaEisiaSdcWcBdX.fml3h28ATN",
+   "gold_sha256": "e69e5f5325b890296dc5a1f6be21a80fc900fad16e5947d270e48462cdeaf323",
+   "header_key": "irpt/cottonwood/platinum/holdings/date=2026-10-07/8982ba981eb888885de8dcdd3a8283759776a3cba1c162912c40ac009a91967e.header.json",
+   "header_sha256_checked": true
+  },
+  "listed": 187,
+  "tally": {
+   "match": 185,
+   "not_held_on_served_date": 2
+  },
+  "producers_all": {
+   "holdings_snapshot.build_cot": 15500
+  },
+  "rows": [
+   {
+    "cusip": "014393YC0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "023551AM6",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "037833AT7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "03843TAX9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "052397J31",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "052398HW7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "052414RA9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "052414TX7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "052477PH3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "053015AJ2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "05612LBD3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "05612LHJ4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "05612LHS4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "06051X3R1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "06051YBM1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "067167ZF6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "067626KU4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "076059GK4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "0882815C0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "088281M72",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "112097S43",
+    "state": "absent"
+   },
+   {
+    "cusip": "116405XU0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "139805CS2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "159195ZA7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "181059ZV1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "18604TEB0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "18605QCU5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "186072TK0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "187720F44",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "194469EA6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "19648GZD7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "19648GZE5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "196707XS7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "20772J3W0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "20772KFU8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "2077583E1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "208399W84",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "208418T37",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "213291QW0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "220113LN2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "220802AV4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "23503CFQ5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "235241SN7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "235241TH9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "248415YU9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "24880SJM6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "283822XR0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "29270C2H7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "29270C6C4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "2982635G5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "30382AJM5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "312432H34",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "31749TDB0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "31925YDG4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "31986HAK1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "335857EJ3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "34153QXN1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "34160KAN0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "343137ER2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "346766T99",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "35880C7B4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "380316AG4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "38150V5M7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "38151PCW9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "38151PET4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "38151PFA4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "38151PLX7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "386442WS2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "3954604V7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "406450H58",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "4140055E4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "414009UA6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "41423PAQ0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "41423PAR8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "41423PAS6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "414962RD4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "414974FB6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "421025DG9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "42211HGY9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "434207AA4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "436146EN0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "4423315E0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "442368QB5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "4424366D8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "44244CS32",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "447290DM6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "46613P3G9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "46659CHT0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "486053CM1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "4860632S8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "495242N54",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "51166FFB0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "516824NX3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "521769DQ9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "527843BP0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "5380366N9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "5380366P4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "549271AF1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "57325VAM1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "574193VF2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "57587GZM0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "58178CDN4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "592112YW0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "59334DKH6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "59334DPD0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "611530DC7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "645424AQ5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "64966QJ35",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "64971XB98",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "64971XDK1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "64990ASU0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "650036BW5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "662832LX0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "662842NA7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "66285WM78",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "66285WT48",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "662903WT6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "666495AY2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "670386RC7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "677523DJ8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "677523KD3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "67765QTH9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "678514EP1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "679111XT6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "679111YY4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "67919PPD9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "68609UWD3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "70879QTZ6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "7170874Z0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "734122CP7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "754730AG4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "755791EK2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "77316QE96",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "774280W56",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "774286BA5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "779699JH1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "79623PFN0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "79623PKA2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "799561JN6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "812643C77",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "812643UP7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "833209LX5",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "83748CAZ9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "842400HQ9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "845437BR2",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "858620Z83",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "876387EP2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "881797AG9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "881847VA2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "88213AKW4",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "882669BG8",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "88269ACU0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "8827236V6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "8827242G1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "882750NR9",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "882806GR7",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "882830BR2",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "89214A102",
+    "expected": "equity",
+    "expected_sub": null,
+    "served": {
+     "equity": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "US Small Cap": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "89439YDU0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "899656WA6",
+    "state": "absent"
+   },
+   {
+    "cusip": "902307JM0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "912797VH7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Cash": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CFM8",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Intermediate": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "91282CJA0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_PATTERN": 1
+    },
+    "sub": {
+     "None": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CJT9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CKE0",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CLY5",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CME8",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CMH1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CMN8",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CMP3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CMY4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CNL1",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Intermediate": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91282CRL7",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_PATTERN": 1
+    },
+    "sub": {
+     "None": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "9128334Y3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Cash": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "9144025Z1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "91514AJU0",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 3
+    },
+    "basis": {
+     "NAME_ALIAS": 3
+    },
+    "sub": {
+     "Municipal": 3
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 3
+    },
+    "nodes": 3,
+    "ok": true
+   },
+   {
+    "cusip": "938688ZM3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "93974D6H6",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "93974DX52",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "93974DY69",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 2
+    },
+    "basis": {
+     "NAME_ALIAS": 2
+    },
+    "sub": {
+     "Municipal": 2
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 2
+    },
+    "nodes": 2,
+    "ok": true
+   },
+   {
+    "cusip": "949764XN9",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "95000U2D4",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "953086NM3",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "969078TT1",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Municipal": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "97705MN27",
+    "expected": "fixed_income",
+    "expected_sub": "Municipal",
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   },
+   {
+    "cusip": "98970LTE3",
+    "expected": "fixed_income",
+    "expected_sub": null,
+    "served": {
+     "fixed_income": 1
+    },
+    "basis": {
+     "NAME_ALIAS": 1
+    },
+    "sub": {
+     "Investment Grade": 1
+    },
+    "producers": {
+     "holdings_snapshot.build_cot": 1
+    },
+    "nodes": 1,
+    "ok": true
+   }
+  ]
+ }
+}

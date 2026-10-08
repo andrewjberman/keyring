@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.18",
+  "prd_version": "v0.19",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -25,11 +25,24 @@
     "FWD-14",
     "FWD-15",
     "FWD-16",
-    "FWD-17"
+    "FWD-17",
+    "FWD-18"
   ],
   "status": "RATIFIED"
 }
 ```
+
+**v0.19 ADDENDUM (2026-10-08 ~13:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~13:1xZ to `2.0.0_SA_COO~H` (its msg 31770, verbatim):
+"ALSO WE SHOULD BE PULLING THE DAYS NEW ARTICLES PER SOURCE PER DAY."
+- **New:** FWD-18, the daily pull. It reverses this seat's ruling R19 of the same day (no sweep built), which rested on his
+  2026-09-15 hold; this word is the decision that hold reserved.
+- **The boundary moves in one line:** the daily pull of FWD-18 is IN. Every other cadence or schedule stays Andrew's.
+- **`C-HV-EGRESS` gains one line:** the daily pull is a standing use under this word, for the sources he has cleared.
+- **What the word does NOT name, so this addendum does not take it:** the FT (held by him 2026-10-05 and 2026-10-06, "deal with FT
+  later"); any pull deeper than the day's new articles; any change to the backfill's own per-use words.
+- **Why the page needs it:** FWD-17's rolling windows and AMGT_RESAPP's news band ("the day's items") had a consumer and no
+  producer; research `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/HARVST_STANDING_COLLECTION_AND_DAILY_SWEEP_RESEARCH_20261008.md` @2394cfc3d8.
+- **ENDPOINT and CONTRACT change:** the ratified-text half re-opens to `3.0.0_SA_CVO~Z`.
 
 **v0.14 ADDENDUM (2026-10-02 ~18:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~17:33Z (record `org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261002_173xZ_SECURITY_ANALYSIS_UIUX_WALK_BRIEFS_TO_CTO_Z.md`; "backend news scanner tie in
 feature work should go to COO~H. CTO~Z should receive everything first to filter and properly fold in").
@@ -401,6 +414,35 @@ act a seat can take on demand; none is a wait.
          SOURCE     Andrew N8, N10; Andrew-direct 2026-09-16 ("finbert not being
                     sure is not a vote", NEWS_SCANNER_DEEP_DIVE_20260916.md s.6);
                     HARVST brief O1, O3, O4
+
+  FWD-18 The day's new articles are collected for every covered name, per
+         source, every day, with nobody starting the run
+         DONE WHEN  EXERCISED -- a scheduled run on the site Z box (v0.19; the
+                    host FWD-10 permits "until the local job matures"), with no
+                    agent session in its path, asks each cleared source
+                    (Bloomberg.com, WSJ, Barron's, Seeking Alpha; the FT joins
+                    on Andrew's word) for what it published about the covered
+                    list since that source's last completed run, stores each
+                    new article once (a held article is never fetched again),
+                    and writes ONE run record per source per day stating asked,
+                    new, already held and failed. A source that published
+                    nothing records zero new, never a missing record; a source
+                    that could not run without a hand records that, by name.
+                    Driven deliberately: one operator-started run of the same
+                    command is the test; the first scheduled run that completes
+                    unattended on a source is that source's acceptance. Negative
+                    arm: a planted held article is counted already held and no
+                    request is made for its body.
+         ACCEPT     An analyst who opens a covered name on a trading morning
+                    reads the prior trading day's articles wherever a cleared
+                    publisher carried any, and can tell from the page's own
+                    words when a source did not run.
+         SOURCE     Andrew-direct 2026-10-08 ~13:1xZ ("WE SHOULD BE PULLING THE
+                    DAYS NEW ARTICLES PER SOURCE PER DAY"); Andrew-direct
+                    2026-09-14 (a local job cycling the platforms "in a polite
+                    manner so no rate limiting"); 2026-09-15 ("articles have to
+                    be keyed on some kind of stable key so we dont keep pulling
+                    the same ones")
 ```
 
 ---
@@ -958,6 +1000,10 @@ key for research, Andrew 2026-09-22).
 
 **`C-HV-EGRESS`.**
 - Any live fetch from a publisher is vendor egress and runs only on Andrew's per-use word.
+- (v0.19) The daily pull of FWD-18 is one standing use under his word of 2026-10-08, for Bloomberg.com, WSJ, Barron's and
+  Seeking Alpha, at the day's new articles for the covered list and no deeper. The FT is not in it until he names it. Its
+  pace is the collector's existing pacing; a listing is read per publisher where the publisher has one (the sitemap), per
+  security elsewhere.
 - The validation security is Lenovo (`992_HK_Equity`), under his trial word (one run per publisher).
 - The 2026 backfill (FWD-9) runs per security, on Andrew's per-use word for that run, with the listing page count
   per publisher printed BEFORE the run under his quota word.
@@ -1068,7 +1114,7 @@ applied here.
 - the social feed;
 - SERP;
 - every non-publication channel;
-- any cadence or schedule, which stays Andrew's;
+- any cadence or schedule other than FWD-18's daily pull (v0.19, Andrew-direct 2026-10-08), which stays Andrew's;
 - any deletion.
 
 ## 3. CONSTRAINTS ON THE CUT

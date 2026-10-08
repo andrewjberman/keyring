@@ -1,0 +1,51 @@
+{
+ "schema": "open-calls/1",
+ "device": "dell1",
+ "written_at": "2026-10-08T17:55:21Z",
+ "written_by": "1.0.0_SA_CTO~DELL1",
+ "rows": [
+  {
+   "id": "dell1-20261008T175521Z-abbb",
+   "project": "MDPF_SECCLASS",
+   "subject": "Re-arm /self-drive 60m at 1.0.0_SA_CTO~DELL1 over MDPF_SECCLASS, MDPF_SECHIST, MDPF_HEALGAP (paused on Andrew-direct 2026-10-07 ~22:3xZ; re-arms only on his word)",
+   "asked_by": "1.0.0_SA_CTO~DELL1",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_0715Z_SELF_DRIVE_60M_MDPF_SECCLASS_MDPF_SECHIST_DELL1.md",
+   "orders": [],
+   "roots": [],
+   "state": "OPEN",
+   "opened_at": "2026-10-08T17:55:21Z",
+   "scope": {
+    "measured_at": "2026-10-08T17:55:21Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/shared-infra"
+    ],
+    "evidence": {
+     "paths": [
+      "infra/aws/terraform/shared-infra/main.tf overlaps the write set of IRPT_BCKEND placed on dell2 (infra/aws/terraform/shared-infra)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of LGIC_ENFORCE placed on laptop (data/assets/scripts/gold/investor_reporting/holdings_snapshot.py)",
+      "data/assets/scripts/gold/investor_reporting/holdings_snapshot.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      "data/assets/scripts/gold/investor_reporting/tests/test_holdings_cusip_fallback.py overlaps the write set of IRPT_BCKEND placed on dell2 (data/assets/scripts/gold/investor_reporting)",
+      ".tools/safe_deploy_core.py overlaps the write set of IRPT_BCKEND placed on dell2 (.tools/safe_deploy_core.py)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/shared-infra declares BDPipelinePermissions, DriftProducerCompPutAndSourceZip, DriftProducerWritesAndDataDeny (+109), also declared by root infra/aws/terraform/shared-infra named by NFRA_REPORT on sitez",
+      "root infra/aws/terraform/shared-infra declares cross-firm-secret-deny, also declared by root infra/aws/terraform/portal-auth named by IRPT_BCKEND on dell2",
+      "root infra/aws/terraform/shared-infra declares cloudwatch-metrics, also declared by root infra/aws/terraform/bd-pipeline named by NFRA_MCPINDEX on sitez"
+     ],
+     "shared": [
+      ".tools/safe_deploy_core.py is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": null
+  }
+ ]
+}

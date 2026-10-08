@@ -11,6 +11,11 @@ spawning a session; `/mstr-spawn {serial} --force "<reason>"` is the
 charter-blanket authorization for the audited concurrency-cap overflow path
 (parallel to /mstr-kill's blanket force-kill authorization).
 
+**This skill acts on THIS box only.** The process scan, the marker scan and the spawn script all see this box's own processes
+and files, and the skill names no box. A seat on another box is that box's manager's to spawn; the register
+`org/devices/DEVICES.json` is the list of boxes. The manager's loop finds a dead seat with `python .tools/seat-liveness.py`
+(read-only) and then runs this skill, whose pre-flight below stands unchanged.
+
 **Invokers: `0.0.0_AB_MSTR` and `2.0.0_SA_COO`, each with or without a `~lane` suffix.**
 Andrew-direct 2026-08-28 ~15:32Z at the `1.0.0_SA_CTO` terminal, VERBATIM: *"/mstr-spawn and
 /mstr-kill should be a COO function in addition to 0.0.0_AB_MSTR, I think it is a natural fit for
@@ -43,6 +48,7 @@ fleet relaunch, cross-fabric seats).
 Parse the argument:
 - Must be a full agent serial matching `^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$`.
 - Tilde-lane suffixes (`~B`/`~C`/`~D`) included as needed — they are distinct sessions from the base serial.
+- A reviewer lane named for a macro (`3.0.0_SA_CVO~<MACRO>`, e.g. `~NFRA`) is spawned where several projects of one macro share a box and that box's CTO asks for it; `.tools/round-close-check.py` reads it as the macro reviewer.
 - Optional flags:
   - `--say "<text>"` → first-message hint appended to ajb invocation (SPAWN-WITH-DIRECTION pattern; max ~200 chars to keep CommandLine sane).
   - `--force "<reason>"` → audited concurrency-cap bypass; mandatory reason string.

@@ -1738,3 +1738,31 @@ Label `<round>29</round>`, ONE issuance, two cells in one chain.
 
 **The round's other item is the issuer's own read, not a cell:** the first rivalfunds record on the audit lake
 (R36's acceptance). `OG-rl-14`'s post-deploy read takes it again.
+
+## ADDENDUM R3-T.27 (2.0.0_SA_COO~O, 2026-10-07 ~20:3xZ) -- round 29, workstream GUARD-RIG-S27
+
+**Source.** Row `NFRA_OPLGTW-Z-W28-S27`, filed by `OG-rl-14`'s Phase A: `tests/test_deploy_base_guard.py` reads 6 passed on
+live and 3 passed, 3 failed on the r28 release tree, because its rig's dashboard stub carries no lockfile and the
+pre-check stops the script.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-bi-4` | 3 | The base-guard test rig carries a lockfile and a stub cache of complete entries; two tests added, one a negative control (a cache miss stops the script before the upload). | WORLD | ~33 | worker-light |
+
+**Chains.** `OG-bi-4` -> `OG-rl-14` (the release commit is re-cut to carry it). **fanout:** 1 start, cap 8.
+
+## ADDENDUM R3-T.28 (2.0.0_SA_COO~O, 2026-10-07 ~22:5xZ) -- round 30, the deploy drains before it restarts
+
+**Source.** `1.0.0_SA_CTO~Z` msg 31444 (the round-29 analysis by message, on `3.0.0_SA_CVO~Z` slug msg 31443), remedy 1 of
+row `NFRA_OPLGTW-Z-S67`. Round 29 is terminal: r28 `aa75078e1b` live since 2026-10-07T21:49:10Z.
+
+Label `<round>30</round>`, ONE issuance, one cell.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-dr-1` | 1 | The deploy stops the service gracefully and waits for requests in flight before it restarts; the revocation of row Z-S67 is reproduced offline as the negative control. No token rule changes. | WORLD | ~35 | worker |
+
+**Chains.** `OG-dr-1` alone; the release that ships it is cut after it drains. **fanout:** 1 start, cap 8.
+
+**Not cut:** a grace window for the previous token generation (research at `4.0.0_SA_CRO~Z`, then the CTO's ruling).
+**Standing:** the release form's 12-hour bar before the 07:00 America/New_York send, until the drain is shown.

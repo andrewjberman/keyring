@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T03:21:35.082351+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the S173 re-point (etf-classifications, after the POSN fill). BD half: its re-read condition is MET (served gold/views/mix_daily_summary.json oIyAV02C.. carries 2026-09-28). METHOD CORRECTION (2.0.0_SA_COO~M, 2026-09-30 19:0xZ): the served 2026-09-23 firm mix is byte-identical before (DJc9gnlj.., 09-25 05:12Z) and after (oIyAV02C..) the write -- C_06 runs incrementally and never recomputes a past date, so no partition comparison can show the move. The BD read must reclassify the 2026-09-28 partition with the half's own classify_holding under the pre-write and post-write loaders and compare to the served 09-28 values (656 rows / 652 accounts at 09-23 is the half's expectation shape), or read the named holdings in the served per-client timeseries (held since 2026-09-26T03:26:16.450830+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the table BD and COT gold now read). BD half (07:3xZ): of the 210 ticker-shaped written keys (the only ones BD reaches), 187 at the 09-26 class, 15 at a later deliberate model/scheduled class (cash, commodities, structured), 8 absent; SPHY, the USD 6.79M move, reads fixed_income/High Yield. COT half (06:5xZ): of 122, 51 at class, 10 later class, 3 prefixed, 58 absent (USD 49.17M, mostly Part-2 manual assets; FWD-15 now covers them, CTO ruling @ddd3eaac69, census @070d5824d0). Closes when FWD-15 places the 58 absent COT keys. No rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
 **Deploy:** bd-securities COT-new write Part 1: 941 conditional PutItem (CTO @ab4a2e41bb; sha c96398886f143f54)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -24,3 +24,6 @@
 - 20260926T032616Z HELD-SOVEREIGN-GATED gate=external/leg R1 reads COT C_06's first scheduled run after the write and BD C_06's next r
 - 20260929T002333Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
 - 20260930T190520Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
+- 20261008T065132Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR m
+- 20261008T065635Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classi
+- 20261008T072825Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the t

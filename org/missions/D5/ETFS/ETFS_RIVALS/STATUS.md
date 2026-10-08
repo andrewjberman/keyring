@@ -1,18 +1,75 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; rounds 15-22 DEPLOYED 2026-10-07 17:3xZ and the 2026-10-07 page republished; ledger legs L3-L5 open)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-26 at CLOUD 0576fb051f; round 27 built: two cells merged, the writer cell held on its branch until the 2026-10-08 11:00Z run is read; ledgers r22 and r26 wait on the 11:00Z and 13:00Z runs)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
 ruled by `1.0.0_SA_CTO~Z`.
 
-As of 2026-10-07 ~17:5xZ. The drive logs are the hour-by-hour record:
+As of 2026-10-08 ~07:1xZ. The drive logs are the hour-by-hour record:
 `org/tier1_exec/2.0.0_SA_COO~RV/drive_log_20261007T{08,09,10,11,12,13,14}Z_opal_bloomberg.md`.
+
+## Round 27 (FWD-24, the vendor request OFF) -- where it stands
+
+Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `deliverables/2.0.0_SA_COO~RV/round27/L8_PACKET_ROUND27.md`
+@09e99a3532. CVO slug @f78a9b6cb1 (ADJUDICATION_v35.Z): ho-1 J1 MET, rk-1 J1 MET, tw-1 J1 owed (C-S80).
+
+| cell | state | what is next |
+|---|---|---|
+| RIV-ho-1 (`history_owed.py`, new) | MERGED aca932cd3f. Live read 2026-10-08: 742 securities, 184,600 units owed over 251 dates | nothing; it is called only when the switch is on |
+| RIV-rk-1 (reader: a close only on its own trading date) | MERGED d99155c49a. From the branch: 0 moved rows of 6,066 and 1,406; 13 of 13 charts as served. NOT deployed to the Lambdas | a never-widen pair, then the Lambda deploy, AFTER the 11:00Z run (ledger r26 L4 reads the round-26 package) |
+| RIV-tw-1 (the daily leg's top-up writer) | complete on branch `wk-ETFS_RIVALS-19` @de25db03ea (worktree `C:/tmp/wk-riv-r27-19`), NOT merged. Pair WHOLE: COO half `round27/NEVER_WIDEN_HALF_COO_R27_TW1_MERGE.md`, CTO half msg 31588 @d969c62f46 | merge AFTER the 2026-10-08 11:00Z vehicle run is read (ruling msg 31584); the first scheduled run after the merge is the pair's read and tw-1's J1 |
+
+- The switch is the environment variable `RIVALFUNDS_HISTORY_OWED`: OFF unless exactly `print` or `ask`; set nowhere on this
+  box. `print` needs a one-line ask to 1.0.0_SA_CTO~Z naming where it would be set; `ask` waits on Andrew's recorded answer
+  relayed by the CTO, and (CTO half C2) on the writer storing a currency and each close's trading date, and on a ruled cap.
+- Standing term (ruling msg 31596, row Z-S75): before ANY merge to site-Z CLOUD, list the merged paths against
+  `round27/vehicle_load_set.json` (18 modules the vehicle's two working-tree legs load); a merge touching one carries a
+  pair or a stated reason it needs none. The rk-1 merge touched one (`gold_holding_contribution.py`) unpaired: left in
+  place by that ruling; the 11:00Z log read grades it (ImportError or a new top-level failure = revert the same hour).
+- For the round-28 list: top-up rows carry no currency; the leg passes the report date as the owed window's end;
+  `HISTORY_OWED_CAP` 5,000 is unruled; row Z-S73 and the day-early 2026-09-29 pull are untraced; two cell ids (rk-1, cu-1)
+  each name two orders (row Z-S74) -- list existing ids before naming a cell.
+
+## 2026-10-08 11:00Z -- the Terminal was signed out (row Z-S76)
+
+- Vehicle log `bbg_tplus1_20261008_070001.log`: rivalfunds legs exit 93 and 97, nothing written, no import failure; the
+  names step was NOT reached, so the run graded neither round-27 merge. RIV-tw-1's merge stays HELD until a vehicle log
+  whose enrichment leg reaches the names step is read (the re-pull after a human sign-in, or the next day's run).
+- Page date=2026-10-08 published 11:06:19Z: 11 of 13 funds updated (CGIC, SCHY held), no close of 2026-10-07.
+  Lambda chain 337.5 s, publish 1,015 MB. Ledger r26 CLOSED 4 of 4; r22 L4 closed, L5 = the 13:00Z sweep.
+- Owner of the sign-in and re-pull: 0.0.3_BG_BBGTerminal and a human (CTO msg 31689). Not this seat.
+- AFTER the re-pull's log shows both rivalfunds legs landed: ONE republish of 2026-10-08, no pair, on the four terms
+  of CTO ruling msg 31697: (1) the payload is the one run under ledger `etfs-rivalfunds-r26` leg L3 (round 26, 01:41Z:
+  only publish-page, refresh_a1 true) -- name it in the record; (2) print the keys it may write before, and the same
+  keys with sizes and times after; (3) funds_updated and both tables before and after, plus one hand read of a CGIC or
+  SCHY holding's weight against its Bloomberg bronze object; (4) once, on 2026-10-08 only -- a re-pull landing on a
+  later day republishes nothing for today without a new ask.
+
+## 2026-10-08 12:20Z to 13:08Z -- recovery, the writer's merge, the sweep
+
+- 0.0.3_BG_BBGTerminal re-ran both rivalfunds legs (logs `bbg_recovery_rivalfunds_20261008_122034Z.log`,
+  `..._collector_20261008_122319Z.log`): enrichment OK (581 market rows for 2026-10-07, 578 closes; names step ran on
+  the merged reader; no HISTORY OWED line), collector OK. Enrichment ran before the collector: it reads G1
+  canonical_shape, which only the Lambda chain builds, so the order did not change what it read.
+- RIV-tw-1 MERGED @93264049f6 under its whole pair (CTO ruling msg 31740). All three round-27 cells are on site-Z CLOUD:
+  suite 910 passed, 3 skipped; 39 of 39 check files PASS. No round-27 worktree remains. The switch is unset. tw-1's J1
+  and the pair's read: the first scheduled vehicle run that pulls (2026-10-09 11:00Z).
+- The 13:00Z sweep (486.4 s, 1,002 MB) published 2026-10-08 at 13:08:17Z: 13 of 13 funds updated, 2,252 of 2,252 fund
+  sections, 6 of 6 checks PASS, AI account in 13 of 13 panels, 0 naming a to-date period. The one manual republish
+  ruled in msg 31697 was NOT used: the sweep is the scheduled product and did it. Ledger r22 CLOSED 5 of 5; r26 CLOSED.
+  No rivalfunds ledger entry is open.
+- NEXT: the ONE round-27 Lambda deploy (the packager stages the whole rivalfunds folder, so all three cells go at one
+  pin) under a never-widen pair; before and after from a real run of 2026-10-08 on the round-27 code.
+
+**Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 
 ## Pins
 
 | What | Value |
 |---|---|
-| Deployed artifact pin | CLOUD **beb13d39ff** in the five rivalfunds Lambdas (rounds 15 to 22), 3,008 MB each. Ledger `etfs-rivalfunds-r22` OPEN: L1 apply and L2 republish CLOSED (@dca1f916d9); L3 the read through the gateway (sign-in wall, reader asked of the CTO); L4, L5 the 2026-10-08 11:00Z and 13:00Z REPORT lines. Rollback pin: 22844f744f (round 14) |
-| Served page | 2026-10-07 republished 17:47Z: index 1,690,862 B, 13 chart objects, equal to the prediction (`round22/served_grade_2026-10-07.json`). Republish run 164.5 s, 1,009 MB |
+| Deployed artifact pin | CLOUD **0576fb051f** in the five rivalfunds Lambdas (rounds 15 to 26: the shared reader of gold security_market, narrowed to timed object names), 3,008 MB each. Ledger `etfs-rivalfunds-r26`: L1 to L3 CLOSED, L4 OPEN = the 2026-10-08 11:00Z daily run (first run of gold_canonical_shape and gold_trade_schedule on the shared reader). Ledger `etfs-rivalfunds-r22`: L4, L5 OPEN = the 11:00Z and 13:00Z REPORT lines. Rollback: content pin fd633ec4d2 on branch `rv-deploy-r25mr` (rounds 15-24 + mr-1), then f9f8334ef6. Deploy tree `C:/tmp/rv-r8` |
+| Withdrawn plan | `C:/tmp/rv_apply25.tfplan` belongs to the WITHDRAWN round-25 deploy (pin acf83a5716, the un-narrowed readers): never apply it. CLOUD HEAD is deployable again as of round 26 |
+| Served page | 2026-10-07; last written 00:11Z 2026-10-08 (RIV-mr-1). The round-26 republish of 01:41Z rebuilt the tables with the new readers and wrote nothing but one input_census object and its state record: the tables' content hash and the page's bytes were unchanged (`round26/served_read_2026-10-07.after_r26.json`). Andrew's look at the round-24 / 25 chart is not yet had |
+| PRD | v0.19 ADMITTED (FWD-24: the year of closes kept by the daily leg; the standing request stays OFF until Andrew's recorded answer). Reader census `round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md` @33e8bbe318 |
 | pk-1 / al-1 (parsekey join, pin 92cf1f322b) | Ledger `etfs-rivalfunds-pk1-al1` CLOSED 4 of 4 @b74bdc238b on the 2026-10-07 morning pass |
 | Round 14 proof | The 2026-10-07 13:00Z sweep read: four gate items MET (`round14/SWEEP_READ_2026-10-07.md` @93f23ea2f4) |
 | Built, not deployed | Rounds 15 to 22 on site-Z CLOUD; last merge c6ac7335a5; suite 876 passed, 2 skipped, 0 failed and 26 of 26 check files PASS at 23d65887ca |
@@ -85,9 +142,13 @@ The Lambda deploy's never-widen pair goes to 1.0.0_SA_CTO~Z as usual.
 | Row | Class | State |
 |---|---|---|
 | Z-S55, Z-S56, Z-S58, Z-S60 | BLOCKING, INERT | Repaired in rounds 16, 18, 19, 20; disposition is the CVO's |
-| Z-S57, Z-S61 | OBSERVATION | Served: buying_trend carries 7 securities under two keys; cause read (its G4 read omitted the parsekey column) and repaired in round 20, not yet deployed |
+| Z-S57, Z-S61 | OBSERVATION | Repaired in round 20 and SERVED: GQGU's Meta is under one key in both served tables (read 19:4xZ); the 16 remaining same-name pairs are different listings or share classes and stay (CTO ruling msg 31341); the CVO re-reads Z-S57 |
 | Z-S63 | BLOCKING, INERT | The deployed daily Lambda used 864 MB of 1,024 MB; the new stages peak at 1,552 MB on site Z. Ruled: 3,008 MB in the same apply; the first runs' REPORT lines are ledger legs |
-| Z-S65 | OBSERVATION | 4 GQGU mentions (META, ASML) open a dialog holding only a name (served today: 0); stated in the COO half; repair is one cell of the next round |
+| Z-S65, Z-S66 | OBSERVATION | Repaired by round 23 (RIV-ks-1) and SERVED 19:19Z: 0 missing; ks-1 J1 MET on the real run (CVO ADJUDICATION_v25); disposition is the CVO's |
+| Z-S71 (replaces Z-S69, Z-S70) | BLOCKING, disarmed by round 26 | The 2026-09-29 live object of gold security_market holds 2026-09-30's closes. Round 26 RIV-rg-2 is DEPLOYED: the union reads only objects whose name carries a capture time, so that object is never opened by the price readers; rg-2 J1 MET (ADJUDICATION_v33). Disposition is the CVO's. Still true: the rule is a name's shape plus one named object; round 27 carries the per-close trading date |
+| Z-S73 | OBSERVATION | A replay of build-canonical-shape and build-trade-schedule made today does not reproduce the served objects (alike under old and new code); four GQGU trims of 2026-10-01 carry a ticker key in the replay and a CUSIP as served. Read in round 27 |
+| Z-S72 | OBSERVATION | The 11:00Z vehicle's enrichment leg loads the module holding the round-25 reader and calls nothing of it; no revert (CTO msg 31489); the first read of the 2026-10-08 vehicle log states the leg's exit code and its security_names step |
+| Z-S67, Z-S68 | OBSERVATION, ARMED / INERT | bbg_budget's two checks use different units (surfaced by 0.0.3_BG_BBGTerminal); Z-S68 is this seat's disarm statement: the backfill's guard is check_points, points requested bound records returned. Day 1's log gives the measured ratio |
 | Z-S62 | OBSERVATION | The 11:00Z vehicle runs the working tree: round 20's enrichment change first runs 2026-10-08 11:00Z; its log line is owed a read |
 | Z-W10-S1 | OBSERVATION | The backfill's one CRNCY lookup is unmeasured at real size (282 keys) |
 | Z-S59 | OBSERVATION | Down to 4 of 393 strips, each a marker in the part month before the window's first day (by design, marked with an asterisk) |

@@ -136,6 +136,33 @@ Rules of the format:
   (org/XXX.md), then execute or route.
 - Do not mark a call closed on your own inference — closure is his word or a relayed ruling.
 
+## The CTO's list for its box -- every card is written to a file (NFRA_CTLPLN FWD-22, contract C-SEATS clause 4)
+
+**Andrew-direct 2026-10-07 ~16:3xZ, VERBATIM:** *"They are responsible for accruing any and all /open-calls on their fabric. If
+the open call in question only pertains to their fabric, does not interfere with any other projects resources or materials, they
+can adjudicate them."* Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_163xZ_FABRIC_ROLES_MSTR_CTO_COO_CVO_CRO_AND_THE_INBOUND_WORK_PIPELINE_INTO_NFRA_CTLPLN.md`.
+
+A CTO running this skill on its box ends the sweep by writing EACH card to the box's list through the tool, then prints the
+list's path (`org/devices/state/<device>/open_calls.json`, one writer per box, the device from `AGENTBUS_DEVICE`):
+
+```
+python .tools/open-calls.py add --project <CODE> --subject "<the call as the card's top line>" --asked-by <serial> \
+    --source <path of the file that holds the call> [--orders <order file> ...] [--roots <terraform root dir> ...]
+python .tools/open-calls.py list            # this box's list, with the file's age; --all reads every box's file
+python .tools/open-calls.py close --id <id> --by <serial> --ruling <path of the ruling>
+```
+
+`add` measures the call (`scope`, below) and saves the measurement on the row. `list --all` names a box whose file is absent:
+absent is not empty. The existing sweep (Step 1) and the card format (Step 2) are unchanged; the file is where the cards live
+after the chat that printed them is gone.
+
+**Whether a call touches only this box is MEASURED, never judged:** `python .tools/open-calls.py scope --project <CODE>
+[--orders ...] [--roots ...]` reads the paths and risk of the orders involved, the project's placement, and the resources the
+named Terraform roots declare; a shared bucket or a trunk register file touches every box. Its last line ends `verdict=OWN-BOX`
+(this box's CTO may settle the call) or `verdict=CROSS-BOX` (it may not alone). It prints, and decides nothing about, an act
+only Andrew can do: such an act still goes to him, named as that act.
+
 ## Self-adjudication inside a running project -- the CTO rules, the loop keeps cycling
 
 **Andrew-direct 2026-09-03 ~05:2xZ at the 1.0.0_SA_CTO terminal, VERBATIM:** *"if upon receipt it is in question, or
@@ -156,6 +183,10 @@ a new directive, money, vendors or a standing hold.
 **Invocation:** `/open-calls --adjudicate <PROJECT_CODE>` at `1.0.0_SA_CTO` (or its lane running that project).
 
 **What it does, in order:**
+0. **Runs `python .tools/open-calls.py scope --project <PROJECT_CODE>` FIRST and proceeds only on `verdict=OWN-BOX`.** On
+   `verdict=CROSS-BOX` it does not adjudicate: the call goes the cross-box route (`.tools/crossbox-call.py`: CTO, manager, the
+   other box's manager, that CTO), is written to the box's list with `open-calls.py add`, and cannot be closed there until a
+   cross-box file for it reads CLOSED-BOTH. Where the project's order files are known, pass `--orders` so the measurement reads them.
 1. Builds the cards in the EXACT format above -- one card per decision, the call on top, the internal divider, the
    REC beneath -- as if for Andrew. The format is the discipline: a call that cannot be reduced to one line is not
    ready to be ruled on.

@@ -2279,3 +2279,58 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "ARMED because draining the portal branch as it stands lands a tree that does not typecheck. Disarm: either do not drain dc88c4f7 plus this cell's portal commit until a cell with write grants on gen-wire.ts (union bodies emit `export type`), wire/index.ts and wire/responses.ts (drop the four hand-added names, derive the YCHARTS slice with Extract) has run, or amend this order's paths to include them and re-run. The consumer migration in this order is correct and complete against that fixed shape."
 }
 ```
+
+## IRPT_YCDGEN-D2-S1 -- dell2 F1 retry blocked by construction: the only Opal-served principal is Andrew's own sign-in
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S1",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T17:15:45Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 F1 retry (Andrew 'HAVE DELL2 RETRY'; CTO ruling CTO_RULING_IRPT_YCDGEN_FWD1_DELL2_RETRY_20261008.md) cannot meet conditions 1 and 4 together: the one principal a seat can sign in as is served by the YCharts producer, and the only Opal-served principal is Andrew's own sign-in",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "spec_asserts": "The ruling counts a dell2-made run when it goes through the deployed portal route as an authenticated Cottonwood-allowed principal, on one real Cottonwood portfolio, ends in an Opal-made Overview read back, with zero YCharts calls measured.",
+  "world_is": "infra/aws/lambda/investor-reporting/ycharts/generate/resident_worker.py:121 OPAL_PRODUCER_PRINCIPALS = ('andrew@opalinvest.com',); producer_for (:126-131) sends every other principal to the YCharts path; :115-120 say the list changes only on Andrew's word and 'No other principal goes on this list'. The one seat-usable Cottonwood-allowed principal is svc-irpt-analysis@opalinvest.com (userType service, allowedFirmIds cottonwood; IRPT_MVP_Y/live_walk/svc_principal.py:30-60): a run as it would take the YCharts path, so condition 4 fails and a vendor call would be made. Signing in as Andrew is not a seat act. No real Cottonwood holdings file is held on dell2 (repo files are AAPL/VNQ test portfolios). UNMEASURED: whether the upload's symbol resolve contacts the provider on the Opal path (inferred from the provider lease at resident_worker.py:737-744, not traced).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "resident_worker.py:112-131 at dell2 CLOUD 8442ad9b0a",
+      "svc_principal.py:30-60",
+      "portal route map: api-client.ts:15,147,160-165; ProspectComposer.tsx:266-325; investor-reporting.ts:1325-1350"
+    ]
+  },
+  "notes": "No run was made: running as the service principal would itself be a YCharts call. Unblocks on Andrew's word, one of: (a) add svc-irpt-analysis@opalinvest.com to OPAL_PRODUCER_PRINCIPALS for this run (a resident release) and name the real Cottonwood holdings file to submit; or (b) the organic arm, Andrew's own run. Result sent to 0.0.0_AB_MSTR~DELL2 per the ruling."
+}
+```
+
+## IRPT_YCDGEN-D2-S2 -- round-close-check reads an empty expected to_id and refuses every round-6 proof
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S2",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T18:25:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "round-close-check.py refuses all 19 round-6 proof instances with \"names to_id '<the order's own id>', not ''\": the expected to_id it compares against is empty",
+  "spec_asserts": "round-close-check.py grades each complete order's proof instance against that order's to_id, so a well-formed instance whose to_id is the order's own id passes.",
+  "world_is": "`python .tools/round-close-check.py --project IRPT_YCDGEN --round 6` at dell2 CLOUD 2c287dec89 (2026-10-08 ~18:2xZ): ORDERS 19 complete; PROOF-BAD 19 of 19, each line 'names to_id IRPT_YCDGEN.TO-YCD-<x>-6.<slug>, not ''' -- the instance's to_id is the order's file stem and the expected value is empty; PROOFS proof_ok=0 proof_bad=19; verdict=REFUSED. The same instances pass .tools/proof-of-spec-check.py (VALID rc=0 on u-6 and v-6 today). UNMEASURED: which code path yields the empty expected id (likely the tree task-orders/ layout vs a flat task_orders/ read).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "round-close-check.py output, 19 PROOF-BAD lines, verdict=REFUSED",
+      "proof-of-spec-check.py VALID rc=0 on IRPT_YCDGEN.TO-YCD-v-6 instance @e02ad46806"
+    ]
+  },
+  "notes": "Not a round-6 defect: the round's close also waits on FWD-1 (F1 release held to ~20:0xZ). Owner of the checker to confirm; this seat keeps working."
+}
+```

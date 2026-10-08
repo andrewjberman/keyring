@@ -22,11 +22,11 @@ Carried open from REMEDIATION_v1.md: W2-S2 (the test's load-time override of one
     "owner": "1.0.0_SA_CTO",
     "round": "v5",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v5"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

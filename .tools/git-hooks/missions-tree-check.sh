@@ -61,8 +61,72 @@ fi
 # hook, and a silent pass would read like approval; neither is a gate.
 RC=0
 OUT="$(cd "$ROOT" && python "$TOOL" check 2>&1)" || RC=$?
+
+# NFRA_CTLPLN CT-s-8 -- a round is not counted finished without a reviewer on the box and a grade by it. When a staged
+# org/missions/D*/*/<CODE>/project.json moves dep_stage TO ROUND_CLOSE or CLOSED, .tools/round-close-check.py runs for that
+# project; verdict=REFUSED is printed (WARN, the default: the commit goes on) or refuses (ENFORCE, only while
+# org/mcp/seat-gates.round-close.missions-tree-check.enforce exists; OPAL_SEAT_GATES_ENFORCE_DIR points a test at another
+# directory, as in safe-apply.sh; the retired org/mcp/seat-gates.enforce turns on nothing; nothing here creates a switch).
+# Audited override: SEAT_GATES_OVERRIDE="reason" (org/git-author-override-audit.log). Any other dep_stage change, and any
+# commit that stages no project.json, never reaches it. Returns 1 only to refuse the commit.
+close_gate() {
+    local p old new code out rc last mode enf worst=0 pj sgd
+    sgd="${OPAL_SEAT_GATES_ENFORCE_DIR:-$ROOT/org/mcp}"
+    enf="$sgd/seat-gates.round-close.missions-tree-check.enforce"
+    mode=WARN; [ -e "$enf" ] && mode=ENFORCE
+    pj="$(printf '%s\n' "$HITS" | grep -E '^org/missions/D(0|[1-9][0-9]?)/[^/]+/[^/]+/project\.json$' || true)"
+    [ -n "$pj" ] || return 0
+    [ -e "$sgd/seat-gates.enforce" ] && echo "WARN: missions-tree-check close-gate -- org/mcp/seat-gates.enforce is retired and turns on nothing; the close gate's switch is org/mcp/seat-gates.round-close.missions-tree-check.enforce." >&2
+    while IFS= read -r p; do
+        [ -n "$p" ] || continue
+        new="$(MSYS_NO_PATHCONV=1 git -C "$ROOT" show ":$p" | tr -d '\r' | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)" || new=""
+        [ -n "$new" ] || new="$(tr -d '\r' < "$ROOT/$p" | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)"
+        case "$new" in ROUND_CLOSE|CLOSED) ;; *) continue ;; esac
+        old=""
+        if git -C "$ROOT" cat-file -e "HEAD:$p" 2>/dev/null; then
+            old="$(MSYS_NO_PATHCONV=1 git -C "$ROOT" show "HEAD:$p" | tr -d '\r' | sed -n 's/.*"dep_stage"[[:space:]]*:[[:space:]]*"\([A-Z_]*\)".*/\1/p' | head -1)" || old=""
+        fi
+        [ "$old" != "$new" ] || continue
+        code="$(basename "$(dirname "$p")")"
+        rc=0
+        out="$(cd "$ROOT" && python .tools/round-close-check.py --project "$code" 2>&1)" || rc=$?
+        last="$(printf '%s\n' "$out" | tr -d '\r' | tail -1)"
+        case "$last" in
+            ROUND-CLOSE\ *"verdict=MAY-CLOSE")
+                echo "OK: missions-tree-check close-gate -- $code dep_stage $old -> $new: $last" ;;
+            ROUND-CLOSE\ *"verdict=REFUSED")
+                printf '%s\n' "$out" | sed 's/^/  | /' >&2
+                if [ "$mode" = ENFORCE ]; then
+                    if [ -n "${SEAT_GATES_OVERRIDE:-}" ]; then
+                        printf '%s SEAT_GATES_OVERRIDE actor=%s missions-tree-check close-gate project=%s reason=%s\n' "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                            "${OPAL_AGENT_SERIAL:-UNKNOWN}" "$code" "$SEAT_GATES_OVERRIDE" >> "$ROOT/org/git-author-override-audit.log"
+                        echo "WARN: missions-tree-check close-gate OVERRIDDEN (audited): $SEAT_GATES_OVERRIDE -- $last" >&2
+                    else
+                        echo "BLOCKED: missions-tree-check close-gate -- $code dep_stage $old -> $new REFUSED (ENFORCE, org/mcp/seat-gates.round-close.missions-tree-check.enforce present): $last" >&2
+                        echo "  remedy: a CVO-kind reviewer live on the box and a CVO row grading every judgment criterion; override: SEAT_GATES_OVERRIDE=\"reason\"." >&2
+                        worst=1
+                    fi
+                else
+                    echo "WARN: missions-tree-check close-gate -- $code dep_stage $old -> $new would be REFUSED under ENFORCE; WARN mode admits it: $last" >&2
+                fi ;;
+            *)
+                if [ "$mode" = ENFORCE ] && [ -z "${SEAT_GATES_OVERRIDE:-}" ]; then
+                    echo "BLOCKED: missions-tree-check close-gate -- round-close-check.py gave no verdict for $code (rc=$rc); refusing rather than passing a close it did not grade (ENFORCE)." >&2
+                    printf '%s\n' "$out" | tail -5 >&2
+                    worst=1
+                else
+                    echo "WARN: missions-tree-check close-gate -- round-close-check.py gave no verdict for $code (rc=$rc); the close goes on (WARN)." >&2
+                fi ;;
+        esac
+    done <<EOF
+$pj
+EOF
+    return "$worst"
+}
+
 case "$RC" in
     0)
+        close_gate || exit 1
         echo "OK: missions-tree-check -- $(printf '%s\n' "$HITS" | grep -c .) tree/register path(s) staged; $(printf '%s\n' "$OUT" | grep -E '^RESULT' | head -1)"
         exit 0 ;;
     1)

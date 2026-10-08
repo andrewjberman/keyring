@@ -159,9 +159,11 @@ Read the window, not just list it:
   share is a flag that the autonomy dial is mis-set — report it so Andrew can
   tune the Stakes Matrix.
 - **Tier-1 liveness check (Andrew direct 2026-05-26)** — pull
-  `get_live_agents()` and assess: are the 6 canonical Tier-1 serials
-  (`1.0.0_SA_CTO`, `2.0.0_SA_COO`, `3.0.0_SA_CVO`, `1.1.0_SA_CTO`,
-  `2.1.0_SA_COO`, `3.1.0_SA_CVO`) LIVE on the broker? Any STALE / absent
+  `get_live_agents()` and assess: are the Tier-1 kinds that THIS box's seat list holds LIVE on the broker? The kinds
+  are read from `org/ref/SEAT_ROLES.json` through `lib/seat_roles.py` (`kind_of(serial)`); the seats this box holds are
+  read from its seat list (`python .tools/seat-list.py show`, or `python .tools/seat-liveness.py` for the live
+  measurement), never from a fixed list of serials. **A box whose seat list holds no reviewer seat (kind CVO, live) is
+  itself a finding** (C-SEATS clause 7; the refusal is cell CT-s-8's). Any STALE / absent
   Tier-1 agent that should be operational is a `liveness_gap` finding;
   remediation = MSTR spawn via `.tools\spawn-agent.ps1 <serial>` (post-reboot
   bring-up uses `$env:FORCE_SPAWN = '<reason>'` audited bypass when the rate

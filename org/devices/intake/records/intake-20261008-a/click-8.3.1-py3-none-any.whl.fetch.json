@@ -1,0 +1,76 @@
+{
+  "schema": "intake-fetch/1",
+  "batch": "intake-20261008-a",
+  "requested": {
+    "name": "click",
+    "version": "8.3.1",
+    "python_tag": "py3",
+    "abi_tag": "none",
+    "platform_tag": "any",
+    "file_name": "click-8.3.1-py3-none-any.whl"
+  },
+  "index_base": "https://pypi.org",
+  "requests": [
+    {
+      "url": "https://pypi.org/pypi/click/8.3.1/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 4762,
+      "at": "2026-10-08T04:07:49Z"
+    },
+    {
+      "url": "https://pypi.org/pypi/click/json",
+      "method": "GET",
+      "status": 200,
+      "bytes": 102510,
+      "at": "2026-10-08T04:07:49Z"
+    },
+    {
+      "url": "https://pypi.org/integrity/click/8.3.1/click-8.3.1-py3-none-any.whl/provenance",
+      "method": "GET",
+      "status": 200,
+      "bytes": 8972,
+      "at": "2026-10-08T04:07:49Z"
+    },
+    {
+      "url": "https://files.pythonhosted.org/packages/98/78/01c019cdb5d6498122777c1a43056ebb3ebfeef2076d9d026bfe15583b2b/click-8.3.1-py3-none-any.whl",
+      "method": "GET",
+      "status": 200,
+      "bytes": 108274,
+      "at": "2026-10-08T04:07:49Z"
+    }
+  ],
+  "published": {
+    "sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+    "size": 108274,
+    "upload_time": "2025-11-15T20:45:41.139301Z",
+    "yanked": false,
+    "requires_python": ">=3.10"
+  },
+  "project": {
+    "release_count": 65,
+    "first_release_at": "2014-04-28T11:22:51.341948Z",
+    "this_release_at": "2025-11-15T20:45:41.139301Z"
+  },
+  "attestation": "present",
+  "attestation_url": "https://pypi.org/integrity/click/8.3.1/click-8.3.1-py3-none-any.whl/provenance",
+  "held_path": "holding/intake-20261008-a/click-8.3.1-py3-none-any.whl",
+  "held_sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+  "held_bytes": 108274,
+  "outcome": "held",
+  "reason": "digest and size equal the published values",
+  "fetched_by": "2.0.0_SA_COO~C",
+  "at": "2026-10-08T04:07:49Z",
+  "approval": {
+    "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_BATCH_20261008_A.md",
+    "sha256": "3d6a87db2d7a4cb9c910199abacf6c66387655e09e10a3cd3114d2a348e03259",
+    "matched": true
+  },
+  "release_files": [
+    "click-8.3.1-py3-none-any.whl",
+    "click-8.3.1.tar.gz"
+  ],
+  "index_file_name": "click-8.3.1-py3-none-any.whl",
+  "received_sha256": "981153a64e25f12d547d3426c367a4857371575ee7ad18df2a6183ab0545b2a6",
+  "received_bytes": 108274
+}

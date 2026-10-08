@@ -28,16 +28,19 @@
 #                                            lock file; NO state, planfile or scratch is touched.
 #                                            The main checkout and any LIVE worktree are skipped.
 #
-#   orphaned-worktree-dirs    AUTO-DELETE   directories that SIT INSIDE a known worktree-staging
+#   orphaned-worktree-dirs    LIST, THEN REMOVE ONLY WHAT IS NAMED IN -AcceptOrphan (a folder git does
+#                                            not know about may be a kit, scratch or rollback copy a seat
+#                                            parked on purpose; a recursive delete of one needs the list
+#                                            shown and accepted first). Scope:
+#                                            directories that SIT INSIDE a known worktree-staging
 #                                            root (wherever `git worktree list` currently has
 #                                            entries, plus .worktrees/ and C:\tmp as defaults) but
 #                                            that `git worktree list` does NOT know about -- i.e.
 #                                            already `rm -rf`'d by hand without `git worktree
 #                                            remove`, or a create that never finished. No git claim
-#                                            exists on these; there is nothing to lose. Still listed
-#                                            (name + byte count) before deletion, not silent, in
-#                                            case something was deliberately parked outside git's
-#                                            view -- this has never happened, but the check is free.
+#                                            exists on these, which is NOT the same as nothing to
+#                                            lose: seats do park folders outside git's view. Each is
+#                                            listed (name + byte count) and left in place.
 #
 #   merged-worktrees          AUTO-DELETE   REGISTERED worktrees, excluded from the LIVE set below,
 #                                            whose HEAD is an ancestor of origin/CLOUD (the one trunk
@@ -76,6 +79,7 @@
 #   cleanup-disk.ps1 -Pool <name>              # run exactly one registered pool (comma-separated for >1)
 #   cleanup-disk.ps1 -LiveWindowHours <n>      # override the live-worktree recency window (default 6)
 #   cleanup-disk.ps1 -ExcludePath <path>       # repeatable; a path (worktree or Temp-pool item) never touched
+#   cleanup-disk.ps1 -AcceptOrphan <path>      # repeatable; the ONLY way an unregistered folder is removed
 #   cleanup-disk.ps1 -RepoRoot <path>          # default: derived from this script's own location
 
 [CmdletBinding()]
@@ -84,6 +88,7 @@ param(
     [string[]]$Pool = @('terraform-provider-temp', 'terraform-provider-cache', 'orphaned-worktree-dirs', 'merged-worktrees', 'unmerged-worktrees'),
     [int]$LiveWindowHours = 6,
     [string[]]$ExcludePath = @(),
+    [string[]]$AcceptOrphan = @(),
     [string]$RepoRoot = $(Split-Path -Parent $PSScriptRoot)
 )
 
@@ -94,9 +99,33 @@ try {
 $_excludeNorm = $ExcludePath | ForEach-Object { $_.Replace('\', '/').TrimEnd('/').ToLowerInvariant() }
 $_liveCutoff = (Get-Date).AddHours(-$LiveWindowHours)
 
+# An excluded path covers ITSELF AND EVERYTHING UNDER IT. Until 2026-10-08 this was an exact match, so
+# `-ExcludePath <parent folder>` excluded nothing and said nothing: 0.0.0_AB_MSTR~Z passed Desktop\opal-pinned to
+# protect the pin trees and the run removed the live AMGT_CORPUS pin 61a724beb0ad (recreated the same hour).
 function Test-Excluded([string]$Path) {
     $n = $Path.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
-    return $_excludeNorm -contains $n
+    foreach ($e in $_excludeNorm) {
+        if ($n -eq $e -or $n.StartsWith($e + '/')) { return $true }
+    }
+    return $false
+}
+
+# A worktree a Windows scheduled task RUNS FROM is live whatever its file ages say: a pin tree is written once and
+# then only read, so the recency heuristic reads it as idle (the same incident). One read of the task table; a task
+# whose working directory, program or arguments name a path at or under the worktree makes that worktree live. A box
+# where the table cannot be read gets an empty list and the old behaviour, said once.
+$_taskPaths = @()
+try {
+    $_taskPaths = @(Get-ScheduledTask -ErrorAction Stop | ForEach-Object { $_.Actions } | ForEach-Object {
+        @($_.WorkingDirectory, $_.Execute, $_.Arguments) } | Where-Object { $_ } |
+        ForEach-Object { ([string]$_).Replace('\', '/').ToLowerInvariant() })
+} catch {
+    Write-Output "WARN: the scheduled-task table could not be read ($($_.Exception.Message)); a tree a task runs from is NOT protected on this run"
+}
+function Test-TaskRunsFrom([string]$Path) {
+    $n = $Path.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+    foreach ($t in $_taskPaths) { if ($t.Contains($n + '/') -or $t.TrimEnd('/', '"').EndsWith($n) -or $t.Contains($n + '"')) { return $true } }
+    return $false
 }
 
 function Get-DirSizeBytes([string]$Path) {
@@ -129,6 +158,7 @@ function Get-WorktreeTable {
 
 function Test-WorktreeLive([string]$Path) {
     if (Test-Excluded $Path) { return $true }
+    if (Test-TaskRunsFrom $Path) { return $true }
     if (-not (Test-Path -LiteralPath $Path)) { return $false }
     try {
         $newest = (Get-ChildItem -LiteralPath $Path -Recurse -Force -ErrorAction SilentlyContinue |
@@ -259,10 +289,23 @@ function Invoke-PoolOrphanedDirs {
         Write-Output ("  {0,10}  {1}  (modified {2})" -f (Format-GB $sz), $o.FullName, $o.LastWriteTime)
     }
     if ($orphans.Count -eq 0) { return }
-    if ($DryRun) { Write-Output "[orphaned-worktree-dirs] DRY RUN -- would delete all of the above, then git worktree prune"; return }
-    foreach ($o in $orphans) { Remove-Item -LiteralPath $o.FullName -Recurse -Force -ErrorAction SilentlyContinue }
-    & git worktree prune 2>$null
-    Write-Output "[orphaned-worktree-dirs] removed; git worktree prune run"
+    # A folder git does not know about can be something a seat parked on purpose (a kit, a scratch, a rollback
+    # copy). It is removed only when its full path was shown by a prior run and passed back in -AcceptOrphan.
+    $accepted = @($orphans | Where-Object {
+        $p = $_.FullName.TrimEnd('\', '/').Replace('/', '\')
+        @($AcceptOrphan | ForEach-Object { $_.TrimEnd('\', '/').Replace('/', '\') }) -contains $p
+    })
+    if ($DryRun) { Write-Output ("[orphaned-worktree-dirs] DRY RUN -- {0} of {1} named in -AcceptOrphan would be deleted; the rest are listed only" -f $accepted.Count, $orphans.Count); return }
+    if ($accepted.Count -eq 0) {
+        Write-Output "[orphaned-worktree-dirs] LISTED ONLY -- nothing removed. To remove one, re-run with -AcceptOrphan <full path> for each folder accepted from the list above."
+        return
+    }
+    foreach ($o in $accepted) {
+        Remove-Item -LiteralPath $o.FullName -Recurse -Force -ErrorAction SilentlyContinue
+        Write-Output ("[orphaned-worktree-dirs] removed (accepted): {0}" -f $o.FullName)
+    }
+    & cmd /c "git worktree prune >nul 2>&1"
+    Write-Output ("[orphaned-worktree-dirs] removed {0} of {1}; git worktree prune run" -f $accepted.Count, $orphans.Count)
 }
 
 # =================================================================================================
@@ -276,7 +319,14 @@ function Invoke-PoolWorktreeSplit([bool]$RunMerged, [bool]$RunUnmerged) {
     # with `$null = ...` (tried once, 2026-09-17) swallows ALL of it, not just a trailing return
     # value -- the fix was removing the `return @{...}` this function used to end with, not the
     # capture. Do not reintroduce either half.
-    git fetch origin *> $null
+    # The fetch runs under cmd so its stderr never reaches PowerShell: under 5.1 with
+    # $ErrorActionPreference = 'Stop', a native command's stderr line (git prints every new ref
+    # there) raises NativeCommandError even when redirected with *>, and the engine exits before
+    # any pool runs. The exit code is the verdict. A failed fetch is a WARN, not a stop: the
+    # merged/unmerged split then reads the last fetched origin, which can only keep a worktree
+    # (it under-counts what is merged), never remove one wrongly.
+    & cmd /c "git fetch origin >nul 2>&1"
+    if ($LASTEXITCODE -ne 0) { Write-Output "WARN: git fetch origin exited $LASTEXITCODE; the worktree split reads the last fetched origin" }
     $wt = Get-WorktreeTable | Where-Object { $_.Path.Replace('\', '/').TrimEnd('/') -ne $RepoRoot.Replace('\', '/').TrimEnd('/') }
     $merged = @(); $unmerged = @(); $live = @(); $gone = @()
     foreach ($row in $wt) {

@@ -1,0 +1,539 @@
+#!/usr/bin/env python3
+"""crossbox-deploy-check.py -- the three measurements a box runs before it deploys its own work, plus the open-deploy read
+(NFRA_CTLPLN workstream SEATS, cell CT-s-3). READ-ONLY: it changes nothing and builds no alert or monitor.
+
+    python .tools/crossbox-deploy-check.py --root <dir> [--target <address> ...] [--notices <dir>] [--serial <serial>]
+        [--now <UTC, e.g. 2026-10-08T05:00:00Z>] [--repo-root <dir>]
+        [--files <path> ... | --files-from <file|-> | --files-vs-trunk]
+    python .tools/crossbox-deploy-check.py --list-deployable [--commit-range <a..b>] [--files-from <file|->] [--repo-root <dir>]
+
+Andrew's word: the laptop needs to know what goes on across the devices, but not every commit/deploy/decision comes from
+the laptop -- only when there is an open call, a potential project overlap, or a deploy that could upset another device's work.
+
+  OPEN-CALL    an unfinished cross-box call (org/devices/crossbox/*.json, state OPEN or ACKED) or an open_calls row
+               (org/devices/state/*/open_calls.json) that names this root, its name (terraform roots only) or a project
+               whose write set covers the root.
+  OVERLAP      a live project placed on ANOTHER box (project.json `placement`, else its `fabric` box) whose write set shares
+               a path with the root -- .tools/placement-check.py's own read_projects() and overlaps(), imported.
+  UPSET        a live deploy notice (org/devices/deploy_notices/<id>.json) that names the root: rule "no-apply" hits any
+               apply; "targeted-only-excluding" hits an UNTARGETED apply and a targeted one that names a listed resource;
+               an empty `resources` list means the whole root. An expired notice is ignored and listed as expired.
+  OPEN-DEPLOY  another seat's open deploy on the root: org/critical_paths/.open_deploys/*.json at HEAD of EVERY live
+               worktree (git worktree list --porcelain, then ls-tree), the per-worktree denominator printed.
+
+FILES MODE (--files, --files-from, --files-vs-trunk; AMENDMENT 1 of the cell's task order): OVERLAP is judged on the files a
+push or deploy actually carries against another box's write set, never on a shared root -- a project hits only if one of THOSE
+files is inside its write set (an empty list reads clear: "no file carried"). --files-vs-trunk makes the list the Terraform
+files of --root that differ from the merge base with the shared branch (committed, staged, unstaged or untracked); when that
+list is empty OVERLAP reads clear with the reason "no file of this root differs", and when the merge base cannot be resolved the
+tool says so and falls back to the root alone. The same rule narrows the OPEN-CALL project-code match and, for a NON-Terraform
+root, the OPEN-DEPLOY match (a sentinel hits only if its text names a carried file). For a Terraform root the OPEN-DEPLOY limb
+keeps matching the root: an apply works on the state of the whole root, so another seat's open deploy of the same root collides
+whatever files differ. Without any of the three flags the old root-wide reading stands (the criterion CTs3-AC2 invocation).
+--list-deployable prints what safe-deploy.sh's own core (safe_deploy_core.py detect_script_files + detect_bundle_member_files,
+called the way its main() calls them) will deploy for the explicit files or the commit range: one `DEPLOYABLE <path>` per file,
+one `DEPLOY-ROOT <data/pipeline>` per root, LAST line `DEPLOYABLE-COUNT n=<k>`; it measures nothing else.
+
+An ABSENT file or directory reads clear, said so ("none recorded"). A file that EXISTS but cannot be parsed, or carries a key
+this reader does not know, is NOT clear: it reads hit with the reason.
+LAST line: CROSSBOX-DEPLOY device=<d> root=<name> open_call=<clear|hit> overlap=<clear|hit> upset=<clear|hit>
+           open_deploy=<clear|hit> verdict=<CLEAR|STOP>
+Exit: 0 CLEAR, 1 STOP, 2 a usage error. CLEAR means this box acts and tells the laptop; STOP names what it hit and routes a
+cross-box call (cell CT-s-6's tool).
+"""
+from __future__ import annotations
+
+import datetime
+import glob
+import importlib.util
+import json
+import os
+import re
+import subprocess
+import sys
+
+TOOLS = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.dirname(TOOLS)
+NOTICE_KEYS = {"id", "root", "resources", "rule", "until", "by", "reason", "record"}
+NOTICE_RULES = ("no-apply", "targeted-only-excluding")
+LIVE_CALL_STATES = {"OPEN", "ACKED"}
+CLOSED_WORDS = {"CLOSED", "CLOSED-BOTH", "COMPLETE", "COMPLETED", "SUPERSEDED", "CANCELLED"}
+
+
+def load_placement(repo_root: str):
+    """placement-check.py is imported (its file name has a hyphen), never copied; ROOT is pointed at repo_root."""
+    spec = importlib.util.spec_from_file_location("opal_placement_check", os.path.join(TOOLS, "placement-check.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    mod.ROOT = repo_root
+    return mod
+
+
+def rel_root(root: str, repo_root: str) -> str:
+    absolute = os.path.abspath(root if os.path.isabs(root) else os.path.join(os.getcwd(), root))
+    try:
+        rel = os.path.relpath(absolute, repo_root)
+    except ValueError:
+        rel = absolute
+    if rel.startswith(".."):
+        rel = root
+    return rel.replace("\\", "/").strip("/")
+
+
+def mention_patterns(rel: str) -> list:
+    """Regexes that count as 'names this root': the path, the last two components, and for a terraform root the bare name."""
+    parts = rel.split("/")
+    pats = [(re.escape(rel), rel)]
+    if len(parts) >= 2:
+        pats.append((re.escape("/".join(parts[-2:])), "/".join(parts[-2:])))
+    if rel.startswith("infra/aws/terraform/") and len(parts) >= 4:
+        pats.append((r"(?<![A-Za-z0-9_-])%s(?![A-Za-z0-9_-])" % re.escape(parts[-1]), parts[-1]))
+    return pats
+
+
+def mentions(text: str, pats: list, codes: list) -> str:
+    for pat, label in pats:
+        if re.search(pat, text):
+            return "names the root (token %s)" % label
+    for code in codes:
+        if re.search(r"(?<![A-Za-z0-9_])%s(?![A-Za-z0-9_])" % re.escape(code), text):
+            return "names project %s, whose write set covers the root" % code
+    return ""
+
+
+def parse_utc(text: str):
+    for fmt in ("%Y-%m-%dT%H:%M:%SZ", "%Y-%m-%dT%H:%MZ"):
+        try:
+            return datetime.datetime.strptime(str(text).strip(), fmt)
+        except ValueError:
+            continue
+    raise ValueError("not a UTC time like 2026-10-08T06:20:00Z: %r" % (text,))
+
+
+def age_text(stamp, now) -> str:
+    try:
+        sec = int((now - parse_utc(str(stamp).replace("+00:00", "Z").split(".")[0].rstrip("Z") + "Z")).total_seconds())
+    except Exception:
+        return "age unknown (written_at %r)" % (stamp,)
+    return "age %dh%02dm" % (sec // 3600, (sec % 3600) // 60)
+
+
+def projects_covering(pc, dev, reg, rel: str, files=None) -> tuple:
+    """([(code, placement_box, write_path, placement_field)], findings) for live projects whose write set overlaps rel --
+    or, when files is a list (FILES MODE), overlaps one of THOSE files: the root alone no longer hits."""
+    projects, findings = pc.read_projects(dev, reg)
+    out = []
+    for proj in projects:
+        if files is None:
+            hit = next((w for w in proj["writes"] if pc.overlaps(w, rel)), None)
+        else:
+            pair = next(((w, f) for w in proj["writes"] for f in files if pc.overlaps(w, f)), None)
+            hit = "%s (carried file %s)" % pair if pair else None
+        if not hit:
+            continue
+        field = None
+        try:
+            field = json.load(open(os.path.join(pc.ROOT, proj["home"], "project.json"), encoding="utf-8")).get("placement")
+        except (OSError, ValueError):
+            pass
+        box = dev.resolve(str(field), reg) if field else None
+        out.append((proj["code"], box or proj["box"], hit, field or "(no placement field; fabric %s)" % proj.get("fabric")))
+    return out, findings
+
+
+def measure_open_call(repo_root, rel, covering, now) -> tuple:
+    pats = mention_patterns(rel)
+    codes = [c[0] for c in covering]
+    lines, hits = [], []
+    crossbox = sorted(glob.glob(os.path.join(repo_root, "org", "devices", "crossbox", "*.json")))
+    if not crossbox:
+        lines.append("  org/devices/crossbox/*.json: none recorded (0 files) -- reads clear")
+    for path in crossbox:
+        name = os.path.relpath(path, repo_root).replace("\\", "/")
+        try:
+            call = json.load(open(path, encoding="utf-8"))
+            state = str(call.get("state", "")).upper()
+            if state not in LIVE_CALL_STATES:
+                lines.append("  %s: state %s -- not live" % (name, state or "(none)"))
+                continue
+            body = ""
+            if call.get("body_path"):
+                try:
+                    body = open(os.path.join(repo_root, call["body_path"]), encoding="utf-8", errors="replace").read()
+                except OSError:
+                    body = ""
+            why = mentions(json.dumps(call) + "\n" + body, pats, codes)
+        except Exception as exc:
+            hits.append("%s unreadable (%s: %s): a file that exists and cannot be parsed is not clear" % (name, type(exc).__name__, exc))
+            lines.append("  HIT %s" % hits[-1])
+            continue
+        if why:
+            hits.append("%s (state %s, %s -> %s) %s" % (name, state, call.get("from_device"), call.get("to_device"), why))
+            lines.append("  HIT %s" % hits[-1])
+        else:
+            lines.append("  %s: live (state %s) but does not name the root or its projects" % (name, state))
+    states = sorted(glob.glob(os.path.join(repo_root, "org", "devices", "state", "*", "open_calls.json")))
+    if not states:
+        lines.append("  org/devices/state/*/open_calls.json: none recorded (0 files) -- reads clear")
+    for path in states:
+        name = os.path.relpath(path, repo_root).replace("\\", "/")
+        try:
+            doc = json.load(open(path, encoding="utf-8"))
+            rows = doc.get("rows", [])
+            age = age_text(doc.get("written_at"), now)
+            lines.append("  %s: device=%s written_by=%s %s rows=%d" % (name, doc.get("device"), doc.get("written_by"), age, len(rows)))
+            for row in rows:
+                if str(row.get("state", "")).upper() in CLOSED_WORDS:
+                    continue
+                why = mentions(json.dumps(row), pats, codes)
+                if why:
+                    hits.append("%s row %s %s" % (name, row.get("id", "?"), why))
+                    lines.append("  HIT %s" % hits[-1])
+        except Exception as exc:
+            hits.append("%s unreadable (%s: %s): not clear" % (name, type(exc).__name__, exc))
+            lines.append("  HIT %s" % hits[-1])
+    return hits, lines
+
+
+def measure_overlap(dev_name, covering, findings, basis, files=None, files_note="") -> tuple:
+    """files None = the old root-wide reading; a list = FILES MODE (an empty list has nothing to overlap: clear, with the reason)."""
+    lines, hits = [], []
+    if files is not None:
+        lines.append("  files mode: %d file(s) carried (%s)" % (len(files), files_note))
+        if not files:
+            reason = files_note if files_note.startswith("no file") else "no file carried"
+            return hits, lines + ["  %s -- reads clear" % reason]
+    if dev_name is None:
+        hits.append("this box is unresolved (%s): cannot say which placement is another box's" % basis)
+        return hits, lines + ["  HIT %s" % hits[0]]
+    for code, box, path, field in covering:
+        if box and box != dev_name:
+            hits.append("project %s is placed on %s (%s) and its write set names %s" % (code, box, field, path))
+            lines.append("  HIT %s" % hits[-1])
+        else:
+            lines.append("  project %s placed on %s (%s) names %s -- this box or unplaced, not another box's" % (code, box, field, path))
+    if not covering:
+        what = "the root" if files is None else "the %d carried file(s)" % len(files)
+        lines.append("  no live project's write set shares a path with %s (placement-check read_projects/overlaps)" % what)
+    for finding in findings:
+        lines.append("  placement finding: %s" % finding)
+    return hits, lines
+
+
+def target_hits(resources: list, targets: list) -> list:
+    out = []
+    for tgt in targets:
+        bare = re.sub(r"\[[^\]]*\]$", "", tgt)
+        for res in resources:
+            if bare == res or bare.endswith("." + res) or res.endswith("." + bare) or tgt.startswith(res + "["):
+                out.append((tgt, res))
+    return out
+
+
+def measure_upset(notices_dir, rel, targets, now) -> tuple:
+    lines, hits = [], []
+    files = sorted(glob.glob(os.path.join(notices_dir, "*.json")))
+    if not files:
+        lines.append("  %s: none recorded (0 notices) -- reads clear" % notices_dir.replace("\\", "/"))
+    for path in files:
+        name = os.path.basename(path)
+        try:
+            note = json.load(open(path, encoding="utf-8"))
+            unknown = sorted(set(note) - NOTICE_KEYS)
+            missing = sorted(NOTICE_KEYS - set(note))
+            if unknown or missing:
+                raise ValueError("keys unknown %s missing %s" % (unknown, missing))
+            if note["rule"] not in NOTICE_RULES:
+                raise ValueError("rule %r is not one of %s" % (note["rule"], list(NOTICE_RULES)))
+            until = parse_utc(note["until"])
+            if not isinstance(note["resources"], list):
+                raise ValueError("resources is not a list")
+        except Exception as exc:
+            hits.append("notice %s unreadable (%s: %s): not clear" % (name, type(exc).__name__, exc))
+            lines.append("  HIT %s" % hits[-1])
+            continue
+        if until <= now:
+            lines.append("  notice %s EXPIRED at %s (now %s) -- ignored" % (note["id"], note["until"], now.strftime("%Y-%m-%dT%H:%M:%SZ")))
+            continue
+        nroot = str(note["root"]).replace("\\", "/").strip("/")
+        if nroot != rel and not rel.startswith(nroot + "/") and not nroot.startswith(rel + "/"):
+            lines.append("  notice %s live until %s names another root (%s) -- not this one" % (note["id"], note["until"], nroot))
+            continue
+        res = [str(r) for r in note["resources"]]
+        base = "notice %s (by %s, until %s, rule %s) names root %s" % (note["id"], note["by"], note["until"], note["rule"], nroot)
+        if note["rule"] == "no-apply" or not res:
+            hits.append("%s%s: no apply of it is made until the notice expires" % (base, "" if res else " as a whole root"))
+        elif not targets:
+            hits.append("%s and this apply is UNTARGETED, so it would reach %s: it waits" % (base, ", ".join(res)))
+        else:
+            named = target_hits(res, targets)
+            if named:
+                hits.append("%s and this apply targets %s, which the notice excludes" % (base, "; ".join("%s (names %s)" % n for n in named)))
+            else:
+                lines.append("  notice %s live: this apply is TARGETED (%d target(s)) and names none of %s -- clear of it" % (note["id"], len(targets), ", ".join(res)))
+                continue
+        lines.append("  HIT %s" % hits[-1])
+        lines.append("    reason: %s | record: %s" % (note["reason"], note["record"]))
+    return hits, lines
+
+
+def git_lines(repo_root, *args) -> tuple:
+    proc = subprocess.run(["git", "-C", repo_root, *args], capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60)
+    return proc.returncode, proc.stdout
+
+
+def read_blobs(repo_root, shas) -> dict:
+    """{sha: text or None} through ONE `git cat-file --batch` (the object store is shared by every worktree)."""
+    out = {sha: None for sha in shas}
+    if not shas:
+        return out
+    proc = subprocess.run(["git", "-C", repo_root, "cat-file", "--batch"], input=("\n".join(shas) + "\n").encode("ascii"),
+                          capture_output=True, timeout=60)
+    data, pos = proc.stdout, 0
+    for sha in shas:
+        end = data.find(b"\n", pos)
+        if end < 0:
+            break
+        head = data[pos:end].split()
+        if len(head) == 3 and head[1] == b"blob":
+            size = int(head[2])
+            out[sha] = data[end + 1:end + 1 + size].decode("utf-8", errors="replace")
+            pos = end + 1 + size + 1
+        else:
+            pos = end + 1
+    return out
+
+
+def file_patterns(files: list) -> list:
+    """Regexes that count as 'names a carried file': its full repo path, or its bare name (never __init__.py)."""
+    pats = []
+    for path in files:
+        pats.append((re.escape(path), path))
+        base = path.rsplit("/", 1)[-1]
+        if base != "__init__.py" and len(base) >= 4:
+            pats.append((r"(?<![A-Za-z0-9_/.-])%s(?![A-Za-z0-9_-])" % re.escape(base), base))
+    return pats
+
+
+def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
+    """files None, or a Terraform root: a sentinel hits when its text names the root (the state of a whole root is what an apply
+    works on). A non-Terraform root in FILES MODE: a sentinel hits only when its text names a carried file."""
+    narrow = files is not None and not rel.startswith("infra/aws/terraform/")
+    pats = file_patterns(files) if narrow else mention_patterns(rel)
+    lines, hits = [], []
+    if narrow:
+        lines.append("  files mode: a sentinel hits only if it names one of the %d carried file(s), not the shared root" % len(files))
+    rc, out = git_lines(repo_root, "worktree", "list", "--porcelain")
+    trees = [ln[9:].strip() for ln in out.splitlines() if ln.startswith("worktree ")] if rc == 0 else []
+    if rc != 0 or not trees:
+        hits.append("git worktree list failed (rc=%d): the open deploys of other seats cannot be read, so this is not clear" % rc)
+        return hits, ["  HIT %s" % hits[0]]
+    found = []
+    for tree in trees:
+        rc, listing = git_lines(tree, "ls-tree", "-r", "HEAD", "org/critical_paths/.open_deploys/")
+        if rc != 0:
+            hits.append("worktree %s: ls-tree rc=%d (not readable, not clear)" % (tree, rc))
+            lines.append("  HIT %s" % hits[-1])
+            continue
+        entries = [ln.split(None, 3) for ln in listing.splitlines() if ln.strip()]
+        sentinels = [e for e in entries if len(e) == 4 and not os.path.basename(e[3].split("\t")[-1]).startswith(".")]
+        lines.append("  worktree %s: %d file(s) at HEAD, %d sentinel(s) read" % (tree.replace("\\", "/"), len(entries), len(sentinels)))
+        found.extend((e[2], e[3].strip(), tree) for e in sentinels)
+    blobs = read_blobs(repo_root, sorted({f[0] for f in found}))
+    seen = set()
+    for sha, path, tree in found:
+        if (path, sha) in seen:
+            continue
+        seen.add((path, sha))
+        text = blobs.get(sha)
+        if text is None:
+            hits.append("%s (blob %s, first seen in %s) unreadable: not clear" % (path, sha[:10], tree))
+            lines.append("  HIT %s" % hits[-1])
+            continue
+        try:
+            doc = json.loads(text)
+        except ValueError as exc:
+            hits.append("%s is not JSON (%s): not clear" % (path, exc))
+            lines.append("  HIT %s" % hits[-1])
+            continue
+        if str(doc.get("status", "")).upper() in CLOSED_WORDS:
+            continue
+        if serial and doc.get("author") == serial:
+            continue
+        why = mentions(text, pats, [])
+        if why and narrow:
+            why = why.replace("names the root (token", "names a carried file (token")
+        if why:
+            hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
+                doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
+            lines.append("  HIT %s" % hits[-1])
+    lines.append("  denominator: %d worktree(s), %d sentinel read(s), %d distinct (path, blob)" % (len(trees), len(found), len(seen)))
+    return hits, lines
+
+
+def norm_file(path: str) -> str:
+    path = path.strip().replace("\\", "/")
+    while path.startswith("./"):
+        path = path[2:]
+    return path
+
+
+TF_SUFFIXES = (".tf", ".tfvars", ".tf.json", ".hcl", ".tftpl")
+
+
+def trunk_files(repo_root, rel) -> tuple:
+    """(files or None, note): the Terraform files of rel that differ from the merge base with the shared branch."""
+    base = ""
+    for cand in ("origin/CLOUD", "CLOUD", "origin/main", "main"):
+        rc, out = git_lines(repo_root, "rev-parse", "--verify", "-q", cand + "^{commit}")
+        if rc != 0:
+            continue
+        rc, out = git_lines(repo_root, "merge-base", "HEAD", cand)
+        if rc == 0 and out.strip():
+            base = out.strip().splitlines()[0]
+            break
+    if not base:
+        return None, "the merge base with the shared branch cannot be resolved (origin/CLOUD, CLOUD, origin/main, main); the root alone is judged"
+    rc1, changed = git_lines(repo_root, "diff", "--name-only", base, "--", rel)
+    rc2, fresh = git_lines(repo_root, "ls-files", "--others", "--exclude-standard", "--", rel)
+    if rc1 != 0 or rc2 != 0:
+        return None, "git diff against the merge base failed (rc=%d/%d); the root alone is judged" % (rc1, rc2)
+    names = sorted({norm_file(x) for x in (changed.splitlines() + fresh.splitlines()) if x.strip()})
+    names = [n for n in names if n.endswith(TF_SUFFIXES)]
+    if not names:
+        return [], "no file of this root differs from the merge base %s with the shared branch" % base[:10]
+    return names, "%d Terraform file(s) of this root differ from the merge base %s" % (len(names), base[:10])
+
+
+def load_core(repo_root):
+    """safe-deploy.sh's own core, imported (its functions decide what a deploy carries; this tool never re-implements them)."""
+    spec = importlib.util.spec_from_file_location("opal_safe_deploy_core", os.path.join(repo_root, ".tools", "safe_deploy_core.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def list_deployable(repo_root, files, commit_range) -> int:
+    try:
+        core = load_core(repo_root)
+        explicit = files if files else None
+        scripts = core.detect_script_files(commit_range=commit_range, explicit_files=explicit)
+        members = core.detect_bundle_member_files(commit_range=commit_range, explicit_files=explicit)
+    except Exception as exc:
+        print("ERROR: cannot read what the deploy core will deploy (%s: %s)" % (type(exc).__name__, exc), file=sys.stderr)
+        return 2
+    deploy = list(dict.fromkeys(norm_file(f) for f in list(scripts) + list(members)))
+    roots = sorted({"/".join(f.split("/")[:2]) if f.startswith("data/") and f.count("/") >= 2 else os.path.dirname(f) for f in deploy})
+    for path in deploy:
+        print("DEPLOYABLE %s" % path)
+    for root in roots:
+        print("DEPLOY-ROOT %s" % root)
+    print("DEPLOYABLE-COUNT n=%d" % len(deploy))
+    return 0
+
+
+def read_list(path: str) -> list:
+    text = sys.stdin.read() if path == "-" else open(path, encoding="utf-8").read()
+    return [norm_file(x) for x in text.splitlines() if x.strip()]
+
+
+def run(argv: list) -> int:
+    root, targets, notices, serial, now_arg, repo_root = "", [], "", "", "", REPO
+    files, trunk, listing, commit_range = None, False, False, None
+    i = 0
+    try:
+        while i < len(argv):
+            arg = argv[i]
+            if arg == "--root":
+                root = argv[i + 1]
+                i += 2
+            elif arg == "--target":
+                targets.append(argv[i + 1])
+                i += 2
+            elif arg == "--notices":
+                notices = argv[i + 1]
+                i += 2
+            elif arg == "--serial":
+                serial = argv[i + 1]
+                i += 2
+            elif arg == "--now":
+                now_arg = argv[i + 1]
+                i += 2
+            elif arg == "--repo-root":
+                repo_root = os.path.abspath(argv[i + 1])
+                i += 2
+            elif arg == "--files":
+                files = [] if files is None else files
+                i += 1
+                while i < len(argv) and not argv[i].startswith("--"):
+                    files.append(norm_file(argv[i]))
+                    i += 1
+            elif arg == "--files-from":
+                files = (files or []) + read_list(argv[i + 1])
+                i += 2
+            elif arg == "--files-vs-trunk":
+                trunk = True
+                i += 1
+            elif arg == "--list-deployable":
+                listing = True
+                i += 1
+            elif arg == "--commit-range":
+                commit_range = argv[i + 1]
+                i += 2
+            else:
+                raise ValueError("unknown argument %r" % arg)
+        if listing:
+            return list_deployable(repo_root, files, commit_range)
+        if not root:
+            raise ValueError("--root is required")
+        if trunk and files is not None:
+            raise ValueError("--files-vs-trunk cannot be combined with --files or --files-from")
+        now = parse_utc(now_arg) if now_arg else datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0, tzinfo=None)
+    except (IndexError, ValueError, OSError) as exc:
+        print("ERROR: %s\nusage: crossbox-deploy-check.py --root <dir> [--target <address> ...] [--notices <dir>] "
+              "[--files <path> ... | --files-from <file|-> | --files-vs-trunk]" % exc, file=sys.stderr)
+        return 2
+    notices = notices or os.path.join(repo_root, "org", "devices", "deploy_notices")
+    rel = rel_root(root, repo_root)
+    name = rel.split("/")[-1]
+    files_note = "the list the caller passed"
+    if trunk:
+        files, files_note = trunk_files(repo_root, rel)
+    pc = load_placement(repo_root)
+    dev = pc.devices_module()
+    reg = dev.load()
+    dev_name, basis = dev.this_device(reg)
+    covering, findings = projects_covering(pc, dev, reg, rel, files)
+    print("CROSSBOX-DEPLOY-CHECK device=%s (%s) root=%s targets=%d files=%s now=%s" % (
+        dev_name or "UNRESOLVED", basis, rel, len(targets), "root-only" if files is None else str(len(files)),
+        now.strftime("%Y-%m-%dT%H:%M:%SZ")))
+    if trunk and files is None:
+        print("FILES-NOTE: %s" % files_note)
+    sections = (
+        ("OPEN-CALL", measure_open_call(repo_root, rel, covering, now)),
+        ("OVERLAP", measure_overlap(dev_name, covering, findings, basis, files, files_note)),
+        ("UPSET", measure_upset(notices, rel, targets, now)),
+        ("OPEN-DEPLOY", measure_open_deploy(repo_root, rel, serial, files)),
+    )
+    verdicts, why = {}, []
+    for label, (hits, lines) in sections:
+        print("%s: %s" % (label, "hit (%d)" % len(hits) if hits else "clear"))
+        for line in lines:
+            print(line)
+        verdicts[label] = "hit" if hits else "clear"
+        why.extend("%s: %s" % (label, h) for h in hits)
+    stop = any(v == "hit" for v in verdicts.values())
+    if stop:
+        print("STOP: %d hit(s) in %s -- first: %s" % (len(why), ", ".join(k for k, v in verdicts.items() if v == "hit"), why[0]))
+        print("ROUTE: do not deploy this on the strength of this box alone; raise a cross-box call to the box that owns the "
+              "work (cell CT-s-6's tool), or wait for the notice to expire.")
+    else:
+        print("CLEAR: this box acts and tells the laptop.")
+    print("CROSSBOX-DEPLOY device=%s root=%s open_call=%s overlap=%s upset=%s open_deploy=%s verdict=%s" % (
+        dev_name or "UNRESOLVED", name, verdicts["OPEN-CALL"], verdicts["OVERLAP"], verdicts["UPSET"],
+        verdicts["OPEN-DEPLOY"], "STOP" if stop else "CLEAR"))
+    return 1 if stop else 0
+
+
+if __name__ == "__main__":
+    sys.exit(run(sys.argv[1:]))

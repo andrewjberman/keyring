@@ -3326,3 +3326,245 @@ row reached stated with their pair counts.
 **Checks dry-run at the base before the cut:**
 - `bg-1` AC1 (`pytest lib/research/harvest/tests/test_bg1_ticker_refusals.py`) base: FAIL as expected (the test is absent).
 - `bg-1` AC2 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
+
+## 75. ROUND 61 -- six enrichment items after served gold rebuild #8 (`1.0.0_SA_CTO~Z` msg 31486, analysis @3b19f962e0), 2026-10-08 ~00:3xZ
+
+Round 60 is terminal: `bg-1` merged, rebuild #8 DONE 2026-10-07 22:48Z (record @1c819a517e, ledger closed). The round-60
+analysis rules R1 to R7 and lists six items. No rebuild is cut in this round (R7): R1 to R5 land on the builder and the next
+rebuild is its own pair after their grades.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**.
+- **Fan-out:** 3 of 4 chains, cap 8 (the `bh-4 -> bh-5 -> bh-3` chain shares `universe_securities.py` and `bh-3` needs CSL's
+  name from `bh-4`; `bh-1` is a chain of one; `bh-2` and `bh-6` are two chains of one queued on one light worker, because the
+  box is running two collection legs).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-1` | `bh-1` | **The pairs that rest on the bare-name fallback alone: a census by security with its denominator, and a sample of 30.** Read-only script over the served list file and silver; a packet with every span in context; no grade by the worker. JUDGMENT: the CVO grades the 30, bar 27. | LOCAL | worker ~111 |
+| `HVST-bh-2` | `bh-2` | **Every pair resting on one of the nine ticker forms no sample reached (20 at the dry run), whole, in context.** Read-only. JUDGMENT: the CVO reads all; a form with 2 or more wrong pairs is refused. | LOCAL | worker-light ~112 |
+| `HVST-bh-3` | `bh-3` | **A bare ticker form shared with a company outside coverage counts only beside a second anchor; `CSL` is the case.** `ticker_anchors` data, two per-security fields, the matcher, plants with the Carlisle line as negative control, a census: 39 of 39 good pairs kept, 3 of 3 Carlisle pairs dropped, 0 other securities changed. | LOCAL | worker ~110 (third) |
+| `HVST-bh-4` | `bh-4` | **A key-only security takes its name from `lib/research/identity/registrations.json`: CAT, CSL, Keyence.** The join after pool and identity map, plants, a census. No vendor call. | LOCAL | worker ~110 (first) |
+| `HVST-bh-5` | `bh-5` | **A legal name cut inside a corporate suffix loses the fragment; one suffix list; every changed name printed** (row Z-S96). Plants, a census. | LOCAL | worker ~110 (second) |
+| `HVST-bh-6` | `bh-6` | **What `ICT_US_Equity` is and where its key came from**, from five sources each with its record count. Read-only record. | LOCAL | worker-light ~112 (second) |
+
+**The close run (issuer):** read each census and packet; hand the two packets to `3.0.0_SA_CVO~Z`; run the suite on the merged
+tree. No gold is built.
+
+**Checks dry-run at the base before the cut:**
+- `bh-1` AC1, `bh-2` AC1, `bh-6` AC1 (`cat` of an output file) base: FAIL as expected (no such file).
+- `bh-3`, `bh-4`, `bh-5` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bh-3`, `bh-4`, `bh-5` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
+- `bh-3`, `bh-4`, `bh-5` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (419 passed).
+
+## 76. ROUND 62 -- the two items ADDENDUM 1 added to the round-60 analysis' list (`1.0.0_SA_CTO~Z` msg 31493, @c75d056652), 2026-10-08 ~00:5xZ
+
+The CVO's L10 slug (msg 31492, `ADJUDICATION_v65.md` @98e21862f2) arrived after the analysis; ADDENDUM 1 adds two items. The
+analysis names them round 61's items 7 and 8; they are cut as ROUND 62, its own issuance, because the L6 gate admits one
+issuance per round and round 61's was committed (@fcf5542a36) minutes before the addendum. No worker was spawned between the two.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**, continued.
+- **Fan-out:** 2 of 2 chains, cap 8 (`bh-7` queues on worker ~110 behind round 61's three orders, which write the same
+  `universe_securities.py`; `bh-8` is a chain of one in `lib/opal_data_harvest`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-7` | `bh-7` | **A brand belongs to the issuer: two listings of one issuer may both carry it** (R8, row Z-W107-S2). One issuer = an equal registry LEI, or a shared ticker root with one company name equal to the other's name or suffix form. Plants with two different companies as negative control; a census: `ASML` back on `ASML_US_Equity`, 0 pairs lost, 0 securities changed outside a group. | LOCAL | worker ~110 (fourth) |
+| `HVST-bh-8` | `bh-8` | **A Seeking Alpha job record's `finished_at` is the job's own end** (row Z-W108-S2). The run record carries it per job; both writers read it through one helper; an old run record keeps its address. Code and plants only: no S3, no emit, no switch change. The merge is the issuer's act with a ledger entry. | SERVED | worker ~113 |
+
+**Checks dry-run at the base before the cut:**
+- `bh-7` AC1 (`pytest` of the new test file) base: FAIL as expected (the test is absent); AC2 (`cat bh7_census.out`) base: FAIL
+  as expected (no such file); AC3 (the harvest suite) base: PASS as expected (419 passed).
+- `bh-8` AC1 (`pytest test_bh8_job_finished_at.py`) base: FAIL as expected (the test is absent); AC2 (`pytest test_bf1_job_record.py
+  test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (count in
+  the commit).
+
+## 77. ROUND 63 -- two rulings on the first reads of the rebuilt gold (`1.0.0_SA_CTO~Z` msgs 31542, 31551, 31554), 2026-10-08 ~02:4xZ
+
+The CVO graded round 61's two packets (@31fbcebb42, and the other 12 fallback pairs @9e8ca92e4e): the fallback sample 27 of
+30, all 27 Nokia and the 3 other-case hits wrong; the nine forms 16 of 17, the miss Hawaiian Electric on `HEI`. Rulings: the
+bare-name fallback matches the stored case only (13 wrong pairs and 2 true BP pairs go, the 2 named); HEI joins the
+second-anchor rule; no rebuild until both are graded. Round 61's `bh-3` is merged with its symbol anchor (@1866108355) and
+round 62's `bh-7` is executing on slot ~110.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**, continued.
+- **Fan-out:** 1 of 1 chain, cap 8 (both cells write files slot ~110's chain holds: `publication_gold.py` and
+  `whole_brand_aliases.json`; they queue behind `bh-7`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-9` | `bh-9` | **The bare-name fallback matches the company name in its stored case only.** One matcher change for a security with no aliases; plants with the verb "sap" and "200-bp" as negative controls and the mutant; a census: every removed pair printed, Nokia removed 0, the two true BP pairs removed and named, securities with aliases changed 0. | LOCAL | worker ~110 (after `bh-7`) |
+| `HVST-bh-10` | `bh-10` | **`HEI` under the second-anchor rule.** One data entry on the terms ruled for CSL; plants with the Hawaiian Electric line as negative control; a census: HEICO pairs kept of 2, Hawaiian Electric dropped of 1. Cut to MEASURE whether a bare ticker list can be kept; a miss returns as a finding. | LOCAL | worker ~110 (after `bh-9`) |
+
+**The close run (issuer):** read both censuses; the removed fallback pairs and any HEI result go to `3.0.0_SA_CVO~Z` and
+`1.0.0_SA_CTO~Z`; the suite on the merged tree. No gold is built. The next rebuild is its own never-widen pair, whose rule
+allows a lost pair only by name (the two BP pairs, and the 3 Carlisle pairs).
+
+**Checks dry-run at the base before the cut:**
+- `bh-9` AC1, `bh-10` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bh-9` AC2, `bh-10` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
+- `bh-9` AC3, `bh-10` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (460 passed).
+
+## 78. ROUND 64 -- rebuild #9 under its pair, and the issuer grouping for TTE and ICT (`1.0.0_SA_CTO~Z` msg 31575, ADDENDUM 2 @e93cccc7be), 2026-10-08 ~04:5xZ
+
+Rounds 61 to 63 are terminal, 10 of 10 orders (@6c959d416b). ADDENDUM 2 records rulings R9 to R13 and lists three items for
+round 64: rebuild #9 under its own pair; row Z-W110-S5; then the first walk of the Security Analysis feed on rebuilt gold.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bi`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one order; the other two items are not orders of this issuance, for the reasons below).
+
+| item | how it runs | class |
+|---|---|---|
+| **Rebuild #9** | The ISSUER'S ACT under its never-widen pair, as rebuild #8 was: dry run `deliverables/2.0.0_SA_COO_H/round64/gold_rebuild9.signing.py` (in flight, PUTS 0), rule `gold_rebuild9_rule.py`, the 21 removals named by key in `REBUILD9_NAMED_REMOVALS.json` (4 true pairs lost). No worker order. | SERVED |
+| `HVST-bi-1` (`bi-1`) | **The issuer grouping reaches the two TotalEnergies listings and says why the two ICT listings stay apart.** Limb 2 ignores whitespace in the name comparison; a `reason` on each root left apart; plants with the ICT pair as negative control; a census: TTE grouped, ICT not, built dicts changed 0. Merged AFTER the act. worker-light ~114. | LOCAL |
+| **The first walk of the Security Analysis feed on rebuilt gold** | Needs the rebuilt gold and its stamp: an unmet dependency today. Cut as the next round the tick the act ends. | -- |
+
+**Checks dry-run at the base before the cut:**
+- `bi-1` AC1 (`pytest test_bi1_grouping_whitespace.py`) base: FAIL as expected (the test is absent).
+- `bi-1` AC2 (`cat bi1_census.out`) base: FAIL as expected (no such file).
+- `bi-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (491 passed).
+
+## 79. ROUND 65 -- the first walk of the Security Analysis feed on rebuilt gold (ADDENDUM 2 item 3), 2026-10-08 ~06:5xZ
+
+Round 64 is terminal: rebuild #9 DONE 06:25Z under its pair (record @60818dd705, ledger closed: mention 48,025 to 48,358,
+21 pairs removed by name, 4 of them true, lost 0, unexplained 0); `bi-1` merged after it (@0090d94c29) and `build()` at the
+merged HEAD still equals the served list file. The walk's dependency, the rebuilt gold and its stamp, is now met.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bj`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bj-1` | `bj-1` | **Twelve securities through the page's own feed reader (`scoped_amgt.read_feed`) on the rebuilt gold.** A read-only script; per security its status, item count and newest 15 items with the matched forms; the 21 named removals checked absent from the walked feeds; no grade by the worker. JUDGMENT: the CVO reads the packet. | LOCAL | worker-light ~115 |
+
+**Checks dry-run at the base before the cut:**
+- `bj-1` AC1 (`cat bj1_feed_walk.out`) base: FAIL as expected (no such file).
+
+## 80. ROUND 66 -- when each source thinned, the capitalised headline, and a second feed walk (`1.0.0_SA_CTO~Z` msg 31613, ADDENDUM 3 @f7ad546af4), 2026-10-08 ~07:5xZ
+
+Rounds 64 and 65 are terminal (rebuild #9 DONE; `bi-1`, `bj-1` merged). The CVO graded the first feed walk (@96206b0d29) and
+filed two rows: Z-S103 (silver holds 714 articles published in the 30-day window, 5 of them FT, and none naming Caterpillar,
+CSL or AIG) and Z-S102 ("25 BP Rate Increase" on BP's feed). ADDENDUM 3 rules R14 (a collection gap, read first, from what is
+held only) and R15 (a capitalised headline does not pair on the exact-case form alone), then a second feed walk.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bk`**.
+- **Fan-out:** 2 of 3 chains, cap 8 (`bk-1` and `bk-2` run now on disjoint write sets; `bk-3` is issued and HELD until a newer
+  gold part is served, which needs the rebuild that carries `bk-2`'s rule under its own pair).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bk-1` | `bk-1` | **Articles collected per source per day over 90 days, from silver, bronze and the collector's run records only; the day each source thinned.** Read-only; three tables and one mechanical THINNED line per source; no publisher called. JUDGMENT: the CVO reads whether it is a collection gap. | LOCAL | worker ~116 |
+| `HVST-bk-2` | `bk-2` | **In a headline capitalised throughout, the exact-case form alone does not pair; it needs a second anchor.** One matcher rule for every security; plants with the "25 BP Rate Increase" title as negative control and the mutant; a census printing the pairs it removes per security, every removed pair for a reviewer, pairs added 0. No rebuild. | LOCAL | worker ~117 |
+| `HVST-bk-3` | `bk-3` | **The second walk of the page's feed, the same twelve securities, beside the first walk.** Held until a newer part is served. JUDGMENT: the CVO reads the packet. | LOCAL | worker-light ~118 (held) |
+
+**The close run (issuer):** read both censuses; `bk-2`'s removed pairs go to `3.0.0_SA_CVO~Z`; the count it moves and `bk-1`'s
+THINNED days go to `1.0.0_SA_CTO~Z`. The rebuild that carries `bk-2` is its own never-widen pair, naming every removed pair.
+
+**Checks dry-run at the base before the cut:**
+- `bk-1` AC1, `bk-3` AC1 (`cat` of an output file) base: FAIL as expected (no such file).
+- `bk-2` AC1 (`pytest test_bk2_capitalised_headline.py`) base: FAIL as expected (the test is absent); AC2 (`cat bk2_census.out`)
+  base: FAIL as expected (no such file); AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`)
+  base: PASS as expected (498 passed).
+
+## 81. ROUND 67 -- two READ cells before the second walk: the never-collected set, and what AIG's empty jobs asked for (`1.0.0_SA_CTO~Z` msg 31631, R18), 2026-10-08 ~08:3xZ
+
+Round 66's `bk-1` is terminal (@0ae995ac2b): no source thinned; the collection is a one-security backfill with no daily
+sweep. The CVO graded it a collection gap (@e84dcdce42) with two causes: Caterpillar and CSL have NO job at all; AIG has six
+jobs that returned nothing. R18 adds two read cells, before the second walk. The ruling names them as additions to round
+66's issuance; they are cut as ROUND 67, its own issuance, because the L6 gate admits one issuance per round and round 66's
+was committed @e739de56ec. `bk-2` is executing and `bk-3` stays held.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bl`**.
+- **Fan-out:** 1 of 2 chains, cap 8 (two read cells on one worker, in order: the second reuses the first's reading of the two
+  run-record stores, and the box already holds one live worker worktree).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bl-1` | `bl-1` | **The covered list (242) less the securities that ever had a collection job, on the union of the S3 run records and this device's, the two counts reconciled first.** Per source too; every never-collected security with its served pair count. No job run. | LOCAL | worker ~119 (first) |
+| `HVST-bl-2` | `bl-2` | **What AIG's six empty jobs asked for, beside Nokia's productive jobs:** the request each sent, read from its record; the identity each was given; what the records show and what they cannot tell apart. No job run. | LOCAL | worker ~119 (second) |
+
+**Checks dry-run at the base before the cut:**
+- `bl-1` AC1 (`cat bl1_never_collected.out`) base: FAIL as expected (no such file).
+- `bl-2` AC1 (`cat bl2_aig_requests.out`) base: FAIL as expected (no such file).
+
+## 82. ROUND 68 -- the three universes reconciled and the truncated stored names repaired, nothing fetched (`1.0.0_SA_CTO~Z` msg 31637, R19 and R20), 2026-10-08 ~09:0xZ
+
+`4.0.0_SA_CRO~Z`'s research (@2394cfc3d8) found the PRD puts any schedule outside the project and Andrew holds the mechanism
+and cadence, so R19 withdraws "a scheduled sweep is owed": no sweep cell, no switch. R20 replaces the two read cells of msg
+31631. `bl-2` is WITHDRAWN unspawned; `bl-1` was executing and finishes as the read behind (a). `bk-2` is terminal (merged
+@6ef6703bf6: 3 pairs removed); `bk-3` stays held.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bm`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (both cells write the same two new files; `bm-2` edits what `bm-1` makes).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bm-1` | `bm-1` | **The three universes reconciled (gold list 242, crosswalk 237, collector 234) and one identity record and universe entry added for each listed security the collector lacks (CAT, CSL, Keyence named so far), as NEW dated files beside the script.** The round-47 files and the config pointer are not touched; plants; nothing fetched. | LOCAL | worker ~120 (first) |
+| `HVST-bm-2` | `bm-2` | **AIG's truncated stored name repaired in the new identity file, and every other name cut the same way printed.** A stored full name where one exists, else the suffix fragment dropped, else left and listed; plants; nothing fetched. | LOCAL | worker ~120 (second) |
+
+**Not in this round, stated:** moving `lib/opal_data_harvest/config.json` to the new files, and any run for an added or
+repaired name. The first is the issuer's act on `1.0.0_SA_CTO~Z`'s word once no leg reads the old files; the second waits on
+Andrew's per-use word.
+
+**Checks dry-run at the base before the cut:**
+- `bm-1` AC1, `bm-2` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bm-1` AC2, `bm-2` AC2 (`cat` of the cell's output) base: FAIL as expected (no such file).
+
+## 83. ROUND 69 -- the stored names made whole or stated, before any word is asked for (`1.0.0_SA_CTO~Z` msg 31649, R22), 2026-10-08 ~09:3xZ
+
+Rounds 67 and 68 are terminal: `bl-1` (8 of 242 covered securities never had a collection job), `bm-1` (8 identity records
+added in new dated files), `bm-2` (2 truncated names repaired, 3 left cut), merged @1fd0140d91 and @1b2e841422. R22: the
+collector's pointer does NOT move now; it rides Andrew's word with the runs. Two repairs first, in one cell.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bn`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bn-1` | `bn-1` | **AIG's stored name becomes its full legal name, from a stored source or three agreeing article spans, with the collector's derived query shown against held titles; `ICT_US` and the two OMAB lines repaired or each said why not; one script yields the final files** (row Z-W120-S3). No pointer move, no collector code change, no job. | LOCAL | worker ~121 |
+
+**Checks dry-run at the base before the cut:**
+- `bn-1` AC1 (`pytest test_bn1_names_made_whole.py`) base: FAIL as expected (the test is absent).
+- `bn-1` AC2 (`cat bn1_names_made_whole.out`) base: FAIL as expected (no such file).
+- `bn-1` AC3 (`pytest test_bm1_identity_records.py test_bm2_truncated_names.py test_bf1_job_record.py test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
+
+## 84. ROUND 70 -- a stored per-security query override, set for AIG only (`1.0.0_SA_CTO~Z` msg 31664, R23), 2026-10-08 ~10:3xZ
+
+Round 69's `bn-1` is terminal (@357b53c71b): AIG's stored name is its SEC legal name and both OMAB lines are whole, in the
+new unpointed identity file; `ICT_US` is unrepaired with its reason, accepted. The query the collector derives for AIG is
+still "AMERICAN INTERNATIONAL", because `publishers._LEGAL_SUFFIX` strips "group". R23: fix it as a stored per-security
+override, never by changing the suffix rule.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bo`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bo-1` | `bo-1` | **An optional `query_override` on an identity record that replaces the derived queries when present; set for `AIG_US_Equity` only through the one builder.** `_LEGAL_SUFFIX`, `slug_query` and the matcher unchanged; plants with the absent field as negative control and the mutant; the derived query of all 242 names before and after (1 changed, 241 identical), 0 of 234 changed on the round-47 file, and the two American Airlines titles excluded. | SERVED | worker ~122 |
+
+**The merge is HELD** on the live Seeking Alpha leg ending AND a never-widen pair: a merge into `lib/opal_data_harvest` is a
+deploy to whatever the driver runs next. The order stays open until then.
+
+**Checks dry-run at the base before the cut:**
+- `bo-1` AC1 (`pytest test_bo1_query_override.py`) base: FAIL as expected (the test is absent).
+- `bo-1` AC2 (`cat bo1_query_table.out`) base: FAIL as expected (no such file).
+- `bo-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (count in the issuance commit).
+
+## 85. ROUND 71 -- a malformed override and the stored label, before the pointer ever moves (CTO half @d6ea0eff2f, condition C2; msg 31679), 2026-10-08 ~11:1xZ
+
+Round 70's `bo-1` is BUILT on branch `wk-AMGT_HARVST-122-r70` @419dc9b1fc and its never-widen pair is complete (COO half
+@ca5cb29676, CTO half @d6ea0eff2f); the merge waits on the live Seeking Alpha leg ending. The CTO half's C2 names two things
+owed before the collector is ever pointed at the new identity file.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bp`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell, stacked on `bo-1`'s branch because it edits the same functions).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bp-1` | `bp-1` | **Which jobs a malformed query override stops, shown by test on the code as found, then contained to exactly one job with a named status and no fallback; and one helper so an overridden security's stored listing label reads the query that was searched** (row Z-W122-S1). `slug_queries` stays the one writer of the queries; the 242-name table re-read. | SERVED | worker ~123 |
+
+**The merge is HELD** like `bo-1`'s, and this cell's commits are not covered by `bo-1`'s pair.
+
+**Checks dry-run at the base (branch `wk-AMGT_HARVST-122-r70`) before the cut:**
+- `bp-1` AC1 (`pytest test_bp1_malformed_override.py`) base: FAIL as expected (the test is absent).
+- `bp-1` AC2 (`cat bp1_query_table_rerun.out`) base: FAIL as expected (no such file).
+- `bp-1` AC3 (`pytest lib/opal_data_harvest -q`) base: PASS as expected (778 passed, 3 skipped on that head).

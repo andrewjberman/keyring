@@ -5,7 +5,7 @@
  "project": "MDPF_HEALGAP",
  "directive": "D8",
  "fabric": "laptop",
- "prd_version": "v0.1",
+ "prd_version": "v0.2",
  "step": 4,
  "brief_ref": "docs/briefs/mdpf-healgap-midstream-brief-20261007.md@a8c67a424e",
  "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6"],
@@ -48,12 +48,17 @@ shipped as `data/mdpf/scripts/gold/mdpf_gold_catchup.py`). That cell stays. It i
                     fails the outcome
          SOURCE     brief O2; PART VI.4 (ten days with two of three parts landed)
 
-  FWD-3  An operator closes an existing hole with one act that says beforehand exactly what it will fetch
-         DONE WHEN  EXERCISED -- the eleven missing days of 2026-08-31 to 2026-09-10 repaired by one act
+  FWD-3  An operator closes an existing hole with one act that says beforehand exactly what it will fetch, and a day
+         that cannot be truthfully fetched is shown as missing, never filled with another day's data
+         DONE WHEN  EXERCISED -- one hole repaired by one act on the day it opened (the source serves current state
+                    only), the hole induced on purpose as FWD-1's was; and the eleven days 2026-08-31 to
+                    2026-09-10 read as marked-missing, not filled
          ACCEPT     before it fetches anything, the repair says which days and which kinds of data it will
                     fill; afterwards exactly those are present and nothing else changed; a repair that
-                    notifies instead of fixing, or that fills days it did not name, fails the outcome
-         SOURCE     brief O3; PART VI.2
+                    notifies instead of fixing, that fills days it did not name, or that puts today's data
+                    under a past date, fails the outcome. A reader of the eleven days sees they are missing
+                    and why
+         SOURCE     brief O3; PART VI.2; ADDENDUM v0.2 (Andrew-direct 2026-10-07 ~13:58Z, "no refill")
 
   FWD-4  Someone reading only the runner's settings correctly predicts how it retries
          DONE WHEN  APPLIED -- the settings in place say what the system actually does
@@ -172,3 +177,20 @@ IAM writes are the laptop's by write-in.
 GROUNDED ON: the brief @a8c67a424e (12,346 bytes), read whole; `org/projects/ADVI_COTBKF.json` title (boundary); the SECHIST PRD
 for house shape. NOT READ: this project's earlier decomposition and task orders (deliberately: Phase 0 reads the brief only); the
 served Cottonwood series; the runner's guard code today.
+
+## ADDENDUM v0.2 (2026-10-08 ~14:5xZ, `1.0.0_SA_CTO~DELL1`, L10 of round 1) -- FWD-3 amended in place, id unchanged
+
+Round 1 found, in row S2 (graduated, REMEDIATION_v1), that the runner's Black Diamond calls carry no as-of date: the Rebalancer
+endpoints serve CURRENT state only. So the only "repair" of the eleven days 2026-08-31..09-10 would put October compositions under
+September dates, which is fabricated history. Andrew declined that refill (Andrew-direct 2026-10-07 ~13:58Z, "ACT 2 rec (no refill)
+approved", @e5fb41862f).
+
+**What FWD-3 no longer promises:** that those eleven days hold their true model compositions. No source Opal reads serves them.
+**What it still promises:** the one-act, named-in-advance repair, exercised on a real hole whose source can still serve the day.
+It also now promises that a day which cannot be truthfully filled reads as missing, with its reason. FWD-3 is AMENDED (the outcome
+was wrong about what is recoverable), not retired: the capability stands. This is an ENDPOINT change, so the ratified-text half
+re-opens for `3.0.0_SA_CVO`'s signature. No other outcome moves.
+
+**v0.2 wording note (~14:5xZ, CVO review @e0ed8e415a):** "a hole whose source can still serve that day" can only be a same-day
+hole, so the DONE WHEN says so and admits an induced hole, as FWD-1's was. Wording only: the promise is unchanged, and the notifier
+does not wait on a re-sign of wording (CLAUDE.md rule 27, proportionate sign-off).

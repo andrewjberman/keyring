@@ -1,0 +1,795 @@
+#!/usr/bin/env python3
+"""crossbox-call.py -- a cross-box call or order travels as a FILE with an acknowledgement from the other side, and is
+closed on both boxes or on neither (NFRA_CTLPLN workstream SEATS, cell CT-s-6; C-SEATS clauses 5 and 6).
+
+WHAT THIS TOOL IS NOT. It does not send on the agent bus, it does not change the bus script, the consumer, the broker or
+the manager-to-Tier-2 hook. It PRINTS the one line a box's manager puts on the bus with the existing
+`bash .tools/agentbus-sqs.sh send <device> ...`, and it READS the line the consumer prints on the other box. The line
+carries an id and a path, never the substance: the substance is a committed file the other box reads by pulling.
+
+`receive` DELIVERS the order to the named seat by writing ONE file into that seat's broker inbox directory on its OWN box,
+in the form `org/mcp/server.py` `_deliver_to_one` writes (the watcher `org/mcp/inbox-watch.sh` reads `*.md` in that
+directory). That is a tool writing a file for a seat on its own box, NOT a manager sending a message, so the bar that keeps
+a manager from messaging a Tier-2 seat (`.tools/hooks/mstr-no-tier2-writes.sh`) is not in play and is not touched.
+
+  python .tools/crossbox-call.py open --kind CALL|ORDER --to-device <d> --to-serial <s> --from-serial <s> --subject <t> --body <path> [--call-id <id>]
+  python .tools/crossbox-call.py line --id <id>                    the bus line, once the file is committed
+  python .tools/crossbox-call.py sent --id <id> --bus-message-id <id>
+  python .tools/crossbox-call.py receive --line "<line as the consumer printed it>"
+  python .tools/crossbox-call.py ack --id <id> --by <serial>       prints  CROSSBOX-ACK <id> READ by <serial> at <UTC>
+  python .tools/crossbox-call.py acked --id <id> --line "<reply line>" --bus-message-id <id>
+  python .tools/crossbox-call.py close --id <id> --side from|to --by <serial>
+  python .tools/crossbox-call.py status --id <id>
+  python .tools/crossbox-call.py list [--open]
+  python .tools/crossbox-call.py merge --id <id> --ref <git ref>   fold the other box's copy of the file into this one
+  python .tools/crossbox-call.py --selftest                        LAST line  CROSSBOX-SELFTEST cases=<k>/<n> ok=<True|False>
+
+THE FILE: org/devices/crossbox/<id>.json, JSON, ASCII, every reader refuses a key it does not know. Keys: schema
+("crossbox/1"), id, kind (CALL|ORDER), call_id (the open-calls id a CALL settles, or null -- the EXPLICIT link
+`.tools/open-calls.py close` finds), from_device, to_device, from_serial, to_serial, subject, body_path, opened_at, state
+(OPEN|ACKED|CLOSED-BOTH, always recomputed from the fields below), sent {at, bus_message_id}, ack null|{at, by,
+bus_message_id}, closed {from_at, from_by, to_at, to_by}. Each box writes only its own fields (the sending box: sent, the
+bus id inside ack, closed.from_*; the receiving box: ack.at/by, closed.to_*), and `merge` folds the other copy in, so
+the two copies reach CLOSED-BOTH by git carrying the file and never by one box writing the other's.
+
+The box is this checkout (--root, default: the repository this script lives in) and its device is AGENTBUS_DEVICE resolved
+through lib/devices.py (--device overrides it: tests only). Exit codes: 0 done, 2 usage, 3 REFUSED, 5 PULL-FIRST.
+"""
+from __future__ import annotations
+
+import argparse
+import datetime
+import importlib.util
+import json
+import os
+import re
+import shutil
+import stat
+import subprocess
+import sys
+import tempfile
+import threading
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+TOOL_ROOT = HERE.parent
+SCHEMA = "crossbox/1"
+REL_DIR = "org/devices/crossbox"
+KEYS = ["schema", "id", "kind", "call_id", "from_device", "to_device", "from_serial", "to_serial", "subject", "body_path",
+        "opened_at", "state", "sent", "ack", "closed"]
+SENT_KEYS = ["at", "bus_message_id"]
+ACK_KEYS = ["at", "by", "bus_message_id"]
+CLOSED_KEYS = ["from_at", "from_by", "to_at", "to_by"]
+KINDS = ("CALL", "ORDER")
+STATES = ("OPEN", "ACKED", "CLOSED-BOTH")
+TIERS = ("tier0_exec", "tier0_utility", "tier1_exec", "tier2_senior", "tier3_junior")   # inbox-watch.sh and server.py TIER_DIRS
+ID_RE = re.compile(r"XB-\d{8}T\d{6}Z-[0-9a-f]{4}")
+SERIAL_RE = re.compile(r"\d+\.\d+\.\d+_[A-Za-z]+_[A-Za-z0-9_]+(?:~[A-Za-z0-9]+)?")
+CALLID_RE = re.compile(r"[A-Za-z0-9._-]+")
+BUSID_RE = re.compile(r"[0-9A-Za-z-]+")
+LINE_RE = re.compile(r"CROSSBOX (XB-\d{8}T\d{6}Z-[0-9a-f]{4}) (CALL|ORDER) for (\S+): (.+?) \| file (org/devices/crossbox/\S+\.json) @([0-9a-f]{7,40})")
+ACK_RE = re.compile(r"CROSSBOX-ACK (XB-\d{8}T\d{6}Z-[0-9a-f]{4}) READ by (\S+) at (\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ)")
+UTC_FMT = "%Y-%m-%dT%H:%M:%SZ"
+
+
+class Refused(Exception):
+    pass
+
+
+class PullFirst(Exception):
+    pass
+
+
+# ---------------------------------------------------------------- small helpers
+
+def now_dt() -> datetime.datetime:
+    return datetime.datetime.now(datetime.timezone.utc)
+
+
+def stamp(dt: datetime.datetime) -> str:
+    return dt.strftime(UTC_FMT)
+
+
+def parse_utc(text) -> datetime.datetime | None:
+    try:
+        return datetime.datetime.strptime(str(text), UTC_FMT).replace(tzinfo=datetime.timezone.utc)
+    except ValueError:
+        return None
+
+
+def age_text(text, now: datetime.datetime | None = None) -> str:
+    then = parse_utc(text)
+    if then is None:
+        return "age unknown"
+    secs = int(((now or now_dt()) - then).total_seconds())
+    if secs < 90:
+        return "%d s ago" % max(secs, 0)
+    mins = secs // 60
+    if mins < 120:
+        return "%d min ago" % mins
+    hours = mins // 60
+    if hours < 48:
+        return "%d h %d min ago" % (hours, mins % 60)
+    return "%d d ago" % (hours // 24)
+
+
+def base_of(serial: str) -> str:
+    return serial.split("~")[0]
+
+
+def devmod():
+    """lib/devices.py of THIS script's repository -- the one reader of the device register."""
+    spec = importlib.util.spec_from_file_location("opal_devices_cb", TOOL_ROOT / "lib" / "devices.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def git(root: Path, *args, extra_env=None, cwd=None):
+    env = dict(os.environ)
+    env.update(extra_env or {})
+    proc = subprocess.run(["git", "-C", str(cwd or root), *args], capture_output=True, text=True, encoding="utf-8",
+                          errors="replace", timeout=60, env=env)
+    return proc.returncode, proc.stdout, proc.stderr
+
+
+def write_text(path: Path, text: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp = path.with_name(path.name + ".tmp")
+    with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(text)
+    os.replace(tmp, path)
+
+
+def check_ascii(text: str, what: str) -> None:
+    if not text.isascii():
+        raise Refused("%s holds non-ASCII text" % what)
+
+
+# ---------------------------------------------------------------- the file
+
+def check_call(doc, where: str) -> dict:
+    """Validate a cross-box file's shape. A key this reader does not know is REFUSED."""
+    if not isinstance(doc, dict):
+        raise Refused("%s: top level is not an object" % where)
+    unknown = sorted(set(doc) - set(KEYS))
+    if unknown:
+        raise Refused("%s: unknown key(s) %s (readers refuse a key they do not know)" % (where, ", ".join(unknown)))
+    missing = [k for k in KEYS if k not in doc]
+    if missing:
+        raise Refused("%s: missing key(s) %s" % (where, ", ".join(missing)))
+    if doc["schema"] != SCHEMA:
+        raise Refused("%s: schema is %r, this reader reads %r" % (where, doc["schema"], SCHEMA))
+    if not (isinstance(doc["id"], str) and ID_RE.fullmatch(doc["id"])):
+        raise Refused("%s: id %r is not an XB-<UTC>-<4 hex> id" % (where, doc["id"]))
+    if doc["kind"] not in KINDS:
+        raise Refused("%s: kind %r is not one of %s" % (where, doc["kind"], "/".join(KINDS)))
+    if doc["call_id"] is not None and not (isinstance(doc["call_id"], str) and CALLID_RE.fullmatch(doc["call_id"])):
+        raise Refused("%s: call_id must be null or a plain id" % where)
+    for key in ("from_device", "to_device", "subject", "body_path", "opened_at"):
+        if not (isinstance(doc[key], str) and doc[key]):
+            raise Refused("%s: %s must be a non-empty string" % (where, key))
+    for key in ("from_serial", "to_serial"):
+        if not (isinstance(doc[key], str) and SERIAL_RE.fullmatch(doc[key])):
+            raise Refused("%s: %s %r is not a serial" % (where, key, doc[key]))
+    if doc["state"] not in STATES:
+        raise Refused("%s: state %r is not one of %s" % (where, doc["state"], "/".join(STATES)))
+    for key, allowed, nullable in (("sent", SENT_KEYS, False), ("ack", ACK_KEYS, True), ("closed", CLOSED_KEYS, False)):
+        block = doc[key]
+        if block is None and nullable:
+            continue
+        if not isinstance(block, dict):
+            raise Refused("%s: %s must be an object%s" % (where, key, " or null" if nullable else ""))
+        odd = sorted(set(block) - set(allowed))
+        short = [k for k in allowed if k not in block]
+        if odd or short:
+            raise Refused("%s: %s has unknown key(s) %s / missing key(s) %s" % (where, key, ", ".join(odd) or "none", ", ".join(short) or "none"))
+    check_ascii(json.dumps(doc), where)
+    return doc
+
+
+def derive_state(doc: dict) -> str:
+    if doc["closed"]["from_at"] and doc["closed"]["to_at"]:
+        return "CLOSED-BOTH"
+    return "ACKED" if doc["ack"] and doc["ack"]["at"] else "OPEN"
+
+
+def dump(doc: dict) -> str:
+    doc["state"] = derive_state(doc)
+    ordered = {k: doc[k] for k in KEYS}
+    return json.dumps(ordered, indent=1, ensure_ascii=True) + "\n"
+
+
+def fmt_line(doc: dict, commit: str) -> str:
+    return "CROSSBOX %s %s for %s: %s | file %s/%s.json @%s" % (
+        doc["id"], doc["kind"], doc["to_serial"], doc["subject"], REL_DIR, doc["id"], commit)
+
+
+# ---------------------------------------------------------------- the box
+
+class Box:
+    """One checkout (root) on one device. Every method returns a list of output lines or raises Refused / PullFirst."""
+
+    def __init__(self, root, device: str | None = None):
+        self.root = Path(root)
+        if device is None:
+            dev = devmod()
+            device, basis = dev.this_device()
+            if device is None:
+                raise Refused("this box is unresolved: %s" % basis)
+        self.device = device
+
+    # -- paths and git
+    def rel(self, call_id: str) -> str:
+        return "%s/%s.json" % (REL_DIR, call_id)
+
+    def path(self, call_id: str) -> Path:
+        return self.root / REL_DIR / ("%s.json" % call_id)
+
+    def tracked_clean(self, rel: str) -> tuple:
+        rc, _, _ = git(self.root, "ls-files", "--error-unmatch", "--", rel)
+        if rc != 0:
+            return False, "is not tracked by git"
+        rc, out, _ = git(self.root, "status", "--porcelain", "--", rel)
+        if rc != 0 or out.strip():
+            return False, "has uncommitted changes"
+        return True, ""
+
+    def last_commit(self, rel: str) -> str:
+        rc, out, _ = git(self.root, "log", "-1", "--format=%h", "--", rel)
+        return out.strip() if rc == 0 else ""
+
+    def read(self, call_id: str) -> dict:
+        if not ID_RE.fullmatch(call_id or ""):
+            raise Refused("%r is not a cross-box id" % call_id)
+        path = self.path(call_id)
+        if not path.is_file():
+            raise Refused("no cross-box file %s in this tree (pull the commit that holds it first)" % self.rel(call_id))
+        try:
+            return check_call(json.loads(path.read_text(encoding="utf-8")), self.rel(call_id))
+        except ValueError as exc:
+            raise Refused("%s is not JSON (%s)" % (self.rel(call_id), exc))
+
+    def save(self, doc: dict) -> None:
+        write_text(self.path(doc["id"]), dump(doc))
+
+    def need_box(self, doc: dict, key: str, what: str) -> None:
+        if doc[key] != self.device:
+            raise Refused("%s runs on the %s box (%s); this box is %s" % (what, "sending" if key == "from_device" else "receiving",
+                                                                         doc[key], self.device))
+
+    # -- open / line / sent
+    def open(self, kind, to_device, to_serial, from_serial, subject, body, call_id=None) -> list:
+        dev = devmod()
+        if kind not in KINDS:
+            raise Refused("--kind must be CALL or ORDER")
+        target = dev.resolve(to_device)
+        if target is None:
+            raise Refused("--to-device %r is not in the device register (holds: %s)" % (to_device, ", ".join(dev.names())))
+        if target == self.device:
+            raise Refused("--to-device %s is this box; a cross-box file travels to ANOTHER box" % target)
+        for what, serial in (("--to-serial", to_serial), ("--from-serial", from_serial)):
+            if not SERIAL_RE.fullmatch(serial or ""):
+                raise Refused("%s %r is not a serial" % (what, serial))
+        subject = (subject or "").strip()
+        if not subject or "|" in subject or "\n" in subject or len(subject) > 120:
+            raise Refused("--subject must be one line of 1 to 120 characters without '|'")
+        check_ascii(subject, "--subject")
+        if call_id is not None and not CALLID_RE.fullmatch(call_id):
+            raise Refused("--call-id %r is not a plain id" % call_id)
+        rel = str(body or "").replace("\\", "/")
+        if not rel or rel.startswith("/") or ".." in rel.split("/") or re.match(r"[A-Za-z]:", rel):
+            raise Refused("--body must be a path inside the repository, relative to its root")
+        if not (self.root / rel).is_file():
+            raise Refused("--body %s is not a file in this tree" % rel)
+        ok, why = self.tracked_clean(rel)
+        if not ok:
+            raise Refused("--body %s %s; the other box reads it by pulling the commit, so an uncommitted body is unreadable there. Commit it first." % (rel, why))
+        now = now_dt()
+        doc = {"schema": SCHEMA, "id": "XB-%s-%s" % (now.strftime("%Y%m%dT%H%M%SZ"), os.urandom(2).hex()), "kind": kind,
+               "call_id": call_id, "from_device": self.device, "to_device": target, "from_serial": from_serial,
+               "to_serial": to_serial, "subject": subject, "body_path": rel, "opened_at": stamp(now), "state": "OPEN",
+               "sent": {"at": None, "bus_message_id": None}, "ack": None,
+               "closed": {"from_at": None, "from_by": None, "to_at": None, "to_by": None}}
+        check_call(doc, "new file")
+        if self.path(doc["id"]).exists():
+            raise Refused("%s already exists" % self.rel(doc["id"]))
+        self.save(doc)
+        return ["OPENED %s (%s, %s -> %s)" % (doc["id"], kind, self.device, target),
+                fmt_line(doc, "UNCOMMITTED"),
+                "NEXT: commit %s (with the body already committed), then `python .tools/crossbox-call.py line --id %s` prints the "
+                "same line with the commit the other box pulls; THAT line goes on the bus, and the substance never does." % (
+                    self.rel(doc["id"]), doc["id"])]
+
+    def line(self, call_id: str) -> list:
+        doc = self.read(call_id)
+        self.need_box(doc, "from_device", "line")
+        rel = self.rel(call_id)
+        ok, why = self.tracked_clean(rel)
+        if not ok:
+            raise Refused("%s %s; commit it first so the other box can pull it" % (rel, why))
+        return [fmt_line(doc, self.last_commit(rel))]
+
+    def sent(self, call_id: str, bus_message_id: str, at: str | None = None) -> list:
+        doc = self.read(call_id)
+        self.need_box(doc, "from_device", "sent")
+        if not BUSID_RE.fullmatch(bus_message_id or ""):
+            raise Refused("--bus-message-id %r is not a bus message id" % bus_message_id)
+        if doc["sent"]["bus_message_id"]:
+            raise Refused("%s already records bus message %s as sent" % (call_id, doc["sent"]["bus_message_id"]))
+        doc["sent"] = {"at": at or stamp(now_dt()), "bus_message_id": bus_message_id}
+        self.save(doc)
+        return ["SENT %s recorded (bus message %s). Sent is not read: status stays SENT, NOT ACKED until the reply line is recorded." % (
+            call_id, bus_message_id)]
+
+    # -- receive / ack / acked
+    def resolve_seat(self, serial: str) -> Path:
+        base = base_of(serial)
+        lane = serial.split("~", 1)[1] if "~" in serial else None
+        folder = None
+        for tier in TIERS:
+            cand = self.root / "org" / tier / base
+            if cand.is_dir():
+                folder = cand
+                break
+        if folder is None:
+            raise Refused("no such seat on this box: no agent folder %s under org/<tier>/ in %s" % (base, self.root))
+        inbox = self.root / "org" / "mcp" / "inbox" / folder.name
+        if lane:
+            inbox = inbox / ("~%s" % lane)
+        if not inbox.is_dir():
+            raise Refused("no such seat on this box: %s has no inbox directory %s (the seat's watcher creates it when armed)" % (
+                serial, inbox))
+        return inbox
+
+    def receive(self, text: str, at: datetime.datetime | None = None) -> list:
+        m = LINE_RE.search(text or "")
+        if not m:
+            raise Refused("no CROSSBOX line found in the text given")
+        call_id, kind, to_serial, subject, rel, commit = m.groups()
+        if rel != self.rel(call_id):
+            raise Refused("the line names file %s, which is not the file of id %s" % (rel, call_id))
+        rc, _, _ = git(self.root, "cat-file", "-e", "%s^{commit}" % commit)
+        if rc != 0:
+            raise PullFirst("PULL-FIRST: commit %s is not in this tree; pull (git fetch + merge) the sender's branch, then run receive "
+                            "again. Nothing was written." % commit)
+        rc, blob, _ = git(self.root, "show", "%s:%s" % (commit, rel))
+        if rc != 0:
+            raise Refused("file %s does not exist at commit %s: the line does not match what the sender committed (tampered or wrong commit)" % (rel, commit))
+        try:
+            doc = check_call(json.loads(blob), "%s@%s" % (rel, commit))
+        except ValueError as exc:
+            raise Refused("%s@%s is not JSON (%s)" % (rel, commit, exc))
+        for field, got, want in (("id", call_id, doc["id"]), ("kind", kind, doc["kind"]), ("to-serial", to_serial, doc["to_serial"]),
+                                 ("subject", subject, doc["subject"])):
+            if got != want:
+                raise Refused("the line's %s %r does not match the committed file's %r (tampered line)" % (field, got, want))
+        if doc["to_device"] != self.device:
+            raise Refused("this order is for box %s; this box is %s" % (doc["to_device"], self.device))
+        rc, _, _ = git(self.root, "cat-file", "-e", "%s:%s" % (commit, doc["body_path"]))
+        if rc != 0:
+            raise Refused("the body file %s is not in commit %s" % (doc["body_path"], commit))
+        inbox = self.resolve_seat(doc["to_serial"])
+        marker = "_CROSSBOX_%s_" % doc["id"]
+        for where in (inbox, inbox / "read"):
+            if where.is_dir() and any(marker in p.name for p in where.glob("*.md")):
+                return ["ALREADY DELIVERED %s to %s (a file for it is already in %s or its read/); nothing written" % (doc["id"], doc["to_serial"], inbox)]
+        when = at or now_dt()
+        ts = when.strftime("%Y%m%dT%H%M%SZ")
+        subj = "CROSSBOX %s %s: %s" % (doc["id"], doc["kind"], doc["subject"])
+        safe_from = re.sub(r"[^a-zA-Z0-9._-]", "_", doc["from_serial"])
+        safe_subject = re.sub(r"[^a-zA-Z0-9._-]", "_", subj)[:40]
+        name = "%s_%s_%s.md" % (ts, safe_from, safe_subject)
+        content = ("# Message from %s (box %s)\n**To:** %s\n**Date:** %s\n**Cross-box:** %s %s from box %s\n**Subject:** %s\n\n"
+                   "file: %s\nbody: %s\n" % (doc["from_serial"], doc["from_device"], doc["to_serial"], ts, doc["id"], doc["kind"],
+                                             doc["from_device"], subj, rel, doc["body_path"]))
+        write_text(inbox / name, content)
+        note = "" if self.path(doc["id"]).is_file() else " NOTE: the file is not in this working tree yet; merge commit %s before `ack`." % commit
+        return ["DELIVERED %s to %s: %s%s" % (doc["id"], doc["to_serial"], inbox / name, note)]
+
+    def ack(self, call_id: str, by: str, at: str | None = None) -> list:
+        doc = self.read(call_id)
+        self.need_box(doc, "to_device", "ack")
+        want = doc["to_serial"]
+        if by != want and ("~" in want or base_of(by) != want):
+            raise Refused("--by %s is not the named seat %s; the named seat acknowledges" % (by, want))
+        if not doc["ack"]:
+            doc["ack"] = {"at": at or stamp(now_dt()), "by": by, "bus_message_id": None}
+            self.save(doc)
+        ack = doc["ack"]
+        return ["ACKED %s at %s by %s on the receiving box. Put this reply line on the bus to the sending box:" % (
+            call_id, ack["at"], ack["by"]), "CROSSBOX-ACK %s READ by %s at %s" % (call_id, ack["by"], ack["at"])]
+
+    def acked(self, call_id: str, text: str, bus_message_id: str) -> list:
+        doc = self.read(call_id)
+        self.need_box(doc, "from_device", "acked")
+        m = ACK_RE.search(text or "")
+        if not m or m.group(1) != call_id:
+            raise Refused("no `CROSSBOX-ACK %s READ by <serial> at <UTC>` line for this id in the text given" % call_id)
+        if not BUSID_RE.fullmatch(bus_message_id or ""):
+            raise Refused("--bus-message-id %r is not a bus message id" % bus_message_id)
+        by, when = m.group(2), m.group(3)
+        if base_of(by) != base_of(doc["to_serial"]):
+            raise Refused("the reply is by %s, not by the named seat %s" % (by, doc["to_serial"]))
+        ack = doc["ack"] or {"at": when, "by": by, "bus_message_id": None}
+        if ack["bus_message_id"] and ack["bus_message_id"] != bus_message_id:
+            raise Refused("a different reply bus message %s is already recorded" % ack["bus_message_id"])
+        ack["bus_message_id"] = bus_message_id
+        doc["ack"] = ack
+        self.save(doc)
+        return ["ACK recorded for %s: read by %s at %s (reply bus message %s)" % (call_id, ack["by"], ack["at"], bus_message_id)]
+
+    # -- close / status / list / merge
+    def close(self, call_id: str, side: str, by: str, at: str | None = None) -> list:
+        doc = self.read(call_id)
+        if side not in ("from", "to"):
+            raise Refused("--side must be from or to")
+        self.need_box(doc, "%s_device" % side, "close --side %s" % side)
+        if not by or not SERIAL_RE.fullmatch(by):
+            raise Refused("--by %r is not a serial" % by)
+        if not (doc["ack"] and doc["ack"]["at"]):
+            raise Refused("%s is not acknowledged yet (no ack recorded in this copy); a call closes after the other side has read it" % call_id)
+        if doc["closed"]["%s_at" % side]:
+            raise Refused("the %s side is already closed (%s)" % (side, doc["closed"]["%s_at" % side]))
+        doc["closed"]["%s_at" % side] = at or stamp(now_dt())
+        doc["closed"]["%s_by" % side] = by
+        self.save(doc)
+        return self.status(call_id)
+
+    def status_of(self, doc: dict, now: datetime.datetime | None = None) -> str:
+        cid, c = doc["id"], doc["closed"]
+        if c["from_at"] and c["to_at"]:
+            return "STATUS %s CLOSED-BOTH (from %s by %s, to %s by %s)" % (cid, c["from_at"], c["from_by"], c["to_at"], c["to_by"])
+        if c["from_at"] or c["to_at"]:
+            side = "from" if c["from_at"] else "to"
+            return "STATUS %s HALF-CLOSED (%s only, %s); the call is NOT settled until both sides are recorded" % (cid, side, c["%s_at" % side])
+        if doc["ack"] and doc["ack"]["at"]:
+            return "STATUS %s ACKED (read by %s at %s); not closed on either side" % (cid, doc["ack"]["by"], doc["ack"]["at"])
+        if doc["to_device"] == self.device:
+            return "STATUS %s AWAITING ACK by %s (this is the receiving box; opened %s)" % (cid, doc["to_serial"], age_text(doc["opened_at"], now))
+        if doc["sent"]["bus_message_id"]:
+            return "STATUS %s SENT, NOT ACKED (sent %s, bus message %s) -- sent is not read" % (
+                cid, age_text(doc["sent"]["at"], now), doc["sent"]["bus_message_id"])
+        return "STATUS %s OPEN, NOT YET PUT ON THE BUS (opened %s)" % (cid, age_text(doc["opened_at"], now))
+
+    def status(self, call_id: str) -> list:
+        doc = self.read(call_id)
+        lines = [self.status_of(doc)]
+        if doc["state"] != derive_state(doc):
+            lines.append("NOTE: the file's state field says %s but its fields read %s; the next write recomputes it" % (doc["state"], derive_state(doc)))
+        return lines
+
+    def listing(self, only_open: bool = False) -> list:
+        lines, shown, total = [], 0, 0
+        for path in sorted((self.root / REL_DIR).glob("*.json")) if (self.root / REL_DIR).is_dir() else []:
+            total += 1
+            try:
+                doc = check_call(json.loads(path.read_text(encoding="utf-8")), path.name)
+            except (ValueError, Refused) as exc:
+                lines.append("UNREADABLE %s: %s" % (path.name, exc))
+                shown += 1
+                continue
+            if only_open and derive_state(doc) == "CLOSED-BOTH":
+                continue
+            shown += 1
+            lines.append("%s %s %s %s -> %s to %s opened %s" % (doc["id"], derive_state(doc), doc["kind"], doc["from_device"],
+                                                                 doc["to_device"], doc["to_serial"], age_text(doc["opened_at"])))
+        lines.append("CROSSBOX-LIST files=%d shown=%d root=%s" % (total, shown, self.root))
+        return lines
+
+    def merge(self, call_id: str, ref: str) -> list:
+        mine = self.read(call_id)
+        rc, blob, err = git(self.root, "show", "%s:%s" % (ref, self.rel(call_id)))
+        if rc != 0:
+            raise Refused("no %s at %s in this tree (%s)" % (self.rel(call_id), ref, err.strip()[:120]))
+        try:
+            other = check_call(json.loads(blob), "%s@%s" % (self.rel(call_id), ref))
+        except ValueError as exc:
+            raise Refused("the file at %s is not JSON (%s)" % (ref, exc))
+        for key in KEYS:
+            if key in ("state", "sent", "ack", "closed"):
+                continue
+            if mine[key] != other[key]:
+                raise Refused("the other copy differs in %s (%r vs %r): not the same call" % (key, mine[key], other[key]))
+        merged = dict(mine)
+        for key in ("sent", "ack", "closed"):
+            if other[key] is None:
+                continue
+            block = dict(mine[key] or {})
+            for sub, val in other[key].items():
+                if val is None:
+                    continue
+                if block.get(sub) not in (None, val):
+                    raise Refused("both copies hold a different %s.%s (%r vs %r): resolve by hand" % (key, sub, block[sub], val))
+                block[sub] = val
+            merged[key] = block
+        changed = merged != mine
+        self.save(merged)
+        return ["MERGED %s from %s (%s)" % (call_id, ref, "fields folded in" if changed else "nothing new")] + self.status(call_id)
+
+
+# ---------------------------------------------------------------- the selftest harness (two scratch checkouts)
+
+GIT_ENV = {"GIT_AUTHOR_NAME": "crossbox-selftest", "GIT_AUTHOR_EMAIL": "selftest@example.invalid",
+           "GIT_COMMITTER_NAME": "crossbox-selftest", "GIT_COMMITTER_EMAIL": "selftest@example.invalid"}
+GIT_FLAGS = ["-c", "core.hooksPath=%s" % os.devnull, "-c", "commit.gpgsign=false", "-c", "core.autocrlf=false"]
+SEAT = "9.9.0_ZZ_Selftest"
+SEAT_LANE = "~X"
+BODY = "docs/selftest_body.md"
+CALL_ID = "OC-SELFTEST-0001"
+
+
+def sgit(root: Path, *args):
+    return git(root, *GIT_FLAGS, *args, extra_env=GIT_ENV)
+
+
+def rmtree_force(path) -> None:
+    def onerr(func, target, _exc):
+        os.chmod(target, stat.S_IWRITE)
+        func(target)
+    shutil.rmtree(path, onerror=onerr)
+
+
+class Harness:
+    """Two scratch git checkouts standing for two boxes; the bus is replaced by handing a printed line across."""
+
+    def __init__(self, tmp):
+        names = devmod().names()
+        if len(names) < 2:
+            raise Refused("the device register holds fewer than two boxes")
+        self.tmp = Path(tmp)
+        a_root, b_root = self.tmp / "boxA", self.tmp / "boxB"
+        a_root.mkdir()
+        sgit(a_root, "init", "-q")
+        (a_root / "docs").mkdir()
+        (a_root / BODY).write_text("selftest body\n", encoding="utf-8")
+        sgit(a_root, "add", BODY)
+        sgit(a_root, "commit", "-q", "-m", "body")
+        subprocess.run(["git", *GIT_FLAGS, "clone", "-q", str(a_root), str(b_root)], capture_output=True, text=True,
+                       env={**os.environ, **GIT_ENV}, timeout=60, check=True)
+        (b_root / "org" / "tier2_senior" / SEAT).mkdir(parents=True)
+        (b_root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE).mkdir(parents=True)
+        self.a = Box(a_root, names[0])
+        self.b = Box(b_root, names[1])
+
+    def commit(self, box: Box, *paths) -> None:
+        sgit(box.root, "add", "--", *paths)
+        sgit(box.root, "commit", "-q", "-m", "step", "--", *paths)
+
+    def pull(self, dst: Box, src: Box, ff: bool) -> None:
+        sgit(dst.root, "fetch", "-q", str(src.root), "HEAD")
+        if ff:
+            sgit(dst.root, "merge", "-q", "--ff-only", "FETCH_HEAD")
+
+
+_ENV_LOCK = threading.Lock()   # the reader takes its directory from an environment variable; two threads must not swap it
+
+
+def open_calls_reader(crossbox_dir: Path, call_id: str = CALL_ID):
+    """The REAL reader in .tools/open-calls.py (its `close` limb for a CROSS-BOX call): the file name that reads CLOSED-BOTH for the call, None when none does,
+    or an ERROR: string when the reader could not be loaded or run."""
+    try:
+        spec = importlib.util.spec_from_file_location("open_calls_cb", HERE / "open-calls.py")
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        with _ENV_LOCK:
+            old = os.environ.get("OPAL_CROSSBOX_ROOT")
+            os.environ["OPAL_CROSSBOX_ROOT"] = str(crossbox_dir)
+            try:
+                found, _lines = mod.crossbox_closed_both(call_id, None)
+            finally:
+                if old is None:
+                    os.environ.pop("OPAL_CROSSBOX_ROOT", None)
+                else:
+                    os.environ["OPAL_CROSSBOX_ROOT"] = old
+        return found
+    except Exception as exc:   # a reader that cannot load is reported, never read as a clean refusal
+        return "ERROR:%s" % exc
+
+
+def raises(kind, fn, needle: str = "") -> tuple:
+    try:
+        fn()
+    except kind as exc:
+        return needle in str(exc), str(exc)
+    return False, "no %s raised" % kind.__name__
+
+
+def run_cases(tmp) -> list:
+    """The whole exchange. Returns [(name, ok, detail)] in order; a step that cannot run reports itself as a failed case."""
+    out = []
+
+    def rec(name, ok, detail=""):
+        out.append((name, bool(ok), str(detail)[:200]))
+
+    h = Harness(tmp)
+    a, b = h.a, h.b
+    seat = SEAT + SEAT_LANE
+
+    (a.root / "docs" / "loose.md").write_text("not committed\n", encoding="utf-8")
+    ok, why = raises(Refused, lambda: a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "subject", "docs/loose.md"), "Commit it first")
+    rec("open-refuses-an-uncommitted-body", ok, why)
+    ok, why = raises(Refused, lambda: a.open("CALL", a.device, seat, "1.0.0_SA_CTO", "subject", BODY), "is this box")
+    rec("open-refuses-this-box-as-the-target", ok, why)
+
+    opened = a.open("CALL", b.device, seat, "1.0.0_SA_CTO", "Close the dell fence call", BODY, call_id=CALL_ID)
+    cid = opened[0].split()[1]
+    doc = a.read(cid)
+    rec("open-writes-the-file-with-state-OPEN", doc["state"] == "OPEN" and doc["call_id"] == CALL_ID and doc["ack"] is None
+        and opened[1].startswith("CROSSBOX %s CALL for %s: Close the dell fence call | file org/devices/crossbox/%s.json @" % (cid, seat, cid)), opened[1])
+    ok, why = raises(Refused, lambda: a.line(cid), "commit it first")
+    rec("line-refused-until-the-file-is-committed", ok, why)
+    h.commit(a, a.rel(cid))
+    bus_line = a.line(cid)[0]
+    rec("line-carries-the-commit-and-no-substance", re.search(r" @[0-9a-f]{7,}$", bus_line) is not None and len(bus_line.split()) < 40, bus_line)
+
+    a.sent(cid, "0a1b2c3d-0000-4000-8000-000000000001", at=stamp(now_dt() - datetime.timedelta(minutes=5)))
+    st = a.status(cid)[0]
+    rec("status-reads-SENT-NOT-ACKED-with-its-age", "SENT, NOT ACKED (sent 5 min ago" in st, st)
+
+    consumer_line = "[2026-10-08T01:02:03Z] [from 1.0.0_SA_CTO] [tailnet a -> b] " + bus_line
+    try:
+        b.receive(consumer_line)
+        rec("receive-before-the-pull-reads-PULL-FIRST", False, "delivered without the commit")
+    except PullFirst as exc:
+        inbox_dir = b.root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE
+        rec("receive-before-the-pull-reads-PULL-FIRST", "PULL-FIRST" in str(exc) and not list(inbox_dir.glob("*.md")), str(exc)[:80])
+    h.pull(b, a, ff=True)
+    forged = consumer_line.replace(cid, "XB-20200101T000000Z-dead")
+    ok, why = raises(Refused, lambda: b.receive(forged), "")
+    rec("a-tampered-line-with-the-id-altered-is-refused", ok, why)
+    forged = consumer_line.replace(" for %s:" % seat, " for 2.0.0_SA_COO:")
+    ok, why = raises(Refused, lambda: b.receive(forged), "")
+    rec("a-tampered-line-with-the-seat-altered-is-refused", ok, why)
+    res = b.receive(consumer_line)
+    inbox_dir = b.root / "org" / "mcp" / "inbox" / SEAT / SEAT_LANE
+    landed = list(inbox_dir.glob("*.md"))
+    body = landed[0].read_text(encoding="utf-8") if landed else ""
+    rec("receive-lands-one-file-in-the-seats-watched-inbox", len(landed) == 1 and res[0].startswith("DELIVERED") and body.startswith("# Message from 1.0.0_SA_CTO")
+        and ("body: " + BODY) in body, res[0])
+    rec("receive-twice-delivers-once", b.receive(consumer_line)[0].startswith("ALREADY DELIVERED") and len(list(inbox_dir.glob("*.md"))) == 1, "")
+
+    ok, why = raises(Refused, lambda: a.ack(cid, seat), "receiving box")
+    rec("the-sending-box-cannot-ack", ok, why)
+    ack_lines = b.ack(cid, seat)
+    reply = ack_lines[-1]
+    rec("ack-sets-ACKED-and-prints-the-reply-line", b.read(cid)["state"] == "ACKED" and re.fullmatch(
+        r"CROSSBOX-ACK %s READ by %s at \d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ" % (cid, re.escape(seat)), reply) is not None, reply)
+    a.acked(cid, "[x] [from %s] %s" % (seat, reply), "0a1b2c3d-0000-4000-8000-000000000002")
+    st = a.status(cid)[0]
+    rec("acked-records-the-reply-on-the-sending-box", a.read(cid)["ack"]["bus_message_id"] and st.startswith("STATUS %s ACKED" % cid), st)
+
+    a.close(cid, "from", "1.0.0_SA_CTO")
+    st = a.status(cid)[0]
+    rec("one-side-closed-reads-HALF-CLOSED", "HALF-CLOSED (from only" in st and a.read(cid)["state"] == "ACKED", st)
+    found = open_calls_reader(a.root / REL_DIR)
+    rec("the-open-calls-close-reader-refuses-a-half-closed-call", found is None, "reader returned %r" % (found,))
+
+    h.commit(a, a.rel(cid))
+    h.pull(b, a, ff=False)
+    b.merge(cid, "FETCH_HEAD")
+    merged = b.read(cid)
+    rec("merge-folds-the-other-boxs-fields-in", merged["sent"]["bus_message_id"] and merged["closed"]["from_at"] and merged["ack"]["by"] == seat, json.dumps(merged["closed"]))
+    b.close(cid, "to", seat)
+    st = b.status(cid)[0]
+    rec("both-sides-recorded-reads-CLOSED-BOTH", st.startswith("STATUS %s CLOSED-BOTH" % cid) and b.read(cid)["state"] == "CLOSED-BOTH", st)
+    found = open_calls_reader(b.root / REL_DIR)
+    rec("the-open-calls-close-reader-accepts-CLOSED-BOTH", found == "%s.json" % cid, "reader returned %r" % (found,))
+
+    h.commit(b, b.rel(cid))
+    h.pull(a, b, ff=False)
+    a.merge(cid, "FETCH_HEAD")
+    st = a.status(cid)[0]
+    rec("the-sending-box-reads-CLOSED-BOTH-after-the-merge", st.startswith("STATUS %s CLOSED-BOTH" % cid), st)
+
+    bad = json.loads(a.path(cid).read_text(encoding="utf-8"))
+    bad["surprise"] = 1
+    a.path(cid).write_text(json.dumps(bad), encoding="utf-8")
+    ok, why = raises(Refused, lambda: a.read(cid), "unknown key")
+    rec("an-unknown-key-in-a-file-is-refused", ok, why)
+    return out
+
+
+def selftest() -> int:
+    tmp = tempfile.mkdtemp(prefix="crossbox-selftest-")
+    try:
+        cases = run_cases(tmp)
+    except Exception as exc:   # a harness that cannot run is a failed selftest, never a pass
+        print("ERROR: the selftest could not run: %s: %s" % (type(exc).__name__, exc))
+        cases = []
+    finally:
+        rmtree_force(tmp)
+    for name, ok, detail in cases:
+        print("%s %s%s" % ("ok  " if ok else "FAIL", name, "" if ok or not detail else "  -- " + detail))
+    good = sum(1 for _, ok, _ in cases if ok)
+    print("CROSSBOX-SELFTEST cases=%d/%d ok=%s" % (good, len(cases), bool(cases) and good == len(cases)))
+    return 0 if cases and good == len(cases) else 1
+
+
+# ---------------------------------------------------------------- CLI
+
+def build_parser() -> argparse.ArgumentParser:
+    ap = argparse.ArgumentParser(prog="crossbox-call.py", description=__doc__.split("\n")[0])
+    ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--root", help="the checkout this box is (default: the repository this script lives in); tests only")
+    ap.add_argument("--device", help="this box's device name (default: AGENTBUS_DEVICE through lib/devices.py); tests only")
+    sub = ap.add_subparsers(dest="cmd")
+    p = sub.add_parser("open")
+    p.add_argument("--kind", required=True)
+    p.add_argument("--to-device", required=True)
+    p.add_argument("--to-serial", required=True)
+    p.add_argument("--from-serial", required=True)
+    p.add_argument("--subject", required=True)
+    p.add_argument("--body", required=True)
+    p.add_argument("--call-id")
+    for name in ("line", "status"):
+        sub.add_parser(name).add_argument("--id", required=True)
+    p = sub.add_parser("sent")
+    p.add_argument("--id", required=True)
+    p.add_argument("--bus-message-id", required=True)
+    sub.add_parser("receive").add_argument("--line", required=True)
+    p = sub.add_parser("ack")
+    p.add_argument("--id", required=True)
+    p.add_argument("--by", required=True)
+    p = sub.add_parser("acked")
+    p.add_argument("--id", required=True)
+    p.add_argument("--line", required=True)
+    p.add_argument("--bus-message-id", required=True)
+    p = sub.add_parser("close")
+    p.add_argument("--id", required=True)
+    p.add_argument("--side", required=True)
+    p.add_argument("--by", required=True)
+    sub.add_parser("list").add_argument("--open", action="store_true")
+    p = sub.add_parser("merge")
+    p.add_argument("--id", required=True)
+    p.add_argument("--ref", required=True)
+    return ap
+
+
+def main(argv: list) -> int:
+    args = build_parser().parse_args(argv)
+    if args.selftest:
+        return selftest()
+    if not args.cmd:
+        print("usage: crossbox-call.py <open|line|sent|receive|ack|acked|close|status|list|merge> ... | --selftest", file=sys.stderr)
+        return 2
+    try:
+        dev = devmod()
+        box = Box(args.root or TOOL_ROOT, dev.resolve(args.device) if args.device else None)
+        if args.cmd == "open":
+            lines = box.open(args.kind, args.to_device, args.to_serial, args.from_serial, args.subject, args.body, args.call_id)
+        elif args.cmd == "line":
+            lines = box.line(args.id)
+        elif args.cmd == "sent":
+            lines = box.sent(args.id, args.bus_message_id)
+        elif args.cmd == "receive":
+            lines = box.receive(args.line)
+        elif args.cmd == "ack":
+            lines = box.ack(args.id, args.by)
+        elif args.cmd == "acked":
+            lines = box.acked(args.id, args.line, args.bus_message_id)
+        elif args.cmd == "close":
+            lines = box.close(args.id, args.side, args.by)
+        elif args.cmd == "status":
+            lines = box.status(args.id)
+        elif args.cmd == "list":
+            lines = box.listing(args.open)
+        else:
+            lines = box.merge(args.id, args.ref)
+    except PullFirst as exc:
+        print(str(exc))
+        return 5
+    except Refused as exc:
+        print("REFUSED: %s" % exc)
+        return 3
+    except Exception as exc:   # an unreadable register must stop the tool, never fall back to a built-in list
+        if type(exc).__name__ == "RegisterError":
+            print(str(exc), file=sys.stderr)
+            return 3
+        raise
+    print("\n".join(lines))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

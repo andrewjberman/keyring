@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~18</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>issued</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
@@ -172,3 +172,27 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: Andrew-direct 2026-10-07 ~16:3xZ (record above), ~18:3xZ item 7, ~18:5xZ, ~19:0xZ, and ~21:1xZ at this seat's terminal
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_211xZ_COO_C_MAKE_SURE_GITOPS_AWSOPS_AGENT_WORKFLOW_DEMANDS_ARE_MET_AND_SAY_LINE_FOR_LINE.md`);
 PRD `prd/NFRA_CTLPLN_PRD.md` v0.19 @b44686cebc (ADMITTED), FWD-21 to FWD-25, contract C-SEATS clauses 1 to 7; CTO msg 106584 (the split).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-08 ~09:4xZ) -- REOPENED, SHORT: the close gate reads its own switch file, not the retired single name
+
+The cell is merged. Since then the single switch file `org/mcp/seat-gates.enforce` was RETIRED: each check now has its own
+switch (cell CT-s-3 AMENDMENT 1, merged @5302e26583; in the two wrappers the old file turns on nothing). Your hook's close gate
+in `.tools/git-hooks/missions-tree-check.sh` still reads the old name (and `OPAL_SEAT_GATES_ENFORCE_FILE`), so the old file
+would silently turn on the close gate alone (row NFRA_CTLPLN-W13-S28). Ruling: `1.0.0_SA_CTO` msg 106858: "1. Who apply-who grades: the seat whose session runs the tool, read from the running session's serial, never a commit's author. A drained commit is pushed by a fabric manager and applied by a deploy seat; neither is its author. 2. Where: in safe-apply only ... In safe-deploy and on a push it stays WARN until it reads the session, and it never refuses a push that deploys nothing. ... 4. Row S28, the tree hook reading the old switch name: a cell, before any switch exists. 5. No switch file today. After 1, 2 and 4, a dry pass over real pushes from all four boxes; I name the first switch from that."
+Gate limb: none graded this modification. NO SWITCH FILE IS CREATED BY YOU.
+
+1. The close gate's switch becomes `org/mcp/seat-gates.round-close.missions-tree-check.enforce` (the form
+   `seat-gates.<check>.<tool>.enforce`). The old file `org/mcp/seat-gates.enforce`, if present, turns on NOTHING in the hook and
+   prints one WARN line saying it is retired and naming the new file. The test-only override becomes a DIRECTORY variable,
+   `OPAL_SEAT_GATES_ENFORCE_DIR` (the same variable the wrappers now read: read `.tools/safe-apply.sh`'s block for how it is
+   used and match it); `OPAL_SEAT_GATES_ENFORCE_FILE` is no longer read.
+2. If `.tools/round-close-check.py` or `.tools/research-owed.py` themselves name the old file anywhere, change them the same
+   way; say whether they did.
+3. `.tools/tests/test_round_close_and_research.py`: the cases that wrote the old file write the new one; add a case that the
+   old file alone leaves the gate in WARN and prints the retired line. The generator's own self-test reads the same before
+   and after.
+4. Search the repository for any OTHER code reader of `seat-gates.enforce` or `OPAL_SEAT_GATES_ENFORCE_FILE` (code, not
+   documents) and list each with file and line; do not edit files outside your `<paths>`.
+
+**ACCEPTANCE.** The three ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
+

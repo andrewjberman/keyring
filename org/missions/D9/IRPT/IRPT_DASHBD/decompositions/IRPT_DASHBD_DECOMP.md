@@ -602,3 +602,41 @@ corrected it: S31 needs its own run and S32 waits on DB-b-43, so neither graduat
 | `DB-b-46` | S31: the extended handler over the whole 49F population for one trading day, wall and peak per stage against 900 s / 2048 MB, the per-account tail; a breach reported with its size | LOCAL | DB-b-41 (merged) | B27 |
 
 fanout: 1 of 1 chains, cap 8, reason: one measurement. Worker 0.9.0_WK_IRPT_DASHBD~26 in its own worktree.
+
+## 29. ROUND 28, WORKSTREAM B (2026-10-08 ~07:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-27 analysis @7fa28c7d6d, msg 1222)
+
+Round 27 is closed: DB-b-46 @acb7066605 (ADJUDICATION_v13 @d640bc455f). S31 measured BREACH: the lots stage refuses on 87 realized lot
+ids repeated within a day (175 rows, 36 accounts, distinct lots) and peaks at least 2,759.5 MB against 2,048 MB. Rulings: the key is the
+smallest measured column set; batch first, raise memory only if the batched peak on pandas 2.2.3 still breaches.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-47` | E1: the realized-lot key measured on the 175 rows; contracts + stage use it; true duplicates still refuse | LOCAL | DB-b-46 (merged) | B28 |
+| `DB-b-48` | E2(1): the lots stage batched; the full day re-run at two batch sizes, lots peak flat | WORLD (handler path floor; applies nothing) | DB-b-47 (the stage must not refuse) | B28 |
+| (issuer act) | E2(2): the batched run on pandas 2.2.3 -- the laptop carries pandas 2.3.3 (MSTR msg 1136), so it runs on dell2 when the Python 3.12 kit lands, with DB-b-43 | LOCAL | DB-b-48 | B28 |
+
+fanout: 1 of 1 chains, cap 8, reason: E2 measures the stage only once E1 stops its refusal, and both edit the same producer. Worker 0.9.0_WK_IRPT_DASHBD~27 in its own worktree.
+
+## 30. ROUND 28, WORKSTREAM BD (2026-10-08 ~13:5xZ, issuer 2.0.0_SA_COO~D2, the tie-out cell named in section 27)
+
+DB-b-45 is complete @3efc66cf42: the one split Black Diamond pull ran on dell2 at 12:37:21Z after the secrets grant applied (11:33:48Z);
+2,299 of 2,299 landed under pull=split20261007, 0 FAILED. The tie-out grades FWD-8's two branches (round-19 analysis section 2).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-49` | the split tie-out: BD's two halves against Opal's served returns for the 2,299 segments; branch A (> half tie on both halves within 0.35 pp) or B; the recompose control | LOCAL | DB-b-45 (complete) | B26-4 |
+
+fanout: 1 of 1 chains, cap 8, reason: one comparison over one landed pull. Worker 0.9.0_WK_IRPT_DASHBD~28 in its own worktree.
+
+## 31. ROUND 29, WORKSTREAMS BD + B (2026-10-08 ~19:0xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-28 analysis @e9b17e6e75, msg 1428)
+
+Round 28 is closed: DB-b-47 + DB-b-48 merged @24d088b96e, DB-b-49 @a556d87e79 (round-close-check MAY-CLOSE). FWD-8 reads BRANCH B:
+the divergence is after 2025-01-10. S34 (440 accounts whose BD halves do not recompose) gates any Opal repair. No vendor call is owed.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-50` | E1: class S34's 440 accounts (closed cause set + named other); trace the 724.16 pp outlier; the overlap with the 1,834 right-half misses | LOCAL | DB-b-49 (merged) | B29-1 |
+| `DB-b-51` | E2: the right-half gap's shape for the 1,528 misses outside S34, Opal's components only; top driver; the 2,220 left-half ties as control | LOCAL | DB-b-49 (merged; the population is DB-b-49's per-row flag, not DB-b-50's output) | B29-2 |
+| `DB-b-52` | E3 (W27-S2): the full run over 7,604 accounts <= 750 s; the chosen batch size set as the producer's default | LOCAL | DB-b-48 (merged) | B29-3 |
+
+fanout: 3 of 3 chains, cap 8, reason: three independent reads -- E1 and E2 take fixed populations from DB-b-49's record, E3 edits only the lots producer. Workers 0.9.0_WK_IRPT_DASHBD~29, ~30, ~31, one worktree each.

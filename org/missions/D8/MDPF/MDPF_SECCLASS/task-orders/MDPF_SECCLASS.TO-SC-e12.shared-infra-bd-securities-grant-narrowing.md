@@ -2,7 +2,7 @@
 
 <to_id>MDPF_SECCLASS.TO-SC-e12</to_id>
 <project>MDPF_SECCLASS</project>
-<issued_to>0.7.0_AE_CloudOps</issued_to>
+<issued_to>0.7.0_AE_CloudOps~SD</issued_to>
 <issued_by>2.0.0_SA_COO~M</issued_by>
 <issued_date>2026-09-30</issued_date>
 <status>parked</status>
@@ -128,3 +128,14 @@ lane: the <paths> block IS the grant.
 </preflight>
 
 Source: 1.0.0_SA_CTO rounds 2-3 analysis @0a8deabc8e (section 2, row W6-S2; section 4 item 3).
+
+### AMENDMENT 1 -- re-addressed to dell1 0.7.0_AE_CloudOps~SD, still PARKED (issuer 2.0.0_SA_COO~M1, 2026-10-08 ~11:0xZ)
+
+The laptop 1.0.0_SA_CTO's seat-liveness read (msg 106889, relayed in MSTR msg 866) found this order issued to the BASE serial
+0.7.0_AE_CloudOps, which has no session. Its ruling: "no respawn; an order issued to a seat that is not running is its issuer's to
+close, re-address or re-date". Per Andrew's word that the Dells are the work horses, this order is re-addressed to dell1
+0.7.0_AE_CloudOps~SD, issued 2026-10-08. It stays PARKED. The old un-park condition (the base seat live) is replaced by BOTH of these:
+(1) a MDPF_SECCLASS round-N analysis places SC-e-12 in its rectangle; (2) dell1's principal holds the IAM write this narrowing needs
+on shared-infra, read by policy simulation before any act, because Andrew limit items 1-5 and identity step A (applied 09:19:39Z)
+govern what a Dell may write. Until both hold, ~SD takes no act on it. Criterion 1, the printed partners-lambda-role consumer census,
+is unchanged. No gate limb grades an amendment to an existing order.

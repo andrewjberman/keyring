@@ -7587,6 +7587,366 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W112-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~112",
+      "surfaced_at": "2026-10-08T00:48:17Z",
+      "one_line": "The nine-form census totals 17 pairs, below the 20 the dry run counted; BNP reads 2 against a dry-run 5 although silver has grown.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-2 section 0: dry run counted BNP 5, HEI 3, SNPS 3, DG 2, ED 2, GPN 2, ADBE 1, NKE 1, SHOP 1 (20 pairs); silver has grown since so counts may be higher; CENSUS OK needs T at least 20.",
+      "world_is": "bh2_nine_forms.out: 19032 silver articles; BNP 2, HEI 3, SNPS 3, DG 2, ED 2, GPN 2, ADBE 1, NKE 1, SHOP 1; TOTAL 17; CENSUS FAIL (BNP fell). Eight of nine forms equal the dry run. Cause of the BNP gap not investigated; the dry run's method for BNP may differ from csl_pairs_sample.py's, or BNP-resting articles left the latest-article set.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/bh2_nine_forms.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T01:18:02Z",
+      "one_line": "Two of the five names the order calls visibly cut (OMAB_US, OMAB_MM) are complete: 'Grupo Aeroportuario del Centro' is 30 characters and is the whole name.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-5 section 0: five of the ten 30-character names are visibly cut, OMAB_US_Equity and OMAB_MM_Equity 'Grupo Aeroportuario del C...'.",
+      "world_is": "bh5_census.out: OMAB_MM_Equity and OMAB_US_Equity both read original=Grupo Aeroportuario del Centro (30 characters, a whole name). Only AIG, KCDMY and ICT are visibly cut; the census CHANGED is 2 of 10 (AIG, KCDMY) and ICT stays unchanged by design. The rule is unaffected.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh5_census.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T01:18:02Z",
+      "one_line": "The order's fragment text is ambiguous for 'Group I': read in tuple order it is a fragment of 'Group Inc' and would drop 'Group I', but plant (i) needs 'American International Group'; the SHORTEST fragment wins here, tuple order breaks ties.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-5 section 1.1: S tried in the tuple's order; 'Group I' is a fragment of 'Group Inc'; the fragment and the space before it are dropped; plant (i) expects 'American International Group'.",
+      "world_is": "Tuple order reaches 'Group Inc' before 'Inc', so a first-match rule drops 'Group I' and leaves 'American International', contradicting plant (i). suffix_fragment() collects every candidate over CORPORATE_SUFFIXES in tuple order and keeps the shortest (a candidate that is itself a whole listed suffix is skipped), so 'I' is dropped. The issuer should confirm this reading. Also: _FORM_WORDS adds {SPA, SE, LP, LLC} that CORPORATE_SUFFIXES does not carry; left unchanged and not read by the fragment rule.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/universe_securities.py suffix_fragment",
+          "lib/research/harvest/tests/test_bh5_cut_legal_names.py test_i"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T02:05:00Z",
+      "one_line": "HVST-bh-3: 8 of the 39 good CSL pairs carry no name or brand of CSL Limited beside the bare form (only the ADR ticker CSLLY), so the rule keeps 31 of 39, not 39; CENSUS FAIL returned to the issuer.",
+      "class": "BLOCKING",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-bh-3 section 1.6: the 39 good pairs are all kept by anchors that are the company's names or brands; if they cannot be, print CENSUS FAIL, list each unanchored good pair, and report it as a finding the issuer takes back.",
+      "world_is": "bh3_census.out (19049 silver articles, 242 securities): anchors CSL Limited, CSL Seqirus, Seqirus, CSL Behring keep 31 of 39 good pairs and drop 3 of 3 Carlisle pairs, 0 ungraded pairs dropped, 0 of 242 other securities changed. The 8 unkept good pairs (sa:4113375, sa:4116212, sa:4124103, sa:4387844, sa:4392855, sa:4405179, sa:4414058, sa:4422985) each carry 'CSL ( OTCQX:CSLLY )' in a bird-flu vaccine-maker list and no other CSL name, brand or product word. The only second anchor in them is CSLLY, the ADR ticker, which is not a name or brand and was not added. ARMED because the committed ticker_anchors entry, if drained and a gold rebuild run, would drop those 8 good pairs; the issuer decides whether CSLLY (another ticker form of the same company) may anchor, or the entry is held. The universe_securities validator also treats an entry whose security is absent from the universe as not-in-universe (summary ticker_anchors_not_in_universe), not as an error, because existing tests build the real rule over small fixture universes without CSL.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh3_census.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh3_census.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T02:47:00Z",
+      "one_line": "HVST-bh-7: of the seven two-listing ticker roots, five group by limb 2 and two do NOT (ICT: a 30-character cut name; TTE: 'Total Energies' vs 'TotalEnergies SE'); no limb links them and the registry carries one listing per root.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-7 section 0: seven ticker roots have two listings (ASML, AZN, GSK, ICT, OMAB, RIO, TTE) and the ruling is that a brand belongs to the issuer; section 1.1 groups only by a shared registry lei or by a shared root plus a casefolded company-name or suffix-form equality, and nothing else.",
+      "world_is": "bh7_census.out (19049 silver articles, 242 securities): ASML, AZN, GSK, OMAB, RIO GROUPED by limb 2; ICT NOT GROUPED ('International Container Terminals' vs the cut 'International Container Termin', ICT_US_Equity's name cut at 30 characters) and TTE NOT GROUPED ('Total Energies' vs 'TotalEnergies SE'). Limb 1 groups no root here: lib/research/identity/registrations.json holds one listing for each of AZN, GSK, ICT, OMAB, RIO, TTE and none for ASML_NA/ASML_US, so no two of the seven roots share a lei in the file. Effect today: the only alias set that changed is ASML_US_Equity (+ASML; pairs 582 -> 582, mentions 2820 -> 2822); the two ungrouped roots carry no whole-brand entry the refusal would touch, so nothing is lost, but a future brand on either would still refuse across the pair. Left as the cell states it; the issuer decides whether the registry should gain the second listing's lei or the two names be matched. Also: the order face says the next row id is S4; S4 was already filed, this row is S5 as the base showed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh7_census.out",
+          "lib/research/identity/registrations.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S6",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T04:08:15Z",
+      "one_line": "HVST-bh-10: under the second-anchor rule HEI_US_Equity keeps 0 of the 2 graded HEICO pairs (sa:3584086, sa:3685322): their ticker lists carry no name, brand or other symbol of HEICO, so AC2 reads CENSUS FAIL; Hawaiian Electric's pair is dropped (1 of 1).",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H: hold the drain of the HEI_US_Equity ticker_anchors entry (branch wk-AMGT_HARVST-110-r61) until the ruling on the 2 lost HEICO pairs; the order stays open on AC2",
+      "spec_asserts": "HVST-bh-10 section 1 item 4: a ticker list may carry no name, brand or other symbol of HEICO at all; if the 2 HEICO pairs cannot be kept under the terms (an anchor is the covered company's own name or brand, a symbol anchor is another listing of the same issuer in exact case, nothing else is added), print CENSUS FAIL, show each lost pair, state what in the article identifies HEICO, and stop. AC2 expects CENSUS OK.",
+      "world_is": "bh10_census.out (19137 silver articles, 242 securities): HEI_US_Equity pairs before 44 after 41; dropped 3: sa:3584086 and sa:3685322 (HEICO, 'ESL , HEI , WWD , LHX' and 'VSAT , HEI , TDY , CACI') and sa:4412260 (Hawaiian Electric, 'The utility's dividend to HEI remains suspended'). GRADED HEICO PAIRS KEPT 0 of 2; GRADED HAWAIIAN ELECTRIC PAIRS DROPPED 1 of 1; UNGRADED PAIRS DROPPED 0; OTHER SECURITIES CHANGED 0 of 242; last line CENSUS FAIL. Each lost article was searched whole, case-insensitive, for heico, hei.a, hei-a, hei/a, wencor, flight support, electronic technologies, mendelson and hawaiian electric: 0 hits in both. Nothing in either article identifies HEICO beyond the bare ticker list itself. The only other listing symbol read in any article is HEI.A (sa:4425338, which also names HEICO Corporation): not in the pool (302 records), the identity registry (72) or the collector's identity record (234), so the row carries 'evidenced by article spans only'; pairs kept only by it: 0. Of 19137 silver articles, 55 carry the string HEI or Hawaiian Electric and 43 carry an exact-case HEI span; 40 of those 43 name HEICO or Heico (the rule keeps them) and the 3 that do not are exactly the 3 graded pairs. No rule was loosened and no word that is not HEICO's own was added; the issuer takes the result back for a ruling. Also: the one existing assertion this cell's rule changed is test_bh3 test_viii_the_shipped_entry_is_the_one_csl_entry (one entry became two).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh10_census.out",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/BH2_NINE_FORMS.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W114-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~114",
+      "surfaced_at": "2026-10-08T04:46:00Z",
+      "one_line": "HVST-bi-1: ignoring whitespace alone does not group TTE: 'TotalEnergies SE' has no suffix form (SE is not in CORPORATE_SUFFIXES), so 'Total Energies' (squashed 'totalenergies') equals neither the name nor a suffix form of the other; AC1 plant (i) and AC2 TTE read FAIL.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bi-1 section 1 item 1: widening limb 2 to ignore whitespace, with nothing else changed, makes 'Total Energies' and 'TotalEnergies SE' (root TTE) group.",
+      "world_is": "suffix_forms('TotalEnergies SE') returns [] at base 47297a5a82 (SE is only in _FORM_WORDS/_DEPOSITARY_TOKENS, not CORPORATE_SUFFIXES), so squashed 'totalenergies' never meets 'totalenergiesse'. bi1_census.out: TTE reads NOT GROUPED with the prefix reason (a squashed 'totalenergies' is a prefix of 'totalenergiesse'), ICT NOT GROUPED with the prefix reason, 5 other roots still grouped, 0 of 242 built dicts changed, last line CENSUS FAIL: TTE not grouped. Other tests: 495 passed, 1 failed (plant i). Not fixed: adding SE to CORPORATE_SUFFIXES would change alias sets across the pool and the order says nothing else changes; the issuer decides the route (a suffix, or a squashed-name-minus-form comparison limited to limb 2).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~114/bi1_census.out",
+          "lib/research/harvest/tests/test_bi1_grouping_whitespace.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S102",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-08T07:27:16Z",
+      "one_line": "The exact-case ticker form BP matches 'BP' meaning basis points in a capitalised headline: 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase' (bbg, 2026-09-16) is served on BP_US_Equity's feed after rebuild #9.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Rebuild #9 removes the false bare-name pairs of BP (basis points in lower case) by matching the fallback in the stored case only; the exact-case ticker form BP is taken as naming the company.",
+      "world_is": "The article's only exact-case BP is in its title, where every word is capitalised. It is 1 of the 15 newest items the feed walk prints for BP_US_Equity. How many of BP_US_Equity's 1,240 served pairs rest on a title-case 'N BP' is not measured.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND65_FEED_WALK_GRADE_20261008.md",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~115/BJ1_FEED_WALK.md (BP_US_Equity, item of 2026-09-16)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S103",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-08T07:27:16Z",
+      "one_line": "Silver holds 714 articles published from 2026-09-09 to 2026-10-08 across five publishers, and 5 of them are FT; none names Caterpillar, CSL or AIG, so three covered securities' feeds read NONE_IN_WINDOW.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The Security Analysis feed shows a covered company its last 30 days of coverage; the five publishers are collected daily.",
+      "world_is": "This seat's read of 19,159 latest silver articles: published in the window 714 (bbg 288, sa 207, barrons 162, wsj 52, ft 5). In-window articles carrying 'Caterpillar' 0, a CSL name 0, AIG 0; controls Nokia 7 (equal to its feed) and HEICO 1. The feeds are faithful to silver. Whether 5 FT articles and no Caterpillar story in thirty days is the world or a collection gap is not measured.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND65_FEED_WALK_GRADE_20261008.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W117-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~117",
+      "surfaced_at": "2026-10-08T07:46:00Z",
+      "one_line": "The order's 'capitalised throughout' (EVERY alphabetic word begins upper-case) is false of its own verbatim negative-control title 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase' ('on' is lower case), so plant (i) and the reported pair cannot pass as written.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bk-2 s.1: a title is capitalised throughout when EVERY alphabetic word begins with an upper-case letter; plant (i) and the census 'THE REPORTED PAIR ... removed' use the verbatim title 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase'.",
+      "world_is": "The verbatim title contains the alphabetic word 'on', which begins with a lower-case letter, so the definition as written returns False for it and the rule never fires on the story it was cut for (plant (i) would read 1, the census would read CENSUS FAIL). Done instead, so the order is executable and without tuning to a count: ONE closed list of title-case minor words (a an the and but or nor for so yet as at by in of on to up off per via vs, the AP rule: articles, conjunctions and prepositions of three letters or fewer) may stay lower case; every other word must begin upper-case; the three-alphabetic-word floor counts the minor words. The list is the constant _TITLE_CASE_MINOR_WORDS in lib/research/harvest/publication_gold.py. The census prints, beside the removed count R, how many removed pairs would also be removed under the strict reading (no minor-word allowance), so the issuer and the CTO can read the cost of the choice. The issuer decides whether the allowance stands.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/publication_gold.py (_capitalised_throughout, _TITLE_CASE_MINOR_WORDS)",
+          "lib/research/harvest/tests/test_bk2_capitalised_headline.py (test_viii)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~117/bk2_census.py"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W119-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~119",
+      "surfaced_at": "2026-10-08T08:41:36Z",
+      "one_line": "240 of 1,258 run-record jobs (58 collector keys, `security-<hash>`) cannot be joined to any covered security: no gold_security_key, absent from the round47 identity file, and no ticker on their device runs file; the 8 never-collected count is therefore exact only if none of those 58 keys is one of the 8.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The order's step 2 expects a job's security to be named by a collector id `security-<hash>` or a `gold_security_key`, and asks which field was joined on and how many jobs lack it; step 3 expects every job to credit one security.",
+      "world_is": "Of 1,258 distinct jobs in the union of the S3 and device stores, 390 lack gold_security_key. 23 resolve through the round47 identity file (collector key to pool key), 7 are already pool-form keys, 120 resolve through the ticker on the device runs file or a collector security file matched to a covered ticker, and 240 jobs (58 distinct keys: bbg 58, wsj 58, barrons 58, sa 64, ft 2) resolve by none of these, because their runs files carry ticker null. 234 covered securities have a resolved job; NEVER COLLECTED = 8 (MRNA, CAT, DG, GEV, CSL, BE, ED, 6861_JP). A heuristic read of the unresolved jobs' stored article titles found 0 naming any of the 8. The reviewer's 323 distinct securities counts raw keys in mixed forms (pool-form and security-<hash>), not securities.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~119/bl1_never_collected.out (JOIN ROUTE counts, UNRESOLVED jobs, TITLE EVIDENCE lines)",
+          "lib/opal_data_harvest/__main__.py universe(): collector `key` versus pool `security_key`"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T08:47:00Z",
+      "one_line": "The order's crosswalk of 237 records is the 2026-09-29 object; the object the crosswalk loader reads (latest) is 2026-10-07 with 243 records.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bm-1 s.0: the CROSSWALK has 237 records and lib/research/identity/crosswalk.py says where the object lives and how it is loaded.",
+      "world_is": "crosswalk.load_crosswalk() reads the LATEST crosswalk/v1/<date>.json, which is 2026-10-07 with 243 records (sha not pinned in the order); the 237-record object is crosswalk/v1/2026-09-29.json (sha256 68a788347ec2bb9cdbeae19afb784771a74e40f3e5921fd42fbe6751269d5bee), the one the pool universe's own refusal text names. Done instead: the script compares against the latest (243, the loader's read) and prints, on its CROSSWALK OBJECT NOTE line, the 237 object and the six keys the latest adds (ABNB_US_Equity, BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity). The region counts are the same for either object except CROSSWALK ONLY (ABNB only under the latest).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.out (CROSSWALK OBJECT NOTE line)",
+          "lib/research/identity/crosswalk.py (load_crosswalk, _read_pool_latest)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T08:47:30Z",
+      "one_line": "Eight keys, not three, are on the gold list and absent from the collector's files; BE, DG, ED, GEV and MRNA are pool holdings with names and no registrations.json entry.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bm-1 s.0: three keys (CAT_US_Equity, CSL_AU_Equity, 6861_JP_Equity) are known to be on the list and absent from the collector's files; s.1 item 6 expects ADDED of at least 3.",
+      "world_is": "The 242-key gold list less the 234 collector keys is 8 keys: the three named plus BE_US_Equity, DG_US_Equity, ED_US_Equity, GEV_US_Equity, MRNA_US_Equity. The five are pool 'holding' records with a pool name and no entry in lib/research/identity/registrations.json, so round 47's at-5 (registry folders only) could not reach them. Done instead: the order's rule (one entry and one record for each key on the list and absent from the collector) was applied to all 8, the five built from the pool record alone by R2 (sa_symbol DERIVED, not probed); ADDED is 8. CSL_AU_Equity and 6861_JP_Equity come out sa_symbol UNRESOLVED (R3); the gold list carries a ticker_anchor_symbol CSLLY for CSL from the alias rule file, which is not a stored sa_symbol resolution and was not used.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.out (ADDED block)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T09:04:30Z",
+      "one_line": "bm1_three_universes.py regenerates rank_universe_identity_20261008.json from the builder, so re-running it after HVST-bm-2 silently reverts the AIG and KCDMY repairs and still prints RECONCILE OK.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-bm-2 s.1 item 2: the repair is made in the two new files only; bm-1's own AC2 invocation (cat of bm1_three_universes.out) is a read of a stored output, not a re-run.",
+      "world_is": "bm1_three_universes.py line 222 writes NEW_IDENTITY from the builder's rules and compares it to the round-47 file (EXISTING RECORDS CHANGED 0), so a re-run after bm-2 rewrites AIG_US_Equity as 'American International Group I' and KCDMY_US_Equity as 'Kimberly-Clark de Mexico SAB d' and prints RECONCILE OK; bm2_truncated_names.py would then have to be run again, and the 'sha256 48cb40f6...' in bm-1's proof instance no longer matches the file (now f3680024...). Done instead: bm-2 changed nothing in the bm-1 script; run order is bm1 then bm2, and the bm-2 plants (test_bm2_truncated_names.py) fail if the repair is reverted. Not run: bm1 script after bm-2.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.py (lines 197-226)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm2_truncated_names.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "AIG's only stored full name is the SEC ticker-to-CIK name quoted inside a reason/evidence sentence, in capitals; every name field holds the 30-character cut or null.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 1: a full name may come, in order, from the pool record's name for that exact key, registrations.json identity.name, the crosswalk record, the older identity file ~94, and last from three agreeing article spans; the stored name becomes the full legal name.",
+      "world_is": "For AIG_US_Equity the pool record (universe/v1/2026-10-06.json) has name null, there is no registrations.json entry, the crosswalk legal_name and the ~94 file hold the cut 'American International Group I', and silver holds 0 spans of the name in 20500 articles. The only full name is 'AMERICAN INTERNATIONAL GROUP, INC.', which the pool record's resolution_reason and the crosswalk record's source_row.bloomberg_ticker.evidence both quote from the SEC ticker-to-CIK table (cik 5272). Done instead: that string is taken as written (not re-cased) as source 1b/3b, the first usable source in the order; the record's company is 'AMERICAN INTERNATIONAL GROUP, INC.' in capitals, which slug_query keeps in capitals ('AMERICAN INTERNATIONAL'). Not done: a name field read, because none holds one; no title-casing, which would be a derivation the order does not name.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_stored_sources.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "ICT_US_Equity's pool/crosswalk evidence carries SEDOL 6455819 with domicile PH, the same SEDOL ICT_PM_Equity's registration holds, though the order says no field shows they are one issuer.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 2: whether ICT_US_Equity and ICT_PM_Equity are one issuer is not shown by any field and is not inferred.",
+      "world_is": "The pool record and crosswalk record for ICT_US_Equity say 'compiled stable_id 6455819_PH (SEDOL 6455819 + domicile PH)'; registrations.json for ICT_PM_Equity holds sedol 6455819 and isin PHY411571011, and the 2026-10-06 pool's key-less 'ICT' holding names both keys as root-equal candidates, NAMED, NOT merged. Whether that is a field that shows the two are one issuer was not judged. Done: nothing from ICT_PM_Equity was used as a source for the US key; ICT_US_Equity stays 'International Container Termin' with verdict NOT REPAIRED (no stored source, 0 article spans in 20500 articles). Not done: no inference of issuer identity either way.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_stored_sources.json@a523c06593",
+          "lib/research/identity/registrations.json (ICT_PM_Equity entry, identity.sedol)@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "No held article carries the AIG or ICT full name in title or body, so the query-match counts are 0 of 0; the silver read held 20500 articles, not about 19,000.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 3: print QUERY MATCHES n of m titles that carry the full name, with five examples; the silver read covers about 19,000 articles.",
+      "world_is": "The silver iterator yielded 20500 articles (barrons 203, bbg 2939, ft 185, sa 16558, wsj 615). Spans beginning with the cut value: American International Group I 0, International Container Termin 0, Grupo Aeroportuario del Centro 7 (in 5 articles, 0 of them in a title that carries the whole name). So QUERY MATCHES reads 0 of 0 for AIG and for both OMAB keys and its five 'carry' examples are empty; the OTHER COMPANIES count is 2 for AIG (American Airlines titles) and 0 for OMAB. Done: the counts are printed as measured with the cause stated beside them, and the stated limit is asserted by plant (ii). Not done: any synthetic title or slug built to make the query 'match'.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_article_scan.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W121-S4",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~121",
+      "surfaced_at": "2026-10-08T09:52:59Z",
+      "one_line": "OMAB_MM_Equity was completed from the same article spans as OMAB_US_Equity although the pool refuses a cross-listing link between the two for the SEC CIK.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bn-1 s.1 item 1: a last-resort source is the company's name as written in held article text, the same completion in at least three distinct articles; item 2 rules only ICT's two keys 'not inferred' as one issuer.",
+      "world_is": "Both OMAB records store the identical cut string 'Grupo Aeroportuario del Centro'; the completion 'Grupo Aeroportuario del Centro Norte' stands in 4 distinct silver articles (sa:3677299, sa:3957263, sa:3958868, sa:4018738) and is consistent with the registry's own 28-character name 'GRUPO AEROPORTUARIO DEL CENT' for OMAB_MM. The pool's OMAB_MM resolution_reason refuses to link that key to CIK 1378239 as a cross-listing ticker collision. Done instead: the rule was applied to each key on its own stored string, with 'evidenced by article spans only' in each evidence, and no identity between the two keys was inferred; both come out 'Grupo Aeroportuario del Centro Norte'. The issuer may judge that wider than the order intended and revert either record by the one script.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~121/bn1_names_made_whole.out@a523c06593",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json@a523c06593"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

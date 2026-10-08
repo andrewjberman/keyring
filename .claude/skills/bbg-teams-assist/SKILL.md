@@ -26,10 +26,13 @@ runs.**
 **0. Preconditions (already standing, restated as the gate):** the step-2a `whoami`
 identity gate passed this session (prompt.md On-Launch); the Teams Monitor is the stock
 engine armed WITH the identity pin (no wrapper — the scratch-wrapper pattern is dead by
-design). The canonical arm line (Monitor tool, persistent):
+design). The canonical arm line (Monitor tool, `timeout_ms: 1800000`). `teams-watch.py` has no exit of its own
+(`while True`, teams-watch.py:531), and the harness kill at 30 minutes stops only the Monitor wrapper, so the
+`timeout 1770` prefix is what ends the python (29.5 minutes, Andrew-direct 2026-10-08 ~16:2xZ). Re-arm on its
+exit and run the backlog sweep (`/bbg-teams-assist`) to cover the gap:
 
 ```
-python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity opalbloomberg
+timeout 1770 python .claude/skills/teams-assist/teams-watch.py --server opal-gateway-bbg --identity opalbloomberg
 ```
 
 The pin is mandatory for this seat — a pin that cannot be satisfied dies loudly

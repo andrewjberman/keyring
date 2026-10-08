@@ -70,3 +70,37 @@ would pass, and the install would then fetch. The lift stands, with one term add
 metadata-request measurement, if a read exists that decides it without a fetch.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 2 -- ROUND 29 (2026-10-07 ~22:5xZ), on `3.0.0_SA_CVO~Z` slug msg 31443 (`ADJUDICATION_v21.Z.md` @b24ebf4e74)
+
+Round 29: OG-bi-3, OG-bi-4 and OG-rl-14 complete. r28 `aa75078e1b` live since 21:49:10Z (`2.0.0_SA_COO~O` msg 31437); CTO half
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_NFRA_OPLGTW_OG-rl-14_GATEWAY_R28_20261007.md` @8614c48050. `rl14.AC1` and `AC2`
+PASS. **R45 read 0:** 0 of 6,441 cache entries touched, bytes and file count equal before and after, 0 download lines in the
+build log; the host's pip 47 already satisfied, 0 downloads. The first measured gateway deploy that wrote no package.
+
+**Row Z-S67 (ARMED): the restart revoked the scoped concierge's sign-in.** No half named it; this seat's included.
+- Measured by the issuer (read-only): the concierge's token family revoked at 21:49:12Z, reason `refresh_token_reuse`;
+  generation 31 consumed, generation 32 issued and the family revoked in the same second; r26 and r27 revoked none.
+- Measured by the issuer: `opal-gateway-bbg` is configured once at the Windows user level, 12 Claude sessions run on this box,
+  and they share ONE credentials file. So up to 12 clients hold one refresh token and each reconnects after a restart.
+- Measured by this seat at ~21:5xZ and ~22:4xZ: `opal-gateway-bbg` refuses with "sign in again"; `opalgateway` answers.
+- NOT measured: how many distinct clients presented generation 31 in that second (OG-dr-1's journal read).
+
+**Rulings, in the order they were made and unmade.**
+- **R47 (msg 31444): the remedy is a drain before restart. WITHDRAWN as the remedy by msg 31452,** on the 0-second gap: a token
+  presented twice after the reconnect is not a refresh cut in flight, and a drain does not prevent it. OG-dr-1 finishes its
+  read; its build is drained by no one until this seat rules on that read.
+- **R48 (msg 31448): no grace for a previous token generation is built now.** Stands. Ground: `4.0.0_SA_CRO~Z`'s research
+  @b4f6065e49 (its section on outside practice is recall, nothing fetched): the estate stores token hashes only, and the reuse
+  branch runs before the client check. It comes back with the journal count.
+- **R49: the release form names the re-authentication a deploy can cost and who performs it; no gateway deploy inside the 12
+  hours before the 07:00 America/New_York send without that named.** Stands until Z-S67 is disarmed.
+
+**What the remedy depends on:** the journal count. Two or more clients presenting one generation is a client-side cause: one
+sign-in shared by many sessions. The choices are then one session per sign-in, a client-side single refresh, or a same-client
+grace. Changing how every session on this box is configured goes to Andrew as his act.
+
+**ACT ONLY ANDREW CAN DO (cited):** the sign-in of `opal-gateway-bbg` (`/mcp` in the `0.0.3_BG_BBGTerminal` window), before the
+2026-10-08 07:00 America/New_York send. It is his Microsoft login.
+
+-- 1.0.0_SA_CTO~Z
