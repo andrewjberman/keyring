@@ -1417,3 +1417,54 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Existence of every declared_in path is not the test the build defines: the probe's `bronze/` matched this row at the base through its (bucket, key) match and now matches it as the only candidate of the key, so by the defined rule it is one stale hint. No weakening made. Two ways to reach 0, both outside this cell: the registry's lane adds the probe path to the row's declared_in, or the COO amends item 2 so a match the item's own bucket confirms is not stale."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S3 -- BF-v-4 newly counts a local-built SCHEDULE name whose cadence the cadence reader cannot see: one new HOLE in a mapped root
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S3",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T21:34:00Z",
+  "one_line": "BF-v-4 counts a local-built schedule name in the mapped root investor-reporting/intake and the run prints one new HOLE (hole=0 -> hole=1): the cadence reader sees only literal names, so no cadence row exists for it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json at wk-LGIC_BLANKFIX-4: `OTHER-HOLE investor-reporting/intake || SCHEDULE irpt-intake-poll -> partial form irpt-intake-poll-{cadence}; could not fill {cadence}: no cadence row for this name  [infra/aws/terraform/investor-reporting/intake/main.tf:122]`; the last line reads hole=1 other_holes=1 where the round-6 run (ALL_ROOTS_round6.txt) read hole=0",
+      "infra/aws/terraform/investor-reporting/intake/main.tf:122 `schedule_name = \"irpt-intake-poll\"` (a literal local); the schedule resource names itself name = local.schedule_name",
+      "lib/opal_naming_cadence.py cadences() builds its rows from opal_naming.census_tf_names(), which reads only literal names, so a schedule or event rule named through a local never gets a cadence row (lib/opal_naming_cadence.py:228-235)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-4 step 1: a locals value that is a literal is counted as an ordinary item with its where at the declaring line, and step 2: a mapped root's names newly counted by step 1 are graded like any other.",
+  "world_is": "Graded like any other, the newly counted SCHEDULE has no cadence row, so decide() cannot fill {cadence} and prints a HOLE; the same newly counted names in investor-reporting/core, ycharts and opal-assets grade FIX or RIGHT. The moved mapped-root counts: investor-reporting/core items 21 -> 22, investor-reporting/intake 5 -> 10, investor-reporting/ycharts 14 -> 16, opal-assets 84 -> 117 (all other mapped roots unchanged). The hole is the honest reading and nothing was hidden or weakened; the repair is outside this cell's grant (lib/opal_naming_cadence.py would read the same locals the scope now resolves), and a where at the resource block line would not repair it because the cadence reader keys on the literal census names."
+}
+```
+
+## LGIC_BLANKFIX-W4-S4 -- the round-5 saved-run check reads BF-v-4's newly counted names in four mapped roots as a difference
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T21:40:00Z",
+  "one_line": "The round-5 saved-run check (deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py, the BU3-AC3 instrument) now prints repeat=DIFFERS because BF-v-4 counts new names in four mapped roots.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py at wk-LGIC_BLANKFIX-4 -> `FAIL: investor-reporting/ycharts: 16 rows for 14 saved lines` / `FAIL: opal-assets: 117 rows for 84 saved lines` / `ALL-ROOTS-R5 ok=False mapped=13 unmapped=74 items=412 hole=0 stopped=0 repeat=DIFFERS`",
+      "the same four roots are listed in row LGIC_BLANKFIX-W4-S3 with their before and after item counts; the unchanged mapped roots still match their saved lines"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-4 step 2: a mapped root's names newly counted by step 1 are graded like any other; and BU3-AC3 (round 6): no line of a mapped root changes its answer from the round-5 saved runs.",
+  "world_is": "The two statements cannot both hold once a mapped root carries a name built in a local: the new lines are added rows, not changed answers, but the round-5 checker compares row counts against the saved file and reads any added row as a difference. No weakening made and the ~2 checker is outside this cell's grant; a later cell may re-baseline the saved run or let the checker ignore rows whose where is not in the saved file."
+}
+```
