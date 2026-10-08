@@ -50,8 +50,9 @@ shipped as `data/mdpf/scripts/gold/mdpf_gold_catchup.py`). That cell stays. It i
 
   FWD-3  An operator closes an existing hole with one act that says beforehand exactly what it will fetch, and a day
          that cannot be truthfully fetched is shown as missing, never filled with another day's data
-         DONE WHEN  EXERCISED -- one real hole repaired by one act whose source can still serve that day; and the
-                    eleven days 2026-08-31 to 2026-09-10 read as marked-missing, not filled
+         DONE WHEN  EXERCISED -- one hole repaired by one act on the day it opened (the source serves current state
+                    only), the hole induced on purpose as FWD-1's was; and the eleven days 2026-08-31 to
+                    2026-09-10 read as marked-missing, not filled
          ACCEPT     before it fetches anything, the repair says which days and which kinds of data it will
                     fill; afterwards exactly those are present and nothing else changed; a repair that
                     notifies instead of fixing, that fills days it did not name, or that puts today's data
@@ -189,3 +190,7 @@ approved", @e5fb41862f).
 It also now promises that a day which cannot be truthfully filled reads as missing, with its reason. FWD-3 is AMENDED (the outcome
 was wrong about what is recoverable), not retired: the capability stands. This is an ENDPOINT change, so the ratified-text half
 re-opens for `3.0.0_SA_CVO`'s signature. No other outcome moves.
+
+**v0.2 wording note (~14:5xZ, CVO review @e0ed8e415a):** "a hole whose source can still serve that day" can only be a same-day
+hole, so the DONE WHEN says so and admits an induced hole, as FWD-1's was. Wording only: the promise is unchanged, and the notifier
+does not wait on a re-sign of wording (CLAUDE.md rule 27, proportionate sign-off).
