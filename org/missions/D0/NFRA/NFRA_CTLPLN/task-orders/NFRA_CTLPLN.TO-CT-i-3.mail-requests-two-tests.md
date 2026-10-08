@@ -101,8 +101,13 @@ teams-chat and End of Day test files and its last line, which must show 0 failed
 <criterion id="CTi3-AC1" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/tests/test_inbound_mail.py</invocation><expect>INBOUND-MAIL-TEST ok=True</expect></criterion>
 `CTi3-AC1` -- the two tests with their difference control: a message failing either reaches no model; one passing both and asking for work becomes one text.
 
-<criterion id="CTi3-AC2" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/teams_chat/mail_requests.py --check-domains</invocation><expect>MAIL-DOMAINS ok=True</expect></criterion>
+<criterion id="CTi3-AC2" cell_refs="CT-i-3"><invocation>python data/transcripts/scripts/teams_chat/mail_requests.py --check-domains --expect-missing 2</invocation><expect>MAIL-DOMAINS ok=True</expect></criterion>
 `CTi3-AC2` -- the seam with the real neighbour: the five firms' domains load from the estate's real records and none is typed. If you filed BLOCKING rows for firms with no recorded domain, record the run with `--expect-missing <n>` beside this one in your report and leave this criterion FAIL: the issuer rules it.
+`CTi3-AC2`, AMENDMENT 2 (issuer ruling on rows W31-S4 and W31-S5): Alongside and Opal have no mail domain in the estate's firm
+records, measured by the cell; no domain is typed to fill the gap. The criterion is run with `--expect-missing 2`: the three
+recorded firms load, the two unrecorded ones are named and their mail is NOT considered until the firm records carry them. The
+two record rows are asked of `1.0.0_SA_CTO` by the issuer. Re-run it, record the new output in the instance as PASS,
+re-validate, and flip `<status>` to `complete`.
 </proof_of_spec>
 
 <expected_criteria>CTi3-AC1,CTi3-AC2</expected_criteria>

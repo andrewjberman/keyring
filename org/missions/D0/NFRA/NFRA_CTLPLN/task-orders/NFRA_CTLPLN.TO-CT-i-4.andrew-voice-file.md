@@ -71,6 +71,27 @@ The agent that drafts in his name is `data/transcripts/scripts/teams_chat/` (`as
     client's, person's or firm's name or a quoted message from one), as counts by class and line numbers, quoting nothing
     longer than five words. You change nothing in that file.
 
+### AMENDMENT 2 (issuer; a second build item of this order, do it AFTER the voice build)
+
+`CT-i-3` left one hop of the mail thread open (its row W31-S7): a mail request is texted to Andrew under a tag `M` plus three
+digits, and nothing routes his reply to that tag. `assist.TAG_RE` admits the letters C, E, J, K and T only, and `#dev` opens a
+job from a CHAT (`tenant.open_job`). Build, in `assist.py`, `tenant.py` and `mail_requests.py`, the smallest change that makes
+his texted reply to a mail item act on it, the same way a reply to a chat item does:
+- `<M tag> #dev [notes]` opens a job: the job's transcript is the mail (sender name, firm, subject, body as plain text), its
+  requester the sender's name, its `chat_id` empty and a new field `origin` reading "mail" with the message id; the pending
+  item is dropped. From there the job is offered, bid, awarded and completed exactly as a chat job.
+- `<M tag> 0` drops the item. `<M tag> 1` and notes-to-redraft are answered with one line saying a reply by mail is not
+  built (no mail is ever sent by an agent), and the item stays.
+- A job whose `origin` is "mail" posts NOTHING to Teams: "I'm on it" and the completion message are not sent to any chat;
+  at completion Andrew is texted the summary under the job's tag with the line `Reply to <sender name> by mail yourself; no
+  mail is sent for you.` and the job closes on his `#close`.
+- Every existing chat path stays byte-for-byte what it is.
+Test file `data/transcripts/scripts/tests/test_inbound_mail_reply.py` (plain script, every model call and send faked, invented
+names): the three replies above; a mail job reaches `bidding` with its transcript holding the mail; a completed mail job
+makes zero gateway chat sends (the difference control: the same completion on a chat job makes one after his 1); an `M` tag
+that names no item is answered as an unknown tag is today. LAST line `INBOUND-MAIL-REPLY-TEST ok=<True|False>
+cases=<passed>/<total>`. This is criterion `CTi4-AC3`; the fourth-criterion rule does not apply (three in all).
+
 ### BUILD
 
 1. `data/transcripts/scripts/teams_chat/andrew_voice.md` (ASCII only). A short head (what the file is, his words above, that
@@ -134,13 +155,15 @@ The agent that drafts in his name is `data/transcripts/scripts/teams_chat/` (`as
 
 <criterion id="CTi4-AC2" cell_refs="CT-i-4"><invocation>python data/transcripts/scripts/teams_chat/voice.py check</invocation><expect>VOICE-FILE ok=True</expect></criterion>
 `CTi4-AC2` -- the real file against its real neighbour: five kinds, and the End of Day section word for word equal to the brief the End of Day post reads today.
+<criterion id="CTi4-AC3" cell_refs="CT-i-4"><invocation>python data/transcripts/scripts/tests/test_inbound_mail_reply.py</invocation><expect>INBOUND-MAIL-REPLY-TEST ok=True</expect></criterion>
+`CTi4-AC3` -- added by AMENDMENT 2: his reply to a mail item acts on it, and a mail job sends nothing to Teams.
 </proof_of_spec>
 
-<expected_criteria>CTi4-AC1,CTi4-AC2</expected_criteria>
+<expected_criteria>CTi4-AC1,CTi4-AC2,CTi4-AC3</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~31/NFRA_CTLPLN.TO-CT-i-4.andrew-voice-file.proof_of_spec.json`,
-validate it with `python .tools/proof-of-spec-check.py <instance> CTi4-AC1,CTi4-AC2`, and flip `<status>` to `complete` only when
+validate it with `python .tools/proof-of-spec-check.py <instance> CTi4-AC1,CTi4-AC2,CTi4-AC3`, and flip `<status>` to `complete` only when
 every criterion passes and the instance is VALID.
 
 <decomp_ref>
@@ -155,6 +178,7 @@ data/transcripts/scripts/teams_chat/assist.py
 data/transcripts/scripts/teams_chat/tenant.py
 data/transcripts/scripts/teams_chat/mail_requests.py
 data/transcripts/scripts/tests/test_inbound_voice.py
+data/transcripts/scripts/tests/test_inbound_mail_reply.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
