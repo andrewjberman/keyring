@@ -22236,7 +22236,30 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
       "git worktree list: C:/tmp/wk-crps-r40-4 366ad30240 [wk-AMGT_CORPUS-40-4]"
     ]
   },
-  "notes": "Surfaced, not chased; the other seat's process was not touched. The walker row S1 and this row are one contention (another AMGT-family worker is mid-walk on the shared device). Two walkers cannot run at once on one account and one port; the issuer sequences them."
+  "notes": "Surfaced, not chased; the other seat's process was not touched. The walker row S1 and this row are one contention (another AMGT-family worker is mid-walk on the shared device). Two walkers cannot run at once on one account and one port; the issuer sequences them."},
+{
+  "id": "AMGT_RESAPP-Z-W314-S3",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~314",
+  "surfaced_at": "2026-10-08T22:22:16Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "one_line": "On ASML NA's Thesis tab no figure in the thesis text is a control: the figure press changed nothing, and the passage under the sentence is drawn when the card opens, not by a press on the figure.",
+  "spec_asserts": "The order (AMGT-cc-8, FWD-18): 'find a figure in the thesis text that can be pressed and press ONE ... record what opens: which passage, from which filing, with which heading and paragraph'. The issuer's read (round79/reads/FWD18_ASML_SERVED_READ.md): 'press the figure in the company-description sentence \"... (8 persons) held 51,095.11 shares, or 0.01%.\" and read that it opens the filing passage'.",
+  "world_is": "On portal 38cc0ecf the Thesis tab holds no pressable figure (pressables: two 'Where this comes from' summaries and the three cards). The sentence with 51,095.11 shares is inside the 'Investment thesis' card's window, under 'No company description is on file yet.' and 'FILED DETAIL (DOES NOT DESCRIBE THE BUSINESS)'. A press on the figure's own text (cursor auto) left the window as it was: dialogs 1, dialog text length 798, passages 2, URL, page count 1 and popover count all unchanged before and after. The passage P0064 'Members of ASML's current Board of Management and Supervisory Board (8 persons) 3' (20-F filed February 25th, 2026, Item 3.D. Risk Factors > 5.09% > paragraph 65) and P0065 (paragraph 66) were already written under the sentence when the card was pressed. On BA the point is pressed through the link under the chart ('2025: 600 -- show the filing passage'), since the chart's own dots carry no handler; that press rendered the passage once. The walk recorded all of this; it did not grade it.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~314/data/run3/fwd18/ASML_figure_press.json (before and after snapshots equal)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~314/captures/017-fwd18-ASML-figure-before-press.png and 018-fwd18-ASML-figure-after-press.png",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~314/data/run3/fwd18/ASML_card_windows.json (investment_thesis window text, passages P0064 and P0065)",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~314/data/run3/fwd18/ASML_thesis_panel_pressables.json"
+    ]
+  },
+  "notes": "Surfaced, not chased; it is a finding for the page's owner and the order's premise, not a failure of the walk. Companion to WALK_ROUND79.md FWD-18. Rows Z-W314-S1 and S2 (the first attempt's contention) stay as filed."
 }
 ]
 ```
