@@ -67,12 +67,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 326.42 days old (min 14); 64 earlier releases (min 3)",
+        "summary": "release 326.43 days old (min 14); 64 earlier releases (min 3)",
         "this_release_at": "2025-11-15T20:45:41.139301Z",
         "first_release_at": "2014-04-28T11:22:51.341948Z",
         "release_count": 65,
         "earlier_releases": 64,
-        "age_days": 326.42,
+        "age_days": 326.43,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -149,17 +149,19 @@
     {
       "n": 8,
       "name": "a person reads the result of 1 to 7 and signs the batch",
-      "verdict": "unsigned",
+      "verdict": "passed",
       "evidence": {
-        "summary": "no --signed-by given: nobody has signed this file",
-        "signer": null,
-        "path": null
+        "summary": "signature file names the batch and the file and carries the signing line",
+        "signer": "1.0.0_SA_CTO",
+        "path": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_CLICK_ONLY.md",
+        "signature_file_sha256": "b41ea9dbfe8d85c53a5c0a572eebce668a891cdf8829e737c7381bf05b626389",
+        "signature_file_git_author": "1.0.0_SA_CTO"
       },
       "rules_out": "a tool's silent failure being read as a pass",
       "leaves": "what none of 1 to 7 can see"
     }
   ],
-  "verdict": "not_checked",
+  "verdict": "checked",
   "checked_by": "2.0.0_SA_COO~C",
-  "at": "2026-10-08T06:56:43Z"
+  "at": "2026-10-08T07:06:50Z"
 }

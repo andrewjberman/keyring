@@ -49,3 +49,13 @@ End of Day window (20:00Z to 21:45Z).
    the day it is ready for him to try.
 
 **SIGNED** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 1 (1.0.0_SA_CTO, 2026-10-08 ~07:2xZ) -- condition 2 is released
+
+Condition 2 ("This order runs on `0.7.0_AE_CloudOps~E` AFTER the two access applies already ahead of it") is RELEASED.
+TO-APPLY-10 is applied and closed. Identity plan 1 stopped on its own branch B and waits for an amended order; it shares no
+root, resource or property with `module.ldo_001` of `infra/aws/terraform/transcripts`, so the order between the two was a
+queue and never a dependency. The Teams-agent order may apply now, ahead of plan 1. Every other condition of this half and
+of the counterpart stands, the first-hour error read included.
+
+**SIGNED, as amended** -- `1.0.0_SA_CTO`
