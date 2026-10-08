@@ -2900,3 +2900,140 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
 }
 ```
+
+
+## NFRA_CTLPLN-W8-S9 -- a worker's start text is its subagent definition (.claude/agents/worker.md), which is neither the launcher nor org/ref/SEAT_ROLES.json, so the table's LAUNCHER holder had to admit a third path
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "a worker's start text is its subagent definition (.claude/agents/worker.md), which is neither the launcher nor org/ref/SEAT_ROLES.json, so the table's LAUNCHER holder had to admit a third path",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read of .claude/agents/worker.md lines 14-90 at the worktree HEAD: 'Commit on your worktree branch only; never push, merge, rebase, `checkout --` or `clean`.' and 'Never: edit outside the task order's <paths>'",
+      "grep of .tools/ajb.ps1 Get-AgentLoopDirective (lines 66-110): arms for 0.0.0_AB_MSTR, CTO, COO, CVO, CRO, AE_CloudOps, Tier-2/3 (DS|AE|DE|DT|RD) and UA|BG; no 0.9.0_WK_ arm"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 2: 'LAUNCHER rules name org/ref/SEAT_ROLES.json or the launcher'.",
+  "world_is": "The rules a worker is handed (commit on the worktree branch only; a surprise is a row, never a question; edit nothing outside <paths>) sit in .claude/agents/worker.md, handed at spawn by /dispatch Step 4; .tools/ajb.ps1 has no WORKER arm and org/ref/SEAT_ROLES.json is not in this tree (CT-s-1's file). I added .claude/agents/worker.md to the checker's LAUNCHER path set (LAUNCHER_PATHS in .tools/seat-rules-check.py) rather than file a worker rule under a path that does not hold it.",
+  "notes": "For 2.0.0_SA_COO~C: if CT-s-1 gives the WORKER kind a statement in org/ref/SEAT_ROLES.json, the three worker LAUNCHER rows (R-GITOPS-8, R-GITOPS-9, R-WORKFLOW-29) can name that file instead; until then the table names the file that really holds the text."
+}
+```
+
+
+## NFRA_CTLPLN-W8-S10 -- the lane gate does NOT confine a worker to its order's <paths> on a path in an ANY lane (.tools/**, docs/**, data/**): it admits the worker before the worker grant is consulted
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the lane gate does NOT confine a worker to its order's <paths> on a path in an ANY lane (.tools/**, docs/**, data/**): it admits the worker before the worker grant is consulted",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "echo .tools/safe-commit.sh | python .tools/owned-paths-validate.py --check-agent 0.9.0_WK_NFRA_CTLPLN~8 .owned-paths.yaml -> no output, rc=0 (the order names only .tools/seat-rules-check.py)",
+      "echo infra/aws/terraform/opal-assets/main.tf | the same command -> VIOLATION ... lane=CLOUD_OPS_OR_ETL ... WORKER: no NON-TERMINAL task order, rc=1",
+      "resolve_lane(.tools/x.py), resolve_lane(docs/x.md), resolve_lane(data/bd/x.py) -> lane ANY with permitted_agents '*' (.owned-paths.yaml read through load_yaml)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md rule 27 and ADHC_OWNPTH.005: 'A worker's write surface is exactly the <paths> its non-terminal order names (.tools/owned-paths-validate.py).'",
+  "world_is": "In .tools/owned-paths-validate.py check_agent, `if permitted == \"*\": return True` (line 303) comes before the worker-grant clause, so a path whose lane is ANY is admitted to a worker whether or not its order names it; only a restricted-lane or an unmapped path is confined to the order. Measured for this worker, whose order names none of them: .tools/seat-rules-unlisted-probe.py, .tools/safe-commit.sh and docs/x.md all rc=0; infra/aws/terraform/opal-assets/main.tf is refused with 'WORKER: no NON-TERMINAL task order'. The table therefore enters the gate's real rule (R-GITOPS-7: restricted lanes, probed) and holds the 'exactly the <paths>' sentence at the worker's start text (R-GITOPS-8), saying that no tool checks it on an ANY-lane path.",
+  "notes": "For 1.0.0_SA_CTO / 2.0.0_SA_COO: whether the worker grant should also bind on ANY lanes is a gate change in 0.0.0_AB_MSTR's registry; this cell only records the real state. Hazard INERT: a worker editing outside its order is not the normal path; the boundary is held by the worker's start text."
+}
+```
+
+
+## NFRA_CTLPLN-W8-S11 -- a gate hook run costs 13 to 34 seconds on this box, so the full probe exercise takes about 52 seconds with 16 probes running at once
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "a gate hook run costs 13 to 34 seconds on this box, so the full probe exercise takes about 52 seconds with 16 probes running at once",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 200 python .tools/seat-rules-check.py exercise -> EXERCISE elapsed=51.9s probes=58 workers=16, then SEAT-RULES ... probes_fail=0 ok=True",
+      "the 24-worker run of 63 probes: R-GITOPS-4 x6 and R-GITOPS-5 FAIL 'timeout after 60s' (they were the heaviest hooks while 40 others ran)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order: run each probe with a 60-second bound and print how long exercise took (the criterion runs under timeout 120).",
+  "world_is": "never-rules-gate.sh spawns many sed/grep/jq processes per call: sequentially 12.8 s (rebase) to 33.6 s (push) per call on 2026-10-08 ~00:5xZ; 63 probe runs in parallel timed out the push probes at 60 s, so the table probes the identity-independent gates (rebase, stash, commit -m, bare terraform apply) with ONE serial that stands for all kinds and the push gate with two. Measured exercise: 'EXERCISE elapsed=51.9s probes=58', all hook probes inside the bound.",
+  "notes": "For the issuer's drain run: expect 50-90 s on a loaded box. If a hook probe times out the line reads probes_fail>0 and ok=False; rerun once before reading it as a gate failure."
+}
+```
+
+
+## NFRA_CTLPLN-W8-S12 -- the order's third decision-for-Andrew ('the routes this project denied the Dells to ten older pipeline roles') matches no text in the repository; I entered it as the ten protected Lambda functions plus role passing
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S12",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the order's third decision-for-Andrew ('the routes this project denied the Dells to ten older pipeline roles') matches no text in the repository; I entered it as the ten protected Lambda functions plus role passing",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python read of dell_deploy_policy.json: Deny statements DenyEveryIamWrite, DenyPassRoleExceptNamed, DenyCloudTrailWrites, DenyS3DeletesOnProductionData, DenyTableAndDatabaseDeletes, DenyApiKeyReads, DenyProtectedFunctions",
+      "infra/aws/terraform/nfra-ctlpln-identity/protected_functions.json 'protected' list names the Lambda functions (auth-validator-edge, cache-control-injector, opal-portal-authorizer, ...)",
+      "a phrase search over the project's task-orders/ and prd/ folders for 'ten older' and 'ten pipeline roles' returned nothing"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 1 and the line-for-line delivery list, line 24: 'the routes this project denied the Dells to ten older pipeline roles'.",
+  "world_is": "The only refusal of that size in the identity root is DenyProtectedFunctions in infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json (ten of 233 Lambda functions; CTO half 'NEWLY REFUSED: updates to ten of 233 Lambda functions') beside DenyPassRoleExceptNamed (no role can be passed, named list empty). I entered R-AWSDEVOPS-7 on that reading, holder GATE (an IAM Deny), with a probe that reads the policy FILE (declared), because no request leaves this machine and whether the Deny is applied live is not read here.",
+  "notes": "For 2.0.0_SA_COO~C: if 'ten older pipeline roles' means something else, say which and the row R-AWSDEVOPS-7 is re-pointed; the question to Andrew is worded on the policy it can see."
+}
+```
+
+
+## NFRA_CTLPLN-W8-S13 -- the probes for the tools other cells build use the output text and the notice shape those cells' orders state, not text I could run, so a drain run may flag a mismatch that is mine
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S13",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T01:07:32Z",
+  "one_line": "the probes for the tools other cells build use the output text and the notice shape those cells' orders state, not text I could run, so a drain run may flag a mismatch that is mine",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-s-3.apply-who-and-crossbox-deploy.md lines 67-92 (APPLY-WHO and CROSSBOX-DEPLOY line formats, the notice file keys)",
+      "TO-CT-s-4 line 125, TO-CT-s-5 lines 89 and 116, TO-CT-s-6 lines 97 and 126, TO-CT-s-8 lines 83 and 132 (the selftest expectations)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-s-2 order BUILD 1 names the probes for CT-s-3 (apply-who-check, crossbox-deploy-check), CT-s-4, CT-s-5, CT-s-6 and CT-s-8 and says a probe whose tool does not exist yet and whose rule says built_by is counted PENDING.",
+  "world_is": "None of those tools is in this tree, so 13 probe runs read PENDING. The expectations are the last-line tokens each order states (APPLY-WHO ... verdict=REFUSED; CROSSBOX-DEPLOY ... verdict=STOP; CALL-SCOPE-SELFTEST cases=k/n ok=True; CROSSBOX-SELFTEST; ROUND-CLOSE-SELFTEST; RESEARCH-OWED-SELFTEST; MSTR-RECORD-SELFTEST). The CT-s-3 stop probe also writes a notice fixture (root infra/aws/terraform/opal-assets, rule no-apply, until 2099-12-31T23:59:59Z) in the key shape CT-s-3's order states; if that tool reads the root or the timestamp in another form the probe reads no STOP and the drain line shows probes_fail>0.",
+  "notes": "For 2.0.0_SA_COO~C: the drain run must read probes_pending=0; any probe that then FAILS names the rule id, so the fix is to the probe's expect or fixture in org/ref/SEAT_RULES.json, not to the tool."
+}
+```
