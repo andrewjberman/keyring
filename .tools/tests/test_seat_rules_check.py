@@ -15,6 +15,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(os.path.dirname(HERE)).replace("\\", "/")
@@ -249,8 +250,112 @@ def summary_line_format_and_ok_logic():
     bad, ok_bad = CK.summary_line(doc, full, [], [{"status": "FAIL"}])
     short, ok_short = CK.summary_line(doc, {"pairs": set()}, [], [{"status": "PASS"}])
     pat = re.compile(r"^SEAT-RULES rules=\d+ gate=\d+ skill=\d+ launcher=\d+ pairs_covered=\d+/24 probes_pass=\d+ "
-                     r"probes_pending=\d+ probes_fail=\d+ needs_andrew=\d+ ok=(True|False)$")
-    return bool(pat.match(good) and ok_good and not ok_bad and not ok_short and pat.match(bad)), good[-70:]
+                     r"probes_pending=\d+ probes_fail=\d+ probes_unread=\d+ needs_andrew=\d+ ok=(True|False)$")
+    # a pending probe is reported and is not a pass: ok needs probes_pending=0 as well (amendment 1)
+    clean, ok_clean = CK.summary_line(doc, full, [], [{"status": "PASS"}, {"status": "PASS"}])
+    unread, ok_unread = CK.summary_line(doc, full, [], [{"status": "PASS"}, {"status": "UNREAD"}])
+    return bool(pat.match(good) and not ok_good and ok_clean and not ok_unread and "probes_unread=1" in unread
+                and not ok_bad and not ok_short and pat.match(bad)), good[-70:]
+
+
+def sleeper(counter, bound, first_only=False, label="sleeper"):
+    """A probe whose command appends one byte to a counter file, then sleeps 30 s (or, first_only, only on its first
+    run), bound seconds being its bound. The counter file counts the runs."""
+    code = ("import sys,time; p=sys.argv[1]; n=len(open(p,'rb').read()) if __import__('os').path.exists(p) else 0; "
+            "open(p,'ab').write(b'x'); print('REFUSED' if %s else 'ADMIT'); "
+            "time.sleep(30 if %s else 0)" % ("n>0" if first_only else "True", "n==0" if first_only else "True"))
+    return {"label": label, "tool": ".tools/seat-rules-check.py", "argv": ["{PY}", "-c", code, counter],
+            "stands_for_all_kinds": True, "expect": "REFUSED", "bound": bound}
+
+
+def sleeper_rule(counter, bound, first_only=False, rid="R-WORKFLOW-1"):
+    return gate(rid, sleeper(counter, bound, first_only), kinds=["CTO"], path=".tools/seat-rules-check.py",
+                entry="BOUND_HOOK")
+
+
+def counter_file(name):
+    """A fresh counter path in a temp directory outside the tree (a probe appends one byte per run)."""
+    path = os.path.join(tempfile.mkdtemp(prefix="sr_test_"), name + ".txt").replace("\\", "/")
+    return path
+
+
+def runs_of(counter):
+    return len(open(counter, "rb").read()) if os.path.exists(counter) else 0
+
+
+@case
+def a_probe_that_sleeps_past_its_bound_reads_unread_and_not_ok():
+    counter = counter_file("unread")
+    if os.path.exists(counter):
+        os.remove(counter)
+    res = run_one(sleeper_rule(counter, 3))
+    line, ok = CK.summary_line({"rules": []}, {"pairs": {(k, a) for k in CK.KINDS for a in CK.AREAS}}, [], res)
+    n_runs = runs_of(counter)
+    os.remove(counter)
+    good = (res[0]["status"] == "UNREAD" and "timeout after 3s" in res[0]["detail"] and not ok
+            and "probes_unread=1" in line and "probes_fail=0" in line and "ok=False" in line)
+    return good, "%s runs=%d %s" % (res[0]["status"], n_runs, line[-70:])
+
+
+@case
+def the_retry_runs_exactly_once_alone():
+    counter = counter_file("retry")
+    if os.path.exists(counter):
+        os.remove(counter)
+    res = run_one(sleeper_rule(counter, 3))
+    n_runs = runs_of(counter)
+    os.remove(counter)
+    return (res[0]["status"] == "UNREAD" and n_runs == 2 and "retried once alone" in res[0]["detail"]), \
+        "%s runs=%d" % (res[0]["status"], n_runs)
+
+
+@case
+def a_probe_that_times_out_once_and_then_finishes_passes_on_the_retry():
+    counter = counter_file("once")
+    if os.path.exists(counter):
+        os.remove(counter)
+    res = run_one(sleeper_rule(counter, 3, first_only=True))
+    n_runs = runs_of(counter)
+    os.remove(counter)
+    return (res[0]["status"] == "PASS" and n_runs == 2 and "first run: did not finish" in res[0]["detail"]), \
+        "%s runs=%d %s" % (res[0]["status"], n_runs, res[0]["detail"][:70])
+
+
+@case
+def a_probe_that_finishes_without_the_refusal_reads_fail_not_unread_and_is_not_retried():
+    counter = counter_file("fail")
+    if os.path.exists(counter):
+        os.remove(counter)
+    pr = sleeper(counter, 20)
+    pr["expect"] = "NEVER-PRINTED"
+    pr["argv"][2] = "import sys; open(sys.argv[1],'ab').write(b'x'); print('ADMIT')"
+    res = run_one(gate("R-WORKFLOW-1", pr, kinds=["CTO"], path=".tools/seat-rules-check.py", entry="BOUND_HOOK"))
+    n_runs = runs_of(counter)
+    os.remove(counter)
+    return (res[0]["status"] == "FAIL" and n_runs == 1), "%s runs=%d" % (res[0]["status"], n_runs)
+
+
+@case
+def bound_is_per_mechanism_and_a_bad_bound_is_refused():
+    hook = CK.probe_bound({"tool": ".tools/hooks/never-rules-gate.sh"})
+    other = CK.probe_bound({"tool": ".tools/owned-paths-validate.py"})
+    own = CK.probe_bound({"tool": ".tools/hooks/x.sh", "bound": 7})
+    doc = base_doc()
+    doc["rules"][0] = gate("R-GITOPS-1", dict(sleeper("x", 5), bound=-1), area="GITOPS", kinds=["CTO"],
+                           path=".tools/seat-rules-check.py", entry="BOUND_HOOK")
+    problems, _ = CK.validate(doc, ROOT)
+    return (hook == CK.BOUND_HOOK and other == CK.BOUND_OTHER and hook > other and own == 7
+            and has(problems, "bound must be a positive number")), "hook=%s other=%s own=%s" % (hook, other, own)
+
+
+@case
+def probes_of_one_hook_run_one_after_another_and_other_tools_in_parallel():
+    jobs = [({"id": "a"}, {"tool": ".tools/hooks/h.sh"}, "s1", "x"), ({"id": "b"}, {"tool": ".tools/p.py"}, "s1", "x"),
+            ({"id": "c"}, {"tool": ".tools/hooks/h.sh"}, "s2", "x"), ({"id": "d"}, {"tool": ".tools/hooks/g.sh"}, "s1", "x"),
+            ({"id": "e"}, {"tool": ".tools/p.py"}, "s2", "x")]
+    groups = CK._groups(jobs)
+    shape = sorted(sorted(item[0] for item in g) for g in groups)
+    return shape == [[0, 2], [1], [3], [4]], str(shape)
 
 
 @case

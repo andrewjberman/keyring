@@ -11,8 +11,23 @@ its probe is actually refused; `exercise` is that proof.
 
 The last line of `exercise`:
   SEAT-RULES rules=<n> gate=<g> skill=<s> launcher=<l> pairs_covered=<c>/24 probes_pass=<p> probes_pending=<q>
-             probes_fail=<f> needs_andrew=<a> ok=<True|False>
+             probes_fail=<f> probes_unread=<u> needs_andrew=<a> ok=<True|False>
 (`probes_*` count single probe RUNS: one probe over four serials is four runs.)
+
+Four outcomes of a probe run, none of them guessed:
+  PASS     the command finished and its output showed the refusal;
+  FAIL     the command FINISHED and its output did not show the refusal (or showed the forbidden text);
+  UNREAD   the command did not finish within its bound, even on one retry run alone: nothing is known about whether
+           the rule refused, so it is neither a pass nor a failure of the rule;
+  PENDING  the tool is built by another cell and is not here yet.
+`ok=True` needs no failure, no UNREAD and no PENDING.
+
+Timing. A hook is a bash script that spawns a pipeline of processes per simple command, and each spawn costs
+0.3 to 0.4 s on this class of box, so one run of .tools/hooks/never-rules-gate.sh is 5 s idle and about 16 s at 85%
+processor load (measured). Probes of ONE hook script therefore run one after another (never in parallel with each
+other); different mechanisms run in parallel. The bound is per mechanism: BOUND_HOOK for a .sh hook, BOUND_OTHER for
+anything else, or a probe's own `bound` key. A probe that hits its bound is killed as a tree and, after every other
+probe has finished (so it runs alone), is run ONCE more with the same bound before it is called UNREAD.
 
 Probe forms (all harmless by construction; none pushes, commits, merges, applies, sends or starts a seat):
   - a hook script fed a JSON stand-in of the tool call on standard input (the form .tools/hooks/tests/ uses),
@@ -52,7 +67,7 @@ RULE_KEYS = {"id", "area", "kinds", "rule", "holder", "mechanism", "probe", "bui
              "source"}
 REQUIRED_KEYS = {"id", "area", "kinds", "rule", "holder", "mechanism", "probe", "built_by", "needs_andrew"}
 PROBE_KEYS = {"label", "tool", "argv", "stdin", "stdin_json", "env", "git_branch", "files", "serials", "expect",
-              "expect_rc", "forbid", "stands_for_all_kinds"}
+              "expect_rc", "forbid", "stands_for_all_kinds", "bound"}
 # The launcher is .tools/ajb.ps1; org/ref/SEAT_ROLES.json is the file CT-s-1 writes for it to hand a seat; a worker's
 # own start text is its subagent definition (see the row filed with this table).
 LAUNCHER_PATHS = {"org/ref/SEAT_ROLES.json", ".tools/ajb.ps1", ".claude/agents/worker.md"}
@@ -72,7 +87,17 @@ KIND_PATTERNS = [
     ("CLOUDOPS", re.compile(r"^0\.[0-9]+\.[0-9]+_AE_Cloud(Ops|Comp)(~[A-Za-z0-9]+)?$")),
     ("TIER2", re.compile(r"^0\.[0-9]+\.[0-9]+_(DS|AE|DE|DT|RD)_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$")),
 ]
-PROBE_TIMEOUT = 60
+# Per-probe bounds in seconds. A hook run was measured at about 16 s alone at 85% processor load (5 s idle):
+# 90 s is a margin of about 5x on the loaded figure. Everything else is a python tool or a self-test: 60 s.
+BOUND_HOOK = 90
+BOUND_OTHER = 60
+
+
+def probe_bound(probe):
+    own = probe.get("bound")
+    if isinstance(own, (int, float)) and not isinstance(own, bool) and own > 0:
+        return own
+    return BOUND_HOOK if str(probe.get("tool", "")).endswith(".sh") else BOUND_OTHER
 
 
 def kind_of_local(serial):
@@ -233,6 +258,9 @@ def _validate_probe(where, pidx, pr, kinds):
     rc = pr.get("expect_rc")
     if rc is not None and not isinstance(rc, int):
         out.append("%s: expect_rc must be a number or null" % tag)
+    bound = pr.get("bound")
+    if bound is not None and (isinstance(bound, bool) or not isinstance(bound, (int, float)) or bound <= 0):
+        out.append("%s: bound must be a positive number of seconds" % tag)
     serials = pr.get("serials")
     if serials is not None:
         if not isinstance(serials, list) or not serials or any(not isinstance(s, str) for s in serials):
@@ -330,7 +358,9 @@ def _kill_tree(proc):
 
 
 def run_probe(rule, probe, serial, root, bash_path):
-    """One probe run. Returns dict(status PASS|PENDING|FAIL, detail)."""
+    """One probe run. Returns dict(status PASS|PENDING|FAIL|UNREAD, detail). UNREAD = the command did not finish
+    within its bound; FAIL = it finished and the output did not show the refusal."""
+    bound = probe_bound(probe)
     tool_path = os.path.join(root, probe["tool"])
     if not os.path.exists(tool_path):
         if rule["built_by"] != "existing":
@@ -369,10 +399,10 @@ def run_probe(rule, probe, serial, root, bash_path):
             with open(in_path, "rb") as fin, open(out_path, "wb") as fout:
                 proc = subprocess.Popen(argv, stdin=fin, stdout=fout, stderr=subprocess.STDOUT, cwd=tmp, env=env)
                 try:
-                    proc.wait(timeout=PROBE_TIMEOUT)
+                    proc.wait(timeout=bound)
                 except subprocess.TimeoutExpired:
                     _kill_tree(proc)
-                    return {"status": "FAIL", "detail": "timeout after %ds" % PROBE_TIMEOUT}
+                    return {"status": "UNREAD", "detail": "did not finish: timeout after %gs" % bound}
         except OSError as exc:
             return {"status": "FAIL", "detail": "could not run: %s" % exc}
         with open(out_path, "rb") as fh:
@@ -399,9 +429,33 @@ def _squash(text, limit=170):
     return text if len(text) <= limit else text[:limit] + "..."
 
 
+def _run_group(group, root, bash_path):
+    """Run one group's jobs one after another. A group is every probe of one hook script, or one probe run."""
+    out = []
+    for rule, probe, serial, _label in group:
+        out.append(run_probe(rule, probe, serial, root, bash_path))
+    return out
+
+
+def _groups(jobs):
+    """Probes of one .sh hook form one sequential group; every other job is a group of its own."""
+    groups = []
+    by_tool = {}
+    for idx, job in enumerate(jobs):
+        tool = str(job[1].get("tool", ""))
+        if tool.endswith(".sh"):
+            if tool not in by_tool:
+                by_tool[tool] = []
+                groups.append(by_tool[tool])
+            by_tool[tool].append((idx,) + job)
+        else:
+            groups.append([(idx,) + job])
+    return groups
+
+
 def exercise(doc, root, workers=16, out=None):
     """Run every probe of every GATE rule. Returns (results, elapsed). Each result: dict(rule, label, serial,
-    status, detail)."""
+    status, detail). Probes of one hook run in sequence; a probe that hit its bound is run once more alone."""
     bash_path = _bash()
     jobs = []
     for rule in doc.get("rules", []):
@@ -413,13 +467,27 @@ def exercise(doc, root, workers=16, out=None):
             for serial in (probe.get("serials") or [None]):
                 jobs.append((rule, probe, serial, label))
     started = time.time()
-    results = []
+    results = [None] * len(jobs)
+    groups = _groups(jobs)
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as pool:
-        futs = [pool.submit(run_probe, rule, probe, serial, root, bash_path) for rule, probe, serial, _l in jobs]
-        for (rule, _probe, serial, label), fut in zip(jobs, futs):
-            res = fut.result()
-            res.update({"rule": rule["id"], "label": label, "serial": serial or "-"})
-            results.append(res)
+        futs = [pool.submit(_run_group, [g[1:] for g in group], root, bash_path) for group in groups]
+        for group, fut in zip(groups, futs):
+            for item, res in zip(group, fut.result()):
+                results[item[0]] = res
+    # The retry: every probe that hit its bound runs ONCE more, alone, now that nothing else is running.
+    for idx, res in enumerate(results):
+        if res["status"] != "UNREAD":
+            continue
+        rule, probe, serial, _label = jobs[idx]
+        first = res["detail"]
+        again = run_probe(rule, probe, serial, root, bash_path)
+        if again["status"] == "UNREAD":
+            again["detail"] = "%s; retried once alone: %s" % (first, again["detail"])
+        else:
+            again["detail"] = "(first run: %s; retried once alone) %s" % (first, again["detail"])
+        results[idx] = again
+    for res, (rule, _probe, serial, label) in zip(results, jobs):
+        res.update({"rule": rule["id"], "label": label, "serial": serial or "-"})
     return results, time.time() - started
 
 
@@ -436,11 +504,13 @@ def summary_line(doc, stats, problems, results):
     p_pass = sum(1 for r in results if r["status"] == "PASS")
     p_pend = sum(1 for r in results if r["status"] == "PENDING")
     p_fail = sum(1 for r in results if r["status"] == "FAIL")
+    p_unread = sum(1 for r in results if r["status"] == "UNREAD")
     covered = len(stats["pairs"])
-    ok = (not problems) and p_fail == 0 and covered == 24
+    ok = (not problems) and p_fail == 0 and p_unread == 0 and p_pend == 0 and covered == 24
     line = ("SEAT-RULES rules=%d gate=%d skill=%d launcher=%d pairs_covered=%d/24 probes_pass=%d probes_pending=%d "
-            "probes_fail=%d needs_andrew=%d ok=%s" % (n, by_holder["GATE"], by_holder["SKILL"], by_holder["LAUNCHER"],
-                                                      covered, p_pass, p_pend, p_fail, needs, ok))
+            "probes_fail=%d probes_unread=%d needs_andrew=%d ok=%s" % (
+                n, by_holder["GATE"], by_holder["SKILL"], by_holder["LAUNCHER"], covered, p_pass, p_pend, p_fail,
+                p_unread, needs, ok))
     return line, ok
 
 
@@ -480,7 +550,7 @@ def cmd_exercise(rules_path, root):
         for e in errs:
             print("PROBLEM: " + e)
         print("SEAT-RULES rules=0 gate=0 skill=0 launcher=0 pairs_covered=0/24 probes_pass=0 probes_pending=0 "
-              "probes_fail=0 needs_andrew=0 ok=False")
+              "probes_fail=0 probes_unread=0 needs_andrew=0 ok=False")
         return 1
     problems, stats = validate(doc, root)
     for pr in problems:
@@ -488,7 +558,8 @@ def cmd_exercise(rules_path, root):
     results, elapsed = exercise(doc, root)
     for r in results:
         print("PROBE %-14s %-8s %-30s %s" % (r["rule"], r["status"], r["serial"], r["detail"]))
-    print("EXERCISE elapsed=%.1fs probes=%d workers=16" % (elapsed, len(results)))
+    print("EXERCISE elapsed=%.1fs probes=%d workers=16 hook_bound=%ds other_bound=%ds" % (
+        elapsed, len(results), BOUND_HOOK, BOUND_OTHER))
     line, ok = summary_line(doc, stats, problems, results)
     print(line)
     return 0 if ok else 1
