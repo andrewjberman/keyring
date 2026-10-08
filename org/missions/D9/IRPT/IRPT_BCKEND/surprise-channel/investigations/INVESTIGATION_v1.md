@@ -21784,3 +21784,55 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: IAM leg -> laptop via MSTR~DELL2 in the pair; document binding -> CTO with the pair."
 }
 ```
+
+## IRPT_BCKEND-D2-W182-S1 -- worker 182 had no terraform binary in its worktree (SAFE_APPLY_TERRAFORM to the main checkout's) and read the order's W179 row prefix as W182
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:14:13Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The worktree carries no .tools/terraform.exe; terraform init, plan and safe-apply ran with the main checkout's terraform.exe through SAFE_APPLY_TERRAFORM, and the order's row-id prefix W179 was read as W182.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "ls .tools/terraform* in C:/dev/wk-irpt-bckend-182 -> no match; C:/dev/ajb_workspace/.tools/terraform.exe exists, version v1.15.8",
+      "safe-apply.sh resolves SAFE_APPLY_TERRAFORM first (lines 35-37); apply log: Apply complete! Resources: 0 added, 1 changed, 0 destroyed. Re-plan: No changes.",
+      "IRPT_BCKEND.TO-IB-pr-374 BOUNDS says row ids are IRPT_BCKEND-D2-W179-S<k>; the dispatching message and the id schema require W{n} to equal the committing worker's suffix (182)"
+    ]
+  },
+  "spec_asserts": "IB-pr-374 step 5: plan the export root and run safe-apply from the planfile in the worktree; row ids are D2-W179-S<k>.",
+  "world_is": "The binary is untracked and absent from a fresh worker worktree, so a worker must name the main checkout's binary (read-only use, no file edited there) to plan and apply. The row id uses W182 because the gate requires the worker suffix. Neither changed what was applied: the same single resource changed, 0 destroyed."
+}
+```
+
+## IRPT_BCKEND-D2-W182-S2 -- TO-IB-pr-374 criteria cite cell IB-pr-371 while the order owns IB-pr-374; proof cannot validate, order left open
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W182-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~182",
+  "surfaced_at": "2026-10-08T22:17:41Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "TO-IB-pr-374's two criteria carry cell_refs=\"IB-pr-371\" but <owned_cells> is IB-pr-374, so the proof_of_spec instance cannot be VALID and the order cannot be flipped to complete; the release itself is applied and both p87 checks PASS.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-374.pcs-writer-release-function.md lines 83 and 87: cell_refs=\"IB-pr-371\"; <owned_cells>IB-pr-374</owned_cells> at the decomp_ref block",
+      "python .tools/proof-of-spec-check.py <instance> IB87-1-AC1,IB87-1-AC2 -> alignment-backward 0/1; VIOLATION: declared cell 'IB-pr-374' is named in the TO's <owned_cells> but NO criterion references it; INVALID (rc=1)",
+      "IB87-1-AC1 PASS and IB87-1-AC2 PASS at HEAD (p87_cells.py); live CodeSha256 rNjtTwcm... == built; re-plan No changes; census changed_members=0; ledger CLOSED"
+    ]
+  },
+  "spec_asserts": "The proof_of_spec instance validates and the order's <status> flips to complete when both criteria PASS.",
+  "world_is": "The order's criteria cite the earlier cell (IB-pr-371, copied from the predecessor order), so no criterion discharges the owned cell. A worker may not amend criteria or weaken a check, and the flip is gated on a VALID instance, so the order stays <status>pending</status>. Remedy owned by the issuer 2.0.0_SA_COO~P2: amend both cell_refs to IB-pr-374 (a criteria amendment the issuer may make itself) and re-run proof-of-spec-check on the committed instance, then flip. Nothing served is affected."
+}
+```

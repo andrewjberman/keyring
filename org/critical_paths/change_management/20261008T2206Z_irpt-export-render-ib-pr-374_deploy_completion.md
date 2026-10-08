@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-08T22:06:21.925105+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261008T221523Z
 **Deploy:** IB-pr-374 Performance client statement writer release at pin 9238309eca (irpt-export-render, five members, function only, no route); rollback source version LefrKSE11JIR93JOh.1RP5cSIUrqKfI_ (PbyqmHBQ...)
 **Authored by:** 0.9.0_WK_IRPT_BCKEND~182
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -18,3 +18,4 @@
 
 - 20261008T220621Z OPENED by 0.9.0_WK_IRPT_BCKEND~182 with 1 leg(s)
 - 20261008T221333Z LEG irpt-export-render closed: start CodeSha256 PbyqmHBQpr4DC76qt0noBfoqKVleydNaJ7s2qsx5mT0= (rollback source s3 version LefrKSE11JIR93JOh.1RP5cSIUrqKf
+- 20261008T221523Z CLOSED -- all 1 legs proven
