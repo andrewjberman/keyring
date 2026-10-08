@@ -174,7 +174,7 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
     runtime_bucket). Then the rows with `declared_in` whose key equals the item's key: ONE such row matches whatever the
     file (the path is a hint; a file not among its declared_in is a STALE HINT, printed by run_items); several: the one whose
-    declared_in holds the item's file, else the one holding a file of the same base name, else none and the reason; no bucket is read. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
+    declared_in holds the item's file, else the one holding a file of the same base name, else none and the reason. A candidate must also agree on the bucket wherever the item's bucket is known (bucket_of); a bucket not read leaves it open. Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
     reads. An item whose bucket is not read matches no row; the reason says the bucket is chosen at run time and names the
     variable when its file shows one, else says it was not read, but only when some row carries the item's key under a
     bucket (otherwise there is nothing the bucket would have decided)."""
@@ -190,6 +190,11 @@ def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
     where_file = _where_file(item)
     cands = [row for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1])))
              if row.get("declared_in") and k == item["current"]]
+    if cands:
+        # a candidate must agree on the bucket wherever the item's bucket is known; a bucket not read leaves the field open
+        known, _why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
+        if known is not None:
+            cands = [r for r in cands if r.get("bucket") in (None, known)]
     if len(cands) == 1:
         return cands[0], None
     if cands:
