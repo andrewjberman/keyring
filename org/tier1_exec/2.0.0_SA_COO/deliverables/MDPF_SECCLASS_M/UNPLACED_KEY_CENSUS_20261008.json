@@ -1,0 +1,396 @@
+{
+  "claim": "measured: read-only census of route=UNPLACED-KEY entries in the three FWD15_AI_PLAN files (e49_replan, 20261007)",
+  "sources": [
+    "FWD15_AI_PLAN_49financial_20261007.json",
+    "FWD15_AI_PLAN_cottonwood_20261007.json",
+    "FWD15_AI_PLAN_inflection_20261007.json"
+  ],
+  "total": 99,
+  "expected_total": 99,
+  "entries_in_groups": 99,
+  "duplicate_firm_key": 0,
+  "firms": {
+    "49financial": {
+      "count": 3,
+      "usd": 406618.54
+    },
+    "cottonwood": {
+      "count": 87,
+      "usd": 76843740.63
+    },
+    "inflection": {
+      "count": 9,
+      "usd": 45677.39
+    }
+  },
+  "usd_signed_sum": 77296036.56,
+  "pattern_labels": [
+    "<10 digits>",
+    "<8 alnum> other (key = cusip column)",
+    "<digits>_<word>",
+    "<ticker>+<suffix>",
+    "<ticker>-OLD<mmddyyyy>",
+    "<ticker><space><class letter>",
+    "BA- <other>",
+    "BA- FIDELITY.*",
+    "BD<6 alnum> (key = cusip column)",
+    "CGF-<alnum>",
+    "CXMANUAL_*",
+    "cash pseudo-key",
+    "dotted ticker"
+  ],
+  "groups": [
+    {
+      "firm": "49financial",
+      "pattern": "dotted ticker",
+      "count": 1,
+      "usd": 395155.54,
+      "abs_usd": 395155.54,
+      "examples": [
+        {
+          "key": "QXO.PR.B",
+          "name": "QXO, Inc. Depositary Shares, each representing a 1/20th interest in a share of 5.50% Series B Mandatory Convertible Preferred Stock",
+          "amount": 395155.54,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "49financial",
+      "pattern": "<ticker>+<suffix>",
+      "count": 2,
+      "usd": 11463.0,
+      "abs_usd": 11463.0,
+      "examples": [
+        {
+          "key": "VNO+L",
+          "name": "VNO+L",
+          "amount": 8425.0,
+          "cusip": "929042844"
+        },
+        {
+          "key": "MS+O",
+          "name": "MS+O",
+          "amount": 3038.0,
+          "cusip": "61762V861"
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "<digits>_<word>",
+      "count": 7,
+      "usd": 49474952.11,
+      "abs_usd": 49474952.11,
+      "examples": [
+        {
+          "key": "4175_VOYA",
+          "name": "Voya",
+          "amount": 25973104.32,
+          "cusip": null
+        },
+        {
+          "key": "4175_CCA_EIGER_III_OPP",
+          "name": "CCA Eiger III Opportunity LP Capital Values",
+          "amount": 6150000.0,
+          "cusip": null
+        },
+        {
+          "key": "4175_CCA_SAXUM_OPP",
+          "name": "CCA Saxum Opportunity LP Capital Values",
+          "amount": 4778309.87,
+          "cusip": null
+        },
+        {
+          "key": "4175_CCA_FC_HOUSTON_OPP",
+          "name": "CCA FC Houston Opportunity LP Capital Values",
+          "amount": 4750000.0,
+          "cusip": null
+        },
+        {
+          "key": "4175_CCA_EIGER_OPP",
+          "name": "CCA Eiger Opportunity LP Capital Values",
+          "amount": 4500000.0,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "CXMANUAL_*",
+      "count": 19,
+      "usd": 19445877.35,
+      "abs_usd": 19873073.13,
+      "examples": [
+        {
+          "key": "CXMANUAL_HOME",
+          "name": "Investor Manual Asset - Home",
+          "amount": 8378664.0,
+          "cusip": null
+        },
+        {
+          "key": "CXMANUAL_LIMITEDLIABILITYCOMPANY",
+          "name": "Investor Manual Asset - Limited Liability Company",
+          "amount": 4125000.0,
+          "cusip": null
+        },
+        {
+          "key": "CXMANUAL_TRUSTACCOUNTS",
+          "name": "Investor Manual Asset - Trust Accounts",
+          "amount": 3173684.09,
+          "cusip": null
+        },
+        {
+          "key": "CXMANUAL_PRIMARYRESIDENCE",
+          "name": "Investor Manual Asset - Primary Residence",
+          "amount": 900000.0,
+          "cusip": null
+        },
+        {
+          "key": "CXMANUAL_INSURANCE",
+          "name": "Investor Manual Asset - Insurance",
+          "amount": 568016.86,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "BD<6 alnum> (key = cusip column)",
+      "count": 43,
+      "usd": 4451531.16,
+      "abs_usd": 4451531.16,
+      "examples": [
+        {
+          "key": "BD4HOKI9",
+          "name": "3208 Voya Index Solution 2050 Portfolio Z",
+          "amount": 652327.56,
+          "cusip": "BD4HOKI9"
+        },
+        {
+          "key": "BDGG24WF",
+          "name": "EXTENDED MARKET UNITS",
+          "amount": 542463.65,
+          "cusip": "BDGG24WF"
+        },
+        {
+          "key": "BDN6L2T7",
+          "name": "BALANCED FUND UNITS",
+          "amount": 418775.91,
+          "cusip": "BDN6L2T7"
+        },
+        {
+          "key": "BD3QUUT3",
+          "name": "EQUITY UNITS",
+          "amount": 306815.91,
+          "cusip": "BD3QUUT3"
+        },
+        {
+          "key": "BDVROD1V",
+          "name": "3665 MFS Growth Fund R6",
+          "amount": 296161.55,
+          "cusip": "BDVROD1V"
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "<10 digits>",
+      "count": 2,
+      "usd": 1937750.0,
+      "abs_usd": 1937750.0,
+      "examples": [
+        {
+          "key": "9102026128",
+          "name": "CCA STNL Income Opportunity LP",
+          "amount": 1287750.0,
+          "cusip": null
+        },
+        {
+          "key": "9102024190",
+          "name": "Maranello-Plano LP",
+          "amount": 650000.0,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "BA- FIDELITY.*",
+      "count": 11,
+      "usd": 987586.9,
+      "abs_usd": 987586.9,
+      "examples": [
+        {
+          "key": "BA- FIDELITY.4005",
+          "name": "FID GR CO POOL CL 3",
+          "amount": 399464.9,
+          "cusip": null
+        },
+        {
+          "key": "BA- FIDELITY.6671",
+          "name": "FID FRDM 2040 CP H",
+          "amount": 144690.3,
+          "cusip": null
+        },
+        {
+          "key": "BA- FIDELITY.3715",
+          "name": "FID LOW PR STK POOL",
+          "amount": 135879.5,
+          "cusip": null
+        },
+        {
+          "key": "BA- FIDELITY.O89H",
+          "name": "RETIREMENT DATE 2030",
+          "amount": 112661.61,
+          "cusip": null
+        },
+        {
+          "key": "BA- FIDELITY.PHXA",
+          "name": "VG INST 500 IDX TR A",
+          "amount": 46733.07,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "CGF-<alnum>",
+      "count": 2,
+      "usd": 381889.58,
+      "abs_usd": 381889.58,
+      "examples": [
+        {
+          "key": "CGF-40H99E950",
+          "name": "GROWTH",
+          "amount": 290790.44,
+          "cusip": null
+        },
+        {
+          "key": "CGF-40H99E885",
+          "name": "CONSERVATIVE INCOME",
+          "amount": 91099.14,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "BA- <other>",
+      "count": 2,
+      "usd": 138985.87,
+      "abs_usd": 138985.87,
+      "examples": [
+        {
+          "key": "BA- INSDBNK09000",
+          "name": "Insured Bank Deposit",
+          "amount": 138960.97,
+          "cusip": null
+        },
+        {
+          "key": "BA- MONEY MARKET BALANCE",
+          "name": "MONEY MARKET",
+          "amount": 24.9,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "cottonwood",
+      "pattern": "<8 alnum> other (key = cusip column)",
+      "count": 1,
+      "usd": 25167.66,
+      "abs_usd": 25167.66,
+      "examples": [
+        {
+          "key": "07399D34",
+          "name": "BEACON PARTNERS FUNDII LP",
+          "amount": 25167.66,
+          "cusip": "07399D34"
+        }
+      ]
+    },
+    {
+      "firm": "inflection",
+      "pattern": "cash pseudo-key",
+      "count": 2,
+      "usd": 45677.39,
+      "abs_usd": 110378.55,
+      "examples": [
+        {
+          "key": "CUSTODIAL_CASH",
+          "name": "Custodial Cash",
+          "amount": 78027.97,
+          "cusip": null
+        },
+        {
+          "key": "FID:CASH",
+          "name": "Fidelity Cash Fund**",
+          "amount": -32350.58,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "inflection",
+      "pattern": "<ticker>-OLD<mmddyyyy>",
+      "count": 5,
+      "usd": 0.0,
+      "abs_usd": 0.0,
+      "examples": [
+        {
+          "key": "AZN-OLD02022026",
+          "name": "AstraZeneca PLC ADR",
+          "amount": 0.0,
+          "cusip": null
+        },
+        {
+          "key": "OGI-OLD04032025",
+          "name": "OrganiGram Global Inc",
+          "amount": 0.0,
+          "cusip": null
+        },
+        {
+          "key": "TEVA-OLD09152026",
+          "name": "Teva Pharmaceutical industries Ltd",
+          "amount": 0.0,
+          "cusip": null
+        },
+        {
+          "key": "THMR-OLD04152026",
+          "name": "Thornburg Mortgage Inc",
+          "amount": 0.0,
+          "cusip": null
+        },
+        {
+          "key": "TTE-OLD12092025",
+          "name": "TotalEnergies SE",
+          "amount": 0.0,
+          "cusip": null
+        }
+      ]
+    },
+    {
+      "firm": "inflection",
+      "pattern": "<ticker><space><class letter>",
+      "count": 2,
+      "usd": 0.0,
+      "abs_usd": 0.0,
+      "examples": [
+        {
+          "key": "BF B",
+          "name": "Brown-Forman Corporation Class B",
+          "amount": 0.0,
+          "cusip": null
+        },
+        {
+          "key": "HEI A",
+          "name": "Heico Corp Cl A",
+          "amount": 0.0,
+          "cusip": null
+        }
+      ]
+    }
+  ],
+  "ok": true
+}
