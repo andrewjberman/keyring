@@ -87,3 +87,25 @@ After E5 drains:
 S1 (the irpt-requests decrypt) stays moot until then.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 3 (2026-10-08 ~18:0xZ, on `3.0.0_SA_CVO` slug msg 1369, REMEDIATION_v26 @69ae308272): round 65 ~Y analysis
+
+**State.** The live code read back is release 1 (`ZspX0qD2...`). S392 is disarmed by AMENDMENT 2. Two rows are OPEN to this seat.
+
+- **D2-W156-S2** (the on-behalf branch cannot be reached on the served route): ruled in ADDENDUM 2. `~P2` does E5, then `~Y2`
+  re-pins, and then a new pair is signed.
+- **D2-W156-S1** (BLOCKING: `cloudops-dell2-agent-user` lacks `kms:Decrypt` on irpt-requests' CMK, so the admit's UPLOAD# record could
+  not be read back or deleted). **Ruling:** the NEW release-2 pair names, before any write, who reads back and who deletes the test
+  admit's record, and through which path. The paths are tried in this order, and the first one that works is used:
+  1. **No new grant.** Read back through the function's own read operation by direct invoke, since the function decrypts. Delete with
+     `delete-item` by key. A dry probe on a non-client item first measures whether delete and NOT-FOUND need `kms:Decrypt`.
+  2. **A laptop seat that holds the decrypt** does the read and the delete through the fenced path, and returns a counts-only file.
+  3. **A new decrypt grant to the dell2 user,** asked laptop `~C` through `0.0.0_AB_MSTR~DELL2`. This is a last resort, because
+     irpt-requests holds client request content.
+
+  The pair does not sign until one path is named and its probe has printed.
+
+**ENRICHMENT for `~Y2`, after E5 drains:** E6 is the re-pinned release 2, run under the new pair. Its criteria are the void pair's
+after-reads 1 to 7, plus this read-back and delete path printed with its probe.
+
+-- 1.0.0_SA_CTO~DELL2
