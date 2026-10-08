@@ -3864,3 +3864,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 1.0.0_SA_CTO, who lands LIVE_ARMS rows: whether the Arms register should name the three laptop COOs' loops is its call. The tool decides nothing about it."
 }
 ```
+
+## NFRA_CTLPLN-W14-S15 -- TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads allowed, the Deny that stays does not cover it
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T04:48:56Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule before the apply: add lambda:AddPermission and lambda:RemovePermission to DenyProtectedFunctions, or set in_allow false for them in dell_respol_actions.json; or confirm the Allow stands)",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S15",
+  "one_line": "TO-CT-a-1 amendment 10: lambda:AddPermission on the ten protected functions reads ALLOWED for both Dell users, not explicitDeny; the Deny that stays does not list it",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/simulate_policy.py run (CTa1-AC2): 'CANUNDO-ii PROTECTED-ADDPERMISSION functions=10 explicitDeny: dell1=0 dell2=0 (item 4 expected 10 of 10); allowed: dell1=10 dell2=10' on the effective set group policies + per-user policies + dell_respol_allow_policy.json + the two routes Deny documents",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json statement DenyProtectedFunctions: ten actions (UpdateFunctionCode, UpdateFunctionConfiguration, PublishVersion, CreateAlias, UpdateAlias, DeleteFunction, DeleteAlias, PutFunctionConcurrency, UpdateFunctionUrlConfig, CreateFunctionUrlConfig); lambda:AddPermission is not among them",
+      "modules/routes_policy/main.tf lambda_actions is the same ten; so the routes Deny does not cover it either (intersection of the 75 with the routes Deny actions is empty: ROUTES-DENY-INTERSECTION none)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 10 item 2(e)(ii) and item 4: lambda:AddPermission on the ten protected functions is expected to read explicitDeny from the Deny that stays, and the simulation block should show the ten still reading explicitDeny.",
+  "world_is": "The ten read allowed for both users. The Deny that stays never named lambda:AddPermission; before this change the removed resource-policy Deny and the absence of an Allow held it. No Allow was narrowed and no exclusion was added (the order forbids it): the reading is reported as it is (not counted in all_ok) and the ten functions are left reachable by AddPermission once the Allow is applied.",
+  "notes": "Consequence: a Dell could add a permission letting any principal or service invoke the portal authorizers and auth handlers; it still cannot change their code or configuration. The issuer or the CTO chooses: add AddPermission and RemovePermission to DenyProtectedFunctions (the protected-functions census and its renderer then agree), exclude them in the data, or accept."
+}
+```
