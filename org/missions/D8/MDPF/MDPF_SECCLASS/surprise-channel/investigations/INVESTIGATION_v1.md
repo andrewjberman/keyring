@@ -5181,3 +5181,57 @@ by dell1 or by this seat.
   "notes": "Found while measuring laptop ~M's ledger bd-securities-cot-new-p1-m-20260926 leg R1 (owner now 2.0.0_SA_COO~M1). For the round-13 analysis: FWD-15's domain should be the firm-held key population, not the AI plan's UNPLACED route. Not a regression: these keys were never in the canonical table."
 }
 ```
+
+## MDPF_SECCLASS-D1-W63-S1 -- SC-e-70b: cottonwood's served holdings snapshot is in opal-data-cottonwood (irpt/cottonwood/gold/holdings/), n
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W63-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~63",
+  "surfaced_at": "2026-10-08T07:18Z",
+  "one_line": "SC-e-70b: cottonwood's served holdings snapshot is in opal-data-cottonwood (irpt/cottonwood/gold/holdings/), not opal-data-cot; opal-data-cot has 0 irpt holdings objects and an empty gold/holdings_lots/; the route rule also needs a bd-securities scan the order's AWS grant does not list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "boto3 list_objects_v2 opal-data-cot prefix irpt/cottonwood/gold/holdings/ -> KeyCount 0; prefix gold/holdings_lots/ -> KeyCount 0; gold/positions_cube/2026-10-06.parquet in opal-data-cot has columns account_id, asset_name, units only (no key, no amount)",
+      "boto3 list_objects_v2 opal-data-cottonwood prefix irpt/cottonwood/gold/holdings/ -> 13 parquet objects, newest date=2026-10-06, VersionId xqKVI6RQHUAmgTeOTLGsHNpRJULlCGy., LastModified 2026-10-07T14:18:07Z (same irpt/<firm>/gold/holdings/ shape as the 49financial and inflection snapshots; org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R10_CHECKS/missing_list.py held_securities() reads this shape)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/fwd15_ai_plan.py main(): the route rule's DIRECT test calls classify_asset_class with a bd-securities lookup built from a consistent scan of bd-securities (10,965 rows read 2026-10-08)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-70 amendment 1 step 1: cottonwood's served holdings sit in opal-data-cot (BD-family gold B_01.holdings_lots.py writes COT's); BOUNDS: AWS reads are s3 on the three firm buckets and dynamodb scan on etf-classifications.",
+  "world_is": "The cottonwood served holdings snapshot is the opal-data-cottonwood irpt object, and the script reads it there (the output JSON prints the opal-data-cot probe beside it). The route rule's DIRECT branch needs bd-securities, so the script also does a read-only consistent scan of bd-securities, the same read fwd15_ai_plan.py did on 2026-10-07; no write, invoke or model call.",
+  "notes": "Both departures are read-only and are the only way to meet SC12-e70b-AC1 as written (same rule, served bytes, cottonwood from its own firm's artifact). If the CTO prefers opal-data-cot as cottonwood's served home, the order's bucket name is the one to correct."
+}
+```
+
+## MDPF_SECCLASS-D1-W63-S2 -- SC-e-70b: 62 of the first census's 99 UNPLACED-KEY entries are now matched by a NAME:: row, and 36 of the 61 C
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W63-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~63",
+  "surfaced_at": "2026-10-08T07:19Z",
+  "one_line": "SC-e-70b: 62 of the first census's 99 UNPLACED-KEY entries are now matched by a NAME:: row, and 36 of the 61 COT keys D1-S5 found bare-absent (ETHA, CXMANUAL_BROKERAGE ...) are not in the served cottonwood holdings snapshot at all.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/firm_held_unplaced_census.py -> FIRM-HELD-CENSUS ok=True firms=3 held=1270/1828/1601 absent=65/380/464 usd=71540299.00/4385210.72/584829.98 e70_still_absent=37 missing_from_widened=0 (firm order cottonwood/49financial/inflection)",
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/FIRM_HELD_UNPLACED_CENSUS_20261008.json control: first_census_entries 99, e70_now_present_by_first_matching_form {'NAME': 62}; e.g. cottonwood BA- FIDELITY.4005 -> table row NAME::FID GR CO POOL CL 3, updated_by mdpf-secclass-old-list-reclassify, last_updated 2026-10-07T19:03:32Z",
+      "A07_DELTA_COT_NEW_20260926.json (org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/): 122 cot changed keys, 61 absent by bare key in the 9,155-row table; 23 are in the widened cottonwood absent set; of the other 38, 2 are held and match a NAME:: row (FFC is one) and 36 are not held by symbol or CUSIP in the 2026-10-06 served snapshot (ETHA, CXMANUAL_BROKERAGE, CXMANUAL_SAVINGS, LNEHV4*, PRU0*); ETHA and CXMANUAL_BROKERAGE are also absent from the 2026-09-28 and 2026-10-02 snapshots"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO SC-e-70 amendment 1: e70_still_absent counts the first census's 99 entries still absent AND still held; D1-S5: 52 COT-held keys absent from the table and from the 99-key census.",
+  "world_is": "By the order's four match forms (ticker, CUSIP:, NAME::, BLOOMBERG:), 62 of the 99 are PRESENT today through a NAME:: row written 2026-10-07T19:03Z, so e70_still_absent is 37 (all 37 in the widened set, missing_from_widened=0). A key-form consumer (symbol or CUSIP) would still see those 62 as unplaced. Separately, D1-S5's bare-absent COT keys came from bd-securities writes, and 36 of them are not positions of the served cottonwood snapshot, so the served-held domain is smaller than the BD key population D1-S5 counted.",
+  "notes": "Not a regression and not fixed here. Whether a NAME::-only placement satisfies FWD-15 for a security that has a symbol or CUSIP is a CTO call; the JSON carries every absent key with its route so either reading can be graded."
+}
+```
