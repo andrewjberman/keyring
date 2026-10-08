@@ -3,7 +3,7 @@
   "project": "NFRA_OPLGTW",
   "directive": "D9",
   "fabric": "site-z",
-  "prd_version": "v1.8",
+  "prd_version": "v1.9",
   "step": 4,
   "brief_ref": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20260914_1511ET_NFRA_OPLGTW_D9_REGISTRATION_AND_PRD.md@45ce4e5b73",
   "endpoint_outcomes": [
@@ -572,9 +572,12 @@ dropped; never an address or content.
 **The body test is the caller's.** Whether the body names him (a whole word, the subject, signature and quoted text apart)
 is judged by the laptop's caller on the message it fetches by id. The gateway does not read a body to decide a listing.
 
-**The domain table.** One configured value read at start, like the sender table. Its entries are copied from
-`infra/logic/registry/scopes.json` (`tenant.email_domain`) and `infra/logic/registry/mail_parties.json`, by the release's
-own record, entry by entry. An empty or unset table refuses every `sender_domain` request 403 before any Graph call, and
+**The domain table.** One configured value read at start, like the sender table. **It holds the domains of the five parties
+Andrew named and no other row's** (his 2026-10-07 ~18:3xZ record, item 6, read by `3.0.0_SA_CVO~Z`; not read by this seat).
+The two registry files, `infra/logic/registry/scopes.json` (`tenant.email_domain`) and `infra/logic/registry/mail_parties.json`,
+are where a party's domain is LOOKED UP, never a list to copy whole: `scopes.json` also carries the demo tenant's `demo.test`,
+which is not one of the five and is not admitted. The release's own record lists each entry beside the party it belongs to,
+five parties at most, and the never-widen halves read that list (v1.9, on the L4-R REFUSE of v1.8, msg 31862). An empty or unset table refuses every `sender_domain` request 403 before any Graph call, and
 admits nothing by domain. A firm with no domain recorded is not considered.
 
 **What this widens, stated plainly.** Today three exact addresses can be read. After this, every message from every
