@@ -21202,3 +21202,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "By reading the Terraform (no live call), the function role cannot GetItem opal-partner-49financial, so a deployed build would refuse every on-behalf upload. The code path is correct and fails closed; the grant (and its KMS decrypt scope, if the partner tables are CMK-encrypted) is an infra change outside this order's paths. Also for the release pair: the advisor email travels as the query parameter advisor_email beside selected_tenant, because the upload body schema rejects unknown fields."
 }
 ```
+
+## IRPT_BCKEND-D2-S5 -- D2-W175-S1 and D2-W174-S3 ruled: each carried to the cell that owns its fix
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S5",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T19:20:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W175-S1 and IRPT_BCKEND-D2-W174-S3 by carrying each to its owner. W175-S1 (no CUSTODY_REPORT retention family): CTO ADDENDUM 5/6 (msgs 1408, 1415) seat it as E8 (2.0.0_SA_COO~M2, a new row irpt-custody-x10-v1, PENDING then ACTIVE) plus E9 (this lane, IB-pr-369, ReportRepository per-family revisions); the custody read keeps failing closed until both land. W174-S3 (irpt-ycharts-generate's role grants no read on opal-partner-<firm>, so the on-behalf admit fails closed NOT_AUTHORIZED once IB-pr-366 ships): a precondition of 2.0.0_SA_COO~Y2's NEW release-2 pair (E6, CTO ADDENDUM 2/3), which must name the IAM grant and its applier; IAM changes are refused on the Dells (msg 1288), so the grant is a laptop act through 0.0.0_AB_MSTR~DELL2. Both are fail-closed, never exposure.",
+  "one_line": "The custody kind's policy row and the on-behalf lookup's IAM read are each owned by the cell that ships them; both gaps fail closed today.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO ADDENDUM 5 (E8 -> ~M2) and ADDENDUM 6 (E8 re-cut + E9 -> ~P2), CTO_ROUND_ANALYSIS_IRPT_BCKEND_ROUNDS_75_76_P_64_Y_20261008.md",
+      "row D2-W174-S3: ycharts/generate.tf:196-203 grants no opal-partner read (worker read, no live call)"
+    ]
+  },
+  "spec_asserts": "Each open finding has an owner and a carrier.",
+  "world_is": "It does: E8 (~M2) and E9 (IB-pr-369) carry the first; ~Y2's E6 pair carries the second."
+}
+```
