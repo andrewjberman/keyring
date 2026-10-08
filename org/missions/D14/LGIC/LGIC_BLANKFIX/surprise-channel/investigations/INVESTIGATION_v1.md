@@ -872,3 +872,27 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S1 -- the reproduction had to live inside the worktree, not a temporary folder
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S1",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T02:05:03Z",
+  "one_line": "BF-s-8 step 1 says build the reproduction in a temporary folder; the checker only grades an instance inside its own tree, so the reproduction was built under the worktree's .scratch/ and the crash (rc 2) reproduced there.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Reproduction: .tools/proof-of-spec-check.py <instance under .scratch/> BQ6-AC1 with one PENDING-THIS-COMMIT row naming a directory printed PermissionError, TOOL-ERROR, rc=2; the same instance naming a file printed VALID (rc=0). An instance outside the tree is refused by the checker's artifact-resolution/CHECKER-SCOPE branch (.tools/proof-of-spec-check.py, near line 383) before any artifact is read."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-s-8 step 1: in a temporary folder build the smallest instance and governing order the checker accepts.",
+  "world_is": "The checker refuses an instance whose path is outside its repository root (CHECKER-SCOPE), so the temporary folder had to sit inside the worktree (.scratch/, removed after). The governing order used was the existing BF-q-6 order in the tree, not a copy. The crash reproduced; the fix is in .tools/proof-of-spec-check.py (artifact-resolution loop, one early directory test)."
+}
+```
