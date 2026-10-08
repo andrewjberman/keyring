@@ -921,3 +921,28 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The checker refuses an instance whose path is outside its repository root (CHECKER-SCOPE), so the temporary folder had to sit inside the worktree (.scratch/, removed after). The governing order used was the existing BF-q-6 order in the tree, not a copy. The crash reproduced; the fix is in .tools/proof-of-spec-check.py (artifact-resolution loop, one early directory test)."
 }
 ```
+
+## LGIC_BLANKFIX-W1-S13 -- six holes of opal-assets fit none of the four classes S1 to S4
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S13",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-08T01:57:30Z",
+  "one_line": "TO BF-s-5: 6 of opal-assets' 20 holes (and of the 38) fit none of the CTO's classes S1 to S4: a stored-file key whose {scope} is open on a multi-firm root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~1/HOLES_SORTED_round5.txt: last line HOLES-SORTED ok=True roots=13 holes=38 carded=22 source_bucket=3 event_rule=3 unknown_word=4 new=6; all 6 NEW lines are type S3Key on root opal-assets, each 'partial form ...{scope}...; could not fill {source}/{scope}: this root serves more than one firm; its map entry does not give the firm'.",
+      "sort_holes.py (same folder): CLASSES tests S1, S3, S2, S4 in order; NEW_KINDS names the sixth kind; names: schwab/silver/account_xref, gold/mdpf_revamp/cottonwood/aggregate_aua_timeseries.json, platinum/mdpf/aggregate_aua/, bronze/, bronze/eclipse/, code/bronze/templates/."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-5 CONTEXT: the CTO sorted the 17 lines it read into four classes, S1 carded, S2 source-owned bucket, S3 event rule, S4 unknown first word; the cell allows a fifth value NEW for a line no rule takes.",
+  "world_is": "Over all 38 holes: S1 carded=22, S2 source_bucket=3 (all opal-data-ycharts), S3 event_rule=3, S4 unknown_word=4, NEW=6. The NEW class is an S3Key (a key, not a bucket) on the multi-firm root opal-assets whose map entry gives no firm; the buckets the check read are opal-data-bd, opal-data-cot, opal-data-assets, opal-data-portal-v2 or none (two keys name several buckets, none picked). S2 as the CTO worded it (a source-owned bucket) does not cover a key; a ruling on how a multi-firm root's keys get their firm is a fifth route. Nothing in lib/ or the registry was changed."
+}
+```
