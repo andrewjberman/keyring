@@ -147,7 +147,7 @@ msg 32041 reads C12's "streaming" as the view updating while open. The Refresh b
 expectation (5 of 5) changed. Graded by to-pipeline-gate on the amendment commit; the worker receives it as a
 continuation when it reports (a worker cannot be messaged mid-run).
 
-<status>pending</status>
+<status>complete -- drained by 2.0.0_SA_COO~MP 2026-10-08 ~22:5xZ @6b1b7b18dd: AC1 5 of 5, AC2, AC3 PASS (issuer re-run in C:/tmp/mp-r4-6); mcportal d60b4e0 (LOCAL, wk-NFRA_MCPORTAL-r4-6-mcportal) goes live only through the release cell. Was: pending</status>
 <round>4</round>
 <slot>~6</slot>
 <fabric>site-z</fabric>

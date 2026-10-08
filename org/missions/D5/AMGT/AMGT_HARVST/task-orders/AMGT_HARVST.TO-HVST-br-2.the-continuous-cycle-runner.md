@@ -112,6 +112,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <risk>SERVED</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+
+COMPLETE 2026-10-08 ~22:2xZ (issuer 2.0.0_SA_COO~H): worker ~127 @ad829c5290, @301945614a, @13dfb79a0d, drained @5a2d54eb4a (surprise channel resolved as a union). Re-run by the issuer from the worktree: AC1 12 passed; AC2 four 'CYCLE PLAN <P> floor 2026-10-07 pairs 242' lines then 'NETWORK CALLS 0', no state dir written; 'ft' refused at parse. The hold 'not merged while a collection leg runs' is LIFTED by the issuer for this branch: its diff adds two new files and changes no file a live process imports (backfill_driver.py unchanged). Row Z-W127-S1 RULED: --idle-seconds (default 300, after a pass in which no cycle completed) is accepted as the polite pace FWD-18's source names. Activation (task registration against a pinned checkout, after the sa backfill leg ends) is the issuer's act at close.
+<status>complete</status>
 <round>74</round>
 <slot>~127</slot>
 <fabric>site-z</fabric>
