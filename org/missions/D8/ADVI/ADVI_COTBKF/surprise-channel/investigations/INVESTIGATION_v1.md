@@ -2195,3 +2195,29 @@ round.** Never edit an existing row.
   "world_is": "Fixed at line 113 of test_commonwealth_mover_classes.py (SWEEP_LIST_VERSION -> SWEEP_LIST_V1_VERSION) in the same commit as this row. The row gate bars in-place mutation of S2, so its disposition is closed by this new row citing the old id; S2 itself is unedited."
 }
 ```
+
+## ADVI_COTBKF-D2-W42-S1 -- CB-u-1: sweep-balance movers carry an unfunded cash debit (a sweep buy funded by a non-sweep sale)
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W42-S1",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~42",
+  "surfaced_at": "2026-10-08T18:48:41Z",
+  "one_line": "CB-u-1: the sweep-balance movers carry a cash DEBIT for a sweep buy whose funding sale (a non-sweep security) never credits cash, so the after-arm base shrinks; the fix lies in the chain's cash legs, not in the sweep list.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~42/mover_causes.md trace sweep_balance D49141714 2019-02: value before 4061.90 / after 51.04 on every no-trade day, D = -4010.86; reported 0.04 pct, before 0.0416, after 3.3111",
+      "silver transactions of D49141714 (local cache): FDIC66606 buys minus sells on or before 2019-02-28 = 4010.86, equal to -D; the funding of the 2019-01-24 sweep buy of 3840.59 is a SALE of 30306A436 (a non-sweep security, 562 shares), and commonwealth_sweeps.sweep_cash_rows adds cash legs for listed-sweep trades only",
+      "mover_causes.parquet (this deliverable): 106 of 147 `neither` movers have s < 0 (the before arm sat above the after arm), 41 s > 0; 72 sweep_balance, 75 other:sweep_trade_day, offsetting 0 (only 2 of 147 months carry a nonzero flow-component error e_f)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "E1 (round-20 analysis): a mover may have matched before only because two errors offset, in which case DIFF is the truer state and the fix lies elsewhere in the chain.",
+  "world_is": "Under the stated rule no month is `offsetting` (the before-state's value-change and flow-taken-out components are not off in opposite directions). The movers are carried by the sweep balance and by sweep-trade days. In the largest-|s| sweep_balance month the after arm debits cash for a sweep purchase (type LIX on CFNCASH) but the sale of the non-sweep security that paid for it credits nothing, so cash goes negative and cancels the sweep position: the after-arm value is the before-arm value minus the sweep balance. This is a reading of ONE traced account; how many of the 147 share it is not measured here (no fix and no wider census in this order)."
+}
+```
