@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "status": "DRAFT -- proposed by NFRA_TRNSPT ~T2 for IRPT_BCKEND ~P2 to agree; built from H1_READY_PRODUCER_FACTS_20261008.md @6061d0e274",
+  "producer": "IRPT_BCKEND (2.0.0_SA_COO~P2)",
+  "consumer": "NFRA_TRNSPT (2.0.0_SA_COO~T2)",
+  "transport": "DynamoDB stream on irpt-requests (NEW_IMAGE; the stream does not exist yet -- H1 adds it); consumer = data/transcripts/scripts/commentary/entry.py handler. Filter: eventName = INSERT AND request_revision begins with REPORT# AND ref.report_kind = ANALYSIS. READY = the single INSERT of one immutable report revision.",
+  "fields": {
+    "eventName": {"type": "string", "required": true, "source": "stream record; must equal INSERT"},
+    "tenant": {"type": "string", "required": true, "source": "NewImage.tenant (owner firm id); ticket write only, never the model"},
+    "request_revision": {"type": "string", "required": true, "source": "NewImage.request_revision = REPORT#<report_id>#<revision>"},
+    "ref.report_id": {"type": "string", "required": true, "source": "NewImage.ref.report_id"},
+    "ref.revision": {"type": "integer", "required": true, "source": "NewImage.ref.revision"},
+    "ref.report_kind": {"type": "string", "required": true, "source": "NewImage.ref.report_kind; must equal ANALYSIS"},
+    "ref.request_ref": {"type": "string", "required": true, "source": "NewImage.ref.request_ref; H2 uses it as the key into the retained composition (producer to confirm it is the composition's request id; else H2 falls back to ref.report_id)"},
+    "blob": {"type": "map", "required": false, "source": "NewImage.blob (S3 pointer to the report bytes); not read by H2 today"},
+    "status": {"type": "string", "required": false, "source": "NewImage.status if the item ever carries one; when present it must equal READY"}
+  },
+  "h2_reads_from_retained_composition_by_id": {
+    "reader": "composition_reader(request_id) -> {browser, resolved, commentary_basis?}",
+    "resolved_from_composition": ["browser.comparison_keys", "resolved.comparison_catalog[*].name", "resolved.profile.prepared_by", "resolved.owner.{advisor_id,firm_id,principal_id,prospect_input_id}", "resolved.document.source.upload_id", "browser.input_id / resolved.input_ref.input_id"],
+    "unknown -- producer to confirm": {
+      "account_type": null,
+      "themes": null,
+      "holdings_category_weights": null,
+      "household": null,
+      "note": "the retained composition is not measured to carry these four; entry.py reads them from an optional commentary_basis and emits null / [] / {} when absent (surprise row NFRA_TRNSPT-D2-W1-S5)"
+    }
+  },
+  "never_contains": [
+    "owner (the owner record: firm, principal, account set)",
+    "client name",
+    "firm name (in the abstract request; tenant is for the ticket write only)",
+    "account number or account id",
+    "advisor email",
+    "household (in the abstract request)",
+    "any client free text"
+  ],
+  "failure": "async; DLQ + retry; never blocks the report"
+}
