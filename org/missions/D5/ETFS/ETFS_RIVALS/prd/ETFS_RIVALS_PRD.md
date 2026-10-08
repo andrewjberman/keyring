@@ -918,7 +918,9 @@ the `/sprint` precedent files.
 
 - v0.20 (2026-10-08 ~22:1xZ, `1.0.0_SA_CTO~Z`), CONTRACTS and G.2 only: `C-OWED-GRAIN` carries R13 (each close's trading
   date; a reader keeps a close only on its own date); G.2's open question is marked ANSWERED with Andrew's card-5 words and
-  record. The ENDPOINT is unchanged. The ratified-text half re-opens to `3.0.0_SA_CVO~RV` for the one contract sentence.
+  record. The ENDPOINT is unchanged. `prd-signoff.py status` still reads the ratified-text half SIGNED and current at @35b829a408:
+  ADDENDUM G is not a hashed section, because the heading's first word decides the half. So the one contract sentence is put to
+  `3.0.0_SA_CVO~RV` by message, and no half is re-opened mechanically.
 
 - v0.17 (2026-10-05 ~04:0xZ, `1.0.0_SA_CTO~Z`), CONTRACTS only: **C-SECURITY-UNIVERSE**, a gold `security_universe` table, the
   interface laptop MDPF_SECCLASS reads (its PRD v0.3 FWD-9/FWD-10, placed by `1.0.0_SA_CTO`, relay msg 29469). The address is builder
