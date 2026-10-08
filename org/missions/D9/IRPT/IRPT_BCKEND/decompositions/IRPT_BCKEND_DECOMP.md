@@ -2193,3 +2193,19 @@ replaces it. Check `deliverables/2.0.0_SA_COO~P2/checks/r86/p86_cells.py`, dry-r
 | `IB-pr-373` | E10 recut: server-derived owner + accounts; trigger via the guarded Entry or in-function schedule; no direct-invoke path; packaging + ACTIVE row + census + BUILD_ONLY + packet | FWD-8 / CUSTDY S07 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-371 (live) | P86-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one writer entry and its packet. Slot ~181.
+
+## 80. ROUND 87, WORKSTREAM ~P (2026-10-08 ~22:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on both halves of IB-pr-373 and CTO msg 1719)
+
+The CTO gave its half of IB-pr-373 (release as is) with conditions: the replay at release; re-read live PbyqmHBQ; the IAM leg (row
+D2-W181-S1) is its own laptop sign-off owed BEFORE the route; and before any firm reads a Performance client statement, a cell adds
+persisted_by and binds the content to the retained composition hash (row D2-W181-S2). This round: the function-only release, and that
+cell, in disjoint write sets. The route is a later order after the IAM leg. Check `deliverables/2.0.0_SA_COO~P2/checks/r87/p87_cells.py`,
+dry-run at base ece42ad420: all four criteria FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-374` | release irpt-export-render at 9238309eca (function only, no route); replay before apply | FWD-8 / CUSTDY S07 | WORLD | IB-pr-373 (drained) | P87-a |
+| `IB-pr-375` | persisted_by + content bound to the retained composition hash; tests | FWD-8 / CUSTDY S08 | WORLD (floor: infra/; code only) | IB-pr-373 (drained) | P87-b |
+
+fanout: 2 of 2 chains, cap 8, reason: disjoint write sets (P87-a: export tf, source map, ledger, deliverables ~182; P87-b: two source
+files + tests + deliverables ~183). Slots ~182, ~183.
