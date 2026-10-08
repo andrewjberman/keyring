@@ -21886,3 +21886,29 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The order's criteria cite the earlier cell (IB-pr-371, copied from the predecessor order), so no criterion discharges the owned cell. A worker may not amend criteria or weaken a check, and the flip is gated on a VALID instance, so the order stays <status>pending</status>. Remedy owned by the issuer 2.0.0_SA_COO~P2: amend both cell_refs to IB-pr-374 (a criteria amendment the issuer may make itself) and re-run proof-of-spec-check on the committed instance, then flip. Nothing served is affected."
 }
 ```
+
+## IRPT_BCKEND-D2-S10 -- round 87 rows ruled: W182-S2 resolved by the issuer's amendment; W182-S1 tooling; W183-S1/S2 carried to the CTO with the round packet
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S10",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T22:30:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-D2-W182-S2, D2-W182-S1, D2-W183-S1 and D2-W183-S2. W182-S2: IB-pr-374's criteria carried cell_refs IB-pr-371 (the issuer derived the order from IB-pr-371's text); AMENDMENT 1 @ef0d4b9afc set them to IB-pr-374, the worker's proof re-validated VALID, and the issuer flipped the order complete after re-running IB87-1-AC1 (live rNjtTwcm) and AC2. W182-S1: a fresh worktree lacks the gitignored terraform binary; tooling only, no served effect. W183-S1 (custody-report-read returns only the document, so an HTTP reader does not see persisted_by) and W183-S2 (the content binding is the declared composition hash verified against the stored artifact, not a recomputation; every producer must now post it): both are carried to 1.0.0_SA_CTO~DELL2 in the round-87 packet against its condition 1 (persisted_by + binding before any firm read).",
+  "one_line": "Round 87's rows each have a resolution or an owner; the writer function is live, its route still waits for the laptop IAM leg.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "proof-of-spec-check on IB-pr-374's instance after AMENDMENT 1 -> VALID (rc=0); live irpt-export-render CodeSha256 rNjtTwcm... (issuer re-read)",
+      "IB87-2-AC1/AC2 PASS on the issuer run (persisted_by 5, content_bound 5, whole file 54)"
+    ]
+  },
+  "spec_asserts": "Each open finding has a resolution or an owner.",
+  "world_is": "It does."
+}
+```
