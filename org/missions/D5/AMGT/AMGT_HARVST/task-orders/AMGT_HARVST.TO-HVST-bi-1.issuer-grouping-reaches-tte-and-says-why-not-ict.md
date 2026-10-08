@@ -123,9 +123,20 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - Slot ~114. **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as expected (no such
   file); AC3 base PASS as expected (491 passed).
 
+**COMPLETE 2026-10-08 ~06:4xZ (issuer):**
+- **Built:** worker-light ~114 in two passes: @b8f52c248a (whitespace squash, the reason field; TTE not grouped, row Z-W114-S1)
+  and, under AMENDMENT 1, @9beb2b23ce (one trailing form word dropped in the comparison). Merged @0090d94c29 AFTER rebuild
+  #9's act ended (record @60818dd705), 7 paths, index check 0 of 7 differ.
+- **AC1 PASS:** 7 of 7. **AC2 PASS:** CENSUS OK: 7 two-listing roots; TTE GROUPED by limb 2; ICT NOT GROUPED ("one name is a
+  prefix of the other; a cut name is not evidence of one issuer"); groups 5 to 6; brand refusals 0 to 0; built dicts changed 0
+  of 242. **AC3 PASS:** 498 on the branch; the issuer's drain check and the list check are in this close's commit message.
+- **Existing assertion changed (1):** `test_bh7_brand_belongs_to_the_issuer.py` test iii expects the `reason` field.
+- **Rows:** Z-W114-S1 (answered by AMENDMENT 1); Z-W110-S5 is answered by this cell.
+
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>64</round>
 <slot>~114</slot>
 <fabric>site-z</fabric>
