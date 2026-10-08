@@ -3422,3 +3422,19 @@ Issuer `2.0.0_SA_COO~H`. Series **`bi`**.
 - `bi-1` AC1 (`pytest test_bi1_grouping_whitespace.py`) base: FAIL as expected (the test is absent).
 - `bi-1` AC2 (`cat bi1_census.out`) base: FAIL as expected (no such file).
 - `bi-1` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (491 passed).
+
+## 79. ROUND 65 -- the first walk of the Security Analysis feed on rebuilt gold (ADDENDUM 2 item 3), 2026-10-08 ~06:5xZ
+
+Round 64 is terminal: rebuild #9 DONE 06:25Z under its pair (record @60818dd705, ledger closed: mention 48,025 to 48,358,
+21 pairs removed by name, 4 of them true, lost 0, unexplained 0); `bi-1` merged after it (@0090d94c29) and `build()` at the
+merged HEAD still equals the served list file. The walk's dependency, the rebuilt gold and its stamp, is now met.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bj`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bj-1` | `bj-1` | **Twelve securities through the page's own feed reader (`scoped_amgt.read_feed`) on the rebuilt gold.** A read-only script; per security its status, item count and newest 15 items with the matched forms; the 21 named removals checked absent from the walked feeds; no grade by the worker. JUDGMENT: the CVO reads the packet. | LOCAL | worker-light ~115 |
+
+**Checks dry-run at the base before the cut:**
+- `bj-1` AC1 (`cat bj1_feed_walk.out`) base: FAIL as expected (no such file).
