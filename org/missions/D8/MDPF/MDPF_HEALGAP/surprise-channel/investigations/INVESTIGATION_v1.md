@@ -383,6 +383,70 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "spec_asserts": "CTO half condition 4, carried as TO-HG-d3 act 4b: whether the date's served Cottonwood figures were in place by 13:30Z is a discriminating read of whether the heal delivered in time.",
     "world_is": "On the instrument the condition names -- the on_success chain -- D=2026-10-08 read MET by 1h43m, so the heal itself is not in question and this row does not reopen it. But the 13:30Z line sits 39 to 42 seconds INSIDE gold's own daily arrival, so widening 'served' to gold makes the same read return MISSED on nine of the last ten days with no failure present: at that width the line discriminates nothing. FWD-1's own wording is 'by the end of the same day', which both widths satisfy. Owner: 2.0.0_SA_COO~G1, to decide whether condition 4's successor reads silver and keeps 13:30Z, or reads gold and moves the line past the mdpf-daily-runner's arrival.",
     "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
-  }
+  },
+    {
+      "id": "MDPF_HEALGAP-D1-W6-S1",
+      "project": "MDPF_HEALGAP",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+      "surfaced_at": "2026-10-08T15:22:25Z",
+      "one_line": "FWD-6 asks each session-dependent pull to be marked RECOVERS or NOT-EXPOSED, but four pulls (five schedules) are exposed to a lapsed login and have neither answer: asset-dim, two Schwab SDD pulls, and the ASTN FT leg.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~G1",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) fires SSM opal-bd-asset-dim-download, which mints a bearer from blackdiamond/49f/session (infra/aws/ssm/opal-bd-asset-dim-download.json line 23); the 49F fees mint bd-49f-fees-session-daily is cron(20 22 ? * MON-FRI *), ten minutes later (live list-rules read 2026-10-08); no re-attempt target exists on the rule",
+          "canonical-schwab-si2-08242234-daily-pull and canonical-schwab-si2-08335338-daily-pull run sdd-daily-pull.ps1, whose own text says a dead standing SI2 session needs a human to re-establish it (infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:271-272); the 30-day lookback (:33) refills the days only after that",
+          "astn-wsjft-3am-run rides the parked astn/ft/session cookie (tools/astn_wsjft/scripts/run.py:53-59); on failure it records the warning 'session expired? -> run harvest_ft_session' (run.py:133), a manual step",
+          "the census with all 23 answered rows and the section 'Exposed, neither answer is true': org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~6/FWD6_SESSION_DEPENDENT_PULLS_CENSUS.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO-HG-t7 and PRD FWD-6: every scheduled pull whose success depends on a vendor login kept alive by something else is marked either 'recovers the same way' or 'not exposed, because ...'; a pull left without an answer fails the outcome. AC1 accepts only RECOVERS or NOT-EXPOSED because <reason> in the answer column.",
+      "world_is": "Four pulls on five schedules depend on a login that lapses and is not re-minted before they run, and neither answer is true of them (asset-dim: no re-attempt and the missed as-of is not re-pulled; Schwab SDD: next-fire catch-up but only after a person restores the session; ASTN FT: manual cookie harvest, no re-attempt). They are listed outside the table, each with the recovery that exists today, so the table carries no false answer and AC1 still reads CENSUS-OK on the 23 true ones. Whether FWD-6 is met for these four is the CVO's grade, and whether they become round-3 enrichment is the COO's and CTO's.",
+      "notes": "No remedy attempted; the order is read-only and these are outside its write grant. ARMED because a lapse on any of the four in normal operation leaves a day unfilled with nobody acting; disarm owner is the round issuer, who recuts."
+    },
+    {
+      "id": "MDPF_HEALGAP-D1-W6-S2",
+      "project": "MDPF_HEALGAP",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+      "surfaced_at": "2026-10-08T15:22:25Z",
+      "one_line": "The native Grep tool fails in this worker environment with ENOENT on ripgrep, and the comp-find census verb ran past the 120s Bash bound on a two-token query.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "Grep(pattern='recover_or_exit|check_jwt_freshness|assert_fresh_or_exit', path='C:/tmp/wk-healgap-6/infra/aws/lambda/inf-pipeline') returned 'ENOENT: no such file or directory, uv_spawn rg' at the worker's first search, 2026-10-08 ~15:1xZ",
+          "comp-find 'wsd-49f-partner-held-etf-daily|wsb-49f-model-aua-daily' --files --all --limit 30 was moved to the background after the 120s timeout (task b56zda7kh) and completed with exit 0 later; the worker did not wait on it and read the same answer with git ls-files"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "The worker brief: code search by comp-find / comp-which, and the Grep tool is fine.",
+      "world_is": "The Grep tool cannot run (no ripgrep binary found by the harness in this session), and comp-find with --all on the whole worktree is slow enough to exceed the bound, so the census reads were done by git ls-files plus Python line scans and direct file reads. Results are the same file:line facts; only the instrument differed."
+    },
+    {
+      "id": "MDPF_HEALGAP-D1-W6-S3",
+      "project": "MDPF_HEALGAP",
+      "fabric": "dell1",
+      "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+      "surfaced_at": "2026-10-08T15:23:25Z",
+      "one_line": "The order says worker rows are MDPF_HEALGAP-W6-S<k>, but the row gate refuses that id on fabric dell1 and requires MDPF_HEALGAP-D1-W6-S<k>.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "TO-HG-t7 BOUNDS refusal clause: 'a surprise row (id MDPF_HEALGAP-W6-S<k>, fabric dell1, ...)'",
+          ".tools/surprise-row-gate.py at the commit of this row: \"MDPF_HEALGAP-W6-S1: fabric='dell1' but the id carries no coordinate ... dell1 = id <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>)\""
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION",
+      "spec_asserts": "TO-HG-t7 BOUNDS: worker surprise rows are minted MDPF_HEALGAP-W6-S<k> with fabric dell1.",
+      "world_is": "On fabric dell1 the gate accepts only MDPF_HEALGAP-D1-W6-S<k>. This worker's rows are therefore MDPF_HEALGAP-D1-W6-S1, -S2 and this one (-S3); the proof instance cites the D1 form."
+    }
 ]
 ```
