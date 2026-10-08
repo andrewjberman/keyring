@@ -90,9 +90,27 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - `.runtime/` is in `<paths>` so the shared tree's run-record files may be READ; nothing is written there.
 - Slot ~119's queue: `bl-1`, then `bl-2`. **Checks dry-run at the base:** AC1 base FAIL as expected (no such file).
 
+**COMPLETE 2026-10-08 ~08:5xZ (issuer):**
+- **Built:** worker ~119 @4dbc4164ba; merged (hash in this close's commit message). No product file changed; no job run.
+- **AC1 PASS:** CENSUS OK; 234 + 8 == 242.
+- **Reconcile:** S3 1,248 records and 1,251 jobs; this device 1,161 records and 1,168 jobs; in both 1,158; S3 only 90 run ids
+  (89 Seeking Alpha jobs and 1 Bloomberg, 2026-10-01 to 10-03, absent from the device files); device only 3 (2026-09-30,
+  absent from S3). The reviewer's "323 securities with a job" counted raw keys in mixed forms; after the join it is 234.
+- **NEVER COLLECTED: 8 of 242, not the 3 named so far:** `MRNA_US_Equity` Moderna (150 served pairs), `CAT_US_Equity` Caterpillar
+  (85), `DG_US_Equity` Dollar General (51), `GEV_US_Equity` GE Vernova (48), `CSL_AU_Equity` CSL (39), `BE_US_Equity` Bloom
+  Energy (29), `ED_US_Equity` Consolidated Edison (25), `6861_JP_Equity` Keyence (0). Together 427 of 48,358 served pairs,
+  every one from an article collected for another name.
+- **Per source, with at least one job:** bbg, wsj and barrons 234 of 242 each; Seeking Alpha 115 of 242; FT 3 of 242.
+- **Collected but never stored** (every job of the security ended in a status other than `new_articles`): bbg 95 of 234, wsj
+  185, barrons 200, sa 42 of 115, ft 2 of 3; on every source it has, 70 of 234.
+- **Bound, row Z-W119-S1:** 240 of 1,258 jobs (58 collector keys whose per-job files carry no ticker) could not be joined to a
+  covered security. The 8 is exact only if none of those 58 keys is one of the 8; a read of their stored article titles
+  found none naming the 8 companies. Check line: CAT 0, CSL 0, AIG 6, Nokia 4, equal to the reviewer's.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>67</round>
 <slot>~119</slot>
 <fabric>site-z</fabric>
