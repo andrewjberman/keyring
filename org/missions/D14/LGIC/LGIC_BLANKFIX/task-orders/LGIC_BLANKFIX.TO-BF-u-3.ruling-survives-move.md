@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~4</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>pending</status>
+<status>complete -- proof-of-spec VALID (rc=0)</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -59,15 +59,50 @@ registry's lane retyped the path. The CTO: "Match on the key itself, with the pa
    stale hint; two rows with the same key, file moved, neither hint matching -> no match and the reason; two rows, one hint matching
    -> that row, no stale hint.
 
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-08) -- BU3-AC2's expectation corrected: the issuer's premise was wrong
+
+The face said the estate run would count no stale hint "since every declared_in path exists". That is not the test item 2
+defines. Item 2 counts a match where the item's file is not in the row's `declared_in`, and the slot's build found one on the
+trunk: `bd-pipeline` `bronze/` in `infra/aws/lambda/bd-pipeline/bd-49f-freshness-probe/lambda_function.py:74` matches a row whose
+`declared_in` names `infra/aws/lambda/opal-assets/opal-assets-ingest-mirror/lambda_function.py` (row `LGIC_BLANKFIX-W4-S2`). The
+line's answer is unchanged; the hint is stale. That is a true report, and the rule that produced it stays as written: exempting a
+match the item's own bucket confirms would hide exactly the drift this cell exists to show.
+
+`BU3-AC2` therefore expects the field present at the end of the last line, whatever its count: `stale_hints=[0-9]+`. Report the
+count and every `STALE-HINT` line. The stale row is the registry lane's to correct (`4.0.0_SA_CRO`, told by the issuer); its
+correction is not this cell's. Nothing else in this order changes.
+
+### AMENDMENT 2 (2.0.0_SA_COO~G, 2026-10-08) -- item 1 corrected: a candidate must agree on the bucket; no answer may move
+
+Item 1 as the issuer wrote it took as candidates "the `declared_in` rows whose key equals the item's key", bucket unread. On the
+trunk that re-paired `bd-49f-freshness-probe`'s `bronze/` (the probe reads `opal-data-bd`, lines 57 and 455; `4.0.0_SA_CRO` msg
+107136) to the `opal-data-inf` row: the line now prints `-> orion/inflection/bronze/` where round 5 printed
+`-> blackdiamond/49financial/bronze/` (`deliverables/0.9.0_WK_LGIC_BLANKFIX~2/all_roots_round5/bd-pipeline.txt:109`). The stale hint
+AMENDMENT 1 called a true report was this mis-pairing. The defect is the order's, not the build's.
+
+**Item 1 now reads:** the candidates for an item are the `declared_in` rows whose key equals the item's key AND whose bucket equals
+the item's bucket wherever the item's bucket is known (`bucket_of`); a row of another bucket is never a candidate. Where the item's
+bucket is not known, the key alone selects, as before. The rest of items 1 to 3 stands. Add to the DIFFERENCE CONTROL: two rows
+with the same key and different buckets, the item's bucket known -> only its bucket's row is a candidate; the other bucket's row
+alone -> no match.
+
+`4.0.0_SA_CRO` has added an `opal-data-bd` `bronze/` row declared in the probe at line 74 (msg 107136); merge `CLOUD` into your
+branch before you prove. **New criterion `BU3-AC3`:** the repeat check (merged from `BF-u-5`) reads `repeat=identical`, so no line
+of a mapped root changes its answer from the round-5 saved runs. `BU3-AC2` keeps AMENDMENT 1's expectation; report the count and
+every `STALE-HINT` line, each checked by hand against the bucket its file reads.
+
 ### ACCEPTANCE
 
 <criterion id="BU3-AC1" cell_refs="BF-u-3"><invocation>python lib/tests/test_opal_naming_rootcheck.py</invocation><expect>ROOTCHECK-TEST ok=True</expect></criterion>
 `BU3-AC1` -- a ruling matches on its key, and the path decides only between rulings of the same key.
 
-<criterion id="BU3-AC2" cell_refs="BF-u-3"><invocation>python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json</invocation><expect>stale_hints=0</expect></criterion>
-`BU3-AC2` -- the estate run counts stale hints; none at the cut, since every declared_in path exists (4.0.0_SA_CRO, msg 106778).
+<criterion id="BU3-AC2" cell_refs="BF-u-3"><invocation>python lib/opal_naming_rootcheck.py all --map infra/logic/registry/root_map.json</invocation><expect>stale_hints=[0-9]+</expect></criterion>
+`BU3-AC2` -- the estate run counts stale hints and prints the count at the end of its last line (AMENDMENT 1: the count is reported, not required to be 0).
 
-<expected_criteria>BU3-AC1,BU3-AC2</expected_criteria>
+<criterion id="BU3-AC3" cell_refs="BF-u-3"><invocation>python org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~2/check_all_roots_round5.py</invocation><expect>repeat=identical</expect></criterion>
+`BU3-AC3` -- no line of a mapped root changes its answer from the round-5 saved runs (AMENDMENT 2).
+
+<expected_criteria>BU3-AC1,BU3-AC2,BU3-AC3</expected_criteria>
 
 Each invocation's LAST printed line is the line the expectation is matched against; print it exactly once, with `ok=True` only when
 every assertion behind it held and `ok=False` otherwise.
@@ -94,9 +129,9 @@ The block is your WRITE grant. You READ and never edit anything outside the bloc
 </decomp_ref>
 
 <proof_of_spec>
-Criterion ids: BU3-AC1, BU3-AC2. Instance at
+Criterion ids: BU3-AC1, BU3-AC2, BU3-AC3. Instance at
 `org/missions/D14/LGIC/LGIC_BLANKFIX/deliverables/0.9.0_WK_LGIC_BLANKFIX~4/LGIC_BLANKFIX.TO-BF-u-3.ruling-survives-move.proof_of_spec.json`,
-validated with `python .tools/proof-of-spec-check.py <instance> BU3-AC1,BU3-AC2` BEFORE the flip.
+validated with `python .tools/proof-of-spec-check.py <instance> BU3-AC1,BU3-AC2,BU3-AC3` BEFORE the flip.
 </proof_of_spec>
 
 **REPORT:** both last lines whole; the before-and-after of the all command's last line; every STALE-HINT line; commits.
