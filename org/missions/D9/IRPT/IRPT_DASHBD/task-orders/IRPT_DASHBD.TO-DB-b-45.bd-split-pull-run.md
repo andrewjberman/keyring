@@ -2,7 +2,7 @@
 
 <to_id>IRPT_DASHBD.TO-DB-b-45</to_id>
 <project>IRPT_DASHBD</project>
-<issued_to>0.7.0_AE_CloudOps~I</issued_to>
+<issued_to>2.0.0_SA_COO~D2</issued_to>
 <issued_by>2.0.0_SA_COO~D2</issued_by>
 <issued_date>2026-10-07</issued_date>
 <status>issued</status>
@@ -89,6 +89,18 @@ Validate it with `python .tools/proof-of-spec-check.py <instance> DB27-1-AC1,DB2
 
 **REPORT:** the pin you ran at, that Andrew's word was read first, the run's and sweep's denominators, landed and FAILED counts, any
 abort, and the returned file sizes.
+
+
+## AMENDMENT 1 (2026-10-08 ~00:3xZ, issuer 2.0.0_SA_COO~D2, on Andrew-direct ~00:0xZ relayed by 0.0.0_AB_MSTR~DELL2 msg 1163) -- re-pointed to dell2
+
+Andrew, verbatim (via laptop 1.0.0_SA_CTO msg 106648): "Why is laptop running any of this, that's the whole point of the dell boxes is to
+run the heavy jobs there". Laptop CTO ruling: no new Dell run on a laptop seat; an access refusal is answered by the grant (the secrets
+grant widens to every secret a Dell project's code reads by name, at laptop 2.0.0_SA_COO~C). So this order runs ON DELL2, by the issuer,
+once `cloudops-dell2-agent-user` can read `blackdiamond/49f/session`. The laptop seat `0.7.0_AE_CloudOps~I` is not used. Steps 1-3 are
+unchanged and run from the dell2 repository root; step 4's return is replaced by the record landing beside the script, which the issuer
+copies byte-exact to `deliverables/2.0.0_SA_COO~D2/relay/`. The pair (COO @20669fcec6, CTO @5a223f2a26) stands: the act, its blast
+radius, its one use of the word and its rollback are unchanged; only the machine moves. Criteria unchanged.
+No gate limb graded this modification (LIMB 6 does not fire on a modification; GATE (viii) grades the unchanged `<placeholders>NONE</placeholders>`).
 
 ---
 
