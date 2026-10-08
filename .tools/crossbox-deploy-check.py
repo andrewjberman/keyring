@@ -4,6 +4,8 @@
 
     python .tools/crossbox-deploy-check.py --root <dir> [--target <address> ...] [--notices <dir>] [--serial <serial>]
         [--now <UTC, e.g. 2026-10-08T05:00:00Z>] [--repo-root <dir>]
+        [--files <path> ... | --files-from <file|-> | --files-vs-trunk]
+    python .tools/crossbox-deploy-check.py --list-deployable [--commit-range <a..b>] [--files-from <file|->] [--repo-root <dir>]
 
 Andrew's word: the laptop needs to know what goes on across the devices, but not every commit/deploy/decision comes from
 the laptop -- only when there is an open call, a potential project overlap, or a deploy that could upset another device's work.
@@ -18,6 +20,19 @@ the laptop -- only when there is an open call, a potential project overlap, or a
                an empty `resources` list means the whole root. An expired notice is ignored and listed as expired.
   OPEN-DEPLOY  another seat's open deploy on the root: org/critical_paths/.open_deploys/*.json at HEAD of EVERY live
                worktree (git worktree list --porcelain, then ls-tree), the per-worktree denominator printed.
+
+FILES MODE (--files, --files-from, --files-vs-trunk; AMENDMENT 1 of the cell's task order): OVERLAP is judged on the files a
+push or deploy actually carries against another box's write set, never on a shared root -- a project hits only if one of THOSE
+files is inside its write set (an empty list reads clear: "no file carried"). --files-vs-trunk makes the list the Terraform
+files of --root that differ from the merge base with the shared branch (committed, staged, unstaged or untracked); when that
+list is empty OVERLAP reads clear with the reason "no file of this root differs", and when the merge base cannot be resolved the
+tool says so and falls back to the root alone. The same rule narrows the OPEN-CALL project-code match and, for a NON-Terraform
+root, the OPEN-DEPLOY match (a sentinel hits only if its text names a carried file). For a Terraform root the OPEN-DEPLOY limb
+keeps matching the root: an apply works on the state of the whole root, so another seat's open deploy of the same root collides
+whatever files differ. Without any of the three flags the old root-wide reading stands (the criterion CTs3-AC2 invocation).
+--list-deployable prints what safe-deploy.sh's own core (safe_deploy_core.py detect_script_files + detect_bundle_member_files,
+called the way its main() calls them) will deploy for the explicit files or the commit range: one `DEPLOYABLE <path>` per file,
+one `DEPLOY-ROOT <data/pipeline>` per root, LAST line `DEPLOYABLE-COUNT n=<k>`; it measures nothing else.
 
 An ABSENT file or directory reads clear, said so ("none recorded"). A file that EXISTS but cannot be parsed, or carries a key
 this reader does not know, is NOT clear: it reads hit with the reason.
@@ -103,12 +118,17 @@ def age_text(stamp, now) -> str:
     return "age %dh%02dm" % (sec // 3600, (sec % 3600) // 60)
 
 
-def projects_covering(pc, dev, reg, rel: str) -> tuple:
-    """([(code, placement_box, write_path, placement_field)], findings) for live projects whose write set overlaps rel."""
+def projects_covering(pc, dev, reg, rel: str, files=None) -> tuple:
+    """([(code, placement_box, write_path, placement_field)], findings) for live projects whose write set overlaps rel --
+    or, when files is a list (FILES MODE), overlaps one of THOSE files: the root alone no longer hits."""
     projects, findings = pc.read_projects(dev, reg)
     out = []
     for proj in projects:
-        hit = next((w for w in proj["writes"] if pc.overlaps(w, rel)), None)
+        if files is None:
+            hit = next((w for w in proj["writes"] if pc.overlaps(w, rel)), None)
+        else:
+            pair = next(((w, f) for w in proj["writes"] for f in files if pc.overlaps(w, f)), None)
+            hit = "%s (carried file %s)" % pair if pair else None
         if not hit:
             continue
         field = None
@@ -175,11 +195,17 @@ def measure_open_call(repo_root, rel, covering, now) -> tuple:
     return hits, lines
 
 
-def measure_overlap(dev_name, covering, findings, basis) -> tuple:
+def measure_overlap(dev_name, covering, findings, basis, files=None, files_note="") -> tuple:
+    """files None = the old root-wide reading; a list = FILES MODE (an empty list has nothing to overlap: clear, with the reason)."""
     lines, hits = [], []
+    if files is not None:
+        lines.append("  files mode: %d file(s) carried (%s)" % (len(files), files_note))
+        if not files:
+            reason = files_note if files_note.startswith("no file") else "no file carried"
+            return hits, lines + ["  %s -- reads clear" % reason]
     if dev_name is None:
         hits.append("this box is unresolved (%s): cannot say which placement is another box's" % basis)
-        return hits, ["  HIT %s" % hits[0]]
+        return hits, lines + ["  HIT %s" % hits[0]]
     for code, box, path, field in covering:
         if box and box != dev_name:
             hits.append("project %s is placed on %s (%s) and its write set names %s" % (code, box, field, path))
@@ -187,7 +213,8 @@ def measure_overlap(dev_name, covering, findings, basis) -> tuple:
         else:
             lines.append("  project %s placed on %s (%s) names %s -- this box or unplaced, not another box's" % (code, box, field, path))
     if not covering:
-        lines.append("  no live project's write set shares a path with the root (placement-check read_projects/overlaps)")
+        what = "the root" if files is None else "the %d carried file(s)" % len(files)
+        lines.append("  no live project's write set shares a path with %s (placement-check read_projects/overlaps)" % what)
     for finding in findings:
         lines.append("  placement finding: %s" % finding)
     return hits, lines
@@ -277,9 +304,25 @@ def read_blobs(repo_root, shas) -> dict:
     return out
 
 
-def measure_open_deploy(repo_root, rel, serial) -> tuple:
-    pats = mention_patterns(rel)
+def file_patterns(files: list) -> list:
+    """Regexes that count as 'names a carried file': its full repo path, or its bare name (never __init__.py)."""
+    pats = []
+    for path in files:
+        pats.append((re.escape(path), path))
+        base = path.rsplit("/", 1)[-1]
+        if base != "__init__.py" and len(base) >= 4:
+            pats.append((r"(?<![A-Za-z0-9_/.-])%s(?![A-Za-z0-9_-])" % re.escape(base), base))
+    return pats
+
+
+def measure_open_deploy(repo_root, rel, serial, files=None) -> tuple:
+    """files None, or a Terraform root: a sentinel hits when its text names the root (the state of a whole root is what an apply
+    works on). A non-Terraform root in FILES MODE: a sentinel hits only when its text names a carried file."""
+    narrow = files is not None and not rel.startswith("infra/aws/terraform/")
+    pats = file_patterns(files) if narrow else mention_patterns(rel)
     lines, hits = [], []
+    if narrow:
+        lines.append("  files mode: a sentinel hits only if it names one of the %d carried file(s), not the shared root" % len(files))
     rc, out = git_lines(repo_root, "worktree", "list", "--porcelain")
     trees = [ln[9:].strip() for ln in out.splitlines() if ln.startswith("worktree ")] if rc == 0 else []
     if rc != 0 or not trees:
@@ -318,6 +361,8 @@ def measure_open_deploy(repo_root, rel, serial) -> tuple:
         if serial and doc.get("author") == serial:
             continue
         why = mentions(text, pats, [])
+        if why and narrow:
+            why = why.replace("names the root (token", "names a carried file (token")
         if why:
             hits.append("open deploy %s (author %s, status %s, opened %s) %s" % (
                 doc.get("slug", path), doc.get("author"), doc.get("status"), doc.get("opened_at"), why))
@@ -326,8 +371,75 @@ def measure_open_deploy(repo_root, rel, serial) -> tuple:
     return hits, lines
 
 
+def norm_file(path: str) -> str:
+    path = path.strip().replace("\\", "/")
+    while path.startswith("./"):
+        path = path[2:]
+    return path
+
+
+TF_SUFFIXES = (".tf", ".tfvars", ".tf.json", ".hcl", ".tftpl")
+
+
+def trunk_files(repo_root, rel) -> tuple:
+    """(files or None, note): the Terraform files of rel that differ from the merge base with the shared branch."""
+    base = ""
+    for cand in ("origin/CLOUD", "CLOUD", "origin/main", "main"):
+        rc, out = git_lines(repo_root, "rev-parse", "--verify", "-q", cand + "^{commit}")
+        if rc != 0:
+            continue
+        rc, out = git_lines(repo_root, "merge-base", "HEAD", cand)
+        if rc == 0 and out.strip():
+            base = out.strip().splitlines()[0]
+            break
+    if not base:
+        return None, "the merge base with the shared branch cannot be resolved (origin/CLOUD, CLOUD, origin/main, main); the root alone is judged"
+    rc1, changed = git_lines(repo_root, "diff", "--name-only", base, "--", rel)
+    rc2, fresh = git_lines(repo_root, "ls-files", "--others", "--exclude-standard", "--", rel)
+    if rc1 != 0 or rc2 != 0:
+        return None, "git diff against the merge base failed (rc=%d/%d); the root alone is judged" % (rc1, rc2)
+    names = sorted({norm_file(x) for x in (changed.splitlines() + fresh.splitlines()) if x.strip()})
+    names = [n for n in names if n.endswith(TF_SUFFIXES)]
+    if not names:
+        return [], "no file of this root differs from the merge base %s with the shared branch" % base[:10]
+    return names, "%d Terraform file(s) of this root differ from the merge base %s" % (len(names), base[:10])
+
+
+def load_core(repo_root):
+    """safe-deploy.sh's own core, imported (its functions decide what a deploy carries; this tool never re-implements them)."""
+    spec = importlib.util.spec_from_file_location("opal_safe_deploy_core", os.path.join(repo_root, ".tools", "safe_deploy_core.py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def list_deployable(repo_root, files, commit_range) -> int:
+    try:
+        core = load_core(repo_root)
+        explicit = files if files else None
+        scripts = core.detect_script_files(commit_range=commit_range, explicit_files=explicit)
+        members = core.detect_bundle_member_files(commit_range=commit_range, explicit_files=explicit)
+    except Exception as exc:
+        print("ERROR: cannot read what the deploy core will deploy (%s: %s)" % (type(exc).__name__, exc), file=sys.stderr)
+        return 2
+    deploy = list(dict.fromkeys(norm_file(f) for f in list(scripts) + list(members)))
+    roots = sorted({"/".join(f.split("/")[:2]) if f.startswith("data/") and f.count("/") >= 2 else os.path.dirname(f) for f in deploy})
+    for path in deploy:
+        print("DEPLOYABLE %s" % path)
+    for root in roots:
+        print("DEPLOY-ROOT %s" % root)
+    print("DEPLOYABLE-COUNT n=%d" % len(deploy))
+    return 0
+
+
+def read_list(path: str) -> list:
+    text = sys.stdin.read() if path == "-" else open(path, encoding="utf-8").read()
+    return [norm_file(x) for x in text.splitlines() if x.strip()]
+
+
 def run(argv: list) -> int:
     root, targets, notices, serial, now_arg, repo_root = "", [], "", "", "", REPO
+    files, trunk, listing, commit_range = None, False, False, None
     i = 0
     try:
         while i < len(argv):
@@ -350,29 +462,58 @@ def run(argv: list) -> int:
             elif arg == "--repo-root":
                 repo_root = os.path.abspath(argv[i + 1])
                 i += 2
+            elif arg == "--files":
+                files = [] if files is None else files
+                i += 1
+                while i < len(argv) and not argv[i].startswith("--"):
+                    files.append(norm_file(argv[i]))
+                    i += 1
+            elif arg == "--files-from":
+                files = (files or []) + read_list(argv[i + 1])
+                i += 2
+            elif arg == "--files-vs-trunk":
+                trunk = True
+                i += 1
+            elif arg == "--list-deployable":
+                listing = True
+                i += 1
+            elif arg == "--commit-range":
+                commit_range = argv[i + 1]
+                i += 2
             else:
                 raise ValueError("unknown argument %r" % arg)
+        if listing:
+            return list_deployable(repo_root, files, commit_range)
         if not root:
             raise ValueError("--root is required")
+        if trunk and files is not None:
+            raise ValueError("--files-vs-trunk cannot be combined with --files or --files-from")
         now = parse_utc(now_arg) if now_arg else datetime.datetime.now(datetime.timezone.utc).replace(microsecond=0, tzinfo=None)
-    except (IndexError, ValueError) as exc:
-        print("ERROR: %s\nusage: crossbox-deploy-check.py --root <dir> [--target <address> ...] [--notices <dir>]" % exc, file=sys.stderr)
+    except (IndexError, ValueError, OSError) as exc:
+        print("ERROR: %s\nusage: crossbox-deploy-check.py --root <dir> [--target <address> ...] [--notices <dir>] "
+              "[--files <path> ... | --files-from <file|-> | --files-vs-trunk]" % exc, file=sys.stderr)
         return 2
     notices = notices or os.path.join(repo_root, "org", "devices", "deploy_notices")
     rel = rel_root(root, repo_root)
     name = rel.split("/")[-1]
+    files_note = "the list the caller passed"
+    if trunk:
+        files, files_note = trunk_files(repo_root, rel)
     pc = load_placement(repo_root)
     dev = pc.devices_module()
     reg = dev.load()
     dev_name, basis = dev.this_device(reg)
-    covering, findings = projects_covering(pc, dev, reg, rel)
-    print("CROSSBOX-DEPLOY-CHECK device=%s (%s) root=%s targets=%d now=%s" % (
-        dev_name or "UNRESOLVED", basis, rel, len(targets), now.strftime("%Y-%m-%dT%H:%M:%SZ")))
+    covering, findings = projects_covering(pc, dev, reg, rel, files)
+    print("CROSSBOX-DEPLOY-CHECK device=%s (%s) root=%s targets=%d files=%s now=%s" % (
+        dev_name or "UNRESOLVED", basis, rel, len(targets), "root-only" if files is None else str(len(files)),
+        now.strftime("%Y-%m-%dT%H:%M:%SZ")))
+    if trunk and files is None:
+        print("FILES-NOTE: %s" % files_note)
     sections = (
         ("OPEN-CALL", measure_open_call(repo_root, rel, covering, now)),
-        ("OVERLAP", measure_overlap(dev_name, covering, findings, basis)),
+        ("OVERLAP", measure_overlap(dev_name, covering, findings, basis, files, files_note)),
         ("UPSET", measure_upset(notices, rel, targets, now)),
-        ("OPEN-DEPLOY", measure_open_deploy(repo_root, rel, serial)),
+        ("OPEN-DEPLOY", measure_open_deploy(repo_root, rel, serial, files)),
     )
     verdicts, why = {}, []
     for label, (hits, lines) in sections:
