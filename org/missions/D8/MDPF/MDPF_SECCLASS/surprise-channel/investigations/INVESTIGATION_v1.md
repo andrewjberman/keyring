@@ -5488,3 +5488,34 @@ by dell1 or by this seat.
   "notes": "Owner of the tool: the deploy lane (0.7.0_AE_CloudOps). Until it is scoped, a deploy half should name the shipped-bundle members or the seat should diff them before signing. ~SD's e65b ledger still owns the scheduled module's move."
 }
 ```
+
+## MDPF_SECCLASS-D1-S13 -- ADDENDUM to D1-S12: no consumer read the out-of-turn bytes in either window, and there were TWO windows today, not one
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S13",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T19:20Z",
+  "one_line": "ADDENDUM TO MDPF_SECCLASS-D1-S12, closing its one open arm and widening its count. (a) S12 says 'an event-triggered fire in that window was not read'; it has now been read, and NO consumer touched the out-of-turn bytes -- every S3 read on the key during the exposure was by the dell1 agent principal itself (the deploy's own HeadObject and the remediation's GetObject), with zero reads by any EC2 instance role, Lambda execution role or other principal. (b) THIS WAS THE SECOND OCCURRENCE TODAY, NOT THE FIRST: the same ETag pair ran 40ffa3fa (01:47:59Z) -> 3f1e6be8 (01:49:54Z), a 1m55s exposure, and S12's own evidence line cites '3f1e6be8... (01:49:54Z)' as the prior version without noting that that timestamp is itself the tail of the earlier push-and-restore. So the shipped-bundle step has moved this module out of turn twice in 17.5 hours, and the 61 s figure is the shorter of the two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail CAN see these reads, established before relying on an absence: get-event-selectors on opal-organization-trail returns a ReadOnly AWS::S3::Object selector whose Values are arn:aws:s3:::opal-data-49financial/, opal-data-bd/, opal-data-cot/ and opal-data-inf/. Read with --output json deliberately: the same call with --output text truncated the Values list to the 49financial entry alone and would have supported the OPPOSITE conclusion (that bd is uncovered and a read is undecidable).",
+      "19:09Z window, 31 CloudTrail files / 2,849 records scanned, 5 on-key: HeadObject 19:09:12Z (the push's own verify), ListObjectVersions 19:09:36Z, GetObject 19:09:59Z, HeadObject 19:10:19Z (post-restore verify), ListObjectVersions 19:12:10Z -- ALL arn:aws:iam::313476888478:user/cloudops-dell1-agent-user, aws-cli/2.37.9 on windows, srcIP 108.242.96.89 (the dell1 box). In-window GetObject/HeadObject: 2, both that principal.",
+      "01:47Z window, 23 files / 1,028 records / 0 unreadable, 11 on-key, 4 in-window GetObject/HeadObject at 01:47:59Z, 01:49:10Z, 01:49:11Z and 01:49:53Z -- all the same agent user. The 01:49:53Z GetObject carries srcIP 'AWS Internal' one second before the 01:49:54Z restore, the signature of a server-side copy-object reading its source, i.e. the remediation rather than a consumer.",
+      "POSITIVE CONTROL on the 19:09Z scan: it returned this seat's OWN ListObjectVersions at 19:12:10Z, so the instrument demonstrably sees activity on this exact key and the absence of a consumer read is MEASURED rather than blind.",
+      "list-object-versions on s3://opal-data-bd/code/gold/lib/_shared/etf_classification_scheduled.py: 3f1e6be8/35100 LATEST (19:10:11Z), 40ffa3fa/35360 (19:09:12Z), 3f1e6be8/35100 (01:49:54Z), 40ffa3fa/35360 (01:47:59Z), 3f1e6be8/35100 (2026-10-07T16:53:57Z), cfe898d1/31082 (2026-10-07T10:39:44Z) -- the 40ffa3fa/3f1e6be8 alternation appears TWICE.",
+      "s3://opal-data-cot/code/gold/lib/_shared/etf_classification_scheduled.py was NOT touched today: its LATEST is 2026-10-07T16:54:13Z at ETag 3f1e6be8, the same prior bytes. The cot copy of the same three-member bundle is a declared second target in .tools/safe_deploy_core.py, so it was checked rather than assumed clean."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12: 'A signed act deploys exactly the objects its half names (here one code object, C_06); a _shared module moves only under its own ledger.' CLAUDE.md NEVER-1: a sign-off names the act's BLAST RADIUS and the rollback per key. CLAUDE.md 22a DELIVERY: SENT != EMITTED != READ, so an object that moved is not yet an object that was consumed.",
+  "world_is": "The out-of-turn bytes existed on the served prefix for 59 s (19:09Z) and 1m55s (01:47Z) and were read by nobody but the deploying principal, so no run consumed the held e65 amendment-3 change and no output is contaminated. The defect S12 names is real and unchanged -- a one-file deploy still moves a table-writer module out of turn -- but its CONSEQUENCE this time was nil, and that is a measurement rather than an inference from the 23:00Z cron alone.",
+  "notes": "Not a remediation and not a disposition: S12's disarm_owner is 2.0.0_SA_COO~M1 and this row only hands that owner the two readings it said were missing. Nothing was written, restored or rolled back under this row -- it is read-only. WHAT THIS DOES NOT COVER, stated so the absence is not over-read: only the ONE key is scanned, only the two windows are scanned, and a read by a principal whose GetObject CloudTrail does not log at all (a VPC-endpoint path with data events off, say) would be invisible to it -- the selector covers the four opal-data-* buckets and nothing was checked outside them. The recurrence matters more than either window: a step that re-ships a bundle on every gold deploy will keep doing this, so the remedy belongs in the tool or in the sign-off's named members, not in a per-incident restore. The deploy lane (0.7.0_AE_CloudOps) owns the tool, as S12 says; this seat has NOT scoped it and does not propose a change here."
+}
+```
