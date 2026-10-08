@@ -4364,3 +4364,57 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: if the intent was file-judged for Terraform roots too, it is one condition in measure_open_deploy()."
 }
 ```
+
+## NFRA_CTLPLN-W14-S17 -- TO-CT-s-4 build item 2 says respawn every DEAD seat whose order is still open
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T09:16:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S17",
+  "one_line": "TO-CT-s-4 build item 2 says respawn every DEAD seat whose order is still open; the laptop's first real read has 7 of 16 seats DEAD with open orders, one holding 38, several dated weeks back, so the order's rule would respawn seats on stale orders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py on the laptop, 2026-10-08 ~08:5xZ: SEAT-LIVENESS device=laptop seats=16 moving=6 quiet=3 hung=0 dead=7 unknown=0 ok=True",
+      "the 7 DEAD lines: 0.7.0_AE_CloudOps (1 order, newest issued 2026-09-30), ~A (38 orders, no issued date in the files), ~F (1, 2026-10-07), ~MI (2, none), ~RV (1, none), ~W (2, 2026-09-09), 2.0.0_SA_COO~D2 (1, 2026-10-07); each has no claude.exe whose command line carries its serial token",
+      "the order files read by the tool: <issued_to> equal to the serial and a non-terminal <status>; older orders carry no <issued_date> at all"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-4 build item 2: for a DEAD seat whose order is still open, respawn it by /mstr-spawn (its own pre-flight stands).",
+  "world_is": "An order file stays non-terminal until someone flips it, so 'open order and no process' describes a seat that finished, was parked or never ran as often as one that crashed. Written into /govern Step 3a with a guard: the tool prints each DEAD seat's order count and newest issued date, and the step respawns only when the order is current, leaving an old order to the COO that issued it as a finding. The skill's pre-flight (1pt, 1a, 1b, 1d) stands unchanged.",
+  "notes": "Not a defect in the order's intent; the order's own cell text says 'whose order is still open', which the files cannot show without a date. The CTO/COO may want a terminal sweep of those orders, or an issued_date on every order, so DEAD reads cleaner. A hazard_standing of INERT because nothing runs this step unless a manager runs /govern, and the guard is in the step."
+}
+```
+
+## NFRA_CTLPLN-W14-S18 -- agentbus-sqs.sh recv still hardcodes two box names in its logic (laptop|sitez), so 'recv dell1' is refused as an unknown flag
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T09:16:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S18",
+  "one_line": "agentbus-sqs.sh recv still hardcodes two box names in its logic (laptop|sitez), so 'recv dell1' is refused as an unknown flag; only the usage text was changed here, as ordered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/agentbus-sqs.sh line 360 (recv): 'laptop|sitez) dev=\"$1\"; shift ;;' then '*) dev=\"$(this_device)\" ;;'",
+      ".tools/agentbus-sqs.sh lines 366-370: the next token, if not --keep or --max, hits '*) echo \"agentbus-sqs: unknown flag ... exit 2'",
+      "org/devices/DEVICES.json holds four boxes: laptop, sitez, dell1, dell2"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-4 build item 2: the usage strings in agentbus-sqs.sh describe the devices the register lists; TEXT ONLY, no logic changed.",
+  "world_is": "The usage text now says a device is any box the register lists; the logic of recv still names two. 'recv <box>' on a Dell is refused loudly (rc 2, 'unknown flag'); 'recv' with no argument works on every box, so no delivery is lost. Left as it is, per the order.",
+  "notes": "A one-line change (resolve the argument through the register's resolve subcommand, as send already does) would close it; it belongs to whoever owns the bus script's logic (0.0.0_AB_MSTR's lane for the bus), not to this cell."
+}
+```

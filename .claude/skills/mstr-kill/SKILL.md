@@ -23,6 +23,9 @@ MSTR.** One carve-out, stated once: **killing `0.0.0_AB_MSTR` itself is not insi
 — MSTR is the device's infra manager and its cross-device comms carrier (`/agentbus` consumer), so
 a COO ends it only on Andrew's explicit word; MSTR self-kills with `--self-ack` as before.
 
+**This skill acts on THIS box only.** It walks this box's own processes and markers and names no box. A seat on another box is
+that box's manager's to end; the register `org/devices/DEVICES.json` is the list of boxes.
+
 > **Force-kill outside this skill still requires explicit Andrew per-instance
 > authorization** (CLAUDE.md / LD-0027). The skill is the structural channel —
 > outside the channel, the default discipline holds.

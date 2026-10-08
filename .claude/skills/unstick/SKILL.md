@@ -13,6 +13,10 @@ terminal window and Ctrl+Tab-cycling while reading the title after every switch.
 keystroke goes ONLY to a tab whose title exactly matches the serial, with the foreground
 re-verified before every send.
 
+**This skill acts on THIS box only.** It finds a tab among this box's own terminal windows and names no box. A seat on another
+box is that box's manager's to unstick; the register `org/devices/DEVICES.json` is the list of boxes. The manager's loop finds a
+hung seat with `python .tools/seat-liveness.py` (read-only), then runs this skill; the diagnosis below stands.
+
 ## Invocation
 
 | Form | Behavior |
