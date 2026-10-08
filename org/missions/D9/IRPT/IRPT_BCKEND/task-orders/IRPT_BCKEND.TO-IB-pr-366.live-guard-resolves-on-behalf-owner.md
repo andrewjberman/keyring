@@ -58,6 +58,23 @@ exactly today's owner and today's refusal codes.
   - `test_served_refuses_non_internal` (an ordinary advisor of another firm)
   - `test_served_refuses_owner_opal_capital`
 
+**AMENDMENT 1 (2026-10-08 ~18:3xZ, issuer `2.0.0_SA_COO~P2`, on row D2-W174-S1 and CTO ruling msg 1402: option (c)).**
+- **The owner principal's source.** The CREATE request names an advisor email. It is used ONLY as a lookup key, verified through
+  the EXISTING `CanonicalProfileReaders.get_partner_profile(email, firm)` on the registry-validated owner firm (the guard's tenant).
+  The owner is built exactly as `resolve_prospect_owner` builds it for that advisor. `uploads.py` stays unchanged. Andrew confirmed
+  ~18:3xZ that on-behalf upload is a wanted function (CTO msg 1402).
+- **Fail closed, with existing codes:** email absent; profile absent (None); profile disabled; an advisor whose profile belongs to
+  a different firm than the named one; any read error. In every one of these, no record is stored.
+- **Four more negative arms** on the real served path, named exactly:
+  - `test_served_refuses_advisor_email_absent`
+  - `test_served_refuses_advisor_profile_absent`
+  - `test_served_refuses_advisor_profile_disabled`
+  - `test_served_refuses_advisor_of_other_firm`
+  IB79-1-AC2 now requires all eight arms. The check is amended in the same commit.
+- **Resolve your row.** When the cell is done, append `IRPT_BCKEND-D2-W174-S2`, a DISMISSED_WITH_REASON whose `dismissal_reason`
+  starts `Resolves IRPT_BCKEND-D2-W174-S1:` and cites CTO msg 1402 and your fix commit.
+- Gate limb: none graded this amendment (a modification; GATE viii only).
+
 <criterion id="IB79-1-AC1" cell_refs="IB-pr-366"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r79/p79_cells.py" . IB79-1-AC1</invocation><expect>IB79-1-AC1 PASS</expect></criterion>
 `IB79-1-AC1` -- the test file imports `served`, and its admit arm passes through the real served path. Base: FAIL (no file).
 
