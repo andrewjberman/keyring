@@ -190,15 +190,15 @@ Not moved: S252 (v16, parked by its own declaration).
     "owner": "the comp-tagauthz gate's owner, via 1.0.0_SA_CTO",
     "round": "v61",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "the comp-tagauthz gate's owner, via 1.0.0_SA_CTO",
       "round": "v61"
     },
     "closed": false,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "the comp-tagauthz gate's owner via 1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-08T18:04:52Z"
     }
   },
   {
