@@ -78,6 +78,7 @@ data/assets/scripts/silver/tests/test_commonwealth_sweeps.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_valuation.py
 data/assets/scripts/silver/tests/test_commonwealth_daily_returns.py
 data/assets/scripts/silver/tests/test_commonwealth_zero_amount_flows.py
+data/assets/scripts/silver/tests/test_commonwealth_mover_classes.py
 org/missions/D8/ADVI/ADVI_COTBKF/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
