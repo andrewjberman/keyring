@@ -490,6 +490,30 @@ fi
 # refused. A CONFLICT falls through to the in-tree path below, because a person resolves it there.
 # SAFE_MERGE_IN_TREE=1 forces the old path. Owner 4.0.0_SA_CRO~A (1.0.0_SA_CTO msg 107030).
 _SM_FL_DIR=""
+# resolve_known P1 P2 T0 -> prints the resolved tree when EVERY conflicted path is a known multi-writer class (a surprise-
+# channel section union, or a regenerated generated index entry: .tools/merge-resolve-known.py); returns 1 otherwise.
+# The conflicted paths come from `git merge-tree --name-only`; T0 is the tree it wrote (markers and all).
+resolve_known() {
+  local p1="$1" p2="$2" t0="$3" mb res idx k path blob how mode tr
+  local -a cps=()
+  while IFS= read -r path; do [ -n "$path" ] && cps+=("$path"); done < <(git merge-tree --write-tree --name-only --no-messages "$p1" "$p2" 2>/dev/null | tail -n +2)
+  [ "${#cps[@]}" -gt 0 ] || return 1
+  mb="$(git merge-base "$p1" "$p2" 2>/dev/null)" || return 1
+  res="$(python "$ROOT/.tools/merge-resolve-known.py" --base "$mb" --ours "$p1" --theirs "$p2" --tree "$t0" "${cps[@]}" 2>&1)" \
+    || { printf '%s\n' "$res" | sed 's/^/    resolver: /' >&2; return 1; }
+  idx="$(git rev-parse --path-format=absolute --git-dir)/resolve-known-$$.index"
+  rm -f "$idx"
+  GIT_INDEX_FILE="$idx" git read-tree "$t0" || { rm -f "$idx"; return 1; }
+  while read -r k path blob how; do
+    [ "$k" = "RESOLVED" ] || continue
+    mode="$(git ls-tree "$t0" -- "$path" | awk '{print $1}')"
+    GIT_INDEX_FILE="$idx" git update-index --cacheinfo "${mode:-100644},${blob},${path}" || { rm -f "$idx"; return 1; }
+    echo "    resolved ${path} (${how})" >&2
+  done <<< "$res"
+  tr="$(GIT_INDEX_FILE="$idx" git write-tree)" || { rm -f "$idx"; return 1; }
+  rm -f "$idx"
+  printf '%s\n' "$tr"
+}
 _sm_fast_lane() {
   local hb p1 tip out mrc t m mb paths n st rc att lockd w hp tl
   [ -n "${OPAL_AGENT_SERIAL:-}" ] || return 1                      # the in-tree path refuses with its own text
@@ -500,8 +524,18 @@ _sm_fast_lane() {
     p1="$(git rev-parse HEAD)"
     git merge-base --is-ancestor "$tip" "$p1" && return 1           # nothing to merge: the in-tree path says so
     out="$(git merge-tree --write-tree --no-messages "$p1" "$tip" 2>/dev/null)"; mrc=$?
-    if [ "$mrc" -eq 1 ]; then echo "safe-merge: fast lane -- '$BRANCH' CONFLICTS with HEAD; falling back to the in-tree merge so it can be resolved"; return 1; fi
     t="$(printf '%s\n' "$out" | head -1)"
+    if [ "$mrc" -eq 1 ]; then
+      # a conflict made only of the known multi-writer classes (surprise-channel rows, generated index entries) is
+      # resolved here, with no worktree and no MERGE_HEAD; anything else falls back to the in-tree path to be resolved
+      if t="$(resolve_known "$p1" "$tip" "$t")"; then
+        echo "safe-merge: fast lane -- the conflict was only known multi-writer files; resolved without opening a merge"
+        mrc=0
+      else
+        echo "safe-merge: fast lane -- '$BRANCH' CONFLICTS with HEAD beyond the known classes; falling back to the in-tree merge so it can be resolved"
+        return 1
+      fi
+    fi
     { [ "$mrc" -eq 0 ] && [ -n "$t" ]; } || { echo "safe-merge: fast lane -- git merge-tree failed (rc=$mrc); in-tree path"; return 1; }
     # the grade: paths the merge changes against BOTH parents, plus paths both sides changed since the merge base
     mb="$(git merge-base "$p1" "$tip" 2>/dev/null || echo '')"
