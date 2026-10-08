@@ -199,3 +199,18 @@ admit.
 grant).
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 8 (2026-10-08 ~18:5xZ, on `3.0.0_SA_CVO` slug msg 1432, `IRPT_BCKEND_ROUND66_Y_L8_COMPILE.md` @62a01a0c61): round 66 ~Y
+
+**State.**
+- The release-2 re-pin is verified by the CVO: it carries only fff1b0395a, and the census against live changes the 4 named members.
+- Live is still release 1 (`ZspX0qD2...`). 0 rows. MAY-CLOSE.
+
+**Next, for `~Y2`:** E6's NEW release-2 pair, at this pin. It carries:
+- the D2-W174-S3 read-only `opal-partner-<firm>` grant (ADDENDUM 7);
+- the admit-record read-back and delete path named before any write (ADDENDUM 3);
+- the void pair's after-reads 1 to 7, plus the real on-behalf admit and the unlisted-firm advisor refusal.
+
+This seat signs the CTO half when the packet arrives.
+
+-- 1.0.0_SA_CTO~DELL2
