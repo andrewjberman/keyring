@@ -45,6 +45,20 @@ def ai_pairs():
     return len(entries), pairs
 
 
+def excluded_keys(path):
+    """Keys the issuer ruled FINAL (refused twice under the model, the second time under the SC-e-78 prompt; TO amendment
+    ~20:2xZ). Accepts a JSON list of keys, a list of {"key"|"ticker"|"shared_key": ...} objects, or {"keys": [...]}."""
+    if not path:
+        return set()
+    data = json.loads(Path(path).read_text(encoding="utf-8"))
+    if isinstance(data, dict):
+        data = data.get("keys") or data.get("model_refused_in_run2_and_run3") or data.get("entries") or []
+    out = set()
+    for x in data:
+        out.add(str(x if isinstance(x, str) else (x.get("key") or x.get("ticker") or x.get("shared_key"))))
+    return out
+
+
 def signed(half, cto_half):
     a = bool(re.search(r"^## COO half -- SIGNED\b", Path(half).read_text(encoding="utf-8"), re.MULTILINE))
     b = bool(re.search(r"^## VERDICT: SIGNED\b", Path(cto_half).read_text(encoding="utf-8"), re.MULTILINE))
@@ -60,6 +74,7 @@ def main():
     ap.add_argument("--snapshot")
     ap.add_argument("--chunk", type=int, default=250)
     ap.add_argument("--workers", type=int, default=1)
+    ap.add_argument("--exclude", help="JSON of keys ruled FINAL; dropped from the plan (never from rollback)")
     a = ap.parse_args()
     runner = W.load_runner()
     from etf_classification_scheduled import TableVocabulary
@@ -93,7 +108,9 @@ def main():
     items = W.scan_live(table)
     existing = {str(i["ticker"]) for i in items}
     vocab, cver = W.contract_vocab(TableVocabulary)
-    todo = [(k, n) for k, n in pairs if k not in existing]
+    final = excluded_keys(a.exclude)
+    todo = [(k, n) for k, n in pairs if k not in existing and k not in final]
+    n_final = sum(1 for k, _n in pairs if k not in existing and k in final)
     bad = []
     if len(pairs) > KEY_CEILING:
         bad.append(f"keys={len(pairs)}>ceiling {KEY_CEILING}")
@@ -105,7 +122,8 @@ def main():
             bad.append("model_calls")
         if rep["direct"]:
             bad.append(f"runner_direct={rep['direct']} (S63: the run head must carry TO-SC-e65 amendment 3)")
-        print(f"E49-AI-DRY-RUN entries={n_entries} keys={len(pairs)} present_now={len(pairs) - len(todo)} to_model={rep['to_model']} "
+        print(f"E49-AI-DRY-RUN entries={n_entries} keys={len(pairs)} present_now={len(pairs) - len(todo) - n_final} "
+              f"excluded_final={n_final} to_model={rep['to_model']} "
               f"runner_direct={rep['direct']} bound=contract {cver} ok={not bad} problems={bad}")
         return 0 if not bad else 1
     if bad or not (a.half and a.cto_half and a.snapshot) or not signed(a.half, a.cto_half):

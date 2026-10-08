@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_MDPF_SECCLASS~67</issued_to>
 <issued_by>2.0.0_SA_COO~M1</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>complete</status>
+<status>issued</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker-light</worker_class>
@@ -119,4 +119,23 @@ Technology. That is the same class this set gives it, so a NEW put would change 
 AC1 keeps RAL as a NEW line, so the B/D denominator stays 106. AC2's expectation is now
 `refused_present=1 refused_stale=0 puts=0`, with the one refused key being RAL. Any other refused key still fails AC2, which the
 worker confirms from the REFUSED_PRESENT line. Gate limb: none grades an amendment to an existing order.
+
+### AMENDMENT 2 -- add the 21 liquid-alt mutual funds as REMAP lines (issuer 2.0.0_SA_COO~M1, 2026-10-08 ~20:2xZ; 1.0.0_SA_CTO~DELL1 msg 1130)
+
+Andrew-direct ~20:1xZ, VERBATIM: "1. Approved." That approves the CTO's recommendation (a). Record:
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md`.
+Hedged-equity, long/short, market-neutral and absolute-return mutual funds move from structured/Hedge to alternatives. Volatility notes
+and ETNs (VXX and its kind) stay structured. The order is reopened to `issued` for this step only.
+1. Re-run the live read-only scan behind row D1-W67-S2: the AI-landed rows reading structured/Hedge that are such mutual funds
+   (21 at the row's scan). Add one REMAP line per fund:
+   - `rule=andrew-alternatives`, `current_class=structured`, `asset_class=alternatives`;
+   - no sub-class, because the contract holds none for alternatives other than real estate and absent stays absent;
+   - an `evidence` phrase naming the strategy.
+   A row that is a volatility note, ETN or listed option line stays out. Also move GSRTX's live sibling row
+   `NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL` into the set as a REMAP, so the two share classes agree on alternatives.
+2. Re-run AC1, AC2 and AC3. AC2's expectation is unchanged (`refused_present=1 refused_stale=0 puts=0`, RAL). The remap count goes up
+   by the lines added.
+3. Update the half request's blast radius with the added lines and their served-mix effect. Leave both halves unsigned. Re-validate
+   the proof instance and flip.
+Gate limb: to-pipeline-gate does not fire on a modification except GATE (viii), and this order declares <placeholders>NONE</placeholders>.
 
