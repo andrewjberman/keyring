@@ -4584,6 +4584,33 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
 }
 ```
 
+## NFRA_CTLPLN-S31 -- the Dell deploy grant reaches the cloud graph bucket (opal-* wildcard), head marker and Iceberg files included
+
+```json
+{
+  "id": "NFRA_CTLPLN-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T14:20:00Z",
+  "one_line": "the Dell group's deploy policy grants s3:PutObject on arn:aws:s3:::opal-*/*, which includes the cloud graph's bucket opal-313476888478-globgrph, where a write to warehouse/_branch_head.main.json starts a Kuzu rebuild and the Iceberg graph tables live; no fence names the bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~14:1xZ by 4.0.0_SA_CRO: infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json, an Allow of s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:ListBucket and more on ['arn:aws:s3:::opal-*', 'arn:aws:s3:::opal-*/*']; its only S3 Deny covers delete and lifecycle on opal-data-* (not opal-313476888478-*).",
+      "Read: infra/aws/terraform/globgrph/projection.tf (an S3 write to warehouse/_branch_head.main.json notifies the queue that starts the projection worker) and infra/aws/globgrph/derive_runner.py:390, :407-419 (the head marker names the current snapshot of graph_nodes and graph_edges).",
+      "Not measured: the live policy (no simulate-principal-policy run), whether a bucket policy on opal-313476888478-globgrph denies the Dell users, and whether any Dell seat has written there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Dell grant is read as admitting deploys and the firm buckets; the graph plane is described as written only by its own in-VPC service roles (docs/architecture/NFRA_GLOBGRPH_PRD.md, the v0.4.1 N-agent rule: agents never write the graph).",
+  "world_is": "As written, a Dell credential can put any object in the graph bucket, including the head marker and the Iceberg table files, so a Dell seat could start a rebuild or replace graph data. Nothing found says this was intended or ruled out. INERT: nothing is known to have done it.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
+}
+```
+
 ## NFRA_CTLPLN-Z-S3 -- the trading calendar's fallback ends at 2027: on 2028-01-01 every staleness read on a function that runs the fallback raises
 
 ```json
@@ -4609,5 +4636,32 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "disposition": "UNDER_INVESTIGATION",
   "disarm_owner": "2.0.0_SA_COO~C",
   "notes": "Filed at the CTO's direction (msg 31336). The disarm is the fallback regenerated to cover 2028 onward and carried by a redeploy of each function that runs it, before 2028-01-01. Surfaced, not chased; no code edited."
+}
+```
+
+## NFRA_CTLPLN-S32 -- placement-check places every Dell project on the laptop (reads `fabric`, never `placement`)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T16:55:00Z",
+  "one_line": ".tools/placement-check.py resolves a project's box from project.json `fabric` only (:90), so projects carrying fabric=laptop with placement=DELL1/DELL2 are counted on the laptop and dell1 and dell2 read as placed 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~16:5xZ: .tools/placement-check.py:90 `box = dev.resolve(str(d.get(\"fabric\") or \"\"), reg)`; no read of `placement` in read_projects().",
+      "Read by a 4.0.0_SA_CRO sub-read 2026-10-08 ~16:3xZ: IRPT_YCDGEN, NFRA_TRNSPT and MDPF_SECHIST carry fabric=laptop with placement=DELL2/DELL2/DELL1, and the tool reports dell1 and dell2 as 'placed 0 (ROOM)'.",
+      "Not read: whether crossbox-deploy-check.py reads placement first in code (its docstring says so)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "placement-check is the C-PLACEMENT viewer of which box holds which project; crossbox-deploy-check imports its overlaps.",
+  "world_is": "Every Dell-placed project is attributed to the laptop, so the per-box placement figures and any cross-box overlap that depends on the box are wrong for dell1 and dell2. INERT: a viewer that never changes an exit; crossbox-deploy-check's use not traced.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~16:1xZ order (long-term graph coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_161xZ_GRAPH_COHERENCE_LONG_TERM_FOLD_IN_ACTIVITY_OVERLAP.md). Proposes no change; the fix owner is the tool's."
 }
 ```
