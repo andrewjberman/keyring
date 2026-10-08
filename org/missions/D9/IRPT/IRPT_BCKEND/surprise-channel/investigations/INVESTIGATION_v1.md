@@ -21600,3 +21600,56 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A new worktree is not provisioned with terraform.exe; the binary and .terraform/ were added as ignored untracked files. The same copy will be needed by every release worker. No tracked file, state or served object differed from the order's expectation."
 }
 ```
+
+## IRPT_BCKEND-D2-W158-S1 -- Release 2's on-behalf guard admits, but the stored write fails: the CSV lane the order's body names stores und
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W158-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~158",
+  "surfaced_at": "2026-10-08T20:42Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Release 2's on-behalf guard admits, but the stored write fails: the CSV lane the order's body names stores under state/prospect_inputs/, which the function role cannot PutObject; read 4 cannot pass, so the run rolled back (branch B).",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Live invoke of release 2 (Un0wVZqj.., 20:40Z): filer allowedFirmIds [49financial], advisor_email = adv-04b85b8aefda, body csv_base64 as test_served_on_behalf_create.py payload(): public code UNEXPECTED; /aws/lambda/irpt-ycharts-generate irpt_internal: AccessDenied PutObject on arn:aws:s3:::opal-data-irpt/irpt/49financial/state/prospect_inputs/ART-92c739dc49f1e55781508e6b7d522d8df09d2c4653bbbc27631ef708934d4238/bcf488cd....csv 'no identity-based policy allows the s3:PutObject action'",
+      "iam get-role-policy irpt-ycharts-generate-role (20:45Z): s3:PutObject only under state/original_holdings/*, state/request_compositions/* (and the vendor-artifact prefixes); no state/prospect_inputs/* statement",
+      "the same advisor_email with an unlisted-firm advisor returned NOT_AUTHORIZED and a non-listed tenant FIRM_BINDING, so the refusal arms work; only the admit's storage step fails",
+      "reports/retention.py reserve() publishes the RETENTION# row BEFORE reports/repository.py put() writes the blob, so the failed admit may have left one RETENTION#RET-92c739dc... row in irpt-requests (tenant 49financial); this seat cannot read irpt-requests. The four derived keys are in deliverables/0.9.0_WK_IRPT_BCKEND~158/Y67-1_admit_keys.json for the laptop to read and delete",
+      "Rolled back the same session: live ZspX0qD2.. at 20:44:41Z, re-plan No changes, census failed={}; test filer row deleted, consistent get-item no Item"
+    ]
+  },
+  "spec_asserts": "The order's step 7.1 expects 'Admitted' with an upload id and an irpt-requests row plus an S3 object in opal-data-ycharts, from a csv_base64 body.",
+  "world_is": "The guard admits (the owner is built for the advisor and uploads.create runs), but the deployed function's upload service is deferred_upload_service: a csv_base64 body goes to the ORIGINAL_CSV family under state/prospect_inputs/ (not granted) and its parse lane is not composed; a file_base64+file_type (template) body stores under state/original_holdings/ (granted) but also sends an SQS message to irpt-generation (the resident's resolver), which is outside this order's write set and was not tried. The S3 bucket is opal-data-irpt, not opal-data-ycharts. Either a role statement for state/prospect_inputs/* (an IAM change this order forbids) or a template-lane body plus an SQS cleanup path is needed before read 4 can pass."
+}
+```
+
+## IRPT_BCKEND-D2-W158-S2 -- Read 7 differs between releases: an ordinary partner subject's own-firm upload with no advisor_email is refuse
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W158-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~158",
+  "surfaced_at": "2026-10-08T20:47Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "Read 7 differs between releases: an ordinary partner subject's own-firm upload with no advisor_email is refused on both, but release 2 answers NOT_AUTHORIZED and release 1 answers UNEXPECTED.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Same event (header-only partner subject, firm 49financial, no advisor_email, csv_base64) invoked on release 2 at 20:41Z (public NOT_AUTHORIZED; log exception_type InputAccessDenied) and on rolled-back release 1 at 20:45Z (public UNEXPECTED; log exception_type PermissionError, text INPUT_ACCESS_DENIED)",
+      "Both stored nothing (the ordinary_authorizer port is None, so authorize_current refuses before any write)"
+    ]
+  },
+  "spec_asserts": "Step 7.4 / after-read 7: the ordinary subject answers as before.",
+  "world_is": "It answers with a different public reason code: release 2 raises the coded InputAccessDenied where release 1 raised a bare PermissionError. No write occurs on either, so no exposure; the code moves from UNEXPECTED to NOT_AUTHORIZED. Recorded as read 7 FAIL because 'as before' was not met to the letter."
+}
+```
