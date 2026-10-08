@@ -777,8 +777,54 @@ def case_editable_install_makes_checks_3_and_6_not_applicable(env):
         env3.close()
 
 
+def write_installed_record(env, *lines):
+    """Rewrite the installed fixture's RECORD (lines as written in a real RECORD; none = delete the file)."""
+    rp = env.site / ("%s-%s.dist-info" % (ic.SYN_NAME, ic.SYN_VERSION)) / "RECORD"
+    if lines:
+        rp.write_text("".join(ln + ",,\n" for ln in lines), encoding="ascii")
+    else:
+        rp.unlink()
+
+
+@with_env
+def case_check_6_extra_module_in_wheel_fails(env):
+    # the installed copy is complete (its RECORD lists only __init__.py, which is on disk); the wheel carries one more module
+    w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
+    record, _ = env.check(w.name)
+    c6 = record["checks"][5]
+    assert c6["verdict"] == "failed" and record["verdict"] == "not_checked", c6
+    ev = c6["evidence"]
+    assert ev["py_extra"] == ["%s/new_module.py" % ic.SYN_NAME] and ev["py_extra_count"] == 1 and ev["py_missing_count"] == 0
+    assert "compared=1 missing=0 extra=1 differ=0" in ev["summary"] and "new_module.py" in ev["summary"], ev["summary"]
+
+
+@with_env
+def case_check_6_missing_file_the_record_lists_is_not_a_difference(env):
+    # the installed copy's RECORD lists new_module.py but the file is gone from disk: missing, never differ, never extra
+    write_installed_record(env, "%s/__init__.py" % ic.SYN_NAME, "%s/new_module.py" % ic.SYN_NAME)
+    w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
+    record, _ = env.check(w.name)
+    c6 = record["checks"][5]
+    assert c6["verdict"] == "passed", c6
+    ev = c6["evidence"]
+    assert ev["py_compared"] == 1 and ev["py_identical"] == 1 and ev["py_missing"] == ["%s/new_module.py" % ic.SYN_NAME]
+    assert ev["py_extra_count"] == 0 and ev["py_differing_count"] == 0, ev
+    assert "compared=1 missing=1 extra=0 differ=0" in ev["summary"], ev["summary"]
+
+
+@with_env
+def case_check_6_record_paths_are_normalised_before_comparing(env):
+    write_installed_record(env, "./%s\\__init__.py" % ic.SYN_NAME, ".\\%s/new_module.py" % ic.SYN_NAME)
+    shutil.rmtree(str(env.site / ic.SYN_NAME))
+    w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
+    record, _ = env.check(w.name)
+    c6 = record["checks"][5]
+    assert c6["verdict"] == "not_applicable" and c6["evidence"]["py_missing_count"] == 2, c6
+
+
 @with_env
 def case_check_6_every_py_missing_on_disk_is_not_applicable(env):
+    write_installed_record(env, "%s/__init__.py" % ic.SYN_NAME, "%s/other.py" % ic.SYN_NAME)
     shutil.rmtree(str(env.site / ic.SYN_NAME))      # a real (non-editable) dist-info whose files are gone
     w = env.add_wheel(extra={"%s/other.py" % ic.SYN_NAME: b"Y = 1\n"})
     record, _ = env.check(w.name)
@@ -786,29 +832,39 @@ def case_check_6_every_py_missing_on_disk_is_not_applicable(env):
     assert v[3] == "passed" and v[6] == "not_applicable", v
     ev = record["checks"][5]["evidence"]
     assert ev["reason"] == "no installed file to compare (0 of 2 present)", ev["reason"]
-    assert ev["py_missing_count"] == 2 and ev["py_differing_count"] == 0 and ev["py_compared"] == 0
+    assert ev["py_missing_count"] == 2 and ev["py_differing_count"] == 0 and ev["py_compared"] == 0 and ev["py_extra_count"] == 0
     assert record["verdict"] == "checked"
 
 
 @with_env
-def case_check_6_some_present_some_missing_compares_the_present(env):
+def case_check_6_all_absent_but_one_never_listed_still_fails(env):
+    shutil.rmtree(str(env.site / ic.SYN_NAME))      # RECORD lists only __init__.py; the wheel's other.py was never installed
+    w = env.add_wheel(extra={"%s/other.py" % ic.SYN_NAME: b"Y = 1\n"})
+    c6 = env.check(w.name)[0]["checks"][5]
+    assert c6["verdict"] == "failed" and c6["evidence"]["py_extra"] == ["%s/other.py" % ic.SYN_NAME], c6
+    assert c6["evidence"]["py_missing"] == ["%s/__init__.py" % ic.SYN_NAME]
+
+
+@with_env
+def case_check_6_without_a_readable_record_absent_is_extra_unless_all_absent(env):
+    write_installed_record(env)                      # RECORD deleted
     w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
-    record, _ = env.check(w.name)
-    c6 = record["checks"][5]
-    assert c6["verdict"] == "passed", c6
-    ev = c6["evidence"]
-    assert ev["py_compared"] == 1 and ev["py_identical"] == 1 and ev["py_missing"] == ["%s/new_module.py" % ic.SYN_NAME]
-    assert ev["py_differing_count"] == 0 and "compared=1 missing=1 differ=0" in ev["summary"], ev["summary"]
-    assert ev["py_missing_not_in_installed_record"] == ["%s/new_module.py" % ic.SYN_NAME], "recorded for the reader"
+    c6 = env.check(w.name)[0]["checks"][5]
+    assert c6["verdict"] == "failed" and c6["evidence"]["py_extra"] == ["%s/new_module.py" % ic.SYN_NAME], c6
+    assert c6["evidence"]["installed_record_readable"] is False
+    shutil.rmtree(str(env.site / ic.SYN_NAME))       # now every .py is absent: nothing to compare
+    c6 = env.check(w.name)[0]["checks"][5]
+    assert c6["verdict"] == "not_applicable" and c6["evidence"]["reason"] == "no installed file to compare (0 of 2 present)", c6
 
 
 @with_env
 def case_check_6_one_present_file_differing_still_fails_beside_missing(env):
+    write_installed_record(env, "%s/__init__.py" % ic.SYN_NAME, "%s/new_module.py" % ic.SYN_NAME)
     w = env.add_wheel(py_bytes=b"VALUE = 3\n", extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
     record, _ = env.check(w.name)
     c6 = record["checks"][5]
     assert c6["verdict"] == "failed" and record["verdict"] == "not_checked", c6
-    assert "compared=1 missing=1 differ=1" in c6["evidence"]["summary"], c6["evidence"]["summary"]
+    assert "compared=1 missing=1 extra=0 differ=1" in c6["evidence"]["summary"], c6["evidence"]["summary"]
     assert c6["evidence"]["py_differing"] == ["%s/__init__.py" % ic.SYN_NAME]
     assert "%s/new_module.py" % ic.SYN_NAME not in c6["evidence"]["py_differing"], "a missing file is never counted as differing"
 
@@ -1104,7 +1160,9 @@ CASES = [
     case_leftover_scan_copy_can_never_be_released_or_packed, case_selftest_av_line_reads_the_stand_in,
     case_check_2_wrong_requests_fail, case_parse_wheel_name, case_check_8_signature_rules,
     case_editable_install_makes_checks_3_and_6_not_applicable, case_check_6_every_py_missing_on_disk_is_not_applicable,
-    case_check_6_some_present_some_missing_compares_the_present,
+    case_check_6_extra_module_in_wheel_fails, case_check_6_missing_file_the_record_lists_is_not_a_difference,
+    case_check_6_record_paths_are_normalised_before_comparing, case_check_6_all_absent_but_one_never_listed_still_fails,
+    case_check_6_without_a_readable_record_absent_is_extra_unless_all_absent,
     case_check_6_one_present_file_differing_still_fails_beside_missing,
     case_check_8_refuses_the_approval_file_as_a_signature, case_check_8_real_cto_files_in_a_temporary_directory,
     case_pack_released_only_packs_the_released_and_names_the_held, case_pack_released_only_edges,

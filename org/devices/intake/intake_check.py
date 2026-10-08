@@ -301,7 +301,10 @@ def installed_record_paths(dist_info):
         with open(dist_info / "RECORD", "r", encoding="utf-8", errors="replace", newline="") as fh:
             for row in csv.reader(fh):
                 if row:
-                    paths.add(row[0].replace("\\", "/"))
+                    entry = row[0].replace("\\", "/")
+                    while entry.startswith("./"):
+                        entry = entry[2:]
+                    paths.add(entry)
     except OSError:
         pass
     return paths
@@ -495,13 +498,14 @@ def check_6(ctx):
     inst = ctx["installed"][0]
     site_dir, inst_di = inst["site"], inst["dist_info"]
     inst_record = installed_record_paths(inst_di)
+    record_readable = bool(inst_record)       # no readable (or an empty) RECORD: no listing to separate missing from extra
     inst_record_base = {p.rsplit("/", 1)[-1].lower() for p in inst_record}
     try:
         inst_eps = entry_point_set((inst_di / "entry_points.txt").read_text(encoding="utf-8", errors="replace"))
     except OSError:
         inst_eps = set()
     py_total = py_ident = 0
-    py_diff, py_missing, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], [], []
+    py_diff, py_missing, py_extra, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], [], [], []
     with zipfile.ZipFile(ctx["path"]) as zf:
         infos = [i for i in zf.infolist() if not i.is_dir()]
         for info in infos:
@@ -531,7 +535,12 @@ def check_6(ctx):
                     continue
                 target = site_dir / rel
                 if not target.is_file():
-                    py_missing.append(n)     # no counterpart on disk: nothing to compare, never a difference
+                    # absent on disk: the installed copy's own RECORD separates a file its install wrote and lost (missing)
+                    # from a file it never wrote (extra); with no readable RECORD every absent file is extra
+                    if record_readable and rel in inst_record:
+                        py_missing.append(n)
+                    else:
+                        py_extra.append(n)
                 elif info.file_size > MAX_PY_BYTES:
                     py_diff.append(n)
                 elif target.read_bytes() == zf.read(info):
@@ -546,28 +555,30 @@ def check_6(ctx):
         label = "entry_point %s:%s = %s" % ep
         (hooks_old if ep in inst_eps else hooks_new).append(label)
     compared = py_ident + len(py_diff)
-    # of the missing files, those the installed copy's own RECORD never listed: information only, not a verdict
-    missing_unlisted = [n for n in py_missing if _site_rel(n) not in inst_record]
     detail = {"installed_copy": "<site-packages>/" + inst["dist_info_name"], "py_in_wheel": py_total, "py_identical": py_ident,
               "py_compared": compared, "py_missing_count": len(py_missing), "py_missing": py_missing,
-              "py_missing_not_in_installed_record": missing_unlisted,
+              "py_extra_count": len(py_extra), "py_extra": py_extra, "installed_record_readable": record_readable,
               "py_differing_count": len(py_diff), "py_differing": py_diff, "compiled_count": len(compiled), "compiled": compiled,
               "hooks_only_in_wheel": hooks_new, "hooks_also_in_installed_copy": hooks_old, "unsafe_member_names": unsafe}
-    if py_total and len(py_missing) == py_total and not unsafe:
+    counts = "compared=%d missing=%d extra=%d differ=%d" % (compared, len(py_missing), len(py_extra), len(py_diff))
+    absent = len(py_missing) + len(py_extra)
+    # nothing present to compare, and (no readable RECORD, or nothing the RECORD fails to list): not applicable
+    if py_total and absent == py_total and not unsafe and (not record_readable or not py_extra):
         reason = "no installed file to compare (0 of %d present)" % py_total
         return rec("not_applicable", reason, reason=reason, **detail)
     problems = []
+    if py_extra:
+        problems.append("%s: %d .py file(s) in the wheel that the installed copy never had: %s" % (counts, len(py_extra), cap(py_extra)))
     if py_diff:
-        problems.append("compared=%d missing=%d differ=%d: %d of %d .py files differ from the installed copy: %s" % (
-            compared, len(py_missing), len(py_diff), len(py_diff), py_total, cap(py_diff)))
+        problems.append("%s: %d of %d .py files differ from the installed copy: %s" % (counts, len(py_diff), py_total, cap(py_diff)))
     if hooks_new:
         problems.append("installer/script/start-up hook(s) not in the installed copy: %s" % cap(hooks_new))
     if unsafe:
         problems.append("unsafe member name(s): %s" % cap(unsafe))
     if problems:
         return rec("failed", "; ".join(problems), **detail)
-    return rec("passed", "%d of %d .py files byte-identical (compared=%d missing=%d differ=0); %d compiled file(s) named; no new hook" % (
-        py_ident, py_total, compared, len(py_missing), len(compiled)), **detail)
+    return rec("passed", "%d of %d .py files byte-identical (%s); %d compiled file(s) named; no new hook" % (
+        py_ident, py_total, counts, len(compiled)), **detail)
 
 
 def _ascii_name(text):
