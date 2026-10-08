@@ -20781,3 +20781,31 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
 }
 ```
+
+## IRPT_BCKEND-S392 -- SC-e-62/e56 first fire: 1 of 5 tabled class moves landed; Branch B held for the paired signer's ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-S392",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first Holdings fire on the SC-e-62/e56 bundle (2026-10-08 14:15Z) published all three firms reconciled with 0 multi_asset, but only 1 of e56's 5 tabled 49financial class moves landed and 233 of the 238 newly placed CUSIPs serve by name/ticker basis, not their CUSIP row. By the COO half's rule 49financial takes Branch B (rollback before the 2026-10-09 14:15Z fire); the rollback is held for a ruling by the paired signer.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E62E56_SERVED_CLASS_CENSUS_20261008.json (sha256 ec864bc9deb4...): 49financial 47 match / 4 off of 51; cottonwood 185 match / 2 not held of 187; 1 TABLE-basis node among the listed",
+      "pinned 10-06 control (49financial index GtsM8pj9...): 06745PR94 fixed_income/NAME_ALIAS, 808516702/108/801 unclassified/NONE in both 10-06 and 10-07; 61756E784 fixed_income -> equity",
+      "E62E56_POST_FIRE_READ_20261008.json (sha256 5d31fa129be0...): reconcile difference 0.00 at all three firms",
+      "COO half NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md, section POST-FIRE GRADE"
+    ]
+  },
+  "spec_asserts": "e56 acceptance 1: each firm's served snapshot reads the 238 by the class and sub-class of their CUSIP: row, and the five tabled class changes read as stated.",
+  "world_is": "The class change reached 1 of 5 tabled securities; the served run did not apply the CUSIP row where the local r2 precheck did. Disarm: the CTO rules hold-or-rollback; the root cause (served run vs the local build) routes to MDPF_SECCLASS dell1 2.0.0_SA_COO~M1."
+}
+```
