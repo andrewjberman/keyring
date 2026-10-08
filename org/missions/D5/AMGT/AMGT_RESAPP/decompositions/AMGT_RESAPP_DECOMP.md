@@ -9084,3 +9084,96 @@ The decomposition is frozen mid-round; that ruling opens it for this cell only.
 - **Carrier:** GATE (x) of `.tools/to-pipeline-gate.py` admits no second order file in a round, so the cell is LEG 0 of the bb-18
   order (its AMENDMENT 1, criteria AC4-AC6), not an order of its own. `fanout` is unchanged: `orders_total: 19`; the bb-18 order
   now owns two cells and is pending for LEG 0 only.
+
+## 87. ROUND 79 -- SERVE WHAT ROUND 78 BUILT: THE SEGMENT TABLE, THE SEEKING ALPHA COLUMN'S THREE STATES, FIVE STORED SECTIONS; THE BUILD-SIDE REPAIRS, THE ADAPTER CELL, REDEPLOY WITH ONE READ GRANT, WALK. Eight orders and two issuer acts
+
+**Input:** the CTO's round-78 analysis `ledger/ROUND_ANALYSIS.round78.md` @1a67e26433 (20 of 30; R1: the issuance names, per outcome
+it means to move, the cell that SERVES it, and the deploy pair lists those hookups by name); CTO msg 31672 (serve the Seeking Alpha
+column now with a read-only grant; three states kept apart; no record is never stale; FWD-7 graded after DSGN's cell); CTO msg
+31623 (five stored dossier fields are a round-79 cell). Drafted in five groups: `deliverables/2.0.0_SA_COO~Z/round79/GROUP_{A..E}_NOTES.md`;
+orders cc-1 to cc-6 are generated from them by `round79/cut_orders.py`; cc-7 and cc-8 are written by the issuer.
+
+### 87a. MEASURED AT THE CUT (deployed `+s6R0/rc`, live since 2026-10-08T07:19:32Z, unless named)
+
+- **Segment table:** nothing serves it. The reader looks at five objects of a folder; AMD's table costs 4 bodies where 2 are
+  needed. 76 of 85 stored names serve rows; Period 1 ties to stored revenue on 72 and not on 4. A deployed-shape read of AMD
+  through the drafted server function: served, 6 rows, fiscal year 2025, USD millions (`round79/GROUP_A_NOTES.md`).
+- **Seeking Alpha column:** 105 job records in 104 folders, 105 of 105 parse. Of 95 covered names 23 hold a record: read 11,
+  checked 12, no record 72 (`round79/GROUP_B_NOTES.md`). The served column still reads the 3 pilot partitions of 2026-09-11.
+- **Five stored sections:** over 95 covered names a value is held on 48 (company description), 18 (why we own), 13, 13 and 13;
+  no route serves any (`round79/GROUP_C_NOTES.md`). Four more why-we-own values stop mid-sentence (LLY, UNVGY, V, WDAY).
+- **The build's own gate fails at CLOUD HEAD:** `gen_harvest_prefixes.py --check` exits 1. One commit of another project
+  (`c09b1ad769`, owner notes on three registry rows) moved the registry hash. Regeneration changes the hash only: 4 of 4 prefix
+  values are byte-equal (`round79/GROUP_E_NOTES.md`).
+- **The role's policy** (`opal-amgt-scoped-api-role`, inline `opal-amgt-scoped-api-grants`): 33 object-read resources and 33 list
+  prefixes, 0 naming `job_record`; live equals the file's list. Document sha256 `6270e453570b...` (sorted keys, compact).
+- **The adapter check at the base** (`r79_cc6.py --crit AC1 --where local`): all 12 clauses fail, the keys being absent; AC2 and
+  AC3 read YES (`1 failed, 860 passed`, the one failure being the stale-hash test cc-5 repairs).
+- **FWD-18 on ASML NA** (a read, `round79/reads/FWD18_ASML_SERVED_READ.md`): the served driver is three share counts and the chart
+  is refused in plain words.
+- **Z-S369** (a read, `round79/reads/Z_S369_ICT_POOL_READ.md`): a name IS stored for ICT US in the daily Bloomberg characteristics
+  file; one key or two is not decided by stored data.
+- **Portal:** origin/DEV `d1b21c97` at the cut.
+
+### 87b. THE RECTANGLE
+
+| id | cell | slot | class | risk | write surface | SERVES (R1) |
+|---|---|---|---|---|---|---|
+| `AMGT-cc-1` | the segment reader finds a stored table under later pulls (bb-1's residual, row Z-W289-S1) | `~308` | worker-light | LOCAL | `api/segment_table.py` + test | FWD-1, through cc-2 and cc-6 |
+| `AMGT-cc-2` | one served segment table with its period and currency labels: new `api/segment_served.py` | `~309` | worker | LOCAL | new `api/segment_served.py` + test | FWD-1, hooked up by cc-6 |
+| `AMGT-cc-3` | the store reader of the Seeking Alpha collector's job records, one listing per snapshot refresh | `~310` | worker | LOCAL | new `freshness/collector_read.py` + test | FWD-7, hooked up by cc-6 |
+| `AMGT-cc-4` | five stored sections of the team's notes, served byte for byte with a reason where absent | `~311` | worker | LOCAL | new `api/dossier_sections.py` + test | enrichment item 2 (FWD-4's place is DSGN's SAUX-42), hooked up by cc-6 |
+| `AMGT-cc-5` | THE BUILD-SIDE REPAIRS, one cell: the stale generated hash, and ONE read-only entry for the builder's job-record prefix | `~312` | worker | WORLD by the path floor only (applies nothing) | `infra/aws/terraform/harvest/gen_harvest_prefixes.py`, `scoped-amgt-api.tf`, `api/_harvest_prefixes.py`, its test | the redeploy cc-7 (the build's gate; the grant FWD-7 needs) |
+| `AMGT-cc-6` | THE ADAPTER CELL: the three hookups (`segment_served.serve_segment_table`, `dossier_sections.dossier_sections`, `collector_read.seeking_alpha_by_security`), the page view's field, two wordings | `~313` | worker | LOCAL | `api/scoped_amgt.py`, `api/inputs_statement.py`, `api/top_band.py`, `freshness/page_body.py`, two test folders | FWD-1, FWD-7, item 2: the ONLY cell that serves |
+| `AMGT-cc-7` | the redeploy in three legs: the read grant with its own before and after, the code, the snapshot event; the three hookups named in the pair | `0.7.0_AE_CloudOps~A` | seat order | WORLD | Lambda artifact, the role's inline policy, ledger | FWD-1, FWD-7, item 2 on the live function |
+| `AMGT-cc-8` | the walk on DEV: FWD-18 on ASML NA with one press, FWD-1 on AMD, FWD-7 on ten rows, the five sections | `~314` | worker | LOCAL (a read) | own deliverables | FWD-18; the screen beside the served value for the rest |
+| issuer act 1 | Z-S369's disarm (R4): the read is printed; the row is marked unresolved with its reason unless Andrew gives the word for the one Bloomberg identity read that decides one key or two | the issuer | ISSUER ACT, no order file | LOCAL | the surprise channel |  |
+| issuer act 2 | ABNB's model-block pull, carried from round 78: a Bloomberg call under its own pair, on Andrew's per-use word | the issuer | ISSUER ACT, no order file | SERVED, its own pair | bronze at the builder's address |  |
+
+**Not cut, and why:**
+- **FWD-16:** not realizable by any cell of this project until Andrew's 2026-09-15 hold on the news collection moves (R2).
+- **FWD-12 and the page halves** (one statement of inputs, officers in the served order, the absence sentences, the Seeking Alpha
+  states drawn, a place for the five sections): DSGN_AMGTV1 PRD v0.18 rows SAUX-37 to SAUX-42 (CTO msg 31676).
+- **The 4 segment names that do not tie:** a Bloomberg re-pull, which is Andrew's word; they serve Period 1 unlabelled.
+- **The truncated stored values** (nine why-we-own or description values): the stored text is served as stored; the repair is
+  AMGT_CORPUS's.
+
+### 87c. THE FOUR-POSTULATE RECORD
+
+- **(i) MECE.** The domain is the round-78 analysis's enrichment list (5 items) plus what the cut measured. By subtraction: item 1
+  -> cc-1, cc-2 (bb-1), cc-3 (bb-16), each served by cc-6 and cc-7; item 2 -> cc-4, cc-6, cc-7; item 3 -> issuer acts 1 and 2;
+  item 4 -> cc-8; item 5 -> not this issuance (DSGN). Found at the cut: the stale build gate and the grant -> cc-5; R5 (Z-S370)
+  -> cc-7's record. Uncovered, stated above: FWD-16, the page halves, the 4 untied names, the truncated values.
+- **(ii) Same grain:** one module, one read or one act per cell. cc-5 is the round's batch repair cell (two repairs, one folder).
+- **(iii) Intent.** One axis per cell. cc-6 is the declared exception: the round's ONLY writer of `scoped_amgt.py`.
+- **(iv) What a cell does NOT move:**
+  - cc-1 to cc-4 change no served byte: nothing reads them until cc-6;
+  - cc-5 runs no terraform and no AWS write; regeneration moves the hash only, 4 of 4 prefix values equal;
+  - cc-6 changes no existing served key on `/thesis` or `/overlay` beyond the ones its notes name: ADDED keys; the Seeking Alpha
+    fields replaced (`denominators.seeking_alpha_bronze_objects_listed` and `reads.seeking_alpha_bronze` retired, no reader in
+    `portal/src`); `per_input.seekingalpha` moves on the 11 read rows; one phrase in the filings row;
+  - cc-7 moves two resources (the function's code, the role's inline policy by one read-only line per limb), no route, no
+    memory, no schedule;
+  - cc-8 and every build cell make no vendor call; nothing is fetched from the internet on this box.
+- **Write sets:** 0 same-wave overlaps of 10 wave-0 pairs. Cross-wave: cc-6's `api/tests/` and `freshness/tests/` against the
+  test files of cc-1 to cc-5, and cc-7's `infra/aws/terraform/harvest/` against cc-5: each later cell starts after the earlier drains.
+
+### 87d. EDGES AND FAN-OUT
+```
+cc-1, cc-2, cc-3, cc-4 --> cc-6 (the adapter: three hookups) --> cc-7 (redeploy: grant leg, code leg, snapshot leg; one pair) --> cc-8 (walk)
+cc-5 --> cc-6      # they share a test folder
+cc-5 --> cc-7      # the build's gate and the grant's text
+fanout:
+  cap: 8
+  orders_total: 8
+  issuer_acts: 2
+  chains_total: 5               # wave-0 cells with no unmet dependency
+  wave_0: [cc-1 ~308, cc-2 ~309, cc-3 ~310, cc-4 ~311, cc-5 ~312]   # 5 of 5 chains, cap 8
+  wave_1: [cc-6 ~313]                          # after the five drain
+  wave_2: [cc-7 0.7.0_AE_CloudOps~A]           # after cc-6 drains, and its pair
+  wave_3: [cc-8 ~314]                          # after cc-7 closes and the snapshot is re-written
+  issuer: [Z-S369's disarm, ABNB model-block pull]
+  no_s3_deletes: true
+  egress: none in any order; issuer act 2 is the one Bloomberg call of the round, under its own pair and Andrew's word
+  portal_ref: d1b21c97   # origin/DEV at the cut
+```

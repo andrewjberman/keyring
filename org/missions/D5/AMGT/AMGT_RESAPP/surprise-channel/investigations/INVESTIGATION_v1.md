@@ -21968,6 +21968,184 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "ARMED until the round-78 redeploy (order AMGT-bb-18, legs 1-2) carries bb-8 and bb-17: the wrong currency is on the served page today. Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong. About 650 priced peer rows carry no currency at all and stay so: the scanner's source workbook has no currency column (round78/reads/SCANNER_CURRENCY_READ.md), and a Bloomberg field for them is Andrew's word."
+},
+{
+  "id": "AMGT_RESAPP-Z-S369",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~H",
+  "surfaced_at": "2026-10-08T01:46:40Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The pool universe carries ICT_US_Equity as a coverage entry with no name, and beside it an unresolved holding entry named 'International Container Termin' (ticker ICT, no security key) that lists ICT_PM_Equity and ICT_US_Equity as candidates; no field shows the two keys as one issuer.",
+  "spec_asserts": "A security on the pool universe carries a name of its own, and a holding entry resolves to one security key; AMGT_HARVST builds its gold list from the pool and reads the name from it or from the collector's identity record.",
+  "world_is": "Read 2026-10-08 ~01:2xZ by AMGT_HARVST order HVST-bh-6 (worker 0.9.0_WK_AMGT_HARVST~112, merged @bd64752926), pool s3://opal-data-harvest/universe/v1/2026-10-06.json, 302 records, 3 carrying ICT as a whole token: (1) security_key ICT_PM_Equity, ticker 'ICT PM', name 'International Container Terminals'; (2) security_key ICT_US_Equity, ticker 'ICT US', name null, source coverage, its resolution reason citing the Positioning chain, SEDOL 6455819 and domicile PH; (3) ticker 'ICT', security_key null, name 'International Container Termin' (30 characters, cut), source holding, book IDVZ weight 1.63, UNRESOLVED, naming ICT_PM_Equity and ICT_US_Equity as root-equal candidates, 'NAMED, NOT merged'. The identity registry (lib/research/identity/registrations.json, 72 entries) carries ICT_PM_Equity only, as INTL CONTAINER TERM SVCS INC. The collector's identity record (234 records) gives ICT_US_Equity the holding entry's cut name, 'pool name as read'. On the served gold (rebuild #8, 2026-10-07) ICT_US_Equity holds 0 pairs: its 17 earlier pairs rested on the refused form ICT and none was about it. NOT known: whether the coverage entry 'ICT US' was added on purpose or by the root join; whether the two keys are one issuer. Ruling 1.0.0_SA_CTO~Z msg 31533: ICT_US_Equity stays on the gold list with 0 pairs because the list is built from the pool; a name for it needs an identity read, which is a Bloomberg call and Andrew's word.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/bh6_ict_source.out: 'SOURCE d (pool universe): pool:universe/v1/2026-10-06.json record count: 302 ICT records: 3' and 'ICT_US_Equity and ICT_PM_Equity: NOT SHOWN BY ANY FIELD'.",
+      "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~112/BH6_ICT_US_EQUITY.md (the record, with what is not known).",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND60_ICT_US_SERVED_PAIRS_GRADE_20261007.md @160f1c9602: 17 of 17 served pairs not about the security."
+    ]
+  },
+  "notes": "Filed on AMGT_RESAPP's channel on 1.0.0_SA_CTO~Z's ruling (msg 31533) because the pool is this project's. ARMED while a holding in a book resolves to no security: disarmed when the pool resolves the holding entry to one key and the kept key carries a name. AMGT_HARVST changes nothing on its side."
+},
+{
+  "id": "AMGT_RESAPP-Z-S370",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.7.0_AE_CloudOps~A",
+  "surfaced_at": "2026-10-08T07:40:54Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The Lambda source map's entry for opal-amgt-scoped-api still carries an _artifact_note reading 'NOT YET UPLOADED. No artifact exists at the key above and no terraform apply has been run', while that artifact has now been uploaded and applied twice -- round 77 (AMGT-ba-20) and round 78 (AMGT-bb-18, this act).",
+  "spec_asserts": "Deployment Rule 4 (cloud-ops skill, THE DEPLOYMENT RULES): every Lambda carries an entry in infra/aws/lambda/ci/lambda-source-map.json, and the entry describes that function. The entry's own prose is read by a human deciding whether a deploy has happened; AMGT-rf-2 wrote the note truthfully at a time when it was a source-plane cell that took no world act.",
+  "world_is": "Read 2026-10-08 ~07:36Z. infra/aws/lambda/ci/lambda-source-map.json, entry opal-amgt-scoped-api, field _artifact_note: 'NOT YET UPLOADED. No artifact exists at the key above and no terraform apply has been run: AMGT-rf-2 is a source-plane cell and its issuer ruled explicitly that no world act is to be taken.' Measured against the world the same session: s3api head-object on opal-313476888478-lambda-artifacts/research/opal-amgt-scoped-api.zip returns VersionId 5EzlvQKaRhlENyrD6osK7pRdpfUkDTxi, ContentLength 42,001,525, content-sha256 +s6R0/rcpQ6lJgYsX2JtxfgoFoCmiaozTtMreyyymTQ=, and the prior version VHwcuot4i70V2evVL44EBgQc0BcAtScd (round 77) is still stored; lambda get-function-configuration reads CodeSha256 +s6R0/rcpQ6..., LastModified 2026-10-08T07:19:32Z, and a terraform apply in infra/aws/terraform/harvest reported 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed'. So BOTH clauses of the note are false of the world, and have been since round 77's close at 0fabcf4f0f. The other six fields of the entry (source_dir, source, tf_file, tf_resource, artifact_s3_key, iam_role) are correct and are what the deploy workflow and comp-iam actually read. NOT measured: whether any other entry in the map carries a note that its own function's world state has since falsified -- this is one entry read because this act deployed it, not a census of the 214 entries.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/ci/lambda-source-map.json, entry opal-amgt-scoped-api, field _artifact_note, read at HEAD 2026-10-08 ~07:36Z.",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.7.0_AE_CloudOps~A/round78-bb18/APPLY_20261008T0719Z.txt: 'Apply complete! Resources: 0 added, 1 changed, 0 destroyed.'",
+      "The same deliverables dir's REPLAN_ZERO_DIFF_20261008T0720Z.txt: 'No changes. Your infrastructure matches the configuration.'",
+      "Round 77's close commit 0fabcf4f0f, whose subject records CodeSha256 MkM9Kf37 landing from base OVpDhfwD -- an apply that predates this one by a round."
+    ]
+  },
+  "notes": "FILED, NOT FIXED: infra/aws/lambda/ci/lambda-source-map.json is NOT in AMGT-bb-18's <paths> (which hold infra/aws/terraform/harvest/, the two change_management surfaces, this lane's deliverables dir and this channel), so editing it is outside this cell's write surface and owned-paths would refuse it. Hazard INERT and not ARMED: no served route, gate or tool reads _artifact_note -- the six machine-read keys of the entry are correct, and comp-iam reads 'source' while the deploy workflow reads 'source_dir'. The cost is to a reader: anyone checking whether this function has ever been deployed is told by the map that it has not. A one-line edit of that field by a seat holding infra/aws/lambda/ is the whole remedy; it does not move the map's schema or any other entry."
+},
+{
+  "id": "AMGT_RESAPP-Z-S371",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T08:13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Row AMGT_RESAPP-Z-S368 is DISARMED by its named act: the round-78 redeploy (AMGT-bb-18) is live, and the deployed page no longer serves USD beside a foreign-listed peer price on the sampled rows.",
+  "spec_asserts": "Row AMGT_RESAPP-Z-S368 (ARMED, disarm_owner 2.0.0_SA_COO~Z): 'ARMED until the round-78 redeploy carries bb-8 and bb-17 ... Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong.'",
+  "world_is": "Measured 2026-10-08. The live function opal-amgt-scoped-api reads CodeSha256 +s6R0/rcpQ6lJgYsX2JtxfgoFoCmiaozTtMreyyymTQ= (applied 07:19:32Z; the kept zip C:/tmp/bb18-r78-fbb643923e.zip hashes to the same value, read by this seat). The executor's AC1 run after the apply (C:/tmp/bb18-criteria.log line 4): r78_bb17.py --crit AC1 --where deployed exit 0, 'PASS H6 no sampled peer row is served a United States record's currency behind a foreign price', and R78 DEPLOYED: YES 3 of 3. Before the apply the same clause read 2 wrong of 60 (row Z-S368). The sample is the same five subject names and 60 peer rows; the other priced peer rows of the covered names were not re-read. The row for a refused listing now carries price_currency_reason and no price_currency.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/bb18-criteria.log (0.7.0_AE_CloudOps~A, 2026-10-08): line 4 'PASS exit=0 :: ... r78_bb17.py --crit AC1 --where deployed :: PASS H6 ...'; line 7 'R78 DEPLOYED: YES 3 of 3'.",
+      "The executor's report org/tier2_senior/0.7.0_AE_CloudOps~A/logs/2026-10-08/round78_bb18_legs1_2_code_redeploy.md and msg 31628: 'H6 reads 0 wrong of 60 on the deployed function (was 2)'.",
+      "This seat's read of the live CodeSha256 and of the kept zip's sha256, equal, 2026-10-08 ~08:2xZ."
+    ]
+  },
+  "notes": "A citing row, not an edit of Z-S368: Z-S368's standing is the CVO's to move. The roughly 650 priced peer rows that carry no currency at all are unchanged and are not this row's subject."
+},
+{
+  "id": "AMGT_RESAPP-Z-W303-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~303",
+  "surfaced_at": "2026-10-08T08:48:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Order AMGT-bb-19 FWD-12 expects the one statement of inputs to carry a filings row; on BA the page's input block has no filings input, and the Model tab ledger's Filings line reads 'no source set up yet; has not run yet' beside a Thesis tab that cites a 10-K filed January 30th, 2026.",
+  "spec_asserts": "AMGT-bb-19 section 1, FWD-12: 'The repair is ONE statement, carrying a filings row that says what the page used. If the page still shows two, or the two disagree, record both with captures.'",
+  "world_is": "Measured 2026-10-08 on BA US at portal ref d1b21c97, dev build on localhost:5174. Two statements of inputs are drawn: (1) the block 'Where this page's data comes from' above the tabs, 4 rows (Bloomberg, Seeking Alpha, web search, research pack; served input keys bloomberg, seekingalpha, serp, pack; no filings key), Seeking Alpha 'September 11th, 2026, 12:03a ET -- Worked'; (2) the Model tab ledger 'Where each input came from', 6 classes, Seeking Alpha 'Seeking Alpha; has not run yet', Filings 'no source set up yet; has not run yet', News 'last ran October 6th, 2026 and worked'. The two disagree on Seeking Alpha (worked on 2026-09-11 against has not run yet). Elsewhere on the Thesis tab the page states the filing it used ('the 10-K filed January 30th, 2026 -- read from the research pool'). The served overlay carries research_coverage and input_provenance (4 entries) for every name read.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run1/fwd16/BA_top.json (provenance rows) and data/run1/api/overlay_BA.json (input_provenance).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run2/ledger/ba_model_ledger_wait.json (the six ledger lines).",
+      "captures 008 and 901 in the same deliverables folder; walk stamps 20261008T083459Z and 20261008T084357Z."
+    ]
+  },
+  "notes": "Recorded in WALK_ROUND78.md under FWD-12; no verdict on it."
+},
+{
+  "id": "AMGT_RESAPP-Z-W303-S2",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~303",
+  "surfaced_at": "2026-10-08T08:48:31Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "The walk was run as two walker arms, not one: a second short arm re-read the BA Model tab ledger, which the first arm read still on its 'Loading where each input came from' line.",
+  "spec_asserts": "AMGT-bb-19 section 1: one walk by hand, then 'Then disarm.'",
+  "world_is": "Run 1 (stamp 20261008T083459Z, holder Opal_Bloomberg:39172:9bf49411) read the BA Model tab 3.5 s after the press with the ledger still loading (0 ledger rows). Run 2 (stamp 20261008T084357Z, holder Opal_Bloomberg:39672:17e6ed9f, armed 08:43:58Z, disarmed 08:44:51Z) waited for the ledger and read it drawn with 6 rows after 1,018 ms. Both arms were disarmed by the walker with 'LOGIN WITH THE WALK PASSWORD AFTER DISARM: HTTP 401 ... REFUSED'; status after run 2 reads armed=no armedBy=none. The walker slot was read disarmed before each arm.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/data/run2/ledger/ba_model_ledger_wait.json",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/instrument/bb19_ledger_walk.mjs"
+    ]
+  },
+  "notes": "Round 77 recorded the BA ledger as not drawn in any of its three runs (row AMGT_RESAPP-Z-W286-S2); this arm's wait is the difference in method. GET only; guard unchanged."
+},
+{
+  "id": "AMGT_RESAPP-Z-S372",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T09:08:38Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D",
+  "class": "OBSERVATION",
+  "one_line": "For BP/ LN the function serves the chief executive first and the page draws the chief financial officer first: the Security Analysis page does not draw the officers in the order served.",
+  "spec_asserts": "AMGT-bb-3 and CTO round-77 ruling 9: the served officer list is ranked chief executive, then chief financial officer, then as served; the page shows that order.",
+  "world_is": "Measured 2026-10-08 on the live function +s6R0/rcpQ6 (applied 07:19:32Z) and on the DEV build at portal d1b21c97. SERVER, one GET-shaped direct invoke of /thesis for BP/_LN_Equity by this seat at ~09:1xZ: management.officers begins Marguerite Eileen O'Neill 'Meg' (Chief Executive Officer), Katherine Anne Thomson 'Kate' (Chief Financial Officer), Sonya Adams (Exec VP:People & Culture). PAGE, the walk bb-19 (WALK_ROUND78.md, OFFICERS; captures 021 and 022): the management list for BP/ LN is drawn from the Bloomberg officer list, 10 officers, in the order Katherine Anne Thomson (CFO), Marguerite Eileen O'Neill (CEO), Sonya Adams. On BA and HD, whose lists come from the filing roster, the page's first two rows are the chief executive then the chief financial officer. So the mismatch was seen on the one name whose list is the Bloomberg fallback; whether the page re-sorts that table, or reads the list from another field of the answer, was NOT read from the portal source. NOT measured: any other fallback name on the page (NG/ LN serves its chief executive first on the server).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "This seat's direct invoke of /thesis for BP/_LN_Equity, 2026-10-08: the first three served officers, as quoted; also round78/reads/BB18_ISSUER_HAND_READS_20261008.txt section 2 (BP/ LN 10 officers, chief executive first).",
+      "org/missions/D5/AMGT/AMGT_RESAPP/deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md, section OFFICERS, the BP/ LN line: 'On BP the chief financial officer is drawn before the chief executive.'"
+    ]
+  },
+  "notes": "The page is DSGN_AMGTV1's. Surfaced, not chased; no code edited. It goes to the CVO's L9 read of the walk and to DSGN's next page round."
+},
+{
+  "id": "AMGT_RESAPP-Z-S373",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "3.0.0_SA_CVO~Z",
+  "surfaced_at": "2026-10-08T09:26:32Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "On AMD US one screen says both 'the research pack built for this name -- October 7th, 2026, 9:01a ET -- Worked' and 'The research team's thesis pillars: no research pack for this security.'",
+  "spec_asserts": "Round-77 ruling 4: one served statement of a name's inputs, read by every place that states them; a reader is not told two things about one input.",
+  "world_is": "Capture 011 of the round-78 walk (portal d1b21c97, function +s6R0/rcpQ6): the block 'Where this page's data comes from' reads the research pack built and worked, and the Thesis panel directly below reads no research pack for this security. The two lines mean different things (the pack the system builds, and the research team's own pack), and the page uses one phrase for both. BA reads the same Thesis line (walk, COVERAGE).",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "deliverables/0.9.0_WK_AMGT_RESAPP~303/captures/011-fwd1-AMD-segment-breakdown.png (viewed by this seat)",
+      "deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md, COVERAGE, the BA line"
+    ]
+  },
+  "notes": "A page finding for DSGN_AMGTV1, beside rows Z-W303-S1 and Z-S372. Not chased."
+},
+{
+  "id": "AMGT_RESAPP-Z-W309-S1",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_AMGT_RESAPP~309",
+  "surfaced_at": "2026-10-08T11:58:22Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "class": "OBSERVATION",
+  "one_line": "lib/research/api/tests/test_harvest_prefixes.py::test_ii_registry_hash_matches fails at this worktree: the stored registry hash differs from the generator's scoped hash.",
+  "spec_asserts": "The order asks for the last line of the lib/research/api/tests folder run; it excuses only a test that reads a portal file absent at the portal ref.",
+  "world_is": "Measured in worktree C:/tmp/r79-309 at b2fd93edbf: the folder run reads 1 failed, 843 passed. The failure is test_harvest_prefixes.py line 68: hp.REGISTRY_HASH begins 0b67ab695620 and the generator's scoped_registry_hash() begins fff9a273a59b. The test reads infra/aws/terraform/harvest/gen_harvest_prefixes.py, not a portal file, and does not import segment_served; this cell changed neither side. Not read: which side moved, or whether the shared tree reads the same.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "pytest -q lib/research/api/tests/ in C:/tmp/r79-309: 1 failed, 843 passed in 35.10s; the assertion line quoted above."
+    ]
+  },
+  "notes": "Surfaced, not chased. The issuer grades the suite on the shared tree."
 }
 ]
 ```

@@ -43,3 +43,14 @@ name, 1D..1Y). The thread reads `n` until then. This packet is re-issued with th
 | scheduled pull, as-of 2026-10-07 | 2026-10-08 07:00 ET | **FAIL of the scheduled vehicle**: Terminal signed out, DAPI down, sign-in fallback aborted, 0 Bloomberg attempts, `OPAL_BBGTML_daily_pull` LastTaskResult 50; no `bbg/2026-10-07/` objects; freshness STALE (site-Z 1.0.0_SA_CTO~Z msg 31688, relayed msg 868) | yes, a FAIL of the vehicle, not of the SH-t-1 code (it never executed) |
 
 Ruling (1.0.0_SA_CTO~DELL1 msg 871, cb6fb2a52c): the post-sign-in recovery re-pull is QA only -- it may expose defects and be read, but never grades FWD-1. Acceptance is the first scheduled pull that runs unassisted (earliest 2026-10-09 07:00 ET) plus the next-morning Positioning read. The sign-in is Andrew's act at site Z.
+
+| attempt (cont.) | when | result | grades FWD-1? |
+|---|---|---|---|
+| recovery re-pull after Andrew's sign-in (QA only, ruling 871), as-of 2026-10-07 | landed 2026-10-08 12:09:44Z, run_class adhoc | backfill DREW: 15 planned, 0 capped, 2,929 rows; budget {estimate 3448, limit 120000, spent_before 0, recorded 2929}; history_backfill_error null; objects_failed [] | no -- QA |
+
+## FWD-1 QA read of the served page (2026-10-08 ~13:1xZ, `R1_CHECKS/sh_fwd1_served_read.py`)
+
+`platinum/etfs/positioning_data.json` republished 2026-10-08T13:01:38Z (data_as_of 2026-10-06/07): **12 of 12 backfilled securities show 8 of 8 return windows**,
+up from 4 of 8 the day before -- CSCO 1Y 76.82, BX 1Y -30.02, LNVGY 1Y 207.68, MRNA 1Y 613.43, plus META, BBY, EXPD, DG, ED, PWR, GEV, BE. Each carries class, sector and
+industry group. Magnitudes cross-checked against raw PX_LAST over the year: MRNA +618.65%, LNVGY +201.07%, CSCO +70.17%, BX -32.19% (price only; the page shows total return).
+The three that returned no rows (2602335D, PFDE, PFOE) stay as before by design. Thread: QA-live; ACCEPTANCE is the first unassisted scheduled pull (earliest 2026-10-09 07:00 ET).

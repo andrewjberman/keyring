@@ -1195,7 +1195,7 @@ RULES = [
       "cloud resource census", "resources by type", "list the lambdas", "every s3 bucket",
       "all the roles", "inventory of cloud"],
      "cloud resources of a type -- census/list (comp-kuzu, the Rule-20 QUERY default)",
-     ["comp-kuzu \"MATCH (n:LAMBDA) RETURN n.id\"  # ~ms, canonical graph; swap the label per type"],
+     ["comp-kuzu \"MATCH (n:CloudNode) WHERE n.node_type = 'LAMBDA' RETURN n.name LIMIT 5\"  # ~ms, canonical graph; swap the node_type per type"],
      "list/inspect cloud resources of a type (all Lambdas / S3 buckets / roles): comp-kuzu is the "
      "fast query layer over the SERVED cloud graph, which the estate refreshes on its own schedule "
      "(nightly derive-runner + incremental updater). Rule 20: default to QUERY, never rebuild to "

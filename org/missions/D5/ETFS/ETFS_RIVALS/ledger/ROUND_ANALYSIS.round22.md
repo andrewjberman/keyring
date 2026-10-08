@@ -63,6 +63,124 @@ Record, his words verbatim: `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIR
   served page and never by the issuer: hovering a buy or sell marker shows what was traded, when and for how much without
   reading small text. Then Andrew's own look, which is the acceptance.
 - **Order in round 23:** this cell and the trade-sentence key repair (R1) are the two page cells; both ship in one deploy
-  after the 2026-10-08 11:00Z run has read under 720 s.
+  after the 2026-10-08 11:00Z run has read under 720 s. (REPLACED at 19:0xZ by msg 31267: the repair deploys today as its own
+  act; a render-only deploy does not wait for the 11:00Z run. The chart cell is round 24.)
+
+-- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 2 -- ROUND 23 ANALYSIS (2026-10-07 ~19:4xZ), on `3.0.0_SA_CVO~RV` slug msg 31320 (`ADJUDICATION_v25.Z.md` @61f0469fd2)
+
+Round 23 was one cell, RIV-ks-1, the trade-sentence key repair (R1). ks-1 J1 MET on the round's real run: 0 of 2,247 buttons
+without their fund's section; exactly 4 buttons differ from the served page. Row Z-S63 REMEDIATED (5 of 5 functions at 3,008 MB).
+Rows Z-S65 and Z-S66 stay OPEN until the repair is served. Its deploy is signed at both ends (CTO half
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_ETFS_RIVALS_R23_KS1_DEPLOY_20261007.md` @e1c74f75b3) and had not been reported
+done at this writing.
+
+**Rulings.**
+- **R6.** Row Z-S57 (Meta in GQGU under two keys) is not the cause R1 repaired, by the issuer's trace. It is its own cell in
+  round 24: one company, one key on the page.
+- **R7.** The price-history backfill records each day's draw in `bbg_budget` before its day 1 (msg 31291). The Terminal's ledger
+  does not see it today, and the pacer `0.0.3_BG_BBGTerminal` orders it third of four claims on the day's allowance.
+
+**ENRICHMENT LIST, round 24** (one issuance by `2.0.0_SA_COO~RV`):
+1. The dialog chart's UI, Andrew's three asks (ADDENDUM 1). JUDGMENT graded by `3.0.0_SA_CVO~RV`; then his own look.
+2. Row Z-S57 (R6).
+3. The served grade of the repair, with the count of mentions that became plain text (the CTO half's condition).
+4. The read of the 2026-10-08 11:00Z run and 13:00Z sweep (round-22 list item 2), unchanged.
+5. The backfill's ledger line (R7); then the deployed-stage read; then backfill day 1.
+
+-- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 3 -- ROUND 24 ANALYSIS (2026-10-07 ~21:5xZ), on `3.0.0_SA_CVO~RV` slugs 31412 and 31430 (`ADJUDICATION_v28.Z.md`, `v29.Z.md`)
+
+**Withdrawn since ADDENDUM 2:** R6 (row Z-S57 needed no cell: the afternoon's deploy had removed the fault; the CVO closed the
+row, msg 31349) and R7 (the backfill does record in `bbg_budget`; it had no line because it has never run, msg 31325).
+
+**Round 24** was one cell, RIV-cu-1, the dialog chart's UI on Andrew's three asks. cu-1 J1 MET before the deploy and again on the
+served page of 21:26Z. Live at `f9f8334ef6`; CTO half `deliverables/CTO_HALF_ETFS_RIVALS_R24_CHART_UI_DEPLOY_20261007.md`
+@db4ab8faec. 32 keys written, all under the page day and its state record; one script, one fetch.
+
+**Rulings.**
+- **R8.** The two faults the CVO noted (the read-out keeps the last curve position while a marker is pointed at; a top marker's
+  tooltip covers the read-out) are one cell, `render.py` only.
+- **R9, row Z-S69 with its correction Z-S70 (BLOCKING, ARMED).** Every reader of `security_market` keeps ONE object per date. On
+  2026-09-29 the object kept is an import with no price and the live pull is ignored: 430 closes unused, 355 chart entries
+  drawing that day from the fund's own valuation. The readers' grain is repaired NOW, ahead of FWD-24's other cells. Its rule:
+  per security and date, non-backfill first, live over import, later capture time, later as-of, name last; and a close, its
+  currency, its date and its source come from ONE object (msg 21:46Z). Its deploy carries a never-widen pair with a before and
+  after of the rankings and the three period tables for every fund.
+- **R10, PRD v0.19 (`FWD-24`, ADMITTED @2914a61989).** No year of closes is written by any route before R9's repair is deployed and
+  graded, the one-time backfill included. The standing Bloomberg request stays switched off until Andrew's recorded answer.
+
+**ENRICHMENT LIST.** Round 25, one issuance, both cells today: R9's readers' grain; R8's read-out repair. Round 26: FWD-24's
+history-owed step and top-up writer, the request off. Beside both: the reads of the 2026-10-08 11:00Z run and 13:00Z sweep.
+
+**ACT ONLY ANDREW CAN DO (cited):** his answer on a standing daily Bloomberg request of closes for the rivalfunds securities
+(CLAUDE.md: no vendor call without his explicit per-use word; PRD ADDENDUM G.2).
+
+-- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 4 -- ROUND 25 ANALYSIS (2026-10-07 ~23:5xZ), on `3.0.0_SA_CVO~RV` slug msg 31476 (`ADJUDICATION_v30.Z.md` @e3cc04e7bb)
+
+**rg-1 J1 NOT MET. Nothing was applied. mr-1 J1 MET (210 of 210 hovers).**
+
+**R9 of ADDENDUM 3 read the fault BACKWARDS, and so did rows Z-S69 and Z-S70.** They said 430 good closes of 2026-09-29 were
+being dropped. The CVO's hand read of one figure (C1 of the CTO half) found the object filed under 2026-09-29 holds 09-30's
+closes: 47 of 57 dollar closes equal the funds' 09-30 valuations; MediaTek in CGIC reads +1.22 percent where the fund's own
+09-29 return is -7.36. The readers ignoring that object was protecting the page. The repair as built would have put next-day
+closes on 2,418 table rows and 408 chart points, and every count in its pair was consistent with itself.
+
+**The read of every object** (`2.0.0_SA_COO~RV` msg 31479, row Z-S71 @bff3ec2e7f): ONE object is mis-dated, not all. 2026-10-01
+matches its own date 31 of 31; 10-02, 10-05 and 10-06 match their own dates on most closes. The `as_of` column is the PULL day,
+not the close's day.
+
+**Rulings.**
+- **R11.** This seat's term "a close is kept only where its as_of equals its partition date" (msg 31477) is WITHDRAWN: it would
+  have kept the wrong object and dropped three right ones (msg 31480).
+- **R12.** An object whose name carries no capture time is read as today, one object by the newest revision; the union applies
+  to timed objects. No served figure moves. The 2026-09-29 live-pull object is NAMED as mis-dated in the reader's test and in
+  row Z-S71.
+- **R13, binding FWD-24.** Every object a writer adds carries, per close, the trading date the close belongs to, and the reader
+  keeps a close only where that date equals the partition date. No year of closes is written without it. PRD `C-OWED-GRAIN` is
+  amended to say so at this seat's next PRD act.
+- **R14.** A never-widen pair that moves served FIGURES carries one figure read by hand against a source the producer did not
+  write. Counts that agree with each other are not that read. Cost: one figure per pair. Non-application: a pair that moves no
+  number a reader sees.
+
+**ENRICHMENT LIST.** Round 25, re-cut: the readers' grain under R12; mr-1 may ship alone, render-only, under its own pair. Round
+26: FWD-24's owed step and writer under R13, the request off.
+
+-- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 5 -- ROUNDS 25 TO 27 (2026-10-08 ~06:0xZ), on `3.0.0_SA_CVO~RV` slugs 31525, 31548 and 31592 (`ADJUDICATION_v33`, `v34`, `v35.Z.md`)
+
+**What is live.** mr-1 (the marker read-out) since 00:10Z, J1 MET on the served page. rg-2 (the readers' grain, narrowed) since
+01:41Z at CLOUD `0576fb051f`: 0 moved rows, the page byte-identical, J1 MET on the served plane. The deployed code is a commit of
+CLOUD again. CTO halves: `CTO_HALF_ETFS_RIVALS_R25_MR1_ONLY_DEPLOY_20261007.md` @86a90330bc,
+`CTO_HALF_ETFS_RIVALS_R26_RG2_READERS_DEPLOY_20261008.md` @e081a672d4.
+
+**Round 27** (the request OFF): ho-1 J1 MET -- the history-owed step reads **742 securities and 184,600 units owed over 251
+dates**, reconciled by the CVO's own run to the closes held on four dates, three units by hand. rk-1 J1 MET: 0 moved rows.
+tw-1 (the top-up writer behind a switch) is built and NOT merged; its J1 cannot be measured until it is. Its merge is signed at
+both ends (`CTO_HALF_ETFS_RIVALS_R27_TW1_MERGE_20261008.md` @d969c62f46) and waits on the 2026-10-08 11:00Z run being read.
+
+**Rulings.**
+- **R15.** The merge of a file the scheduled vehicle runs is a deploy on this box and carries a pair, even with its switch off.
+- **R16.** The switch `RIVALFUNDS_HISTORY_OWED` is set nowhere on this box (process, User, Machine, the scheduled task's
+  definition: this seat's read). `ask` waits on Andrew's recorded answer. `print` is ruled by this seat on an ask naming where the
+  variable would be set.
+- **R17, before `ask` is ever set:** the writer stores each close's currency and the trading date it belongs to (R13); the
+  per-run cap (5,000 units, the issuer's number, 37 runs for 184,600) is ruled against the pacer's day; and the first timed
+  object on an untimed-only date must not drop the import's sectors (the rg-2 half's note).
+- **R18, row Z-S73.** Four GQGU trims replay under a ticker key and are served under a CUSIP. One cell reads why a replay of the
+  trade schedule does not reproduce its served rows, and says whether the daily build is repeatable.
+
+**`FWD-24` stands NOT REALIZED:** its negative control (a new security whole within 3 runs) cannot be shown with the request off.
+
+**ENRICHMENT LIST, round 28:** tw-1's merge and its read; R17's three items; R18; the reads of the 2026-10-08 11:00Z run
+(memory, duration, the `security_names` import step) and the 13:00Z sweep (the count of AI accounts naming calendar periods).
+
+**ACT ONLY ANDREW CAN DO (cited):** his answer on a standing daily Bloomberg request of closes for the rivalfunds securities
+(CLAUDE.md, vendor use by his explicit word).
 
 -- 1.0.0_SA_CTO~Z

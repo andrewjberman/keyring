@@ -5,10 +5,10 @@
  "project": "ETFS_RIVALS",
  "directive": "D5",
  "fabric": "site-z",
- "prd_version": "v0.18",
+ "prd_version": "v0.19",
  "step": 4,
  "brief_ref": "docs/briefs/etf-holdings-research-20260929.md@77c891c869",
- "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23"],
+ "endpoint_outcomes": ["FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7", "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13", "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19", "FWD-20", "FWD-21", "FWD-22", "FWD-23", "FWD-24"],
  "status": "DRAFT"
 }
 ```
@@ -19,7 +19,7 @@
 `TRADE_INFERENCE_FEASIBILITY.md` in the same folder.
 **Andrew's words:** every word this PRD rests on is verbatim in that folder's `ANDREW_DIRECT.md`.
 **Registered** @`ec6f31261c` (D4/ETFS), **moved to D5/ETFS** on Andrew's word (record `ANDREW_DIRECT_20260930_063xZ_ETFS_INCLUDED_IN_D5_MACROS_ETFS_RIVALS_TO_D5.md`), fabric site-z. **COO:** `2.0.0_SA_COO~RV`, seated by 0.0.0_AB_MSTR~Z (msg 26952).
-**CVO:** `3.0.0_SA_CVO~Z`. **CRO:** `4.0.0_SA_CRO~Z`.
+**CVO:** `3.0.0_SA_CVO~RV` (since Andrew-direct 2026-10-07 ~05:30Z; before that `3.0.0_SA_CVO~Z`). **CRO:** `4.0.0_SA_CRO~Z`.
 **The ENDPOINT is confirmed by Andrew** (2026-09-30 ~01:5x ET, *"1.) Yes approved."*, record @`77c891c869`).
 **Sign-off:** proportionate (CLAUDE.md rule 27). The CVO signs the ratified-text half; the brief half is accepted because the
 CRO wrote the brief.
@@ -449,6 +449,35 @@ approved it.
          SOURCE     Andrew-direct 2026-10-07 ~04:5xZ at the COO~RV terminal
                     (record cooRV_ANDREW_DIRECT_20261007_045xZ_RIVALFUNDS_
                     PERIODS_30D_90D_365D_EVERYWHERE.md)
+
+  FWD-24 (NEW, v0.19) Every security a tracked fund held in the last 365
+         days has its year of daily closes in the store, and the daily
+         sequence keeps it so without anyone running anything
+         DONE WHEN  EXERCISED -- on a day's run, the sequence prints the
+                    HISTORY OWED: for every security any tracked fund held
+                    within the last 365 calendar days, the trading days of
+                    that window with no stored close, with the denominator
+                    of securities and days read; the same run asks for what
+                    is owed, inside the day's budget, and carries the rest
+                    to the next run; and a negative control shows it -- a
+                    security planted as first traded today, with no stored
+                    close, has its 365 days stored within 3 runs and the
+                    owed count for it reads 0
+         ACCEPT     A security a fund bought this week has a full year's
+                    curve in its modal, not a curve that starts at the
+                    purchase. A security a fund sold out of keeps its curve
+                    current for 365 days after. A day with no close reads a
+                    gap with its reason. The owed count is a number on the
+                    run's record every day, and it falls.
+         NOT THIS   A tracked fund's own HOLDINGS history (the collector's
+                    backfill) and a fund's own share-price series. Neither
+                    is asked by this outcome.
+         SOURCE     Andrew-direct 2026-10-07 ~20:4xZ at the 4.0.0_SA_CRO~Z
+                    terminal ("we kind of need to be storing 365d calendar
+                    backfill per security AND *per tracked fund*, as those
+                    securities appear in the daily transactions record ...
+                    WE need a solution for that built into the ingestion
+                    sequence")
 
   CTO RULINGS ON THE BRIEFS' OPEN POINTS (Andrew may overrule any):
   - The fund picker shows one fund at a time, grouped under its Opal fund, and
@@ -1171,3 +1200,60 @@ price curve. It is applied at that reach, not as a general lift.
 
 **Nothing on FWD-22 or FWD-23 is waiting on Andrew now.** Round 15 cuts all of it. The chart route is released by NFRA_OPLGTW,
 and the page's script lands only after that route serves, as the audit link did.
+
+## ADDENDUM G, v0.19, 2026-10-07 -- the year of closes is kept by the daily sequence (`FWD-24`)
+
+**L2 by `1.0.0_SA_CTO~Z`** on Andrew-direct ~20:4xZ at the `4.0.0_SA_CRO~Z` terminal (record
+`org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261007_204xZ_RIVALFUNDS_365D_BACKFILL_PER_SECURITY_AND_FUND_IN_THE_INGESTION_SEQUENCE.md`)
+and on that seat's measured analysis beside it (`RIVALFUNDS_365D_BACKFILL_IN_INGESTION_ANALYSIS_20261007.md` @180673413d), read
+whole by this seat. The definition is in the ENDPOINT section. This addendum holds the contracts and the readings.
+
+### G.1 -- what the analysis measured (its reads, not this seat's)
+
+- `security_market` holds 5 trading days of closes. 761 securities appear in a fund's reports in the last year; 206 have no close
+  at all and 555 have closes on under a quarter of the days.
+- 355 times in the last year a security entered a fund after that fund's first stored report. For 354 of them the store holds no
+  close on any day before the entry.
+- Nothing in the sequence gives a new security its earlier days. The backfill tool is hand-run, and its "already held" test is
+  per DATE: once a date holds any price object, a later run for a new security plans nothing for that date.
+
+### G.2 -- the two readings this seat took of his words (each is one word from him to reverse)
+
+1. **"Per security AND per tracked fund"** is read as: the closes are kept per SECURITY, for every security any tracked fund held
+   in the window. A (fund, security) pair is then whole because its security is. It is NOT read as the fund's own holdings
+   history (506 daily partitions are already stored) or the fund's own share price. `FWD-24`'s NOT THIS line says so.
+2. **"Built into the ingestion sequence"** names no vendor, and his ~05:1xZ word covered an ad hoc backfill only. So it is NOT
+   taken as his word for a standing Bloomberg request. **The build proceeds: the history-owed step, the grain change, the reader
+   census and the leg's code, exercised with the request switched off. The first STANDING request of closes waits on his recorded
+   answer to one question, put to him the same hour: may the daily rivalfunds leg ask Bloomberg each day for the closes it finds
+   owed, inside the budget.** (Amended on `3.0.0_SA_CVO~RV`'s refusal of the first wording, msg 31400: CLAUDE.md, no vendor call
+   without his explicit per-use word.) The ad hoc one-time backfill stays covered by his ~05:1xZ word.
+
+### G.3 -- CONTRACTS
+
+- **`C-HISTORY-OWED`.** The owed set is computed from stored tables only (`security_universe`'s `first_seen`, `last_seen` and
+  `funds`, and `security_market`), with no vendor call. Its unit is one (security, trading day) with no stored close.
+- **`C-OWED-GRAIN`: the held test is per (security, date), never per date.** A top-up for a date that already holds a price
+  object lands as its OWN object in that date's partition. Nothing is overwritten and nothing is deleted. Every reader of
+  `security_market` takes all objects of a date; the cell that changes the test first lists those readers, with the count.
+- **`C-OWED-IN-THE-LEG`.** The spend is inside the existing daily rivalfunds enrichment leg, which the vehicle already runs. No new
+  scheduled task and no edit under `integrations/bloomberg/` (Andrew's no-modify order stands). The daily request list widens
+  from "held today" to "held within 365 calendar days".
+- **`C-OWED-BUDGET`.** Every request is checked against `bbg_budget` before it is sent and recorded after, as mode `market-range`
+  does today. A per-run cap is a named constant; what is over it is carried, and the run's record prints owed, asked and carried.
+  It is third in the pacer's order of claims on the day's allowance (`0.0.3_BG_BBGTerminal`, msg 31283).
+- **The one-time backfill** (the round-20 analysis's step) is the first, largest spend of the same owed set. It is not a
+  separate tool run once `C-OWED-GRAIN` holds: the leg's own carry does it over as many days as the cap needs.
+
+### G.4 -- ORDER (the one time-sensitive point)
+
+The reader census of `C-OWED-GRAIN` comes BEFORE any year of closes is written. If every reader already takes all objects of a
+date (the table holds 8 objects over 5 dates today), the one-time load may be written under the present tool and later top-ups
+still land. If any reader takes one object per date, that reader is repaired first. No year of closes is written before that
+census is read.
+
+### G.5 -- L4-R
+
+An ENDPOINT outcome and CONTRACTS are added, so the RATIFIED half re-opens to `3.0.0_SA_CVO~RV`. The brief half is Andrew's
+words, verbatim in the record, with the CRO's analysis as its measurement. `FWD-1` to `FWD-23` and every existing contract are
+unchanged.

@@ -4583,3 +4583,85 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Supersedes the bound recommendation in W8-S14 only as to how often: a bound of timeout 240 on CTs2-AC1 would make the criterion independent of load. No existing row was edited."
 }
 ```
+
+## NFRA_CTLPLN-S31 -- the Dell deploy grant reaches the cloud graph bucket (opal-* wildcard), head marker and Iceberg files included
+
+```json
+{
+  "id": "NFRA_CTLPLN-S31",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T14:20:00Z",
+  "one_line": "the Dell group's deploy policy grants s3:PutObject on arn:aws:s3:::opal-*/*, which includes the cloud graph's bucket opal-313476888478-globgrph, where a write to warehouse/_branch_head.main.json starts a Kuzu rebuild and the Iceberg graph tables live; no fence names the bucket",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~14:1xZ by 4.0.0_SA_CRO: infra/aws/terraform/nfra-ctlpln-identity/dell_deploy_policy.json, an Allow of s3:GetObject, s3:GetObjectVersion, s3:PutObject, s3:ListBucket and more on ['arn:aws:s3:::opal-*', 'arn:aws:s3:::opal-*/*']; its only S3 Deny covers delete and lifecycle on opal-data-* (not opal-313476888478-*).",
+      "Read: infra/aws/terraform/globgrph/projection.tf (an S3 write to warehouse/_branch_head.main.json notifies the queue that starts the projection worker) and infra/aws/globgrph/derive_runner.py:390, :407-419 (the head marker names the current snapshot of graph_nodes and graph_edges).",
+      "Not measured: the live policy (no simulate-principal-policy run), whether a bucket policy on opal-313476888478-globgrph denies the Dell users, and whether any Dell seat has written there."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The Dell grant is read as admitting deploys and the firm buckets; the graph plane is described as written only by its own in-VPC service roles (docs/architecture/NFRA_GLOBGRPH_PRD.md, the v0.4.1 N-agent rule: agents never write the graph).",
+  "world_is": "As written, a Dell credential can put any object in the graph bucket, including the head marker and the Iceberg table files, so a Dell seat could start a rebuild or replace graph data. Nothing found says this was intended or ruled out. INERT: nothing is known to have done it.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~13:3xZ order (a cloud graph for multi-agent coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_133xZ_CLOUD_GRAPH_FOR_MULTI_AGENT_COHERENCE_REVIEW_PRIOR_ART.md). Whether the Dells should write there is the control plane's ruling; this row proposes no change."
+}
+```
+
+## NFRA_CTLPLN-Z-S3 -- the trading calendar's fallback ends at 2027: on 2028-01-01 every staleness read on a function that runs the fallback raises
+
+```json
+{
+  "id": "NFRA_CTLPLN-Z-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-07T19:49:57Z",
+  "one_line": "lib/trading_calendar.py's hardcoded fallback covers 2010-2027 and now raises CalendarCoverageError outside it; a Lambda packaged without pandas_market_calendars runs on that fallback, so once the frontier date is in 2028 its trading-day reads raise where they answered before.",
+  "spec_asserts": "lib/trading_calendar.py:14-16 and :34 at CLOUD HEAD: the fallback is 2010-2027, an out-of-range year raises CalendarCoverageError, and the module's own header says 'Regenerate NYSE_HOLIDAYS_FALLBACK (lib/tests/gen_nyse_closures.py --write) before 2028.' The change is NFRA_CTLPLN's (commit 4b766e4e2d, 0.9.0_WK_NFRA_CTLPLN~12).",
+  "world_is": "Read 2026-10-07 for the AMGT_RESAPP round-78 redeploy pair (COO half org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round78/NEVER_WIDEN_HALF_COO_BB18.md @b7530ac2d4; CTO half org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_RESAPP_R78_BB18_REDEPLOY_20261007.md @24536e3cbe, condition C4). The deployed opal-amgt-scoped-api package holds 0 members of pandas_market_calendars, so that function runs on the fallback; its next build carries this module. Callers in that function's closure: scoped_amgt._stale_trading_days (three call sites, one unguarded), the top band (wrapped), rolling_windows, harvest/window_tone, freshness/stale_rule._age. Inside 2010-2027 nothing moves: the closure dates for 2024-2027 are equal in the deployed and the new copy (41 and 41), and 302 of 302 rows of the live freshness snapshot answered with 0 raised. The hazard is dated: from 2028-01-01 the frontier itself is outside the range. NOT measured: which other deployed functions package this module without pandas_market_calendars; whether any scheduled regeneration of the fallback exists.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/trading_calendar.py at CLOUD HEAD, lines 14-16, 34, 48, 111-113, 118-158 (read 2026-10-07): the range, the raise and the 'before 2028' instruction.",
+      "The AMGT_RESAPP bb-18 COO half, section SEVEN FILES FROM OTHER PROJECTS, item 1: 0 pandas_market_calendars members in the deployed zip; 302 of 302 snapshot rows answered.",
+      "The CTO half's C4: 'on 2028-01-01 the frontier itself leaves the range and every staleness read on this function raises ... One surprise row on NFRA_CTLPLN, filed by the issuer, disarm_owner that project's issuer.'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~C",
+  "notes": "Filed at the CTO's direction (msg 31336). The disarm is the fallback regenerated to cover 2028 onward and carried by a redeploy of each function that runs it, before 2028-01-01. Surfaced, not chased; no code edited."
+}
+```
+
+## NFRA_CTLPLN-S32 -- placement-check places every Dell project on the laptop (reads `fabric`, never `placement`)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S32",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "4.0.0_SA_CRO",
+  "surfaced_at": "2026-10-08T16:55:00Z",
+  "one_line": ".tools/placement-check.py resolves a project's box from project.json `fabric` only (:90), so projects carrying fabric=laptop with placement=DELL1/DELL2 are counted on the laptop and dell1 and dell2 read as placed 0",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Read 2026-10-08 ~16:5xZ: .tools/placement-check.py:90 `box = dev.resolve(str(d.get(\"fabric\") or \"\"), reg)`; no read of `placement` in read_projects().",
+      "Read by a 4.0.0_SA_CRO sub-read 2026-10-08 ~16:3xZ: IRPT_YCDGEN, NFRA_TRNSPT and MDPF_SECHIST carry fabric=laptop with placement=DELL2/DELL2/DELL1, and the tool reports dell1 and dell2 as 'placed 0 (ROOM)'.",
+      "Not read: whether crossbox-deploy-check.py reads placement first in code (its docstring says so)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "placement-check is the C-PLACEMENT viewer of which box holds which project; crossbox-deploy-check imports its overlaps.",
+  "world_is": "Every Dell-placed project is attributed to the laptop, so the per-box placement figures and any cross-box overlap that depends on the box are wrong for dell1 and dell2. INERT: a viewer that never changes an exit; crossbox-deploy-check's use not traced.",
+  "notes": "Found while researching Andrew's 2026-10-08 ~16:1xZ order (long-term graph coherence; record org/tier1_exec/4.0.0_SA_CRO/deliverables/ANDREW_DIRECT_20261008_161xZ_GRAPH_COHERENCE_LONG_TERM_FOLD_IN_ACTIVITY_OVERLAP.md). Proposes no change; the fix owner is the tool's."
+}
+```

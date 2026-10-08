@@ -102,6 +102,13 @@ cleanly." Every cycle, before Step 3b:
    **UNKNOWN** (including "placement unread for <n> order(s)") is never respawned: an unread placement licenses no respawn.
 4. **QUIET, MOVING, ELSEWHERE, UNKNOWN**: no act here. List the ELSEWHERE and UNKNOWN seats in the report.
 5. **RECORD** each act (the serial, the class, the skill run, its result) in the cycle report's SEATS line and the heartbeat.
+6. **GARBAGE COLLECTION** (Andrew-direct 2026-10-08 ~16:3xZ, `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`).
+   Every cycle, this box's processes: run `powershell -NoProfile -File .tools/kill-maint.ps1 -Mode scripts` (dry), and run the
+   `/watcher` step-2 census for every serial with a row, since the reaper does not yet see a REPLACED copy. Zero targets and one
+   watcher row per serial: record `GC: 0`. Otherwise read each target, then stop it: `kill-maint.ps1 -Mode scripts -Execute`,
+   and for a serial with more than one watcher row, `taskkill /T /F /PID` on every row but the newest. Never a target: a live
+   seat's newest watcher row, a process under a live claude.exe, a process working in a `drain-*` worktree. Record count,
+   classes and MB freed on the GC line.
 
 This step acts on this box only. Another box's seat is that box's manager's; the register `org/devices/DEVICES.json` is the list
 of boxes and Step 3b is how the managers keep in touch.
@@ -148,6 +155,7 @@ Print fixed format (CROSS-FABRIC line added per the 2026-08-19 amendment):
   PRE-1-TURN:    {N} too fresh
   RESPONDED:     {N} closed
   SEATS:         {n} seats | moving {a} quiet {b} hung {c} dead {e} unknown {u} | acts: {serial: skill -> result | none}
+  GC:            {n} stopped ({classes}) | {MB} MB freed | watcher rows {r} over {s} serials | 0
   CROSS-FABRIC:  status exchanged | on-track every box / finding: ... | merge: ran (heads) / assess-only / not-quiet
   LOOP:          cron-driven (next cycle in {interval})
 ```
