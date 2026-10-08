@@ -108,3 +108,19 @@ Verbatim, laptop terminal to 1.0.0_SA_CTO:
 Placement: 1.0.0_SA_CTO adds the line to `.claude/skills/govern/SKILL.md` Step 3a (this box's own processes, every cycle,
 dry census then act). It reaches every box's MSTR by the trunk. This is the unattended-run word the GC fast-fix list held
 for Andrew, scoped to a /govern cycle.
+
+## Addendum ~16:4xZ -- restart the laptop fabric; no fabric-wide deploys on this box
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO:
+
+> "Ok great, now I think we need to get the fabric on here rolling again. ALl i recall that you had going was COO~G. We
+> should no longer need to be running deploys for the whole fabric on this box, so that should take off some of the load
+> on that basis."
+
+Placement: 0.0.0_AB_MSTR spawns `2.0.0_SA_COO~G` to resume LGIC_BLANKFIX round 6 (its handoff @d96bc61aed: round 5
+closed, round 6 drafted, not issued). The laptop is the control plane: no deploy seat is re-seated here to carry other
+boxes' deploys (0.7.0_AE_CloudOps~E and ~F stay down); a deploy for a project placed on another box runs on that box.
+
+Same minute, verbatim: "With that in mind, we do have the codex 0.7.0_AE_CloudOps available and idle as needed for
+deploys on this box". So the laptop's own deploys (e.g. the NFRA_CTLPLN identity-root apply) go to the Codex seat
+`0.7.0_AE_CloudOps`, by task order.

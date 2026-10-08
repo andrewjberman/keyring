@@ -31,7 +31,10 @@ it acts and reports the measured result after.
   My msg 106669 exclusion is superseded by that word. It ships with the grant widen, which is UNAPPLIED: its apply seats
   (2.0.0_SA_COO~C, 0.7.0_AE_CloudOps~E) are not live after the reboot. Proof stays as the list says: one `comp-kuzu`
   query on dell1 and on dell2.
-- **F3 (one full rebuild + why 2026-10-07 did not publish):** ACCEPTED; needs a live 0.7.0_AE_CloudOps seat. None is live.
+- **F3 (one full rebuild + why 2026-10-07 did not publish):** WITHDRAWN ~16:4xZ. Its premise is false (4.0.0_SA_CRO msg
+  107000): the nightly full rebuild published every night 10-04 through 10-08, read from the projection manifests; the
+  "last full 10-04" read came from a marker field that each incremental update overwrites. Its task order
+  NFRA_CTLPLN.TO-GRAPH-1 (@5431396b08) goes to `cancelled` by its issuer, 2.0.0_SA_COO~C.
 - **F4 (say the vintage):** ACCEPTED; binds by reading. Every seat that acts on a graph answer quotes its `VINTAGE:` line.
 - **F5 (no Deny on the Dells' graph-bucket write):** ACCEPTED on Andrew's call 3 ("They should be able to"); row
   `NFRA_CTLPLN-S31` is dispositioned by that word, no Deny is added. The sanctioned write shape is the project's (draft
