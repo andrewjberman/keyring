@@ -19,6 +19,12 @@ lane deletes its cron and the row is struck; a struck row's record stays in git.
 
 ## Arms
 
+- `1.0.0_SA_CTO` `/self-drive 60m laptop directives` at `17 * * * *`, DIRECTED: re-armed after the 2026-10-08 laptop reboot on
+  Andrew's "1.) Yes." (~18:3xZ, last addendum of
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_153xZ_TWO_PRIORITIES_GITOPS_AND_PROCESS_GC.md`), terms of
+  `ANDREW_DIRECT_20261007_071xZ_SELF_DRIVE_60M_LAPTOP_FABRIC_AS_CLUSTER_CONTROL_PLANE.md`; GitOps, GC and graph coherence
+  ranked first each tick. Stop: as that record. Landed by 1.0.0_SA_CTO.
+
 - Every fabric manager (`0.0.0_AB_MSTR`, `~Z`, `~DELL1`, `~DELL2`) `/govern 30m` at instantiation, DIRECTED. Andrew at the laptop
   `1.0.0_SA_CTO` terminal ~17:4xZ 2026-10-08, VERBATIM: "MSTR agents should have /govern on a 30m loop at instantiation." Record
   `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_174xZ_MSTR_GOVERN_30M_LOOP_AT_INSTANTIATION.md`. Supersedes
