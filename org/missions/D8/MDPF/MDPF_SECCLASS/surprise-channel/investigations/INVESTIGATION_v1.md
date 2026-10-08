@@ -5683,3 +5683,30 @@ by dell1 or by this seat.
   "notes": "Not decided here; the evidence column of S11_ROW_SET_20261008.tsv carries one phrase per line and the half request lists what was deliberately left unmoved."
 }
 ```
+
+## MDPF_SECCLASS-D1-W67-S3 -- SC-e-77 amendment 2: OXYWS (group B) landed by the e49 runner at 2026-10-08T20:08:38Z, so AC2 reads refused_present=2, not 1
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W67-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~67",
+  "surfaced_at": "2026-10-08T20:22:54Z",
+  "one_line": "SC-e-77 amendment 2: OXYWS (group B, $4,958) is now ALSO present in etf-classifications (e49 model runner, 2026-10-08T20:08:38Z, equity/Energy) -- AC2 reads refused_present=2, not the amended 1; RAL is no longer the only refused key.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py -> 'REFUSED_PRESENT OXYWS live=equity/Energy by=mdpf-secclass-model' and 'REFUSED_PRESENT RAL live=equity/Information Technology by=mdpf-secclass-model' then 'S11-ROWS-DRY-RUN new=104 remap=34 refused_present=2 refused_stale=0 puts=0', rc=1 (at 2026-10-08T20:22Z, after the 23 amendment-2 REMAP lines were appended).",
+      "get-item (consistent) ticker=OXYWS: asset_class equity, sub_asset_class Energy, classified_by model, updated_by mdpf-secclass-model, classification_confidence 0.72, low_confidence true, last_updated 2026-10-08T20:08:38.201415+00:00. The set's NEW line for OXYWS reads equity (the same class), so a put would change nothing, as with RAL (row MDPF_SECCLASS-D1-W67-S1).",
+      "The 23 amendment-2 REMAP lines are not the cause: every one read structured/Hedge, updated_by mdpf-secclass-model at the get_item, and none is refused (refused_stale=0)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-77 AC2 as amended by Amendment 1 and restated in Amendment 2: refused_present=1 refused_stale=0 puts=0, the one refused key being RAL; any other refused key still fails AC2.",
+  "world_is": "The e49 model runner landed a second group-B ticker (OXYWS) after the trace and after Amendment 1, so the dry run refuses two keys. The test is not weakened: AC2 is recorded FAIL at refused_present=2 and the order is left open. The fix is the issuer's: amend AC2 to admit OXYWS beside RAL (refused_present=2), or drop the two lines from the set and re-cut AC1's denominator to 104. More group-B tickers may land before the signing; the issuer re-reads at signing.",
+  "notes": "Filed by the worker; no change made to the grant. The writer's REFUSED_PRESENT path is doing its job (a put on an existing key is refused)."
+}
+```
