@@ -21,11 +21,11 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08. Graduated at sweep 20 (ADJUD
     "owner": "2.0.0_SA_COO~P2",
     "round": "v82",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~P2",
       "round": "v82"
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```

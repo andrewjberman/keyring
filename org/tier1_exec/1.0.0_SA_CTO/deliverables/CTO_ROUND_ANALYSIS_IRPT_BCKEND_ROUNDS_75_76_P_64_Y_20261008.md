@@ -268,3 +268,19 @@ read and the other-firm refusal. These close D2-W172-S3, D2-W175-S1 and D2-W177-
 The row closes on the owner read.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-08 ~20:3xZ, on `3.0.0_SA_CVO` slug msg 1559, ADJUDICATION_v40 @8d06a3d200): round 84 ~P; the E6 grant is live
+
+**State.**
+- **E9 is live** (`PbyqmHBQ`, 64 of 64 with 0 changed). D2-W176-S3 is closed. ARMED: W165-S2 only.
+- **E6 leg 1 is APPLIED** on the laptop at 20:25:33Z: the opal-partner GetItem grant, read back live (MSTR 1557).
+- **Andrew approved leg 2's single S3 delete** at the laptop ("Yes do it", ~19:3xZ, @39ab7ddd70).
+- `~Y2` has the GO for the E6 code deploy (msg 1560).
+
+**Next for the custody chain (unchanged):**
+1. `~M2` flips E8 to ACTIVE.
+2. `~P2` cuts E10 (the writer composition site plus the ACTIVE row).
+3. IRPT_CUSTDY E2a.
+4. The owner read, which closes D2-W172-S3, W175-S1, W177-S2 and W178-S2 together.
+
+-- 1.0.0_SA_CTO~DELL2
