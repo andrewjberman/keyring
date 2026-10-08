@@ -5519,3 +5519,59 @@ by dell1 or by this seat.
   "notes": "Not a remediation and not a disposition: S12's disarm_owner is 2.0.0_SA_COO~M1 and this row only hands that owner the two readings it said were missing. Nothing was written, restored or rolled back under this row -- it is read-only. WHAT THIS DOES NOT COVER, stated so the absence is not over-read: only the ONE key is scanned, only the two windows are scanned, and a read by a principal whose GetObject CloudTrail does not log at all (a VPC-endpoint path with data events off, say) would be invisible to it -- the selector covers the four opal-data-* buckets and nothing was checked outside them. The recurrence matters more than either window: a step that re-ships a bundle on every gold deploy will keep doing this, so the remedy belongs in the tool or in the sign-off's named members, not in a per-incident restore. The deploy lane (0.7.0_AE_CloudOps) owns the tool, as S12 says; this seat has NOT scoped it and does not propose a change here."
 }
 ```
+
+## MDPF_SECCLASS-D1-W67-S1 -- SC-e-77: RAL (group B, $70) is NOT absent from etf-classifications -- a model row landed at 2026-10-08T19:01:5
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W67-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~67",
+  "surfaced_at": "2026-10-08T19:32:34Z",
+  "one_line": "SC-e-77: RAL (group B, $70) is NOT absent from etf-classifications -- a model row landed at 2026-10-08T19:01:52Z, after the trace was cut -- so AC1 (RAL must be a NEW line) and AC2 (refused_present=0) cannot both hold; the dry run reads refused_present=1.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R15_CHECKS/s11_rows_write.py -> 'REFUSED_PRESENT RAL live=equity/Information Technology by=mdpf-secclass-model' then 'S11-ROWS-DRY-RUN new=105 remap=11 refused_present=1 refused_stale=0 puts=0', rc=1 (the other 105 NEW keys are absent, the 11 REMAP keys all read their set class).",
+      "get-item (consistent) ticker=RAL: asset_class equity, sub_asset_class Information Technology, classified_by model, updated_by mdpf-secclass-model, classification_confidence 0.55, low_confidence true, last_updated 2026-10-08T19:01:52.311771+00:00; NAME::RALLIANT CORP COM is still absent.",
+      "sc_r15_rows_set.py (AC1) reads every B/D key exactly once as NEW, RAL included (the trace's why for RAL starts 'B:'); the set therefore carries RAL as NEW and the writer refuses it."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "SC-e-77 AC1 and AC2 as written: every B/D security is a NEW line, and the dry run plans every line and refuses none (refused_present=0).",
+  "world_is": "The live table moved between the trace and the dry run: the model runner landed RAL (equity, the same class the set gives it) after the trace. The set is left whole (no weakening of AC1); AC2 records refused_present=1 and the order stays open. The write itself would be harmless (the put refuses RAL, the row already reads equity); the fix is the issuer dropping the RAL line from the set and re-cutting AC1's denominator to 105 or accepting the one refusal.",
+  "notes": "Not disarmable by this worker and not decided here. The half request states the RAL case in its dry-run bullet. Group B's other 24 tickers and all 81 group D keys were absent at the read, so only RAL moved."
+}
+```
+
+## MDPF_SECCLASS-D1-W67-S2 -- SC-e-77: the contract has no alternatives sub-class for a hedge or private fund (only Real Estate / Internatio
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W67-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~67",
+  "surfaced_at": "2026-10-08T19:32:34Z",
+  "one_line": "SC-e-77: the contract has no alternatives sub-class for a hedge or private fund (only Real Estate / International Real Estate), and the set's literal reading of Andrew's rule leaves 21 structured/Hedge liquid-alt mutual-fund rows, two crypto/class conflicts and a sibling-row conflict for the CVO to decide.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MDPF_SECCLASS_CONTRACT.json 0.8.0 fields.sub_asset_class.values_by_class.alternatives = ['International Real Estate', 'Real Estate']; the live table holds 168 alternatives rows, all Real Estate / International Real Estate; the contract states 'a row with no sub_asset_class stays absent; no value is defaulted or inferred', so the 9 NEW private-fund lines and 4 REMAP hedge/private-credit lines carry no sub-class.",
+      "Live scan (10,607 rows): 21 mdpf-secclass-model rows read structured/Hedge and are hedged-equity, long/short, market-neutral or absolute-return mutual funds (e.g. NAME::AQR LONG-SHORT EQUITY I, NAME::CALAMOS MARKET NEUTRAL INCOME I, NAME::JPMORGAN HEDGED EQUITY I); the set does NOT remap them, reading 'hedge funds' literally. Only NAME::SHAW PARK MULTI STRATEGF OFFSHORE FUND LP (an offshore fund LP) and NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES (an LP) were moved.",
+      "GSRTX (NEW, alternatives) and the live row NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL (structured/Hedge, model) are one fund in two share classes with two classes (structured/Hedge vs the set's alternatives).",
+      "Spot bitcoin, ether and XRP trusts are NEW lines read commodities/Commodities on the table's own precedent (ARKB, IBIT, GBTC, BTC all commodities/Commodities) although the trace's old map reads alternatives; REX-OSPREY XRP ETF reads equity/Global in the table.",
+      "Eight NEW lines read structured on precedent (listed CALL lines; two annuity-lock lines; one futures-participation line); Rule B (target-date, balanced, allocation -> equity; income-oriented -> fixed_income) moved 7 NEW lines off the old map's alternatives."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-08: 'Hedge funds, private funds, real estate funds, all of this falls to Alternatives.'; Rule B (ANDREW_DIRECT_20261007_00xxZ): target-date, balanced and allocation funds go to equity; income-oriented to fixed income; the contract's closed sub-class lists.",
+  "world_is": "The rule can be read narrowly (a fund the issuer calls a hedge fund) or widely (any strategy fund with 'hedge' in its name, liquid alts and managed futures included). The set reads it narrowly and says so per line in the evidence column; the CVO's L9 grade decides the 21 structured/Hedge rows, the crypto trusts, GSRTX and the allocation-fund lines, and whether the contract gains an alternatives sub-class for hedge/private funds.",
+  "notes": "Not decided here; the evidence column of S11_ROW_SET_20261008.tsv carries one phrase per line and the half request lists what was deliberately left unmoved."
+}
+```
