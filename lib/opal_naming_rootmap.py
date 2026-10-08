@@ -27,6 +27,14 @@ import opal_naming  # noqa: E402
 _ROOT_FIELDS = ("system", "scope", "source", "evidence")
 _EXC_FIELDS = ("name", "type", "system", "evidence")
 _FILL_SLOTS = ("system", "scope", "source")
+# A ROOT WITH NOTHING TO NAME (root_map.json _about): names 'none', why, evidence, and none of these six fields.
+_NONE_WHY = ("names_from_caller", "attaches_to_names_declared_elsewhere")
+_NONE_FORBIDDEN = ("system", "scope", "source", "fills", "source_dirs", "exceptions")
+
+
+def nothing_to_name(ent):
+    """True for an entry that says its root has nothing to name (names == 'none'); such an entry has no system, scope or source."""
+    return isinstance(ent, dict) and ent.get("names") == "none"
 
 
 def _bad(root, field, why):
@@ -72,6 +80,17 @@ def load_map(path):
     for root, ent in doc["roots"].items():
         if not isinstance(ent, dict):
             raise _bad(root, "(entry)", "must be an object")
+        if "names" in ent or "why" in ent:
+            if ent.get("names") != "none":
+                raise _bad(root, "names", "%r is not 'none' (the only value `names` takes)" % (ent.get("names"),))
+            if ent.get("why") not in _NONE_WHY:
+                raise _bad(root, "why", "%r is not one of %s" % (ent.get("why"), ", ".join(_NONE_WHY)))
+            if not isinstance(ent.get("evidence"), str) or not ent["evidence"].strip():
+                raise _bad(root, "evidence", "missing or not a non-empty string")
+            for f in _NONE_FORBIDDEN:
+                if f in ent:
+                    raise _bad(root, f, "a names: 'none' entry must not carry %s" % (f,))
+            continue
         for f in _ROOT_FIELDS:
             if not isinstance(ent.get(f), str) or not ent[f].strip():
                 raise _bad(root, f, "missing or not a non-empty string")
@@ -110,12 +129,12 @@ def load_map(path):
 
 
 def resolve(map, root, name, type, role=None):
-    """None when `root` has no entry; else {system, scope, source, basis}.
+    """None when `root` has no entry or its entry says nothing to name; else {system, scope, source, basis}.
 
     An exception that names `roles` matches only when `role` is in that list (basis "exception-with-role"); an exception
     without `roles` matches on (name, type) alone (basis "exception"). A role-less call never matches a roled exception."""
     ent = (map.get("roots") or {}).get(root)
-    if ent is None:
+    if ent is None or nothing_to_name(ent):
         return None
     system, basis = ent["system"], "root-default"
     for ex in ent.get("exceptions", []):

@@ -469,6 +469,7 @@ def decide(item, ans, fourth=None):
 
 
 _TF_PREFIX = "infra/aws/terraform/"
+NTN_STOP = "the map says nothing to name and the root names %d"
 
 
 def map_key(root):
@@ -494,6 +495,12 @@ def check_root(root, map_path, not_judged=None, out=print, report_only=False, si
     doc = opal_naming_rootmap.load_map(map_path)
     name = map_key(opal_naming_scope._norm_root(root))
     entry = (doc.get("roots") or {}).get(name)
+    if opal_naming_rootmap.nothing_to_name(entry):
+        n = len(items)
+        if n:
+            raise ValueError(NTN_STOP % (n,))
+        out("NOTHING-TO-NAME %s why=%s names=0" % (name, entry.get("why")))
+        return 0
     krows = {}
     for r in opal_naming_keyfill.fill_keys(items, entry):
         krows[(r["type"], r["current"], r["where"])] = r
@@ -740,6 +747,21 @@ def all_roots(map_path, out=print, run_one=None):
     cls = dict((c, 0) for c in HOLE_CLASSES)
     other_lines, stale_lines, items_all = [], [], 0
     for key in keys:
+        ent = doc["roots"][key]
+        if opal_naming_rootmap.nothing_to_name(ent):
+            # a root the map says has nothing to name: mapped; read against the scope, never skipped
+            try:
+                n = len(opal_naming_scope.root_items(opal_naming_scope._map_key_root(key), map_path)[0])
+                why = None if n == 0 else NTN_STOP % (n,)
+            except Exception as exc:
+                n, why = -1, "%s: %s" % (type(exc).__name__, exc)
+            if why is None:
+                done += 1
+                out("NOTHING-TO-NAME %s why=%s names=%d" % (key, ent.get("why"), n))
+            else:
+                stopped += 1
+                out("ROOT %s | NOTHING-TO-NAME why=%s | STOPPED %s" % (key, ent.get("why"), why))
+            continue
         lines, reason = [], ""
         try:
             run_one(key, map_path, out=lines.append, report_only=True)
