@@ -1,0 +1,1197 @@
+{
+  "attached_policies": [
+    {
+      "PolicyName": "cloudops-dell-agent-create-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-platform-secrets-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-respol-allow-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-deploy-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-routes-fn-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-fn-policy"
+    },
+    {
+      "PolicyName": "cloudops-dell-agent-vendor-secrets-policy",
+      "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-vendor-secrets-policy"
+    }
+  ],
+  "policies": {
+    "cloudops-dell-agent-create-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-create-policy",
+        "PolicyId": "ANPAUR7FNW6PNAMQ5OR7I",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy",
+        "Path": "/",
+        "DefaultVersionId": "v3",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: create, update and tag non-IAM resources; never IAM, never access-granting actions.",
+        "CreateDate": "2026-10-07 08:15:50+00:00",
+        "UpdateDate": "2026-10-08 18:00:17+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:CreateBucket",
+                "s3:PutBucketTagging",
+                "s3:PutBucketVersioning",
+                "s3:PutEncryptionConfiguration",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:PutBucketOwnershipControls",
+                "s3:PutBucketCORS",
+                "s3:PutLifecycleConfiguration",
+                "s3:PutBucketNotification",
+                "s3:PutBucketLogging",
+                "s3:PutObjectTagging"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s3:::opal*",
+                "arn:aws:s3:::opal*/*"
+              ],
+              "Sid": "CreateUpdateTagS3OnOpalBuckets"
+            },
+            {
+              "Action": [
+                "lambda:CreateFunction",
+                "lambda:CreateEventSourceMapping",
+                "lambda:UpdateEventSourceMapping",
+                "lambda:PublishLayerVersion",
+                "lambda:PutFunctionEventInvokeConfig",
+                "lambda:UpdateFunctionEventInvokeConfig",
+                "lambda:TagResource",
+                "lambda:UntagResource",
+                "ecr:CreateRepository",
+                "ecr:PutImageTagMutability",
+                "ecr:PutImageScanningConfiguration",
+                "ecr:TagResource",
+                "ecr:UntagResource",
+                "codebuild:Create*",
+                "codebuild:Update*",
+                "ec2:RunInstances",
+                "ec2:StartInstances",
+                "ec2:StopInstances",
+                "ec2:ModifyInstance*",
+                "ec2:CreateTags",
+                "ec2:DeleteTags",
+                "ec2:CreateSecurityGroup",
+                "ec2:AuthorizeSecurityGroup*",
+                "ec2:RevokeSecurityGroup*",
+                "ec2:ModifySecurityGroupRules",
+                "ec2:UpdateSecurityGroupRuleDescriptions*",
+                "ssm:CreateDocument",
+                "ssm:UpdateDocument",
+                "ssm:UpdateDocumentDefaultVersion",
+                "ssm:PutParameter",
+                "ssm:AddTagsToResource",
+                "ssm:RemoveTagsFromResource"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CreateUpdateTagCompute"
+            },
+            {
+              "Action": [
+                "dynamodb:Create*",
+                "dynamodb:Update*",
+                "dynamodb:Tag*",
+                "dynamodb:Untag*",
+                "sqs:CreateQueue",
+                "sqs:SetQueueAttributes",
+                "sqs:TagQueue",
+                "sqs:UntagQueue",
+                "sns:CreateTopic",
+                "sns:SetTopicAttributes",
+                "sns:Subscribe",
+                "sns:SetSubscriptionAttributes",
+                "sns:TagResource",
+                "sns:UntagResource",
+                "secretsmanager:CreateSecret",
+                "secretsmanager:UpdateSecret",
+                "secretsmanager:PutSecretValue",
+                "secretsmanager:TagResource",
+                "secretsmanager:UntagResource",
+                "kms:CreateKey",
+                "kms:CreateAlias",
+                "kms:UpdateAlias",
+                "kms:EnableKeyRotation",
+                "kms:UpdateKeyDescription",
+                "kms:TagResource",
+                "kms:UntagResource"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CreateUpdateTagDataAndMessaging"
+            },
+            {
+              "Action": [
+                "scheduler:Create*",
+                "scheduler:Update*",
+                "scheduler:TagResource",
+                "scheduler:UntagResource",
+                "events:TagResource",
+                "events:UntagResource",
+                "logs:PutRetentionPolicy",
+                "logs:AssociateKmsKey",
+                "logs:PutMetricFilter",
+                "logs:TagResource",
+                "logs:UntagResource",
+                "logs:TagLogGroup",
+                "logs:CreateDelivery",
+                "logs:UpdateDeliveryConfiguration",
+                "logs:PutDeliverySource",
+                "logs:PutDeliveryDestination",
+                "cloudwatch:PutMetricAlarm",
+                "cloudwatch:TagResource",
+                "cloudwatch:UntagResource",
+                "cloudtrail:CreateTrail",
+                "cloudtrail:AddTags",
+                "cloudtrail:RemoveTags",
+                "cloudtrail:StartLogging",
+                "cur:PutReportDefinition",
+                "cur:ModifyReportDefinition",
+                "cur:TagResource",
+                "cur:UntagResource"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CreateUpdateTagSchedulingAndLogs"
+            },
+            {
+              "Action": [
+                "apigateway:POST",
+                "apigateway:PUT",
+                "apigateway:PATCH",
+                "cloudfront:Create*",
+                "cloudfront:Update*",
+                "cloudfront:PublishFunction",
+                "cloudfront:TagResource",
+                "cloudfront:UntagResource",
+                "wafv2:Create*",
+                "wafv2:Update*",
+                "wafv2:PutLoggingConfiguration",
+                "wafv2:TagResource",
+                "wafv2:UntagResource",
+                "route53:ChangeResourceRecordSets",
+                "route53:ChangeTagsForResource",
+                "ses:VerifyDomainIdentity",
+                "ses:VerifyDomainDkim",
+                "ses:SetIdentityMailFromDomain"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "CreateUpdateTagEdgeAndDns"
+            },
+            {
+              "Action": "iam:SimulatePrincipalPolicy",
+              "Effect": "Allow",
+              "Resource": "arn:aws:iam::313476888478:user/${aws:username}",
+              "Sid": "SimulateOwnPolicyOnly"
+            },
+            {
+              "Action": "ssm:GetParameter",
+              "Effect": "Allow",
+              "Resource": "arn:aws:ssm:us-east-1::parameter/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-x86_64",
+              "Sid": "ReadPublicAmiParameter"
+            },
+            {
+              "Action": [
+                "apigateway:GET",
+                "cloudfront:Get*",
+                "cloudfront:List*",
+                "cloudfront:Describe*",
+                "codebuild:BatchGet*",
+                "codebuild:List*",
+                "cur:Describe*",
+                "route53:Get*",
+                "route53:List*",
+                "scheduler:Get*",
+                "scheduler:List*",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:List*",
+                "ses:Get*",
+                "ses:List*",
+                "ssm:DescribeParameters",
+                "ssm:DescribeDocument*",
+                "ssm:GetDocument",
+                "ssm:ListTagsForResource",
+                "wafv2:Get*",
+                "wafv2:List*",
+                "wafv2:Describe*",
+                "s3:GetEncryptionConfiguration",
+                "s3:GetLifecycleConfiguration",
+                "s3:GetAccelerateConfiguration",
+                "s3:GetReplicationConfiguration",
+                "s3:GetObjectLockConfiguration",
+                "s3:GetObjectTagging",
+                "sqs:GetQueueAttributes",
+                "sqs:GetQueueUrl"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "ReadForDerivedKinds"
+            },
+            {
+              "Action": [
+                "s3:PutBucketLogging",
+                "s3:PutBucketNotification",
+                "s3:PutBucketOwnershipControls",
+                "s3:PutBucketPublicAccessBlock",
+                "s3:PutBucketVersioning",
+                "s3:PutEncryptionConfiguration",
+                "s3:PutLifecycleConfiguration"
+              ],
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:s3:::opal-cloudtrail-logs-313476888478",
+                "arn:aws:s3:::opal-cloudtrail-logs-313476888478/*"
+              ],
+              "Sid": "DenyAuditTrailBucketWrites"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v3",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-08 18:00:17+00:00"
+      }
+    },
+    "cloudops-dell-agent-platform-secrets-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-platform-secrets-policy",
+        "PolicyId": "ANPAUR7FNW6PIPG3X3PKO",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: read the platform-key class of secrets (signing keys, seeds, admin credentials, gateway bearer tokens) by exact secret ARN.",
+        "CreateDate": "2026-10-08 18:00:17+00:00",
+        "UpdateDate": "2026-10-08 18:00:17+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": "secretsmanager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/otp-gateway-token-asH4JY",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/cot/otp-gateway-token-T1HlmV",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:gateway/global/taxsma-workbook-token-nPDnbk",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:gateway/mail/bearer-g8XFDo",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:gateway/principals/rosters-wg59oX",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:gateway/teams/bearer-93ZHiU",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:gateway/transcripts/bearer-tY9tUO",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:inf/otp-relay/token-ujJN73",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:irpt/svc-irpt-analysis/password-rfHf9l",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/auth/irpt-render-jwt-private-key-Rm6oGY",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/auth/jwt-private-key-Av5dZz",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/auth/origin-verify-Pe97BM",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/graph-read-token-MGAqlV",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/ms-ingest-token-mXFTKk",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opal-gateway-blackdiamond-reader-external-id-99LeEC",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opal-gateway-fernet-ZqfQle",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opal-gateway-jwt-m0fXOX",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opal-gateway-schwab-account-ref-key-Ffp6Tj",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opal-gateway-schwab-reader-external-ids-2BSIrt",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/mcp/opalbloomberg-login-CIdP1R",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/portal/svc-data-refresh-4QLOH6",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/pseudonym/49financial-jggsn3",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/pseudonym/opal-capital-w7wHIU",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/ticketing/svc-analyst-intake-HGzn67",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opalinvest/admin-seed-IwXIxW",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opalinvest/jwt-secret-yFxPeS",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:schwab/anonymization-key-ZzRD22",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:schwab/ec2-credentials-ygaVqE"
+              ],
+              "Sid": "ReadPlatformKeys"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-08 18:00:17+00:00"
+      }
+    },
+    "cloudops-dell-agent-respol-allow-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-respol-allow-policy",
+        "PolicyId": "ANPAUR7FNW6PHYHX2YQYJ",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy",
+        "Path": "/",
+        "DefaultVersionId": "v2",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: change who may reach a resource (bucket, key, function, queue policies and permissions); never an iam: action, never a secret's resource policy.",
+        "CreateDate": "2026-10-08 12:39:33+00:00",
+        "UpdateDate": "2026-10-08 18:00:17+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "cloudfront:DeleteResourcePolicy",
+                "cloudfront:PutResourcePolicy",
+                "cloudtrail:DeleteResourcePolicy",
+                "cloudtrail:PutResourcePolicy",
+                "codebuild:DeleteResourcePolicy",
+                "codebuild:PutResourcePolicy",
+                "dynamodb:DeleteResourcePolicy",
+                "dynamodb:PutResourcePolicy",
+                "ec2:CancelImageLaunchPermission",
+                "ec2:CreateNetworkInterfacePermission",
+                "ec2:DeleteNetworkInterfacePermission",
+                "ec2:ModifyFpgaImageAttribute",
+                "ec2:ModifyImageAttribute",
+                "ec2:ModifySnapshotAttribute",
+                "ec2:ModifyVerifiedAccessEndpointPolicy",
+                "ec2:ModifyVerifiedAccessGroupPolicy",
+                "ec2:ModifyVpcEndpointServicePermissions",
+                "ec2:ResetFpgaImageAttribute",
+                "ec2:ResetImageAttribute",
+                "ec2:ResetSnapshotAttribute",
+                "ecr:DeleteRegistryPolicy",
+                "ecr:DeleteRepositoryPolicy",
+                "ecr:PutRegistryPolicy",
+                "ecr:SetRepositoryPolicy",
+                "events:PutPermission",
+                "events:RemovePermission",
+                "kms:CreateGrant",
+                "kms:PutKeyPolicy",
+                "kms:RetireGrant",
+                "kms:RevokeGrant",
+                "lambda:AddLayerVersionPermission",
+                "lambda:AddPermission",
+                "lambda:RemoveLayerVersionPermission",
+                "lambda:RemovePermission",
+                "logs:DeleteDeliveryDestinationPolicy",
+                "logs:DeleteResourcePolicy",
+                "logs:PutDeliveryDestinationPolicy",
+                "logs:PutDestinationPolicy",
+                "logs:PutResourcePolicy",
+                "rds:ModifyDBClusterSnapshotAttribute",
+                "rds:ModifyDBSnapshotAttribute",
+                "route53:CreateVPCAssociationAuthorization",
+                "route53:DeleteVPCAssociationAuthorization",
+                "s3:CreateAccessGrant",
+                "s3:DeleteAccessGrant",
+                "s3:DeleteAccessGrantsInstanceResourcePolicy",
+                "s3:DeleteAccessPointPolicy",
+                "s3:DeleteAccessPointPolicyForObjectLambda",
+                "s3:DeleteBucketPolicy",
+                "s3:PutAccessGrantsInstanceResourcePolicy",
+                "s3:PutAccessPointPolicy",
+                "s3:PutAccessPointPolicyForObjectLambda",
+                "s3:PutBucketAcl",
+                "s3:PutBucketPolicy",
+                "s3:PutMultiRegionAccessPointPolicy",
+                "s3:PutObjectAcl",
+                "s3:PutObjectVersionAcl",
+                "ses:CreateEmailIdentityPolicy",
+                "ses:DeleteEmailIdentityPolicy",
+                "ses:DeleteIdentityPolicy",
+                "ses:PutIdentityPolicy",
+                "ses:UpdateEmailIdentityPolicy",
+                "sns:AddPermission",
+                "sns:RemovePermission",
+                "sqs:AddPermission",
+                "sqs:RemovePermission",
+                "sqs:SetQueueAttributes",
+                "ssm:DeleteResourcePolicy",
+                "ssm:ModifyDocumentPermission",
+                "ssm:PutResourcePolicy",
+                "wafv2:DeletePermissionPolicy",
+                "wafv2:PutPermissionPolicy"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "AllowResourcePolicyChanges"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v2",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-08 18:00:17+00:00"
+      }
+    },
+    "cloudops-dell-agent-deploy-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-deploy-policy",
+        "PolicyId": "ANPAUR7FNW6PBEMMIHYAZ",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy",
+        "Path": "/",
+        "DefaultVersionId": "v4",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: deploy code and data; never change access, audit or delete production data.",
+        "CreateDate": "2026-10-07 04:59:51+00:00",
+        "UpdateDate": "2026-10-08 18:00:17+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "s3:GetObject",
+                "s3:GetObjectVersion",
+                "s3:PutObject",
+                "s3:ListBucket",
+                "s3:GetBucketLocation",
+                "s3:ListBucketVersions",
+                "s3:GetBucket*"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:s3:::opal-*",
+                "arn:aws:s3:::opal-*/*"
+              ],
+              "Sid": "S3ObjectsOnOpalBuckets"
+            },
+            {
+              "Action": [
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:PublishVersion",
+                "lambda:CreateAlias",
+                "lambda:UpdateAlias",
+                "lambda:InvokeFunction",
+                "ecs:RegisterTaskDefinition",
+                "ecs:DeregisterTaskDefinition",
+                "ecs:CreateService",
+                "ecs:UpdateService",
+                "ecs:RunTask",
+                "ecs:StopTask",
+                "events:PutRule",
+                "events:DeleteRule",
+                "events:PutTargets",
+                "events:RemoveTargets",
+                "events:EnableRule",
+                "events:DisableRule",
+                "dynamodb:GetItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+                "dynamodb:Query",
+                "dynamodb:Scan",
+                "dynamodb:BatchGetItem",
+                "dynamodb:BatchWriteItem",
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:FilterLogEvents",
+                "logs:StartQuery",
+                "logs:StopQuery"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "DeployServices"
+            },
+            {
+              "Action": [
+                "sqs:SendMessage",
+                "sqs:GetQueueUrl",
+                "sqs:GetQueueAttributes"
+              ],
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:sqs:us-east-1:313476888478:agentbus-ajbdev-sitez-to-laptop.fifo",
+                "arn:aws:sqs:us-east-1:313476888478:agentbus-ajbdev-laptop-to-sitez.fifo",
+                "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell1-queue*",
+                "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell2-queue*"
+              ],
+              "Sid": "AgentbusSendToInboundQueues"
+            },
+            {
+              "Action": [
+                "sts:GetCallerIdentity",
+                "ec2:Describe*",
+                "iam:Get*",
+                "iam:List*",
+                "kms:Describe*",
+                "kms:Get*",
+                "kms:List*",
+                "lambda:Get*",
+                "lambda:List*",
+                "ecs:Describe*",
+                "ecs:List*",
+                "events:Describe*",
+                "events:List*",
+                "dynamodb:Describe*",
+                "dynamodb:List*",
+                "logs:Describe*",
+                "logs:Get*",
+                "logs:List*",
+                "sqs:List*",
+                "sns:Get*",
+                "sns:List*",
+                "cloudwatch:Describe*",
+                "cloudwatch:Get*",
+                "cloudwatch:List*",
+                "cloudtrail:Describe*",
+                "cloudtrail:Get*",
+                "cloudtrail:List*",
+                "cloudtrail:LookupEvents",
+                "rds:Describe*",
+                "rds:List*",
+                "s3:ListAllMyBuckets",
+                "ecr:Describe*",
+                "ecr:Get*",
+                "ecr:List*",
+                "application-autoscaling:Describe*",
+                "tag:Get*"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "ReadOnlyForTerraformPlan"
+            },
+            {
+              "Action": [
+                "iam:Create*",
+                "iam:Delete*",
+                "iam:Put*",
+                "iam:Attach*",
+                "iam:Detach*",
+                "iam:Update*",
+                "iam:Add*",
+                "iam:Remove*",
+                "iam:Tag*",
+                "iam:Untag*",
+                "iam:Set*",
+                "iam:Upload*",
+                "iam:Enable*",
+                "iam:Deactivate*",
+                "iam:ChangePassword"
+              ],
+              "Effect": "Deny",
+              "Resource": "*",
+              "Sid": "DenyEveryIamWrite"
+            },
+            {
+              "Action": "iam:PassRole",
+              "Effect": "Deny",
+              "Resource": "*",
+              "Sid": "DenyPassRoleExceptNamed"
+            },
+            {
+              "Action": [
+                "cloudtrail:Stop*",
+                "cloudtrail:Update*",
+                "cloudtrail:DeleteChannel",
+                "cloudtrail:DeleteDashboard",
+                "cloudtrail:DeleteEventDataStore",
+                "cloudtrail:DeleteTrail",
+                "cloudtrail:PutEventConfiguration",
+                "cloudtrail:PutEventSelectors",
+                "cloudtrail:PutInsightSelectors"
+              ],
+              "Effect": "Deny",
+              "Resource": "*",
+              "Sid": "DenyCloudTrailWrites"
+            },
+            {
+              "Action": [
+                "s3:DeleteBucket*",
+                "s3:DeleteObject*",
+                "s3:PutLifecycleConfiguration"
+              ],
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:s3:::opal-data-*",
+                "arn:aws:s3:::opal-data-*/*"
+              ],
+              "Sid": "DenyS3DeletesOnProductionData"
+            },
+            {
+              "Action": [
+                "dynamodb:DeleteTable",
+                "dynamodb:DeleteBackup",
+                "rds:Delete*"
+              ],
+              "Effect": "Deny",
+              "Resource": "*",
+              "Sid": "DenyTableAndDatabaseDeletes"
+            },
+            {
+              "Action": "apigateway:GET",
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:apigateway:*::/apikeys",
+                "arn:aws:apigateway:*::/apikeys/*"
+              ],
+              "Sid": "DenyApiKeyReads"
+            },
+            {
+              "Action": [
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:PublishVersion",
+                "lambda:CreateAlias",
+                "lambda:UpdateAlias",
+                "lambda:DeleteFunction",
+                "lambda:DeleteAlias",
+                "lambda:PutFunctionConcurrency",
+                "lambda:UpdateFunctionUrlConfig",
+                "lambda:CreateFunctionUrlConfig"
+              ],
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:lambda:us-east-1:313476888478:function:auth-validator-edge",
+                "arn:aws:lambda:us-east-1:313476888478:function:auth-validator-edge:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:cache-control-injector",
+                "arn:aws:lambda:us-east-1:313476888478:function:cache-control-injector:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-authorizer",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-authorizer:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-rest-authorizer",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-rest-authorizer:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opalinvest-auth-handler",
+                "arn:aws:lambda:us-east-1:313476888478:function:opalinvest-auth-handler:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:public-data-router",
+                "arn:aws:lambda:us-east-1:313476888478:function:public-data-router:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router",
+                "arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router-response",
+                "arn:aws:lambda:us-east-1:313476888478:function:shared-advisor-router-response:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:trade-auth-handler",
+                "arn:aws:lambda:us-east-1:313476888478:function:trade-auth-handler:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:trade-authorizer",
+                "arn:aws:lambda:us-east-1:313476888478:function:trade-authorizer:*"
+              ],
+              "Sid": "DenyProtectedFunctions"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v4",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-08 18:00:17+00:00"
+      }
+    },
+    "cloudops-dell-agent-routes-fn-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-routes-fn-policy",
+        "PolicyId": "ANPAUR7FNW6PBUWXJKAGM",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-fn-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: explicit Deny on updating a function that runs as a role able to write IAM, the audit trail or delete production data.",
+        "CreateDate": "2026-10-07 13:13:32+00:00",
+        "UpdateDate": "2026-10-07 13:13:32+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "lambda:UpdateFunctionCode",
+                "lambda:UpdateFunctionConfiguration",
+                "lambda:PublishVersion",
+                "lambda:CreateAlias",
+                "lambda:UpdateAlias",
+                "lambda:DeleteFunction",
+                "lambda:DeleteAlias",
+                "lambda:PutFunctionConcurrency",
+                "lambda:UpdateFunctionUrlConfig",
+                "lambda:CreateFunctionUrlConfig"
+              ],
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:lambda:us-east-1:313476888478:function:bd-price-update",
+                "arn:aws:lambda:us-east-1:313476888478:function:bd-price-update:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:finbert-batch-processor",
+                "arn:aws:lambda:us-east-1:313476888478:function:finbert-batch-processor:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-client-detail",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-client-detail:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-portal-advisor-publisher",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-portal-advisor-publisher:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-portal-publisher",
+                "arn:aws:lambda:us-east-1:313476888478:function:inf-portal-publisher:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:news-semantic-clustering",
+                "arn:aws:lambda:us-east-1:313476888478:function:news-semantic-clustering:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-bd-transaction-consolidator",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-bd-transaction-consolidator:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-infrastructure-monitor",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-infrastructure-monitor:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-market-overview-tiered-generator",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-market-overview-tiered-generator:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-market-regime-classifier",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-market-regime-classifier:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-news-ai-sentiment",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-news-ai-sentiment:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-news-layer3-curation",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-news-layer3-curation:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-optimization-autosave-put",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-optimization-autosave-put:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-optimization-loader",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-optimization-loader:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-snapshot-handler",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-snapshot-handler:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-upload-urls",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-pm-upload-urls:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-authorizer",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-authorizer:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-data-proxy",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-data-proxy:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-fear-greed-fetcher",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-fear-greed-fetcher:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-rest-authorizer",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-rest-authorizer:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-volatility-fetcher",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portal-volatility-fetcher:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-autosave-get",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-autosave-get:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-autosave-put",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-autosave-put:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-funds-list",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-funds-list:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-pickle-parser",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-pickle-parser:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-version-get",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-version-get:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-versions-list",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-portfolio-versions-list:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-session-analytics",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-session-analytics:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-smartx-ingestion-pipeline",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-smartx-ingestion-pipeline:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher",
+                "arn:aws:lambda:us-east-1:313476888478:function:opal-trending-topics-portal-publisher:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:semantic-news-layer3-curation",
+                "arn:aws:lambda:us-east-1:313476888478:function:semantic-news-layer3-curation:*",
+                "arn:aws:lambda:us-east-1:313476888478:function:semantic-trending-topics-portal-publisher",
+                "arn:aws:lambda:us-east-1:313476888478:function:semantic-trending-topics-portal-publisher:*",
+                "arn:aws:lambda:us-east-2:313476888478:function:opal-news-layer3-curation",
+                "arn:aws:lambda:us-east-2:313476888478:function:opal-news-layer3-curation:*"
+              ],
+              "Sid": "DenyRoutesToPrivilegedRolesFunctions"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-07 13:13:32+00:00"
+      }
+    },
+    "cloudops-dell-agent-vendor-secrets-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell-agent-vendor-secrets-policy",
+        "PolicyId": "ANPAUR7FNW6PA3UBEARQA",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell-agent-vendor-secrets-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "Dell agents: read vendor credentials and client sessions by exact secret ARN; never a signing key, seed, admin credential or platform token.",
+        "CreateDate": "2026-10-08 11:33:48+00:00",
+        "UpdateDate": "2026-10-08 11:33:48+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": "secretsmanager:GetSecretValue",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:FredApiKey-czRCaW",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:aaii/credentials-miwYCO",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ai/claude-api-key-GM3DDQ",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:anthropic-api-key-G90Ir7",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/brightdata/residential-proxy-zmFaXL",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/ft/credentials-h3nx2e",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/ft/session-kIDiAU",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:astn/kimi/api-key-WV6Jlp",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/credentials-pMn2oj",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/49f/session-6bwJqe",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/cot/credentials-jnzOyC",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:blackdiamond/cot/session-jnzOyC",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:bloomberg/session-OBWD4f",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:bloomberg/terminal/login-WSplmg",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:brightdata-api-key-FZ4zpN",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:conferenceboard/credentials-LpyGqd",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:dowjones/barrons/session-sgKnGv",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:dowjones/credentials-BvOShR",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:dowjones/wsj/session-YaOTUt",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-dualbiz/bright-data/serp-qsFYGo",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/api-key-7ojPkd",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/bright-data/scraping-browser-creds-apWcXu",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/builtin/api-key-w9YWUS",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/efinancialcareers/api-key-wjKIKX",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/glassdoor/api-key-eomGjZ",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/indeed/api-key-Mbe1IT",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/insurancejobs/api-key-NXAewN",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/linkedin-jobs/api-key-vbMnuR",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/wellfound/api-key-QfxSYV",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/job-board/ziprecruiter/api-key-kb1InS",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:find-insure/lusha-ai/api-key-sCN5Ck",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:massive-api-key-2IqkSg",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:msci-api-credentials-S3bI1H",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:multi-threadv2-v69Xlr",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:nopecha/api-key-OAExZh",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ocilar/credentials-sNZba2",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/bd/cottonwood/credentials-ml9vNM",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/bd/credentials-YS4QhX",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/opalai/analyst-claude-oauth-token-kfEJMZ",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/openai/andrew-fideles-iOgIQw",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/openai/aws-lambda-ki-6kcSAx",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/openai/layer3-curation-W4ohUl",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/openai/market-update-tWfQ3V",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:opal/openai/news-trending-3qtGjW",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:openai-api-key-EsKspt",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:orion/credentials-jrq3yI",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:orion/eclipse_jwt/current-VgH7n0",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:orion/jwt/current-ewrBtp",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:price_discovery-256Rxw",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:quo/api-key-5QfdTs",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:rivalfunds/openai-api-key-sVm5HZ",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:schwab/sdd-credentials-dYQCTJ",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:seeking-alpha/bright-data-api-key-LEE17n",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:seeking-alpha/credentials-1WjOVD",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:seeking-alpha/session-840XMX",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/cookie/current-UOdUCI",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/credentials/password-hChc3R",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/credentials/username-9mrtlN",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/credentials/yaliu-bundle-ILu23S",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/credentials/yang-shared-6DzhRe",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:smartx/jwt/current-jk8FRu",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:twilio/credentials-GkeBED",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/credentials-2deEMz",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/login/credentials-16Ebmj",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/current-fxoD1K",
+                "arn:aws:secretsmanager:us-east-1:313476888478:secret:ycharts/session/research-20260911-FQCIve"
+              ],
+              "Sid": "ReadVendorCredentialsAndClientSessions"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-08 11:33:48+00:00"
+      }
+    },
+    "cloudops-dell1-agent-bus-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell1-agent-bus-policy",
+        "PolicyId": "ANPAUR7FNW6PHVKFQJ7P2",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell1-agent-bus-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "dell1 receives from its own agentbus inbound queue only.",
+        "CreateDate": "2026-10-07 04:59:51+00:00",
+        "UpdateDate": "2026-10-07 04:59:51+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          },
+          {
+            "Key": "Device",
+            "Value": "dell1"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "sqs:ReceiveMessage",
+                "sqs:DeleteMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:GetQueueAttributes"
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell1-queue*",
+              "Sid": "ReceiveOwnInboundQueueOnly"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-07 04:59:51+00:00"
+      }
+    },
+    "cloudops-dell2-agent-bus-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell2-agent-bus-policy",
+        "PolicyId": "ANPAUR7FNW6PCJFFBFMNX",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell2-agent-bus-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "dell2 receives from its own agentbus inbound queue only.",
+        "CreateDate": "2026-10-07 04:59:51+00:00",
+        "UpdateDate": "2026-10-07 04:59:51+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          },
+          {
+            "Key": "Device",
+            "Value": "dell2"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": [
+                "sqs:ReceiveMessage",
+                "sqs:DeleteMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:GetQueueAttributes"
+              ],
+              "Effect": "Allow",
+              "Resource": "arn:aws:sqs:us-east-1:313476888478:agentbus-global-dell2-queue*",
+              "Sid": "ReceiveOwnInboundQueueOnly"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-07 04:59:51+00:00"
+      }
+    },
+    "cloudops-dell2-agent-ssm-policy": {
+      "metadata": {
+        "PolicyName": "cloudops-dell2-agent-ssm-policy",
+        "PolicyId": "ANPAUR7FNW6PCNOV6R3QS",
+        "Arn": "arn:aws:iam::313476888478:policy/cloudops-dell2-agent-ssm-policy",
+        "Path": "/",
+        "DefaultVersionId": "v1",
+        "AttachmentCount": 1,
+        "PermissionsBoundaryUsageCount": 0,
+        "IsAttachable": true,
+        "Description": "dell2: send the fixed resident command documents to the one resident host and read the results; never a shell document.",
+        "CreateDate": "2026-10-07 13:13:32+00:00",
+        "UpdateDate": "2026-10-07 13:13:32+00:00",
+        "Tags": [
+          {
+            "Key": "DisplayName",
+            "Value": "DellBoxes"
+          },
+          {
+            "Key": "Project",
+            "Value": "NFRA_CTLPLN"
+          },
+          {
+            "Key": "Fwd",
+            "Value": "FWD-10"
+          },
+          {
+            "Key": "Device",
+            "Value": "dell2"
+          }
+        ]
+      },
+      "version": {
+        "Document": {
+          "Statement": [
+            {
+              "Action": "ssm:SendCommand",
+              "Effect": "Allow",
+              "Resource": [
+                "arn:aws:ec2:us-east-1:313476888478:instance/i-0167fd745ad906a66",
+                "arn:aws:ssm:us-east-1:313476888478:document/irpt-ycharts-deploy",
+                "arn:aws:ssm:us-east-1:313476888478:document/irpt-ycharts-run"
+              ],
+              "Sid": "SendResidentDocumentsToResidentHost"
+            },
+            {
+              "Action": [
+                "ssm:GetCommandInvocation",
+                "ssm:ListCommandInvocations",
+                "ssm:ListCommands",
+                "ssm:DescribeInstanceInformation"
+              ],
+              "Effect": "Allow",
+              "Resource": "*",
+              "Sid": "ReadCommandResults"
+            },
+            {
+              "Action": [
+                "ssm:SendCommand",
+                "ssm:StartSession"
+              ],
+              "Effect": "Deny",
+              "Resource": [
+                "arn:aws:ssm:*::document/AWS-RunShellScript",
+                "arn:aws:ssm:*::document/AWS-RunPowerShellScript",
+                "arn:aws:ssm:*::document/AWS-RunRemoteScript",
+                "arn:aws:ssm:*::document/AWS-StartInteractiveCommand",
+                "arn:aws:ssm:*::document/AWS-StartNonInteractiveCommand",
+                "arn:aws:ssm:*::document/AWS-StartSSHSession",
+                "arn:aws:ssm:*::document/AWS-StartPortForwardingSession*",
+                "arn:aws:ssm:us-east-1:313476888478:document/irpt-export-render-run"
+              ],
+              "Sid": "DenyShellDocuments"
+            }
+          ],
+          "Version": "2012-10-17"
+        },
+        "VersionId": "v1",
+        "IsDefaultVersion": true,
+        "CreateDate": "2026-10-07 13:13:32+00:00"
+      }
+    }
+  },
+  "users": {
+    "cloudops-dell1-agent-user": {
+      "arn": "arn:aws:iam::313476888478:user/cloudops-dell1-agent-user",
+      "attached": [
+        {
+          "PolicyName": "cloudops-dell1-agent-bus-policy",
+          "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell1-agent-bus-policy"
+        }
+      ]
+    },
+    "cloudops-dell2-agent-user": {
+      "arn": "arn:aws:iam::313476888478:user/cloudops-dell2-agent-user",
+      "attached": [
+        {
+          "PolicyName": "cloudops-dell2-agent-bus-policy",
+          "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell2-agent-bus-policy"
+        },
+        {
+          "PolicyName": "cloudops-dell2-agent-ssm-policy",
+          "PolicyArn": "arn:aws:iam::313476888478:policy/cloudops-dell2-agent-ssm-policy"
+        }
+      ]
+    }
+  },
+  "routes_host_absent": true
+}

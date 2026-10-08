@@ -1,0 +1,66 @@
+diff --git a/org/mcp/server.py b/org/mcp/server.py
+index 5bba6eb060..f12fb07cdf 100644
+--- a/org/mcp/server.py
++++ b/org/mcp/server.py
+@@ -2603,9 +2603,61 @@ def _install_strict_kwargs(mcp_instance) -> None:
+ _install_strict_kwargs(mcp)
+ 
+ 
++# ---------------------------------------------------------------------------
++# Parent watchdog: exit when the harness (our direct parent) is gone. Without it
++# a server whose stdin never reaches EOF outlives its session and keeps its
++# poller and broker row alive. Windows: a SYNCHRONIZE handle opened at start and
++# held, so the parent pid cannot be reused under us. Fails open: if the parent
++# cannot be opened, no watchdog runs and behaviour is as before.
++# ---------------------------------------------------------------------------
++
++def _start_parent_watchdog(interval: float = 15.0) -> bool:
++    import threading
++    ppid = os.getppid()
++    if sys.platform == "win32":
++        import ctypes
++        from ctypes import wintypes
++        _k32 = ctypes.WinDLL("kernel32", use_last_error=True)
++        _k32.OpenProcess.restype = wintypes.HANDLE
++        _k32.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
++        _k32.WaitForSingleObject.restype = wintypes.DWORD
++        _k32.WaitForSingleObject.argtypes = [wintypes.HANDLE, wintypes.DWORD]
++        SYNCHRONIZE = 0x00100000
++        WAIT_OBJECT_0 = 0
++        handle = _k32.OpenProcess(SYNCHRONIZE, False, ppid) if ppid > 0 else None
++        if not handle:
++            return False
++
++        def _parent_gone() -> bool:
++            return _k32.WaitForSingleObject(handle, 0) == WAIT_OBJECT_0
++
++        # A parent already gone at start means a short-lived launcher, not the harness: never arm (fail open),
++        # or the watchdog would kill a live seat's MCP server 15 s after launch.
++        if _parent_gone():
++            return False
++    else:
++        if ppid <= 1:
++            return False
++
++        def _parent_gone() -> bool:
++            return os.getppid() != ppid
++
++    def _watch() -> None:
++        while True:
++            _time.sleep(interval)
++            if _parent_gone():
++                print(f"OK: parent pid {ppid} exited -- opal-agent-comms server "
++                      f"{os.getpid()} exiting", file=sys.stderr, flush=True)
++                os._exit(0)
++
++    threading.Thread(target=_watch, name="opal-parent-watchdog", daemon=True).start()
++    return True
++
++
+ # ---------------------------------------------------------------------------
+ # Entry point
+ # ---------------------------------------------------------------------------
+ 
+ if __name__ == "__main__":
++    _start_parent_watchdog()
+     mcp.run(transport="stdio")

@@ -1,0 +1,28 @@
+{
+  "changes": {
+    "aws_iam_group_policy_attachment.dell_agent_platform_secrets[0]": [
+      "create"
+    ],
+    "aws_iam_policy.dell_agent_create": [
+      "update"
+    ],
+    "aws_iam_policy.dell_agent_deploy": [
+      "update"
+    ],
+    "aws_iam_policy.dell_agent_platform_secrets[0]": [
+      "create"
+    ],
+    "aws_iam_policy.dell_agent_respol_allow[0]": [
+      "update"
+    ]
+  },
+  "counts": {
+    "secret_arn_added": 28,
+    "iam_action_added": 0,
+    "secret_put_resource_policy_added": 0,
+    "secret_delete_resource_policy_added": 0
+  },
+  "plan_sha256": "674e6eda03b3eb8febe6c359b709fa73f3bd1d12a6686f2e965a08743fee39ec",
+  "exact_shape": true,
+  "counts_ok": true
+}

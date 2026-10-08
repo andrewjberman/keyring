@@ -1,0 +1,12 @@
+#!/bin/bash
+# comp-activity -- who is working on what, per box: commits (every box writes one record per commit), open task
+# orders' <paths>, open deploy entries, and the estate graph's view of the surface. THIN WRAPPER over the engine
+# .tools/fabric-activity.py (Andrew-direct 2026-10-08 ~16:5xZ / ~17:5xZ, 4.0.0_SA_CRO).
+# Usage: comp-activity who <path-or-surface> [--hours 24] [--graph]
+#        comp-activity overlap [--hours 24] [--all]
+#        comp-activity boxes [--hours 24]
+WORKSPACE="$(cd "$(dirname "$0")/.." && pwd)"
+python "$WORKSPACE/.tools/fabric-activity.py" "$@"
+_exit=$?
+python "$WORKSPACE/org/modules/graph/comp_log_auto.py" "comp-activity" "$*" $_exit 2>/dev/null
+exit $_exit

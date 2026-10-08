@@ -1,6 +1,10 @@
 doc: THE ONLY HAND-AUTHORED TOOL FIELDS. Everything else is derived by gen_tool_registry.py. Seeded from
   comp-coverage-map (concern) and graph-call-manifest (canonical_call) -- never invented.
 tools:
+  comp-activity:
+    concern: WHO is working on a surface, PER BOX -- commits, open task orders' <paths>, open deploy entries and the
+      estate graph's view; the cross-box OVERLAP map and per-box figures
+    canonical_call: comp-activity who <path-or-surface> [--hours 24] [--graph] ; comp-activity overlap ; comp-activity boxes
   comp-adapter-audit:
     concern: portal ADAPTER field-threading audit vs LIVE S3 envelope (schema-drift / not-threaded / fallback-order)
     canonical_call: comp-adapter-audit <adapter-fn> [--severity warn|error]

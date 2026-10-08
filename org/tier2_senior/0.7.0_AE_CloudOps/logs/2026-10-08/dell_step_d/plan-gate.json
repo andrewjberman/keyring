@@ -1,0 +1,13 @@
+{
+  "changes": {
+    "aws_iam_group_policy_attachment.dell_agent_routes_host[0]": [
+      "delete"
+    ],
+    "aws_iam_policy.dell_agent_routes_host[0]": [
+      "delete"
+    ]
+  },
+  "added_lines": 0,
+  "plan_sha256": "01296c72dbe8258629a2517c090010ef5527cf27a00f86d027b76b3324edf993",
+  "all_ok": true
+}

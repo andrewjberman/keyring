@@ -1,0 +1,446 @@
+diff --git a/infra/aws/globgrph/Dockerfile b/infra/aws/globgrph/Dockerfile
+index 9ffc3a57bd..cbae2d96d8 100644
+--- a/infra/aws/globgrph/Dockerfile
++++ b/infra/aws/globgrph/Dockerfile
+@@ -77,6 +77,9 @@ COPY infra/aws/globgrph/_provenance.py /app/_provenance.py
+ COPY infra/aws/globgrph/projection_worker.py /app/projection_worker.py
+ COPY infra/aws/globgrph/kuzu_nessie_load.py /app/kuzu_nessie_load.py
+ COPY infra/aws/globgrph/kuzu_incremental_refresh.py /app/kuzu_incremental_refresh.py
++# Fabric overlay (who changed what, on which box; its own Kuzu tables, optional by construction, 4.0.0_SA_CRO
++# 2026-10-08). COPY-only; the projection worker calls it after the engine run.
++COPY infra/aws/globgrph/kuzu_fabric_overlay.py /app/kuzu_fabric_overlay.py
+ COPY infra/aws/globgrph/comp_detect.py /app/comp_detect.py
+ COPY infra/aws/globgrph/tsgraph_detectors.yaml /app/tsgraph_detectors.yaml
+ COPY infra/aws/globgrph/tsgraph_detect_baseline.json /app/tsgraph_detect_baseline.json
+diff --git a/infra/aws/globgrph/kuzu_fabric_overlay.py b/infra/aws/globgrph/kuzu_fabric_overlay.py
+new file mode 100644
+index 0000000000..c50f629382
+--- /dev/null
++++ b/infra/aws/globgrph/kuzu_fabric_overlay.py
+@@ -0,0 +1,237 @@
++#!/usr/bin/env python3
++"""kuzu_fabric_overlay -- lay the FABRIC layer (who changed what, on which box) over a built Kuzu projection.
++
++Andrew-direct 2026-10-08 ~17:5xZ (org/tier1_exec/4.0.0_SA_CRO/deliverables/
++ANDREW_DIRECT_20261008_175xZ_COMMITS_AS_GRAPH_METADATA_CONTINUE_BUILD_MAP_COMP_TOOLS.md): git keeps the bytes; the graph
++holds commit METADATA joined to the estate. Source: the per-commit activity records every box writes with
++.tools/fabric-activity.py to s3://<bucket>/fabric/activity/v1/dt=<day>/box=<box>/<time>_<sha12>.json.
++
++ITS OWN TABLES, so no estate reader changes: every existing `MATCH (n:CloudNode)` / `[e:CloudEdge]` query, the
++incremental refresh's diff and count guard, and the manifest's node_count/edge_count see exactly what they saw before.
++  FabricNode(node_id PK, node_type, name, snapshot_ts, props)
++     fabric:box:<box> BOX | fabric:seat:<serial> SEAT | fabric:commit:<sha> COMMIT | fabric:surface:<key> SURFACE
++     | fabric:project:<code> PROJECT
++  FabricEdge(FabricNode -> FabricNode)  COMMIT -MADE_ON-> BOX, -MADE_BY-> SEAT, -EDITS-> SURFACE, -FOR_PROJECT-> PROJECT
++  FabricLink(FabricNode -> CloudNode)   SURFACE -RESOLVES_TO-> the estate nodes it names {match}
++Query: MATCH (c:FabricNode {node_type:'COMMIT'})-[:FabricEdge {edge_type:'EDITS'}]->(s)-[:FabricLink]->(n:CloudNode) ...
++
++HOW IT STAYS CHEAP: an incremental projection starts from a copy of the previous artifact, fabric tables included, so
++this pass GETs only record keys it has not seen (COMMIT props key + seen_keys), then expires commits older than the
++window. A full or cold build (fresh DB) loads the whole window once.
++
++FAIL-SAFE: DDL first, then one transaction. Any error rolls back and exits 3; the worker publishes the estate projection
++without the overlay. CloudNode/CloudEdge are never written here.
++"""
++import argparse
++import concurrent.futures
++import datetime as dt
++import json
++import os
++import sys
++
++BUCKET = os.environ.get("GLOBGRPH_BUCKET", "opal-313476888478-globgrph")
++PREFIX = "fabric/activity/v1"
++DAYS = int(os.environ.get("GLOBGRPH_FABRIC_DAYS", "7"))
++LINK_CAP = 500
++
++DDL = (
++    "CREATE NODE TABLE IF NOT EXISTS FabricNode(node_id STRING PRIMARY KEY, node_type STRING, name STRING, "
++    "snapshot_ts INT64, props STRING)",
++    "CREATE REL TABLE IF NOT EXISTS FabricEdge(FROM FabricNode TO FabricNode, edge_type STRING, snapshot_ts INT64, "
++    "props STRING)",
++    "CREATE REL TABLE IF NOT EXISTS FabricLink(FROM FabricNode TO CloudNode, edge_type STRING, props STRING)",
++)
++
++
++def _ts(iso):
++    return int(dt.datetime.strptime(iso, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=dt.timezone.utc).timestamp())
++
++
++def list_keys(s3, days, now):
++    keys = []
++    pag = s3.get_paginator("list_objects_v2")
++    for i in range(days + 1):
++        d = (now - dt.timedelta(days=i)).strftime("%Y-%m-%d")
++        for page in pag.paginate(Bucket=BUCKET, Prefix="%s/dt=%s/" % (PREFIX, d)):
++            keys += [o["Key"] for o in page.get("Contents", [])]
++    return keys
++
++
++def fetch(s3, keys):
++    def get(k):
++        try:
++            r = json.loads(s3.get_object(Bucket=BUCKET, Key=k)["Body"].read())
++            r["_key"] = k
++            return r
++        except Exception:  # noqa: BLE001 -- one unreadable record is skipped, never fatal
++            return None
++    with concurrent.futures.ThreadPoolExecutor(32) as ex:
++        return [r for r in ex.map(get, keys) if r]
++
++
++def _rank(r):
++    return (r.get("box_claim") == "measured", r.get("infer_rev") or 0, r.get("_key") or r.get("key") or "")
++
++
++def _resolve_query(skey):
++    """(Cypher with $v, value, match kind) finding the estate CloudNodes a surface key names, or None."""
++    kind, _, val = skey.partition(":")
++    if kind == "tf":
++        return ("MATCH (n:CloudNode) WHERE n.props CONTAINS $v RETURN n.node_id", '"tf_module": "%s"' % val, "tf_module")
++    if kind == "pipeline":
++        parts = val.split(":")
++        if len(parts) == 3:
++            return ("MATCH (n:CloudNode) WHERE n.node_id STARTS WITH 'pipeline:' AND n.node_id ENDS WITH $v "
++                    "RETURN n.node_id", ":%s:%s" % (parts[1], parts[2]), "pipeline_id")
++    if kind == "lambda-src":
++        return ("MATCH (n:CloudNode) WHERE n.node_type = 'LAMBDA' AND n.name = $v RETURN n.node_id", val, "lambda_name")
++    if kind == "portal":
++        return ("MATCH (n:CloudNode) WHERE n.node_id STARTS WITH $v RETURN n.node_id", "module:portal/" + val,
++                "portal_path")
++    return None
++
++
++def overlay(db_path, days=DAYS, s3=None, now=None, log=print):
++    import kuzu
++    if s3 is None:
++        import boto3
++        s3 = boto3.client("s3", region_name="us-east-1")
++    now = now or dt.datetime.now(dt.timezone.utc)
++    cutoff = _ts((now - dt.timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%SZ"))
++
++    db = kuzu.Database(db_path)
++    conn = kuzu.Connection(db)
++    for stmt in DDL:
++        conn.execute(stmt)
++
++    loaded = {}
++    r = conn.execute("MATCH (n:FabricNode) WHERE n.node_type = 'COMMIT' RETURN n.node_id, n.props")
++    while r.has_next():
++        nid, props = r.get_next()
++        try:
++            loaded[nid] = json.loads(props or "{}")
++        except ValueError:
++            loaded[nid] = {}
++    loaded_keys = set()
++    for p in loaded.values():
++        loaded_keys.add(p.get("key"))
++        loaded_keys.update(p.get("seen_keys") or [])
++
++    keys = list_keys(s3, days, now)
++    new = fetch(s3, [k for k in keys if k not in loaded_keys])
++    best, seen = {}, {}
++    for rec in new:
++        if rec.get("schema") != "fabric-activity/1" or not rec.get("sha") or not rec.get("when"):
++            continue
++        seen.setdefault(rec["sha"], set()).add(rec["_key"])
++        if _ts(rec["when"]) < cutoff:
++            continue
++        cur = best.get(rec["sha"])
++        if cur is None or _rank(rec) > _rank(cur):
++            best[rec["sha"]] = rec
++    todo = [rec for sha, rec in best.items()
++            if "fabric:commit:" + sha not in loaded or _rank(rec) > _rank(loaded["fabric:commit:" + sha])]
++
++    stats = {"listed": len(keys), "fetched": len(new), "loaded_before": len(loaded), "upserted": 0, "expired": 0,
++             "resolved_surfaces": 0, "links": 0}
++    conn.execute("BEGIN TRANSACTION")
++    try:
++        stale = [nid for nid, p in loaded.items() if _ts(p.get("when") or "1970-01-01T00:00:00Z") < cutoff]
++        stale += ["fabric:commit:" + rec["sha"] for rec in todo if "fabric:commit:" + rec["sha"] in loaded]
++        for nid in stale:
++            conn.execute("MATCH (n:FabricNode {node_id: $k}) DETACH DELETE n", {"k": nid})
++        stats["expired"] = len(stale)
++
++        def node(nid, ntype, name, ts, props):
++            conn.execute("MERGE (n:FabricNode {node_id: $k}) SET n.node_type = $t, n.name = $nm, n.snapshot_ts = $ts, "
++                         "n.props = $p",
++                         {"k": nid, "t": ntype, "nm": name, "ts": ts, "p": json.dumps(props, sort_keys=True)})
++
++        def edge(src, dst, etype, ts, props=None):
++            conn.execute("MATCH (a:FabricNode {node_id: $s}), (b:FabricNode {node_id: $d}) "
++                         "CREATE (a)-[:FabricEdge {edge_type: $t, snapshot_ts: $ts, props: $p}]->(b)",
++                         {"s": src, "d": dst, "t": etype, "ts": ts, "p": json.dumps(props or {}, sort_keys=True)})
++
++        # loaded commits whose new records all lost on rank: remember those keys so no later pass fetches them again
++        todo_shas = {rec["sha"] for rec in todo}
++        for sha, ks in seen.items():
++            cid = "fabric:commit:" + sha
++            if sha in todo_shas or cid not in loaded:
++                continue
++            props = dict(loaded[cid])
++            props["seen_keys"] = sorted(set(props.get("seen_keys") or []) | ks)
++            conn.execute("MATCH (n:FabricNode {node_id: $k}) SET n.props = $p",
++                         {"k": cid, "p": json.dumps(props, sort_keys=True)})
++
++        surfaces_new = set()
++        for rec in todo:
++            ts = _ts(rec["when"])
++            cid, bid, sid = "fabric:commit:" + rec["sha"], "fabric:box:" + rec["box"], "fabric:seat:" + rec["seat"]
++            node(bid, "BOX", rec["box"], ts, {})
++            node(sid, "SEAT", rec["seat"], ts, {})
++            node(cid, "COMMIT", rec["sha"][:12], ts,
++                 {"when": rec["when"], "subject": (rec.get("subject") or "")[:200], "box": rec["box"],
++                  "box_claim": rec.get("box_claim"), "infer_rev": rec.get("infer_rev"), "branch": rec.get("branch"),
++                  "file_count": rec.get("file_count"), "seat": rec["seat"], "key": rec["_key"],
++                  "seen_keys": sorted(seen.get(rec["sha"], set()) | set((loaded.get(cid) or {}).get("seen_keys") or []))})
++            edge(cid, bid, "MADE_ON", ts)
++            edge(cid, sid, "MADE_BY", ts)
++            for s in rec.get("surfaces", []):
++                sk = "fabric:surface:" + s["key"]
++                node(sk, "SURFACE", s["key"], ts, {"cls": s.get("cls")})
++                edge(cid, sk, "EDITS", ts, {"cls": s.get("cls")})
++                surfaces_new.add(s["key"])
++            for code in rec.get("projects", []):
++                pid = "fabric:project:" + code
++                node(pid, "PROJECT", code, ts, {})
++                edge(cid, pid, "FOR_PROJECT", ts)
++            stats["upserted"] += 1
++
++        for skey in sorted(surfaces_new):
++            q = _resolve_query(skey)
++            if not q:
++                continue
++            sid = "fabric:surface:" + skey
++            conn.execute("MATCH (s:FabricNode {node_id: $k})-[e:FabricLink]->() DELETE e", {"k": sid})
++            rr = conn.execute(q[0], {"v": q[1]})
++            targets = []
++            while rr.has_next():
++                targets.append(rr.get_next()[0])
++            for t in targets[:LINK_CAP]:
++                conn.execute("MATCH (a:FabricNode {node_id: $s}), (b:CloudNode {node_id: $d}) "
++                             "CREATE (a)-[:FabricLink {edge_type: 'RESOLVES_TO', props: $p}]->(b)",
++                             {"s": sid, "d": t, "p": json.dumps({"match": q[2]})})
++            stats["resolved_surfaces"] += 1 if targets else 0
++            stats["links"] += min(len(targets), LINK_CAP)
++
++        # drop fabric nodes no commit points at any more (boxes, seats, surfaces, projects that aged out)
++        conn.execute("MATCH (n:FabricNode) WHERE n.node_type <> 'COMMIT' AND NOT EXISTS { "
++                     "MATCH (c:FabricNode)-[:FabricEdge]->(n) WHERE c.node_type = 'COMMIT' } DETACH DELETE n")
++        conn.execute("COMMIT")
++    except Exception:
++        conn.execute("ROLLBACK")
++        raise
++    stats["fabric_nodes"] = int(conn.execute("MATCH (n:FabricNode) RETURN count(*)").get_next()[0])
++    stats["fabric_edges"] = int(conn.execute("MATCH ()-[e:FabricEdge]->() RETURN count(*)").get_next()[0])
++    stats["fabric_links"] = int(conn.execute("MATCH ()-[e:FabricLink]->() RETURN count(*)").get_next()[0])
++    conn.close()
++    db.close()
++    log("INFO: FABRIC_OVERLAY " + json.dumps(stats, sort_keys=True))
++    return stats
++
++
++def main():
++    ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
++    ap.add_argument("--db", required=True)
++    ap.add_argument("--days", type=int, default=DAYS)
++    a = ap.parse_args()
++    try:
++        overlay(a.db, a.days)
++    except Exception as exc:  # noqa: BLE001
++        print("WARN: FABRIC_OVERLAY_FAILED %s: %s -- estate projection unaffected" % (type(exc).__name__, exc))
++        return 3
++    return 0
++
++
++if __name__ == "__main__":
++    sys.exit(main())
+diff --git a/infra/aws/globgrph/projection_worker.py b/infra/aws/globgrph/projection_worker.py
+index ec106c8a67..278a8c1c40 100644
+--- a/infra/aws/globgrph/projection_worker.py
++++ b/infra/aws/globgrph/projection_worker.py
+@@ -346,7 +346,10 @@ def conform_manifest(db_path: Path, manifest_path: Path, marker: dict, mode: str
+     size = db_path.stat().st_size
+     sha256 = _sha256_file(db_path)
+     manifest = dict(original)  # preserve local-reader provenance fields additively
++    fabric_nodes, fabric_edges = _fabric_counts(db_path)
+     manifest.update({
++        "fabric_node_count": fabric_nodes,
++        "fabric_edge_count": fabric_edges,
+         "schema_version": 1,
+         "vintage": vintage,
+         "committed_at": vintage,
+@@ -390,6 +393,24 @@ def _direct_counts(db_path: Path) -> tuple[int, int]:
+     return nodes, edges
+ 
+ 
++def _fabric_counts(db_path: Path) -> tuple[int, int]:
++    """The fabric overlay's rows (kuzu_fabric_overlay.py), in their own tables FabricNode / FabricEdge / FabricLink.
++    They never enter CloudNode/CloudEdge, so node_count/edge_count keep their meaning. Absent tables -> (0, 0)."""
++    import kuzu
++
++    db = kuzu.Database(str(db_path), read_only=True)
++    conn = kuzu.Connection(db)
++    try:
++        nodes = int(conn.execute("MATCH (n:FabricNode) RETURN count(*)").get_next()[0])
++        edges = int(conn.execute("MATCH ()-[e:FabricEdge]->() RETURN count(*)").get_next()[0])
++        edges += int(conn.execute("MATCH ()-[e:FabricLink]->() RETURN count(*)").get_next()[0])
++    except RuntimeError:  # no fabric tables in this artifact
++        nodes, edges = 0, 0
++    finally:
++        del conn, db
++    return nodes, edges
++
++
+ def _verify_manifest_counts(db_path: Path, manifest: dict) -> dict:
+     nodes, edges = _direct_counts(db_path)
+     declared_nodes = int(manifest.get("node_count", -1))
+@@ -647,6 +668,15 @@ def build_and_publish(s3, marker: dict, event: MarkerEvent) -> dict:
+             if rc != 0:
+                 raise RuntimeError(f"full projection loader failed rc={rc}")
+ 
++        # FABRIC overlay (who changed what, on which box) in its own tables: optional by construction. A failure
++        # publishes the estate projection without it; GLOBGRPH_FABRIC_OVERLAY=0 turns it off.
++        fabric_rc = None
++        if os.environ.get("GLOBGRPH_FABRIC_OVERLAY", "1") != "0":
++            fabric_rc, _fs, _fm = run_engine(
++                [sys.executable, str(SCRIPT_DIR / "kuzu_fabric_overlay.py"), "--db", str(output_db)], env)
++            if fabric_rc != 0:
++                print(f"WARN: FABRIC_OVERLAY rc={fabric_rc} -- publishing the estate projection without it", flush=True)
++
+         compaction = None
+         if mode == "incremental":
+             compaction = checkpoint_and_compact(output_db)
+@@ -678,6 +708,7 @@ def build_and_publish(s3, marker: dict, event: MarkerEvent) -> dict:
+             "peak_rss_mib": round(max(incremental_peak_mib, full_peak_mib), 3),
+             "fallback_reason": fallback_reason,
+             "compaction": compaction,
++            "fabric_overlay_rc": fabric_rc,
+             "node_count": verified["nodes"],
+             "edge_count": verified["edges"],
+             "artifact_key": target_db_key,
+diff --git a/infra/aws/globgrph/tests/test_kuzu_fabric_overlay.py b/infra/aws/globgrph/tests/test_kuzu_fabric_overlay.py
+new file mode 100644
+index 0000000000..7ee263ec13
+--- /dev/null
++++ b/infra/aws/globgrph/tests/test_kuzu_fabric_overlay.py
+@@ -0,0 +1,119 @@
++"""kuzu_fabric_overlay: the fabric layer lands in its own tables, never touches CloudNode/CloudEdge, reloads only new
++records, prefers a measured record over an inferred one, expires commits past the window, and links a surface to the
++estate nodes it names."""
++import datetime as dt
++import io
++import json
++import os
++import sys
++import tempfile
++
++HERE = os.path.dirname(os.path.abspath(__file__))
++sys.path.insert(0, os.path.dirname(HERE))
++
++import kuzu  # noqa: E402
++
++import kuzu_fabric_overlay as fo  # noqa: E402
++
++NOW = dt.datetime(2026, 10, 8, 18, 0, 0, tzinfo=dt.timezone.utc)
++
++
++class FakeS3:
++    def __init__(self, objects):
++        self.objects = dict(objects)
++        self.gets = 0
++
++    def get_paginator(self, _name):
++        outer = self
++
++        class P:
++            def paginate(self, Bucket, Prefix):  # noqa: N803
++                yield {"Contents": [{"Key": k} for k in sorted(outer.objects) if k.startswith(Prefix)]}
++        return P()
++
++    def get_object(self, Bucket, Key):  # noqa: N803
++        self.gets += 1
++        return {"Body": io.BytesIO(json.dumps(self.objects[Key]).encode())}
++
++
++def rec(sha, when, box, claim="measured", surfaces=(("tf:shared-infra", "INFRA"),), infer_rev=None):
++    r = {"schema": "fabric-activity/1", "sha": sha, "when": when, "box": box, "box_claim": claim, "seat": "S~1",
++         "subject": "s", "files": [], "file_count": 1, "branch": "CLOUD",
++         "surfaces": [{"key": k, "cls": c} for k, c in surfaces], "projects": ["P1"]}
++    if infer_rev:
++        r["infer_rev"] = infer_rev
++    return r
++
++
++def key(r):
++    return "fabric/activity/v1/dt=%s/box=%s/%s_%s.json" % (r["when"][:10], r["box"],
++                                                            r["when"].replace("-", "").replace(":", ""), r["sha"][:12])
++
++
++def estate_db(path):
++    db = kuzu.Database(path)
++    c = kuzu.Connection(db)
++    c.execute("CREATE NODE TABLE CloudNode(node_id STRING PRIMARY KEY, arn STRING, node_type STRING, name STRING, "
++              "layer STRING, drift_class STRING, source STRING, snapshot_ts INT64, props STRING)")
++    c.execute("CREATE REL TABLE CloudEdge(FROM CloudNode TO CloudNode, edge_type STRING, layer STRING, "
++              "snapshot_ts INT64, props STRING)")
++    c.execute("CREATE (:CloudNode {node_id: 'b1', node_type: 'S3_BUCKET', name: 'b1', layer: 'aws', "
++              "props: '{\"provenance\": {\"tf_module\": \"shared-infra\"}}'})")
++    c.execute("CREATE (:CloudNode {node_id: 'b2', node_type: 'S3_BUCKET', name: 'b2', layer: 'aws', props: '{}'})")
++    c.execute("MATCH (a:CloudNode {node_id: 'b1'}), (b:CloudNode {node_id: 'b2'}) "
++              "CREATE (a)-[:CloudEdge {edge_type: 'X', layer: 'aws'}]->(b)")
++    del c, db
++
++
++def counts(path):
++    c = kuzu.Connection(kuzu.Database(path))
++    q = lambda s: c.execute(s).get_next()[0]  # noqa: E731
++    return {"cloud_nodes": q("MATCH (n:CloudNode) RETURN count(*)"),
++            "cloud_edges": q("MATCH ()-[e:CloudEdge]->() RETURN count(*)"),
++            "commits": q("MATCH (n:FabricNode) WHERE n.node_type = 'COMMIT' RETURN count(*)"),
++            "links": q("MATCH ()-[e:FabricLink]->() RETURN count(*)")}
++
++
++def test_overlay_isolated_incremental_ranked_and_expiring():
++    with tempfile.TemporaryDirectory() as td:
++        db = os.path.join(td, "g.kuzu")
++        estate_db(db)
++        a = rec("a" * 40, "2026-10-08T10:00:00Z", "laptop", claim="inferred", infer_rev=2)
++        b = rec("b" * 40, "2026-10-08T11:00:00Z", "dell1")
++        old = rec("c" * 40, "2026-09-20T11:00:00Z", "dell2")  # outside a 7-day window
++        s3 = FakeS3({key(r): r for r in (a, b, old)})
++        st = fo.overlay(db, days=30, s3=s3, now=NOW, log=lambda m: None)
++        assert st["upserted"] == 3
++        c = counts(db)
++        assert c["cloud_nodes"] == 2 and c["cloud_edges"] == 1   # estate untouched
++        assert c["links"] == 1                                    # tf:shared-infra -> b1 only
++
++        # second pass: nothing new fetched
++        s3.gets = 0
++        fo.overlay(db, days=30, s3=s3, now=NOW, log=lambda m: None)
++        assert s3.gets == 0
++
++        # a measured record for commit a (other box key) replaces the inferred one
++        a2 = rec("a" * 40, "2026-10-08T10:00:00Z", "dell2")
++        s3.objects[key(a2)] = a2
++        fo.overlay(db, days=30, s3=s3, now=NOW, log=lambda m: None)
++        cn = kuzu.Connection(kuzu.Database(db))
++        props = json.loads(cn.execute("MATCH (n:FabricNode {node_id: $k}) RETURN n.props",
++                                      {"k": "fabric:commit:" + "a" * 40}).get_next()[0])
++        assert props["box"] == "dell2" and props["box_claim"] == "measured"
++        del cn
++
++        # shrinking the window expires the old commit
++        fo.overlay(db, days=7, s3=s3, now=NOW, log=lambda m: None)
++        assert counts(db)["commits"] == 2
++
++
++def test_estate_delete_cascades_links():
++    with tempfile.TemporaryDirectory() as td:
++        db = os.path.join(td, "g.kuzu")
++        estate_db(db)
++        r = rec("d" * 40, "2026-10-08T10:00:00Z", "laptop")
++        fo.overlay(db, days=7, s3=FakeS3({key(r): r}), now=NOW, log=lambda m: None)
++        c = kuzu.Connection(kuzu.Database(db))
++        c.execute("MATCH (n:CloudNode {node_id: 'b1'}) DETACH DELETE n")
++        assert c.execute("MATCH ()-[e:FabricLink]->() RETURN count(*)").get_next()[0] == 0

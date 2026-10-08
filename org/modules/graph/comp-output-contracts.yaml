@@ -684,6 +684,21 @@ contracts:
       "1": {class: fail, meaning: "tool/input error -- unparseable Terraform, missing route config, or bad args. A query that resolves to nothing is exit 0 with a loud No-match/UNRESOLVED line, not this."}
     exit_source: "org/modules/graph/routes_cli.py (argparse errors + uncaught parse failures; no verdict-exit contract -- every no-match/uncovered answer prints loudly and exits 0) @2026-07-23"
 
+  comp-activity:
+    coverage: "who touched a surface, per box: one record per commit written by the box that made it (s3 globgrph fabric/activity/v1), joined at read time with this box's open task orders' <paths> (DECLARES), its open deploy entries (HOLDS) and, with --graph, the served projection's view of the surface"
+    blind_spots:
+      - "a box that has not installed the post-commit hook writes no record; its history is present only as box_claim=inferred backfill (box guessed from serials), and every row carries its claim"
+      - "DECLARES and HOLDS read THIS box's tree: another box's unpushed task order or open deploy entry is invisible"
+      - "MERGED / PUSHED are read against this box's last fetch of origin/CLOUD and origin/box/* (the age of origin/CLOUD is printed); a stale fetch under-reports MERGED"
+      - "the surface roll-up is coarse by design (Terraform module, Lambda source dir, gold script, lib module, tool, skill, portal folder, project record tree); two files of one surface are one surface, and two surfaces of one resource meet only through --graph"
+    plane: mixed
+    grain: artifact
+    scope: estate
+    vintage: "per record: its commit time (when) and box_claim (measured | inferred); --graph rows: the served projection's VINTAGE line, re-printed verbatim"
+    exit_codes:
+      "2": {class: fail, kind: usage, meaning: "argument error (argparse): an unknown subcommand or a missing target"}
+      "1": {class: fail, meaning: "tool error: the activity store or the device register could not be read (an uncaught exception); not a verdict about the estate"}
+    exit_source: ".tools/fabric-activity.py main() (argparse usage -> 2; every subcommand returns 0) @2026-10-08; emit never fails a commit (spools and returns 0)"
   comp-keys:
     coverage: "keys / partition dates / per-firm existence under an S3 prefix, from a LIVE s3api listing"
     blind_spots:
