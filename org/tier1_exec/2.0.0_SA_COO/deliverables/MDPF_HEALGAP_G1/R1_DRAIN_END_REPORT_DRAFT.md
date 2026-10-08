@@ -38,9 +38,14 @@ diagnostic ambiguity), S8 (pre-rule terraform checkpoint calls). No ARMED row op
   rebalancer_model_detail 93. Runner log: the re-attempt target fired on cot-bronze-complete, invoked 11:32:06Z, verdict
   BRONZE-COMPLETE 11:32:24Z (71 models, 992 accounts, 93 model details; 1 of 54 count-reconcile mismatch CARRIED). Branch B
   (same-day manual re-run) not needed.
-- the reader: `hg_fwd1_reader.py --date 2026-10-08`: ... (baseline 2026-10-07: READER-OK, point 2026-10-06 model measured,
-  $205,755,075.09, written 13:50:50Z)
-- 13:30Z floor for D: MET / MISSED (from `0.7.0_AE_CloudOps~F`'s ledger)
+- the reader: `hg_fwd1_reader.py --date 2026-10-08`: READER-OK -- served file written 2026-10-08T13:50:51Z, newest point
+  2026-10-07 with model=measured, model_aua $206,543,412.19 (baseline 2026-10-07: READER-OK, point 2026-10-06 model measured,
+  $205,755,075.09, written 13:50:50Z). The reader's view on the induced-failure day is the same as on a normal day.
+- close read 2026-10-08T14:05:25Z re-ran all four: FAILED-OK / HEALED-OK / RESTORED-OK / READER-OK (lines as above).
+- 13:30Z floor for D: PENDING -- recorded in `0.7.0_AE_CloudOps~F`'s HG-d3 ledger (close commits 1df5e818f2 / 1977c56f48,
+  not yet on origin at 14:05Z); filled when they land.
+- restore actor (rows D1-S3 -> D1-S4 -> D1-S5): ~F's own failsafe script (task bv5miebw8) outlived the 20:2xZ kill reported
+  as "timers died" and restored at 06:08:45-46Z; Andrew confirmed not by hand. The defect is the liveness report, not the act.
 
 ## For the round-1 analysis
 
