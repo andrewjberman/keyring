@@ -5,7 +5,7 @@
   "project": "AMGT_HARVST",
   "directive": "D5",
   "fabric": "site-z",
-  "prd_version": "v0.19",
+  "prd_version": "v0.20",
   "step": 4,
   "brief_ref": "org/missions/D5/AMGT/AMGT_HARVST/brief/BRIEF_AMGT_PUBLICATIONS_BRONZE_SILVER_GOLD_20260922.md@5b90a0b839",
   "endpoint_outcomes": [
@@ -31,6 +31,11 @@
   "status": "RATIFIED"
 }
 ```
+
+**v0.20 (2026-10-08 ~15:3xZ, `1.0.0_SA_CTO~Z`):** FWD-18's fence only, on `3.0.0_SA_CVO~Z`'s REFUSE of v0.19 (msg 31839, review
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_HARVST_v0.19_RATIFIED_TEXT_20261008_Z.md` @5325186148). The refusal is right:
+v0.19 stated a schedule, a host and four publishers as fact where Andrew's words name none. A READING line now says so, and the
+schedule stays OFF until his yes is cited. The `C-HV-EGRESS` line of v0.19 reads under that same condition.
 
 **v0.19 ADDENDUM (2026-10-08 ~13:4xZ, `1.0.0_SA_CTO~Z`)**, on Andrew-direct ~13:1xZ to `2.0.0_SA_COO~H` (its msg 31770, verbatim):
 "ALSO WE SHOULD BE PULLING THE DAYS NEW ARTICLES PER SOURCE PER DAY."
@@ -433,6 +438,17 @@ act a seat can take on demand; none is a wait.
                     unattended on a source is that source's acceptance. Negative
                     arm: a planted held article is counted already held and no
                     request is made for its body.
+         READING    Andrew's ten words name no schedule, no host and no list
+                    of publishers. Three terms above are THIS FABRIC'S READING
+                    of them and not his words: a schedule with nobody starting
+                    it, the site Z box as host, and the four publishers as one
+                    standing use. The reading was stated to him at the
+                    1.0.0_SA_CTO~Z terminal on 2026-10-08 ~13:5xZ and ~14:2xZ
+                    and he has NOT confirmed it. Until his yes is cited here in
+                    SOURCE, the run is built with its schedule switch OFF
+                    (config recurring_schedule_enabled false), exercised only
+                    by an operator-started run on a per-use word, and nothing
+                    is registered with the Windows scheduler (v0.20).
          ACCEPT     An analyst who opens a covered name on a trading morning
                     reads the prior trading day's articles wherever a cleared
                     publisher carried any, and can tell from the page's own
