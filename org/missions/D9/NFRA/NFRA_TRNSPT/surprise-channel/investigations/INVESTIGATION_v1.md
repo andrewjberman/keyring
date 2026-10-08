@@ -1014,6 +1014,29 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "PRD FWD-5 ACCEPT: an analyst who now opens a file to find what was said about one company gets it without opening the file; round-9 analysis E1: given a company, return its speaker turns.",
     "world_is": "The read works (NVIDIA: 8 turns in 5 meetings) but the stored text has lost most company names to the mail wipe, so the read is blind to them; some loss is also from held-out rows.",
     "notes": "Counts only; no transcript text read into any record. The issuer's round-8 ruling chose the mail wipe for the text; that choice is the cause."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T21:13:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "one_line": "The securities allowlist (TR-a-11) widens wipe.Assets.allow with 7,343 tokens, of which 738 are also given-name/surname dictionary words (544 capitalised, e.g. Allison, Apollo, Ally, Abbott, Alger; Apple is itself a dictionary surname); the wipe checks the allowlist first, so a bare person name equal to such a token is no longer wiped outside a salutation/title or neighbouring-name context.",
+    "disarm_owner": "2.0.0_SA_COO~T2 (TR-b-11 re-fold: decide whether the 738 overlap tokens stay allowlisted, or are restricted to tickers and a curated issuer subset, before the re-write of the 29 silver objects)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/teams/securities_allowlist.json @bf7ec25d8f: tokens=7343; set intersection with wipe.load_assets() given_names|surnames|name_words (capitalize() match), tokens not already in the base allow = 738, capitalised-only 544; counts only, no transcript text",
+        "data/transcripts/scripts/outlook/wipe.py:_token (allowlist first, name context only via _dict_name_context) and wipe.py module docstring rule 4",
+        "dry re-fold of research_transcripts/structured/*.json after the change: 29 files, 20,473 rows, 0 failures, held_out 3,644"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-TR-a11 build step 1: tokens = every ticker plus each issuer name's distinctive first word; the planted gate keeps a person name (not an issuer) wiped.",
+    "world_is": "The gate holds for names that are not issuer tokens, but the rule as specified allowlists 738 dictionary-name words (issuer first words such as Allison, Apollo, Alger), so a person with such a name written bare in a transcript survives the wipe; the planted test cannot show this by construction.",
+    "notes": "Built exactly as ordered; not changed by the worker. Counts only."
   }
 ]
 ```
