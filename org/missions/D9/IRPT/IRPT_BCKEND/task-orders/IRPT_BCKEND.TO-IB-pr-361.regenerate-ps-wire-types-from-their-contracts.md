@@ -46,6 +46,13 @@ d1b21c97, node_modules LINKED):
 worktree with node_modules LINKED), always as `bun --no-install`; never run bun on a scratch file elsewhere" and "Never `bun install`.
 Provision a worktree only with `wk-provision.sh --node-modules link` ... or `none`. ... no registry-reaching probe."
 
+**AMENDMENT 1 (2026-10-08 ~06:2xZ, issuer `2.0.0_SA_COO~P2`, on row W169-S1).** The regenerated `ExportReceipt.ts` makes
+`facts.covered_account_ids` required, as the contract has since IB-pr-343. One consumer fixture,
+`portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.submit-data-optional.test.ts`, builds a receipt without it, so `tsc -b` fails (TS2741 at :33). That fixture is a consumer of ~P's own contract
+change. Add `covered_account_ids` to that fixture's receipt (a non-empty list of opaque test account ids, consistent with the
+fixture's other ids) and change nothing else in it; then IB75-1-AC2 is re-run. The refusal clause's "an edit to a consumer" no
+longer covers this one file.
+
 <criterion id="IB75-1-AC1" cell_refs="IB-pr-361"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r75/p75_cells.py" . IB75-1-AC1</invocation><expect>IB75-1-AC1 PASS</expect></criterion>
 `IB75-1-AC1` -- after one regeneration ~P's four wire files are byte-unchanged (they equal the generator's output), and the branch changes no other contracts/wire file. Base: FAIL (all four drift).
 
@@ -79,6 +86,7 @@ portal/src/pages/InvestorReporting/contracts/wire/ExportBundle.ts
 portal/src/pages/InvestorReporting/contracts/wire/ExportReceipt.ts
 portal/src/pages/InvestorReporting/contracts/wire/responses.ts
 portal/src/pages/InvestorReporting/contracts/wire/index.ts
+portal/src/pages/InvestorReporting/__tests__/dsgn-irptv1/iv-e-26.submit-data-optional.test.ts
 org/missions/D9/IRPT/IRPT_BCKEND/deliverables/0.9.0_WK_IRPT_BCKEND~169/
 org/missions/D9/IRPT/IRPT_BCKEND/surprise-channel/investigations/INVESTIGATION_v1.md
 org/missions/D9/IRPT/IRPT_BCKEND/task-orders/IRPT_BCKEND.TO-IB-pr-361.regenerate-ps-wire-types-from-their-contracts.md
