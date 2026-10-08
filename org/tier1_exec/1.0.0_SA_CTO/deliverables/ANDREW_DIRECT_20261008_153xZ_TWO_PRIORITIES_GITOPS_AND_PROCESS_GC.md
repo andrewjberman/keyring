@@ -149,3 +149,21 @@ what is in their workstream"
 
 Placement: 1.0.0_SA_CTO reads 2.0.0_SA_COO~C's workstream (cells, write paths, state) first, then asks 4.0.0_SA_CRO,
 ~A and ~B for timing and their write paths, and rules any overlap to one owner.
+
+## Addendum ~17:4xZ -- Andrew answers six open calls
+
+Cards put at ~17:3xZ (1 unattended cleanup: (a) /govern only or (b) also a scheduled task; 2 two-phase commit on for the
+laptop ~2:10 PM ET; 3 start the long-term self-ending script packages; 4 graph engine: (a) stay on Kuzu 0.11.3, (b) a
+fork, (c) another way; 5 branch model: (a) one trunk, (b) per-box, (c) per-project; 6 automatic worktree removal and its
+limits). Verbatim answer:
+
+> "1.) A is better for now. 2.) Yes, but faster, 2p ET today. 3.) rec approved. 4.) A for now, also i dont think its
+> actually frozen youre just not accounting for the stitch functions. 5.) A for now but we need to get on to B very soon it
+> is a priority. 6.) Yes sure, CRO~B is working on a formal version of this"
+
+Routing: 1 -> 4.0.0_SA_CRO~B (no scheduled task installed; /govern Step 3a.6 is the one unattended reaper). 2 -> 0.0.0_AB_MSTR
+and 4.0.0_SA_CRO~A (two-phase safe-commit ON by default on the laptop at 2:00 PM ET = 18:00Z today). 3 -> 4.0.0_SA_CRO~B
+(start P1, the comms watchers). 4 -> 4.0.0_SA_CRO (stay on Kuzu; the engine's upstream is archived, but the served graph is
+not frozen: the stitch functions keep it current). 5 -> 4.0.0_SA_CRO~A (keep one trunk now; per-box branches are a
+priority, design starts now). 6 -> 4.0.0_SA_CRO~B (worktree removal allowed: merged, clean, idle 48 h, never `drain-*`,
+logged; its formal version governs).
