@@ -31,3 +31,4 @@
 - 20261008T222803Z LEG X1 closed: SSM 67b98703 22:27:11-22:27:4xZ rc 0 (after the retained F1 message dead-lettered: 5 receives 21:10-22:10Z all Opal-path
 - 20261008T222804Z LEG V2 closed: same SSM 67b98703: active, root 409e3066d1-st24, restarts 0; allow list andrew only; worker sha256 9317219a = st24; rend
 - 20261008T222819Z CLOSED -- all 7 legs proven
+- 20261008T2240Z NOTE post-close: the F1 shell window CLOSED 22:34:24Z by laptop 0.7.0_AE_CloudOps (TO18 leg C, canonical closed IAM policy restored, shell send denied; MSTR 1827). Both windows are closed: secret reader 21:27:47Z, shell 22:34:24Z.

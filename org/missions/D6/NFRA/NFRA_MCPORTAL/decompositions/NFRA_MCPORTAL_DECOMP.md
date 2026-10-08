@@ -357,3 +357,135 @@ here).
 3. A1n's arms (ii), a valid non-owner header, and (iii), an owner header past `exp`, need an ALB-signed header no seat
    can mint. They stand on MP-b-2's in-package tests, as a fixture, per the diet's clause (b).
 4. Subtracted, per the analysis's section 5: C6 (round 4), FWD-3 and 5-13 and FWD-4's A4, and Z-W2-S6 (CloudOps).
+
+# ROUND 4 -- THE CONTROL-PLANE THREAD (L5, v4)
+
+```json
+{
+ "project": "NFRA_MCPORTAL",
+ "decomp_version": "v4",
+ "step": 5,
+ "round": 4,
+ "input": "org/missions/D6/NFRA/NFRA_MCPORTAL/prd/NFRA_MCPORTAL_PRD.md@cecf26d2c9 (v0.5 addendum, FWD-14..19, C11-C16; ratified-text half signed @8de5b2dc76 by 3.0.0_SA_CVO~Z)",
+ "author": "2.0.0_SA_COO~MP",
+ "thread": "FWD-14",
+ "cells": 5,
+ "chains": 2,
+ "join_cells": 2,
+ "frozen": true
+}
+```
+
+**Author:** `2.0.0_SA_COO~MP`, re-seated 2026-10-08 ~21:0xZ. **Input:** the CTO's v0.5 addendum, which is the CTO's answer
+under rule 27 L10 (an FWD that no cell served). Its **Order** paragraph sets this round: FWD-14 end to end first. FWD-15 to
+FWD-19 are later enrichment rounds on the same page and two more pages. Rounds 1 to 3 above stay frozen as their own records.
+
+## R4.0 THE ISSUER'S RE-READ OF ROUND 3 (the addendum's "re-read before any cut")
+
+- `MP-c-1` (G-CLOSE) stays staged in round 3. Andrew held Alyssa's close run until gateway r29 is live (record
+  `org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md`).
+  That is an essential wait, qualified with Andrew's word. It spawns from its staging file when r29 is live and the
+  sitting is set.
+- `MP-v-1` (G-2ND) stays staged in round 3. There is no Andrew word on it. It is a human sign-in act.
+- Round 3 therefore stays open beside round 4. Its L10 follows its last terminal order. Neither round holds the other: no
+  round-4 cell reads a round-3 write, and the two write surfaces are disjoint (round 3: the grant writer and its
+  deliverables; round 4: the cells below).
+
+## R4.1 THE DOMAIN, BY SUBTRACTION
+
+FWD-14's ACCEPT has three clauses: (i) every figure carries its age; (ii) a box that is not reporting reads "not
+reporting", never zero; (iii) the counts match the activity store for the same window. The journey has five hops:
+1. the store (`s3://opal-313476888478-globgrph/fabric/activity/v1/`, live, writer `.tools/fabric-activity.py`);
+2. the gateway's read permission on it;
+3. an owner-gated admin handler that reads and aggregates;
+4. the page that renders it;
+5. the release that serves 3 and 4, and Andrew's look.
+
+Hop 1 exists and is not this project's (C11). Each of hops 2 to 5 is one cell. The look is the close run. Subtracted:
+- site Z's activity hook. It is a precondition of a four-box read, placed with `0.0.0_AB_MSTR~Z` by C12. Until it lands,
+  the page shows site Z as "not reporting", which is clause (ii) working.
+- the git-state columns (FWD-16) and overlap (FWD-15). These are enrichments.
+
+## R4.2 THE CELLS -- 5
+
+| Cell | Serves | Builds / runs | Write surface | Risk |
+|---|---|---|---|---|
+| `MP-x-1` | FWD-14 hop 3 | `GET /api/admin/fabric/boxes?hours=N` behind `owner_only`, per the contract in R4.3, plus its roster file and tests | `infra/aws/ec2/opal-gateway/app/admin_fabric.py` (new), `app/admin_api.py` (one route line), `app/refs/fabric_boxes.json` (new), `infra/aws/ec2/opal-gateway/tests/test_admin_fabric.py` (new) | WORLD (infra floor; live only through MP-x-4) |
+| `MP-x-2` | FWD-14 hop 4 | the Control Plane page in `mcportal`: the sidebar entry, the API client call, the view, its tests | mcportal `src/pages/control-plane/*` (new), `src/shell/pages.ts`, `src/shell/sidebar.test.ts`, `src/api/admin.ts`, `src/api/admin.test.ts` | WORLD (live only through MP-x-4) |
+| `MP-x-3` | FWD-14 hop 2 | the gateway role's read grant on the activity prefix, in the form the CTO rules on row Z-S18; `safe-apply`, targeted; NEVER-2 ledger; read-back by `simulate-principal-policy` (one positive and two negative arms) | `infra/aws/terraform/opal-gateway/mcportal_fabric_read.tf` (new), `graph-read.tf` comment only if the ruling says so, ledger paths | WORLD |
+| `MP-x-4` | FWD-14 hop 5 | the gateway release that ships MP-x-1 and the MP-x-2 bundle: `EC2_MANIFEST.json` `mcportal_commit` moves to MP-x-2's commit; deploy on the live base with the stale-base guard; read-back: `/api/admin/fabric/boxes` returns 200 with real boxes, `/` serves the new bundle | `infra/aws/ec2/EC2_MANIFEST.json`, ledger paths | WORLD |
+| `MP-x-5` | FWD-14 DONE WHEN | the close run: Andrew opens the page and names one box's projects for the afternoon. The worker reads the same window from the store with `fabric-activity.py boxes`/`who` and grades A14. Carries the round's JUDGMENT criterion (graded at L9) | its deliverables only | WORLD |
+
+## R4.3 THE CONTRACT BETWEEN MP-x-1 AND MP-x-2 (fixed here so the two chains run in parallel)
+
+`GET /api/admin/fabric/boxes?hours=N`. N is an integer from 1 to 24; the default is 6; out of range returns 400. The
+response is JSON:
+
+```
+{ "window": {"hours": N, "start": "<ISO Z>", "end": "<ISO Z>"},
+  "read_at": "<ISO Z>",
+  "records_scanned": <int>,
+  "records_skipped": <int>,
+  "source": "s3://opal-313476888478-globgrph/fabric/activity/v1/",
+  "boxes": [ { "box": "<roster name>",
+               "status": "reporting" | "not reporting",
+               "commits": <int>,
+               "seats": ["<serial>", ...],
+               "projects": [ {"code": "<CODE>", "commits": <int>, "last": "<ISO Z>"} ],
+               "last_commit": {"when": "<ISO Z>", "sha": "<12>", "seat": "<serial>", "subject": "<text>"} | null,
+               "claims": ["measured" | "inferred" | "absent", ...] } ],
+  "unrostered": [ "<box name seen in records but not on the roster>", ... ] }
+```
+
+- **Roster.** The boxes are the `devices[].name` values of `org/devices/DEVICES.json`, copied into
+  `app/refs/fabric_boxes.json`, because the gateway host carries `app/` and not `org/`. A test asserts the two lists are
+  equal, so the copy cannot drift silently. Every roster box appears in `boxes`. A box with no record in the window has
+  `status` "not reporting", `commits` 0 and `last_commit` null. That is the one place a 0 may appear, and it is labelled.
+- **Reading.** Records are deduplicated by `sha`, preferring `box_claim` measured, the same rule as `fabric-activity.py`
+  `fetch()`. They are filtered by `when` against the window. The keys listed are `dt=<day>/` for each UTC day the window
+  touches.
+- **Load.** The gateway runs as one worker on a t4g.nano, so every S3 call runs off the event loop (Starlette
+  `run_in_threadpool`). Bodies are cached in-process by key, bounded, because each record is write-once and its body is
+  a function of its key. Thread fan-out is capped at 8.
+- **Failure.** An unreadable store (AccessDenied, a timeout, a parse failure on a listing) returns 503 with
+  `{"error": "store unreadable", "reason": "<class: message>"}` and never an empty `boxes` list. One unparseable record is
+  skipped and counted in `records_skipped`. Before MP-x-3 is applied, the live handler returns that 503, which is the
+  failure arm working.
+
+## R4.4 DEPENDENCY EDGES AND CHAINS
+
+```
+chain A   MP-x-1 --> MP-x-4 --> MP-x-5     the release ships x-1; the close run reads the released page
+chain B   MP-x-2 --> MP-x-4                the release ships x-2's bundle
+joins     MP-x-4 (A + B + MP-x-3 applied + G-REL)    MP-x-5 (x-4 drained + G-SEE)
+MP-x-3    no code edge; gated on G-R3; it must be APPLIED before MP-x-4's read-back can pass
+```
+
+**Fan-out:** `N = 2 of M = 2 chains, cap 8`. The slots start at the issuance: `~5` takes MP-x-1, then MP-x-4, then
+MP-x-5; `~6` takes MP-x-2. MP-x-3 takes slot `~7` when G-R3 is ruled. The issuance cuts the two ungated cells. MP-x-3,
+MP-x-4 and MP-x-5 are cut into this round by issuer amendment when their gates land, because MP-x-3's criteria depend on
+the form of the G-R3 ruling. The decomposition does not change.
+
+## R4.5 GATES (spawn preconditions, each an act a named holder can take)
+
+- **G-R3 (MP-x-3):** a ruling on row NFRA_MCPORTAL-Z-S18 (C11's grant against the gateway's no-globgrph-grant control,
+  `graph-read.tf:4-8`). R3 is NFRA_CLDGRPH's control, and NFRA_CLDGRPH belongs to the laptop fabric. `1.0.0_SA_CTO~O`
+  routed it cross-fabric through `0.0.0_AB_MSTR~Z` to the laptop MSTR with rec (a) (msg 32021, ~21:33Z). Holder: the
+  laptop NFRA_CLDGRPH owner, via the laptop MSTR. This cell stays parked until that ruling lands.
+- **G-REL (MP-x-4):** the gateway's release lane is clear. NFRA_OPLGTW's r29 is the next release (Andrew's ~20:0xZ word
+  holds G-CLOSE until it is live). MP-x-4 deploys on the live base after r29 drains, or rides r29 if `2.0.0_SA_COO~O`
+  takes it. The issuer asks `2.0.0_SA_COO~O` once MP-x-1 and MP-x-2 have drained. Holder: `2.0.0_SA_COO~O`.
+- **G-SEE (MP-x-5):** Andrew opens `https://mcp.opalinvest.dev/control-plane` once and says one box's projects. Holder:
+  Andrew.
+
+## R4.6 WHAT THIS CUT DOES NOT CLAIM
+
+1. No cell has run. The store's live record count, the handler's latency on the nano, and the bundle size are measured
+   by their cells.
+2. FWD-14's "four-box read" needs site Z's activity hook (C12, `0.0.0_AB_MSTR~Z`). The thread closes on the boxes that
+   report, with site Z shown "not reporting" if the hook has not landed. That is ACCEPT clause (ii), not a gap.
+3. The Control Plane sidebar entry goes LAST, after Infosec, so that Andrew's verbatim sidebar order from the 2026-09-17
+   brief (asserted by `src/shell/sidebar.test.ts`) stands unchanged with one entry appended. The position is the issuer's
+   placement, and Andrew may move it.
+4. FWD-15 to FWD-19, C13 to C16, the open-calls read (C11's second prefix) and the git-state columns are subtracted and
+   belong to later rounds.
