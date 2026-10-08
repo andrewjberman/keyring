@@ -27,3 +27,4 @@
 - 20261008T205410Z LEG P1 closed: SSM fbce151c 20:53:54Z rc 0: active root 409e3066d1-st24 restarts 0; allow list andrew only; worker sha256 9317219a (st2
 - 20261008T205606Z LEG D2 closed: SSM 959fadc3 20:55:02-20:55:46Z rc 0 (attempt 1 SSM 56fe806f refused at fetch, exit 30, nothing moved: host role lacks s
 - 20261008T205606Z LEG V1 closed: same SSM 959fadc3: running root 3cf5d52a7b-st25; allow list (andrew, svc-irpt-analysis); worker sha256 c0bbea55 = built;
+- 20261008T2104Z NOTE secret ADD (laptop TO-APPLY-15) put 21:01:00Z and ROLLED BACK by the laptop applier (AWS reordered Principal.AWS; nothing read the secret; laptop ledger 20261008T2100Z_svc-irpt-add-laptop-20261008). F1 held. CTO~DELL2 ruling msg 1629: if the laptop retry ruling + re-applied ADD are not in by 22:05Z, run X1+V2 and close the shell window; F1 then goes in a new window.
