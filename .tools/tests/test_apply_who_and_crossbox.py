@@ -515,6 +515,8 @@ def one_switch_case(wname, args, rc_block):
     stem = wname.replace(".sh", "")
     for check, other, tag, other_tag in (("apply-who", "crossbox", "apply-who", "crossbox-deploy"),
                                          ("crossbox", "apply-who", "crossbox-deploy", "apply-who")):
+        if check == "apply-who" and stem == "safe-deploy":
+            continue    # AMENDMENT 2: apply-who is warn-only in safe-deploy; its cases are below
         @case("%s: ONLY seat-gates.%s.%s.enforce is its own -> %s blocks (rc %d), the other check only WARNs; the other wrapper's two "
               "switch files and the retired seat-gates.enforce turn on nothing here (one 'retired' WARN line)" % (wname, check, stem, check, rc_block))
         def _(check=check, tag=tag, other_tag=other_tag):
@@ -534,6 +536,59 @@ def one_switch_case(wname, args, rc_block):
 
 one_switch_case("safe-apply.sh", APPLY_ARGS, 9)
 one_switch_case("safe-deploy.sh", DEPLOY_ARGS, 1)
+
+
+# ---------------------------------------------------- AMENDMENT 2 item 1: apply-who can never refuse in safe-deploy
+WARN_ONLY_LINE = "turns on nothing: apply-who is warn-only in this wrapper by ruling 106858"
+
+
+@case("safe-deploy: seat-gates.apply-who.safe-deploy.enforce present, WORKER seat (apply-who REFUSES): rc 0, no BLOCKED, mode=WARN, "
+      "exactly one warn-only line; WITHOUT the file the reading is the same and the warn-only line is absent")
+def _():
+    fx = wrap_fixture()
+    rc0, out0, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
+    enforce(fx, "apply-who.safe-deploy")
+    rc1, out1, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
+    lines1 = [ln for ln in out1.splitlines() if WARN_ONLY_LINE in ln]
+    who0 = [ln for ln in out0.splitlines() if "APPLY-WHO " in ln]
+    who1 = [ln for ln in out1.splitlines() if "APPLY-WHO " in ln]
+    ok = rc0 == 0 and rc1 == 0 and "BLOCKED" not in out1 and len(lines1) == 1 and WARN_ONLY_LINE not in out0 \
+        and who0 == who1 and who1 and "mode=WARN" in who1[0] and "verdict=REFUSED" in who1[0]
+    return ok, "no-file rc=%s, file rc=%s, warn-only lines=%d, %s" % (rc0, rc1, len(lines1), who1[:1])
+
+
+@case("safe-deploy: ONLY the apply-who.safe-deploy file present and apply-who crashes: the wrapper proceeds (rc 0, WARN 'gave no verdict', "
+      "no ERROR, no BLOCKED) -- the old ENFORCE fail-closed arm is gone for apply-who")
+def _():
+    fx = wrap_fixture()
+    enforce(fx, "apply-who.safe-deploy")
+    put(fx / ".tools/apply-who-check.py", "raise SystemExit(5)\n")
+    rc, out, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
+    ok = rc == 0 and "WARN [seat-gates] apply-who-check gave no verdict" in out and "BLOCKED" not in out and "ERROR [seat-gates]" not in out
+    return ok, "rc=%s %s" % (rc, last_line(out))
+
+
+@case("safe-deploy: with the crossbox.safe-deploy switch ON beside the apply-who.safe-deploy file, a WORKER invocation is blocked on the "
+      "crossbox check ALONE (apply-who is not named in the blocked line)")
+def _():
+    fx = wrap_fixture()
+    enforce(fx, "apply-who.safe-deploy", "crossbox.safe-deploy")
+    rc, out, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
+    line = blocked_line(out)
+    return rc == 1 and "crossbox-deploy" in line and "apply-who" not in line, "rc=%s %s" % (rc, line[:160])
+
+
+@case("safe-apply.sh grades the SESSION serial: it reads resolve_actor (OPAL_AGENT_SERIAL first) and passes that serial to apply-who-check; "
+      "a CLOUDOPS session is ADMITTED and a WORKER session REFUSED on the same arguments")
+def _():
+    text = (REPO / ".tools/safe-apply.sh").read_text("utf-8")
+    reads = 'sg_serial="$(resolve_actor)"' in text and '--serial "$sg_serial" --root "$sg_root"' in text
+    fx = fresh("LAPTOP")
+    rc_c, out_c, _c = wrapper(fx, "safe-apply.sh", CLOUDOPS, APPLY_ARGS + [DRY])
+    rc_w, out_w, _c = wrapper(fx, "safe-apply.sh", WORKER, APPLY_ARGS + [DRY])
+    ok = reads and ("serial=%s " % CLOUDOPS) in out_c and "verdict=ADMITTED" in out_c and ("serial=%s " % WORKER) in out_w \
+        and "verdict=REFUSED" in out_w
+    return ok, "reads=%s cloudops rc=%s worker rc=%s" % (reads, rc_c, rc_w)
 
 
 @case("OPAL_SEAT_GATES_ENFORCE_DIR (the test-only directory variable) points the four switches at a temp directory; the scratch tree has none")
@@ -661,13 +716,17 @@ def _():
     return ok, "warn rc=%s enforce rc=%s" % (rc0, rc1)
 
 
-@case("the block ITSELF errors while a switch file exists -> safe-deploy BLOCKS rc 1")
+@case("the block ITSELF errors while the crossbox.safe-deploy switch exists -> safe-deploy BLOCKS rc 1; with only the apply-who.safe-deploy "
+      "file it WARNs and proceeds (rc 0)")
 def _():
     fx = wrap_fixture()
     put(fx / ".tools/lib/resolve-actor.sh", "exit 3\n")
     enforce(fx, "apply-who.safe-deploy")
+    rc0, out0, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
+    enforce(fx, "crossbox.safe-deploy")
     rc, out, _c = wrapper(fx, "safe-deploy.sh", WORKER, DEPLOY_ARGS + [DRY])
-    return rc == 1 and "the block itself errored (rc=3)" in out, "rc=%s %s" % (rc, last_line(out))
+    ok = rc == 1 and "the block itself errored (rc=3)" in out and rc0 == 0 and "the block errored (rc=3); proceeding exactly as before" in out0
+    return ok, "apply-who file only rc=%s; crossbox file rc=%s %s" % (rc0, rc, last_line(out))
 
 
 # ---------------------------------------------------------------- ITEM 3: apply-who grades a deploy, not a push
@@ -693,14 +752,14 @@ def _():
     return rc == 0 and SKIP_LINE in out and "APPLY-WHO" not in out and "BLOCKED" not in out, "rc=%s %s" % (rc, last_line(out))
 
 
-@case("safe-deploy: a fabric manager's (MSTR) invocation that carries a DEPLOYABLE file -- here a bundle member the core deploys, so the root "
-      "comes from the core's list -- is graded (REFUSED kind=MSTR): reported for a ruling, not exempted")
+@case("safe-deploy: a fabric manager's (MSTR) invocation that carries a DEPLOYABLE file -- a bundle member the core deploys -- prints its "
+      "apply-who reading (REFUSED kind=MSTR, mode=WARN) and is NOT blocked, with the apply-who.safe-deploy file present (rc 0)")
 def _():
     fx = deploy_fixture()
     enforce(fx, "apply-who.safe-deploy")
     rc, out, _c = wrapper(fx, "safe-deploy.sh", SERIALS["MSTR"], [PIPE_REL + "/config/roster.json", DRY])
-    return rc == 1 and "kind=MSTR" in out and "verdict=REFUSED" in out and "root=pipea" in out and SKIP_LINE not in out, \
-        "rc=%s %s" % (rc, blocked_line(out)[:140])
+    return rc == 0 and "kind=MSTR" in out and "verdict=REFUSED" in out and "mode=WARN" in out and "BLOCKED" not in out \
+        and "root=pipea" in out and SKIP_LINE not in out, "rc=%s %s" % (rc, last_line(out))
 
 
 @case("safe-deploy --commit-range (the pre-push shape): a pushed range whose only scripts-path change is a README SKIPs apply-who, MSTR seat, switch ON -> not blocked")
@@ -915,24 +974,47 @@ def tree_snapshot(fx):
     return status, head, files
 
 
-@case("dry pass --last: attributes each commit to its author's serial; a worker's deploy WOULD STOP, a non-serial author is SKIPPED, a README deploys nothing (PASS)")
+@case("dry pass --last with NO --actor: the Terraform range reads apply_who=UNGRADED (no actor given) and is not a would-stop; the author is shown "
+      "(author=...) and never graded; a deploy-only range reads WARN-ONLY; a non-serial author is SKIPPED (cross-box fallback)")
 def _():
     fx = dry_fixture()
     rc, out = dry(fx, "--last", "10", "--ref", "CLOUD", "--device", "laptop")
-    verdicts = [(m.group(1), m.group(2)) for m in (re.search(r"serial=(\S+) verdict=(\S+)", ln) for ln in out.splitlines()) if m]
-    ok = rc == 1 and last_line(out) == "SEAT-GATES-DRY ranges=4 would_stop=1 skipped=1 ok=False" \
-        and (WORKER, "WOULD-STOP") in verdicts and (CLOUDOPS, "PASS") in verdicts and (SERIALS["TIER2"], "PASS") in verdicts \
-        and "SKIPPED" in out and "is not a serial" in out and "SKIP(deploys nothing)" in out and "WOULD-STOP" in out
+    tf_line = next((ln for ln in out.splitlines() if "apply_who=UNGRADED (no actor given)" in ln), "")
+    ok = rc == 0 and last_line(out) == "SEAT-GATES-DRY ranges=4 would_stop=0 skipped=1 ungraded=1 ok=True"         and ("author='%s'" % CLOUDOPS) in tf_line and "actor=none" in tf_line and "WARN-ONLY(safe-deploy)[no actor given]" in out         and "SKIPPED" in out and "is not a serial" in out and "SKIP(deploys nothing)" in out and "WOULD-STOP" not in out.replace("verdict=WOULD-STOP", "")
     return ok, last_line(out)
 
 
-@case("dry pass --range (repeatable) with --serial: the acting seat is the one named; a CLOUDOPS seat reading zero would-stops gives ok=True, rc 0")
+@case("dry pass --actor <WORKER> (a seat that does not apply): ONLY the Terraform range would stop (apply apply-who REFUSED), whoever authored it "
+      "(the author was a CLOUDOPS seat); the deploy-only ranges print WARN-ONLY[REFUSED] and are not stops; ungraded=0")
+def _():
+    fx = dry_fixture()
+    rc, out = dry(fx, "--last", "10", "--ref", "CLOUD", "--actor", WORKER, "--device", "laptop")
+    stops = [ln for ln in out.splitlines() if ln.startswith("  WOULD-STOP")]
+    ok = rc == 1 and last_line(out) == "SEAT-GATES-DRY ranges=4 would_stop=1 skipped=0 ungraded=0 ok=False" and len(stops) == 1         and "apply apply-who" in stops[0] and "kind=WORKER" in stops[0] and "WARN-ONLY(safe-deploy)[REFUSED]" in out
+    return ok, last_line(out)
+
+
+@case("dry pass --range (repeatable) with --actor <CLOUDOPS> (a seat that applies): zero would-stops, the Terraform range reads ADMITTED, rc 0; "
+      "a deploy-only range authored by a WORKER is not graded on its author")
+def _():
+    fx = dry_fixture()
+    rc, out = dry(fx, "--last", "10", "--ref", "CLOUD", "--actor", CLOUDOPS, "--device", "laptop")
+    y_line = next((ln for ln in out.splitlines() if "deploy_crossbox[" in ln and ("author='%s'" % WORKER) in ln), "")
+    ok = rc == 0 and last_line(out) == "SEAT-GATES-DRY ranges=4 would_stop=0 skipped=0 ungraded=0 ok=True"         and "apply_apply_who=ADMITTED" in out and "WARN-ONLY(safe-deploy)[ADMITTED]" in y_line
+    return ok, last_line(out)
+
+
+@case("dry pass --actor <MSTR> (a fabric manager): a push that carries a deployable file is WARN-ONLY and NOT a would-stop; only a Terraform "
+      "range would stop; a --range over only the deployable commit reads ok=True")
 def _():
     fx = dry_fixture()
     rc_, shas = git(fx, "log", "--format=%H", "-n", "4")
     top = shas.split()
-    rc, out = dry(fx, "--range", "%s^..%s" % (top[2], top[2]), "--range", "%s^..%s" % (top[3], top[3]), "--serial", CLOUDOPS, "--device", "laptop")
-    return rc == 0 and last_line(out) == "SEAT-GATES-DRY ranges=2 would_stop=0 skipped=0 ok=True", last_line(out)
+    y_sha = top[3]
+    rc, out = dry(fx, "--range", "%s^..%s" % (y_sha, y_sha), "--actor", SERIALS["MSTR"], "--device", "laptop")
+    rc2, out2 = dry(fx, "--last", "10", "--ref", "CLOUD", "--actor", SERIALS["MSTR"], "--device", "laptop")
+    ok = rc == 0 and last_line(out) == "SEAT-GATES-DRY ranges=1 would_stop=0 skipped=0 ungraded=0 ok=True"         and "WARN-ONLY(safe-deploy)[REFUSED]" in out and rc2 == 1 and last_line(out2).startswith("SEAT-GATES-DRY ranges=4 would_stop=1 ")
+    return ok, "%s | %s" % (last_line(out), last_line(out2))
 
 
 @case("dry pass is READ-ONLY: no file, index or HEAD change in the tree it reads, and no Terraform or deploy runs")
@@ -944,12 +1026,12 @@ def _():
     return before == after and not (fx / "TERRAFORM_WAS_CALLED").exists(), "same=%s" % (before == after)
 
 
-@case("dry pass with no range is a usage error (rc 2); a fabric manager's push (MSTR serial) with a deployable file reads would-stop")
+@case("dry pass with no range is a usage error (rc 2); --serial (the retired flag) is a usage error too (apply-who is never graded on an author)")
 def _():
     fx = dry_fixture()
     rc, out = dry(fx)
     rc2, out2 = dry(fx, "--last", "10", "--ref", "CLOUD", "--serial", SERIALS["MSTR"])
-    return rc == 2 and rc2 == 1 and "kind=MSTR" in out2 and "verdict=REFUSED" in out2, "%s | %s" % (rc, last_line(out2))
+    return rc == 2 and rc2 == 2, "%s %s" % (rc, rc2)
 
 
 @case("the real tree has NONE of the five enforce files (WARN mode is the shipped default)")
@@ -1015,7 +1097,7 @@ def main():
     try:
         for placement in ("DELL1", "LAPTOP"):
             TEMPLATES[placement] = build_template(placement)
-        with ThreadPoolExecutor(max_workers=12) as pool:
+        with ThreadPoolExecutor(max_workers=16) as pool:
             outcomes = list(pool.map(execute, CASES))
     finally:
         pass
