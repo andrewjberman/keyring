@@ -20730,3 +20730,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "A second routes.json is tracked in the api root. Nothing reads it for the apply; the IB-pr-363 packet names the docs copy as the writer's input."
 }
 ```
+
+## IRPT_BCKEND-S390 -- W169-S1 resolved: AMENDMENT 1 granted the one fixture; IB75-1-AC2 (tsc -b --noEmit) PASS on branch 169
+
+```json
+{
+  "id": "IRPT_BCKEND-S390",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W169-S1: AMENDMENT 1 to IB-pr-361 (@63db9c46c6) granted iv-e-26.submit-data-optional.test.ts; the worker added covered_account_ids to the fixture's facts (portal f63c5fdd) and the issuer re-ran IB75-1-AC2 on branch 169: tsc -b --noEmit rc 0. Proof @2874a10e7f VALID; drained @7a5f0d2fb7.",
+  "one_line": "The one consumer fixture now carries covered_account_ids, so the regenerated ExportReceipt typechecks; the portal branch remains a DEV candidate on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment @63db9c46c6; drain @7a5f0d2fb7; L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md (IB75-1-AC2 PASS)"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration.",
+  "world_is": "It does, after the granted one-line fixture edit."
+}
+```
+
+## IRPT_BCKEND-S391 -- W171-S1 ruled INERT: nothing applies from the stale api/routes.json; its removal is carried to the CTO's analysis
+
+```json
+{
+  "id": "IRPT_BCKEND-S391",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W171-S1 as not a hazard to any apply: routes.tf local.contract_routes_path reads docs/contracts/investor-reporting/v1/routes.json only, and the IB-pr-363 packet names that docs copy as the writer's input. The stale second carrier is a cleanup item listed in the rounds 75-76 L8 packet's Rows section for the CTO's round-N analysis; the issuer cuts no cell for it mid-round.",
+  "one_line": "The tracked infra/aws/terraform/investor-reporting/api/routes.json is read by no apply; deleting it is an enrichment item for the next round, not a live hazard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W171-S1 evidence: routes.tf contract_routes_path -> docs/contracts/investor-reporting/v1/routes.json",
+      "L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md, Rows: W171-S1 OBSERVATION/INERT"
+    ]
+  },
+  "spec_asserts": "routes.tf: one route list, the contract file.",
+  "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
+}
+```
