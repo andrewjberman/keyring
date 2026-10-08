@@ -339,6 +339,27 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "D1-S3: the restore carries no owner -- the laptop CTO made no put, ~F's timers were reported dead at 20:2xZ (MSTR msg 642), dell1 read NOOP.",
     "world_is": "An owned automation did it: a laptop-credential process with ~F's toolchain kept polling the rule all night and restored on schedule. Most likely 0.7.0_AE_CloudOps~F's owner-(1) restore loop survived the session kill that was reported as 'timers died', so the defect is a liveness report that called a running loop dead, not an unknown actor. INERT: correct value, in window. Open until the laptop names the process (asked via 0.0.0_AB_MSTR~DELL1)."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S5",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T13:30:00Z",
+    "one_line": "Names the actor of MDPF_HEALGAP-D1-S3/D1-S4: the 06:08:46Z restore was laptop 0.7.0_AE_CloudOps~F's own failsafe script (background task bv5miebw8, session 393fd2b5), which outlived the 20:2xZ kill ~F reported, polled hourly, acted once and exited.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "0.0.0_AB_MSTR~DELL1 msg 924, relaying the laptop MSTR (bus 355bc946), measured on the laptop: task bv5miebw8 output (414 bytes, last write 06:08:55Z) reads FAILSAFE-WOKE 06:08:40Z current_input={\"mode\":\"pull\",\"induce\":\"auth-lapse\"} / FAILSAFE-ACTING / FailedEntryCount 0 / PUT_UTC 06:08:45Z / READBACK {\"mode\":\"pull\"} / FAILSAFE-RESTORED-BY-SCRIPT; nothing runs now.",
+        "Matches the CloudTrail reconstruction in D1-S4 (list 06:08:41Z, put 06:08:46Z, list 06:08:56Z; hourly reads 18:42Z..05:41Z; cadence ends after 06:35:48Z).",
+        "Site Z ruled out on OS build 26200 vs the event's 26100 (MSTR msg 919)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "MSTR msg 642 (relaying laptop CTO 106564): ~F's HG-d3 timers 'DIED' in the laptop's 20:2xZ out-of-memory kill, neither had fired, so owners (2) and (3) carried the restore.",
+    "world_is": "One of ~F's restore mechanisms was an unattended background task that survived both the kill and the seat's close and did the restore correctly inside the window. The restore therefore had an owner the whole time; the defect is the liveness report ('timers died') that called a running task dead. For the next cut: a seat that arms a restore names every mechanism it armed and reads each one's state, rather than inferring death from its own session ending. Follow-up of the killed-but-not-killed gap is the laptop's (MSTR msg 924)."
   }
 ]
 ```
