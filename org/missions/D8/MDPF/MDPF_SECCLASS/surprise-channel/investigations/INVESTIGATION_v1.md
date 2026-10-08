@@ -4902,3 +4902,34 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "No fix attempted: R12_CHECKS/ai_leg_verify.py is outside this order's <paths>. This row does not touch the resume-or-roll-back call on the act itself, which is the issuer's and is put to it with this seat's recommendation (resume: the distinct key set stays 2,291 either way, so the 8,495 vendor ceiling is untouched, and the 187 landed rows and 251 calls are not discarded). The sibling TO-AI-e49 cites the same AC1 script, so it inherits this gap."
 }
 ```
+
+## MDPF_SECCLASS-S67 -- S64 MEASURED: AC1 returned opposite verdicts on identical state 63 minutes apart, flipping on the UTC day boundary alone
+
+```json
+{
+  "id": "MDPF_SECCLASS-S67",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~SC",
+  "surfaced_at": "2026-10-08T00:20Z",
+  "one_line": "Row S64 predicted that ai_leg_verify.py's listing limb is coupled to UTC midnight; it is now measured on the live e32 partial state, and the flip is clean -- at 23:1xZ AC1 printed ok=True rc=0 listing_count=200, and at 00:18Z the SAME invocation against the SAME 187 landed rows printed ok=False rc=1 listing_count=None, with nothing in the table, the listing or the snapshot changed in between; the whole difference is that the wall clock crossed 2026-10-08 and AC1 then asked S3 for a date=2026-10-08 key that no chunk has written yet.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "0.7.0_AE_CloudOps~SC for the e32 act: AC1 is run only AFTER run 2's first chunk rewrites the date=2026-10-08 listing, never before, and any ok=False is re-read against the other day's key before it is reported. The DURABLE fix is 2.0.0_SA_COO~M1's (owner of R12_CHECKS): AC1 should take the run day or the act's printed index_address as an argument instead of recomputing it from datetime.now(), and should distinguish NoSuchKey from a count mismatch rather than folding both into lcount=None.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "2026-10-07 23:1xZ, act=e32: 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=187 unresolved=2104 problems=0 snapshot_keys_gone=0 multi_asset=0 model_rows=200 listing_count=200', AC1 rc=0",
+      "2026-10-08 00:18:44Z, IDENTICAL invocation and identical snapshot argument: 'AI-LEG-VERIFY act=e32 ok=False planned=2291 landed=187 unresolved=2104 problems=0 snapshot_keys_gone=0 multi_asset=0 model_rows=200 listing_count=None', AC1 rc=1",
+      "every other field is byte-identical across the two runs (planned, landed, unresolved, problems, snapshot_keys_gone, multi_asset, model_rows); only listing_count moved, 200 -> None",
+      "direct S3 read at 00:18Z: date=2026-10-07/index.json count=200 PRESENT; date=2026-10-08/index.json ABSENT (NoSuchKey) -- so the 10-07 listing that satisfied AC1 an hour earlier is still there and still correct, and AC1 simply stopped looking at it",
+      "amendment 2's own dry run at 00:1xZ prints index_address=s3://opal-data-mdpf/mdpf/global/gold/ai_classified_securities/date=2026-10-08/index.json, where the 21:1xZ dry run printed date=2026-10-07 -- the address the act writes moved with the clock exactly as S64 said",
+      "no write of any kind occurred between the two AC1 runs: the act process was killed at 23:0xZ and confirmed dead, and the only acts since were read-only (scans, a dry run, S3 gets)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order's proof_of_spec gives AC1 one invocation and one expectation, 'AI-LEG-VERIFY act=e32 ok=True', as though its verdict were a function of the act's output alone.",
+  "world_is": "Its verdict is also a function of WHEN it is asked. On one unchanged world state it answers ok=True before 00:00Z and ok=False after, so the criterion as written is not reproducible across a midnight boundary and a grader reading it at the wrong hour grades the wrong thing. Worse, the two failure directions are opposite and both silent: before midnight it was a FALSE PASS (ok=True on an act 8 percent complete, row S66), and after midnight it is a FALSE FAIL (ok=False on 187 rows that are correct, complete-as-far-as-they-go, and inside contract 0.8.0). A reader who trusts rc gets a wrong answer either way, and NoSuchKey is folded into the same lcount=None that a genuine count mismatch would produce, so the output cannot distinguish 'the listing is missing' from 'the listing disagrees'.",
+  "notes": "This row records the measurement for S64, which is append-only and not edited. No fix attempted: R12_CHECKS/ai_leg_verify.py is outside this order's <paths>. The sibling TO-AI-e49 cites the same script with the same single-expectation shape. Amendment 2 clause 5 independently adds a completeness check at close (run 1 sent + run 2 ai_to_model = 2,291), which addresses S66's partial-completeness gap but not this clock coupling."
+}
+```
