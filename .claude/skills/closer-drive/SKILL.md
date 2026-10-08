@@ -45,6 +45,7 @@ project's ONE loop. `/canonical-drive` is the FULL body, and the lease picks bet
 - **You are Andrew's live reviewer on the screen.**
 - **The CVO grades each landed pin after the fact (call 3).** A FAIL becomes the next item. Nothing waits on the
   grade, and the CVO grades on the real run's artifact, never on static markup.
+- **Before the round is counted finished** (`dep_stage` to `ROUND_CLOSE`), run `python .tools/round-close-check.py --project <CODE>`; `verdict=REFUSED` means it is not finished (a landed pin still waits on nothing; the close does).
 
 ## Boundaries (spine, FAST mode)
 

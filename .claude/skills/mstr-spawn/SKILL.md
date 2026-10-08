@@ -43,6 +43,7 @@ fleet relaunch, cross-fabric seats).
 Parse the argument:
 - Must be a full agent serial matching `^[0-9]+\.[0-9]+\.[0-9]+_[A-Za-z]+_[A-Za-z0-9]+(~[A-Za-z0-9]+)?$`.
 - Tilde-lane suffixes (`~B`/`~C`/`~D`) included as needed — they are distinct sessions from the base serial.
+- A reviewer lane named for a macro (`3.0.0_SA_CVO~<MACRO>`, e.g. `~NFRA`) is spawned where several projects of one macro share a box and that box's CTO asks for it; `.tools/round-close-check.py` reads it as the macro reviewer.
 - Optional flags:
   - `--say "<text>"` → first-message hint appended to ajb invocation (SPAWN-WITH-DIRECTION pattern; max ~200 chars to keep CommandLine sane).
   - `--force "<reason>"` → audited concurrency-cap bypass; mandatory reason string.

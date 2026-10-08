@@ -43,6 +43,7 @@ which. Nothing moving is not proof of stalled and never licenses a kill.
    the issuance commit (default cap 8). No cell is cut for coverage alone.
 3. **Terminal orders -> merge per chain end (`/dispatch` Step 5), then the ONE REAL RUN of each outcome at close** --
    the running page looked at, or the real entry point -- and the L8 compile, by you. The compile is an act, never a wait.
+   Before the round is counted finished (`dep_stage` to `ROUND_CLOSE`), run `python .tools/round-close-check.py --project <CODE> --round <n>`; `verdict=REFUSED` means it is not finished.
 4. **L8 packet at the CVO** (`SERVED` / `WORLD` rounds): no READ ack at one tick -> nudge with path + hash; two ticks ->
    `[STUCK]` to `0.0.0_AB_MSTR`.
 5. **Idle lane + uncovered FWD-serving cell = a DEFECT** in this tick's row; the remedy is 2, same tick. On round 1 of a

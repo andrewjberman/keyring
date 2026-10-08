@@ -176,5 +176,7 @@ to the infra lane; `/fabric-check` covers the gap until it lands.
 - **Telemetry > broker for liveness.** Prefer `/fabric-check`'s telemetry-derived liveness over
   a bare `get_live_agents()` when you need to know if an agent is *really* working (e.g. before
   routing time-sensitive work, or diagnosing a stall).
+- **One box only.** This output is the box it runs on. For what each seat on every box is doing, with each box's report age,
+  run `python .tools/seat-list.py show --all`.
 - **Engine:** `.tools/fabric-check.py` (canonical). Thresholds + taxonomy live there; tune in
   one place. Design: this file + `docs/architecture/TELEMETRY_LIVENESS_FRAMEWORK.md`.
