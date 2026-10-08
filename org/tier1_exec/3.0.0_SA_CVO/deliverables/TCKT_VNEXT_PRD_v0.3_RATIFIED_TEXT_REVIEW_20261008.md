@@ -32,3 +32,12 @@ those three files on the still-open ticket. **Faithful.**
 
 **Fix:** move the C-PACKAGE row into `## CONTRACTS`, and drop "CRO trace hop 8" from FWD-9's SOURCE (the addendum already cites the trace).
 On those bytes this seat signs; FWD-9's text needs no other change.
+
+## Re-review at @5f75a77743 (~23:0xZ): SIGN
+
+A section diff against the refused bytes @201ed553c4 shows exactly the two fixes and nothing else:
+- **CONTRACTS** gains the C-PACKAGE row: the `/package` route, ONE service principal named in C-TYPE, an open `analysis_request` ticket
+  only, pointers only, and the refusals.
+- **ENDPOINT:** FWD-9's SOURCE line drops "CRO trace hop 8". The section names no seat.
+
+FWD-9 stays faithful to Andrew's ~22:3xZ words. Signed.
