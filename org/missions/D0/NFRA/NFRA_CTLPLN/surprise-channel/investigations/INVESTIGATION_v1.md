@@ -2667,3 +2667,419 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For the issuer 2.0.0_SA_COO~C: no re-work by the slot is needed beyond the amended expect; the AC3 output_evidence in the proof instance is the real line."
 }
 ```
+
+## NFRA_CTLPLN-W13-S20 -- TO-CT-k-2 AMENDMENT 8: the two scratch install folders could not be deleted -- the permission system denied the recursive removal
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S20",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order says to delete the whole-kit scratch folder when the check ends and report the space returned; the Bash permission system denied the recursive removal twice, so two scratch folders of 2,075 MB each were left on C: and the space returned is 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Bash: rm -rf /c/tmp/kit-python312-scratch-20261007 -> 'Permission to use Bash with command ... has been denied' (twice, with and without a trailing ls)",
+      "du -sm: kit-python312-scratch-20261007 2075, kit-python312-scratch2-20261007 2075, kit-repro-20261007 21; df -k /c at the end: 14611388 KB available"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 section on disk: put the scratch install target under C:/tmp in a NEW folder and DELETE it when the check has finished, reporting the space returned.",
+  "world_is": "Two scratch installs were made (the first with an isolation that was too strict, see W13-S21; the second is the one whose last line is recorded). Removing them was refused by the permission system on both attempts, so nothing was removed and nothing was routed around it. Left on disk: C:/tmp/kit-python312-scratch-20261007 (2075 MB), C:/tmp/kit-python312-scratch2-20261007 (2075 MB), C:/tmp/kit-repro-20261007 (21 MB, the byte-identity cut of one wheel) and the kit itself C:/tmp/kit-python312-pack-20261007 (502 MB, to be kept). Free space on C: was 14.6 GB at the end. Deleting the three scratch folders returns about 4.2 GB."
+}
+```
+
+## NFRA_CTLPLN-W13-S21 -- TO-CT-k-2 AMENDMENT 8: the isolated import as first written failed two requirement lines for reasons that are not the kit's
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S21",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first whole-kit run (imported=60 import_missing_dep=3 failed=4) reported mcp as missing pywintypes and sentence-transformers as failing, both caused by the check itself: a replaced sys.path does not read the target's pywin32.pth, and a scrubbed environment has no USERNAME for getpass.getuser().",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "first run PY-KIT-INSTALL-ALL python=3.12.10 wheels=161 installed=161 requirement_lines=67 imported=60 import_missing_dep=3 failed=4 ok=True; second run: imported=62 import_missing_dep=2 failed=3 ok=True",
+      "the traceback of sentence_transformers under the first scheme ended in getpass.getuser() inside torch/_inductor/runtime/cache_dir_utils.py; mcp under the first scheme: No module named 'pywintypes'",
+      "org/devices/test_kit_python_repack.py cases 15 and 17 (isolation control, borrowed load reported, .pth in the target honoured, .pth outside it refused)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 point 3 and the worker rules: python -I, sys.path REPLACED so that it holds only the scratch target and the standard library, no environment variables.",
+  "world_is": "Two things were added and the isolation was not otherwise loosened: (1) the TARGET's own .pth files are processed (site.addsitedir(target)), because a real install into a site-packages directory honours them (pywin32 depends on it), and any path a .pth puts on sys.path outside the target and the standard library is refused (ForeignPathError); (2) USERNAME, USERPROFILE, LOCALAPPDATA and APPDATA are kept in the otherwise scrubbed environment, because torch calls getpass.getuser() at import. After both: imported=62 import_missing_dep=2 failed=3. Both runs' logs are in the record. The module still cannot be borrowed: a load from the machine's real site-packages is reported as BorrowedModuleError, tested."
+}
+```
+
+## NFRA_CTLPLN-W13-S22 -- TO-CT-k-2 AMENDMENT 8: eighteen installed scripts carry a rewritten first line in the closure kit, not four
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The order speaks of four installed scripts whose first line pip rewrote; across the 161 packages the tool put the portable first line back on 18 scripts in 5 packages.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "MANIFEST.json wheels[].shebangs_restored in C:/tmp/kit-python312-pack-20261007: awscli 2, pdfminer.six 2, docutils 12, jmespath 1, xlsxwriter 1"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 worker rules: four installed scripts whose first line pip rewrote are carried with the portable first line, as the earlier pass did.",
+  "world_is": "The four belonged to the earlier 49-package pass. In the closure kit the restored scripts are awscli 2 (aws, aws_completer), pdfminer.six 2, docutils 12, jmespath 1, xlsxwriter 1 = 18, each first line put back to #!python, which the receiving pip rewrites for its own interpreter. The behaviour is the one AMENDMENT 7 built; only the count differs."
+}
+```
+
+## NFRA_CTLPLN-W13-S23 -- TO-CT-k-2 AMENDMENT 8: with the closure present two requirement lines still report a missing dependency and twenty top_level.txt names do not import, on this machine too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S23",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The whole-kit check reports 5 of 67 requirement lines that do not fully import (uvicorn, duckdb, catboost, pyarrow, pywin32); every one of the 22 modules involved fails identically with a plain import in this machine's own environment, so none comes from the kit.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "for m in the 22 modules: python -c 'import <m>' on this machine -> ModuleNotFoundError (21) and ImportError MFC (dde): the same first lines the isolated check printed",
+      "C:/tmp/kit-python312-pack-20261007 whole-kit run 2: duckdb import_missing_dep: missing adbc_driver_manager; uvicorn import_missing_dep: missing click; catboost, pyarrow, pywin32 import_failed[other]"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 point 3: with the closure present, a missing dependency should no longer occur, and any that does is named.",
+  "world_is": "uvicorn needs click and click is not carried: it is an editable install whose import fails here too (python -c 'import click': No module named click). duckdb lists adbc_driver_duckdb in its top_level.txt, which needs adbc_driver_manager, installed neither here nor in the closure. The other 20 are names in a top_level.txt that are not importable top-level modules even in the source environment: catboost _catboost and _hnsw, pyarrow __dummy__, and 17 of pywin32's 59 (PyISAPI_loader, adsi, authorization, axcontrol, axdebug, axscript, bits, dde (ImportError: This must be an MFC application), directsound, exchange, ifilter, internet, mapi, perfmondata, propsys, shell, taskscheduler). The line for each package still imported its main module (catboost, pyarrow, duckdb, 42 of pywin32's modules). The check classifies a top-level name that is the package's own and not found as other, not as a missing dependency."
+}
+```
+
+## NFRA_CTLPLN-W13-S24 -- TO-CT-k-2 AMENDMENT 8: the repack test failed 11 of 17 cases when the host's free disk fell to 5 GB, through a floor the cases do not test
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S24",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-07T21:53:53Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "test_kit_python_repack.py passed 12 of 12, then 6 of 17, because repack's built-in floor of 10 GB free refuses to write when other work fills C:; the cases do not test the floor, so the test's repack helper now passes --min-free-gb 0.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/devices/test_kit_python_repack.py before the helper change: 'FAIL case 1 ... IndexError' with repack output 'disk: free 5.12 GB, up to 0.00 GB to write, 5.12 GB would remain (floor 10.0 GB)'; after: PY-REPACK-TEST cases=17/17 ok=True",
+      "df -k /c readings in this session: 29G (df -h), 20299636 KB, 15104376 KB, 5011748 KB, 14257552 KB, 16155076 KB, 14611388 KB"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 8 criterion CTk2-AC11: the test's last line reads ok=True with every case passing; disk floor of 10 GB applies to cutting the real kit.",
+  "world_is": "Free space on C: moved 29 GB at the start, 20 GB at the first install, 5.0 GB at its lowest, 14.6 GB at the end, with no step of mine writing more than the kit (502 MB) and two scratch installs (2075 MB each). A test whose result depends on the host's free disk is a flake. The helper change is one argument; the floor stays in repack and is exercised by the real cut (it printed 'disk: free 30.45 GB ... floor 10.0 GB')."
+}
+```
+
+## NFRA_CTLPLN-W14-S7 -- TO-CT-a-1 amendment 5: placement IS recorded (as a target) in project.json, DIRECTIVES.yaml and the CTO four-box record; the order said no register lists it
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S7",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:09:58Z",
+  "one_line": "The order says no register places a project on a Dell, but 13 tree project.json files carry a placement field of DELL1 or DELL2, the directive register places D7 (OPAL_TICKET_VNEXT) on DELL2, and the CTO four-box record places ADVI_PERFRP on DELL2; the field is the TARGET box, so a live project may still be running elsewhere until its round boundary",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py --from-file infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json prints one PLACED line per project with file:line: 13 org/missions/D*/*/*/project.json placement lines (DELL1: MDPF_HEALGAP, MDPF_SECCLASS, MDPF_SECHIST, MDPF_TAXSMA; DELL2: ADVI_BILLING, ADVI_COTBKF, DSGN_IRPTV1, IRPT_BCKEND, IRPT_CUSTDY, IRPT_DASHBD, IRPT_YCDGEN, NFRA_OPSWKF, NFRA_TRNSPT)",
+      "org/missions/DIRECTIVES.yaml:325 (D7 placement DELL2) and the members line naming OPAL_TICKET_VNEXT; org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_PLACEMENT_20261007_FOUR_BOX_LAYOUT_ANDREW_APPROVED.md:18 (ADVI_PERFRP, DELL2, no tree home)",
+      "the CTO record says a live project moves at its next round boundary and the project.json placement_ruling for ADVI_COTBKF says 'TARGET BOX dell2 ... Replaces the dell1 target of the four-box layout': the field is a target and two registers disagree on ADVI_COTBKF (layout table DELL1, project.json DELL2); org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261007_071xZ_DELL2_SEATING_CTO_SELF_DRIVE_COO_CANONICAL_DRIVE_MSTR_ARMS.md lines 46-50 quote seats ~K2 ~C2 ~P2 ~Y2 ~M2 ~G2 ~D2 on dell2 for IRPT_CUSTDY, ADVI_COTBKF, IRPT_BCKEND, IRPT_YCDGEN, IRPT_DASHBD"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5 step 1(c): 'NO register lists this (the directive register names DELL2 for D7 only; project rows carry laptop or site-z)'; infer placement from lane suffixes where the relay files confirm the convention.",
+  "world_is": "Project rows carry DELL1/DELL2 in a placement field (13 tree rows) and the census uses those lines, not the lane-suffix convention: org/devices/DEVICES.json lists no lane letters for dell1 or dell2 (lane_letters_claim absent), so the convention is read only from the relay files and places no project. placement_inferred=False for all 15 placed projects; the placed list is a TARGET list.",
+  "notes": "For the issuer: the join is only as current as the target; a project that has not yet moved still runs elsewhere, and a project moved later is missed until the census is retaken (--live)."
+}
+```
+
+## NFRA_CTLPLN-W14-S8 -- TO-CT-a-1 amendment 5: the whitelist scopes OpenAI to ETFS_RIVALS only, and the census finds MDPF_SECCLASS programs reading the OpenAI key
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S8",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:09:58Z",
+  "one_line": "The standing vendor-egress whitelist scopes OpenAI to ETFS_RIVALS only ('not any other project's use of OpenAI'), while the vendor census finds four MDPF_SECCLASS programs on dell1 reading openai-api-key; the Dell grant lets a Dell read the key and says nothing of whether a call is allowed, which the whitelist older wording would refuse for that project",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/ref/VENDOR_EGRESS_WHITELIST.yaml VEW-2: vendor OpenAI, scope 'ETFS_RIVALS -- the rivalfunds AI chain only', not_covered 'OpenAI for any project other than ETFS_RIVALS'; VEW-3 Kimi scope 'any'",
+      "tests/vendor_secrets_census.json join: MDPF_SECCLASS reads openai-api-key in data/black_diamond/scripts/classification/classify_bd_securities.py:159, data/black_diamond/scripts/gold/B_01b.classify_new_securities.py:283, data/cot/scripts/gold/B_01b.classify_new_securities.py:284, data/inf/scripts/classification/classify_assets.py:290",
+      "Andrew 18:3xZ item 4 ('The Dell Boxes have vendor egress as needed', org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md) is newer than the register row and broader; the register row was not struck or widened by it"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: grant the Dell group read of exactly the vendor secrets its placed projects need; whether a given vendor call is one Andrew allowed stays the rule seats follow.",
+  "world_is": "openai-api-key is classed VENDOR (an AI model provider key read by name by MDPF_SECCLASS programs) and is in the built grant; the register row that records Andrew's standing OpenAI word covers one project. No call is made by this cell; the half request carries the secret so a person can strike it or widen VEW-2.",
+  "notes": "For 1.0.0_SA_CTO (the register's only writer): whether item 4 widens VEW-2 for the Dell-placed projects, or the key leaves the grant."
+}
+```
+
+## NFRA_CTLPLN-W14-S9 -- TO-CT-a-1 amendment 5: CTa1-AC5 cannot read ok=True after the apply, because its ok includes 'live key policy equals the pre-edit render'
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S9",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:26:53Z",
+  "one_line": "CTa1-AC5 reads ok=False on the live account because its check requires the LIVE transcripts key policy to equal the PRE-edit render, and the amendment 3 change has since been applied: the live key policy now holds 3 statements, the pre-edit render 2; every other field of the line passes",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py (rc 1) prints 'live key policy (kms get-key-policy) statements=3 equals the pre-edit render (one-element lists normalised as KMS stores them): False' and LAST line 'TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True statements_added=1 ok=False'",
+      "the same script on the committed amendment 3 state read ok=True in the earlier pass (proof instance row CTa1-AC5, before the apply); the render still reads 'statements after=3 before(55ec1bd250)=2' and the diff added=['DellAgentUsersDecryptOnly']",
+      "check_transcripts_dell_decrypt.py, the line after 'the live key policy equals the pre-edit render': live_same is part of ok, so a correct apply makes the check fail by construction; I did not compare the live statements' content to the after-render (kms get-key-policy is not in amendment 5's read list), so 'the live policy is the applied after-state' is inferred from the count 3"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: the other five criteria are unchanged and must still pass; CTa1-AC5 expects ok=True with statements_added=1.",
+  "world_is": "The check's ok includes 'live key policy equals the pre-edit render', true only before the apply. After the apply the line reads ok=False although the expected substring dell_decrypt=2/2 and statements_added=1 hold. I did not edit the test (a change to how ok is formed is the issuer's to rule, as amendment 4 did for AC2); the order stays in_progress with AC5 recorded FAIL.",
+  "notes": "For 2.0.0_SA_COO~C: amend CTa1-AC5 so the live comparison accepts the applied state (live equals the after-render) or drop it from ok, then re-run; no other criterion is affected."
+}
+```
+
+## NFRA_CTLPLN-W14-S10 -- TO-CT-a-1 amendment 5: CTa1-AC2's contiguous expectation cannot match a line that gains vendor_ok= before all_ok
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S10",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-07T21:45:52Z",
+  "one_line": "CTa1-AC2's expectation 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is a contiguous pattern, and amendment 5 makes the same line gain vendor_ok= before all_ok, so the line now reads 'routes_ok=5/5 vendor_ok=19/19 all_ok=True' and the pattern no longer matches although every token it names is present",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "timeout 120 python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py (rc 0, 13 s) LAST line: POLICY-SIM allowed_ok=22/22 denied_ok=19/19 passrole_ok=5/5 protected_ok=8/8 respol_ok=13/13 ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True",
+      "the proof checker decides a mechanical row by re.search(expect, output_evidence): 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' is not a substring of that line (vendor_ok=19/19 sits between routes_ok=5/5 and all_ok=True)",
+      "amendment 5 says 'CTa1-AC2's line gains vendor_ok=' and the worker order says 'gains vendor_ok=<a>/<n> before all_ok'; neither fixes a position that keeps the old pattern contiguous, and the issuer did not restate the expectation as amendment 4 did"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 5: CTa1-AC2 expects 'ssm_ok=9/9 routes_ok=5/5 all_ok=True' and its line gains vendor_ok=.",
+  "world_is": "Both cannot hold as a literal pattern. I placed vendor_ok immediately before all_ok and did not move it to make the pattern match; the proof row records CTa1-AC2 FAIL with the reason, and every named token (ssm_ok=9/9, routes_ok=5/5, all_ok=True) is present on the line.",
+  "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
+}
+```
+
+## NFRA_CTLPLN-W32-S1 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_bid_available_with_the_contract_payload fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_bid_available_with_the_contract_payload fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError on set(p) == {...six keys}: the payload gained 'reviewer'.",
+      "The case asserts the bid payload key set is exactly {device, serial, available, cpu_pct, mem_pct, at}; the bid now also carries reviewer (and unavailable_reason when false), as the order's seam fixes; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S2 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_accept_locks_then_close_unlocks fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_accept_locks_then_close_unlocks fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError assert 2 == 0 on the first accept.",
+      "The case calls accept with no --brief-file and a payload of exactly {device, serial, coo}; accept now refuses without a brief file (rc 2) and the payload gains brief_sha256; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S3 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_complete_payload_and_attempt_event_id fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_complete_payload_and_attempt_event_id fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: IndexError: list index out of range on env.sent[-1] (nothing was sent), after accept itself refused.",
+      "The case completes a job that was never graded and expects a send with a payload of exactly {device, serial, summary, deployed, evidence}; complete now refuses without a passing reviewer grade and the payload gains coo and grade; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S4 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_dry_run_sends_nothing_and_touches_no_lock fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_dry_run_sends_nothing_and_touches_no_lock fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError assert 2 == 3 (two DRY-RUN lines).",
+      "The case runs a dry-run accept with no --brief-file and expects three DRY-RUN lines (bid, accept, fail); the accept now refuses before printing one; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S5 -- TO-CT-i-2: the seam's protocol additions are not in this order's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the seam says the new payload fields are additions to REMOTE_JOBS_PROTOCOL_20261002.md, which is not in the order's paths and not in its BUILD, so the protocol file was not edited",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order's <paths> block lists four files; org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md is not among them, and BUILD steps 1-3 do not name it.",
+      "The protocol file at the base still lists job.bid, job.accepted and job.complete with the old payloads (device, serial, available, cpu_pct, mem_pct, at / device, serial, coo / device, serial, summary, deployed, evidence)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM WITH THE CLOUD: 'Additions to org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md; nothing in it is removed.'",
+  "world_is": "The tool, the skill and the test carry the new fields (reviewer, unavailable_reason, brief_sha256, coo, grade); the protocol file does not, so the two halves' shared contract text still shows the old payloads until a seat with that path adds them."
+}
+```
+
+## NFRA_CTLPLN-S22 -- the kit verifier answers differently on two boxes over the same tar bytes (the requirements-kit.txt limb)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T23:41:47Z",
+  "one_line": "The Python 3.12 kit's verifier reads ok=False on dell2 and ok on dell1 over the same tar bytes: one limb, the requirements-kit.txt comparison, answers differently on the two boxes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106627, from dell2 (bus 587743ea, relayed in 0.0.0_AB_MSTR msg 106626): tar sha256 equal on both boxes; 'PY-KIT-VERIFY wheels=161 verified=161 stray=0' with ok=False on 'FAIL: requirements-kit.txt absent or differs from the manifest's wheel list'; dell2's own compare of the name==version sets reads 161 = 161, none only in either; the file is 163 lines; dell1 verified the same tar clean",
+      "Issuer's run on the laptop before the merge: PY-KIT-VERIFY wheels=161 verified=161 stray=0 ok=True (org/devices/kit_python_repack.py, merged @666132025e)",
+      "The CTO's ruling at 23:2xZ: the kit is ACCEPTED on dell2; an equal tar hash means the file inside is byte-identical, so the limb's two answers come from the verifier as checked out on each box; line endings or the tool's version are the candidates, NOT measured",
+      "Not read by this seat: dell2's checkout of the tool, its commit, or the bytes it compared"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 8: verify checks every wheel against the manifest and that requirements-kit.txt is the closure's exact name==version lines; the same tool on the same bytes gives the same answer on any box.",
+  "world_is": "A verifier whose answer depends on the checkout it runs from. The file has 163 lines for 161 wheels (two comment lines mark its two groups), so a comparison that counts lines, or that reads one side with different line endings than the other, can differ by box. The kit itself is not in doubt. Repair, at the next cut of the kit cell: compare the parsed name==version SETS, ignoring comment lines and line endings, and print the tool's own commit beside its verdict so two boxes can see whether they ran the same verifier."
+}
+```
+
+## NFRA_CTLPLN-W6-S14 -- TO-CT-s-1: the launcher's arm order cannot be copied into an exclusive pattern set; CLOUDOPS widens CloudComp to any version
+
+```json
+{
+  "id": "NFRA_CTLPLN-W6-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~6",
+  "surfaced_at": "2026-10-07T23:58:18Z",
+  "one_line": "TO-CT-s-1 asks for serial_pattern values 'derived from the launcher's existing regular expressions', but the launcher's arms are ordered (first match wins) and the file's kinds must be exclusive, so TIER2 needed a hand-built complement of the AE_CloudOps/AE_CloudComp names and CLOUDOPS matches AE_CloudComp at any version",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/ref/SEAT_ROLES.json TIER2 serial_pattern at the TO-CT-s-1 commit: '_AE_' followed by the complement of {CloudOps, CloudComp} spelled out prefix by prefix, because Python re and the PowerShell arms share no lookaround and kind_of must find exactly one kind",
+      ".tools/ajb.ps1 before this order: the CloudComp arm is '^0\\.8\\.0_AE_CloudComp' (version 0.8.0 only); the file's CLOUDOPS pattern is '^0\\.[0-9]+\\.[0-9]+_AE_Cloud(Ops|Comp)$', so a 0.9.0_AE_CloudComp serial is CLOUDOPS in the file but falls to the Tier-2/3 arm in the launcher's operational text",
+      ".tools/tests/test_seat_roles_launcher.py: 116 AE names (every prefix of CloudOps and CloudComp with one character changed, inserted or appended) each resolve to exactly one of CLOUDOPS and TIER2; the run printed 'AE namespace fuzz (116 names, CLOUDOPS xor TIER2): True'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-1 BUILD 1: serial_pattern per kind is derived from the launcher's existing regular expressions, and a serial matches exactly ONE kind.",
+  "world_is": "The launcher resolves overlap by arm order and the file cannot, so the patterns are exclusive by construction and one widens the launcher's CloudComp arm from 0.8.0 to any version; I kept the launcher's CloudComp arm as it was and did not change which operational text any serial receives.",
+  "notes": "For 1.0.0_SA_CTO: either accept 'Cloud(Ops|Comp) at any version is CLOUDOPS', or narrow CLOUDOPS to the launcher's two arms and rule how the TIER2 complement is to be written; no serial currently in use is affected."
+}
+```

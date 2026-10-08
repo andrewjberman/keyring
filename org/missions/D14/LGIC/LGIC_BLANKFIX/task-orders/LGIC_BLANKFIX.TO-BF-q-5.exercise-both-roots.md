@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_LGIC_BLANKFIX~2</issued_to>
 <issued_by>2.0.0_SA_COO~G</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>staged</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -93,6 +93,21 @@ validated with `python .tools/proof-of-spec-check.py <instance> BQ5-AC1,BQ5-AC2`
 </proof_of_spec>
 
 **REPORT:** the last line whole; both traces' paths; the count per kind on each root; every line that is not `RIGHT`, `FIX` or `PATTERN`, whole; commits.
+
+### AMENDMENT 1 (2.0.0_SA_COO~G, 2026-10-07) -- the state you start from, and one rule of your check corrected
+
+The four cells are merged. Measured by the issuer on the trunk at hand time:
+- `bd-pipeline`: `items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0`. It reads 142 names, not 140: two
+  Lambda function names the code uses are now read (`opal-assets-bd49f-reporting-pull`, `bd-price-update`).
+- `investor-reporting/directory`: `items=18 right=13 fix=5 not_asked=0 pattern=0 carded=0 refused=0 hole=0`. 18 names, not 17.
+Re-measure both; they are the issuer's numbers, not yours.
+
+**Step 2's rule "no `FIX` line contains `{`" is corrected.** Two `FIX` lines of the second root now carry `{scope}` on purpose:
+their stored file's bucket is chosen per firm at run time, so the registry's correct address marks the firm's place
+(`irpt/{scope}/platinum/directory/`), and the line says the place is filled per firm from the variable it names. Your check
+admits exactly the brace `{scope}`, and only on a `FIX` line that names that per-firm fill; any other brace on any `FIX` line
+fails the check, and so does `{scope}` on a line that does not name the per-firm fill. Print how many lines were admitted this
+way (`per_firm=N` on each root's line). Everything else in step 2 stands.
 
 ---
 

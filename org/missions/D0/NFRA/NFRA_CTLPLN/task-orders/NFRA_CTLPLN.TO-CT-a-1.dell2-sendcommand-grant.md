@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -113,7 +113,7 @@ shell document, the export render document, another instance, a rewrite of a gra
 <criterion id="CTa1-AC3" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py</invocation><expect>names_from_builder=9/9 policy_size_ok=True ok=True</expect></criterion>
 `CTa1-AC3` -- the control: the root validates, nine names are the builder's, every document fits the limit.
 
-<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4,CTa1-AC5</expected_criteria>
+<expected_criteria>CTa1-AC1,CTa1-AC2,CTa1-AC3,CTa1-AC4,CTa1-AC5,CTa1-AC6</expected_criteria>
 
 ## BOUNDS
 
@@ -145,6 +145,9 @@ infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py
 infra/aws/terraform/nfra-ctlpln-identity/tests/check_identity.py
 infra/aws/terraform/transcripts/main.tf
 infra/aws/terraform/transcripts/tests/
+infra/aws/terraform/nfra-ctlpln-identity/dell_vendor_secrets_policy.json
+infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py
+infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>
 
@@ -410,7 +413,7 @@ whose principals come from `var.reader_principal_arns` and whose actions include
 
 **ACCEPTANCE.** One criterion is ADDED; the other four are unchanged and must still pass:
 
-<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2</expect></criterion>
+<criterion id="CTa1-AC5" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/transcripts/tests/check_transcripts_dell_decrypt.py</invocation><expect>TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True</expect></criterion>
 `CTa1-AC5` -- the same line must read `ok=True` with `statements_added=1`.
 
 **BOUNDS.** Read-only AWS: `iam simulate-*`, `iam get-*`/`list-*` for the two Dell users' attached policies, `kms describe-key`,
@@ -425,4 +428,83 @@ no plan against the backend, no download. Never print or save the content of a t
 requires every block, the resource-policy one included. Gate limb: none graded this modification.
 The worker re-runs the five criteria, rewrites the proof instance's `CTa1-AC2` row from that run (its `expect` field equal to the
 new expectation, `status` from the match), validates the instance, and flips the order to `complete` when all five pass.
+
+## AMENDMENT 5 (2.0.0_SA_COO~C, 2026-10-07 ~19:4xZ) -- REOPENED: the Dell group reads exactly the vendor secrets its placed projects need (measure first; build and measure only)
+
+The issuer reopens its own order (`complete` -> `in_progress`); the slot is re-seated in a fresh worktree; every earlier commit is
+inherited state, merged. Authority: `1.0.0_SA_CTO` msg 106535, verbatim: "Andrew's 18:3xZ item 4, 'The Dell Boxes have vendor
+egress as needed'. dell1 is denied secretsmanager:GetSecretValue on astn/kimi/api-key, so it cannot make a vendor call he has
+allowed it. Measure which vendor secrets the Dells' placed projects need, and send one half request granting the Dell group read
+of exactly those." His words as recorded
+(`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_183xZ_TWELVE_ITEMS_ANSWERED_INSTALLER_PUSH_VENDOR_EGRESS_STORE_OUTLOOK_LAW_LINE_D2_HOLD_LIFTED.md`,
+item 4): "Vendor egress does not count as raw internet access; those are protected channels. The Dell Boxes have vendor egress
+as needed." Gate limb: none graded this modification. YOU APPLY NOTHING AND YOU READ NO SECRET VALUE: no
+`secretsmanager get-secret-value`, no `batch-get-secret-value`, by any identity, for any reason. Names, ARNs, tags, descriptions
+and last-accessed dates only.
+
+THE WORD IS "VENDOR". A secret that holds a vendor's API key or sign-in is in scope. A secret that holds anything else (a
+database password, a signing key, a session secret, a portal user store, another firm's credential that is not a vendor call) is
+NOT in scope and must not ride in on a wildcard. The Dell group holds no `secretsmanager:GetSecretValue` today (issuer's read of
+the three group policies: create, update, tag, describe and list only).
+
+1. THE CENSUS, in `tests/derive_vendor_secrets.py`, saved as `tests/vendor_secrets_census.json`:
+   - (a) every secret in the account by NAME (`secretsmanager list-secrets`, auto-paginated, counted client-side; the region the
+     estate uses, and say which regions you read): name, ARN, description, tags, last accessed date, last changed date; never a value;
+   - (b) every reference to a secret name or a `secretsmanager` call in the repository (the Grep tool; a shell `grep -r` is
+     blocked): the file, the secret named, and which project root or pipeline it belongs to (the directory under
+     `infra/aws/terraform/`, `data/`, `lib/` or `portal/` and, where a project row names it, the project code);
+   - (c) which projects are placed on a Dell. NO register lists this (the directive register names DELL2 for D7 only; project
+     rows carry laptop or site-z). Read what the repository does record: `org/missions/DIRECTIVES.yaml` placements naming a Dell;
+     task orders whose `<issued_to>` or `<issued_by>` serial ends in a lane that the device register or today's relay files tie to
+     a Dell (lanes ending `1` on dell1 and `2` on dell2 by the fabric's convention, for example `~M1`, `~G1`, `~C2`, `~P2`, `~Y2`:
+     confirm the convention from `org/devices/DEVICES.json` or the relay files under
+     `org/tier0_exec/0.0.0_AB_MSTR/deliverables/` before using it; if you cannot confirm it, say so and mark placement INFERRED).
+     Print each Dell-placed project with the evidence line that places it;
+   - (d) the join: for each Dell-placed project, the secrets its code references; each classified VENDOR (names the vendor and the
+     call it serves, from the code or the secret's description), NOT-VENDOR (says what it is), or UNSURE (counted, listed, NOT
+     granted). The one secret the CTO names, `astn/kimi/api-key`, must appear with its project and class.
+   - LAST line `VENDOR-SECRETS secrets=<n> referenced=<r> dell_projects=<p> placement_inferred=<True|False> vendor=<v> not_vendor=<x> unsure=<u> granted=<g> ok=<True|False>`
+     (`ok=True` when both listings completed and every referenced secret of a Dell-placed project has exactly one class;
+     `granted` equals `vendor`).
+2. THE GRANT, built from the census and nothing typed twice: `dell_vendor_secrets_policy.json`, one statement
+   `ReadNamedVendorSecrets`, Effect Allow, Action exactly `secretsmanager:GetSecretValue`, Resource the EXACT ARNs of the VENDOR
+   class (a secret's ARN ends in a random suffix: use the full ARN from the listing, or the name followed by `-??????`; no `*`
+   that could match a second secret; say which form you used and prove it matches exactly one secret each). No `kms:Decrypt`
+   unless a listed secret is encrypted under a customer-managed key (read each secret's `KmsKeyId`; a secret under the
+   account's default key needs none); if one is, STOP and report it rather than widening a key policy. Add the policy and its
+   group attachment to `iam.tf` beside the others, its name from the builder as the others are (a sixth managed policy on the
+   group; the limit is ten).
+   If the commit gate's naming limb refuses the secret names in a `.json` outside `tests/` (it refused function names before),
+   do NOT override: keep the census committed, file a BLOCKING row, and report -- the CTO ruled the earlier case by having
+   Terraform build the statement from the census file under `tests/`; say whether the same form would serve here.
+3. THE PROOF WITHOUT AN APPLY: extend `tests/simulate_policy.py` with an eighth block on the group's set plus the new document:
+   each Dell user `secretsmanager:GetSecretValue` on each VENDOR secret -> allowed; on one NOT-VENDOR secret -> not allowed; on
+   one secret outside every Dell project -> not allowed; `secretsmanager:PutSecretValue` on a VENDOR secret -> as today (report
+   what today is: the create policy allows it; this cell does not change it, and you say so plainly in the plan note).
+   The last line gains `vendor_ok=<a>/<n>`.
+4. `PLAN_NOTE_DELL_VENDOR_SECRETS.md` in your deliverables: what the apply would show (by reading: one policy and one attachment
+   created), the table of secrets granted with the project and vendor each serves, the NOT-VENDOR and UNSURE lists, how placement
+   was established, and what the grant does NOT do (it lets a Dell READ the key; whether a given vendor call is one Andrew
+   allowed for a given project stays the rule seats follow).
+
+**ACCEPTANCE.** One criterion is ADDED; the other five are unchanged and must still pass (`CTa1-AC2`'s line gains `vendor_ok=`):
+
+<criterion id="CTa1-AC6" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/derive_vendor_secrets.py --from-file infra/aws/terraform/nfra-ctlpln-identity/tests/vendor_secrets_census.json</invocation><expect>VENDOR-SECRETS secrets=</expect></criterion>
+`CTa1-AC6` -- the census was taken and saved; the same line must read `ok=True`. The live listing may exceed 120 seconds and is
+run once outside the bound with `--live`.
+
+**BOUNDS.** Read-only AWS: `secretsmanager list-secrets`, `describe-secret`, `iam simulate-*`, `iam get-*`/`list-*` for the Dell
+group's policies, `sts get-caller-identity`. NEVER a secret's value. No apply, no plan against the backend, no download.
+
+## AMENDMENT 6 (2.0.0_SA_COO~C, 2026-10-07 ~22:3xZ) -- two issuer repairs to expectations (rows W14-S9, W14-S10); no code change
+
+1. `CTa1-AC2`: AMENDMENT 5 made the simulation's line gain `vendor_ok=` before `all_ok`, and left the expectation as contiguous
+   text that the new field splits. It is now `ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+2. `CTa1-AC5`: the transcripts key change was APPLIED today (order NFRA_CTLPLN.TO-APPLY-9, complete). The check's `ok` includes a
+   pre-apply guard that the LIVE key policy equals the pre-edit render, which is false after the apply by construction, so the
+   line now ends `ok=False`. The criterion's expectation names the four results the cell proves and no longer the `ok` word:
+   `TRANSCRIPTS-DELL-DECRYPT dell_decrypt=2/2 dell_write_refused=10/10 reader_unchanged=True unlisted_refused=True`. The proof row
+   says in its evidence that the invocation exits non-zero for that stated reason.
+Gate limb: none graded this modification. The worker re-runs the six criteria, rewrites the two proof rows from that run with
+their new `expect` fields, validates the instance, and flips the order to `complete` when all six match.
 

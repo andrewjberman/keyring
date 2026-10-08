@@ -71,7 +71,8 @@ KEY_RULINGS_FILE = "key_rulings.json"
 
 def load_key_rulings(path=None):
     """{(bucket, key): row} from the registry's key rulings file (opal_naming.REGISTRY_DIR). Each row carries exactly one
-    of `canonical` and `none_owed`; a row with both or neither, or a second row for one (bucket, key), is an error."""
+    of `canonical` and `none_owed`, and exactly one of `bucket` and (`bucket_per` 'firm' with `bucket_from`); a row with
+    both or neither, or a second row for one (bucket, key), is an error. A per-firm row is keyed ("per:" + bucket_from, key)."""
     path = path or os.path.join(opal_naming.REGISTRY_DIR, KEY_RULINGS_FILE)
     with open(path, "rb") as fh:
         doc = json.loads(fh.read().decode("utf-8"))
@@ -80,30 +81,62 @@ def load_key_rulings(path=None):
         if bool(r.get("canonical")) == bool(r.get("none_owed")):
             raise ValueError("key ruling %r/%r carries not exactly one of canonical and none_owed" % (
                 r.get("bucket"), r.get("key")))
-        k = (r.get("bucket"), r.get("key"))
+        per = bool(r.get("bucket_per") or r.get("bucket_from"))
+        if bool(r.get("bucket")) == per or (per and not (r.get("bucket_per") == "firm" and r.get("bucket_from"))):
+            raise ValueError("key ruling %r carries not exactly one of bucket and (bucket_per 'firm' with bucket_from)" % (
+                r.get("key"),))
+        k = ("per:" + r["bucket_from"], r.get("key")) if per else (r.get("bucket"), r.get("key"))
         if k in out:
             raise ValueError("two key rulings for %r" % (k,))
         out[k] = r
     return out
 
 
-def _ruling_of(item, rulings, bucket_reader=None):
-    """(row or None, unread reason or None) for a stored-file item: the row matching (bucket, key) where the bucket is
-    the one opal_naming_keyfill.bucket_of(item) reads. An item whose bucket is not read matches no row; the reason says so,
-    but only when some row carries the item's key under a bucket (otherwise there is nothing the bucket would have decided)."""
-    if item["type"] != "S3Key" or not rulings:
+def _ruling_of(item, rulings, bucket_reader=None, runtime_reader=None):
+    """(row or None, unread reason or None) for a stored-file item. A PER-FIRM row (bucket_per, bucket_from) is matched first:
+    its key equals the item's key AND the item's own source file names its bucket_from variable (opal_naming_keyfill.
+    runtime_bucket). Else the row matching (bucket, key) where the bucket is the one opal_naming_keyfill.bucket_of(item)
+    reads. An item whose bucket is not read matches no row; the reason says the bucket is chosen at run time and names the
+    variable when its file shows one, else says it was not read, but only when some row carries the item's key under a
+    bucket (otherwise there is nothing the bucket would have decided)."""
+    if item["type"] != "S3Key":
+        return None, None
+    runtime_reader = runtime_reader or opal_naming_keyfill.runtime_bucket
+    asked = sorted(set(r["bucket_from"] for r in (rulings or {}).values() if r.get("bucket_from")))
+    names, _rb = runtime_reader(item, None, asked)
+    for (_b, k), row in sorted((rulings or {}).items(), key=lambda kv: (str(kv[0][0]), str(kv[0][1]))):
+        if row.get("bucket_per") and k == item["current"] and row["bucket_from"] in names:
+            return row, None
+    if not rulings:
         return None, None
     bucket, why = (bucket_reader or opal_naming_keyfill.bucket_of)(item)
     if bucket is None:
+        if names:
+            return None, ("the bucket is chosen at run time from %s, one bucket per firm, and the registry holds no per-firm "
+                          "answer for this key and variable, so no key ruling is matched" % (", ".join(names),))
         if any(k == item["current"] for (_b, k) in rulings):
             return None, "the bucket was not read (%s), so no key ruling is matched" % (why,)
         return None, None
     return rulings.get((bucket, item["current"])), None
 
 
+def _is_per_firm(row):
+    return bool(row) and bool(row.get("bucket_per"))
+
+
+def stray_braces(text, per_firm=False):
+    """True when `text` carries a brace. A per-firm answer's {scope} is the one brace admitted."""
+    if per_firm:
+        text = text.replace("{scope}", "")
+    return "{" in text or "}" in text
+
+
 def _ruling_line(item, row):
     """(kind, detail) of a stored-file item the key rulings answer: the whole canonical address, or none owed."""
     if row.get("canonical"):
+        if _is_per_firm(row):
+            return "FIX", ("%s (the firm's place {scope} is filled per firm: the code reads its bucket from %s, one bucket "
+                           "per firm, so the firm is the one whose bucket is being served)" % (row["canonical"], row["bucket_from"]))
         if row["canonical"] == item["current"]:
             return "RIGHT", row["canonical"]
         return "FIX", row["canonical"]
@@ -226,7 +259,10 @@ def decide(item, ans, fourth=None):
         what = var.group(0) if var else key.get("basis")
         return "PATTERN", "a code pattern, not a name; variable %r" % (what,)
     if ans.get("key_ruling"):
-        return _ruling_line(item, ans["key_ruling"])
+        kind, detail = _ruling_line(item, ans["key_ruling"])
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(ans["key_ruling"])):
+            return "HOLE", "partial form %s; a brace remains that no per-firm answer admits" % (detail,)
+        return kind, detail
     if ans.get("carded"):
         kind, detail = _card_line(item, ans.get("card"))
         if ans.get("ruling_unread"):
@@ -235,7 +271,7 @@ def decide(item, ans, fourth=None):
     if key is not None and key.get("class") == "REFUSED-CROSS-FIRM":
         return "REFUSED", _refused_line(key)
     if ans.get("raised") is not None:
-        return "HOLE", str(ans["raised"])
+        return "HOLE", str(ans["raised"]) + ("; " + ans["ruling_unread"] if ans.get("ruling_unread") else "")
     verdict, canon = ans["graded"]
     cad = ans.get("cadence") if typ in _CADENCE_TYPES else None
     rebuilt = False
@@ -422,6 +458,8 @@ def lines_check(root, map_path, out=print):
             bad.append("a rule code in: " + line)
         if kind == "NOT-ASKED" and "rename" not in line:
             bad.append("a NOT-ASKED line without 'rename': " + line)
+        if kind == "FIX" and stray_braces(detail, _is_per_firm(_ans.get("key_ruling"))):
+            bad.append("a FIX line carries a brace: " + line)
         if kind == "FIX":
             targets.setdefault((it["type"], detail), set()).add(it["current"])
         if kind == "REFUSED" and "belongs to another firm's store" in line:

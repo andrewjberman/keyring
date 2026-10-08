@@ -770,3 +770,105 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "Closing either HOLE is a registry decision (4.0.0_SA_CRO owns key_rulings.json and the card): a ruling that the key is a prefix under each firm's own bucket and either names the canonical form or says none is owed. A (bucket, key) row cannot be written once because the bucket is per firm and not in the repository; nothing the run or the map entry (fills: [system], no firm) can supply closes it. The run honoured fills: no line fills a firm or a source from the map entry."
 }
 ```
+
+## LGIC_BLANKFIX-W2-S10 -- the wider function-name rule adds two names to bd-pipeline, not one
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W2-S10",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~2",
+  "surfaced_at": "2026-10-07T21:24:00Z",
+  "one_line": "TO BF-q-4 says bd-pipeline will read 141 names where it read 140; with the wider rule it reads 142, because a second function-name literal in the same root (bd-price-update) is also typed LAMBDA.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming_rootcheck.py infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json --report-only, last line: 'ROOTCHECK ok=True root=infra/aws/terraform/bd-pipeline items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0' (base: items=140 fix=116).",
+      "Census diff of that root, wide switch off vs on: two added lines, 'FIX LAMBDA opal-assets-bd49f-reporting-pull -> opal-assets-bd49f-reporting-pull-lambda [infra/aws/lambda/bd-pipeline/bd-49f-session-trigger/lambda_function.py:54]' and 'FIX LAMBDA bd-price-update -> advi-49f-price-update-lambda [infra/aws/lambda/bd-pipeline/bd-allocation-processor/lambda_function.py:117]'.",
+      "infra/aws/lambda/bd-pipeline/bd-allocation-processor/lambda_function.py:117 is FunctionName='bd-price-update' in a client call: a function-name context the order's own rule covers; the order named only the line-54 literal."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-4 CELL: bd-pipeline will read 141 names where it read 140.",
+  "world_is": "bd-pipeline reads 142 (fix 118): the rule adds every function-name literal with no kind token under the root, and the root holds two. No criterion depends on the count (BQ4-AC2 is the line checks, which pass); the rule was not narrowed to reach 141. Both added names grade without raising."
+}
+```
+
+## LGIC_BLANKFIX-W1-S11 -- the face's REFUSED expectation for the two cot_bronze_ingest.py lines is overtaken by a key ruling
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S11",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T22:05:30Z",
+  "one_line": "TO BF-q-3 says the two bd-pipeline lines for code/bronze/cot_bronze_ingest.py must still print REFUSED after the build; the root check prints FIX for them because a registry key ruling for (opal-data-bd, that key) has landed.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/key_rulings.json@cab8510cc3 line 45: a row with key 'code/bronze/cot_bronze_ingest.py'.",
+      "python lib/opal_naming.py census --root infra/aws/terraform/bd-pipeline --map infra/logic/registry/root_map.json (run in the worktree after the build): 'FIX S3Key code/bronze/cot_bronze_ingest.py -> blackdiamond/49financial/code/bronze/bronze_ingest.py' at lambda_function.py:43 and :59; last line 'ROOTCHECK ok=True ... fix=116 ... refused=0 hole=0'.",
+      "opal_naming_keyfill.fill_keys(items, root_map['bd-pipeline']) after the build (measured): both rows class REFUSED-CROSS-FIRM, basis \"conflict: path token 'cot' names firm 'cottonwood', the root entry's scope is '49financial'\" -- the same text as before the build; the module does not read key rulings."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-3 WORKER FACE last sentence: the two bd-pipeline lines for code/bronze/cot_bronze_ingest.py must still print REFUSED after the build.",
+  "world_is": "The root check prints FIX for both lines: the root check answers a key the registry rules on first (lib/opal_naming_rootcheck.py module docstring, line 9), so fill_keys' REFUSED-CROSS-FIRM class is no longer what the line shows. What this build holds is the class: fill_keys still classes both REFUSED-CROSS-FIRM (the key's path word 'cot' names Cottonwood in 49 Financial's bucket opal-data-bd), and crossfirm prints them as REFUSED. The build did not change either."
+}
+```
+
+## LGIC_BLANKFIX-W1-S12 -- the face's existing no-brace rule for key-ruling lines and the lines command did not exist
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W1-S12",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~1",
+  "surfaced_at": "2026-10-07T22:50:50Z",
+  "one_line": "TO BF-q-2 AMENDMENT 1 speaks of the lines command's existing no-brace rule; the lines command held none, so the brace rule was added in both the line decision and the lines command.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "lib/opal_naming_rootcheck.py@807831814c lines_check (before the build): it checked rule codes, NOT-ASKED wording, FIX target collisions, REFUSED wording and the count line; no check of a brace in a FIX detail. decide() kept 'if \"{\" not in form' only for the {system}/{cadence} fill path, and the key-ruling branch returned the registry canonical with no brace test.",
+      "After the build: decide() turns a FIX from a key ruling that carries any brace other than {scope}-on-a-per-firm-row into HOLE, and lines_check fails the run on a FIX line with such a brace (tests in lib/tests/test_opal_naming_rootcheck.py: 'the same {scope} on a row that is not per-firm is refused' and 'the lines command refuses {scope} on a FIX line whose row is not per-firm')."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-q-2 AMENDMENT 1: the check's own no-brace rule and the lines command must admit exactly {scope} on a line whose row is per-firm and refuse every other brace as today.",
+  "world_is": "No brace rule existed on a key-ruling line or in the lines command before this build, so 'as today' described the {system}/{cadence} fill path only. The build adds the rule for key-ruling FIX lines and the lines command; the bd-pipeline count line is unchanged by it (ROOTCHECK ok=True items=142 right=9 fix=118 not_asked=12 pattern=3 carded=0 refused=0 hole=0 before and after)."
+}
+```
+
+## LGIC_BLANKFIX-S5 -- the proof checker raises on a directory artifact path where it should refuse
+
+```json
+{
+  "id": "LGIC_BLANKFIX-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~G",
+  "surfaced_at": "2026-10-08T00:20:05Z",
+  "one_line": "The proof-of-spec checker crashes (rc 2, PermissionError) when a proof instance names a DIRECTORY as an artifact path; a worker worked round it by listing 13 files one by one.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BF-q-6 worker report (0.9.0_WK_LGIC_BLANKFIX~2, commit 51fde5ac43): the checker crashed, rc=2, PermissionError, on a directory artifact path; the instance lists the 13 per-root files as separate rows",
+      "NOT reproduced by the issuer: the crash is the worker's report; the instance as committed validates rc=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The spine, L7: proof-of-spec-check.py refuses an instance whose artifact rows do not resolve at their pins. A refusal is a verdict with a reason.",
+  "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
+}
+```
