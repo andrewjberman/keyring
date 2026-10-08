@@ -82,6 +82,16 @@ then route. Nothing else moves.
 `other_firm_refused`, `other_firm_code`, `other_firm_body_bytes`, `opal_by_ref`, `open_leg_discharge`, `ledger_entry`,
 `ledger_closed`, `rolled_back`, `rollback_source_version`, `limits`. Use opaque ids only: no names, emails or raw account numbers.
 
+**AMENDMENT 1 (2026-10-08 ~17:3xZ, issuer `2.0.0_SA_COO~P2`, on the CTO round analysis @0a91529221, msg 1334, section 1 S334).**
+- Row S334 is ARMED: the comp-tagauthz pre-apply gate in `.tools/safe-apply.sh` fails closed on trees that set `default_tags`.
+- **The interim disarm, as the CTO ruled it:** this order may set `TAGAUTHZ_OVERRIDE` for its OWN two named applies only: the
+  `export` root (step 3) and the `api` root (step 4). The reason must read: `IRPT_BCKEND-S334 interim (CTO @0a91529221): IB-pr-364
+  <root> apply`. Use it only after the gate has refused without it.
+- **Commit the plan text first.** Before each apply, write `terraform show -no-color <planfile>` to
+  `deliverables/0.9.0_WK_IRPT_BCKEND~172/IB77-1_plan_<root>.txt` and commit it. Only then apply.
+- Write `tagauthz_override_used` (a list of the roots it was used on, or []) in the after-reads JSON.
+- Gate limb: none graded this amendment (a modification; GATE viii only). The criteria and checks are unchanged.
+
 <criterion id="IB77-1-AC1" cell_refs="IB-pr-364"><invocation>python "org/missions/D9/IRPT/IRPT_BCKEND/deliverables/2.0.0_SA_COO~P2/checks/r77/p77_cells.py" . IB77-1-AC1</invocation><expect>IB77-1-AC1 PASS</expect></criterion>
 `IB77-1-AC1` -- the after-reads file holds pin 1e0cdaf90c, exactly the three members, the start sha equal to the rollback target,
 built == live CodeSha256 (re-read live), post-census 0, both re-plans 0, the route live on api 7k3ed8px20 (re-read live), the
