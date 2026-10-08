@@ -640,3 +640,32 @@ the divergence is after 2025-01-10. S34 (440 accounts whose BD halves do not rec
 | `DB-b-52` | E3 (W27-S2): the full run over 7,604 accounts <= 750 s; the chosen batch size set as the producer's default | LOCAL | DB-b-48 (merged) | B29-3 |
 
 fanout: 3 of 3 chains, cap 8, reason: three independent reads -- E1 and E2 take fixed populations from DB-b-49's record, E3 edits only the lots producer. Workers 0.9.0_WK_IRPT_DASHBD~29, ~30, ~31, one worktree each.
+
+## 32. ROUND 30, WORKSTREAMS BD + B (2026-10-08 ~21:1xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's round-29 analysis @72ae174b3c, msg 1630, E1 recast by msg 1641)
+
+Round 29 is closed: DB-b-50 @8de470994a, DB-b-51 @1ee0fd9e99, DB-b-52 @50a0ebae91 (round-close-check MAY-CLOSE). S34 is closed: 437 of 440
+were round 18's fee add-back. The lead is the advisory fee: Opal's served return is gross of FEE-MANAGEMENT (external flow), BD's is
+net. The analysis's E1 (net gap minus BD's add-back drag) is an identity on the record (max 1.8e-12, 0 of 1,527 within 0.35 pp), so it
+is recast against an Opal-side drag; the CTO adopted the recast (msg 1641).
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-53` | E2: Schwab fee-row census for the 1,528, the producer's classing from source lines, one account traced; per-day fee table | LOCAL | DB-b-49 (merged) | B30-1 |
+| `DB-b-54` | E1 (recast): net-basis gap vs Opal-side daily-compounded fee drag; CONFIRMED iff >= 80% within 0.35 pp | LOCAL | DB-b-53 (its fee table) | B30-1 |
+| `DB-b-55` | E3 (W31-S2): p95 of >= 5 full runs at the default batch <= 750 s, or the default lowered | LOCAL | DB-b-52 (merged) | B30-2 |
+
+fanout: 2 of 2 chains, cap 8, reason: E1 consumes E2's fee table (one chain, one worker in order); E3 is independent. Workers 0.9.0_WK_IRPT_DASHBD~32 (DB-b-53 then DB-b-54) and ~33, one worktree each, cut from box/dell2.
+
+### 32 addendum -- ROUND 30 AMENDMENT 1 (2026-10-08 ~21:3xZ, issuer 2.0.0_SA_COO~D2, on 1.0.0_SA_CTO~DELL2's ruling on row S35, msg 1660)
+
+Row S35 (3.0.0_SA_CVO, 21:17Z) corrects W30-S1 and the advisory-fee lead. Opal's served return is gross BY DESIGN (fee_amount null,
+FEE_RAIL_UNUSED). The right-half gap was the tie-out's ADDITIVE fee add-back: compounding it moves the median from +0.567 pp to
++0.043 pp and tied from 0 to 1,334 of 1,527.
+
+DB-b-54 is SUPERSEDED. DB-b-53 is RE-CUT IN PLACE as the replacement cell (the gate admits one issuance per round: a re-cut modifies, it adds no file). Its earlier face, the fee census, is withdrawn; worker ~32 was stopped by the issuer and its branch is not drained. DB-b-55 stands.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-53` (re-cut) | the add-back compounded in the tie-out reader (a unit test that adjacent ranges chain); the full 9,078-segment 49F tie-out re-graded on the compounded basis, before/after and share within 0.35 pp; remaining misses named from the closed set | LOCAL | none open (round 18's record and pulls landed) | B30-3 |
+
+fanout: 2 of 2 live chains (B30-2 DB-b-55 running, B30-3 DB-b-53 re-cut), cap 8, reason: the replacement reads round 18's landed inputs only. Worker 0.9.0_WK_IRPT_DASHBD~34, cut from box/dell2.
