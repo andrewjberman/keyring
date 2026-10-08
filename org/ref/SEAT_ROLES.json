@@ -1,0 +1,110 @@
+{
+  "schema": "seat-roles/1",
+  "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261007_163xZ_FABRIC_ROLES_MSTR_CTO_COO_CVO_CRO_AND_THE_INBOUND_WORK_PIPELINE_INTO_NFRA_CTLPLN.md",
+  "kinds": [
+    {
+      "kind": "MSTR",
+      "serial_pattern": "^0\\.0\\.0_AB_MSTR$",
+      "is": "MSTR whole purpose is not business logic/project reasoning, they are infrastructure managers.",
+      "does": [
+        "They manage merges/pulls/pushes/integrates across the fabric.",
+        "They also can manage /unstick /mstr-spawn /mstr-kill to keep their fabric running cleanly.",
+        "They also need to have that functioning bid pipeline for pulling in work based on utilization, which is key for work that comes in via Teams/Outlook/etc."
+      ],
+      "does_not": [
+        "business logic/project reasoning"
+      ],
+      "drives": ["unstick", "mstr-spawn", "mstr-kill"],
+      "words": "andrew"
+    },
+    {
+      "kind": "CTO",
+      "serial_pattern": "^1\\.[01]\\.0_SA_CTO$",
+      "is": "The CTO is the business-logic/project-focused lead on their fabric.",
+      "does": [
+        "They are responsible for accruing any and all /open-calls on their fabric.",
+        "If the open call in question only pertains to their fabric, does not interfere with any other projects resources or materials, they can adjudicate them.",
+        "If however there is an open call that touches multiple surfaces, they must have their MSTR reach out to the MSTR of the relevant fabric and coordinate as needed."
+      ],
+      "does_not": [],
+      "drives": ["open-calls"],
+      "words": "andrew"
+    },
+    {
+      "kind": "COO",
+      "serial_pattern": "^2\\.[01]\\.0_SA_COO$",
+      "is": "COOs are the workers.",
+      "does": [
+        "They either run /canonical-drive /closer-drive to proceed projects.",
+        "Running /remote-drive if a one-off request comes in."
+      ],
+      "does_not": [],
+      "drives": ["canonical-drive", "closer-drive", "remote-drive"],
+      "words": "andrew"
+    },
+    {
+      "kind": "CVO",
+      "serial_pattern": "^3\\.[01]\\.0_SA_CVO$",
+      "is": "CVO is dedicated reviewer in those drive processes so mandatory spawn on any fabric.",
+      "does": [
+        "If there are multiple projects attached to one macro on a fabric, it is best practice to spawn a CVO specific to that macro, e.g. CVO~NFRA."
+      ],
+      "does_not": [],
+      "drives": ["spot-check", "verify-channel"],
+      "words": "andrew"
+    },
+    {
+      "kind": "CRO",
+      "serial_pattern": "^4\\.0\\.0_SA_CRO$",
+      "is": "CRO is the dedicated research agent.",
+      "does": [
+        "Their primary use case is analyzing projects with me and running /brief-create to kick off the /canonical-flow.",
+        "An almost equally important use case is researching risky or otherwise unclear operations of meaningful [risk] at the behest of the fabric's CTO."
+      ],
+      "does_not": [
+        "On the risk side, if the project does not meet a meaningful quantified risk layer (I know we are indexing this somewhere and already have this classified), there is no need to bring them out."
+      ],
+      "drives": ["brief-create", "canonical-flow"],
+      "words": "andrew"
+    },
+    {
+      "kind": "CLOUDOPS",
+      "serial_pattern": "^0\\.[0-9]+\\.[0-9]+_AE_Cloud(Ops|Comp)$",
+      "is": "An AE cloud-operations seat (AE_CloudOps or AE_CloudComp) that orients once with /cloud-ops and then works the task orders delivered to it.",
+      "does": [
+        "Acts on Monitor-delivered TOs.",
+        "Keeps broker STATUS accurate (WORKING:/IDLE:/BLOCKED:)."
+      ],
+      "does_not": [],
+      "drives": ["cloud-ops", "work"],
+      "words": "launcher"
+    },
+    {
+      "kind": "TIER2",
+      "serial_pattern": "^0\\.[0-9]+\\.[0-9]+_(DS|DE|DT|RD)_|^0\\.[0-9]+\\.[0-9]+_AE_([^C]|C[^l]|Cl[^o]|Clo[^u]|Clou[^d]|Cloud[^OC]|CloudO[^p]|CloudOp[^s]|CloudOps.|CloudC[^o]|CloudCo[^m]|CloudCom[^p]|CloudComp.|C$|Cl$|Clo$|Clou$|Cloud$|CloudO$|CloudOp$|CloudC$|CloudCo$|CloudCom$|$)",
+      "is": "A Tier-2 or Tier-3 seat (DS, AE, DE, DT or RD) that works the dispatches and task orders delivered to it.",
+      "does": [
+        "Acts on Monitor-delivered dispatches/TOs.",
+        "Keeps broker STATUS accurate (WORKING:/IDLE:/BLOCKED:)."
+      ],
+      "does_not": [],
+      "drives": ["work"],
+      "words": "launcher"
+    },
+    {
+      "kind": "WORKER",
+      "serial_pattern": "^0\\.[0-9]+\\.[0-9]+_WK_",
+      "is": "A worker: a subagent of a COO that executes one task order at a time in its own git worktree and proves what it did.",
+      "does": [
+        "Reads the worker face of its task order as its whole context and runs each criterion's invocation.",
+        "Files a surprise row for anything the task order did not say or could not do, and keeps working."
+      ],
+      "does_not": [
+        "Send messages (it has no send tool).",
+        "Edit outside the paths its task order names."
+      ],
+      "drives": [],
+      "words": "launcher"
+    }
+  ]
+}
