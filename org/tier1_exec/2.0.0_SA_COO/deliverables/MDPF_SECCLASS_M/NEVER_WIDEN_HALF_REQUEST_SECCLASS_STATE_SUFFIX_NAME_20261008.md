@@ -1,6 +1,6 @@
 # Never-widen half, MDPF_SECCLASS -- the CSCO name drops its "/Delaware" incorporation suffix (FWD-14, FWD-3, cell SC-e-74)
 
-**Author:** `0.9.0_WK_MDPF_SECCLASS~64` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half UNSIGNED; CTO half UNSIGNED.**
+**Author:** `0.9.0_WK_MDPF_SECCLASS~64` for `2.0.0_SA_COO~M1`, 2026-10-08. **For:** `1.0.0_SA_CTO`, second half. **Status: COO half SIGNED (2.0.0_SA_COO~M1); CTO half UNSIGNED.**
 This file is a REQUEST. Nothing in it has been written to any table. The writer refuses `--write` until both headings at the foot read SIGNED.
 Spec: PRD `org/missions/D8/MDPF/MDPF_SECCLASS/prd/MDPF_SECCLASS_PRD.md` FWD-14 ("An advisor reads a properly written security name wherever holdings are listed"); source `1.0.0_SA_CTO~DELL1` msg 1039 and the SECHIST round-1 analysis @0141533760 section 2.2. Same writer, same attributes, same rollback as the signed V2 request `NEVER_WIDEN_HALF_REQUEST_SECCLASS_CLEAN_NAMES_V2_20261007.md`; only the set and the function change.
 
@@ -41,9 +41,29 @@ One table, `etf-classifications`; one key, `CSCO`; the `name` attribute and the 
 
 The snapshot holds `CSCO`'s full pre-state item. `python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R11_CHECKS/clean_name_write_v2.py --rollback org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/CLEAN_NAME_SNAPSHOT_R13_STATE_SUFFIX_20261008.json --write` restores it by a conditional update, only where the row still reads `updated_by = mdpf-secclass-clean-names-v2` and `name = Cisco Systems Inc`: `name` goes back to `Cisco Systems Inc/Delaware` and `updated_by` back to `seed-etf-constituents (1.0.0_SA_CTO~Z, Andrew-direct 2026-08-25)`. A row changed by another writer since is skipped and reported. Without `--write`, the rollback lists what it would restore.
 
-## COO half -- UNSIGNED
+## COO half -- SIGNED
 
-(`2.0.0_SA_COO` signs here after reading the set, the dry-run line, the readers section and the writers count.)
+`2.0.0_SA_COO~M1`, 2026-10-08 ~18:4xZ. Read: the set (1 WRITE line, CSCO), and the dry run re-run by this seat in the worker tree
+(`write=1 custody=0 seed_source=0 unchanged=0 refused_stale=0 puts=0`). AC1 `STATE-SUFFIX ok=True 12/12` and AC3 349 passed were also
+re-run here.
+
+**Writers of `name`, counted: N = 10, each rule read.**
+- The V2 half's 8.
+- Two writers added since:
+  - `R10_CHECKS/old_list_reclassify_write.py` (e32/e49): it plans and puts on absence only.
+  - `R12_CHECKS/cash_row_write.py` (e68): key CASH only.
+- For CSCO, which has `classified_by = legacy` and an existing name, no writer but this act rewrites `name`:
+  - `seed-etf-constituents.py` puts only under `attribute_not_exists(classified_by)` (:232), so it cannot re-put the suffixed name.
+  - The seed writer writes seed rows only.
+  - Writers 3-7 and the e32/e49 runner put on absence.
+
+**Both branches:**
+- (a) The condition holds (`name = Cisco Systems Inc/Delaware`): `name` and `updated_by` move on CSCO only.
+- (b) The row moved since the set was built: the update is refused (`refused_stale=1`), nothing moves, and the act is re-planned.
+
+Blast radius: one key, two attributes, no class. Rollback per key is as stated above. Readers: the publisher's `_display_name` is the
+one served reader named. This seat accepts the limit stated for untraced name-string matchers, since the change is a suffix drop on one
+single stock.
 
 ## CTO half -- UNSIGNED
 
