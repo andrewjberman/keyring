@@ -7766,6 +7766,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W119-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~119",
+      "surfaced_at": "2026-10-08T08:41:36Z",
+      "one_line": "240 of 1,258 run-record jobs (58 collector keys, `security-<hash>`) cannot be joined to any covered security: no gold_security_key, absent from the round47 identity file, and no ticker on their device runs file; the 8 never-collected count is therefore exact only if none of those 58 keys is one of the 8.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The order's step 2 expects a job's security to be named by a collector id `security-<hash>` or a `gold_security_key`, and asks which field was joined on and how many jobs lack it; step 3 expects every job to credit one security.",
+      "world_is": "Of 1,258 distinct jobs in the union of the S3 and device stores, 390 lack gold_security_key. 23 resolve through the round47 identity file (collector key to pool key), 7 are already pool-form keys, 120 resolve through the ticker on the device runs file or a collector security file matched to a covered ticker, and 240 jobs (58 distinct keys: bbg 58, wsj 58, barrons 58, sa 64, ft 2) resolve by none of these, because their runs files carry ticker null. 234 covered securities have a resolved job; NEVER COLLECTED = 8 (MRNA, CAT, DG, GEV, CSL, BE, ED, 6861_JP). A heuristic read of the unresolved jobs' stored article titles found 0 naming any of the 8. The reviewer's 323 distinct securities counts raw keys in mixed forms (pool-form and security-<hash>), not securities.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~119/bl1_never_collected.out (JOIN ROUTE counts, UNRESOLVED jobs, TITLE EVIDENCE lines)",
+          "lib/opal_data_harvest/__main__.py universe(): collector `key` versus pool `security_key`"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
