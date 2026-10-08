@@ -171,6 +171,11 @@
             "type": "command",
             "command": "python \"$CLAUDE_PROJECT_DIR/org/mcp/hook_register_orphan_cleanup.py\"",
             "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/.tools/worktree_gc.py\" --hook-notice",
+            "timeout": 15
           }
         ]
       },
