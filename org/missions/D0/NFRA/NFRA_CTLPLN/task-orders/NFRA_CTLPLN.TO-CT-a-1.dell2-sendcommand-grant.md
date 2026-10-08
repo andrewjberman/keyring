@@ -552,3 +552,45 @@ Gate limb: none graded this modification. YOU APPLY NOTHING AND YOU READ NO SECR
 **ACCEPTANCE.** The six criteria and their expectations are unchanged (`CTa1-AC6`'s line will read `granted=4` with the two
 ruled classes counted: say how your line counts them; if you add fields, add them at the end of the line). Write a NEW proof
 instance covering the six ids, validate it, and flip the order to `complete` when all six match.
+
+## AMENDMENT 8 (2.0.0_SA_COO~C, 2026-10-08 ~00:2xZ) -- SUPERSEDES AMENDMENT 7's items 1 and 2: the grant WIDENS to every secret a Dell-placed project's own code reads by name
+
+Authority: `1.0.0_SA_CTO` msg 106646, on Andrew-direct ~00:0xZ ("I think we need to start giving dell boxes more permissions.
+Their entire point is to be work horses and laptop is control plane."; record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_000xZ_DELLS_ARE_THE_WORK_HORSES_MORE_PERMISSIONS_LAPTOP_IS_CONTROL_PLANE.md`,
+which may not be in your worktree yet). The CTO's ruling, verbatim: "the grant widens to every secret a Dell-placed project's
+own code reads by name, vendor or internal, from the census already taken; openai-api-key stays out; this supersedes 'three'
+and my 23:35Z input. One amended half, one plan." Gate limb: none graded this modification. WHERE THIS AMENDMENT AND
+AMENDMENT 7 DIFFER, THIS ONE GOVERNS. AMENDMENT 7's items 3 and 4 and its bounds stand. YOU APPLY NOTHING AND READ NO SECRET VALUE.
+
+1. THE GRANT SET, derived from the saved census and nothing typed: every listed secret for which the census holds at least one
+   reference that is A PROGRAM of a Dell-placed project reading the secret BY NAME (the census's own distinction, made in the
+   earlier pass: a program that fetches the value, as against a Terraform grant, a registry, a manifest, a fixture or a
+   document that merely names it). Vendor or internal makes no difference now. `openai-api-key` is EXCLUDED-BY-RULING and stays
+   out. A secret named only in a project's documents, or only in registries, is NOT in the set. A secret no Dell-placed
+   project's program reads is NOT in the set, whatever its class was. `blackdiamond/49f/session` is in the set if and only
+   if the rule above puts it there (a program of IRPT_DASHBD reads it by name: check); it is no longer a special case.
+   Keep the earlier class column (VENDOR, NOT-VENDOR, UNSURE) as information and add a boolean `granted` with the reader
+   program's file and line as its evidence. If the saved census does not record, per reference, whether it is a program
+   reading by name, re-derive that from the repository (names only) and say so.
+   For each granted secret read `KmsKeyId` from the saved listing: one under a customer-managed key is left OUT, listed as
+   blocked-by-key, and reported (no key policy is touched).
+2. ONE STATEMENT ON THE GROUP (the simplest correct form; the per-box scoping of AMENDMENT 7 item 2 is dropped by the ruling's
+   "one plan"): `ReadSecretsDellProjectsReadByName`, Allow `secretsmanager:GetSecretValue`, the exact ARN of every granted
+   secret, built by Terraform from the census as before. Keep the document inside the 6,144-character managed-policy limit: if
+   it does not fit, split by a stable rule into two policies and say so; a precondition already refuses an oversize document.
+3. In the simulation's eighth block: every granted secret allowed for both Dell users (you may sample when the set is large:
+   then test ALL of them once outside the 120-second criterion and record the full result in the plan note, and keep a fixed
+   sample of at least eight in the criterion's run, chosen to include a vendor key, an internal bearer token, a signing key if
+   one is granted, and a session secret); `openai-api-key` REFUSED; one secret that only documents name REFUSED; one secret no
+   Dell project's program reads REFUSED; one unrelated secret REFUSED; a granted name with a wrong suffix REFUSED.
+4. THE PLAN NOTE must list, by name, EVERY granted secret with its class, its project, its reader program (file and line) and
+   one plain sentence on what holding its value lets a box do: this is the list two people sign, and it will include internal
+   credentials. Put first, under their own heading, any granted secret that is a SIGNING KEY, a seed, an administrator
+   credential or a token that lets its holder act as the firm or as a user (for example a JWT private key, an admin seed, a
+   gateway bearer token), so that the widening is read for what it is. Do not soften or omit one; if the rule puts it in the
+   set, it is in the set and it is named.
+
+**ACCEPTANCE.** The six criteria and their expectations are unchanged; `CTa1-AC6`'s line reads `granted=<n>` with the new count.
+Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
+
