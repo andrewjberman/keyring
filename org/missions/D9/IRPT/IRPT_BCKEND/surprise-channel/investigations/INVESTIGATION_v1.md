@@ -20627,3 +20627,185 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: 0 extras."
 }
 ```
+
+## IRPT_BCKEND-W169-S1 -- regenerated ExportReceipt makes covered_account_ids required; a test consumer no longer typechecks
+
+```json
+{
+  "id": "IRPT_BCKEND-W169-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~169",
+  "surfaced_at": "2026-10-08T05:37:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After regenerating ~P's four wire files (portal branch wk-IRPT_BCKEND-169-portal @c0291b68), tsc -b --noEmit exits 2: iv-e-26.submit-data-optional.test.ts line 33 builds an ExportReceipt facts object without the now-required covered_account_ids (IB-pr-343). IB75-1-AC2 is a stop; no consumer was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_BCKEND-169-portal @c0291b68; p75_cells.py . IB75-1-AC2 -> FAIL: TS2741 at iv-e-26.submit-data-optional.test.ts(33,5), 1 error"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration (base PASS as a control).",
+  "world_is": "It exits 2 with one TS2741 in a test fixture that omits covered_account_ids. The fixture needs the field; the owner of that test (not this cell's grant) must add it."
+}
+```
+
+## IRPT_BCKEND-W170-S1 -- The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W140-S1: IB-pr-341 (portal @5c726cf4, an ancestor of portal DEV d1b21c970c) made the over-age status public. On DEV d1b21c970c, `bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage` reads '10 pass, 0 fail' (rc 0); the four over-age reader arms P1-P4 are plain tests (no test.failing remains in the file) and pass.",
+  "one_line": "The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10 pass, 0 fail on portal DEV d1b21c970c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal DEV d1b21c970c (HEAD of the shared checkout, branch DEV, equal to origin/DEV); git merge-base --is-ancestor 5c726cf4 HEAD -> true",
+      "bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage -> '10 pass / 0 fail / 22 expect() calls / Ran 10 tests across 1 file', rc 0",
+      "grep -c 'test.failing|it.failing' search-readers.test.ts -> 0; arms P1-P4 over_age are plain tests (line 49 comment: IB-pr-341)"
+    ]
+  },
+  "spec_asserts": "W140-S1: all four portal readers throw EnvelopeMismatch('status') on the over-age answer.",
+  "world_is": "They no longer do: the four over-age arms pass as plain tests on DEV. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W170-S2 -- A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) an
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W145-S2: finalize_on_read.finalize hands the pending pointer's account_ids to handler.finalize_export as covered_account_ids and refuses a pointer naming none (commit 7afc91d40c, IB-pr-343 amendment 1, shipped in the IB-pr-349 release). `release-census.py irpt-export-render --pin b921635dad` reads 'built_members=63 live_members=63 changed_members=0' (rc 0), so the live bytes equal the pin; test_retained_finalize_names_accounts.py: 6 passed.",
+  "one_line": "A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) and the 6 retained-finalize tests pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> 'function=irpt-export-render pin=b921635dad built_members=63 live_members=63 / changed_members=0', rc 0",
+      "python -m pytest tests/test_retained_finalize_names_accounts.py -q (from infra/aws/lambda/investor-reporting/export) -> '6 passed in 1.76s', rc 0",
+      "finalize_on_read.py:98 finalize_export(..., covered_account_ids=covered); handler.py:327 passes covered_account_ids or submission.get('covered_account_ids')"
+    ]
+  },
+  "spec_asserts": "W145-S2: after release every retained export raises ReceiptRefused at finalize, because no covered account reaches receipt.build.",
+  "world_is": "It does not: the retained path carries the pointer's accounts, and a pointer naming none is refused before finalize. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W171-S1 -- infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/route
+
+```json
+{
+  "id": "IRPT_BCKEND-W171-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~171",
+  "surfaced_at": "2026-10-08T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/routes.json; routes.tf reads only the docs copy, so a route added to the stale copy would never apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the two files at 1e0cdaf90c: differ at char 7 line 2",
+      "infra/aws/terraform/investor-reporting/api/routes.tf local.contract_routes_path points at docs/contracts/investor-reporting/v1/routes.json (comment: 'routes.json IS the carrier and Terraform reads it')"
+    ]
+  },
+  "spec_asserts": "routes.tf: ONE route list, the contract file; no second carrier.",
+  "world_is": "A second routes.json is tracked in the api root. Nothing reads it for the apply; the IB-pr-363 packet names the docs copy as the writer's input."
+}
+```
+
+## IRPT_BCKEND-S390 -- W169-S1 resolved: AMENDMENT 1 granted the one fixture; IB75-1-AC2 (tsc -b --noEmit) PASS on branch 169
+
+```json
+{
+  "id": "IRPT_BCKEND-S390",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W169-S1: AMENDMENT 1 to IB-pr-361 (@63db9c46c6) granted iv-e-26.submit-data-optional.test.ts; the worker added covered_account_ids to the fixture's facts (portal f63c5fdd) and the issuer re-ran IB75-1-AC2 on branch 169: tsc -b --noEmit rc 0. Proof @2874a10e7f VALID; drained @7a5f0d2fb7.",
+  "one_line": "The one consumer fixture now carries covered_account_ids, so the regenerated ExportReceipt typechecks; the portal branch remains a DEV candidate on Andrew's word.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "amendment @63db9c46c6; drain @7a5f0d2fb7; L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md (IB75-1-AC2 PASS)"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration.",
+  "world_is": "It does, after the granted one-line fixture edit."
+}
+```
+
+## IRPT_BCKEND-S391 -- W171-S1 ruled INERT: nothing applies from the stale api/routes.json; its removal is carried to the CTO's analysis
+
+```json
+{
+  "id": "IRPT_BCKEND-S391",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~P2",
+  "surfaced_at": "2026-10-08T17:07:23Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W171-S1 as not a hazard to any apply: routes.tf local.contract_routes_path reads docs/contracts/investor-reporting/v1/routes.json only, and the IB-pr-363 packet names that docs copy as the writer's input. The stale second carrier is a cleanup item listed in the rounds 75-76 L8 packet's Rows section for the CTO's round-N analysis; the issuer cuts no cell for it mid-round.",
+  "one_line": "The tracked infra/aws/terraform/investor-reporting/api/routes.json is read by no apply; deleting it is an enrichment item for the next round, not a live hazard.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "W171-S1 evidence: routes.tf contract_routes_path -> docs/contracts/investor-reporting/v1/routes.json",
+      "L8 packet deliverables/2.0.0_SA_COO~P2/IRPT_BCKEND_ROUNDS_75_76_P_DRAIN_END_20261008.md, Rows: W171-S1 OBSERVATION/INERT"
+    ]
+  },
+  "spec_asserts": "routes.tf: one route list, the contract file.",
+  "world_is": "The apply reads one list; a second, unread copy is tracked and should be removed in a later round."
+}
+```
+
+## IRPT_BCKEND-S392 -- SC-e-62/e56 first fire: 1 of 5 tabled class moves landed; Branch B held for the paired signer's ruling
+
+```json
+{
+  "id": "IRPT_BCKEND-S392",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~M2",
+  "surfaced_at": "2026-10-08T17:45:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The first Holdings fire on the SC-e-62/e56 bundle (2026-10-08 14:15Z) published all three firms reconciled with 0 multi_asset, but only 1 of e56's 5 tabled 49financial class moves landed and 233 of the 238 newly placed CUSIPs serve by name/ticker basis, not their CUSIP row. By the COO half's rule 49financial takes Branch B (rollback before the 2026-10-09 14:15Z fire); the rollback is held for a ruling by the paired signer.",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~M2",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/2.0.0_SA_COO/deliverables/IRPT_MVP_M/E62E56_SERVED_CLASS_CENSUS_20261008.json (sha256 ec864bc9deb4...): 49financial 47 match / 4 off of 51; cottonwood 185 match / 2 not held of 187; 1 TABLE-basis node among the listed",
+      "pinned 10-06 control (49financial index GtsM8pj9...): 06745PR94 fixed_income/NAME_ALIAS, 808516702/108/801 unclassified/NONE in both 10-06 and 10-07; 61756E784 fixed_income -> equity",
+      "E62E56_POST_FIRE_READ_20261008.json (sha256 5d31fa129be0...): reconcile difference 0.00 at all three firms",
+      "COO half NEVER_WIDEN_IRPT_BCKEND_COO_HALF_SECCLASS_E62_E56_RELEASE_20261007.md, section POST-FIRE GRADE"
+    ]
+  },
+  "spec_asserts": "e56 acceptance 1: each firm's served snapshot reads the 238 by the class and sub-class of their CUSIP: row, and the five tabled class changes read as stated.",
+  "world_is": "The class change reached 1 of 5 tabled securities; the served run did not apply the CUSIP row where the local r2 precheck did. Disarm: the CTO rules hold-or-rollback; the root cause (served run vs the local build) routes to MDPF_SECCLASS dell1 2.0.0_SA_COO~M1."
+}
+```

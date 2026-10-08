@@ -161,3 +161,57 @@ bytes equal), the pins, Branches A and B, and the not-covered list are unchanged
 
 **Next owed:** the per-firm read after the first `irpt-holdings-snapshot` fire, Thursday 2026-10-08 10:15 ET (14:15Z). That is
 Branch A or Branch B above.
+
+## PIN RE-READ before the first fire (2026-10-08T14:15:35Z, 2.0.0_SA_COO~M2; CTO msg 979)
+
+The scheduled re-read was set for 10:05 ET. The session was busy, so it ran at 10:15:35 ET, the same minute as the
+`irpt-holdings-snapshot` fire. The `current/manifest.json` VersionId was read per firm with head-object:
+
+| firm | VersionId read | equals the 10-07 pin? |
+|---|---|---|
+| 49financial | `GtsM8pj9VnTwPZH3n5Bzp.oobsgLaja0` (LastModified 2026-10-07T14:21:07Z) | yes |
+| inflection | `a6gP7JDBtaKHr_LMKP0vQsNSegtaQQWc` (LastModified 2026-10-07T14:19:09Z) | yes |
+| cottonwood | `gF3nGvI1eKu_xPEYZXBaRl7iw55fpmnL` (LastModified 2026-10-07T14:18:11Z) | yes |
+
+**The rollback pins are unchanged:** no firm's index moved between the 10-07 pins and the fire.
+
+**Race seen at Cottonwood.** The body fetched a moment after the head-object already read `latest_date` 2026-10-07, revision
+`8982ba981eb8`, dated manifest `1Br9XRcrsNOeDjzAQAUfqvv.a7HoZ.FB`. The 10-08 fire wrote Cottonwood's new index during this
+read. The pin above (gF3nGvI1...) stays the pre-fire rollback target.
+
+**The bundle** read `JITP9ecNeQyAnAmKo90oxqWyFemEqVaI` at the fire: the r4 bundle, read back PASS @31ae01919c.
+
+## POST-FIRE GRADE (2026-10-08, 2.0.0_SA_COO~M2; re-seated after the 16:38Z dell2 reboot)
+
+The 14:15Z fire published 2026-10-07 at every firm. Two reads, both dell2 identity `cloudops-dell2-agent-user`:
+- `E62E56_POST_FIRE_READ_20261008.json` (`e62e56_post_fire_read.py`, 15:06Z): per firm moved, reconcile difference 0.00,
+  0 `multi_asset`, 0 classes outside the six.
+- `E62E56_SERVED_CLASS_CENSUS_20261008.json` (`e62e56_served_class_census.py`, ~17:3xZ): each of the 238 precheck CUSIPs
+  on the served 2026-10-07 gold, by `security_id` CUSIP.
+
+| firm | listed | served class = CUSIP row | off | not held 10-07 | served by CUSIP row (basis TABLE) |
+|---|---|---|---|---|---|
+| 49financial | 51 | 47 | 4 | 0 | 1 |
+| inflection | 0 | - | - | - | - |
+| cottonwood | 187 | 185 | 0 | 2 | 0 (226 NAME_ALIAS, 2 NAME_PATTERN nodes) |
+
+**The five tabled class moves (49financial):** ONE landed. Pinned 10-06 control (index `GtsM8pj9...`) beside the served 10-07:
+
+| CUSIP | expected | 10-06 pin | 10-07 served |
+|---|---|---|---|
+| 61756E784 | equity | fixed_income / TABLE | equity / TABLE -- moved |
+| 06745PR94 | structured (Hedge) | fixed_income / NAME_ALIAS | fixed_income / NAME_ALIAS -- unchanged |
+| 808516702 | equity | unclassified / NONE (22 nodes) | unclassified / NONE -- unchanged |
+| 808516108 | equity | unclassified / NONE (3) | unclassified / NONE -- unchanged |
+| 808516801 | equity | unclassified / NONE (21) | unclassified / NONE -- unchanged |
+
+The new code ran (61756E784 moved; 49financial alternatives 29 -> 61, cash 0 -> 1), but the CUSIP row did not reach 4 of the 5
+tabled securities, and 233 of the 238 serve by name or ticker basis, not their `CUSIP:` row. Acceptance item 1 of e56's half
+is NOT met. Nothing served is worse than the pin: totals reconcile to the cent and `unclassified` is 167 in both.
+
+**Branch, by this half's own rule:** 49financial is off expectation, so Branch B applies to it (re-point the index to
+`GtsM8pj9...`, bundle back to `Lo8nhS9k...`, before the Friday 2026-10-09 14:15Z fire). Inflection reads as expected.
+Cottonwood's classes match but not by the CUSIP row. A Branch B rollback would serve a day-older snapshot and revert the one
+correct move, while restoring nothing that the fire made worse. This seat holds the rollback and asks the paired signer
+`1.0.0_SA_CTO~DELL2` for a ruling (row IRPT_BCKEND-S392). With no ruling by 2026-10-09 13:30Z, this seat executes Branch B
+as signed.
