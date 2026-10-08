@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~32</issued_to>
 <issued_by>2.0.0_SA_COO~R</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>pending</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -99,8 +99,14 @@ Additions to `org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_2026
 - **Send nothing.** No bus message, no event to the cloud, no broker message: `--dry-run` or a fake in every run. Never run
   `bid`, `accept`, `complete` or `fail` without `--dry-run` outside a test's fake. Leave the real `.tools/.remote-job.json`
   as you find it.
-- Do not edit `.tools/tests/test_remote_job.py`; if your change makes one of its cases fail, that is a surprise row naming
-  the case, class BLOCKING.
+- **AMENDMENT 1 (issuer, REOPENED complete -> in_progress, on your rows W32-S1 to S4; it OVERRIDES the rule this line
+  replaces):** `.tools/tests/test_remote_job.py` is now in your `<paths>`. Bring its four failing cases
+  (`test_bid_available_with_the_contract_payload`, `test_accept_locks_then_close_unlocks`,
+  `test_complete_payload_and_attempt_event_id`, `test_dry_run_sends_nothing_and_touches_no_lock`) to the contract THE SEAM
+  states: each keeps what it tested and gains the new fields and preconditions (a live reviewer for an available bid, a
+  brief file for accept, a PASS grade for complete). Remove no case and weaken no assertion that still holds; the six
+  passing cases stay as they are. Then run criterion `CTi2-AC3`, add its row to the proof instance, re-validate against all
+  three ids, and flip `<status>` to `complete`. Rows S1 to S4 are disarmed by that passing run; say so in your report.
 - Spawn nothing, start no seat.
 - No non-ASCII in any file you write. Bake no absolute path, no device name and no user name.
 - Refuse a criterion you cannot satisfy as written and report the refusal with its measurement; do not repair or widen it.
@@ -113,9 +119,11 @@ Additions to `org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_2026
 
 <criterion id="CTi2-AC2" cell_refs="CT-i-2"><invocation>python .tools/remote-job.py complete J999 --summary probe --dry-run</invocation><expect>ERROR: J999 has no passing reviewer grade on this box; nothing sent</expect></criterion>
 `CTi2-AC2` -- the real tool on this box, where no job J999 was ever graded, refuses.
+<criterion id="CTi2-AC3" cell_refs="CT-i-2"><invocation>python -m pytest .tools/tests/test_remote_job.py -q -p no:cacheprovider</invocation><expect>10 passed</expect></criterion>
+`CTi2-AC3` -- added by AMENDMENT 1: the tool's existing ten cases pass under the new contract; the line must not read `failed`.
 </proof_of_spec>
 
-<expected_criteria>CTi2-AC1,CTi2-AC2</expected_criteria>
+<expected_criteria>CTi2-AC1,CTi2-AC2,CTi2-AC3</expected_criteria>
 
 Each invocation runs under `timeout 120`. Write the proof instance to
 `org/missions/D0/NFRA/NFRA_CTLPLN/deliverables/0.9.0_WK_NFRA_CTLPLN~32/NFRA_CTLPLN.TO-CT-i-2.reviewer-and-brief-in-the-job.proof_of_spec.json`,
@@ -130,6 +138,7 @@ every criterion passes and the instance is VALID.
 <paths>
 .tools/remote-job.py
 .tools/tests/test_remote_job_review.py
+.tools/tests/test_remote_job.py
 .claude/skills/remote-drive/SKILL.md
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
 </paths>

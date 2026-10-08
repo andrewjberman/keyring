@@ -2900,3 +2900,159 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: restate the expectation, for example 'ssm_ok=9/9 routes_ok=5/5 vendor_ok=19/19 all_ok=True', in the same amendment that repairs CTa1-AC5 (row NFRA_CTLPLN-W14-S9); the proof row's expect field then matches and flips to PASS with no code change."
 }
 ```
+
+## NFRA_CTLPLN-W32-S1 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_bid_available_with_the_contract_payload fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_bid_available_with_the_contract_payload fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError on set(p) == {...six keys}: the payload gained 'reviewer'.",
+      "The case asserts the bid payload key set is exactly {device, serial, available, cpu_pct, mem_pct, at}; the bid now also carries reviewer (and unavailable_reason when false), as the order's seam fixes; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S2 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_accept_locks_then_close_unlocks fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S2",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_accept_locks_then_close_unlocks fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError assert 2 == 0 on the first accept.",
+      "The case calls accept with no --brief-file and a payload of exactly {device, serial, coo}; accept now refuses without a brief file (rc 2) and the payload gains brief_sha256; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S3 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_complete_payload_and_attempt_event_id fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_complete_payload_and_attempt_event_id fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: IndexError: list index out of range on env.sent[-1] (nothing was sent), after accept itself refused.",
+      "The case completes a job that was never graded and expects a send with a payload of exactly {device, serial, summary, deployed, evidence}; complete now refuses without a passing reviewer grade and the payload gains coo and grade; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S4 -- TO-CT-i-2: .tools/tests/test_remote_job.py::test_dry_run_sends_nothing_and_touches_no_lock fails after the order's own change
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the existing case test_dry_run_sends_nothing_and_touches_no_lock fails after the order's own change (the order forbids editing that file)",
+  "class": "BLOCKING",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~R",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python -m pytest .tools/tests/test_remote_job.py -q on the worker branch: 4 failed, 6 passed; this case: AssertionError assert 2 == 3 (two DRY-RUN lines).",
+      "The case runs a dry-run accept with no --brief-file and expects three DRY-RUN lines (bid, accept, fail); the accept now refuses before printing one; the order's BUILD fixes the new behaviour and its rules forbid editing the file."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Rules for this cell: if the change makes one of test_remote_job.py's cases fail, that is a surprise row naming the case, class BLOCKING.",
+  "world_is": "The case still pins the pre-order behaviour; until a seat with that file in its paths updates it, a plain pytest run of the file reads 4 failed. The new behaviour is covered by .tools/tests/test_remote_job_review.py."
+}
+```
+
+## NFRA_CTLPLN-W32-S5 -- TO-CT-i-2: the seam's protocol additions are not in this order's paths
+
+```json
+{
+  "id": "NFRA_CTLPLN-W32-S5",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~32",
+  "surfaced_at": "2026-10-07T22:40:00Z",
+  "one_line": "TO-CT-i-2: the seam says the new payload fields are additions to REMOTE_JOBS_PROTOCOL_20261002.md, which is not in the order's paths and not in its BUILD, so the protocol file was not edited",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "The order's <paths> block lists four files; org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md is not among them, and BUILD steps 1-3 do not name it.",
+      "The protocol file at the base still lists job.bid, job.accepted and job.complete with the old payloads (device, serial, available, cpu_pct, mem_pct, at / device, serial, coo / device, serial, summary, deployed, evidence)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "THE SEAM WITH THE CLOUD: 'Additions to org/tier1_exec/4.0.0_SA_CRO/deliverables/REMOTE_JOBS_PROTOCOL_20261002.md; nothing in it is removed.'",
+  "world_is": "The tool, the skill and the test carry the new fields (reviewer, unavailable_reason, brief_sha256, coo, grade); the protocol file does not, so the two halves' shared contract text still shows the old payloads until a seat with that path adds them."
+}
+```
+
+## NFRA_CTLPLN-S22 -- the kit verifier answers differently on two boxes over the same tar bytes (the requirements-kit.txt limb)
+
+```json
+{
+  "id": "NFRA_CTLPLN-S22",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-07T23:41:47Z",
+  "one_line": "The Python 3.12 kit's verifier reads ok=False on dell2 and ok on dell1 over the same tar bytes: one limb, the requirements-kit.txt comparison, answers differently on the two boxes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106627, from dell2 (bus 587743ea, relayed in 0.0.0_AB_MSTR msg 106626): tar sha256 equal on both boxes; 'PY-KIT-VERIFY wheels=161 verified=161 stray=0' with ok=False on 'FAIL: requirements-kit.txt absent or differs from the manifest's wheel list'; dell2's own compare of the name==version sets reads 161 = 161, none only in either; the file is 163 lines; dell1 verified the same tar clean",
+      "Issuer's run on the laptop before the merge: PY-KIT-VERIFY wheels=161 verified=161 stray=0 ok=True (org/devices/kit_python_repack.py, merged @666132025e)",
+      "The CTO's ruling at 23:2xZ: the kit is ACCEPTED on dell2; an equal tar hash means the file inside is byte-identical, so the limb's two answers come from the verifier as checked out on each box; line endings or the tool's version are the candidates, NOT measured",
+      "Not read by this seat: dell2's checkout of the tool, its commit, or the bytes it compared"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CT-k-2 AMENDMENT 8: verify checks every wheel against the manifest and that requirements-kit.txt is the closure's exact name==version lines; the same tool on the same bytes gives the same answer on any box.",
+  "world_is": "A verifier whose answer depends on the checkout it runs from. The file has 163 lines for 161 wheels (two comment lines mark its two groups), so a comparison that counts lines, or that reads one side with different line endings than the other, can differ by box. The kit itself is not in doubt. Repair, at the next cut of the kit cell: compare the parsed name==version SETS, ignoring comment lines and line endings, and print the tool's own commit beside its verdict so two boxes can see whether they ran the same verifier."
+}
+```
