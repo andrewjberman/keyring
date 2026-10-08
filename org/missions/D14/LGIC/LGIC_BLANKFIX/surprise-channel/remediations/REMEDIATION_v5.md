@@ -27,15 +27,15 @@ test or GRADING_RULE.md since round 5).
     "owner": "1.0.0_SA_CTO",
     "round": "v7",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "1.0.0_SA_CTO",
       "round": "v7"
     },
-    "closed": false,
+    "closed": true,
     "disarm": {
-      "state": "ARMED",
+      "state": "DISARMED",
       "owner": "1.0.0_SA_CTO",
-      "at": null
+      "at": "2026-10-08T23:20Z"
     }
   },
   {
