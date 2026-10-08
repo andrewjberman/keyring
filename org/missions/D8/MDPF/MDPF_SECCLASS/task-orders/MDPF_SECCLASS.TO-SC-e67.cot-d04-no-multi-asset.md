@@ -69,6 +69,7 @@ Dry-run at the base (dell1 CLOUD, 2026-10-08 ~02:5xZ): SC12-e67-AC1 FAIL as expe
   (id `MDPF_SECCLASS-W57-S<k>`, `surfaced_at` = `date -u +%FT%TZ` at filing), and do not weaken the test.
 
 <paths>
+data/cot/scripts/gold/C_06.client_mix_timeseries.py
 data/cot/scripts/gold/tests/test_d04_no_multi_asset.py
 org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/NEVER_WIDEN_HALF_REQUEST_SECCLASS_COT_D04_MULTI_ASSET_20261008.md
 org/missions/D8/MDPF/MDPF_SECCLASS/surprise-channel/investigations/INVESTIGATION_v1.md
