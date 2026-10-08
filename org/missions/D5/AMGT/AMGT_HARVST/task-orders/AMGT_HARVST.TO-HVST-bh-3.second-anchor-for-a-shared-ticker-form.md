@@ -75,6 +75,34 @@ the code: `HVST-bd-1`'s `anchored_aliases` (a bare "Lilly" counts only beside "E
 
 Change an existing test assertion only where this cell's rule is the reason, and list each in your report.
 
+## AMENDMENT 1 (issuer, 2026-10-08 ~02:1xZ; `1.0.0_SA_CTO~Z` msg 31554 on row AMGT_HARVST-Z-W110-S4; no gate limb graded it)
+
+Your first pass (commits c5eea8fc73, 99ed64f3fe on this branch) is right and stays: Carlisle dropped 3 of 3, good pairs kept
+31 of 39. The 8 lost pairs read "CSL ( OTCQX:CSLLY )" and carry no name or brand. The ruling: **the issuer's own listing
+symbol, matched in EXACT CASE, is an admissible second anchor.** Two terms bind it:
+- a symbol anchor is another listing of the SAME issuer, and its data row names where the symbol was read from (the pool,
+  the registry, or the article spans that carry it); a symbol with no stated source is not added;
+- the bar is unchanged: 39 of 39 good pairs kept, 3 of 3 Carlisle dropped, 0 other securities changed.
+
+What to change, and nothing else:
+1. **Data.** The `CSL_AU_Equity` entry of `ticker_anchors` gains `symbol_anchors`: a list of
+   `{"symbol": "CSLLY", "listing": "<what it is, e.g. the OTCQX ADR of CSL Limited>", "source": "<where you read it>"}`.
+   The source must be something you can show: the article keys whose spans carry it are enough; add the pool or registry
+   entry if one carries it. Extend the entry's `census` with the re-run counts.
+2. **The list.** An entry's `symbol_anchors` is validated (each with a non-empty `symbol`, `listing` and `source`, else raise
+   with the entry named) and lands on the security as `ticker_anchor_symbols` (the symbols). A security with no entry
+   still gains no key.
+3. **The matcher.** A symbol in `ticker_anchor_symbols` anchors the required form when it appears in the title or a block
+   in EXACT CASE. It is an anchor only: it does not count as a mention of its own and is not added to `match_forms`.
+4. **Plants** added to the same test file: (ix) "CSL ( OTCQX:CSLLY )" alone counts the form `CSL` once; (x) lower-case
+   "cslly" does not anchor; (xi) "Carlisle Companies ( NYSE: CSL )" still gives 0; (xii) a `symbol_anchors` row with no
+   `source` raises; (xiii) the mutant: with `symbol_anchors` removed, (ix) gives 0.
+5. **Re-run the census** with the same script (extend its header line only if needed) and overwrite `bh3_census.out`. It also
+   prints `RECOVERED BY A SYMBOL ANCHOR: <k>` with each article key and its span in context, for a reviewer.
+6. Update the proof instance to the new commits. Your next row id is `AMGT_HARVST-Z-W110-S5`.
+
+The three criteria are unchanged (AC1 the test file, AC2 `CENSUS OK`, AC3 the suite).
+
 <paths>
 lib/research/harvest/whole_brand_aliases.json
 lib/research/harvest/universe_securities.py
