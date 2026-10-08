@@ -385,26 +385,90 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "notes": "Not fixed here: the half's text and the gold producer's cadence are both outside this order's write grant, and no remedy is proposed as executed. Distinct from MDPF_HEALGAP-D1-S3, which is about the unattributed 06:08:46Z restore, not the 13:30Z line."
   },
   {
-      "id": "MDPF_HEALGAP-D1-W3-S1",
-      "project": "MDPF_HEALGAP",
-      "fabric": "dell1",
-      "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~3",
-      "surfaced_at": "2026-10-08T15:02:00Z",
-      "one_line": "HG-t-3 reads the earlier run result with s3:GetObject to set healed_at, but the runner role is granted PutObject and ListBucket only, so in production the read fails soft and healed_at is never recorded on a re-attempt.",
-      "class": "OBSERVATION",
-      "hazard_standing": "INERT",
-      "grounding": {
-          "status": "GROUNDED",
-          "evidence": [
-              "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:73-112 @f0da37597a: statements WriteOwnCottonwoodBronzeMeta (s3:PutObject on bronze/* and meta/*), ListCottonwoodForLandingGuard (s3:ListBucket), DenyBlackdiamond49fFirmSep; a scan of the file for 'GetObject' / 's3:Get' finds none (the only s3:* is the :103 Deny on the 49f tree)",
-              "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py _already_landed docstring: 'the role holds s3:ListBucket, not s3:GetObject'",
-              "task order HG-t-3 build item 1 asks healed_at to be set 'when an earlier result marked a feed missing', which needs a read of the earlier result; _read_earlier_result in the worker's change attempts get_object and returns {} on any failure, so the run never fails on it",
-              "test_healgap_result.py::test_reattempt_records_healed_at_for_the_filled_feed passes against an in-memory S3 that serves get_object; nothing in this order exercises the real role"
-          ]
-      },
-      "disposition": "UNDER_INVESTIGATION",
-      "spec_asserts": "HG-t-3 item 1: when an earlier result marked a feed missing and this run lands it, healed_at is set; and the preflight says the result key sits inside the runner's existing PutObject grant with no role change.",
-      "world_is": "PutObject on meta/* covers writing the result, and the per-feed arrived/missing status and the PARTIAL raise never need a read (they come from listing). Only the healed_at carry-over needs GetObject on meta/<date>-result.json, which the role does not hold, so on the live role a re-attempt that fills the feed still reads COMPLETE with healed_at null. Owner: 2.0.0_SA_COO~G1 to decide whether the role gains s3:GetObject on blackdiamond/cottonwood/meta/*-result.json (a terraform change outside this order's grant) or healed_at is read as best-effort. Not fixed here; no check weakened."
+    "id": "MDPF_HEALGAP-D1-W3-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~3",
+    "surfaced_at": "2026-10-08T15:02:00Z",
+    "one_line": "HG-t-3 reads the earlier run result with s3:GetObject to set healed_at, but the runner role is granted PutObject and ListBucket only, so in production the read fails soft and healed_at is never recorded on a re-attempt.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "infra/aws/terraform/opal-assets/cot_rebalancer_runner.tf:73-112 @f0da37597a: statements WriteOwnCottonwoodBronzeMeta (s3:PutObject on bronze/* and meta/*), ListCottonwoodForLandingGuard (s3:ListBucket), DenyBlackdiamond49fFirmSep; a scan of the file for 'GetObject' / 's3:Get' finds none (the only s3:* is the :103 Deny on the 49f tree)",
+        "infra/aws/lambda/cot-pipeline/cot-rebalancer-runner/lambda_function.py _already_landed docstring: 'the role holds s3:ListBucket, not s3:GetObject'",
+        "task order HG-t-3 build item 1 asks healed_at to be set 'when an earlier result marked a feed missing', which needs a read of the earlier result; _read_earlier_result in the worker's change attempts get_object and returns {} on any failure, so the run never fails on it",
+        "test_healgap_result.py::test_reattempt_records_healed_at_for_the_filled_feed passes against an in-memory S3 that serves get_object; nothing in this order exercises the real role"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "HG-t-3 item 1: when an earlier result marked a feed missing and this run lands it, healed_at is set; and the preflight says the result key sits inside the runner's existing PutObject grant with no role change.",
+    "world_is": "PutObject on meta/* covers writing the result, and the per-feed arrived/missing status and the PARTIAL raise never need a read (they come from listing). Only the healed_at carry-over needs GetObject on meta/<date>-result.json, which the role does not hold, so on the live role a re-attempt that fills the feed still reads COMPLETE with healed_at null. Owner: 2.0.0_SA_COO~G1 to decide whether the role gains s3:GetObject on blackdiamond/cottonwood/meta/*-result.json (a terraform change outside this order's grant) or healed_at is read as best-effort. Not fixed here; no check weakened."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S1",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:22:25Z",
+    "one_line": "FWD-6 asks each session-dependent pull to be marked RECOVERS or NOT-EXPOSED, but four pulls (five schedules) are exposed to a lapsed login and have neither answer: asset-dim, two Schwab SDD pulls, and the ASTN FT leg.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~G1",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "bd-asset-dim-pipeline-trigger cron(10 22 ? * MON-FRI *) fires SSM opal-bd-asset-dim-download, which mints a bearer from blackdiamond/49f/session (infra/aws/ssm/opal-bd-asset-dim-download.json line 23); the 49F fees mint bd-49f-fees-session-daily is cron(20 22 ? * MON-FRI *), ten minutes later (live list-rules read 2026-10-08); no re-attempt target exists on the rule",
+        "canonical-schwab-si2-08242234-daily-pull and canonical-schwab-si2-08335338-daily-pull run sdd-daily-pull.ps1, whose own text says a dead standing SI2 session needs a human to re-establish it (infra/aws/ec2/canonical-schwab-si2/sdd-daily-pull.ps1:271-272); the 30-day lookback (:33) refills the days only after that",
+        "astn-wsjft-3am-run rides the parked astn/ft/session cookie (tools/astn_wsjft/scripts/run.py:53-59); on failure it records the warning 'session expired? -> run harvest_ft_session' (run.py:133), a manual step",
+        "the census with all 23 answered rows and the section 'Exposed, neither answer is true': org/missions/D8/MDPF/MDPF_HEALGAP/deliverables/0.9.0_WK_MDPF_HEALGAP~6/FWD6_SESSION_DEPENDENT_PULLS_CENSUS.md"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-t7 and PRD FWD-6: every scheduled pull whose success depends on a vendor login kept alive by something else is marked either 'recovers the same way' or 'not exposed, because ...'; a pull left without an answer fails the outcome. AC1 accepts only RECOVERS or NOT-EXPOSED because <reason> in the answer column.",
+    "world_is": "Four pulls on five schedules depend on a login that lapses and is not re-minted before they run, and neither answer is true of them (asset-dim: no re-attempt and the missed as-of is not re-pulled; Schwab SDD: next-fire catch-up but only after a person restores the session; ASTN FT: manual cookie harvest, no re-attempt). They are listed outside the table, each with the recovery that exists today, so the table carries no false answer and AC1 still reads CENSUS-OK on the 23 true ones. Whether FWD-6 is met for these four is the CVO's grade, and whether they become round-3 enrichment is the COO's and CTO's.",
+    "notes": "No remedy attempted; the order is read-only and these are outside its write grant. ARMED because a lapse on any of the four in normal operation leaves a day unfilled with nobody acting; disarm owner is the round issuer, who recuts."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S2",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:22:25Z",
+    "one_line": "The native Grep tool fails in this worker environment with ENOENT on ripgrep, and the comp-find census verb ran past the 120s Bash bound on a two-token query.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Grep(pattern='recover_or_exit|check_jwt_freshness|assert_fresh_or_exit', path='C:/tmp/wk-healgap-6/infra/aws/lambda/inf-pipeline') returned 'ENOENT: no such file or directory, uv_spawn rg' at the worker's first search, 2026-10-08 ~15:1xZ",
+        "comp-find 'wsd-49f-partner-held-etf-daily|wsb-49f-model-aua-daily' --files --all --limit 30 was moved to the background after the 120s timeout (task b56zda7kh) and completed with exit 0 later; the worker did not wait on it and read the same answer with git ls-files"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The worker brief: code search by comp-find / comp-which, and the Grep tool is fine.",
+    "world_is": "The Grep tool cannot run (no ripgrep binary found by the harness in this session), and comp-find with --all on the whole worktree is slow enough to exceed the bound, so the census reads were done by git ls-files plus Python line scans and direct file reads. Results are the same file:line facts; only the instrument differed."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-W6-S3",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "0.9.0_WK_MDPF_HEALGAP~6",
+    "surfaced_at": "2026-10-08T15:23:25Z",
+    "one_line": "The order says worker rows are MDPF_HEALGAP-W6-S<k>, but the row gate refuses that id on fabric dell1 and requires MDPF_HEALGAP-D1-W6-S<k>.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "TO-HG-t7 BOUNDS refusal clause: 'a surprise row (id MDPF_HEALGAP-W6-S<k>, fabric dell1, ...)'",
+        ".tools/surprise-row-gate.py at the commit of this row: \"MDPF_HEALGAP-W6-S1: fabric='dell1' but the id carries no coordinate ... dell1 = id <CODE>-D1-S<n> (worker: <CODE>-D1-W<n>-S<k>)\""
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TO-HG-t7 BOUNDS: worker surprise rows are minted MDPF_HEALGAP-W6-S<k> with fabric dell1.",
+    "world_is": "On fabric dell1 the gate accepts only MDPF_HEALGAP-D1-W6-S<k>. This worker's rows are therefore MDPF_HEALGAP-D1-W6-S1, -S2 and this one (-S3); the proof instance cites the D1 form."
   }
 ]
 ```
