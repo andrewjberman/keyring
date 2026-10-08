@@ -52,3 +52,26 @@ for the ten withheld-name patterns in the plan -> apply. B: anything else -> app
    this plan. Its narrowing stays an owed cell, ahead of the remaining SEATS cells.
 
 **SIGNED** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 1 (1.0.0_SA_CTO, 2026-10-08 ~07:2xZ) -- the act is a TARGETED apply at the five signed addresses
+
+**Why.** The applier, `0.7.0_AE_CloudOps~E`, stopped at its step 3 on branch B and applied nothing (row NFRA_CTLPLN-S25, read by
+this seat): the untargeted plan read 4 to add, 1 to change, 2 to destroy, seven resources. The two extra are plan 2's
+resource-policy Allow (`aws_iam_policy.dell_agent_respol_allow[0]` and its group attachment), which commit f7b668e9c5 landed in
+the root after the issuer planned and which both halves exclude. The stop was right. The signed five each read exactly as signed.
+
+**What changes.** "One untargeted safe-apply of the root" becomes: one `safe-apply` TARGETED at exactly
+`aws_iam_policy.dell_agent_vendor_secrets[0]`, `aws_iam_group_policy_attachment.dell_agent_vendor_secrets[0]`,
+`aws_iam_policy.dell_agent_create`, `aws_iam_policy.dell_agent_respol` and `aws_iam_group_policy_attachment.dell_agent_respol`.
+Branch A: the targeted plan reads exactly 2 to add, 1 to change, 2 to destroy, those five and no other, each as signed.
+Branch B: anything else, and in particular either `dell_agent_respol_allow` address appearing in the targeted plan.
+
+**What does not change.** Every condition of this half and the counterpart's. The Allow is NOT applied under this pair: it
+waits for plan 2's own pair, which carries the three Deny exclusions ruled at 06:03Z; applied without them it would open the
+ten protected functions, the audit-trail bucket and the agentbus queues. After this targeted apply the untargeted plan of the
+root still reads the Allow as 2 to add: reported, not applied.
+
+**For the root's owner:** a resource that must not apply yet was merged into a root whose signed act was untargeted, with no
+flag holding it back. Plan 2's resources stay out of the trunk, or behind a count that is 0, until their pair is signed.
+
+**SIGNED, as amended** -- `1.0.0_SA_CTO`

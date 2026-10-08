@@ -31,6 +31,8 @@ ACK is the event you send back (the bid, the accept), not a bus ACK.
 MSTR routes; it does not do the job (CLAUDE.md: 0.0.0_AB_MSTR "integrates and never works a project"). One remote
 job per machine at a time: `.tools/.remote-job.json` holds the open one, and a busy machine bids `available: false`.
 
+Before a job is counted finished (`remote-job.py complete`), run `python .tools/round-close-check.py --reviewer-only`; `verdict=REFUSED` means it is not finished.
+
 ## Half 2 -- the COO: `/remote-drive J042 <brief path>`
 
 1. **Read the brief.** Who asked, what is broken or wanted, which page or function, how they will check it.

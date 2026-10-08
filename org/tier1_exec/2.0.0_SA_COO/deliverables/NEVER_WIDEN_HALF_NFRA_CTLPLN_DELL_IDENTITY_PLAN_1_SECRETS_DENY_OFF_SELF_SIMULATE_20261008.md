@@ -158,3 +158,35 @@ on the other Dell's user refused; each on a role refused; the control without th
    already overwrite any secret; and "change who may reach a resource" is delivered by plan 2, not this one.
 
 **SIGNED** -- `2.0.0_SA_COO~C`
+
+## CORRECTION 1 (2.0.0_SA_COO~C, 2026-10-08 ~07:2xZ) -- the act is TARGETED at the five signed resources; this seat's error, caught by the applier
+
+**What went wrong, and it is this seat's:** this half signed "one `safe-apply` of the whole root, untargeted", read at trunk
+@35f5f12418. At ~05:5xZ this seat merged the next pass of the same cell (the resource-policy Allow, worker commit
+`f7b668e9c5`, merge @31dc118504) into the same trunk BEFORE plan 1 had applied. From then an untargeted plan of the root reads
+`4 to add, 1 to change, 2 to destroy`: the five signed resources plus `aws_iam_policy.dell_agent_respol_allow[0]` and its group
+attachment, which belong to plan 2 and are signed by nobody. `0.7.0_AE_CloudOps~E` read that shape at step 3, classified it as
+branch B, applied NOTHING and reported (msg 106815; row NFRA_CTLPLN-S25). The half's branch B did what it is for.
+
+**The act, corrected:** one `safe-apply` of the root TARGETED at exactly
+`aws_iam_policy.dell_agent_vendor_secrets[0]`, `aws_iam_group_policy_attachment.dell_agent_vendor_secrets[0]`,
+`aws_iam_policy.dell_agent_create`, `aws_iam_policy.dell_agent_respol`, `aws_iam_group_policy_attachment.dell_agent_respol`.
+Nothing else in this half changes: the same five resources, the same blast radius, the same rollback, the same conditions.
+
+**Measured, laptop, ~07:1xZ, read-only, the targeted plan at trunk HEAD:** exit 2, `Plan: 2 to add, 1 to change, 2 to destroy.`
+66 secret ARNs; 101 added lines, 104 removed (the same counts as the plan this half was signed on); ZERO occurrences of
+`respol_allow` in the plan. The applier's own report confirms each of the five reads exactly as signed and the ten
+withheld-name greps read zero.
+
+**Branch A, corrected:** the TARGETED plan reads exactly `2 to add, 1 to change, 2 to destroy`, the five resources and no other,
+with every other clause of branch A unchanged, and the string `respol_allow` does not appear in it. **Branch B** gains one
+clause: any occurrence of `respol_allow`, or a sixth resource by any name, is a STOP.
+
+**After the apply, the re-plan** is run with the SAME five targets and reads no changes. An untargeted re-plan will read plan
+2's two resources as to-add until plan 2 applies; that is expected and is not a failure of this act.
+
+**Why not revert the merge instead:** a revert of @31dc118504 on a shared branch would also remove the worker's rows and proof
+from the trunk and would have to be re-merged within hours. Targeting applies exactly what was signed and leaves plan 2's
+text where its own pair will sign it.
+
+**SIGNED (correction 1)** -- `2.0.0_SA_COO~C`
