@@ -4168,3 +4168,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: if the commit hook should run the checker, it needs a cache keyed on the instance's blob hash or a staged-only reading; this cell did not build either."
 }
 ```
+
+## NFRA_CTLPLN-S26 -- a package pack carries every released file of its batch, so a box is handed and fails another box's file
+
+```json
+{
+  "id": "NFRA_CTLPLN-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-08T08:05:40Z",
+  "one_line": "A package pack carries every released file of its batch, so a box receiving it is handed files meant for another box and its proof reads ok=False for a file that was never its own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106843, relaying dell2 (0.0.0_AB_MSTR msg 106842): 'INTAKE-VERIFY ... wheels=2 verified=2 checked=2 stray=0 ok=True', then 'INTAKE-PROVE device=dell2 python=3.12.10 wheels=2 installed=1 imported=1 import_missing_dep=0 failed=1 refused=0 ok=False'; the one failure is rpds_py-2026.6.3-cp314-cp314-win_amd64.whl, site Z's file, on a Python 3.12 box",
+      "Issuer's pack at ~07:0xZ: 'INTAKE-PACK batch=intake-20261008-a files=2 out=intake-pack-20261008-a held_back=0' (org/devices/intake/intake_check.py pack --released-only, merged @4a584469fb); the issuer told the CTO before carriage that the rpds wheel would ride along (msg to 1.0.0_SA_CTO, 07:07Z)",
+      "The CTO's ruling in msg 106843: click's delivery to dell2 is accepted as proved; the tool's verdict is wrong for a stated reason, so it is a defect, not a pass by hand",
+      "Not read by this seat: dell2's own records of the verify and prove runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-INTAKE: a receiving box verifies the pack and proves each file installs and imports on that box; its receipt reads ok when every file meant for it does.",
+  "world_is": "A batch can hold files for different boxes (here one for site Z on Python 3.14 and one for the two Dells on Python 3.12), but neither the batch, the pack nor the proof knows a file's destination. So the pack holds both, and prove counts the other box's file as failed. Repair, ruled by the CTO for a cell at the next cut: (1) each released file carries its destination box or boxes in the batch; (2) pack takes a destination and holds only that box's files; (3) prove counts a file tagged for another box as not-for-this-box, never as failed."
+}
+```
