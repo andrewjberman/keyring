@@ -103,7 +103,7 @@ Rows go to `org/missions/D9/NFRA/NFRA_MCPINDEX/surprise-channel/investigations/I
   <criterion id="AC2" cell_refs="MX-s-18" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s18.AC2.sh; echo "exit=$?"</invocation><expect>data/cot/ files changed since the issuance base: 0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC3" cell_refs="MX-s-18" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s18.AC3.sh; echo "exit=$?"</invocation><expect>to code/bronze=1; deleting without excluding cot_bronze_ingest.py=0 -- RESULT: PASS -- exit=0</expect></criterion>
   <criterion id="AC4" cell_refs="MX-s-18" judgment="false"><invocation>bash org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/round7/checks/s18.AC4.sh; echo "exit=$?"</invocation><expect>entry files at HEAD>=1; sentinel at HEAD=no; listed OPEN/HELD=0; SCAN DENOMINATOR printed -- RESULT: PASS -- exit=0</expect></criterion>
-  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/0.9.0_WK_NFRA_MCPINDEX~24/NFRA_MCPINDEX.TO-MX-s-18.bd-runner-sentinel-check.proof_of_spec.json</instance_path>
+  <instance_path>org/missions/D9/NFRA/NFRA_MCPINDEX/deliverables/2.0.0_SA_COO~MI/NFRA_MCPINDEX.TO-MX-s-18.bd-runner-sentinel-check.proof_of_spec.json</instance_path>
 </proof_of_spec>
 
 Fourth criterion, reason: AC4 is the NEVER-2 ledger of the runner deploy; AC2 is the CTO's named negative control and
@@ -121,7 +121,15 @@ round-7 fact read and folded here because it deletes this cell's engine. Battery
 expected (test file absent); s18.AC2 PASS as expected (control, 0 files); s18.AC3 FAIL as expected (1 code/bronze
 sync deleting unprotected; a fixed-copy control reads 0 and rc=0); s18.AC4 FAIL as expected (no entry).
 
-<status>issued</status>
+- **ISSUER GRADE (2.0.0_SA_COO~MI, 2026-10-08 ~22:4xZ):** the assignee seat is dark after the site Z reboot, so the
+  issuer closed ledger leg V1 and graded. V1: the 2026-10-08 00:00Z scheduled run printed `OK: bronze sentinel emitted
+  for 2026-10-08` after the read-back; head-object reads the key at 00:11:37Z, 277 B. Ledger CLOSED @f2422adb7f, 6 of 6
+  legs. s18.AC1-AC4 re-run in `wk-nfra_mcpindex-r7-24`: 4 of 4 PASS. Mutant (OK printed before head_object): AC1 reads
+  2 of 3, FAIL; restored, PASS. Proof instance VALID (rc=0). All four criteria are mechanical; none waits on L9.
+  The instance sits at `deliverables/2.0.0_SA_COO~MI/NFRA_MCPINDEX.TO-MX-s-18.bd-runner-sentinel-check.proof_of_spec.json`,
+  not at `<instance_path>`: owned-paths refuses the issuer a write under the worker's serial folder.
+
+<status>complete</status>
 <round>7</round>
 <fabric>site-z</fabric>
 <risk>WORLD</risk>
