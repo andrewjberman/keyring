@@ -2092,3 +2092,29 @@ round.** Never edit an existing row.
   "world_is": "Net MATCH rises 1,685 -> 2,057, but 163 months that matched Commonwealth before now DIFF. Unexplained: a candidate is that sweep balances counted as cash at 1.0 now enter the value in months where the earlier chain left them unpriced or cancelling, so a month that matched by offsetting errors no longer does. Classing the 163 is an enrichment candidate for the round-19 analysis."
 }
 ```
+
+## ADVI_COTBKF-D2-S30 -- L9 CB19s1-AC3 MET; Fidelity Government Cash Reserves trades like a core sweep (232 accounts), off the list by the ruling's bank-only scope
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S30",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T17:47:16Z",
+  "one_line": "L9 CB19s1-AC3 MET (the sweep list is a declared list of two bank deposit sweeps; no rejected candidate is a bank sweep by its source). Beyond the criterion: 316067107 Fidelity Government Cash Reserves trades like a custodian core sweep across 232 accounts and is off the list only because the round-18 ruling covers bank sweeps.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_19_L9_GRADE_20261008.md",
+      ".scratch/advi_cotbkf/cache/transactions.parquet (1,416,497 rows, dell2): 316067107 8,768 rows, 232 accounts, 2023-03-17..2026-06-22, dv 3,410 / dvr 3,292, 91% of rows on an account-day with another CUSIP traded (FDIC66606 75%, FDIC66853 78%)",
+      "1.0.0_SA_CTO~DELL2 round-18 analysis @04b347e9ea section 1: 'A bank sweep is the account's cash parked in an interest-bearing vehicle ... sweep vehicles are cash'"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Round-18 ruling: sweep vehicles are cash, their buys and sells INTERNAL, by a declared list.",
+  "world_is": "The list holds the two bank deposit sweeps. A money-market core position that behaves as a sweep for 232 accounts is valued as a priced holding and its buys and sells count as trades; whether it is a sweep vehicle under the ruling is the CTO's call (wider than the packet's 6-month enrichment item 2)."
+}
+```
