@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-06T03:31:09.409523+00:00
-**Status:** OPEN
+**Status:** CLOSED -- nothing stranded -- closed 20261008T135020Z
 **Deploy:** IRPT_YCDGEN round 6 branch B2: resident package 409e3066d1-st24 (st22 plus the 11 named files, the Overview map, the classifier client member and the pinned pyarrow), Andrew's sign-in on the Opal allow list; CTO half pending, COO half in the packet
 **Authored by:** 2.0.0_SA_COO~Y
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -17,7 +17,7 @@
 | P1 | verify | pre-install step-2 answers | recorded | pre-install answers recorded; equal to branch B pre; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6 (re-recorded by 2.0.0_SA_COO~G2 from the ledger at HEAD; originally closed 20261006T034427Z by 2.0.0_SA_COO~Y, commit e2fec30ce2; the .open_deploys JSON on dell2 never carried that close) | CLOSED 20261007T102038Z |
 | D2 | activation | install_branch_b2.sh via SSM | root 409e3066d1-st24 active; pyarrow in the root; members equal | root 409e3066d1-st24 active, rc=0, 14 members OK, pyarrow in root, MainPID 622977 NRestarts 0; org/missions/D9/IRPT/IRPT (re-recorded by 2.0.0_SA_COO~G2 from the ledger at HEAD; originally closed 20261006T034427Z by 2.0.0_SA_COO~Y, commit e2fec30ce2; the .open_deploys JSON on dell2 never carried that close) | CLOSED 20261007T102039Z |
 | V1 | verify | post-install step-2 equal; real classifier and characteristics reads from the running root, exit code 0 | equal or rolled back | step-2 answers equal pre (only root name differs); real classifier SPY and characteristics 3 of 3 from running root, exi (re-recorded by 2.0.0_SA_COO~G2 from the ledger at HEAD; originally closed 20261006T034428Z by 2.0.0_SA_COO~Y, commit e2fec30ce2; the .open_deploys JSON on dell2 never carried that close) | CLOSED 20261007T102039Z |
-| F1 | verify | Andrew's first real Overview | opened by Andrew |  | OPEN |
+| F1 | verify | Andrew's first real Overview | opened by Andrew | SUPERSEDED per 1.0.0_SA_CTO~DELL2 ruling msg 1260 (NEVER-2 measure, no re-execute): the deploy is world-done -- D2 and V1 closed; host root 409e3066d1-st24 last measured by laptop SSM 4119ed28 (DELL2_READS_SECOND_BATCH_20261007.md @8b83fd1d6f); no resident install since (2.0.0_SA_COO~G2 is the host's one writer; 390 s release ad4ae786d9 never applied); trunk constant equal (M1, diff 0). Andrew's first real Overview is the OUTCOME FWD-1, graded by round 6 on the run card F1_RUN_CARD_20261007.md (retry opened msg 1278), not by this deploy entry. | CLOSED 20261008T135017Z |
 | M1 | git | the allow-list constant lands on CLOUD after F1 | commit | commit 035443efaa (cherry-pick of 409e3066d1), drained to CLOUD @73e23d9f5e; git diff 409e3066d1 HEAD -- ycharts/generate/resident_worker.py = 0 lines (trunk constant == running root, OPAL_PRODUCER_PRINCIPALS = andrew@opalinvest.com); host root 409e3066d1-st24 read SSM 4119ed28 (DELL2_READS_SECOND_BATCH_20261007.md @8b83fd1d6f); CTO~DELL2 msg 306; code only, no deploy | CLOSED 20261007T101933Z |
 
 ## Log
@@ -33,3 +33,5 @@
 - 20261007T102038Z LEG P1 closed: pre-install answers recorded; equal to branch B pre; org/missions/D9/IRPT/IRPT_YCDGEN/deliverables/2.0.0_SA_COO~Y/round6
 - 20261007T102039Z LEG D2 closed: root 409e3066d1-st24 active, rc=0, 14 members OK, pyarrow in root, MainPID 622977 NRestarts 0; org/missions/D9/IRPT/IRPT
 - 20261007T102039Z LEG V1 closed: step-2 answers equal pre (only root name differs); real classifier SPY and characteristics 3 of 3 from running root, exi
+- 20261008T135017Z LEG F1 closed: SUPERSEDED per 1.0.0_SA_CTO~DELL2 ruling msg 1260 (NEVER-2 measure, no re-execute): the deploy is world-done -- D2 and V
+- 20261008T135020Z CLOSED -- all 7 legs proven
