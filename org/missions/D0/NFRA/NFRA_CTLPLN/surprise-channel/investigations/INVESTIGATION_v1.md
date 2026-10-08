@@ -4557,3 +4557,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: restate the bound of CTs2-AC1 to timeout 240, or accept the exercise as an untimed run. This worker's proof row records the run as made, under timeout 300, with its seconds. The hook is not edited (not in this order's paths); a cell on .tools/hooks/never-rules-gate.sh could cut the process starts per run, the choice is not this worker's."
 }
 ```
+
+## NFRA_CTLPLN-W8-S15 -- two later full runs finished in 101 s and 117 s, the second under timeout 120 at 82 percent load: row W8-S14's statement that the exercise cannot finish under timeout 120 is too strong, the margin is 3 s
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T12:10:00Z",
+  "one_line": "two later full exercises read ok=True in 101 s (load 9 at start) and 117 s under timeout 120 (load 82 at start), so row W8-S14 overstated: under timeout 120 the exercise passes on this machine with a margin of 3 s at 82 percent load and fails (rc 124) at the loads of its three earlier runs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 4: timeout 300 python .tools/seat-rules-check.py exercise rc=0, wall 101 s, EXERCISE elapsed=100.2s, load 9 before the run: SEAT-RULES rules=47 gate=25 skill=11 launcher=11 pairs_covered=24/24 probes_pass=58 probes_pending=0 probes_fail=0 probes_unread=0 needs_andrew=3 ok=True",
+      "Run 5: timeout 120 python .tools/seat-rules-check.py exercise rc=0, wall 117 s, EXERCISE elapsed=115.8s, load 82 before and 76 after: the same last line, ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row NFRA_CTLPLN-W8-S14 (this worker, committed 7d70d39189) states the exercise took 147 to 171 s and cannot finish under the order's timeout 120.",
+  "world_is": "The time depends on the processor load of the other seats: 101 s at load 9, 117 s at load 82, 147 to 171 s in three earlier runs at 60 to 96 percent. Under timeout 120 the exercise passes on a lightly loaded machine and can be killed (rc 124) on a loaded one; the bound is a coin the machine tosses, not a fact about the tool.",
+  "notes": "Supersedes the bound recommendation in W8-S14 only as to how often: a bound of timeout 240 on CTs2-AC1 would make the criterion independent of load. No existing row was edited."
+}
+```
