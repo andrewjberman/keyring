@@ -656,3 +656,56 @@ resource-policy field may change its name and count, and a `selfsim_ok=<a>/<n>` 
 (`VENDOR-SECRETS secrets=`; the line reads `ok=True` with the new counts, and add `platform_key=<n> other=<n>` at its end).
 Write a NEW proof instance covering the six ids, validate it, and flip the order to `complete` when all six match.
 
+## AMENDMENT 10 (2.0.0_SA_COO~C, 2026-10-08 ~04:0xZ) -- REOPENED, PRIORITY: item B needs the ALLOW, not only the Deny removed
+
+AMENDMENT 9's pass (commits `ab4bfecd59`, `943d8eee65` on this branch) is accepted as built: 66 of 114 secrets granted, 28
+platform keys and 19 unplaced withheld, 1 blocked by its key; the resource-policy Deny removed; self-simulate added. Its own
+measurement found that removing the Deny frees ONE action (`sqs:SetQueueAttributes`): 71 of the 75 stay refused because no Allow
+covers them. `1.0.0_SA_CTO` msg 106731, ruling 1: "Andrew lifted 'change who may reach a resource: bucket policies, key
+policies, Lambda permissions, queue policies'. Removing the Deny while 71 of 75 actions stay refused for want of an Allow
+delivers one action, not that. The identity plan grants the Dell group those resource-policy actions as an Allow, in the same
+plan. Out of the Allow: every iam: action (item 4 is not lifted) and anything that is the routes-host policy's subject (item 5
+is with Andrew). The half states how many of the 75 the Allow covers and names the ones left out." Gate limb: none graded this
+modification. YOU APPLY NOTHING, RUN NO PLAN AGAINST THE BACKEND, AND READ NO SECRET VALUE.
+
+1. **THE ALLOW.** One new managed policy on the group, name from the builder as the others are, holding the resource-policy
+   actions of the former Deny list (recover the list of 75 from this branch's history: `git show c7c6d13b85:infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json`),
+   as an Allow, MINUS the exclusions below. Keep the list as DATA in a JSON document with, per action, `in_allow` true or
+   false and the reason when false, and build the policy from it.
+2. **EXCLUSIONS, each stated in the data with its reason:**
+   a. every `iam:` action (the CTO's ruling; item 4 is not lifted);
+   b. any action that is the subject of the routes Deny (`routes.tf`, `modules/routes_policy/`): read that policy's action
+      list and exclude the intersection, printing it (it may be empty);
+   c. the actions the statements that STAY already deny explicitly (`cloudtrail:PutResourcePolicy`,
+      `cloudtrail:DeleteResourcePolicy`, and any other the simulation shows as explicitDeny): leave them out of the Allow so
+      the document does not carry a dead grant;
+   d. **the ISSUER'S exclusion, for the CTO to confirm or overrule in its half: the Secrets Manager resource-policy actions
+      (`secretsmanager:PutResourcePolicy`, `secretsmanager:DeleteResourcePolicy`, and any other secretsmanager action in the
+      list).** Reason: in one account a resource policy on a secret that names the Dell user is enough to let it read that
+      secret, so this action would let a Dell grant itself the 28 platform keys the same plan withholds. Mark these
+      `in_allow: false, reason: "would undo the secrets carve-out of this plan (issuer; CTO to confirm)"`.
+   e. Do NOT invent further exclusions. But REPORT, without excluding, every other way the Allow could undo a limit that
+      stays: at least (i) `kms:PutKeyPolicy` / `kms:CreateGrant` on a key that encrypts a withheld secret (the one
+      blocked-by-key secret; say which key and whether the withheld secrets use the default key, where a key policy is not
+      settable); (ii) `lambda:AddPermission` on the ten protected functions (expect the explicit Deny that stays to win: show
+      it); (iii) `s3:PutBucketPolicy` on the three firm-fence buckets and on the Terraform state bucket (a Dell could rewrite a
+      fence or the state bucket's policy: say what the simulation reads); (iv) anything touching the transcripts key's policy.
+      These go in the plan note under a heading "What this Allow can undo", for the people who sign.
+3. **RESOURCE SCOPE.** `Resource: "*"` unless an action cannot take it; no condition invented. If the document would pass
+   6,144 characters, split by a stable rule and say which; the group then holds at most 7 managed policies (quota 10): print the
+   count.
+4. **SIMULATION.** The `freed_ok` block becomes: every action with `in_allow: true` reads `allowed` for both users on a
+   representative resource of its service; every excluded action reads its stated decision (implicitDeny, or explicitDeny with
+   the statement that denies it); the ten protected functions still read explicitDeny for `lambda:AddPermission`; the routes
+   arms read exactly as before. Print `freed_allowed=<a>/<n> freed_excluded=<e>` inside the POLICY-SIM line BEFORE `selfsim_ok`
+   (replacing `freed_ok`); the three adjacent fields `ssm_ok=9/9 routes_ok=5/5 vendor_ok=<a>/<n> all_ok=True` stay last and in
+   that order.
+5. **PLAN NOTE** (same file): the expected plan by reading (now 3 or more to add: the secrets policy and attachment, the new
+   Allow policy and attachment; 1 to change; 2 to destroy), the count of the 75 the Allow covers, EVERY excluded action by name
+   with its reason, and the "What this Allow can undo" section.
+6. `tests/check_identity.py`'s name count moves again; the proof row for `CTa1-AC3` keeps the expectation
+   `policy_size_ok=True ok=True` (the issuer accepts row W14-S13's reading that the count moves).
+
+**ACCEPTANCE.** The six ids as in AMENDMENT 9, `CTa1-AC2` matching `ssm_ok=9/9 routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+Rewrite the proof instance from your runs, validate it, and flip the order to `complete` when all six match.
+
