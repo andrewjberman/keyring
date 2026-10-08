@@ -2326,3 +2326,29 @@ round.** Never edit an existing row.
   "world_is": "--data-dir is now required (the caller names the folder), and a grade-version mismatch is refused; a day-parquet mismatch is not detectable until the runner stamps the list version (and cash-leg rule) into the day parquet."
 }
 ```
+
+## ADVI_COTBKF-D2-S34 -- L9 CB22v1-AC3 MET; the one-cause prediction falsified; a double-credit lead for the 23 regressions
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-S34",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T19:42:34Z",
+  "one_line": "L9 CB22v1-AC3 MET: funding_credit_rows is one general rule (per account and trade date with a listed-sweep buy, credit min(non-sweep sale proceeds, sweep buy); no account named in code), the 72 and 75 are counted from the persisted mover grades (25 of 72, 0 of 75), and all 138 movers still DIFF are named (138 distinct account-months). The CVO's round-21 prediction (D2-S32: both classes collapse together) is FALSIFIED: only carried-balance months returned.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/assets/scripts/silver/commonwealth_sweeps.py funding_credit_rows (this seat's read at HEAD); comp-find of the traced/regressed account ids over data/assets/scripts/silver: 1 hit, a crosswalk test, none in the rule",
+      "org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~43/sweep_regrade.md lines 711-1207: 163 movers read from mover_classes.parquet; 'Movers left not MATCH ... each named: 138', 138 distinct rows (this seat's count)",
+      "org/tier1_exec/3.0.0_SA_CVO/deliverables/ADVI_COTBKF_ROUND_22_L9_GRADE_20261008.md"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CB22v1-AC3: one general cash-leg rule, the 72 and 75 counted back from the persisted grades, every month still DIFF named, not forced.",
+  "world_is": "Met. Unmeasured lead for the 23 MATCH -> DIFF regressions (19 in 0QF879130 and 0QF879352): the rule credits cash whenever a non-sweep sale and a sweep buy share a day, so if the vendor already posts a cash leg for some of those sales, the synthetic credit counts it twice. A per-month check for an existing CFNCASH row on the credited days decides it."
+}
+```
