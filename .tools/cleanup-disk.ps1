@@ -99,9 +99,33 @@ try {
 $_excludeNorm = $ExcludePath | ForEach-Object { $_.Replace('\', '/').TrimEnd('/').ToLowerInvariant() }
 $_liveCutoff = (Get-Date).AddHours(-$LiveWindowHours)
 
+# An excluded path covers ITSELF AND EVERYTHING UNDER IT. Until 2026-10-08 this was an exact match, so
+# `-ExcludePath <parent folder>` excluded nothing and said nothing: 0.0.0_AB_MSTR~Z passed Desktop\opal-pinned to
+# protect the pin trees and the run removed the live AMGT_CORPUS pin 61a724beb0ad (recreated the same hour).
 function Test-Excluded([string]$Path) {
     $n = $Path.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
-    return $_excludeNorm -contains $n
+    foreach ($e in $_excludeNorm) {
+        if ($n -eq $e -or $n.StartsWith($e + '/')) { return $true }
+    }
+    return $false
+}
+
+# A worktree a Windows scheduled task RUNS FROM is live whatever its file ages say: a pin tree is written once and
+# then only read, so the recency heuristic reads it as idle (the same incident). One read of the task table; a task
+# whose working directory, program or arguments name a path at or under the worktree makes that worktree live. A box
+# where the table cannot be read gets an empty list and the old behaviour, said once.
+$_taskPaths = @()
+try {
+    $_taskPaths = @(Get-ScheduledTask -ErrorAction Stop | ForEach-Object { $_.Actions } | ForEach-Object {
+        @($_.WorkingDirectory, $_.Execute, $_.Arguments) } | Where-Object { $_ } |
+        ForEach-Object { ([string]$_).Replace('\', '/').ToLowerInvariant() })
+} catch {
+    Write-Output "WARN: the scheduled-task table could not be read ($($_.Exception.Message)); a tree a task runs from is NOT protected on this run"
+}
+function Test-TaskRunsFrom([string]$Path) {
+    $n = $Path.Replace('\', '/').TrimEnd('/').ToLowerInvariant()
+    foreach ($t in $_taskPaths) { if ($t.Contains($n + '/') -or $t.TrimEnd('/', '"').EndsWith($n) -or $t.Contains($n + '"')) { return $true } }
+    return $false
 }
 
 function Get-DirSizeBytes([string]$Path) {
@@ -134,6 +158,7 @@ function Get-WorktreeTable {
 
 function Test-WorktreeLive([string]$Path) {
     if (Test-Excluded $Path) { return $true }
+    if (Test-TaskRunsFrom $Path) { return $true }
     if (-not (Test-Path -LiteralPath $Path)) { return $false }
     try {
         $newest = (Get-ChildItem -LiteralPath $Path -Recurse -Force -ErrorAction SilentlyContinue |

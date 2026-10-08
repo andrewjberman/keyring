@@ -4740,6 +4740,297 @@
     "spec_asserts": "A row's world_is states what was measured",
     "world_is": "The cause of row Z-S65 is not traced: which stage emits a dialog shell under the CUSIP key, and why the account text's name links to it and not to the Bloomberg-keyed dialog. The fault, its count of 4 and the repair being one cell of the next round stand",
     "notes": "Cites ETFS_RIVALS-Z-S65. The COO never-widen half for the deploy carries the same correction."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S67",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.0.3_BG_BBGTerminal",
+    "surfaced_at": "2026-10-07T19:35Z",
+    "one_line": "bbg_budget's two budget checks price the SAME 3,750-point day 150 times apart -- check_points treats 1 point as 1 row while check_backfill prices points through estimate() at 24-2,198 rows each; and mode market-range records points REQUESTED into the same rows field the other modes fill with records RETURNED.",
+    "class": "OBSERVATION",
+    "hazard_standing": "ARMED",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "One ceiling in one unit: bbg_budget.json daily_ceiling_rows with production_reserve_rows, and record()/spent() summing a single rows field that gates every backfill.",
+    "world_is": "Exercised against the live module 2026-10-07, not read off the source: remaining(today)=119,245 rows. For ONE day of 3,750 points, check_points(3750) returns ALLOWED while check_backfill of the identical plan returns 'refused before any fetch: estimate 562,500 rows > 119,245 rows remaining' -- a 150x divergence at the default 150 rows per fund-date (per-fund range 24 for PFOE to 2,198 for ACWI). check_points' own refusal text re-labels the same 120,000 as 'the 120000-point backfill budget', so one number carries two unit names. Separately the rows field is not one unit across modes: collector_bloomberg.py:630 records max(len(cap['rows'])-1,0), records RETURNED; security_names.py:14 records the names RETURNED; enrichment_bloomberg.py:75/836/855 records the points REQUESTED (len(lookups), len(batch)*len(run)) under mode market-range. Today's spent()=755 is coherent (749+6, both returned) ONLY because no market-range line landed. record() carries no unit field and spent() sums rows blindly, so a mixed-unit day is unlabelled and undetectable after the fact.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live exercise of bbg_budget.check_points(3750) -> ALLOWED and bbg_budget.check_backfill({'2026-10-08': 3750 default-estimate funds}) -> REFUSED 562,500 rows > 119,245, same process, same config (this seat, 2026-10-07 ~19:25Z)",
+        "bbg_budget.py:112-121 remaining() returns ceiling-reserve-spent in ROWS; :124-136 check_points compares a raw point count against it; :87-91 estimate() prices fund-dates through est_rows_per_fund_date",
+        "Record sites read verbatim: collector_bloomberg.py:630 (rows returned), security_names.py:14-15 (names returned), enrichment_bloomberg.py:75 and :836/:855 (points requested)",
+        "Negative/scoping control: MDPF_SECHIST's own card-A draw calls NEITHER check -- it prices in returned-record units and compares against config directly (2.0.0_SA_COO~H1 msg 598, etf_daily_pull.py:560 at fad25b1527, line printed and it reads 'Same rule as bbg_budget.check_backfill, priced per ticker-weekday. BEFORE any request'), so this hazard does NOT reach the 2026-10-08 draw"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "notes": "Filed at the direction of 1.0.0_SA_CTO~Z ruling 31309; composed by 0.0.3_BG_BBGTerminal, which cannot write under org/missions or commit (concierge fence; no OWNPATHS lane) -- the writer is the issuer. The LIVE caller of check_points is enrichment_bloomberg.py:817, which is why hazard_standing is ARMED rather than INERT despite the card-A draw being unaffected. NOT a request to edit integrations/bloomberg: the no-modify order stands (ruling 31309). Related: ESTATE_GOVERNANCE-S27 (same file's as-of frontier), a separate row with its own owner."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S68",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T19:42:31Z",
+    "one_line": "Disarm statement for row ETFS_RIVALS-Z-S67: the price-history backfill's guard is check_points, and its unit is one requested price point, which returns at most one record",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py lines 815 to 817 (mode market-range): remaining = bbg_budget.remaining(); over_budget = bbg_budget.check_points(need), where need is the plan's count of security-days; an over-budget plan is refused before any request",
+        "data/etfs/scripts/rivalfunds/bbg_budget.py lines 87 to 136, read: check_backfill(plan) takes {date: [funds]} and prices each FUND-DATE of a holdings pull through est_rows_per_fund_date (default 150 returned rows for one fund on one date); check_points(points) compares a count taken directly. The two functions price different draws, so 3,750 handed to both is 3,750 fund-dates in one and 3,750 price points in the other",
+        "enrichment_bloomberg.py lines 836 to 861: every request sent records its points, including a request that fails. One price point is one security on one day; a history request returns at most one record for it (none on a non-trading day or for an unknown key)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S67 and 1.0.0_SA_CTO~Z ruling msg 31309: before backfill day 1 the disarm owner states which check the backfill's guard uses and that its unit matches what the ledger records",
+    "world_is": "The guard is check_points. Its unit, points requested, is an upper bound on records returned, so against a ceiling kept in returned records it refuses early and never late: 3,750 points draw at most 3,750 records. The mixed unit in the ledger's rows field stands as row Z-S67 says: after a backfill day the day's spent() is returned records plus requested points, an over-count. Not exercised: no market-range request has been sent, so 'at most one record per point' is read from the request's shape, not measured; day 1's log gives the measured ratio and this seat reports it",
+    "notes": "Cites ETFS_RIVALS-Z-S67 (surfaced by 0.0.3_BG_BBGTerminal, filed by this seat at its ask, msgs 31332 and 31333). The hazard cannot fire before a backfill runs, and none runs before the deployed-stage read and a never-widen pair. No file under integrations/bloomberg is touched."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S69",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T21:34:06Z",
+    "one_line": "Production closes are dropped today: for 2026-09-29 every reader of gold security_market takes the 172-security object and ignores the 434-security one, so 413 closes of that day never reach the rankings or the charts",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Live objects under s3://opal-data-etfs/rivalfunds/etfs/gold/security_market/date=2026-09-29/ read 2026-10-07 ~21:3xZ: market-20260929-afcd903ad844.parquet 172 rows, 172 securities; market-20260929-53bc393958bd.parquet 434 rows, 434 securities, source blp_client.reference_data. Of the 434, 417 (security, date) pairs are not in the 172-row object and 413 of those carry px_close",
+        "revision.newest (data/etfs/scripts/rivalfunds/revision.py lines 101 to 118) picks one object per date; neither name carries a capture time, so the last tie-break, the name, decides: afcd sorts above 53bc. gold_holding_contribution._newest_by_date (lines 696 to 702) returns that one object to the rankings, the trend, the input census, the chart price series and the parsekey map",
+        "Reader census org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round25_prep/READER_CENSUS_SECURITY_MARKET_20261007.md @33e8bbe318: six row-reading call sites, each one object per date",
+        "Control, same read: date=2026-10-02 holds three objects of 601 rows each; the two ignored ones hold 0 pairs the winner lacks. So the loss is on one date of the five"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "PRD C-OWED-GRAIN (v0.19 G.4) and FWD-22 / FWD-23: a security's stored close for a day is on its chart and prices its contribution",
+    "world_is": "For 2026-09-29, 413 stored closes are not read by any product stage. Seen on the served page as a break in a chart's curve around 29 Sep where the security is not among the 172; in the rankings a holding with no market price that day is priced from the fund's own valuation (holding_implied) or not at all. How many of the 413 are securities on the page today, and whether any served ranking figure would move, was not measured. The date stays inside the 30-day window until 2026-10-29 and inside the 365-day chart for a year",
+    "notes": "ARMED and live: it is served now and has been since the charts deployed today (the rankings since round 14 or earlier). Not caused by today's deploys. Disarm: the readers' grain cell of round 25 (CTO ruling msg 31416: a date's rows are the union of all its objects, with a stated winner where two objects hold the same security and date), deployed and graded; it needs no rewrite of S3. No write of closes happens before that. Why two objects of one day differ by 262 securities (an early partial pull beside the full one) was not traced."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S70",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T21:44:28Z",
+    "one_line": "Correction to row ETFS_RIVALS-Z-S69: the object the readers pick for 2026-09-29 is an IMPORT with no price at all, so all 430 market closes of that day are unused, not 413; and the page shows it as a valuation-implied point, not a break in the curve",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Both objects of date=2026-09-29 opened 2026-10-07 ~21:4xZ: market-20260929-afcd903ad844.parquet (the one revision.newest picks) has 172 rows, source import:bbg/2026-09-29/characteristics.parquet, px_close non-null 0, total_return_index non-null 0, currency non-null 0, gics_sector non-null 164; market-20260929-53bc393958bd.parquet has 434 rows, source blp_client.reference_data, px_close non-null 430. 17 securities are in both; for all 17 the picked object's close is null",
+        "The served chart objects of 2026-10-07 (round 24): 355 fund-security entries have a key among the 413 securities priced only in the ignored object, and 355 of 355 carry a 2026-09-29 point, each from the fund's own valuation (point source 'i'). GQGU's Meta is not among them: the break seen in that chart near 29 Sep is something else and was not traced",
+        "The readers hand revision.newest bare uris (gold_holding_contribution._newest_by_date), so its rule that an import never outranks a live object has no provenance to act on, and neither name carries a capture time: the name decides"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A row's world_is states what was measured",
+    "world_is": "Row Z-S69 said 413 closes reach no stage and that the fault shows as a break in a chart's curve. Measured: 430 closes (413 of securities only in the ignored object, 17 of securities in both, null in the picked one); the day is drawn, from a valuation-implied price. Z-S69's class, standing and disarm stand. Still not measured: whether any served ranking figure moves; the readers' cell's never-widen pair carries that before and after",
+    "notes": "Cites ETFS_RIVALS-Z-S69. The rule the repair states for this date: the live pull's close for every security it prices, GICS from the live pull where it has one and from the import where only the import has one (round 25 cell RIV-rg-1)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W15-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~15",
+    "surfaced_at": "2026-10-07T22:55:00Z",
+    "one_line": "Neighbouring check bk-1.AC3 pins the buying trend's G4 read to the module's own _read(s, uris, columns); a union reader that bypassed it failed that check, so g4_window takes the stage's reader as an argument",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/bk-1.AC3.py lines 85-100 wrap gold_buying_trend._read and require a security_market read through it whose column tuple names security_parsekey or is None; with the union reader calling hc._read the run printed '_read calls: 3 | security_market reads and their columns: []' and 'AC3 RESULT: FAIL 2 failures' (rg-1.AC3 arm bk-1.AC3 failed with it)",
+        "After the change gold_buying_trend.handler_entry calls hc.g4_window(..., read=_read): bk-1.AC3 prints 'security_market reads and their columns: [None]' and 'AC3 RESULT: PASS 0 failures'"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Interface item 2 moves the trend's G4 read to the one shared function; AC3 requires bk-1.AC3 to still pass unchanged",
+    "world_is": "The two cannot both hold if the shared function reads objects itself; the function takes `read` (default hc._read) and the trend passes its module's _read, called once per object with no column filter, columns applied after the union. No check or order text was edited",
+    "notes": "Files: data/etfs/scripts/rivalfunds/gold_holding_contribution.py (g4_window), gold_buying_trend.py (the call)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W15-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~15",
+    "surfaced_at": "2026-10-07T22:56:00Z",
+    "one_line": "By the stated rule a security whose live row has no close and whose backfill row has one merges to a backfill-marked row, so drop_backfill and _g4_for then drop the security's live GICS and parsekey as well",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order RIV-rg-1 interface item 1: the price group (including as_of_source) travels whole from the first row in the order whose px_close is not null; (a) ranks a backfill row after a non-backfill row but a non-backfill row with a null close is skipped for the price group; item 3: drop_backfill runs AFTER the union. Read in gold_holding_contribution._g4_merge",
+        "Not exercised by any check (rg-1.AC2 arm a plants K1 live 100.0 against backfill 90.0, and K2 backfill-only). The writer market-range writes only dates holding no market-* object (READER_CENSUS_SECURITY_MARKET_20261007.md section Writer), so a mixed partition does not arise from the writer today"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A non-backfill row before a backfill row; backfill rows handled after the union exactly as today",
+    "world_is": "Built exactly as the order states. In a partition that mixes a live object and a backfill object, a security with a live row without a close would be priced from the backfill row and then dropped by the rankings and the G1 join, losing its live descriptive fields. Today no partition mixes them",
+    "notes": "Raised for the round-N analysis; no change made."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S71",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-07T23:42:51Z",
+    "one_line": "Rows ETFS_RIVALS-Z-S69 and Z-S70 read the fault backwards: the 2026-09-29 live object of gold security_market holds the closes of 2026-09-30, so the readers ignoring it protected the page; and that object's as_of column does not show it",
+    "class": "BLOCKING",
+    "hazard_standing": "ARMED",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "3.0.0_SA_CVO~RV ADJUDICATION_v30.Z.md @e3cc04e7bb (the hand read asked by the CTO half's C1): 47 of 57 closes filed under 2026-09-29 equal the funds' 2026-09-30 valuations; RIV-rg-1 J1 NOT MET; 1.0.0_SA_CTO~Z ruling msg 31477: nothing is applied",
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round25/g4_date_offset_read_20261007.json (this seat, all 8 objects, USD closes of fund-held securities against the funds' valuation price within 0.2 percent on the partition date and two reports either side). market-20260929-53bc393958bd.parquet: 58 comparable closes; 48 match 2026-09-30, 32 match ONLY 2026-09-30; 6 match its own date and 0 match only its own date",
+        "Same read, the other objects that carry closes: date=2026-10-01 31 of 31 match their own date (21 only it); date=2026-10-02 86 of 125 (50 only it; two objects with the same closes); date=2026-10-05 142 of 165 (106 only it); date=2026-10-06 142 of 165 (115 only it). So ONE object is mis-dated, of five that carry closes. A sixth, date=2026-10-02 market-20261005T123318Z, has 601 rows and 0 closes",
+        "The as_of column: the mis-dated object says as_of 2026-09-29, EQUAL to its partition date. The four correctly dated pulls say as_of 2026-10-04, 2026-10-04, 2026-10-06 and 2026-10-07, the day they were pulled, NOT their partition date; the 2026-10-01 object says 2026-10-01"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "disarm_owner": "2.0.0_SA_COO~RV",
+    "spec_asserts": "PRD C-OWED-GRAIN and FWD-22 / FWD-23: a close filed under a date is that date's close. Rows Z-S69 and Z-S70 asserted that 430 closes of 2026-09-29 were wrongly unused",
+    "world_is": "The 430 closes are 2026-09-30's, filed a day early. The served page (rounds 15 to 24) does not read them: correct by accident, through a name tie-break. Round 25's RIV-rg-1 as merged on site-Z CLOUD (1d2241ca66) WOULD read them as 2026-09-29's: it is not deployed and must not be deployed as it stands. The before and after this seat produced (2,418 moved rows; MediaTek +0.233) measured the effect of that mis-dated day and was presented as a repair. A rule keyed on as_of equal to the partition date would keep the mis-dated object and drop four correct ones. Why the object is a day early was not traced; 2026-09-30 itself has no partition",
+    "notes": "Cites ETFS_RIVALS-Z-S69 and Z-S70, whose class and direction this row replaces. ARMED: site-Z CLOUD HEAD carries a reader that would serve wrong closes if deployed; the deploy tree and the saved plan C:/tmp/rv_apply25.tfplan are at that pin. Disarm: no apply of pin acf83a5716 or any pin holding 1d2241ca66 until RIV-rg-1 is amended and re-graded; the COO half @cfa71419f0 is WITHDRAWN by this row. The miss was this seat's: it counted closes and did not check whose day they were; the CTO's condition C1 and the reviewer's hand read caught it."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S72",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T00:22:34Z",
+    "one_line": "The 11:00Z vehicle's enrichment leg loads, from the working tree, the module that holds round 25's withdrawn reader; it calls nothing of it",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "integrations/bloomberg/pipeline/scheduled_daily_pull.cmd lines 431 and 477: the vehicle runs rivalfunds.collector_bloomberg and rivalfunds.enrichment_bloomberg, --mode daily, from the working tree",
+        "data/etfs/scripts/rivalfunds/enrichment_bloomberg.py line 1021: after a daily market pull lands it imports security_names, whose line 34 imports gold_holding_contribution, where round 25 added g4_rows and g4_window",
+        "security_names.py calls _newest_by_date, _blank, target_uri, parquet_bytes and _content_sha of that module; none is in round 25's diff of it (five functions added; removed lines only inside handler_entry and one constant re-wrapped). The name g4_ appears 0 times in security_names.py, enrichment_bloomberg.py and collector_bloomberg.py (1.0.0_SA_CTO~Z's own read, msg 31489). The module imports clean at CLOUD HEAD"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Row ETFS_RIVALS-Z-S62: the vehicle runs the working tree, so a merge touching a module it loads is a deploy of that module",
+    "world_is": "The 2026-10-08 11:00Z run loads round 25's module top level and cannot call the reader. Not exercised: the leg was not run by this seat. 1.0.0_SA_CTO~Z ruled no revert (msg 31489) with one term: the first read of that day's vehicle log states the enrichment leg's exit code and its security_names step are as on 2026-10-07; an ImportError or a new top-level failure in gold_holding_contribution there is a BLOCKING row and a revert the same hour",
+    "notes": "Related: ETFS_RIVALS-Z-S62, Z-S71. Owner of the log read: 2.0.0_SA_COO~RV, with the L4 leg of ledger etfs-rivalfunds-r22."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S73",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T01:53:29Z",
+    "one_line": "A replay of build-canonical-shape and build-trade-schedule made today does not reproduce the served objects: revision and corporate-action columns differ on every date, and on 2026-10-01 four GQGU trims carry a ticker key where the served rows carry a CUSIP",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round26/upstream_stages_local.pin.json and .live_code.json (replay 2026-09-29..2026-10-06 through a read-only overlay, 2026-10-08 ~01:2xZ): the SAME differences from the served objects under the live code and under the pin code; the two codes' outputs are equal to each other row for row (upstream_ab_compare_live_code_vs_pin.json), so the reader change is not the cause",
+        "trade_schedule date=2026-10-01, 21 rows in the replay and 21 in the newest served object: 17 keys in both; replay only [[\"AMD US Equity\", \"-71424.68000000001\"], [\"ASML US Equity\", \"-48829.23\"], [\"LRCX US Equity\", \"-311871.7\"], [\"MU US Equity\", \"-167900.66999999998\"]]; served only [[\"007903107\", \"-71424.68000000001\"], [\"512807306\", \"-311871.7\"], [\"595112103\", \"-167900.66999999998\"], [\"N07059210\", \"-48829.23\"]]. The four pairs carry the same dollars: the same four trims of GQGU over the window 2026-09-28 to 2026-10-01, keyed by a Bloomberg ticker string in the replay and by a CUSIP in the served rows",
+        "The replay's rows cite dataset_revision 20261005T054409Z-9357ccb096f1; the served-only rows cite 20261004T110541Z-5583fd8945f7. Five served objects exist for that date (20261002T110033Z .. 20261005T054409Z)",
+        "On the other dates the row keys agree and the differing columns are corporate_actions_applied, dividends_applied, dataset_revision, prior_dataset_revision and, on 2026-10-02, inference_version and a corporate-actions revision column; canonical_shape: the replay finds 5 of 6 report dates already built with identical content and writes 2026-10-06 anew under both codes"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A stage re-run on its own inputs reproduces its served output (1.0.0_SA_CTO~Z msg 31527: a stage that does not reproduce its own served output is a finding)",
+    "world_is": "Not reproduced, alike under both codes. Read so far: the four keys differ in FORM, not in trade; the replay reads a later holdings revision of GQGU in which the fund's raw identifier is a ticker string. Not traced: which served object the page's stages read for that date and whether the comparison picked the same one; why corporate_actions_applied and dividends_applied differ on every row; why canonical_shape 2026-10-06 is rewritten. The served page is not affected by this row: nothing was written by the replay",
+    "notes": "Asked by 1.0.0_SA_CTO~Z msg 31527 as a surprise row, not a hold; read in round 27. Related: the one-key rule of round 22 (a trade under a CUSIP gathered under its Bloomberg key by parsekey) and rows Z-S57, Z-S65."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S74",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T05:04:08Z",
+    "one_line": "The issuance gate admits an order whose cell id an earlier order already holds, and then refuses the rename that would fix it as a second issuance in the round",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Issuance 21b3614f93 (round 27) added ETFS_RIVALS.TO-RIV-rk-1.the-reader-keeps-a-close-only-on-its-own-trading-date.md while ETFS_RIVALS.TO-RIV-rk-1.holding-contribution.md exists; .tools/to-pipeline-gate.py printed OK. The task-orders folder holds 124 order ids; two are held twice: rk-1 (this round) and cu-1 (round 24, ETFS_RIVALS.TO-RIV-cu-1.*, closed and deployed)",
+        "A commit that removed the order and added the same text as ETFS_RIVALS.TO-RIV-kd-1.* was refused: 'round 27 of ETFS_RIVALS already has an issuance at HEAD ... ONE ISSUER PER ROUND is keyed to the ROUND'; the audited '# pipeline-override:' line was taken and the refusal stood (the override covers the coverage refusal, not this one). The rename was undone; nothing of it is committed",
+        "The issuer picked the ids without listing the existing ones: first RIV-rd-1 (held by a round-7 order, caught before issuance), then RIV-rk-1 (held, not caught), and for round 24 RIV-cu-1 (held, not caught)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A cell id names one cell of the project (the decomposition's cell_refs and every packet cite cells by id)",
+    "world_is": "Two ids each name two orders of different rounds. Nothing mechanical has confused them: each order's decomp_ref resolved, each check file lives under its own name, and the earlier orders are complete. A reader of the record who greps an id finds two cells. The id of round 27's reader cell stands as RIV-rk-1 with a note in the order",
+    "notes": "Owner of the gate: 1.0.0_SA_CTO (the gate's own refusal names it). Shape of a repair: the issuance gate refuses a newly-added order whose cell id any existing order file carries, and admits a pure rename of an order added by the round's own issuance. The issuer's own remedy from here: list the existing ids before naming a cell."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W20-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~20",
+    "surfaced_at": "2026-10-08T05:21:30Z",
+    "one_line": "RIV-rk-1 rules that the untimed object yields no row for a security with no non-null descriptive field, and defines descriptive as every column outside the price group; every row the producer writes carries non-null provenance columns, so read literally the rule yields a row for every security of the untimed object and contradicts rg-2.AC1 arm c",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Task order RIV-rk-1 rulings: 'Descriptive fields are every column outside the price group' and 'a security present ONLY in the picked untimed object, with no non-null descriptive field there, yields NO row (so rg-2.AC1.py arm c stands unchanged)'",
+        "rg-2.AC1.py arm c plants UNT_ONLY (close 99.0, no sector) in an untimed object beside two timed objects and requires UNT_ONLY absent; its rows are built by enrichment_bloomberg._market_table, where security_bloomberg, revision, produced_at, producer_version, input_manifest and claim are non-null on every row (rg-2.AC1.py mrow)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Descriptive fields are every column outside the price group; a security only in the picked untimed object with no non-null descriptive field yields no row",
+    "world_is": "Built so that both sentences hold: the row-existence test reads gold_holding_contribution.G4_DESCRIPTIVE (the eight GICS columns, security_name, security_parsekey: the producer's MARKET_MAP less the price group). Once a row exists, every non-price column of the untimed object coalesces last in the order, as the order says. On the live table no date mixes timed and untimed objects, so nothing read today moves",
+    "notes": "File: data/etfs/scripts/rivalfunds/gold_holding_contribution.py (G4_DESCRIPTIVE, _g4_merge). A later column added to MARKET_MAP that describes a security needs a line in G4_DESCRIPTIVE."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S75",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T06:13:22Z",
+    "one_line": "The issuer merged RIV-rk-1 (gold_holding_contribution.py) at 05:3xZ without treating it as a deploy to the 11:00Z vehicle, which loads that module in its names step (row Z-S72); the pair and the timing were applied to RIV-tw-1's file only",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Merge d99155c49a put the round-27 reader change on the working tree the vehicle runs from. security_names.py names six members of the module: TABLE, _blank, _content_sha, _newest_by_date, parquet_bytes, target_uri",
+        "AST compare of the module at 0576fb051f against the working tree, 43 functions then and 44 now: changed _g4_merge, drop_backfill, g4_objects, handler_entry; added _pd_null; removed none. None of the five functions the names step calls is changed. The module and security_names import clean from the working tree (read 2026-10-08 06:1xZ)",
+        "The order's worker face forbade changing those five functions and the worker reported them unchanged; the issuer did not make this read before the merge, only after"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "A merge that touches a file the scheduled vehicle loads is a deploy to that job and is timed and signed as one (rows Z-S62, Z-S72; CTO ruling msg 31584 for tw-1)",
+    "world_is": "The 2026-10-08 11:00Z run will load a gold_holding_contribution.py that differs from the one the 2026-10-07 run loaded, in four functions its names step does not call. The enrichment file itself is unchanged (0 lines against 361b735308). The run stays a clean read of enrichment_bloomberg.py and of the Lambda (the Lambda runs its deployed package at 0576fb051f, not the tree)",
+    "notes": "Put to 1.0.0_SA_CTO~Z as a decision: leave the merge or revert it before 11:00Z. Issuer's recommendation: leave; the vehicle log read at 11:00Z already checks the names step for an ImportError (BLOCKING row and revert the same hour). The issuer's remedy from here: before any merge, list the merged paths against the vehicle's load set (enrichment_bloomberg.py, collector_bloomberg.py, security_names.py, gold_holding_contribution.py and what they import)."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S76",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T11:35:24Z",
+    "one_line": "2026-10-08: the Bloomberg Terminal was signed out at 11:00Z, both rivalfunds vehicle legs wrote nothing, and the scheduled page of 2026-10-08 was published without the day's Bloomberg holdings and closes",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "C:/Users/Opal Bloomberg/opal_bbg_logs/bbg_tplus1_20261008_070001.log (137 lines): DAPI DOWN, the fallback's three fills did not verify, 'PRECONDITION: FAILED -- PULL NOT ATTEMPTED'; RIVALFUNDS BLOOMBERG LEG EXIT CODE 93 (captures 2026-10-07 BAD-ANCHOR), RIVALFUNDS ENRICHMENT EXIT CODE 97 (BloombergError: could not start blpapi session; market unreachable after 3 session attempts). No ImportError, no Traceback, no HISTORY OWED line. The names step did not run: the leg failed before it",
+        "Served page date=2026-10-08, manifest generated 11:06:19Z: 13 funds in input, 11 updated; CGIC and SCHY FAIL report_date_freshness (latest report 2026-10-05 against 2026-10-07 expected, source bloomberg); holding_contribution as_of 2026-10-07 over 5 dates of closes (the newest stored close date is 2026-10-06); fund sections 1,411 of 1,411; 13 chart objects",
+        "The page has 1,411 security buttons against 2,247 on the 2026-10-07 page: the difference is the AI account blocks (per fund: The last 30 days, Observed, Inferred, What would prove this wrong, Direction verdict), which the 13:00Z sweep writes; the six tables per fund are present on both (read for ETFT heading by heading)",
+        "1.0.0_SA_CTO~Z msg 31689 names the same log and asks 0.0.3_BG_BBGTerminal for the recovery runbook's Step 2 once a human has signed in"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The daily page of day D carries each fund's holdings through D-1 and closes through D-1 (FWD-1; the vehicle's two legs run at 11:00Z before the Lambda chain reads)",
+    "world_is": "The 2026-10-08 page is whole in shape and one trading day short in Bloomberg-sourced content: two funds not updated, no close of 2026-10-07 for any security. The 11:00Z run graded neither round-27 merge: the enrichment leg failed before its names step, so the read ruling 31584 and ruling 31596 rest on is still owed. RIV-tw-1's merge stays held",
+    "notes": "Owner of the Terminal sign-in and the re-pull: 0.0.3_BG_BBGTerminal and a human (not this seat; integrations/bloomberg is no-modify). This seat's part after a re-pull lands: read that log's rivalfunds legs (it is then the clean read on the unchanged enrichment file), and republish 2026-10-08 on the CTO's word. The 13:00Z sweep is read as scheduled."
   }
 ]
 ```

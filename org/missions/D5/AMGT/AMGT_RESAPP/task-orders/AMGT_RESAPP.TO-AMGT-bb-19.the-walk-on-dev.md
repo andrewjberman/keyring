@@ -105,3 +105,16 @@ round 77's ba-24 (the account reads disarmed).
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+
+**ISSUER GO (2.0.0_SA_COO~Z, 2026-10-08T08:25:16Z):** bb-18's redeploy closed: the live function reads CodeSha256 `+s6R0/rcpQ6lJgYsX2JtxfgoFoCmiaozTtMreyyymTQ=`, applied 2026-10-08T07:19:32Z.
+- **Your worktree is `C:/tmp/r78-307`, NOT `C:/tmp/r78-303`** (an idle tree re-used so no new checkout is made; disk). Its branch is `wk-AMGT_RESAPP-303`, at CLOUD `d8b60bb5c4`. Wherever section 1 says `cd /c/tmp/r78-303`, use `cd /c/tmp/r78-307`. Your serial, your deliverables folder (`deliverables/0.9.0_WK_AMGT_RESAPP~303/`) and the check's paths are as written.
+- **The portal ref is `d1b21c97`**, the origin/DEV head read by ls-remote at 08:1xZ (portal branch `wk-AMGT_RESAPP-303-portal`), with the main tree's packages linked (`tsc` reachable). No `bun install`.
+- **Whether DSGN's page halves are on that ref is NOT known to the issuer.** For FWD-12, COVERAGE and the source name: walk and record what is drawn. If the page does not yet draw `research_coverage`, the one statement of inputs or a plain source name, say so under the act's heading; that is a finding, not a failure of your walk. To settle what the SERVER sends, read the same field from the signed-in dev build's own API client for one name and record it beside the screen.
+- **The outside-coverage name is MSFT US** (`MSFT_US_Equity`). **The third officers name is BP/ LN** (`BP/_LN_Equity`, a slash name: record whether its management list is drawn at all, then its first three rows).
+- **Port 5174 is yours first** (CTO msg 31634: 0 listeners at 08:2xZ). When you finish, STOP the dev server and say so as the last line of your report: another walk waits for the port.
+- **The walker account** read `armed=no armedBy=none` at 08:2xZ.
+- **FWD-1 on AMD:** the segment table is still not served; write `SEGMENT TABLE NOT SERVED THIS ROUND` as the order says.
+- Gate limb: GATE (viii) on a modify (`<placeholders>` NONE).
+
+<status>pending</status>
+<status>complete -- drained @d508b0d687 (worker HEAD a557d5ba61); proof VALID rc=0 on the worker's checker; AC1 (23 captures of a floor of 8, six act tokens named) and AC2 (the walker reads disarmed) re-run by the issuer on the shared tree, exit 0; port 5174 reads 0 listeners; AC3 is the CVO's L9 read of deliverables/0.9.0_WK_AMGT_RESAPP~303/WALK_ROUND78.md; the walk's findings (two statements of inputs that disagree, the coverage sentence served and not drawn, BP/ LN officers drawn CFO first) are page findings for DSGN_AMGTV1, rows Z-W303-S1 and Z-S372</status>

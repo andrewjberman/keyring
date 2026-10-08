@@ -258,11 +258,11 @@ Owed after the deploy: RIV-md-1 J1 and RIV-pd-2 J1 on the served page; the serve
     "owner": "2.0.0_SA_COO~RV",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-C-S58",
@@ -278,11 +278,11 @@ Owed after the deploy: RIV-md-1 J1 and RIV-pd-2 J1 on the served page; the serve
     "owner": "2.0.0_SA_COO~RV",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-C-S59",
@@ -298,11 +298,11 @@ Owed after the deploy: RIV-md-1 J1 and RIV-pd-2 J1 on the served page; the serve
     "owner": "2.0.0_SA_COO~RV",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-S60",
@@ -341,11 +341,11 @@ Owed after the deploy: RIV-md-1 J1 and RIV-pd-2 J1 on the served page; the serve
     "owner": "2.0.0_SA_COO~RV",
     "round": "v12",
     "remediation": {
-      "state": "OPEN",
+      "state": "REMEDIATED",
       "owner": "2.0.0_SA_COO~RV",
       "round": "v12"
     },
-    "closed": false
+    "closed": true
   },
   {
     "id": "ETFS_RIVALS-Z-C-S62",
