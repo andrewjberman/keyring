@@ -81,6 +81,39 @@ Report once:
 
 Stamp any row's `surfaced_at` with `date -u`.
 
+## AMENDMENT 1 (2026-10-08 ~14:3xZ, by the issuer on the CTO half's ruling) -- FOUR LEGS, THE GRANT FIRST IN ITS OWN APPLY
+
+This amendment REPLACES the order of acts in section 1 wherever they differ. The pair is:
+`org/missions/D5/AMGT/AMGT_RESAPP/deliverables/2.0.0_SA_COO~Z/round79/NEVER_WIDEN_HALF_COO_CC7.md` (read it whole: its tables are
+your STOP lists, its section THE NEGATIVE ARM holds the eight literal commands, and its section THE ISSUER'S CALLS holds eleven
+terms) and `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_RESAPP_R79_CC7_REDEPLOY_20261008.md` (read it whole: GRANT
+FIRST, and conditions C1 to C3). ONE NEVER-2 entry, FOUR legs recorded apart:
+
+- **LEG 1, the grant, in its OWN apply, BEFORE any build or upload.** Save the role's inline policy whole (BEFORE). Run the
+  eight arms (BEFORE). Then ONE `safe-apply` on `infra/aws/terraform/harvest/` from a DETACHED worktree at EXACTLY the pin the GO
+  names, the plan graded UNTARGETED: it shows `aws_iam_role_policy.scoped_amgt_api_grants` ALONE, gaining one resource and one
+  prefix value. Any other resource in that plan is a STOP before the apply. Save the policy whole again (AFTER: 34 and 34, the
+  two added lines, nothing else changed) and run the eight arms again: P1 and P2 read `allowed`, N1 to N4 read `implicitDeny`,
+  C0 and C1 read `allowed`. An `allowed` on N1, N2 or N3: roll the grant back and STOP; nothing else has moved.
+- **LEG 2, the build**, as section 1's code leg says (the gate, the two compares, the CONTENT-DIFF: CHANGED 12, ADDED 4, REMOVED 0,
+  exactly the two tables of the COO half; 0 vendored lines). No apply in this leg.
+- **LEG 3, the code, in its OWN apply.** Upload the kept zip, then ONE `safe-apply`, the plan graded UNTARGETED: it shows
+  `module.scoped_amgt_api.aws_lambda_function.this` ALONE. Then the hash rule and the leadpanel run of section 1.
+- **LEG 4, the snapshot event.** Read `head-object` on the snapshot object immediately before the event and record THAT
+  VersionId as the rollback key. Send the event once. Branch A (200, a new VersionId, 302 rows): wait 65 seconds, then AC1; AC1
+  prints the stamp of the view that answered, and an old stamp means wait 65 seconds more and run again. Branch B (500, nothing
+  written): report its body, run P1 and P2, and stop before AC1; ONE more event is allowed only when P1 and P2 read `allowed`,
+  each event's body and both VersionIds recorded; never a third.
+- **Windows (CTO C3):** not while a Bloomberg pull is writing; not inside the 12:30Z scheduled snapshot write.
+- **From the snapshot event's log line, report the duration of the one view build inside the function** (CTO C1).
+- **c59 (AC2):** run it within minutes of the event with nothing else running on the box. A C1 difference confined to rows
+  whose store object is newer than the snapshot's `generated_at` is NOT a rollback trigger: print the differing rows and their
+  stamps and stop for the issuer. Any other C1 difference, or C2 or C3 reading NO, is the rollback trigger.
+- **Rollback:** the code and the snapshot roll back TOGETHER (the prior artifact through the module, then copy-object of the
+  snapshot's prior VersionId; never a delete); the grant by removing the one list entry and applying.
+- The source-map note takes the text of the COO half's section SOURCE MAP, with no hash in it.
+- This amendment supersedes the preflight line that says no simulation was made: the COO half made ten.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** s.87; staged until the adapter cell (cc-6) and the repairs cell (cc-5) drain and the pair is signed. CTO round-78 analysis R1: the pair LISTS the three hookups by name. CTO msg 31672: the grant is its own leg with its own before and after. At the GO the issuer names: the build commit; `AMGT_DEPLOYED_ZIP` (`C:/tmp/bb18-r78-fbb643923e.zip`, the package live since 2026-10-08T07:19:32Z, kept by round 78); the wheel folder (`C:/tmp/bb18-wheels`, six files, hashes in `round78/BB18_WHEEL_FOLDER_SHA256_20261008.txt`); and the list count. Checks dry-run at the base: cc-7 AC1 base NO CELLS LISTED exit 2 (FAIL as expected); AC2's pins as round 78's bb-18 read them on +s6R0/rc; AC3 base YES (the issuer's one real run of round 78).
@@ -92,3 +125,4 @@ Stamp any row's `surfaced_at` with `date -u`.
 <risk>WORLD</risk>
 <proof_genre>DEPLOY</proof_genre>
 <worker_class>worker</worker_class>
+<status>staged -- AMENDMENT 1: four legs, the grant first in its own apply (CTO half, msg 31782); the pair is signed by both seats at the pin 63f0605039; no GO yet</status>
