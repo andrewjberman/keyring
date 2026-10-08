@@ -48,14 +48,15 @@
     {
       "n": 3,
       "name": "the version is one this machine already runs",
-      "verdict": "passed",
+      "verdict": "not_applicable",
       "evidence": {
-        "summary": "an installed distribution of the same name and version exists here: click-8.3.1.dist-info",
-        "installed": [
-          "click-8.3.1.dist-info"
-        ],
+        "summary": "the installed distribution is an editable install (source at file:///C:/Users/AndrewBerman/Desktop/worktrees/comp-learns/task-002/ds-b/click-src), not a copy of the published files",
+        "reason": "the installed distribution is an editable install (source at file:///C:/Users/AndrewBerman/Desktop/worktrees/comp-learns/task-002/ds-b/click-src), not a copy of the published files",
         "installed_versions": [
           "8.3.1"
+        ],
+        "editable_installs": [
+          "click-8.3.1.dist-info"
         ]
       },
       "rules_out": "a brand-new release nobody has used",
@@ -66,12 +67,12 @@
       "name": "the release's age and the project's earlier releases",
       "verdict": "passed",
       "evidence": {
-        "summary": "release 326.31 days old (min 14); 64 earlier releases (min 3)",
+        "summary": "release 326.42 days old (min 14); 64 earlier releases (min 3)",
         "this_release_at": "2025-11-15T20:45:41.139301Z",
         "first_release_at": "2014-04-28T11:22:51.341948Z",
         "release_count": 65,
         "earlier_releases": 64,
-        "age_days": 326.31,
+        "age_days": 326.42,
         "min_release_age_days": 14,
         "min_earlier_releases": 3,
         "yanked": false
@@ -94,37 +95,10 @@
     {
       "n": 6,
       "name": "the archive opened and listed, never installed",
-      "verdict": "failed",
+      "verdict": "not_applicable",
       "evidence": {
-        "summary": "17 of 17 .py files differ from the installed copy: ['click/__init__.py', 'click/_compat.py', 'click/_termui_impl.py', 'click/_textwrap.py', 'click/_utils.py', 'click/_winconsole.py', 'click/core.py', 'click/decorators.py', 'click/exceptions.py', 'click/formatting.py', '... (+7 more; full list in the record)']",
-        "installed_copy": "<site-packages>/click-8.3.1.dist-info",
-        "py_in_wheel": 17,
-        "py_identical": 0,
-        "py_differing_count": 17,
-        "py_differing": [
-          "click/__init__.py",
-          "click/_compat.py",
-          "click/_termui_impl.py",
-          "click/_textwrap.py",
-          "click/_utils.py",
-          "click/_winconsole.py",
-          "click/core.py",
-          "click/decorators.py",
-          "click/exceptions.py",
-          "click/formatting.py",
-          "click/globals.py",
-          "click/parser.py",
-          "click/shell_completion.py",
-          "click/termui.py",
-          "click/testing.py",
-          "click/types.py",
-          "click/utils.py"
-        ],
-        "compiled_count": 0,
-        "compiled": [],
-        "hooks_only_in_wheel": [],
-        "hooks_also_in_installed_copy": [],
-        "unsafe_member_names": []
+        "summary": "check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files",
+        "reason": "check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files"
       },
       "rules_out": "code added outside the compiled files",
       "leaves": "code inside the compiled files"
@@ -187,5 +161,5 @@
   ],
   "verdict": "not_checked",
   "checked_by": "2.0.0_SA_COO~C",
-  "at": "2026-10-08T04:08:33Z"
+  "at": "2026-10-08T06:56:43Z"
 }
