@@ -3648,3 +3648,30 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: either add tests/dell_fence_census.py to the order's <paths> (then the tested patch applies as is) or have the file's owner land it; until then the self-test line stays ok=False and the order is left in_progress. Nothing else in the fence checks depends on it."
 }
 ```
+
+## NFRA_CTLPLN-W34-S1 -- TO-CT-i-6: the plan needs the transcripts-pull package built too
+
+```json
+{
+  "id": "NFRA_CTLPLN-W34-S1",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~34",
+  "surfaced_at": "2026-10-08T00:50Z",
+  "one_line": "TO-CT-i-6 item 4: the transcripts root cannot be planned, even with -target, unless a SECOND package (transcripts-pull.zip) is also built; the order builds only the Teams-assist package",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "terraform plan -target=module.ldo_001 in infra/aws/terraform/transcripts at 56061b2d9c + the two statements: 'Error: Error in function call' on mail_pull.tf line 106 and pull.tf line 105, filebase64sha256(local.pull_zip), 'open lambda/transcripts-pull/dist/transcripts-pull.zip: The system cannot find the path specified' (rc 1, no plan produced)",
+      "infra/aws/terraform/transcripts/pull.tf line 19 (pull_zip) and line 105, mail_pull.tf line 106 evaluate filebase64sha256 at configuration load, so a -target does not skip them",
+      "Remedy taken, local only: bash infra/aws/lambda/transcripts-pull/build.sh built dist/transcripts-pull.zip (56 files, SHA-256 b84461a885d28f1dc5521a65a7f28616d82792f4e6151a8ea37af17c72e294bf) in this worktree; dist/ is gitignored (infra/.gitignore:48) and was not committed or uploaded"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-i-6 BUILD item 3 builds the one package infra/aws/lambda/teams-chat-assist/build.sh; item 4 then reads 'terraform plan -target=module.ldo_001' as a read the build makes possible.",
+  "world_is": "The plan needs both dist/teams-chat-assist.zip and dist/transcripts-pull.zip on disk; with only the first it fails at load. The second zip is built from the worktree's own sources, so the untargeted plan's pull and mail_pull function hashes reflect this worktree's build; the applier must build both packages before any plan.",
+  "notes": "For 2.0.0_SA_COO~R: add the transcripts-pull build to the cut's item 3 and to the applier's preflight."
+}
+```
