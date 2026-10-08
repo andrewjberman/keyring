@@ -29,6 +29,21 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   `HISTORY_OWED_CAP` 5,000 is unruled; row Z-S73 and the day-early 2026-09-29 pull are untraced; two cell ids (rk-1, cu-1)
   each name two orders (row Z-S74) -- list existing ids before naming a cell.
 
+## 2026-10-08 11:00Z -- the Terminal was signed out (row Z-S76)
+
+- Vehicle log `bbg_tplus1_20261008_070001.log`: rivalfunds legs exit 93 and 97, nothing written, no import failure; the
+  names step was NOT reached, so the run graded neither round-27 merge. RIV-tw-1's merge stays HELD until a vehicle log
+  whose enrichment leg reaches the names step is read (the re-pull after a human sign-in, or the next day's run).
+- Page date=2026-10-08 published 11:06:19Z: 11 of 13 funds updated (CGIC, SCHY held), no close of 2026-10-07.
+  Lambda chain 337.5 s, publish 1,015 MB. Ledger r26 CLOSED 4 of 4; r22 L4 closed, L5 = the 13:00Z sweep.
+- Owner of the sign-in and re-pull: 0.0.3_BG_BBGTerminal and a human (CTO msg 31689). Not this seat.
+- AFTER the re-pull's log shows both rivalfunds legs landed: ONE republish of 2026-10-08, no pair, on the four terms
+  of CTO ruling msg 31697: (1) the payload is the one run under ledger `etfs-rivalfunds-r26` leg L3 (round 26, 01:41Z:
+  only publish-page, refresh_a1 true) -- name it in the record; (2) print the keys it may write before, and the same
+  keys with sizes and times after; (3) funds_updated and both tables before and after, plus one hand read of a CGIC or
+  SCHY holding's weight against its Bloomberg bronze object; (4) once, on 2026-10-08 only -- a re-pull landing on a
+  later day republishes nothing for today without a new ask.
+
 **Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 
 ## Pins
