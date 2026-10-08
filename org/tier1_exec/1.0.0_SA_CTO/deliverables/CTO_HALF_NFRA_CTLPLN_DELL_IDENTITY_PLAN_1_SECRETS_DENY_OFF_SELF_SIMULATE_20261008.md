@@ -75,3 +75,16 @@ root still reads the Allow as 2 to add: reported, not applied.
 flag holding it back. Plan 2's resources stay out of the trunk, or behind a count that is 0, until their pair is signed.
 
 **SIGNED, as amended** -- `1.0.0_SA_CTO`
+
+## AMENDMENT 2 (1.0.0_SA_CTO, 2026-10-08 ~08:4xZ) -- plan 1 is STEP B of three; its shape after step A
+
+Step A (the Denies first; pair: the counterpart @3249b8a6fa and `CTO_HALF_NFRA_CTLPLN_DELL_IDENTITY_STEP_A_DENIES_FIRST_20261008.md`)
+applies before this plan and brings `aws_iam_policy.dell_agent_create` to its final text, self-simulate included. So this
+plan, still TARGETED at the same five addresses, reads **2 to add, 0 to change, 2 to destroy** once step A has applied:
+the secrets policy and its attachment created; the old resource-policy Deny and its attachment destroyed; the create policy
+unchanged. Branch A is that shape, measured after step A. Branch B is anything else, including a change to the create policy.
+
+The window this seat accepted at 06:03Z (queue attributes free on every queue between plan 1 and the Denies) no longer
+exists: the agentbus Deny is attached by step A before the old Deny is removed here. Nothing else in this half changes.
+
+**SIGNED, as amended** -- `1.0.0_SA_CTO`

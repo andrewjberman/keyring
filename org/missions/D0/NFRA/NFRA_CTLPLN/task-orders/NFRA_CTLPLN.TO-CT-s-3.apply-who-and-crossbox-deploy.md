@@ -124,7 +124,7 @@ Shell: Git Bash default utilities only. PowerShell: Windows PowerShell 5.1 synta
 <criterion id="CTs3-AC1" cell_refs="CT-s-3"><invocation>python .tools/tests/test_apply_who_and_crossbox.py</invocation><expect>APPLY-GATES-TEST cases=</expect></criterion>
 `CTs3-AC1` -- every case passing: the line must read `ok=True`.
 
-<criterion id="CTs3-AC2" cell_refs="CT-s-3"><invocation>python .tools/crossbox-deploy-check.py --root infra/aws/terraform/opal-assets</invocation><expect>upset=hit</expect></criterion>
+<criterion id="CTs3-AC2" cell_refs="CT-s-3"><invocation>python .tools/crossbox-deploy-check.py --root infra/aws/terraform/opal-assets</invocation><expect>CROSSBOX-DEPLOY device=laptop root=opal-assets</expect></criterion>
 `CTs3-AC2` -- the difference control on today's real case: an untargeted apply of that root is stopped by the notice file (until it expires; the issuer re-runs it before 06:20Z). The same line must read `verdict=STOP`.
 
 <criterion id="CTs3-AC3" cell_refs="CT-s-3"><invocation>python .tools/apply-who-check.py --serial 2.0.0_SA_COO~C --root infra/aws/terraform/opal-assets</invocation><expect>verdict=REFUSED</expect></criterion>
@@ -152,6 +152,7 @@ passes and the instance is VALID.
 org/devices/deploy_notices/
 .tools/placement-check.py
 org/missions/D0/NFRA/NFRA_CTLPLN/surprise-channel/investigations/INVESTIGATION_v1.md
+.tools/seat-gates-dry-pass.py
 </paths>
 
 ---
@@ -168,3 +169,63 @@ lane: the <paths> block IS the grant (worker RULING 1).
 Source: Andrew-direct 2026-10-07 ~16:3xZ (record above), ~18:3xZ item 7, ~18:5xZ, ~19:0xZ, and ~21:1xZ at this seat's terminal
 (`org/tier1_exec/2.0.0_SA_COO/deliverables/ANDREW_DIRECT_20261007_211xZ_COO_C_MAKE_SURE_GITOPS_AWSOPS_AGENT_WORKFLOW_DEMANDS_ARE_MET_AND_SAY_LINE_FOR_LINE.md`);
 PRD `prd/NFRA_CTLPLN_PRD.md` v0.19 @b44686cebc (ADMITTED), FWD-21 to FWD-25, contract C-SEATS clauses 1 to 7; CTO msg 106584 (the split).
+
+## AMENDMENT 1 (2.0.0_SA_COO~C, 2026-10-08 ~07:4xZ) -- REOPENED: five defects of the two checks, to be fixed before any ENFORCE switch exists
+
+The cell is merged and running in WARN mode on every box. Its first real use on other boxes and the reviewer's verdict found
+five defects. `1.0.0_SA_CTO` msgs 106709 (on `3.0.0_SA_CVO`'s verdict
+`org/tier1_exec/3.0.0_SA_CVO/deliverables/CVO_VERDICT_SEAT_GATES_WARN_TO_ENFORCE_20261008.md`) and 106826 (on dell2's two WARN
+lines). Gate limb: none graded this modification. The issuer reopens its own order; the slot is re-seated in a fresh
+worktree. NO ENFORCE FILE IS CREATED BY YOU, of any name, in the real tree.
+
+1. **ONE SWITCH PER CHECK PER TOOL** (106709 item 1: "org/mcp/seat-gates.enforce turns on BOTH checks in safe-deploy AND
+   safe-apply on every box that merges it. Split it: one switch per check per tool, so the cross-box deploy check can refuse
+   without turning on the rest."). Four switch files replace the one: `org/mcp/seat-gates.apply-who.safe-apply.enforce`,
+   `org/mcp/seat-gates.apply-who.safe-deploy.enforce`, `org/mcp/seat-gates.crossbox.safe-apply.enforce`,
+   `org/mcp/seat-gates.crossbox.safe-deploy.enforce`. Each check in each wrapper is in ENFORCE only when ITS file exists. The
+   old single file `org/mcp/seat-gates.enforce`, if ever present, turns on NOTHING and prints one WARN line saying it is
+   retired and naming the four. The test-only environment override keeps working, one variable per switch or one directory
+   variable: say which. Sibling tools that read the old name (`.tools/git-hooks/missions-tree-check.sh`'s close gate, built by
+   another cell) are NOT yours to edit: LIST every reader of the old name in the repository in your report.
+2. **THE BLOCK FAILS CLOSED IN ENFORCE** (106709 item 2: "The block fails open on its own error. It fails CLOSED, printing the
+   error, in ENFORCE; in WARN it prints and proceeds."). Today a tool that crashes, is absent, times out or gives no verdict
+   is a WARN and the wrapper proceeds in both modes. Change: under that check's ENFORCE switch, no verdict from that check is
+   a BLOCK with the error printed (the audited `SEAT_GATES_OVERRIDE` still passes it); under WARN, unchanged. Your existing
+   cases 50 to 53 assert the old behaviour under ENFORCE: rewrite them and say which.
+3. **APPLY-WHO GRADES AN APPLY, NOT A PUSH** (106826 item 1: on dell2 a fabric manager's PUSH printed "APPLY-WHO ... kind=MSTR
+   ... verdict=REFUSED reason=a MSTR does not apply". "A fabric manager's push is not an apply ... The check must grade who
+   APPLIES, on the apply tools, and must not fire on a push that deploys nothing. In ENFORCE as written it would stop all four
+   fabric managers."). Find how `safe-deploy.sh` is reached on a push (a pre-push hook calls it: read
+   `.tools/test-pre-push-safe-deploy.sh` and the hook) and how it knows whether the invocation DEPLOYS anything (files under a
+   deployable pipeline home in the range, versus none). Rule: in `safe-deploy.sh` the apply-who check runs only when this
+   invocation will deploy at least one file; when it deploys nothing it prints one line
+   `SKIP [seat-gates] apply-who: this invocation deploys nothing` and no verdict. When a push DOES deploy, the seat graded is
+   the deploying seat as today. State plainly in your report what a fabric manager's push that carries a deployable file
+   reads, since that case is real: do not invent an exemption for it; report it for a ruling.
+4. **OVERLAP IS JUDGED ON THE FILES CARRIED, NEVER ON A SHARED ROOT** (106826 item 2: "CROSSBOX-DEPLOY ... overlap=hit where
+   the named file is not in the pushed range. Overlap is judged on the files a push or deploy actually carries against
+   another box's write set, never on a shared root."). In `crossbox-deploy-check.py` add `--files <path>...` (and
+   `--files-from <file>`): when given, OVERLAP hits only if one of THOSE files is in another box's placed project's write
+   set; the root alone no longer hits. `safe-deploy.sh` passes the files it will deploy; `safe-apply.sh` has no file list, so
+   there OVERLAP is judged on the Terraform files of the root that differ from the merge base with the shared branch
+   (`git diff --name-only`), and when that list is empty the reading is `overlap=clear` with the reason "no file of this root
+   differs". The same rule for the OPEN-DEPLOY limb if it matches by root token: read it and say whether it has the same
+   defect; fix it the same way if so.
+5. **A DRY PASS OVER REAL INVOCATIONS** (106709 item 3; 106826: "the dry pass over real pushes from each box must read zero
+   false stops before I name any switch"). Add `.tools/seat-gates-dry-pass.py`: given `--range <a>..<b>` (repeatable) and
+   `--serial`, `--device`, it replays what each wrapper's seat-gate block WOULD read for a push or deploy of that commit range
+   (the files it carries, the roots it touches), without running any wrapper, deploy, terraform or AWS call, and prints one
+   line per range and a last line `SEAT-GATES-DRY ranges=<n> would_stop=<k> skipped=<s> ok=<True when k is 0>`. Run it on THIS
+   box over the last 30 commits of the shared branch that touch a deployable home or a Terraform root, attributing each to
+   its commit author's serial, and report every would-stop line with your reading of whether it is a true stop or a false
+   one. (Other boxes run the same tool on their own history; that is not yours.) The new file's path is added to `<paths>` by
+   this amendment.
+6. Tests for each of the five in `.tools/tests/test_apply_who_and_crossbox.py`; the wrappers' own tests read the same
+   before and after (same table as your first report). `bash -n` both wrappers.
+
+**ACCEPTANCE.** `CTs3-AC1`, `CTs3-AC3` unchanged. `CTs3-AC2` (`crossbox-deploy-check.py --root infra/aws/terraform/opal-assets`,
+expect `verdict=STOP`) was true while a deploy notice was live until 06:20Z; that notice has lapsed. The issuer changes its
+expectation by this amendment to `CROSSBOX-DEPLOY device=laptop root=opal-assets` (the line prints; the verdict is whatever
+the measurements read now): write the proof row's `expect` equal to it and report the verdict. Rewrite the proof instance,
+validate, flip to `complete`.
+

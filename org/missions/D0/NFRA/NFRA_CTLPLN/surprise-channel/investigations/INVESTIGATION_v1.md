@@ -4168,3 +4168,253 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "For 2.0.0_SA_COO~C: if the commit hook should run the checker, it needs a cache keyed on the instance's blob hash or a staged-only reading; this cell did not build either."
 }
 ```
+
+## NFRA_CTLPLN-S26 -- a package pack carries every released file of its batch, so a box is handed and fails another box's file
+
+```json
+{
+  "id": "NFRA_CTLPLN-S26",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-08T08:05:40Z",
+  "one_line": "A package pack carries every released file of its batch, so a box receiving it is handed files meant for another box and its proof reads ok=False for a file that was never its own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "INFERRED",
+    "evidence": [
+      "1.0.0_SA_CTO msg 106843, relaying dell2 (0.0.0_AB_MSTR msg 106842): 'INTAKE-VERIFY ... wheels=2 verified=2 checked=2 stray=0 ok=True', then 'INTAKE-PROVE device=dell2 python=3.12.10 wheels=2 installed=1 imported=1 import_missing_dep=0 failed=1 refused=0 ok=False'; the one failure is rpds_py-2026.6.3-cp314-cp314-win_amd64.whl, site Z's file, on a Python 3.12 box",
+      "Issuer's pack at ~07:0xZ: 'INTAKE-PACK batch=intake-20261008-a files=2 out=intake-pack-20261008-a held_back=0' (org/devices/intake/intake_check.py pack --released-only, merged @4a584469fb); the issuer told the CTO before carriage that the rpds wheel would ride along (msg to 1.0.0_SA_CTO, 07:07Z)",
+      "The CTO's ruling in msg 106843: click's delivery to dell2 is accepted as proved; the tool's verdict is wrong for a stated reason, so it is a defect, not a pass by hand",
+      "Not read by this seat: dell2's own records of the verify and prove runs"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "C-INTAKE: a receiving box verifies the pack and proves each file installs and imports on that box; its receipt reads ok when every file meant for it does.",
+  "world_is": "A batch can hold files for different boxes (here one for site Z on Python 3.14 and one for the two Dells on Python 3.12), but neither the batch, the pack nor the proof knows a file's destination. So the pack holds both, and prove counts the other box's file as failed. Repair, ruled by the CTO for a cell at the next cut: (1) each released file carries its destination box or boxes in the batch; (2) pack takes a destination and holds only that box's files; (3) prove counts a file tagged for another box as not-for-this-box, never as failed."
+}
+```
+
+## NFRA_CTLPLN-W14-S16 -- TO-CT-a-1 amendment 12: 11 of 21 listed Deny actions take another resource type; the audit-trail bucket's configuration actions stay allowed by the create policy
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T07:20:13Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO (rule before plan 2 whether DenyAuditTrailBucketPolicy also names the audit bucket's configuration actions listed in notes, or accept them; a CTO ruling then a one-line edit of the statement)",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S16",
+  "one_line": "TO-CT-a-1 amendment 12: 11 of the 21 actions the three new Denies list take another resource type and never fire on the Deny's resource (listed as ordered); and the audit-trail bucket's own configuration actions are allowed to both Dell users by the create policy, outside the ruled list",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/simulate_policy.py run (CTa1-AC2): 'UNDO-INERT-COUNT actions in the three statements that take another resource type=11 of 21 ... the evaluator matches the Deny for 2 of them on the Deny's own resource'; the 11: lambda:AddLayerVersionPermission, lambda:RemoveLayerVersionPermission (resource type layer version, the Deny lists function ARNs) and nine s3 access-point, access-grant and multi-region access-point actions (the Deny lists the bucket ARN); each reads implicitDeny with no statement matched on the function or bucket ARN for both users, before and after",
+      "scratch probe through the same simulator (.scratch/probe12.py, both users, effective set of the run): s3:PutLifecycleConfiguration, s3:PutBucketPublicAccessBlock, s3:PutBucketLogging, s3:PutBucketNotification, s3:PutEncryptionConfiguration, s3:PutBucketOwnershipControls, s3:PutBucketVersioning on arn:aws:s3:::opal-cloudtrail-logs-313476888478 all read allowed, matched statement CreateUpdateTagS3OnOpalBuckets(Allow) in dell_create_policy.json (Resource opal* and opal*/*); s3:DeleteObject reads implicitDeny",
+      "infra/aws/terraform/nfra-ctlpln-identity/dell_respol_policy.json: the 14 s3 actions of the Allow's data are the ones the new Deny lists; none of the seven configuration actions above is in that data (they are the create policy's, older than this Allow)"
+    ]
+  },
+  "spec_asserts": "AMENDMENT 12 items 1 and 2: every lambda: action and every s3 action of the Allow's data document is added to a Deny on the protected function ARNs and on the audit-trail bucket and its objects, and each denied action on each named resource reads explicitDeny with the new statement matched.",
+  "world_is": "The Deny statements list every action as ordered. The evaluator applies them to the actions that take that resource type (lambda:AddPermission, lambda:RemovePermission on the functions; s3 bucket policy, bucket ACL, object ACL actions on the bucket and its objects; all four queue actions) and those arms are counted (undo_denied). The 11 actions of other resource types are printed (UNDO-INERT lines) and not counted: they cannot be authorised against a function or bucket ARN, so the entry is dead on that resource and a layer-version or access-point resource would need its own ARN. Separately, the seven audit-bucket configuration actions in the evidence are allowed by the create policy and are outside the CTO's ruled list (s3:PutBucketPolicy and the Allow's data); nothing was added for them.",
+  "notes": "Consequence of the second part: a Dell can set a lifecycle rule on the audit-trail log bucket that expires its logs, change its logging, notification, encryption, versioning, ownership controls or public access block. Not caused by the Allow (the create policy grants them on every opal* bucket; DenyS3DeletesOnProductionData covers opal-data-* only) and not changed by this pass. The CTO may extend DenyAuditTrailBucketPolicy by those seven actions (the document has headroom: dell_create_policy.json 5,364 of 6,144 characters; seven actions add about 250), or accept. The access-point route to the bucket cannot be read from here: s3:CreateAccessPoint is in no Dell Allow, so no Dell can create an access point to hang a policy on (read from the three group policy documents, not from AWS)."
+}
+```
+
+## NFRA_CTLPLN-S27 -- The teams-chat-assist package hash is NOT a function of the commit on this device -- two packaged registry files sit CRLF in the shared working tree and LF from a fresh checkout -- so the Teams-agent order's CODE ROLLBACK cannot be executed as written: a rebuild at 55cb79f93c yields eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs=, not the reference IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= the order requires be confirmed BEFORE that rollback applies. A substitute way back was established before the apply by downloading the live deployed bytes
+
+```json
+{
+  "id": "NFRA_CTLPLN-S27",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T08:50Z",
+  "one_line": "The teams-chat-assist package hash is NOT a function of the commit on this device -- two packaged registry files sit CRLF in the shared working tree and LF from a fresh checkout -- so the Teams-agent order's CODE ROLLBACK cannot be executed as written: a rebuild at 55cb79f93c yields eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs=, not the reference IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= the order requires be confirmed BEFORE that rollback applies. A substitute way back was established before the apply by downloading the live deployed bytes",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "order NFRA_CTLPLN.TO-APPLY-11.teams-agent-inbound-deploy-laptop, ROLLBACK clause: 'Code: check out the packaged paths at 55cb79f93c in a scratch worktree, rebuild there, confirm the rebuilt hash is IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E=, and the same targeted apply.' The COO half repeats it: 'the prior hash ... is the reference a rebuilt package must reproduce before it is applied'",
+      "MEASURED before the apply, 2026-10-08 ~08:0xZ: a fresh detached worktree at 55cb79f93c (C:/tmp/wt-teams-rollback-55cb79f), rebuilt with its own infra/aws/lambda/teams-chat-assist/build.sh, produces base64 eXsoJG6SGZQ+TVHu+g5ohw7TFc4sxlitzZi/WPEjwPs= -- NOT the reference. So the rollback's own pre-condition fails and the gate would refuse the rollback",
+      "THE REFERENCE IS THE DEPLOYED HASH, not a stale note: both functions read CodeSha256 IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= live before the apply (get-function-configuration on teams-global-chat-assist-handler-lambda and teams-global-chat-assist-ingress-lambda, LastModified 2026-10-04T23:04:53Z and 23:04:47Z)",
+      "THE BUILD IS NOT THE VARIABLE: two builds at HEAD in the shared tree produce the byte-identical hash 61858efddc4fc7248fa5a00f9abf8587166d4019e40a12784861a7b6fbef32be, so the builder is deterministic within one tree",
+      "CAUSE, measured by comparing two zips entry by entry (HEAD build vs a build at the cell's own pin ebc8931b3c): 28 entries each, none added or missing, 3 differ -- infra/logic/registry/key_rulings.json (a REAL content change, LF in both, by commits ac99c10b2e and e0f80cc248) and infra/logic/registry/remediations.json and infra/logic/registry/scopes.json, which differ ONLY in line endings: main tree 3277 B with 44 CRLF vs worktree 3233 B with 0 CRLF, and main 18518 B with 345 CRLF vs worktree 18173 B with 0 CRLF. For both, the parsed JSON is IDENTICAL and the bytes are identical after normalising CRLF to LF",
+      "git is NOT doing the conversion: core.autocrlf reads false and git check-attr on scopes.json returns text: unspecified, eol: unspecified. The shared tree's working copies simply carry CRLF on disk while a fresh checkout writes the committed LF bytes",
+      "COROLLARY, which is why the cell's own number could not be reproduced either: a rebuild at the cell's pin ebc8931b3c gives 62c88d0d2ed020c6fd7ab1eb41aef7d903f559d51099d0d9ba4313730e96be28, a THIRD value, neither the cell's recorded c1af3fe33556e895ec97cbf0ad6bd1915596f4daee5c259d1fca55a697d1da32 nor this seat's",
+      "DISARMED BEFORE THE APPLY, which is why this row is INERT: the live deployed bytes were downloaded via lambda get-function's presigned URL and verified to hash to EXACTLY the reference -- C:/tmp/rollback-teams-ldo001-20261008/teams-chat-assist-DEPLOYED-20261004T2304Z.zip, 141456 B, sha256 hex 201aef78d402f996ebcbda478db27b0b55b0e8465bf795d15da16bce23529fa1, base64 IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E=. The code rollback is therefore: copy that zip over infra/aws/lambda/teams-chat-assist/dist/teams-chat-assist.zip and run the same targeted apply"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order and the COO half: the prior package hash IBrveNQC+Zbry9pHjbJ7C1Ww6EZb95XRXaFrziNSn6E= is a reference a rebuilt package must REPRODUCE from commit 55cb79f93c before the code rollback is applied; and the new package's hash is expected to equal the cell's c1af3fe3... unless named trunk files changed.",
+  "world_is": "A package hash on this device is a function of (commit, the line-ending state of the working tree it is built in). A fresh worktree at 55cb79f93c cannot reproduce the deployed reference, so the written code rollback is not executable; and a fresh worktree at ebc8931b3c cannot reproduce the cell's recorded hash either, so 'the hash differs from the cell's' can never by itself distinguish a content change from a checkout difference. The deploy went ahead because a byte-exact substitute way back was established first -- the live deployed bytes, downloaded and verified against the reference -- and because the real content delta was independently named from git as one file.",
+  "notes": "For 2.0.0_SA_COO~R and whoever owns the builder: the durable fix is to make the zip byte-reproducible from the commit -- have build.sh normalise line endings on the text members it packs (or read them from git rather than the worktree), which also makes the hash a usable deploy oracle. The cheap fix for the NEXT order is to stop writing a rebuild-reproduces-the-hash gate into a rollback: name the live CodeSha256 and keep the downloaded deployed zip as the reference instead, which is what this entry does. Note the limit of that substitute: the file is device-local and not in git, so it is a reference only while this laptop holds it, and it must be taken BEFORE the apply that replaces the bytes."
+}
+```
+
+## NFRA_CTLPLN-S28 -- CTO condition 3's first-hour read is structurally unobservable for one of the two functions it names: teams-global-chat-assist-handler-lambda is event-driven, has no scheduled tick, and had ZERO invocations and NO CloudWatch datapoint at all after the apply -- so 'zero new error signatures' on it is zero observations, not a clean read, and the order forbids making an invocation to get one
+
+```json
+{
+  "id": "NFRA_CTLPLN-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.7.0_AE_CloudOps~E",
+  "surfaced_at": "2026-10-08T08:50Z",
+  "one_line": "CTO condition 3's first-hour read is structurally unobservable for one of the two functions it names: teams-global-chat-assist-handler-lambda is event-driven, has no scheduled tick, and had ZERO invocations and NO CloudWatch datapoint at all after the apply -- so 'zero new error signatures' on it is zero observations, not a clean read, and the order forbids making an invocation to get one",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CTO half @e58bcf5d8e condition 3: 'the applier reads both functions' error counts and the newest log lines of one ordinary invocation each (the scheduled tick is enough; no invocation is made for it) and reports zero new error signatures, or the signature'",
+      "MEASURED after the apply (window from 2026-10-08T08:15:35Z): teams-global-chat-assist-ingress-lambda 19 invocations, Errors Sum 0.0, Throttles Sum 0.0, 62 log event lines, 0 error signatures, positive control REPORT|START = 31",
+      "teams-global-chat-assist-handler-lambda: 0 log event lines, positive control on the same filter also 0, and NO CloudWatch datapoint for Invocations, Errors or Throttles over the window -- the metric has no datapoint because the function did not run",
+      "CAUSE, read from the state rather than guessed: the handler's entrypoint is handlers.on_event and it is driven by events the ingress finds; the ingress's own post-deploy ticks all read {\"event\": \"ingress_poll\", \"events\": 0, \"first_run\": false}, so no handler invocation existed to read. The ingress carries the one-minute clock (module.ldo_001's aws_cloudwatch_event_target.clock[0]); the handler carries none",
+      "WHAT THE INGRESS READ DOES COVER: both functions run the SAME package bytes (one package, two families -- both read CodeSha256 YYWO/dxPxySPpaAPmr+FhxZtQBnkChJ4SGGntvvvMr4=), and the ingress imported and ran them 19 times without fault, so the fault class the condition names -- 'an import or address fault from the naming files would show there first' -- is genuinely observed",
+      "WHAT IT DOES NOT COVER: any fault reachable only inside handlers.on_event. That arrives with FWD-20's own exercise, one real request from a person in Teams"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO condition 3: within the first hour the applier reads the newest log lines of ONE ORDINARY INVOCATION of EACH of the two functions, the scheduled tick being enough, and reports zero new error signatures or the signature.",
+  "world_is": "Only one of the two functions has a scheduled tick. The handler cannot produce an ordinary invocation without a real inbound event, and the order forbids manufacturing one, so the condition as written cannot be fully met by any applier -- not on this deploy and not on the next. Reported as a split verdict (ingress PASS on 19 invocations; handler NOT OBSERVED with its reason) rather than as a clean pass on both, because an absent error and an absent invocation read identically.",
+  "notes": "For 1.0.0_SA_CTO: the condition is sound for the ingress and sound in intent for the handler -- the import class it targets IS covered, because the two functions share one package and the ingress exercised it. Wording that would be satisfiable: 'one ordinary invocation of the function that carries the clock, plus both functions' error counts, and the handler's own first invocation reported with FWD-20's exercise.' Until then an applier must either report NOT OBSERVED or invoke the handler, and the bounds forbid the second."
+}
+```
+
+## NFRA_CTLPLN-W13-S28 -- TO-CT-s-3 AMENDMENT 1 item 1 retires org/mcp/seat-gates.enforce, but .tools/git-hooks/missions-tree-check.sh (cell CT-s-8) still reads that file and OPAL_SEAT_G
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S28",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "TO-CT-s-3 AMENDMENT 1 item 1 retires org/mcp/seat-gates.enforce, but .tools/git-hooks/missions-tree-check.sh (cell CT-s-8) still reads that file and OPAL_SEAT_GATES_ENFORCE_FILE as the switch of its own close gate, so the wrappers' 'retired, turns on nothing' WARN line is false for that hook.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/git-hooks/missions-tree-check.sh lines 68, 73 (enf=${OPAL_SEAT_GATES_ENFORCE_FILE:-$ROOT/org/mcp/seat-gates.enforce}) and 102 (BLOCKED ... org/mcp/seat-gates.enforce present) @ed1adcaa72",
+      ".tools/tests/test_round_close_and_research.py lines 109 (creates org/mcp/seat-gates.enforce in a scratch tree) and 123 (pops OPAL_SEAT_GATES_ENFORCE_FILE) @ed1adcaa72",
+      "all executable readers of either old name in the worktree: those two files, plus the two wrappers' retired-WARN lines and this cell's own test"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 1: the old single file org/mcp/seat-gates.enforce, if ever present, turns on NOTHING and prints one WARN line saying it is retired and naming the four.",
+  "world_is": "True for safe-apply.sh and safe-deploy.sh after this edit. Not true of the close gate in missions-tree-check.sh, which still treats the file as ITS enforce switch; a person who creates the old file to turn that gate on will see the wrappers print that it is retired. The hook was not edited (another cell's file), so the two meanings coexist under one name.",
+  "notes": "For 2.0.0_SA_COO~C: CT-s-8's hook needs its own switch name (for example seat-gates.close-gate.enforce) in a cell that owns that file; until then the WARN line is accurate only for the two wrappers."
+}
+```
+
+## NFRA_CTLPLN-W13-S29 -- The dry pass attributes each commit to its AUTHOR's serial as ordered, but a commit's author is not the seat that pushes or applies it: all 17 would-stops of th
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S29",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "The dry pass attributes each commit to its AUTHOR's serial as ordered, but a commit's author is not the seat that pushes or applies it: all 17 would-stops of the last 30 deploy/Terraform commits are apply-who REFUSED on WORKER or COO authors, which never run the wrappers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-gates-dry-pass.py --last 30 --ref CLOUD --device laptop --repo-root C:/Users/AndrewBerman/Desktop/ajb_workspace -> SEAT-GATES-DRY ranges=30 would_stop=17 skipped=0 ok=False; 16 WORKER authors and 1 COO author, all apply-who REFUSED",
+      "the same run with --repo-root this worktree (HEAD ed1adcaa72): would_stop=17 as well, but 5 of them also carry a crossbox STOP on data/assets (ADVI_COTBKF placed on dell2 is live in that tree and no longer live in the shared checkout)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 5: replay the last 30 commits attributing each to its commit author's serial, and read every would-stop as a true or false stop.",
+  "world_is": "The author of a drained commit is the worker or COO that wrote it; the push is made by an integrator and a Terraform apply by a CLOUDOPS or TIER2 seat. So an author-attributed apply-who REFUSED says what the rule thinks of the writer, not of the actor. The real actor of a pre-push of a drained range is a fabric manager, which the rule as written also REFUSES; that is the case item 3 reports for a ruling. A true false-stop count needs the pusher's serial, which git history does not record.",
+  "notes": "The tool takes --serial to replay one named actor over every range (for example the MSTR serial); the report carries both readings."
+}
+```
+
+## NFRA_CTLPLN-W13-S30 -- Item 4 says fix the OPEN-DEPLOY limb 'the same way' if it matches by root token; it does, but for a Terraform root I kept the root match because an apply works 
+
+```json
+{
+  "id": "NFRA_CTLPLN-W13-S30",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~13",
+  "surfaced_at": "2026-10-08T09:05:00Z",
+  "one_line": "Item 4 says fix the OPEN-DEPLOY limb 'the same way' if it matches by root token; it does, but for a Terraform root I kept the root match because an apply works on the state of the whole root, and narrowed it to carried files only for a non-Terraform (data pipeline) root.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/crossbox-deploy-check.py measure_open_deploy(): narrow = files is not None and not rel.startswith('infra/aws/terraform/') @ this commit",
+      ".tools/tests/test_apply_who_and_crossbox.py cases 'OPEN-DEPLOY, files mode (data root)' (clear unless a carried file is named) and '... on a TERRAFORM root' (still hits on the root)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-s-3 AMENDMENT 1 item 4: the same rule for the OPEN-DEPLOY limb if it matches by root token; fix it the same way if so.",
+  "world_is": "The limb matched by root token, so it had the same defect for data pipelines (many scripts share one root). Fixed there. For a Terraform root, narrowing it to the files that differ from the merge base would let an apply of a root clear another seat's open apply of the same root whenever no .tf file differs, which is the commonest case; the token match stays. This is a judgment the order did not make.",
+  "notes": "For 2.0.0_SA_COO~C: if the intent was file-judged for Terraform roots too, it is one condition in measure_open_deploy()."
+}
+```
+
+## NFRA_CTLPLN-W14-S17 -- TO-CT-s-4 build item 2 says respawn every DEAD seat whose order is still open
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T09:16:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S17",
+  "one_line": "TO-CT-s-4 build item 2 says respawn every DEAD seat whose order is still open; the laptop's first real read has 7 of 16 seats DEAD with open orders, one holding 38, several dated weeks back, so the order's rule would respawn seats on stale orders.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python .tools/seat-liveness.py on the laptop, 2026-10-08 ~08:5xZ: SEAT-LIVENESS device=laptop seats=16 moving=6 quiet=3 hung=0 dead=7 unknown=0 ok=True",
+      "the 7 DEAD lines: 0.7.0_AE_CloudOps (1 order, newest issued 2026-09-30), ~A (38 orders, no issued date in the files), ~F (1, 2026-10-07), ~MI (2, none), ~RV (1, none), ~W (2, 2026-09-09), 2.0.0_SA_COO~D2 (1, 2026-10-07); each has no claude.exe whose command line carries its serial token",
+      "the order files read by the tool: <issued_to> equal to the serial and a non-terminal <status>; older orders carry no <issued_date> at all"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-4 build item 2: for a DEAD seat whose order is still open, respawn it by /mstr-spawn (its own pre-flight stands).",
+  "world_is": "An order file stays non-terminal until someone flips it, so 'open order and no process' describes a seat that finished, was parked or never ran as often as one that crashed. Written into /govern Step 3a with a guard: the tool prints each DEAD seat's order count and newest issued date, and the step respawns only when the order is current, leaving an old order to the COO that issued it as a finding. The skill's pre-flight (1pt, 1a, 1b, 1d) stands unchanged.",
+  "notes": "Not a defect in the order's intent; the order's own cell text says 'whose order is still open', which the files cannot show without a date. The CTO/COO may want a terminal sweep of those orders, or an issued_date on every order, so DEAD reads cleaner. A hazard_standing of INERT because nothing runs this step unless a manager runs /govern, and the guard is in the step."
+}
+```
+
+## NFRA_CTLPLN-W14-S18 -- agentbus-sqs.sh recv still hardcodes two box names in its logic (laptop|sitez), so 'recv dell1' is refused as an unknown flag
+
+```json
+{
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T09:16:43Z",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disposition": "UNDER_INVESTIGATION",
+  "id": "NFRA_CTLPLN-W14-S18",
+  "one_line": "agentbus-sqs.sh recv still hardcodes two box names in its logic (laptop|sitez), so 'recv dell1' is refused as an unknown flag; only the usage text was changed here, as ordered.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      ".tools/agentbus-sqs.sh line 360 (recv): 'laptop|sitez) dev=\"$1\"; shift ;;' then '*) dev=\"$(this_device)\" ;;'",
+      ".tools/agentbus-sqs.sh lines 366-370: the next token, if not --keep or --max, hits '*) echo \"agentbus-sqs: unknown flag ... exit 2'",
+      "org/devices/DEVICES.json holds four boxes: laptop, sitez, dell1, dell2"
+    ]
+  },
+  "spec_asserts": "TO-CT-s-4 build item 2: the usage strings in agentbus-sqs.sh describe the devices the register lists; TEXT ONLY, no logic changed.",
+  "world_is": "The usage text now says a device is any box the register lists; the logic of recv still names two. 'recv <box>' on a Dell is refused loudly (rc 2, 'unknown flag'); 'recv' with no argument works on every box, so no delivery is lost. Left as it is, per the order.",
+  "notes": "A one-line change (resolve the argument through the register's resolve subcommand, as send already does) would close it; it belongs to whoever owns the bus script's logic (0.0.0_AB_MSTR's lane for the bus), not to this cell."
+}
+```
