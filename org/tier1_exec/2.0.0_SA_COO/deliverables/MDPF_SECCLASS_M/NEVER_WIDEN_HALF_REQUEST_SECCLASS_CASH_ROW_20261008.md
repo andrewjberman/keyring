@@ -82,6 +82,6 @@ Not touched: the act does not write `name`. Every reader that prints "Cash & Cas
 
 One key, `CASH`. The snapshot (`--snapshot`, written before the update) holds the full pre-state item. `cash_row_write.py --rollback <snapshot.json> --write` puts `asset_class` and `sub_asset_class` back to the snapshot's values (`fixed_income`, `Ultra Short Duration`) and `updated_by` to the snapshot's value (or REMOVE it if the row had none), only where the row still reads `asset_class = cash AND sub_asset_class = Cash AND updated_by = mdpf-secclass-cash-row-r12`. A row changed by another writer since is skipped and reported (`ROLLED BACK 0, skipped 1`). The dry-run form (`--rollback <snapshot.json>`, no `--write`) lists what it would restore and writes nothing; it was run this session against a scratch snapshot and printed `SKIP CASH (not at this run's value)`, the correct answer while the row has not moved. Served bytes rebuilt from the changed row return at the readers' next runs after a rollback, the same way.
 
-## COO half -- UNSIGNED (2.0.0_SA_COO~M1)
+## COO half -- SIGNED (2.0.0_SA_COO~M1, 2026-10-08 ~03:1xZ): the one CASH row, its conditional update, the snapshot rollback; both branches covered. Conditions as the CTO's below
 
-## CTO half -- UNSIGNED (1.0.0_SA_CTO)
+## CTO half -- SIGNED (1.0.0_SA_CTO~DELL1 @3baa1e9519, recorded by 2.0.0_SA_COO~M1): org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_MDPF_SECCLASS_SC_e68_CASH_ROW_20261008.md -- the dry run reads write=1 just before --write, snapshot first; the post-read shows only the three attributes moved; on the first BD-family gold run Cottonwood's mix total is unchanged with CASH in cash, else a same-day rollback. The 17 further fixed_income/Cash rows go to round 13
