@@ -18,6 +18,7 @@ REMOVE updated_by if it had none; a custody row: REMOVE name, and updated_by res
 updated_by = this run's value and name = the clean name.
 
   python .../clean_name_write_v2.py                                    # dry run
+  python .../clean_name_write_v2.py --set <rows.tsv>                   # dry run over another set (same columns); default is the V2 set
   python .../clean_name_write_v2.py --write --half <half.md> --snapshot <snapshot.json>
   python .../clean_name_write_v2.py --rollback <snapshot.json> [--write]
 """
@@ -63,8 +64,8 @@ class CountingClient:
         return guarded
 
 
-def read_set():
-    with SET_FILE.open(encoding="utf-8", newline="") as fh:
+def read_set(set_file=None):
+    with Path(set_file or SET_FILE).open(encoding="utf-8", newline="") as fh:
         rd = csv.DictReader(fh, delimiter="\t", quoting=csv.QUOTE_NONE)
         assert rd.fieldnames == COLS, f"set header {rd.fieldnames!r}"
         return list(rd)
@@ -92,10 +93,10 @@ def still_as_built(r, item):
     return ("name" not in item) if is_custody(r) else (s(item, "name") == r["current_name"])
 
 
-def run(write, half, snapshot):
+def run(write, half, snapshot, set_file=None):
     import boto3
     ddb = CountingClient(boto3.client("dynamodb", region_name="us-east-1"), allow_mutation=write)
-    rows = read_set()
+    rows = read_set(set_file)
     seed_source = [r for r in rows if r["action"] == "SEED-SOURCE"]
     unchanged = [r for r in rows if r["action"] == "UNCHANGED"]
     todo = [r for r in rows if r["action"] == "WRITE"]
@@ -194,9 +195,10 @@ if __name__ == "__main__":
     ap.add_argument("--half")
     ap.add_argument("--snapshot")
     ap.add_argument("--rollback")
+    ap.add_argument("--set", dest="set_file", help="row-set TSV with the V2 columns; default CLEAN_NAME_ROW_SET_V2_20261007.tsv")
     a = ap.parse_args()
     if a.rollback:
         sys.exit(rollback(a.rollback, a.write))
     if a.write and not (a.half and a.snapshot):
         sys.exit("REFUSED: --write needs --half <path> and --snapshot <path>")
-    sys.exit(run(a.write, a.half, a.snapshot))
+    sys.exit(run(a.write, a.half, a.snapshot, a.set_file))
