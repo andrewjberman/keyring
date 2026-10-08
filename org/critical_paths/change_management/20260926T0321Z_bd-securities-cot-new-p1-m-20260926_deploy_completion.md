@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-09-26T03:21:35.082351+00:00
-**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classifications (the table COT gold now reads): of 122 COT keys, 51 at the 09-26 class, 10 at a later deliberate model/scheduled class, 3 under a namespace prefix, 58 absent (USD 49,174,203.65; 52 of them outside FWD-15's census, row MDPF_SECCLASS-D1-S5). BD half (652 accounts) not yet read. Closes when the round-13 analysis rules the 58 absent keys (FWD-15 scope) and the BD read is taken. No rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the table BD and COT gold now read). BD half (07:3xZ): of the 210 ticker-shaped written keys (the only ones BD reaches), 187 at the 09-26 class, 15 at a later deliberate model/scheduled class (cash, commodities, structured), 8 absent; SPHY, the USD 6.79M move, reads fixed_income/High Yield. COT half (06:5xZ): of 122, 51 at class, 10 later class, 3 prefixed, 58 absent (USD 49.17M, mostly Part-2 manual assets; FWD-15 now covers them, CTO ruling @ddd3eaac69, census @070d5824d0). Closes when FWD-15 places the 58 absent COT keys. No rollback (S188). (held since 2026-09-26T03:26:16.450830+00:00)
 **Deploy:** bd-securities COT-new write Part 1: 941 conditional PutItem (CTO @ab4a2e41bb; sha c96398886f143f54)
 **Authored by:** 2.0.0_SA_COO~M
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -26,3 +26,4 @@
 - 20260930T190520Z HELD-SOVEREIGN-GATED gate=external/CTO ruling S188 (msg 102504): R1 stays OPEN, no rollback; COT half waits on the 
 - 20261008T065132Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1 (dell1; laptop ~M closed, laptop CTO msg 106788 via MSTR m
 - 20261008T065635Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 COT half MEASURED 2026-10-08T06:5xZ against etf-classi
+- 20261008T072825Z HELD-SOVEREIGN-GATED gate=external/OWNER 2.0.0_SA_COO~M1. R1 measured 2026-10-08 against etf-classifications (the t
