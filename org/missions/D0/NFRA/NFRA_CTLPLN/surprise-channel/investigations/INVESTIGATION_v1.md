@@ -3056,3 +3056,31 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "world_is": "A verifier whose answer depends on the checkout it runs from. The file has 163 lines for 161 wheels (two comment lines mark its two groups), so a comparison that counts lines, or that reads one side with different line endings than the other, can differ by box. The kit itself is not in doubt. Repair, at the next cut of the kit cell: compare the parsed name==version SETS, ignoring comment lines and line endings, and print the tool's own commit beside its verdict so two boxes can see whether they ran the same verifier."
 }
 ```
+
+## NFRA_CTLPLN-W14-S11 -- TO-CT-a-1 amendment 8: the vendor-secrets census stores no per-reference reader fact; reader evidence re-derived by hand
+
+```json
+{
+  "id": "NFRA_CTLPLN-W14-S11",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~14",
+  "surfaced_at": "2026-10-08T01:23:17Z",
+  "one_line": "TO-CT-a-1 amendment 8: the saved vendor-secrets census does not record, per reference, whether a program reads the secret by name (its `program` flag is a file-suffix test that is true for comments and constants), and the project join rests in part on a whole-tree path entry (portal/)",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "tests/derive_vendor_secrets.py is_program(): suffix in {.py,.js,.mjs,.cjs,.ts,.tsx,.sh,.ps1} and not a test/fixture path; join rows store only {file, lines, program, named_exactly_by_a_task_order}. Of the 61 join rows, the program=True references that are comments or other non-reads include bd_49f_auto_login.js:25-27 (comment lines), _render_identity/mint.py:17-19,70-72 (comments saying no Secrets Manager call is made), opal-gateway/app/config.py:251 (comment)",
+      "IRPT_BCKEND's task orders carry the path entry `portal/` (the whole portal tree): task_order_paths('org/missions/D9/IRPT/IRPT_BCKEND/') includes it, so portal/etl/.../opal-portal-volatility-fetcher/lambda_function.py (reads opal/external-apis by name, line 84) and portal/scripts/setup-env.sh (reads opal/portal/config, line 77) are 'IRPT_BCKEND code' in the join",
+      "a reading program the join does not hold: infra/aws/lambda/opal-assets/opal-assets-bd49f-reporting-pull/lambda_function.py:45,87 reads blackdiamond/49f/session by default name and is loaded by IRPT_BCKEND's performance/bd_adapter.py:52-60; the join reaches the secret only through performance/tenants.py:145",
+      "derive_vendor_secrets.py --verify-readers: READERS-VERIFIED entries=13 ok=True (each name line holds the literal, each read line holds its call token)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-CT-a-1 amendment 8 item 1: the census's own earlier distinction separates a program that fetches the value from a grant, registry, manifest, fixture or document; if it is not stored per reference, re-derive it and say so.",
+  "world_is": "The distinction is stored per file as a suffix test only. I re-derived it from the repository: 13 reader entries (secret, project, name line, read line, token) are now data in the script head and are checked on every run; a secret with a program file and no entry is READER-UNCLEAR and not granted (7 secrets, listed with reasons in the plan note); the one-segment path entry portal/ was not treated as a project's own code. Granted set: 9 of 114. Not assessed here: whether IRPT_BCKEND's `portal/` path entry is intended (it grants the project the whole portal tree as a write surface), and the readers of secrets in projects with no task order.",
+  "notes": "For the CTO at the round analysis: the join could store 'reads_by_name' per reference (the read-call line) so a later census needs no hand-made reader table; the `portal/` entry in IRPT_BCKEND's task-order paths is worth a look as a write-surface question separate from this cell."
+}
+```
