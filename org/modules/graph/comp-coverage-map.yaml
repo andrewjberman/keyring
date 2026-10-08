@@ -600,6 +600,11 @@ tools:
       - { tool: comp-assets,    shared_resource: freshness, my_concern: "estate-object write-freshness (repo files)", their_concern: "OPAL_ASSETS monolith backfill COMPLETENESS census (S3 objects)" }
 
   # ====================== GIT surface ======================
+  - tool: comp-activity
+    surface: GIT
+    granularity: file
+    concern: "WHO is working on a surface, PER BOX -- commits (one record per commit, written by the box that made it), open task orders' <paths>, open deploy entries, and the estate graph's view; the cross-box OVERLAP map and per-box figures"
+    touches_resource: []
   - tool: comp-xray
     surface: GIT
     granularity: file

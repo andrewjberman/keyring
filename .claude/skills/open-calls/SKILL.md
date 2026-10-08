@@ -163,6 +163,30 @@ named Terraform roots declare; a shared bucket or a trunk register file touches 
 (this box's CTO may settle the call) or `verdict=CROSS-BOX` (it may not alone). It prints, and decides nothing about, an act
 only Andrew can do: such an act still goes to him, named as that act.
 
+## The whole cluster, from any box -- `/open-calls --all`
+
+**Andrew-direct 2026-10-08 ~18:4xZ (point 5), record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md`;
+built by 4.0.0_SA_CRO on 1.0.0_SA_CTO msg 107121:** every box's list is also kept in S3, so any box reads every box's
+calls with no git pull and no lag.
+
+```
+python .tools/open-calls.py list --all --cloud [--include-closed]   # every box, grouped box > project > agent, timestamps
+python .tools/open-calls.py publish                                 # put THIS box's list to S3 as it stands (no row change)
+python .tools/open-calls.py add ... --kind fork|act [--project NONE]
+```
+
+- Each `add` and `close` writes the box's list and its cluster copy
+  (`s3://opal-313476888478-globgrph/fabric/open-calls/v1/box=<box>/open_calls.json`). A failed put is spooled and
+  retried on the next write or `list --cloud`.
+- `kind`: `fork` is a decision with options (the default). `act` is an act only Andrew can do, such as a delete, a
+  signature or a vendor use. Both stay in open calls, on Andrew's word: "keep that all in open calls". Print the `act`
+  rows under `ACTS ONLY ANDREW CAN DO`, never as cards.
+- `--project NONE` records a call that belongs to no project. No scope measurement runs; the verdict reads NO-PROJECT.
+- A box with no cluster copy prints `ABSENT`. **Absent is not empty**: never render it as "no calls".
+- `/open-calls --all` = run the cluster list, then render one card per OPEN `fork` row in the Step 2 format, grouped by
+  box. Each card's context line names the box, the project, the asking seat and the age.
+
 ## Self-adjudication inside a running project -- the CTO rules, the loop keeps cycling
 
 **Andrew-direct 2026-09-03 ~05:2xZ at the 1.0.0_SA_CTO terminal, VERBATIM:** *"if upon receipt it is in question, or

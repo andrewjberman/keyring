@@ -1,0 +1,11 @@
+cloudops-dell1-agent-user code_write: allowed; matched=cloudops-dell-agent-deploy-policy/S3ObjectsOnOpalBuckets
+cloudops-dell1-agent-user document_update: allowed; matched=cloudops-dell-agent-create-policy/CreateUpdateTagCompute
+cloudops-dell1-agent-user document_send: implicitDeny; matched=NONE: no identity Allow
+cloudops-dell1-agent-user function_code: explicitDeny; matched=cloudops-dell-agent-routes-fn-policy/DenyRoutesToPrivilegedRolesFunctions
+cloudops-dell1-agent-user iam_create: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyEveryIamWrite
+cloudops-dell2-agent-user code_write: allowed; matched=cloudops-dell-agent-deploy-policy/S3ObjectsOnOpalBuckets
+cloudops-dell2-agent-user document_update: allowed; matched=cloudops-dell-agent-create-policy/CreateUpdateTagCompute
+cloudops-dell2-agent-user document_send: implicitDeny; matched=NONE: no identity Allow
+cloudops-dell2-agent-user function_code: explicitDeny; matched=cloudops-dell-agent-routes-fn-policy/DenyRoutesToPrivilegedRolesFunctions
+cloudops-dell2-agent-user iam_create: explicitDeny; matched=cloudops-dell-agent-deploy-policy/DenyEveryIamWrite
+READBACK arms=10/10 admin_controls=3/3 retained_policies=6/6 attachments=6 routes_host_absent=True all_ok=True

@@ -296,6 +296,32 @@ entries:
     status: canonical
     notes: "NFRA_CLDGRPH CG-s-17 (round 5, 2026-09-09) -- the SUCCESSOR entry named by cloud.refresh.full and cloud.refresh.incremental. Deliberately a READ: FWD-2 (the served projection refreshes on the estate's own schedule) and FWD-3 (every answer carries its own age) are what make a refresh route unnecessary, and re-creating one would re-create the retired rebuild path. The client takes NO database path and NO Cypher parameter dict -- projection_client.query(statement, timeout_s) -> {rows, vintage, age_line, manifest_sha256, artifact_prefix} (:194-201). A call form documenting either documents a capability that does not exist."
 
+  # ---- FABRIC ACTIVITY: who is working on what, per box (Andrew-direct 2026-10-08, 4.0.0_SA_CRO) ----
+  - id: fabric.activity.who
+    use_case: "Who else is working on this file / folder / Terraform module / Lambda / gold script -- which box, which seat, which commit, which open task order, which open deploy -- before I change it"
+    canonical_call: "comp-activity who <path-or-surface> [--hours 24] [--graph]"
+    tool: comp-activity
+    mode: query
+    write_path: false
+    layer: fabric
+    cost: "seconds -- one S3 list + cached GETs of the per-commit records; --graph adds one served-graph query"
+    freshness: "EDITS: seconds after a commit on a box that runs the post-commit hook (MERGED/PUSHED read from this box's last fetch, age printed); DECLARES and HOLDS: this box's tree; --graph: the served graph's VINTAGE line"
+    rebuild_trigger: "none -- each box writes its own record at commit time (.tools/git-hooks/fabric-activity-post-commit.sh)"
+    anti_pattern: "grepping git log on one box for another box's work, or asking in a message who is on a surface -> comp-activity who"
+    status: canonical
+  - id: fabric.activity.overlap
+    use_case: "Where are two boxes getting close -- which surfaces have two or more boxes on them right now, and how is each box loaded"
+    canonical_call: "comp-activity overlap [--hours 24] [--all] ; comp-activity boxes [--hours 24]"
+    tool: comp-activity
+    mode: query
+    write_path: false
+    layer: fabric
+    cost: "seconds -- the same store read as who"
+    freshness: "as fabric.activity.who; records carry box_claim (measured from the hook, inferred for backfilled history)"
+    rebuild_trigger: "none"
+    anti_pattern: "assembling an overlap picture by hand from several boxes' logs -> comp-activity overlap"
+    status: canonical
+
   # ---- RETIRED RECORDS (entry grain): the two LOCAL-PROJECTION REFRESH MODES ----
   # KEPT, never deleted -- a retirement nobody can read is indistinguishable from a thing that
   # never existed, which is the reason retired_aliases: above keeps a retired NAME. Convention and
@@ -1872,6 +1898,7 @@ tools_index:
   comp-ontolint: { does: "Lint the NFRA_ONTOLOGY Relation-vs-Role DUAL-AXIS composite exception (routes-to->Router / resolves-through->Registry / projects->Gateway are dual-axis; every other relation is single-axis, a Relation with no Role) from the canonical rule-bank -- machine-enforced, replaces the prose 'load-bearing subtlety' (NFRA_ONTOCLARITY WS-B fog-7). ALSO the WS-C spot-8 polymorphic-Role tie-breaker (role-resolve): role_priority total-order arbitration when a node matches 2+ roles (guards+transforms -> Guard)", subcommands: ["check", "self-test", "role-resolve <Role>..."], entries: [ontology.relation_role.dual_axis_lint] }
   comp-genesis:  { does: "NFRA_GENESIS provisioner -- SPIN UP a NEW company: bootstrap its graph + ontology-binding + closed learning loop (versioned Nessie/Iceberg -> Kuzu -> Trino + the C0-C3 ladder) from a single company.yaml, on the proven Opal stack (parameterized; Opal is the reference instance). Two bespoke-per-company pieces (recognizer keystone + binding adapter); everything else reused. verify --local closes the loop at zero cloud spend. NOT a query over Opal's OWN estate (that is comp-system). Thin shim -> infra/system/sdk/genesis", subcommands: ["new <c>", "validate <c>", "project <c>", "up [--dry-run] <c>", "verify --local <c>", "loop --tick --local <c>", "status <c>", "selftest", "down <c>"], entries: [meta.genesis.provision_new_company] }
   comp-kuzu:     { does: "Cypher query the SERVED graph projection (cloud + cross-layer) -- a thin client over the projection service; the FAST default read-path, and the ONLY one (it takes no database path and there is no refresh flag)", subcommands: ["<cypher>", "--json", "--limit", "--schema"], entries: [cloud.lookup.nodes_by_type, cloud.reachability.transitive, cloud.blast.what_breaks, xlayer.fullstack.firm_component_to_bucket, cloud.read.served_vintage] }
+  comp-activity: { does: "WHO else is working on a surface, per box: commits by box (MERGED / PUSHED / on-box), open task orders whose <paths> cover it, open deploy entries that hold it, and with --graph what the estate graph says it is; plus the cross-box OVERLAP map and per-box figures. Engine .tools/fabric-activity.py over the per-commit activity store (s3 globgrph fabric/activity/v1) -- every box writes one record per commit", subcommands: ["who <path-or-surface>", "overlap", "boxes", "emit", "flush", "backfill", "surface", "--hours", "--graph", "--all", "--limit", "--commit", "--since", "--rev"], entries: [fabric.activity.who, fabric.activity.overlap] }
   comp-describe: { does: "FIND + DESCRIBE one AWS resource -- ONE resource's purpose synthesized from the graph (type + layer + producers/consumers/wiring), off the derive-at-scan summary-corpus engine over the comp-kuzu QUERY path. Lexical resolution (exact ARN -> exact name -> substring); ambiguous -> disambiguation list, no silent guess. NOT nearest-BY-PURPOSE similarity (that is comp-similar). WS-7 tools_index closure (router-reachable, entry already existed at cloud.describe.resource, was missing from this browsable catalog)", subcommands: ["<arn-or-name>", "--json"], entries: [cloud.describe.resource] }
   comp-state:    { does: "Registry/TO/PRD state linter -- is the registry / a project JSON / a task-order status / a PRD Status line BEHIND the estate's actual git-commit state? BM25-style drift check over git commits (Andrew-direct 2026-07-14). ADVISORY: a BEHIND is a place to LOOK never an auto-edit; CURRENT is absence-of-lexical-evidence not a verified record. --self-test MUST print PASS (its own N/N line; 4/4 since the TIGHTENING-J2 encoding leg) before trusting a report. WS-7 tools_index closure (router-reachable, entry already existed at org.state.registry_drift, was missing from this browsable catalog)", subcommands: ["--project CODE", "--days N", "--all", "--self-test", "--json"], entries: [org.state.registry_drift] }
   comp-keys:     { does: "What S3 keys / partition-dates / per-firm existence EXIST under a prefix -- INVENTORY (what exists), distinct from comp-freshness (is-it-fresh). Live s3api, explicit-Z, denominator-always. NFRA_MSBEFF.R5", subcommands: [prefix, partitions, exists], entries: [pipeline.keys.enumerate] }

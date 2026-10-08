@@ -8,7 +8,8 @@ through its manager. "Touches only its fabric" is a MEASUREMENT here, never a ju
 
     python .tools/open-calls.py add --project <CODE> --subject <text> --asked-by <serial> --source <path>
                                     [--orders <order file> ...] [--roots <dir> ...]
-    python .tools/open-calls.py list [--device <d> | --all]
+    python .tools/open-calls.py list [--device <d> | --all] [--cloud] [--include-closed]
+    python .tools/open-calls.py publish          # put this box's current list to the cluster copy, unchanged
     python .tools/open-calls.py close --id <id> --by <serial> --ruling <path> [--crossbox <crossbox id>]
     python .tools/open-calls.py scope --project <CODE> [--orders <order file> ...] [--roots <dir> ...]
     python .tools/open-calls.py scope --selftest
@@ -18,6 +19,15 @@ lib/devices.py, never from a path). Shape (schema "open-calls/1"; every reader r
     {"schema", "device", "written_at", "written_by", "rows": [ {id, project, subject, asked_by, source, orders, roots,
      state (OPEN|CLOSED), opened_at, scope {...the measurement...}, closed (null | {at, by, ruling, crossbox})} ]}
 A file ABSENT is not an EMPTY list: `list --all` names the boxes whose file is absent.
+`kind` (optional on a row): `fork` = a decision with options (the default) | `act` = an act only Andrew can do (a delete,
+a signature, a vendor use); Andrew 2026-10-08 ~18:4xZ: "keep that all in open calls". `--project NONE` records a call
+that belongs to no project (no scope measurement is run; its verdict reads NO-PROJECT).
+
+THE CLUSTER COPY (1.0.0_SA_CTO msg 107121, Andrew-direct ~18:4xZ point 5): every write of a box's list also puts it to
+    s3://opal-313476888478-globgrph/fabric/open-calls/v1/box=<box>/open_calls.json
+beside the fabric-activity store (a failed put is spooled under .comp-graph/open-calls-spool/ and retried on the next
+write or `list --cloud`). `list --all --cloud` reads EVERY box's cloud copy -- no git pull, no lag -- grouped by box,
+project and agent with timestamps; a box with no cloud copy prints ABSENT, never empty.
 
 THE MEASUREMENT (`scope`), four readings and a shared set:
   paths      the union of <paths> of the orders named (else the project's non-terminal orders) plus the roots named: a path
@@ -58,7 +68,12 @@ ROOT = os.path.dirname(TOOLS)
 
 SCHEMA = "open-calls/1"
 TOP_KEYS = {"schema", "device", "written_at", "written_by", "rows"}
-ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed"}
+ROW_KEYS = {"id", "project", "subject", "asked_by", "source", "orders", "roots", "state", "opened_at", "scope", "closed",
+            "kind"}
+KINDS = ("fork", "act")
+NO_PROJECT = "NONE"
+CLOUD_BUCKET = "opal-313476888478-globgrph"
+CLOUD_PREFIX = "fabric/open-calls/v1"
 ROW_REQUIRED = {"id", "project", "subject", "asked_by", "source", "state", "opened_at", "scope"}
 CLOSED_KEYS = {"at", "by", "ruling", "crossbox"}
 STATES = ("OPEN", "CLOSED")
@@ -417,6 +432,8 @@ def validate_doc(doc, device: str, where: str) -> dict:
             raise BadFile("%s: row %s lacks %s" % (where, row.get("id", i), ", ".join(missing)))
         if row["state"] not in STATES:
             raise BadFile("%s: row %s state %r is not one of %s" % (where, row["id"], row["state"], "/".join(STATES)))
+        if "kind" in row and row["kind"] not in KINDS:
+            raise BadFile("%s: row %s kind %r is not one of %s" % (where, row["id"], row["kind"], "/".join(KINDS)))
         closed = row.get("closed")
         if closed is not None and (not isinstance(closed, dict) or set(closed) - CLOSED_KEYS):
             raise BadFile("%s: row %s `closed` carries a key this reader does not know" % (where, row["id"]))
@@ -442,7 +459,84 @@ def write_list(device: str, doc: dict, serial: str) -> str:
     with open(tmp, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(json.dumps(doc, indent=1, ensure_ascii=True) + "\n")
     os.replace(tmp, path)
+    cloud_put(device, doc)
     return path
+
+
+# ---------------------------------------------------------------- the cluster copy (s3)
+
+def cloud_key(device: str) -> str:
+    return "%s/box=%s/open_calls.json" % (CLOUD_PREFIX, device)
+
+
+def _spool_dir() -> str:
+    return os.path.join(ROOT, ".comp-graph", "open-calls-spool")
+
+
+def _s3():
+    import boto3
+    from botocore.config import Config
+    return boto3.client("s3", config=Config(connect_timeout=5, read_timeout=15, retries={"max_attempts": 2}))
+
+
+def cloud_put(device: str, doc: dict) -> bool:
+    """Put this box's list to the cluster copy. Never fails the write: a failed put is spooled (latest only) and retried."""
+    if os.environ.get("OPAL_STATE_ROOT", "").strip() or os.environ.get("OPAL_OPENCALLS_CLOUD", "1") == "0":
+        return False   # tests and an explicit off-switch never touch the cluster copy
+    body = (json.dumps(doc, indent=1, ensure_ascii=True) + "\n").encode("ascii")
+    try:
+        _s3().put_object(Bucket=CLOUD_BUCKET, Key=cloud_key(device), Body=body, ContentType="application/json")
+        spooled = os.path.join(_spool_dir(), device + ".json")
+        if os.path.exists(spooled):
+            os.remove(spooled)
+        print("CLOUD s3://%s/%s" % (CLOUD_BUCKET, cloud_key(device)))
+        return True
+    except Exception as exc:  # noqa: BLE001 -- the local list is the record; the cloud copy catches up
+        os.makedirs(_spool_dir(), exist_ok=True)
+        with open(os.path.join(_spool_dir(), device + ".json"), "wb") as fh:
+            fh.write(body)
+        print("WARN: cluster copy not written (%s); spooled for the next write or `list --cloud`" % type(exc).__name__)
+        return False
+
+
+def cloud_flush() -> None:
+    d = _spool_dir()
+    if not os.path.isdir(d):
+        return
+    for name in sorted(os.listdir(d)):
+        if name.endswith(".json"):
+            try:
+                doc = json.load(open(os.path.join(d, name), encoding="utf-8"))
+            except (OSError, ValueError):
+                continue
+            cloud_put(name[:-5], doc)
+
+
+def _err_code(exc) -> str:
+    resp = getattr(exc, "response", None)
+    return ((resp or {}).get("Error") or {}).get("Code", "") if isinstance(resp, dict) else ""
+
+
+def cloud_read_all(boxes: list) -> tuple:
+    """({box: (doc, last_modified_utc)}, absent boxes, refused [(box, reason)]) from the cluster copies."""
+    s3 = _s3()
+    found, absent, refused = {}, [], []
+    for box in boxes:
+        try:
+            obj = s3.get_object(Bucket=CLOUD_BUCKET, Key=cloud_key(box))
+        except Exception as exc:  # noqa: BLE001
+            if _err_code(exc) in ("NoSuchKey", "404"):
+                absent.append(box)
+            else:
+                refused.append((box, "%s %s" % (type(exc).__name__, _err_code(exc))))
+            continue
+        try:
+            doc = validate_doc(json.loads(obj["Body"].read()), box, "s3://%s/%s" % (CLOUD_BUCKET, cloud_key(box)))
+        except (BadFile, ValueError) as exc:
+            refused.append((box, str(exc)))
+            continue
+        found[box] = (doc, obj["LastModified"].astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    return found, absent, refused
 
 
 def this_box(dev, reg) -> str:
@@ -492,7 +586,12 @@ def cmd_add(args) -> int:
     if args.device and ctx["dev"].resolve(args.device, ctx["reg"]) != device:
         raise Refused("REFUSED: a call is written to this box's list only (%s); %s is another box's list. One writer per box." % (
             device, args.device))
-    res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
+    if args.project == NO_PROJECT:
+        res = {"paths": "n/a", "placement": "n/a", "resources": "n/a", "shared": "n/a", "risk": "LOCAL",
+               "verdict": "NO-PROJECT", "roots": [], "evidence": {}}
+        notes = ["--project NONE: the call belongs to no project, so no scope measurement is run"]
+    else:
+        res, notes = scope_project(ctx, args.project, args.orders or [], args.roots or [])
     path = list_path(device)
     if os.path.exists(path):
         doc = read_list(device)
@@ -504,9 +603,14 @@ def cmd_add(args) -> int:
         "source": rel_to_root(args.source, ctx["root"]),
         "orders": [rel_to_root(o, ctx["root"]) for o in (args.orders or [])],
         "roots": [norm(rel_to_root(r, ctx["root"])) for r in (args.roots or [])],
-        "state": "OPEN", "opened_at": now_utc(), "scope": public_scope(res), "closed": None})
+        "state": "OPEN", "opened_at": now_utc(), "kind": args.kind,
+        "scope": public_scope(res) if args.project != NO_PROJECT else dict(res, measured_at=now_utc()), "closed": None})
     written = write_list(device, doc, writer_serial(args.asked_by))
-    print("ADDED id=%s file=%s open=%d" % (cid, written, sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
+    print("ADDED id=%s kind=%s file=%s open=%d" % (cid, args.kind, written,
+                                                   sum(1 for r in doc["rows"] if r["state"] == "OPEN")))
+    if args.project == NO_PROJECT:
+        print("NOTE: " + notes[0])
+        return 0
     print_scope(res, notes)
     if res["verdict"] == "CROSS-BOX":
         print("ROUTE: this call touches another box or a shared set; it goes the cross-box route "
@@ -521,8 +625,8 @@ def print_list(device: str, count: dict) -> None:
     print("FILE %s | device=%s written_by=%s written_at=%s | %s | rows=%d" % (
         path, doc["device"], doc["written_by"], doc["written_at"], age_text(doc["written_at"]), len(rows)))
     for row in rows:
-        print("  %s [%s] %s | %s | scope=%s risk=%s | asked_by %s | source %s" % (
-            row["id"], row["state"], row["project"], row["subject"], row["scope"].get("verdict", "?"),
+        print("  %s [%s] %s %s | %s | scope=%s risk=%s | asked_by %s | source %s" % (
+            row["id"], row["state"], row.get("kind", "fork"), row["project"], row["subject"], row["scope"].get("verdict", "?"),
             row["scope"].get("risk", "?"), row["asked_by"], row["source"]))
     count["rows"] += len(rows)
     count["open"] += sum(1 for r in rows if r["state"] == "OPEN")
@@ -533,6 +637,8 @@ def cmd_list(args) -> int:
     reg = dev.load()
     count = {"rows": 0, "open": 0}
     absent, refused, read = [], [], 0
+    if args.cloud:
+        return cmd_list_cloud(args, dev, reg)
     if args.all:
         boxes = dev.names(reg)
     elif args.device:
@@ -557,6 +663,74 @@ def cmd_list(args) -> int:
             print("REFUSED %s" % exc)
     print("OPEN-CALLS-LIST boxes=%d read=%d absent=%s refused=%s rows=%d open=%d" % (
         len(boxes), read, ",".join(absent) or "none", ",".join(refused) or "none", count["rows"], count["open"]))
+    return 3 if refused else 0
+
+
+def cmd_publish(args) -> int:
+    """Put this box's list, as it stands, to the cluster copy (no row changes; the local file is not rewritten)."""
+    dev = load_mod("opal_devices", "lib/devices.py")
+    reg = dev.load()
+    device = this_box(dev, reg)
+    path = list_path(device)
+    if not os.path.exists(path):
+        print("ABSENT %s: no open_calls.json for %s in this tree (%s); nothing to publish. Absent is not empty." % (
+            device, device, path))
+        return 0
+    doc = read_list(device)
+    ok = cloud_put(device, doc)
+    print("PUBLISH device=%s rows=%d open=%d cloud=%s" % (device, len(doc["rows"]),
+                                                         sum(1 for r in doc["rows"] if r["state"] == "OPEN"),
+                                                         "written" if ok else "spooled"))
+    return 0
+
+
+def cmd_list_cloud(args, dev, reg) -> int:
+    """Every box's cluster copy, grouped box > project > agent, with timestamps. Absent is named, never shown as empty."""
+    cloud_flush()
+    if args.device:
+        box = dev.resolve(args.device, reg)
+        if box is None:
+            print("ERROR: %r is not a device in the register" % args.device, file=sys.stderr)
+            return 2
+        boxes = [box]
+    else:
+        boxes = dev.names(reg)
+    found, absent, refused = cloud_read_all(boxes)
+    total = {"open": 0, "closed": 0, "fork": 0, "act": 0}
+    print("OPEN CALLS ACROSS THE CLUSTER -- s3://%s/%s/  (read %s)" % (CLOUD_BUCKET, CLOUD_PREFIX, now_utc()))
+    for box in boxes:
+        if box in absent:
+            print("\n[%s] ABSENT: no cluster copy. Absent is not empty: nothing here says %s has no open calls." % (box, box))
+            continue
+        if box not in found:
+            continue
+        doc, modified = found[box]
+        rows = doc["rows"]
+        shown = [r for r in rows if args.include_closed or r["state"] == "OPEN"]
+        n_open = sum(1 for r in rows if r["state"] == "OPEN")
+        total["open"] += n_open
+        total["closed"] += len(rows) - n_open
+        print("\n[%s] open=%d closed=%d | list written %s by %s (%s) | cloud copy %s" % (
+            box, n_open, len(rows) - n_open, doc["written_at"], doc["written_by"], age_text(doc["written_at"]), modified))
+        by_project = {}
+        for r in shown:
+            by_project.setdefault(r["project"], {}).setdefault(r["asked_by"], []).append(r)
+        for project in sorted(by_project):
+            print("  %s" % project)
+            for agent in sorted(by_project[project]):
+                print("    %s" % agent)
+                for r in sorted(by_project[project][agent], key=lambda x: x["opened_at"]):
+                    kind = r.get("kind", "fork")
+                    if r["state"] == "OPEN":
+                        total[kind] = total.get(kind, 0) + 1
+                    print("      %s [%s] %-4s opened %s (%s) | %s | scope=%s | %s" % (
+                        r["id"], r["state"], kind, r["opened_at"], age_text(r["opened_at"]), r["subject"],
+                        r["scope"].get("verdict", "?"), r["source"]))
+    for box, why in refused:
+        print("\n[%s] REFUSED: %s" % (box, why))
+    print("\nOPEN-CALLS-CLUSTER boxes=%d read=%d absent=%s refused=%s open=%d (fork %d, act %d) closed=%d" % (
+        len(boxes), len(found), ",".join(absent) or "none", ",".join(b for b, _ in refused) or "none",
+        total["open"], total.get("fork", 0), total.get("act", 0), total["closed"]))
     return 3 if refused else 0
 
 
@@ -772,10 +946,15 @@ def build_parser() -> argparse.ArgumentParser:
     add.add_argument("--orders", nargs="+", default=[])
     add.add_argument("--roots", nargs="+", default=[])
     add.add_argument("--device", help="refused unless it is this box (one writer per box)")
+    add.add_argument("--kind", choices=KINDS, default="fork",
+                     help="fork = a decision with options (default); act = an act only Andrew can do")
     lst = sub.add_parser("list", help="print the list(s) with each file's age")
     grp = lst.add_mutually_exclusive_group()
     grp.add_argument("--device")
     grp.add_argument("--all", action="store_true")
+    lst.add_argument("--cloud", action="store_true", help="read every box's cluster copy in S3 (no git lag)")
+    lst.add_argument("--include-closed", action="store_true", help="with --cloud: show CLOSED rows too")
+    sub.add_parser("publish", help="put this box's current list to the cluster copy in S3, unchanged")
     cls = sub.add_parser("close", help="set a call CLOSED with its ruling")
     cls.add_argument("--id", required=True)
     cls.add_argument("--by", required=True)
@@ -792,7 +971,8 @@ def build_parser() -> argparse.ArgumentParser:
 def main(argv: list) -> int:
     args = build_parser().parse_args(argv)
     try:
-        return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope}[args.cmd](args)
+        return {"add": cmd_add, "list": cmd_list, "close": cmd_close, "scope": cmd_scope,
+                "publish": cmd_publish}[args.cmd](args)
     except Refused as exc:
         print(str(exc) if str(exc).startswith("REFUSED") else "ERROR: %s" % exc, file=sys.stderr)
         return 1 if str(exc).startswith("REFUSED") else 2
