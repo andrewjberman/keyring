@@ -1521,3 +1521,29 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "The registry decides those three systems (portal, portal, advi), so I decided them with the row cited; and the listed exceptions are redundant for the printed result today (they matter only for a {system}-blank name whose owner differs from the default). I entered them as the round-6 measurement defines them; the registry owner may drop them."
 }
 ```
+
+## LGIC_BLANKFIX-W4-S5 -- census --all-roots prints counts per root, not one line per name
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W4-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~4",
+  "surfaced_at": "2026-10-08T22:03:00Z",
+  "one_line": "BF-v-1 CONTEXT says `census --all-roots` prints one line per name; it prints one ROOT line per mapped root, one UNCOUNTED line per uncounted name, and no RIGHT/FIX/... line.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python lib/opal_naming.py census --all-roots at wk-LGIC_BLANKFIX-4 (HEAD d67274877f) -> 166 lines; first words: ALL-ROOTS 1, HOLE-CLASSES 1, OTHER-HOLE 1, ROOT 13, ROOTS 1, TOTALS 1, UNCOUNTED 74, UNMAPPED 74; zero lines of kind RIGHT, FIX, NOT-ASKED, PATTERN, CARDED, REFUSED or HOLE",
+      "lib/opal_naming_rootcheck.py all_roots() (lines 723-841) calls run_one(..., report_only=True) into a local list and prints only that list's last (ROOTCHECK) line inside the ROOT line; ALL_ROOTS_round6.txt carries the same line kinds (ROOT 13, UNMAPPED 74, no per-name line)",
+      "per-name lines come from `python lib/opal_naming.py census --root <root folder>` (check_root); the README section written by this cell says so"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BF-v-1 CONTEXT: the all-roots output is 'One line per name: KIND type current -> detail [where]', and the README section is to explain 'each line kind ... the per-name kinds'.",
+  "world_is": "The per-name kinds exist only in a single-root run; the all-roots run shows them as per-root and total COUNTS (right=, fix=, ...). The README section describes the output as it is and names the single-root command for the per-name lines; the order's criterion is unaffected."
+}
+```
