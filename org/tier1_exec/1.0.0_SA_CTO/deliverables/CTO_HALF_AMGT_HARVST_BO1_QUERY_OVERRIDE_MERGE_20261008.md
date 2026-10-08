@@ -4,7 +4,10 @@
 **COO half:** `org/missions/D5/AMGT/AMGT_HARVST/deliverables/2.0.0_SA_COO_H/round70/NEVER_WIDEN_HALF_COO_BO1_QUERY_OVERRIDE_MERGE.md`
 @6b9d3118c6 (SIGNED), read whole.
 
-## VERDICT: SIGNED for one merge of branch `wk-AMGT_HARVST-122-r70` @419dc9b1fc, not before the Seeking Alpha leg has ended. Two conditions beyond the COO half's three.
+**SPENT WITHOUT AN ACT (2026-10-08 ~12:1xZ):** superseded by `CTO_HALF_AMGT_HARVST_QUERY_OVERRIDE_BRANCH_MERGE_20261008.md`,
+which signs the one branch holding bo-1 and bp-1 at 537ac56e9b. Nothing was merged under this half.
+
+## VERDICT (spent): SIGNED for one merge of branch `wk-AMGT_HARVST-122-r70` @419dc9b1fc, not before the Seeking Alpha leg has ended. Two conditions beyond the COO half's three.
 
 The act is a merge. On this box it is a deploy of `publishers.py` and `__main__.py` to the next collector process started from
 the shared tree. No pointer move, no job, no S3 write, no vendor call.
