@@ -2235,3 +2235,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r89/p89_cells.py`, dry-run at base 47
 | `IB-pr-377` | apply the r61 directory release (refresh then search), at 4710b8007b, by 0.7.0_AE_CloudOps~DELL2 | FWD-7 | WORLD | D2-S11 | P89-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Assignee: 0.7.0_AE_CloudOps~DELL2 (a seat, not a worker slot).
+
+## 83. ROUND 90, WORKSTREAM ~P (2026-10-08 ~23:0xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the IB-pr-376 halves + CTO sequencing ruling)
+
+The IAM leg for the Performance client statement writer applied at 22:47:14Z (laptop). The CTO half of IB-pr-376 (@b97fa248b2) ruled the
+order: the function with persisted_by and the binding (pin 49bc13131d, built 7T29wPhz) first, then the custody-report-persist route only
+after a live read shows that sha, so no persist is served without them. One apply order to 0.7.0_AE_CloudOps~DELL2. The real persist
+and the owner/other-firm reads follow IRPT_CUSTDY E2a. Check `deliverables/2.0.0_SA_COO~P2/checks/r90/p90_cells.py`: AC1, AC2 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-378` | release irpt-export-render at 49bc13131d (replay first), then apply the custody-report-persist route | FWD-8 / CUSTDY S07-S08 | WORLD | IB-pr-376 (drained), IAM leg (applied) | P90-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release then one route, ordered. Assignee: 0.7.0_AE_CloudOps~DELL2.
