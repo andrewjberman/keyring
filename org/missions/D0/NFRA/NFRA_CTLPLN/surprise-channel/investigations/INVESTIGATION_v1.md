@@ -5041,3 +5041,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Not measured against a real key (no AWS call allowed in this cell)."
 }
 ```
+
+## NFRA_CTLPLN-W38-S3 -- disarm record for W38-S1: AMENDMENT 1 reads outcomes from the tenant line; the reader no longer reads ldo_event.result
+
+```json
+{
+  "id": "NFRA_CTLPLN-W38-S3",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~38",
+  "surfaced_at": "2026-10-08T21:30:00Z",
+  "one_line": "Disarm record for NFRA_CTLPLN-W38-S1: per AMENDMENT 1 of TO-CT-i-10 the reader takes results only from tenant lines of kind teams.messages, attributes a line to a chat only when it carries object, and counts object-less lines in the totals and a new unattributed total.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D0/NFRA/NFRA_CTLPLN/task-orders/NFRA_CTLPLN.TO-CT-i-10.received-vs-texted-count.md AMENDMENT 1 @dd6deef902: outcomes from the tenant line; object-less lines count in totals and unattributed; ldo_event.result no longer read",
+      "python data/transcripts/scripts/tests/test_inbound_count.py, last line: INBOUND-COUNT-TEST ok=True arms=7/7 (texted arm uses an attributed tenant line; unattributed arm: two object-less tenant lines -> unattributed=2, no chat result; every other arm kept)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: row W38-S1 is disarmed by an appended line naming this amendment.",
+  "world_is": "S1 keeps ARMED in its own bytes (append-only; a worker may not edit it). The reader now takes outcomes from tenant lines, so ldo_event.result=ok no longer hides texted/updated. Lines logged before the issuer adds object at the merge read as unattributed, so texted_chats stays 0 for them while the totals texted= and updated= are complete; the post-drain real run is the first measurement against real lines.",
+  "notes": "Cites NFRA_CTLPLN-W38-S1. Proposed disposition for the CVO: S1 resolved by AMENDMENT 1 (the issuer's own recut). The worker does not set it."
+}
+```
