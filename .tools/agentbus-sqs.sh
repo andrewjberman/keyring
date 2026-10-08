@@ -37,14 +37,14 @@
 #
 # TO MAKE THIS DEVICE REACHABLE, arm the consumer once per session, under the Monitor tool
 # (persistent: true, timeout_ms: 3600000):
-#     bash .tools/agentbus-sqs.sh watch laptop      # on the laptop
-#     bash .tools/agentbus-sqs.sh watch sitez       # on site Z
+#     bash .tools/agentbus-sqs.sh watch             # on every box: it targets THIS box's own queue
+#     bash .tools/agentbus-sqs.sh watch <this-device>   # the same, named; refused if it is not this box
 # WITHOUT A WATCHER ON A DEVICE, MAIL TO THAT DEVICE IS NOT DELIVERED -- it accumulates. `send`
 # returning a MessageId means STORED, never DELIVERED. Verified live 2026-07-29: site-Z watcher
 # armed and exercised end-to-end; laptop side pending Andrew's word.
 #
-#   <device> is `laptop` or `sitez`. `send laptop` puts a message on the queue the
-#   LAPTOP drains; `recv sitez` drains the queue addressed TO site Z.
+#   <device> is a box the device register lists (`agentbus-sqs.sh devices` prints the set, org/devices/DEVICES.json
+#   holds it). `send <box>` puts a message on the queue THAT box drains; `recv <box>` drains the queue addressed TO that box.
 #
 # ACK DISCIPLINE (CLAUDE.md Rule 22b -- SENT IS NOT READ). A successful send returns a
 # MessageId. THAT IS NOT DELIVERY. It is not delivered until the receiving agent emits
@@ -301,8 +301,8 @@ cmd="${1:-}"; shift || true
 
 case "$cmd" in
   send)
-    to="${1:?usage: send <laptop|sitez> <from-serial> <body...>}"; shift
-    from="${1:?usage: send <laptop|sitez> <from-serial> <body...>}"; shift
+    to="${1:?usage: send <to-device> <from-serial> <body...>}"; shift
+    from="${1:?usage: send <to-device> <from-serial> <body...>}"; shift
     body="$*"
     [ -n "$body" ] || { echo "agentbus-sqs: refusing to send an empty body" >&2; exit 2; }
     ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -659,7 +659,7 @@ case "$cmd" in
     ;;
 
   peek)
-    dev="${1:?usage: peek <laptop|sitez>}"
+    dev="${1:?usage: peek <device>}"
     aws sqs get-queue-attributes --region "$REGION" --queue-url "$(queue_for "$dev")" \
         --attribute-names ApproximateNumberOfMessages ApproximateNumberOfMessagesNotVisible
     echo "NOTE: depth is a PRODUCER-SIDE signal. It cannot distinguish read from discarded."

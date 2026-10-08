@@ -95,7 +95,7 @@ def make_template(tmp, device):
 
 
 def hook(tmp, template, name, device, head="EXECUTING", staged="ROUND_CLOSE", enforce=False, reviewer=False, graded=True,
-         override=None, gen_rc=0, drop_tool=False, stage_other=False):
+         override=None, gen_rc=0, drop_tool=False, stage_other=False, old_file=False, old_var_only=False):
     fx = Path(tmp) / name
     shutil.copytree(template, fx)
     now = int(time.time())
@@ -105,8 +105,12 @@ def hook(tmp, template, name, device, head="EXECUTING", staged="ROUND_CLOSE", en
     put(fx, "org/mcp/liveness.json", json.dumps(seats))
     if not graded:
         (fx / PROJ / "surprise-channel/adjudications/ADJUDICATION_v1.md").unlink()
+    sgdir = fx / "scratch_seat_gates"
+    sgdir.mkdir()
     if enforce:
-        put(fx, "org/mcp/seat-gates.enforce", "scratch\n")
+        put(sgdir, "seat-gates.round-close.missions-tree-check.enforce", "scratch\n")
+    if old_file:
+        put(sgdir, "seat-gates.enforce", "scratch\n")
     if head != "EXECUTING":
         put(fx, PROJ + "/project.json", project_json(head))
         git(fx, "add", PROJ + "/project.json")
@@ -120,7 +124,11 @@ def hook(tmp, template, name, device, head="EXECUTING", staged="ROUND_CLOSE", en
         put(fx, PROJ + "/project.json", project_json(staged, note="b"))
         git(fx, "add", PROJ + "/project.json")
     env = dict(os.environ, PRECOMP_REPO_ROOT=str(fx), AGENTBUS_DEVICE=device, STUB_GEN_RC=str(gen_rc))
+    env["OPAL_SEAT_GATES_ENFORCE_DIR"] = str(sgdir)
     env.pop("OPAL_SEAT_GATES_ENFORCE_FILE", None)
+    if old_var_only:
+        put(sgdir, "elsewhere.flag", "scratch\n")
+        env["OPAL_SEAT_GATES_ENFORCE_FILE"] = str(sgdir / "elsewhere.flag")
     env.pop("OWNED_PATHS_STAGED_FILES", None)
     env.pop("SEAT_GATES_OVERRIDE", None)
     if override:
@@ -175,6 +183,22 @@ def main():
             rc, out, _ = H()
             return rc == 0 and "verdict=REFUSED" in out and "WARN: missions-tree-check close-gate" in out and "would be REFUSED under ENFORCE" in out, "rc=%d %s" % (rc, last_line(out))
         add("WARN mode: a close with no reviewer on the box is printed and admitted", warn_admits)
+
+        def old_file_alone():
+            rc, out, _ = H(old_file=True)
+            return (rc == 0 and "org/mcp/seat-gates.enforce is retired and turns on nothing" in out and "BLOCKED" not in out
+                    and "would be REFUSED under ENFORCE" in out), "rc=%d %s" % (rc, last_line(out))
+        add("the retired single file alone leaves the gate in WARN and prints the retired line", old_file_alone)
+
+        def old_file_with_new():
+            rc, out, _ = H(old_file=True, enforce=True)
+            return rc == 1 and "is retired and turns on nothing" in out and "BLOCKED: missions-tree-check close-gate" in out, "rc=%d %s" % (rc, last_line(out))
+        add("the new file still enforces when the retired file is also present", old_file_with_new)
+
+        def old_var_ignored():
+            rc, out, _ = H(old_var_only=True)
+            return rc == 0 and "BLOCKED" not in out and "would be REFUSED under ENFORCE" in out, "rc=%d %s" % (rc, last_line(out))
+        add("OPAL_SEAT_GATES_ENFORCE_FILE is no longer read (set to an existing file it changes nothing)", old_var_ignored)
 
         def enforce_refuses():
             rc, out, _ = H(enforce=True)
