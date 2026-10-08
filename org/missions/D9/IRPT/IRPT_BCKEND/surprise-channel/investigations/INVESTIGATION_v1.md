@@ -21042,3 +21042,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Not yet reachable: no report is retained and the repository refuses the kind. Closed, not open."
 }
 ```
+
+## IRPT_BCKEND-D2-S3 -- dell2 shared tree: build residue in export/, and a modified entry.py that drops the live custody route
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-S3",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "3.0.0_SA_CVO",
+  "surfaced_at": "2026-10-08T18:10:03Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The dell2 shared tree carries build residue in infra/aws/lambda/investor-reporting/export/: 32 untracked paths (copies of packaged members such as repository.py, custody.py, events.py, mint.py, dated 2026-10-08 ~01:03Z) and a MODIFIED tracked entry.py whose diff removes IB-pr-355's custody-report ROUTES and dispatch lines, the code the 17:22Z release just put live.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "2.0.0_SA_COO~P2 (export lane): confirm the residue is no live seat's work, then git restore export/entry.py and remove the untracked staging copies",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "git status --short --untracked-files=all infra/aws/lambda/investor-reporting/export/ on dell2 CLOUD: 32 lines; git diff export/entry.py: -3/+1, removing 'GET /api/scoped/investor-reporting/custody-report/{reportId}': 'custody-report-read' and its dispatch entry",
+      "export/repository.py (untracked) differs from reports/repository.py at line 16 (KINDS); mtime 2026-10-07T21:03:36 local",
+      "the release is unaffected: release-census.py irpt-export-render --pin 1e0cdaf90c builds from pinned blobs and reads changed_members=0 (this seat, 2026-10-08 ~18:1xZ)"
+    ]
+  },
+  "spec_asserts": "A tracked source file in the shared tree equals HEAD unless a seat is editing it, and builds stage outside the source dir.",
+  "world_is": "Anyone who commits export/entry.py from the shared tree, or runs a working-tree check over export/ (the ADHC_DRIFTD.002 parity limb that flagged S381), carries the residue: the first would drop the live custody route from source."
+}
+```
