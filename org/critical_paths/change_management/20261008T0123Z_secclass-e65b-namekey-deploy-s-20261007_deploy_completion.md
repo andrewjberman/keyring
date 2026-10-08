@@ -72,3 +72,80 @@ TO-DEPLOY-e57e61, the next order in this seat's queue, so that order must not be
 this device until the shim resolves. Filed as a surprise row.
 
 The entry stays OPEN with all four legs OPEN and the world untouched.
+
+- 20261008T015258Z ATTEMPT 2 HALF-LANDED then ROLLED BACK IN-SESSION by 0.7.0_AE_CloudOps~SD. Parity restored; escalated loud. See the section below.
+
+## ATTEMPT 2 -- HALF-LANDED, ROLLED BACK, PARITY RESTORED (0.7.0_AE_CloudOps~SD, 20261008T015258Z)
+
+The hold of ruling msg 733 was lifted by msg 735 after 0.0.0_AB_MSTR~DELL1's fix
+62d57c9f73 to .tools/aws.cmd. PROVEN FIRST, as that ruling directed, on all three caller
+paths: `.tools\aws.cmd --version` -> aws-cli/2.37.9; `.tools\aws.cmd sts
+get-caller-identity` -> arn:aws:iam::313476888478:user/cloudops-dell1-agent-user; and
+python shutil.which('aws.cmd') -> C:\Users\Test\bin\aws.cmd -> 2.37.9, which is the
+exact native-Python path that failed in attempt 1.
+
+GATE RE-CHECKED before the retry: gold/trigger-pending.json 404, zero objects under
+logs/gold-layer/ newer than the 01:16:24Z run log, so no gold run in progress. All 8 keys
+RE-READ: both movers at 3f1e6be8 with the order's exact rollback VersionIds, the six others
+equal to repo HEAD. Mover md5 at HEAD 40ffa3fac380551704637adc8a3b6ff3.
+
+WHAT LANDED. The one safe-deploy run uploaded THREE keys to opal-data-bd, then failed on
+the first opal-data-cot key:
+
+  DEPLOYED-SHIPPED etf_classifications_dynamodb.py -> s3://opal-data-bd/...
+  DEPLOYED-SHIPPED etf_classification_scheduled.py -> s3://opal-data-bd/...
+  DEPLOYED-SHIPPED etf_classification.py           -> s3://opal-data-bd/...
+  ERROR UPLOAD_FAIL  etf_classifications_dynamodb.py -> s3://opal-data-cot/...
+    AccessDenied on s3:PutObject, resource
+    arn:aws:s3:::opal-data-cot/code/gold/lib/_shared/etf_classifications_dynamodb.py,
+    principal arn:aws:iam::313476888478:user/cloudops-dell1-agent-user,
+    "with an explicit deny in an identity-based policy:
+     arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy"
+
+MEASURED, per key: exactly ONE key moved BY CONTENT -- the bd mover, ETag
+3f1e6be8910952f33c88bf100c610ab6 -> 40ffa3fac380551704637adc8a3b6ff3 at new VersionId
+zSt33nq7_Eh78Y9hR_KR31D18BTa5v6b (01:47:59Z). The other two bd uploads were byte-identical:
+etf_classifications_dynamodb.py stayed 4cc11d3e (new Ver VJUrFMm.HC7SGZt0YSoeKqNugn7R51ZC)
+and etf_classification.py stayed 3a033c04 (new Ver U0SHTQGhpKPE6t0vVS2G1QpaZctq.UV4). All
+five remaining keys were UNTOUCHED at their pre-act VersionIds: the cot mover, both cot
+members, and both gold carriers (which never uploaded).
+
+WHY FINISHING WAS IMPOSSIBLE: an EXPLICIT DENY in an identity-based policy, not a missing
+grant. No ordering, retry or re-scoping of this act can satisfy it from this device, and
+working around it is refused by the order and by CLAUDE.md. So NEVER-2's other branch
+applied: roll back in-session and escalate loud.
+
+ROLLBACK EXECUTED, the entry's own named command:
+  aws s3api copy-object --bucket opal-data-bd
+    --key code/gold/lib/_shared/etf_classification_scheduled.py
+    --copy-source '...?versionId=0aE1FGTSH.2rsPdoj.3mtrBuHmmByxAu' --metadata-directive COPY
+It returned ETag 3f1e6be8910952f33c88bf100c610ab6 at new VersionId
+keWIVX74Byn38wT7eBADpt1ElR7U1E3t (01:49:54Z). VERIFIED by an INDEPENDENT head-object, not
+from the copy's own response: bd mover ETag 3f1e6be8910952f33c88bf100c610ab6, 35,100 B;
+cot mover ETag 3f1e6be8910952f33c88bf100c610ab6, 35,100 B. PARITY RESTORED -- both firm
+copies carry identical pre-act content, which is the state the act began from.
+
+The two byte-identical bd keys were NOT rolled back and need no rollback: their CONTENT
+never moved (4cc11d3e and 3a033c04, unchanged before and after). A copy-back would only
+mint a third VersionId with identical bytes. L3's standard is content unmoved, and it is.
+
+EXPOSURE WINDOW: 01:47:59Z to 01:49:54Z, 115 seconds, during which opal-data-bd carried
+40ffa3fa while opal-data-cot carried 3f1e6be8. NOTHING CONSUMED IT: gold/trigger-pending.json
+reads 404 and zero objects exist under logs/gold-layer/ newer than the 01:16:24Z run log, so
+no BD gold run started, and E_18 wrote no cash_token row against the new module. The
+asymmetry was never observed by a producer.
+
+THE GATE SAW IT COMING. safe-deploy's own seat-gates printed, before any upload:
+  [seat-gates] CROSSBOX-DEPLOY device=dell1 root=black_diamond ... verdict=STOP
+  [seat-gates] CROSSBOX-DEPLOY device=dell1 root=cot ... verdict=STOP
+  [seat-gates] WARN would stop under ENFORCE (crossbox-deploy:data/black_diamond
+               crossbox-deploy:data/cot); WARN mode proceeds.
+The IAM explicit deny and that gate are two expressions of one rule: dell1 is not the device
+that deploys these firm roots. In WARN mode the gate advised and proceeded; the IAM policy
+refused. Had the gate been in ENFORCE, nothing would have landed and no rollback would have
+been needed. Filed as a surprise row.
+
+STATE AT THIS WRITING: all four legs OPEN, the entry stays OPEN per ruling msg 733, and the
+world is back to its pre-act content on all 8 keys. Nothing is stranded. e65b CANNOT be
+completed from dell1; escalated to 2.0.0_SA_COO~M1 the same hour, asking for a seat that can
+write opal-data-cot or a lift of the deny. This seat attempted no workaround.
