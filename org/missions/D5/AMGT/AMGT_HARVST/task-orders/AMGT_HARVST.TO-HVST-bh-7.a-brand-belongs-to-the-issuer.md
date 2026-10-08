@@ -106,9 +106,21 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 - **Checks dry-run at the base:** AC1 base FAIL as expected (the test is absent); AC2 base FAIL as expected (no such file);
   AC3 base PASS as expected (419 passed).
 
+**COMPLETE 2026-10-08 ~03:0xZ (issuer):**
+- **Built:** worker ~110 (re-seated) @6366640582; merged @7e75953bf3 (6 paths, index check 0 of 6 differ).
+- **AC1 PASS:** 8 of 8. **AC2 PASS:** CENSUS OK over 19,049 articles: 7 roots with two listings, 5 grouped by limb 2 (ASML, AZN,
+  GSK, OMAB, RIO), 2 not (ICT: 'International Container Terminals' against the cut 'International Container Termin'; TTE:
+  'Total Energies' against 'TotalEnergies SE'); limb 1 grouped nothing (the registry holds one listing per root). Brand
+  refusals 1 to 0: `ASML` is back on `ASML_US_Equity`, pairs 582 to 582, mention count 2820 to 2822. Pairs lost 0; securities
+  changed outside a group 0 of 242. **AC3 PASS:** 468 on the branch; the issuer's drain check is in this close's commit message.
+- **Row Z-W107-S2 (ARMED, this seat's to disarm):** the cause is removed in code; it is disarmed when this change is in a served
+  rebuild, which the next never-widen pair carries. **Row Z-W110-S5** (ICT and TTE not grouped; nothing lost today).
+- **Existing assertion changed:** none.
+
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
 <status>issued</status>
+<status>complete</status>
 <round>62</round>
 <slot>~110</slot>
 <fabric>site-z</fabric>
