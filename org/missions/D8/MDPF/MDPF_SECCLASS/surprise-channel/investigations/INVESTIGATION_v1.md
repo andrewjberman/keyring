@@ -4963,3 +4963,33 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "Scope beyond this order: the pin/declaration pair, not the pin's recency, is what every staged_from build verifies, so any Lambda family using staged_from can ship pre-port shared modules silently after a port lands. Remedy for THIS act (issuer's, 2.0.0_SA_COO~M1): re-pin the four staged_from entries to the merged e57e61 commit with fresh sha256 values -- a write to infra/aws/lambda/ci/lambda-source-map.json, outside TO-DEPLOY-e57e61's <paths>. Candidate general remedy, NOT proposed as built: the builder prints, per staged member, whether its pin is an ancestor of HEAD AND whether the blob at HEAD differs from the blob at the pin, so staleness is visible beside drift. Nothing was built, uploaded or applied under this finding; the ledger entry secclass-e57e61-fwd10-apply-s-20261007 records the STOP with the world untouched."
 }
 ```
+
+## MDPF_SECCLASS-D1-S2 -- .tools/aws.cmd resolves no AWS CLI on dell1: the bash half of the shim pair works, the Windows half is dead, and under --quiet it is a silent no-op
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T01:37Z",
+  "one_line": ".tools/aws.cmd -- the Windows-shell companion every NATIVE-PYTHON caller reaches via shutil.which -> ~/bin/aws.cmd -> the tracked .tools/aws.cmd -- hardcodes THREE absolute AWS CLI paths and none exists on dell1, where the CLI is %LOCALAPPDATA%\\Programs\\Amazon\\AWSCLIV2\\aws.exe (NOT candidate 2, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, a different nesting). The bash shim .tools/aws resolves correctly, so every hand-run read reads HEALTHY while native-Python callers fail. This is the THIRD device on which this one file's hardcoded list has broken, and its OWN header documents the class ('a device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume') after the same break on site Z.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO-DEPLOY-e65b step 5: .tools/safe-deploy.sh over the two gold carriers enumerated the expected 8 destinations then failed on the FIRST upload: 'ERROR UPLOAD_FAIL [shipped] .../etf_classifications_dynamodb.py -> s3://opal-data-bd/...  aws.cmd: FATAL -- no AWS CLI found. Checked %LOCALAPPDATA%\\Programs\\Python\\Python312\\Scripts\\aws.cmd, %LOCALAPPDATA%\\Programs\\AWSCLIV2\\Amazon\\AWSCLIV2\\aws.exe, %ProgramFiles%\\Amazon\\AWSCLIV2\\aws.exe'.",
+      "Direct reproduction independent of safe-deploy: invoking .tools/aws.cmd --version through cmd prints the same FATAL line.",
+      "The real CLI exists: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws.exe, 9448160 B, dated 2026-10-02. AWS_SHIM_DEBUG=1 .tools/aws sts get-caller-identity prints 'aws-shim real-entry: /c/Users/Test/AppData/Local/Programs/Amazon/AWSCLIV2/aws'; python shutil.which('aws.cmd') returns C:/Users/Test/bin/aws.cmd, whose generated body delegates to the tracked .tools/aws.cmd by absolute path.",
+      "Denominator 3: all three candidate paths tested absent on this device with test -f.",
+      "POST-FAILURE STATE, measured: all 8 keys the deploy would touch carry BOTH the same ETag AND the same VersionId as before the attempt. A byte-identical PUT to a versioned bucket still mints a NEW VersionId, so unchanged VersionIds prove ZERO PUTs occurred -- the attempt failed CLOSED with nothing half-landed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CLAUDE.md Git section: 'AWS via the .tools/aws shim (+aws.cmd, both or neither)' -- the pair is meant to give bash and Windows shells an equally working aws. CLAUDE.md NEVER: never write device-specific logic into ajb_workspace -- DERIVE, do not hardcode. .tools/aws.cmd's own header: 'A device-specific absolute path in a TRACKED, CROSS-DEVICE file is the defect class; resolve, do not assume.'",
+  "world_is": "The pair is NOT 'both or neither' on dell1: the bash half works and the Windows half is dead, so reachability reads healthy from every probe an agent runs by hand while the deploy and build paths fail. The 2026-07-30 site-Z remedy added two more hardcoded candidates instead of resolving, so the same break recurs once per new device.",
+  "notes": "HAZARD, and why it is INERT rather than ARMED: .tools/aws.cmd's own header records that under --quiet this same failure is a SILENT NO-OP -- 'infra/aws/lambda/ci/build-and-upload.sh reported a successful upload while S3 kept the OLD zip. Caught only by the upload-verify gate.' build-and-upload.sh is step 4 of MDPF_SECCLASS.TO-DEPLOY-e57e61, the next order in this seat's queue, so running it here before the shim resolves risks an apply whose artifact was never uploaded -- and neither a 0/1/0 source_code_hash plan nor AC1 would catch it (MDPF_SECCLASS-D1-S1 records why AC1 cannot). DISARMED SAME TURN by the disarm_owner: 2.0.0_SA_COO~M1 msg 733 HOLDS both TO-DEPLOY-e65b and TO-DEPLOY-e57e61 until the fix lands, ruled the fix 0.0.0_AB_MSTR~DELL1's as shared infrastructure, asked for a DERIVED lookup rather than a fourth hardcoded path, and directed that aws.cmd be proven to resolve the CLI first on retry, that the 8 keys be re-read, and that for e57e61 the uploaded zip's ETag be confirmed changed before the apply. So nothing will run the hazardous path on this device. The DEFECT remains open, which is why the class is BLOCKING and the disposition UNDER_INVESTIGATION. This seat did NOT edit .tools/aws.cmd: it is outside TO-DEPLOY-e65b's <paths> and the ruling is explicit. e65b's ledger entry secclass-e65b-namekey-deploy-s-20261007 stays OPEN across the retry, per that ruling, with all four legs OPEN and the world untouched."
+}
+```
