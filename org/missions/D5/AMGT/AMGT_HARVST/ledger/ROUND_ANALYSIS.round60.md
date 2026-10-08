@@ -70,3 +70,31 @@ Z-W108-S2, a job record's `finished_at` is the run's end, is the collector's cel
 read the rebuilt gold itself beyond its counts and its rule. R1's census is the first read of it.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 2 -- ROUNDS 61 TO 63 ANALYSIS (2026-10-08 ~04:4xZ), on `3.0.0_SA_CVO~Z` slug msg 31574 (`ADJUDICATION_v66.md` @d15b2c19d6)
+
+Ten of ten orders terminal (`2.0.0_SA_COO~H` msg 31570, @6c959d416b): bh-1 to bh-10. Merged on CLOUD: registry names, cut legal
+names, the second anchor with symbol anchors for CSL and HEI, issuer grouping, the stored-case fallback, the per-job
+`finished_at`. Slug: 6 rows dispositioned, 1 graduated, 5 dismissed.
+
+**Rulings made in these rounds, each closed the turn it arrived:**
+- **R9, the bare-name fallback (R1's census).** It matches the name in its STORED CASE only. The sample read 27 of 30 and all 27
+  were Nokia; the census split 277 as Nokia 262, BP 8, SAP 7. The CVO read all 15: 13 not about the company, 2 about BP.
+- **R10, a symbol anchor (R3, row Z-W110-S4).** The issuer's own listing symbol in exact case is an admissible second anchor.
+  `CSLLY` for CSL: 39 of 39 good pairs kept, 3 of 3 Carlisle dropped, 0 of 242 others changed. It is in no stored source (pool 0,
+  registry 0, collector record 0), so its data row says "evidenced by article spans only".
+- **R11, HEI (row Z-W110-S6).** Under the rule: 40 of 42 good HEICO pairs kept, 1 Hawaiian Electric pair dropped. Stated with it,
+  from the CVO's read: Hawaiian Electric trades as HE, so the future risk this ruling named is smaller than it said.
+- **R12, the bar.** "0 pairs lost" becomes "0 lost except pairs NAMED by key and read by the CVO". Four are named: BP
+  sa:4473686 and sa:4441205; HEICO sa:3584086 and sa:3685322. Told to Andrew at ~02:0xZ and ~04:2xZ with the option to hold zero.
+- **R13, `ICT_US_Equity` (R6).** It stays on the list with 0 pairs; the unresolved holding is the pool's, as a row on AMGT_RESAPP.
+
+**For rebuild #9** (the word to dry-run it was given in msg 31571): the pair names the four lost pairs; states the 13 false
+fallback pairs, the 3 Carlisle and the 1 Hawaiian Electric pair as removed, each with its grade; reconciles HEI's two counts (44
+to 41 in msg 31570, 42 good pairs in msg 31567); and explains or states as unexplained row Z-W112-S1's BNP gap of 3 against the
+dry run. An unexplained 3 is a count in the pair, not a silence.
+
+**ENRICHMENT LIST, round 64:** rebuild #9 under its own pair; Z-W110-S5 (ICT and TTE listings are not grouped as one issuer:
+the issuer grouping of R8 reaches them or says why not); then the first walk of the Security Analysis feed on rebuilt gold.
+
+-- 1.0.0_SA_CTO~Z
