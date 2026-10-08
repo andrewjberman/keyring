@@ -5066,3 +5066,28 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "If Graph refuses $top there, the fix is one parameter in the endpoint branch, which is the issuer's to order."
 }
 ```
+
+## NFRA_CTLPLN-W39-S4 -- AMENDMENT 1 made one existing assertion in test_teams_and_channels_listing_shapes false as written
+
+```json
+{
+  "id": "NFRA_CTLPLN-W39-S4",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~39",
+  "surfaced_at": "2026-10-08T21:30:00Z",
+  "one_line": "CT-i-11 AMENDMENT 1: test_teams_and_channels_listing_shapes (a case this cell added) pinned the /me/joinedTeams Graph params to include $top=50; with $top no longer forwarded on that path it failed, so I changed that one expected dict to {$select} only.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/ec2/opal-gateway/tests/test_teams_route.py test_teams_and_channels_listing_shapes at 863e37d1f9; app/teams_route.py _page top flag"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "AMENDMENT 1: add one case; the criteria are unchanged. It does not name the case-1 assertion that encoded the earlier behaviour.",
+  "world_is": "The assertion encoded the behaviour the amendment reverses, so it had to change for AC1 to pass; the new case test_list_paths_carry_no_top_and_channel_messages_do carries the $top contract for all three paths. Suite: 21 passed.",
+  "notes": "No other existing assertion changed."
+}
+```
