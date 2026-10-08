@@ -5316,3 +5316,206 @@ by dell1 or by this seat.
   "notes": "Cross-fabric: the r4 bundle stays live under the per-fire NO-WORSE rule (dell2). The trace is cut as one diagnosis order in the next MDPF_SECCLASS round; the fix ships under its own never-widen pair."
 }
 ```
+
+## MDPF_SECCLASS-D1-S9 -- BD gold re-emits multi_asset on 36 client concentration files after the switch; COT SGIIX still too; remap ledger leg G blocked
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S9",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T18:15Z",
+  "one_line": "BD gold still emits multi_asset after the six-class switch: 36 opal-data-bd platinum/clients/*/concentration.json written 2026-10-08 00:50-05:51Z serve it (balanced funds ABALX, AMECX, CAIBX and 88 ticker-less entries); COT's 2 SGIIX files (row S60) were rewritten 10-08 11:36Z still multi_asset. Ledger secclass-multi-asset-remap-b-m-20261007 leg G cannot close.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "R12_CHECKS/served_multi_asset_split.py (read-only, 2026-10-08 ~18:10Z), record MDPF_SECCLASS_M/SERVED_MULTI_ASSET_SPLIT_20261008T1810Z.json: opal-data-bd listed=25265 hit_keys=36 post_switch=36 pre_switch=0; opal-data-cot listed=1153 hit_keys=2 post_switch=2",
+      "the same script on 2026-10-07 ~16:5xZ (row S60): opal-data-bd hit_keys=204 post_switch=0 -- so the 10-07 night BD gold fire re-emitted the class",
+      "get-object over the 38 hit keys (~18:1xZ): BD multi_asset items by ticker ABALX 12, AMECX 9, CAIBX 9, SCGB1 5, KAGIX/FBALX/FKIQX/MDLOX/AAETX/CFIHX 3 each, ticker None 88; data_as_of 2026-10-06 (35) and 2026-10-05 (1); COT SGIIX 2, data_as_of 2026-10-07",
+      "ledger leg S (2026-10-07 ~07:15Z): full scan of etf-classifications reads 0 multi_asset rows -- the class comes from a producer path, not the canonical table",
+      "leg H read clean the same hour: the IRPT holdings publications of all three firms serve 0 multi_asset (LEG_H_SERVED_HOLDINGS_READ_20261008T1805Z.json)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Andrew-direct 2026-10-07: six classes only; after rule-B remap (ledger secclass-multi-asset-remap-b-m-20261007 leg G) the next Cottonwood and Black Diamond gold runs serve no multi_asset and the firm_composition gaps close.",
+  "world_is": "The canonical table and the IRPT holdings path are clean, but the BD client concentration producer (and COT's, per S60) still assigns multi_asset to balanced funds through a non-canonical classify path. Widens S60 from COT to BD.",
+  "notes": "Trace (which classify site in BD/COT D_04 emits it) is cut as one order in the next round alongside D1-S8. portal composition.ts keeps multi_asset while this and S60 are open, so pages render."
+}
+```
+
+## MDPF_SECCLASS-D1-S10 -- TO-AI-e32 is unflippable: its two owned cells are declared in DECOMP_R8 and DECOMP_R9 while its decomp_ref cites DECOMP_R11, so no single decomp_ref closes the alignment join
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S10",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T18:12Z",
+  "one_line": "TO-AI-e32 cannot be flipped complete: its <owned_cells>SC-e-32, SC-e-50</owned_cells> and its <decomp_ref> name THREE DIFFERENT decomps. SC-e-32 is declared in DECOMP_R8.md, SC-e-50 in DECOMP_R9.md, and the decomp_ref cites DECOMP_R11.md, whose entire cell id space is SC-e-65 and SC-e-66. to-pipeline-gate.py layer 1 half B requires a VALID proof-of-spec instance for a complete flip on a pipeline-registered project, and proof-of-spec-check.py's alignment_check then refuses on three independent limbs: forward-2 (cell_ref SC-e-32 does not exist in the cited decomp), and backward twice (SC-e-32 and SC-e-50 are in a DELIMITED <owned_cells> with no criterion reaching them in that id space). Because the two owned cells live in two different decomps, NO single decomp_ref value can close the join -- this is not a typo that a repoint fixes by itself.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "TO face at HEAD: <decomp_doc>org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/MDPF_SECCLASS_DECOMP_R11.md</decomp_doc> and <owned_cells>SC-e-32, SC-e-50</owned_cells>; its single criterion AC1 carries cell_refs=\"SC-e-32\".",
+      "comp-read --enumerate 'SC-e-[0-9]+' on DECOMP_R11.md: 15 hit(s) across 81 lines / 15 sections. The id space is SC-e-65 and SC-e-66 (plus mentions of SC-e-45/46/59 as deferred or sequencing). NEITHER SC-e-32 NOR SC-e-50 appears -- denominator printed, scope is the whole file.",
+      "comp-find 'SC-e-32' over org/missions/D8/MDPF/MDPF_SECCLASS/decompositions/: 8 hit(s) across 13 file(s), ALL in MDPF_SECCLASS_DECOMP_R8.md, which declares it at :67 and :118.",
+      "comp-find 'SC-e-50' over the same 13 files: 4 hit(s), ALL in MDPF_SECCLASS_DECOMP_R9.md, declared at :59 and :91.",
+      "to-pipeline-gate.py refusal, measured on a real safe-commit attempt: 'flips to complete on PIPELINE-REGISTERED project MDPF_SECCLASS, and NO proof-of-spec instance was found beside it. Layer 1: no VALID instance, no complete flip.' FIX line offers the two blocks or '# pipeline-override: <reason>'.",
+      "proof-of-spec-check.py alignment_check:1152-1193 -- forward-2 refuses a cell_ref absent from the decomp's id space; the backward limb ASSERTS (rather than announces) because <owned_cells> is present, i.e. DELIMITED, so an unreached declared cell is a violation and not an 'I cannot tell'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-AI-e32 the_act step 4: 'Flip this order complete, with the proof instance in your deliverables.' The <decomp_ref> body itself reads '(round 11), \"Issuer acts\": the release of cells SC-e-32/SC-e-50', and the ROUND TAG amendment (~14:3xZ, from 3.0.0_SA_CVO msg 960) set <round>11</round> on the strength of that same decomp_ref.",
+  "world_is": "The ACT is finished and graded: AC1 reads 'AI-LEG-VERIFY act=e32 ok=True planned=2291 landed=1519 refused_final=772 refused_transport=0 problems=0 snapshot_keys_gone=0 multi_asset=0 listing_count=1532 model_rows=1532', and ledger legs W and V are closed on their proofs. Only the FLIP is blocked, and it is blocked on the order's own face, not on the work. The decomp_ref appears to name the round that RELEASED the two cells as issuer acts rather than the decomp that DECLARES them, which is a coherent thing for a human to write and an incoherent one for the alignment join to read.",
+  "notes": "Not disarmable by this seat: amending <owned_cells>, <decomp_ref> or the criterion set of an order is the issuer's act, and adding '# pipeline-override:' would be this seat implementing its own escape from a gate -- CLAUDE.md section 2 'DO NOT MANUFACTURE FRICTION' clause (a) runs the other way but the same principle bars inventing the exemption. Three shapes the issuer could take, none chosen here: (i) narrow <owned_cells> to SC-e-32 and repoint <decomp_ref> to DECOMP_R8.md, which closes every limb because AC1 already cites only SC-e-32 and SC-e-50 was never discharged by a criterion on this order; (ii) split the cells across two orders; (iii) the audited '# pipeline-override: <reason>' the gate itself offers. SCOPE BEYOND THIS ORDER: any order whose <decomp_ref> cites the round that RELEASED its cells rather than the one that DECLARED them is unflippable the same way, and the failure appears only at the close, after the work is done -- the gate cannot see it at the cut. This seat reverted its own premature 'complete' flip back to 'pending' rather than leave an uncommitted terminal claim in the working tree."
+}
+```
+
+## MDPF_SECCLASS-D1-S11 -- BD firm mix unclassified 6.94 pct (> 5.0); alternatives sleeve appears to have moved to unclassified
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S11",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T19:05Z",
+  "one_line": "BD firm mix serves unclassified 6.94 pct (data_as_of 2026-10-06), over the 5.0 limit read at the 10-02 re-land (4.14 pct); across mix_periods alternatives fell from 3.6-4.4 pct (Q4'25-Q2'26) to 0.09 pct (Q3) / 0.06 pct (Q4) while unclassified rose 0 -> 4.14 -> 6.94 pct -- the alternatives sleeve appears to have moved to unclassified.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "get-object s3://opal-data-bd/platinum/firm/mix_summary.json (LastModified 2026-10-08T05:48:04Z, data_as_of 2026-10-06), read 2026-10-08 ~19:0xZ: mix pct equity 0.7247, fixed_income 0.1904, unclassified 0.0694, structured 0.0126, cash 0.0016, commodities 0.0008, alternatives 0.0006, other 0.0; sum 1.0",
+      "same object mix_periods: alternatives 2025-Q4 0.0441, 2026-Q1 0.0387, Q2 0.0361, Q3 0.0009, Q4 0.0006; unclassified Q4'25-Q2 0.0, Q3 0.0414, Q4 0.0694",
+      "ledger secclass-bd-thread-r4-reland-m-20261002 leg R (CLOSED 20261002T193059Z): unclassified 4.14 pct <= 5.0 -- the limit this row compares against"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "BD_THREAD acceptance (re-land leg R): the firm mix serves every class present with unclassified at or below 5.0 pct.",
+  "world_is": "Unclassified is 6.94 pct and still rising, and the alternatives class has nearly emptied since Q3. Candidate cause, not proven: holdings that were alternatives under the old map (hedge funds, private funds) now resolve to no canonical class after the six-class switch / the 10-07 remap, rather than to alternatives.",
+  "notes": "Surfaced by the old-ledger measurement for 1.0.0_SA_CTO~DELL1 msg 1050; does not reopen bd-residual leg R (closed on its own read). A trace (which tickers make up the 6.94 pct) is the next cut."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:48:32Z",
+  "one_line": "SC-e-75: the multi_asset on the 36 BD concentration.json keys does not enter in D_04; it is frozen on 2026-10-03..05 history entries of the C_06 envelopes gold/entities/clients/{rid}.json, so the D_04 fix is moot and the order stops at step 1.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "BD_MULTI_ASSET_TRACE_20261008.md (org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/): 36 of 36 opal-data-bd concentration.json hit keys read; 141 multi_asset holdings; by date 2026-10-03=47, 10-04=47, 10-05=47; zero on any date >= 10-06; by ticker ABALX 12, AMECX 9, CAIBX 9, SCGB1 5, 88 no-ticker, plus KAGIX/FBALX/FKIQX/MDLOX/AAETX/CFIHX 3 each.",
+      "D_04.client_portal_summary.py:1192 conc_list = data.get('concentration', []) and :1208 write it unchanged to platinum/clients/{rid}/concentration.json; the module does no class mapping on that path.",
+      "s3://opal-data-bd/gold/entities/clients/z08119861.json (C_06 envelope, VersionId pUkdGIUqCg0Y_I8tkmOHelaTlNn5U.ar, LastModified 2026-10-08T05:24:01Z) already holds KAGIX asset_class multi_asset on 2026-10-03/04/05, class_source etf-classifications: the value is one hop upstream of D_04.",
+      "C_06.client_mix_timeseries.py:731-740 incremental merge: existing_conc[ds] is overwritten only for dates in the new partitions, so a dated entry classified while the etf-classifications table held multi_asset (R9 write 2026-10-03; remap commit 0d9457b639 2026-10-07 03:10 -0400) is never reclassified.",
+      "Deployed-vs-repo by content, 9 of 9 files identical (D_04, C_06, lib/etf_classifier, s3_layout, config, exclusions, floored_percentiles, mix_views, lib/_shared/etf_classifications_dynamodb): sha256 equal; no stale running bytes.",
+      "Criteria at the worktree root: SC14-e75-AC1 PYTEST-BAD rc=4 (test file absent, not written); SC14-e75-AC2 NOT-READY (half absent); SC14-e75-AC3 PYTEST-OK 76 passed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e75 step 2: 'FIX only if the source is D_04.client_portal_summary.py ... If the source is another file or an input object, STOP after step 1 and file a row. The issuer re-points.' Steps 3-4 (test, half request) presuppose a D_04 fix and a deploy of D_04 to code/gold/.",
+  "world_is": "The source is an INPUT OBJECT (the C_06 envelopes gold/entities/clients/{rid}.json, history dates 2026-10-03..05, frozen by C_06's incremental merge), not D_04. Deploying a changed D_04 would not move the 141 holdings unless D_04 itself rewrote the class, which is a class copy of exactly the kind the six-class design retired. Steps 2-4 were not executed; AC1 and AC2 cannot be met as written; AC3 holds as the control. The order is left open.",
+  "notes": "Not decided here (issuer's re-point): (i) a C_06 FULL build, which reclassifies every date through the current table; (ii) a targeted rewrite of the 36 envelopes' 3 dated entries; (iii) a D_04 passthrough guard that maps any class outside the six (plus unclassified) at write time, which would also pin the next such case. Any of (i)/(ii) writes served gold/entities/clients/ and platinum/clients/ objects and needs the never-widen pair. COT's twin is out of scope here: 2 opal-data-cot keys (z09305621, z09305679, 1 hit each, last modified 2026-10-08T11:36:56Z) in the cell's evidence file."
+}
+```
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W65-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~65",
+  "surfaced_at": "2026-10-08T18:59:51Z",
+  "one_line": "SC-e-75: C_06's retained-entry reclass heals every holding the envelope shows, but 15 of 105 changed dates keep a mix sum below 0.999 because the envelope holds only the top 10 holdings per date.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Local run of reclassify_retained (C_06.client_mix_timeseries.py:273) over the 36 hit envelopes gold/entities/clients/{rid}.json named by SERVED_MULTI_ASSET_SPLIT_20261008T1810Z.json (read-only S3 get, live classifier): entries=105 holdings=141 (multi_asset->equity 84, ->fixed_income 57); mix sum after the move on the 105 changed dates: max 1.000001, min 0.952431, 15 of 105 below 0.999.",
+      "z08119861 (3 dates): mix sum 0.963313/0.963298/0.968003 before, 1.0 after; 1291 other dated entries byte-identical.",
+      "C_06.client_mix_timeseries.py:552-554 builds mix over MIX_ASSET_CLASSES, which has no multi_asset key, so multi_asset weight never entered the served mix; :559-566 keeps only TOP_N_CONC=10 holdings per date."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Amendment 1 step 2: recompute the date's mix class totals from the reclassified holdings, so the retained entries come out consistent.",
+  "world_is": "The mix is recomputed from the holdings the envelope holds. A multi_asset position outside a date's top 10 is not in the envelope and its weight was never in the mix, so on 15 of the 105 healed dates the mix stays short of 1.0 by that weight (up to 0.047569). The order's own test and criteria are met; the shortfall is stated in the half request (section Blast radius, 'Known limit'). Only a C_06 FULL build, which reclassifies from the canonical holdings, closes it.",
+  "notes": "Not disarmable and not decided here; the signing seats read the limit. Leg G should count mix sums < 0.999 on the healed dates beside the multi_asset census."
+}
+```
+
+## MDPF_SECCLASS-D1-S12 -- safe-deploy of one BD gold file also re-shipped _shared modules; one moved out of turn and was restored
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S12",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T19:12Z",
+  "one_line": "safe-deploy, asked to deploy ONE BD gold file (C_06), also re-shipped 3 _shared modules to s3://opal-data-bd/code/gold/lib/_shared/; one of them (etf_classification_scheduled.py) changed bytes, shipping e65 amendment 3 ahead of its own ledger (secclass-e65b-namekey-deploy-s-20261007). Restored to the prior bytes 61 s later.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "bash .tools/safe-deploy.sh --author 2.0.0_SA_COO~M1 data/black_diamond/scripts/gold/C_06.client_mix_timeseries.py (19:09Z): 'DEPLOYED-SHIPPED' lines for etf_classifications_dynamodb.py, etf_classification_scheduled.py, etf_classification.py -> code/gold/lib/_shared/, then 'DEPLOYED [bd] ...C_06...'",
+      "list-object-versions: etf_classifications_dynamodb.py and etf_classification.py ETags equal their prior versions (DELTA=0); etf_classification_scheduled.py 3f1e6be8... (01:49:54Z) -> 40ffa3fa... (19:09:12Z)",
+      "diff prior vs HEAD: HEAD adds the NAME:: skip in the cash-ticker test (TO-SC-e65 amendment 3 @1fae201565, row S63)",
+      "copy-object from VersionId keWIVX74Byn38wT7eBADpt1ElR7U1E3t at 19:10:11Z: new VersionId YoJkpC5X267BZaMnYdbVi6B28FFIkguM, ETag 3f1e6be8910952f33c88bf100c610ab6 (= prior)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "A signed act deploys exactly the objects its half names (here one code object, C_06); a _shared module moves only under its own ledger.",
+  "world_is": "safe-deploy's shipped-bundle step refreshes every _shared member the deployed script's pipeline declares, so a one-file deploy can move a table-writer module (the scheduled classifier) out of turn. The BD gold schedule is bd-gold-nightly-fallback cron(0 23 ? * MON-SAT *), so no scheduled fire fell between 19:09:12Z and 19:10:11Z (an event-triggered fire in that window was not read).",
+  "notes": "Owner of the tool: the deploy lane (0.7.0_AE_CloudOps). Until it is scoped, a deploy half should name the shipped-bundle members or the seat should diff them before signing. ~SD's e65b ledger still owns the scheduled module's move."
+}
+```
+
+## MDPF_SECCLASS-D1-S13 -- ADDENDUM to D1-S12: no consumer read the out-of-turn bytes in either window, and there were TWO windows today, not one
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S13",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.7.0_AE_CloudOps~SD",
+  "surfaced_at": "2026-10-08T19:20Z",
+  "one_line": "ADDENDUM TO MDPF_SECCLASS-D1-S12, closing its one open arm and widening its count. (a) S12 says 'an event-triggered fire in that window was not read'; it has now been read, and NO consumer touched the out-of-turn bytes -- every S3 read on the key during the exposure was by the dell1 agent principal itself (the deploy's own HeadObject and the remediation's GetObject), with zero reads by any EC2 instance role, Lambda execution role or other principal. (b) THIS WAS THE SECOND OCCURRENCE TODAY, NOT THE FIRST: the same ETag pair ran 40ffa3fa (01:47:59Z) -> 3f1e6be8 (01:49:54Z), a 1m55s exposure, and S12's own evidence line cites '3f1e6be8... (01:49:54Z)' as the prior version without noting that that timestamp is itself the tail of the earlier push-and-restore. So the shipped-bundle step has moved this module out of turn twice in 17.5 hours, and the 61 s figure is the shorter of the two.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~M1",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "CloudTrail CAN see these reads, established before relying on an absence: get-event-selectors on opal-organization-trail returns a ReadOnly AWS::S3::Object selector whose Values are arn:aws:s3:::opal-data-49financial/, opal-data-bd/, opal-data-cot/ and opal-data-inf/. Read with --output json deliberately: the same call with --output text truncated the Values list to the 49financial entry alone and would have supported the OPPOSITE conclusion (that bd is uncovered and a read is undecidable).",
+      "19:09Z window, 31 CloudTrail files / 2,849 records scanned, 5 on-key: HeadObject 19:09:12Z (the push's own verify), ListObjectVersions 19:09:36Z, GetObject 19:09:59Z, HeadObject 19:10:19Z (post-restore verify), ListObjectVersions 19:12:10Z -- ALL arn:aws:iam::313476888478:user/cloudops-dell1-agent-user, aws-cli/2.37.9 on windows, srcIP 108.242.96.89 (the dell1 box). In-window GetObject/HeadObject: 2, both that principal.",
+      "01:47Z window, 23 files / 1,028 records / 0 unreadable, 11 on-key, 4 in-window GetObject/HeadObject at 01:47:59Z, 01:49:10Z, 01:49:11Z and 01:49:53Z -- all the same agent user. The 01:49:53Z GetObject carries srcIP 'AWS Internal' one second before the 01:49:54Z restore, the signature of a server-side copy-object reading its source, i.e. the remediation rather than a consumer.",
+      "POSITIVE CONTROL on the 19:09Z scan: it returned this seat's OWN ListObjectVersions at 19:12:10Z, so the instrument demonstrably sees activity on this exact key and the absence of a consumer read is MEASURED rather than blind.",
+      "list-object-versions on s3://opal-data-bd/code/gold/lib/_shared/etf_classification_scheduled.py: 3f1e6be8/35100 LATEST (19:10:11Z), 40ffa3fa/35360 (19:09:12Z), 3f1e6be8/35100 (01:49:54Z), 40ffa3fa/35360 (01:47:59Z), 3f1e6be8/35100 (2026-10-07T16:53:57Z), cfe898d1/31082 (2026-10-07T10:39:44Z) -- the 40ffa3fa/3f1e6be8 alternation appears TWICE.",
+      "s3://opal-data-cot/code/gold/lib/_shared/etf_classification_scheduled.py was NOT touched today: its LATEST is 2026-10-07T16:54:13Z at ETag 3f1e6be8, the same prior bytes. The cot copy of the same three-member bundle is a declared second target in .tools/safe_deploy_core.py, so it was checked rather than assumed clean."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "S12: 'A signed act deploys exactly the objects its half names (here one code object, C_06); a _shared module moves only under its own ledger.' CLAUDE.md NEVER-1: a sign-off names the act's BLAST RADIUS and the rollback per key. CLAUDE.md 22a DELIVERY: SENT != EMITTED != READ, so an object that moved is not yet an object that was consumed.",
+  "world_is": "The out-of-turn bytes existed on the served prefix for 59 s (19:09Z) and 1m55s (01:47Z) and were read by nobody but the deploying principal, so no run consumed the held e65 amendment-3 change and no output is contaminated. The defect S12 names is real and unchanged -- a one-file deploy still moves a table-writer module out of turn -- but its CONSEQUENCE this time was nil, and that is a measurement rather than an inference from the 23:00Z cron alone.",
+  "notes": "Not a remediation and not a disposition: S12's disarm_owner is 2.0.0_SA_COO~M1 and this row only hands that owner the two readings it said were missing. Nothing was written, restored or rolled back under this row -- it is read-only. WHAT THIS DOES NOT COVER, stated so the absence is not over-read: only the ONE key is scanned, only the two windows are scanned, and a read by a principal whose GetObject CloudTrail does not log at all (a VPC-endpoint path with data events off, say) would be invisible to it -- the selector covers the four opal-data-* buckets and nothing was checked outside them. The recurrence matters more than either window: a step that re-ships a bundle on every gold deploy will keep doing this, so the remedy belongs in the tool or in the sign-off's named members, not in a per-incident restore. The deploy lane (0.7.0_AE_CloudOps) owns the tool, as S12 says; this seat has NOT scoped it and does not propose a change here."
+}
+```
