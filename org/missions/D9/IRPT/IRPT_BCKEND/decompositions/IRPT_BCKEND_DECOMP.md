@@ -2248,3 +2248,18 @@ and the owner/other-firm reads follow IRPT_CUSTDY E2a. Check `deliverables/2.0.0
 | `IB-pr-378` | release irpt-export-render at 49bc13131d (replay first), then apply the custody-report-persist route | FWD-8 / CUSTDY S07-S08 | WORLD | IB-pr-376 (drained), IAM leg (applied) | P90-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release then one route, ordered. Assignee: 0.7.0_AE_CloudOps~DELL2.
+
+## 84. ROUND 91, WORKSTREAM ~P (2026-10-08 ~23:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1949)
+
+IB-pr-377 (round 89) graded PASS at dc3ff4c2c9: the r61 directory release is live (refresh RbpsijC2, search IV7P2AL4). Its driven refresh
+was READY at 49financial and REFRESH_FAILED+SAFE at inflection and cottonwood, because clients the previous build carried are absent (row
+D2-S13). The CTO ordered this cell FIRST in the round, landed before those served directories go OVER_AGE (expiry.py: over 2 trading days).
+The cell measures the cause per firm (BUILD_BUG, KEY_CHANGE or SOURCE_REMOVAL), fixes a build or key fault at its root without weakening the
+disappearance rule, and packages the release for the applier. SOURCE_REMOVAL stops at the diagnosis with a row to the CTO. Check
+`deliverables/2.0.0_SA_COO~P2/checks/r91/p91_cells.py`: AC1, AC2, AC3 FAIL at base.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-379` | diagnose and fix the dropped entries in the inflection and cottonwood builds; package the refresh release | FWD-7 | WORLD | IB-pr-377 (PASS) | P91-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one fault, one cell; the release order follows its packet. Assignee: 0.9.0_WK_IRPT_BCKEND~187.
