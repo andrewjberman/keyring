@@ -5692,6 +5692,32 @@ carries none.
     ]
   },
   "notes": "INERT, and the enum is why that word is used: hazard_standing admits only ARMED or INERT, and the accurate state is NEITHER -- the hazard was never armed in the world because the publish that would arm it did not happen. It is INERT by NOT ACTING, not by remedy. ARMING CONDITION, named: any publish that points a document on i-00c7568bc510f7423 at the code/silver script while boto3 is absent there. Filed rather than merely reported because: the ledger is CLOSED as not-applied and the served state is unchanged, so nothing is half-landed and nothing is stranded. The UNDERLYING defect is OPEN and belongs to the issuer.\nWHAT THIS DOES NOT SAY: it does not say the realized document is safe to repoint alone. Its own box passed, but the two documents are one signed act and NEVER-2 forbids a half-landed deploy, so neither was published.\nWHAT THIS DOES NOT COVER: whether the OTHER boxes that run code/silver-era scripts carry boto3. Only the two MX-s-17 instances were read; i-0e6f6dc014fdcf1cd (bd-assets, opal-bd-asset-dim-download, rule ENABLED) was NOT read and is outside this order.\nCANDIDATE REMEDIES, none this cell's call and none attempted: (i) install boto3 on i-00c7568bc510f7423 and re-measure, then re-run PHASE B; (ii) let MX-s-19 retire the two documents and drop the repoint entirely, which the MX-a-1 verdict already argues for; (iii) have the document pip-install boto3 the way the same script already self-heals pandas (lines 45-48 print \"Installing pandas...\"). Route (ii) makes this row moot.\nKNOCK-ON: MX-s-18 PHASE B is HELD and not started. Its GO reads \"Only AFTER MX-s-17's ledger is closed\" and the CTO half's review item 2 reads \"s-17 must land before s-18\". The ledger is closed but s-17 did NOT land, which is a state the signed halves do not cover, so proceeding would be acting outside them. The issuer rules."
-}
+},
+  {
+    "id": "NFRA_MCPINDEX-Z-S83",
+    "project": "NFRA_MCPINDEX",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~MI",
+    "surfaced_at": "2026-10-08T23:32Z",
+    "disposition": "DISMISSED_WITH_REASON",
+    "adjudicates": [
+      "NFRA_MCPINDEX-Z-W24-S9",
+      "NFRA_MCPINDEX-Z-W24-S11"
+    ],
+    "one_line": "RULES Z-W24-S9 and Z-W24-S11 at the MX-s-18 close: S11's hazard (no s3:GetObject for the sentinel read-back) was removed by the applied ReadBackBdBronzeSentinel grant and the live read-back passed on the 2026-10-08 00:00Z run; S9's hazard (a boto3-only script published to the evening documents) cannot occur because MX-s-17 was cancelled and nothing was published.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "S11: ledger nfra-mcpindex-r7-bd-runner-sentinel leg R2 (simulate GetObject on bronze/<date>/_BRONZE_COMPLETE.json allowed after safe-apply 2026-10-07T00:49:58Z) and leg V1 (run 2026-10-08T00:00:19Z, RequestId 9c228e2b-4c66-424e-ba30-170c887d7ea5, printed 'OK: bronze sentinel emitted for 2026-10-08' after head_object); ledger CLOSED @f2422adb7f.",
+        "S11: head-object opal-data-bd bronze/2026-10-08/_BRONZE_COMPLETE.json read 2026-10-08T22:2xZ: LastModified 00:11:37Z, 277 B.",
+        "S9: NFRA_MCPINDEX.TO-MX-s-17 <status>cancelled</status> @c03153cd0f on 1.0.0_SA_CTO~O ruling msg 30400 (a); the MX-s-17 ledger closed not-applicable with 0 of 3 legs landed and no document version published (seat msg 30396)."
+      ]
+    },
+    "dismissal_reason": "Neither hazard can fire. S11: the precondition it named (no GetObject grant) no longer holds on the APPLIED plane, and the read-back it said would fail nightly passed live. S9: it was ARMED only if the boto3-only script went onto the evening EC2 documents; that publish was cancelled, and the morning bd-silver-merge Lambda imports boto3 from its runtime. MX-s-19 disables the evening rules and publishes no document version, so it does not re-arm S9.",
+    "spec_asserts": "Every ARMED row is disarmed by its disarm_owner before the round closes.",
+    "world_is": "Both rows are disarmed by measurement: one by a live run, one by a cancellation that removed the act it depended on."
+  }
 ]
 ```
