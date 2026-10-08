@@ -4,8 +4,8 @@
 - **Brief:** `docs/briefs/mdpf-strategy-identification-into-global-brief-20261008.md` @68aa9dbe9e (`4.0.0_SA_CRO~DELL1`, 194 lines).
 - **Order:** Andrew-direct ~18:3xZ, record @4672605201.
 - **NOT YET LANDED in a PRD.** No PRD exists. This block goes into the PRD under the section title
-  `ENDPOINT (step 2, /endpoint --forward)` once the project code is registered (L3). Until Andrew confirms the DONE WHEN lines, it is a
-  DRAFT.
+  `ENDPOINT (step 2, /endpoint --forward)` once the project code is registered (L3). **RATIFIED** by Andrew ~20:1xZ ("Confirm as
+  written"), with FWD-5 amended per his restatement; record `ANDREW_DIRECT_20261008_201xZ_LIQUID_ALTS_TO_ALTERNATIVES_ETF_STRATEGY_SLEEVES_ENDPOINT_CONFIRMED.md`.
 - **NOT READ:** the task-order register, the project JSONs of MDPF_GLOBAL / MDPF_TAXSMA / MDPF_SECCLASS, and any open task order.
   Phase 0 reads the brief only.
 
@@ -35,11 +35,14 @@ FWD-4  A new Opal strategy reaches Global with no engineer involved
                   or listed by name for a person to place; nobody edits a program to make either happen
        SOURCE     brief O3; Andrew "Tax or Muni for ALT thus far"
 
-FWD-5  Every Opal ETF is counted under ETF Strategies from one list
+FWD-5  Every Opal ETF Strategy sleeve is counted under ETF Strategies, wherever it appears
        DONE WHEN  EXERCISED -- shown on purpose
-       ACCEPT     adding a fund to the one list of Opal ETFs is the only step, and on the next run that fund's holdings at every
-                  firm appear under ETF Strategies
-       SOURCE     brief O4, F5; Andrew "all the Opal ETFs for ETF Strategies"
+       ACCEPT     a client sleeve named after an Opal ETF, by its ticker or its full fund name, is found in SmartX, Rebalancer and
+                  Eclipse alike and shows in the SMA group under the ETF Strategies drill-down; adding a new Opal ETF to the one
+                  list is the only step for its sleeves to be found the same way
+       SOURCE     brief O4, F5; Andrew "all the Opal ETFs for ETF Strategies", restated ~20:1xZ: sleeves named by ticker (DIVZ) or
+                  full name (Opal Dividend Income) in SmartX, Rebalancer and Eclipse "(so far)", aggregated into the SMA taxonomy
+                  category under ETF Strategies. AMENDED in place before ratification (id unchanged).
 
 FWD-6  Nothing in Global is counted twice, and a person can see why
        DONE WHEN  EXERCISED -- shown on purpose
@@ -61,10 +64,9 @@ FWD-7  What the system could not identify is visible, never absorbed
   choice inside Andrew's ruling, not a new decision of his: both hold at once only on a per-firm basis.
 - **Placement:** asked of the MDPF_GLOBAL owner (laptop `1.0.0_SA_CTO`) via `0.0.0_AB_MSTR~DELL1`, REC dell1.
 
-## Open for Andrew (the one reading the words leave open, brief Part VII)
+## Settled by Andrew (~20:1xZ)
 
-"All the Opal ETFs for ETF Strategies" reads two ways:
-- (a) Opal ETFs held in SMA sleeves only; or
-- (b) every holding of an Opal ETF at every firm OUTSIDE an Opal Model (an Opal ETF inside an Opal Model is already in Model dollars
-  and is not counted again; FWD-6).
-REC (b). It is the plain reading of "all", and FWD-6 prevents the double count that is the only argument for (a).
+The open reading of "all the Opal ETFs" was neither (a) nor (b). ETF Strategies are Opal-managed SMAs that appear as whole client
+sleeves named after an Opal ETF (ticker or full name) in SmartX, Rebalancer and Eclipse (so far). They are aggregated into the SMA
+taxonomy category under the ETF Strategies drill-down. Direct holdings of Opal ETF shares are not this project's object. FWD-5 is
+amended accordingly.

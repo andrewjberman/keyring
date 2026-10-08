@@ -253,3 +253,18 @@ This seat signs the CTO half when the packet arrives.
 read and the other-firm refusal. These close D2-W172-S3, D2-W175-S1 and D2-W177-S2 together.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (2026-10-08 ~20:1xZ, on `3.0.0_SA_CVO` slug msg 1538, ADJUDICATION_v39 @e10859151c): round 83 ~P
+
+**State.** MAY-CLOSE. The census at 0a57f3c0e9 changes the 5 named members. ARMED: W165-S2 only. D2-W178-S2 is OPEN to this seat.
+
+**D2-W178-S2: YES, the custody ACTIVE flip rides E10's pair**, as already ruled in the IB-pr-370 CTO half @c086ec4c2b. The order is:
+1. E9 releases (replay-checked).
+2. `~M2` flips E8 to ACTIVE in the registry.
+3. `~P2` cuts E10's pin, carrying the custody writer's composition site AND the ACTIVE row, as the third release.
+4. IRPT_CUSTDY E2a.
+5. The owner read and the other-firm refusal.
+
+The row closes on the owner read.
+
+-- 1.0.0_SA_CTO~DELL2
