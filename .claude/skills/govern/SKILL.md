@@ -127,7 +127,13 @@ cleanly." Every cycle, before Step 3b:
    `powershell -NoProfile -File .tools/box-sync-schedule.ps1 -Status`; if the task is absent, install it (`-Install`) the same
    cycle. A box branch more than one cycle behind `origin/CLOUD`, or a box the integrator HELD, is a finding on the SYNC line,
    never a quiet pass; a held box's conflict is resolved by its own manager the same cycle.
-   (b) **the integrator** (the laptop; site Z's manager on a recorded handover) reads its task's last integrate result.
+   (b) **the integrator** (the laptop; site Z's manager on a recorded handover) reads its task's last integrate result, and
+   MEASURES EVERY BOX'S PULL (Andrew-direct ~20:2xZ, VERBATIM: "I want to make sure that every box in the organization does a
+   pull from CLOUD as needed to get all the newest information onto their device"; record
+   `org/tier0_exec/0.0.0_AB_MSTR/deliverables/ANDREW_DIRECT_20261008_202xZ_EVERY_BOX_PULLS_CLOUD_AS_NEEDED.md`): after
+   `git fetch origin`, for each `origin/box/<box>`, `git merge-base --is-ancestor origin/CLOUD origin/box/<box>` (current) or
+   `git rev-list --count origin/box/<box>..origin/CLOUD` (behind by N). A box behind for two cycles is chased over the bus to its
+   manager the same cycle; every box's state goes on the SYNC line.
    (c) **open calls:** `python .tools/open-calls.py publish`, then `python .tools/open-calls.py list --all --cloud`; a box read
    ABSENT is asked over the bus to publish.
    Record on the SYNC line: box branch ahead/behind `origin/CLOUD` (ls-remote read), integrate result, open calls per box.
