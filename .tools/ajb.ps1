@@ -347,6 +347,11 @@ function ajb {
             [System.IO.File]::WriteAllText((Join-Path $sessDir "$bgSid.serial"), "0.0.3_BG_BBGTerminal`n")
             $claudeArgs += @('--session-id', $bgSid)
             Write-Host "[ajb] F8: BG identity bound at launch -- session $bgSid -> 0.0.3_BG_BBGTerminal (launch-path marker + serial file written)" -ForegroundColor Cyan
+            # opal-gateway-bbg is this seat's only (Andrew-direct 2026-10-08 ~17:4xZ at 0.0.0_AB_MSTR~Z, row
+            # NFRA_OPLGTW-Z-S67): no longer user-level, so no other session loads the Bloomberg account's sign-in.
+            $bgMcp = Join-Path $ws '.tools\bg-gateway.mcp.json'
+            if (Test-Path -LiteralPath $bgMcp) { $claudeArgs += @('--mcp-config', $bgMcp) }
+            else { Write-Host "[ajb] WARN: $bgMcp is missing -- the BG seat launches WITHOUT opal-gateway-bbg" -ForegroundColor Yellow }
         }
         # Headless = no user present to answer a fork -> hard-remove the
         # user-BLOCKING tools so an autonomous agent can never strand on an
