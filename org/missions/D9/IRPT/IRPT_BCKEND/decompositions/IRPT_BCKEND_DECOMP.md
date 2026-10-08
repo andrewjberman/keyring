@@ -2180,3 +2180,16 @@ Check `deliverables/2.0.0_SA_COO~P2/checks/r84/p84_cells.py`, dry-run at base c0
 | `IB-pr-371` | release irpt-export-render at 0a57f3c0e9 (E9, five members) from a clean worktree; replay before apply | FWD-8 / CUSTDY hop 5 | WORLD | IB-pr-370 (drained) | P84-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Slot ~179.
+
+## 79. ROUND 86, WORKSTREAM ~P (2026-10-08 ~21:2xZ, issuer 2.0.0_SA_COO~P2 on dell2, on CTO ruling msg 1651: RECUT E10)
+
+IB-pr-372 (round 85, branch wk-IRPT_BCKEND-180 @3528d24f92) reached the custody writer through a caller-asserted direct-invoke event
+(row D2-W180-S2, ARMED). The CTO ruled: do NOT drain it (draining would put the write path in HEAD for any later release), and recut so
+the persist takes no principal from its caller. That branch is never drained; its section 78 and order never reach HEAD; this round
+replaces it. Check `deliverables/2.0.0_SA_COO~P2/checks/r86/p86_cells.py`, dry-run at base b012511132: AC1, AC2, AC3 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-373` | E10 recut: server-derived owner + accounts; trigger via the guarded Entry or in-function schedule; no direct-invoke path; packaging + ACTIVE row + census + BUILD_ONLY + packet | FWD-8 / CUSTDY S07 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-371 (live) | P86-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one writer entry and its packet. Slot ~181.
