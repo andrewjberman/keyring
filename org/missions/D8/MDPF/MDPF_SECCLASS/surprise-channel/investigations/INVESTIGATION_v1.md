@@ -5549,3 +5549,81 @@ by dell1 or by this seat.
   "notes": "ARMED because a RED is scheduled to fire at about 2026-10-08T01:5xZ+24h on an act whose correct reading is 'not started, sovereign-gated'. DISARM, same-turn and in-lane, is a MESSAGE not a code change: this seat has told the issuer and will tell whoever reads the RED that e65b is unapplied and that the served bytes are measured pre-e65b, so nobody re-executes it. NO WORKAROUND WAS TAKEN -- the entry was NOT closed to silence the alarm (close refuses an unproven leg anyway, and closing a never-executed deploy would be a false record), and no new ledger state was invented. CANDIDATE REMEDIES, none proposed as built and none this seat's to land unasked: (i) a NOT-STARTED/PRE-APPLY hold class whose precondition is that ZERO apply legs have landed, which is the mirror of the existing HELD precondition and is decidable from the same leg data; (ii) let `hold` accept an entry with all apply legs OPEN AND no leg ever closed, since 'nothing applied' and 'everything applied' are both coherent hold states while only the middle is RED; (iii) stop opening the entry until the first apply is authorized, which conflicts with NEVER-2's 'opened at start'. Option (iii) is the one that looks cheapest and is probably wrong, which is why it is named rather than omitted. SCOPE BEYOND THIS PROJECT: any act whose half is signed but whose apply waits on an Andrew-class decision has this shape, so the two NEVER-2 clauses -- open at start, and a window that blares -- are in tension for every sovereign-gated deploy in the estate, not just e65b."
 }
 ```
+
+## MDPF_SECCLASS-D1-W66-S1 -- SC-e-76: one group-A security (AMERICAN CENTURY ULTRA INV) is placed by the identity chain (name-c
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W66-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~66",
+  "surfaced_at": "2026-10-08T19:29:32Z",
+  "one_line": "SC-e-76: one group-A security (AMERICAN CENTURY ULTRA INV) is placed by the identity chain (name-cusip-row) as equity while its NAME:: row says fixed_income; the order keeps the chain's answer, so AC1 resolves 795 of 796.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "sc_r15_name_lookup.py run from the worktree root: NAME-LOOKUP ok=True group_a=796 resolved=795 mismatch=1 first_miss=[('AMERICAN CENTURY ULTRA\u00ae INV', 'equity', 'name-cusip-row', 'fixed_income')]",
+      "The trace listed this security as group A (chain never places it); live, a CUSIP: row written after the trace places it, so classify_with_identity returns the chain's class unchanged, as build step 1 requires."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 1: a chain-resolved position is never changed; group A = positions the chain cannot place.",
+  "world_is": "Two canonical rows disagree for one security (CUSIP: row equity, NAME:: row fixed_income). The NAME read is not reached and the CUSIP row's class lands. This worker decides neither which row is right nor whether the NAME:: row should be corrected; the disagreement is a table-content question for the row owner.",
+  "notes": "Filed by the worker; no change made to the grant. Reads: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_UNCLASSIFIED_TRACE_D1S11_20261008.json."
+}
+```
+
+## MDPF_SECCLASS-D1-W66-S2 -- SC-e-76 build step 3: the COT lib copy has no name path at all (no classify_with_identity, no NAME:: read), so
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W66-S2",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~66",
+  "surfaced_at": "2026-10-08T19:29:32Z",
+  "one_line": "SC-e-76 build step 3: the COT lib copy has no name path at all (no classify_with_identity, no NAME:: read), so a COT position the ticker and CUSIP rows do not place stays unclassified whatever NAME:: rows exist; not edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "data/cot/scripts/gold/lib/etf_classifier.py:137-158 classify_position(ticker, cusip, cash_equivalent): rules cash flag, ticker row, CUSIP: row, else 'unclassified'; the file contains no 'NAME::' and no IdentityResolver (Grep over the file).",
+      "classify_position takes no name argument, so a NAME:: read cannot be added inside the lib alone; its callers would have to pass the position name."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Build step 3: check whether the COT lib carries the same gap; if so, file a row, do not edit.",
+  "world_is": "The gap exists in kind (no NAME:: namespace read) but not in shape (a different method, no name input). Whether COT has a measurable unclassified share a NAME:: row would place is not measured here; the COT trace (SC-e-67 and the COT unclassified measure) owns that count.",
+  "notes": "Filed by the worker; no change made to the grant. Reads: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_UNCLASSIFIED_TRACE_D1S11_20261008.json."
+}
+```
+
+## MDPF_SECCLASS-D1-W66-S3 -- SC-e-76: 32 of the 796 group-A securities carry a ticker wi
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-W66-S3",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~66",
+  "surfaced_at": "2026-10-08T19:29:32Z",
+  "one_line": "SC-e-76: 32 of the 796 group-A securities carry a ticker with no row (the name key moves 760, not 796), so the order's own rule (a ticker is never changed) leaves them unclassified; AC1 passes only because it calls with a blank ticker.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Local run over the 902 trace securities with the live classifier: 764 move out of unclassified ($132,556,627), 138 stay ($6,846,121); group A rows with a ticker: 36 in the trace, 4 now have a ticker row, 32 stay at hop ticker-no-row (e.g. LBSAX, row 28 of the trace).",
+      "sc_r15_name_lookup.py passes '' as the ticker for every group-A row (classify_with_identity(\"\", r[\"name\"], ...)), so its 795 of 796 does not exercise ticker-no-row."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Cell text: $133.58M (796 securities, group A) on blank-ticker positions; build step 1: a ticker is never changed.",
+  "world_is": "Group A in the trace is 'a NAME:: row is present', not 'ticker blank': 36 of its 796 have a ticker. The half request states the candidate diff from the real call (764 securities), not from AC1's 796. Whether a ticker-no-row position should also fall back to its NAME:: row is a spec call for the CTO and is not taken here.",
+  "notes": "Filed by the worker; no change made to the grant. Reads: org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/BD_UNCLASSIFIED_TRACE_D1S11_20261008.json."
+}
+```
