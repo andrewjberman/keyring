@@ -10111,3 +10111,78 @@ name the one known failure instead of silently inheriting it.
   "notes": "Not done here (outside the cell and the paths): any change to app/server.py or app/oauth_as.py. A read that would decide the route: the gateway audit lake's token-endpoint records around 21:49Z (status and latency per refresh, no identifiers) for a 503 or a response over 30 s; remedy 2 (a short grace for the previous generation, with 4.0.0_SA_CRO~Z) covers every route."
 }
 ```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S1",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "The grant-writer Lambda ships its own copy of data_entitlement.py and the contract, pinned at the manifest's deployed_commit; until it is rebuilt from a commit carrying this cell it refuses every calendar_months grant, and test_grant_writer_stages_the_contract_only_from_the_standard already fails on the new contract bytes.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN (this worktree, after the cell) python -m pytest tests/test_schwab_host_inputs.py: test_grant_writer_stages_the_contract_only_from_the_standard FAILED 'At index 27 diff: b'3' != b'4'' (the package staged from the pinned commit carries contract_version 1.3; org/standards now carries 1.4). The same file's other two failures (an env-input count 19 vs 18, 52 vs 51) read unrelated to this cell; not run at the cut.",
+      "FILE infra/aws/ec2/opal-gateway/tests/test_schwab_host_inputs.py:150-171 reads the package through infra/aws/lambda/mcportal/mcportal-grant-writer-lambda/build_package.py from the manifest's deployed_commit; the writer's validation is app/data_entitlement.py parse_scope, which this cell changed."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Order OG-cm-1 bounds: built and held on the branch; the release sets Alyssa's and Andrew's grants to 13 months.",
+  "world_is": "The operator writer (ops/schwab_entitlement_admin.py) and the admin door are in the gateway tree and carry the new rule. The Lambda that actually writes grants through app/admin_grants.py narrow/widen runs its own packaged parse_scope, so a 13-month grant written through it is refused as 'carries only its mode' until that package is rebuilt and the manifest's deployed_commit moved to a commit carrying this cell; the contract-staging test fails until then. Both are release-time acts outside this order's paths.",
+  "notes": "Release checklist item: rebuild and redeploy the grant-writer package after merge (an AE lane act; never-widen applies to the grant itself, not to the code), then re-run test_schwab_host_inputs.py."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S2",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "The measured 280-date availability() figure (0.0014 s over 283 faked qualified dates) excludes all I/O, so it does not bound the real 13-month cost: each date costs one state-store read (or a full S3 validation the first time it is seen) and the loop is sequential.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "RUN tests/test_grant_calendar_months.py::test_ogcm1_ac01 under -s: 'OGCM1-AC1: ... 280-date availability() 0.0014 s over 283 faked qualified dates (283 snapshots); deadline 30 s' (Catalog.snapshot faked, so it times the window loop and the dict work only).",
+      "FILE infra/aws/ec2/opal-gateway/app/integrations/schwab/catalog.py availability(): evaluates every listed date in [first, latest] through _cached -> snapshot() one at a time, and the per-request cache dies with the request (source_cache_seconds is a separate TTL cache in integration.py)."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "Order OG-cm-1 item 4: time availability() over 280 faked qualified dates; file a row with the number if it threatens the 30-second deadline.",
+  "world_is": "The compute figure does not threaten the deadline; the I/O does not appear in it. At an assumed 10 ms per stored-snapshot read the 283 dates are about 3 s per master and dataset, and a date never seen before costs a full S3 validation, which was not measured. A query that touches several master/dataset pairs repeats the loop per pair. No cache was added and no cap moved, as ordered. A measured run against the real store over 13 months is the PRD's own decider for any cap.",
+  "notes": "Not done here: any caching or parallel evaluation (ordered off). The 10 ms is an assumption, not a measurement."
+}
+```
+
+```json
+{
+  "id": "NFRA_OPLGTW-Z-W42-S3",
+  "project": "NFRA_OPLGTW",
+  "fabric": "site-z",
+  "surfaced_by": "0.9.0_WK_NFRA_OPLGTW~42",
+  "surfaced_at": "2026-10-08T23:25:32Z",
+  "one_line": "Today's rolling grant record carries no calendar_days at all (only its mode), so 'in place of calendar_days' had no stored form to mirror; this cell admits calendar_days only as the contract window (30) and refuses any other value.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "FILE infra/aws/ec2/opal-gateway/app/data_entitlement.py at the cut: parse_scope refused any rolling dates map beyond {mode}; the 30-day window is the module constant ROLLING_WINDOW_DAYS, and calendar_days: 30 appears only in the contract's proposed_initial_profile.",
+      "FILE org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md:674 item 4 and the order's AC wording 'a grant with calendar_days (or neither) answers exactly as before'."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "disarm_owner": "2.0.0_SA_COO~O",
+  "spec_asserts": "PRD v2.0 item 4: a grant may set calendar_months in place of calendar_days; exactly one is set.",
+  "world_is": "The cell lets a rolling grant carry calendar_days only when it equals 30 (the unchanged contract window), carries calendar_months 1 to 13, refuses both together and refuses calendar_days of any other value rather than coercing it. A grant needing another day count would be a new ask. The record, the diff and the read-back show either field only when carried, so a plain grant stores, diffs and reads back exactly as before.",
+  "notes": "Judgment of form only: the narrower reading was chosen because an unbounded calendar_days would widen a window the contract fixes."
+}
+```
