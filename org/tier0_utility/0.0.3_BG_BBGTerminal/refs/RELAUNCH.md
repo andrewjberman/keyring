@@ -14,7 +14,7 @@ defect (the §0b standing order is the one ruled exception, carried on its own r
 |---|---|---|
 | P1 | TO-1 identity pin LANDED + EXERCISED | `git log --oneline -1 -- .claude/skills/teams-assist/teams-watch.py` shows `0f1bbcf0e` or a descendant (exercised record: 0.5.0_AE log 2026-08-10). Never relaunch on a committed-but-unexercised pin. |
 | P2 | `opal-gateway-bbg` token minted for **Opal Bloomberg** | `whoami` on `opal-gateway-bbg` → "Opal Bloomberg". No valid token: login secret `opal/mcp/opalbloomberg-login` (Secrets Manager — NAME citable, VALUE never); OTP goes to Andrew's phone — surface the auth URL, he completes the mint. Any non-Opal-Bloomberg answer → HOLD (Error paths). |
-| P3 | Mechanical fence present + **F8 fail-closed-scoped** | `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37; F8 tightening @cde91ccd08, Andrew-direct "rec approved" @ad2585793c). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. **F8:** an UNRESOLVABLE identity on this seat's launch path FAILS CLOSED AND LOUD (every classed call denied with a named line); a healthy `ajb` launch resolves POSITIVELY (see §1) and is ACTIVE; any other seat with an unresolvable identity gets a LOUD line, never a block. A launch that lands LOUD-CLOSED = the identity binding did not land — relaunch via `ajb`; never loosen the fence. |
+| P3 | **RETIRED -- the fence is UNWIRED by Andrew's word** | `org/tier0/ledger/LD-0580.md` (Andrew-direct 2026-09-17, "the BG concierge gate is bullshit pull that off right now."): the hook is removed from `.claude/settings.json`; the script stays on disk, unwired. Its absence is NOT a relaunch blocker and no seat re-wires it without his new word (ruled by `1.0.0_SA_CTO~Z`, 2026-10-08). The seat's read-and-report discipline binds by its prompt. The text below is the pre-LD-0580 contract, kept for history only: `.tools/hooks/bg-concierge-gate.sh` wired in `.claude/settings.json` (@65d80ab37; F8 tightening @cde91ccd08, Andrew-direct "rec approved" @ad2585793c). The fence arms PER-SESSION at session start — never assume a prior session's fence is active. **F8:** an UNRESOLVABLE identity on this seat's launch path FAILS CLOSED AND LOUD (every classed call denied with a named line); a healthy `ajb` launch resolves POSITIVELY (see §1) and is ACTIVE; any other seat with an unresolvable identity gets a LOUD line, never a block. A launch that lands LOUD-CLOSED = the identity binding did not land — relaunch via `ajb`; never loosen the fence. |
 | P4 | Bloomberg box state | Terminal logged in (else `bloomberg_health` FAILS at step 4 — surface, don't work around). |
 
 ## 0b. STANDING ORDER — EVENT-BASED summons response; a successor arms NO cron (Andrew-direct 2026-08-20 ~1329Z, cutover completed ~1540Z)
@@ -54,14 +54,20 @@ evidence below.
      never exits), command:
 
      ```
-     TMPDIR="$(cygpath -w "$HOME/AppData/Local/Temp")" python .claude/skills/teams-assist/teams-watch.py 15 --server opal-gateway-bbg --identity opalbloomberg
+     TMPDIR="$(cygpath -w "$HOME/AppData/Local/Temp")" python .claude/skills/teams-assist/teams-watch.py 15 --server opal-gateway-bbg --identity 517aa5ee-b4d0-425a-b493-5a22ff77ac4f
      ```
+
+     **Pin form = Opal Bloomberg's Entra object id**, not `opalbloomberg`: since the
+     2026-10-08 reauth the `opal-gateway-bbg` token `sub` is `<tenant>/<oid>` with no UPN
+     substring, so the name pin matches 0 records. The oid matches exactly 1 record (the
+     bbg one) and Andrew's oid `2e21f8e5-...` matches 0 (negative control, measured
+     2026-10-08 by `0.0.3_BG_BBGTerminal` msg 31987 and re-read by `1.0.0_SA_CTO~Z`).
 
      (`15` = poll interval seconds, the operating value; omit for the default 10.)
    - **The pin is mandatory for this seat. Pin arg absent → do not arm.**
    - Confirm `TaskOutput(<monitor id>, block=false)` → running, and the stderr banner shows
-     `pin(server=opal-gateway-bbg, identity=opalbloomberg)` + `token selected:
-     identity=opalbloomberg@opalinvest.com`.
+     `pin(server=opal-gateway-bbg, identity=517aa5ee-...)` + `token selected:
+     identity=.../517aa5ee-...`.
    - **ZERO scratchpad scaffolding:** no wrapper script — the stock engine + flags is the
      whole arm (no-shadow veto).
    - An exit-2 `[TEAMS-IDENTITY-FAIL]` at/after arm = the pinned token is absent, expired,
@@ -93,7 +99,7 @@ evidence below.
 | Limb | Evidence |
 |---|---|
 | Identity | step-2a `whoami` output == Opal Bloomberg |
-| Monitor | pinned arm `TaskOutput(<id>)` → running + the `token selected: identity=opalbloomberg@...` line |
+| Monitor | pinned arm `TaskOutput(<id>)` → running + the `token selected: identity=.../517aa5ee-...` line |
 | Serve | one ACK-FIRST serve delivered as "Opal Bloomberg" (vintage attached) |
 | Fabric | broker registration LIVE + inbox pulled/actioned |
 

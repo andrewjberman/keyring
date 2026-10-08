@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_ADVI_COTBKF~45</issued_to>
 <issued_by>2.0.0_SA_COO~C2</issued_by>
 <issued_date>2026-10-08</issued_date>
-<status>issued</status>
+<status>withdrawn</status>
 <direct_act>false</direct_act>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
@@ -37,6 +37,8 @@ stays separately measurable."
 2. Re-grade `--before-cash-leg conditional --after-cash-leg divfee` (list v1 both arms). In `sweep_regrade.md`: the 75
    `sweep_trade_day` movers counted back to MATCH; every round-19 mover still DIFF named (account, month, computed, reported); the
    whole grade before and after; the control. `regressions` counts against the `conditional` arm (E1's baseline).
+
+**AMENDMENT 1 -- CLOSE (CTO ruling msg 1707, 2026-10-08 ~21:4xZ, on row D2-W45-S4).** "Stop adding rules ... Drain the chain with the conditional credit as the default; CB-w-2 closes refused, citing W45-S4." Do: make `conditional` the DEFAULT again in `with_sweep_cash`, `commonwealth_daily_valuation.run` and the runner; `divfee` stays selectable, unchanged, with its tests. Confirm the default run equals CB-w-1's: the runner with `--before-cash-leg r19` and no `--after-cash-leg` prints `regressions=1`. Keep `divfee/sweep_regrade.md` as the record. Set `<status>withdrawn</status>` (the round-close vocabulary's terminal state for a refused order); AC2 stays recorded FAIL in the proof instance, never re-graded.
 
 Tests in `data/assets/scripts/silver/tests/test_commonwealth_cash_leg.py` (add to it): a dividend funding a same-day sweep buy moves the
 value by the dividend once; a fee paid by a same-day sweep sale moves the value by the fee once; a dividend with no sweep buy is

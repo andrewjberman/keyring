@@ -75,6 +75,9 @@ org/missions/D5/AMGT/AMGT_HARVST/surprise-channel/investigations/INVESTIGATION_v
 <risk>LOCAL</risk>
 <worker_class>worker-light</worker_class>
 <status>issued</status>
+
+COMPLETE 2026-10-08 ~19:0xZ (issuer 2.0.0_SA_COO~H): worker ~124 @359ee158d8 and @3c288e4fcc, drained @afd20e8eac. AC1 3 passed (re-run by the issuer from the worktree: 3 passed); AC2 note line 1 'TODAY: YES -- a lower-case common word ("target") pairs with a security (TGT_US_Equity) whose alias list holds "Target"; nothing was repaired.' Controls: lower-case 'tgt' does not pair (ticker forms keep their case); capitalised 'Target' pairs. Proof instance VALID.
+<status>complete</status>
 <round>73</round>
 <slot>~124</slot>
 <fabric>site-z</fabric>

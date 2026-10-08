@@ -3591,3 +3591,35 @@ merge its own pair; `bq-2`'s merge is HELD while any collection leg runs. **Noth
 - `bq-1` AC1 base: FAIL as expected (the test is absent). AC2 base: FAIL as expected (no such file).
 - `bq-2` AC1 base: FAIL as expected (the test is absent). AC2 base: FAIL as expected (no such file). AC3 base: PASS as
   expected (787 passed, 3 skipped on 537ac56e9b).
+
+## 87. ROUND 74 -- gold's capital-initial alias rule (R30), and FWD-18's continuous cycle: the runner and its start with the box (PRD v0.22, both halves SIGNED), 2026-10-08 ~21:4xZ
+
+R30 (`1.0.0_SA_CTO~Z` msg 32004) on the issuer's round-73 census @7e1509b798: an exact-stored-case rule removes 1,466 good
+and bad pairs alike; the rule instead is a capital first letter on the matched text. FWD-18 (PRD v0.22 @e30fb3e610;
+`prd-signoff.py status` read ADMITTED 21:1xZ; `1.0.0_SA_CTO~Z` msg 31923 "cut it after that sign") is one process on this
+box that cycles bbg, wsj, barrons and sa without end, one record per cycle; the FT is never run. Round 73's `bq-2` is
+still open (worker ~125 reseated 21:2xZ after the issuer's session ended); this round does not touch its files.
+
+Issuer `2.0.0_SA_COO~H`. Series **`br`**.
+- **Fan-out:** 3 of 3 chains, cap 8 (no edges: `br-3` needs only the runner's command line, fixed in both orders; write
+  sets disjoint at file grain: `lib/research/harvest/`; `cycle_runner.py`, its test, `backfill_driver.py`;
+  `install-cycle-schedule.ps1`, `README.md`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-br-1` | `br-1` | **R30: an alias matches in gold only where the matched text begins with a capital letter, or equals the stored alias exactly (the issuer's clause, for "eBay"); census on the round-73 population with both denominators; REMOVED SAMPLE 30 for the CVO; KEPT READ on V, CDNS, BKNG, ORA.** | SERVED | worker ~126 |
+| `HVST-br-2` | `br-2` | **FWD-18 hop 1: `cycle_runner`, a cycle per publisher over the backfill driver with the floor at the last COMPLETED cycle, one record per cycle, a refused sign-in recorded by name and the pass going on; negative arm: a held article counted held with no body request.** | SERVED | worker ~127 |
+| `HVST-br-3` | `br-3` | **FWD-18 hop 2: `install-cycle-schedule.ps1`, the runner registered at log-on with no time limit; `-Plan` registers nothing; the cell registers nothing.** | LOCAL | worker-light ~128 |
+
+**NOT cut:** FWD-18 hop 3, the page an analyst reads ("can tell from the page's own words when a publisher did not run"):
+it needs cycle records that exist; it is the next enrichment. **Activation at close (the issuer):** the r47 sa backfill
+leg ends or is stopped before the runner runs `sa`; the task is registered against a PINNED checkout of the merged runner;
+ACCEPTANCE per publisher is the first cycle completing with no one at the box after start. **Merges:** `br-1` carries its
+own never-widen pair and serves in a rebuild after #11 (R28, R30); `br-2` is not merged while a collection leg runs from
+the shared tree.
+
+**Checks dry-run at the base before the cut:**
+- `br-1` AC1 base: FAIL as expected (no tests ran: the test is absent). AC2, AC3 base: FAIL as expected (no such file).
+- `br-2` AC1 base: FAIL as expected (absent). AC2 base: FAIL as expected ("No module named lib.opal_data_harvest.cycle_runner").
+  AC3 base: PASS (765 passed, 1 skipped).
+- `br-3` AC1, AC2 base: FAIL as expected (no such script). AC3 base: PASS (`TASK ABSENT`).

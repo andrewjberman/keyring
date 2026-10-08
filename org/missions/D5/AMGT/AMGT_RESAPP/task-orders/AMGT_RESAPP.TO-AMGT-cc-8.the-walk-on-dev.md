@@ -84,3 +84,5 @@ The `<status>` flip is the issuer's.
 <fabric>site-z</fabric>
 <risk>LOCAL</risk>
 <worker_class>worker</worker_class>
+<status>pending -- GO 2026-10-08T21:3xZ by the issuer after cc-7 closed (@42700562a4, graded @7cf4305781; snapshot ar7KPWgP rewritten 18:08Z by the new code ltXvElw). Worktree C:/tmp/r79-308 re-used (drained, clean), branch wk-AMGT_RESAPP-314 at the shared HEAD; portal ref 38cc0ecf (origin DEV), packages linked; DSGN_AMGTV1 SAUX-41 and SAUX-42 are NOT on that ref (0 seeking_alpha / dossier_sections hits in portal src), so FWD-7 and SECTIONS read the API beside the page; walker account disarmed, armedBy none; port 5174 0 listeners; no plant</status>
+<status>pending -- RE-GO 2026-10-08T21:51:49Z by the issuer: the first GO came back BLOCKED @d03508571e/b44271afcc (rows Z-W314-S1 walker and S2 port, both contention with an AMGT_CORPUS walk); port 5174 released by 1.0.0_SA_CTO~Z (msg 32036), issuer read 0 listeners and the walker disarmed (armedBy none); same worker ~314, same worktree C:/tmp/r79-308, portal 38cc0ecf</status>

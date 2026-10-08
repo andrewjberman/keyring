@@ -121,3 +121,65 @@ left apart with its reason). bj-1, the first walk of the page's feed: twelve rea
 **ENRICHMENT LIST, round 66:** R14's read first; R15; then a second feed walk.
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 4 -- R18 TO R29, ROUNDS 66 TO 72 (written 2026-10-08 ~21:3xZ), carried from this seat's ruling mail
+
+These rulings were sent to `2.0.0_SA_COO~H` as messages between 08:12Z and 18:11Z and are written here, the carrier, now. Each
+line names its message. The operative sentence is the message's own; read the message for the full text.
+
+- **R18 (msg 31631).** Round 66 carries two READ cells before the second walk, and neither runs a job: the census of covered
+  securities with no collection job, by subtraction, with both denominators reconciled; and AIG's six empty jobs read from their run
+  records beside Nokia's three productive ones. Superseded in its cells by R20.
+- **R19 (msg 31637, on `4.0.0_SA_CRO~Z` msg 31636 @2394cfc3d8).** This seat's "a scheduled sweep is owed" (msg 31626) is
+  WITHDRAWN. No sweep is built or scheduled: the PRD puts any schedule outside the project, and Andrew's word of 2026-10-03 bars
+  changes to data operations without his directive. The sweep's shape is recorded for his card only.
+- **R20 (msg 31637).** It replaces R18's cells, and neither cell fetches: (a) reconcile the three universes (list 242, crosswalk 237,
+  collector 234) and add the missing identity records; (b) repair AIG's truncated stored name and print every other name cut the
+  same way. A run for any of them waits on Andrew's per-use word.
+- **R21.** No ruling carries this number. This seat's sent mail of 2026-10-08 under `org/mcp/inbox/` holds 0 occurrences of it;
+  the number is skipped, not lost.
+- **R22 (msg 31649).** The collector's pointer does not move. Moving it is the data-operations adjustment that Andrew's 2026-10-03
+  word reserves. The new dated files stay beside the old ones, unpointed. First: AIG's stored name becomes the full legal name, and
+  the three names cut and not repaired (ICT_US, both OMAB lines) are repaired or their reasons stated.
+- **R23 (msg 31664).** The AIG query is a stored per-security override for `AIG_US_Equity` only. `publishers._LEGAL_SUFFIX`
+  is not changed. Proof: the derived-query table over all 242 names reads 1 changed, 241 identical. The merge is held until the
+  live Seeking Alpha leg ends, and it carries a pair, because a merge into `lib/opal_data_harvest` is a deploy on this box.
+  ICT_US unrepaired with its reason is accepted.
+- **R24 (msg 31703).** One merge is one act and one pair. The pair on 419dc9b1fc lapses SPENT WITHOUT AN ACT, and a new pair names
+  537ac56e9b. Recorded because C2's test found the whole Bloomberg leg stopping on one bad record: the new half shows the
+  900-second cooldown is not set on the new path, and it states row Z-W123-S1's bound in words.
+- **R25 (msg 31831).** Repair the ACCEPTANCE CHECK, not the aliases. Acceptance uses the strings `slug_queries` searched with,
+  whole-word. No alias is edited for the 149 names. Proof before any merge: the before-and-after acceptance table over 242 names,
+  every article accepted today still accepted, and the single-common-word names listed. The merge carries a pair, and any
+  re-collection is Andrew's word. "Case-sensitive" is withdrawn by R27.
+- **R26 (msg 31845, on `4.0.0_SA_CRO~Z` msg 31841 @3bb6d192e0).** No list of company names is kept: the rules are case, whole
+  word and a second anchor. The order: (a) test whether gold pairs a planted lower-case "target" on a security that carries
+  aliases; (b) if it does, gold matches an alias in its stored case; (c) only then R25. Each merge has its own pair, and nothing
+  is re-collected.
+- **R27 (msg 31867).** Acceptance is whole-word and case-INSENSITIVE on `slug_queries`' strings, a superset of today's rule. R25's
+  "case-sensitive" is withdrawn: nine names are stored in capitals (NVIDIA, QUALCOMM, CATERPILLAR and six more). R26(a) stands as
+  ruled. R26(b) is not cut; it waits on a census over built gold of the pairs that a stored-case rule would remove, by security.
+- **R28 (msg 31945, on the gate stop 31942).** Rebuild #10 runs on the list that rebuild #9 served, frozen in
+  `round72/securities.universe.r72.json`, and serves only the capitalised-headline rule (R15). The AIG/OMAB list move is rebuild
+  #11, under its own pair. Its dry run prints the pairs moved per security for AIG and both OMAB lines, ten titles each, graded by
+  `3.0.0_SA_CVO~Z`.
+- **R29 (msg 31945).** The collector pointer has two readers, the collector and gold's list. Any act that moves it names both in
+  its ledger.
+
+**Read with them:** gold rebuild #10's CTO half, SIGNED (`org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_AMGT_HARVST_GOLD_REBUILD10_20261008.md`
+@fee6ba8438), with C1 met by `3.0.0_SA_CVO~Z`'s grade (msg 31883: the ten GSK titles, 10 of 10 GlaxoSmithKline). PRD v0.22 was
+SIGNED at L4-R (msg 31943). R26(a) read YES (`2.0.0_SA_COO~H` msg 31961): gold pairs a lower-case "target" on a security that
+carries aliases, so R26(b)'s census is the next ruling input.
+
+- **R30 = R26(b)'s shape (ruling sent to `2.0.0_SA_COO~H` at 21:24:04Z, on the census 32003 @7e1509b798,
+  `deliverables/2.0.0_SA_COO_H/round73/stored_case_census.out`).** Exact stored case is REFUSED. The census shows it removes 1,466
+  of 46,066 tested pairs over 37 securities, led by good pairs on all-caps stores (NVDA 782, JPM 179, QCOM 85) and by exact-form
+  rows such as ASML, Nestle and EBay. The rule: an alias matches whole-word only where the matched text's first letter is
+  upper-case; the rest is case-insensitive. The cell: the same census re-run under R30, by security, with both denominators;
+  `3.0.0_SA_CVO~Z` reads 30 removed pairs, bar 27 of 30 wrong; and 10 kept pairs on V, CDNS, BKNG and ORA read for residual
+  sentence-initial matches, stated as a count. Its own pair, served in a rebuild after #11, and nothing re-collected.
+
+**ENRICHMENT LIST (open at this writing):** R30's census and grade; then R27's acceptance change under its pair; rebuild #11 under
+its own pair (R28). The collector pointer and any re-collection wait on Andrew's per-use word (R22).
+
+-- 1.0.0_SA_CTO~Z

@@ -297,6 +297,313 @@ def root_items(root, map_path=None):
     return out, stats
 
 
+# ---- BF-v-4: names the literal reader does not count -------------------------------------------------------------
+# census_repo() reads a name only when the name attribute of a graded resource is ONE string literal. A name built in a
+# `locals` block, from a `var.`, through a module or from a generated .json is counted by nothing, so a root that builds
+# all its names that way read names=0. scan_dir() reads one folder of .tf files and puts every such name in one of two
+# places: COUNTED (it resolves to a literal inside the folder's own files: a literal local, a .tfvars.json value) or
+# UNCOUNTED with a reason naming what was not followed: local, var, module, json, interpolation.
+
+UNCOUNTED_REASONS = ("local", "var", "module", "json", "interpolation")
+_INTERP_RE = re.compile(r"\$\{([^{}]*)\}")
+_REF_LOCAL_RE = re.compile(r"^local\.([A-Za-z_][A-Za-z0-9_-]*)$")
+_REF_VAR_RE = re.compile(r"^var\.([A-Za-z_][A-Za-z0-9_-]*)$")
+_REF_EACH_RE = re.compile(r"^each\.(key|value(?:\.[A-Za-z_][A-Za-z0-9_-]*)*)$")
+_INTERP_KIND_RE = re.compile(r"\$\{\s*(local|var|module)[.\[]")
+_TAG_NAME_RE = re.compile(r'(?:^|[{,\s])"?Name"?\s*=\s*([^\n,}]+)')
+
+
+class _Unres(Exception):
+    """An expression the folder's own files do not resolve to a literal; .reason is what was not followed."""
+
+    def __init__(self, reason):
+        Exception.__init__(self, reason)
+        self.reason = reason
+
+
+def _flat(raw):
+    return " ".join(str(raw).split())
+
+
+def _kind_of(ref):
+    """The reason a reference that is not followed carries, by what it starts with."""
+    ref = ref.strip()
+    for k in ("local", "var", "module"):
+        if ref.startswith(k + ".") or ref.startswith(k + "["):
+            return k
+    return "interpolation"
+
+
+def _json_line(text, path):
+    """The 1-based line of the last key of `path` in a pretty-printed JSON text: each key is searched for after the line
+    of the one before it. 1 when a key is not found."""
+    lines, start, found = text.split("\n"), 0, 1
+    for key in path:
+        pat = re.compile(r'"%s"\s*:' % re.escape(str(key)))
+        for n in range(start, len(lines)):
+            if pat.search(lines[n]):
+                found, start = n + 1, n
+                break
+    return found
+
+
+class _Ctx(object):
+    def __init__(self, locals_, jvars):
+        self.locals = locals_      # name -> (raw expression, "file", line)
+        self.vars = jvars          # name -> (value, "file", text)
+        self.each = None           # (var name, key, value) while a for_each binding is read
+
+
+def _eval(raw, ctx, depth=0):
+    """(string, source) the expression spells: source is ("file", line) of the declaring line when the whole expression
+    is one reference, else None. _Unres when the folder's files do not resolve it."""
+    raw = str(raw).strip()
+    if depth > 8:
+        raise _Unres("local")
+    m = opal_naming._TF_LITERAL_RE.match(raw)
+    if not m:
+        q = _INTERP_KIND_RE.search(raw) if raw.startswith('"') else None
+        if q:
+            raise _Unres(q.group(1))  # a string with a quote inside an interpolation: the first reference not followed
+        return _ref(raw, ctx, depth)
+    body = m.group(1)
+    if "%{" in body:
+        raise _Unres("interpolation")
+    parts = list(_INTERP_RE.finditer(body))
+    if not parts:
+        if "${" in body:
+            raise _Unres("interpolation")
+        return body.replace('\\"', '"').replace("\\\\", "\\"), None
+    if len(parts) == 1 and parts[0].span() == (0, len(body)):
+        return _ref(parts[0].group(1).strip(), ctx, depth)
+    out, pos = [], 0
+    for p in parts:
+        out.append(body[pos:p.start()])
+        out.append(_ref(p.group(1).strip(), ctx, depth)[0])
+        pos = p.end()
+    out.append(body[pos:])
+    text = "".join(out)
+    if "${" in text:
+        raise _Unres("interpolation")
+    return text, None
+
+
+def _ref(ref, ctx, depth):
+    m = _REF_LOCAL_RE.match(ref)
+    if m:
+        row = ctx.locals.get(m.group(1))
+        if row is None:
+            raise _Unres("local")
+        try:
+            val = _eval(row[0], ctx, depth + 1)[0]
+        except _Unres:
+            raise _Unres("local")
+        return val, (row[1], row[2])
+    m = _REF_VAR_RE.match(ref)
+    if m:
+        row = ctx.vars.get(m.group(1))
+        if row is None or not isinstance(row[0], str):
+            raise _Unres("var")
+        return row[0], (row[1], _json_line(row[2], [m.group(1)]))
+    m = _REF_EACH_RE.match(ref)
+    if m:
+        if ctx.each is None:
+            raise _Unres("json")
+        vname, key, value = ctx.each
+        _v, fname, text = ctx.vars[vname]
+        path, cur = [vname, key], value
+        if m.group(1) == "key":
+            return key, (fname, _json_line(text, path))
+        for part in m.group(1).split(".")[1:]:
+            if not isinstance(cur, dict) or part not in cur:
+                raise _Unres("json")
+            cur = cur[part]
+            path.append(part)
+        if not isinstance(cur, str):
+            raise _Unres("json")
+        return cur, (fname, _json_line(text, path))
+    raise _Unres(_kind_of(ref))
+
+
+def _bindings(raw, ctx):
+    """[(var name, key, value)] a for_each over a JSON-backed var spells; _Unres when it is not one."""
+    m = _REF_VAR_RE.match(str(raw).strip())
+    if not m:
+        raise _Unres(_kind_of(str(raw)))
+    row = ctx.vars.get(m.group(1))
+    if row is None or not isinstance(row[0], dict):
+        raise _Unres("var")
+    return [(m.group(1), k, v) for k, v in row[0].items()]
+
+
+def _dir_vars(directory, json_names, label):
+    out = {}
+    for fn in sorted(json_names):
+        if not fn.endswith(".tfvars.json"):
+            continue
+        try:
+            with open(os.path.join(directory, fn), encoding="utf-8", errors="replace") as fh:
+                text = fh.read().replace("\r\n", "\n")
+            doc = json.loads(text)
+        except (OSError, ValueError):
+            continue
+        if isinstance(doc, dict):
+            for k, v in doc.items():
+                out[k] = (v, label + "/" + fn, text)
+    return out
+
+
+_SCAN_CACHE = {}
+
+
+def scan_dir(directory, label, tf_names=None, json_names=None):
+    """(literal, resolved, uncounted) of the .tf files in ONE folder (a Terraform configuration: its locals and its
+    .tfvars.json files are the folder's own).
+      literal    the names census_repo() counts (read here by the census's own reader, for a test to read once);
+      resolved   the names the census cannot read that the folder's own files resolve to a literal: items
+                 {plane, type, current, where};
+      uncounted  one dict {type, attribute, expression, reason, where} per graded resource whose name does not resolve,
+                 and per module call whose called module builds names it does not state (reason module).
+    label is the repository-relative folder path that prefixes every `where`."""
+    directory = os.path.abspath(directory)
+    key = (directory, label, tuple(sorted(tf_names)) if tf_names is not None else None,
+           tuple(sorted(json_names)) if json_names is not None else None)
+    if key in _SCAN_CACHE:
+        return _SCAN_CACHE[key]
+    _SCAN_CACHE[key] = ([], [], [])  # a module cycle reads empty, never loops
+    names = sorted(tf_names) if tf_names is not None else sorted(f for f in os.listdir(directory) if f.endswith(".tf"))
+    jnames = sorted(json_names) if json_names is not None else sorted(
+        f for f in os.listdir(directory) if f.endswith(".tfvars.json"))
+    texts = {}
+    for fn in names:
+        try:
+            with open(os.path.join(directory, fn), encoding="utf-8", errors="replace") as fh:
+                texts[fn] = fh.read().replace("\r\n", "\n")
+        except OSError:
+            continue
+    lcl = {}
+    for fn in sorted(texts):
+        t = texts[fn]
+        for it in opal_naming._tf_items(t, 0, len(t)):
+            if it[0] == "block" and it[1] == "locals" and not it[2]:
+                for a in opal_naming._tf_items(t, it[4], it[5]):
+                    if a[0] == "attr":
+                        lcl.setdefault(a[1], (a[3], label + "/" + fn, opal_naming._line_of(t, a[2])))
+    ctx = _Ctx(lcl, _dir_vars(directory, jnames, label))
+    attr_map = opal_naming._census_tf_attr()
+    literal, resolved, uncounted = [], [], []
+    for fn in sorted(texts):
+        t = texts[fn]
+        rel = label + "/" + fn
+        names_, _exprs = opal_naming.census_tf_names(rel, t)
+        literal += [{"plane": "repo", "type": a, "current": b, "where": c} for a, b, c in names_]
+        for it in opal_naming._tf_items(t, 0, len(t)):
+            if it[0] != "block":
+                continue
+            where = "%s:%d" % (rel, opal_naming._line_of(t, it[3]))
+            if it[1] == "module" and len(it[2]) == 1:
+                src = [a for a in opal_naming._tf_items(t, it[4], it[5]) if a[0] == "attr" and a[1] == "source"]
+                raw = src[0][3] if src else ""
+                if _module_unstated(directory, opal_naming._tf_literal(raw)):
+                    uncounted.append({"type": "module", "attribute": "source", "expression": _flat(raw),
+                                      "reason": "module", "where": where})
+                continue
+            if it[1] != "resource" or len(it[2]) != 2 or it[2][0] not in attr_map:
+                continue
+            typ, attr = attr_map[it[2][0]]
+            attrs = {a[1]: a for a in opal_naming._tf_items(t, it[4], it[5]) if a[0] == "attr"}
+            raw = None
+            if attr == "tags.Name":
+                tags = attrs.get("tags")
+                m = _TAG_NAME_RE.search(tags[3]) if tags else None
+                raw = m.group(1).strip() if m else None
+            elif attr in attrs:
+                raw = attrs[attr][3]
+            if raw is None:
+                continue
+            if opal_naming._tf_literal(raw) is not None:
+                continue  # one literal: the census counts it (an empty literal names nothing)
+            got, bad = [], None
+            try:
+                binds = [None]
+                if "each." in raw:
+                    fe = attrs.get("for_each")
+                    if fe is None:
+                        raise _Unres("json")
+                    binds = _bindings(fe[3], ctx)
+                for b in binds:
+                    ctx.each = b
+                    val, src = _eval(raw, ctx)
+                    if not val:
+                        raise _Unres("interpolation")
+                    w = "%s:%d" % src if src is not None else where
+                    if (typ, val, w) not in got:
+                        got.append((typ, val, w))
+            except _Unres as exc:
+                bad = exc.reason
+            finally:
+                ctx.each = None
+            if bad is not None:
+                uncounted.append({"type": typ, "attribute": attr, "expression": _flat(raw), "reason": bad,
+                                  "where": where})
+            else:
+                resolved += [{"plane": "repo", "type": a, "current": b, "where": c} for a, b, c in got]
+    _SCAN_CACHE[key] = (literal, resolved, uncounted)
+    return _SCAN_CACHE[key]
+
+
+def _module_unstated(directory, source):
+    """True when the module a call names builds names the call's folder cannot read: its source is not a local folder, the
+    folder is unreadable, or its own scan has an uncounted name."""
+    if not source or not source.startswith(("./", "../")):
+        return True
+    target = os.path.normpath(os.path.join(directory, source))
+    if not os.path.isdir(target):
+        return True
+    try:
+        rel = os.path.relpath(target, REPO).replace("\\", "/")
+    except ValueError:  # another drive
+        rel = ".."
+    if rel.startswith(".."):
+        rel = os.path.basename(target)
+    return bool(scan_dir(target, rel)[2])
+
+
+def root_extra(root):
+    """(resolved, uncounted) for a Terraform root: scan_dir over every folder that holds the root's tracked .tf files, in
+    file order. Reads the folders on disk; a root with no tracked .tf file reads ([], [])."""
+    r = str(root).replace("\\", "/").strip().rstrip("/")
+    by_dir = {}
+    for f in _tf_files():
+        if _under(f, r):
+            d, fn = f.rsplit("/", 1)
+            by_dir.setdefault(d, []).append(fn)
+    jfiles = {}
+    for f in _files():
+        if f.endswith(".tfvars.json") and _under(f, r):
+            d, fn = f.rsplit("/", 1)
+            jfiles.setdefault(d, []).append(fn)
+    resolved, uncounted = [], []
+    for d in sorted(by_dir):
+        _lit, res, unc = scan_dir(os.path.join(REPO, *d.split("/")), d, by_dir[d], jfiles.get(d, []))
+        resolved += res
+        uncounted += unc
+    return resolved, uncounted
+
+
+def root_names(root, map_path=None):
+    """(items, uncounted, stats): root_items() plus the names the root's own files resolve to a literal (BF-v-4), and the
+    names it builds that they do not resolve. A root whose items and uncounted are both empty has nothing to name."""
+    items, stats = root_items(root, map_path)
+    resolved, uncounted = root_extra(root)
+    return list(items) + resolved, uncounted, stats
+
+
+def uncounted_line(u):
+    """The one printed line of an uncounted name."""
+    return _safe("UNCOUNTED %s %s = %s -- %s  [%s]" % (u["type"], u["attribute"], u["expression"], u["reason"], u["where"]))
+
+
 def _cards():
     if "cards" not in _CACHE:
         with open(os.path.join(REPO, *NOT_JUDGED.split("/")), encoding="utf-8") as fh:
