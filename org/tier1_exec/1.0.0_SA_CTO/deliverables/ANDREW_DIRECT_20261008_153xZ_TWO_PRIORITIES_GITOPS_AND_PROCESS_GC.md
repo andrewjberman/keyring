@@ -132,3 +132,10 @@ the Actions minute usage through the GitHub API?: "1.) No need. 2.) Yes". Per-us
 org's billing usage and budgets (gh api). Read ~17:0xZ: plan `free`; October 1-8 Linux minutes 1,811 (portal 1,035,
 ajb_workspace 769, opal_ai 7), all inside the included allowance; Actions budget $200 with prevent_further_usage=false
 (alerts to the org owner), so Actions do not stop when the allowance runs out.
+
+## Addendum ~17:1xZ -- status of the box managers on the new GC and GitOps abilities
+
+Verbatim: "Yes I updated it, i also want to make sure that the various MSTRs across the boxes are now managing with the new
+garbage collection and git ops abilities, get status on this". ("it" = the GitHub Actions budget.) Read at ~17:1xZ:
+origin CLOUD 838362db08; since the fast-fix push a92d59d74f, dell1 has drained and pushed (838362db08), dell2 and site Z
+have not. 0.0.0_AB_MSTR collects a per-box status over the bus.
