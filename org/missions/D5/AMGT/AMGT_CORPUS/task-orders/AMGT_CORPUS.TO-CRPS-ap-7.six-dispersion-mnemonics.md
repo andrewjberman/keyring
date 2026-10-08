@@ -170,6 +170,35 @@ run your new test file with pytest and report its last line. Then section 5 agai
 checker after your final commit, and the status tag reading complete appended at the END of this file only if AC1, AC2 and AC3
 pass.
 
+## 8. AMENDMENT 3 (2026-10-08, the issuer's own; the CTO's ruling msg 31815)
+
+AMENDMENT 2 is merged and is your INHERITED STATE: `record_fire_budget` in
+`integrations/bloomberg/research/model_block_pull.py` appends one line per fire to the shared Bloomberg budget ledger, with
+`rows` = `figures` (about 67,000 for a fire) and `rows_unit=returned-figures` in the batch id. That was the earlier ruling
+("the largest of the three, until the collector's unit is named"). No fire has run with it: the scheduled task is pinned to
+a commit that does not hold it.
+
+**The ruling now: the ledger holds ONE unit, RETURNED RECORDS.** The ledger's other writers record rows returned (the
+2026-10-08 backfill line is 2,929). A line of about 67,000 would tell every later leg that 56 percent of the day's limit is
+gone when 3.5 percent is, and another product could be refused capacity by a unit error.
+
+**Build, and only this:**
+1. In `record_fire_budget`, `rows` is `records` (the value passed to `bbg_budget.record`), and the batch id ends
+   `:rows_unit=returned-records`. `calls`, `security_fields`, `figures` and `records` all stay in the batch id as they are.
+   Update the docstring: the unit, the ruling (msg 31815) and why. Nothing else in the function changes; it still never
+   raises.
+2. `_close_fire_budget` and its printed line: if the line names which count was recorded, it names records. Do not change
+   what is counted.
+3. Update `integrations/bloomberg/research/tests/test_fire_budget_record_round40.py` (line 92 asserts `rows == 66879`, line 95
+   the old unit word) to the new rule, and add one test that `rows` equals `records` and not `figures` when the two differ.
+   Mark edits `AMENDMENT 3 (CRPS-ap-7, round 40):`.
+
+**Prove** AC1, AC2 and AC3 by their invocations in section 4. AC3 (`ap7_budget_check.py`) now expects rows 4224, a rise in
+`spent()` of 4224 and `rows_unit=returned-records`; on the inherited code it reads `ap7b build 0/2 control 2/2`, and after
+your change `ap7b build 2/2 control 2/2`. Then section 5 again: the proof instance updated and pinned to your code commit,
+the checker run after your final commit, and the status tag reading complete appended at the END of this file only if AC1,
+AC2 and AC3 pass.
+
 <!-- ===================== RECORD FACE -- does NOT travel to the worker ===================== -->
 
 **ISSUER NOTES:** round-39 analysis @`5ccdc90368` ruling 10 + s.4 item 4; CTO msg 30490 (AMGT_RESAPP ROUND_ANALYSIS.round76 ADDENDUM 1 item 2 @a7b2c3e0ba). Base: ap7 build 0/1 control 2/2; the six files 51 passed. Calls per fire: 768 before, 768 after. A 2026-09-15 probe instrument spells `BEST_CPS_STDDEV`; the issuer's one-name scripted probe (CRPS-ap-10) settles the spelling before the re-pin.
@@ -178,6 +207,8 @@ pass.
 <round>40</round>
 <slot>~3</slot>
 <fabric>site-z</fabric>
+<status>complete</status>
+<status>in_progress</status>
 <status>complete</status>
 <status>in_progress</status>
 <status>complete</status>

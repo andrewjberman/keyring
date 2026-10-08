@@ -1,0 +1,117 @@
+aws_iam_user.dell1: Refreshing state... [id=cloudops-dell1-agent-user]
+aws_iam_group_policy_attachment.dell_agent_routes_host[0]: Refreshing state... [id=cloudops-dell-agents-group-20261007131332360900000002]
+aws_iam_policy.dell2_ssm: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell2-agent-ssm-policy]
+aws_iam_policy.dell_agent_routes_host[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy]
+aws_iam_policy.dell2_bus: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell2-agent-bus-policy]
+aws_iam_policy.dell_agent_deploy: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-deploy-policy]
+aws_iam_policy.dell_agent_create: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-create-policy]
+aws_iam_policy.dell_agent_respol_allow[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-respol-allow-policy]
+aws_iam_policy.dell1_bus: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell1-agent-bus-policy]
+aws_iam_user.dell2: Refreshing state... [id=cloudops-dell2-agent-user]
+aws_iam_policy.dell_agent_routes_fn[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-fn-policy]
+aws_iam_group.dell_agents: Refreshing state... [id=cloudops-dell-agents-group]
+aws_iam_policy.dell_agent_vendor_secrets[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-vendor-secrets-policy]
+aws_iam_policy.dell_agent_platform_secrets[0]: Refreshing state... [id=arn:aws:iam::313476888478:policy/cloudops-dell-agent-platform-secrets-policy]
+aws_iam_user_policy_attachment.dell2_ssm: Refreshing state... [id=cloudops-dell2-agent-user-20261007131332412200000004]
+aws_iam_user_policy_attachment.dell1_bus: Refreshing state... [id=cloudops-dell1-agent-user-20261007045950656800000001]
+aws_iam_user_policy_attachment.dell2_bus: Refreshing state... [id=cloudops-dell2-agent-user-20261007045950669000000003]
+aws_iam_group_policy_attachment.dell_agent_create: Refreshing state... [id=cloudops-dell-agents-group-20261007081550288100000001]
+aws_iam_group_policy_attachment.dell_agent_respol_allow[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008123931336900000001]
+aws_iam_group_policy_attachment.dell_agent_deploy: Refreshing state... [id=cloudops-dell-agents-group-20261007045950669000000002]
+aws_iam_group_membership.dell_agents: Refreshing state... [id=cloudops-dell-agents-membership]
+aws_iam_group_policy_attachment.dell_agent_routes_fn[0]: Refreshing state... [id=cloudops-dell-agents-group-20261007131332305000000001]
+aws_iam_group_policy_attachment.dell_agent_vendor_secrets[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008113346722500000001]
+aws_iam_group_policy_attachment.dell_agent_platform_secrets[0]: Refreshing state... [id=cloudops-dell-agents-group-20261008180017632500000001]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  # aws_iam_group_policy_attachment.dell_agent_routes_host[0] will be destroyed
+  # (because aws_iam_group_policy_attachment.dell_agent_routes_host is not in configuration)
+  - resource "aws_iam_group_policy_attachment" "dell_agent_routes_host" {
+      - group      = "cloudops-dell-agents-group" -> null
+      - id         = "cloudops-dell-agents-group-20261007131332360900000002" -> null
+      - policy_arn = "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy" -> null
+    }
+
+  # aws_iam_policy.dell_agent_routes_host[0] will be destroyed
+  # (because aws_iam_policy.dell_agent_routes_host is not in configuration)
+  - resource "aws_iam_policy" "dell_agent_routes_host" {
+      - arn              = "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy" -> null
+      - attachment_count = 1 -> null
+      - description      = "Dell agents: explicit Deny on writing or sending a command document, task definition or downloaded artifact prefix that runs as a privileged role." -> null
+      - id               = "arn:aws:iam::313476888478:policy/cloudops-dell-agent-routes-host-policy" -> null
+      - name             = "cloudops-dell-agent-routes-host-policy" -> null
+      - path             = "/" -> null
+      - policy           = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "ssm:UpdateDocument",
+                          - "ssm:UpdateDocumentDefaultVersion",
+                          - "ssm:CreateDocument",
+                          - "ssm:DeleteDocument",
+                          - "ssm:SendCommand",
+                        ]
+                      - Effect   = "Deny"
+                      - Resource = [
+                          - "arn:aws:ssm:us-east-1:313476888478:document/advi-49f-chain-dispatch",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-bd-49f-session-fetch",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-cot-bd-session-fetch",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-cot-bronze-run",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-cot-gold-run",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-cot-silver-run",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-export-run",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-jwt-fetch",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-jwt-setup",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-test-login-stage1",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-test-login-stage2",
+                          - "arn:aws:ssm:us-east-1:313476888478:document/opal-inf-test-login-stage3",
+                        ]
+                      - Sid      = "DenyRoutesToPrivilegedRolesDocuments"
+                    },
+                  - {
+                      - Action   = [
+                          - "s3:PutObject",
+                        ]
+                      - Effect   = "Deny"
+                      - Resource = [
+                          - "arn:aws:s3:::opal-data-cot/code/bronze/cot_bronze_ingest.py",
+                          - "arn:aws:s3:::opal-data-cot/code/gold/*",
+                          - "arn:aws:s3:::opal-data-cot/code/silver/cot_silver_merge.py",
+                          - "arn:aws:s3:::opal-data-inf/code/exporter/inf-jwt-fetch.sh",
+                          - "arn:aws:s3:::opal-data-inf/code/exporter/stepwise/*",
+                        ]
+                      - Sid      = "DenyRoutesToPrivilegedRolesPrefixes"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> null
+      - policy_id        = "ANPAUR7FNW6POTHIGMLQP" -> null
+      - tags             = {
+          - "DisplayName" = "DellBoxes"
+          - "Fwd"         = "FWD-10"
+          - "Project"     = "NFRA_CTLPLN"
+        } -> null
+      - tags_all         = {
+          - "DisplayName" = "DellBoxes"
+          - "Fwd"         = "FWD-10"
+          - "Project"     = "NFRA_CTLPLN"
+        } -> null
+        # (1 unchanged attribute hidden)
+    }
+
+Plan: 0 to add, 0 to change, 2 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Saved the plan to:
+C:\Users\AndrewBerman\Desktop\ajb_workspace\org\tier2_senior\0.7.0_AE_CloudOps\logs\2026-10-08\dell_step_d/step-d.tfplan
+
+To perform exactly these actions, run the following command to apply:
+    terraform apply "C:\\Users\\AndrewBerman\\Desktop\\ajb_workspace\\org\\tier2_senior\\0.7.0_AE_CloudOps\\logs\\2026-10-08\\dell_step_d/step-d.tfplan"

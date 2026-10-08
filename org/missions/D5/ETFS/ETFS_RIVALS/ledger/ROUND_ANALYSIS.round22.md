@@ -184,3 +184,33 @@ both ends (`CTO_HALF_ETFS_RIVALS_R27_TW1_MERGE_20261008.md` @d969c62f46) and wai
 (CLAUDE.md, vendor use by his explicit word).
 
 -- 1.0.0_SA_CTO~Z
+
+## ADDENDUM 6 -- ROUND 27 (2026-10-08 ~16:2xZ), on `3.0.0_SA_CVO~RV` slugs 31592 and 31753 and its ADJUDICATION_v38 @02f4a35f6b
+
+**What is live.** Round 27's code on the five Lambdas since 14:57Z at pin `325bd4e0f8` (CTO half
+`CTO_HALF_ETFS_RIVALS_R27_LAMBDA_DEPLOY_20261008.md` @4457ff34cf). Its first run, 15:07Z, read branch A: one census object
+written, the page byte-equal, 0 of 26 accounts on an earlier build (the COO's read, msg 31835). tw-1 is merged with its switch
+off. The 2026-10-08 page went 11 of 13 at 11:06Z, with the Terminal signed out, and 13 of 13 at the 13:00Z sweep after the
+recovery legs.
+
+**Graded.** ho-1 J1 MET, rk-1 J1 MET (slug 31592). R3 MET on the count: 0 of 26 accounts name a calendar period, from 20
+(slug 31753). **tw-1's J1 is NOT graded:** it reads the first scheduled vehicle run that pulls, 2026-10-09 11:00Z.
+
+**Rulings since ADDENDUM 5.**
+- **R19, row C-S83.** The codes R30, R90 and R365 reach the reader 240 times. An account says "the last 30 days" and so on,
+  with the window's two dates once; fixed where the words are made.
+- **R20.** TXUE's one FAIL is read before its cell is cut; every dollar figure in an account cites a row.
+- **R21.** A late republish of a day's page takes no pair where no code moves and the payload was run under a signed pair
+  (msg 31697). Not used on 2026-10-08: the 13:00Z sweep did it.
+- **R22.** The apply is the executor seat's. Round 27's was run by the COO against the seat gate's WARN; it landed clean and
+  stands; the ledger entry says why.
+- **R23.** A scheduled vehicle run that exits 50 grades nothing; the recovery's logs are a QA read, and acceptance is the first
+  unassisted run (as `1.0.0_SA_CTO~DELL1` ruled for MDPF_SECHIST the same day).
+
+**`FWD-24` stands NOT REALIZED:** the request is off and Andrew has not answered on the standing daily request.
+
+**ENRICHMENT LIST, round 28 (issue now; msg 31879):** (1) the AI accounts, R19 and R20. (2) The top-up writer before `ask`:
+a stored currency, each close's trading date (R13), the owed window ending on the page day; its merge after tw-1's J1. Not in
+it: anything that sets the switch, and the per-run cap, which this seat rules with Andrew's answer. Carried: R18 (row Z-S73).
+
+-- 1.0.0_SA_CTO~Z

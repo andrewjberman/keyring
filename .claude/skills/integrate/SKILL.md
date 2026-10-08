@@ -21,6 +21,79 @@ LD-0613. The last `SITEZ` tip is tag `archive/SITEZ-20260924`. The portal has ru
 never a fixed point. Two live fabrics cannot be at the same commit for longer than it takes someone to commit; a
 push-hold to manufacture equality is refused unless a real consumer asked for a frozen state.
 
+## PER-BOX BRANCHES -- a box that has switched (Andrew-direct 2026-10-08 ~18:0xZ)
+
+Design: `org/tier1_exec/4.0.0_SA_CRO~A/deliverables/PER_BOX_BRANCH_DESIGN_20261008.md` (Andrew's answers verbatim in
+section 9; cadence rules in section 10). Build placement: `1.0.0_SA_CTO` `PER_BOX_BRANCH_BUILD_PLACEMENT_20261008.md`.
+A box has SWITCHED once its shared tree is on `box/<box>` (`git symbolic-ref --short HEAD`). Until then Steps 0-3
+below apply to it unchanged. Once switched:
+
+- **Its seats commit to `box/<box>`; its MSTR pushes only `box/<box>` and NEVER pushes `CLOUD`.**
+- **`CLOUD` has ONE writer, the integrator: `0.0.0_AB_MSTR` (laptop).** `0.0.0_AB_MSTR~Z` takes over only on a
+  handover recorded in a ledger entry. Two live integrators re-create the push race this model removes.
+- **Slots** (`/govern`): laptop `:00`/`:30` (integrator pass, then its own box pass), site Z `:06`/`:36`, dell1
+  `:12`/`:42`, dell2 `:18`/`:48`. A slot is load-spreading, never what makes a pass safe: boxes share no writable ref.
+- **Skip, never overlap:** each pass takes `mkdir "$(git rev-parse --git-common-dir)/pass-<kind>.lock"` (kind = `box`
+  or `integrator`) and removes it at the end. If it exists and the pid in it is alive, this slot is skipped and said
+  so in one line. A dead holder's lock is removed and logged.
+
+### THE PROGRAM: `.tools/box-sync.sh` (Andrew-direct ~19:5xZ: "I think this should be programmatic")
+
+The two passes below run as ONE COMMAND each. Neither uses a worktree, and neither opens a merge in any shared tree.
+Each merge is computed with `git merge-tree --write-tree`, graded on a private index pinned to its two parents (only
+what the merge introduces), checked with `safe-merge.sh --verify-merge`, and written with `git commit-tree`.
+- **Box pass** (each box's MSTR, at its slot): `bash .tools/box-sync.sh box`. The only shared-tree act is the land,
+  under safe-commit's own lock: a compare-and-swap of `box/<box>`, plus `git read-tree -m -u` of the paths the trunk
+  changed. It takes about half a second in the fixture. It refuses rather than overwrite a seat's uncommitted edit.
+- **Integrator pass** (`0.0.0_AB_MSTR` only): `bash .tools/box-sync.sh integrate`. It touches no working tree, so it
+  costs the laptop a fetch, the merges and a push. It may run more often than `:00`/`:30`.
+- **Exit 4 = HELD** (a conflict, or a seat's dirty edit on a changed path). Nothing landed; it is logged as a
+  `BOX-SYNC` row. A conflict is resolved by hand with the procedure below. `--dry-run` reports without acting.
+- The manual procedures below stay as the fallback and the conflict path.
+
+### BOX PASS (every switched box, at its slot): take the trunk FIRST, then push
+
+```bash
+BOX=$(bash .tools/agentbus-sqs.sh device | sed -n 's/^device: //p'); B=box/$BOX; TS=$(date -u +%Y%m%dT%H%M%SZ)
+git fetch origin
+if ! git merge-base --is-ancestor origin/CLOUD "$B"; then         # 1. take the trunk (F1 shape) only if it moved
+  WT=<scratch>/drain-$TS; git worktree add "$WT" -b drain/$BOX/$TS "$B"
+  (cd "$WT" && bash .tools/safe-merge.sh origin/CLOUD)            #    grade + the TREE-DROP CHECK (below) in the worktree
+  (cd "$WT" && bash .tools/safe-merge.sh "$B")                    #    catch-up: this box's commits made during the grade
+  git merge --ff-only drain/$BOX/$TS                              #    shared tree (on $B): a fast-forward, seconds
+  git worktree remove "$WT"; git branch -d drain/$BOX/$TS
+fi
+git push origin "$B"                                              # 2. the deploy gate deploys THIS box's diff vs origin/CLOUD
+git ls-remote origin "refs/heads/$B"                              #    the only landing oracle
+```
+Taking the trunk first means the branch the integrator merges next already holds `CLOUD`, so its merge carries only
+this box's own new commits. The push is a fast-forward: nobody else writes `box/<box>`. The deploy gate deploys only
+this box's own diff against `origin/CLOUD` (B2, `.tools/git-hooks/pre-push-safe-deploy.sh`).
+
+### INTEGRATOR PASS (`0.0.0_AB_MSTR` only, at `:00` and `:30`, before its own box pass)
+
+```bash
+git fetch origin
+AHEAD=$(for r in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin/box/); do
+          git merge-base --is-ancestor "$r" origin/CLOUD || echo "$r"; done)
+[ -z "$AHEAD" ] && { echo "integrator: no box ahead of CLOUD -- no-op pass"; exit 0; }
+WT=<scratch>/drain-int-$TS; git worktree add "$WT" -b integrate/$TS origin/CLOUD
+for r in $AHEAD; do (cd "$WT" && bash .tools/safe-merge.sh "$r") || HELD="$HELD $r"; done   # see below
+#   TREE-DROP CHECK on every merge commit made, in the worktree, before the push
+git -C "$WT" push origin HEAD:CLOUD                               # an INTEGRATION push: the deploy gate deploys nothing
+git ls-remote origin refs/heads/CLOUD
+git worktree remove "$WT"; git branch -D integrate/$TS
+```
+- **One box at a time today; one merge with one grade per pass is the target.** `safe-merge.sh` takes one head, so the
+  pass merges the boxes that are ahead in turn. Each is small, because every box took the trunk before pushing. The
+  single octopus merge with one grade (design section 10, rule 3) lands with build item B3 in `safe-merge.sh`.
+- **A box that conflicts is HELD, not resolved under the clock:** abort that merge, carry on with the others, and send
+  that box's MSTR one agentbus message naming the conflicting paths. That box resolves it in its next box pass, by
+  taking the trunk, so the conflict is settled where the work was written.
+- **Before the laptop itself switches:** its own commits are still on `CLOUD` with no box branch. Push them first,
+  on their own (Steps 1-2: they deploy on that push), then run this pass. The deploy gate REFUSES an integration push
+  that also carries commits from no box branch, because those would never deploy.
+
 ## Step 0 -- identity + the two questions every push answers
 
 - You are an MSTR serial, or you stop here.

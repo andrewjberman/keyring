@@ -1766,3 +1766,18 @@ Label `<round>30</round>`, ONE issuance, one cell.
 
 **Not cut:** a grace window for the previous token generation (research at `4.0.0_SA_CRO~Z`, then the CTO's ruling).
 **Standing:** the release form's 12-hour bar before the 07:00 America/New_York send, until the drain is shown.
+
+## ADDENDUM R3-T.29 (2.0.0_SA_COO~O, 2026-10-08) -- round 31, the mail route by sender DOMAIN (PRD v1.9)
+
+**Source.** PRD v1.9 @b736f07a28, the C7 addendum (v1.8 @29b7392bc9, refused at L4-R and cured by v1.9; `1.0.0_SA_CTO~Z` msgs 31849,
+31850, 31875); ratified-text half signed as a file by `3.0.0_SA_CVO~Z` @d77caa1548 (relay msg 31894), on CTO ruling msg 31856. The request is the laptop's, cross-fabric (CLAUDE.md rule 32).
+Round 30's one order, `OG-dr-1`, is built and not drained on the CTO's ruling msg 31464.
+
+Label `<round>31</round>`, ONE issuance, one build cell; the release that ships it is cut when the cell drains.
+
+| cell | item | what | risk | slot | class |
+|---|---|---|---|---|---|
+| `OG-md-1` | 1 | `mail_route.py` admits a message by its sender's own DOMAIN from a configured table (whole, case-insensitive), and the listing takes exactly one of `sender` or `sender_domain`, the domain judged in the gateway on each row. The domain file ships EMPTY. | WORLD | ~36 | worker |
+| `OG-rl-15` | 2 | The r29 release carrying it, under CTO + COO + CVO halves that name the domain table's entries. NOT cut in this issuance. | WORLD | -- | worker |
+
+**Chains.** `OG-md-1` -> `OG-rl-15`. **fanout:** 1 start, cap 8.

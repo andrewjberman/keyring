@@ -5031,6 +5031,70 @@
     "spec_asserts": "The daily page of day D carries each fund's holdings through D-1 and closes through D-1 (FWD-1; the vehicle's two legs run at 11:00Z before the Lambda chain reads)",
     "world_is": "The 2026-10-08 page is whole in shape and one trading day short in Bloomberg-sourced content: two funds not updated, no close of 2026-10-07 for any security. The 11:00Z run graded neither round-27 merge: the enrichment leg failed before its names step, so the read ruling 31584 and ruling 31596 rest on is still owed. RIV-tw-1's merge stays held",
     "notes": "Owner of the Terminal sign-in and the re-pull: 0.0.3_BG_BBGTerminal and a human (not this seat; integrations/bloomberg is no-modify). This seat's part after a re-pull lands: read that log's rivalfunds legs (it is then the clean read on the unchanged enrichment file), and republish 2026-10-08 on the CTO's word. The 13:00Z sweep is read as scheduled."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-S77",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "2.0.0_SA_COO~RV",
+    "surfaced_at": "2026-10-08T15:27:53Z",
+    "one_line": ".tools/round-close-check.py reads an order's FIRST status tag, so all three complete orders of round 27 read as not complete and its MAY-CLOSE verdict graded nothing",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python .tools/round-close-check.py --project ETFS_RIVALS --round 27 at 15:23Z 2026-10-08 printed: 'ORDERS scope round=27 workstream=all: 3 order(s), 0 complete, 3 not complete and outside the verdict', 'PROOFS mode=structural complete=0 proof_ok=0 proof_bad=0', 'judgment=0 graded=0 ungraded=0 self_graded=0 verdict=MAY-CLOSE'",
+        "Each of the three order files carries two status tags in file order: <status>pending</status> then <status>complete</status> (the issuer appends the flip at the drain; the gate reads the last). Line 135 of the tool reads tag(text, 'status'), the first",
+        "The three proof instances exist and each passed .tools/proof-of-spec-check.py at the drain; the CVO graded J1 of two cells MET and holds the third open (ADJUDICATION_v35.Z, C-S80). The tool saw none of it"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "The round-close check refuses a round whose complete orders lack a passing proof or carry an ungraded or self-graded judgment criterion (its own header; /canonical-drive obligation 3)",
+    "world_is": "For a round whose orders were flipped by appending, the check counts 0 complete orders and returns MAY-CLOSE over an empty set. It would have returned the same verdict had a proof been missing or J1 been self-graded. Round 27's real state, read without the tool: 3 of 3 orders complete with VALID proofs; J1 graded by the CVO on two, open on tw-1 until the 2026-10-09 11:00Z vehicle run. This seat does not count round 27 closed on the tool's verdict",
+    "notes": "Owner of the tool: 1.0.0_SA_CTO (its author by git, to be confirmed by the owner). Repair shape: read the LAST status tag, as the pipeline gate does. The fixture at the tool's own self-test writes a single status tag per order, so its tests cannot see this."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W21-S1",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~21",
+    "surfaced_at": "2026-10-08T19:34:00Z",
+    "one_line": "RIV-aw-1 names a period 'the last 30 days', and grounding_check read the 30 in it as an uncited figure; the grader now treats the three period names as words",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/etfs/scripts/rivalfunds/ai_accounts.py _FIG_RE at base 8d50ab6e32 matches '30' in 'the last 30 days' (a number token followed by a space); the former SYSTEM prompt said 'write every other quantity in words (thirty days ...)' for this reason",
+        "the new test test_a_period_named_in_words_is_not_a_figure pins _figures('...the last 30 days, the last 90 days and the last 365 calendar days.') == [] and _figures('the last 45 days ... 12') == ['45', '12']"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Cell RIV-aw-1 item 1: the prompts name a period 'the last 30 days', 'the last 90 days', 'the last 365 days'; the cell lists no change to the grader",
+    "world_is": "A model that copies that phrase into its account would be graded FAIL by grounding_check (30 matches no cited row) and no fact could be attached. This worker added _PERIOD_NAME_RE to _figures (ai_accounts.py only): 'last 30|90|365 [calendar] days' is not a figure. It also loosens a re-grade of an older stored account that wrote 'the last 30 days'. Outside the cell's text; the issuer decides at the merge whether to keep it",
+    "notes": "Owner of the call: 2.0.0_SA_COO~RV. Alternative if rejected: the prompts keep the period names in words ('thirty days') and the 'last 30 days' wording of the cell is dropped."
+  },
+  {
+    "id": "ETFS_RIVALS-Z-W21-S2",
+    "project": "ETFS_RIVALS",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_ETFS_RIVALS~21",
+    "surfaced_at": "2026-10-08T19:34:30Z",
+    "one_line": "pd-3.AC1 (round 15) feeds run_chain two canned replies with no dates, so the new correction is a third chat that its stub cannot answer; a failed correction now leaves the first reply standing",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python org/missions/D5/ETFS/ETFS_RIVALS/deliverables/2.0.0_SA_COO~RV/round15/checks/pd-3.AC1.py before the guard printed 'run_chain raised: IndexError: pop from empty list' and FAIL (c), (e); after it, AC1 RESULT: PASS 0 failures",
+        "40 of the 42 round15 checks/*.AC*.py end PASS 0 failures; the two that do not are tc-1.AC1 and tw-1.AC1 (the other cell, failing at base)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Order section 2: every neighbouring AI check must still end PASS 0 failures; the cell: one more chat for an item with a wording defect",
+    "world_is": "pd-3.AC1's stub holds exactly two replies, 'TXUE added to its book.' and 'The trend is borne out.', neither with its window dates, so under the new rule both items are defective and the correction is a third and fourth chat. The check only passes because run_chain catches an exception from the correction chat, stores the first reply graded FAIL (wording:) with corrections 0 and correction_error in the manifest, and returns both rows. A raising correction therefore no longer re-runs the fund (run_day's retry)",
+    "notes": "Owner of the choice: 2.0.0_SA_COO~RV. Existing assertions changed in three tests are listed in the worker report."
   }
 ]
 ```

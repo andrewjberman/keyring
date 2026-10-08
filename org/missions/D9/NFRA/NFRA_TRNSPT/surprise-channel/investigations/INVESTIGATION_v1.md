@@ -881,6 +881,116 @@ seat's row is `NFRA_TRNSPT-S<k>`; the CVO's adjudication rows live in `../adjudi
     "spec_asserts": "TR-c-5: the manifest's deployed_commit is a commit whose mail_route.py can be read with git show and compared with HEAD.",
     "world_is": "The commit aa75078e1b is absent from this repo (deploy record 6a5d5e8d60 names it, source commit is not reachable here); the worker's record carries the facts and no MAIL_ROUTE line, so r5_checks c5-record reads FAIL.",
     "notes": "The issuer may read the same compare against a repo that holds the commit, or accept the 6a5d5e8d60 bound; that is a ruling, not the worker's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S3",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T19:25:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "Round-5 analysis E1 asks the 20261007T233013Z run record whether the 2026-08-11 message was listed and which admission test failed; run.json keeps totals only and holds no message id or per-test flag for a non-admitted candidate, so the question is answered by a re-classification read instead (decomposition round 6, ruling 1).",
+    "disarm_owner": "2.0.0_SA_COO~T2 (issuer act TR-e-6)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "data/transcripts/scripts/outlook/pull.py:134-190: run() adds a non-admitted candidate to candidates, near_miss, excluded_trade_update and not_landed_not_admitted and continues; no per-message entry is written",
+        "row NFRA_TRNSPT-D2-S2 grounding: run.json numeric fields only (candidates=99 ingest=3 near_miss=96 not_landed_not_admitted=96)"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "CTO round-5 analysis @a8931c9d12 E1 (1): from the fire's run record, read on dell2, is the 08-11 message's id present in the listing, and each admission test's result as pass/fail flags.",
+    "world_is": "The run record cannot answer it: it stores counts, not the listing or per-message flags. The decisive read is a gateway re-listing of 2026-08-10..12 for the pull's sender table with criterion.classify, flags only.",
+    "notes": "A run record that kept per-candidate flags (date, sender index, four booleans) would make the next such question a store read; that is a design option for the CTO, not built here."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S1",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T19:41:17Z",
+    "class": "BLOCKING",
+    "hazard_standing": "INERT",
+    "one_line": "TR-g-7: the ruled new silver column admission_class makes two existing test_outlook_silver.py assertions fail (19-column pins); the file is outside this order's paths, so the suite check is red until the issuer amends them.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -m pytest data/transcripts/scripts/tests -q -p no:cacheprovider -k 'outlook or mail or encrypted' --ignore=data/transcripts/scripts/tests/test_eod_voice.py: 2 failed, 99 passed",
+        "data/transcripts/scripts/tests/test_outlook_silver.py:149-153 test_row_columns_and_types pins set(row) to 19 names without admission_class; :232 test_the_wipes_limits_travel_inside_the_parquet asserts table.num_columns == 19 (now 20)",
+        "test_eod_voice.py fails at collection (ModuleNotFoundError: test_teams_chat_tenant), unrelated to this order and outside the -k filter's reach; excluded with --ignore"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-g-7 build item 4: silver gets a new column admission_class (schema updated), and the order asks existing outlook tests to stay green without changing an existing test's expectation.",
+    "world_is": "Adding the column is the ruled semantic and moves the silver row from 19 to 20 columns; the two pins are exact-set / exact-count assertions in a file this order does not grant. Both criteria (g7-class, g7-gold) pass; only the issuer's drain suite is red.",
+    "notes": "Fix is two lines in test_outlook_silver.py: add admission_class to the expected set and 19 -> 20. The worker did not edit it (refusal clause)."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W2-S2",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~2",
+    "surfaced_at": "2026-10-08T20:08:30Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TR-s-8: one utterance in research_transcripts/structured/RT-20260409-1029.json (seq 1) has speaker null, not a string; research_fold passes it through as None rather than listing the file as a parse failure.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "scan of the 29 structured files (20473 utterances): 1 utterance with a non-string speaker (NoneType), 0 with non-string text; the file's own speakers list names an UNATTRIBUTED speaker with 1 utterance",
+        "python org/tier1_exec/2.0.0_SA_COO/deliverables/NFRA_TRNSPT_T2/R8_CHECKS/r8s_checks.py s8-all -> R8-S8-ALL-OK files=29 rows=20473 failures=0 (with the pass-through); before it the same file was the sole failure"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "TR-s-8 build item 1 and the speaker ruling: speaker is a string passed through unchanged; a file that cannot parse is listed in failures.",
+    "world_is": "One utterance carries a null speaker (unattributed). Passing None through keeps the ruling 'speaker unchanged' and the 29-of-29 criterion; the silver speaker column therefore holds one null in 20473 rows.",
+    "notes": "The issuer may rule a sentinel (e.g. UNATTRIBUTED, matching the file's speakers list) instead of null; that is a one-line change in research_fold._fold_one and a ruling, not the worker's."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-W1-S2",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "0.9.0_WK_NFRA_TRNSPT~1",
+    "surfaced_at": "2026-10-08T20:24:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "TR-w-9: the per-row held_out count over the 29 files is 4555 rows, not 2716; 2716 is the number of DISTINCT residual-flag words (wipe_blocks de-duplicates its flag list), so the round-8 'rows held out' figure counted words.",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "python -c build(sorted(glob('research_transcripts/structured/*.json'))) at data/transcripts/scripts/teams/research_fold.py@c59ec0af21 -> files=29 rows=20473 failures=0 residual_flags=2716 held_out_rows=4555",
+        "data/transcripts/scripts/outlook/wipe.py:336-337 appends a flag only 'if w not in flags'; the per-block occurrence counter c2['residual'] counts every occurrence; held_out uses the latter via a _Wiper mirror asserted equal to wipe_blocks' flag list"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "Round-8 analysis @08ff07562f and the TR-w-9 cell: '2,716 residual-flag rows held out'; held_out is TRUE when an utterance drew at least one residual flag.",
+    "world_is": "Under the TR-w-9 definition 4555 of 20473 rows are held out (15918 stored and re-wiped); 2716 is residual_flags, a distinct-word count. The writer follows the stated definition, so the issuer's served write holds out 4555 rows.",
+    "notes": "Test fixtures show sentence-initial title/common capitalised words (e.g. a leading title or noun) also draw a flag, which is why the row count exceeds the word count. The issuer should expect 4555, not 2716, in the read-back."
+  },
+  {
+    "id": "NFRA_TRNSPT-D2-S4",
+    "project": "NFRA_TRNSPT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~T2",
+    "surfaced_at": "2026-10-08T20:50:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "one_line": "A second producer writes into opal-data-transcripts: on 2026-10-08, 71 objects under teams/transcripts/bronze/chat_messages/ (00:28Z..20:19Z) and 4 under teams/transcripts/state/chat_assist/ (10:47Z..20:42Z), from the Teams chat-assist code (data/transcripts/scripts/teams_chat/assist.py, infra/aws/terraform/transcripts/chat_assist.tf), not this project's mail pull or transcript pull; its owner is unconfirmed (recent commits by NFRA_CTLPLN workers).",
+    "disarm_owner": "1.0.0_SA_CTO~DELL2 (confirm the producer's owning project and whether it belongs under NFRA_TRNSPT's store and reader set)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3 list opal-data-transcripts (2,088 objects, 2026-10-08T20:4xZ): teams/transcripts/bronze/chat_messages today=71; teams/transcripts/state/chat_assist today=4; positive control: teams/transcripts/silver/research_meeting today=29 (this project's TR-x-9 write, 20:41Z)",
+        "producer: data/transcripts/scripts/teams_chat/assist.py:56 address('teams','transcripts',tier,table,partition,obj); deploy infra/aws/terraform/transcripts/chat_assist.tf",
+        "git log on those two paths: 9734652dbe (0.9.0_WK_NFRA_CTLPLN~34, 2026-10-08), 377ee45542 and 6975661829 (0.9.0_WK_NFRA_CTLPLN~31, 2026-10-07)",
+        "CTO msg 1567 counted 84 such objects over its own window; this census counts 75 for the UTC day 2026-10-08"
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "PRD C-BUCKET / C-TIERS: opal-data-transcripts is NFRA_TRNSPT's one store, written by this project's pulls; FWD-8 names its readers (CTO msgs 1542, 1567).",
+    "world_is": "Another project's Teams chat-assist Lambda writes chat_messages bronze and chat_assist state into the same bucket under the teams/transcripts prefix, with no NFRA_TRNSPT registry row, decomposition cell or owner on this project's record.",
+    "notes": "Counts and keys only; no object content was read. Not a hazard to the project's own partitions (disjoint prefixes)."
   }
 ]
 ```

@@ -214,3 +214,73 @@ grant).
 This seat signs the CTO half when the packet arrives.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 9 (2026-10-08 ~19:2xZ, on `3.0.0_SA_CVO` slug msg 1470, ADJUDICATION_v37 @923b595b23): round 81 ~P
+
+**State.**
+- **IB-pr-368 RELEASED** (E7 part 1). Live `irpt-export-render` is `idanP8nX...`; the CVO's census reads 64 of 64 with `changed_members=0`.
+  This seat re-read the live CodeSha256.
+- The packaged repository now names CUSTODY_REPORT. The custody read stays closed until E8 and E9 land.
+- ARMED: W165-S2 only.
+- D2-W176-S3 is OPEN to `~P2`, for E9.
+
+**Next, in ADDENDUM 6's order. Each step is unblocked as soon as the one before it lands.**
+1. `~M2`: merge E8 (`irpt-custody-x10-v1`, PENDING_ENFORCEMENT; branch `m2-e8-custody-row` @8530114ff9, equality proof PASS).
+2. `~P2`: E9, the per-family revision map in `ReportRepository`, released under its own pair.
+3. E8 flips to ACTIVE.
+4. `~K2`: E2 retains one real custody report.
+5. The owner read and the other-firm refusal run. They close D2-W172-S3 and D2-W175-S1.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 10 (2026-10-08 ~19:5xZ, on `3.0.0_SA_CVO` slug msg 1510, ADJUDICATION_v38 @a457075a38): round 82 ~P
+
+**State.**
+- MAY-CLOSE. Both ARMED rows are fixed at HEAD and dismissed. ARMED: W165-S2 only.
+- **D2-W177-S2 is OPEN.** Two custody callers sit outside IB-pr-369 (E9):
+  - `ycharts/generate/custody_submission.py` builds its repositories with no custody revision;
+  - `persist_custody_report` has NO production composition site. This is the round-6 IRPT_CUSTDY break (1): no deployed function packages
+    the custody writer.
+
+**Ruling.** The custody chain needs a deployed writer before E2 can retain a real report. Two cells, one per lane, both after E9 is live:
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E10 | `~P2` | **A production composition site for `persist_custody_report`** in the one function that will run IRPT_CUSTDY's producer, named in the packet with its reason, and composing the enforced repository with `irpt-custody-x10-v1` through the registry-gated probe | (1) the release census at the pin lists the writer and its composition as owned members, with no rider; (2) a test through the composed path: a CUSTODY_REPORT is retained under `irpt-custody-x10-v1` and read back, while an unregistered kind refuses | SERVED (own pair) |
+| E11 | `~Y2` | **`custody_submission.py` composes with the custody revision** (the same probe), in the release after E6, never added to E6's signed pair | (1) a test: custody submission repositories carry `irpt-custody-x10-v1`, and PERFORMANCE and ANALYSIS stay on `irpt-x10-v1` | LOCAL, then rides `~Y2`'s next pair |
+
+**Order:** E9 live -> E8 ACTIVE -> E10 released -> IRPT_CUSTDY E2a retains one real custody report through E10's function -> the owner
+read and the other-firm refusal. These close D2-W172-S3, D2-W175-S1 and D2-W177-S2 together.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 11 (2026-10-08 ~20:1xZ, on `3.0.0_SA_CVO` slug msg 1538, ADJUDICATION_v39 @e10859151c): round 83 ~P
+
+**State.** MAY-CLOSE. The census at 0a57f3c0e9 changes the 5 named members. ARMED: W165-S2 only. D2-W178-S2 is OPEN to this seat.
+
+**D2-W178-S2: YES, the custody ACTIVE flip rides E10's pair**, as already ruled in the IB-pr-370 CTO half @c086ec4c2b. The order is:
+1. E9 releases (replay-checked).
+2. `~M2` flips E8 to ACTIVE in the registry.
+3. `~P2` cuts E10's pin, carrying the custody writer's composition site AND the ACTIVE row, as the third release.
+4. IRPT_CUSTDY E2a.
+5. The owner read and the other-firm refusal.
+
+The row closes on the owner read.
+
+-- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 12 (2026-10-08 ~20:3xZ, on `3.0.0_SA_CVO` slug msg 1559, ADJUDICATION_v40 @8d06a3d200): round 84 ~P; the E6 grant is live
+
+**State.**
+- **E9 is live** (`PbyqmHBQ`, 64 of 64 with 0 changed). D2-W176-S3 is closed. ARMED: W165-S2 only.
+- **E6 leg 1 is APPLIED** on the laptop at 20:25:33Z: the opal-partner GetItem grant, read back live (MSTR 1557).
+- **Andrew approved leg 2's single S3 delete** at the laptop ("Yes do it", ~19:3xZ, @39ab7ddd70).
+- `~Y2` has the GO for the E6 code deploy (msg 1560).
+
+**Next for the custody chain (unchanged):**
+1. `~M2` flips E8 to ACTIVE.
+2. `~P2` cuts E10 (the writer composition site plus the ACTIVE row).
+3. IRPT_CUSTDY E2a.
+4. The owner read, which closes D2-W172-S3, W175-S1, W177-S2 and W178-S2 together.
+
+-- 1.0.0_SA_CTO~DELL2

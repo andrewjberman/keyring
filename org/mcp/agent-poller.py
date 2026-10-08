@@ -15,6 +15,9 @@ What it does:
        (no manual deregister_agent call needed).
     3. While the MCP server is alive, updates last_seen_epoch in liveness.json
        every 2 seconds and heartbeats the broker every 10 seconds.
+    4. Single instance per serial via the named mutex Local\\opal-poller-<serial>;
+       re-reads liveness[serial].pid each cycle and follows a re-registration;
+       exits if the serial's entry is removed (never recreates it).
 
 What it does NOT do:
     - Does NOT touch the inbox. Inbox watching is handled by a separate script:
@@ -31,6 +34,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 import time
 import urllib.request
@@ -40,7 +44,9 @@ from pathlib import Path
 from contextlib import contextmanager
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-LIVENESS_FILE = SCRIPT_DIR / "liveness.json"
+# OPAL_LIVENESS_FILE overrides the registry path (scratch exercises only); the
+# default is unchanged.
+LIVENESS_FILE = Path(os.environ.get("OPAL_LIVENESS_FILE") or (SCRIPT_DIR / "liveness.json"))
 ORG_ROOT = SCRIPT_DIR.parent
 
 # Heartbeat cadence. Bounded by server.py STALE_THRESHOLD (120s) -- a heartbeat
@@ -203,26 +209,78 @@ def _read_mcp_pid(serial: str) -> int | None:
     return None
 
 
-def _update_heartbeat(serial: str) -> bool:
-    """Update last_seen_epoch in liveness.json. Returns True if successful."""
+_MUTEX_HANDLE = None  # held for the process lifetime; the OS frees it on exit
+
+
+def _acquire_single_instance(serial: str) -> bool:
+    """Take the per-serial named mutex. False = another poller already holds it.
+
+    Windows only. The OS releases a named mutex when its last handle closes,
+    which includes process death, so a crashed poller leaves no stale state.
+    Fails open (returns True) if the mutex cannot be created at all.
+    """
+    global _MUTEX_HANDLE
+    if sys.platform != "win32":
+        return True
+    import ctypes
+    from ctypes import wintypes
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    kernel32.CreateMutexW.restype = wintypes.HANDLE
+    kernel32.CreateMutexW.argtypes = [ctypes.c_void_p, wintypes.BOOL, wintypes.LPCWSTR]
+    ERROR_ALREADY_EXISTS = 183
+    name = "Local\\opal-poller-" + re.sub(r"[^A-Za-z0-9._~-]", "_", serial)
+    handle = kernel32.CreateMutexW(None, False, name)
+    err = ctypes.get_last_error()
+    if not handle:
+        print(f"WARN: CreateMutexW failed for {name} (err {err}); continuing without "
+              f"single-instance guard", file=sys.stderr)
+        return True
+    if err == ERROR_ALREADY_EXISTS:
+        kernel32.CloseHandle(handle)
+        return False
+    _MUTEX_HANDLE = handle
+    return True
+
+
+def _read_entry_pid(serial: str) -> tuple[str, int | None]:
+    """Read liveness[serial].pid. Returns (state, pid).
+
+    state: "ok" (entry with an int pid), "gone" (serial absent from a readable
+    file), or "unknown" (read failed, or entry has no int pid). Only "gone" is
+    a verdict; "unknown" never ends the poller.
+    """
+    try:
+        with _locked_liveness(write=False) as data:
+            entry = data.get(serial)
+            if entry is None:
+                return "gone", None
+            pid = entry.get("pid") if isinstance(entry, dict) else None
+            if isinstance(pid, int):
+                return "ok", pid
+            return "unknown", None
+    except Exception as e:
+        print(f"WARN: liveness read failed: {e}", file=sys.stderr)
+        return "unknown", None
+
+
+def _update_heartbeat(serial: str) -> str:
+    """Update last_seen_epoch in liveness.json. Returns "ok", "gone" or "error".
+
+    Never recreates a deleted entry: an absent serial means the registration
+    was removed (deregister / _clean_stale), and resurrecting it under the
+    poller's own pid made the poller its own liveness witness.
+    """
     now = time.time()
     try:
         with _locked_liveness(write=True) as data:
             if serial not in data:
-                data[serial] = {
-                    "pid": os.getpid(),
-                    "summary": "background poller active",
-                    "registered_at": datetime.now(timezone.utc).isoformat(),
-                    "last_seen": datetime.now(timezone.utc).isoformat(),
-                    "last_seen_epoch": now,
-                }
-            else:
-                data[serial]["last_seen"] = datetime.now(timezone.utc).isoformat()
-                data[serial]["last_seen_epoch"] = now
-        return True
+                return "gone"
+            data[serial]["last_seen"] = datetime.now(timezone.utc).isoformat()
+            data[serial]["last_seen_epoch"] = now
+        return "ok"
     except Exception as e:
         print(f"WARN: heartbeat failed: {e}", file=sys.stderr)
-        return False
+        return "error"
 
 
 def _broker_heartbeat(serial: str) -> None:
@@ -246,6 +304,12 @@ def main():
         sys.exit(1)
 
     serial = sys.argv[1]
+    # Single instance per serial, enforced by the poller itself (the launch
+    # hook's pidfile check is only a fast path).
+    if not _acquire_single_instance(serial):
+        print(f"OK: poller already running for {serial} (named mutex held); exiting",
+              file=sys.stderr)
+        sys.exit(0)
     # All serials (ws + CL) use the unified opal-agent-comms broker since LD-0034.
     # The per-CL-channel switch is RETIRED (LD-0202 E2) -- see note above.
     channel = "opal-agent-comms"
@@ -286,6 +350,22 @@ def main():
     broker_cycle = 0
     try:
         while True:
+            # Follow the registration: re-read liveness[serial].pid every cycle.
+            # A re-register (new session, same serial) rewrites the pid; watch
+            # the new server if it is live. A removed entry ends the poller.
+            state, entry_pid = _read_entry_pid(full_serial)
+            if state == "gone":
+                print(
+                    f"OK: {full_serial} no longer in {LIVENESS_FILE} -- poller exiting",
+                    file=sys.stderr,
+                )
+                sys.exit(0)
+            if (state == "ok" and entry_pid != mcp_pid and entry_pid != os.getpid()
+                    and _pid_alive(entry_pid)):
+                print(f"  Now tracking MCP server PID: {entry_pid} (was {mcp_pid})",
+                      file=sys.stderr)
+                mcp_pid = entry_pid
+
             # Watchdog: if the MCP server process we're proxying for has died,
             # the terminal was closed / session ended / process crashed. Exit
             # so last_seen_epoch stops advancing — server.py's _clean_stale
@@ -300,8 +380,13 @@ def main():
                 )
                 sys.exit(0)
 
-            # Heartbeat to liveness.json (every cycle = 15s)
-            _update_heartbeat(full_serial)
+            # Heartbeat to liveness.json (every cycle = 15s). Never recreates.
+            if _update_heartbeat(full_serial) == "gone":
+                print(
+                    f"OK: {full_serial} no longer in {LIVENESS_FILE} -- poller exiting",
+                    file=sys.stderr,
+                )
+                sys.exit(0)
 
             # Heartbeat to broker (every 5th cycle = 75s, reduce HTTP chatter).
             # Cadence-independent for liveness: broker.py _clean_stale evicts on

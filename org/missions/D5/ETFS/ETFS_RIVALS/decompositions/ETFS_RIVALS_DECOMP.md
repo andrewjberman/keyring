@@ -904,3 +904,112 @@ RIV-ho-1, so no chain waits on another. Risk SERVED.
   issuer's own measurement of the live table on 2026-10-07 and 2026-10-08: 8 objects over 5 dates, the two untimed on
   2026-09-29 alone, no `price_date` column anywhere, `as_of_source` absent or `pull` on every row.
 - **Organic trigger:** any republish; the issuer's real run reads 0 moved rows and identical charts.
+
+## ROUND 28 (main workstream) -- APPENDED 2026-10-08, revision 1.18 of this file
+
+Two cells on the ENRICHMENT LIST of ROUND_ANALYSIS.round22 ADDENDUM 6 (@8ea0b4a05a; CTO msg 31885: issue now): (1) the AI
+accounts, CTO rulings R19 and R20; (2) the top-up writer before `ask`, CTO half C2 of round 27 and ruling R13. Not in the
+round: anything that sets the switch `RIVALFUNDS_HISTORY_OWED`, and `HISTORY_OWED_CAP` (the CTO rules it with Andrew's
+answer). Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Two chains with disjoint files: `~21` RIV-aw-1
+(ai_accounts.py), `~22` RIV-tc-1 (enrichment_bloomberg.py). RIV-tc-1's merge is a deploy to the 11:00Z vehicle and lands
+only after RIV-tw-1's J1 is graded on the 2026-10-09 run. Risk SERVED.
+
+### `RIV-aw-1` -- an AI account names its periods in words with the window's two dates, never by the system's codes, and cites a row for every dollar figure; one correction call when it does not (CTO rulings R19, R20; rows C-S83; ROUND_ANALYSIS.round22 ADDENDUM 6)
+- Measured (served page 2026-10-08, 13:08Z): 26 account items over 13 funds. The codes `R30`, `R90` and `R365` reach the
+  reader 240 times ("The top R30 contributor ..."): the SYSTEM prompt teaches the codes and the fact lines carry them.
+  One item (TXUE, the 30-day account) is shown as grounding FAIL: it states "$1.2 million" and cites no row for it, and
+  three uncited facts round to that amount, so `attach_uncited` cannot attach one
+  (`deliverables/2.0.0_SA_COO~RV/round28_prep/R20_TXUE_GROUNDING_FAIL_READ_20261008.md`). Where exactly one uncited fact
+  matches, `attach_uncited` attaches it silently and the item reads "Grounded".
+- Interface (`data/etfs/scripts/rivalfunds/ai_accounts.py` only):
+  1. **Words, not codes.** `PROMPT_VERSION` becomes `a1-chain/7`. The SYSTEM prompt and the TEXT of every fact line
+     given to the model name a period as "the last 30 days", "the last 90 days" or "the last 365 days" and never contain
+     the tokens `R30`, `R90`, `R365` (a fact's `id` and its `cited_row` keys keep the codes: they are keys, not prose).
+     Each prompt names, once, the two end dates of each period it covers, as ISO dates, taken from the same window the
+     fact pack is built on (the 30-day account: the 30-day window; the direction verdict: the 30-, 90- and 365-day
+     windows), and tells the model to state the window's two dates once in `text`.
+  2. **A wording check**, a new pure function `wording_check(text_fields, windows) -> list[str]` (empty = clean): it
+     returns one reason per defect over the item's `text`, `observed`, `inferred` and `invalidation`: (a) a period code
+     as a whole word, case-insensitive (`R30`, `R90`, `R365`; also `MTD`, `QTD`, `YTD`); (b) the item's own window
+     dates not both present in `text` (the 30-day account: the 30-day window's two ISO dates; the direction verdict: the
+     365-day window's two).
+  3. **Cite every dollar figure.** The SYSTEM prompt requires the id of a fact in `cited` for EVERY figure written. A
+     figure the item writes that no CITED row carries is a defect even when exactly one uncited fact matches it
+     (today's silent attach).
+  4. **One correction call per item.** When an item has a wording defect (2) or an uncited figure (3), the chain sends
+     ONE more `client.chat` for that item: the item's own message history, the item's reply as the assistant turn, and
+     one user message that lists each defect (for an uncited figure: the figure and the ids of the candidate facts;
+     for a code: the code and the words to use; for missing dates: the two dates) and asks for the corrected JSON
+     object. The corrected reply replaces the item and is graded once more by the same checks; there is no second
+     correction. The direction verdict's own prompt is built on the FIRST reply of the 30-day account, as today: a
+     correction of item 1 does not re-run item 2. At most 2 additional `chat` calls per fund per run.
+  5. **What is stored.** An item still carrying a wording defect after its correction is stored with
+     `grounding = "FAIL"` and the defect in `grounding_reason` (prefix `wording: `), beside any figure reasons. After the
+     correction, `attach_uncited` still runs as today (an item is not failed for a figure a single fact explains), and
+     the number of figures it attached is written as an integer `attached_figures` inside the row's `input_manifest`
+     JSON, with `corrections` (0 or 1). No column is added to the stored table and no reader changes.
+  6. `regrade_rows` / `regrade_day` re-grade stored items with the new checks and send NOTHING to a model.
+- Rulings at the cut (issuer): the fix is where the words are made; nothing in `render.py` or `publish_page.py` replaces
+  a code in a stored account. The page's own labels and data attributes that say R30 / R90 / R365 are not this cell's.
+  NOTHING in this cell or its checks calls a model or the web: every check and test passes a stub client. The first
+  real accounts under the new prompt are the 13:00Z sweep's after the deploy.
+- Rulings on the check drafter's questions (issuer): a period's two dates are the `period_start` and `period_end` of
+  that period's contribution rows in the fact pack (the dates the page's own period labels show), not the 30-trading-day
+  trade window; `fact_pack` and `run_chain` keep today's signatures and the chain takes the windows from the facts (a
+  fact may carry them). `wording_check(text_fields, windows)`: `text_fields` is a dict `{"text", "observed": [..],
+  "inferred": [..], "invalidation"}`, `windows` a list of `(start_iso, end_iso)` pairs; a code's reason names the code.
+  A correction is the item's history, then the item's reply byte for byte as the assistant turn, then ONE user message;
+  for a figure it writes the figure as the reply wrote it and each candidate fact id as a whole token. `attached_figures`
+  and `corrections` are integers in EVERY row's `input_manifest`. `regrade_rows` keeps its arguments and applies the
+  wording rule and the cite-every-figure rule only to a row whose `prompt_version` is `a1-chain/7` or later (older
+  stored accounts are re-graded as today). The two user-prompt templates outside the fact lines carry no code either
+  (not graded by the checks: pin it in your package test). A fact id written into an item's prose counts as the code it
+  contains.
+- **Organic trigger:** the first 13:00Z sweep after the deploy; the issuer's read counts the codes in the 26 served
+  account items (0 expected), the items stating their two dates (26 expected), the FAIL items and the sum of
+  `attached_figures`.
+
+### `RIV-tc-1` -- a top-up close is stored with a currency, and the owed window ends on the page day (CTO half C2 of round 27; ROUND_ANALYSIS.round22 ADDENDUM 6 item 2; CTO ruling R13)
+- Measured (round 27 as built, `enrichment_bloomberg._history_owed`): a top-up row is written with `currency` NULL
+  (`{"PX_LAST": px, "CRNCY": None}`), and a security that never had a daily pull would have closes and no stored
+  currency (the chart draws no curve without one). The leg calls `history_owed.owed(s, date)` with the REPORT date, so
+  the window ends one trading day before it and the report date itself is never owed for a security the daily pull
+  did not ask (a formerly-held one). `market-range` already has the pattern: `_stored_currencies` first, then ONE
+  `_blp_reference_data` request for the single field `CRNCY` for exactly the securities with none, counted in the
+  budget before any request.
+- Interface (`data/etfs/scripts/rivalfunds/enrichment_bloomberg.py` only, inside the branch the switch opens):
+  1. **The window's end.** The leg calls `history_owed.owed(s, page_day)` where `page_day` is the next trading day
+     after the report date (`lib.trading_calendar`), so the report date is the newest date a unit can be owed for. In
+     `print` and in `ask`.
+  2. **Currency, in `ask` only.** For the securities among the units to ask: the stored currency
+     (`_stored_currencies`, over the owed window) where one exists; for those with none, ONE `_blp_reference_data`
+     request for the single field `CRNCY`, sent through `_blp_call`, BEFORE the history requests. Its points (one per
+     security asked) are part of the count passed to `bbg_budget.check_points` (units to ask plus currency lookups) and
+     are recorded with `bbg_budget.record("history-owed", <securities asked>, batch_id)`. A top-up row carries the
+     currency found, NULL only when the lookup returned none for that security. If the currency request fails, no
+     history request is sent, nothing lands, and the line reads `carried <all>` with the failure.
+  3. **The printed line** in `ask` gains `; currency lookups <n>` after `asked <a>`; in `print` it gains
+     `; currency lookups <n> (not sent)` computed from the stored currencies alone (no request).
+  4. `price_date` on every top-up row stays as round 27 built it (the returned trading date; a close for a date not
+     asked is not written).
+  5. With the switch OFF nothing changes: `tw-1.AC1.py` still ends `PASS 0 failures` (it compares the OFF run with the
+     module at commit 361b735308).
+  6. **The cap (AMENDMENT 1, Andrew-direct ~17:1xZ via CTO msg 31926, ruling R24).** `HISTORY_OWED_CAP` becomes `20000`
+     (an `int`): up to 20,000 units a run, each unit one security on one day, so at most 20,000 returned records. It is the
+     only number that changes; `tw-1.AC1.py` arm (e), amended with this order, reads `20000`.
+- Rulings at the cut (issuer): `HISTORY_OWED_CAP` is 20,000 by item 6 (ruling R24). Nothing here
+  sets the switch: `ask` is set only after this cell is merged and RIV-tw-1's J1 is graded, where the vehicle reads it, in a pair. NOTHING in this cell or its checks calls a vendor: every check and test stubs the client hook and
+  points the budget ledger at a temp directory. The cap counts history units only; the currency lookups are counted
+  on top of it in the budget check.
+- Rulings on the check drafter's questions (issuer): `_stored_currencies` is read from the window's first day THROUGH
+  THE REPORT DATE, so a security the daily pull priced in this same run takes its currency from the object just written
+  and is never looked up. The `currency lookups <n>` clause is OMITTED when n is 0, in `print` and in `ask` (as
+  `misdated` and `failed` are): with both, round 27's `tw-1.AC2.py` still ends `PASS 0 failures` unchanged, and it must.
+  The lookup is ONE reference request whose fields are exactly `["CRNCY"]`, recorded by its OWN `bbg_budget.record`
+  call; a lookup that was sent and failed is recorded as spent, as `market-range` records it. After a failed lookup the
+  line says `asked 0` and `carried <all>` and names the failure; the result dict's shape for that case is yours. Under
+  the cap, lookups are counted over the securities of the capped units only. A security the lookup returned no currency
+  for is looked up again on a later run (one point each time; stated for the cap's ruling). The read cost of
+  `_stored_currencies` over the window is accepted in `ask` and in `print`.
+- **Organic trigger:** none while the switch is OFF. THE VEHICLE RUNS THIS FILE FROM THE WORKING TREE: the merge is a
+  deploy to the 11:00Z job, lands only after RIV-tw-1's J1 is graded on the 2026-10-09 run, and carries a pair.

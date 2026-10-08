@@ -3,12 +3,13 @@
   "project": "NFRA_MCPORTAL",
   "directive": "D6",
   "fabric": "site-z",
-  "prd_version": "v0.4",
+  "prd_version": "v0.5",
   "step": 4,
   "brief_ref": "docs/briefs/mcportal-tech-ops-dashboard-brief-20260917.md@8d1f5c362b",
   "endpoint_outcomes": [
     "FWD-1", "FWD-2", "FWD-3", "FWD-4", "FWD-5", "FWD-6", "FWD-7",
-    "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13"
+    "FWD-8", "FWD-9", "FWD-10", "FWD-11", "FWD-12", "FWD-13",
+    "FWD-14", "FWD-15", "FWD-16", "FWD-17", "FWD-18", "FWD-19"
   ],
   "status": "DRAFT"
 }
@@ -162,6 +163,40 @@ and ACCEPT are verbatim, and SOURCE lines are dropped.
          DONE WHEN  EXERCISED -- one suspicious address blocked and unblocked
          ACCEPT     Andrew goes from "this address looks wrong" to blocked without the AWS console,
                     and the block and its removal are recorded
+
+  FWD-14 Andrew opens the control-plane page and sees, without asking any seat, which box is
+         working on what right now, by box, seat and project, with each box's last commit (v0.5)
+         DONE WHEN  EXERCISED -- Andrew names one box's projects this afternoon from the page alone
+         ACCEPT     every figure carries its age; a box that is not reporting reads "not reporting",
+                    never zero; the counts match the activity store for the same window
+
+  FWD-15 Andrew sees where two or more boxes are on the same surface, rated by risk (v0.5)
+         DONE WHEN  EXERCISED -- one real overlap read on the page and checked against the store
+         ACCEPT     each shared surface is rated by what it is (Terraform first) and whether a deploy
+                    is open on it; two boxes editing a surface one holds a deploy on stands out from
+                    two boxes appending to a shared log
+
+  FWD-16 Andrew sees each box's git state: committed, pushed to its box branch, on the trunk, and
+         when the trunk last moved or integration was refused (v0.5)
+         DONE WHEN  EXERCISED -- one box whose work is not on the trunk is seen as such the same day
+         ACCEPT     the page's per-box states match the branches and integration records; an event
+                    with no recorded home reads "not recorded", never absent-as-zero
+
+  FWD-17 Andrew reads every open call on every box and closes one with his ruling from the page (v0.5)
+         DONE WHEN  EXERCISED -- one real call closed from the page
+         ACCEPT     calls show box, project, asking seat and age; a box with no published list reads
+                    absent, never empty; the close lands in that box's list with his ruling
+
+  FWD-18 Andrew reads the gateway as one map: every channel, its tools, and what each reaches (v0.5)
+         DONE WHEN  EXERCISED -- one channel's reach answered from the page and checked in code
+         ACCEPT     each tool shows what it reaches, the fields where known, read or act, and the tier
+                    and entitlement that admit it, REST routes included; the map is generated from
+                    the gateway's own definitions and cannot drift from what it serves
+
+  FWD-19 Every channel carries a sensitivity rating, stored where a later policy can read it (v0.5)
+         DONE WHEN  EXERCISED -- the ratings read from the page and from their stored form agree
+         ACCEPT     each channel shows its rating and a one-line reason; a channel with no rating
+                    reads "unrated", never a default level; no policy acts on a rating
 ```
 
 ## CONTRACTS
@@ -366,3 +401,66 @@ Health Check, User Analytics, Infosec, Cost. S6 joins once G-OPLGTW is given. **
 moves into `opal_ai` under NFRA_OPALAI's G-MOVE. A cell that edits gateway code is cut against the path where the
 gateway lives at issuance, and is re-cut if the move lands mid-program. The two projects' gateway cells are never
 issued into the same round with overlapping paths (one issuer, `2.0.0_SA_COO~O`, holds both).
+
+### v0.5 addendum (2026-10-08 ~20:4xZ, 1.0.0_SA_CTO~O) -- the control plane: the fabric seen, the gateway mapped and rated
+
+**Input.** Andrew-direct ~18:4xZ at the laptop, point 4: "MC portal becomes the control plane" (record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_184xZ_FIVE_POINTS_KIMMY_EFFICIENCY_ALYSSA_MCPORTAL_OPEN_CALLS_AGGREGATE.md`,
+on the laptop; relayed to this seat by laptop `1.0.0_SA_CTO` msgs 107123 and 107181 through `0.0.0_AB_MSTR~Z` msg 31980;
+this seat read the relay, not the record). The ask: un-park the project and cut this addendum. The brief is
+`docs/briefs/mcportal-control-plane-brief-20261008.md` @bdeea1aefc (`4.0.0_SA_CRO`, laptop), with the gateway census
+`org/tier1_exec/4.0.0_SA_CRO/deliverables/GATEWAY_CHANNEL_MAP_20261008.md`, both read whole from origin CLOUD a8689cb259.
+
+**Un-park.** The project is un-parked by his word. Its old un-park condition (the Alyssa sitting, G-CLOSE) no longer gates
+the control-plane work. G-CLOSE itself stays held: Andrew held Alyssa's close run until gateway r29 is live (~20:0xZ,
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md`).
+
+**What this reverses.** Scope listed "a Fabric page" as NOT this project's (brief Part II of 2026-09-17). His word of today
+makes the fabric pages this project's. The other exclusions stand.
+
+**Endpoint.** FWD-14 to FWD-19 above, one per brief outcome O1 to O6. O7 (pull a person off) is FWD-6 and FWD-10 as written;
+O8 (who may reach which channel) is FWD-1. Neither is re-scoped. FWD-14 is the THREAD of this addition: one page, Andrew
+signed in, real data from the activity store. DONE WHEN lines are confirmed by this seat under the 2026-09-24 goal licence,
+as v0.1's were; Andrew may amend any line.
+
+**Contracts added.**
+- **C11 -- Read the stores; never re-collect.** FWD-14 to FWD-16 read the activity store
+  (`s3://opal-313476888478-globgrph/fabric/activity/v1/`, writer `.tools/fabric-activity.py`, owner `4.0.0_SA_CRO`) and
+  FWD-17 the open-calls cluster copy (`.../fabric/open-calls/v1/`, writer `.tools/open-calls.py`). The portal holds a read
+  grant on those two prefixes only, Terraform-applied under C10. No page writes either store except FWD-17's close, which
+  goes through the open-calls writer and never edits the file.
+- **C12 -- Live on open, with age.** "Streaming" reads as live when the page is opened or refreshed (C8: no alert, no
+  checker, no push). Every figure prints the time of its source record. A box with no record in the window reads "not
+  reporting". Site Z writes no activity record today (brief Part IV.1): installing the hook here is a precondition of
+  FWD-14's four-box read and is placed with `0.0.0_AB_MSTR~Z`, not built by this project.
+- **C13 -- Overlap risk is data.** The FWD-15 rating is a function of the surface kind (Terraform, code, registry, tool,
+  record) and whether `org/critical_paths/.open_deploys/` on any box names that surface. The kinds and the rule live in one
+  versioned file the page reads; the rule is tested against a planted Terraform overlap and a planted shared-log overlap.
+- **C14 -- Git state from records, never from a guess.** FWD-16 reads commit records (activity store), box branches
+  (`origin/box/*`) and integration records as they exist. Push, fetch and integration-refusal events have no readable
+  home today (brief Part IV.2); the page shows "not recorded" for them until one exists, and giving them one is
+  `4.0.0_SA_CRO~A`'s GitOps work, not this project's.
+- **C15 -- The map is generated.** FWD-18 is built from the gateway's own definitions at the deployed commit:
+  integration specs, the tool class table, `destructive_ops.py`, `refs/DATA_CATALOG.yaml`, and the REST route table. No
+  hand-kept list. A tool present in the code and absent from every class table shows as "unclassified" (cf. NFRA_OPALAI row
+  Z-S62, where exactly that refused a live tool). Field reach is shown where a contract states it (Schwab, Black Diamond,
+  the catalog) and as "whatever the user's mailbox/files hold" for Microsoft 365 tools.
+- **C16 -- Ratings: proposed scale, stored, unenforced.** The scale is the brief's R0 to R4 (R0 public or vendor market
+  data; R1 internal operational metadata; R2 firm-confidential aggregates; R3 client PII or client financial rows; R4 acts on
+  a person's or the firm's behalf). The scale and every channel's value live in one versioned data file beside the
+  gateway's catalog, owned by this project's CTO. A channel added without a value reads "unrated". No code path reads the
+  rating to allow or deny; any policy on a rating is NFRA_OPLGTW's and needs Andrew's word.
+
+**Surfaces added.** S14 control-plane page (FWD-14 to FWD-16); S15 open-calls page (FWD-17); S16 gateway map and ratings
+page (FWD-18, FWD-19). Each sits behind C2's owner gate and is served under C3.
+
+**Acceptance added.** A14: one box's projects named from the page and matched to the store; a not-reporting box reads so.
+A15: a planted Terraform overlap rated above a planted shared-log overlap. A16: a box with work off the trunk shown so the
+same day. A17: one call closed from the page and read back from that box's list. A18: one channel's reach read on the page
+equals the code. A19: an unrated channel reads "unrated"; the page and the stored file agree.
+
+**Order.** Andrew called the fabric view "the more immediate": the next round builds FWD-14 end to end first, then
+FWD-15 to FWD-17, then FWD-18 and FWD-19. The FWD-1 thread's open round-3 orders are re-read by the issuer before any cut.
+
+**Sign-off.** ENDPOINT and CONTRACTS change. The ratified-text half re-opens for the CVO signing for `3.0.0_SA_CVO~O`. The
+brief half: the laptop `4.0.0_SA_CRO` wrote the brief (CLAUDE.md rule 27, PROPORTIONATE SIGN-OFF).

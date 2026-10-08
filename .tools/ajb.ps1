@@ -75,14 +75,11 @@ function Get-AgentLoopDirective {
         '^1\.1\.0_SA_CTO$' {
             return "$header`n  CL CTO: /watcher ONCE. /cl-charter ad-hoc. Event-driven via the inbox Monitor."
         }
-        '^2\.[01]\.0_SA_COO$' {
+        '^2\.0\.0_SA_COO$' {
             return "$header`n  COO: /watcher ONCE. /drive is OFF by default. Arm /drive ONLY per a live scoped authorization in the org/XXX.md Step 1b-F COO row (honor its cadence AND its stop condition); if none is live, arm nothing.`n  Event-triggered: /mstr-spawn, /mstr-kill (a COO function in addition to 0.0.0_AB_MSTR -- Andrew-direct 2026-08-28; seat and release work-population lanes directly, no request to MSTR)."
         }
         '^3\.0\.0_SA_CVO$' {
             return "$header`n  ws CVO: /watcher ONCE. /spot-check + /verify-channel ad-hoc / closeout-triggered. Scope (base vs ~Z) + any scoped arming: org/XXX.md Step 1b-F CVO rows."
-        }
-        '^3\.1\.0_SA_CVO$' {
-            return "$header`n  CL CVO: /watcher ONCE. /verify-channel + /case-find + /spot-check ad-hoc."
         }
         '^0\.[0-9]+\.[0-9]+_AE_CloudOps(~[A-Za-z0-9]+)?$' {
             return "$header`n  AE_CloudOps: /watcher ONCE, then /cloud-ops ONCE (session-orient one-shot, not a cron). Event-driven. /work ad-hoc."
@@ -95,12 +92,6 @@ function Get-AgentLoopDirective {
         }
         '^0\.[0-9]+\.[0-9]+_WK_' {
             return "$header`n  Worker: /watcher ONCE. Your task order is your whole instruction."
-        }
-        '^1\.[0-9]+\.[0-9]+_DS_CompLearns(~[A-Za-z0-9]+)?$' {
-            return "$header`n  CL Tier-2 DS: /watcher ONCE. Event-driven; keep broker STATUS accurate. /work ad-hoc."
-        }
-        '^2\.1\.0_SC_CompLearns(~[A-Za-z0-9]+)?$' {
-            return "$header`n  CL Tier-2 SC: /watcher ONCE. Event-driven; keep broker STATUS accurate. /work ad-hoc."
         }
         '^4\.0\.0_SA_CRO(~[A-Za-z0-9]+)?$' {
             return "$header`n  ws CRO (does NOT dispatch): /watcher ONCE. Event-driven: research/RCG program work + Andrew directives via the inbox Monitor."
@@ -276,8 +267,10 @@ function ajb {
     # (claude.exe overwrites runtime titles otherwise).
     $esc = [char]27
     $bel = [char]7
-    [Console]::Write("${esc}]0;${Serial}${bel}")
-    $Host.UI.RawUI.WindowTitle = $Serial
+    # A spawn may set a display title (a COO's project code); registration stays $Serial.
+    $tabTitle = if ($env:OPAL_TAB_TITLE) { $env:OPAL_TAB_TITLE } else { $Serial }
+    [Console]::Write("${esc}]0;${tabTitle}${bel}")
+    $Host.UI.RawUI.WindowTitle = $tabTitle
 
     # Per-process serial -> the PostToolUse telemetry hook attributes this
     # session's tool calls to the right serial even with concurrent agents.
@@ -347,6 +340,11 @@ function ajb {
             [System.IO.File]::WriteAllText((Join-Path $sessDir "$bgSid.serial"), "0.0.3_BG_BBGTerminal`n")
             $claudeArgs += @('--session-id', $bgSid)
             Write-Host "[ajb] F8: BG identity bound at launch -- session $bgSid -> 0.0.3_BG_BBGTerminal (launch-path marker + serial file written)" -ForegroundColor Cyan
+            # opal-gateway-bbg is this seat's only (Andrew-direct 2026-10-08 ~17:4xZ at 0.0.0_AB_MSTR~Z, row
+            # NFRA_OPLGTW-Z-S67): no longer user-level, so no other session loads the Bloomberg account's sign-in.
+            $bgMcp = Join-Path $ws '.tools\bg-gateway.mcp.json'
+            if (Test-Path -LiteralPath $bgMcp) { $claudeArgs += @('--mcp-config', $bgMcp) }
+            else { Write-Host "[ajb] WARN: $bgMcp is missing -- the BG seat launches WITHOUT opal-gateway-bbg" -ForegroundColor Yellow }
         }
         # Headless = no user present to answer a fork -> hard-remove the
         # user-BLOCKING tools so an autonomous agent can never strand on an

@@ -85,8 +85,10 @@ from the Dell itself, without the laptop carrying them. This is Andrew's call 3.
 
 ### O6 -- Andrew chooses the graph engine knowing the engine's status
 
-Andrew decides what the shared graph runs on, knowing that Kuzu is archived and frozen at 0.11.3. The options include
-staying on 0.11.3 as a frozen dependency, moving to a maintained fork, or serving the same questions another way. The
+Andrew decides what the shared graph runs on, knowing that the Kuzu SOFTWARE package is archived at 0.11.3. The graph's
+DATA is not frozen: it is rebuilt nightly, updated incrementally all day, and its stitch layer is re-derived nightly
+(correction of 2026-10-08 ~17:4xZ on Andrew's word, "A for now ... youre just not accounting for the stitch functions").
+The options include staying on 0.11.3 as a pinned dependency, moving to a maintained fork, or serving the same questions another way. The
 choice is written down with its cost to O1-O5. This outcome is the decision record, not a migration. Source: Part IV
 finding 5.
 
@@ -141,7 +143,9 @@ change to what the estate layer models.
    reaches the head marker, which starts a rebuild, and the Iceberg files. Andrew's call 3 makes this wanted. What is
    missing is a sanctioned shape for it: today a write would bypass the producers and the "agents never write the
    estate graph" rule of 2026-06 (Part V).
-5. **Kuzu is archived [READ, pypi.org/project/kuzu, 2026-10-08 ~15:4xZ].** The banner reads: "This project has been
+5. **The Kuzu package is archived; the served graph is not frozen [READ, pypi.org/project/kuzu, 2026-10-08 ~15:4xZ;
+   projection manifests 10-01..10-08 read ~17:4xZ: 290 projections, nightly full builds every night, stitch re-derived
+   nightly at ~03:01Z every night 10-03..10-08 (10-01 and 10-02 carried the 09-30 stitch)].** The banner reads: "This project has been
    archived by its maintainers, and is no longer receiving any updates." The last release is 0.11.3, dated 2025-10-10,
    and that is the version the projection worker pins and refuses to move from (`projection_worker.py:303`, by
    sub-search). A web search (secondary sources, not verified) says Apple acquired Kuzu Inc. in October 2025 and that

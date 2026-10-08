@@ -22,7 +22,6 @@
 #
 # VERDICT values (worst-wins precedence):
 #   NONE           no watcher process found for this serial
-#   WRONG-CHANNEL  CL agent on the ajb watcher, or a ws agent on the feature_clb watcher
 #   MULTIPLE       more than one watcher process for this serial (atomic-mv race)
 #   ORPHAN         a watcher has no live eval-launcher parent (PPID=1 / dead / reparented)
 #   RELATIVE-PATH  a watcher was launched via the banned relative `org/mcp/inbox-watch.sh`
@@ -80,9 +79,7 @@ while IFS='|' read -r pid ppid; do
   wline="$(printf '%s\n' "$PSOUT" | awk -v p="$pid" '$2==p')"
 
   # path form
-  if printf '%s' "$wline" | grep -q 'feature_clb'; then
-    form="cl"
-  elif printf '%s' "$wline" | grep -qE 'bash[[:space:]]+org/mcp/'; then
+  if printf '%s' "$wline" | grep -qE 'bash[[:space:]]+org/mcp/'; then
     form="relative"; SAW_RELATIVE=1
   else
     form="absolute"

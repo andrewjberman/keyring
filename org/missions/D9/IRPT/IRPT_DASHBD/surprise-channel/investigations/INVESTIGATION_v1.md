@@ -2870,6 +2870,81 @@ live in `../adjudications/` as `IRPT_DASHBD-C-S<k>`. **Append-only during the ro
 }
 ```
 
+## IRPT_DASHBD-W30-S1 -- fee_amount is zero on every served day of the E2 population's right halves
+
+```json
+{
+  "id": "IRPT_DASHBD-W30-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~30",
+  "surfaced_at": "2026-10-08T19:09:34Z",
+  "one_line": "fee_amount carries no variance over the 1,528 E2 right halves (every window-day value is 0 or null), so its correlation with the gap is undefined and it is listed under drivers_undefined, not drivers.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-51 item 2: record drivers as one {component, corr} per component including fee_amount, corr = Pearson correlation of the per-account fee_amount / first-day market_value_eod with the signed gap.",
+  "world_is": "MEASURED (RIGHT_GAP_E2.json statistic, drivers_undefined): the per-account fee_amount sum / first-day market_value_eod takes ONE distinct value (0.0) across all 1,528 accounts, min 0.0 max 0.0, so Pearson is undefined. The check DB29-2-AC2 requires every drivers entry to carry a numeric corr, so fee_amount is recorded in drivers_undefined with its reason rather than as a filled figure; five components remain in drivers (needs >= 3). Whether the gold fee_amount is unpopulated for this firm, or fees are genuinely absent from the served series, was not examined.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~30/RIGHT_GAP_E2.json drivers_undefined"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W30-S2 -- round 18's read_gold fixes its column list; the further components were read by a sibling reader
+
+```json
+{
+  "id": "IRPT_DASHBD-W30-S2",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~30",
+  "surfaced_at": "2026-10-08T19:09:34Z",
+  "one_line": "The imported round-18 reader (tieout_e2_gross -> tieout_e2.read_gold) reads a fixed column list without income_received, fee_amount, day_quality or carried_days, so right_gap_e2.py reads the same partitions with those columns and imports only the constants, _num and segment_days.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~D2",
+  "spec_asserts": "TO-DB-b-51 worker face: round 18's reader of the served series is imported, not restated.",
+  "world_is": "MEASURED (tieout_e2.py read_gold, local cols list): the list is account_id, business_date, market_value_eod, external_flow, income_return, total_return_daily, holdings_price_return_reason; the order needs four columns it lacks, and the list is a function-local, so it cannot be extended by import. right_gap_e2.py::read_gold repeats the partition-listing and GET loop (S3 reads only) with the order's columns; bucket, prefix, number coercion and the segment rule come from the import. 566 partitions listed; all 2,238 distinct accounts requested (the union of the 1,528 E2 and 2,220 control sets) have served rows.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~12/tieout_e2.py read_gold",
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~30/right_gap_e2.py read_gold"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
+## IRPT_DASHBD-W29-S1 -- 437 of S34's 440 are not a split-pull defect: BD's net returns chain, and the gross gap is round 18's fee add-back being evaluated on a different value basis per range.
+
+```json
+{
+  "id": "IRPT_DASHBD-W29-S1",
+  "project": "IRPT_DASHBD",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_DASHBD~29",
+  "surfaced_at": "2026-10-08T18:30:00Z",
+  "one_line": "On 437 of the 440 non-recomposing accounts BD's NET returns chain to BD's full-range NET within 0.35 pp (day counts and held flags agree); the gross gap comes from the round-18 fee add-back fees / ((bmv + emv) / 2), which is not additive across ranges and reaches -8.6 on a closing account with a negative fee.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "spec_asserts": "TO-DB-b-27 (round 18) reader: gross = BD net twr + fees / ((bmv + emv) / 2) is a sound gross basis for any range, so halves chained should reproduce the full-range gross (DB-b-49 recompose control).",
+  "world_is": "MEASURED (S34_CLASS_E1.json, 880 landed objects re-read): net chain within tolerance on 437 of 440; 3 are over tolerance on net (0.40 to 0.45 pp) with near-zero opening values; 18 have ending value 0 on the full range (denominator is half the opening value); 30 carry a negative fee on a point; the 724.16 pp outlier has fees -175.99 on a left half with bmv 40.69 / emv 219.04 (add-back -1.36) and -174.9 on the full range with emv 0 (add-back -8.60). The gross basis therefore cannot be compared across ranges of different length on small or closing balances. Not examined: how many of the 9,078 round-18 segments outside S34 carry the same distortion within tolerance.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/missions/D9/IRPT/IRPT_DASHBD/deliverables/0.9.0_WK_IRPT_DASHBD~29/S34_CLASS_E1.json counts, outlier, sub_counts"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION"
+}
+```
+
 ## IRPT_DASHBD-W31-S1 -- The one-batch run (batch size 0) ended about 900 s into the lots stage with no record and no cap line.
 
 ```json
