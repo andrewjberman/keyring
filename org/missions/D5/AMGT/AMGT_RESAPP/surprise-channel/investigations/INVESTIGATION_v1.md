@@ -22015,6 +22015,29 @@ than adding an edge to a frozen spec; the row exists so a reader of the manifest
     ]
   },
   "notes": "FILED, NOT FIXED: infra/aws/lambda/ci/lambda-source-map.json is NOT in AMGT-bb-18's <paths> (which hold infra/aws/terraform/harvest/, the two change_management surfaces, this lane's deliverables dir and this channel), so editing it is outside this cell's write surface and owned-paths would refuse it. Hazard INERT and not ARMED: no served route, gate or tool reads _artifact_note -- the six machine-read keys of the entry are correct, and comp-iam reads 'source' while the deploy workflow reads 'source_dir'. The cost is to a reader: anyone checking whether this function has ever been deployed is told by the map that it has not. A one-line edit of that field by a seat holding infra/aws/lambda/ is the whole remedy; it does not move the map's schema or any other entry."
+},
+{
+  "id": "AMGT_RESAPP-Z-S371",
+  "project": "AMGT_RESAPP",
+  "fabric": "site-z",
+  "surfaced_by": "2.0.0_SA_COO~Z",
+  "surfaced_at": "2026-10-08T08:13:36Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~Z",
+  "class": "OBSERVATION",
+  "one_line": "Row AMGT_RESAPP-Z-S368 is DISARMED by its named act: the round-78 redeploy (AMGT-bb-18) is live, and the deployed page no longer serves USD beside a foreign-listed peer price on the sampled rows.",
+  "spec_asserts": "Row AMGT_RESAPP-Z-S368 (ARMED, disarm_owner 2.0.0_SA_COO~Z): 'ARMED until the round-78 redeploy carries bb-8 and bb-17 ... Disarm is that redeploy; its deployed list carries r78_bb17.py --crit AC1 --where deployed, whose H6 then reads 0 wrong.'",
+  "world_is": "Measured 2026-10-08. The live function opal-amgt-scoped-api reads CodeSha256 +s6R0/rcpQ6lJgYsX2JtxfgoFoCmiaozTtMreyyymTQ= (applied 07:19:32Z; the kept zip C:/tmp/bb18-r78-fbb643923e.zip hashes to the same value, read by this seat). The executor's AC1 run after the apply (C:/tmp/bb18-criteria.log line 4): r78_bb17.py --crit AC1 --where deployed exit 0, 'PASS H6 no sampled peer row is served a United States record's currency behind a foreign price', and R78 DEPLOYED: YES 3 of 3. Before the apply the same clause read 2 wrong of 60 (row Z-S368). The sample is the same five subject names and 60 peer rows; the other priced peer rows of the covered names were not re-read. The row for a refused listing now carries price_currency_reason and no price_currency.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "C:/tmp/bb18-criteria.log (0.7.0_AE_CloudOps~A, 2026-10-08): line 4 'PASS exit=0 :: ... r78_bb17.py --crit AC1 --where deployed :: PASS H6 ...'; line 7 'R78 DEPLOYED: YES 3 of 3'.",
+      "The executor's report org/tier2_senior/0.7.0_AE_CloudOps~A/logs/2026-10-08/round78_bb18_legs1_2_code_redeploy.md and msg 31628: 'H6 reads 0 wrong of 60 on the deployed function (was 2)'.",
+      "This seat's read of the live CodeSha256 and of the kept zip's sha256, equal, 2026-10-08 ~08:2xZ."
+    ]
+  },
+  "notes": "A citing row, not an edit of Z-S368: Z-S368's standing is the CVO's to move. The roughly 650 priced peer rows that carry no currency at all are unchanged and are not this row's subject."
 }
 ]
 ```
