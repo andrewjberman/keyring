@@ -7606,6 +7606,45 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S2",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T01:18:02Z",
+      "one_line": "Two of the five names the order calls visibly cut (OMAB_US, OMAB_MM) are complete: 'Grupo Aeroportuario del Centro' is 30 characters and is the whole name.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-5 section 0: five of the ten 30-character names are visibly cut, OMAB_US_Equity and OMAB_MM_Equity 'Grupo Aeroportuario del C...'.",
+      "world_is": "bh5_census.out: OMAB_MM_Equity and OMAB_US_Equity both read original=Grupo Aeroportuario del Centro (30 characters, a whole name). Only AIG, KCDMY and ICT are visibly cut; the census CHANGED is 2 of 10 (AIG, KCDMY) and ICT stays unchanged by design. The rule is unaffected.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh5_census.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T01:18:02Z",
+      "one_line": "The order's fragment text is ambiguous for 'Group I': read in tuple order it is a fragment of 'Group Inc' and would drop 'Group I', but plant (i) needs 'American International Group'; the SHORTEST fragment wins here, tuple order breaks ties.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-5 section 1.1: S tried in the tuple's order; 'Group I' is a fragment of 'Group Inc'; the fragment and the space before it are dropped; plant (i) expects 'American International Group'.",
+      "world_is": "Tuple order reaches 'Group Inc' before 'Inc', so a first-match rule drops 'Group I' and leaves 'American International', contradicting plant (i). suffix_fragment() collects every candidate over CORPORATE_SUFFIXES in tuple order and keeps the shortest (a candidate that is itself a whole listed suffix is skipped), so 'I' is dropped. The issuer should confirm this reading. Also: _FORM_WORDS adds {SPA, SE, LP, LLC} that CORPORATE_SUFFIXES does not carry; left unchanged and not read by the fragment rule.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/universe_securities.py suffix_fragment",
+          "lib/research/harvest/tests/test_bh5_cut_legal_names.py test_i"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
