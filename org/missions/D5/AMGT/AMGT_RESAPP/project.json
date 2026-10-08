@@ -7,6 +7,7 @@
   "pipeline": null,
   "status": "active",
   "dep_stage": "EXECUTING",
+  "coo_lane": "2.0.0_SA_COO~Z",
   "created": "2026-09-10",
   "registered_under_tree": "2026-09-10",
   "last_updated": "2026-09-26",

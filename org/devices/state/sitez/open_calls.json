@@ -1,8 +1,8 @@
 {
  "schema": "open-calls/1",
  "device": "sitez",
- "written_at": "2026-10-08T16:59:23Z",
- "written_by": "1.0.0_SA_CTO~Z",
+ "written_at": "2026-10-08T21:16:10Z",
+ "written_by": "1.0.0_SA_CTO~O",
  "rows": [
   {
    "id": "sitez-20261008T165918Z-97ab",
@@ -239,6 +239,337 @@
     }
    },
    "closed": null
+  },
+  {
+   "id": "sitez-20261008T174158Z-bb06",
+   "project": "NFRA_OPLGTW",
+   "subject": "Show account numbers and titles to named Opal staff on the gateway (reverses the pilot's forbidden-field rule)?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_O_OPEN_CALLS_GATEWAY_SCHWAB_USABILITY_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T17:41:58Z",
+   "scope": {
+    "measured_at": "2026-10-08T17:41:58Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:04Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T174159Z-3450",
+   "project": "NFRA_OPLGTW",
+   "subject": "How much Schwab history may a gateway grant reach (today 30 days)?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_O_OPEN_CALLS_GATEWAY_SCHWAB_USABILITY_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T17:41:59Z",
+   "scope": {
+    "measured_at": "2026-10-08T17:41:59Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:05Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T174200Z-dc96",
+   "project": "NFRA_OPLGTW",
+   "subject": "Run one list-only enumerate for Tax SMA master 08403355 on the Schwab box?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_O_OPEN_CALLS_GATEWAY_SCHWAB_USABILITY_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T17:42:00Z",
+   "scope": {
+    "measured_at": "2026-10-08T17:42:00Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:06Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T174201Z-f241",
+   "project": "NFRA_MCPINDEX",
+   "subject": "Give the gateway mail-move and Teams-send write tools?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_O_OPEN_CALLS_GATEWAY_SCHWAB_USABILITY_20261008.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T17:42:01Z",
+   "scope": {
+    "measured_at": "2026-10-08T17:42:01Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "hit",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway",
+     "infra/aws/terraform/bd-pipeline"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-mcpindex-mx-c-3.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-mcpindex-mx-c-3.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-mcpindex-mx-h-2.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-mcpindex-mx-h-2.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [
+      "root infra/aws/terraform/bd-pipeline declares cloudwatch-metrics, also declared by root infra/aws/terraform/shared-infra named by LGIC_ENFORCE on laptop"
+     ],
+     "shared": [
+      "bucket opal-data-assets is marked shared (infra/logic/registry/tiers.json homes marked shared)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:07Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/4.0.0_SA_CRO~Z/deliverables/ANDREW_DIRECT_20261008_174xZ_GATEWAY_SCHWAB_FOUR_CALLS_ANSWERED.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T200105Z-87dc",
+   "project": "NFRA_OPLGTW",
+   "subject": "Confirm the DONE WHEN lines of FWD-10..13 (PRD v2.0) as written?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/prd/NFRA_OPLGTW_PRD.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:01:05Z",
+   "scope": {
+    "measured_at": "2026-10-08T20:01:05Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:08Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T200105Z-1223",
+   "project": "NFRA_OPLGTW",
+   "subject": "Release the two held sends: round-32 recut to COO~O and the brief-half sign request to CRO~Z?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round31.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:01:05Z",
+   "scope": {
+    "measured_at": "2026-10-08T20:01:05Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:09Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
+  },
+  {
+   "id": "sitez-20261008T200107Z-3587",
+   "project": "NFRA_OPLGTW",
+   "subject": "Hold Alyssa's Analyst close-run test until release r29 is live?",
+   "asked_by": "1.0.0_SA_CTO~O",
+   "source": "org/missions/D9/NFRA/NFRA_OPLGTW/ledger/ROUND_ANALYSIS.round31.md",
+   "orders": [],
+   "roots": [],
+   "state": "CLOSED",
+   "opened_at": "2026-10-08T20:01:07Z",
+   "scope": {
+    "measured_at": "2026-10-08T20:01:07Z",
+    "paths": "hit",
+    "placement": "clear",
+    "resources": "clear",
+    "shared": "hit",
+    "risk": "WORLD",
+    "verdict": "CROSS-BOX",
+    "roots": [
+     "infra/aws/terraform/opal-gateway"
+    ],
+    "evidence": {
+     "paths": [
+      "org/critical_paths/change_management overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/change_management)",
+      "org/critical_paths/change_management overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/change_management)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-g-c-synthetic-grant.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of LGIC_ENFORCE placed on laptop (org/critical_paths/.open_deploys)",
+      "org/critical_paths/.open_deploys/nfra-oplgtw-ga1-grant-write.json overlaps the write set of IRPT_BCKEND placed on dell2 (org/critical_paths/.open_deploys)"
+     ],
+     "placement": [],
+     "resources": [],
+     "shared": [
+      ".tools/halt-gate-check.sh is on the shared branch (.tools)",
+      ".tools/halt-gate-worker-order-test.sh is on the shared branch (.tools)",
+      "bucket opal-data-portal-v2 is marked shared (infra/logic/registry/tiers.json homes marked shared)"
+     ]
+    }
+   },
+   "closed": {
+    "at": "2026-10-08T21:16:10Z",
+    "by": "1.0.0_SA_CTO~O",
+    "ruling": "org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_200xZ_OPLGTW_THREE_CALLS_RECS_APPROVED_ROUND32_FWD10_13_ALYSSA_HOLD.md",
+    "crossbox": null,
+    "ruled_by": "andrew"
+   }
   }
  ]
 }
