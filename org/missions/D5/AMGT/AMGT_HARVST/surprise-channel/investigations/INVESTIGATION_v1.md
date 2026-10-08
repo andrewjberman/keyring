@@ -7969,6 +7969,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W126-S1",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~126",
+      "surfaced_at": "2026-10-08T21:52:41Z",
+      "one_line": "test_bc1_legal_names.py::test_build_joins_the_identity_record_and_the_default_path_is_the_configured_file fails at HEAD 39889dd4d7, independent of HVST-br-1: it pins the configured identity file name to rank_universe_identity_20261005.json.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "lib/research/harvest/tests/test_bc1_legal_names.py:216 asserts load_legal_names() resolves to a path ending rank_universe_identity_20261005.json.",
+      "world_is": "load_legal_names() resolves to org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json, so the suite lib/research/harvest reads 1 failed / 510 passed. The same single failure appears with _CAPITAL_INITIAL_ALIAS_RULE forced False, so the R30 change does not cause it. The test was left unchanged (the configured path moved in a prior round's cell, not this one).",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "lib/research/harvest/tests/test_bc1_legal_names.py:216@99d232e3b9",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/rank_universe_identity_20261008.json@39889dd4d7"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
