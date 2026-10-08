@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -105,7 +105,7 @@ id occurs in `investor-reporting/ycharts/resident.tf`.
 `CTa1-AC1` -- every declared command document was read and classified, and the policy names exactly the fixed resident ones. The same
 line must read `ok=True`, stated in the proof row, with `unsure_params` reported.
 
-<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
+<criterion id="CTa1-AC2" cell_refs="CT-a-1"><invocation>python infra/aws/terraform/nfra-ctlpln-identity/tests/simulate_policy.py</invocation><expect>routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True</expect></criterion>
 `CTa1-AC2` -- the cloud's evaluator lets dell2 send a fixed resident document to the one host and read the result, and refuses the
 shell document, the export render document, another instance, a rewrite of a granted document, and dell1. The same line must read
 `all_ok=True` with `ssm_ok` at its full count; the refusals are the control arms of the allow.
@@ -838,6 +838,50 @@ BACKEND. THE ISSUER HOLDS THIS BRANCH OFF THE TRUNK UNTIL THE APPLIER REPORTS ST
 
 **ACCEPTANCE.** The six ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
 
+## AMENDMENT 15 (2.0.0_SA_COO~C, 2026-10-08 ~13:5xZ) -- REOPENED, PRIORITY: item 5 is lifted -- the routes Deny comes off both Dells (step D)
+
+Authority: Andrew-direct 2026-10-08 ~13:2xZ at the `1.0.0_SA_CTO` terminal, verbatim and entire in the record
+`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_132xZ_TEN_ANSWERS_LIFT_ITEMS_5_AND_4_WIDEN_BOTH_GRANTS_DELL2_RETRIES_DELL1_INSTALLS.md`
+(read its table and its "One consequence" section): "1.) lIFT ITEM 5. 2.) LIFT ITEM 4. 3.( WIDEN THE TWO GRANTS, YES. ...".
+`1.0.0_SA_CTO` msg 106945: "Three cells, each under its own pair ... (1) Item 5, first: remove the Deny in
+cloudops-dell-agent-routes-host-policy for both Dells. dell1 measures s3:PutObject on the cot and bd code prefixes
+explicitDeny; three dell1 deploys wait. (2) Item 3 widened ... (3) Item 4 ...". THIS AMENDMENT IS CELL (1) ONLY. Cells (2) and
+(3) follow as later amendments, each merged only after the one before it has applied; do NOT start them. Gate limb: none
+graded this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. **FIND THE WHOLE OF ITEM 5 FIRST, by reading, and print it.** The routes Deny is built in `routes.tf` through
+   `modules/routes_policy/`. Report: every managed policy it creates (names from the builder; the CTO names
+   `cloudops-dell-agent-routes-host-policy`; say whether there is a second document, as earlier passes spoke of "the two routes
+   Deny documents"), every attachment (group or per user), every statement in each with its actions and resources in plain
+   words (what a Dell is refused today: command documents, task definitions, the code prefixes of which buckets, and so on),
+   and which statements a DIFFERENT file of this root holds that also refuse a deploy route (name them; for example
+   `DenyPassRoleExceptNamed`, `DenyProtectedFunctions`, `DenyApiKeyReads`, `DenyS3DeletesOnProductionData`, `DenyEveryIamWrite`).
+2. **REMOVE ONLY THE ROUTES DENY**: the policy or policies and attachments that `routes.tf` creates. Do it so that a plan of
+   the root shows exactly those resources destroyed and NOTHING else changed: the module also renders the secrets policy and
+   the Allow's data (`respol_policy_count` and the like), so do NOT delete the module; remove or zero the routes resources
+   only, and keep every other output of the module rendering exactly as it does (assert the secrets policy and the Allow
+   documents are byte-identical before and after your change, from the module's rendered JSON).
+   The statements named at the end of item 1 that live in OTHER files STAY in this cell, untouched: they are cells (2) and (3)
+   or not lifted at all. If dell1's measured refusal (`s3:PutObject` on the cot and bd code prefixes) is caused by a statement
+   that is NOT in the routes policy, STOP and report which statement refuses it: removing the routes policy would then not
+   deliver what was asked, and the issuer must know before a half is signed.
+3. **SIMULATION.** The `routes_ok` block becomes its mirror: for both users, each action and resource the routes Deny
+   refused is REPORTED by its decision once the Deny is gone (allowed, or still refused and by which statement), not asserted
+   to be allowed. Include, as named arms: `s3:PutObject` on a key under the Cottonwood code prefix and under the Black Diamond
+   code prefix (find the exact prefixes the routes policy names); writing an SSM command document; registering a task
+   definition; and whatever else item 1 found. Print the field as `routes_freed=<allowed>/<n> routes_still_refused=<k>` in
+   place of `routes_ok=5/5`, and list each still-refused arm with its statement. The fields after it stay
+   `vendor_ok=<a>/<n> all_ok=True`, last.
+4. **STATIC CHECK**: names from the builder and the group's attachment count move; report both. `allow_default_true=True`
+   stays.
+5. **PLAN NOTE**: a new section F, "STEP D -- the routes Deny removed (item 5)": the expected plan by reading (resources
+   destroyed, by address, so the applier can TARGET them), what each Dell can newly do, in plain words, and what still
+   refuses a deploy route after this step and why.
+
+**ACCEPTANCE.** The six ids. `CTa1-AC2`'s expectation becomes, by this amendment,
+`routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True` (the issuer changes the criterion's
+`<expect>` in this order; write the proof row's `expect` equal to it). Rewrite the proof instance, validate, flip to `complete`.
+
 ## AMENDMENT 16 (2.0.0_SA_COO~C, 2026-10-08 ~16:3xZ) -- REOPENED, PRIORITY: item 3 -- widen the two grants (cell 2, step E)
 
 Authority: Andrew-direct 2026-10-08 ~13:2xZ, record
@@ -918,3 +962,23 @@ its own criterion, Andrew-direct 2026-09-24). YOU APPLY NOTHING.
 2. Rewrite the AC5 proof row with this expectation, the run's line, and the two allowed arms named (`kms:PutKeyPolicy`, each
    user, the statement that allows it). Validate the instance; flip the order to `complete` when all six match.
 3. Row W14-S19: disposition it as resolved by this amendment (the row's resolving id is this amendment).
+
+## AMENDMENT 18 (2.0.0_SA_COO~C, 2026-10-08 ~17:5xZ) -- AMENDMENT 15 (cell 1, the routes Deny) RE-SEATED on the trunk that carries cell 2
+
+`1.0.0_SA_CTO` msg 106987 put cell 2 (AMENDMENTS 16 and 17, merged @e80238bdab, apply order TO-APPLY-14 in flight) before cell
+1. AMENDMENT 15 above is re-seated on a branch cut from that trunk (`wk-NFRA_CTLPLN-17`). Gate limb: none graded this
+modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. **AMENDMENT 15 governs the work**, read against the new base: the simulation now carries AMENDMENT 16's fields
+   (`freed_allowed`, `undo_freed`, `undo_still_denied`, the platform-key vendor arms); keep every one of them reading as it
+   does at the base. Only `routes_ok=5/5` becomes `routes_freed=<a>/<n> routes_still_refused=<k>`, in its place.
+   `CTa1-AC2`'s `<expect>` is AMENDMENT 15's (set above in this order): `routes_freed=[0-9]+/[0-9]+ routes_still_refused=[0-9]+ vendor_ok=[0-9]+/[0-9]+ all_ok=True`.
+   AMENDMENT 17's `CTa1-AC5` expectation stands.
+2. **A DEAD PREDECESSOR'S WORK, read only.** A worker on AMENDMENT 15 was killed by a reboot with UNCOMMITTED edits to
+   `routes.tf`, `tests/check_identity.py` and `tests/simulate_policy.py` in `C:/tmp/wk-ctlpln-14` (branch
+   `wk-NFRA_CTLPLN-14`, base before cell 2). Read them with `git -C C:/tmp/wk-ctlpln-14 diff`; reuse, verify or discard.
+   NEVER write in that worktree and never checkout, reset or stash there.
+3. **Plan note section F** lists the expected plan assuming STEP E (TO-APPLY-14) is APPLIED; say so in the section.
+4. Surprise rows: the next free id is `NFRA_CTLPLN-W14-S24`.
+
+**ACCEPTANCE.** The six ids, `CTa1-AC2` as in item 1. Rewrite the proof instance, validate, flip to `complete`.
