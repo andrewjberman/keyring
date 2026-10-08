@@ -21939,3 +21939,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "The neighbouring fixture's policy accessor does not model an unregistered revision, so the same probe that is correct against the real registry (custody row holds only CUSTODY_REPORT) breaks that test. The fix is in test_custody_retained.py or its world (a policy lookup that raises ValueError for an unknown revision, as export/tests/test_custody_writer_composed.py does); both are outside this order's paths, and swallowing ReportRefused in the edit would weaken the probe. The edit stays committed at 128b6f7db1; the order stays pending; issuer 2.0.0_SA_COO~Y2 to amend paths to admit the fixture fix or rule otherwise. Nothing is deployed."
 }
 ```
+
+## IRPT_BCKEND-D2-W220-S2 -- DISPOSITION of IRPT_BCKEND-D2-W220-S1: resolved by AMENDMENT 1
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W220-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~220",
+  "surfaced_at": "2026-10-08T23:50:00Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "one_line": "DISPOSITION of IRPT_BCKEND-D2-W220-S1: resolved by AMENDMENT 1 -- the test_custody_retained reporting_policy fixture now raises ValueError for an unregistered revision; AC2 66 passed, 2 skipped, 0 failed",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "commit 9e6d041f93: registered_only(w) in test_custody_retained.py wraps w.policy.reporting_policy; custody_submission.py untouched, ReportRefused not caught",
+      "AC2 at HEAD 9e6d041f93: 66 passed, 2 skipped; AC1: 3 passed",
+      "AMENDMENT 1 at 608ef4c1f9 (issuer 2.0.0_SA_COO~Y2)"
+    ]
+  },
+  "dismissal_reason": "The blocking condition no longer holds: the fixture models the real registry, so the probe is exercised as in production.",
+  "spec_asserts": "IRPT_BCKEND-D2-W220-S1: AC2 shows 66 passed, 0 failed after the probe edit.",
+  "world_is": "MEASURED: AC2 66 passed, 2 skipped, 0 failed at 9e6d041f93; nothing deployed."
+}
+```
