@@ -21,11 +21,15 @@ Author: 3.0.0_SA_CVO (seated on dell2), 2026-10-08. Graduated at round 9's L9 (A
     "owner": "1.0.0_SA_CTO~DELL2",
     "round": "v10",
     "remediation": {
-      "state": "OPEN",
+      "state": "CLOSED_UNREMEDIATED",
       "owner": "1.0.0_SA_CTO~DELL2",
-      "round": "v10"
+      "round": "v10",
+      "closure": {
+        "reason": "NOT_A_DEFECT",
+        "pointer": "1.0.0_SA_CTO~DELL2 msg 1587 relaying laptop 1.0.0_SA_CTO msg 107261: the 71 chat_messages and 4 chat_assist objects are the Teams assistant LDO-001 designed bronze writes (chat_assist.tf, deployed 08:15Z), owned by macro COMM lane 2.0.0_SA_COO~R; COMM is the one writer of those two prefixes"
+      }
     },
-    "closed": false
+    "closed": true
   }
 ]
 ```
