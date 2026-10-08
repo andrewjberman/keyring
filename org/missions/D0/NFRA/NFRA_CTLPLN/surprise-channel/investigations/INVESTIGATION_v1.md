@@ -4530,3 +4530,56 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Out of this cell's paths and not widened. A cell on transcripts-pull/build.sh would apply the same packaging-step change; the choice to cut it is the COO's."
 }
 ```
+
+## NFRA_CTLPLN-W8-S14 -- with the slow hook's probes run in sequence, the whole exercise takes 147 to 171 s on this loaded machine, over the order's timeout 120
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S14",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T11:52:00Z",
+  "one_line": "with the slow hook's probes run in sequence, the whole exercise takes 147 to 171 s on this loaded machine (60 to 96 percent processor load), so it cannot finish under the order's timeout 120; the hook itself finishes every probe, 5 to 27 s each",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Three consecutive runs of python .tools/seat-rules-check.py exercise on the amended tool, all ok=True with probes_unread=0: wall 171 s (load 82 to 96), 162 s (load 59 to 74), 148 s (load 87 to 73); transcripts in the worker report.",
+      "One never-rules-gate.sh probe alone: 7.7 s (R-GITOPS-1), 11.6 s (R-AWSDEVOPS-1), 18.1 to 26.7 s (R-GITOPS-4, the push probe) at load 93; 16.1 and 16.5 s at load 83 to 87. The hook run by hand with bash -x timestamps: 4.7 s, 142 trace lines, a gap of 0.32 to 0.39 s at every step that starts a process (lines 201 to 258: the _strip_heredocs, sed and printf pipeline that isolates each simple command); user time 0.7 s, system time 2.6 s.",
+      "Seven never-rules-gate.sh probe runs in sequence (R-GITOPS-1 to 5, R-AWSDEVOPS-1; R-GITOPS-4 has two serials) at 15 to 25 s each is 105 to 175 s."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "The order, after AMENDMENT 1: the whole exercise finishes under 170 s when the machine is idle, and each criterion invocation runs under timeout 120. The proof checker (.tools/proof-of-spec-check.py) compares the invocation text only and enforces no run time.",
+  "world_is": "The hook is not slow in one step and never hangs: its cost is the number of processes it starts (the cost of a process start on this box is about 0.35 s and rises with load), so seven runs in sequence cost 105 to 175 s here and the machine was never idle (59 to 96 percent processor load from other seats). Run in parallel they contended and timed out at 60 s (the issuer's three runs). The exercise reads ok=True in 147 to 171 s; under timeout 120 it would be killed (rc 124). No probe was shortened to fit.",
+  "notes": "For 2.0.0_SA_COO~C: restate the bound of CTs2-AC1 to timeout 240, or accept the exercise as an untimed run. This worker's proof row records the run as made, under timeout 300, with its seconds. The hook is not edited (not in this order's paths); a cell on .tools/hooks/never-rules-gate.sh could cut the process starts per run, the choice is not this worker's."
+}
+```
+
+## NFRA_CTLPLN-W8-S15 -- two later full runs finished in 101 s and 117 s, the second under timeout 120 at 82 percent load: row W8-S14's statement that the exercise cannot finish under timeout 120 is too strong, the margin is 3 s
+
+```json
+{
+  "id": "NFRA_CTLPLN-W8-S15",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_NFRA_CTLPLN~8",
+  "surfaced_at": "2026-10-08T12:10:00Z",
+  "one_line": "two later full exercises read ok=True in 101 s (load 9 at start) and 117 s under timeout 120 (load 82 at start), so row W8-S14 overstated: under timeout 120 the exercise passes on this machine with a margin of 3 s at 82 percent load and fails (rc 124) at the loads of its three earlier runs",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "Run 4: timeout 300 python .tools/seat-rules-check.py exercise rc=0, wall 101 s, EXERCISE elapsed=100.2s, load 9 before the run: SEAT-RULES rules=47 gate=25 skill=11 launcher=11 pairs_covered=24/24 probes_pass=58 probes_pending=0 probes_fail=0 probes_unread=0 needs_andrew=3 ok=True",
+      "Run 5: timeout 120 python .tools/seat-rules-check.py exercise rc=0, wall 117 s, EXERCISE elapsed=115.8s, load 82 before and 76 after: the same last line, ok=True"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Row NFRA_CTLPLN-W8-S14 (this worker, committed 7d70d39189) states the exercise took 147 to 171 s and cannot finish under the order's timeout 120.",
+  "world_is": "The time depends on the processor load of the other seats: 101 s at load 9, 117 s at load 82, 147 to 171 s in three earlier runs at 60 to 96 percent. Under timeout 120 the exercise passes on a lightly loaded machine and can be killed (rc 124) on a loaded one; the bound is a coin the machine tosses, not a fact about the tool.",
+  "notes": "Supersedes the bound recommendation in W8-S14 only as to how often: a bound of timeout 240 on CTs2-AC1 would make the criterion independent of load. No existing row was edited."
+}
+```
