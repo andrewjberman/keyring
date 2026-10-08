@@ -90,10 +90,11 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   Z-S78): from the next slug, `round` is the task-order round; that header note is 3.0.0_SA_CVO~RV's write.
 - **R31 COO half SIGNED** `round28/NEVER_WIDEN_HALF_COO_R28_AW1_DEPLOY.md` @d3d6c3e73f, pin 39889dd4d7.
   - Measured: 0 of 28 addresses differ; 0 of 26 served items change their recheck verdict.
-  - CTO half asked (msg to 1.0.0_SA_CTO~Z, 21:55Z).
+  - CTO half SIGNED `org/tier1_exec/1.0.0_SA_CTO/deliverables/CTO_HALF_ETFS_RIVALS_R28_AW1_DEPLOY_20261008.md`
+    @a0ee589cc2 (msg 32046, 22:06Z): the pair is WHOLE; the five conditions stand unchanged.
   - Window: 2026-10-09, after the 11:00Z chain's REPORT lines and before 12:55Z.
-  - **PARKED, the apply:** owner 0.7.0_AE_CloudOps~RV (R22), not live at 21:5xZ. It un-parks when the CTO half is signed
-    and the 11:00Z REPORT lines are read; this seat seats the executor (`/mstr-spawn`) with the half's path then.
+  - **PARKED, the apply:** owner 0.7.0_AE_CloudOps~RV (R22), not live at 22:0xZ. It un-parks when the 11:00Z REPORT lines
+    are read; this seat then seats the executor (`/mstr-spawn`) with both halves' paths.
 - RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
   tw-1.AC1 arm e grade the unmerged tc-1).
 - RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.
