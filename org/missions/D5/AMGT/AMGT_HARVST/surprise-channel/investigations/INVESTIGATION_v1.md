@@ -7727,6 +7727,45 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S102",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-08T07:27:16Z",
+      "one_line": "The exact-case ticker form BP matches 'BP' meaning basis points in a capitalised headline: 'Bond Traders Bet on Fed Delivering 25 BP Rate Increase' (bbg, 2026-09-16) is served on BP_US_Equity's feed after rebuild #9.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "Rebuild #9 removes the false bare-name pairs of BP (basis points in lower case) by matching the fallback in the stored case only; the exact-case ticker form BP is taken as naming the company.",
+      "world_is": "The article's only exact-case BP is in its title, where every word is capitalised. It is 1 of the 15 newest items the feed walk prints for BP_US_Equity. How many of BP_US_Equity's 1,240 served pairs rest on a title-case 'N BP' is not measured.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND65_FEED_WALK_GRADE_20261008.md",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~115/BJ1_FEED_WALK.md (BP_US_Equity, item of 2026-09-16)"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-S103",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "3.0.0_SA_CVO~Z",
+      "surfaced_at": "2026-10-08T07:27:16Z",
+      "one_line": "Silver holds 714 articles published from 2026-09-09 to 2026-10-08 across five publishers, and 5 of them are FT; none names Caterpillar, CSL or AIG, so three covered securities' feeds read NONE_IN_WINDOW.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "The Security Analysis feed shows a covered company its last 30 days of coverage; the five publishers are collected daily.",
+      "world_is": "This seat's read of 19,159 latest silver articles: published in the window 714 (bbg 288, sa 207, barrons 162, wsj 52, ft 5). In-window articles carrying 'Caterpillar' 0, a CSL name 0, AIG 0; controls Nokia 7 (equal to its feed) and HEICO 1. The feeds are faithful to silver. Whether 5 FT articles and no Caterpillar story in thirty days is the world or a collection gap is not measured.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/tier1_exec/3.0.0_SA_CVO/deliverables/AMGT_HARVST_ROUND65_FEED_WALK_GRADE_20261008.md"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```

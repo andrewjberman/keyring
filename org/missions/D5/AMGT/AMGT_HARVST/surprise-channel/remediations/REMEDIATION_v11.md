@@ -19,11 +19,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v65. Fabric: site-z. Recorded: 2026-10-08T00:07:3
   "owner": "2.0.0_SA_COO~H",
   "round": "v65",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~H",
    "round": "v65"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_HARVST-Z-W107-S2",
@@ -40,16 +40,16 @@ Author: 3.0.0_SA_CVO~Z. Round: v65. Fabric: site-z. Recorded: 2026-10-08T00:07:3
   "owner": "2.0.0_SA_COO~H",
   "round": "v65",
   "disarm": {
-   "state": "ARMED",
+   "state": "DISARMED",
    "owner": "2.0.0_SA_COO~H",
-   "at": null
+   "at": "2026-10-08T05:53Z"
   },
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~H",
    "round": "v65"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_HARVST-Z-S101",
@@ -66,11 +66,11 @@ Author: 3.0.0_SA_CVO~Z. Round: v65. Fabric: site-z. Recorded: 2026-10-08T00:07:3
   "owner": "2.0.0_SA_COO~H",
   "round": "v65",
   "remediation": {
-   "state": "OPEN",
+   "state": "REMEDIATED",
    "owner": "2.0.0_SA_COO~H",
    "round": "v65"
   },
-  "closed": false
+  "closed": true
  },
  {
   "id": "AMGT_HARVST-Z-W108-S2",
