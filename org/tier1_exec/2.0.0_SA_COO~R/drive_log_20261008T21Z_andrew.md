@@ -1,0 +1,8 @@
+## tick 2026-10-08T20:4xZ (2.0.0_SA_COO~R, laptop)
+| project | limb | round | TOs t/T | cells c/F | thread | act fired |
+|---|---|---|---|---|---|---|
+| NFRA_CTLPLN (INBOUND) | L6->L7 | 6 | 0/4 | 4/4 FWD-20 | n (no live exercise this round yet) | DRIVE FORWARD: issuance 8f0db50042 merged c912dd6c72; 4 workers ~37..~40 spawned; index drift NFRA_TRNSPT regenerated f33361047f |
+Log groups for the CT-i-10 real run: /aws/lambda/teams-global-chat-assist-handler-lambda, /aws/lambda/teams-global-chat-assist-ingress-lambda
+- 20:5xZ drain CT-i-9 (~37) merged 897fbf8e1f; AC1 re-run 6/6, proof VALID. RULED (issuer, own decomposition): the chat-list stop at min(floor, every cursor) is accepted as written; ENRICHMENT for round 7: prune quiet chats' cursors so the list read does not deepen without bound.
+- 21:3xZ drain CT-i-12 (~40) merged 840de68f9c (AC1 re-run 7/7, proof VALID). CT-i-10 (~38) and CT-i-11 (~39) passed but REOPENED: AMENDMENT 1 each (dd6deef902 on row W38-S1 ARMED: outcomes from the tenant line; 434126a7cb on row W39-S3: no $top on joinedTeams/channels). Original workers not resumable -> both slots RE-SEATED with inherited commits named. Hookups committed fff0bc0a11 (route, minute step, object hash on the tenant line); 113 tests pass.
+- 21:1xZ ROUND DRAINED: CT-i-10 73b6e98145, CT-i-11 b3afc00597 (append-only conflicts in INVESTIGATION_v1.md resolved as base+both appends, byte-checked). Drain checks green (134 passed, ruff, py_compile). Real count run 10-08: received=31 chats=3 unexplained=0; his chat list: 3 active chats today. Row S33 ARMED (silent EOD redraft refusal; Andrew-direct via MSTR 107296, diagnosis sent). Drain-end 03d37ff43f; ONE message to 1.0.0_SA_CTO 21:16Z. Writer declaration f3170c6f94 (CTO 107261).

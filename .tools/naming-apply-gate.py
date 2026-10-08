@@ -319,6 +319,11 @@ def _is_addition(change, attr):
     is a new name even though the resource address is not new (item 1)."""
     actions = (change or {}).get("actions") or []
     if "create" in actions:
+        if "delete" in actions:
+            # A REPLACE (delete + create) that keeps its own-name re-registers a name that already exists -- e.g. a
+            # new ECS task-definition revision, which Terraform can only plan as a replace. Only a replace whose
+            # name changes is a new name (4.0.0_SA_CRO 2026-10-08, AE msg 107252: globgrph-projection-worker).
+            return _get_path((change or {}).get("before") or {}, attr) != _get_path((change or {}).get("after") or {}, attr)
         return True
     if "update" in actions:
         return _get_path((change or {}).get("before") or {}, attr) != _get_path((change or {}).get("after") or {}, attr)
@@ -386,6 +391,16 @@ def self_test():
         arm = got[0] == want_verdict and got[3] is want_refuses
         ok = ok and arm
         print("SELF-TEST arm %s IAM_POLICY -> %s refuses=%s: %s" % (name, got[0], got[3], "ok" if arm else "FAIL"))
+    # The replace arms: a replace keeping its name is existing; a replace that renames, and a plain create, are additions.
+    same = {"actions": ["delete", "create"], "before": {"family": "x-1"}, "after": {"family": "x-1"}}
+    renamed = {"actions": ["delete", "create"], "before": {"family": "x-1"}, "after": {"family": "x-2"}}
+    created = {"actions": ["create"], "before": None, "after": {"family": "x-1"}}
+    for label, change, want in (("replace-same-name", same, False), ("replace-renamed", renamed, True),
+                                ("plain-create", created, True)):
+        got = _is_addition(change, "family")
+        arm = got is want
+        ok = ok and arm
+        print("SELF-TEST arm %s -> addition=%s: %s" % (label, got, "ok" if arm else "FAIL"))
     print("NAMING-APPLY-GATE-SELF-TEST: %s" % ("PASS" if ok else "FAIL"))
     return 0 if ok else 1
 
