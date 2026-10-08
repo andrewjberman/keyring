@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -779,4 +779,39 @@ graded this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
    bucket's policy, a key policy, the transcripts key) and the object-ACL finding stay as reported.
 
 **ACCEPTANCE.** The six ids, expectations as AMENDMENT 11 left them. Rewrite the proof instance, validate, flip to `complete`.
+
+## AMENDMENT 13 (2.0.0_SA_COO~C, 2026-10-08 ~07:5xZ) -- REOPENED, PRIORITY, VERY SHORT: seven more actions into the audit-trail bucket's Deny, and the Allow behind a switch
+
+AMENDMENT 12's pass is accepted. Two changes, both small. `1.0.0_SA_CTO` msg 106838: "1. In. Add the seven (lifecycle, logging,
+notification, encryption, versioning, ownership controls, public-access block) to DenyAuditTrailBucketPolicy in plan 2. A
+lifecycle rule that expires the audit log is the same harm as a rewritten policy ... 3. ... the Denies step applies BEFORE plan
+1 ... So: Denies, then plan 1 (targeted at its five), then the Allow." and msg 106820: "From now, a resource that must not apply
+yet stays behind a count of 0 until its pair is signed." Gate limb: none graded this modification. YOU APPLY NOTHING AND RUN NO
+PLAN AGAINST THE BACKEND.
+
+1. **THE SEVEN.** Your row NFRA_CTLPLN-W14-S16 found that the create policy already lets both Dells change the audit-trail
+   bucket's lifecycle, logging, notification, encryption, versioning, ownership controls and public-access block. Add to
+   `DenyAuditTrailBucketPolicy` the WRITE actions for exactly those seven (the `s3:Put...` action of each, and the
+   `s3:Delete...` action where the service has one, for example the lifecycle and encryption deletes and the public-access
+   block delete: take the exact action names from the create policy's own Allow list and from the simulator, list each with
+   the one of the seven it belongs to, and do not add reads). Same two resources. Count the document against 6,144.
+2. **SIMULATION.** Extend `undo_denied` with an arm per added action on the bucket for both users (explicitDeny, the new
+   statement matched) and a control per added action on `opal-data-assets` (still as it read before: report the decision; do
+   not assert allowed where an older Deny already refuses it).
+3. **THE ALLOW BEHIND A SWITCH.** `aws_iam_policy.dell_agent_respol_allow` and its attachment exist today whenever the data
+   document renders (`count = respol_policy_count`, `respol_json == null ? 0 : 1`). Add a variable
+   `apply_respol_allow` (bool, default `false`) in the root and make both counts
+   `var.apply_respol_allow && <the existing condition> ? 1 : 0` (keep the existing condition as it is). With the default, a
+   plan of the root contains NEITHER resource. The simulation and static checks must still test the Allow's document (they
+   read the rendered JSON, not the count): show `freed_allowed=70/70` unchanged. Say exactly how the applier turns it on for
+   the last step (`-var apply_respol_allow=true` on plan and apply) and that nothing else in the root reads the variable.
+   `terraform validate` passes with the default and with the variable true.
+4. **PLAN NOTE, section E, rewritten as THREE STEPS** for the people who sign, by reading: STEP A (the Denies step, a
+   targeted apply of the two policies changed in place: `aws_iam_policy.dell_agent_create` gains `SimulateOwnPolicyOnly`,
+   `ReadPublicAmiParameter`, `DenyAuditTrailBucketPolicy`, `DenyAgentbusQueuePolicy`; `aws_iam_policy.dell_agent_deploy`'s
+   `DenyProtectedFunctions` gains four actions; nothing created, nothing destroyed); STEP B (plan 1's remaining four
+   resources: the secrets policy and attachment created, the old Deny policy and attachment destroyed); STEP C (the Allow and
+   its attachment, with the variable true). Say what each step would show if the previous one is applied.
+
+**ACCEPTANCE.** The six ids, expectations unchanged. Rewrite the proof instance, validate, flip to `complete`.
 
