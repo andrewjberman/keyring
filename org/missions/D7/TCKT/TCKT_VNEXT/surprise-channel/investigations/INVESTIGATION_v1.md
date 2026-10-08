@@ -277,6 +277,30 @@ live in `../adjudications/` as `TCKT_VNEXT-C-S<k>`.
     "spec_asserts": "principal_class resolves sub == svc-commentary AND userType == service to the new class (TO-F10-l1 item 1).",
     "world_is": "The handler has no sub key; the authorizer context field that holds a service subject is email. The class was built on that existing key. Also: AMENDMENT 1 (coordinator message) moved svc-commentary's firm check to env COMMENTARY_ALLOWED_FIRMS; built as a module constant, the order file text itself left unedited because the order's write grant is status flip only.",
     "notes": "If the authorizer mints svc-commentary with the subject only in sub, the class is UNRESOLVABLE and every create is a 403 - the O1 token-mint question in the contract."
+  },
+  {
+    "project": "TCKT_VNEXT",
+    "fabric": "dell2",
+    "surfaced_by": "2.0.0_SA_COO~V2",
+    "surfaced_at": "2026-10-08T22:52:00Z",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "disposition": "UNDER_INVESTIGATION",
+    "id": "TCKT_VNEXT-D2-S7",
+    "one_line": "infra/aws/terraform/ticket-center/build-and-upload.sh has no BUILD_ONLY mode: BUILD_ONLY=1 still uploaded the F10 package (OuTw3w...) over ticket-center/opal-ticket-api.zip at 22:50:01Z while opal-ticket-api ran y0UF...; the issuer restored the 10-07 version (y0UF..., new version ZBF40mIM...) at ~22:51Z.",
+    "disarm_owner": "2.0.0_SA_COO~V2 (disarmed same turn by the restore; the script fix is the script owner's, carried in the F10 slug)",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "s3api list-object-versions ticket-center/opal-ticket-api.zip: ICKV1ztn... 2026-10-08T22:50:01Z latest, lx44Hu0g... 2026-10-07T19:16:29Z",
+        "copy-object of lx44Hu0g... -> ZBF40mIM..., head-object content-sha256 y0UFtRIfZxu3x6BCFSGLjXsNgScCl/GPuWNHbmZV7BI= = live CodeSha256",
+        "grep BUILD_ONLY infra/aws/terraform/ticket-center/build-and-upload.sh: 0 hits",
+        "org/missions/D7/TCKT/TCKT_VNEXT/deliverables/2.0.0_SA_COO~V2/TV_D1_DEPLOY_PACKET_20261007.md section 1 cites BUILD_ONLY=1 as a build-only run (it was not)"
+      ]
+    },
+    "spec_asserts": "A build-only read of the package hash writes nothing to the artifact bucket; the artifact key holds what is deployed until the applier's upload.",
+    "world_is": "The script always uploads; any later terraform plan on ticket-center would have seen a code change nobody applied.",
+    "notes": "Window ~1 min; the Lambda never moved (CodeSha256 y0UF... read before and after). The F10 apply order builds and uploads in its own leg."
   }
 ]
 ```
