@@ -7826,6 +7826,27 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W120-S3",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~120",
+      "surfaced_at": "2026-10-08T09:04:30Z",
+      "one_line": "bm1_three_universes.py regenerates rank_universe_identity_20261008.json from the builder, so re-running it after HVST-bm-2 silently reverts the AIG and KCDMY repairs and still prints RECONCILE OK.",
+      "class": "OBSERVATION",
+      "hazard_standing": "ARMED",
+      "disarm_owner": "2.0.0_SA_COO~H",
+      "spec_asserts": "HVST-bm-2 s.1 item 2: the repair is made in the two new files only; bm-1's own AC2 invocation (cat of bm1_three_universes.out) is a read of a stored output, not a re-run.",
+      "world_is": "bm1_three_universes.py line 222 writes NEW_IDENTITY from the builder's rules and compares it to the round-47 file (EXISTING RECORDS CHANGED 0), so a re-run after bm-2 rewrites AIG_US_Equity as 'American International Group I' and KCDMY_US_Equity as 'Kimberly-Clark de Mexico SAB d' and prints RECONCILE OK; bm2_truncated_names.py would then have to be run again, and the 'sha256 48cb40f6...' in bm-1's proof instance no longer matches the file (now f3680024...). Done instead: bm-2 changed nothing in the bm-1 script; run order is bm1 then bm2, and the bm-2 plants (test_bm2_truncated_names.py) fail if the repair is reverted. Not run: bm1 script after bm-2.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm1_three_universes.py (lines 197-226)",
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~120/bm2_truncated_names.out"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
