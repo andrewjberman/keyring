@@ -21784,3 +21784,54 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: IAM leg -> laptop via MSTR~DELL2 in the pair; document binding -> CTO with the pair."
 }
 ```
+
+## IRPT_BCKEND-D2-W183-S1 -- custody-report-read serves the document only, so persisted_by and the composition hash (stored in the record's provenance) are read by resolve, not returned by the HTTP operation
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The Performance client statement record now carries persisted_by and composition_sha256 in its provenance, and retained_export.resolve returns that provenance unchanged, but the custody-report-read operation answers only report_kind, report_id, revision and report, so an HTTP reader does not see either field.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_read.py@1f14f0db5e: custody_report_read returns {report_kind, report_id, revision, report}; it drops resolved['provenance']; the file is outside this order's paths",
+      "infra/aws/lambda/investor-reporting/export/tests/test_custody_writer_composed.py::test_persisted_by_the_stored_record_names_the_verified_caller_not_the_submitter: _read_back (retained_export.resolve over the same repository) returns provenance['persisted_by'] == the persister and provenance == the stored record's provenance"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 1: 'A read through custody-report-read returns it unchanged.'",
+  "world_is": "The record stores persisted_by in provenance (repository.persist stores owner, request_ref, report and provenance only; a new top-level record field would be a repository.py change outside the paths). The unchanged read is proved on the resolve path that custody-report-read is built on. Whether the operation's response should also carry persisted_by is a separate change to custody_read.py and the route contract, not made here; no firm reads a statement through it yet."
+}
+```
+
+## IRPT_BCKEND-D2-W183-S2 -- the content binding is a declared hash in the document, verified against the retained composition; it proves which composition the document claims, not that the sections were computed from it
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W183-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~183",
+  "surfaced_at": "2026-10-08T22:10:30Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "The strongest binding the existing data allows is the document declaring composition_sha256 equal to the retained REQUEST_COMPOSITION artifact's content hash; the sections cannot be recomputed here, so a verified Opal operator can still supply sections that do not follow from the composition, and every producer of a Performance client statement document must now declare the hash or the persist refuses it.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/aws/lambda/investor-reporting/export/custody_persist.py@1f14f0db5e: _check_request already verifies sha256(loaded['data']) == loaded['ref']['sha256']; the retained composition holds inputs (snapshot, accounts, recipe, settings), not the computed sections",
+      "infra/aws/lambda/investor-reporting/reports/custody_write.py: _check_binding refuses an absent, malformed or different composition_sha256 with CustodyWriteRefused, which the Entry's reasons table maps to INVALID_INPUT (export/entry.py line 473)",
+      "export/tests/test_custody_writer_composed.py: 54 passed; the persist-path tests that persisted DOCUMENT now persist _doc(request), the same document plus the declared hash; no assertion was removed or loosened"
+    ]
+  },
+  "spec_asserts": "IB-pr-375 step 2: 'Choose the strongest binding the existing data allows, and say why.'",
+  "world_is": "Recomputing or verifying the sections against the composition is not possible in this function (the render that computes them is the IRPT_CUSTDY producer). The binding is therefore declared-and-verified. A producer of the document (IRPT_CUSTDY) must add composition_sha256 to what it posts; that is a caller change the CTO and COO sequence before any firm reads a statement."
+}
+```
