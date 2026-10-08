@@ -20858,3 +20858,30 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "Nothing is retained (0 custody reports) and the shipped repository cannot read one back, so the Opal-by-ref leg cannot succeed until IRPT_CUSTDY adds the kind to repository.KINDS and a custody family to the reporting policy. The failure is closed (no body). This is the open leg named OPEN-BY-DESIGN in the after-reads, with a narrower cause than 'no report yet'."
 }
 ```
+
+## IRPT_BCKEND-D2-W172-S4 -- IB77-1-AC1 instrument crashes on this device (aws shim, large output); route is live
+
+```json
+{
+  "id": "IRPT_BCKEND-D2-W172-S4",
+  "project": "IRPT_BCKEND",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~172",
+  "surfaced_at": "2026-10-08T18:10:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "IB77-1-AC1 cannot run on this device: the check's get-routes call (python subprocess -> bash .tools/aws -> aws.exe) dies with rc 3221225477 (0xC0000005) for the api's 6,368-byte route list, so AC1 reads FAIL although the route is live; the same call from the shell, and aws.exe called directly, return the list.",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "p77_cells.py IB77-1-AC1 run 3 times (bare, bash -c, powershell.exe): 'FAIL: get-routes rc 3221225477', identical each time",
+      "python subprocess of ['bash', '.tools/aws', 'apigatewayv2','get-routes',...,'--query','Items[].RouteKey'] -> rc 3221225477, 0 bytes; same with --query Items[:40].RouteKey (2,360 bytes) -> rc 0; Items[] full list (6,368 bytes) -> crash; under 'bash -c \"bash .tools/aws ... | wc -c\"' from python -> rc 0, 6368; C:/Program Files/Amazon/AWSCLIV2/aws.exe called directly from python -> rc 0, 6368 bytes",
+      "shell read of the same call: GET /api/scoped/investor-reporting/custody-report/{reportId} CUSTOM naqxlm listed on api 7k3ed8px20 (get-routes --query Items[?contains(RouteKey,'custody')])",
+      "every other AC1 field verified true by hand: pin, 3 members, start sha == rollback target, built == live == 03p2eIEK..., post-census 0, both re-plans 0, ledger closed, rolled_back false"
+    ]
+  },
+  "spec_asserts": "IB77-1-AC1: the check re-reads the route list live and prints 'IB77-1-AC1 PASS'.",
+  "world_is": "The check's instrument fails on this device before it reads the route list: a large-output aws call launched from a native python process through the .tools/aws shim crashes. The route is live; the check's verdict is FAIL by instrument fault, not by state. The check was not changed and AC1 is recorded FAIL; the order stays open. The issuer can re-run AC1 on a device where the shim call succeeds, or decide the instrument fix (.tools/aws is not in this order's paths)."
+}
+```
