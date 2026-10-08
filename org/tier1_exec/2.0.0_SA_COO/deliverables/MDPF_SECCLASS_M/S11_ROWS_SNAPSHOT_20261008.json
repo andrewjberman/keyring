@@ -1,0 +1,1301 @@
+{
+ "classified_by": "scheduled",
+ "new": {
+  "ASFYX": "alternatives",
+  "BINC": "fixed_income",
+  "BITX": "commodities",
+  "CMWAY": "equity",
+  "COMP": "equity",
+  "DFUS": "equity",
+  "FYC": "equity",
+  "GSRTX": "alternatives",
+  "GTOP": "equity",
+  "HEAL": "equity",
+  "MPNGY": "equity",
+  "NAME::AMERICAN BEACON AHL MGD FUTS STRAT Y": "alternatives",
+  "NAME::AMERICAN FUNDS 2040 TRGT DATE RETIRE A": "equity",
+  "NAME::AMERICAN FUNDS INCOME FUND OF AMER 529A": "fixed_income",
+  "NAME::ARK 21SHARES BITCOIN ETF": "commodities",
+  "NAME::BD7I9FCG": "equity",
+  "NAME::BD7UD5HA": "equity",
+  "NAME::BD949S99": "equity",
+  "NAME::BD9AS499": "fixed_income",
+  "NAME::BDDNL2V4": "equity",
+  "NAME::BDMRCIX0": "equity",
+  "NAME::BDO6GHW8": "fixed_income",
+  "NAME::BDP10C60": "alternatives",
+  "NAME::BDP10C63": "alternatives",
+  "NAME::BDP10C6I": "alternatives",
+  "NAME::BDP134X3": "alternatives",
+  "NAME::BDP134X6": "alternatives",
+  "NAME::BDPD3F76": "fixed_income",
+  "NAME::BDPU6036": "equity",
+  "NAME::BDV4IISI": "fixed_income",
+  "NAME::BDVR693I": "equity",
+  "NAME::BDYXF3XU": "equity",
+  "NAME::BLACKSTONE - BXPE ESC": "alternatives",
+  "NAME::BOW RIVER CAPITAL EVERGR EEN FUND CLASS I": "alternatives",
+  "NAME::BUFFALO GROWTH INCOME INST": "equity",
+  "NAME::CAIS PRIVATE EQUITY CORE II LP": "alternatives",
+  "NAME::CALL BE 00105": "structured",
+  "NAME::CALL IREN 00010": "structured",
+  "NAME::CLOV NOV 28 25 4 CALL": "structured",
+  "NAME::CNL STRATEGIC CAPITAL LL C CLASS A 1G": "alternatives",
+  "NAME::COHEN STEERS PREFERRED SEC INC I": "fixed_income",
+  "NAME::CONSERVATIVE PORTFOLIO": "equity",
+  "NAME::DARKHORSE TECHNOLOGIES INC COM SHS": "equity",
+  "NAME::EATON VANCE STRATEGIC INCOME CLASS I": "fixed_income",
+  "NAME::FIDELITY ADVISOR STOCK SELEC MID CP M": "equity",
+  "NAME::FIDELITY WISE ORIGIN BITCOIN FUND": "commodities",
+  "NAME::FIRST TRUST MULTI-STRATEGY CL I": "alternatives",
+  "NAME::FRANKLIN ETHEREUM ETF": "commodities",
+  "NAME::FRANKLIN XRP ETF": "commodities",
+  "NAME::FS MVP PRIVATE MKTS FD CL I": "alternatives",
+  "NAME::GOLDMAN SACHS MANAGED FUTS STRAT INV": "alternatives",
+  "NAME::HARTFORD BALANCED INCOME F": "equity",
+  "NAME::HERTZ GLOBAL HLDGS INC WT EXP 063051": "equity",
+  "NAME::IGV JUL 17 26 114 CALL": "structured",
+  "NAME::INCOME INDEX POOL": "fixed_income",
+  "NAME::INDEXED ANNUITY": "structured",
+  "NAME::INVESCO DB US DOLLAR INDEX BULLISH FUND": "alternatives",
+  "NAME::INVESCO VARIABLE RATE PREFERRED ETF": "fixed_income",
+  "NAME::ISHARES ETHEREUM TRUST ETF": "commodities",
+  "NAME::ISHARES TRUST ISHARES USD GREEN BOND ETF": "fixed_income",
+  "NAME::JHANCOCK BALANCED R6": "equity",
+  "NAME::JPMCB SMARTRETIREMENT DRE 2040 CF-D": "equity",
+  "NAME::KKR PRIVATE EQUITY CONGL OMERATE LLC CLASS U": "alternatives",
+  "NAME::LORD ABBETT GLOBAL EQUITY I": "equity",
+  "NAME::MORNINGSTAR DEFENSIVE BOND": "fixed_income",
+  "NAME::MORNINGSTAR MULTISECTOR BOND": "fixed_income",
+  "NAME::NUVEEN CHURCHILL PRVATE CAP SHS CL I": "alternatives",
+  "NAME::OCEAN PARK TACTICAL ALL ASSET INSTL": "equity",
+  "NAME::ORION PROPERTIES INC COM": "equity",
+  "NAME::PIMCO ALL ASSET I2": "equity",
+  "NAME::PIMCO ALL ASSET INSTL": "equity",
+  "NAME::PIMCO TRENDS FUND INSTITUTIONAL": "alternatives",
+  "NAME::PRINCIPAL DIVERSIFIED INCOME INSTL": "fixed_income",
+  "NAME::PROSHARES BITCOIN ETF": "commodities",
+  "NAME::PROSPERA INCOME ETF": "fixed_income",
+  "NAME::RALLIANT CORP COM": "equity",
+  "NAME::S P 500 ANN LOCK 5YR -10": "structured",
+  "NAME::S P FUTURES 3 IDX PTPT W": "structured",
+  "NAME::SCHFDX0": "fixed_income",
+  "NAME::SCHWAB CHARLES FAMILY FD GOV SECURITIES": "fixed_income",
+  "NAME::SCHWAB TARGET 2025 INDEX": "equity",
+  "NAME::SHAW PARK PRIVATE MARKET S 2021 LP": "alternatives",
+  "NAME::STEPSTONE PRIVATE MARKETS I": "alternatives",
+  "NAME::TEMPLETON WORLD A": "equity",
+  "NAME::TFI INTL INC COM": "equity",
+  "NAME::THOMPSON BOND": "fixed_income",
+  "NAME::TQQQ AUG 09 24 82 CALL": "structured",
+  "NAME::VANECK BITCOIN ETF": "commodities",
+  "NAME::VARIANT ALTERNATIVE INCOME INSTITUTIONAL": "alternatives",
+  "NAME::VICTORY PIONEER STRATEGIC INCOME Y": "fixed_income",
+  "NAME::VOLATILITY SHARES 2X BITCOIN ETF": "commodities",
+  "NAME::VORNADO RLTY TR PFD SER L 5 40": "equity",
+  "NICHX": "alternatives",
+  "PPLT": "commodities",
+  "PQTIX": "alternatives",
+  "SCBP1": "equity",
+  "SCGK1": "fixed_income",
+  "SCII1": "fixed_income",
+  "SDVY": "equity",
+  "SKWD": "equity",
+  "TSEOQ": "equity",
+  "USERX": "commodities",
+  "UWMC": "equity"
+ },
+ "remap": {
+  "ARBIX": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.75"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "TICKER"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:33:38.424222+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Absolute Convertible Arbitrage Instl"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "ARBIX"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "JHEQX": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.85"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "TICKER"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:41:59.194502+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "JPMorgan Hedged Equity I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "JHEQX"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::AB SELECT US LONG SHORT ADVISOR": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.8"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:45:28.733793+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Ab Select US LONG/SHORT Advisor"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::AB SELECT US LONG SHORT ADVISOR"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::ABSOLUTE CONVERTIBLE ARBITRAGE INSTL": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.72"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:45:28.733793+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Absolute Convertible Arbitrage Instl"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::ABSOLUTE CONVERTIBLE ARBITRAGE INSTL"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::AQR LONG-SHORT EQUITY I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.85"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:56:14.460453+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Aqr Long-Short Equity I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::AQR LONG-SHORT EQUITY I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::BLACKROCK EVENT DRIVEN EQUITY INSTL": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.62"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:22:42.646544+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Blackrock Event Driven Equity Instl"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::BLACKROCK EVENT DRIVEN EQUITY INSTL"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::BLACKROCK SYSTEMATIC MULTI-STRAT INSTL": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.72"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:25:07.137979+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Blackrock Systematic Multi-Strat Instl"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::BLACKROCK SYSTEMATIC MULTI-STRAT INSTL"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I": {
+   "before": {
+    "asset_class": {
+     "S": "fixed_income"
+    },
+    "classification_confidence": {
+     "N": "0.72"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:25:07.137979+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Blackstone Private Credit Fund SHS CL I"
+    },
+    "sub_asset_class": {
+     "S": "Structured Credit"
+    },
+    "ticker": {
+     "S": "NAME::BLACKSTONE PRIVATE CREDIT FUND SHS CL I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CALAMOS HEDGED EQUITY I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.82"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:27:24.691950+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Calamos Hedged Equity I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CALAMOS HEDGED EQUITY I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CALAMOS MARKET NEUTRAL INCOME I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.8"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:27:24.691950+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Calamos Market Neutral Income I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CALAMOS MARKET NEUTRAL INCOME I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CALAMOS MARKET NEUTRAL INCOME R6": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.85"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:27:24.691950+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Calamos Market Neutral Income R6"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CALAMOS MARKET NEUTRAL INCOME R6"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CARLYLE TACTICAL PRIVATE CREDIT N": {
+   "before": {
+    "asset_class": {
+     "S": "fixed_income"
+    },
+    "classification_confidence": {
+     "N": "0.7"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:35:49.383394+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Carlyle Tactical Private Credit N"
+    },
+    "sub_asset_class": {
+     "S": "Structured Credit"
+    },
+    "ticker": {
+     "S": "NAME::CARLYLE TACTICAL PRIVATE CREDIT N"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CATALYST MILLBURN HEDGE STRATEGY I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.92"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:35:49.383394+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "CATALYST/MILLBURN Hedge Strategy I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CATALYST MILLBURN HEDGE STRATEGY I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.55"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T13:29:58.029398+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "CCA Eiger Opportunity LP Capital Values"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CCA EIGER OPPORTUNITY LP CAPITAL VALUES"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::COHEN STEERS GLOBAL REALTY I": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "Cohen & Steers Global Realty I"
+    },
+    "sub_asset_class": {
+     "S": "Global"
+    },
+    "ticker": {
+     "S": "NAME::COHEN STEERS GLOBAL REALTY I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "International Real Estate"
+  },
+  "NAME::CROMWELL LONG SHORT INVESTOR": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.62"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:49:19.666662+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Cromwell Long Short Investor"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::CROMWELL LONG SHORT INVESTOR"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::EATON VANCE GLBL MACR ABSOLUTE RETURN I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.75"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:54:50.885727+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Eaton Vance GLBL Macr Absolute Return I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::EATON VANCE GLBL MACR ABSOLUTE RETURN I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::EATON VANCE GLBL MACRO ABS RET ADVTG A": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.78"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T14:54:50.885727+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Eaton Vance GLBL Macro Abs Ret Advtg A"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::EATON VANCE GLBL MACRO ABS RET ADVTG A"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::FIRST TRUST MERGER ARBITRAGE CL I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.6"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:13:44.092986+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "First Trust Merger Arbitrage CL I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::FIRST TRUST MERGER ARBITRAGE CL I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::FIRST TRUST S P REIT INDEX FUND": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "First Trust S&P REIT Index Fund"
+    },
+    "sub_asset_class": {
+     "S": "US Large Cap"
+    },
+    "ticker": {
+     "S": "NAME::FIRST TRUST S P REIT INDEX FUND"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "Real Estate"
+  },
+  "NAME::FLEXSHARES GLOBAL QUALITY REAL ESTATE INDEX FUND": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "Flexshares Global Quality Real Estate Index Fund"
+    },
+    "sub_asset_class": {
+     "S": "Global"
+    },
+    "ticker": {
+     "S": "NAME::FLEXSHARES GLOBAL QUALITY REAL ESTATE INDEX FUND"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "International Real Estate"
+  },
+  "NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.7"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:26:19.479274+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Goldman Sachs Absolute Ret Trckr Instl"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::GOLDMAN SACHS ABSOLUTE RET TRCKR INSTL"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::JPMORGAN HEDGED EQUITY 2 R6": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.72"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:40:09.646969+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "JPMorgan Hedged Equity 2 R6"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::JPMORGAN HEDGED EQUITY 2 R6"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::JPMORGAN HEDGED EQUITY A": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.82"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:40:09.646969+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "JPMorgan Hedged Equity A"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::JPMORGAN HEDGED EQUITY A"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::JPMORGAN HEDGED EQUITY I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.78"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:40:09.646969+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "JPMorgan Hedged Equity I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::JPMORGAN HEDGED EQUITY I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::JPMORGAN HEDGED EQUITY R6": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.85"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:40:09.646969+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "JPMorgan Hedged Equity R6"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::JPMORGAN HEDGED EQUITY R6"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::NEXPOINT MERGER ARBITRAGE Z": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.82"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T15:49:21.781840+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Nexpoint Merger Arbitrage Z"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::NEXPOINT MERGER ARBITRAGE Z"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::PACER DATA INFRASTRUCTURE REAL ESTATE ETF": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "Pacer Data & Infrastructure Real Estate ETF"
+    },
+    "sub_asset_class": {
+     "S": "US Large Cap"
+    },
+    "ticker": {
+     "S": "NAME::PACER DATA INFRASTRUCTURE REAL ESTATE ETF"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "Real Estate"
+  },
+  "NAME::PENDER REAL ESTATE CREDIT I1": {
+   "before": {
+    "asset_class": {
+     "S": "fixed_income"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "Pender Real Estate Credit I1"
+    },
+    "sub_asset_class": {
+     "S": "Structured Credit"
+    },
+    "ticker": {
+     "S": "NAME::PENDER REAL ESTATE CREDIT I1"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "Real Estate"
+  },
+  "NAME::SHAW PARK MULTI STRATEGF OFFSHORE FUND LP": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.82"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T16:10:34.780376+00:00"
+    },
+    "low_confidence": {
+     "BOOL": false
+    },
+    "name": {
+     "S": "Shaw Park Multi Strategf Offshore Fund LP"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::SHAW PARK MULTI STRATEGF OFFSHORE FUND LP"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::T ROWE PRICE REAL ESTATE": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classified_by": {
+     "S": "scheduled"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-07T19:03:32.909068+00:00"
+    },
+    "name": {
+     "S": "T. Rowe Price Real Estate"
+    },
+    "sub_asset_class": {
+     "S": "US Large Cap"
+    },
+    "ticker": {
+     "S": "NAME::T ROWE PRICE REAL ESTATE"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-old-list-reclassify"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "Real Estate"
+  },
+  "NAME::TOEWS HEDGED U S FD": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.7"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T16:23:38.431867+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Toews Hedged U.S. FD"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::TOEWS HEDGED U S FD"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "NAME::VICTORY MARKET NEUTRAL INCOME I": {
+   "before": {
+    "asset_class": {
+     "S": "structured"
+    },
+    "classification_confidence": {
+     "N": "0.75"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "NAME"
+    },
+    "last_updated": {
+     "S": "2026-10-08T16:29:55.748005+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "Victory Market Neutral Income I"
+    },
+    "sub_asset_class": {
+     "S": "Hedge"
+    },
+    "ticker": {
+     "S": "NAME::VICTORY MARKET NEUTRAL INCOME I"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": ""
+  },
+  "REM": {
+   "before": {
+    "asset_class": {
+     "S": "equity"
+    },
+    "classification_confidence": {
+     "N": "0.62"
+    },
+    "classified_by": {
+     "S": "model"
+    },
+    "identifier_namespace": {
+     "S": "TICKER"
+    },
+    "last_updated": {
+     "S": "2026-10-08T16:35:47.146855+00:00"
+    },
+    "low_confidence": {
+     "BOOL": true
+    },
+    "name": {
+     "S": "iShares Mortgage Real Estate ETF"
+    },
+    "sub_asset_class": {
+     "S": "Financials"
+    },
+    "ticker": {
+     "S": "REM"
+    },
+    "updated_by": {
+     "S": "mdpf-secclass-model"
+    }
+   },
+   "set_class": "alternatives",
+   "set_sub": "Real Estate"
+  }
+ },
+ "table": "etf-classifications",
+ "taken_at": "2026-10-08T20:31:03.889747+00:00",
+ "updated_by": "mdpf-secclass-s11-rows"
+}
