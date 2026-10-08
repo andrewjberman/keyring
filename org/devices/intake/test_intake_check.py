@@ -31,7 +31,7 @@ BATCH = "tb1"
 GOOD_STATE = 266240      # 0x041000: real-time on, definitions current (the CTO's measured value)
 OFF_STATE = 393472       # 0x060100: real-time off
 AV_NAME = "Synthetic Antivirus (stand-in)"
-SIGNER_TEXT = "I have read checks 1 to 7 for batch %s and sign file %s\n"
+SIGNER_TEXT = "I have read checks 1 to 7 for batch %s and sign file %s\n\nCHECK 8 SIGNED -- test signer\n"
 
 
 class Skip(Exception):
@@ -167,14 +167,6 @@ def case_differing_py_fails_check_6_and_is_listed(env):
     assert ev["py_differing"] == ["%s/__init__.py" % ic.SYN_NAME] and ev["py_differing_count"] == 1
     assert ev["py_in_wheel"] == 1 and ev["py_identical"] == 0
     assert ev["compiled_count"] == 1 and ev["compiled"] == ["%s/_ext.pyd" % ic.SYN_NAME]
-
-
-@with_env
-def case_py_absent_from_installed_copy_is_a_difference(env):
-    w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
-    record, _ = env.check(w.name)
-    assert record["checks"][5]["verdict"] == "failed"
-    assert "%s/new_module.py" % ic.SYN_NAME in record["checks"][5]["evidence"]["py_differing"]
 
 
 @with_env
@@ -742,6 +734,250 @@ def case_failed_fetch_outcome_fails_check_1(env):
     assert verdicts(record)[1] == "failed" and record["verdict"] == "not_checked"
 
 
+# ------------------------------------------------------------------------------------- AMENDMENT 3: item 1 (checks 3 and 6)
+def make_editable(env, source="file:///gone/click-src", with_source_dir=False):
+    """Turn the installed fixture into an editable install: direct_url.json says so; the source folder is gone."""
+    di = env.site / ("%s-%s.dist-info" % (ic.SYN_NAME, ic.SYN_VERSION))
+    (di / "direct_url.json").write_text(json.dumps({"dir_info": {"editable": True}, "url": source}), encoding="ascii")
+    if not with_source_dir:
+        shutil.rmtree(str(env.site / ic.SYN_NAME))
+
+
+@with_env
+def case_editable_install_makes_checks_3_and_6_not_applicable(env):
+    make_editable(env)
+    w = env.add_wheel()
+    record, line = env.check(w.name)
+    v = verdicts(record)
+    assert v[3] == "not_applicable" and v[6] == "not_applicable", v
+    assert record["checks"][2]["evidence"]["reason"] == (
+        "the installed distribution is an editable install (source at file:///gone/click-src), not a copy of the published files")
+    assert "editable" in record["checks"][5]["evidence"]["reason"]
+    assert record["verdict"] == "checked", "not_applicable WITH a reason does not block"
+    # the same when the editable source still exists on disk: an editable install is never 'an installed copy'
+    env2 = Env()
+    try:
+        make_editable(env2, with_source_dir=True)
+        w2 = env2.add_wheel()
+        record2, _ = env2.check(w2.name)
+        assert verdicts(record2)[3] == "not_applicable" and verdicts(record2)[6] == "not_applicable"
+        assert (env2.site / ic.SYN_NAME / "__init__.py").is_file(), "the source files are still on disk in this arm"
+    finally:
+        env2.close()
+    # an unreadable or non-editable direct_url.json does not make an install editable
+    env3 = Env()
+    try:
+        di = env3.site / ("%s-%s.dist-info" % (ic.SYN_NAME, ic.SYN_VERSION))
+        (di / "direct_url.json").write_text('{"dir_info": {}, "url": "file:///x"}', encoding="ascii")
+        w3 = env3.add_wheel()
+        assert verdicts(env3.check(w3.name)[0])[3] == "passed"
+        (di / "direct_url.json").write_text("{not json", encoding="ascii")
+        assert verdicts(env3.check(w3.name)[0])[3] == "passed"
+    finally:
+        env3.close()
+
+
+@with_env
+def case_check_6_every_py_missing_on_disk_is_not_applicable(env):
+    shutil.rmtree(str(env.site / ic.SYN_NAME))      # a real (non-editable) dist-info whose files are gone
+    w = env.add_wheel(extra={"%s/other.py" % ic.SYN_NAME: b"Y = 1\n"})
+    record, _ = env.check(w.name)
+    v = verdicts(record)
+    assert v[3] == "passed" and v[6] == "not_applicable", v
+    ev = record["checks"][5]["evidence"]
+    assert ev["reason"] == "no installed file to compare (0 of 2 present)", ev["reason"]
+    assert ev["py_missing_count"] == 2 and ev["py_differing_count"] == 0 and ev["py_compared"] == 0
+    assert record["verdict"] == "checked"
+
+
+@with_env
+def case_check_6_some_present_some_missing_compares_the_present(env):
+    w = env.add_wheel(extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
+    record, _ = env.check(w.name)
+    c6 = record["checks"][5]
+    assert c6["verdict"] == "passed", c6
+    ev = c6["evidence"]
+    assert ev["py_compared"] == 1 and ev["py_identical"] == 1 and ev["py_missing"] == ["%s/new_module.py" % ic.SYN_NAME]
+    assert ev["py_differing_count"] == 0 and "compared=1 missing=1 differ=0" in ev["summary"], ev["summary"]
+    assert ev["py_missing_not_in_installed_record"] == ["%s/new_module.py" % ic.SYN_NAME], "recorded for the reader"
+
+
+@with_env
+def case_check_6_one_present_file_differing_still_fails_beside_missing(env):
+    w = env.add_wheel(py_bytes=b"VALUE = 3\n", extra={"%s/new_module.py" % ic.SYN_NAME: b"X = 1\n"})
+    record, _ = env.check(w.name)
+    c6 = record["checks"][5]
+    assert c6["verdict"] == "failed" and record["verdict"] == "not_checked", c6
+    assert "compared=1 missing=1 differ=1" in c6["evidence"]["summary"], c6["evidence"]["summary"]
+    assert c6["evidence"]["py_differing"] == ["%s/__init__.py" % ic.SYN_NAME]
+    assert "%s/new_module.py" % ic.SYN_NAME not in c6["evidence"]["py_differing"], "a missing file is never counted as differing"
+
+
+# ------------------------------------------------------------------------------------------- AMENDMENT 3: item 2 (check 8)
+CTO_DIR = ic.REPO_ROOT / "org" / "tier1_exec" / "1.0.0_SA_CTO" / "deliverables"
+REAL_SIGNATURE = CTO_DIR / "CTO_CHECK_8_NFRA_CTLPLN_INTAKE_BATCH_20261008_A_RPDS_PY_ONLY.md"
+REAL_APPROVAL = CTO_DIR / "CTO_APPROVAL_TO_FETCH_NFRA_CTLPLN_INTAKE_BATCH_20261008_A.md"
+REAL_BATCH = "intake-20261008-a"
+RPDS = "rpds_py-2026.6.3-cp314-cp314-win_amd64.whl"
+CLICK = "click-8.3.1-py3-none-any.whl"
+
+
+@with_env
+def case_check_8_refuses_the_approval_file_as_a_signature(env):
+    w = env.add_wheel()
+    # (a) the signature file IS the --approved-by file (same path)
+    sig = env.sign(w.name)
+    env.approved = pathlib.Path(sig)
+    record, _ = env.check(w.name)
+    assert verdicts(record)[8] == "failed" and record["verdict"] == "not_checked"
+    assert "is the --approved-by file" in record["checks"][7]["evidence"]["summary"], record["checks"][7]["evidence"]
+    # (a) the same CONTENT under another path
+    copy = env.tmp / "approval_copy.txt"
+    copy.write_bytes(pathlib.Path(sig).read_bytes())
+    env.approved = copy
+    record, _ = env.check(w.name)
+    assert verdicts(record)[8] == "failed" and "is the --approved-by file" in record["checks"][7]["evidence"]["summary"]
+    # a genuinely different approved list leaves the signature good
+    env.approved = env.tmp / "approved.txt"
+    assert verdicts(env.check(w.name)[0])[8] == "passed"
+    # (b) names the batch and the file but carries no signing line: an approval-shaped text
+    text = "approved to fetch batch %s, file %s. It is NOT CHECK 8 SIGNED. Check 8 is a later file.\n" % (BATCH, w.name)
+    record, _ = env.check(w.name, signed=env.sign(w.name, text=text))
+    assert verdicts(record)[8] == "failed" and "no line beginning" in record["checks"][7]["evidence"]["summary"], record["checks"][7]
+    # (b) the phrase must BEGIN a line; the CTO's own form is accepted too, with markdown emphasis in front
+    ok1 = "batch %s\nfile %s\n\n**SIGNED, check 8, for the one file above** -- someone\n" % (BATCH, w.name)
+    ok2 = "batch %s\nfile %s\n\nCHECK 8 SIGNED\n" % (BATCH, w.name)
+    no = "batch %s\nfile %s\nsigned, check 8 (lower case)\nsee CHECK 8 SIGNED above\n" % (BATCH, w.name)
+    assert verdicts(env.check(w.name, signed=env.sign(w.name, text=ok1))[0])[8] == "passed"
+    assert verdicts(env.check(w.name, signed=env.sign(w.name, text=ok2))[0])[8] == "passed"
+    assert verdicts(env.check(w.name, signed=env.sign(w.name, text=no))[0])[8] == "failed"
+
+
+def case_check_8_real_cto_files_in_a_temporary_directory():
+    assert REAL_SIGNATURE.is_file() and REAL_APPROVAL.is_file(), "the two CTO files must be in this tree"
+    tmp = pathlib.Path(tempfile.mkdtemp(prefix="intake_c8_"))
+    try:
+        sd = tmp / "signer"
+        sd.mkdir()
+        sig = sd / REAL_SIGNATURE.name
+        appr = sd / REAL_APPROVAL.name
+        shutil.copy2(str(REAL_SIGNATURE), str(sig))
+        shutil.copy2(str(REAL_APPROVAL), str(appr))
+        other = tmp / "approved_list.txt"           # a different --approved-by file
+        other.write_text("rpds-py==2026.6.3\nclick==8.3.1\n", encoding="ascii")
+        cfg = ic.Cfg(root=tmp / "r", records=tmp / "rec", av_json="", sites=[], signer_dir=sd)
+
+        def c8(file_name, signed, approved):
+            return ic.check_8({"cfg": cfg, "batch": REAL_BATCH, "file_name": file_name, "signed_by": str(signed),
+                               "approved_by": str(approved) if approved else None})
+        got = {}
+        for label, fn, signed, approved in (
+                ("signature/rpds", RPDS, sig, other), ("signature/click", CLICK, sig, other),
+                ("approval/rpds", RPDS, appr, other), ("approval/click", CLICK, appr, other),
+                ("approval-as-both/rpds", RPDS, appr, appr), ("approval-as-both/click", CLICK, appr, appr)):
+            got[label] = c8(fn, signed, approved)
+        print("CHECK8-REAL-FILES: " + " | ".join("%s=%s" % (k, v[0]) for k, v in got.items()))
+        assert got["signature/rpds"][0] == "passed", got["signature/rpds"]
+        assert got["signature/rpds"][1]["signer"] and got["signature/rpds"][1]["path"] == sig.name
+        assert got["signature/click"][0] == "failed" and "file name" in got["signature/click"][1]["summary"]
+        for k in ("approval/rpds", "approval/click", "approval-as-both/rpds", "approval-as-both/click"):
+            assert got[k][0] == "failed", (k, got[k])
+        assert "no line beginning" in got["approval/rpds"][1]["summary"] and "no line beginning" in got["approval/click"][1]["summary"]
+        assert "is the --approved-by file" in got["approval-as-both/rpds"][1]["summary"]
+    finally:
+        shutil.rmtree(str(tmp), ignore_errors=True)
+
+
+# ----------------------------------------------------------------------------------------- AMENDMENT 3: item 3 (pack)
+def two_files_one_released_one_held(env):
+    a = env.add_wheel()
+    b = env.add_wheel(version="2.0.0")
+    ic.build_installed_fixture(env.site, version="2.0.0")
+    env.approved.write_text("%s==1.0.0\n%s==2.0.0\n" % (ic.SYN_NAME, ic.SYN_NAME), encoding="ascii")
+    rec_a, _ = env.check(a.name)
+    assert rec_a["verdict"] == "checked" and release(env, a.name)[0] == 0
+    rec_b, _ = env.check(b.name, signed=False)
+    assert rec_b["verdict"] == "not_checked"
+    return a, b
+
+
+@with_env
+def case_pack_released_only_packs_the_released_and_names_the_held(env):
+    import intake_receive as rcv
+    a, b = two_files_one_released_one_held(env)
+    out = env.tmp / "packout"
+    # without the flag: refused, as before
+    rc, msg = pack(env, out)
+    assert rc == 1 and "files remain in holding" in msg and b.name in msg and not out.exists(), msg
+    sink = io.StringIO()
+    rc = ic.run_pack(env.cfg, BATCH, out, out=sink, released_only=True)
+    assert rc == 0 and "files=1" in sink.getvalue() and "held_back=1" in sink.getvalue(), sink.getvalue()
+    man = json.loads((out / "MANIFEST.json").read_text(encoding="ascii"))
+    assert [f["name"] for f in man["files"]] == [a.name], man["files"]
+    assert sorted(p.name for p in out.iterdir()) == sorted(
+        ["MANIFEST.json", a.name, a.name + ".check.json", a.name + ".delivery.txt"]), "the held file is not in the pack"
+    assert len(man["held_back"]) == 1
+    hb = man["held_back"][0]
+    assert hb["name"] == b.name and hb["verdict"] == "not_checked" and hb["where"] == "holding/%s/" % BATCH, hb
+    assert [(c["n"], c["verdict"]) for c in hb["failing_checks"]] == [(8, "unsigned")], hb
+    # the receive tool, as merged, still verifies the pack: it reads only manifest['files'] and ignores 'held_back'
+    res = rcv.verify_pack(str(out))
+    assert res["ok"] is True and res["verified"] == 1 and res["checked"] == 1 and not res["stray"] and not res["pack_defects"], res
+    r = subprocess.run([sys.executable, str(HERE / "intake_receive.py"), "verify", "--from", str(out)], capture_output=True,
+                       text=True, timeout=100, stdin=subprocess.DEVNULL)
+    last = r.stdout.strip().splitlines()[-1]
+    assert r.returncode == 0 and last.endswith("wheels=1 verified=1 checked=1 stray=0 ok=True"), r.stdout + r.stderr
+    print("PACK-RELEASED-ONLY-VERIFY: " + last)
+
+
+@with_env
+def case_pack_released_only_edges(env):
+    # a failing file and a fetch-record-only file are both named as held back
+    a, b = two_files_one_released_one_held(env)
+    c_fn = "gone-1.0-py3-none-any.whl"
+    fr = json.loads((env.cfg.records_dir(BATCH) / (b.name + ".fetch.json")).read_text(encoding="ascii"))
+    fr["requested"]["file_name"] = c_fn
+    fr["outcome"] = "refused"
+    (env.cfg.records_dir(BATCH) / (c_fn + ".fetch.json")).write_text(json.dumps(fr), encoding="ascii")
+    sink = io.StringIO()
+    out = env.tmp / "packout2"
+    assert ic.run_pack(env.cfg, BATCH, out, out=sink, released_only=True) == 0, sink.getvalue()
+    man = json.loads((out / "MANIFEST.json").read_text(encoding="ascii"))
+    by = {h["name"]: h for h in man["held_back"]}
+    assert sorted(by) == sorted([b.name, c_fn]) and by[c_fn]["verdict"] == "no_check_record", by
+    assert "fetch record only" in by[c_fn]["where"]
+    # a released file that is not checked is still refused even with the flag
+    shutil.move(str(b), str(env.cfg.release(BATCH) / b.name))
+    sink = io.StringIO()
+    assert ic.run_pack(env.cfg, BATCH, env.tmp / "packout3", out=sink, released_only=True) == 1
+    assert "does not read 'checked'" in sink.getvalue() and not (env.tmp / "packout3").exists(), sink.getvalue()
+    # an empty release folder is still refused
+    env2 = Env()
+    try:
+        env2.add_wheel()
+        sink = io.StringIO()
+        assert ic.run_pack(env2.cfg, BATCH, env2.tmp / "p", out=sink, released_only=True) == 1 and "holds no files" in sink.getvalue()
+    finally:
+        env2.close()
+    # the CLI flag
+    env3 = Env()
+    try:
+        w = env3.add_wheel()
+        env3.check(w.name)
+        release(env3, w.name)
+        env3.add_wheel(version="2.0.0")
+        e = dict(os.environ, OPAL_INTAKE_ROOT=str(env3.cfg.root), OPAL_INTAKE_RECORDS=str(env3.cfg.records_base))
+        tool = str(HERE / "intake_check.py")
+        r = subprocess.run([sys.executable, tool, "pack", "--batch", BATCH, "--out", str(env3.tmp / "o1")], capture_output=True,
+                           text=True, env=e, timeout=100, stdin=subprocess.DEVNULL)
+        assert r.returncode == 1 and "files remain in holding" in r.stdout, r.stdout
+        r = subprocess.run([sys.executable, tool, "pack", "--batch", BATCH, "--out", str(env3.tmp / "o2"), "--released-only"],
+                           capture_output=True, text=True, env=e, timeout=100, stdin=subprocess.DEVNULL)
+        assert r.returncode == 0 and "held_back=1" in r.stdout, r.stdout + r.stderr
+    finally:
+        env3.close()
+
+
 def case_constants_appear_verbatim_in_the_brief():
     text = re.sub(r"\s+", " ", BRIEF.read_text(encoding="utf-8").replace("**", ""))   # the brief bolds the sentence's lead
     rows = {}
@@ -849,7 +1085,7 @@ def case_real_security_center_and_on_access_read_on_tiny_synthetic_wheel():
 
 CASES = [
     case_clean_signed_checked_and_releases, case_unsigned_not_checked_and_release_refuses, case_flipped_byte_fails_check_1,
-    case_differing_py_fails_check_6_and_is_listed, case_py_absent_from_installed_copy_is_a_difference,
+    case_differing_py_fails_check_6_and_is_listed,
     case_added_pth_fails_check_6, case_other_hooks_fail_and_known_hook_is_not_a_failure,
     case_release_two_days_old_fails_check_4_default_passes_with_flag,
     case_attestation_absent_not_applicable_unread_failed_present_passed,
@@ -867,6 +1103,11 @@ CASES = [
     case_check_7_non_ascii_product_name_is_replaced_with_a_question_mark,
     case_leftover_scan_copy_can_never_be_released_or_packed, case_selftest_av_line_reads_the_stand_in,
     case_check_2_wrong_requests_fail, case_parse_wheel_name, case_check_8_signature_rules,
+    case_editable_install_makes_checks_3_and_6_not_applicable, case_check_6_every_py_missing_on_disk_is_not_applicable,
+    case_check_6_some_present_some_missing_compares_the_present,
+    case_check_6_one_present_file_differing_still_fails_beside_missing,
+    case_check_8_refuses_the_approval_file_as_a_signature, case_check_8_real_cto_files_in_a_temporary_directory,
+    case_pack_released_only_packs_the_released_and_names_the_held, case_pack_released_only_edges,
     case_default_signer_dir_is_the_ctos_deliverables, case_no_path_to_checked_without_the_signature,
     case_hand_edited_record_cannot_release, case_missing_fetch_record_and_held_file_fail,
     case_failed_fetch_outcome_fails_check_1, case_constants_appear_verbatim_in_the_brief, case_records_are_ascii_only,

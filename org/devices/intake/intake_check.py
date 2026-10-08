@@ -12,7 +12,7 @@ Verbs:
   check   --batch <id> --file <file name> [--approved-by <path>] [--signed-by <path>]
           [--min-release-age-days 14] [--min-earlier-releases 3] [--scan-wait-seconds 20]
   release --batch <id> --file <file name>
-  pack    --batch <id> --out <dir>
+  pack    --batch <id> --out <dir> [--released-only]
   selftest-unsigned
   selftest-av   (reads the REAL Security Center, prints one INTAKE-AV line, writes no file)
 
@@ -403,10 +403,31 @@ def check_2(ctx):
     return rec("passed", "file name, METADATA, WHEEL tags and the approved list all say %s" % approved_line, **detail)
 
 
+def editable_source(dist_info):
+    """None when the distribution is not an editable install; else the url its direct_url.json names (a string, '' if none).
+    An editable install is read from <dist-info>/direct_url.json, key dir_info.editable true. Unreadable = not editable."""
+    try:
+        data = json.loads((dist_info / "direct_url.json").read_text(encoding="utf-8", errors="replace"))
+    except (OSError, ValueError):
+        return None
+    di = data.get("dir_info") if isinstance(data, dict) else None
+    if isinstance(di, dict) and di.get("editable") is True:
+        return ascii_clean(str(data.get("url", "")))
+    return None
+
+
 def check_3(ctx):
     req = ctx["fetch"].get("requested") or {}
-    found, versions = find_installed(ctx["cfg"], req.get("name", ""), req.get("version", ""))
+    found_all, versions = find_installed(ctx["cfg"], req.get("name", ""), req.get("version", ""))
+    editable = [(f, editable_source(f["dist_info"])) for f in found_all]
+    found = [f for f, src in editable if src is None]
+    ed = [(f, src) for f, src in editable if src is not None]
     ctx["installed"] = found
+    ctx["installed_editable"] = bool(ed)
+    if not found and ed:
+        reason = "the installed distribution is an editable install (source at %s), not a copy of the published files" % ed[0][1]
+        return rec("not_applicable", reason, reason=reason, installed_versions=versions,
+                   editable_installs=[f["dist_info_name"] for f, _ in ed])
     if not found:
         reason = "this machine holds no installed copy of %s %s (installed versions of that name: %s)" % (
             req.get("name"), req.get("version"), ", ".join(versions) if versions else "none")
@@ -467,7 +488,9 @@ def _unsafe(name):
 
 def check_6(ctx):
     if not ctx.get("installed"):
-        reason = "check 3 was not applicable: no installed copy of this version to compare with"
+        reason = ("check 3 was not applicable: the installed distribution is an editable install, not a copy of the published files"
+                  if ctx.get("installed_editable") else
+                  "check 3 was not applicable: no installed copy of this version to compare with")
         return rec("not_applicable", reason, reason=reason)
     inst = ctx["installed"][0]
     site_dir, inst_di = inst["site"], inst["dist_info"]
@@ -478,7 +501,7 @@ def check_6(ctx):
     except OSError:
         inst_eps = set()
     py_total = py_ident = 0
-    py_diff, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], []
+    py_diff, py_missing, compiled, hooks_new, hooks_old, unsafe = [], [], [], [], [], []
     with zipfile.ZipFile(ctx["path"]) as zf:
         infos = [i for i in zf.infolist() if not i.is_dir()]
         for info in infos:
@@ -507,7 +530,9 @@ def check_6(ctx):
                     py_diff.append(n)
                     continue
                 target = site_dir / rel
-                if info.file_size > MAX_PY_BYTES or not target.is_file():
+                if not target.is_file():
+                    py_missing.append(n)     # no counterpart on disk: nothing to compare, never a difference
+                elif info.file_size > MAX_PY_BYTES:
                     py_diff.append(n)
                 elif target.read_bytes() == zf.read(info):
                     py_ident += 1
@@ -520,20 +545,29 @@ def check_6(ctx):
     for ep in sorted(wheel_eps):
         label = "entry_point %s:%s = %s" % ep
         (hooks_old if ep in inst_eps else hooks_new).append(label)
+    compared = py_ident + len(py_diff)
+    # of the missing files, those the installed copy's own RECORD never listed: information only, not a verdict
+    missing_unlisted = [n for n in py_missing if _site_rel(n) not in inst_record]
     detail = {"installed_copy": "<site-packages>/" + inst["dist_info_name"], "py_in_wheel": py_total, "py_identical": py_ident,
+              "py_compared": compared, "py_missing_count": len(py_missing), "py_missing": py_missing,
+              "py_missing_not_in_installed_record": missing_unlisted,
               "py_differing_count": len(py_diff), "py_differing": py_diff, "compiled_count": len(compiled), "compiled": compiled,
               "hooks_only_in_wheel": hooks_new, "hooks_also_in_installed_copy": hooks_old, "unsafe_member_names": unsafe}
+    if py_total and len(py_missing) == py_total and not unsafe:
+        reason = "no installed file to compare (0 of %d present)" % py_total
+        return rec("not_applicable", reason, reason=reason, **detail)
     problems = []
     if py_diff:
-        problems.append("%d of %d .py files differ from the installed copy: %s" % (len(py_diff), py_total, cap(py_diff)))
+        problems.append("compared=%d missing=%d differ=%d: %d of %d .py files differ from the installed copy: %s" % (
+            compared, len(py_missing), len(py_diff), len(py_diff), py_total, cap(py_diff)))
     if hooks_new:
         problems.append("installer/script/start-up hook(s) not in the installed copy: %s" % cap(hooks_new))
     if unsafe:
         problems.append("unsafe member name(s): %s" % cap(unsafe))
     if problems:
         return rec("failed", "; ".join(problems), **detail)
-    return rec("passed", "%d of %d .py files byte-identical; %d compiled file(s) named; no new hook" % (py_ident, py_total, len(compiled)),
-               **detail)
+    return rec("passed", "%d of %d .py files byte-identical (compared=%d missing=%d differ=0); %d compiled file(s) named; no new hook" % (
+        py_ident, py_total, compared, len(py_missing), len(compiled)), **detail)
 
 
 def _ascii_name(text):
@@ -710,6 +744,19 @@ def _git_author(path):
         return "unread"
 
 
+SIGN_MARKERS = ("CHECK 8 SIGNED", "SIGNED, check 8")
+
+
+def has_sign_marker(text):
+    """True when some line, once markdown emphasis, backticks, dashes-as-bullets and spaces are stripped from its start, BEGINS
+    with one of SIGN_MARKERS (case-sensitive). A phrase met mid-sentence (e.g. 'It is NOT check 8') is not a marker."""
+    for line in text.splitlines():
+        lead = line.lstrip(" 	*`_#>-").rstrip()
+        if any(lead.startswith(m) for m in SIGN_MARKERS):
+            return True
+    return False
+
+
 def check_8(ctx):
     signed = ctx.get("signed_by")
     if not signed:
@@ -728,10 +775,23 @@ def check_8(ctx):
             DEFAULT_SIGNER_REL if cfg.signer_dir is None else "<OPAL_INTAKE_SIGNER_DIR>"))
     if not rp.is_file():
         return rec("failed", "the signature file does not exist")
+    approved = ctx.get("approved_by")
+    if approved:
+        ap = pathlib.Path(approved)
+        if not ap.is_absolute():
+            ap = REPO_ROOT / ap
+        try:
+            if ap.is_file() and (ap.resolve() == rp or sha256_file(ap) == sha256_file(rp)):
+                return rec("failed", "the signature file is the --approved-by file (same path or same content): an approval "
+                           "to fetch is not a signature")
+        except OSError as exc:
+            return rec("failed", "the signature file could not be compared with the --approved-by file: %s" % exc)
     text = rp.read_text(encoding="utf-8", errors="replace")
     miss = [what for what, s in (("batch id", ctx["batch"]), ("file name", ctx["file_name"])) if s not in text]
     if miss:
         return rec("failed", "the signature file's text does not contain the %s" % " and the ".join(miss))
+    if not has_sign_marker(text):
+        return rec("failed", "the signature file has no line beginning 'CHECK 8 SIGNED' or 'SIGNED, check 8'")
     if cfg.signer_dir is None:
         rel = rp.relative_to(REPO_ROOT.resolve()).as_posix()
         parts = rel.split("/")
@@ -741,7 +801,7 @@ def check_8(ctx):
         rel = rp.name
         signer = "override-dir:" + rb.name
         author = "not read (override dir)"
-    return rec("passed", "signature file names the batch and the file", signer=signer, path=rel,
+    return rec("passed", "signature file names the batch and the file and carries the signing line", signer=signer, path=rel,
                signature_file_sha256=sha256_bytes(rp.read_bytes()), signature_file_git_author=author)
 
 
@@ -913,15 +973,34 @@ def run_release(cfg, batch, file_name, out=None):
     return 0
 
 
-def run_pack(cfg, batch, outdir, out=None):
+def held_back_entry(cfg, batch, name, why):
+    """One file of the batch that is NOT in the pack: its current verdict and the check(s) that fail it."""
+    record, rwhy = load_check_record(cfg, batch, name)
+    row = {"name": name, "where": why, "verdict": None, "failing_checks": []}
+    if record is None:
+        row["verdict"] = "no_check_record"
+        row["note"] = rwhy
+        return row
+    row["verdict"] = record.get("verdict") if isinstance(record, dict) else "unreadable"
+    for c in (record.get("checks") or []) if isinstance(record, dict) else []:
+        if isinstance(c, dict) and c.get("verdict") in ("failed", "unsigned"):
+            row["failing_checks"].append({"n": c.get("n"), "name": c.get("name"), "verdict": c.get("verdict"),
+                                          "summary": ascii_clean(str((c.get("evidence") or {}).get("summary", ""))[:300])})
+    return row
+
+
+def run_pack(cfg, batch, outdir, out=None, released_only=False):
     """Refusal rules: (a) any file left in holding/<batch>/ refuses the batch, because a held file is one not yet checked and
     released (or one that failed), and a carrier must never receive a batch that is not whole; (b) every file in
     release/<batch>/ (other than its <name>.delivery.txt) must have a check record that re-derives 'checked', whose
-    held_sha256 equals the file's SHA-256, and a delivery text; (c) an empty release folder refuses."""
+    held_sha256 equals the file's SHA-256, and a delivery text; (c) an empty release folder refuses.
+    With released_only=True rule (a) is lifted: the pack holds exactly the released, checked files, and the manifest gains a
+    `held_back` list naming every other file of the batch (in holding/, or named by a fetch record) with its verdict and failing
+    checks. Rules (b) and (c) still refuse: a released file that is not checked is an integrity fault, not a held file."""
     out = out or sys.stdout
     problems = []
     hold, rel = cfg.holding(batch), cfg.release(batch)
-    if hold.is_dir():
+    if hold.is_dir() and not released_only:
         left = sorted(p.name for p in hold.iterdir() if p.is_file())
         if left:
             problems.append("files remain in holding/%s/: %s" % (batch, ", ".join(
@@ -954,6 +1033,20 @@ def run_pack(cfg, batch, outdir, out=None):
     if problems:
         print("INTAKE-PACK REFUSED batch=%s reasons=%s" % (batch, " | ".join(problems)), file=out)
         return 1
+    held_back = []
+    if released_only:
+        packed = {e[0].name for e in entries}
+        names = {}
+        if hold.is_dir():
+            for q in hold.iterdir():
+                if q.is_file() and not is_scan_copy(q.name):
+                    names[q.name] = "holding/%s/" % batch
+        rdir = cfg.records_dir(batch)
+        if rdir.is_dir():
+            for q in rdir.iterdir():
+                if q.name.endswith(".fetch.json"):
+                    names.setdefault(q.name[:-len(".fetch.json")], "fetch record only: not in holding or release")
+        held_back = [held_back_entry(cfg, batch, n, names[n]) for n in sorted(names) if n not in packed]
     outdir = pathlib.Path(outdir)
     if outdir.exists() and any(outdir.iterdir()):
         print("INTAKE-PACK REFUSED batch=%s reasons=output folder %s is not empty" % (batch, outdir.name), file=out)
@@ -967,8 +1060,14 @@ def run_pack(cfg, batch, outdir, out=None):
         manifest["files"].append({"name": f.name, "sha256": sha, "size": f.stat().st_size,
                                   "check_record": chk.name, "check_record_sha256": sha256_file(outdir / chk.name),
                                   "delivery": deliv.name, "delivery_sha256": sha256_file(outdir / deliv.name)})
+    if released_only:
+        manifest["held_back"] = held_back     # intake_receive.py reads only manifest["files"]; this key is ignored there
     write_json_atomic(outdir / "MANIFEST.json", manifest)
-    print("INTAKE-PACK batch=%s files=%d out=%s" % (batch, len(entries), outdir.name), file=out)
+    print("INTAKE-PACK batch=%s files=%d out=%s%s" % (batch, len(entries), outdir.name,
+                                                      " held_back=%d" % len(held_back) if released_only else ""), file=out)
+    for h in held_back:
+        print("INTAKE-PACK held back: %s verdict=%s failing=%s" % (
+            h["name"], h["verdict"], ",".join("c%s" % c["n"] for c in h["failing_checks"]) or "none"), file=out)
     return 0
 
 
@@ -1107,6 +1206,7 @@ def main(argv=None):
     p = sub.add_parser("pack")
     p.add_argument("--batch", required=True)
     p.add_argument("--out", required=True)
+    p.add_argument("--released-only", action="store_true", dest="released_only")
     sub.add_parser("selftest-unsigned")
     sub.add_parser("selftest-av")
     a = ap.parse_args(argv)
@@ -1128,7 +1228,7 @@ def main(argv=None):
         return 0
     if a.verb == "release":
         return run_release(cfg, a.batch, a.file)
-    return run_pack(cfg, a.batch, a.out)
+    return run_pack(cfg, a.batch, a.out, released_only=a.released_only)
 
 
 if __name__ == "__main__":
