@@ -12,10 +12,11 @@
 
 | leg | kind | target | proof required | proof | state |
 |---|---|---|---|---|---|
-| I1 | activation | build one shared image and preserve six nonworker digests | CodeBuild success and exact digest |  | OPEN |
+| I1 | activation | build one shared image and preserve six nonworker digests | CodeBuild success and exact digest | CodeBuild de95c779-1f3e-4fee-9949-d00e69870cdc SUCCEEDED source5c625a6b9fe80bd2d5635662a7dcda595a6d9a21 includes overlay78e2e7b0b7; digestd3037f32c0143855a283f5e997fa83d8f09fc23755608c190896ab0adfd3f3b1. Six nonworker families already pinned immutable prior digest; exact consumer references saved. | CLOSED 20261008T204542Z |
 | W1 | activation | worker definition and its Pipe revision binding only | safe-apply and live digest/pointer references |  | OPEN |
 | V1 | verify | next projection publish and served FabricNode | fabric_node_count positive node_count295xx newer VINTAGE six nonworker digests unchanged |  | OPEN |
 
 ## Log
 
 - 20261008T204035Z OPENED by 0.7.0_AE_CloudOps with 3 leg(s)
+- 20261008T204542Z LEG I1 closed: CodeBuild de95c779-1f3e-4fee-9949-d00e69870cdc SUCCEEDED source5c625a6b9fe80bd2d5635662a7dcda595a6d9a21 includes overlay
