@@ -4,28 +4,34 @@ of a commit range, over real history, to count false stops BEFORE any ENFORCE sw
 item 5). READ-ONLY: it runs no wrapper, no deploy core, no terraform and no AWS call; it reads git history and files, and it runs
 the two read-only checks (apply-who-check.py, crossbox-deploy-check.py) exactly as the wrappers call them.
 
-    python .tools/seat-gates-dry-pass.py --range <a>..<b> [--range ...] [--serial <serial>] [--device <box>]
-    python .tools/seat-gates-dry-pass.py --last <n> [--ref CLOUD] [--serial <serial>] [--device <box>]
+    python .tools/seat-gates-dry-pass.py --range <a>..<b> [--range ...] [--actor <serial>] [--device <box>]
+    python .tools/seat-gates-dry-pass.py --last <n> [--ref CLOUD] [--actor <serial>] [--device <box>]
 
   --range    a commit range as a push or deploy carries it (repeatable).
   --last     the last n NON-MERGE commits of --ref (default CLOUD) that touch a deployable home (data/*/scripts/) or a Terraform root
              (infra/aws/terraform/), each replayed as the range <commit>^..<commit>.
-  --serial   the acting seat for every range. Without it each range is attributed to its commit author's name: exactly one
-             distinct author and it must be a serial (0.x.0_XX_Name[~lane]); otherwise the range is `skipped` with the reason.
+  --actor    the seat whose SESSION would run the wrapper on this box (ruling 106858: apply-who grades the running session, never a
+             commit's author). Required for the APPLY reading: a range that touches a Terraform root with no --actor reports
+             `apply_who=UNGRADED (no actor given)`, counts in `ungraded`, and is never a would-stop. The cross-box check takes the
+             actor as its serial; without an actor it falls back to the range's single author serial (else the range is `skipped`).
+             The author stays on every line as information (author=...) and is never graded for apply-who.
   --device   the box whose view is replayed (sets AGENTBUS_DEVICE for the checks); default: the environment's.
   --repo-root  the tree whose register, projects, task orders, notices, calls, open deploys and deploy core are read (default:
              this tree); the two checks run are always the ones beside this file.
 
 Per range it replays, with the wrappers' own rules:
   DEPLOY block (safe-deploy.sh): the files the deploy core would deploy for the range (crossbox-deploy-check.py
-      --list-deployable, which imports the core's own detectors); apply-who runs only if at least one file deploys, else SKIP;
-      the cross-box check runs per data/<pipeline> root (at most four) with the deployable files under that root.
-  APPLY block (safe-apply.sh): each Terraform root the range touches (at most four), untargeted (the worst case), with the
-      Terraform files of the root the range carries -- the replay of --files-vs-trunk.
+      --list-deployable, which imports the core's own detectors); apply-who is WARN-ONLY there for good (ruling 106858): it is read
+      when at least one file deploys (else SKIP) and reported `WARN-ONLY (safe-deploy)`, and is never a would-stop; the cross-box
+      check runs per data/<pipeline> root (at most four) with the deployable files under that root.
+  APPLY block (safe-apply.sh): only for a range that touches a Terraform root: apply-who graded on --actor, then each Terraform
+      root the range touches (at most four), untargeted (the worst case), with the Terraform files of the root the range carries --
+      the replay of --files-vs-trunk.
 It reads TODAY's register, projects, notices, calls and open deploys (the state a push would meet now), not the state of the day
 the commit was made. One line per range; then `BY-SWITCH ...`; LAST line:
-    SEAT-GATES-DRY ranges=<n> would_stop=<k> skipped=<s> ok=<True when k is 0>
-A would-stop is a range where, with all four switches on, at least one check REFUSES/STOPS or gives no verdict (fail closed).
+    SEAT-GATES-DRY ranges=<n> would_stop=<k> skipped=<s> ungraded=<u> ok=<True when k is 0>
+A would-stop is a range where, with the switches that can refuse (apply-who in safe-apply, crossbox in both) on, at least one
+check REFUSES/STOPS or gives no verdict (fail closed).
 Exit 0 when k is 0, 1 otherwise, 2 on a usage error.
 """
 from __future__ import annotations
@@ -92,15 +98,16 @@ def cross_verdict(repo, env, serial, root, files):
     return "NO-VERDICT", "crossbox-deploy-check gave no verdict (rc=%d): %s" % (rc, line), ""
 
 
-def attribute(repo, rng, serial_arg):
-    """(serial or None, author_text, skip_reason)."""
+def attribute(repo, rng, actor_arg):
+    """(crossbox serial or None, author_text, skip_reason). The actor, when given, is the crossbox serial; without one the
+    range's single author serial stands in for the cross-box check only (apply-who never grades an author)."""
     rc, out = git(repo, "log", "--format=%an", rng)
     names = sorted({ln.strip() for ln in out.splitlines() if ln.strip()})
     author = ", ".join(names) if names else "(no commit)"
     if rc != 0 or not names:
         return None, author, "git log %s gave no commit (rc=%d)" % (rng, rc)
-    if serial_arg:
-        return serial_arg, author, ""
+    if actor_arg:
+        return actor_arg, author, ""
     if len(names) != 1:
         return None, author, "the range has %d distinct authors and no --serial was given" % len(names)
     if not SERIAL_RE.match(names[0]):
@@ -108,9 +115,10 @@ def attribute(repo, rng, serial_arg):
     return names[0], author, ""
 
 
-def replay(repo, env, rng, serial_arg):
-    serial, author, skip = attribute(repo, rng, serial_arg)
-    rec = {"range": rng, "serial": serial, "author": author, "skip": skip, "stops": [], "switches": set(), "parts": []}
+def replay(repo, env, rng, actor):
+    serial, author, skip = attribute(repo, rng, actor)
+    rec = {"range": rng, "serial": serial, "actor": actor, "author": author, "skip": skip, "stops": [], "switches": set(),
+           "parts": [], "ungraded": False}
     if skip:
         return rec
     rc, out = git(repo, "diff", "--name-only", rng)
@@ -135,12 +143,11 @@ def replay(repo, env, rng, serial_arg):
     else:
         if count == 0:
             rec["parts"].append("deploy_apply_who=SKIP(deploys nothing)")
+        elif actor:
+            verdict, line = who_verdict(repo, env, actor, roots[0])
+            rec["parts"].append("deploy_apply_who=WARN-ONLY(safe-deploy)[%s]" % verdict)
         else:
-            verdict, line = who_verdict(repo, env, serial, roots[0])
-            rec["parts"].append("deploy_apply_who=%s" % verdict)
-            if verdict != "ADMITTED":
-                rec["stops"].append("deploy apply-who: %s" % line)
-                rec["switches"].add("apply-who.safe-deploy")
+            rec["parts"].append("deploy_apply_who=WARN-ONLY(safe-deploy)[no actor given]")
         for root in roots:
             files = [f for f in deployable if f.startswith(root + "/")]
             cv, cline, why = cross_verdict(repo, env, serial, root, files)
@@ -156,11 +163,15 @@ def replay(repo, env, rng, serial_arg):
             tf.setdefault(match.group(1), []).append(path)
     if tf:
         roots = sorted(tf)[:MAX_ROOTS]
-        verdict, line = who_verdict(repo, env, serial, roots[0])
-        rec["parts"].append("apply_apply_who=%s" % verdict)
-        if verdict != "ADMITTED":
-            rec["stops"].append("apply apply-who: %s" % line)
-            rec["switches"].add("apply-who.safe-apply")
+        if actor:
+            verdict, line = who_verdict(repo, env, actor, roots[0])
+            rec["parts"].append("apply_apply_who=%s" % verdict)
+            if verdict != "ADMITTED":
+                rec["stops"].append("apply apply-who: %s" % line)
+                rec["switches"].add("apply-who.safe-apply")
+        else:
+            rec["ungraded"] = True
+            rec["parts"].append("apply_who=UNGRADED (no actor given)")
         for root in roots:
             cv, cline, why = cross_verdict(repo, env, serial, root, tf[root])
             rec["parts"].append("apply_crossbox[%s]=%s(%d files)" % (root, cv, len(tf[root])))
@@ -173,13 +184,13 @@ def replay(repo, env, rng, serial_arg):
 
 
 def usage(msg):
-    print("ERROR: %s\nusage: seat-gates-dry-pass.py (--range a..b)... | --last n [--ref CLOUD] [--serial S] [--device D] [--repo-root DIR]" % msg,
+    print("ERROR: %s\nusage: seat-gates-dry-pass.py (--range a..b)... | --last n [--ref CLOUD] [--actor S] [--device D] [--repo-root DIR]" % msg,
           file=sys.stderr)
     return 2
 
 
 def main(argv):
-    ranges, last, ref, serial, device, repo = [], 0, "CLOUD", "", "", REPO
+    ranges, last, ref, actor, device, repo = [], 0, "CLOUD", "", "", REPO
     i = 0
     try:
         while i < len(argv):
@@ -190,8 +201,8 @@ def main(argv):
                 last = int(argv[i + 1])
             elif arg == "--ref":
                 ref = argv[i + 1]
-            elif arg == "--serial":
-                serial = argv[i + 1]
+            elif arg == "--actor":
+                actor = argv[i + 1]
             elif arg == "--device":
                 device = argv[i + 1]
             elif arg == "--repo-root":
@@ -213,8 +224,8 @@ def main(argv):
     if device:
         env["AGENTBUS_DEVICE"] = device
     with ThreadPoolExecutor(max_workers=6) as pool:
-        recs = list(pool.map(lambda rng: replay(repo, env, rng, serial), ranges))
-    stops = skipped = 0
+        recs = list(pool.map(lambda rng: replay(repo, env, rng, actor), ranges))
+    stops = skipped = ungraded = 0
     tally = {}
     for rec in recs:
         if rec["skip"]:
@@ -223,13 +234,14 @@ def main(argv):
             continue
         verdict = "WOULD-STOP" if rec["stops"] else "PASS"
         stops += 1 if rec["stops"] else 0
+        ungraded += 1 if rec["ungraded"] else 0
         for name in rec["switches"]:
             tally[name] = tally.get(name, 0) + 1
-        print("RANGE %s serial=%s verdict=%s %s" % (rec["range"], rec["serial"], verdict, " ".join(rec["parts"])))
+        print("RANGE %s actor=%s author=%r verdict=%s %s" % (rec["range"], rec["actor"] or "none", rec["author"], verdict, " ".join(rec["parts"])))
         for stop in rec["stops"]:
             print("  WOULD-STOP %s | %s" % (rec["range"], stop))
     print("BY-SWITCH %s" % (" ".join("%s=%d" % kv for kv in sorted(tally.items())) or "none"))
-    print("SEAT-GATES-DRY ranges=%d would_stop=%d skipped=%d ok=%s" % (len(recs), stops, skipped, stops == 0))
+    print("SEAT-GATES-DRY ranges=%d would_stop=%d skipped=%d ungraded=%d ok=%s" % (len(recs), stops, skipped, ungraded, stops == 0))
     return 0 if stops == 0 else 1
 
 

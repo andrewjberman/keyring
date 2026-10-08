@@ -88,15 +88,19 @@ If execution fails or hits a structural block (e.g., HARD-BLOCK class-5), surfac
 Andrew-direct 2026-10-07 ~16:3xZ, VERBATIM: "They also can manage /unstick /mstr-spawn /mstr-kill to keep their fabric running
 cleanly." Every cycle, before Step 3b:
 
-1. **MEASURE.** Run `python .tools/seat-liveness.py` (read-only). It lists each seat on THIS box as MOVING, QUIET, HUNG, DEAD or
-   UNKNOWN, and ends `SEAT-LIVENESS device=<d> seats=<n> ... ok=<True|False>`. `ok=False` (a source could not be read): record
-   it and act on nothing from that run.
+1. **MEASURE.** Run `python .tools/seat-liveness.py` (read-only). It lists each seat on THIS box as MOVING, QUIET, HUNG, DEAD,
+   ELSEWHERE(<box>) or UNKNOWN, and ends `SEAT-LIVENESS device=<d> seats=<n> ... dead=<e> elsewhere=<f> unknown=<g> ok=<True|False>`.
+   `ok=False` (a source could not be read): record it and act on nothing from that run.
 2. **HUNG** (alive by process, an open task order, nothing in 45 minutes): run `/unstick <serial>`. The unstick skill's own
    diagnosis stands: peek first, key only a seat that is at a prompt.
-3. **DEAD** whose order is still open: read the order first (the line prints its count and newest issued date). Respawn by
-   `/mstr-spawn <serial>` when the order is current; `/mstr-spawn`'s own pre-flight (1pt process truth, 1a, 1b, 1d) stands and
-   a refusal is the answer. An old order to a seat that never ran is a finding for the COO that issued it, not a respawn.
-4. **QUIET, MOVING, UNKNOWN**: no act. List the UNKNOWN seats in the report.
+3. **DEAD** is a seat with an open order whose project is PLACED ON THIS BOX and no process here. Read the order first (the line
+   prints its count, its placed-here and elsewhere counts, and newest issued date). Respawn by `/mstr-spawn <serial>` when the
+   order is current; `/mstr-spawn`'s own pre-flight (1pt process truth, 1a, 1b, 1d) stands and a refusal is the answer. An old
+   order to a seat that never ran is a finding for the COO that issued it, not a respawn. **ELSEWHERE(<box>)** is never respawned
+   here: the serial string is the same on every box and this box cannot see another box's sessions, so the seat is working on
+   that box. It is that box's manager's to look at; ask that box's manager over the bus (Step 3b's frame), naming the serial.
+   **UNKNOWN** (including "placement unread for <n> order(s)") is never respawned: an unread placement licenses no respawn.
+4. **QUIET, MOVING, ELSEWHERE, UNKNOWN**: no act here. List the ELSEWHERE and UNKNOWN seats in the report.
 5. **RECORD** each act (the serial, the class, the skill run, its result) in the cycle report's SEATS line and the heartbeat.
 
 This step acts on this box only. Another box's seat is that box's manager's; the register `org/devices/DEVICES.json` is the list

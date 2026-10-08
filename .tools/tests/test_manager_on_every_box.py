@@ -39,8 +39,8 @@ def write(path: str, text: str) -> None:
         fh.write(text)
 
 
-def order(root: str, name: str, issued_to: str, status: str) -> None:
-    write(os.path.join(root, "org", "missions", "D0", "TST", "TST_ONE", "task-orders", name + ".md"),
+def order(root: str, name: str, issued_to: str, status: str, project: str = "TST_ONE") -> None:
+    write(os.path.join(root, "org", "missions", "D0", "TST", project, "task-orders", name + ".md"),
           "# TO %s\n<issued_to>%s</issued_to>\n<issued_date>2026-10-07</issued_date>\n<status>%s</status>\n" % (
               name, issued_to, status))
 
@@ -53,7 +53,8 @@ def register(base: str) -> str:
     path = os.path.join(base, "register.json")
     write(path, json.dumps({"schema_version": 1, "devices": [
         {"name": "alpha", "aliases": [], "inbound_queue": "q-alpha.fifo", "lane_letters": [], "lane_letters_default": True},
-        {"name": "beta", "aliases": [], "inbound_queue": "q-beta.fifo", "lane_letters": ["Q"], "lane_letters_default": False},
+        {"name": "beta", "aliases": ["B-Box"], "inbound_queue": "q-beta.fifo", "lane_letters": ["Q"], "lane_letters_default": False},
+        {"name": "gamma", "aliases": [], "inbound_queue": "q-gamma.fifo", "lane_letters": [], "lane_letters_default": False},
     ]}))
     return path
 
@@ -94,6 +95,24 @@ def fixture(base: str, with_processes: bool = True) -> str:
     order(fx, "TST_ONE.TO-3", "0.9.0_WK_TST~1", "issued")          # a worker: a subagent with no process, never a seat
     order(fx, "TST_ONE.TO-4", "2.0.0_SA_COO~T7", "issued")          # order-only seat, lane owned here: DEAD
     order(fx, "TST_ONE.TO-5", "2.0.0_SA_COO~Q", "issued")           # lane Q belongs to the other box: not a seat here
+    # placement: each project's project.json `placement` is resolved through the register (name or alias, any case)
+    for project, placement in (("TST_ONE", "ALPHA"), ("TST_AWAY", "b-box"), ("TST_FAR", "GAMMA"), ("TST_BADVAL", "mars"),
+                               ("TST_NONE", None)):
+        row = {"project_code": project, "fabric": "alpha"}      # a fabric value never stands in for a missing placement
+        if placement is not None:
+            row["placement"] = placement
+        write(os.path.join(fx, "org", "missions", "D0", "TST", project, "project.json"), json.dumps(row))
+    order(fx, "TST_AWAY.TO-1", "2.0.0_SA_COO~T8", "issued", "TST_AWAY")      # all orders on beta: ELSEWHERE(beta)
+    order(fx, "TST_ONE.TO-6", "2.0.0_SA_COO~T9", "issued")                   # one here ...
+    order(fx, "TST_AWAY.TO-2", "2.0.0_SA_COO~T9", "issued", "TST_AWAY")      # ... one on beta: decided as today, DEAD
+    order(fx, "TST_NONE.TO-1", "2.0.0_SA_COO~T10", "issued", "TST_NONE")     # a project row with no placement: UNKNOWN
+    order(fx, "TST_NOFILE.TO-1", "2.0.0_SA_COO~T11", "issued", "TST_NOFILE")  # no project.json at all: UNKNOWN
+    order(fx, "TST_BADVAL.TO-1", "2.0.0_SA_COO~T12", "issued", "TST_BADVAL")  # a placement the register does not hold: UNKNOWN
+    order(fx, "TST_AWAY.TO-3", "2.0.0_SA_COO~T13", "issued", "TST_AWAY")     # beta and gamma, none here: ELSEWHERE(beta,gamma)
+    order(fx, "TST_FAR.TO-1", "2.0.0_SA_COO~T13", "issued", "TST_FAR")
+    order(fx, "TST_AWAY.TO-4", "2.0.0_SA_COO~T14", "issued", "TST_AWAY")     # elsewhere + an unread one, none here: UNKNOWN
+    order(fx, "TST_NONE.TO-2", "2.0.0_SA_COO~T14", "issued", "TST_NONE")
+    order(fx, "TST_AWAY.TO-5", "2.0.0_SA_COO~T15", "complete", "TST_AWAY")   # a terminal order places nothing: not a seat
     return fx
 
 
@@ -112,6 +131,14 @@ def klass_of(out: str, serial: str):
         if len(parts) >= 3 and parts[0] == serial:
             return parts[2]
     return None
+
+
+def line_of(out: str, serial: str) -> str:
+    for line in out.splitlines():
+        parts = line.split()
+        if parts and parts[0] == serial:
+            return line
+    return ""
 
 
 def test_liveness(base: str) -> None:
@@ -139,9 +166,27 @@ def test_liveness(base: str) -> None:
     case("an open order to a seat that never ran reads DEAD", klass_of(out, "2.0.0_SA_COO~T7") == "DEAD", detail)
     case("a worker is never a seat and a lane another box owns is not listed",
          klass_of(out, "0.9.0_WK_TST~1") is None and klass_of(out, "2.0.0_SA_COO~Q") is None, detail)
+    case("ELSEWHERE: every open order placed on another box, no process: the box is named, never DEAD",
+         klass_of(out, "2.0.0_SA_COO~T8") == "ELSEWHERE(beta)", detail)
+    case("ELSEWHERE names every box when the orders sit on two others",
+         klass_of(out, "2.0.0_SA_COO~T13") == "ELSEWHERE(beta,gamma)", detail)
+    case("mixed: an order here and one elsewhere, no process, is decided as today (DEAD) and both counts are on the line",
+         klass_of(out, "2.0.0_SA_COO~T9") == "DEAD" and "1 placed here, 1 elsewhere, 0 unread" in line_of(out, "2.0.0_SA_COO~T9"),
+         detail)
+    case("a project with no placement value is UNKNOWN with the reason, never DEAD (its fabric value is not a placement)",
+         klass_of(out, "2.0.0_SA_COO~T10") == "UNKNOWN" and "placement unread for 1 order(s)" in line_of(out, "2.0.0_SA_COO~T10"),
+         detail)
+    case("a project with no project.json is UNKNOWN, never DEAD", klass_of(out, "2.0.0_SA_COO~T11") == "UNKNOWN", detail)
+    case("a placement the register does not hold is UNKNOWN, never DEAD", klass_of(out, "2.0.0_SA_COO~T12") == "UNKNOWN", detail)
+    case("elsewhere plus an unread placement, none here, is UNKNOWN (an unread placement licenses no respawn)",
+         klass_of(out, "2.0.0_SA_COO~T14") == "UNKNOWN" and "placement unread for 1 order(s), 1 placed elsewhere" in
+         line_of(out, "2.0.0_SA_COO~T14"), detail)
+    case("a seat placed here with no process is still DEAD, and a terminal order is no seat",
+         klass_of(out, "2.0.0_SA_COO~T7") == "DEAD" and "1 placed here, 0 elsewhere" in line_of(out, "2.0.0_SA_COO~T7")
+         and klass_of(out, "2.0.0_SA_COO~T15") is None, detail)
     last = out.strip().splitlines()[-1] if out.strip() else ""
-    case("the last line carries the counts, 10 seats: 2 moving 2 quiet 1 hung 3 dead 2 unknown, ok=True",
-         last == "SEAT-LIVENESS device=alpha seats=10 moving=2 quiet=2 hung=1 dead=3 unknown=2 ok=True" and rc == 0,
+    case("the last line carries the counts, 17 seats: 2 moving 2 quiet 1 hung 4 dead 2 elsewhere 6 unknown, ok=True",
+         last == "SEAT-LIVENESS device=alpha seats=17 moving=2 quiet=2 hung=1 dead=4 elsewhere=2 unknown=6 ok=True" and rc == 0,
          "%s rc=%d" % (last, rc))
     wide = run_liveness(fx, reg, ["--minutes", "1000"])[1]
     case("the window is a flag: at 1000 minutes the quiet and hung seats read MOVING",
@@ -158,7 +203,7 @@ def test_liveness(base: str) -> None:
     write(os.path.join(gone, "now"), str(NOW))
     rc3, out3, err3 = run_liveness(gone, reg)
     case("an unreadable liveness file stops the tool: ok is False, rc 3, never an empty box",
-         rc3 == 3 and out3.strip().endswith("seats=0 moving=0 quiet=0 hung=0 dead=0 unknown=0 ok=False"),
+         rc3 == 3 and out3.strip().endswith("seats=0 moving=0 quiet=0 hung=0 dead=0 elsewhere=0 unknown=0 ok=False"),
          "rc=%d %s %s" % (rc3, out3, err3))
 
 
@@ -205,6 +250,9 @@ def test_skills() -> None:
     case("/govern Step 0 admits a manager serial with a lane", re.search(r"0\.0\.0_AB_MSTR~<lane>", govern.split("## Step 1")[0])
          is not None)
     step_3a = govern.split("## Step 3a")[1].split("## Step 3b")[0] if "## Step 3a" in govern else ""
+    case("/govern Step 3a: a DEAD seat is one placed on THIS box; ELSEWHERE is never respawned here and goes to that box's "
+         "manager; UNKNOWN is never respawned", "PLACED ON THIS BOX" in step_3a and "ELSEWHERE(<box>)** is never respawned" in step_3a
+         and "that box's manager" in step_3a and "**UNKNOWN**" in step_3a and "never respawned" in step_3a, step_3a[:200])
     case("/govern has a seat-liveness step that runs the tool, /unstick for HUNG and /mstr-spawn for DEAD",
          ".tools/seat-liveness.py" in step_3a and "/unstick" in step_3a and "/mstr-spawn" in step_3a and "HUNG" in step_3a
          and "DEAD" in step_3a, step_3a[:200])
