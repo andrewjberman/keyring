@@ -40,4 +40,3 @@ it acts and reports the measured result after.
 ## Not ruled here
 
 GC's "held for Andrew" items (unattended runs) and GitOps' branch-model change stay with Andrew.
-</content>
