@@ -39,8 +39,17 @@ if (-not $root) { Fail "cannot resolve the repo root from $PSScriptRoot" }
 $common = (& git -C $root rev-parse --path-format=absolute --git-common-dir 2>$null)
 $gitExe = (Get-Command git.exe -ErrorAction SilentlyContinue).Source
 if (-not $gitExe) { Fail "git.exe is not on PATH" }
-$bash = Join-Path (Split-Path (Split-Path $gitExe)) 'bin\bash.exe'
-if (-not (Test-Path $bash)) { Fail "Git Bash not found beside git.exe ($bash)" }
+# Walk up from git.exe to the Git root that holds bin\bash.exe. The first git.exe on PATH may be cmd\git.exe,
+# bin\git.exe or ucrt64\bin\git.exe (site Z, 2026-10-08: 0.0.0_AB_MSTR~Z, relay RELAY_SITEZ_BOXSYNC_INSTALLER_DEFECT_20261008_2053Z.md),
+# so a fixed number of Split-Paths is wrong on some box.
+$bash = $null
+$dir = Split-Path $gitExe
+for ($i = 0; $i -lt 5 -and $dir; $i++) {
+  $cand = Join-Path $dir 'bin\bash.exe'
+  if (Test-Path $cand) { $bash = $cand; break }
+  $dir = Split-Path $dir
+}
+if (-not $bash) { Fail "Git Bash (bin\bash.exe) not found in any parent of $gitExe" }
 $box = $env:AGENTBUS_DEVICE
 if (-not $box) { $box = [Environment]::GetEnvironmentVariable('AGENTBUS_DEVICE', 'User') }
 if (-not $box) { Fail "AGENTBUS_DEVICE is not set (process or user environment); refusing to guess the box" }
