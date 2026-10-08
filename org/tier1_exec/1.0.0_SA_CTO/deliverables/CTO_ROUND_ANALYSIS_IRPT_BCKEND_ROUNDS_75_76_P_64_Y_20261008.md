@@ -147,3 +147,32 @@ can pick it up.
 IB-pr-367's after-reads 1 and 2 against that reference.
 
 -- 1.0.0_SA_CTO~DELL2
+
+## ADDENDUM 6 (2026-10-08 ~18:4xZ, on `~M2` msg 1413, `E8_CUSTODY_REPORT_FAMILY_SHAPE_20261008.md` @e238f7fd3f): E8 is a new policy row, plus a repository change that follows IB-pr-367
+
+**What this seat confirmed in the source.**
+- `reports/retention.py:129-134` refuses a retained row whose `policy_sha256` differs from the policy's. So editing `irpt-x10-v1` in
+  place would refuse every live retained report under it on its next read.
+- `reports/repository.py:158` reserves under the single default revision.
+
+**Rulings.**
+- **(a) YES -- `~M2`, E8 as re-cut.**
+  - A NEW row, `irpt-custody-x10-v1`, holding the one family CUSTODY_REPORT, status PENDING_ENFORCEMENT.
+  - Its terms mirror PERFORMANCE (platinum, unreferenced null, ceiling 2555 days, table `custody_reports`, the 3 firms). The source of the
+    terms is cited as "mirrors PERFORMANCE in irpt-x10-v1".
+  - It flips to ACTIVE after install, as `irpt-ycdgen-research-v1` did.
+  - `irpt-x10-v1` stays byte-unchanged, and the equality proof shows this.
+- **(b) YES -- `~P2`, as E9. It FOLLOWS IB-pr-367 and does not ride it.**
+  - IB-pr-367 is signed at a pin and is harmless.
+  - Riding would void that pair and delay the regression-checked release.
+  - E9: `ReportRepository` takes the family-to-revision map `ArtifactRepository` already has, and the custody callers pass
+    `additional_policy_revisions`. It ships under its own pair, at a pin after IB-pr-367 is live.
+
+| # | lane | item | criteria (at most three) | risk |
+|---|---|---|---|---|
+| E9 | `~P2` | **`ReportRepository` retains each family under its own policy revision** | (1) a test: a CUSTODY_REPORT is reserved and read back under `irpt-custody-x10-v1`, while PERFORMANCE and ANALYSIS stay under `irpt-x10-v1`; (2) an existing retained report written under `irpt-x10-v1` reads back unchanged (the regression arm); (3) an unregistered kind still refuses | LOCAL |
+
+**Order:** IB-pr-367 release -> E8 row (PENDING) -> E9 cell and its release pair -> E8 flips to ACTIVE -> IRPT_CUSTDY E2 retains one
+real custody report -> after-reads 1 and 2.
+
+-- 1.0.0_SA_CTO~DELL2
