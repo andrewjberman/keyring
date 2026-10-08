@@ -1,4 +1,4 @@
-# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-27 at pin 325bd4e0f8, deployed 14:57Z 2026-10-08; the 2026-10-08 page is whole, 13 of 13 funds; ledger r27 L2 and RIV-tw-1's read wait on the 2026-10-09 11:00Z and 13:00Z runs; the history-owed switch is unset)
+# ETFS_RIVALS (rivalfunds) -- status (FULL; LIVE = rounds 15-27 at pin 325bd4e0f8; round 28 built: RIV-aw-1 merged, RIV-tc-1 held on its branch; the 2026-10-09 11:00Z run grades tw-1 and opens the order of acts below; the switch is unset)
 
 Seat `2.0.0_SA_COO~RV` (CLAUDE). Mode FULL (`/canonical-drive`, hourly session cron; authority `org/ref/LIVE_ARMS.md`
 ~RV row and the relaunch record of 2026-10-07 ~08:2xZ). Reviewer `3.0.0_SA_CVO~RV`. Open calls on this project are being
@@ -79,6 +79,27 @@ Issued @21b3614f93 (three cells), amended @9c349b8d0a (a note). Packet `delivera
   R30 / R90 / R365 (row C-S83); R20 every dollar figure in an account cites a row (`round28_prep/R20_TXUE_GROUNDING_FAIL_READ_20261008.md`);
   the top-up writer stores a currency and each close's trading date; the owed window ends on the page day; the cap is
   ruled; rows Z-S73 and the day-early 2026-09-29 pull are read.
+
+## 2026-10-08 ~20:2xZ -- round 28, and THE ORDER OF ACTS FOR 2026-10-09
+
+- Issuance 222194aee0; AMENDMENT 1 to RIV-tc-1 @8d50ab6e32 (cap 20,000). Packet `deliverables/2.0.0_SA_COO~RV/round28/L8_PACKET_ROUND28.md`
+  @954c16bb49. **PARKED:** msg 31984 to 3.0.0_SA_CVO~RV is QUEUED, not read; owner 3.0.0_SA_CVO~RV; un-parks when that seat
+  is live (it is not among the live seats at 20:2xZ, nor is 1.0.0_SA_CTO~Z).
+- RIV-aw-1 MERGED (branch tip a2283fc349). Merged CLOUD: suite 919 passed, 3 skipped; 40 of 42 checks PASS (tc-1.AC1 and
+  tw-1.AC1 arm e grade the unmerged tc-1).
+- RIV-tc-1 complete on `wk-ETFS_RIVALS-22` @b0b65368fb (worktree `C:/tmp/wk-riv-r28-22`), NOT merged.
+- Andrew-direct ~17:1xZ (CTO msg 31926, R24): YES to the standing daily request, up to 20,000 a morning. The ledger's unit
+  is returned records (msg 31941).
+
+The order, each waiting on the one before:
+1. 2026-10-09 11:00Z vehicle run: read its log (exit codes, names step, no HISTORY OWED line) -> RIV-tw-1 J1 (C-S80) and
+   ledger `etfs-rivalfunds-r27` L2's first half; the Lambda chain's REPORT lines (>720 s = BLOCKING).
+2. RIV-tc-1's merge: a short pair (a deploy to the vehicle; list its paths against `round27/vehicle_load_set.json`).
+3. ONE round-28 Lambda deploy at the pin after that merge, BEFORE 12:55Z so the 13:00Z sweep writes the first `a1-chain/7`
+   accounts: a pair; the apply is the executor seat's (R22) -- a task order to it; the pin now also carries origin's
+   `lib/opal_naming.py` (+12) and five registry files: list them in the half.
+4. The 13:00Z sweep: ledger r27 L2's second half; RIV-aw-1's J1 count (codes 0 of 26, dates 26 of 26, FAILs, attached).
+5. The switch `RIVALFUNDS_HISTORY_OWED` to `ask` where the vehicle reads it, under a pair (R24), only after 1 and 2.
 
 **Sections below this one were written before round 23 and are history where they disagree with the title line and this section.**
 

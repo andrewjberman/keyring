@@ -47,6 +47,16 @@ CARRIED (nothing blocked; answer whenever)
 - AMGT_CORPUS's portal candidate `0498827c975a` (named on the card only as NOT-MINE). Its push word is not given here.
 - Any act outside the two cards.
 
+## ADDENDUM -- Andrew-direct 2026-10-08 ~19:4xZ, same terminal
+
+**His words, verbatim, whole:** "Yes your rec is correct, it was not an intentional interrupt, merely was breaking the hang.
+Furthermore, I am looking at PROD security analysis right now, what am I lookin for here?"
+
+**What he was answering:** this seat's /open-calls card of ~19:3xZ, one call: how the two post-deploy reads of PROD `f73f9ab0`
+are done, (a) this seat does them / (b) his own walk closes them / (c) other. Its REC was (a). Both of his tool-use refusals
+that afternoon were, by his words here, not refusals of the act. **(a) was done:** walker read on PROD 19:59-20:04Z, 8 of 8;
+NEVER-2 `portal-prod-promote-dsgn-r52-20261008` CLOSED @51e9676468. His own walk on PROD (FWD-1) was in progress at his words.
+
 ## Acts that follow, and who holds each
 
 | act | holder |
