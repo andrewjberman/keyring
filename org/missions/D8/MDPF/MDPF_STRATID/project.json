@@ -55,8 +55,8 @@
   "leads": {
     "cto": "1.0.0_SA_CTO~DELL1 (L2-L4, L10)",
     "cro": "4.0.0_SA_CRO~DELL1 (L1, brief @68aa9dbe9e)",
-    "coo": "UNSEATED -- seated when a dell1 COO lane frees (laptop placement msg 107101)"
+    "coo": "2.0.0_SA_COO~S1 (dell1), spawned ~20:45Z by 0.0.0_AB_MSTR~DELL1 on Andrew-direct ~20:4xZ \"yes, spawn the fourth COO for MDPF_STRATID\" (record @aea2b86eae)"
   },
   "placement_ruling": "Placed on dell1 by laptop 1.0.0_SA_CTO msg 107101 (relayed MSTR~DELL1 msg 1049), as MDPF_GLOBAL owner: seated when a dell1 COO lane frees; changes to Global's served output take the laptop's never-widen pair.",
-  "coo_lane": null
+  "coo_lane": "2.0.0_SA_COO~S1"
 }
