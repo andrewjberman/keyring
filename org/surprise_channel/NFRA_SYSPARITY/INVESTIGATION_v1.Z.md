@@ -60,6 +60,31 @@
   "spec_asserts": "/integrate Step 1: the pull is git merge --no-ff origin/CLOUD in the shared tree, with overlap measured by merge-tree before the merge. A deploy ledger entry is a tracked record under org/critical_paths/.",
   "world_is": "merge-tree reads committed trees only, so it reported one conflict (org/ref/LIVE_ARMS.md) and could not see 13 uncommitted tool writes that would have refused the merge. The tracked ledger file doubles as the monitor's per-device run-state store, so two devices write different values of the same keys and only one of them commits.",
   "notes": "NOT MEASURED: which invocation of deploy_ledger.py writes these keys on site Z and on what cadence; whether the laptop's commit of them was deliberate or rode another commit. NOT DONE: no edit to deploy_ledger.py. The next site-Z merge meets the same refusal once the monitor writes again. Candidate remedies are the owner's to choose: keep the run-state keys in an untracked sidecar, or have the writer commit them."
+ },
+ {
+  "id": "NFRA_SYSPARITY-Z-S3",
+  "project": "NFRA_SYSPARITY",
+  "fabric": "site-z",
+  "surfaced_by": "0.0.0_AB_MSTR~Z (hit while pulling origin/CLOUD on Andrew-direct 2026-10-08 ~13:1xZ; not looked for)",
+  "surfaced_at": "2026-10-08T14:50:00Z",
+  "one_line": "safe-merge.sh's abort after a row-gate refusal on the merged index left three incoming files STAGED in the shared index with no MERGE_HEAD and no lock; any seat's next commit of the whole index would have carried another device's files as its own.",
+  "class": "OBSERVATION",
+  "hazard_standing": "ARMED",
+  "disarm_owner": "1.0.0_SA_CTO~Z",
+  "grounding": {
+   "status": "GROUNDED",
+   "evidence": [
+    "C:/tmp/mstrz-relay/merge4_20261008.log (site Z, 2026-10-08 ~14:2xZ): 'safe-merge: grading the MERGED index -- 3 staged path(s)', then 'REFUSED BY THE ROW GATE ON THE MERGED INDEX (rc=1)' and 'Aborting the merge.'",
+    "git status at ~14:4xZ, after that run had exited: no .git/MERGE_HEAD, no safe-merge.lock.d, and three paths still staged -- REMEDIATION_v7.md (A), R1_DRAIN_END_REPORT_DRAFT.md (M), MDPF_SECCLASS.TO-DEPLOY-e57e61 (M).",
+    "Each staged blob equalled origin 097dd3fe4e's blob for that path and the working-tree copy (git rev-parse :path, 097dd3fe4e:path, git hash-object): d65c6bd771, 64fa554fa7, 9ee3839bae. Denominator: 3 of 3 staged residue paths; 3 further staged paths in the same index were a peer's own work and were left alone.",
+    "Five peer commits landed between the abort and the cleanup (be542d0d36..3539981432); git ls-tree HEAD read REMEDIATION_v7.md absent after them, so none carried the residue. Each used safe-commit with named paths.",
+    "What was done: git restore --staged --worktree on the two modified paths, git restore --staged plus removal of the added file. The later merge 2d0d4296bf brought all three in from origin (tree check 0 dropped)."
+   ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "safe-merge.sh on a refusal: 'Aborting the merge so nothing is left staged' (its own refusal text); its header promises a refused drain leaves the shared index as it found it.",
+  "world_is": "On the row-gate refusal path of a non-conflicted merge the script removed MERGE_HEAD and its lock and left the merged paths staged and written. The same script's law-lock refusal at ~13:5xZ (merge_continue_20261008.log) did the opposite: it said 'Aborting the merge' and left MERGE_HEAD and the staged resolutions in place, which is what let the retry succeed.",
+  "notes": "NOT MEASURED: which abort command the row-gate limb runs (git merge --abort, reset --merge, or a hand unstage) and why it left the index; whether a dirty tracked file elsewhere in the tree (org/mcp/agent-spawn-audit.log was modified) made git merge --abort fail quietly. NOT DONE: no edit to safe-merge.sh. The exercise .tools/exercise-safe-merge-lock.sh (29 cases) has no case for this limb. Protection today is only that seats commit named paths."
  }
 ]
 ```
