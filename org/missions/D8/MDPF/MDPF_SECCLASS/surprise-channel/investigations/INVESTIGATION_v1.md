@@ -5051,3 +5051,29 @@ coordinate); a seat's row is `MDPF_SECCLASS-S<k>`; the CVO's adjudication rows l
   "notes": "This seat lost nothing permanently: the section was recovered from f9c38b6165 and both narratives (e57e61's STOP and e65b's half-landed/rollback) are preserved in org/tier2_senior/0.7.0_AE_CloudOps~SD/deliverables/MDPF_SECCLASS_E57E61_PROOF_INSTANCE_AND_ACT_NARRATIVE_20261008.md, which no tool regenerates. WORKING RULE this seat now follows, offered to others: put structured state in the ledger via the tool's own verbs (open/close-leg/hold/close and their --proof text, which DO survive because the tool writes them), and put narrative in a deliverable the ledger points at. The long --proof strings on L1 and L2 of the e57e61 entry are deliberately written that way. Candidate remedies for the tool's owner, NEITHER proposed as built: (a) preserve any content below a sentinel marker across regeneration; or (b) refuse to regenerate when the file carries bytes the tool did not write, naming them, so the loss is loud instead of silent. Remedy (b) matches the fail-closed posture the rest of the deploy toolchain takes -- safe-deploy's upload verify and safe-apply's 'a gate that cannot evaluate must not pass' both refuse rather than proceed quietly."
 }
 ```
+
+## MDPF_SECCLASS-W59-S1 -- the identifier_namespace backfill's planned set is empty: every CUSIP: and NAME:: row already carries it
+
+```json
+{
+  "id": "MDPF_SECCLASS-W59-S1",
+  "project": "MDPF_SECCLASS",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_MDPF_SECCLASS~59",
+  "surfaced_at": "2026-10-08T03:04Z",
+  "one_line": "The e69 backfill's planned set is EMPTY: all 425 CUSIP: and 4,375 NAME:: rows of etf-classifications already carry identifier_namespace (626 BBG: carry BLOOMBERG), so the cell's conditional backfill would make 0 updates; the writer change is the live part of the cell.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python org/tier1_exec/2.0.0_SA_COO/deliverables/MDPF_SECCLASS_M/R12_CHECKS/namespace_backfill.py -> NAMESPACE-BACKFILL-DRY-RUN rows=9155 missing_cusip=0 missing_name=0 puts=0 (2 scan pages, ConsistentRead)",
+      "census by key form and stored value, same scan: (CUSIP, CUSIP) 425; (NAME, NAME) 4375; (BBG, BLOOMBERG) 626; (bare, absent) 3729; 0 mutating calls",
+      "comp-find 'NamespaceTable' infra/aws/lambda/v2_portal -> 0 hits across 311 files: the wrapper the cell names as in the two executors was not found under that path (not searched elsewhere)"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO-SC-e69 / CTO round-12 analysis section 3 item 3: 'a conditional backfill of rows that have none (count printed)'; the cell is framed as rows lacking a namespace needing a backfill.",
+  "world_is": "Live table 2026-10-08: no CUSIP: or NAME:: row lacks the attribute, so the backfill is a standing guard for rows landed by a writer that omits it (the AI runner before this change) and a --write today would make 0 updates. The half request states the empty set and the 0 count; whether a half is still wanted for an empty set is the issuer's and the CTO's call. Bare rows (3,729) lack the attribute by design and read TICKER."
+}
+```
