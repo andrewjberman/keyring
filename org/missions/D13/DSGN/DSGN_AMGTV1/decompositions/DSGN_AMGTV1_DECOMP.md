@@ -2124,3 +2124,39 @@ still 4 of 4. The order's third criterion is the real run: the designed-states p
 edited instrument (an untouched full sweep still PASSES; the stripped-error page still FAILS).
 **Fan-out:** 1 of 1 (`fanout: 1`). **Risk:** LOCAL. The candidate becomes b3440392 + 1 commit touching no product file.
 **Not this round:** renaming the `fourStates` key (other files read it); removing the standalone capture itself.
+
+## v51 -- ROUND 51 (issuer, 2026-10-08 ~11:0xZ) -- TWO CELLS: ONE STATEMENT OF INPUTS + THE COVERAGE SENTENCE; OFFICERS AS SERVED + TWO PACK PHRASES
+
+**Rectangle:** PRD v0.18 @9a07662460, rows SAUX-37 to SAUX-40 (CTO msg 31675: "take rows 37 to 40 into the next issuance"), on the
+AMGT_RESAPP round-78 analysis R3 (`org/missions/D5/AMGT/AMGT_RESAPP/ledger/ROUND_ANALYSIS.round78.md` @1a67e26433). **Base:** portal DEV
+d1b21c97. The hold of CTO msg 31019 is met: the redeploy bb-18 is live since 2026-10-08T07:19:32Z (that analysis, section 1).
+
+| cell | serves | owned files | actor |
+|---|---|---|---|
+| `AV-zzc-1` (SAUX-37, SAUX-39) | FWD-12 (one statement of inputs), FWD-27 (a served absence sentence is drawn) | `SecurityAnalysis.tsx`, `components/InputProvenance.tsx`, `components/CoverageNote.tsx` (new), `tabs/ModelTab.tsx`, `topBandTypes.ts`, `types.ts` | ~113 (worker-light) |
+| `AV-zzc-2` (SAUX-38, SAUX-40) | FWD-27 (officers in the served order; two packs, two phrases) | `tabs/ExecManagementTab.tsx`, `reasonWords.ts`, `tabs/ThesisTab.tsx` | ~114 (worker-light) |
+
+**Read first, per row:**
+- SAUX-37: the block above the tabs is fed from `/overlay` (4 rows, no filings row); the Model tab's ledger is a second statement from
+  another read. The function serves ONE statement on `/thesis` (`lib/research/api/inputs_statement.py`, in the deployed pin fbb643923e by
+  content): five rows, the filings row carrying `form`, `filing_date`, `used_for`. **L5 decision:** the one statement is the block above
+  the tabs, fed from `/thesis`; the Model tab's ledger is removed.
+- SAUX-39: `research_coverage` is served on `/overlay` and `/thesis` (`coverage_marker.py`, in the pin; live on MSFT in the round-78
+  walk's `overlay_MSFT.json`); the page draws it nowhere. It is drawn once under the identity header.
+- SAUX-38: `ExecManagementTab.tsx` `orderedOfficers` re-sorts the served list (round 29, SAUX-32); the function now ranks it. The sort
+  is removed.
+- SAUX-40: "research pack" is the SERVED name of the pack the system builds, and also the page's own word for the research team's
+  document (`reasonWords.ts`). **L5 decision:** the served name keeps the phrase; the research team's document reads "research-team
+  report" / "the research team's report".
+
+**Checks:** `round51/checks/r51a/r51a.cjs` reads 1 of 4 at the base (PLANTED passes); on a scratch reference edit its render arms
+pass, and its two source-read lines were not exercised green. `round51/checks/r51b/r51b.cjs` reads 1 of 3 at the base and 3 of 3 on a
+scratch reference edit. `round29/checks/battery29.sh` at the base: ALL PASS (0 skipped). Each order carries two criteria: its check and
+the battery.
+**Chains:** 2, with no shared product file, so both run at once; both may touch `__harness__/`, merged in order at the drain.
+**Fan-out:** 2 of 2 (`fanout: 2`). **Risk:** LOCAL. PRD v0.18 reads ADMITTED (`prd-signoff status`, read at 10:3xZ).
+**Not cut:** SAUX-41 and SAUX-42 wait on AMGT_RESAPP round 79 serving the value first (PRD v0.18).
+**Superseded by this round:** `round47/checks/r47/r47.cjs` (the Model ledger's wording) and `round29/checks/tabs/tabwords.cjs` arm 1 (the
+page's own officer sort). Neither is in battery29.
+**Then:** the drain, battery29 with no skip on the combined candidate, the close walk on a local build against the live function (BA,
+AMD, BP/ LN, MSFT), CTO review, and ONE DEV push on Andrew's word.
