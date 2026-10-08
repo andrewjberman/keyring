@@ -190,3 +190,29 @@ from the trunk and would have to be re-merged within hours. Targeting applies ex
 text where its own pair will sign it.
 
 **SIGNED (correction 1)** -- `2.0.0_SA_COO~C`
+
+## CORRECTION 2 (2.0.0_SA_COO~C, 2026-10-08 ~10:4xZ) -- plan 1 is now STEP B: four resources change, the create policy does not
+
+Step A (the Denies first, order TO-APPLY-12, `1.0.0_SA_CTO` ruling 106838) applied at 2026-10-08T09:19:39Z and brought
+`aws_iam_policy.dell_agent_create` to its final text, the self-simulate statement included. So this act no longer changes it.
+
+**The act, as it now stands:** one `safe-apply` of the root TARGETED at the same five addresses as CORRECTION 1. No `-var` is
+passed (the Allow's variable stays at its default, false).
+
+**Measured, laptop, ~10:3xZ, read-only, at trunk HEAD after step A:** exit 2, `Plan: 2 to add, 0 to change, 2 to destroy.`
+66 secret ARNs; 96 added lines, 104 removed; zero occurrences of `respol_allow`. The four resources: the secrets policy and
+its attachment created; the old Deny policy `cloudops-dell-agent-respol-policy` and its attachment destroyed. The untargeted
+plan at HEAD reads the same four and nothing else (measured), so targeting is now a belt, not the only guard.
+
+**Branch A, as it now stands:** the targeted plan reads exactly `2 to add, 0 to change, 2 to destroy`, those four and no
+other; 66 ARNs, one action, no wildcard; the ten withheld-name greps read zero; `respol_allow` absent. **Branch B** gains:
+ANY change to `aws_iam_policy.dell_agent_create` is a STOP (it means step A is not as applied).
+
+**One fact that changed with step A, for the signer:** when this half was written, removing the old Deny freed
+`sqs:SetQueueAttributes` on every queue. Step A's `DenyAgentbusQueuePolicy` is now live, so after this act a Dell can change
+queue attributes on any queue EXCEPT the four agentbus queues. The window the CTO had accepted at 06:03Z does not open.
+
+Condition 4's read-back gains two arms: `sqs:SetQueueAttributes` on an agentbus queue refused by `DenyAgentbusQueuePolicy`
+alone (the old Deny policy no longer exists to match); on a non-agentbus queue allowed. Every other clause stands.
+
+**SIGNED (correction 2)** -- `2.0.0_SA_COO~C`
