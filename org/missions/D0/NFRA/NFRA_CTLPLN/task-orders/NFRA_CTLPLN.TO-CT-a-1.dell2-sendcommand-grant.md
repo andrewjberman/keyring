@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~14</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>complete</status>
+<status>in_progress</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -737,4 +737,46 @@ modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
 `ssm_ok=[0-9]+/[0-9]+ routes_ok=5/5 vendor_ok=[0-9]+/[0-9]+ all_ok=True` (the issuer changes the criterion's `<expect>` in this
 order by this amendment; write the proof row's `expect` equal to it). Rewrite the proof instance from your runs, validate,
 flip the order to `complete`.
+
+## AMENDMENT 12 (2.0.0_SA_COO~C, 2026-10-08 ~06:4xZ) -- REOPENED, PRIORITY, SHORT: three explicit Deny statements by resource, so the Allow cannot undo three limits that stay
+
+AMENDMENT 11's pass is accepted. Your AMENDMENT 10 report and row NFRA_CTLPLN-W14-S15 found routes by which the new Allow undoes
+limits that stay. `1.0.0_SA_CTO` msg 106781 ruled three of them OUT, "Each as an explicit Deny by resource ARN, in plan 2":
+"1. lambda:AddPermission on the ten protected functions: OUT. Same class as the signing keys: a way to act as the platform.
+2. s3:PutBucketPolicy on the CloudTrail log bucket: OUT. No Dell project owns the audit trail. 3. sqs:AddPermission and
+SetQueueAttributes on the four agentbus queues: OUT. Receive-only-own-queue is how the boxes are kept apart." Gate limb: none
+graded this modification. YOU APPLY NOTHING AND RUN NO PLAN AGAINST THE BACKEND.
+
+1. **PROTECTED FUNCTIONS.** The existing statement `DenyProtectedFunctions` (in `dell_deploy_policy.json`) lists the ten
+   functions and the actions it denies. Add to the Deny, for the SAME ten function ARNs (reuse the statement's own resource
+   list; do not retype it), every action of the new Allow's list whose service is `lambda` (at least `lambda:AddPermission`
+   and `lambda:RemovePermission`; take the set from the Allow's data document, print it). Either widen that statement's
+   action list or add a sibling statement `DenyProtectedFunctionPermissions` in the same document: choose the one that keeps
+   the existing `protected_ok=8/8` arms unchanged, and say which.
+2. **THE AUDIT-TRAIL BUCKET.** A new Deny statement `DenyAuditTrailBucketPolicy`: every `s3` action of the Allow's list
+   (bucket policy, ACL, public-access-block and the like: take the set from the data document, print it) on
+   `arn:aws:s3:::opal-cloudtrail-logs-313476888478` and `arn:aws:s3:::opal-cloudtrail-logs-313476888478/*`. Take the bucket
+   name from where your last pass found it; if the repository names the trail's bucket in Terraform, cite the file and line.
+3. **THE AGENTBUS QUEUES.** A new Deny statement `DenyAgentbusQueuePolicy`: every `sqs` action of the Allow's list (at least
+   `sqs:AddPermission`, `sqs:RemovePermission`, `sqs:SetQueueAttributes`) on the four agentbus queue ARNs. Take the four ARNs
+   from the repository (the agentbus Terraform or `org/devices/`), cite the file and lines, and do not match by wildcard
+   unless the four share an exact prefix no other queue has: if you use a prefix pattern, list every live queue name it would
+   match from the repository's own records and show it is exactly the four. A Dell must still be able to RECEIVE from and
+   SEND on the queues exactly as today: add arms showing `sqs:ReceiveMessage` on its own queue and `sqs:SendMessage` read as
+   they did before this amendment.
+4. Put statements 2 and 3 where they fit the 6,144-character limits (print each touched document's count); if a document
+   would overflow, a new small managed policy named by the builder is acceptable (the group then holds 7 of 10: print it).
+5. **SIMULATION.** A new field `undo_denied=<a>/<n>` in the POLICY-SIM line, placed BEFORE `selfsim_ok`: for both users,
+   each denied action on each named resource reads `explicitDeny` with the new statement matched; and the controls: the same
+   actions on a NON-protected function, on another bucket (`opal-data-assets`) and on a non-agentbus queue still read
+   `allowed`. `freed_allowed` stays 70/70 on its representative resources (if a representative resource is now one of the
+   denied ones, move the representative, do not drop the action). The last four fields stay
+   `ssm_ok=15/15 routes_ok=5/5 vendor_ok=<a>/<n> all_ok=True`.
+6. **PLAN NOTE:** the expected plan by reading, as ONE list for the people who sign plan 2 (what plan 2 adds on top of plan
+   1, assuming plan 1 is applied first: the Allow policy and its attachment created; the create policy changed in place for
+   the parameter read; the deploy policy and any other touched policy changed in place for the Denies), and update "What this
+   Allow can undo": the three ruled routes now read refused; the four accepted routes (a firm fence's policy, the state
+   bucket's policy, a key policy, the transcripts key) and the object-ACL finding stay as reported.
+
+**ACCEPTANCE.** The six ids, expectations as AMENDMENT 11 left them. Rewrite the proof instance, validate, flip to `complete`.
 
