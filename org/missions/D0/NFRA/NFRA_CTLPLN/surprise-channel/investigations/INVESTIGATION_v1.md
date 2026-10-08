@@ -5252,3 +5252,29 @@ worker's is `NFRA_CTLPLN-W<n>-S<k>`. **Append-only during the round.** Never edi
   "notes": "Found while reconciling CT-i-10's real count (sms_sent=4 vs texted=9 + updated=5). Not fixed by the round-6 package (TO-APPLY-19)."
 }
 ```
+
+```json
+{
+  "id": "NFRA_CTLPLN-S35",
+  "project": "NFRA_CTLPLN",
+  "fabric": "laptop",
+  "surfaced_by": "2.0.0_SA_COO~C",
+  "surfaced_at": "2026-10-08T21:30:45Z",
+  "one_line": "A real advisor email reached committed, pushed history: two 0.7.0_AE_CloudOps evidence files of IRPT_BCKEND.TO-APPLY-E6 leg 2 printed the owner field, which is the advisor's email, because the issuer's order said to print owner.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "org/tier2_senior/0.7.0_AE_CloudOps/deliverables/irpt_e6_20261008/Y67-1_laptop_cleanup_result.json and leg2-before.json: one email-shaped value each (counted 2026-10-08 ~21:27Z, values not printed); first committed @0ca54dbc3d, on origin box/laptop.",
+      "IRPT_BCKEND.TO-APPLY-E6 leg 2 step 1 as cut @4598d513c5: 'get-item (print owner and acting_principal_id only ...)'.",
+      "dell2 2.0.0_SA_COO~Y2 msg 1640 (relay RELAY_DELL2_PII_REDACTION_ASK_2107Z.md): the E6 pair requires opaque ids only.",
+      "Forward redaction by 0.7.0_AE_CloudOps msg 107339 (commit 99abbd98c2); 1.0.0_SA_CTO msg 107348 ruled forward redaction only, no history rewrite (NEVER-rebase), and that every order prints an opaque hash in place of an email or name."
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "An applier's evidence names a principal by an opaque id only (E6 pair; CTO msg 107348).",
+  "world_is": "The value remains in history at @0ca54dbc3d by ruling; the current files are redacted. The E6 order now prints a sha256 prefix in place of owner.",
+  "notes": "The issuer's wording caused it, not the applier. Rule from here: an order that has a worker report a record's fields names the opaque-id fields explicitly."
+}
+```

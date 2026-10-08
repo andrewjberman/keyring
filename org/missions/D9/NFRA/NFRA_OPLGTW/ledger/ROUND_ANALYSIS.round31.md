@@ -58,6 +58,26 @@ release form reads 0 revoked families for the concierge. **Z-W35-S1** stays ARME
 
 Items 3-5 decide v2.0's build round; the build of G1-G4 is round 33's, cut from this list's records.
 
+## 4a. AMENDMENT before issuance (2026-10-08 ~21:3xZ): FWD-12 and FWD-13 are built IN round 32
+
+Cause: Andrew-direct ~21:2xZ, "asap" on Alyssa's 13-month access and on the Tax SMA master tested, added to the daily pull and
+served on the gateway (`org/tier1_exec/1.0.0_SA_CTO/deliverables/ANDREW_DIRECT_20261008_212xZ_ALYSSA_13M_AND_TAX_SMA_MASTER_ASAP.md`).
+Round 32 was not yet issued; this section replaces section 4's last sentence for those two outcomes only.
+
+- **7. FWD-13 build, chained on item 3.** When item 3's record shows `08403355` returns files in the same shape as `08335338`
+  (the same file types, the same vendor filename grammar, a clean silver conversion of one day), the same round adds `08403355`
+  to the daily pull's `-Master` set and to the gateway catalog as a separate master. Andrew's 17:4xZ answer 1 already rules the
+  add on that condition; no further word is needed. The add is a scheduled-producer change: a NEVER-2 ledger entry and the
+  never-widen sign-off (CTO+COO, blast radius = the new master's keys only) before it lands. If item 3 returns no files, item 7
+  stops and the outcome reports that.
+- **8. FWD-12 build, chained on item 5.** Item 5 sizes the completion-marker gap; item 8 then backfills the producer's
+  completion metadata (C3) for every date in the 13 months that has a silver partition, for both existing masters (and
+  `08403355` once item 7 lands), and sets the grant reach to 13 months. A date with no proven-complete source stays
+  unavailable, never guessed.
+- **Unchanged:** items 1, 2, 4 and 6. Alyssa's sitting still waits on release r29, which waits on Andrew's `opal-gateway-bbg`
+  sign-in (section 5). G1, G3 and G4 (identity columns, lots) stay round 33's: "asap" named only the 13 months and the master.
+- Fan-out is the COO's, derived from the two chains (3 -> 7, 5 -> 8) beside items 1, 2 and 4.
+
 ## 5. ACTS ONLY ANDREW CAN DO (cited)
 
 - The `opal-gateway-bbg` sign-in after the move (his Microsoft login; record @ item 2 above). Release r29 waits on it.

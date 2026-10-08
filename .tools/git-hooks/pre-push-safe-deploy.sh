@@ -84,8 +84,43 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
             echo "BLOCKED: push of $REMOTE_REF -- no merge-base with origin/CLOUD, so this box's own diff cannot be bounded. Fetch origin and push again." >&2
             exit 1
         fi
-        echo "deploy gate: $REMOTE_REF is this box's branch -- deploying its own diff against origin/CLOUD (${_mb:0:10}..${LOCAL_SHA:0:10})" >&2
-        bash "$SAFE_DEPLOY" --no-pipescript --commit-range "${_mb}..${LOCAL_SHA}" || exit 1
+        # LEDGER-GATED (1.0.0_SA_CTO ruling msg 107341 on dell1's finding 107334: a scheduled box push must not put a
+        # script live whose never-widen pair is unsigned). Of this box's deploy-scope files, ONLY those an OPEN
+        # change-management ledger entry names are deployed (.tools/deploy-ledger-names.py); every other one is HELD:
+        # not deployed, one HELD-DEPLOY row in org/safe-deploy-bypass-audit.log, and the push still goes through.
+        # A list that cannot be read deploys nothing (held, logged). PREPUSH_DEPLOY_LISTER is a test seam only.
+        _audit="$REPO_ROOT/org/safe-deploy-bypass-audit.log"
+        _ts="$(date -u +%Y-%m-%dT%H:%M:%SZ)"; _who="${OPAL_AGENT_SERIAL:-UNKNOWN}"
+        _lister="${PREPUSH_DEPLOY_LISTER:-$REPO_ROOT/.tools/crossbox-deploy-check.py}"
+        # `|| true` inside: under set -e + pipefail a failed lister would otherwise KILL the hook and block the push.
+        _dl="$(python "$_lister" --list-deployable --repo-root "$REPO_ROOT" --commit-range "${_mb}..${LOCAL_SHA}" </dev/null 2>/dev/null | tr -d '\r' || true)"
+        _dn="$(printf '%s\n' "$_dl" | sed -n 's/^DEPLOYABLE-COUNT n=\([0-9]*\)$/\1/p' | tail -n 1)"
+        if [ -z "$_dn" ]; then
+            echo "deploy gate: HELD-DEPLOY -- the deploy-scope list for $REMOTE_REF could not be read; NOTHING deployed; the push goes through" >&2
+            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  range=${_mb:0:10}..${LOCAL_SHA:0:10}  reason=deploy-list-unreadable" >> "$_audit" 2>/dev/null || true
+            continue
+        fi
+        if [ "$_dn" -eq 0 ]; then
+            echo "deploy gate: $REMOTE_REF -- no deploy-scope file in this box's diff against origin/CLOUD; nothing to deploy" >&2
+            continue
+        fi
+        _dpaths=(); while IFS= read -r _p; do [ -n "$_p" ] && _dpaths+=("$_p"); done < <(printf '%s\n' "$_dl" | sed -n 's/^DEPLOYABLE //p')
+        _ln="$(python "$REPO_ROOT/.tools/deploy-ledger-names.py" --repo-root "$REPO_ROOT" "${_dpaths[@]}" 2>/dev/null | tr -d '\r' || true)"
+        _led=()
+        if printf '%s\n' "$_ln" | grep -q '^LEDGER-OPEN-ENTRIES n='; then
+            while read -r _k _p _s; do [ "$_k" = "LEDGERED" ] && _led+=("$_p"); done <<< "$_ln"
+        else
+            _ln="$(printf 'HELD %s\n' "${_dpaths[@]}")"   # the ledger could not be read: hold everything
+        fi
+        while read -r _k _p _s; do
+            [ "$_k" = "HELD" ] || continue
+            echo "deploy gate: HELD-DEPLOY $_p -- no OPEN change-management ledger names it; not deployed (the push goes through)" >&2
+            echo "$_ts HELD-DEPLOY  $_who  ref=$REMOTE_REF  path=$_p  reason=no-open-ledger-names-it" >> "$_audit" 2>/dev/null || true
+        done <<< "$_ln"
+        if [ "${#_led[@]}" -gt 0 ]; then
+            echo "deploy gate: $REMOTE_REF -- deploying ${#_led[@]} ledgered file(s) of ${_dn} deploy-scope file(s)" >&2
+            bash "$SAFE_DEPLOY" --no-pipescript "${_led[@]}" || exit 1
+        fi
         continue
         ;;
       refs/heads/CLOUD)
