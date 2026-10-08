@@ -3508,3 +3508,21 @@ Andrew's per-use word.
 **Checks dry-run at the base before the cut:**
 - `bm-1` AC1, `bm-2` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
 - `bm-1` AC2, `bm-2` AC2 (`cat` of the cell's output) base: FAIL as expected (no such file).
+
+## 83. ROUND 69 -- the stored names made whole or stated, before any word is asked for (`1.0.0_SA_CTO~Z` msg 31649, R22), 2026-10-08 ~09:3xZ
+
+Rounds 67 and 68 are terminal: `bl-1` (8 of 242 covered securities never had a collection job), `bm-1` (8 identity records
+added in new dated files), `bm-2` (2 truncated names repaired, 3 left cut), merged @1fd0140d91 and @1b2e841422. R22: the
+collector's pointer does NOT move now; it rides Andrew's word with the runs. Two repairs first, in one cell.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bn`**.
+- **Fan-out:** 1 of 1 chain, cap 8 (one cell).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bn-1` | `bn-1` | **AIG's stored name becomes its full legal name, from a stored source or three agreeing article spans, with the collector's derived query shown against held titles; `ICT_US` and the two OMAB lines repaired or each said why not; one script yields the final files** (row Z-W120-S3). No pointer move, no collector code change, no job. | LOCAL | worker ~121 |
+
+**Checks dry-run at the base before the cut:**
+- `bn-1` AC1 (`pytest test_bn1_names_made_whole.py`) base: FAIL as expected (the test is absent).
+- `bn-1` AC2 (`cat bn1_names_made_whole.out`) base: FAIL as expected (no such file).
+- `bn-1` AC3 (`pytest test_bm1_identity_records.py test_bm2_truncated_names.py test_bf1_job_record.py test_az1_alias_set.py -q`) base: PASS as expected (count in the issuance commit).
