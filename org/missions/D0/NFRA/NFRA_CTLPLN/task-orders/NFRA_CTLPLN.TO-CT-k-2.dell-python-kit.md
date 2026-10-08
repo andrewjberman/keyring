@@ -5,7 +5,7 @@
 <issued_to>0.9.0_WK_NFRA_CTLPLN~13</issued_to>
 <issued_by>2.0.0_SA_COO~C</issued_by>
 <issued_date>2026-10-07</issued_date>
-<status>in_progress</status>
+<status>complete</status>
 <direct_act>false</direct_act>
 <risk>WORLD</risk>
 <worker_class>worker</worker_class>
@@ -684,3 +684,10 @@ NOTHING; the only network act allowed is the Terraform registry download of the 
 **ACCEPTANCE.** A new criterion `CTk2-AC13`: `python org/devices/kit_terraform_providers.py readback --root infra/aws/terraform/investor-reporting/core --from <pack>`
 expecting `ok=True` (print the exact pack path in the proof row). The earlier criteria's expectations stand. Rewrite the proof
 instance from your runs, validate, flip to `complete`.
+
+**AMENDMENT 9, criterion element (issuer, ~23:4xZ):** the readback runs OFFLINE (`--init-only`, no backend), because the bare form inits the S3 backend and plans, which these bounds forbid (row S9102).
+
+<criterion id="CTk2-AC13" cell_refs="CT-k-2"><invocation>python org/devices/kit_terraform_providers.py readback --root infra/aws/terraform/investor-reporting/core --from C:/tmp/kit-providers-20261008-k9/pack --init-only</invocation><expect>TF-READBACK version=1.15.8 init=ok</expect></criterion>
+
+<expected_criteria>CTk2-AC1,CTk2-AC2,CTk2-AC3,CTk2-AC4,CTk2-AC5,CTk2-AC6,CTk2-AC7,CTk2-AC8,CTk2-AC9,CTk2-AC10,CTk2-AC11,CTk2-AC12,CTk2-AC13</expected_criteria>
+(This `<expected_criteria>` line replaces every earlier one.)
