@@ -2334,3 +2334,31 @@ Worker rows are `IRPT_YCDGEN-W<n>-S<k>`; append-only; gate `.tools/surprise-row-
   "notes": "Not a round-6 defect: the round's close also waits on FWD-1 (F1 release held to ~20:0xZ). Owner of the checker to confirm; this seat keeps working."
 }
 ```
+
+## IRPT_YCDGEN-D2-S3 -- the resident host has no Opal brand asset: every Opal-path Overview ends LayoutRefused
+
+```json
+{
+  "id": "IRPT_YCDGEN-D2-S3",
+  "project": "IRPT_YCDGEN",
+  "fabric": "dell2",
+  "surfaced_by": "2.0.0_SA_COO~G2",
+  "surfaced_at": "2026-10-08T21:24:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "disarm_owner": "2.0.0_SA_COO~G2",
+  "one_line": "The resident host has no Opal brand spec or logo, so the Opal layout refuses EVERY Opal-path Overview (svc's F1 run and Andrew's alike): F1 ended retained_for_retry class=LayoutRefused",
+  "spec_asserts": "FWD-1: an Opal-made Overview renders for a listed principal on the resident host (CTO ruling d54e0b7515: real route, real portfolio, rendered read-back, zero YCharts calls).",
+  "world_is": "F1 run 21:10:18-21:10:32Z as svc through CloudFront (f1_svc_release/F1_RUN_RECORD_20261008.json): login 200, upload NORMALIZED, submit QUEUED as REQ-8966d24ffefa1c28269ef26c. Resident journal (SSM b6145e25, 2db64430): 21:10:24 IRPT_RESIDENT_RESOLVE state=READY; 21:10:31 'Classification not found for ticker: $:CASH' then 'IRPT_RESIDENT_POLL retained_for_retry class=LayoutRefused code=-'. Host: the st25 root holds no brand*.json; unit env carries IRPT_PLAYWRIGHT_CORE only (no IRPT_BRAND_SPEC/IRPT_OPAL_LOGO). layout_overview.py:101-108 (_asset_path) finds the asset only via git roots or those env vars, and raises LayoutRefused('brand asset absent ...') otherwise; st24 differs from st25 only in the allow-list constant, so it refuses Andrew's runs identically. YCharts markers in the window (VENDOR_REQUESTS, STEP, WAF, READ_BACK, SESSION_ROTATION, ycharts.com): 0 of 40 lines. UNMEASURED: the exception text (the journal logs code=-); the match to line 108 is by the code path.",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "F1_RUN_RECORD_20261008.json",
+      "resident journal SSM b6145e25 + 2db64430 (read-only, inside the F1 shell window)",
+      "infra/aws/lambda/investor-reporting/ycharts/research/layout_overview.py:101-116 at 3cf5d52a7b"
+    ]
+  },
+  "notes": "CTO~DELL2 ruling msg 1664: next YCDGEN cell = a resident release carrying the brand asset (packaged into the root, or IRPT_BRAND_SPEC/IRPT_OPAL_LOGO set) under its own pair, after-read = one Opal-path layout renders; F1 retries after it. The retained SQS message keeps st25 in place until it dead-letters (an st24 retry would route svc to YCHARTS)."
+}
+```
