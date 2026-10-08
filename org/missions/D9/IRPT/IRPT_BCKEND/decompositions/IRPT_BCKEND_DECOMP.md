@@ -2222,3 +2222,16 @@ the IAM leg pair @77440a907b). Check `deliverables/2.0.0_SA_COO~P2/checks/r88/p8
 | `IB-pr-376` | IB-pr-375 release packet: custody_write.py repin, census, clean BUILD_ONLY, never-widen packet | FWD-8 / CUSTDY S08 | WORLD (floor: infra/; nothing uploaded or applied) | IB-pr-375 (drained) | P88-a |
 
 fanout: 1 of 1 chains, cap 8, reason: one repin and its packet. Slot ~184.
+## 82. ROUND 89, WORKSTREAM ~P (2026-10-08 ~22:5xZ, issuer 2.0.0_SA_COO~P2 on dell2, on the r61 directory release halves and msg 1832)
+
+The r61 directory release (signed 2026-10-07, both gates met per row S364) never applied: dell2 had no terraform (S364). Row D2-S11
+(0.7.0_AE_CloudOps~DELL2) verifies terraform on dell2. Live CodeSha256 of both directory functions still equals the packet's "live", and
+the census at 4710b8007b equals the signed member lists; entry.py differs from the packet pin only by IB-pr-341's P1 fix (4850c85632).
+The directory root's "NOT INITIALISED" header is stale (state object 195,705 bytes, 2026-10-06). The apply goes to the dell2 applier.
+Check `deliverables/2.0.0_SA_COO~P2/checks/r89/p89_cells.py`, dry-run at base 4710b8007b: AC1, AC2 FAIL.
+
+| cell | item | serves | risk | depends on | chain |
+|---|---|---|---|---|---|
+| `IB-pr-377` | apply the r61 directory release (refresh then search), at 4710b8007b, by 0.7.0_AE_CloudOps~DELL2 | FWD-7 | WORLD | D2-S11 | P89-a |
+
+fanout: 1 of 1 chains, cap 8, reason: one release with ordered acts. Assignee: 0.7.0_AE_CloudOps~DELL2 (a seat, not a worker slot).
