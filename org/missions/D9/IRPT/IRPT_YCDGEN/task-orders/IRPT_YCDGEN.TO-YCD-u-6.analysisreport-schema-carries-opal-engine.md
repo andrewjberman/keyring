@@ -116,4 +116,4 @@ tests of instance c73a029dc3 (two `assert 19 == 20` route counts, one absent bra
 too (row D2-W6-S2). AC2 is NOT amended (CTO ruling msg 1250); it is met by the next cell on this chain, YCD-v-6 (decomposition R6L
 revision 1.1), after which this order's AC2 is re-run. Gate limb: none graded this modification (modified order; no placeholders).
 
-<status>issued</status>
+<status>complete</status>

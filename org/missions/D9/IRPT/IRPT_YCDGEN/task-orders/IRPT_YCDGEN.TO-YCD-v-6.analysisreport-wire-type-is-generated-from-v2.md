@@ -121,4 +121,4 @@ byte-equal), contracts/wire/index.ts and responses.ts (only the AnalysisReport n
 disarm: the portal branch is not drained until AC2 and AC3 pass. Gate limb: none graded this modification (modified order; no
 placeholders). u-6 stays open until its AC2 is re-run on the fixed generator.
 
-<status>issued</status>
+<status>complete</status>
