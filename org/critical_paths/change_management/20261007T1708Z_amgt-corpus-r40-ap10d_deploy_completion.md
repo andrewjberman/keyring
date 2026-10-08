@@ -1,6 +1,6 @@
 # Deploy Completion Record
 **Date opened:** 2026-10-07T17:08:51.920744+00:00
-**Status:** OPEN
+**Status:** HELD-SOVEREIGN-GATED -- gate: external / AMGT_RESAPP round 78 bb-18 redeploy of the scoped API package at dossier method 7, by 2.0.0_SA_COO~Z (leg Lv is the live-route read after it) (held since 2026-10-08T06:37:39.088855+00:00)
 **Deploy:** AMGT_CORPUS round 40 CRPS-ap-10 (d): re-write the 95 research dossiers at method version 6 (a bare heading is no longer a passage; pair COO @14c896b419 / CTO @b39724f085); serves nothing until the scoped API package carries dossier.py at 6 (AMGT_RESAPP bb-18)
 **Authored by:** 2.0.0_SA_COO~X
 **Class:** deploy-completion (NEVER-law gate e38cc2b16; contract tool .tools/deploy_ledger.py, TO #5)
@@ -19,3 +19,4 @@
 
 - 20261007T170851Z OPENED by 2.0.0_SA_COO~X with 2 leg(s)
 - 20261007T194800Z LEG Lw closed: dossier --write completed 2026-10-07T19:31:23Z rc 0 (pooled run --workers 8, started 17:25Z): 'names 95 written 93 exist
+- 20261008T063739Z HELD-SOVEREIGN-GATED gate=external/AMGT_RESAPP round 78 bb-18 redeploy of the scoped API package at dossier method 
