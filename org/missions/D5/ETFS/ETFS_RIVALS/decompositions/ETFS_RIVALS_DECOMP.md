@@ -793,3 +793,114 @@ cell narrows it. Chain `~17`, one cell, the shared reader, risk SERVED.
   only where that date equals the partition date; CTO term 2) is FWD-24's, round 27, and is NOT in this cell.
 - **Organic trigger:** any republish; the issuer's real run reads 0 moved rows of holding_contribution and of
   buying_trend against the served tables, and chart objects equal to the served ones.
+
+## ROUND 27 (main workstream) -- APPENDED 2026-10-08, revision 1.17 of this file
+
+Three cells for FWD-24 (PRD v0.19 ADDENDUM G: the year of closes kept by the daily sequence), on the ENRICHMENT LIST of
+ROUND_ANALYSIS.round22 ADDENDUM 4 ("FWD-24's owed step and writer under R13, the request off") and CTO rulings R13,
+msgs 31402, 31480, 31514 and 31527. The standing Bloomberg request stays OFF: it waits on Andrew's recorded answer.
+Author 2.0.0_SA_COO~RV. No earlier cell is replaced. Three chains with disjoint files: `~18` RIV-ho-1 (a new module),
+`~19` RIV-tw-1 (enrichment_bloomberg.py), `~20` RIV-rk-1 (the shared reader). RIV-tw-1's checks stub the module of
+RIV-ho-1, so no chain waits on another. Risk SERVED.
+
+### `RIV-ho-1` -- the history-owed set: every (security, trading day) of the last 365 days with no stored close, computed from stored tables alone (FWD-24, PRD v0.19 C-HISTORY-OWED)
+- Measured (the CRO's analysis behind ADDENDUM G; live read by the issuer 2026-10-08): gold `security_universe` holds
+  1,051 securities with `first_seen`, `last_seen` and `funds` (a comma-joined list of fund tickers); gold
+  `security_market` holds closes on 5 trading days. Nothing computes what is owed.
+- Interface (a NEW module `data/etfs/scripts/rivalfunds/history_owed.py`; standard library, pandas and the package's own
+  readers only; NO vendor import and no network call but the sink's):
+  1. `history_owed.owed(s, day, window_days=365)` -> a pandas DataFrame, one row per owed unit, columns `security_id`,
+     `security_bloomberg`, `date` (ISO string), `funds`. A unit is owed when: the security is in the newest
+     `security_universe` object at or before `day` with a non-blank `security_bloomberg`; `date` is a trading day
+     (`lib.trading_calendar`) with `day - window_days <= date <= as_of(day)` where `as_of(day)` is the previous trading
+     day of `day`; `first_seen - window_days <= date` is NOT required (a security held at any time in the window is owed
+     its whole window: the PRD's "every security a tracked fund held in the last 365 days has its year of closes"), but
+     the security's `last_seen` is on or after `day - window_days`; and `hc.g4_window` over the window returns no row for
+     (`security_id`, `date`) whose `px_close` is not null. Rows sorted by `date` descending, then `security_id`.
+  2. `history_owed.summary(df)` -> a dict `{"securities": n, "units": n, "dates": n, "newest": iso, "oldest": iso}`
+     (zeros and None for an empty frame).
+  3. A unit whose only stored close sits in an object the shared reader does not read (an untimed object beside timed
+     ones; the mis-dated 2026-09-29 object) IS owed: the set is defined by what the readers return, not by what S3 holds.
+- Rulings at the cut (issuer): the unit of the budget is this row (one security on one day). Cash lines and securities
+  with no Bloomberg key are not owed (there is nothing to ask). The function writes nothing.
+- Rulings on the check drafter's questions (issuer): `first_seen` is no bound at all -- a security whose `last_seen` is on
+  or after `day - window_days` (inclusive) is owed every trading day of the window through `as_of(day)`, before its
+  `first_seen` and after its `last_seen` included; the window's first day is inclusive; "the newest universe object at
+  or before `day`" includes one dated `day`; `day` is an ISO string and `s` the sink; a blank key includes a
+  whitespace-only one (`hc._blank`); an empty result still carries the four columns; `date` is an ISO string.
+- **Organic trigger:** the issuer's real read prints `summary(owed(s, day))` for the live tables.
+
+### `RIV-tw-1` -- the daily leg asks for owed closes inside the budget and lands each date's top-up as its own object, each close carrying its trading date; the request is OFF by default (FWD-24, C-OWED-GRAIN, C-OWED-IN-THE-LEG, C-OWED-BUDGET; CTO ruling R13)
+- Measured: `enrichment_bloomberg.py` mode `daily` asks for the securities held today and lands ONE object per date;
+  mode `market-range` (the hand-run backfill) skips any date that already holds a `market-*` object
+  (`_held_dates`), checks `bbg_budget.check_points` before any request and records every request sent. The vehicle runs
+  `python -m rivalfunds.enrichment_bloomberg --mode daily` FROM THE WORKING TREE every day at 11:00Z (rows Z-S62, Z-S72):
+  this file's merge is its deploy to that job.
+- Interface (`enrichment_bloomberg.py` only, plus the module of RIV-ho-1 which it imports lazily):
+  1. A switch, environment variable `RIVALFUNDS_HISTORY_OWED`, read once per run: unset, empty or `"0"` = OFF. With it
+     OFF the `daily` run is byte-for-byte what it is today: it does not import `history_owed`, makes no additional sink
+     list or get, sends no additional request, prints no additional line and returns the same result dict. `"print"` =
+     compute the owed set after the daily pull lands and print one line `HISTORY OWED: owed <units> units, <securities>
+     securities, <dates> dates; asked 0 (request off); carried <units>`, send nothing, write nothing. `"ask"` = compute,
+     ask, land, print `HISTORY OWED: owed <o>; asked <a>; landed <l>; carried <c>`.
+  2. With `"ask"`: the units to ask are the first `HISTORY_OWED_CAP` (a named module constant, 5,000) of the owed set in
+     its own order (newest dates first); `bbg_budget.check_points(n)` is called BEFORE any request with the count to
+     ask, and a refusal asks nothing and prints the refusal with `carried <all>`; every request sent is recorded with
+     `bbg_budget.record("history-owed", <points requested>, batch_id)`; what is not asked is carried (counted, never
+     stored: the next run recomputes the owed set).
+  3. Landing: per date, ONE new object in that date's partition, named by `market_target_uri(date, revision)` with a
+     revision that carries the capture time (as `_market_pull` builds it), never overwriting a name and never touching
+     another object. Every row carries, beside the existing columns, **`price_date`**: the ISO trading date the vendor
+     returned for that close. A returned close whose own date is not the partition's date is NOT written (and is
+     counted in the printed line as `misdated <n>`). Rows are marked `as_of_source = "backfill"` and `source` as
+     `market-range` marks them today.
+  4. The result dict of the `daily` run gains a key `history_owed` only when the switch is not OFF.
+  5. The Bloomberg client is reached only through the function `market-range` already uses for a history request; no
+     file under `integrations/` is edited or imported in a new way.
+- Rulings at the cut (issuer): NOTHING in this cell or its checks calls a vendor: every check and test stubs the client
+  hook, as `bf-1.AC1.py` / `bf-1.AC2.py` do. The switch stays OFF in the repository and on the vehicle; turning it on is
+  Andrew's recorded answer relayed by 1.0.0_SA_CTO~Z, never a merge. `market-range` and its `_held_dates` are left as
+  they are.
+- Rulings on the check drafter's questions (issuer): any value of the switch other than exactly `print` or `ask`
+  (case-sensitive) is OFF. ONLY the top-up objects carry `price_date`: they are written with the market schema plus
+  that one string column; the daily pull's object and `market-range`'s objects are written exactly as today.
+  "Misdated" means: a close the vendor returns for a date that is NOT one of the units asked for that security; it is
+  not written and is counted. A close is landed in the partition of its own returned date, with `price_date` equal to
+  it, only when that (security, date) was asked. `landed` may count rows or objects. A refusal's line format is free
+  beyond containing `HISTORY OWED:` and `carried <all>`. `tw-1.AC1.py` compares the switch-OFF run with the module as
+  it is at commit 361b735308, read from git: the OFF path stays identical to that commit's behaviour.
+- **Organic trigger:** none while the switch is OFF; the issuer's read is the 2026-10-08 and later vehicle logs showing
+  the enrichment leg unchanged.
+
+### `RIV-rk-1` -- the reader keeps a close only where its own trading date equals the partition date; an untimed date that gains a timed object keeps its sectors; a backfill close does not cost a security its sector (CTO ruling R13; CTO half @e081a672d4 note; worker row Z-W15-S2)
+- Measured: `gold_holding_contribution.g4_objects` / `_g4_merge` (rounds 25, 26). No stored object carries a per-close
+  date today, so nothing tells the reader that a close belongs to another day (row Z-S71). On a date with untimed
+  objects only (2026-09-29) the reader returns one object, an import with sectors; the first timed top-up landed there
+  would make the union "timed only" and drop those sectors. And a security whose live row has no close while a backfill
+  row has one merges to a backfill-marked row, which `drop_backfill` then removes whole, sector and parsekey included.
+- Interface (`gold_holding_contribution.py`; `gold_canonical_shape.py` only if `_g4_for` needs it):
+  1. THE PRICE DATE. Where a row carries a non-null `price_date`, its price group (`px_close`, `total_return_index`,
+     `currency`, `as_of`, `source`, `as_of_source`, `price_date`) takes part in the merge only when `price_date` equals
+     the partition date; otherwise that row offers no price group (its descriptive fields still coalesce). A row with no
+     `price_date` column, or a null one, is treated as today (every stored object).
+  2. THE UNTIMED DATE THAT GAINS A TIMED OBJECT. On a date holding timed AND untimed objects, the ONE untimed object
+     the pre-round-25 read picks (`revision.newest` of the date's untimed uris) contributes its DESCRIPTIVE fields to
+     the merge, last in the order, and NEVER a price group. Other untimed objects are still not read.
+  3. THE BACKFILL CLOSE. `drop_backfill` no longer removes a merged row whose price group came from a backfill row when
+     any of its descriptive fields came from a non-backfill row: it returns the row with the price group nulled
+     (so the rankings price it as they do today, from the fund's valuation) and the descriptive fields kept. A row
+     whose every contributing object is a backfill object is still dropped. The price series (`price_series.load`)
+     still receives the backfill close.
+  4. Everything rounds 25 and 26 built stands; on the live table NOTHING read today changes (no stored object carries
+     `price_date`; no date mixes timed and untimed objects; no backfill row exists).
+- Rulings at the cut (issuer): the column is named `price_date` in both this cell and RIV-tw-1. No object is written,
+  moved or deleted.
+- Rulings on the check drafter's questions (issuer): `price_date` may arrive as an ISO string or a date; both compare
+  to the partition date. In item 2 a security present ONLY in the picked untimed object, with no non-null descriptive
+  field there, yields NO row (so `rg-2.AC1.py` arm c stands unchanged). Descriptive fields are every column outside
+  the price group. Item 3 also binds `gold_canonical_shape._g4_for`: a merged row whose price group came from a
+  backfill row while a descriptive field came from a non-backfill row stays in its sector join (today it filters the
+  merged frame on `as_of_source`); `rk-1.AC1.py` does not grade that, so the cell's package test does. Item 4 is the
+  issuer's own measurement of the live table on 2026-10-07 and 2026-10-08: 8 objects over 5 dates, the two untimed on
+  2026-09-29 alone, no `price_date` column anywhere, `as_of_source` absent or `pull` on every row.
+- **Organic trigger:** any republish; the issuer's real run reads 0 moved rows and identical charts.
