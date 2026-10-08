@@ -872,3 +872,53 @@ worker's is `LGIC_BLANKFIX-W<n>-S<k>`. **Append-only during the round.** Never e
   "world_is": "On a directory path the checker does not refuse: it raises and exits 2, which reads as a tool failure and not as a verdict. The file is .tools/proof-of-spec-check.py, outside this project's write surface; its owner is 1.0.0_SA_CTO. Nothing was changed. The worker did not file a row; the issuer files it at the drain."
 }
 ```
+
+## LGIC_BLANKFIX-W3-S4 -- the Schwab key's path also carries a master account, which the firm test read as a firm of its own
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S4",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T02:21:39Z",
+  "one_line": "the Schwab key's path also carries a master account, which the firm test read as a firm of its own",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json row key 08242234: class MASTER, firm 49financial, vendor schwab",
+      "lib/opal_naming_keyfill.py _tok_firm and tests 'SOURCE: a path naming its own registry source in a firm's bucket is not refused' and 'SOURCE DIFFERENCE CONTROL: a path naming another FIRM (a master of Cottonwood) is refused' in lib/tests/test_opal_naming_keyfill.py"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-7 cell item 2 says the conflict is only the source test: a path whose first segment is a source the registry knows names ITS source.",
+  "world_is": "Removing the source conflict alone moved the refusal of schwab/08242234/silver/fact_rps (bd-pipeline, bucket opal-data-assets) to the firm test: the path word 08242234 is a MASTER row of scopes.json and v.scope maps it to itself, so lib/opal_naming_keyfill.py _firm_check read it as a firm other than the root's 49financial. scopes.json gives that MASTER row firm=49financial. The build maps a master token to its row's firm (_tok_firm) before comparing, so a master of the bucket's own firm is no conflict and a master of another firm (z09, Cottonwood) is refused as that firm."
+}
+```
+
+## LGIC_BLANKFIX-W3-S5 -- the registry holds no bucket-to-source table; the source test now reads the one source a product scope's bucket belongs to
+
+```json
+{
+  "id": "LGIC_BLANKFIX-W3-S5",
+  "project": "LGIC_BLANKFIX",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_LGIC_BLANKFIX~3",
+  "surfaced_at": "2026-10-08T02:21:39Z",
+  "one_line": "the registry holds no bucket-to-source table; the source test now reads the one source a product scope's bucket belongs to",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "infra/logic/registry/scopes.json: PRODUCT rows mdpf, etfs, irpt, harvest carry bucket; the firm rows carry bucket_firm only",
+      "python lib/opal_naming_keyfill.py crossfirm --map infra/logic/registry/root_map.json: last line KEYFILL-CROSSFIRM ok=True roots=13 keys=79 checked=47 ruled=11 unchecked=21 refused=0"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "TO BF-s-7 cell item 2: refuse a key for a source only where the registry says the bucket belongs to one source and the path names another.",
+  "world_is": "The registry says a bucket belongs to a FIRM (scopes.json bucket and bucket aliases, v.bucket_firm); it names no source for a bucket as such. The only statement of one-source ownership it carries is a PRODUCT scope row whose key is also a systems.json source (mdpf, etfs, irpt, harvest) with its bucket. The build reads that as the bucket's one source (_bucket_source); a firm bucket and a shared store (opal-data-assets) name none, so no source is refused there. Today no real stored key is refused for a source on that rule: the real sweep prints refused=0. If the CTO wants a different table (for example the source a firm bucket's pipeline tree writes), it is a registry row to add."
+}
+```

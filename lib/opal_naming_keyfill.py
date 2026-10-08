@@ -7,8 +7,11 @@ carry them. This module classes each such row as exactly one of:
   PATTERN    the current name has a variable segment (opal_naming._VAR_RE); nothing to fill
   LEGACY     the key is a store of infra/logic/registry/legacy_addresses.json AND the key's bucket is that
              entry's bucket; it keeps its bytes (a key path alone never decides it)
+  RULED      infra/logic/registry/key_rulings.json answers the key (the root check's match rule): the ruling's whole
+             address, or none owed; it is neither filled nor refused
   REFUSED-CROSS-FIRM  the key's bucket belongs to another firm than the root entry's scope, or its own path
-             names another firm/source; it is never filled with this root's firm
+             names another firm, or a source other than the one source the registry says its bucket belongs to;
+             it is never filled with this root's firm
   ADDRESS    the root's map entry fills {source} and {scope}: a whole address
   UNDECIDED  none of the above (no root entry, or a hole left after the fill)
 
@@ -334,15 +337,46 @@ def _firms(v):
     return set(v.bucket_firm.values())
 
 
-def _firm_check(name, v, bucket, bbasis, root_entry):
-    """The cross-firm check of one stored file. {"home", "home_kind", "clash", "unchecked"}.
+_REASONS = ("bucket-names-no-firm", "bucket-not-read", "bucket-chosen-at-run-time", "no-path-word-names-a-firm")
+
+
+def _tok_firm(tok, v):
+    """The firm a path token names, else None: a firm word (long or short), or a master account of a firm (08242234 names
+    49financial); global and a product are no firm."""
+    long_ = v.scope.get(tok)
+    if long_ is None:
+        return None
+    for s in opal_naming._scopes(opal_naming._registry()):
+        if s.get("long") == long_ and s.get("class") == "MASTER":
+            return s.get("firm") or long_
+    return long_
+
+
+def _bucket_source(bucket, v):
+    """The one source the registry says a bucket belongs to, else None. The registry (scopes.json) says it only for a
+    PRODUCT scope's bucket whose key is also a source of systems.json (mdpf, etfs, irpt, harvest); a firm's bucket and the
+    shared stores hold many sources, so they name none."""
+    if not bucket:
+        return None
+    found = set()
+    for s in opal_naming._scopes(opal_naming._registry()):
+        names = [s.get("bucket")] + [a.get("spelling") for a in s.get("aliases", []) if "bucket" in a.get("planes", [])]
+        if s.get("class") == "PRODUCT" and bucket in names and s.get("key") in v.v1:
+            found.add(s["key"])
+    return next(iter(found)) if len(found) == 1 else None
+
+
+def _firm_check(name, v, bucket, bbasis, root_entry, runtime=()):
+    """The cross-firm check of one stored file. {"home", "home_kind", "clash", "unchecked", "code"}.
     What the key's firm is compared WITH is the firm of its own bucket (the registry's bucket-to-firm table), whatever
     the root entry fills; where the bucket was not read (or names no firm) the root entry's scope stands in, when the
-    entry may give one (no `fills`, or `fills` lists scope); otherwise nothing is compared and `unchecked` says why.
-    A path word naming a source other than the entry's is judged only where the entry gives a source."""
+    entry may give one (no `fills`, or `fills` lists scope); otherwise nothing is compared and `unchecked` says why, and
+    `code` is one of _REASONS (`runtime` is the per-firm variable names the key's file shows). A path word naming a
+    source is judged only against the source the registry says the bucket belongs to (_bucket_source), never against the
+    root entry's source: a path whose own first segment is a source the registry knows names ITS source. A key whose path
+    names no firm at all has nothing to refuse and is checked (code no-path-word-names-a-firm)."""
     fills = None if root_entry is None else root_entry.get("fills")
     can_scope = root_entry is not None and (fills is None or "scope" in fills)
-    can_source = root_entry is not None and (fills is None or "source" in fills)
     bfirm = v.bucket_firm.get(bucket) if bucket else None
     own_scope = v.scope.get(root_entry.get("scope"), root_entry.get("scope")) if can_scope else None
     if bfirm is not None:
@@ -351,34 +385,41 @@ def _firm_check(name, v, bucket, bbasis, root_entry):
         home, kind = own_scope, "root"
     else:
         home, kind = None, None
-    unchecked = None
-    if home is None:
-        if bucket is None:
-            why = "the key's bucket was not read (%s)" % (bbasis,)
-        else:
-            why = "bucket %s names no firm" % (bucket,)
-        if root_entry is None:
-            unchecked = "the firm could not be checked: %s and there is no root map entry" % why
-        elif can_scope:
-            unchecked = "the firm could not be checked: %s and the root entry gives no scope" % why
-        else:
-            unchecked = ("the firm could not be checked: %s and the root entry's fills (%s) leave out scope, so it gives "
-                         "no firm to compare with" % (why, ", ".join(fills)))
-    own_names = set() if root_entry is None else {root_entry.get("source"), root_entry.get("system")}
     firms = _firms(v)
+    toks = _TOKEN_RE.findall(name.lower())
+    bsrc = _bucket_source(bucket, v)
     clash = None
-    for tok in _TOKEN_RE.findall(name.lower()):
-        if home is not None and tok in v.scope and v.scope[tok] != home and (kind == "root" or v.scope[tok] in firms):
+    for tok in toks:
+        tf = _tok_firm(tok, v)
+        if home is not None and tf is not None and tf != home and (kind == "root" or tf in firms):
             if kind == "root" or own_scope == home:
                 # the root's scope and the bucket's firm are the same firm: the wording the root check already reads
-                clash = "path token %r names firm %r, the root entry's scope is %r" % (tok, v.scope[tok], home)
+                clash = "path token %r names firm %r, the root entry's scope is %r" % (tok, tf, home)
             else:
-                clash = "path token %r names firm %r, the firm of bucket %s is %r" % (tok, v.scope[tok], bucket, home)
+                clash = "path token %r names firm %r, the firm of bucket %s is %r" % (tok, tf, bucket, home)
             break
-        if can_source and tok in v.v1 and tok not in own_names:
-            clash = "path token %r names source %r, the root entry's source is %r" % (tok, tok, root_entry.get("source"))
+        if bsrc is not None and tok in v.v1 and tok != bsrc:
+            clash = "path token %r names source %r, bucket %s belongs to source %r" % (tok, tok, bucket, bsrc)
             break
-    return {"home": home, "home_kind": kind, "clash": clash, "unchecked": unchecked}
+    unchecked, code = None, None
+    if home is None and clash is None:
+        if not any(_tok_firm(t, v) in firms for t in toks):
+            code = "no-path-word-names-a-firm"
+        else:
+            if bucket is None:
+                why = "the key's bucket was not read (%s)" % (bbasis,)
+                code = "bucket-chosen-at-run-time" if runtime else "bucket-not-read"
+            else:
+                why = "bucket %s names no firm" % (bucket,)
+                code = "bucket-names-no-firm"
+            if root_entry is None:
+                unchecked = "the firm could not be checked: %s and there is no root map entry" % why
+            elif can_scope:
+                unchecked = "the firm could not be checked: %s and the root entry gives no scope" % why
+            else:
+                unchecked = ("the firm could not be checked: %s and the root entry's fills (%s) leave out scope, so it gives "
+                             "no firm to compare with" % (why, ", ".join(fills)))
+    return {"home": home, "home_kind": kind, "clash": clash, "unchecked": unchecked, "code": code}
 
 
 def _address_firm(canonical):
@@ -398,13 +439,46 @@ def _item_bucket(it, name, v, text_of=None):
     return bucket_of(it, text_of(it) if text_of else None)
 
 
-def _classify(items, root_entry, text_of=None):
+def _rulings(key_rulings=None):
+    """{(bucket, key): row} of infra/logic/registry/key_rulings.json, read by the root check's own loader
+    (opal_naming_rootcheck.load_key_rulings) unless a table is passed. Imported at the call: rootcheck imports this module."""
+    if key_rulings is not None:
+        return key_rulings
+    import opal_naming_rootcheck
+    return opal_naming_rootcheck.load_key_rulings()
+
+
+def ruling_of(item, rulings, text_of=None):
+    """The key_rulings.json row that answers a stored-file item, else None: the root check's own match rule
+    (opal_naming_rootcheck._ruling_of: a per-firm row by the key and the variable its file shows, else the (bucket, key)
+    row with the bucket bucket_of() reads). `text_of(item)` stands in for the source file (the test's way in). An item whose
+    key no row carries is not asked (no source is read for it)."""
+    if item.get("type") != "S3Key" or not rulings:
+        return None
+    if not any(k == item["current"] for (_b, k) in rulings):
+        return None
+    import opal_naming_rootcheck
+    if text_of is None:
+        return opal_naming_rootcheck._ruling_of(item, rulings)[0]
+    return opal_naming_rootcheck._ruling_of(
+        item, rulings, bucket_reader=lambda i: bucket_of(i, text_of(i)),
+        runtime_reader=lambda i, _t, names: runtime_bucket(i, text_of(i), names))[0]
+
+
+def _ruling_basis(row):
+    if row.get("canonical"):
+        return "key ruling: the whole address is %s" % (row["canonical"],)
+    return "key ruling: %s" % (str(row["none_owed"]).strip().rstrip("."),)
+
+
+def _classify(items, root_entry, text_of=None, key_rulings=None):
     """(rows, raising, graded): the classified rows, the count grade() raised on, the count of graded
     items that carry a {source}/{scope} blank (the rows' denominator). text_of(item) may stand in for the
     source file bucket_of() would read (the test's way in)."""
     v = opal_naming._vocab()
     entries = _legacy_entries()
     rows, raising = [], 0
+    rulings = _rulings(key_rulings)
     own_scope = None if root_entry is None else v.scope.get(root_entry.get("scope"), root_entry.get("scope"))
     # `fills` (root map): the slots the entry may fill; absent means all of them. A slot it leaves out is the key's own,
     # so the entry's HOME scope/source is not written into a name. The cross-firm checks do not depend on it: a key's
@@ -424,10 +498,11 @@ def _classify(items, root_entry, text_of=None):
         row = {"type": typ, "current": name, "where": it.get("where"), "class": None, "canonical": None,
                "basis": None, "bucket": bucket, "bucket_basis": bbasis}
         var = opal_naming._VAR_RE.search(name)
-        matches = [] if var else _legacy_matches(name, v, entries)
+        ruled = None if var else ruling_of(it, rulings, text_of)
+        matches = [] if var or ruled else _legacy_matches(name, v, entries)
         leg = [m for m in matches if bucket is not None and m[1] == bucket]
         bfirm = v.bucket_firm.get(bucket) if bucket else None
-        fc = None if var else _firm_check(name, v, bucket, bbasis, root_entry)
+        fc = None if var or ruled else _firm_check(name, v, bucket, bbasis, root_entry)
         clash = None if fc is None else fc["clash"]
         no_check = "" if fc is None or fc["unchecked"] is None else "; " + fc["unchecked"]
         not_legacy = ""
@@ -437,6 +512,10 @@ def _classify(items, root_entry, text_of=None):
         if var:
             row["class"] = "PATTERN"
             row["basis"] = "variable segment %r in the current name" % (var.group(0),)
+        elif ruled:
+            row["class"] = "RULED"
+            row["canonical"] = ruled.get("canonical")
+            row["basis"] = _ruling_basis(ruled)
         elif leg:
             row["class"] = "LEGACY"
             row["canonical"] = name
@@ -481,11 +560,12 @@ def _classify(items, root_entry, text_of=None):
     return rows, raising, graded
 
 
-def fill_keys(items, root_entry):
+def fill_keys(items, root_entry, key_rulings=None):
     """One dict per item whose graded canonical carries a blank other than {system}/{cadence}:
     type, current, where, class, canonical (or None), basis, bucket (or None), bucket_basis. An item grade()
-    raises on is skipped."""
-    return _classify(items, root_entry)[0]
+    raises on is skipped. A key infra/logic/registry/key_rulings.json answers (the root check's match rule) is class RULED,
+    with the ruling's canonical address or None; `key_rulings` stands in for the file."""
+    return _classify(items, root_entry, key_rulings=key_rulings)[0]
 
 
 def _independent_count(items):
@@ -508,7 +588,7 @@ def cmd_dir(source_dir, root, map_path, out=print):
     items, _stats = opal_naming.census_repo()
     sel = [i for i in items if i["where"].startswith(prefix)]
     rows, raising, _n = _classify(sel, root_entry)
-    count = {"ADDRESS": 0, "LEGACY": 0, "PATTERN": 0, "REFUSED-CROSS-FIRM": 0, "UNDECIDED": 0}
+    count = {"ADDRESS": 0, "LEGACY": 0, "PATTERN": 0, "REFUSED-CROSS-FIRM": 0, "UNDECIDED": 0, "RULED": 0}
     for r in rows:
         count[r["class"]] += 1
         out("%s %s %r canonical=%s where=%s bucket=%s bucket_basis=%s basis=%s"
@@ -519,10 +599,10 @@ def cmd_dir(source_dir, root, map_path, out=print):
     ind = _independent_count(sel)
     ok = (root_entry is not None and sum(count.values()) == len(rows) and len(rows) == ind and not holes
           and len(rows) > 0)
-    out("KEYFILL-DIR ok=%s dir=%s rows=%d address=%d legacy=%d pattern=%d refused=%d undecided=%d raising=%d "
-        "with_bucket=%d"
+    out("KEYFILL-DIR ok=%s dir=%s rows=%d address=%d legacy=%d pattern=%d ruled=%d refused=%d undecided=%d "
+        "raising=%d with_bucket=%d"
         % (ok, prefix.rstrip("/"), len(rows), count["ADDRESS"], count["LEGACY"], count["PATTERN"],
-           count["REFUSED-CROSS-FIRM"], count["UNDECIDED"], raising, sum(1 for r in rows if r["bucket"])))
+           count["RULED"], count["REFUSED-CROSS-FIRM"], count["UNDECIDED"], raising, sum(1 for r in rows if r["bucket"])))
     return 0 if ok else 1
 
 
@@ -535,34 +615,43 @@ def _word_firm(name, v):
     return None
 
 
-def crossfirm_rows(root, root_entry, map_path=None):
+def crossfirm_rows(root, root_entry, map_path=None, key_rulings=None):
     """One dict per stored file (type S3Key) of a mapped root: root, current, where, bucket, bucket_firm, word_firm
-    (the firm the path word, or the filled address, names), verdict (OK, REFUSED, UNCHECKED), reason."""
+    (the firm the path word, or the filled address, names), verdict (OK, RULED, REFUSED, UNCHECKED), code (the reason
+    of an UNCHECKED row, one of _REASONS; no-path-word-names-a-firm also on an OK row), reason."""
     import opal_naming_scope
     v = opal_naming._vocab()
+    rulings = _rulings(key_rulings)
     items, _stats = opal_naming_scope.root_items("infra/aws/terraform/" + root, map_path)
     items = [i for i in items if i["type"] == "S3Key"]
     filled = {}
-    for r in _classify(items, root_entry)[0]:
+    for r in _classify(items, root_entry, key_rulings=rulings)[0]:
         filled[(r["type"], r["current"], r["where"])] = r
     out = []
     for it in items:
         name = it["current"]
         bucket, bbasis = _item_bucket(it, name, v)
-        fc = _firm_check(name, v, bucket, bbasis, root_entry)
+        names, _rb = runtime_bucket(it)
+        fc = _firm_check(name, v, bucket, bbasis, root_entry, names)
         row = filled.get((it["type"], name, it["where"]))
         wfirm = _word_firm(name, v)
         if row is not None and row["class"] == "ADDRESS":
             wfirm = _address_firm(row["canonical"]) or wfirm
         rec = {"root": root, "current": name, "where": it["where"], "bucket": bucket,
                "bucket_firm": v.bucket_firm.get(bucket) if bucket else None, "word_firm": wfirm,
-               "verdict": None, "reason": None}
-        if row is not None and row["class"] == "REFUSED-CROSS-FIRM":
+               "verdict": None, "code": None, "reason": None, "runtime": names}
+        ruled = ruling_of(it, rulings)
+        if ruled:
+            rec["verdict"], rec["reason"] = "RULED", _ruling_basis(ruled)
+        elif row is not None and row["class"] == "REFUSED-CROSS-FIRM":
             rec["verdict"], rec["reason"] = "REFUSED", row["basis"]
         elif fc["clash"]:
             rec["verdict"], rec["reason"] = "REFUSED", fc["clash"]
         elif fc["unchecked"]:
-            rec["verdict"], rec["reason"] = "UNCHECKED", fc["unchecked"]
+            rec["verdict"], rec["code"], rec["reason"] = "UNCHECKED", fc["code"], fc["unchecked"]
+        elif fc["code"]:
+            rec["verdict"], rec["code"] = "OK", fc["code"]
+            rec["reason"] = "no path word names a firm: nothing to refuse"
         else:
             rec["verdict"] = "OK"
             rec["reason"] = "path words name no firm other than the %s's %r" % (
@@ -571,27 +660,45 @@ def crossfirm_rows(root, root_entry, map_path=None):
     return out
 
 
-def cmd_crossfirm(map_path, out=print):
+def _detail(r):
+    """What a reason's table row names: the bucket, the variable, or the bucket candidates seen."""
+    if r["code"] == "bucket-chosen-at-run-time":
+        return ",".join(r["runtime"])
+    if r["code"] == "bucket-names-no-firm":
+        return r["bucket"]
+    m = re.search(r"\((no bucket literal[^;)]*|the key's own statement names several buckets, none picked: [^)]*|"
+                  r"the file has \d+ bucket candidates[^)]*)", r["reason"] or "")
+    return m.group(1) if m else (r["reason"] or "")
+
+
+def cmd_crossfirm(map_path, out=print, key_rulings=None):
     doc = opal_naming_rootmap.load_map(map_path)
     roots = doc.get("roots") or {}
-    keys = checked = unchecked = refused = 0
+    rulings = _rulings(key_rulings)
+    n = {"OK": 0, "RULED": 0, "REFUSED": 0, "UNCHECKED": 0}
+    keys = 0
+    table = {}
     reasons_ok = True
     for root in sorted(roots):
-        for r in crossfirm_rows(root, roots[root], map_path):
+        for r in crossfirm_rows(root, roots[root], map_path, rulings):
             keys += 1
+            n[r["verdict"]] += 1
             if r["verdict"] == "UNCHECKED":
-                unchecked += 1
-                reasons_ok = reasons_ok and bool(r["reason"])
-            else:
-                checked += 1
-                if r["verdict"] == "REFUSED":
-                    refused += 1
-            out("%s root=%s key=%r where=%s bucket=%s bucket_firm=%s word_firm=%s reason=%s"
+                reasons_ok = reasons_ok and bool(r["reason"]) and r["code"] in _REASONS[:3]
+                det = _detail(r)
+                table.setdefault(r["code"], {})
+                table[r["code"]][det] = table[r["code"]].get(det, 0) + 1
+            out("%s root=%s key=%r where=%s bucket=%s bucket_firm=%s word_firm=%s code=%s reason=%s"
                 % (r["verdict"], r["root"], r["current"], r["where"], r["bucket"], r["bucket_firm"], r["word_firm"],
-                   r["reason"]))
-    ok = bool(roots) and checked + unchecked == keys and reasons_ok
-    out("KEYFILL-CROSSFIRM ok=%s roots=%d keys=%d checked=%d unchecked=%d refused=%d"
-        % (ok, len(roots), keys, checked, unchecked, refused))
+                   r["code"], r["reason"]))
+    for code in _REASONS[:3]:
+        det = table.get(code, {})
+        out("UNCHECKED-BY-REASON %s n=%d %s" % (code, sum(det.values()),
+                                                "; ".join("%s x%d" % (d, c) for d, c in sorted(det.items()))))
+    refused, ruled, unchecked, checked = n["REFUSED"], n["RULED"], n["UNCHECKED"], n["OK"]
+    ok = bool(roots) and checked + ruled + unchecked + refused == keys and reasons_ok
+    out("KEYFILL-CROSSFIRM ok=%s roots=%d keys=%d checked=%d ruled=%d unchecked=%d refused=%d"
+        % (ok, len(roots), keys, checked, ruled, unchecked, refused))
     return 0 if ok else 1
 
 
