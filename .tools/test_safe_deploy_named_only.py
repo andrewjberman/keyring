@@ -62,17 +62,38 @@ def test_tree_flag_routes_an_artifact_only_deploy_to_that_tree_only():
     assert sdc.unrouted_artifacts_for([SCHED], (bd_name,)) == {}
 
 
-def test_explicit_artifact_only_deploy_is_refused_end_to_end(monkeypatch, capsys):
+def test_explicit_artifact_only_deploy_is_refused_end_to_end(monkeypatch, capsys, tmp_path):
     """main() with only the artifact named: rc 2, the refusal line, and NO upload attempted."""
     def _no_upload(*_a, **_k):
         raise AssertionError("an upload was attempted")
     monkeypatch.setattr(sdc, "deploy_file", _no_upload)
     monkeypatch.setattr(sdc, "mint_bundle", _no_upload)
+    audit = tmp_path / "audit.log"
+    monkeypatch.setattr(sdc, "BYPASS_AUDIT_LOG", audit)
     rc = sdc.main(["--no-pipescript", SCHED])
     out = capsys.readouterr().out
     assert rc == 2
     assert "REFUSED-ARTIFACT" in out and SCHED in out
     assert "nothing was deployed" in out
+    rows = audit.read_text(encoding="utf-8").splitlines()
+    assert len(rows) == 1 and "REFUSED-ARTIFACT" in rows[0] and SCHED in rows[0] and "explicit-refused" in rows[0]
+
+
+def test_push_range_unrouted_artifact_is_not_refused_but_leaves_a_row(monkeypatch, capsys, tmp_path):
+    """CTO msg 107184: push mode does not refuse the push, but the skipped artifact leaves a durable row."""
+    def _no_upload(*_a, **_k):
+        raise AssertionError("an upload was attempted")
+    monkeypatch.setattr(sdc, "deploy_file", _no_upload)
+    monkeypatch.setattr(sdc, "mint_bundle", _no_upload)
+    monkeypatch.setattr(sdc, "_changed_paths", lambda _r: [SCHED])
+    audit = tmp_path / "audit.log"
+    monkeypatch.setattr(sdc, "BYPASS_AUDIT_LOG", audit)
+    rc = sdc.main(["--no-pipescript", "--commit-range", "aaaaaaa..bbbbbbb"])
+    out = capsys.readouterr().out
+    assert rc == 0
+    assert "REFUSED-ARTIFACT" in out
+    rows = audit.read_text(encoding="utf-8").splitlines()
+    assert len(rows) == 1 and "REFUSED-ARTIFACT" in rows[0] and "push-range aaaaaaa..bbbbbbb not-shipped" in rows[0]
 
 
 def test_bd_deploy_naming_the_artifact_never_ships_it_to_cot():

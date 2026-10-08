@@ -1332,7 +1332,8 @@ def write_bypass_audit(
     kind: str = "ALLOW-STALE",
 ) -> None:
     """Append an audit line. `kind` tags the row: ALLOW-STALE (the --allow-stale
-    bypass, default -- unchanged) or SERVE-RELEASE (a gated serve-hold removal)."""
+    bypass, default -- unchanged), SERVE-RELEASE (a gated serve-hold removal) or REFUSED-ARTIFACT (a named
+    shipped artifact with no target tree: not shipped, so an undeployed shared change stays findable)."""
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
     BYPASS_AUDIT_LOG.parent.mkdir(parents=True, exist_ok=True)
     detail = ",".join(files[:5])
@@ -1561,9 +1562,17 @@ def main(argv: list[str]) -> int:
     named_pool = list(args.files) if args.files else _changed_paths(args.commit_range)
     shipped = shipped_artifacts_for(named_pool, tuple(args.tree))
     unrouted = unrouted_artifacts_for(named_pool, tuple(args.tree))
+    if unrouted:
+        # DURABLE ROW (CTO msg 107184): a printed line scrolls away, and a committed _shared change that never
+        # deploys is a stale-code hazard -- one REFUSED-ARTIFACT row per artifact in the deploy audit log.
+        _sha = _current_commit_sha()
+        _mode = "explicit-refused" if args.files else f"push-range {args.commit_range or 'HEAD~1..HEAD'} not-shipped"
     for member, tnames in unrouted.items():
         print(f"REFUSED-ARTIFACT: {member} is named by this deploy but no target tree is: name it with "
               f"--tree <one of: {', '.join(tnames)}> or deploy it beside a script of that tree. NOT shipped.")
+        write_bypass_audit(args.author or "UNKNOWN", [member], _sha,
+                           f"no target tree named; declaring trees: {', '.join(tnames)}; {_mode}",
+                           kind="REFUSED-ARTIFACT")
     if unrouted and args.files:
         # An explicit deploy that names an artifact with no tree is refused whole (CTO msg 107175).
         # A pushed commit range is not refused (it would block the push); its unrouted artifact ships
