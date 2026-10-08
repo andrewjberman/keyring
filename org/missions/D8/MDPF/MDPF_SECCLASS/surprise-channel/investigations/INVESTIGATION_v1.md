@@ -5235,3 +5235,29 @@ by dell1 or by this seat.
   "notes": "Not a regression and not fixed here. Whether a NAME::-only placement satisfies FWD-15 for a security that has a symbol or CUSIP is a CTO call; the JSON carries every absent key with its route so either reading can be graded."
 }
 ```
+## MDPF_SECCLASS-D1-S6 -- Cottonwood already serves CASH as cash before the e68 write; condition 3's predicted -5.48M move and fixed total cannot be the grade
+
+```json
+{
+  "id": "MDPF_SECCLASS-D1-S6",
+  "project": "MDPF_SECCLASS",
+  "fabric": "dell1",
+  "surfaced_by": "2.0.0_SA_COO~M1",
+  "surfaced_at": "2026-10-08T10:48:55Z",
+  "one_line": "Cottonwood's served compositions ALREADY place the CASH key in cash before the e68 write (206 clients, USD +781,527.87, 0 in fixed_income), so the half's predicted Cottonwood move of USD -5,480,054.44 fixed_income->cash does not describe the served bytes, and the CTO condition-3 pass (firm total == 568,707,320.21) cannot hold on a run with a new data_as_of.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "s3://opal-data-cot/platinum/clients/*/composition.json (226 objects; 219 generated 2026-10-07T11Z, data_as_of 2026-10-06, i.e. BEFORE the 03:12:55Z write): key CASH found in 211; top-holding class cash in 206 (sum market_value 781,527.87), fixed_income in 5 (sum 0.00)",
+      "s3://opal-data-cot/platinum/firm/mix_summary.json VersionId eH1ZuCUJaxEo3ox8JvWZC9fnYa1NgQas: data_as_of 2026-10-06, composition.total_market_value 568,707,320.21; each daily run carries a new data_as_of, so the firm total moves with positions",
+      "NEVER_WIDEN_HALF_REQUEST_SECCLASS_CASH_ROW_20261008.md :48 predicted Cottonwood USD -5,480,054.44 via D_04/C_06/D_03 ETFClassifier reading the canonical row"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "CTO e68 half condition 3 (amendment 2 @9c667f5c15): the first Cottonwood mix rebuild after the write shows total == 568,707,320.21 and fixed_income/cash move by CASH's amount.",
+  "world_is": "The COT producer already serves CASH as cash, so the write should move no Cottonwood served value (DELTA expected 0 on COT); and the total cannot be compared across data_as_of dates. Which COT rule classifies CASH before the canonical row is not traced here; the -5.48M figure in the half's compare did not come from the served COT bytes.",
+  "notes": "Proposed grade for the ~11:36Z read, sent to 1.0.0_SA_CTO~DELL1: rebuilt after 03:12:55Z; CASH key class cash in every listing client with no CASH line in fixed_income; firm mix internally consistent (sum of mix market_value == composition.total_market_value within USD 1.00). Whether the 5 fixed_income listings (all at 0.00) are the 7 stale-dated clients was not measured."
+}
+```
