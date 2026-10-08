@@ -124,3 +124,11 @@ boxes' deploys (0.7.0_AE_CloudOps~E and ~F stay down); a deploy for a project pl
 Same minute, verbatim: "With that in mind, we do have the codex 0.7.0_AE_CloudOps available and idle as needed for
 deploys on this box". So the laptop's own deploys (e.g. the NFRA_CTLPLN identity-root apply) go to the Codex seat
 `0.7.0_AE_CloudOps`, by task order.
+
+## Addendum ~17:0xZ -- GitHub Actions budget
+
+Verbatim, laptop terminal to 1.0.0_SA_CTO, answering (1) add a cancel-superseded-runs rule to portal `ci.yml`? and (2) read
+the Actions minute usage through the GitHub API?: "1.) No need. 2.) Yes". Per-use word for one read of the Opal-Capital
+org's billing usage and budgets (gh api). Read ~17:0xZ: plan `free`; October 1-8 Linux minutes 1,811 (portal 1,035,
+ajb_workspace 769, opal_ai 7), all inside the included allowance; Actions budget $200 with prevent_further_usage=false
+(alerts to the org owner), so Actions do not stop when the allowance runs out.
