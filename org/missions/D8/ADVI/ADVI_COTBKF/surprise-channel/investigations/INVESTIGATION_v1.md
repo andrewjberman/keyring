@@ -2407,3 +2407,31 @@ round.** Never edit an existing row.
   "world_is": "(a)+(b) leaves 14 regressions and loses the 25; (c) clears the 13 and keeps the 25 (measured without (a)); (a) clears 9 of the other 10 but loses the 25; one month (B3S748567 2025-07) is untouched by every condition. regressions=0 with the 25 kept is not reached by any combination of (a), (b), (c). The shipped default is (a)+(b)+(c) as the order directs; the issuer may rule (a) out, which gives regressions=10 with the 25 kept. The test is not weakened."
 }
 ```
+
+## ADVI_COTBKF-D2-W45-S3 -- CB23w1-AC2 not met under AMENDMENT 2: regressions=1 (B3S748567 2025-07); the blank relabels 2110 already-UNPRICED days and moves no verdict
+
+```json
+{
+  "id": "ADVI_COTBKF-D2-W45-S3",
+  "project": "ADVI_COTBKF",
+  "fabric": "dell2",
+  "surfaced_by": "0.9.0_WK_ADVI_COTBKF~45",
+  "surfaced_at": "2026-10-08T21:00Z",
+  "one_line": "CB23w1-AC2 not met under AMENDMENT 2: (a')+(b)+(c) leaves regressions=1 (B3S748567 2025-07, core candidate 316067107, row D2-S30); the blank changes no verdict (2110 of 2111 blank days were already UNPRICED) and round 22's 25 are 0 MATCH / 25 DIFF / 0 UNGRADABLE",
+  "class": "BLOCKING",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "real run of the AC2 invocation with the shipped AMENDMENT 2 rule (b)+(c) credit, (a') unvalued funding sale blanked: months_after=2058/1525/79010 control_same=True regressions=1 movers_back=0 (rc 0, 5m47s under timeout 1500); report org/missions/D8/ADVI/ADVI_COTBKF/deliverables/0.9.0_WK_ADVI_COTBKF~45/sweep_regrade.md sections 'CB-w-1 AMENDMENT 2' and 'Round 22's 23 regressions'. Classes of the 23 (sum 23): vendor_cfncash_leg_of_sweep_sale 13, unvalued_funding_sale 9, other:credit_kept_by_every_condition 1; 22 of 23 now MATCH",
+      "variant table, all measured with the same invocation: round 22 repaired 23/25 (regressions/movers_back, months_after 2103/1520/78970); (b)+(c) 10/25 (2116/1507/78970); (a)+(b) 14/0 (2045/1538/79010); (a)+(b)+(c) 1/0 (2058/1525/79010); (a')+(b)+(c) 1/0 (2058/1525/79010). Credit days posted of 2703: (b)+(c) 2671; (a')+(b)+(c) 560 with 2111 blank days",
+      "the blank moves no verdict: of 2111 credit days with an unvalued funding sale, 2110 are on the value grid and all 2110 were already blank (reason UNPRICED) under the same values with no blank list (daily_returns run with and without blank_days on the persisted after values: 2110 reasons changed UNPRICED -> UNVALUED_FUNDING_SALE, 0 computed days changed); the 1797 months holding one were already UNGRADABLE; no month of the 23 or of round 22's 25 holds a blank day (their credit days are in earlier months)",
+      "round 22's 25 by new verdict: MATCH 0, DIFF 25, UNGRADABLE 0 (0QF879238 2017-07..12, 2018-01..06; B3S605725 2018-01; B3S804888 2024-02/08, 2025-02/08; D49141608 2019-02..09; D49141714 2019-02). Not crediting leaves their accounts' level at r19 (DIFF); a one-day blank on the credit day cannot reach the later months that carry the level",
+      "the remaining MATCH -> DIFF month: B3S748567 2025-07 (computed 0.0535, reported 0.12). Sold security 316067107 is held (bought 45000 on 2024-05-02) and priced 1.00, so (a') does not blank it; credits 2025-03-28 4871.60, 2025-04-29 4711.88, 2025-05-28 1514.07, 2025-06-27 778.15 (sum 11875.70) each pay a same-day sweep buy, no CFNCASH row on those days, so (b) and (c) drop nothing; value 2025-07-31 r19 9816.72 vs credited 21692.42. The reported return has the r19 base: consistent with the vendor not carrying the fund in its performance base (inference), i.e. the parked core candidate of row D2-S30"
+    ]
+  },
+  "disposition": "UNDER_INVESTIGATION",
+  "spec_asserts": "Order CB-w-1 AMENDMENT 2 (issuer ruling on row D2-W45-S2): a funding sale of a security not valued the day before blanks the credit day (UNVALUED_FUNDING_SALE, month UNGRADABLE), (b) and (c) stay, and AC2 stays regressions=0; round 22's 25 are reported by new verdict.",
+  "world_is": "The rule is built as stated and does not reach regressions=0: B3S748567 2025-07 passes every condition because its sold fund is held and priced (a row-type or valuation condition cannot tell a core cash fund from any held fund; it needs the D2-S30 designation). The blank is a relabel, not a verdict mover: every blank day was already UNPRICED, so round 22's 25 land DIFF, not UNGRADABLE. The test is not weakened; the order stays open."
+}
+```
