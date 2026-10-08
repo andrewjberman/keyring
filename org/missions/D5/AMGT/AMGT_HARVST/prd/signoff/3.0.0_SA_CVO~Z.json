@@ -1,13 +1,12 @@
 {
   "prd": "AMGT_HARVST_PRD.md",
-  "prd_version": "v0.21",
-  "prd_pin": "c18cf4424c170a9081737ea7032d312d40e11ae9",
+  "prd_version": "v0.22",
+  "prd_pin": "e30fb3e6103d6effb0e4cb37146e0f9052829469",
   "half": "ratified-text",
-  "half_hash": "28c20b31e11d3c9ad9036d7e602b3fd065c68c39ebf758d2425f9dcdae5e2096",
-  "endpoint_hash": "21444a90b822b7b6450a8832b9f6115ba6bc6d0efb791e6c1f67acb3198d14c1",
-  "verdict": "REFUSED",
-  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_HARVST_v0.21_RATIFIED_TEXT_20261008_Z.md@938af3a1bb",
+  "half_hash": "a41a1dc1a81c3a768131191fb2ec214e47b6285e38882f2e7e7e2c0ba7aee87e",
+  "endpoint_hash": "5f5074c48bc31895b7c5ba8ac39836a8e54b5db422dcd4a40edd2ec97b9f9938",
+  "verdict": "SIGNED",
+  "review_ref": "org/tier1_exec/3.0.0_SA_CVO/deliverables/L4R_REVIEW_AMGT_HARVST_v0.22_RATIFIED_TEXT_20261008_Z.md@5d5f0827fd",
   "signed_by": "3.0.0_SA_CVO~Z",
-  "signed_at": "2026-10-08T17:19:18Z",
-  "reason": "FWD-18's fence gives two rules for the switch and the scheduler, and its DONE WHEN still describes a daily job where his word is a continuous run; the fence is to be stated once"
+  "signed_at": "2026-10-08T18:06:42Z"
 }
