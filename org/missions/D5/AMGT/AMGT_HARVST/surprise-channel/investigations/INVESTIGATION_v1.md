@@ -7666,6 +7666,26 @@ So all five publishers keep NO as-received bytes today. The one layer every publ
         ]
       },
       "disposition": "UNDER_INVESTIGATION"
+    },
+    {
+      "id": "AMGT_HARVST-Z-W110-S5",
+      "project": "AMGT_HARVST",
+      "fabric": "site-z",
+      "surfaced_by": "0.9.0_WK_AMGT_HARVST~110",
+      "surfaced_at": "2026-10-08T02:47:00Z",
+      "one_line": "HVST-bh-7: of the seven two-listing ticker roots, five group by limb 2 and two do NOT (ICT: a 30-character cut name; TTE: 'Total Energies' vs 'TotalEnergies SE'); no limb links them and the registry carries one listing per root.",
+      "class": "OBSERVATION",
+      "hazard_standing": "INERT",
+      "spec_asserts": "HVST-bh-7 section 0: seven ticker roots have two listings (ASML, AZN, GSK, ICT, OMAB, RIO, TTE) and the ruling is that a brand belongs to the issuer; section 1.1 groups only by a shared registry lei or by a shared root plus a casefolded company-name or suffix-form equality, and nothing else.",
+      "world_is": "bh7_census.out (19049 silver articles, 242 securities): ASML, AZN, GSK, OMAB, RIO GROUPED by limb 2; ICT NOT GROUPED ('International Container Terminals' vs the cut 'International Container Termin', ICT_US_Equity's name cut at 30 characters) and TTE NOT GROUPED ('Total Energies' vs 'TotalEnergies SE'). Limb 1 groups no root here: lib/research/identity/registrations.json holds one listing for each of AZN, GSK, ICT, OMAB, RIO, TTE and none for ASML_NA/ASML_US, so no two of the seven roots share a lei in the file. Effect today: the only alias set that changed is ASML_US_Equity (+ASML; pairs 582 -> 582, mentions 2820 -> 2822); the two ungrouped roots carry no whole-brand entry the refusal would touch, so nothing is lost, but a future brand on either would still refuse across the pair. Left as the cell states it; the issuer decides whether the registry should gain the second listing's lei or the two names be matched. Also: the order face says the next row id is S4; S4 was already filed, this row is S5 as the base showed.",
+      "grounding": {
+        "status": "GROUNDED",
+        "evidence": [
+          "org/missions/D5/AMGT/AMGT_HARVST/deliverables/0.9.0_WK_AMGT_HARVST~110/bh7_census.out",
+          "lib/research/identity/registrations.json"
+        ]
+      },
+      "disposition": "UNDER_INVESTIGATION"
     }
   ]
 ```
