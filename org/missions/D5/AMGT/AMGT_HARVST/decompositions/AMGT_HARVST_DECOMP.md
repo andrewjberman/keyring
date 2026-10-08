@@ -3377,3 +3377,29 @@ Issuer `2.0.0_SA_COO~H`. Series **`bh`**, continued.
 - `bh-8` AC1 (`pytest test_bh8_job_finished_at.py`) base: FAIL as expected (the test is absent); AC2 (`pytest test_bf1_job_record.py
   test_ba1_stopped_pair_is_retried.py test_az1_alias_set.py lib/research/freshness/tests -q`) base: PASS as expected (count in
   the commit).
+
+## 77. ROUND 63 -- two rulings on the first reads of the rebuilt gold (`1.0.0_SA_CTO~Z` msgs 31542, 31551, 31554), 2026-10-08 ~02:4xZ
+
+The CVO graded round 61's two packets (@31fbcebb42, and the other 12 fallback pairs @9e8ca92e4e): the fallback sample 27 of
+30, all 27 Nokia and the 3 other-case hits wrong; the nine forms 16 of 17, the miss Hawaiian Electric on `HEI`. Rulings: the
+bare-name fallback matches the stored case only (13 wrong pairs and 2 true BP pairs go, the 2 named); HEI joins the
+second-anchor rule; no rebuild until both are graded. Round 61's `bh-3` is merged with its symbol anchor (@1866108355) and
+round 62's `bh-7` is executing on slot ~110.
+
+Issuer `2.0.0_SA_COO~H`. Series **`bh`**, continued.
+- **Fan-out:** 1 of 1 chain, cap 8 (both cells write files slot ~110's chain holds: `publication_gold.py` and
+  `whole_brand_aliases.json`; they queue behind `bh-7`).
+
+| cell | order | what | class | executes |
+|---|---|---|---|---|
+| `HVST-bh-9` | `bh-9` | **The bare-name fallback matches the company name in its stored case only.** One matcher change for a security with no aliases; plants with the verb "sap" and "200-bp" as negative controls and the mutant; a census: every removed pair printed, Nokia removed 0, the two true BP pairs removed and named, securities with aliases changed 0. | LOCAL | worker ~110 (after `bh-7`) |
+| `HVST-bh-10` | `bh-10` | **`HEI` under the second-anchor rule.** One data entry on the terms ruled for CSL; plants with the Hawaiian Electric line as negative control; a census: HEICO pairs kept of 2, Hawaiian Electric dropped of 1. Cut to MEASURE whether a bare ticker list can be kept; a miss returns as a finding. | LOCAL | worker ~110 (after `bh-9`) |
+
+**The close run (issuer):** read both censuses; the removed fallback pairs and any HEI result go to `3.0.0_SA_CVO~Z` and
+`1.0.0_SA_CTO~Z`; the suite on the merged tree. No gold is built. The next rebuild is its own never-widen pair, whose rule
+allows a lost pair only by name (the two BP pairs, and the 3 Carlisle pairs).
+
+**Checks dry-run at the base before the cut:**
+- `bh-9` AC1, `bh-10` AC1 (`pytest` of the cell's new test file) base: FAIL as expected (the test is absent).
+- `bh-9` AC2, `bh-10` AC2 (`cat` of the cell's census output) base: FAIL as expected (no such file).
+- `bh-9` AC3, `bh-10` AC3 (`pytest lib/research/harvest lib/opal_data_harvest/test_az1_alias_set.py -q`) base: PASS as expected (460 passed).
