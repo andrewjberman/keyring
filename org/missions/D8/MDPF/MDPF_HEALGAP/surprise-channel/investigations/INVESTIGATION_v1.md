@@ -316,6 +316,29 @@ Append-only. Worker rows `MDPF_HEALGAP-W<n>-S<k>`; seat rows `MDPF_HEALGAP-S<k>`
     "disposition": "UNDER_INVESTIGATION",
     "spec_asserts": "TO-HG-d3 step 2 and the FWD-1 never-widen half: the restore is made by a named owner -- (1) 0.7.0_AE_CloudOps~F, (2) 2.0.0_SA_COO~G1 at 06:10Z, (3) laptop 1.0.0_SA_CTO at 06:17Z -- with its put time-stamped in the ledger.",
     "world_is": "The right value landed inside the 06:05-06:20Z window, so the exercise is intact (FAILED-OK, RESTORED-OK). But the act carries no owner: a laptop-credential process or Andrew directly wrote the target, and nothing in the order or the halves names it. INERT: the value is the declared restore value and no further put is pending. The ledger names the actor by CloudTrail identity until the laptop identifies it (asked by MSTR~DELL1 msg 808)."
+  },
+  {
+    "id": "MDPF_HEALGAP-D1-S4",
+    "project": "MDPF_HEALGAP",
+    "fabric": "dell1",
+    "surfaced_by": "2.0.0_SA_COO~G1",
+    "surfaced_at": "2026-10-08T13:25:00Z",
+    "one_line": "Advances MDPF_HEALGAP-D1-S3: the 06:08:46Z restore was made by an automated laptop-credential process -- the same key and client that set the induce at 17:40:39Z ran a read-put-read restore after polling the rule roughly hourly all night; Andrew confirms it was not by hand.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "Andrew-direct 13:1xZ (0.0.0_AB_MSTR record @14130c9b47): 'i did not do it by hand ... more likely a cascading issue/error, look into it regardless.'",
+        "CloudTrail read by 2.0.0_SA_COO~G1 13:2xZ, rule cot-rebalancer-runner-daily, 10-07 12:00Z..10-08 06:15Z: PutTargets 2 of 3 events on the rule, both user/Andrew_Berman key ...CBIJ aws-cli/1.44.44 -- 17:40:39Z (the induce set, TO-HG-d3 step 1) and 06:08:46Z (the restore).",
+        "06:08 shape: ListTargetsByRule 06:08:41Z -> PutTargets 06:08:46Z -> ListTargetsByRule 06:08:56Z (the order's step-2 read, put, read-back).",
+        "Same client read the rule ~hourly overnight: 18:42, 19:09, 20:10, 20:29, 20:39, 20:43, 21:24, 21:36, 22:22, 22:48, 23:06, 23:48, 00:40, 01:35, 02:36, 03:34, 04:37, 05:41, 06:08:41Z (130 ListTargetsByRule on the rule in the window, all principals).",
+        "Source IP 108.242.96.89 is shared with dell1 (cloudops-dell1-agent-user reads from it too), so IP does not discriminate the box; principal + OS build 26100 (dell1 26200) do (1.0.0_SA_CTO~DELL1 msg 911)."
+      ]
+    },
+    "disposition": "UNDER_INVESTIGATION",
+    "spec_asserts": "D1-S3: the restore carries no owner -- the laptop CTO made no put, ~F's timers were reported dead at 20:2xZ (MSTR msg 642), dell1 read NOOP.",
+    "world_is": "An owned automation did it: a laptop-credential process with ~F's toolchain kept polling the rule all night and restored on schedule. Most likely 0.7.0_AE_CloudOps~F's owner-(1) restore loop survived the session kill that was reported as 'timers died', so the defect is a liveness report that called a running loop dead, not an unknown actor. INERT: correct value, in window. Open until the laptop names the process (asked via 0.0.0_AB_MSTR~DELL1)."
   }
 ]
 ```
