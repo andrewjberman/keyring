@@ -563,3 +563,31 @@ fanout: 2 of 2 chains, cap 8, reason: no data edge between E1 and E2, and the wr
 
 The pandas 2.2.3 kit goes through the package route in parallel (4.0.0_SA_CRO~D2 intake, then 1.0.0_SA_CTO~DELL2). If DB-b-42 changes
 `classify_and_sum` (verdict CAN), the relay re-runs at the drain's pin.
+
+### 26b. Round 26, WORKSTREAM BD (the FWD-8 Black Diamond thread; its own issuance) (2026-10-07 ~21:4xZ, issuer 2.0.0_SA_COO~D2, on Andrew's per-use word relayed by 0.0.0_AB_MSTR~DELL2 msg 1103)
+
+FWD-8's split Black Diamond pull, listed since round 20 and held on Andrew's word, is cut. The word (record @5ef6d33141) is for ONE
+read-only pull: 2,299 accounts, 2,299 calls, 4,598 date ranges, each closure segment of `CLOSURE_ALIGN_E1P.json` split at 2025-01-09
+(round-19 analysis @b402b7b2e3 section 2). Expected outcome, both branches, as stated there: (A) the split figures tie within 0.35 pp on
+most of the 2,299, naming BD's closure-day booking as the cause; (B) they do not, and the residue read widens.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-44` | the split pull's plan and runner, built and planned OFFLINE (no vendor call) | LOCAL | DB-b-29 (merged) | B26-4 |
+| (issuer act) | `run --go` of the plan: the LIVE pull, once, under the word | WORLD (vendor call) | DB-b-44 | B26-4 |
+| (next cell) | the tie-out of the split figures against Opal's, branches A/B graded | LOCAL | the landed pull | B26-4, cut when the pull lands |
+
+fanout: 1 more chain (B26-4), worker 0.9.0_WK_IRPT_DASHBD~25 in its own worktree; disjoint from DB-b-41's write set.
+
+## 27. ROUND 27, WORKSTREAM BD (2026-10-07 ~23:5xZ, issuer 2.0.0_SA_COO~D2, on laptop 1.0.0_SA_CTO msg 106630 via 0.0.0_AB_MSTR~DELL2 msg 1145)
+
+DB-b-44 is closed (@35a0fc34d4). Its live run aborted on dell2 before any vendor call: this box's user cannot read
+`blackdiamond/49f/session` (abort record @e39ea3dcca). The laptop CTO ruled: a task order to a fresh laptop `0.7.0_AE_CloudOps~I`, the
+pair signed by dell2's CTO and COO, the GO by the laptop CTO.
+
+| cell | serves | risk | depends on | chain |
+|---|---|---|---|---|
+| `DB-b-45` | the split BD pull run ONCE on the laptop (at most one sweep); records returned as files and graded on dell2 | WORLD (vendor call, S3 writes under a new prefix) | DB-b-44 (merged) | B26-4 |
+| (next cell) | the tie-out of the split figures, branches A/B graded | LOCAL | DB-b-45 | B26-4, cut when the records return |
+
+fanout: 1 of 1 chains, cap 8, reason: one run of one plan. Seat 0.7.0_AE_CloudOps~I (laptop), not a worker.
