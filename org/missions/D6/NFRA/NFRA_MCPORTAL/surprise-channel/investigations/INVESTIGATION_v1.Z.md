@@ -796,6 +796,28 @@
     "spec_asserts": "C11: the portal reads the activity and open-calls stores with a prefix-scoped read grant.",
     "world_is": "The only principal that can hold the portal's grant is opal-gateway-role, whose standing control (graph-read.tf, CG-s-12) is no grant of any kind on the globgrph bucket. Applying C11 as written breaks that control as written. Not acted on: no Terraform written, no grant applied.",
     "notes": "Holds only the grant cell of round 4 (FWD-14's store read). Ruling owner: 1.0.0_SA_CTO~O (contract text). Options named in the ask, issuer's rec first: (a) a prefix-scoped read on fabric/activity/v1/ and fabric/open-calls/v1/ only, with the graph-read.tf control text amended to carve out fabric/ (outside warehouse/, never the served graph); (b) the two stores move to a bucket the gateway may read; (c) the gateway proxies the reads through the projection service."
+  },
+  {
+    "id": "NFRA_MCPORTAL-Z-W6-S1",
+    "project": "NFRA_MCPORTAL",
+    "fabric": "site-z",
+    "surfaced_by": "0.9.0_WK_NFRA_MCPORTAL~6",
+    "surfaced_at": "2026-10-08T22:10Z",
+    "disposition": "UNDER_INVESTIGATION",
+    "one_line": "The worker's sparse worktree did not carry paths the workspace commit gates read (org/modules/graph, org/projects, infra/logic, and the sibling project trees under org/missions), so safe-commit refused three times before passing; the order's face names none of them.",
+    "class": "OBSERVATION",
+    "hazard_standing": "INERT",
+    "grounding": {
+      "status": "GROUNDED",
+      "evidence": [
+        "safe-commit 1st refusal: commit_gate_runner.py:96 ModuleNotFoundError comp_constants_cli (file is org/modules/graph/comp_constants_cli.py at HEAD, absent from the sparse cone).",
+        "2nd/3rd refusal: missions-tree-check INDEX-MISSING org/projects/NFRA_MCPORTAL.json, then 45 INDEX-ORPHAN violations for sibling project trees under org/missions.",
+        "git sparse-checkout list at start: .claude, .tools, infra/aws/ec2/opal-gateway, lib, org/devices, org/missions/D6/NFRA/NFRA_MCPORTAL, org/ref, org/standards. Worker ran `git sparse-checkout add org/modules/graph org/projects infra/logic org/missions org/surprise_channel` (worktree-local config, no repo write); the commit then passed (1fa09c0cc0, 0 violations)."
+      ]
+    },
+    "spec_asserts": "The worker face says the worktree is a sparse checkout sufficient to commit a proof instance via safe-commit.",
+    "world_is": "The cone as cut cannot pass the commit gates; five directories had to be added (org/surprise_channel as well, for the row gate). A later sparse worker would repeat it.",
+    "notes": "Issuer's call whether the cut should widen the cone. Nothing was reconstructed beyond the four cone additions."
   }
 ]
 ```
