@@ -20627,3 +20627,106 @@ slots (`0.9.0_WK_IRPT_BCKEND~1`, `~2`, `~3`, `~4`).
   "world_is": "It does: 0 extras."
 }
 ```
+
+## IRPT_BCKEND-W169-S1 -- regenerated ExportReceipt makes covered_account_ids required; a test consumer no longer typechecks
+
+```json
+{
+  "id": "IRPT_BCKEND-W169-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~169",
+  "surfaced_at": "2026-10-08T05:37:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "After regenerating ~P's four wire files (portal branch wk-IRPT_BCKEND-169-portal @c0291b68), tsc -b --noEmit exits 2: iv-e-26.submit-data-optional.test.ts line 33 builds an ExportReceipt facts object without the now-required covered_account_ids (IB-pr-343). IB75-1-AC2 is a stop; no consumer was edited.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal wk-IRPT_BCKEND-169-portal @c0291b68; p75_cells.py . IB75-1-AC2 -> FAIL: TS2741 at iv-e-26.submit-data-optional.test.ts(33,5), 1 error"
+    ]
+  },
+  "spec_asserts": "IB75-1-AC2: tsc -b --noEmit exits 0 after regeneration (base PASS as a control).",
+  "world_is": "It exits 2 with one TS2741 in a test fixture that omits covered_account_ids. The fixture needs the field; the owner of that test (not this cell's grant) must add it."
+}
+```
+
+## IRPT_BCKEND-W170-S1 -- The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W140-S1: IB-pr-341 (portal @5c726cf4, an ancestor of portal DEV d1b21c970c) made the over-age status public. On DEV d1b21c970c, `bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage` reads '10 pass, 0 fail' (rc 0); the four over-age reader arms P1-P4 are plain tests (no test.failing remains in the file) and pass.",
+  "one_line": "The four portal readers of the directory-search response now accept the over-age status: ir-62-overage runs 10 pass, 0 fail on portal DEV d1b21c970c.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "portal DEV d1b21c970c (HEAD of the shared checkout, branch DEV, equal to origin/DEV); git merge-base --is-ancestor 5c726cf4 HEAD -> true",
+      "bun --no-install test src/pages/InvestorReporting/__tests__/ir-62-overage -> '10 pass / 0 fail / 22 expect() calls / Ran 10 tests across 1 file', rc 0",
+      "grep -c 'test.failing|it.failing' search-readers.test.ts -> 0; arms P1-P4 over_age are plain tests (line 49 comment: IB-pr-341)"
+    ]
+  },
+  "spec_asserts": "W140-S1: all four portal readers throw EnvelopeMismatch('status') on the over-age answer.",
+  "world_is": "They no longer do: the four over-age arms pass as plain tests on DEV. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W170-S2 -- A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) an
+
+```json
+{
+  "id": "IRPT_BCKEND-W170-S2",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~170",
+  "surfaced_at": "2026-10-08T08:53:07Z",
+  "disposition": "DISMISSED_WITH_REASON",
+  "dismissal_reason": "Resolves IRPT_BCKEND-W145-S2: finalize_on_read.finalize hands the pending pointer's account_ids to handler.finalize_export as covered_account_ids and refuses a pointer naming none (commit 7afc91d40c, IB-pr-343 amendment 1, shipped in the IB-pr-349 release). `release-census.py irpt-export-render --pin b921635dad` reads 'built_members=63 live_members=63 changed_members=0' (rc 0), so the live bytes equal the pin; test_retained_finalize_names_accounts.py: 6 passed.",
+  "one_line": "A retained export names its accounts: the live irpt-export-render equals pin b921635dad (changed_members=0) and the 6 retained-finalize tests pass.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "python infra/aws/lambda/ci/release-census.py irpt-export-render --pin b921635dad -> 'function=irpt-export-render pin=b921635dad built_members=63 live_members=63 / changed_members=0', rc 0",
+      "python -m pytest tests/test_retained_finalize_names_accounts.py -q (from infra/aws/lambda/investor-reporting/export) -> '6 passed in 1.76s', rc 0",
+      "finalize_on_read.py:98 finalize_export(..., covered_account_ids=covered); handler.py:327 passes covered_account_ids or submission.get('covered_account_ids')"
+    ]
+  },
+  "spec_asserts": "W145-S2: after release every retained export raises ReceiptRefused at finalize, because no covered account reaches receipt.build.",
+  "world_is": "It does not: the retained path carries the pointer's accounts, and a pointer naming none is refused before finalize. Disarmed."
+}
+```
+
+## IRPT_BCKEND-W171-S1 -- infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/route
+
+```json
+{
+  "id": "IRPT_BCKEND-W171-S1",
+  "project": "IRPT_BCKEND",
+  "fabric": "laptop",
+  "surfaced_by": "0.9.0_WK_IRPT_BCKEND~171",
+  "surfaced_at": "2026-10-08T08:00:00Z",
+  "disposition": "UNDER_INVESTIGATION",
+  "one_line": "infra/aws/terraform/investor-reporting/api/routes.json differs from docs/contracts/investor-reporting/v1/routes.json; routes.tf reads only the docs copy, so a route added to the stale copy would never apply.",
+  "class": "OBSERVATION",
+  "hazard_standing": "INERT",
+  "grounding": {
+    "status": "GROUNDED",
+    "evidence": [
+      "cmp of the two files at 1e0cdaf90c: differ at char 7 line 2",
+      "infra/aws/terraform/investor-reporting/api/routes.tf local.contract_routes_path points at docs/contracts/investor-reporting/v1/routes.json (comment: 'routes.json IS the carrier and Terraform reads it')"
+    ]
+  },
+  "spec_asserts": "routes.tf: ONE route list, the contract file; no second carrier.",
+  "world_is": "A second routes.json is tracked in the api root. Nothing reads it for the apply; the IB-pr-363 packet names the docs copy as the writer's input."
+}
+```
