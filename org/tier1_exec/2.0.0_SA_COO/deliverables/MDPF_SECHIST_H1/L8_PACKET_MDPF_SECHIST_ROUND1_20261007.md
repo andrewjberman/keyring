@@ -34,3 +34,12 @@ name, 1D..1Y). The thread reads `n` until then. This packet is re-issued with th
 
 - A hazard amendment (interior gaps for CSCO/BX/LNVGY) was drafted and WITHDRAWN before commit: the census was over `history_topup` only, and gold also reads the 2026-10-06
   gap-fill CSVs at `bbg-testpull/tickers/<T>/gap_20261001_20261005/history.csv`, which carry those days.
+
+## FWD-1 run attempts (appended 2026-10-08 ~11:4xZ by 2.0.0_SA_COO~H1)
+
+| attempt | when | result | grades FWD-1? |
+|---|---|---|---|
+| scheduled pull, as-of 2026-10-06 | 2026-10-07 11:08Z | ran the OLD code (site Z had not yet taken the file): no `history_backfill` fields | no -- pre-deploy |
+| scheduled pull, as-of 2026-10-07 | 2026-10-08 07:00 ET | **FAIL of the scheduled vehicle**: Terminal signed out, DAPI down, sign-in fallback aborted, 0 Bloomberg attempts, `OPAL_BBGTML_daily_pull` LastTaskResult 50; no `bbg/2026-10-07/` objects; freshness STALE (site-Z 1.0.0_SA_CTO~Z msg 31688, relayed msg 868) | yes, a FAIL of the vehicle, not of the SH-t-1 code (it never executed) |
+
+Ruling (1.0.0_SA_CTO~DELL1 msg 871, cb6fb2a52c): the post-sign-in recovery re-pull is QA only -- it may expose defects and be read, but never grades FWD-1. Acceptance is the first scheduled pull that runs unassisted (earliest 2026-10-09 07:00 ET) plus the next-morning Positioning read. The sign-in is Andrew's act at site Z.

@@ -1,6 +1,6 @@
 ---
 name: agentbus
-description: Make this device reachable on the cross-device agent bus (SQS). `/agentbus` arms the persistent consumer Monitor for this device's inbound queue; `/agentbus status`; `/agentbus send <device> <body>`; `/agentbus off`. Use at session start on either machine or when cross-device mail seems undelivered -- opal-agent-comms is localhost-only and cannot cross devices.
+description: Make this device reachable on the cross-device agent bus (SQS). `/agentbus` arms the persistent consumer Monitor for this device's inbound queue; `/agentbus status`; `/agentbus send <device> <body>`; `/agentbus off`. Use at session start on any box or when cross-device mail seems undelivered -- opal-agent-comms is localhost-only and cannot cross devices.
 ---
 
 # /agentbus — cross-device agent messaging (SQS Port 2)
@@ -10,9 +10,9 @@ Arms this device's **consumer** on the agent bus and teaches the canonical send/
 ## Why this exists (read once)
 
 `opal-agent-comms` is a **localhost broker** (port 7800) and `org/mcp/liveness.json` is
-**gitignored** — both are device-local. An agent on one machine cannot see, address, or be
-addressed by the fabric on the other. Measured 2026-07-29: `get_live_agents()` on site Z
-returned 1 (itself) while CTO, CVO, DT and DE were provably alive on the laptop.
+**gitignored** — both are device-local. An agent on one box cannot see, address, or be
+addressed by the fabric on another. Measured 2026-07-29: `get_live_agents()` on one box
+returned 1 (itself) while CTO, CVO, DT and DE were provably alive on another.
 
 The git trunk (`org/mcp/agentbus-trunk/`) works but is a **history tier**: no ack, no ordering,
 needs a pull, 4–15 min. SQS is the **delivery tier**. Both are kept — a queue has nothing to
@@ -30,7 +30,8 @@ re-read, so "what did base send me last Tuesday" is unanswerable from SQS alone.
 bash .tools/agentbus-sqs.sh device
 ```
 
-Prints `laptop` or `sitez`, the basis for the answer, and your inbound queue.
+Prints this box's name as the device register lists it, the basis for the answer, and your inbound queue. The boxes
+are whatever `org/devices/DEVICES.json` lists; `bash .tools/agentbus-sqs.sh devices` prints the set with each queue.
 
 > **This is the load-bearing question, and getting it wrong is not a harmless mistake.**
 > Arming a consumer for the *other* device drains **its** mail into a session that is not the
@@ -88,7 +89,7 @@ Each arriving message becomes one chat event: `[AGENTBUS -> <device>] [ts] [from
 bash .tools/agentbus-sqs.sh send <to-device> <your-full-serial> <body...>
 ```
 
-- `<to-device>` is the **recipient** (`laptop` or `sitez`), not you.
+- `<to-device>` is the **recipient** (a box the register lists; `bash .tools/agentbus-sqs.sh devices`), not you.
 - `<your-full-serial>` includes any `~lane` suffix — it is stamped into the body and the
   message attributes, and it is how the far side knows who to ack.
 - Body is free text. Timestamp and sender are prepended automatically.
@@ -154,7 +155,7 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
 
 ```
 /agentbus <device>
-  DEVICE:   <laptop|sitez> (basis: workspace path | AGENTBUS_DEVICE)
+  DEVICE:   <device from the register> (basis: workspace path | AGENTBUS_DEVICE)
   CONSUMER: armed — Monitor task <id>, watching <queue> | already live <id> | stopped <id>
   QUEUES:   inbound <n> · outbound-to-peer <n>
   SEND:     bash .tools/agentbus-sqs.sh send <peer> <your-serial> "<body>"
@@ -210,15 +211,15 @@ MessageId precisely so you can. Silent receipt is a protocol violation (RAVC ste
   an empty queue."* The first version of `recv` swallowed stderr and rendered every failure as
   `(no messages)` — byte-identical to a healthy empty queue, so a broken retrieval read as a
   negative result. Do not reintroduce `2>/dev/null` anywhere in the receive path.
-- **Same principal, both devices.** Port 2 carries **no** cross-distrust controls by
+- **Same principal, every device.** Port 2 carries **no** cross-distrust controls by
   construction (PRD A.2) — same owner, no colleague boundary. **Never route cross-principal
   traffic through these queues**; that is Port 1's problem and it has a different control model.
 
 ## Reference
 
 - Transport + helper: `.tools/agentbus-sqs.sh` (`device` · `send` · `recv` · `watch` · `peek`)
-- Queues: `agentbus-ajbdev-sitez-to-laptop.fifo` / `agentbus-ajbdev-laptop-to-sitez.fifo`
-  (`us-east-1`, acct `313476888478`, FIFO + content-dedup + SSE, 20s long-poll, 14d retention)
+- Queues: one FIFO inbound queue per box, named in the register (`inbound_queue` in `org/devices/DEVICES.json`; the
+  `devices` subcommand prints each) (`us-east-1`, acct `313476888478`, FIFO + content-dedup + SSE, 20s long-poll, 14d retention)
 - Project: `org/projects/OPAL_SQSCHAT.json` · Ruling: `org/tier0/ledger/LD-0347.md`
 - Design: `docs/architecture/NFRA_AGENTBUS_PRD.md` (Port 2) · Ratification: LD-0306
   (**read its `ratification_note`, not only `decision_summary`** — the summary describes the

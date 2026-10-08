@@ -11,6 +11,11 @@ spawning a session; `/mstr-spawn {serial} --force "<reason>"` is the
 charter-blanket authorization for the audited concurrency-cap overflow path
 (parallel to /mstr-kill's blanket force-kill authorization).
 
+**This skill acts on THIS box only.** The process scan, the marker scan and the spawn script all see this box's own processes
+and files, and the skill names no box. A seat on another box is that box's manager's to spawn; the register
+`org/devices/DEVICES.json` is the list of boxes. The manager's loop finds a dead seat with `python .tools/seat-liveness.py`
+(read-only) and then runs this skill, whose pre-flight below stands unchanged.
+
 **Invokers: `0.0.0_AB_MSTR` and `2.0.0_SA_COO`, each with or without a `~lane` suffix.**
 Andrew-direct 2026-08-28 ~15:32Z at the `1.0.0_SA_CTO` terminal, VERBATIM: *"/mstr-spawn and
 /mstr-kill should be a COO function in addition to 0.0.0_AB_MSTR, I think it is a natural fit for
